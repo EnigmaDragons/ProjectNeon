@@ -5,15 +5,13 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class Party : ScriptableObject
 {
-    private Character characterOne = new NoCharacter();
-    private Character characterTwo;
-    private Character characterThree;
+    [SerializeField]
+    private Character characterOne;
 
-    public Party( Character one, Character two, Character three)
-    {
-        this.characterOne = one;
-        this.characterTwo = two;
-        this.characterThree = three;
-    }
+    [SerializeField]
+    private Character characterTwo;
+
+    [SerializeField]
+    private Character characterThree;
 
 }
