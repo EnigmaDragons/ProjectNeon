@@ -6,20 +6,23 @@ using System.Linq;
 [CreateAssetMenu(fileName = "New Game Event", menuName = "Game Event")]
 public class GameEvent : ScriptableObject
 {
-    private IEnumerable<GameEventListener> listeners = Array.Empty<GameEventListener>();
+    private IEnumerable<GameEventSubscription> listeners = Array.Empty<GameEventSubscription>();
 
     public void Publish()
     {
-        listeners.ForEach(x => x.OnEventRaised());
+        listeners.ForEach(l => l.OnEvent(l));
     }
 
-    public void RegisterListener(GameEventListener listener)
+    public void Subscribe(GameEventListener listener) => Subscribe(new GameEventSubscription(name, x => listener.OnEventRaised(), listener));
+    public void Unsubscribe(GameEventListener listener) => Unsubscribe((object) listener);
+
+    public void Subscribe(GameEventSubscription e)
     {
-        listeners = listeners.Concat(listener);
+        listeners = listeners.Concat(e);
     }
 
-    public void UnregisterListener(GameEventListener listener)
+    public void Unsubscribe(object owner)
     {
-        listeners = listeners.Except(listener.AsArray());
+        listeners = listeners.Where(l => !ReferenceEquals(l.Owner, owner));
     }
 }
