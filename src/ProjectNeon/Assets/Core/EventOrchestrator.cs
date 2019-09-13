@@ -1,0 +1,31 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class EventOrchestrator : MonoBehaviour
+{
+    [SerializeField] private GameEvent OnStepsCompleted;
+    [SerializeField] private List<GameEvent> RequiredEvents;
+    
+    // Display
+    [SerializeField] private bool _isFinished = false;
+    [SerializeField] private List<GameEvent> _finishedEvents = new List<GameEvent>();
+    
+    void Awake()
+    {
+        RequiredEvents.ForEach(e => e.Subscribe(new GameEventSubscription(e.name, x => ProcessEvent(e), this)));
+    }
+
+    void ProcessEvent(GameEvent e)
+    {
+        if (_isFinished)
+            return;
+        
+        _finishedEvents = _finishedEvents.Concat(e).Distinct().ToList();
+        if (RequiredEvents.Except(_finishedEvents).None())
+        {
+            _isFinished = true;
+            OnStepsCompleted.Publish();
+        }
+    }
+}
