@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck 
+public class Deck : ScriptableObject
 {
     private List<Card> cards;
 
@@ -11,10 +11,9 @@ public class Deck
         this.cards = cards;
     }
 
-    void shuffle()
+    void Shuffle()
     {
         cards.Sort((a, b) => (int)System.Math.Round(Random.value, 0));
     }
-
 
 }
