@@ -5,20 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class Navigator : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public void NavigateToTitleScreen()
     {
-        
+        SceneManager.LoadScene("TitleScreen");
     }
 
-    public void Navigate(string scene)
+    public void NavigateToSquadSelection()
     {
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene("SquadSelection");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void NavigateToGameScene()
     {
-        
+        SceneManager.LoadScene("GameScene");
     }
+
+    public void NavigateToDeckBuilderScene()
+    {
+        SceneManager.LoadScene("DeckBuilderScene");
+    }
+
+    public void NavigateToBattleScene()
+    {
+        SceneManager.LoadScene("BattleScene");
+    }
+
+    public void NavigateToVictoryScene()
+    {
+        SceneManager.LoadScene("VictoryScene");
+    }
+
+    public void NavigateToDefeatScene()
+    {
+        SceneManager.LoadScene("DefeatScene");
+    }
+
 }
