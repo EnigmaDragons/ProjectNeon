@@ -3,6 +3,6 @@
 [CreateAssetMenu()]
 public class Character : ScriptableObject
 {
-    [SerializeField] private Sprite Bust;
-    [SerializeField] private string ClassName;
+    public Sprite Bust;
+    public string ClassName;
 }
