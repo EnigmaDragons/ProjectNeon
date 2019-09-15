@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BattleSetup : MonoBehaviour
 {
+    [SerializeField]
+    Deck player;
+
+    [SerializeField]
+    List<Deck> enemy;
+
     // Start is called before the first frame update
-    void Start(Deck player, List<Deck> enemy)
+    void Start()
     {
         player.Shuffle();
         foreach(Deck deck in enemy){
