@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 [CreateAssetMenu()]
 public class Card : ScriptableObject
 {
-
+    public Sprite Art;
+    public CardEffect Effect;
+    public string Description;
+    public string TypeDescription;
 }
