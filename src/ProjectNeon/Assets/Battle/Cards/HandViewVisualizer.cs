@@ -22,11 +22,11 @@ public class HandViewVisualizer : MonoBehaviour
         cardsInHand.OnZoneCardsChanged.Unsubscribe(this);
     }
 
-    // @todo: #30:15min This isn't parallel-safe. Too many cards are created during setup. Implement intelligent card diffs.
+    // @todo #30:15min This isn't parallel-safe. Too many cards are created during setup. Implement intelligent card diffs.
 
-    // @todo: #30:30min Animate these cards entrances. Should slide in from right of screen
+    // @todo #30:30min Animate these cards entrances. Should slide in from right of screen
 
-    // @todo: #30:15min Space card out from the center, instead of from Left of Zone, and add a little tilt, based on card index.
+    // @todo #30:15min Space card out from the center, instead of from Left of Zone, and add a little tilt, based on card index.
 
     void UpdateVisibleCards()
     {
