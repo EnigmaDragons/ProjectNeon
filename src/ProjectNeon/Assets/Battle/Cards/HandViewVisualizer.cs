@@ -7,7 +7,7 @@ public class HandViewVisualizer : MonoBehaviour
     [SerializeField] private float minX = 200;
     [SerializeField] private float maxX = 1920 - 200;
     [SerializeField] private float spaceBetweenCards = 200;
-    [SerializeField] private GameObject cardPrototype;
+    [SerializeField] private CardPresenter cardPrototype;
 
     private GameObject[] _shownCards = new GameObject[0];
 
@@ -34,6 +34,9 @@ public class HandViewVisualizer : MonoBehaviour
         shown.ForEach(x => Destroy(x));
         var cards = cardsInHand.Cards.ToArray();
         for (var i = 0; i < cards.Length; i++)
-            Instantiate(cardPrototype, new Vector3(minX + spaceBetweenCards * i, transform.position.y, transform.position.z), Quaternion.identity, gameObject.transform);
+        {
+            var c = Instantiate(cardPrototype, new Vector3(minX + spaceBetweenCards * i, transform.position.y, transform.position.z), Quaternion.identity, gameObject.transform);
+            c.Set(cards[i]);
+        }
     }
 }

@@ -3,6 +3,7 @@
 public class SetupPlayerCards : MonoBehaviour
 {
     [SerializeField] private CardPlayZones PlayerCardPlayZones;
+    [SerializeField] private Card DebugDefaultCard;
 
     // @todo #30:10min Create IntVariable Scriptable Object and setup StartingCards IntVariable
 
@@ -18,7 +19,7 @@ public class SetupPlayerCards : MonoBehaviour
         Play.Clear();
         Deck.Clear();
         for (var i = 0; i < 8; i++)
-            Deck.PutOnBottom(new Card());
+            Deck.PutOnBottom(DebugDefaultCard);
     }
 
     void Start()
