@@ -6,12 +6,12 @@ public class Deck : ScriptableObject
 {
     private List<Card> cards;
 
-    Deck(List<Card> cards)
+    public Deck(List<Card> cards)
     {
         this.cards = cards;
     }
 
-    void Shuffle()
+    public void Shuffle()
     {
         cards.Sort((a, b) => (int)System.Math.Round(Random.value, 0));
     }
