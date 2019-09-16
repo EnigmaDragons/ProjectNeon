@@ -7,14 +7,7 @@ public class PartyVisualizer : MonoBehaviour
 
     [SerializeField] private PartyArea partyArea;
 
-    // Start is called before the first frame update
     void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void UpdateParty()
     {
         Instantiate(partyArea.party.characterOne.Bust, new Vector3(150, 10, transform.position.z), Quaternion.identity, gameObject.transform);
         Instantiate(partyArea.party.characterTwo.Bust, new Vector3(-180, -25, transform.position.z), Quaternion.identity, gameObject.transform);

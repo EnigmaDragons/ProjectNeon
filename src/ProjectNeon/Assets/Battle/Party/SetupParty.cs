@@ -15,10 +15,4 @@ public class SetupParty : MonoBehaviour
     {
         this.partyArea = new PartyArea(party);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
