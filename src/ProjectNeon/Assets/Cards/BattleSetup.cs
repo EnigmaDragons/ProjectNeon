@@ -19,11 +19,4 @@ public class BattleSetup : MonoBehaviour
             deck.Shuffle();
         }
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
