@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu()]
 public class PartyArea : ScriptableObject
 {
-    [SerializeField]
+
     public Party party;
 
     public PartyArea(Party party)

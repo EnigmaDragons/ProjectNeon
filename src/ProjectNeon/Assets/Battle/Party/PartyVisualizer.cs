@@ -16,15 +16,8 @@ public class PartyVisualizer : MonoBehaviour
     // Update is called once per frame
     void UpdateParty()
     {
-        partyArea.party.characterOne;
-        partyArea.party.characterTwo;
-        partyArea.party.characterThree;
-
-
-        for (var i = 0; i < ; i++)
-        {
-            var c = Instantiate(cardPrototype, new Vector3(minX + spaceBetweenCards * i, transform.position.y, transform.position.z), Quaternion.identity, gameObject.transform);
-            c.Set(cards[i]);
-        }
+        Instantiate(partyArea.party.characterOne.Bust, new Vector3(150, 10, transform.position.z), Quaternion.identity, gameObject.transform);
+        Instantiate(partyArea.party.characterTwo.Bust, new Vector3(-180, -25, transform.position.z), Quaternion.identity, gameObject.transform);
+        Instantiate(partyArea.party.characterThree.Bust, new Vector3(0, -65, transform.position.z), Quaternion.identity, gameObject.transform);
     }
 }

@@ -114,7 +114,7 @@ RectTransform:
   m_Children:
   - {fileID: 8781584177414937378}
   m_Father: {fileID: 4257165968249606330}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -554,6 +554,7 @@ RectTransform:
   - {fileID: 3078520783781877402}
   - {fileID: 5789708883698528397}
   - {fileID: 2396074418867839718}
+  - {fileID: 7744763206297365769}
   - {fileID: 2974538952112005480}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -745,6 +746,55 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &5515504284197551705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7744763206297365769}
+  - component: {fileID: 158339429893106374}
+  m_Layer: 0
+  m_Name: PartyArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7744763206297365769
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5515504284197551705}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -221.10011}
+  m_LocalScale: {x: 1.7860466, y: 1.7860466, z: 1.7860466}
+  m_Children: []
+  m_Father: {fileID: 4257165968249606330}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 480.02, y: -71.1}
+  m_SizeDelta: {x: 537.53, y: 337.3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &158339429893106374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5515504284197551705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8f32944663b094c84fa478efa22dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyArea: {fileID: 11400000, guid: 4a4ebf517f0dad7459114e198e518cf2, type: 2}
 --- !u!1 &6480969075285512402
 GameObject:
   m_ObjectHideFlags: 0
