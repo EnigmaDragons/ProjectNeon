@@ -6,12 +6,12 @@ using UnityEngine;
 public class Party : ScriptableObject
 {
     [SerializeField]
-    private Character characterOne;
+    public Character characterOne;
 
     [SerializeField]
-    private Character characterTwo;
+    public Character characterTwo;
 
     [SerializeField]
-    private Character characterThree;
+    public Character characterThree;
 
 }
