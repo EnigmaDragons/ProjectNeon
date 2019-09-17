@@ -6,22 +6,23 @@ public class EnemyVisualizer : MonoBehaviour
 {
 
     [SerializeField] private EnemyArea enemyArea;
-    [SerializeField] private GameObject enemy1;
-    [SerializeField] private GameObject enemy2;
-    [SerializeField] private GameObject enemy3;
-    [SerializeField] private GameObject enemy4;
-    [SerializeField] private GameObject enemy5;
+    [SerializeField] private List<GameObject> enemies;
 
     /**
-     * @todo #28:15min Render player characters in battle screen.
+     * @todo #29:15min Draw enemy characters on battle screen. Enemy positioning must be relative to 
+     *  total enemy count. Each enemy must dinamically create a sprite inside EnemyArea Object.
+     */
+    /**
+     * @todo #29:30min Wire enemy setup with correct events. Enemy setup on battle scene must be triggered
+     *  upon BattleSetupStarted event and broadcast BattleSetupEnemyPartyEntered event after enemy party
+     *  is ready.
      */
 
     void Start()
     {
-        enemy1.GetComponent<SpriteRenderer>().sprite = enemyArea.enemies[0].image;
-        enemy2.GetComponent<SpriteRenderer>().sprite = enemyArea.enemies[1].image;
-        enemy3.GetComponent<SpriteRenderer>().sprite = enemyArea.enemies[2].image;
-        enemy4.GetComponent<SpriteRenderer>().sprite = enemyArea.enemies[3].image;
-        enemy5.GetComponent<SpriteRenderer>().sprite = enemyArea.enemies[4].image;
+        foreach (GameObject enemy in enemies)
+        {
+            enemy.GetComponent<SpriteRenderer>().sprite = enemyArea.enemies[enemies.IndexOf(enemy)].image;
+        }
     }
 }
