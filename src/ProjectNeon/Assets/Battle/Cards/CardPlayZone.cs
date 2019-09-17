@@ -22,6 +22,14 @@ public class CardPlayZone : ScriptableObject
         OnZoneCardsChanged.Publish();
    }
 
+    public Card Take(int index)
+    {
+        var card = Cards[index];
+        Cards = Cards.Where((v, i) => i != index).ToArray();
+        OnZoneCardsChanged.Publish();
+        return card;
+    }
+
     public void PutOnTop(Card card)
     {
         Cards = card.Concat(Cards).ToArray();
@@ -31,6 +39,12 @@ public class CardPlayZone : ScriptableObject
     public void PutOnBottom(Card card)
     {
         Cards = Cards.Concat(card).ToArray();
+        OnZoneCardsChanged.Publish();
+    }
+
+    public void Shuffle()
+    {
+        Cards = Cards.OrderBy((a) => (int)Math.Round(UnityEngine.Random.value, 0)).ToArray();
         OnZoneCardsChanged.Publish();
     }
 }

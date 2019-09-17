@@ -4,6 +4,7 @@ public class SetupPlayerCards : MonoBehaviour
 {
     [SerializeField] private CardPlayZones PlayerCardPlayZones;
     [SerializeField] private Card DebugDefaultCard;
+    [SerializeField] private GameEvent OnFinished;
 
     // @todo #30:10min Create IntVariable Scriptable Object and setup StartingCards IntVariable
 
@@ -24,7 +25,9 @@ public class SetupPlayerCards : MonoBehaviour
 
     void Start()
     {
+        Deck.Shuffle();
         for (var c = 0; c < 6; c++)
             Hand.PutOnBottom(Deck.DrawOneCard());
+        OnFinished.Publish();
     }
 }
