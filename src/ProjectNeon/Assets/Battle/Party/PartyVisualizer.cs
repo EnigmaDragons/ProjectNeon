@@ -6,11 +6,15 @@ public class PartyVisualizer : MonoBehaviour
 {
 
     [SerializeField] private PartyArea partyArea;
+    [SerializeField] private GameObject _character1;
+    [SerializeField] private GameObject _character2;
+    [SerializeField] private GameObject character3;
+
 
     void Start()
     {
-        Instantiate(partyArea.party.characterOne.Bust, new Vector3(150, 10, transform.position.z), Quaternion.identity, gameObject.transform);
-        Instantiate(partyArea.party.characterTwo.Bust, new Vector3(-180, -25, transform.position.z), Quaternion.identity, gameObject.transform);
-        Instantiate(partyArea.party.characterThree.Bust, new Vector3(0, -65, transform.position.z), Quaternion.identity, gameObject.transform);
+        _character1.GetComponent<SpriteRenderer>().sprite = partyArea.party.characterOne.Bust;
+        _character2.GetComponent<SpriteRenderer>().sprite = partyArea.party.characterTwo.Bust;
+        character3.GetComponent<SpriteRenderer>().sprite = partyArea.party.characterThree.Bust;
     }
 }
