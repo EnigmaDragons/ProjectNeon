@@ -15,7 +15,6 @@ public class Deck : ScriptableObject
 
     public void Shuffle()
     {
-        cards.Sort((a, b) => (int)System.Math.Round(Random.value, 0));
     }
 
 }
