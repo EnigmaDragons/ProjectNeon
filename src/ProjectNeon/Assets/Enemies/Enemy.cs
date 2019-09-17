@@ -17,4 +17,6 @@ public class Enemy : ScriptableObject
     [SerializeField]
     private Stats stats;
 
+    public Sprite image;
+
 }
