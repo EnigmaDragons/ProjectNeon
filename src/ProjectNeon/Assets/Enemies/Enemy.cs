@@ -20,4 +20,6 @@ public class Enemy : ScriptableObject
     [SerializeField]
     public int powerLevel;
 
+    public Sprite image;
+
 }
