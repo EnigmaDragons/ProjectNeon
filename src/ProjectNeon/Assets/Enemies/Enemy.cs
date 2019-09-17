@@ -17,4 +17,7 @@ public class Enemy : ScriptableObject
     [SerializeField]
     private Stats stats;
 
+    [SerializeField]
+    public int powerLevel;
+
 }

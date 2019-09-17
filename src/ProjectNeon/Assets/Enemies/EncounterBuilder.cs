@@ -6,27 +6,25 @@ public class EncounterBuilder : MonoBehaviour
     [SerializeField]
     private List<Enemy> possible;
 
-    [SerializeField]
+    [SerializeField, Range(1,10)]
     private int difficulty;
 
-    public List<Enemy> generate()
+    public List<Enemy> Generate()
     {
         /**
-         * @todo #52:30min Implement encounter generation after the encounter algorithm is defined, and then
-         *  return correct list of enemies in generate() method.
+         * @todo #52:30min Evolve Encounter Generation after playtesting. 
          */
         /**
          * @todo #52:15min After #29 merge, wire encounter builder restult with BattleSetup so we can use the generated
          *  enemies into the battle scene. BattleEnemiesSpawned  event must be triggered after they are added to
          *  the scene.
          */
-        if (difficulty < 0) difficulty = 1;
-        if (difficulty > 7) difficulty = 7;
         List<Enemy> enemies = new List<Enemy>();
-        for (int i = 0; i < difficulty; i++)
-        {
-            enemies.Add(possible[Random.Range(0, possible.Count-1)]); ;
-        }
-        return possible;
+        possible.FindAll(
+            enemy => enemy.powerLevel <= difficulty
+        ).ForEach(
+            enemy => enemies.Add(enemy)
+        );
+        return enemies;
     }
 }
