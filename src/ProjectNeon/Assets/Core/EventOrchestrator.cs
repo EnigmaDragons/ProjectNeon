@@ -7,9 +7,8 @@ public class EventOrchestrator : MonoBehaviour
     [SerializeField] private GameEvent OnStepsCompleted;
     [SerializeField] private List<GameEvent> RequiredEvents;
     
-    // Display
-    [SerializeField] private bool _isFinished = false;
-    [SerializeField] private List<GameEvent> _finishedEvents = new List<GameEvent>();
+    [ReadOnly] [SerializeField] private bool _isFinished = false;
+    [ReadOnly] [SerializeField] private List<GameEvent> _finishedEvents = new List<GameEvent>();
     
     void Awake()
     {

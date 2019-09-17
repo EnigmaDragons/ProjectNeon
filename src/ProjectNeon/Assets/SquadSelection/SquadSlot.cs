@@ -9,10 +9,7 @@ public class SquadSlot : MonoBehaviour
     [SerializeField] private CharacterPool characterPool;
     [SerializeField] private CharacterDisplayPresenter presenter;
     
-    // Display Only
-    
-    // @todo #65:15min Implement Readonly Inspector Attributes Maybe like this https://answers.unity.com/questions/489942/how-to-make-a-readonly-property-in-inspector.html
-    [SerializeField] private Character current;
+    [ReadOnly] [SerializeField] private Character current;
 
     private void Awake()
     {
