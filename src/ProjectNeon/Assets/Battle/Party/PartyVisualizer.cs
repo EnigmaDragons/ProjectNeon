@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PartyVisualizer : MonoBehaviour
 {
@@ -16,8 +15,8 @@ public class PartyVisualizer : MonoBehaviour
 
     void Start()
     {
-        character1.GetComponent<SpriteRenderer>().sprite = partyArea.party.characterOne.Bust;
-        character2.GetComponent<SpriteRenderer>().sprite = partyArea.party.characterTwo.Bust;
-        character3.GetComponent<SpriteRenderer>().sprite = partyArea.party.characterThree.Bust;
+        character1.GetComponent<Image>().sprite = partyArea.party.characterOne.Bust;
+        character2.GetComponent<Image>().sprite = partyArea.party.characterTwo.Bust;
+        character3.GetComponent<Image>().sprite = partyArea.party.characterThree.Bust;
     }
 }
