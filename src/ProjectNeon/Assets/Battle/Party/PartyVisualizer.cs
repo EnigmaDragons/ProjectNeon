@@ -1,22 +1,20 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class PartyVisualizer : MonoBehaviour
 {
-
-    [SerializeField] private PartyArea partyArea;
+    [SerializeField] private Party party;
     [SerializeField] private GameObject character1;
     [SerializeField] private GameObject character2;
     [SerializeField] private GameObject character3;
+    [SerializeField] private GameEvent onPartySetupFinished;
 
-    /**
-     * @todo #28:15min Render player characters in battle screen.
-     */
-
+    // @todo: #125:15min Dynamically create Characters from a Prototype, instead of fixed slots
+    
     void Start()
     {
-        character1.GetComponent<Image>().sprite = partyArea.party.characterOne.Bust;
-        character2.GetComponent<Image>().sprite = partyArea.party.characterTwo.Bust;
-        character3.GetComponent<Image>().sprite = partyArea.party.characterThree.Bust;
+        character1.GetComponent<SpriteRenderer>().sprite = party.characterOne.Bust;
+        character2.GetComponent<SpriteRenderer>().sprite = party.characterTwo.Bust;
+        character3.GetComponent<SpriteRenderer>().sprite = party.characterThree.Bust;
+        onPartySetupFinished.Publish();
     }
 }
