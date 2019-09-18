@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 /**
  * Generates an anemy encounter based on the difficulty set.
@@ -10,12 +12,16 @@
 
 public class EncounterBuilder : MonoBehaviour
 {
-    [SerializeField]
-    private List<Enemy> possible;
+    [SerializeField] private Enemy[] possible;
 
-    [SerializeField, Range(1, 10)]
-    private int difficulty;
+    [SerializeField, Range(1, 10)] private int difficulty;
 
+    public void Init(IEnumerable<Enemy> possibleEnemies, int newDifficulty)
+    {
+        possible = possibleEnemies.ToArray();
+        difficulty = newDifficulty;
+    }
+    
     public List<Enemy> Generate()
     {
         /**
@@ -32,11 +38,9 @@ public class EncounterBuilder : MonoBehaviour
         while (currentDifficulty < difficulty && enemies.Count < 7)
         {
             int maximum = difficulty - currentDifficulty;
-            Enemy nextEnemy = possible.FindAll(
+            var nextEnemy = possible.ToList().FindAll(
                 enemy => enemy.powerLevel <= maximum
-            ).ElementAt(
-                Random.Next(possible.Length)
-            );
+            ).Random();
             enemies.Add(nextEnemy);
             currentDifficulty = currentDifficulty + nextEnemy.powerLevel;
         }
