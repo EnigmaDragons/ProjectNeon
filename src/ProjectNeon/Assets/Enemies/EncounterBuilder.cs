@@ -12,14 +12,13 @@ using UnityEngine;
 
 public class EncounterBuilder : MonoBehaviour
 {
+    [SerializeField] private IntReference difficulty;
     [SerializeField] private Enemy[] possible;
-
-    [SerializeField, Range(1, 10)] private int difficulty;
 
     public void Init(IEnumerable<Enemy> possibleEnemies, int newDifficulty)
     {
         possible = possibleEnemies.ToArray();
-        difficulty = newDifficulty;
+        difficulty = new IntReference(newDifficulty);
     }
     
     public List<Enemy> Generate()
@@ -32,12 +31,12 @@ public class EncounterBuilder : MonoBehaviour
          *  enemies into the battle scene. BattleEnemiesSpawned  event must be triggered after they are added to
          *  the scene.
          */
-        int currentDifficulty = 0;
-        List<Enemy> enemies = new List<Enemy>();
+        var currentDifficulty = 0;
+        var enemies = new List<Enemy>();
 
         while (currentDifficulty < difficulty && enemies.Count < 7)
         {
-            int maximum = difficulty - currentDifficulty;
+            var maximum = difficulty - currentDifficulty;
             var nextEnemy = possible.ToList().FindAll(
                 enemy => enemy.powerLevel <= maximum
             ).Random();

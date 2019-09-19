@@ -13,6 +13,7 @@ public class GameEvent : ScriptableObject
         listeners.ForEach(l => l.OnEvent(l));
     }
 
+    public void Subscribe(Action action, object subscriber) => Subscribe(new GameEventSubscription(name, x => action(), subscriber));
     public void Subscribe(GameEventListener listener) => Subscribe(new GameEventSubscription(name, x => listener.OnEventRaised(), listener));
     public void Unsubscribe(GameEventListener listener) => Unsubscribe((object) listener);
 
