@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu()]
 public class Party : ScriptableObject
@@ -13,5 +11,7 @@ public class Party : ScriptableObject
 
     [SerializeField]
     public Character characterThree;
+
+    [SerializeField] private IntVariable totalPowerLevel;
 
 }

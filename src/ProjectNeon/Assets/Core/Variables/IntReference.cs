@@ -5,9 +5,9 @@ public class IntReference
 {
     public bool UseConstant = true;
     public int ConstantValue;
-    public IntVariable IntVariable;
+    public IntVariable Variable;
 
-    public int Value => UseConstant ? ConstantValue : IntVariable.Value;
+    public int Value => UseConstant ? ConstantValue : Variable.Value;
 
     public IntReference() { }
 

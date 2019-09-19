@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /**
  * Puts the enemy party into screen.
@@ -12,30 +10,21 @@ using UnityEngine;
  */
 public class EnemyVisualizer : MonoBehaviour
 {
-
     [SerializeField] private EnemyArea enemyArea;
-    [SerializeField] private List<GameObject> enemies;
+    [SerializeField] private GameObject enemyPrototype;
+    [SerializeField] private GameEvent onSetupFinished;
+    [SerializeField] private float rowHeight = 1.5f;
+    [SerializeField] private float widthBetweenEnemies = 1.5f; 
 
-    //enemy sprite default height
-    private int height = 200;
-
-    //enemy sprite default width
-    private int width = 100;
-
-    /**
-      * @todo #29:5min Wire enemy setup with correct events. Enemy setup on battle scene must be triggered
-      *  upon BattleSetupStarted event and broadcast BattleSetupEnemyPartyEntered event after enemy party
-      *  is ready.
-      */
-
-    void Start()
+    public void SetupEnemies()
     {
-        for (int i= 0; i < enemies.Count; i++)
+        for (var i= 0; i < enemyArea.enemies.Count; i++)
         {
-            GameObject enemy = enemies[i];
-            SpriteRenderer renderer = enemy.AddComponent<SpriteRenderer>();
-            renderer.sprite = enemyArea.enemies[i].image;
-            renderer.transform.position = new Vector3Int(i * width, (i % 2) * height, 0);
+            var enemy = Instantiate(enemyPrototype, transform);
+            var r = enemy.AddComponent<SpriteRenderer>();
+            r.sprite = enemyArea.enemies[i].image;
+            r.transform.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
         }
+        onSetupFinished.Publish();
     }
 }

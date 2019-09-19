@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2956178282122672818}
+  - component: {fileID: 3219375918161334657}
   - component: {fileID: 385469686191321178}
   m_Layer: 0
   m_Name: BattleSetup
@@ -33,6 +34,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3219375918161334657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9101337857457253886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9909e676fe54451ba298490b44a5385d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStepsCompleted: {fileID: 11400000, guid: cb35872cdfb402546bb1036ea2e637a5, type: 2}
+  RequiredEvents: []
+  _isFinished: 0
+  _finishedEvents: []
 --- !u!114 &385469686191321178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +212,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleEnemySetup
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4327990211393144517, guid: 572dca927ecc08847b4dad07c9f72e7a,
+        type: 3}
+      propertyPath: encounterBuilder
+      value: 
+      objectReference: {fileID: 3922927715355309994}
+    m_RemovedComponents:
+    - {fileID: 769716646490537199, guid: 572dca927ecc08847b4dad07c9f72e7a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 572dca927ecc08847b4dad07c9f72e7a, type: 3}
 --- !u!4 &901749350636958433 stripped
 Transform:
@@ -203,3 +226,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8144454666741432394}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3922927715355309994 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5149835004199368672, guid: 572dca927ecc08847b4dad07c9f72e7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8144454666741432394}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc2318b02e74cf248a1c5f7dbb21c222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

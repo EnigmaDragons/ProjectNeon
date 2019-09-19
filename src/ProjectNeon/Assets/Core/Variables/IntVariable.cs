@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[CreateAssetMenu]
 public sealed class IntVariable : ScriptableObject
 {
 #if UNITY_EDITOR
