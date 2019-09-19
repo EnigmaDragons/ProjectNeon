@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
 public class FloatVariable : ScriptableObject
 {
 #if UNITY_EDITOR
