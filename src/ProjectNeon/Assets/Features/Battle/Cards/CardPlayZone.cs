@@ -2,7 +2,6 @@
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu]
 public class CardPlayZone : ScriptableObject
 {
     public Card[] Cards;

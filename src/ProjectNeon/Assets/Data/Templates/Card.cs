@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu()]
 public class Card : ScriptableObject
 {
     public Sprite Art;
