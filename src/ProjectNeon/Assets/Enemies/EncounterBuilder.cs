@@ -26,11 +26,7 @@ public class EncounterBuilder : MonoBehaviour
         /**
          * @todo #52:30min Evolve Encounter Generation after playtesting. 
          */
-        /**
-         * @todo #52:15min After #29 merge, wire encounter builder restult with BattleSetup so we can use the generated
-         *  enemies into the battle scene. BattleEnemiesSpawned  event must be triggered after they are added to
-         *  the scene.
-         */
+
         var currentDifficulty = 0;
         var enemies = new List<Enemy>();
 
