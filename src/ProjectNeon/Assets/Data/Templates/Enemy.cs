@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu()]
 public class Enemy : ScriptableObject
 {
     [SerializeField]
     private string enemyName;
 
     [SerializeField]
-    private Deck deck;
+    private Card[] deck;
 
     [SerializeField]
     private TurnAI turn;

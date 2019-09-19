@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu()]
 public class CardEffect : ScriptableObject
 {
     [SerializeField] private EffectAction Effect;

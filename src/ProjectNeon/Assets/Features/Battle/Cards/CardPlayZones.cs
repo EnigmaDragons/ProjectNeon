@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
 public class CardPlayZones : ScriptableObject
 {
     public CardPlayZone DrawZone;
