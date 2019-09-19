@@ -1,6 +1,31 @@
 ﻿using UnityEngine;
 
-class ConfirmCardSelection : MonoBehaviour
+public class ConfirmCardSelection : MonoBehaviour
 {
-    // @todo #90:30min Visually confirm player selection when three card are chosen
+    [SerializeField] private CardPlayZone playArea;
+    [SerializeField] private GameEvent onConfirmation;
+    [SerializeField] private GameObject confirmUi;
+
+    private bool CanConfirm => playArea.Cards.Length == 3;
+
+    private void OnEnable()
+    {
+        playArea.OnZoneCardsChanged.Subscribe(UpdateUiElement, this);
+    }
+
+    private void OnDisable()
+    {
+        playArea.OnZoneCardsChanged.Unsubscribe(this);
+    }
+
+    private void UpdateUiElement()
+    {
+        confirmUi.SetActive(CanConfirm);
+    }
+
+    public void Confirm()
+    {
+        if (CanConfirm)
+            onConfirmation.Publish();
+    }
 }
