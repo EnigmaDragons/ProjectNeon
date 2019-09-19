@@ -8,7 +8,7 @@ public class PartyVisualizer : MonoBehaviour
     [SerializeField] private GameObject character3;
     [SerializeField] private GameEvent onPartySetupFinished;
 
-    // @todo: #125:15min Dynamically create Characters from a Prototype, instead of fixed slots
+    // @todo #125:15min Dynamically create Characters from a Prototype, instead of fixed slots
     
     void Start()
     {
