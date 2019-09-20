@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd660d71dbd74c20a35fd0c98c2cf8ba, type: 3}
   m_Name: PlayerDeck
   m_EditorClassIdentifier: 
-  Cards:
-  - {fileID: 0}
-  - {fileID: 0}
-  OnZoneCardsChanged: {fileID: 11400000, guid: 465a0c900ca3e574b836d7ae38db2326, type: 2}
+  maxCards:
+    UseConstant: 1
+    ConstantValue: 36
+    Variable: {fileID: 0}
+  cards:
+  - {fileID: 11400000, guid: 0f74e993cb1895042a2beaf558d5b531, type: 2}
+  - {fileID: 11400000, guid: 0f74e993cb1895042a2beaf558d5b531, type: 2}
+  onZoneCardsChanged: {fileID: 11400000, guid: 465a0c900ca3e574b836d7ae38db2326, type: 2}
