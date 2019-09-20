@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu()]
+// @todo #1:10min Is this really a state structure? Is this only used by Squad Selection? Consider the necessity of this class
 public sealed class CharacterPool : ScriptableObject
 {
     [SerializeField] private Character[] all;
     
-    [SerializeField]private Character[] selected;
+    [SerializeField] private Character[] selected;
 
     public IEnumerable<Character> AvailableCharacters => all.Except(selected).ToArray();
 
