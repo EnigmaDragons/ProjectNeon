@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class SquadSlot : MonoBehaviour
     private void Start()
     {
         if (characterPool.AvailableCharacters.None())
-            Debug.LogError("No Available Characters");
+            throw new InvalidOperationException("No Available Characters");
         SelectCharacter(defaultCharacter);
     }
     
