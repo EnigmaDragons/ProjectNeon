@@ -6,6 +6,15 @@ static class GameDataMenu
 {
     [MenuItem("Assets/Create/GameContent/Card")]
     static void Card() => Create<Card>();
+
+    //Effects menu
+    [MenuItem("Assets/Create/GameContent/Effects/Effect")]
+    static void Effect() => Create<Effect>();
+
+    [MenuItem("Assets/Create/GameContent/Effects/NoEffect")]
+    static void NoEffect() => Create<NoEffect>();
+
+
     [MenuItem("Assets/Create/GameContent/Character")]
     static void Character() => Create<Character>();
     [MenuItem("Assets/Create/GameContent/Enemy")]
@@ -15,10 +24,6 @@ static class GameDataMenu
     static void Stats() => Create<Stats>();
     [MenuItem("Assets/Create/GameContent/Deck")]
     static void Deck() => Create<Deck>();
-    [MenuItem("Assets/Create/GameContent/CardEffect")]
-    static void CardEffect() => Create<CardEffect>();
-    [MenuItem("Assets/Create/GameContent/EffectAction")]
-    static void EffectAction() => Create<EffectAction>();
     [MenuItem("Assets/Create/GameContent/EnemyAI")]
     static void TurnAI() => Create<TurnAI>();
 
