@@ -20,8 +20,8 @@ public class CardPlayZone : ScriptableObject
    {
         Cards = Array.Empty<Card>();
         OnZoneCardsChanged.Publish();
-   }
-
+    }
+    // @todo #133: 20min Rename methods to more clear names
     public Card Take(int index)
     {
         var card = Cards[index];

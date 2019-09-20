@@ -2,20 +2,20 @@
 
 public class ConfirmCardSelection : MonoBehaviour
 {
-    [SerializeField] private CardPlayZone playArea;
-    [SerializeField] private GameEvent onConfirmation;
+    [SerializeField] private CardPlayZones playZones;
     [SerializeField] private GameObject confirmUi;
+    public GameEvent onConfirmation;
 
-    private bool CanConfirm => playArea.Cards.Length == 3;
+    private bool CanConfirm => playZones.PlayZone.Cards.Length == 3;
 
     private void OnEnable()
     {
-        playArea.OnZoneCardsChanged.Subscribe(UpdateUiElement, this);
+        playZones.PlayZone.OnZoneCardsChanged.Subscribe(UpdateUiElement, this);
     }
 
     private void OnDisable()
     {
-        playArea.OnZoneCardsChanged.Unsubscribe(this);
+        playZones.PlayZone.OnZoneCardsChanged.Unsubscribe(this);
     }
 
     private void UpdateUiElement()
@@ -23,9 +23,14 @@ public class ConfirmCardSelection : MonoBehaviour
         confirmUi.SetActive(CanConfirm);
     }
 
+    // @todo #133: 50min Add resolution zone
     public void Confirm()
     {
         if (CanConfirm)
+        {
             onConfirmation.Publish();
+            confirmUi.SetActive(false);
+        }
+            
     }
 }
