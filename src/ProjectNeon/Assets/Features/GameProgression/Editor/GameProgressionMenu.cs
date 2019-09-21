@@ -4,11 +4,13 @@ using UnityEngine;
 
 public static class GameProgressionMenu
 {
-    [MenuItem("Assets/Create/GameContent/Stage")]
+    [MenuItem("Assets/Create/Adventure/Stage")]
     static void Stage() => Create<Stage>();
-    [MenuItem("Assets/Create/GameContent/FixedEncounter")]
+    [MenuItem("Assets/Create/Adventure/FixedEncounter")]
     static void FixedEncounter() => Create<SpecificEncounterSegment>();
-
+    [MenuItem("Assets/Create/Adventure/Adventure")]
+    static void Adventure() => Create<Adventure>();
+    
     private static void Create<T>() where T : ScriptableObject
     {
         var asset = ScriptableObject.CreateInstance<T>();
