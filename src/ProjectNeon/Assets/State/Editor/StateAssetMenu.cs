@@ -13,6 +13,8 @@ static class StateAssetMenu
     static void PartyDecks() => Create<PartyDecks>();
     [MenuItem("Assets/Create/Game State/Character Pool")]
     static void CharacterPool() => Create<CharacterPool>();
+    [MenuItem("Assets/Create/Game State/Adventure Progress")]
+    static void AdventureProgress() => Create<AdventureProgress>();
 
     private static void Create<T>() where T : ScriptableObject
     {
