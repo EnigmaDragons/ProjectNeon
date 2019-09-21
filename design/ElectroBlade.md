@@ -13,6 +13,7 @@ He's fun to play because of his feast-or-famine playstyle that comes from his co
 - Late-fight hypercarry
 - Anti-boss
  
+####All Cards can be played to generate 2 Energy.
 
 ###Electro effects can:
 - Temporarily enchant his blade

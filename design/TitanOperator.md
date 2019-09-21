@@ -6,6 +6,13 @@ The Titan has spinning blades. These blades have RPM. Some cards increase the RP
 This makes him very strong at the start of a fight.
 The fun is primarily in the deckbuilding aspect where even the best cards aren't always a good idea to add to the deck.
 
+
+Titan's Attack is affected by RPM(~ +.5% damage/RPM)
+Titan starts combat with 25 RPM. This is the baseline. Start of turn the RPM moves closer to the baseline by 1 + 1per10delta from baseline.
+
+Titan's Spell Power is affected by Heat(~+2%/heat)
+Titan starts combat with 2 Heat. He overheats when he has 10 heat.
+
 ###Role Descriptors:
 - Tanky
 - Early-fight focused
