@@ -45,4 +45,9 @@ public class Navigator : MonoBehaviour
     {
         SceneManager.LoadScene("ShopScene");
     }
+    
+    public void NavigateToRewardScene()
+    {
+        SceneManager.LoadScene("RewardScene");
+    }
 }
