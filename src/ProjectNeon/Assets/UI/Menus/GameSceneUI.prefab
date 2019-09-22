@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   adventure: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
   navigator: {fileID: 5188896434261062195}
+  nextText: {fileID: 5724702111800043388}
   next: {fileID: 0}
 --- !u!1001 &210059058509317146
 PrefabInstance:
@@ -609,16 +610,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5188896434261062195}
+      objectReference: {fileID: 4986413871947030710}
     - target: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: NavigateToBattleScene
+      value: StartNextStageSegment
       objectReference: {fileID: 0}
     - target: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 137997872680105394, guid: 15f8bed6dcdfe3944824f5a4606e82a9,
+        type: 3}
+      propertyPath: m_Name
+      value: NextText
       objectReference: {fileID: 0}
     - target: {fileID: 8417788295269649810, guid: 15f8bed6dcdfe3944824f5a4606e82a9,
         type: 3}
@@ -665,6 +671,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4297498266661563118}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5724702111800043388 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8417788295269649810, guid: 15f8bed6dcdfe3944824f5a4606e82a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4297498266661563118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8474970077071288154
 PrefabInstance:
   m_ObjectHideFlags: 0
