@@ -10,7 +10,9 @@ public static class GameProgressionMenu
     static void FixedEncounter() => Create<SpecificEncounterSegment>();
     [MenuItem("Assets/Create/Adventure/Adventure")]
     static void Adventure() => Create<Adventure>();
-    
+    [MenuItem("Assets/Create/Adventure/ShopSegment")]
+    static void ShoppingSegment() => Create<ShopSegment>();
+
     private static void Create<T>() where T : ScriptableObject
     {
         var asset = ScriptableObject.CreateInstance<T>();
