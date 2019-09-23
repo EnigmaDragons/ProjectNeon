@@ -10,6 +10,6 @@ public class Damage : Effect
     [SerializeField] private int quantity;
     public override void Apply(Target target)
     {
-        target.members.ForEach(member => member.hp -= this.quantity);
+        target.targets.ForEach(member => member.hp -= this.quantity);
     }
 }

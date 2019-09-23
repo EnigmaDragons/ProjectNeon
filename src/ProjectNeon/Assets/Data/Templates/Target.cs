@@ -7,5 +7,5 @@ using UnityEngine;
  */
 public abstract class Target : ScriptableObject {
 
-    [SerializeField] public List<Member> members;
+    [SerializeField] public List<Member> targets;
 }
