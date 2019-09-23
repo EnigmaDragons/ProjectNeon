@@ -9,15 +9,6 @@ public class Heal : Effect
 
     public override void Apply(Target target)
     {
-        if (target.GetType() == typeof(Member))
-        {
-            ((Member)target).hp += this.quantity;
-        }
-        else if (target.GetType() == typeof(Team))
-        {
-            ((Team)target).members.ForEach(
-                member => member.hp += this.quantity
-            );
-        }
+        target.members.ForEach(member => member.hp += this.quantity);
     }
 }

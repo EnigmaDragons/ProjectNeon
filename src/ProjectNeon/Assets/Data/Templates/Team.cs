@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class Team : Target
 {
-    [SerializeField] public List<Member> members;
 
 }

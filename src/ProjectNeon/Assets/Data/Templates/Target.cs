@@ -5,5 +5,7 @@ using UnityEngine;
 /**
  * A target for some effect in battlefield
  */
-public abstract class Target : ScriptableObject { 
+public abstract class Target : ScriptableObject {
+
+    [SerializeField] public List<Member> members;
 }
