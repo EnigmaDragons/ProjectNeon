@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu()]
 public class Party : ScriptableObject
 {
+    // @todo #1:10min change this to a dynamic size array
+
     [SerializeField]
     public Character characterOne;
 

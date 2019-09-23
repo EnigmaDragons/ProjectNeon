@@ -6,4 +6,5 @@ public class CardPlayZones : ScriptableObject
     public CardPlayZone HandZone;
     public CardPlayZone PlayZone;
     public CardPlayZone DiscardZone;
+    public CardPlayZone SelectionZone;
 }

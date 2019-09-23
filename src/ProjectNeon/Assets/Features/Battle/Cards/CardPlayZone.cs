@@ -1,49 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class CardPlayZone : ScriptableObject
 {
-    public Card[] Cards;
-    public GameEvent OnZoneCardsChanged;
+    [SerializeField] private IntReference maxCards = new IntReference(6);
+    [SerializeField] private Card[] cards;
+    [SerializeField] private GameEvent onZoneCardsChanged;
+
+    public int Count => cards.Length;
+    public Card[] Cards => cards.ToArray();
+    public GameEvent OnZoneCardsChanged => onZoneCardsChanged;
 
     public Card DrawOneCard()
     {
-        var newCard = Cards[0];
-        Cards = Cards.Skip(1).ToArray();
-        OnZoneCardsChanged.Publish();
+        var newCard = cards[0];
+        Mutate(c => c.Skip(1).ToArray());
         return newCard;
     }
 
-   public void Clear()
-   {
-        Cards = Array.Empty<Card>();
-        OnZoneCardsChanged.Publish();
-   }
-
     public Card Take(int index)
     {
-        var card = Cards[index];
-        Cards = Cards.Where((v, i) => i != index).ToArray();
-        OnZoneCardsChanged.Publish();
+        var card = cards[index];
+        Mutate(c => c.Where((v, i) => i != index));
         return card;
     }
 
-    public void PutOnTop(Card card)
-    {
-        Cards = card.Concat(Cards).ToArray();
-        OnZoneCardsChanged.Publish();
-    }
+    public void Clear() => Mutate(c => Array.Empty<Card>());
+    public void PutOnTop(Card card) => Mutate(c => card.Concat(c));
+    public void PutOnBottom(Card card) => Mutate(c => c.Concat(card));
+    public void Shuffle() => Mutate(c => c.OrderBy((a) => (int)Math.Round(UnityEngine.Random.value, 0)));
 
-    public void PutOnBottom(Card card)
+    public void Mutate(Func<Card[], IEnumerable<Card>> update)
     {
-        Cards = Cards.Concat(card).ToArray();
-        OnZoneCardsChanged.Publish();
-    }
-
-    public void Shuffle()
-    {
-        Cards = Cards.OrderBy((a) => (int)Math.Round(UnityEngine.Random.value, 0)).ToArray();
-        OnZoneCardsChanged.Publish();
+        if (cards == null)
+            cards = new Card[0];
+        var newVal = update(cards).ToArray();
+        if (newVal.Length > maxCards.Value)
+            throw new InvalidOperationException($"{name} can hold a Maximum of {maxCards.Value} Cards");
+        cards = newVal;
+        onZoneCardsChanged.Publish();
     }
 }
