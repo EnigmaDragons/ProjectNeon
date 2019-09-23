@@ -8,8 +8,11 @@ static class GameDataMenu
     static void Card() => Create<Card>();
 
     //Effects menu
-    [MenuItem("Assets/Create/GameContent/Effects/Effect")]
-    static void Effect() => Create<Effect>();
+    [MenuItem("Assets/Create/GameContent/Effects/Damage")]
+    static void Damage() => Create<Damage>();
+
+    [MenuItem("Assets/Create/GameContent/Effects/Heal")]
+    static void Heal() => Create<Heal>();
 
     [MenuItem("Assets/Create/GameContent/Effects/NoEffect")]
     static void NoEffect() => Create<NoEffect>();
