@@ -12,4 +12,9 @@ public class Member : Target
      * for this one so we can set up reactive bindings.
      */
 
+    public Deck GetDeck()
+    {
+        return deck;
+    }
+
 }

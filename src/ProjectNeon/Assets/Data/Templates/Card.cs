@@ -6,5 +6,7 @@ public class Card : ScriptableObject
     public Sprite Art;
     public string Description;
     public string TypeDescription;
-    public string[] actions;
+    public List<CardAction> actions;
+    public Scope scope;
+    public Group group;
 }
