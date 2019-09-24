@@ -23,7 +23,7 @@ public class DumbAI : TurnAI
 
     public override PlayedCard Play()
     {
-        Card chosen = me.GetDeck().GetCards().Random();
+        Card chosen = me.GetDeck().Cards.Random();
 
         Target target = me;
         List<Member> team = new List<Member>();
@@ -46,14 +46,14 @@ public class DumbAI : TurnAI
                 target = team.Random();
                 break;
             case Scope.All:
-                target = new Team(team);
+                target = new Team().Init(team);
                 break;
             case Scope.Self:
                 target = me;
                 break;
         }
 
-        return new PlayedCard(me, target, chosen);
+        return new PlayedCard().Init(me, target, chosen);
     }
 
 }
