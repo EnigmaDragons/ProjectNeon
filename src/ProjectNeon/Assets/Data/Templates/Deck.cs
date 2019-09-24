@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Deck : ScriptableObject
@@ -10,14 +11,10 @@ public class Deck : ScriptableObject
     {
     }
 
-    public List<Card> GetCards
+    public List<Card> Cards
     {
         get {
-            List<Card> ret = new List<Card>();
-            cards.ForEach(
-                card => ret.Add(card)
-              );
-            return ret;
+            return cards.ToList();
         }
     }
 
