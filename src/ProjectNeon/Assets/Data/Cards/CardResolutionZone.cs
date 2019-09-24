@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CardResolutionZone : ScriptableObject
 {
-    private List<PlayedCard> enemyMoves = new List<PlayedCard>();
+    private List<PlayedCard> moves = new List<PlayedCard>();
 
-    public void AddEnemyMove(PlayedCard played)
+    public void Add(PlayedCard played)
     {
-        enemyMoves.Add(played);
+        moves.Add(played);
     }
 }
