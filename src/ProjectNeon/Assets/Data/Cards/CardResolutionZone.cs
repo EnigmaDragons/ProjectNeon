@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CardResolutionZone : ScriptableObject
 {
+    [SerializeField]
     private List<PlayedCard> moves = new List<PlayedCard>();
 
     public void Add(PlayedCard played)
