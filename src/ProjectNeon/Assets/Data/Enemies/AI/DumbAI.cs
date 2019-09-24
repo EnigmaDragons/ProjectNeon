@@ -10,16 +10,18 @@ public class DumbAI : TurnAI
     private Member me;
 
     /**
-     * This AI allied members.
+     * The current BattleState.
      */
-    private List<Member> allies;
+    private BattleState battleState;
 
-    /**
-     * This AI enemy members.
-     */
-    private List<Member> enemies;
+    public DumbAI Init (Member ai, BattleState state)
+    {
+        this.me = ai;
+        this.battleState = state;
+        return this;
+    }
 
-    public override PlayedCard play()
+    public override PlayedCard Play()
     {
         Card chosen = me.GetDeck().GetCards().Random();
 
@@ -28,14 +30,14 @@ public class DumbAI : TurnAI
         switch (chosen.group)
         {
             case Group.Enemy:
-                team = enemies;
+                team = this.battleState.GetEnemies();
                 break;
             case Group.Ally:
-                team = allies;
+                team = this.battleState.GetAllies();
                 break;
             case Group.All:
-                team = allies;
-                team.AddRange(enemies);
+                team = this.battleState.GetAllies();
+                team.AddRange(this.battleState.GetEnemies());
                 break;
         }
         switch (chosen.scope)

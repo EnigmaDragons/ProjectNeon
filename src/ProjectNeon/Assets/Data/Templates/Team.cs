@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Team : Target
 {
-    public Team(List<Member> members)
+    public Team Init(List<Member> members)
     {
         this.targets = members;
+        return this;
     }
 }
