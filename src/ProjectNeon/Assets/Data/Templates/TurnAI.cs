@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TurnAI : ScriptableObject
+public abstract class TurnAI : ScriptableObject
 {
-
+    public abstract PlayedCard Play();
 }
