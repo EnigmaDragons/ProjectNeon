@@ -23,8 +23,10 @@ static class GameDataMenu
     [MenuItem("Assets/Create/GameContent/Enemy")]
     static void Enemy() => Create<Enemy>();
 
-    [MenuItem("Assets/Create/GameContent/Stats")]
-    static void Stats() => Create<Stats>();
+    [MenuItem("Assets/Create/GameContent/BaseStats")]
+    static void BaseStats() => Create<BaseStats>();
+    [MenuItem("Assets/Create/GameContent/SimpleResourceType")]
+    static void SimpleResourceType() => Create<SimpleResourceType>();
     [MenuItem("Assets/Create/GameContent/Deck")]
     static void Deck() => Create<Deck>();
     [MenuItem("Assets/Create/GameContent/EnemyAI")]
