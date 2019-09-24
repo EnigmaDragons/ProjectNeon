@@ -2,6 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/**
+ * @todo #190:15min Improve Event Orchestrator documentation. Code is not unsderstandabe by itself, and creating new
+ *  EventOrchestrator instances are difficult becase we have to debug the code to guess what each field does.
+ */
 public class EventOrchestrator : MonoBehaviour
 {
     [SerializeField] private GameEvent OnStepsCompleted;
