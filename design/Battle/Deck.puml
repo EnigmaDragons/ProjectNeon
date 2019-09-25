@@ -1,0 +1,24 @@
+@startuml
+
+class Deck
+class Card
+class CardAction
+class Effect
+enum Scope {
+One,
+All,
+Self
+}
+enum Group {
+Enemy,
+Ally,
+All
+}
+
+CardAction "1" o-- Group
+Deck "1" o-- "1..*" Card
+Card "1..*" o-- "0..*" CardAction
+CardAction "1..*" o-- "1..*" Effect
+CardAction "1" o-- Scope
+
+@enduml

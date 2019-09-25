@@ -1,0 +1,16 @@
+@startuml
+
+!include Team.puml
+hide Character
+hide Stats
+hide TurnAI
+
+abstract class Target
+
+Team "1" o-- "0..*" Target
+Target <|-- Team
+Target <|-- Member
+
+Target : void apply(Effect effect)
+
+@enduml

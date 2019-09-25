@@ -1,0 +1,24 @@
+@startuml
+title "Neo Punches Agent Smith for 10 damage"
+
+object "__First Move__ : Move" as Move
+object "Neo : Member" as Member
+object "Punch Single : Card" as Card
+object "Agent Smith : Member" as Target
+
+Move o-- "1" Member :  performer >
+Move o-- "0..*" Card : played card >
+Move o-- Target : affected targets >
+
+object "Damage Single Enemy : CardAction" as CardAction
+CardAction : scope = One
+CardAction : group = Enemy
+
+object "Damage : Effect" as Effect
+Effect : int quantity = 10;
+
+Card  o--  CardAction
+CardAction  o--  Effect
+
+
+@enduml

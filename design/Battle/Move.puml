@@ -1,0 +1,32 @@
+@startuml
+
+!include Team.puml
+!include Deck.puml
+!include Targeting.puml
+
+show Character
+show Stats
+show TurnAI
+hide Deck
+hide CardAction
+hide Effect
+hide Scope
+hide Group
+hide Hero
+hide Enemy
+hide Character
+hide TurnAI
+hide Stats
+hide Team
+
+class Move
+
+Move o-- "1" Member :  performer >
+Move o-- "0..*" Card : played card >
+Move o-- Target : affected targets >
+Move <-- Member : creates / performs
+
+Member : void : perform(BattleState battle)
+
+
+@enduml

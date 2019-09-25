@@ -1,0 +1,19 @@
+@startuml
+
+abstract class Member
+class Team
+class Hero
+class Enemy
+class Character
+class TurnAI
+class Stats
+
+Member <|.. Hero
+Member <|.. Enemy
+Enemy "1..*" o-- "1" TurnAI
+Member "1" o-- "1" Character
+
+Character "1..*" o-- "1" Stats
+Team "1" o-- "1..*" Member
+
+@enduml
