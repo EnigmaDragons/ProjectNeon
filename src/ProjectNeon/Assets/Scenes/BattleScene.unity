@@ -153,6 +153,7 @@ MonoBehaviour:
   resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
   onEnemyTurnsConfirmed: {fileID: 11400000, guid: 1975ba5369676894cb9d408f15c2d8e4,
     type: 2}
+  battle: {fileID: 0}
 --- !u!114 &419769022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,6 +265,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: []
+--- !u!1 &1361886042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1361886044}
+  - component: {fileID: 1361886043}
+  m_Layer: 0
+  m_Name: Resolution
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1361886043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361886042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9909e676fe54451ba298490b44a5385d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStepsCompleted: {fileID: 0}
+  RequiredEvents:
+  - {fileID: 11400000, guid: 1975ba5369676894cb9d408f15c2d8e4, type: 2}
+  - {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536, type: 2}
+  _isFinished: 0
+  _finishedEvents: []
+--- !u!4 &1361886044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361886042}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.80496556, y: 0.39207432, z: -151.65125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1428028583
 GameObject:
   m_ObjectHideFlags: 0
