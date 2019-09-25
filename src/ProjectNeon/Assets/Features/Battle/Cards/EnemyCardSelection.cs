@@ -8,17 +8,10 @@ public class EnemyCardSelection : MonoBehaviour
     [SerializeField] private GameEvent onEnemyTurnsConfirmed;
     [SerializeField] private BattleState battle;
 
-
-    private List<Enemy> enemies = new List<Enemy>();
-    /**
-     * @todo #190:30min Refactor the relation Member - Enemy. At the moment we can't extract
-     *  enemies from BattleState object because they are all wrapped in Member instances.
-     */
-
     void ChooseCards()
     {
-        enemies.ForEach(
-            enemy => resolutionZone.Add(enemy.turn.Play())
+        this.battle.GetEnemies().ForEach(
+            enemy => resolutionZone.Add(enemy.Player.Play())
         );
         onEnemyTurnsConfirmed.Publish();
     }

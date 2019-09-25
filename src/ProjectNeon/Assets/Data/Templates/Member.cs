@@ -7,6 +7,7 @@ public class Member : Target
     [SerializeField] private Character character;
     [SerializeField] private Deck deck;
     [SerializeField] public int hp;
+    [SerializeField] private TurnAI player = new NoAI();
 
     /**
      * @todo #55:30min This constructor does not provide values to all class members. Create a default value for
@@ -21,6 +22,10 @@ public class Member : Target
     public Deck GetDeck()
     {
         return deck;
+    }
+
+    public TurnAI Player {
+        get { return this.player;  }
     }
 
     // @todo #54:30min hp property should not be accessed and mutated by other classes. Create accessors for this one so we can set up reactive bindings.
