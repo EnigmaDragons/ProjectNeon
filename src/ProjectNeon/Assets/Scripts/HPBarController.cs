@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HPBarController : MonoBehaviour
 {
-    #region Parametrs
     [SerializeField] Image barImage;
-    [SerializeField] Text barTextValue;
+    [SerializeField] TMP_Text barTextValue;
 
     int maxHP = 100;
 
-    public int currentHP { get; private set; }
+    public int CurrentHP { get; private set; }
     public int MaxHP
     {
         set
@@ -22,36 +22,25 @@ public class HPBarController : MonoBehaviour
             return maxHP;
         }
     }
-
-    public delegate void Death();
-    public event Death OnDeath;
-    #endregion
-    #region Unity methods
     private void Start()
     {
-        currentHP = maxHP;
+        CurrentHP = maxHP;
         UpdateUI();
     }
-    #endregion
-    #region Public methods
-    public void UpdateMaxHP(int _maxHP)
+    public void ChangeMaxHP(int _maxHP)
     {
         maxHP += _maxHP;
         UpdateUI();
     }
     public void ChangeHP(int value)
     {
-        currentHP += value;
+        CurrentHP += value;
         CorectHPValue();
         UpdateUI();
-        CheckDeath();
     }
-    #endregion
-    #region Private methods
     void CorectHPValue()
     {
-        if (currentHP < 0) currentHP = 0;
-        if (currentHP > maxHP) currentHP = maxHP;
+        Mathf.Clamp(CurrentHP, 0, maxHP);
     }
     void UpdateUI()
     {
@@ -60,16 +49,10 @@ public class HPBarController : MonoBehaviour
     }
     void ChangeImage()
     {
-        barImage.fillAmount = currentHP * 1f / maxHP * 1f;
+        barImage.fillAmount = CurrentHP * 1f / maxHP * 1f;
     }
     void ChangeText()
     {
-        barTextValue.text = $"{currentHP}/{maxHP}";
+        barTextValue.text = $"{CurrentHP}/{maxHP}";
     }
-    void CheckDeath()
-    {
-        if (currentHP != 0) return;
-        if (OnDeath != null) OnDeath.Invoke();
-    }
-    #endregion
 }
