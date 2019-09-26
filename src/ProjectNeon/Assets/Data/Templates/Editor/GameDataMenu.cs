@@ -29,8 +29,8 @@ static class GameDataMenu
     static void SimpleResourceType() => Create<SimpleResourceType>();
     [MenuItem("Assets/Create/GameContent/Deck")]
     static void Deck() => Create<Deck>();
-    [MenuItem("Assets/Create/GameContent/EnemyAI")]
-    static void TurnAI() => Create<TurnAI>();
+    [MenuItem("Assets/Create/GameContent/DumbAI")]
+    static void DumbAI() => Create<DumbAI>();
 
     private static void Create<T>() where T : ScriptableObject
     {

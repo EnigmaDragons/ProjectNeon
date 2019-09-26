@@ -1,12 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Member : Target
 {
     // @todo #1:30min We have a circular reference between Member and Target. Evolve the architecture;
 
+    [SerializeField] private TeamType team;
     [SerializeField] private Character character;
     [SerializeField] private Deck deck;
     [SerializeField] public int hp;
+    // @todo #54:30min hp property should not be accessed and mutated by other classes. Create accessors for this one so we can set up reactive bindings.
+    
+    public TeamType TeamType => team;
+    public Member[] Members => this.AsArray();
 
     /**
      * @todo #55:30min This constructor does not provide values to all class members. Create a default value for
@@ -23,5 +29,4 @@ public class Member : Target
         return deck;
     }
 
-    // @todo #54:30min hp property should not be accessed and mutated by other classes. Create accessors for this one so we can set up reactive bindings.
 }

@@ -8,7 +8,7 @@ public class SetupEnemies : MonoBehaviour
     
     void Start()
     {
-        enemyArea.enemies = encounterBuilder.Generate();
+        enemyArea.Init(encounterBuilder.Generate());
         onEncounterGenerated.Publish();
     }
 }
