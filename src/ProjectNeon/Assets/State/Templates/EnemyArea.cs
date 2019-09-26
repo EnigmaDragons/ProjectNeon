@@ -7,6 +7,10 @@ public class EnemyArea : ScriptableObject
     [SerializeField] private Enemy[] enemies;
 
     public Enemy[] Enemies => enemies.ToArray();
-    
-    public void Init(IEnumerable<Enemy> newEnemies) => enemies = newEnemies.ToArray();
+
+    public EnemyArea Initialized(IEnumerable<Enemy> newEnemies)
+    {
+        enemies = newEnemies.ToArray();
+        return this;
+    }
 }

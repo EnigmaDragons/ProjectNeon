@@ -1,7 +1,8 @@
 ﻿
 public enum Group
 {
-    Enemy,
+    Self,
+    Opponent,
     Ally,
     All
 }
