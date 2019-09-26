@@ -11,6 +11,7 @@ public class SetupPlayerCards : MonoBehaviour
     private CardPlayZone Discard => playerCardPlayZones.DiscardZone;
     private CardPlayZone Play => playerCardPlayZones.PlayZone;
     private CardPlayZone Deck => playerCardPlayZones.DrawZone;
+    private CardPlayZone Selection => playerCardPlayZones.SelectionZone;
 
     void Awake()
     {
@@ -18,6 +19,7 @@ public class SetupPlayerCards : MonoBehaviour
         Discard.Clear();
         Play.Clear();
         Deck.Clear();
+        Selection.Clear();
         for (var i = 0; i < 8; i++)
             Deck.PutOnBottom(debugDefaultCard);
     }

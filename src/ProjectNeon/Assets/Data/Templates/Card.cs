@@ -14,6 +14,8 @@ public class Card : ScriptableObject
     public string Description => description;
     public string TypeDescription => typeDescription;
     public CardAction[] Actions => actions.ToArray();
+    
+    // @todo #1:15min Remove TargetScope and Group. Update PlayedCard to take Targets for each Card Action. Update AI to choose targets for each Action
     public Scope TargetScope => targetScope;
     public Group TargetGroup => targetGroup;
 }

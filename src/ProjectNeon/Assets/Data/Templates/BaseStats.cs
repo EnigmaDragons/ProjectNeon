@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using UnityEngine;
 
 public sealed class BaseStats : Stats
@@ -11,11 +11,11 @@ public sealed class BaseStats : Stats
     [SerializeField] private float resistance;
     [SerializeField] private ResourceType[] resourceTypes;
 
-    public override int MaxHP => throw new NotImplementedException();
-    public override int MaxShield => throw new NotImplementedException();
-    public override int Attack => throw new NotImplementedException();
-    public override int Magic => throw new NotImplementedException();
-    public override float Armor => throw new NotImplementedException();
-    public override float Resistance => throw new NotImplementedException();
-    public override IResourceType[] ResourceTypes => throw new NotImplementedException();
+    public override int MaxHP => maxHP;
+    public override int MaxShield => maxShield;
+    public override int Attack => attack;
+    public override int Magic => magic;
+    public override float Armor => armor;
+    public override float Resistance => resistance;
+    public override IResourceType[] ResourceTypes => resourceTypes.Cast<IResourceType>().ToArray();
 }

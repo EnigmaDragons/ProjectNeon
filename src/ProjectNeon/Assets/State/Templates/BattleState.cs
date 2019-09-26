@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Features.Battle;
 using UnityEngine;
 
 public class BattleState : ScriptableObject
@@ -18,15 +19,15 @@ public class BattleState : ScriptableObject
          */
         return new []
         {
-            new Member().Init(party.characterOne), 
-            new Member().Init(party.characterTwo), 
-            new Member().Init(party.characterThree)
+            new Member(TeamType.Party, party.characterOne.Stats),
+            new Member(TeamType.Party, party.characterTwo.Stats),
+            new Member(TeamType.Party, party.characterThree.Stats)
         };
     }
 
     public Member[] GetEnemies()
     {
-        return enemies.Enemies.Select(x => new Member()).ToArray();
+        return enemies.Enemies.Select(x => x.AsMember()).ToArray();
     }
 
     private Member[] Get(TeamType team)
@@ -40,7 +41,7 @@ public class BattleState : ScriptableObject
 
     public Target[] GetPossibleEnemyTeamTargets(Member self, Group group, Scope scope) 
         => scope == Scope.Self 
-            ? new Target[] { self } 
+            ? new Target[] { new MemberAsTarget(self) } 
             : NonSelfTargetsFor(TeamType.Enemies, @group, scope);
 
     public Target[] GetPossiblePlayerTargets(Group group, Scope scope)
@@ -54,7 +55,7 @@ public class BattleState : ScriptableObject
     {
         var opponentsAre = myTeam == TeamType.Party ? TeamType.Enemies : TeamType.Party;
         var teamMembers = group == Group.Ally ? Get(myTeam) : Get(opponentsAre);
-        var membersAsTargets = teamMembers.Cast<Target>().ToArray();
+        var membersAsTargets = teamMembers.Select(x => new MemberAsTarget(x)).ToArray();
         
         return scope == Scope.One 
             ? Targets(membersAsTargets) 
