@@ -14,7 +14,7 @@ public sealed class DumbAI : TurnAI
     {
         var me = activeEnemy.AsMember();
         var card = activeEnemy.Deck.Cards.Random();
-        var possibleTargets = battleState.GetPossibleEnemyTeamTargets(me, card.TargetGroup, card.TargetScope);
+        var possibleTargets = battleState.GetPossibleEnemyTeamTargets(me, card.Actions[0].Group, card.Actions[0].Scope);
         var target = possibleTargets.Random();
         
         return new PlayedCard().Init(me, target, card);
