@@ -47,6 +47,9 @@ class SelectCardTargets : MonoBehaviour
         uiView.SetActive(true);
 
         var possibleTargets = battleState.GetPossiblePlayerTargets(_selectedCard.Actions[0].Group, _selectedCard.Actions[0].Scope);
+        // @todo #207:30min Repeat target selection for all card actions. Currently we re just sorting possible targets for the first
+        //  CardAction, but we need select target for all actions after the first one.
+
         // @todo #1:15min Needs to know who Self is, if this is a Hero card.
         
         // @todo #1:30min Create UI Indicator that can indicate possible selections

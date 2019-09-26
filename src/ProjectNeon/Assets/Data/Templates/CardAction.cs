@@ -15,14 +15,7 @@ public class CardAction : ScriptableObject
         );
     }
 
-    public Scope Scope
-    {
-        get { return targetScope; }
-    }
+    public Scope Scope => targetScope;
 
-    public Group Group
-    {
-        get { return targetGroup; }
-    }
-
+    public Group Group => targetGroup;
 }
