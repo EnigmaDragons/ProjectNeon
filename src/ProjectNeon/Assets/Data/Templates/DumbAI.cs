@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public sealed class DumbAI : TurnAI
 {
@@ -14,10 +15,17 @@ public sealed class DumbAI : TurnAI
     {
         var me = activeEnemy.AsMember();
         var card = activeEnemy.Deck.Cards.Random();
-        var possibleTargets = battleState.GetPossibleEnemyTeamTargets(me, card.TargetGroup, card.TargetScope);
-        var target = possibleTargets.Random();
+        List<Target> targets = new List<Target>();
+        card.Actions.ForEach(
+            action =>
+            {
+                Target[] possibleTargets = battleState.GetPossibleEnemyTeamTargets(me, action.Group, action.Scope);
+                Target target = possibleTargets.Random();
+                targets.Add(target);
+            }
+        );
         
-        return new PlayedCard().Init(me, target, card);
+        return new PlayedCard().Init(me, targets.ToArray(), card)
     }
 
 }

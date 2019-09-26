@@ -14,4 +14,8 @@ public class CardAction : ScriptableObject
             effect => effect.Apply(target)
         );
     }
+
+    public Scope Scope => targetScope;
+
+    public Group Group => targetGroup;
 }
