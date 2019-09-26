@@ -9,6 +9,7 @@ class SelectCardTargets : MonoBehaviour
     [SerializeField] private GameEvent onTargetSelectionFinished;
     [SerializeField] private GameObject uiView;
     [SerializeField] private CardPresenter cardPresenter;
+    [SerializeField] private BattleState battleState;
 
     [ReadOnly] [SerializeField] private Card _selectedCard;
 
@@ -45,7 +46,9 @@ class SelectCardTargets : MonoBehaviour
         cardPresenter.Set(_selectedCard, () => { });
         uiView.SetActive(true);
 
-        // @todo #1:30min Get Possible Targets,as per Card Scope
+        var possibleTargets = battleState.GetPossiblePlayerTargets(_selectedCard.TargetGroup, _selectedCard.TargetScope);
+        // @todo #1:15min Needs to know who Self is, if this is a Hero card.
+        
         // @todo #1:30min Create UI Indicator that can indicate possible selections
     }
 

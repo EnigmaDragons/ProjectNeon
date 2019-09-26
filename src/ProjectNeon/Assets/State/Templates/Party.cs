@@ -15,4 +15,11 @@ public class Party : ScriptableObject
 
     [SerializeField] private IntVariable totalPowerLevel;
 
+    public Party Initialized(Character one, Character two, Character three)
+    {
+        characterOne = one;
+        characterTwo = two;
+        characterThree = three;
+        return this;
+    }
 }

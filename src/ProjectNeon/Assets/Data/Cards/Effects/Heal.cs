@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 public class Heal : Effect
 {
@@ -9,6 +6,6 @@ public class Heal : Effect
 
     public override void Apply(Target target)
     {
-        target.targets.ForEach(member => member.hp += this.quantity);
+        target.Members.ForEach(member => member.hp += this.quantity);
     }
 }

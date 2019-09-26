@@ -18,11 +18,12 @@ public class EnemyVisualizer : MonoBehaviour
 
     public void SetupEnemies()
     {
-        for (var i= 0; i < enemyArea.enemies.Count; i++)
+        var enemies = enemyArea.Enemies;
+        for (var i= 0; i < enemies.Length; i++)
         {
             var enemy = Instantiate(enemyPrototype, transform);
             var r = enemy.AddComponent<SpriteRenderer>();
-            r.sprite = enemyArea.enemies[i].image;
+            r.sprite = enemies[i].Image;
             r.transform.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
         }
         onSetupFinished.Publish();

@@ -34,10 +34,10 @@ public class EncounterBuilder : MonoBehaviour
         {
             var maximum = difficulty - currentDifficulty;
             var nextEnemy = possible.ToList().FindAll(
-                enemy => enemy.powerLevel <= maximum
+                enemy => enemy.PowerLevel <= maximum
             ).Random();
             enemies.Add(nextEnemy);
-            currentDifficulty = currentDifficulty + nextEnemy.powerLevel;
+            currentDifficulty = currentDifficulty + nextEnemy.PowerLevel;
         }
         return enemies;
     }

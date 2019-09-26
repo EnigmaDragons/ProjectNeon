@@ -18,6 +18,9 @@ static class GameDataMenu
     static void NoEffect() => Create<NoEffect>();
 
 
+    [MenuItem("Assets/Create/GameContent/CardAction")]
+    static void CardAction() => Create<CardAction>();
+    
     [MenuItem("Assets/Create/GameContent/Character")]
     static void Character() => Create<Character>();
     [MenuItem("Assets/Create/GameContent/Enemy")]
@@ -29,8 +32,8 @@ static class GameDataMenu
     static void SimpleResourceType() => Create<SimpleResourceType>();
     [MenuItem("Assets/Create/GameContent/Deck")]
     static void Deck() => Create<Deck>();
-    [MenuItem("Assets/Create/GameContent/EnemyAI")]
-    static void TurnAI() => Create<TurnAI>();
+    [MenuItem("Assets/Create/GameContent/DumbAI")]
+    static void DumbAI() => Create<DumbAI>();
 
     private static void Create<T>() where T : ScriptableObject
     {
