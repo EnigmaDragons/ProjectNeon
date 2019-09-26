@@ -2,6 +2,8 @@
 
 public static class BattleStateTargetingExtensions
 {
+    // @todo #1:30min Needs to handle Group All scenarios.
+
     public static Member[] GetPartyMembers(this BattleState state)
     {
         return new[]

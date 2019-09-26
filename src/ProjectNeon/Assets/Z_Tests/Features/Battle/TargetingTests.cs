@@ -46,7 +46,7 @@ public class TargetingTests
         Assert.AreEqual(me, targets[0].Members[0]);
     }
 
-    [Ignore]
+    [Ignore("Assertion not Finished")]
     [Test]
     public void PossibleTargets_EnemyOneOpponent_TargetsEachPartyMember()
     {
