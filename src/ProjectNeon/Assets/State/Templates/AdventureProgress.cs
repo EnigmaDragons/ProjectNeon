@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 class AdventureProgress : ScriptableObject
 {
@@ -17,6 +18,10 @@ class AdventureProgress : ScriptableObject
     public void Reset()
     {
         currentStageIndex = -1;
+        if (currentAdventure.Stages.Length < 1)
+        {
+            Console.WriteLine("The adventure must have a least one stage!");
+        }
     }
 
     public StageSegment Advance()
@@ -34,6 +39,9 @@ class AdventureProgress : ScriptableObject
         {
             currentStageIndex++;
             currentStageSegmentIndex = -1;
+        } else
+        {
+            Console.WriteLine("Can't advance: is final stage");
         } 
     }
 }
