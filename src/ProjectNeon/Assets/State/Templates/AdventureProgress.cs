@@ -14,8 +14,6 @@ class AdventureProgress : ScriptableObject
     private bool HasBegun => currentStageIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
 
-    // @todo #1:30min Adventure should be initialized when a game is started from the TitleScreen. Never Advance past the end of the adventure. All Adventure must have at least 1 stage.
-
     public void Reset()
     {
         currentStageIndex = -1;
@@ -32,7 +30,10 @@ class AdventureProgress : ScriptableObject
 
     private void AdvanceStage()
     {
-        currentStageIndex++;
-        currentStageSegmentIndex = -1;
+        if (!IsFinalStage)
+        {
+            currentStageIndex++;
+            currentStageSegmentIndex = -1;
+        } 
     }
 }

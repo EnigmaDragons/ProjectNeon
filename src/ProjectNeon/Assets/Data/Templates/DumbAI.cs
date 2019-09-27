@@ -24,8 +24,8 @@ public sealed class DumbAI : TurnAI
                 targets.Add(target);
             }
         );
-        
-        return new PlayedCard().Init(me, targets.ToArray(), card)
+
+        return new PlayedCard().Init(me, targets.ToArray(), card);
     }
 
 }
