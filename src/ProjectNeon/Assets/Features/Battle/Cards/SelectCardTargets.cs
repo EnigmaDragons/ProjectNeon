@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 class SelectCardTargets : MonoBehaviour
 {
@@ -43,15 +44,21 @@ class SelectCardTargets : MonoBehaviour
 
         onTargetSelectionStarted.Publish();
         _selectedCard = selectedCardZone.Cards[0];
+        var cardPerformer = _selectedCard.LimitedToHero;
+        if (!cardPerformer.IsPresent)
+        {
+            Debug.Log("Card is not playable by Heroes", _selectedCard);
+            return;
+        }
+
         cardPresenter.Set(_selectedCard, () => { });
         uiView.SetActive(true);
 
-        var possibleTargets = battleState.GetPossiblePlayerTargets(_selectedCard.Actions[0].Group, _selectedCard.Actions[0].Scope);
+        var hero = battleState.GetPartyMembers().Single(x => x.Name.Equals(cardPerformer.Value));
+        var possibleTargets = battleState.GetPossibleTargets(hero, _selectedCard.Actions[0].Group, _selectedCard.Actions[0].Scope);
         // @todo #207:30min Repeat target selection for all card actions. Currently we re just sorting possible targets for the first
         //  CardAction, but we need select target for all actions after the first one.
-
-        // @todo #1:15min Needs to know who Self is, if this is a Hero card.
-        
+                
         // @todo #1:30min Create UI Indicator that can indicate possible selections
     }
 

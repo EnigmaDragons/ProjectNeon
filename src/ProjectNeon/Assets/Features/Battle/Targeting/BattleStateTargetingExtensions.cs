@@ -8,9 +8,9 @@ public static class BattleStateTargetingExtensions
     {
         return new[]
         {
-            new Member(TeamType.Party, state.Party.characterOne.Stats),
-            new Member(TeamType.Party, state.Party.characterTwo.Stats),
-            new Member(TeamType.Party, state.Party.characterThree.Stats)
+            new Member(state.Party.characterOne.name, TeamType.Party, state.Party.characterOne.Stats),
+            new Member(state.Party.characterTwo.name, TeamType.Party, state.Party.characterTwo.Stats),
+            new Member(state.Party.characterThree.name, TeamType.Party, state.Party.characterThree.Stats)
         };
     }
 
@@ -28,17 +28,10 @@ public static class BattleStateTargetingExtensions
         return new Member[0];
     }
 
-    public static Target[] GetPossibleEnemyTeamTargets(this BattleState state, Member self, Group group, Scope scope)
+    public static Target[] GetPossibleTargets(this BattleState state, Member self, Group group, Scope scope)
         => group == Group.Self
             ? new Target[] { new MemberAsTarget(self) }
-            : NonSelfTargetsFor(state, TeamType.Enemies, group, scope);
-
-    public static Target[] GetPossiblePlayerTargets(this BattleState state, Group group, Scope scope)
-    {
-        if (group == Group.Self)
-            return new Target[0]; // Puzzle exists in SelectCardTargets.cs
-        return NonSelfTargetsFor(state, TeamType.Party, group, scope);
-    }
+            : NonSelfTargetsFor(state, self.TeamType, group, scope);
 
     private static Target[] NonSelfTargetsFor(this BattleState state, TeamType myTeam, Group group, Scope scope)
     {
