@@ -19,7 +19,7 @@ public sealed class DumbAI : TurnAI
         card.Actions.ForEach(
             action =>
             {
-                Target[] possibleTargets = battleState.GetPossibleEnemyTeamTargets(me, action.Group, action.Scope);
+                Target[] possibleTargets = battleState.GetPossibleTargets(me, action.Group, action.Scope);
                 Target target = possibleTargets.Random();
                 targets.Add(target);
             }
