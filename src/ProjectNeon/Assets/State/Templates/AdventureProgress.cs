@@ -20,7 +20,7 @@ class AdventureProgress : ScriptableObject
         currentStageIndex = -1;
         if (currentAdventure.Stages.Length < 1)
         {
-            Console.WriteLine("The adventure must have a least one stage!");
+            Debug.Log("The adventure must have a least one stage!");
         }
     }
 
@@ -41,7 +41,7 @@ class AdventureProgress : ScriptableObject
             currentStageSegmentIndex = -1;
         } else
         {
-            Console.WriteLine("Can't advance: is final stage");
+            Debug.Log("Can't advance: is final stage");
         } 
     }
 }
