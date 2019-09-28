@@ -7,8 +7,8 @@ public class TargetingTests
     [Test]
     public void PossibleTargets_EnemyOneSelf_TargetsOnlySelf()
     {
-        var anyCharacter = TestableObjectFactory.Create<Character>();
-        var party = TestableObjectFactory.Create<Party>().Initialized(anyCharacter, anyCharacter, anyCharacter);
+        var anyHero = TestableObjectFactory.Create<Hero>();
+        var party = TestableObjectFactory.Create<Party>().Initialized(anyHero, anyHero, anyHero);
 
         var anyEnemy = TestableObjectFactory.Create<Enemy>();
         var baseStats = TestableObjectFactory.Create<BaseStats>();
@@ -28,8 +28,8 @@ public class TargetingTests
     [Test]
     public void PossibleTargets_EnemyAllSelf_TargetsOnlySelf()
     {
-        var anyCharacter = TestableObjectFactory.Create<Character>();
-        var party = TestableObjectFactory.Create<Party>().Initialized(anyCharacter, anyCharacter, anyCharacter);
+        var anyHero = TestableObjectFactory.Create<Hero>();
+        var party = TestableObjectFactory.Create<Party>().Initialized(anyHero, anyHero, anyHero);
 
         var anyEnemy = TestableObjectFactory.Create<Enemy>();
         var baseStats = TestableObjectFactory.Create<BaseStats>();
@@ -52,13 +52,13 @@ public class TargetingTests
     {
         var baseStats = TestableObjectFactory.Create<BaseStats>();
 
-        var anyCharacter1 = TestableObjectFactory.Create<Character>();
-        anyCharacter1.Stats = baseStats;
-        var anyCharacter2 = TestableObjectFactory.Create<Character>();
-        anyCharacter2.Stats = baseStats;
-        var anyCharacter3 = TestableObjectFactory.Create<Character>();
-        anyCharacter3.Stats = baseStats;
-        var party = TestableObjectFactory.Create<Party>().Initialized(anyCharacter1, anyCharacter2, anyCharacter3);
+        var anyHero1 = TestableObjectFactory.Create<Hero>();
+        anyHero1.Stats = baseStats;
+        var anyHero2 = TestableObjectFactory.Create<Hero>();
+        anyHero2.Stats = baseStats;
+        var anyHero3 = TestableObjectFactory.Create<Hero>();
+        anyHero3.Stats = baseStats;
+        var party = TestableObjectFactory.Create<Party>().Initialized(anyHero1, anyHero2, anyHero3);
 
         var anyEnemy = TestableObjectFactory.Create<Enemy>();
         var prop = anyEnemy.GetType().GetField("stats", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -71,6 +71,6 @@ public class TargetingTests
         var targets = battleState.GetPossibleEnemyTeamTargets(me, Group.Opponent, Scope.One);
 
         Assert.AreEqual(3, targets.Count());
-        CollectionAssert.AreEquivalent(new[] { anyCharacter1, anyCharacter2, anyCharacter3 }, targets.SelectMany(t => t.Members));
+        CollectionAssert.AreEquivalent(new[] { anyHero1, anyHero2, anyHero3 }, targets.SelectMany(t => t.Members));
     }
 }

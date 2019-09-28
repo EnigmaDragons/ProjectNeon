@@ -8,9 +8,9 @@ public static class BattleStateTargetingExtensions
     {
         return new[]
         {
-            new Member(TeamType.Party, state.Party.characterOne.Stats),
-            new Member(TeamType.Party, state.Party.characterTwo.Stats),
-            new Member(TeamType.Party, state.Party.characterThree.Stats)
+            new Member(TeamType.Party, state.Party.heroOne.Stats),
+            new Member(TeamType.Party, state.Party.heroTwo.Stats),
+            new Member(TeamType.Party, state.Party.heroThree.Stats)
         };
     }
 
