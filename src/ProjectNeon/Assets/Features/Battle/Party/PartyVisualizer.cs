@@ -15,6 +15,7 @@ public class PartyVisualizer : MonoBehaviour
         hero1.GetComponent<SpriteRenderer>().sprite = party.heroOne.Bust;
         hero2.GetComponent<SpriteRenderer>().sprite = party.heroTwo.Bust;
         hero3.GetComponent<SpriteRenderer>().sprite = party.heroThree.Bust;
+        partyArea.WithUiPositions(new[] { character1.transform, character2.transform, character3.transform });
         onPartySetupFinished.Publish();
     }
 }
