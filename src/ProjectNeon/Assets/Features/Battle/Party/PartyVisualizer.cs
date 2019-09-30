@@ -2,7 +2,7 @@
 
 public class PartyVisualizer : MonoBehaviour
 {
-    [SerializeField] private Party party;
+    [SerializeField] private PartyArea partyArea;
     [SerializeField] private GameObject hero1;
     [SerializeField] private GameObject hero2;
     [SerializeField] private GameObject hero3;
@@ -12,10 +12,11 @@ public class PartyVisualizer : MonoBehaviour
     
     void Start()
     {
+        var party = partyArea.Party;
         hero1.GetComponent<SpriteRenderer>().sprite = party.heroOne.Bust;
         hero2.GetComponent<SpriteRenderer>().sprite = party.heroTwo.Bust;
         hero3.GetComponent<SpriteRenderer>().sprite = party.heroThree.Bust;
-        partyArea.WithUiPositions(new[] { character1.transform, character2.transform, character3.transform });
+        partyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform });
         onPartySetupFinished.Publish();
     }
 }
