@@ -55,7 +55,21 @@ class SelectCardTargets : MonoBehaviour
         cardPresenter.Set(_selectedCard, () => { });
         uiView.SetActive(true);
 
-        var hero = battleState.Members.Values.Single(x => x.Name.Equals(cardPerformer.Value));
+        var hero = battleState.Members.Values.SingleOrDefault(x => x.Name.Equals(cardPerformer.Value));
+        if (hero == null)
+        {
+            Debug.Log($"Could not find Party Member named {cardPerformer.Value}");
+            return;
+        }
+
+        var actions = _selectedCard.Actions;
+        if (actions.Length == 0)
+        {
+            Debug.Log($"Card {_selectedCard.name} has no Card Actions");
+            OnTargetConfirmed();
+            return;
+        }
+
         var possibleTargets = battleState.GetPossibleTargets(hero, _selectedCard.Actions[0].Group, _selectedCard.Actions[0].Scope);
         // @todo #207:30min Repeat target selection for all card actions. Currently we re just sorting possible targets for the first
         //  CardAction, but we need select target for all actions after the first one.

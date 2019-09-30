@@ -15,12 +15,22 @@ public class EventOrchestrator : MonoBehaviour
         RequiredEvents.ForEach(e => e.Subscribe(new GameEventSubscription(e.name, x => ProcessEvent(e), this)));
     }
 
+    void Start()
+    {
+        CheckForFinished();
+    }
+
     void ProcessEvent(GameEvent e)
     {
         if (_isFinished)
             return;
         
         _finishedEvents = _finishedEvents.Concat(e).Distinct().ToList();
+        CheckForFinished();
+    }
+
+    void CheckForFinished()
+    {
         if (RequiredEvents.Except(_finishedEvents).None())
         {
             _isFinished = true;
