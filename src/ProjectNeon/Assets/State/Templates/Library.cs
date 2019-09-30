@@ -2,8 +2,8 @@
 
 public class Library : ScriptableObject
 {
-    [SerializeField] private Character[] unlockedCharacters;
+    [SerializeField] private Hero[] unlockedHeroes;
     [SerializeField] private Card[] unlockedCards;
 
-    public Character[] UnlockedCharacters => unlockedCharacters;    
+    public Hero[] UnlockedHeroes => unlockedHeroes;
 }

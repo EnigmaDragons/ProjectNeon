@@ -5,21 +5,21 @@ public class Party : ScriptableObject
     // @todo #1:10min change this to a dynamic size array
 
     [SerializeField]
-    public Character characterOne;
+    public Hero heroOne;
 
     [SerializeField]
-    public Character characterTwo;
+    public Hero heroTwo;
 
     [SerializeField]
-    public Character characterThree;
+    public Hero heroThree;
 
     [SerializeField] private IntVariable totalPowerLevel;
 
-    public Party Initialized(Character one, Character two, Character three)
+    public Party Initialized(Hero one, Hero two, Hero three)
     {
-        characterOne = one;
-        characterTwo = two;
-        characterThree = three;
+        heroOne = one;
+        heroTwo = two;
+        heroThree = three;
         return this;
     }
 }

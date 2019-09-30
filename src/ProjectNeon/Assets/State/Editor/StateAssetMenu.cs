@@ -13,8 +13,8 @@ static class StateAssetMenu
     static void Party() => Create<Party>();
     [MenuItem("Assets/Create/Game State/Party Decks")]
     static void PartyDecks() => Create<PartyDecks>();
-    [MenuItem("Assets/Create/Game State/Character Pool")]
-    static void CharacterPool() => Create<CharacterPool>();
+    [MenuItem("Assets/Create/Game State/Hero Pool")]
+    static void HeroPool() => Create<HeroPool>();
     [MenuItem("Assets/Create/Game State/Adventure Progress")]
     static void AdventureProgress() => Create<AdventureProgress>();
 

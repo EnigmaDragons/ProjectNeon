@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /**
- * Represents a played card from enemy or player character.
+ * Represents a played card from enemy or hero.
  */
  
 public class PlayedCard : MonoBehaviour

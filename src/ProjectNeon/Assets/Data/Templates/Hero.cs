@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Character : ScriptableObject
+public class Hero : ScriptableObject
 {
     public Sprite Bust;
     public Stats Stats;
