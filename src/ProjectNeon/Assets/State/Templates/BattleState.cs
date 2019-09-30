@@ -54,4 +54,5 @@ public class BattleState : ScriptableObject
     }
     
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
+    public Vector3 GetPosition(int memberId) => _uiTransformsById[memberId].position;
 }
