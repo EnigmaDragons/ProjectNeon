@@ -21,7 +21,7 @@ public class BattleState : ScriptableObject
         return Init();
     }
 
-    // @todo: #1:10min Initialize this as the last step in Battle Setup
+    // @todo #1:10min Initialize this as the last step in Battle Setup
     public BattleState Init()
     {
         var id = 1;      
