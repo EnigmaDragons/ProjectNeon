@@ -19,13 +19,18 @@ public class EnemyVisualizer : MonoBehaviour
     public void SetupEnemies()
     {
         var enemies = enemyArea.Enemies;
+        var positions = new Transform[enemies.Length];
         for (var i= 0; i < enemies.Length; i++)
         {
             var enemy = Instantiate(enemyPrototype, transform);
             var r = enemy.AddComponent<SpriteRenderer>();
             r.sprite = enemies[i].Image;
-            r.transform.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
+            var t= r.transform;
+            t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
+            positions[i] = t;
         }
+
+        enemyArea.WithUiTransforms(positions);
         onSetupFinished.Publish();
     }
 }

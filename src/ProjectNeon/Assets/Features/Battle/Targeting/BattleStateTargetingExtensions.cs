@@ -3,29 +3,9 @@
 public static class BattleStateTargetingExtensions
 {
     // @todo #1:30min Needs to handle Group All scenarios.
-
-    public static Member[] GetPartyMembers(this BattleState state)
-    {
-        return new[]
-        {
-            new Member(state.Party.characterOne.name, TeamType.Party, state.Party.characterOne.Stats),
-            new Member(state.Party.characterTwo.name, TeamType.Party, state.Party.characterTwo.Stats),
-            new Member(state.Party.characterThree.name, TeamType.Party, state.Party.characterThree.Stats)
-        };
-    }
-
-    public static Member[] GetEnemyMembers(this BattleState state)
-    {
-        return state.EnemyArea.Enemies.Select(x => x.AsMember()).ToArray();
-    }
-
     private static Member[] Get(this BattleState state, TeamType team)
     {
-        if (team == TeamType.Party)
-            return state.GetPartyMembers();
-        if (team == TeamType.Enemies)
-            return state.GetEnemyMembers();
-        return new Member[0];
+        return state.Members.Values.Where(x => x.TeamType == team).ToArray();
     }
 
     public static Target[] GetPossibleTargets(this BattleState state, Member self, Group group, Scope scope)
