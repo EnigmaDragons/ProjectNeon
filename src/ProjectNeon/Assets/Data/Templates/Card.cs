@@ -6,7 +6,7 @@ public class Card : ScriptableObject
     [SerializeField] private Sprite art;
     [SerializeField] private string description;
     [SerializeField] private string typeDescription;
-    // @todo: #1:15min Limit this by Class. Create StringVariable for all classes to reduce fragility
+    // @todo #1:15min Limit this by Class. Create StringVariable for all classes to reduce fragility
     [SerializeField] private string onlyPlayableByHeroName;
     [SerializeField] private CardAction[] actions;
 
