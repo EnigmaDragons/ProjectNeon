@@ -18,8 +18,8 @@ public class TargetingTests
         var enemyArea = TestableObjectFactory.Create<EnemyArea>().Initialized(anyEnemy.AsArray());
         var battleState = TestableObjectFactory.Create<BattleState>().Initialized(party, enemyArea);
 
-        var me = anyEnemy.AsMember();
-        var targets = battleState.GetPossibleEnemyTeamTargets(me, Group.Self, Scope.One);
+        var me = anyEnemy.AsMember(1);
+        var targets = battleState.GetPossibleTargets(me, Group.Self, Scope.One);
 
         Assert.AreEqual(1, targets.Count());
         Assert.AreEqual(me, targets[0].Members[0]);
@@ -39,8 +39,8 @@ public class TargetingTests
         var enemyArea = TestableObjectFactory.Create<EnemyArea>().Initialized(anyEnemy.AsArray());
         var battleState = TestableObjectFactory.Create<BattleState>().Initialized(party, enemyArea);
 
-        var me = anyEnemy.AsMember();
-        var targets = battleState.GetPossibleEnemyTeamTargets(me, Group.Self, Scope.All);
+        var me = anyEnemy.AsMember(1);
+        var targets = battleState.GetPossibleTargets(me, Group.Self, Scope.All);
 
         Assert.AreEqual(1, targets.Count());
         Assert.AreEqual(me, targets[0].Members[0]);
@@ -67,8 +67,8 @@ public class TargetingTests
         var enemyArea = TestableObjectFactory.Create<EnemyArea>().Initialized(anyEnemy.AsArray());
         var battleState = TestableObjectFactory.Create<BattleState>().Initialized(party, enemyArea);
 
-        var me = anyEnemy.AsMember();
-        var targets = battleState.GetPossibleEnemyTeamTargets(me, Group.Opponent, Scope.One);
+        var me = anyEnemy.AsMember(1);
+        var targets = battleState.GetPossibleTargets(me, Group.Opponent, Scope.One);
 
         Assert.AreEqual(3, targets.Count());
         CollectionAssert.AreEquivalent(new[] { anyHero1, anyHero2, anyHero3 }, targets.SelectMany(t => t.Members));

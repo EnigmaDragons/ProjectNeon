@@ -7,6 +7,8 @@ static class StateAssetMenu
     static void Library() => Create<Library>();
     [MenuItem("Assets/Create/Game State/Battle State")]
     static void BattleState() => Create<BattleState>();
+    [MenuItem("Assets/Create/Game State/Battle Player Targeting State")]
+    static void BattlePlayerTargetingState() => Create<BattlePlayerTargetingState>();
     [MenuItem("Assets/Create/Game State/Party")]
     static void Party() => Create<Party>();
     [MenuItem("Assets/Create/Game State/Party Decks")]

@@ -21,24 +21,13 @@ public static class BattleStateTargetingExtensions
 
     private static Member[] Get(this BattleState state, TeamType team)
     {
-        if (team == TeamType.Party)
-            return state.GetPartyMembers();
-        if (team == TeamType.Enemies)
-            return state.GetEnemyMembers();
-        return new Member[0];
+        return state.Members.Values.Where(x => x.TeamType == team).ToArray();
     }
 
-    public static Target[] GetPossibleEnemyTeamTargets(this BattleState state, Member self, Group group, Scope scope)
+    public static Target[] GetPossibleTargets(this BattleState state, Member self, Group group, Scope scope)
         => group == Group.Self
             ? new Target[] { new MemberAsTarget(self) }
-            : NonSelfTargetsFor(state, TeamType.Enemies, group, scope);
-
-    public static Target[] GetPossiblePlayerTargets(this BattleState state, Group group, Scope scope)
-    {
-        if (group == Group.Self)
-            return new Target[0]; // Puzzle exists in SelectCardTargets.cs
-        return NonSelfTargetsFor(state, TeamType.Party, group, scope);
-    }
+            : NonSelfTargetsFor(state, self.TeamType, group, scope);
 
     private static Target[] NonSelfTargetsFor(this BattleState state, TeamType myTeam, Group group, Scope scope)
     {

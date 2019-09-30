@@ -11,15 +11,16 @@ public sealed class DumbAI : TurnAI
         return this;
     }
 
-    public override PlayedCard Play(Enemy activeEnemy)
+    public override PlayedCard Play(int memberId)
     {
-        var me = activeEnemy.AsMember();
-        var card = activeEnemy.Deck.Cards.Random();
+        var enemy = battleState.GetEnemyById(memberId);
+        var me = battleState.Members[memberId];
+        var card = enemy.Deck.Cards.Random();
         List<Target> targets = new List<Target>();
         card.Actions.ForEach(
             action =>
             {
-                Target[] possibleTargets = battleState.GetPossibleEnemyTeamTargets(me, action.Group, action.Scope);
+                Target[] possibleTargets = battleState.GetPossibleTargets(me, action.Group, action.Scope);
                 Target target = possibleTargets.Random();
                 targets.Add(target);
             }
