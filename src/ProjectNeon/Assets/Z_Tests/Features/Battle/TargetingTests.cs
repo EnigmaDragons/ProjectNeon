@@ -18,7 +18,7 @@ public class TargetingTests
         var enemyArea = TestableObjectFactory.Create<EnemyArea>().Initialized(anyEnemy.AsArray());
         var battleState = TestableObjectFactory.Create<BattleState>().Initialized(party, enemyArea);
 
-        var me = anyEnemy.AsMember();
+        var me = anyEnemy.AsMember(1);
         var targets = battleState.GetPossibleTargets(me, Group.Self, Scope.One);
 
         Assert.AreEqual(1, targets.Count());
@@ -39,7 +39,7 @@ public class TargetingTests
         var enemyArea = TestableObjectFactory.Create<EnemyArea>().Initialized(anyEnemy.AsArray());
         var battleState = TestableObjectFactory.Create<BattleState>().Initialized(party, enemyArea);
 
-        var me = anyEnemy.AsMember();
+        var me = anyEnemy.AsMember(1);
         var targets = battleState.GetPossibleTargets(me, Group.Self, Scope.All);
 
         Assert.AreEqual(1, targets.Count());
@@ -67,7 +67,7 @@ public class TargetingTests
         var enemyArea = TestableObjectFactory.Create<EnemyArea>().Initialized(anyEnemy.AsArray());
         var battleState = TestableObjectFactory.Create<BattleState>().Initialized(party, enemyArea);
 
-        var me = anyEnemy.AsMember();
+        var me = anyEnemy.AsMember(1);
         var targets = battleState.GetPossibleTargets(me, Group.Opponent, Scope.One);
 
         Assert.AreEqual(3, targets.Count());

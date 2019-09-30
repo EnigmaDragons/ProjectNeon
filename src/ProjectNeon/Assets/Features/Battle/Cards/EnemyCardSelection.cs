@@ -1,17 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class EnemyCardSelection : MonoBehaviour
 {
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private GameEvent onEnemyTurnsConfirmed;
     [SerializeField] private BattleState battle;
-    [SerializeField] private EnemyArea enemyArea;
  
     void ChooseCards()
     {
-        enemyArea.Enemies.ForEach(
-            enemy => resolutionZone.Add(enemy.AI.Play(enemy))
-        );
+        battle.Members.Where(x => x.Value.TeamType == TeamType.Enemies)
+            .ForEach(e => resolutionZone.Add(battle.GetEnemyById(e.Key).AI.Play(e.Key)));
         onEnemyTurnsConfirmed.Publish();
     }
 }
