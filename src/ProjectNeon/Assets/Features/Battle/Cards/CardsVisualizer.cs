@@ -5,8 +5,6 @@ public class CardsVisualizer : MonoBehaviour
 {
     [SerializeField] private CardPlayZone zone;
     [SerializeField] private CardPlayZone onCardClickDestination;
-    [SerializeField] private float minX = 200;
-    [SerializeField] private float maxX = 1920 - 200;
     [SerializeField] private float cardSpacingScreenPercent = 0.15f;
     [SerializeField] private CardPresenter cardPrototype;
 
@@ -41,16 +39,16 @@ public class CardsVisualizer : MonoBehaviour
     
     // @todo #30:30min Animate these cards entrances. Should slide in from right of screen
 
-    // @todo #30:15min Space card out from the center, instead of from Left of Zone, and add a little tilt, based on card index.
-
     private void CreateCurrentCards(Card[] cards)
     {
         var newShownCards = new GameObject[cards.Length];
+        var totalSpaceNeeded = Screen.width * (cardSpacingScreenPercent * cards.Length);
+        var startX = (Screen.width - totalSpaceNeeded) / 2f;
         for (var i = 0; i < cards.Length; i++)
         {
             var cardIndex = i;
             var c = Instantiate(cardPrototype, 
-                new Vector3(minX + cardSpacingScreenPercent * Screen.width * i, transform.position.y, transform.position.z), 
+                new Vector3(startX + cardSpacingScreenPercent * (i + 0.5f) * Screen.width, transform.position.y, transform.position.z), 
                 cardPrototype.transform.rotation, 
                 gameObject.transform);
             c.Set(cards[cardIndex], () => SelectCard(cardIndex));
