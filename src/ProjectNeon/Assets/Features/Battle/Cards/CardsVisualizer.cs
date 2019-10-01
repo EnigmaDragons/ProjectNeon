@@ -11,6 +11,8 @@ public class CardsVisualizer : MonoBehaviour
     [ReadOnly] [SerializeField] private GameObject[] _shownCards = new GameObject[0];
     private bool _isDirty = false;
 
+    public GameObject[] ShownCards => _shownCards;
+
     void Awake()
     {
         zone.OnZoneCardsChanged.Subscribe(
