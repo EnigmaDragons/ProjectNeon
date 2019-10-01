@@ -45,7 +45,7 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id] = partyArea.UiPositions[i];
         }
         
-        _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, TeamType.Party, h.Value.Stats))
+        _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, h.Value.ClassName.Value, TeamType.Party, h.Value.Stats))
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
 

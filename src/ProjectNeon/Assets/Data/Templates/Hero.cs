@@ -2,7 +2,11 @@
 
 public class Hero : ScriptableObject
 {
-    public Sprite Bust;
-    public Stats Stats;
-    public string ClassName;
+    [SerializeField] private Sprite bust;
+    [SerializeField] private Stats stats;
+    [SerializeField] private StringVariable className;
+
+    public Sprite Bust => bust;
+    public Stats Stats => stats;
+    public StringVariable ClassName => className;
 }

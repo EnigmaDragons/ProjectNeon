@@ -19,6 +19,6 @@ public class HeroDisplayPresenter : MonoBehaviour
     {
         heroBust.sprite = c.Bust;
         heroName.text = c.name;
-        heroClassName.text = c.ClassName;
+        heroClassName.text = c.ClassName.Value;
     }
 }
