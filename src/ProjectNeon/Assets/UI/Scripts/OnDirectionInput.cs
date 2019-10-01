@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class OnDirectionInput : MonoBehaviour
 {
+    [ReadOnly, SerializeField] private bool isActive;
     [SerializeField] private GameEvent activateOn;
     [SerializeField] private GameEvent deactivateOn;
     [SerializeField] private UnityEvent onLeft;
@@ -11,14 +12,14 @@ public class OnDirectionInput : MonoBehaviour
     [SerializeField] private UnityEvent onUp;
     [SerializeField] private UnityEvent onDown;
 
-    private bool _isActive;
     private float _lastHDir = 0;
     private float _lastVDir = 0;
     
     private void OnEnable()
     {
-        activateOn.Subscribe(() => _isActive = true, this);
-        deactivateOn.Subscribe(() => _isActive = false, this);
+        isActive = false;
+        activateOn.Subscribe(() => isActive = true, this);
+        deactivateOn.Subscribe(() => isActive = false, this);
     }
 
     private void OnDisable()
@@ -29,7 +30,7 @@ public class OnDirectionInput : MonoBehaviour
 
     void Update()
     {
-        if (!_isActive)
+        if (!isActive)
             return;
 
         var hDir = Input.GetAxisRaw("Horizontal");

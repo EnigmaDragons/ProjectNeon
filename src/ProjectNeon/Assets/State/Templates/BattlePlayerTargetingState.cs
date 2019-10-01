@@ -1,39 +1,31 @@
-using System;
 using UnityEngine;
 
 public sealed class BattlePlayerTargetingState : ScriptableObject
 {
-    [SerializeField, ReadOnly] private int currentTarget;
-    [SerializeField, ReadOnly] private int numTargets;
     [SerializeField] private GameEvent onTargetChanged;
 
-    private Target[] _possibleTargets;
+    private IndexSelector<Target> _selector;
     
     public GameEvent OnTargetChanged => onTargetChanged;
 
     public BattlePlayerTargetingState WithPossibleTargets(Target[] targets)
     {
-        _possibleTargets = targets;
-        numTargets = targets.Length;
-        currentTarget = 0;
+        _selector = new IndexSelector<Target>(targets);
         OnTargetChanged.Publish();
         return this;
     }
 
-    public Target Current => _possibleTargets[currentTarget];
+    public Target Current => _selector.Current;
     
     public void MoveNext()
     {
-        currentTarget = (currentTarget + 1) % numTargets;
+        _selector.MoveNext();
         OnTargetChanged.Publish();
     }
 
     public void MovePrevious()
     {
-        var next = (currentTarget - 1) % numTargets;
-        if (next < 0)
-            next = numTargets - 1;
-        currentTarget = next;
+        _selector.MovePrevious();
         OnTargetChanged.Publish();
     }
 }
