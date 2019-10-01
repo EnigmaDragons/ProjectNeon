@@ -17,6 +17,8 @@ static class StateAssetMenu
     static void HeroPool() => Create<HeroPool>();
     [MenuItem("Assets/Create/Game State/Adventure Progress")]
     static void AdventureProgress() => Create<AdventureProgress>();
+    [MenuItem("Assets/Create/Game State/Deck State")]
+    static void DeckBuilderState() => Create<DeckBuilderState>();
 
     private static void Create<T>() where T : ScriptableObject
     {

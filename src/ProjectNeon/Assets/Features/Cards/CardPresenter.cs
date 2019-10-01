@@ -19,7 +19,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     {
         _onClick = onClick;
         _card = card;
-        name.text = _card.name.WithSpaceBetweenWords();
+        name.text = _card.ToString();
         description.text = _card.Description;
         type.text = _card.TypeDescription;
         art.sprite = _card.Art;
