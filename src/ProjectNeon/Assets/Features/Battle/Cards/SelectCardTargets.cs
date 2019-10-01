@@ -14,15 +14,23 @@ class SelectCardTargets : MonoBehaviour
     [SerializeField] private BattlePlayerTargetingState targetingState;
 
     [ReadOnly] [SerializeField] private Card _selectedCard;
-
+    private bool _isReadyForSelection;
+    
     private void Update()
     {
         if (_selectedCard == null) return;
+        if (!_isReadyForSelection)
+        {
+            _isReadyForSelection = true;
+            return;
+        }
 
-        if (Input.GetButton("Submit"))
+        // @todo #1:15min Replace this with OnConfirmOrCancel script
+        
+        if (Input.GetButtonDown("Submit"))
             OnTargetConfirmed();
 
-        if (Input.GetButton("Cancel"))
+        if (Input.GetButtonDown("Cancel"))
             OnCancelled();
     }
 
@@ -45,6 +53,7 @@ class SelectCardTargets : MonoBehaviour
 
         onTargetSelectionStarted.Publish();
         _selectedCard = selectedCardZone.Cards[0];
+        _isReadyForSelection = false;
         var cardClass = _selectedCard.LimitedToClass;
         if (!cardClass.IsPresent)
         {

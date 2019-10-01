@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class CardsVisualizer : MonoBehaviour
@@ -10,10 +11,13 @@ public class CardsVisualizer : MonoBehaviour
 
     [ReadOnly] [SerializeField] private GameObject[] _shownCards = new GameObject[0];
     private bool _isDirty = false;
+    private Action _onShownCardsChanged = () => { };
 
     public GameObject[] ShownCards => _shownCards;
 
-    void Awake()
+    public void SetOnShownCardsChanged(Action action) => _onShownCardsChanged = action;
+    
+    void OnEnable()
     {
         zone.OnZoneCardsChanged.Subscribe(
             new GameEventSubscription(zone.OnZoneCardsChanged.name, x => _isDirty = true, this));
@@ -37,6 +41,7 @@ public class CardsVisualizer : MonoBehaviour
     {
         KillPreviousCards();
         CreateCurrentCards(zone.Cards.ToArray());
+        _onShownCardsChanged();
     }
     
     // @todo #30:30min Animate these cards entrances. Should slide in from right of screen
@@ -65,7 +70,7 @@ public class CardsVisualizer : MonoBehaviour
         shown.ForEach(x => DestroyImmediate(x));
     }
 
-    void SelectCard(int cardIndex)
+    public void SelectCard(int cardIndex)
     {
         onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
     }
