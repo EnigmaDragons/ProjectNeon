@@ -10,6 +10,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private Image art;
+    [SerializeField] private GameObject highlight;
 
     private Card _card;
     private Action _onClick;
@@ -27,5 +28,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         _onClick();
+    }
+
+    public void SetHighlight(bool active)
+    {
+        highlight.SetActive(active);
     }
 }

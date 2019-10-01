@@ -3,6 +3,7 @@
 public static class BattleStateTargetingExtensions
 {
     // @todo #1:30min Needs to handle Group All scenarios.
+
     private static Member[] Get(this BattleState state, TeamType team)
     {
         return state.Members.Values.Where(x => x.TeamType == team).ToArray();

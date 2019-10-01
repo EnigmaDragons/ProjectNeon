@@ -12,7 +12,7 @@ public class BattleState : ScriptableObject
     public EnemyArea EnemyArea => enemies;
     public IReadOnlyDictionary<int, Member> Members => _membersById;
     private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
-    private Dictionary<int, Character> _heroesById = new Dictionary<int, Character>();
+    private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
 
@@ -26,7 +26,7 @@ public class BattleState : ScriptableObject
     public BattleState Init()
     {
         var id = 1;      
-        var heroes = new[] {Party.characterOne, Party.characterTwo, Party.characterThree};
+        var heroes = new[] {Party.heroOne, Party.heroTwo, Party.heroThree};
         
         _uiTransformsById = new Dictionary<int, Transform>();
         _enemiesById = new Dictionary<int, Enemy>();
@@ -37,7 +37,7 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
         }
         
-        _heroesById = new Dictionary<int, Character>();
+        _heroesById = new Dictionary<int, Hero>();
         for (var i = 0; i < 3; i++)
         {
             id++;
@@ -45,7 +45,7 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id] = partyArea.UiPositions[i];
         }
         
-        _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, TeamType.Party, h.Value.Stats))
+        _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, h.Value.ClassName.Value, TeamType.Party, h.Value.Stats))
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
 

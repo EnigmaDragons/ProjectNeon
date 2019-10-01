@@ -14,15 +14,23 @@ class SelectCardTargets : MonoBehaviour
     [SerializeField] private BattlePlayerTargetingState targetingState;
 
     [ReadOnly] [SerializeField] private Card _selectedCard;
-
+    private bool _isReadyForSelection;
+    
     private void Update()
     {
         if (_selectedCard == null) return;
+        if (!_isReadyForSelection)
+        {
+            _isReadyForSelection = true;
+            return;
+        }
 
-        if (Input.GetButton("Submit"))
+        // @todo #1:15min Replace this with OnConfirmOrCancel script
+        
+        if (Input.GetButtonDown("Submit"))
             OnTargetConfirmed();
 
-        if (Input.GetButton("Cancel"))
+        if (Input.GetButtonDown("Cancel"))
             OnCancelled();
     }
 
@@ -45,8 +53,9 @@ class SelectCardTargets : MonoBehaviour
 
         onTargetSelectionStarted.Publish();
         _selectedCard = selectedCardZone.Cards[0];
-        var cardPerformer = _selectedCard.LimitedToHero;
-        if (!cardPerformer.IsPresent)
+        _isReadyForSelection = false;
+        var cardClass = _selectedCard.LimitedToClass;
+        if (!cardClass.IsPresent)
         {
             Debug.Log("Card is not playable by Heroes", _selectedCard);
             return;
@@ -55,10 +64,10 @@ class SelectCardTargets : MonoBehaviour
         cardPresenter.Set(_selectedCard, () => { });
         uiView.SetActive(true);
 
-        var hero = battleState.Members.Values.SingleOrDefault(x => x.Name.Equals(cardPerformer.Value));
+        var hero = battleState.Members.Values.SingleOrDefault(x => x.Class.Equals(cardClass.Value));
         if (hero == null)
         {
-            Debug.Log($"Could not find Party Member named {cardPerformer.Value}");
+            Debug.Log($"Could not find Party Member named {cardClass.Value}");
             return;
         }
 
