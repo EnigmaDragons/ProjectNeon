@@ -16,17 +16,17 @@ public sealed class DumbAI : TurnAI
         var enemy = battleState.GetEnemyById(memberId);
         var me = battleState.Members[memberId];
         var card = enemy.Deck.Cards.Random();
-        List<Target> targets = new List<Target>();
+        var targets = new List<Target>();
         card.Actions.ForEach(
             action =>
             {
-                Target[] possibleTargets = battleState.GetPossibleTargets(me, action.Group, action.Scope);
-                Target target = possibleTargets.Random();
+                var possibleTargets = battleState.GetPossibleTargets(me, action.Group, action.Scope);
+                var target = possibleTargets.Random();
                 targets.Add(target);
             }
         );
 
-        return new PlayedCard().Init(me, targets.ToArray(), card);
+        return new PlayedCard(me, targets.ToArray(), card);
     }
 
 }

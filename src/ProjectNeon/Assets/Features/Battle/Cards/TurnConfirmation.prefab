@@ -270,8 +270,9 @@ GameObject:
   - component: {fileID: 5651372932758694073}
   - component: {fileID: 5651372932758694079}
   - component: {fileID: 5651372932758694078}
+  - component: {fileID: 7732304892849273419}
   m_Layer: 5
-  m_Name: BattleCardSelectionConfirmation
+  m_Name: TurnConfirmation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,5 +319,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playArea: {fileID: 11400000, guid: 1911fbbf2065d4e44be1966051f09a92, type: 2}
-  onConfirmation: {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536, type: 2}
+  onConfirmed: {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536, type: 2}
+  onConfirmationStarted: {fileID: 11400000, guid: 814e80441c7027549a540b9fd601c7b2,
+    type: 2}
   confirmUi: {fileID: 5651372932476609963}
+--- !u!114 &7732304892849273419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5651372932758694072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821c49dd6cfc48b2aae8816b8fc3f37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSubmit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5651372932758694078}
+        m_MethodName: Confirm
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onCancel:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
