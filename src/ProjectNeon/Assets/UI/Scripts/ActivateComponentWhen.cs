@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class ActivateWhen : MonoBehaviour
+public sealed class ActivateComponentWhen : MonoBehaviour
 {
     [ReadOnly, SerializeField] private bool isActive;
     [SerializeField] private GameEvent[] activateOn;
