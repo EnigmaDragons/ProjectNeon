@@ -6,7 +6,7 @@ public sealed class VisualCardSelection : MonoBehaviour
 
     private IndexSelector<GameObject> _indexSelector;
     private bool _isDirty = false;
-
+    
     private void OnEnable()
     {
         cards.SetOnShownCardsChanged(() => _isDirty = true);
@@ -20,6 +20,8 @@ public sealed class VisualCardSelection : MonoBehaviour
         _isDirty = false;
         if (cards.ShownCards.Length < 1)
             return;
+
+        // @todo #1:15min Don't show highlight on Card unless player can select a card from Hand. 
         
         _indexSelector = new IndexSelector<GameObject>(cards.ShownCards);
         _indexSelector.Current.GetComponent<CardPresenter>().SetHighlight(true);
@@ -27,20 +29,24 @@ public sealed class VisualCardSelection : MonoBehaviour
 
     public void MoveNext()
     {
-        _indexSelector.Current.GetComponent<CardPresenter>().SetHighlight(false);
+        DisableCurrentCardHighlight();
         _indexSelector.MoveNext().GetComponent<CardPresenter>().SetHighlight(true);
     }
     
     public void MovePrevious()
     {
-        _indexSelector.Current.GetComponent<CardPresenter>().SetHighlight(false);
+        DisableCurrentCardHighlight();
         _indexSelector.MovePrevious().GetComponent<CardPresenter>().SetHighlight(true);
     }
 
-    // @todo #1:15min Don't allow selection from Hand when Selection Targets
-    
     public void Select()
     {
+        DisableCurrentCardHighlight();
         cards.SelectCard(_indexSelector.Index);
+    }
+
+    private void DisableCurrentCardHighlight()
+    {
+        _indexSelector.Current.GetComponent<CardPresenter>().SetHighlight(false);
     }
 }

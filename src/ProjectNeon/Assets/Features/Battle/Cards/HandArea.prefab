@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 9171807529961977257}
   - component: {fileID: 3699100472444320317}
   - component: {fileID: 5882633125846672675}
+  - component: {fileID: 8304905122166461790}
+  - component: {fileID: 8693375296077520057}
   m_Layer: 5
   m_Name: HandArea
   m_TagString: Untagged
@@ -92,9 +94,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4917dcf83c9664b49b0d7e32335e1ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
-  activateOn: {fileID: 11400000, guid: 7abae0c55fd5b794a884f60d3ef2e639, type: 2}
-  deactivateOn: {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536, type: 2}
   onLeft:
     m_PersistentCalls:
       m_Calls:
@@ -149,9 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821c49dd6cfc48b2aae8816b8fc3f37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
-  activateOn: {fileID: 11400000, guid: 7abae0c55fd5b794a884f60d3ef2e639, type: 2}
-  deactivateOn: {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536, type: 2}
   onSubmit:
     m_PersistentCalls:
       m_Calls:
@@ -173,3 +169,45 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &8304905122166461790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726350066465214634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77891b0cb614489f9ba45551184ba80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 0
+  activateOn:
+  - {fileID: 11400000, guid: f2a9dd7e51ba2c642ad8b2147a76929e, type: 2}
+  - {fileID: 11400000, guid: 26a6fe037cb009541bef5a1546d98b6f, type: 2}
+  deactivateOn:
+  - {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536, type: 2}
+  - {fileID: 11400000, guid: bee72d36bb5bc2d49bef2f58d641cfbc, type: 2}
+  startsActive: 0
+  target: {fileID: 3699100472444320317}
+--- !u!114 &8693375296077520057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726350066465214634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77891b0cb614489f9ba45551184ba80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 0
+  activateOn:
+  - {fileID: 11400000, guid: f2a9dd7e51ba2c642ad8b2147a76929e, type: 2}
+  - {fileID: 11400000, guid: 26a6fe037cb009541bef5a1546d98b6f, type: 2}
+  deactivateOn:
+  - {fileID: 11400000, guid: bee72d36bb5bc2d49bef2f58d641cfbc, type: 2}
+  - {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536, type: 2}
+  startsActive: 0
+  target: {fileID: 5882633125846672675}
