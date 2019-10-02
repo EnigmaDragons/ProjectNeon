@@ -13,6 +13,12 @@ public class DeckBuilderState : ScriptableObject
     [SerializeField] private PartyDecks decks;
 
     /**
+     * Current deck changed event
+     */
+    [SerializeField] private GameEvent onCurrentDeckChanged;
+    public GameEvent OnCurrentDeckChanged => onCurrentDeckChanged;
+
+    /**
      * Current deck from the hero selected in Deck Builder Scene
      */
     private Deck current;

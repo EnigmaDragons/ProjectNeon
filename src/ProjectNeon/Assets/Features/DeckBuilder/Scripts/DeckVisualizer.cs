@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 /**
@@ -29,9 +26,9 @@ public class DeckVisualizer : MonoBehaviour
     /**
      * Indicates if some change happened in the DeckVisualizer (i.e, it's dirty)
      */
-    private bool _isDirty = true;
+    private bool _isDirty = false;
 
-    [SerializeField] private CardPresenter cardPrototype;
+    [SerializeField] private CardListItem cardPrototype;
 
     /**
      * Updates the list
@@ -92,5 +89,17 @@ public class DeckVisualizer : MonoBehaviour
     {
         var shown = _shownCards.ToArray();
         shown.ForEach(x => DestroyImmediate(x));
+    }
+
+    void OnEnable()
+    {
+        this._isDirty = true;
+        state.OnCurrentDeckChanged.Subscribe(
+            new GameEventSubscription(state.OnCurrentDeckChanged.name, x => _isDirty = true, this));
+    }
+
+    void OnDisable()
+    {
+        state.OnCurrentDeckChanged.Unsubscribe(this);
     }
 }
