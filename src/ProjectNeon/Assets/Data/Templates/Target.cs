@@ -4,6 +4,5 @@
  */
 public interface Target  
 {
-    TeamType TeamType { get; }
     Member[] Members { get; }
 }
