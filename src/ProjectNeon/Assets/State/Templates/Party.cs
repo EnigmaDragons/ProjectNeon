@@ -15,6 +15,8 @@ public class Party : ScriptableObject
 
     [SerializeField] private IntVariable totalPowerLevel;
 
+    public Hero[] Heroes => new []{ heroOne, heroTwo, heroThree };
+
     public Party Initialized(Hero one, Hero two, Hero three)
     {
         heroOne = one;

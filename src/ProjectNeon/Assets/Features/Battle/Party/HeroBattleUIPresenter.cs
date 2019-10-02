@@ -5,7 +5,7 @@ public class HeroBattleUIPresenter : MonoBehaviour
 {
     [SerializeField] private Image bust;
     
-    void Set(Hero hero)
+    public void Set(Hero hero)
     {
         bust.sprite = hero.Bust;
     }
