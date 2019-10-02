@@ -8,6 +8,5 @@ public class Team : Target
         Members = members.ToArray();
     }
 
-    public TeamType TeamType => Members[0].TeamType;
     public Member[] Members { get; }
 }
