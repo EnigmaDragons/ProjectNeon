@@ -70,12 +70,5 @@ public class DeckVisualizer : MonoBehaviour
     void OnEnable()
     {
         this._isDirty = true;
-        state.OnCurrentDeckChanged.Subscribe(
-            new GameEventSubscription(state.OnCurrentDeckChanged.name, x => _isDirty = true, this));
-    }
-
-    void OnDisable()
-    {
-        state.OnCurrentDeckChanged.Unsubscribe(this);
     }
 }
