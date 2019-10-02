@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardPresenter : MonoBehaviour, IPointerDownHandler
+public class CardListItem : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private TextMeshProUGUI name;
-    [SerializeField] private TextMeshProUGUI description;
-    [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private Image art;
+    [SerializeField] private TextMeshProUGUI count;
+
     [SerializeField] private GameObject highlight;
 
     private Card _card;
@@ -19,15 +19,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     {
         _onClick = onClick;
         _card = card;
-        name.text = _card.ToString();
-        description.text = _card.Description;
-        type.text = _card.TypeDescription;
+        name.text = _card.name.WithSpaceBetweenWords();
         art.sprite = _card.Art;
+        count.text = "2x";
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _onClick();
+        //_onClick();
     }
 
     public void SetHighlight(bool active)
