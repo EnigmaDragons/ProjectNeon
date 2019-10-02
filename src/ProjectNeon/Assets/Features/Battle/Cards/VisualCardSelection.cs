@@ -3,13 +3,21 @@ using UnityEngine;
 public sealed class VisualCardSelection : MonoBehaviour
 {
     [SerializeField] private CardsVisualizer cards;
-
+    [SerializeField] private GameEvent[] activateHighlightWhen;
+    
     private IndexSelector<GameObject> _indexSelector;
     private bool _isDirty = false;
+    private bool _shouldHighlight;
     
     private void OnEnable()
     {
+        activateHighlightWhen.ForEach(e => e.Subscribe(() =>
+        {
+            _shouldHighlight = true;
+            _isDirty = true;
+        }, this));
         cards.SetOnShownCardsChanged(() => _isDirty = true);
+        _isDirty = true;
     }
 
     private void Update()
@@ -21,31 +29,38 @@ public sealed class VisualCardSelection : MonoBehaviour
         if (cards.ShownCards.Length < 1)
             return;
 
-        // @todo #1:15min Don't show highlight on Card unless player can select a card from Hand. 
-        
         _indexSelector = new IndexSelector<GameObject>(cards.ShownCards);
-        _indexSelector.Current.GetComponent<CardPresenter>().SetHighlight(true);
+        if (_shouldHighlight)
+            EnableHighlight();
     }
 
     public void MoveNext()
     {
-        DisableCurrentCardHighlight();
-        _indexSelector.MoveNext().GetComponent<CardPresenter>().SetHighlight(true);
+        DisableHighlight();
+        _indexSelector.MoveNext();
+        EnableHighlight();
     }
     
     public void MovePrevious()
     {
-        DisableCurrentCardHighlight();
-        _indexSelector.MovePrevious().GetComponent<CardPresenter>().SetHighlight(true);
+        DisableHighlight();
+        _indexSelector.MovePrevious();
+        EnableHighlight();
     }
 
     public void Select()
     {
-        DisableCurrentCardHighlight();
+        DisableHighlight();
+        _shouldHighlight = false;
         cards.SelectCard(_indexSelector.Index);
     }
 
-    private void DisableCurrentCardHighlight()
+    private void EnableHighlight()
+    {
+        _indexSelector.Current.GetComponent<CardPresenter>().SetHighlight(true);
+    }
+    
+    private void DisableHighlight()
     {
         _indexSelector.Current.GetComponent<CardPresenter>().SetHighlight(false);
     }

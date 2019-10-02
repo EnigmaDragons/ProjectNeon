@@ -11,6 +11,7 @@ public sealed class ActivateWhen : MonoBehaviour
     private void OnEnable()
     {
         isActive = startsActive;
+        target.enabled = isActive;
         activateOn.ForEach(e => e.Subscribe(() => SetTargetState(true), this));
         deactivateOn.ForEach(e => e.Subscribe(() => SetTargetState(false), this));
     }

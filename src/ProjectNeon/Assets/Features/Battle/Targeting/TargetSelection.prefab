@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 3776901136553991120}
   - component: {fileID: 5519522430884201971}
   - component: {fileID: 4379393178723148762}
+  - component: {fileID: 1419528218216008528}
   m_Layer: 0
   m_Name: TargetSelection
   m_TagString: Untagged
@@ -158,8 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4917dcf83c9664b49b0d7e32335e1ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateOn: {fileID: 11400000, guid: bee72d36bb5bc2d49bef2f58d641cfbc, type: 2}
-  deactivateOn: {fileID: 11400000, guid: 26a6fe037cb009541bef5a1546d98b6f, type: 2}
   onLeft:
     m_PersistentCalls:
       m_Calls:
@@ -202,3 +201,22 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1419528218216008528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2223496852038805829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77891b0cb614489f9ba45551184ba80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 0
+  activateOn:
+  - {fileID: 11400000, guid: bee72d36bb5bc2d49bef2f58d641cfbc, type: 2}
+  deactivateOn:
+  - {fileID: 11400000, guid: 26a6fe037cb009541bef5a1546d98b6f, type: 2}
+  startsActive: 0
+  target: {fileID: 4379393178723148762}
