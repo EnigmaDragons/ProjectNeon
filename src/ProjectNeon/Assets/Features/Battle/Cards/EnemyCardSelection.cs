@@ -7,7 +7,7 @@ public class EnemyCardSelection : MonoBehaviour
     [SerializeField] private GameEvent onEnemyTurnsConfirmed;
     [SerializeField] private BattleState battle;
  
-    void ChooseCards()
+    public void ChooseCards()
     {
         battle.Members.Where(x => x.Value.TeamType == TeamType.Enemies)
             .ForEach(e => resolutionZone.Add(battle.GetEnemyById(e.Key).AI.Play(e.Key)));

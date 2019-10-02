@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 
-public class ConfirmCardSelection : MonoBehaviour
+public class ConfirmPlayerTurn : MonoBehaviour
 {
     [SerializeField] private CardPlayZone playArea;
-    [SerializeField] private GameEvent onConfirmation;
+    [SerializeField] private GameEvent onConfirmed;
+    [SerializeField] private GameEvent onConfirmationStarted;
     [SerializeField] private GameObject confirmUi;
 
     private bool CanConfirm => playArea.Cards.Length == 3;
 
     private void OnEnable()
     {
-        playArea.OnZoneCardsChanged.Subscribe(UpdateUiElement, this);
+        playArea.OnZoneCardsChanged.Subscribe(UpdateState, this);
     }
 
     private void OnDisable()
@@ -18,14 +19,16 @@ public class ConfirmCardSelection : MonoBehaviour
         playArea.OnZoneCardsChanged.Unsubscribe(this);
     }
 
-    private void UpdateUiElement()
+    private void UpdateState()
     {
         confirmUi.SetActive(CanConfirm);
+        if (CanConfirm)
+            onConfirmationStarted.Publish();
     }
 
     public void Confirm()
     {
         if (CanConfirm)
-            onConfirmation.Publish();
+            onConfirmed.Publish();
     }
 }
