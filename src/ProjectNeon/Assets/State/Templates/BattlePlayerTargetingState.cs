@@ -2,15 +2,30 @@ using UnityEngine;
 
 public sealed class BattlePlayerTargetingState : ScriptableObject
 {
-    [SerializeField] private Transform[] targetUiTransforms;
-    [SerializeField] private int currentTarget;
+    [SerializeField] private GameEvent onTargetChanged;
 
-    private Target[] possibleTargets;
+    private IndexSelector<Target> _selector;
+    
+    public GameEvent OnTargetChanged => onTargetChanged;
 
     public BattlePlayerTargetingState WithPossibleTargets(Target[] targets)
     {
-        possibleTargets = targets;
-        currentTarget = 0;
+        _selector = new IndexSelector<Target>(targets);
+        OnTargetChanged.Publish();
         return this;
+    }
+
+    public Target Current => _selector.Current;
+    
+    public void MoveNext()
+    {
+        _selector.MoveNext();
+        OnTargetChanged.Publish();
+    }
+
+    public void MovePrevious()
+    {
+        _selector.MovePrevious();
+        OnTargetChanged.Publish();
     }
 }

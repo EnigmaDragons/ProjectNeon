@@ -5,43 +5,43 @@ using UnityEngine;
 
 public class SquadSlot : MonoBehaviour
 {
-    [SerializeField] private Character defaultCharacter;
-    [SerializeField] private Character noCharacter;
-    [SerializeField] private CharacterPool characterPool;
-    [SerializeField] private CharacterDisplayPresenter presenter;
+    [SerializeField] private Hero defaultHero;
+    [SerializeField] private Hero noHero;
+    [SerializeField] private HeroPool heroPool;
+    [SerializeField] private HeroDisplayPresenter presenter;
     
-    [ReadOnly] [SerializeField] private Character current;
+    [ReadOnly] [SerializeField] private Hero current;
 
     private void Awake()
     {
-        characterPool.ClearSelections();
+        heroPool.ClearSelections();
     }
 
     private void Start()
     {
-        if (characterPool.AvailableCharacters.None())
-            throw new InvalidOperationException("No Available Characters");
-        SelectCharacter(defaultCharacter);
+        if (heroPool.AvailableHeroes.None())
+            throw new InvalidOperationException("No Available Heroes");
+        SelectHero(defaultHero);
     }
     
-    public void SelectNextCharacter()
+    public void SelectNextHero()
     {
-        characterPool.Unselect(current);
-        SelectCharacter(AvailableCharactersIncludingNone.SkipWhile(x => x != current).Skip(1).First());
+        heroPool.Unselect(current);
+        SelectHero(AvailableHeroesIncludingNone.SkipWhile(x => x != current).Skip(1).First());
     }
 
-    public void SelectPreviousCharacter()
+    public void SelectPreviousHero()
     {
-        characterPool.Unselect(current);
-        SelectCharacter(AvailableCharactersIncludingNone.Reverse().SkipWhile(x => x != current).Skip(1).First());
+        heroPool.Unselect(current);
+        SelectHero(AvailableHeroesIncludingNone.Reverse().SkipWhile(x => x != current).Skip(1).First());
     }
 
-    private void SelectCharacter(Character c)
+    private void SelectHero(Hero c)
     {
         current = c;
-        characterPool.Select(c);
+        heroPool.Select(c);
         presenter.Select(c);
     }
 
-    private IEnumerable<Character> AvailableCharactersIncludingNone => characterPool.AvailableCharacters.WrappedWith(noCharacter);
+    private IEnumerable<Hero> AvailableHeroesIncludingNone => heroPool.AvailableHeroes.WrappedWith(noHero);
 }

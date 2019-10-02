@@ -10,8 +10,12 @@ class BattleAssetMenu
     static void CardPlayZones() => Create<CardPlayZones>();
     [MenuItem("Assets/Create/Battle/Enemy Area")]
     static void EnemyArea() => Create<EnemyArea>();
+    [MenuItem("Assets/Create/Battle/Party Area")]
+    static void PartyArea() => Create<PartyArea>();
     [MenuItem("Assets/Create/Battle/Card Resolution Zone")]
     static void CardResolutionZone() => Create<CardResolutionZone>();
+    [MenuItem("Assets/Create/Battle/Battle Player Targeting State")]
+    static void BattlePlayerTargetingState() => Create<BattlePlayerTargetingState>();
 
     private static void Create<T>() where T : ScriptableObject
     {
