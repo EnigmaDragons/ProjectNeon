@@ -7,20 +7,12 @@ using UnityEngine;
  */
 public class DeckBuilderState : ScriptableObject
 {
-    /**
-     * Party Decks
-     */
+
     [SerializeField] private PartyDecks decks;
 
-    /**
-     * Current deck changed event
-     */
     [SerializeField] private GameEvent onCurrentDeckChanged;
     public GameEvent OnCurrentDeckChanged => onCurrentDeckChanged;
 
-    /**
-     * Current deck from the hero selected in Deck Builder Scene
-     */
     private Deck current;
     public Deck Current()
     {

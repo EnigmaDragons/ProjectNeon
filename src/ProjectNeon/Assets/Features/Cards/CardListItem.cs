@@ -19,7 +19,7 @@ public class CardListItem : MonoBehaviour, IPointerDownHandler
     {
         _onClick = onClick;
         _card = card;
-        name.text = _card.ToString();
+        name.text = _card.name.WithSpaceBetweenWords();
         art.sprite = _card.Art;
         count.text = "2x";
     }

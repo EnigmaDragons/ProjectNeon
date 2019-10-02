@@ -7,32 +7,17 @@ using UnityEngine;
  */
 public class DeckVisualizer : MonoBehaviour
 {
-    /**
-     * Deck builder state
-     */
     [SerializeField] private DeckBuilderState state;
 
-    /**
-     * Card list spacing, relative to screen height
-     */
     [SerializeField] private float cardSpacingScreenPercent = 0.15f;
 
-    /**
-     * Cards shown in screen
-     */
     [ReadOnly] [SerializeField] private GameObject[] _shownCards = new GameObject[0];
     public GameObject[] ShownCards => _shownCards;
 
-    /**
-     * Indicates if some change happened in the DeckVisualizer (i.e, it's dirty)
-     */
     private bool _isDirty = false;
 
     [SerializeField] private CardListItem cardPrototype;
 
-    /**
-     * Updates the list
-     */
     public void Update()
     {
         if (!_isDirty)
@@ -43,18 +28,12 @@ public class DeckVisualizer : MonoBehaviour
     }
 
 
-    /**
-     * Updates the DeckListView
-     */
     private void UpdateDeckListView(Deck deck)
     {
         Clear();
         CreateCurrentCards(deck.Cards.ToArray());
     }
 
-    /**
-     * Create the current list object for a set of cards
-     */
     private void CreateCurrentCards(Card[] cards)
     {
         var newShownCards = new GameObject[cards.Length];
@@ -82,9 +61,6 @@ public class DeckVisualizer : MonoBehaviour
          */
     }
 
-    /**
-     * Clear list
-     */
     private void Clear()
     {
         var shown = _shownCards.ToArray();
