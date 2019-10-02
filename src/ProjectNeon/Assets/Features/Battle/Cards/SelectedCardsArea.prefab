@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2340197527112028393}
   - component: {fileID: 2597566376981184047}
   - component: {fileID: 870932972680032351}
+  - component: {fileID: 348697449608729254}
   m_Layer: 5
   m_Name: SelectedCardsArea
   m_TagString: Untagged
@@ -61,7 +62,23 @@ MonoBehaviour:
   onCardClickDestination: {fileID: 11400000, guid: d384cb3c3fffa7241a3f7e1555a17223,
     type: 2}
   cardSpacingScreenPercent: 0.15
-  offset: 120
   cardPrototype: {fileID: 1826247112722277224, guid: 0800740c7d5a73942b094c3b2785d0c0,
     type: 3}
   _shownCards: []
+--- !u!114 &348697449608729254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848685639216814085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54611262cbb5b61469814874aff177da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onConfirmation: {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536, type: 2}
+  playZones: {fileID: 11400000, guid: 0a8497e1383588d4ab9b06ee1c09e8e1, type: 2}
+  targetPoint: {fileID: 0}
+  handArea: {fileID: 0}
+  cardDelta: 50
