@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HPBarController : MonoBehaviour
 {
     [SerializeField] Image barImage;
-    [SerializeField] Text barTextValue;
+    [SerializeField] TextMeshProUGUI barTextValue;
 
     int maxHP = 100;
 
