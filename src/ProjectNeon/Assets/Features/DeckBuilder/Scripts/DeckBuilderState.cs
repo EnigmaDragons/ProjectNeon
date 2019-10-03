@@ -16,11 +16,6 @@ public class DeckBuilderState : ScriptableObject
     private Deck current;
     public Deck Current()
     {
-        return this.decks.Decks[0];
+        return this.decks.Decks[(int)CharacterController.currentCharacter];
     }
-
-    /**
-     * @todo #216:30min We need to correctly initialize and update current Deck. This deck should
-     *  change each time we change character in DeckBuilderUi (ChangeCurrentCharacter Event).
-     */
 }
