@@ -9,18 +9,15 @@ public class SelectNextStageSegment : MonoBehaviour
 
     [ReadOnly] [SerializeField] private StageSegment next;
 
-    private void OnEnable()
+    public void Advance()
     {
         if (adventure.IsFinalStageSegment)
             navigator.NavigateToVictoryScene();
         else
-            Advance();
-    }
-
-    private void Advance()
-    {
-        next = adventure.Advance();
-        nextText.text = next.Name;
+        {
+            next = adventure.Advance();
+            nextText.text = next.Name;
+        }
     }
 
     public void StartNextStageSegment()
