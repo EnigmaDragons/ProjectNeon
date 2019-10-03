@@ -10,7 +10,7 @@ public class SelectionCursorVisualizer : MonoBehaviour
     [SerializeField] private Vector3 offset;
 
     private bool isActive;
-
+    private GameObject[] extraCursors = new GameObject[0];
     private void OnEnable()
     {
         activateOn.Subscribe(Activate, this);
@@ -29,19 +29,37 @@ public class SelectionCursorVisualizer : MonoBehaviour
     {
         var firstTarget = targeting.Current;
         var firstMember = firstTarget.Members[0];
-        // @todo #1:30min Visualize Multi-Targets
         cursor.transform.position = battleState.GetPosition(firstMember.Id) + offset;
+        if (firstTarget.Members.Length <= 1) return;
+        extraCursors = new GameObject[firstTarget.Members.Length - 1];
+        for (int i = 1; i < firstTarget.Members.Length; i++)
+        {
+            extraCursors[i - 1] = Instantiate(cursor, battleState.GetPosition(firstTarget.Members[i].Id) + offset, cursor.transform.rotation);
+        }
     }
 
     void Activate()
     {
         isActive = true;
         cursor.SetActive(isActive);
+        ExtraCursorsAction(isActive);
     }
 
     void Deactivate()
     {
         isActive = false;
         cursor.SetActive(isActive);
+        ExtraCursorsAction(isActive);
+    }
+    void ExtraCursorsAction(bool needCursors)
+    {
+        if (extraCursors.Length == 0) return;
+        if (needCursors) extraCursors.ForEach(x => x.SetActive(true));
+        else
+        {
+            extraCursors.ForEach(x => Destroy(x));
+            extraCursors = new GameObject[0];
+        }
+
     }
 }
