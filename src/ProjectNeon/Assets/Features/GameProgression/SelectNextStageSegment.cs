@@ -17,11 +17,7 @@ public class SelectNextStageSegment : MonoBehaviour
         {
             next = adventure.Advance();
             nextText.text = next.Name;
+            next.Start();
         }
-    }
-
-    public void StartNextStageSegment()
-    {
-        next.Start();
     }
 }
