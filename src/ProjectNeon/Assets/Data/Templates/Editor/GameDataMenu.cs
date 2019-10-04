@@ -1,5 +1,4 @@
-﻿
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 static class GameDataMenu
@@ -8,11 +7,8 @@ static class GameDataMenu
     static void Card() => Create<Card>();
 
     //Effects menu
-    [MenuItem("Assets/Create/GameContent/Effects/Damage")]
-    static void Damage() => Create<Damage>();
-
-    [MenuItem("Assets/Create/GameContent/Effects/Heal")]
-    static void Heal() => Create<Heal>();
+    [MenuItem("Assets/Create/GameContent/Effects/PhysicalAttack")]
+    static void PhysicalAttack() => Create<PhysicalAttack>();
 
     [MenuItem("Assets/Create/GameContent/Effects/NoEffect")]
     static void NoEffect() => Create<NoEffect>();

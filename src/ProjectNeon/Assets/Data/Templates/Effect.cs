@@ -1,12 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-/**
- * Card effect
- */
 public abstract class Effect : ScriptableObject
 {
-
-    public abstract void Apply(Target target);
+    public abstract void Apply(Member source, Target target);
 }

@@ -19,6 +19,7 @@ public class CardsSelectController : MonoBehaviour
         playerCards = transform.GetComponentsInChildren<CardPresenter>();
         StartCoroutine(MoveToBottom());
     }
+    
     // @todo #133: 40min Change card rotation while moving down
     // @todo #133: 20min Change card scale while moving down
     IEnumerator MoveToBottom()
@@ -44,6 +45,5 @@ public class CardsSelectController : MonoBehaviour
     {
         playerCards[cardIndex].transform.position = 
             Vector3.MoveTowards(playerCards[cardIndex].transform.position, targetPosition, 1500f * Time.deltaTime);
-
     }
 }
