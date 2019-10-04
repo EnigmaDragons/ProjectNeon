@@ -4,13 +4,24 @@ public sealed class PartyBattleUIVisualizer : MonoBehaviour
 {
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private HeroBattleUIPresenter heroPresenter;
+    [SerializeField] private GameEvent setupAfter;
     [SerializeField] private GameEvent onCompleted;
     [SerializeField] private float ySpacing;
     [SerializeField] private float xSpacing;
     [SerializeField] private float xOffset;
     [SerializeField] private float yOffset;
 
-    void Start()
+    private void OnEnable()
+    {
+        setupAfter.Subscribe(Setup, this);
+    }
+
+    private void OnDisable()
+    {
+        setupAfter.Unsubscribe(this);
+    }
+
+    void Setup()
     {
         var party = partyArea.Party;
         var position = transform.position;
