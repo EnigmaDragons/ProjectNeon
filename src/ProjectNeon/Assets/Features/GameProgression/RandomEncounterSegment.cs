@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 class RandomEncounterSegment : StageSegment
 {
@@ -6,6 +7,6 @@ class RandomEncounterSegment : StageSegment
 
     public override void Start()
     {
-        SceneManager.LoadScene("BattleScene");
+        SceneManager.LoadScene("GameScene");
     }
 }

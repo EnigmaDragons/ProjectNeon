@@ -11,6 +11,6 @@ class SpecificEncounterSegment : StageSegment
     public override void Start()
     {
         // @todo #1:30min Setup Custom Encounter, instead of letting Battle Scene randomly generate one
-        SceneManager.LoadScene("BattleScene");
+        SceneManager.LoadScene("GameScene");
     }
 }

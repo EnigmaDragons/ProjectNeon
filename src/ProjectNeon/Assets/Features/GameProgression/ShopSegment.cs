@@ -6,5 +6,5 @@ class ShopSegment : StageSegment
 {
     public override string Name => "Shop";
 
-    public override void Start() => SceneManager.LoadScene("ShopScene");
+    public override void Start() => SceneManager.LoadScene("GameScene");
 }
