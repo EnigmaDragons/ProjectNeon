@@ -1,4 +1,7 @@
-﻿public enum CharactersEnum
+﻿using System;
+
+[Obsolete("Use Hero and StringVariable for Class instead")]
+public enum CharactersEnum
 {
     Character1,
     Character2,
