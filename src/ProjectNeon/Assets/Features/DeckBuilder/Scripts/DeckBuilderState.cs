@@ -7,15 +7,14 @@ using UnityEngine;
  */
 public class DeckBuilderState : ScriptableObject
 {
-
+    public CharactersEnum currentCharacter = CharactersEnum.Character1;
     [SerializeField] private PartyDecks decks;
-
     [SerializeField] private GameEvent onCurrentDeckChanged;
     public GameEvent OnCurrentDeckChanged => onCurrentDeckChanged;
 
     private Deck current;
     public Deck Current()
     {
-        return this.decks.Decks[(int)CharacterController.currentCharacter];
+        return this.decks.Decks[(int)currentCharacter];
     }
 }

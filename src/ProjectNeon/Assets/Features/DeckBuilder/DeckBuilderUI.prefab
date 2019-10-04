@@ -445,6 +445,22 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &6398887163552660212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6619362288594071980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942179bc9b1aa3846978ad47afb3f6d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckBuilderState: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1, type: 2}
+  deckVisualizer:
+  - {fileID: 3622214856978261227}
+  - {fileID: 0}
 --- !u!1 &6702994911028617721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,6 +1186,24 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1007072923987923320}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6619362288594071980 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6207479344012648660, guid: 2ec4ee36fb36eac409a622e36757ab39,
+    type: 3}
+  m_PrefabInstance: {fileID: 1007072923987923320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3622214856978261227 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4592939643730802067, guid: 2ec4ee36fb36eac409a622e36757ab39,
+    type: 3}
+  m_PrefabInstance: {fileID: 1007072923987923320}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1807c57f9070f014883e3201fbe1d1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2874985301355467194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1287,6 +1321,48 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9215575370991484015, guid: 8d1e60c3d3b8f4d4b8a3a17824187166,
+        type: 3}
+      propertyPath: deckBuilderState
+      value: 
+      objectReference: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1,
+        type: 2}
+    - target: {fileID: 9215575370088229107, guid: 8d1e60c3d3b8f4d4b8a3a17824187166,
+        type: 3}
+      propertyPath: deckBuilderState
+      value: 
+      objectReference: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1,
+        type: 2}
+    - target: {fileID: 9215575370207579729, guid: 8d1e60c3d3b8f4d4b8a3a17824187166,
+        type: 3}
+      propertyPath: deckBuilderState
+      value: 
+      objectReference: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1,
+        type: 2}
+    - target: {fileID: 9215575370900674469, guid: 8d1e60c3d3b8f4d4b8a3a17824187166,
+        type: 3}
+      propertyPath: deckBuilderState
+      value: 
+      objectReference: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1,
+        type: 2}
+    - target: {fileID: 9215575370924876314, guid: 8d1e60c3d3b8f4d4b8a3a17824187166,
+        type: 3}
+      propertyPath: deckBuilderState
+      value: 
+      objectReference: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1,
+        type: 2}
+    - target: {fileID: 9215575371060531722, guid: 8d1e60c3d3b8f4d4b8a3a17824187166,
+        type: 3}
+      propertyPath: deckBuilderState
+      value: 
+      objectReference: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1,
+        type: 2}
+    - target: {fileID: 9215575371965560134, guid: 8d1e60c3d3b8f4d4b8a3a17824187166,
+        type: 3}
+      propertyPath: deckBuilderState
+      value: 
+      objectReference: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d1e60c3d3b8f4d4b8a3a17824187166, type: 3}
 --- !u!224 &6341546697936219604 stripped
@@ -1447,6 +1523,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6702994911028617725}
     m_Modifications:
+    - target: {fileID: 550182026678486815, guid: 0754d194127ca5a4daef5f00b3046882,
+        type: 3}
+      propertyPath: m_Name
+      value: LibraryView
+      objectReference: {fileID: 0}
     - target: {fileID: 550182026678486814, guid: 0754d194127ca5a4daef5f00b3046882,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1551,11 +1632,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 550182026678486815, guid: 0754d194127ca5a4daef5f00b3046882,
-        type: 3}
-      propertyPath: m_Name
-      value: LibraryView
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0754d194127ca5a4daef5f00b3046882, type: 3}

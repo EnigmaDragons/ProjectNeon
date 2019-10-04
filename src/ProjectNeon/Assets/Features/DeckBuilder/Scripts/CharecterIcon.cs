@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class CharecterIcon : MonoBehaviour
 {
+    [SerializeField] DeckBuilderState deckBuilderState;
     [SerializeField, ReadOnly] bool selected;
     [SerializeField] CharactersEnum characterValue;
     [SerializeField] GameObject selectImage;
@@ -10,13 +11,13 @@ public class CharecterIcon : MonoBehaviour
     void Start()
     {
         GetComponent<Button>().onClick.AddListener(OnClick);
-        CharacterController.instance.OnCharacterChanged += OnCharacterChanged;
+        deckBuilderState.OnCurrentDeckChanged.Subscribe(OnCharacterChanged, this);
         OnCharacterChanged();
     }
 
     private void OnCharacterChanged()
     {
-        selected = CharacterController.currentCharacter == characterValue;
+        selected = deckBuilderState.currentCharacter == characterValue;
         selectImage.SetActive(selected);
     }
 

@@ -572,18 +572,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643673839}
   m_CullTransparentMesh: 0
---- !u!114 &725345598 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3622214856978261227, guid: 0d94034e8ba2b4c478eb50c79a239265,
-    type: 3}
-  m_PrefabInstance: {fileID: 1946301033}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1807c57f9070f014883e3201fbe1d1d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &740250365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1434,28 +1422,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1255963843}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1512644450 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6619362288594071980, guid: 0d94034e8ba2b4c478eb50c79a239265,
-    type: 3}
-  m_PrefabInstance: {fileID: 1946301033}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1512644454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512644450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 942179bc9b1aa3846978ad47afb3f6d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterController: {fileID: 1946301037}
-  deckVisualizer:
-  - {fileID: 725345598}
-  - {fileID: 1191623638}
 --- !u!1 &1607361175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,10 +1597,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6398887163552660212, guid: 0d94034e8ba2b4c478eb50c79a239265,
+        type: 3}
+      propertyPath: deckVisualizer.Array.data[1]
+      value: 
+      objectReference: {fileID: 1191623638}
     - target: {fileID: 6702994911028617721, guid: 0d94034e8ba2b4c478eb50c79a239265,
         type: 3}
       propertyPath: m_Name
       value: DeckBuilderUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3622214856978261227, guid: 0d94034e8ba2b4c478eb50c79a239265,
+        type: 3}
+      propertyPath: cardPrototype
+      value: 
+      objectReference: {fileID: 374076930379976630, guid: b44d2cd6221463e41843f8e0e0f13bf0,
+        type: 3}
+    - target: {fileID: 3622214856978261227, guid: 0d94034e8ba2b4c478eb50c79a239265,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4614590528640295337, guid: 0d94034e8ba2b4c478eb50c79a239265,
         type: 3}
@@ -2553,17 +2535,6 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3622214856978261227, guid: 0d94034e8ba2b4c478eb50c79a239265,
-        type: 3}
-      propertyPath: cardPrototype
-      value: 
-      objectReference: {fileID: 374076930379976630, guid: b44d2cd6221463e41843f8e0e0f13bf0,
-        type: 3}
-    - target: {fileID: 3622214856978261227, guid: 0d94034e8ba2b4c478eb50c79a239265,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6341546697936219604, guid: 0d94034e8ba2b4c478eb50c79a239265,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2799,18 +2770,6 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!114 &1946301037 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6341546697936219605, guid: 0d94034e8ba2b4c478eb50c79a239265,
-    type: 3}
-  m_PrefabInstance: {fileID: 1946301033}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946301034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01dbd958d2b61ab46b266f47e8d002a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2066716488
 PrefabInstance:
   m_ObjectHideFlags: 0

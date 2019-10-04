@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class DeckController : MonoBehaviour
 {
-    [SerializeField] CharacterController characterController;
+    [SerializeField] DeckBuilderState deckBuilderState;
     [SerializeField] List<DeckVisualizer> deckVisualizer;
 
     private void Start()
     {
-        characterController.OnCharacterChanged += OnCharacterChanged;
+        deckBuilderState.OnCurrentDeckChanged.Subscribe(OnCharacterChanged, this);
     }
     private void OnCharacterChanged()
     {
@@ -16,6 +16,6 @@ public class DeckController : MonoBehaviour
     }
     private void OnDisable()
     {
-        characterController.OnCharacterChanged -= OnCharacterChanged;
+        deckBuilderState.OnCurrentDeckChanged.Unsubscribe(this);
     }
 }

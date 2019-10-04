@@ -28,9 +28,13 @@ public class DeckVisualizer : MonoBehaviour
     }
 
 
-    public void UpdateDeckListView(Deck deck = null)
+    public void UpdateDeckListView()
     {
-        if (deck == null) deck = this.state.Current();
+        Clear();
+        CreateCurrentCards(state.Current().Cards.ToArray());
+    }
+    public void UpdateDeckListView(Deck deck)
+    {
         Clear();
         CreateCurrentCards(deck.Cards.ToArray());
     }
