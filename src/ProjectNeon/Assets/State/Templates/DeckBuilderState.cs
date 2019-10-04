@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /**
  * State for Deck Builder scene
  */
 public class DeckBuilderState : ScriptableObject
 {
-
     [SerializeField] private PartyDecks decks;
-
+    [SerializeField] private Hero currentHero;
     [SerializeField] private GameEvent onCurrentDeckChanged;
+    
     public GameEvent OnCurrentDeckChanged => onCurrentDeckChanged;
 
+    public Hero CurrentHero => currentHero;
+    
     private Deck current;
     public Deck Current()
     {

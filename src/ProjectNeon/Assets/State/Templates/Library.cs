@@ -6,4 +6,5 @@ public class Library : ScriptableObject
     [SerializeField] private Card[] unlockedCards;
 
     public Hero[] UnlockedHeroes => unlockedHeroes;
+    public Card[] UnlockedCards => unlockedCards;
 }
