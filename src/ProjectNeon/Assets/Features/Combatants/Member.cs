@@ -1,11 +1,12 @@
-﻿public class Member 
+﻿using System;
+
+public class Member 
 {
     public int Id { get; }
     public string Name { get; }
     public string Class { get; }
     public TeamType TeamType { get; }
-    public int hp;
-    // @todo #54:30min hp property should not be accessed and mutated by other classes. Create accessors for this one so we can set up reactive bindings.
+    public MemberState State { get; }
     
     public Member(int id, string name, string characterClass, TeamType team, Stats baseStats)
     {
@@ -13,7 +14,11 @@
         Name = name;
         Class = characterClass;
         TeamType = team;
-        hp = baseStats.MaxHP;
+        State = new MemberState(baseStats);
     }
 
+    public void Apply(Action<MemberState> effect)
+    {
+        effect(State);
+    }
 }

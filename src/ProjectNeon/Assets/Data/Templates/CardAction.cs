@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CardAction : ScriptableObject
@@ -8,10 +7,10 @@ public class CardAction : ScriptableObject
     [SerializeField] private Scope targetScope;
     [SerializeField] private Group targetGroup;
     
-    public void Apply(Target target)
+    public void Apply(Member source, Target target)
     {
         effects.ForEach(
-            effect => effect.Apply(target)
+            effect => effect.Apply(source, target)
         );
     }
 
