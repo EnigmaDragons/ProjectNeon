@@ -55,4 +55,11 @@ public class HPBarController : MonoBehaviour
     {
         barTextValue.text = $"{CurrentHP}/{maxHP}";
     }
+
+    public void Init(int maxHp)
+    {
+        MaxHP = maxHp;
+        CurrentHP = maxHp;
+        UpdateUI();
+    }
 }
