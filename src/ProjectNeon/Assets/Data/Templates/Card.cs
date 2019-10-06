@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class Card : ScriptableObject
@@ -12,7 +13,7 @@ public class Card : ScriptableObject
     public Sprite Art => art;
     public string Description => description;
     public string TypeDescription => typeDescription;
-    public CardAction[] Actions => actions.ToArray();
+    public CardAction[] Actions => (actions ?? Array.Empty<CardAction>()).ToArray();
     public Maybe<string> LimitedToClass => new Maybe<string>(onlyPlayableByClass.Value.Length > 0 ? onlyPlayableByClass.Value : null);
 
 }

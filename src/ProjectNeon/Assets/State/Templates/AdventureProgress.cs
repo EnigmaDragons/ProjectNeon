@@ -11,8 +11,9 @@ class AdventureProgress : ScriptableObject
     public bool IsFinalStageSegment => IsFinalStage && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
     public Stage CurrentStage => currentAdventure.Stages[currentStageIndex];
     public StageSegment CurrentStageSegment => CurrentStage.Segments[currentStageSegmentIndex];
+    public bool HasStageBegun => currentStageSegmentIndex > -1;
 
-    private bool HasBegun => currentStageIndex > -1;
+    private bool HasBegun => currentStageIndex > -1;    
     private bool CurrentStageIsFinished => HasBegun && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
 
     public void Reset()
@@ -27,7 +28,10 @@ class AdventureProgress : ScriptableObject
     public StageSegment Advance()
     {
         if (!HasBegun || CurrentStageIsFinished)
+        {
             AdvanceStage();
+        }
+            
 
         currentStageSegmentIndex++;
         return CurrentStageSegment;
