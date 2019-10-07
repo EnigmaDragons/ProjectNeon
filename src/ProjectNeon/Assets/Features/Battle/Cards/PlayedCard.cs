@@ -20,4 +20,16 @@ public class PlayedCard
         _targets = targets;
         _card = card;
     }
+
+    public void perform()
+    {
+        int index = 0;
+        _card.Actions.ForEach(
+            action => 
+            {
+                action.Apply(_performer, _targets[index]);
+                index++;
+            }
+        ); ;
+    }
 }
