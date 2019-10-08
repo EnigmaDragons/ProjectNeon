@@ -18,4 +18,9 @@ public class Deck : ScriptableObject
         }
     }
 
+    public void Add(Card card)
+    {
+        cards.Add(card);
+    }
+
 }
