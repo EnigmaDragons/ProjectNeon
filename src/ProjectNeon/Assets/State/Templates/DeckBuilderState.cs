@@ -25,9 +25,9 @@ public class DeckBuilderState : ScriptableObject
         return this.decks.Decks[0];
     }
 
-    public Deck currentHeroDeck()
+    public List<Card> GetPossibleCardsForCurrentHero()
     {
-        Deck deck = new Deck();
+        List<Card> cards = new List<Card>();
         library.UnlockedCards.ForEach(
             card =>
             {
@@ -36,11 +36,11 @@ public class DeckBuilderState : ScriptableObject
                     card.LimitedToClass.Value.Contains(currentHero.name)
                 )
                 {
-                    deck.Add(card);
+                    cards.Add(card);
                 }
             }
         );
-        return deck;
+        return cards;
     }
 
 
