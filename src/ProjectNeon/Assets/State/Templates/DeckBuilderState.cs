@@ -9,7 +9,7 @@ public class DeckBuilderState : ScriptableObject
     [SerializeField] private PartyDecks decks;
     [SerializeField] private Hero currentHero;
     [SerializeField] private GameEvent onCurrentDeckChanged;
-    [SerializeField] private Library _library;
+    [SerializeField] private Library library;
 
     public GameEvent OnCurrentDeckChanged => onCurrentDeckChanged;
 
@@ -22,8 +22,13 @@ public class DeckBuilderState : ScriptableObject
     private Deck current;
     public Deck Current()
     {
+        return this.decks.Decks[0];
+    }
+
+    public Deck currentHeroDeck()
+    {
         Deck deck = new Deck();
-        _library.UnlockedCards.ForEach(
+        library.UnlockedCards.ForEach(
             card =>
             {
                 if (
@@ -37,6 +42,7 @@ public class DeckBuilderState : ScriptableObject
         );
         return deck;
     }
+
 
     /**
      * @todo #216:30min We need to correctly initialize and update current Deck. This deck should
