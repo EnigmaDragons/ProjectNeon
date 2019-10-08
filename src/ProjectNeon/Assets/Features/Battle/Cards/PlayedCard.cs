@@ -21,7 +21,7 @@ public class PlayedCard
         _card = card;
     }
 
-    public void perform()
+    public void Perform()
     {
         int index = 0;
         _card.Actions.ForEach(
@@ -30,6 +30,6 @@ public class PlayedCard
                 action.Apply(_performer, _targets[index]);
                 index++;
             }
-        ); ;
+        );
     }
 }
