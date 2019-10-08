@@ -23,13 +23,9 @@ public class PlayedCard
 
     public void Perform()
     {
-        int index = 0;
-        _card.Actions.ForEach(
-            action => 
-            {
-                action.Apply(_performer, _targets[index]);
-                index++;
-            }
-        );
+        for (int index = 0; index < _card.Actions.Length; index++)
+        {
+            _card.Actions[index].Apply(_performer, _targets[index]);
+        }
     }
 }
