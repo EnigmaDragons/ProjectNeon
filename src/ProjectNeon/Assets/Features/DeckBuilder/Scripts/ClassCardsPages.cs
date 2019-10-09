@@ -31,7 +31,11 @@ public class ClassCardsPages : MonoBehaviour
         {
             for (int card = 0; card < 8; card++)
             {
-                _cardPages[page].Cards[card] = state.Current().Cards[page * 8 + card];
+                int cardNumber = page * 8 + card;
+                if (cardNumber < state.Current().Cards.Count)
+                    _cardPages[page].Cards[card] = state.Current().Cards[page * 8 + card];
+                else
+                    break;
             }
         }
     }
