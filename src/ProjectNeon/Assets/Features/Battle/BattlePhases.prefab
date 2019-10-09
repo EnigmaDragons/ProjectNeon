@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7321019381997276890}
   - component: {fileID: 4678751458934777547}
   - component: {fileID: 3611657031451877850}
+  - component: {fileID: 2121090264260732048}
+  - component: {fileID: 6844332256594595274}
   m_Layer: 0
   m_Name: BattlePhases
   m_TagString: Untagged
@@ -103,6 +105,52 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4678751458934777547}
         m_MethodName: ChooseCards
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &2121090264260732048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4678751458934777546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9909e676fe54451ba298490b44a5385d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStepsCompleted: {fileID: 11400000, guid: 0f197aab719b742479f9ad8452088baa, type: 2}
+  RequiredEvents:
+  - {fileID: 11400000, guid: 86602994b57d0a24fbc87aa0ec9be3f5, type: 2}
+  _isFinished: 0
+  _finishedEvents: []
+--- !u!114 &6844332256594595274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4678751458934777546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d4c3c39484597899571e932184560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 86602994b57d0a24fbc87aa0ec9be3f5, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
+        m_MethodName: resolve
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
