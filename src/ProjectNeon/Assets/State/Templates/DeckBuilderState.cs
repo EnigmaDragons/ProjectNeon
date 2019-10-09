@@ -11,6 +11,9 @@ public class DeckBuilderState : ScriptableObject
     [SerializeField] private GameEvent onCurrentDeckChanged;
     [SerializeField] private Library library;
 
+    [SerializeField] private IntVariable minimumDeckSize;
+    public int MinimumDeckSize => this.minimumDeckSize.Value;
+
     public GameEvent OnCurrentDeckChanged => onCurrentDeckChanged;
 
     public Hero CurrentHero
@@ -43,6 +46,10 @@ public class DeckBuilderState : ScriptableObject
         return cards;
     }
 
+    public bool HasDeckMinimumSize()
+    {
+        return (this.Current().Cards.Count >= minimumDeckSize.Value);
+    }
 
     /**
      * @todo #216:30min We need to correctly initialize and update current Deck. This deck should
