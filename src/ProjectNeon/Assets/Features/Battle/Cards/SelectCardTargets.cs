@@ -15,7 +15,7 @@ class SelectCardTargets : MonoBehaviour
 
     [ReadOnly] [SerializeField] private Card _selectedCard;
     private bool _isReadyForSelection;
-    
+
     private void Update()
     {
         if (_selectedCard == null) return;
@@ -44,13 +44,11 @@ class SelectCardTargets : MonoBehaviour
         selectedCardZone.OnZoneCardsChanged.Unsubscribe(this);
     }
 
-    // @todo #1:30min When Target Selection Starts, disable selecting a new card or cancelling a previous selection
-
     private void BeginSelection()
     {
         if (selectedCardZone.Count < 1)
             return;
-
+        battleState.SelectionStarted = true;
         onTargetSelectionStarted.Publish();
         _selectedCard = selectedCardZone.Cards[0];
         _isReadyForSelection = false;
@@ -95,5 +93,6 @@ class SelectCardTargets : MonoBehaviour
         _selectedCard = null;
         uiView.SetActive(false);
         onTargetSelectionFinished.Publish();
+        battleState.SelectionStarted = false;
     }
 }

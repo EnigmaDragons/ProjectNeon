@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CardPresenter : MonoBehaviour, IPointerDownHandler
 {
+    [SerializeField] private BattleState battleState;
     [SerializeField] private TextMeshProUGUI name;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI type;
@@ -14,7 +15,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     private Card _card;
     private Action _onClick;
-
     public void Set(Card card, Action onClick)
     {
         _onClick = onClick;
@@ -24,9 +24,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         type.text = _card.TypeDescription;
         art.sprite = _card.Art;
     }
-
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (battleState.SelectionStarted)
+            return;
         _onClick();
     }
 
