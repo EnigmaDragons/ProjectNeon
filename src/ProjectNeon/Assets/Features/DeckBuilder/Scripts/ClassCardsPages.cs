@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class ClassCardsPages : MonoBehaviour
@@ -8,7 +9,7 @@ public class ClassCardsPages : MonoBehaviour
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private TextMeshProUGUI pageNumber;
 
-    private CardPage[] _cardPages = new CardPage[0];
+    private CardPage[] _cardPages;
     private IndexSelector<Card[][]> _pageSelector;
     
     void OnEnable()
@@ -21,9 +22,18 @@ public class ClassCardsPages : MonoBehaviour
         state.OnCurrentDeckChanged.Unsubscribe(this);
     }
 
-    // @todo #1:30min Selected relevant cards from library and paginate them
     void Init()
     {
+        int pages = Convert.ToInt16(Math.Truncate(Convert.ToDecimal(state.Current().Cards.Count / 8)));
+        _cardPages = new CardPage[pages];
+
+        for(int page = 0; page < pages; page++)
+        {
+            for (int card = 0; card < 8; card++)
+            {
+                _cardPages[page].Cards[card] = state.Current().Cards[page * 8 + card];
+            }
+        }
     }
 
     void DisplayCurrentPage()
