@@ -23,7 +23,6 @@ public class DeckBuilderState : ScriptableObject
     private Deck current;
     public Deck Current()
     {
-        Debug.Log(decks.Decks[(int)currentCharacter].Cards.Count);
         return this.decks.Decks[(int)currentCharacter];
     }
 
