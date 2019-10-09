@@ -8,4 +8,5 @@ public interface IStats
     float Armor { get; }
     float Resistance { get; }
     IResourceType[] ResourceTypes { get; }
+    bool Active(int currentTurn);
 }

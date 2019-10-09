@@ -50,4 +50,5 @@ public sealed class MemberState : IStats
     public float Armor => CurrentStats.Armor;
     public float Resistance => CurrentStats.Resistance;
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
+    public bool Active => true;
 }
