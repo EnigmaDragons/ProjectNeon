@@ -10,7 +10,7 @@ public class StatsDecoRationTests
         var spellStats = TestableObjectFactory.Create<BarkskinStats>();
         spellStats.Init(memberStats);
         memberStats.CurrentStats = spellStats;
-        Assert.IsTrue(spellStats.Armor().Equals(10.0F));
+        Assert.IsTrue(spellStats.Armor.Equals(10.0F));
     }
 }
 

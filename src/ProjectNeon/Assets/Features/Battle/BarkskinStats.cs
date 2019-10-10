@@ -5,9 +5,5 @@ using UnityEngine;
 public class BarkskinStats : BattleStats
 {
     private float quantity = 10F;
-
-    public new float Armor()
-    {
-        return this.Origin.Armor + quantity;
-    }
+    public override float Armor => this.Origin.Armor + quantity;
 }

@@ -10,13 +10,13 @@ public abstract class BattleStats : IStats
     private IStats origin;
 
     public IStats Origin => origin;
-    public int MaxHP => origin.MaxHP;
-    public int MaxShield => origin.MaxShield;
-    public int Attack => origin.Attack;
-    public int Magic => origin.Magic;
-    public float Armor => origin.Armor;
-    public float Resistance => origin.Resistance;
-    public IResourceType[] ResourceTypes => origin.ResourceTypes;
+    public virtual int MaxHP => origin.MaxHP;
+    public virtual int MaxShield => origin.MaxShield;
+    public virtual int Attack => origin.Attack;
+    public virtual int Magic => origin.Magic;
+    public virtual float Armor => origin.Armor;
+    public virtual float Resistance => origin.Resistance;
+    public virtual IResourceType[] ResourceTypes => origin.ResourceTypes;
     public bool Active(int turn) => true;
 
     public void Init(IStats origin)

@@ -41,7 +41,8 @@ public sealed class MemberState : IStats
 
     public void ApplyUntilEndOfBattle(BattleStats mods)
     {
-        this.CurrentStats = mods.Init(this.CurrentStats);
+        mods.Init(this.CurrentStats);
+        this.CurrentStats = mods;
         
         // @todo #1:30min Create a design that allows for mods that last the whole battle
     }
