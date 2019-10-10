@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardSelector : MonoBehaviour
+public class CardSelector : ScriptableObject
 {
     [SerializeField] private DeckBuilderState state;
-    [SerializeField] private Card current;
+    private Card current;
+
+    public void Init (Card current)
+    {
+        this.current = current;
+    }
 
     public void ListToDeck()
     {

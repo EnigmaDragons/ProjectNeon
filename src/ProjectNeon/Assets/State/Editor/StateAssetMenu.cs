@@ -19,6 +19,8 @@ static class StateAssetMenu
     static void AdventureProgress() => Create<AdventureProgress>();
     [MenuItem("Assets/Create/Game State/Deck State")]
     static void DeckBuilderState() => Create<DeckBuilderState>();
+    [MenuItem("Assets/Create/Game State/Card Selector")]
+    static void CardSelector() => Create<CardSelector>();
 
     private static void Create<T>() where T : ScriptableObject
     {
