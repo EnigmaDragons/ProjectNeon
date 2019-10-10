@@ -12,6 +12,8 @@ public class EnemyVisualizer : MonoBehaviour
 {
     [SerializeField] private EnemyArea enemyArea;
     [SerializeField] private GameObject enemyPrototype;
+    [SerializeField] private GameObject hpParent;
+    [SerializeField] private GameObject hpPrefab;
     [SerializeField] private GameEvent onSetupFinished;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f; 
@@ -28,6 +30,7 @@ public class EnemyVisualizer : MonoBehaviour
             var t= r.transform;
             t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
             positions[i] = t;
+            Instantiate(hpPrefab, hpParent.transform);
         }
 
         enemyArea.WithUiTransforms(positions);
