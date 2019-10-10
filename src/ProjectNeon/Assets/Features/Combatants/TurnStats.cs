@@ -11,6 +11,7 @@ public abstract class TurnStats : IStats
     private int turnStarted;
     private int duration;
 
+    public IStats Origin => origin;
     public int MaxHP => origin.MaxHP;
     public int MaxShield => origin.MaxShield;
     public int Attack => origin.Attack;
@@ -21,5 +22,10 @@ public abstract class TurnStats : IStats
 
     public bool Active(int turn) {
         return turn < turnStarted + duration;
+    }
+
+    public void Init(IStats origin, int turnStarted, int duration)
+    {
+        this.origin = origin;
     }
 }

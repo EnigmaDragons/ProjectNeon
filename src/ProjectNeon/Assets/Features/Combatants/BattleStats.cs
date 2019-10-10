@@ -9,6 +9,7 @@ public abstract class BattleStats : IStats
 {
     private IStats origin;
 
+    public IStats Origin => origin;
     public int MaxHP => origin.MaxHP;
     public int MaxShield => origin.MaxShield;
     public int Attack => origin.Attack;
@@ -17,4 +18,9 @@ public abstract class BattleStats : IStats
     public float Resistance => origin.Resistance;
     public IResourceType[] ResourceTypes => origin.ResourceTypes;
     public bool Active(int turn) => true;
+
+    public void Init(IStats origin)
+    {
+        this.origin = origin;
+    }
 }
