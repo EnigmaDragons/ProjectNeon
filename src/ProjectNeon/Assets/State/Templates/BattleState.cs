@@ -7,7 +7,8 @@ public class BattleState : ScriptableObject
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private EnemyArea enemies;
     [SerializeField, ReadOnly] private Vector3[] uiPositions;
-    
+    public bool SelectionStarted = false;
+
     public Party Party => partyArea.Party;
     public EnemyArea EnemyArea => enemies;
     public IReadOnlyDictionary<int, Member> Members => _membersById;
