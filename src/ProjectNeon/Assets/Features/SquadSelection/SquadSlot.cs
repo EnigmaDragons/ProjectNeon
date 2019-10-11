@@ -25,7 +25,6 @@ public class SquadSlot : MonoBehaviour
 
     private void SelectHero(Hero c)
     {
-        Debug.Log(c.name);
         current = c;
         heroPool.Select(c);
         presenter.Select(c);

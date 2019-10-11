@@ -1,19 +1,10 @@
 ﻿using UnityEngine;
 
-public class Party : ScriptableObject
+public sealed class Party : ScriptableObject
 {
-    // @todo #1:10min change this to a dynamic size array
-
-    [SerializeField]
-    public Hero heroOne;
-
-    [SerializeField]
-    public Hero heroTwo;
-
-    [SerializeField]
-    public Hero heroThree;
-
-    [SerializeField] private IntVariable totalPowerLevel;
+    [SerializeField] private Hero heroOne;
+    [SerializeField] private Hero heroTwo;
+    [SerializeField] private Hero heroThree;
 
     public Hero[] Heroes => new []{ heroOne, heroTwo, heroThree };
 
