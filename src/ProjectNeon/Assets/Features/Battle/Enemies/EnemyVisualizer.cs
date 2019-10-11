@@ -11,7 +11,6 @@
 public class EnemyVisualizer : MonoBehaviour
 {
     [SerializeField] private EnemyArea enemyArea;
-    [SerializeField] private GameObject enemyPrototype;
     [SerializeField] private GameEvent onSetupFinished;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f; 
@@ -22,10 +21,8 @@ public class EnemyVisualizer : MonoBehaviour
         var positions = new Transform[enemies.Length];
         for (var i= 0; i < enemies.Length; i++)
         {
-            var enemy = Instantiate(enemyPrototype, transform);
-            var r = enemy.AddComponent<SpriteRenderer>();
-            r.sprite = enemies[i].Image;
-            var t= r.transform;
+            var enemy = Instantiate(enemies[i].Prefab, transform);
+            var t = enemy.transform;
             t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
             positions[i] = t;
         }

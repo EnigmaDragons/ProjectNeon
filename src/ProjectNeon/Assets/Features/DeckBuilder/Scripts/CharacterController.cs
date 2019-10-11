@@ -2,10 +2,7 @@
 
 public class CharacterController : MonoBehaviour
 {
-    public static CharactersEnum currentCharacter = CharactersEnum.Character1;
-
-    public delegate void ChangeCurrentCharacter();
-    public event ChangeCurrentCharacter OnCharacterChanged;
+    [SerializeField] DeckBuilderState deckBuilderState;
 
     public static CharacterController instance;
     private void Awake()
@@ -14,8 +11,8 @@ public class CharacterController : MonoBehaviour
     }
     public void SelectCharacter(CharactersEnum characterValue)
     {
-        currentCharacter = characterValue;
-        if (OnCharacterChanged != null)
-            OnCharacterChanged.Invoke();
+        deckBuilderState.currentCharacter = characterValue;
+        if (deckBuilderState.OnCurrentDeckChanged != null)
+            deckBuilderState.OnCurrentDeckChanged.Publish();
     }
 }
