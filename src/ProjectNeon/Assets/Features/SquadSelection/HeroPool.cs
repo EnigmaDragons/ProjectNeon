@@ -6,10 +6,17 @@ using UnityEngine;
 public sealed class HeroPool : ScriptableObject
 {
     [SerializeField] private Library library;
-    
     [SerializeField] private Hero[] selected;
 
-    public IEnumerable<Hero> AvailableHeroes => library.UnlockedHeroes.Except(selected).ToArray();
+    public IEnumerable<Hero> AvailableHeroes
+    {
+        get
+        {
+            var heroes = library.UnlockedHeroes.Except(selected).ToArray();
+            Debug.Log(string.Join(", ", heroes.Select(x => x.name)));
+            return heroes;
+        }
+    }
 
     public void ClearSelections() => selected = Array.Empty<Hero>();
     public void Select(Hero c) => selected = selected.Concat(c).ToArray();

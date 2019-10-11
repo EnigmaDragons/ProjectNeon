@@ -14,5 +14,4 @@ public class Card : ScriptableObject
     public string TypeDescription => typeDescription;
     public CardAction[] Actions => (actions ?? new CardAction[0]).ToArray();
     public Maybe<string> LimitedToClass => new Maybe<string>(onlyPlayableByClass.Value.Length > 0 ? onlyPlayableByClass.Value : null);
-
 }

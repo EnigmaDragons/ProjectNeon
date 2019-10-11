@@ -17,6 +17,7 @@ public class HeroDisplayPresenter : MonoBehaviour
 
     public void Select(Hero c)
     {
+        currentHero = c;
         heroBust.sprite = c.Bust;
         heroName.text = c.name;
         heroClassName.text = c.ClassName.Value;
