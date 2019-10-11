@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public sealed class SetupPartyForGame : MonoBehaviour
+public class SetupPartyWithSelectedHeroes : MonoBehaviour
 {
     [SerializeField] private HeroPool pool;
     [SerializeField] private Party party;
