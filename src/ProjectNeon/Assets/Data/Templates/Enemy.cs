@@ -7,11 +7,11 @@ public class Enemy : ScriptableObject
     [SerializeField] private TurnAI ai;
     [SerializeField] private Stats stats;
     [SerializeField] private int powerLevel;
-    [SerializeField] private Sprite image;
+    [SerializeField] private GameObject prefab;
 
     public Deck Deck => deck;
     public Member AsMember(int id) => new Member(id, enemyName, "Enemy", TeamType.Enemies, stats);
     public TurnAI AI => ai;
     public int PowerLevel => powerLevel;
-    public Sprite Image => image;
+    public GameObject Prefab => prefab;
 }
