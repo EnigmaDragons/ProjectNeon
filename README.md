@@ -3,7 +3,9 @@
 ----
 
 [Project Kanban Board](https://zube.io/enigmadragons/projectneon/w/neon-all/kanban)
+
 [Work Policy](https://www.enigmadragons.com/policy)
+
 [PR Review Policy](./guides/pr-review-policy.md)
 
 ----
