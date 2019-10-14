@@ -6,7 +6,7 @@ class SpecificEncounterSegment : StageSegment
 {
     [SerializeField] private Enemy[] enemies;
 
-    public override string Name => "Battle";
+    public override string Name => "Boss Battle";
     
     public override void Start()
     {

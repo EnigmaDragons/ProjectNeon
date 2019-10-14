@@ -11,6 +11,7 @@ class AdventureProgress : ScriptableObject
     public bool IsFinalStageSegment => IsFinalStage && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
     public Stage CurrentStage => currentAdventure.Stages[currentStageIndex];
     public StageSegment CurrentStageSegment => CurrentStage.Segments[currentStageSegmentIndex];
+    public bool HasStageBegun => currentStageSegmentIndex > -1;
 
     private bool HasBegun => currentStageIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
@@ -18,6 +19,7 @@ class AdventureProgress : ScriptableObject
     public void Reset()
     {
         currentStageIndex = -1;
+        currentStageSegmentIndex = -1;
         if (currentAdventure.Stages.Length < 1)
         {
             Debug.Log("The adventure must have a least one stage!");
@@ -27,7 +29,9 @@ class AdventureProgress : ScriptableObject
     public StageSegment Advance()
     {
         if (!HasBegun || CurrentStageIsFinished)
+        {
             AdvanceStage();
+        }
 
         currentStageSegmentIndex++;
         return CurrentStageSegment;
