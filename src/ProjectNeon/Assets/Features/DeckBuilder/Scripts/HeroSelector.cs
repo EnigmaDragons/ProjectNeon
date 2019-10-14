@@ -9,13 +9,6 @@ public class HeroSelector : MonoBehaviour
 
     public void Update()
     {
-        //state.CurrentHero = CharacterController.currentCharacter;
-        /**
-         * @todo #282:30min At the time we don't have a Hero reference in 
-         * CharacterController which points to the current selected Hero.
-         * CharacterController is the responsible for Hero change event in
-         * DeckBuilder. As it is obsolete, we should provide another way of 
-         * controlling the hero currently selected.
-         */
+        // @todo #1:30min Wire up to UI. Use this to replace CharacterController. Kill CharactersEnum. Kill all static.
     }
 }

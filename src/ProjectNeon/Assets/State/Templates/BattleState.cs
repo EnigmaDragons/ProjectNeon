@@ -7,7 +7,8 @@ public class BattleState : ScriptableObject
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private EnemyArea enemies;
     [SerializeField, ReadOnly] private Vector3[] uiPositions;
-    
+    public bool SelectionStarted = false;
+
     public Party Party => partyArea.Party;
     public EnemyArea EnemyArea => enemies;
     public IReadOnlyDictionary<int, Member> Members => _membersById;
@@ -26,7 +27,7 @@ public class BattleState : ScriptableObject
     public BattleState Init()
     {
         var id = 1;      
-        var heroes = new[] {Party.heroOne, Party.heroTwo, Party.heroThree};
+        var heroes = Party.Heroes;
         
         _uiTransformsById = new Dictionary<int, Transform>();
         _enemiesById = new Dictionary<int, Enemy>();

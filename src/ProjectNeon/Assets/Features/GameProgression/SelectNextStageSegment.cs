@@ -5,26 +5,23 @@ public class SelectNextStageSegment : MonoBehaviour
 {
     [SerializeField] private AdventureProgress adventure;
     [SerializeField] private Navigator navigator;
-    [SerializeField] private TextMeshProUGUI nextText;
 
-    [ReadOnly] [SerializeField] private StageSegment next;
-
-    private void OnEnable()
+    public void Advance()
     {
+        Debug.Log(adventure.IsFinalStageSegment);
         if (adventure.IsFinalStageSegment)
+        {
+            Debug.Log("Navigating to victory srceen");
             navigator.NavigateToVictoryScene();
+        }
         else
-            Advance();
-    }
-
-    private void Advance()
-    {
-        next = adventure.Advance();
-        nextText.text = next.Name;
+        {
+            adventure.Advance();
+        }
     }
 
     public void StartNextStageSegment()
     {
-        next.Start();
+        adventure.CurrentStageSegment.Start();
     }
 }

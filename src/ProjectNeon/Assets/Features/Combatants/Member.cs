@@ -8,7 +8,7 @@ public class Member
     public TeamType TeamType { get; }
     public MemberState State { get; }
     
-    public Member(int id, string name, string characterClass, TeamType team, Stats baseStats)
+    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats)
     {
         Id = id;
         Name = name;

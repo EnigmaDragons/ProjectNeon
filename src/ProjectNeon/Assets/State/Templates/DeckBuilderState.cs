@@ -6,10 +6,14 @@ using UnityEngine;
  */
 public class DeckBuilderState : ScriptableObject
 {
+    public CharactersEnum currentCharacter = CharactersEnum.Character1;
     [SerializeField] private PartyDecks decks;
     [SerializeField] private Hero currentHero;
     [SerializeField] private GameEvent onCurrentDeckChanged;
     [SerializeField] private Library library;
+
+    [SerializeField] private IntVariable minimumDeckSize;
+    public int MinimumDeckSize => this.minimumDeckSize.Value;
 
     public GameEvent OnCurrentDeckChanged => onCurrentDeckChanged;
 
@@ -22,7 +26,7 @@ public class DeckBuilderState : ScriptableObject
     private Deck current;
     public Deck Current()
     {
-        return this.decks.Decks[0];
+        return this.decks.Decks[(int)currentCharacter];
     }
 
     public List<Card> GetPossibleCardsForCurrentHero()
@@ -43,6 +47,10 @@ public class DeckBuilderState : ScriptableObject
         return cards;
     }
 
+    public bool HasDeckMinimumSize()
+    {
+        return (this.Current().Cards.Count >= minimumDeckSize.Value);
+    }
 
     /**
      * @todo #216:30min We need to correctly initialize and update current Deck. This deck should

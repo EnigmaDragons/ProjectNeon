@@ -20,4 +20,12 @@ public class PlayedCard
         _targets = targets;
         _card = card;
     }
+
+    public void Perform()
+    {
+        for (int index = 0; index < _card.Actions.Length; index++)
+        {
+            _card.Actions[index].Apply(_performer, _targets[index]);
+        }
+    }
 }

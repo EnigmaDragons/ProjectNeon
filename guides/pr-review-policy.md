@@ -36,6 +36,19 @@
 
 ----
 
+## Unity PreFab Standards
+
+- Everything in a scene must be composed of nothing except high-level PreFabs
+- Every PreFab must be able to be dropped into a new Scene and "just work"
+- No Prefab may have any overrides when used in a Scene or another PreFab
+- PreFabs must have all of their required connections set in the Editor
+- ScriptableObjects are safe connections, since the are Global Singletons
+- Children elements are safe connections, since they exist within the current hierarchical 
+- PreFabs must not have more 8 immediate children
+- When a generic PreFab is available for an element, use the generic PreFab instead of a custom one (buttons, for example)
+
+----
+
 ## Event Guidelines
 
 - Events should be subscribed to in the `Awake` phase

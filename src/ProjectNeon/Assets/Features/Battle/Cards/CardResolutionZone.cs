@@ -11,4 +11,11 @@ public class CardResolutionZone : ScriptableObject
     {
         moves.Add(played);
     }
+
+    public void Resolve()
+    {
+        moves.ForEach(
+            played => played.Perform()
+        );
+    }
 }
