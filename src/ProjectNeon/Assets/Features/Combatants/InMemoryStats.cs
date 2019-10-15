@@ -1,3 +1,5 @@
+using System;
+
 namespace Features.Combatants
 {
     public sealed class InMemoryStats : IStats
@@ -9,5 +11,7 @@ namespace Features.Combatants
         public float Armor { get; set; }
         public float Resistance { get; set; }
         public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
+        public Func<int, bool> active;
+        public bool Active(int currentTurn) { return active.Invoke(currentTurn); }
     }
 }

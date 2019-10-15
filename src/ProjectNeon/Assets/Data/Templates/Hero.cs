@@ -26,6 +26,7 @@ public class Hero : ScriptableObject
         Armor = armor,
         Resistance = resistance,
         MaxShield = (int)Math.Ceiling(maxHp / 3m),
-        ResourceTypes = resource1 != null ? new IResourceType[] { resource1 } : Array.Empty<IResourceType>()
+        ResourceTypes = resource1 != null ? new IResourceType[] { resource1 } : Array.Empty<IResourceType>(),
+        active = (currentTurn) => true
     };
 }
