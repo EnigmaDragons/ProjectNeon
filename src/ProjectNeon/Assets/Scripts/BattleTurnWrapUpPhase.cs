@@ -25,4 +25,8 @@ public class BattleTurnWrapUpPhase : MonoBehaviour
         // @todo #311: 30min Add re-setup battle cards
         turnStarted.Publish();
     }
+    private void OnDisable()
+    {
+        playerTurnConfirmed.Unsubscribe(this);
+    }
 }
