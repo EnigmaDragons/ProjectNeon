@@ -18,4 +18,5 @@ public sealed class BaseStats : Stats
     public override float Armor => armor;
     public override float Resistance => resistance;
     public override IResourceType[] ResourceTypes => resourceTypes.Cast<IResourceType>().ToArray();
+    public override bool Active(int currentTurn) => true;
 }

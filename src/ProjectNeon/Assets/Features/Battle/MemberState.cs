@@ -3,7 +3,7 @@ using System.Linq;
 public sealed class MemberState : IStats
 {
     private readonly IStats _baseStats;
-    private IStats CurrentStats => _baseStats;
+    private IStats _currentStats;
     private int _hp;
     private int _shield;
     private int[] _resources;
@@ -21,6 +21,7 @@ public sealed class MemberState : IStats
         set => _shield = value;
     }
 
+    public IStats CurrentStats { get;  set; }
     public int Resource1 { get; set; }
     public int Resource2 { get; set; }
     
@@ -38,8 +39,11 @@ public sealed class MemberState : IStats
         // @todo #1:30min Create a design that allows for temporary stat modifications
     }
 
-    public void ApplyUntilEndOfBattle(IStats mods)
+    public void ApplyUntilEndOfBattle(BattleStats mods)
     {
+        mods.Init(this.CurrentStats);
+        this.CurrentStats = mods;
+        
         // @todo #1:30min Create a design that allows for mods that last the whole battle
     }
 
@@ -50,4 +54,5 @@ public sealed class MemberState : IStats
     public float Armor => CurrentStats.Armor;
     public float Resistance => CurrentStats.Resistance;
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
+    public bool Active(int turn) => true;
 }

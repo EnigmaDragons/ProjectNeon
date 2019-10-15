@@ -9,4 +9,5 @@ public abstract class Stats : ScriptableObject, IStats
     public abstract float Armor { get; }
     public abstract float Resistance { get; }
     public abstract IResourceType[] ResourceTypes { get; }
+    public abstract bool Active(int currentTurn);
 }
