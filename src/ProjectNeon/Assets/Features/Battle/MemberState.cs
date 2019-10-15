@@ -3,7 +3,7 @@ using System.Linq;
 public sealed class MemberState : IStats
 {
     private readonly IStats _baseStats;
-    private IStats currentStats;
+    private IStats _currentStats;
     private int _hp;
     private int _shield;
     private int[] _resources;
