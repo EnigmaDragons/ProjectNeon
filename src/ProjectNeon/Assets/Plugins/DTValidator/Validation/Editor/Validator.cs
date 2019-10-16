@@ -171,7 +171,6 @@ namespace DTValidator {
 				}
 
 				IList<UnityEngine.Object> unityEngineObjects = GetUnityEngineObjects(memberInfo, obj);
-				// TODO (darren): don't alloc memory for List<> if not necessary
 				if (unityEngineObjects == null || unityEngineObjects.Count <= 0) {
 					// NOTE (darren): if this is not a UnityEngine.Object
 					// we might still have to recursively look through its fields
