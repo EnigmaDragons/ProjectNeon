@@ -11,9 +11,15 @@ public class Card : ScriptableObject
     [SerializeField] private CardAction cardAction1;
     [SerializeField] private CardAction cardAction2;
 
+    // @todo #1:15min Add Resource Cost to Card
+    
     public Sprite Art => art;
     public string Description => description;
     public string TypeDescription => typeDescription;
-    public CardAction[] Actions => Array.Empty<CardAction>().ConcatIfNotNull(cardAction1).ConcatIfNotNull(cardAction2).ToArray();
     public Maybe<string> LimitedToClass => new Maybe<string>(onlyPlayableByClass.Value.Length > 0 ? onlyPlayableByClass.Value : null);
+    
+    public CardAction[] Actions => Array.Empty<CardAction>()
+        .ConcatIf(cardAction1, c => c.HasEffects)
+        .ConcatIf(cardAction2, c => c.HasEffects)
+        .ToArray();
 }
