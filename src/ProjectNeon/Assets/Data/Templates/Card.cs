@@ -8,11 +8,11 @@ public class Card : ScriptableObject
     [SerializeField] private string description;
     [SerializeField] private string typeDescription;
     [SerializeField] private StringVariable onlyPlayableByClass;
+    [SerializeField] private ResourceCost cost;
     [SerializeField] private CardAction cardAction1;
     [SerializeField] private CardAction cardAction2;
 
-    // @todo #1:15min Add Resource Cost to Card
-    
+    public ResourceCost Cost => cost;
     public Sprite Art => art;
     public string Description => description;
     public string TypeDescription => typeDescription;
