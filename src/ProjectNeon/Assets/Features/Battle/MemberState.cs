@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using UnityEngine;
 
 public sealed class MemberState : IStats
 {
@@ -53,4 +55,14 @@ public sealed class MemberState : IStats
     public float Resistance => _currentStats.Resistance;
     public IResourceType[] ResourceTypes => _currentStats.ResourceTypes;
     public bool Active(int turn) => true;
+
+    public void GainHp(float amount) => ChangeHp(amount);
+    public void TakePhysicalDamage(float amount) => ChangeHp((-(amount * ((1f - Armor)/1f))));
+
+    private void ChangeHp(float amount)
+    {
+        HP = RoundUp(Mathf.Clamp(HP + amount, 0, MaxHP));
+    }
+
+    private int RoundUp(float amount) => Convert.ToInt32(Math.Ceiling(amount));
 }

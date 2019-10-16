@@ -5,13 +5,6 @@ static class GameDataMenu
 {
     [MenuItem("Assets/Create/GameContent/Card")]
     static void Card() => Create<Card>();
-
-    //Effects menu
-    [MenuItem("Assets/Create/GameContent/Effects/PhysicalAttack")]
-    static void PhysicalAttack() => Create<PhysicalAttack>();
-
-    [MenuItem("Assets/Create/GameContent/Effects/NoEffect")]
-    static void NoEffect() => Create<NoEffect>();
     
     [MenuItem("Assets/Create/GameContent/Hero")]
     static void Hero() => Create<Hero>();

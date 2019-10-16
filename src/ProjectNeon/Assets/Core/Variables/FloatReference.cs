@@ -5,7 +5,7 @@ public class FloatReference
 {
     public bool UseConstant = true;
     public float ConstantValue;
-    public FloatVariable FloatVariable;
+    [DTValidator.Optional] public FloatVariable FloatVariable;
 
     public float Value => UseConstant ? ConstantValue : FloatVariable.Value;
 
