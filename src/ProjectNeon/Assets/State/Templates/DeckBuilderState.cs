@@ -8,9 +8,10 @@ public class DeckBuilderState : ScriptableObject
 {
     public CharactersEnum currentCharacter = CharactersEnum.Character1;
     [SerializeField] private PartyDecks decks;
-    [SerializeField] private Hero currentHero;
     [SerializeField] private GameEvent onCurrentDeckChanged;
     [SerializeField] private Library library;
+    
+    [SerializeField, DTValidator.Optional] private Hero currentHero;
 
     [SerializeField] private IntVariable minimumDeckSize;
     public int MinimumDeckSize => this.minimumDeckSize.Value;
