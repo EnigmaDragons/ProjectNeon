@@ -5,7 +5,7 @@ using UnityEngine;
 public sealed class PartyArea : ScriptableObject
 {
     [SerializeField] private Party party;
-    [SerializeField] private Transform[] uiPositions;
+    [SerializeField, DTValidator.Optional] private Transform[] uiPositions;
 
     public Party Party => party;
     public Transform[] UiPositions => uiPositions;

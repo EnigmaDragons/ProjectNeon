@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class CardAction : ScriptableObject
+[Serializable]
+public sealed class CardAction
 {
     [SerializeField] private List<Effect> effects;
     [SerializeField] private Scope targetScope;

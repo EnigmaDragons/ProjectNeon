@@ -1,16 +1,16 @@
-﻿using System.Linq;
+﻿using Features.Combatants;
 using NUnit.Framework;
 
-public class StatsDecoRationTests
+public class StatsDecorationTests
 {
     [Test]
     public void Stats_Barkskin_DecorateArmor()
     {
-        MemberState memberStats = TestableObjectFactory.Create<MemberState>();
-        BattleStats spellStats = TestableObjectFactory.Create<BarkskinStats>();
-        spellStats.Init(memberStats);
-        memberStats.CurrentStats = spellStats;
-        Assert.IsTrue(spellStats.Armor.Equals(10.0F));
+        var memberStats = new MemberState(new InMemoryStats());
+        
+        memberStats.ApplyUntilEndOfBattle(new BarkskinStats());
+        
+        Assert.AreEqual(10f, memberStats.Armor);
     }
 }
 
