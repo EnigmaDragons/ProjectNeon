@@ -13,7 +13,7 @@ class SelectCardTargets : MonoBehaviour
     [SerializeField] private BattleState battleState;
     [SerializeField] private BattlePlayerTargetingState targetingState;
 
-    [ReadOnly] [SerializeField] private Card _selectedCard;
+    [ReadOnly, SerializeField, DTValidator.Optional] private Card _selectedCard;
     private bool _isReadyForSelection;
 
     private void Update()

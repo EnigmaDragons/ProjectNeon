@@ -12,10 +12,6 @@ static class GameDataMenu
 
     [MenuItem("Assets/Create/GameContent/Effects/NoEffect")]
     static void NoEffect() => Create<NoEffect>();
-
-
-    [MenuItem("Assets/Create/GameContent/CardAction")]
-    static void CardAction() => Create<CardAction>();
     
     [MenuItem("Assets/Create/GameContent/Hero")]
     static void Hero() => Create<Hero>();

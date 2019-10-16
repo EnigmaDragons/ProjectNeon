@@ -21,7 +21,6 @@ public sealed class MemberState : IStats
         set => _shield = value;
     }
 
-    public IStats CurrentStats { get;  set; }
     public int Resource1 { get; set; }
     public int Resource2 { get; set; }
     
@@ -32,6 +31,7 @@ public sealed class MemberState : IStats
         _shield = 0;
         _resources = new int[baseStats.ResourceTypes.Length];
         _resourcesMax = baseStats.ResourceTypes.Select(x => x.MaxAmount).ToArray();
+        _currentStats = _baseStats;
     }
 
     public void ApplyTemporary(IStats mods, int numTurns, string effectName)
@@ -41,18 +41,16 @@ public sealed class MemberState : IStats
 
     public void ApplyUntilEndOfBattle(BattleStats mods)
     {
-        mods.Init(this.CurrentStats);
-        this.CurrentStats = mods;
-        
-        // @todo #1:30min Create a design that allows for mods that last the whole battle
+        mods.Init(_currentStats);
+        _currentStats = mods;
     }
 
-    public int MaxHP => CurrentStats.MaxHP;
-    public int MaxShield => CurrentStats.MaxShield;
-    public int Attack => CurrentStats.Attack;
-    public int Magic => CurrentStats.Magic;
-    public float Armor => CurrentStats.Armor;
-    public float Resistance => CurrentStats.Resistance;
-    public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
+    public int MaxHP => _currentStats.MaxHP;
+    public int MaxShield => _currentStats.MaxShield;
+    public int Attack => _currentStats.Attack;
+    public int Magic => _currentStats.Magic;
+    public float Armor => _currentStats.Armor;
+    public float Resistance => _currentStats.Resistance;
+    public IResourceType[] ResourceTypes => _currentStats.ResourceTypes;
     public bool Active(int turn) => true;
 }
