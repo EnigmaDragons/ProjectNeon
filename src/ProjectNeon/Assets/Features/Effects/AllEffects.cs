@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Features.Combatants;
 using UnityEngine;
 
 public static class AllEffects
@@ -8,7 +9,8 @@ public static class AllEffects
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.HealFlat, e => new SimpleEffect(t => t.ApplyToAll(m => m.GainHp(e.FloatAmount)))},
-        { EffectType.PhysicalDamage, e => new SimpleEffect((src, t) => t.ApplyToAll(m => m.TakePhysicalDamage(src.State.Attack * e.FloatAmount)))}
+        { EffectType.PhysicalDamage, e => new SimpleEffect((src, t) => t.ApplyToAll(m => m.TakePhysicalDamage(src.State.Attack * e.FloatAmount)))},
+        { EffectType.BuffAttackFlat, e => new SimpleEffect((src, t) => t.ApplyToAll(m => m.ApplyTemporaryAdditive(new BuffedStats(new InMemoryStats{ Attack = e.IntAmount}, e.NumberOfTurns))))},
     };
     
     public static void Apply(EffectData effectData, Member source, Target target)
