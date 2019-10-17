@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-public class DeckBuilderNavigator : Navigator
+public class DeckBuilderNavigator : MonoBehaviour
 {
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private Navigator navigator;
@@ -14,20 +12,14 @@ public class DeckBuilderNavigator : Navigator
         errorText.enabled = false;
     }
 
-    public new void NavigateToSquadSelection()
+    public void NavigateToSquadSelection()
     {
-        if (this.state.HasDeckMinimumSize())
-            navigator.NavigateToSquadSelection();
+        if (state.HasDeckMinimumSize())
+            navigator.NavigateToGameScene();
         else
         {
             errorText.text = "You have to choose at least " + state.MinimumDeckSize + " cards for your deck!";
             errorText.enabled = true;
-
-            /**
-             * @todo #284:30min Define and implement how the message about the minimum deck size
-             *  must be shown to the player. Then remove the debug.log line which prints the message to
-             *  console.
-             */
         }
     }
 

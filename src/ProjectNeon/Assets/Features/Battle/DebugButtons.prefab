@@ -219,7 +219,6 @@ GameObject:
   - component: {fileID: 2532950235463983040}
   - component: {fileID: 7882114015000327928}
   - component: {fileID: 881314163226925920}
-  - component: {fileID: 1149091496547463382}
   m_Layer: 5
   m_Name: DefeatButton
   m_TagString: Untagged
@@ -328,7 +327,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1149091496547463382}
+      - m_Target: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
         m_MethodName: NavigateToDefeatScene
         m_Mode: 1
         m_Arguments:
@@ -341,18 +340,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &1149091496547463382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4713868173603340571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5916f5953c5b464dbfe21ef52288f37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6422426301944577808
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +352,7 @@ GameObject:
   - component: {fileID: 648404770943267123}
   - component: {fileID: 1614579104217136923}
   - component: {fileID: 727676114547819196}
-  - component: {fileID: 2129736127873391441}
+  - component: {fileID: 8564534927565746915}
   m_Layer: 5
   m_Name: VictoryButton
   m_TagString: Untagged
@@ -474,7 +461,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2129736127873391441}
+      - m_Target: {fileID: 8564534927565746915}
+        m_MethodName: Advance
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
         m_MethodName: NavigateToGameScene
         m_Mode: 1
         m_Arguments:
@@ -487,7 +485,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &2129736127873391441
+--- !u!114 &8564534927565746915
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -496,9 +494,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6422426301944577808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5916f5953c5b464dbfe21ef52288f37, type: 3}
+  m_Script: {fileID: 11500000, guid: fe399b055637ca145bae7429a1fef5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  adventure: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
+  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
 --- !u!1 &8047300843816739659
 GameObject:
   m_ObjectHideFlags: 0
