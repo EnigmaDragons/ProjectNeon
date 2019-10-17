@@ -8,7 +8,6 @@ public class SelectNextStageSegment : MonoBehaviour
 
     public void Advance()
     {
-        Debug.Log(adventure.IsFinalStageSegment);
         if (adventure.IsFinalStageSegment)
         {
             Debug.Log("Navigating to victory srceen");
@@ -16,6 +15,7 @@ public class SelectNextStageSegment : MonoBehaviour
         }
         else
         {
+            Debug.Log("Advancing to next Stage Segment.");
             adventure.Advance();
         }
     }

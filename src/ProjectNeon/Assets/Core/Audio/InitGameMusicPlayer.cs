@@ -7,7 +7,6 @@ public sealed class InitGameMusicPlayer : MonoBehaviour
     
     private void Awake()
     {
-        Debug.Log("Awake Music Init");
         var objs = GameObject.FindGameObjectsWithTag("Music");
         if (objs.Length > 1)
         {
