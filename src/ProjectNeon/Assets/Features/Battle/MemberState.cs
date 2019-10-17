@@ -1,11 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public sealed class MemberState : IStats
 {
-    private readonly IStats _baseStats;
-    private IStats _currentStats;
+    private IStats _baseStats;
+    private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
+    private IStats CurrentStats => _baseStats.Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray());
     private int _hp;
     private int _shield;
     private int[] _resources;
@@ -33,31 +35,36 @@ public sealed class MemberState : IStats
         _shield = 0;
         _resources = new int[baseStats.ResourceTypes.Length];
         _resourcesMax = baseStats.ResourceTypes.Select(x => x.MaxAmount).ToArray();
-        _currentStats = _baseStats;
     }
 
-    public void ApplyTemporary(IStats mods, int numTurns, string effectName)
+    public void ApplyTemporaryAdditive(ITemporalState mods)
     {
-        // @todo #1:30min Create a design that allows for temporary stat modifications
+        _additiveMods.Add(mods);
     }
 
     public void ApplyUntilEndOfBattle(BattleStats mods)
     {
-        mods.Init(_currentStats);
-        _currentStats = mods;
+        mods.Init(CurrentStats);
+        _baseStats = mods;
     }
 
-    public int MaxHP => _currentStats.MaxHP;
-    public int MaxShield => _currentStats.MaxShield;
-    public int Attack => _currentStats.Attack;
-    public int Magic => _currentStats.Magic;
-    public float Armor => _currentStats.Armor;
-    public float Resistance => _currentStats.Resistance;
-    public IResourceType[] ResourceTypes => _currentStats.ResourceTypes;
-    public bool Active(int turn) => true;
+    public int MaxHP => CurrentStats.MaxHP;
+    public int MaxShield => CurrentStats.MaxShield;
+    public int Attack => CurrentStats.Attack;
+    public int Magic => CurrentStats.Magic;
+    public float Armor => CurrentStats.Armor;
+    public float Resistance => CurrentStats.Resistance;
+    public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
 
     public void GainHp(float amount) => ChangeHp(amount);
     public void TakePhysicalDamage(float amount) => ChangeHp((-(amount * ((1f - Armor)/1f))));
+
+    // @todo #1:15min In The Battle Wrap Up Phase, Advance Turn on all members
+    public void AdvanceTurn()
+    {
+        _additiveMods.ForEach(m => m.AdvanceTurn());
+        _additiveMods.RemoveAll(m => !m.IsActive);
+    }
 
     private void ChangeHp(float amount)
     {

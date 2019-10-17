@@ -19,4 +19,10 @@ public sealed class EffectCreationTests
     {
         Assert.IsNotNull(AllEffects.Create(new EffectData { EffectType = EffectType.PhysicalDamage }));
     }
+
+    [Test]
+    public void Effect_BuffAttackFlat_CanCreate()
+    {
+        Assert.IsNotNull(AllEffects.Create(new EffectData { EffectType = EffectType.BuffAttackFlat }));
+    }
 }
