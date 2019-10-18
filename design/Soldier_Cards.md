@@ -20,7 +20,7 @@ Bullet Barrage - X Ammo - X Random Enemies - Deals 0.5x ATK
 	
 ### Tactics:
 
-Counter-Attack - 1 Ally - During the turn, whenever target is attacking, fire back for 1 Ammo, 2x ATK
+Counter-Attack - 1 Ally - During the turn, whenever target is attacked, fire back for 1 Ammo, 2x ATK
 Focus Fire - 2 Ammo - 1 Enemy - 1x ATK. Target takes 1.25x Physical damage until the end of the next round
 Coordinated Attack - All Allies - 3 Turns - +0.2x to all Allies ATK
 

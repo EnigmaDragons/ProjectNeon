@@ -18,7 +18,7 @@ public class Hero : ScriptableObject
     public Sprite Bust => bust;
     public StringVariable ClassName => className;
     
-    public IStats Stats => new InMemoryStats
+    public IStats Stats => new StatAddends
     {
         MaxHP = maxHp,
         Magic = magic,

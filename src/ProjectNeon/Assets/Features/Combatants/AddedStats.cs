@@ -5,10 +5,10 @@ public sealed class AddedStats : IStats
     private readonly IStats _first;
     private readonly IStats _second;
 
-    public int MaxHP => _first.MaxHP + _second.MaxHP;
-    public int MaxShield => _first.MaxShield + _second.MaxShield;
-    public int Attack => _first.Attack + _second.Attack;
-    public int Magic => _first.Magic + _second.Magic;
+    public float MaxHP => _first.MaxHP + _second.MaxHP;
+    public float MaxShield => _first.MaxShield + _second.MaxShield;
+    public float Attack => _first.Attack + _second.Attack;
+    public float Magic => _first.Magic + _second.Magic;
     public float Armor => _first.Armor + _second.Armor;
     public float Resistance => _first.Resistance + _second.Resistance;
     

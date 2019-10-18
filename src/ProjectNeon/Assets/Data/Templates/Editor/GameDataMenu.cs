@@ -4,7 +4,6 @@ using UnityEngine;
 static class GameDataMenu
 {
     [MenuItem("Assets/Create/Card")]
-    [MenuItem("Assets/Create/GameContent/Card")]
     static void Card() => Create<Card>();
     
     [MenuItem("Assets/Create/GameContent/Hero")]
@@ -12,8 +11,6 @@ static class GameDataMenu
     [MenuItem("Assets/Create/GameContent/Enemy")]
     static void Enemy() => Create<Enemy>();
 
-    [MenuItem("Assets/Create/GameContent/BaseStats")]
-    static void BaseStats() => Create<BaseStats>();
     [MenuItem("Assets/Create/GameContent/SimpleResourceType")]
     static void SimpleResourceType() => Create<SimpleResourceType>();
     [MenuItem("Assets/Create/GameContent/Deck")]
