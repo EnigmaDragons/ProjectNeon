@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public sealed class AddedStats : IStats
 {
     private readonly IStats _first;
@@ -22,7 +24,8 @@ public sealed class AddedStats : IStats
 
 public static class AddedStatExtensions
 {
-    public static IStats Plus(this IStats first, params IStats[] others)
+    public static IStats Plus(this IStats first, params IStats[] others) => Plus(first, (IEnumerable<IStats>) others);
+    public static IStats Plus(this IStats first, IEnumerable<IStats> others)
     {
         var result = first;
         foreach (var other in others)

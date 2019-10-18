@@ -10,7 +10,15 @@ public static class AllEffects
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.HealFlat, e => new SimpleEffect(t => t.ApplyToAll(m => m.GainHp(e.FloatAmount)))},
         { EffectType.PhysicalDamage, e => new SimpleEffect((src, t) => t.ApplyToAll(m => m.TakePhysicalDamage(src.State.Attack * e.FloatAmount)))},
-        { EffectType.BuffAttackFlat, e => new SimpleEffect((src, t) => t.ApplyToAll(m => m.ApplyTemporaryAdditive(new BuffedStats(new InMemoryStats{ Attack = e.IntAmount}, e.NumberOfTurns))))},
+        { EffectType.BuffAttackFlat, e => new SimpleEffect(t => t.ApplyToAll(m => m.ApplyTemporaryAdditive(new BuffedStats(new InMemoryStats{ Attack = e.IntAmount}, e.NumberOfTurns))))},
+        { EffectType.RemoveDebuffs, e => new SimpleEffect(t => t.ApplyToAll(m => m.RemoveTemporaryEffects(effect => effect.IsDebuff)))},
+        { EffectType.BuffMaxHp, e => new SimpleEffect(t => t.ApplyToAll(m =>
+            {
+                m.ApplyAdditiveUntilEndOfBattle(new InMemoryStats {MaxHP = e.IntAmount});
+                m.GainHp(e.IntAmount);
+            }))},
+        { EffectType.ShieldFlat, e => new SimpleEffect(t => t.ApplyToAll(m => m.GainShield(e.IntAmount))) },
+        { EffectType.ResourceFlat, e => new SimpleEffect(t => t.ApplyToAll(m => m.GainResource(e.EffectScope.Value, e.IntAmount)))}
     };
     
     public static void Apply(EffectData effectData, Member source, Target target)

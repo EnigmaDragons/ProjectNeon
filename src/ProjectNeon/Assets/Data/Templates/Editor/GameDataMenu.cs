@@ -3,6 +3,7 @@ using UnityEngine;
 
 static class GameDataMenu
 {
+    [MenuItem("Assets/Create/Card")]
     [MenuItem("Assets/Create/GameContent/Card")]
     static void Card() => Create<Card>();
     
