@@ -7,5 +7,6 @@ public sealed class EffectData
     public EffectType EffectType;
     public FloatReference FloatAmount = new FloatReference();
     public IntReference NumberOfTurns = new IntReference();
+    public StringReference EffectScope = new StringReference();
     public int IntAmount => Convert.ToInt32(Math.Ceiling(FloatAmount.Value));
 }

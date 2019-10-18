@@ -1,28 +1,15 @@
+using System;
+using System.Linq;
 using NUnit.Framework;
 
 public sealed class EffectCreationTests
 {
     [Test]
-    public void Effect_NoEffect_CanCreate()
+    public void Effects_CanCreateAll()
     {
-        Assert.IsNotNull(AllEffects.Create(new EffectData { EffectType = EffectType.Nothing }));
-    }
+        var types = Enum.GetValues(typeof(EffectType)).Cast<EffectType>().Select(t => new EffectData {EffectType = t});
 
-    [Test]
-    public void Effect_Heal_CanCreate()
-    {
-        Assert.IsNotNull(AllEffects.Create(new EffectData { EffectType = EffectType.HealFlat }));
-    }
-    
-    [Test]
-    public void Effect_DealPhysicalDamage_CanCreate()
-    {
-        Assert.IsNotNull(AllEffects.Create(new EffectData { EffectType = EffectType.PhysicalDamage }));
-    }
-
-    [Test]
-    public void Effect_BuffAttackFlat_CanCreate()
-    {
-        Assert.IsNotNull(AllEffects.Create(new EffectData { EffectType = EffectType.BuffAttackFlat }));
+        foreach (var effectData in types)
+            Assert.IsNotNull(AllEffects.Create(effectData), $"Could not create Effect of Type {effectData.EffectType.ToString()}");
     }
 }

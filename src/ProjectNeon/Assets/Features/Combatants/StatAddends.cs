@@ -2,12 +2,12 @@ using System;
 
 namespace Features.Combatants
 {
-    public sealed class InMemoryStats : IStats
+    public sealed class StatAddends : IStats
     {
-        public int MaxHP { get; set; }
-        public int MaxShield { get; set; }
-        public int Attack { get; set; }
-        public int Magic { get; set;  }
+        public float MaxHP { get; set; }
+        public float MaxShield { get; set; }
+        public float Attack { get; set; }
+        public float Magic { get; set;  }
         public float Armor { get; set; }
         public float Resistance { get; set; }
         public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
