@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public sealed class AddedStats : IStats
 {
