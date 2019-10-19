@@ -1,17 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public sealed class AddedStats : IStats
 {
     private readonly IStats _first;
     private readonly IStats _second;
 
-    public float MaxHP => _first.MaxHP + _second.MaxHP;
-    public float MaxShield => _first.MaxShield + _second.MaxShield;
-    public float Attack => _first.Attack + _second.Attack;
-    public float Magic => _first.Magic + _second.Magic;
-    public float Armor => _first.Armor + _second.Armor;
-    public float Resistance => _first.Resistance + _second.Resistance;
-    
+    public float this[StatType statType] => _first[statType] + _second[statType];
+
     // @todo #1:15min Combine MaxResource Amounts
     public IResourceType[] ResourceTypes => _first.ResourceTypes;
 
@@ -25,11 +21,5 @@ public sealed class AddedStats : IStats
 public static class AddedStatExtensions
 {
     public static IStats Plus(this IStats first, params IStats[] others) => Plus(first, (IEnumerable<IStats>) others);
-    public static IStats Plus(this IStats first, IEnumerable<IStats> others)
-    {
-        var result = first;
-        foreach (var other in others)
-            result = new AddedStats(result, other);
-        return result;
-    }
+    public static IStats Plus(this IStats first, IEnumerable<IStats> others) => others.Aggregate(first, (current, other) => new AddedStats(current, other));
 }

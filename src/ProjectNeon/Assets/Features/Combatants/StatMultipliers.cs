@@ -1,10 +1,18 @@
 public sealed class StatMultipliers : IStats
 {
-    public float MaxHP { get; set; } = 1f;
-    public float MaxShield { get; set; } = 1f;
-    public float Attack { get; set; } = 1f;
-    public float Magic { get; set; } = 1f;
-    public float Armor { get; set; } = 1f;
-    public float Resistance { get; set; } = 1f;
+    private readonly DictionaryWithDefault<string, float> _values = new DictionaryWithDefault<string, float>(1);
+
+    public float this[StatType statType]
+    {
+        get => _values[statType.ToString()];
+        set => _values[statType.ToString()] = value;
+    }
+    
+    public StatMultipliers With(StatType statType, float value)
+    {
+        this[statType] = value;
+        return this;
+    }
+
     public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
 }
