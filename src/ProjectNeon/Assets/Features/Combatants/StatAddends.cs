@@ -1,17 +1,18 @@
-using System;
-
-namespace Features.Combatants
+public sealed class StatAddends : IStats
 {
-    public sealed class StatAddends : IStats
+    private readonly DictionaryWithDefault<string, float> _values = new DictionaryWithDefault<string, float>(0);
+
+    public float this[StatType statType]
     {
-        public float MaxHP { get; set; }
-        public float MaxShield { get; set; }
-        public float Attack { get; set; }
-        public float Magic { get; set;  }
-        public float Armor { get; set; }
-        public float Resistance { get; set; }
-        public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
-        public Func<int, bool> ActiveFunction = (currentTurn) => true;
-        public bool Active(int currentTurn) { return ActiveFunction.Invoke(currentTurn); }
+        get => _values[statType.ToString()];
+        set => _values[statType.ToString()] = value;
     }
+
+    public StatAddends With(StatType statType, float value)
+    {
+        this[statType] = value;
+        return this;
+    }
+    
+    public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
 }

@@ -10,4 +10,5 @@ public enum EffectType
     ResourceFlat = 7,
     DamageOverTimeFlat = 8,
     BuffAttackMultiplier = 9,
+    ApplyVulnerable = 10,
 }

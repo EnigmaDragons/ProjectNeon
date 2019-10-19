@@ -1,4 +1,3 @@
-using Features.Combatants;
 
 public sealed class DamageOverTime : ITemporalState, Effect
 {
