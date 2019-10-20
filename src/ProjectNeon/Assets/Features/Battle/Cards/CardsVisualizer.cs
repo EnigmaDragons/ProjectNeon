@@ -5,6 +5,7 @@ using UnityEngine;
 public class CardsVisualizer : MonoBehaviour
 {
     [SerializeField] private CardPlayZone zone;
+    [SerializeField] private bool allowInteractions = true;
     [SerializeField] private CardPlayZone onCardClickDestination;
     [SerializeField] private float cardSpacingScreenPercent = 0.15f;
     [SerializeField] private CardPresenter cardPrototype;
@@ -19,6 +20,7 @@ public class CardsVisualizer : MonoBehaviour
     
     void OnEnable()
     {
+        _isDirty = true;
         zone.OnZoneCardsChanged.Subscribe(
             new GameEventSubscription(zone.OnZoneCardsChanged.name, x => _isDirty = true, this));
     }
@@ -72,6 +74,7 @@ public class CardsVisualizer : MonoBehaviour
 
     public void SelectCard(int cardIndex)
     {
-        onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
+        if (allowInteractions)
+            onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
     }
 }

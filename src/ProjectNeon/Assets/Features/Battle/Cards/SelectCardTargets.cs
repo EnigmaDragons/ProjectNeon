@@ -89,6 +89,7 @@ class SelectCardTargets : MonoBehaviour
 
     private void OnSelectionComplete(CardPlayZone sendToZone)
     {
+        // @todo #1:15 Put in Card Resolution Zone
         sendToZone.PutOnBottom(selectedCardZone.DrawOneCard());
         _selectedCard = null;
         uiView.SetActive(false);
