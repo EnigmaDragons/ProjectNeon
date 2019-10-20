@@ -8,7 +8,7 @@ public sealed class AddedStats : IStats
 
     public float this[StatType statType] => _first[statType] + _second[statType];
 
-    // @todo #1:15min Combine MaxResource Amounts
+    // @todo #1:15min Combine Added MaxResource Amounts
     public IResourceType[] ResourceTypes => _first.ResourceTypes;
 
     public AddedStats(IStats first, IStats second)
