@@ -28,7 +28,9 @@
 
 **One-Shot** cards do not get reshuffled into the deck.
 
+**Armor** All incoming damage is reduced by your Armor. Negative armor causes all damage to be increased.
 
+**Retributive** effects only trigger when the enemy attacked an ally last turn.
 
 
 
