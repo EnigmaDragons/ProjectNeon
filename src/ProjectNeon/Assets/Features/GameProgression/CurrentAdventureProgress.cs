@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class CurrentAdventureProgress : MonoBehaviour
@@ -12,6 +10,7 @@ public class CurrentAdventureProgress : MonoBehaviour
     {
         if (!adventure.HasStageBegun)
         {
+            Debug.Log($"Is advancing the adventure. {adventure}");
             adventure.Advance();
         }
         nextText.text = adventure.CurrentStageSegment.Name;

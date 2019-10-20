@@ -7,7 +7,7 @@ public class SquadSlot : MonoBehaviour
     [SerializeField] private HeroPool heroPool;
     [SerializeField] private HeroDisplayPresenter presenter;
     
-    [ReadOnly] [SerializeField] private Hero current;
+    [ReadOnly, SerializeField, DTValidator.Optional] private Hero current;
 
     public void SelectNextHero()
     {
