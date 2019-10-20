@@ -19,6 +19,8 @@
 - **Lifesteal** is a modifier that causes all damage dealt from the card to be gained as health to the caster.
 - **Finisher** is an informative modifier that indicates that your entire Mana Pool will be spent to cast the card.(It should be accompanied by another symbol that indicates what the bonus effect for each mana spent will be.)
 - **One-Shot** cards do not get reshuffled into the deck.
+- **Armor** All incoming damage is reduced by your Armor. Negative armor causes all damage to be increased.
+- **Retributive** effects only trigger when the enemy attacked an ally last turn.
 
 ----
 
@@ -42,4 +44,3 @@
 +-% Resistance - Causes Resistance to be modified for the combat. 
 +-% Magic - Causes Magic to be modified for the combat. 
 +-Attack - Causes Attack to be modified for the combat. 
-

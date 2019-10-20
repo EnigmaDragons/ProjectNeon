@@ -1,6 +1,6 @@
 ## Paladin Cards
 
-###All Paladin cards may be played as Protect.
+### All Paladin cards may be played as Protect.
 
 ### Guardian:
 

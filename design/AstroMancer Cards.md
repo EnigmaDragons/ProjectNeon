@@ -1,21 +1,37 @@
 ##AstroMancer Cards
 
-###AstroMancer Cards can be played for 2 Mana
+AstroMancer Cards can be played as Manaflow
 
-Starfall -2 Mana Quadra-cast(Total cost = 2) Deal 6 damage to a random enemy. Feed: Heal a random ally 2.(So 8 healing in all.)
 
-Star Slash +1 Mana deal .5 damage to an enemy. Feed: Heal 1 for each mana.
 
-Starlight -1 Mana Deal 5 damage to all enemies. Feed: The Solar card has +10% spell Power for each enemy hit.
 
-Sunburn -2 Mana Deal 12 damage to all unshielded characters. Feed: 20% Chance to recast.
+###Tactical
 
-Shield of Radiance - Shield 1x Defense. Feed: Other allies get a .5 Defense Shield.
+**Blinding Light** +1 Mana Deal 3 damage to all characters. All characters deal -5 damage this turn. Feed-Lunar: This spell costs no mana.
 
-Blinding Light +1 Mana Deal 3 damage to all characters. All characters deal -5 damage this turn. Feed: This spell costs no mana.
+**Lunar Embrace** Character gains Regen 3, +3 strength for 3 turns & +3 defense for 3 turns.
 
-Lunar Embrace Character gains Regen 3, +3 strength for 3 turns & +3 defense for 3 turns.
+**Manaflow** 2 Mana
 
-Crescent Strike Deal 1x attack, gain 50% evasion until next turn.
 
-Lunar Flare Deal 15 (spell) damage to an enemy. 
+
+###Defensive
+
+**Shield of Radiance** Shield 1x Defense. Feed-Lunar: Other allies get a Shield equal to 1/2 your Shields.
+
+**Star Slash** +1 Mana deal .5 attack to an enemy. Feed-Solar: Heal 1 for each mana.
+
+
+
+###Offensive
+
+**Starfall** -2 Mana Quadra-cast Deal 6 to a random enemy. Feed-Solar: Heal a random ally 4.
+
+**Crescent Strike** Deal 1x attack. Gain 50% evasion until next turn.
+
+**Lunar Flare** Deal 15 to an enemy. 
+
+**Sunburn** -2 Mana Deal 12 to all unshielded characters. Feed-Lunar: 20% Chance to recast.
+
+
+**Starlight** -1 Mana Deal 5 to all enemies. Feed-Solar: +10% spell Power for each enemy hit by Starlight.
