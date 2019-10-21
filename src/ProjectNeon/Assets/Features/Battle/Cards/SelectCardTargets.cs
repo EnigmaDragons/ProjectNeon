@@ -62,7 +62,8 @@ class SelectCardTargets : MonoBehaviour
         cardPresenter.Set(_selectedCard, () => { });
         uiView.SetActive(true);
 
-        var hero = battleState.Members.Values.SingleOrDefault(x => x.Class.Equals(cardClass.Value));
+        // @todo: #1:15min Replace one of the Target Dummy with another class.
+        var hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value));
         if (hero == null)
         {
             Debug.Log($"Could not find Party Member with Class {cardClass.Value}");

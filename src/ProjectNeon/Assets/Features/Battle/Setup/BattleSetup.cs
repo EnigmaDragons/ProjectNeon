@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class BattleSetup : MonoBehaviour
 {
-    [SerializeField]
-    List<Deck> enemy;
-
+    [SerializeField] private List<Deck> enemy;
+    
     void Start()
     {
         foreach(Deck deck in enemy){
-            deck.Shuffle();
+            // @todo #1:15min Reimplement Enemy Battle Setup once an Enemy deck is ready
         }
     }
 }

@@ -4,23 +4,7 @@ using UnityEngine;
 
 public class Deck : ScriptableObject
 {
-    [SerializeField]
-    private List<Card> cards; 
+    [SerializeField] private List<Card> cards;
 
-    public void Shuffle()
-    {
-    }
-
-    public List<Card> Cards
-    {
-        get {
-            return cards.ToList();
-        }
-    }
-
-    public void Add(Card card)
-    {
-        cards.Add(card);
-    }
-
+    public List<Card> Cards => cards.ToList();
 }

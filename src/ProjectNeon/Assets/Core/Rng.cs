@@ -45,4 +45,17 @@ public static class Rng
     {
         return list[Int(list.Count)];
     }
+    
+    public static T[] Shuffled<T>(this T[] arr)
+    {
+        var shuffled = arr.ToArray();
+        for (var n = shuffled.Length - 1; n > 1; n--)
+        {
+            var k = Instance.Next(n + 1);
+            var value = shuffled[k];
+            shuffled[k] = shuffled[n];
+            shuffled[n] = value;
+        }
+        return shuffled;
+    }
 }

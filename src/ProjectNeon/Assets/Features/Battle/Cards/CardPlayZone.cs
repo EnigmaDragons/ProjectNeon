@@ -35,7 +35,7 @@ public class CardPlayZone : ScriptableObject
     public void Clear() => Mutate(c => Array.Empty<Card>());
     public void PutOnTop(Card card) => Mutate(c => card.Concat(c));
     public void PutOnBottom(Card card) => Mutate(c => c.Concat(card));
-    public void Shuffle() => Mutate(c => c.OrderBy((a) => (int)Math.Round(UnityEngine.Random.value, 0)));
+    public void Shuffle() => Mutate(c => c.Shuffled());
 
     public void Mutate(Func<Card[], IEnumerable<Card>> update)
     {
