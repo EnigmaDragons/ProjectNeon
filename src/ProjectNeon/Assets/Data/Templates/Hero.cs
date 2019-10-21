@@ -5,6 +5,7 @@ public class Hero : ScriptableObject
 {
     [SerializeField] private Sprite bust;
     [SerializeField] private StringVariable className;
+    [SerializeField] private Deck startingDeck;
     
     // Stats
     [SerializeField] private int maxHp;
@@ -17,6 +18,7 @@ public class Hero : ScriptableObject
     
     public Sprite Bust => bust;
     public StringVariable ClassName => className;
+    public Deck Deck => startingDeck;
 
     public IStats Stats => new StatAddends
         {
