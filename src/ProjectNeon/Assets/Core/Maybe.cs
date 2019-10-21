@@ -33,4 +33,6 @@ public sealed class Maybe<T> where T : class
     {
         return IsPresent && !condition(_value);
     }
+
+    public T OrDefault(Func<T> createDefault) => IsPresent ? Value : createDefault();
 }
