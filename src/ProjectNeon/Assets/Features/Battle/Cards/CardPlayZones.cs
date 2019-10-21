@@ -2,9 +2,24 @@
 
 public class CardPlayZones : ScriptableObject
 {
-    public CardPlayZone DrawZone;
-    public CardPlayZone HandZone;
-    public CardPlayZone PlayZone;
-    public CardPlayZone DiscardZone;
-    public CardPlayZone SelectionZone;
+    [SerializeField] private CardPlayZone drawZone;
+    [SerializeField] private CardPlayZone handZone;
+    [SerializeField] private CardPlayZone playZone;
+    [SerializeField] private CardPlayZone discardZone;
+    [SerializeField] private CardPlayZone selectionZone;
+
+    public CardPlayZone DrawZone => drawZone;
+    public CardPlayZone HandZone => handZone;
+    public CardPlayZone PlayZone => playZone;
+    public CardPlayZone DiscardZone => discardZone;
+    public CardPlayZone SelectionZone => selectionZone;
+
+    public void ClearAll()
+    {
+        drawZone.Clear();
+        handZone.Clear();
+        playZone.Clear();
+        discardZone.Clear();
+        selectionZone.Clear();
+    }
 }

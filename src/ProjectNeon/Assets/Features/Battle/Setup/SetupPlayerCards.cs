@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class SetupPlayerCards : MonoBehaviour
 {
+    [SerializeField] private Party party;
     [SerializeField] private CardPlayZones playerCardPlayZones;
-    [SerializeField] private Card debugDefaultCard;
     [SerializeField] private GameEvent onFinished;
     [SerializeField] private IntReference startingCards;
 
@@ -15,13 +16,8 @@ public class SetupPlayerCards : MonoBehaviour
 
     void Awake()
     {
-        Hand.Clear();
-        Discard.Clear();
-        Play.Clear();
-        Deck.Clear();
-        Selection.Clear();
-        for (var i = 0; i < 8; i++)
-            Deck.PutOnBottom(debugDefaultCard);
+        playerCardPlayZones.ClearAll();
+        Deck.Init(party.Decks.SelectMany(x => x.Cards));
     }
 
     void Start()
