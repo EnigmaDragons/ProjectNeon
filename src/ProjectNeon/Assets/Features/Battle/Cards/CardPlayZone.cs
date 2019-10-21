@@ -13,6 +13,11 @@ public class CardPlayZone : ScriptableObject
     public Card[] Cards => cards.ToArray();
     public GameEvent OnZoneCardsChanged => onZoneCardsChanged;
 
+    public void Init(IEnumerable<Card> newCards)
+    {
+        cards = newCards.ToArray();
+    }
+    
     public Card DrawOneCard()
     {
         var newCard = cards[0];

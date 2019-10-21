@@ -55,7 +55,7 @@ class SelectCardTargets : MonoBehaviour
         var cardClass = _selectedCard.LimitedToClass;
         if (!cardClass.IsPresent)
         {
-            Debug.Log("Card is not playable by Heroes", _selectedCard);
+            Debug.Log($"Card {_selectedCard.Name} is not playable by Heroes", _selectedCard);
             return;
         }
 
@@ -65,14 +65,14 @@ class SelectCardTargets : MonoBehaviour
         var hero = battleState.Members.Values.SingleOrDefault(x => x.Class.Equals(cardClass.Value));
         if (hero == null)
         {
-            Debug.Log($"Could not find Party Member named {cardClass.Value}");
+            Debug.Log($"Could not find Party Member with Class {cardClass.Value}");
             return;
         }
 
         var actions = _selectedCard.Actions;
         if (actions.Length == 0)
         {
-            Debug.Log($"Card {_selectedCard.name} has no Card Actions");
+            Debug.Log($"Card {_selectedCard.Name} has no Card Actions");
             OnTargetConfirmed();
             return;
         }

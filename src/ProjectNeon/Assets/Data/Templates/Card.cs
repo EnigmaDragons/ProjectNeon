@@ -12,6 +12,7 @@ public class Card : ScriptableObject
     [SerializeField] private CardAction cardAction1;
     [SerializeField] private CardAction cardAction2;
 
+    public string Name => name.WithSpaceBetweenWords();
     public ResourceCost Cost => cost;
     public Sprite Art => art;
     public string Description => description;

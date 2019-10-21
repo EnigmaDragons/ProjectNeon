@@ -16,7 +16,7 @@ public sealed class Party : ScriptableObject
         heroOne = one;
         heroTwo = two;
         heroThree = three;
-        decks = new Deck[] { one.Deck, two.Deck, three.Deck };
+        decks = new[] { one.Deck, two.Deck, three.Deck };
         return this;
     }
 }
