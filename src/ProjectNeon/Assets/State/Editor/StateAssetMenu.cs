@@ -11,8 +11,6 @@ static class StateAssetMenu
     static void BattlePlayerTargetingState() => Create<BattlePlayerTargetingState>();
     [MenuItem("Assets/Create/Game State/Party")]
     static void Party() => Create<Party>();
-    [MenuItem("Assets/Create/Game State/Party Decks")]
-    static void PartyDecks() => Create<PartyDecks>();
     [MenuItem("Assets/Create/Game State/Hero Pool")]
     static void HeroPool() => Create<HeroPool>();
     [MenuItem("Assets/Create/Game State/Adventure Progress")]

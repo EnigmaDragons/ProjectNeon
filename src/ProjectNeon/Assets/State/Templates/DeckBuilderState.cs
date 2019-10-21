@@ -7,7 +7,7 @@ using UnityEngine;
 public class DeckBuilderState : ScriptableObject
 {
     public CharactersEnum currentCharacter = CharactersEnum.Character1;
-    [SerializeField] private PartyDecks decks;
+    [SerializeField] private Party party;
     [SerializeField] private GameEvent onCurrentDeckChanged;
     [SerializeField] private Library library;
     
@@ -27,7 +27,7 @@ public class DeckBuilderState : ScriptableObject
     private Deck current;
     public Deck Current()
     {
-        return this.decks.Decks[(int)currentCharacter];
+        return party.Decks[(int)currentCharacter];
     }
 
     public List<Card> GetPossibleCardsForCurrentHero()
