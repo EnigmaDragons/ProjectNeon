@@ -11,4 +11,6 @@ public enum EffectType
     DamageOverTimeFlat = 8,
     BuffAttackMultiplier = 9,
     ApplyVulnerable = 10,
+    ShieldToughness = 11,
+    ArmorFlat = 12
 }

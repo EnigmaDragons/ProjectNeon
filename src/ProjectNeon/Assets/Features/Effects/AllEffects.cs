@@ -21,6 +21,8 @@ public static class AllEffects
         { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new DebuffedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), e.NumberOfTurns))) },
+        { EffectType.ShieldToughness, e => new SimpleEffect(m => m.GainShield(e.IntAmount * m.Toughness())) },
+        { EffectType.ArmorFlat, e => new SimpleEffect(m => m.GainArmor(e.IntAmount)) },
     };
     
     public static void Apply(EffectData effectData, Member source, Target target)

@@ -38,6 +38,7 @@ public sealed class MemberState : IStats
     public void GainResource(string resourceName, int amount) => Counter(resourceName).ChangeBy(amount);
     public void GainHp(float amount) => ChangeHp(amount);
     public void GainShield(float amount) => Counter(TemporalStatType.Shield).ChangeBy(amount);
+    public void GainArmor(float amount) => Counter(TemporalStatType.Armor).ChangeBy(amount);
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
     public void TakePhysicalDamage(float amount) => ChangeHp((-(amount * ((1f - CurrentStats.Armor()) / 1f))) * CurrentStats.Damagability());
     private void ChangeHp(float amount) => Counter(TemporalStatType.HP).ChangeBy(amount);
