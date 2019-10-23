@@ -28,6 +28,7 @@ public sealed class MemberState : IStats
     }
 
     public float this[StatType statType] => CurrentStats[statType];
+    public float this[TemporalStatType temporalStatType] => _counters[temporalStatType.ToString()].Amount;
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
     
     public void ApplyTemporaryAdditive(ITemporalState mods) => _additiveMods.Add(mods);
@@ -38,7 +39,7 @@ public sealed class MemberState : IStats
     public void GainResource(string resourceName, int amount) => Counter(resourceName).ChangeBy(amount);
     public void GainHp(float amount) => ChangeHp(amount);
     public void GainShield(float amount) => Counter(TemporalStatType.Shield).ChangeBy(amount);
-    public void GainArmor(float amount) => Counter(TemporalStatType.Armor).ChangeBy(amount);
+    public void GainArmor(float amount) => ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.Armor, amount));
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
     public void TakePhysicalDamage(float amount) => ChangeHp((-(amount * ((1f - CurrentStats.Armor()) / 1f))) * CurrentStats.Damagability());
     private void ChangeHp(float amount) => Counter(TemporalStatType.HP).ChangeBy(amount);
