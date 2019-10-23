@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DebugDrawCard : MonoBehaviour
 {
@@ -9,10 +8,5 @@ public class DebugDrawCard : MonoBehaviour
     public void DrawOneCard()
     {
         Hand.PutOnBottom(Deck.DrawOneCard());
-    }
-
-    public static void Log(EffectData effectData)
-    {
-        throw new NotImplementedException();
     }
 }

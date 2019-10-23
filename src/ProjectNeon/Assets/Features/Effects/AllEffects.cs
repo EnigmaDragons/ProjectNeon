@@ -21,9 +21,12 @@ public static class AllEffects
         { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new DebuffedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), e.NumberOfTurns))) },
-        { EffectType.ShieldToughness, e => new SimpleEffect(m => m.GainShield(e.IntAmount * m.Toughness())) },
+        { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.GainShield(e.IntAmount * src.State.Toughness())) },
         { EffectType.ArmorFlat, e => new SimpleEffect(m => m.GainArmor(e.IntAmount)) },
     };
+    /**
+     * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
+     */
     
     public static void Apply(EffectData effectData, Member source, Target target)
     {

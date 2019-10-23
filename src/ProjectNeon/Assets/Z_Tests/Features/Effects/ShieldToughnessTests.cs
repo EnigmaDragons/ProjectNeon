@@ -13,7 +13,7 @@ public sealed class ShieldToughnessTests
         "Good Dummy One", 
         "Paladin", 
         TeamType.Party, 
-        new StatAddends()
+        new StatAddends().With(StatType.Toughness, 5)
     );
 
     private Member target = new Member(
@@ -21,13 +21,12 @@ public sealed class ShieldToughnessTests
         "Good Dummy Two", 
         "Wooden Dummy", 
         TeamType.Party, 
-        new StatAddends().With(StatType.Toughness, 5) 
+        new StatAddends()
     );
 
     [Test]
     public void ShieldToughness_ApplyEffect()
     {
-        Debug.Log("Testtinf");
         AllEffects.Apply(data, performer, new MemberAsTarget(target));
         Assert.AreEqual(
             5,

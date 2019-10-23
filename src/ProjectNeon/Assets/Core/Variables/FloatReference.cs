@@ -21,9 +21,4 @@ public class FloatReference
     {
         return reference.Value;
     }
-
-    public static implicit operator FloatReference(int v)
-    {
-        throw new NotImplementedException();
-    }
 }
