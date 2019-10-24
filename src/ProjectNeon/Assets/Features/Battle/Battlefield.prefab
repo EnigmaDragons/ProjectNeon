@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5198417540457684062}
-  - component: {fileID: 3228917146696906469}
+  - component: {fileID: 700813340484455772}
   m_Layer: 0
   m_Name: Battlefield
   m_TagString: Untagged
@@ -26,13 +26,13 @@ Transform:
   m_GameObject: {fileID: 1553302666813258211}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.93, y: 0.93, z: 0.93}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3500899982171565924}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3228917146696906469
+--- !u!114 &700813340484455772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,13 +41,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1553302666813258211}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9909e676fe54451ba298490b44a5385d, type: 3}
+  m_Script: {fileID: 11500000, guid: bd947ee86516f5e4c94cdedabce73daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnStepsCompleted: {fileID: 11400000, guid: e3488d505f799c3438f46aacaf58b5eb, type: 2}
-  RequiredEvents: []
-  _isFinished: 0
-  _finishedEvents: []
+  battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  onFinished: {fileID: 11400000, guid: e3488d505f799c3438f46aacaf58b5eb, type: 2}
 --- !u!1 &6347719312223762102
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,7 +62,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3500899982171565924
 Transform:
   m_ObjectHideFlags: 0

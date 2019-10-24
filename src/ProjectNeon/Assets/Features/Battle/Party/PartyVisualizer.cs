@@ -14,10 +14,23 @@ public class PartyVisualizer : MonoBehaviour
     {
         var party = partyArea.Party;
         var heroes = party.Heroes;
-        hero1.GetComponent<SpriteRenderer>().sprite = heroes[0].Bust;
-        hero2.GetComponent<SpriteRenderer>().sprite = heroes[1].Bust;
-        hero3.GetComponent<SpriteRenderer>().sprite = heroes[2].Bust;
+        SetupHero(hero1, heroes[0]);
+        SetupHero(hero2, heroes[1]);
+        SetupHero(hero3, heroes[2]);
         partyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform });
         onPartySetupFinished.Publish();
+    }
+
+    private void SetupHero(GameObject heroOrigin, Hero hero)
+    {
+        var hasBody = !hero.Body.name.Equals("BodyPlaceholder");
+        if (hasBody)
+        {
+            Instantiate(hero.Body, heroOrigin.transform.position, Quaternion.identity, heroOrigin.transform);
+        }
+        else
+        {
+            heroOrigin.GetComponent<SpriteRenderer>().sprite = hero.Bust;
+        }
     }
 }
