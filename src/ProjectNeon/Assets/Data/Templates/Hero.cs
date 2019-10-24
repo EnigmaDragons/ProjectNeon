@@ -4,6 +4,7 @@ using UnityEngine;
 public class Hero : ScriptableObject
 {
     [SerializeField] private Sprite bust;
+    [SerializeField] private GameObject body;
     [SerializeField] private StringVariable className;
     [SerializeField] private Deck startingDeck;
     
@@ -17,6 +18,7 @@ public class Hero : ScriptableObject
     [SerializeField] private ResourceType resource1;
     
     public Sprite Bust => bust;
+    public GameObject Body => body;
     public StringVariable ClassName => className;
     public Deck Deck => startingDeck;
 
