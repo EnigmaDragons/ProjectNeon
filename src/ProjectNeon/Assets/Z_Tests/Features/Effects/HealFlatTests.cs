@@ -1,45 +1,27 @@
 ﻿using NUnit.Framework;
 
-
 public sealed class HealFlatTests
 {
-
-    private EffectData data = new EffectData { EffectType = EffectType.HealFlat, FloatAmount = new FloatReference(5) } ;
-
-    private Member performer = new Member(
-        1,
-        "Good Dummy One",
-        "Paladin",
-        TeamType.Party,
-        new StatAddends()
-    );
-
-    private Member target = new Member(
-        2,
-        "Good Dummy Two",
-        "Wooden Dummy",
-        TeamType.Party,
-        new StatAddends().With(StatType.MaxHP, 10).With(StatType.Damagability, 1)
-    );
-
     [Test]
     public void HealFlat_ApplyEffect_DoesNotPassFullHealth()
     {
-        AllEffects.Apply(data, performer, new MemberAsTarget(target));
-        Assert.AreEqual(
-            10,
-            target.State[TemporalStatType.HP]
-        );
+        var heal5 = new EffectData { EffectType = EffectType.HealFlat, FloatAmount = new FloatReference(5) };
+        var target = TestMembers.With(StatType.MaxHP, 10);
+        
+        AllEffects.Apply(heal5, TestMembers.Any(), new MemberAsTarget(target));
+        
+        Assert.AreEqual(10, target.State[TemporalStatType.HP]);
     }
 
     [Test]
-    public void HealFlat_ApplyEffect()
+    public void HealFlat_Take6DamageAndThenHeal5_HpIsCorrect()
     {
+        var heal5 = new EffectData { EffectType = EffectType.HealFlat, FloatAmount = new FloatReference(5) };
+        var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
+        
         target.State.TakeRawDamage(6);
-        AllEffects.Apply(data, performer, new MemberAsTarget(target));
-        Assert.AreEqual(
-            9,
-            target.State[TemporalStatType.HP]
-        );
+        AllEffects.Apply(heal5, TestMembers.Any(), new MemberAsTarget(target));
+        
+        Assert.AreEqual(9, target.State[TemporalStatType.HP]);
     }
 }

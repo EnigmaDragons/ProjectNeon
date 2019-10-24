@@ -1,36 +1,16 @@
 ﻿using NUnit.Framework;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
+[TestFixture]
 public sealed class ShieldToughnessTests
 {
-
-    private EffectData data = new EffectData { EffectType = EffectType.ShieldToughness, FloatAmount = new FloatReference(1)} ;
-
-    private Member performer = new Member(
-        1, 
-        "Good Dummy One", 
-        "Paladin", 
-        TeamType.Party, 
-        new StatAddends().With(StatType.Toughness, 5)
-    );
-
-    private Member target = new Member(
-        2, 
-        "Good Dummy Two", 
-        "Wooden Dummy", 
-        TeamType.Party, 
-        new StatAddends()
-    );
-
     [Test]
     public void ShieldToughness_ApplyEffect()
     {
-        AllEffects.Apply(data, performer, new MemberAsTarget(target));
-        Assert.AreEqual(
-            5,
-            target.State[TemporalStatType.Shield]
-        );
+        var shieldTarget = new EffectData { EffectType = EffectType.ShieldToughness, FloatAmount = new FloatReference(1)};
+        var performer = TestMembers.With(StatType.Toughness, 5);
+        var target = TestMembers.With(StatType.Toughness, 10);
+        
+        AllEffects.Apply(shieldTarget, performer, new MemberAsTarget(target));
+        Assert.AreEqual(5, target.State[TemporalStatType.Shield]);
     }
 }
