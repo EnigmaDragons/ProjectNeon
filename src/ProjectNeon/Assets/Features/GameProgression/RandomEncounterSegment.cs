@@ -1,11 +1,15 @@
-﻿using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
-class RandomEncounterSegment : StageSegment
+public class RandomEncounterSegment : StageSegment
 {
     public override string Name => "Battle";
-
+    [SerializeField] private GameObject[] possibleBattlegrounds;
+    [SerializeField] private BattleState battleState;
+    
     public override void Start()
     {
+        battleState.SetNextBattleground(possibleBattlegrounds.Random());
         SceneManager.LoadScene("BattleScene");
     }
 }
