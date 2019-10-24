@@ -5,19 +5,10 @@ using UnityEngine;
 
 public sealed class StunTests
 {
-
-    private EffectData data = new EffectData { EffectType = EffectType.Stun, FloatAmount = new FloatReference(1)} ;
-
-    private Member performer = new Member(
-        1, 
-        "Good Dummy One", 
-        "Paladin", 
-        TeamType.Party, 
-        new StatAddends()
-    );
+    private EffectData data = new EffectData { EffectType = EffectType.Stun, NumberOfTurns = new IntReference(1)} ;
 
     private Member target = new Member(
-        2, 
+        1, 
         "Good Dummy Two", 
         "Confusable Dummy", 
         TeamType.Party, 
@@ -27,10 +18,10 @@ public sealed class StunTests
     [Test]
     public void Stun_ApplyEffect()
     {
-        AllEffects.Apply(data, performer, new MemberAsTarget(target));
+        AllEffects.Apply(data, target, new MemberAsTarget(target));
         Assert.AreEqual(
             true,
-            target.State[Status.Stunned]
+            target.State[TemporalStatType.Stun] > 0
         );
     }
 }
