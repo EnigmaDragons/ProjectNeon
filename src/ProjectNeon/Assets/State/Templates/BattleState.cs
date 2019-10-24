@@ -6,11 +6,13 @@ public class BattleState : ScriptableObject
 {
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private EnemyArea enemies;
+    [SerializeField] private GameObject nextBattlegroundPrototype;
     [SerializeField, ReadOnly] private Vector3[] uiPositions;
     public bool SelectionStarted = false;
 
     public Party Party => partyArea.Party;
     public EnemyArea EnemyArea => enemies;
+    public GameObject Battlefield => nextBattlegroundPrototype;
     public IReadOnlyDictionary<int, Member> Members => _membersById;
     private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
@@ -24,6 +26,11 @@ public class BattleState : ScriptableObject
         return Init();
     }
 
+    public void SetNextBattleground(GameObject prototype)
+    {
+        nextBattlegroundPrototype = prototype;
+    }
+    
     public BattleState Init()
     {
         var id = 1;      
