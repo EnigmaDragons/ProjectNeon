@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class StageSegment : ScriptableObject
 {
