@@ -62,7 +62,7 @@ class SelectCardTargets : MonoBehaviour
         cardPresenter.Set(_selectedCard, () => { });
         uiView.SetActive(true);
 
-        // @todo: #1:15min Replace one of the Target Dummy with another class.
+        // @todo #1:15min Replace one of the Target Dummy with another class.
         var hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value));
         if (hero == null)
         {
