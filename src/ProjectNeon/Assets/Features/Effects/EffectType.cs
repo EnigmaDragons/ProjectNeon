@@ -12,5 +12,6 @@ public enum EffectType
     BuffAttackMultiplier = 9,
     ApplyVulnerable = 10,
     ShieldToughness = 11,
-    ArmorFlat = 12
+    ArmorFlat = 12,
+    TriggeredShieldFlat = 13
 }
