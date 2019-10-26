@@ -28,8 +28,7 @@ public class DeckUI : MonoBehaviour
 
     private void OnDeckChanged()
     {
-        if (_cardButtons.Any(x => x.Count == 0) || state.TemporaryDeck.Cards.Any(card => _cardButtons.All(button => button.CardName != card.Name)))
-            GenerateDeck();
+        GenerateDeck();
     } 
 
     private void GenerateDeck()

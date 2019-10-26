@@ -11,7 +11,6 @@ public class DeckSelectionUI : MonoBehaviour
     [SerializeField] private GameEvent decksChanged;
     [SerializeField] private DeckStorage storage;
     [SerializeField] private DeckBuilderState state;
-    [SerializeField] private DeckBuilderNavigation navigation;
 
     private void OnEnable()
     {
@@ -30,12 +29,12 @@ public class DeckSelectionUI : MonoBehaviour
         pageViewer.Init(selectDeckButton.gameObject, addDeckButton.gameObject, storage.GetDecks()
             .Where(x => x.ClassName != null && !string.IsNullOrWhiteSpace(x.Name) && x.ClassName.Value == state.SelectedHero.ClassName.Value)
             .Select(InitSelectDeckButton)
-            .ToList(), x => x.GetComponent<AddDeckButton>().Init(navigation), true);
+            .ToList(), x => {}, true);
     }
 
     private Action<GameObject> InitSelectDeckButton(Deck deck)
     {
-        Action<GameObject> init = gameObj => gameObj.GetComponent<SelectDeckButton>().Init(navigation, deck);
+        Action<GameObject> init = gameObj => gameObj.GetComponent<SelectDeckButton>().Init(deck);
         return init;
     }
 }

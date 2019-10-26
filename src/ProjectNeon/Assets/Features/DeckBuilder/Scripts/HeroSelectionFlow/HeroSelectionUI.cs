@@ -8,7 +8,6 @@ public class HeroSelectionUI : MonoBehaviour
     [SerializeField] private Party party;
     [SerializeField] private SelectHeroButton selectHeroButtonTemplate;
     [SerializeField] private Transform parent;
-    [SerializeField] private DeckBuilderNavigation navigation;
 
     private void Start()
     {
@@ -16,7 +15,7 @@ public class HeroSelectionUI : MonoBehaviour
         party.Heroes.ForEach(x =>
         {
             var button = Instantiate(selectHeroButtonTemplate, parent);
-            button.GetComponent<SelectHeroButton>().Init(x, navigation);
+            button.GetComponent<SelectHeroButton>().Init(x);
             buttons.Add(button.GetComponent<RectTransform>());
         });
         for (var i = 0; i < buttons.Count; i++)

@@ -6,12 +6,11 @@ public class DeckBuilderState : ScriptableObject
     [SerializeField] private GameEvent deckSelected;
     [SerializeField] private GameEvent deckChosen;
 
-    [ReadOnly] public DeckBuilderOperation Operation;
-
     private Hero _selectedHero;
     private Deck _selectedDeck;
     private Deck _temporaryDeck;
 
+    public DeckBuilderOperation Operation { get; set; }
     public bool DeckIsSelected { get; set; }
 
     public Hero SelectedHero

@@ -5,13 +5,12 @@ public class SelectDeckButton : MonoBehaviour
 {
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private TextMeshProUGUI deckNameText;
-
-    private DeckBuilderNavigation _navigation;
+    [SerializeField] private GameEvent deckBuildingStarted;
+    
     private Deck _deck;
 
-    public void Init(DeckBuilderNavigation navigation, Deck deck)
+    public void Init(Deck deck)
     {
-        _navigation = navigation;
         _deck = deck;
         deckNameText.text = deck.Name;
     }
@@ -21,7 +20,7 @@ public class SelectDeckButton : MonoBehaviour
         if (state.DeckIsSelected && state.SelectedDeck == _deck)
         {
             state.Operation = state.SelectedDeck.IsImmutable ? DeckBuilderOperation.View : DeckBuilderOperation.Edit;
-            _navigation.NavigateToDeckBuilder();
+            deckBuildingStarted.Publish();
         }
         else
         {

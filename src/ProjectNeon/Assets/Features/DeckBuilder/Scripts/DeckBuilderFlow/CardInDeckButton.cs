@@ -11,20 +11,20 @@ public class CardInDeckButton : MonoBehaviour
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private GameEvent deckChanged;
 
-    public string CardName;
-    public int Count;
+    private string _cardName;
+    private int _count;
 
     public void Init(string cardName)
     {
-        CardName = cardName;
+        _cardName = cardName;
         button.interactable = !state.TemporaryDeck.IsImmutable;
         UpdateInfo();
     }
 
     public void RemoveCard()
     {
-        state.TemporaryDeck.Cards.Remove(state.TemporaryDeck.Cards.First(x => x.Name == CardName));
-        Count--;
+        state.TemporaryDeck.Cards.Remove(state.TemporaryDeck.Cards.First(x => x.Name == _cardName));
+        _count--;
         deckChanged.Publish();
     }
 
@@ -33,8 +33,8 @@ public class CardInDeckButton : MonoBehaviour
 
     private void UpdateInfo()
     {
-        Count = state.TemporaryDeck.Cards.Count(x => x.Name == CardName);
-        cardNameText.text = CardName;
-        countText.text = Count.ToString();
+        _count = state.TemporaryDeck.Cards.Count(x => x.Name == _cardName);
+        cardNameText.text = _cardName;
+        countText.text = _count.ToString();
     }
 }
