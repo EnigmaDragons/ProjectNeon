@@ -5,12 +5,12 @@ public class EditDeckButton : MonoBehaviour
 {
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private Button button;
-    [SerializeField] private DeckBuilderNavigation navigation;
+    [SerializeField] private GameEvent deckBuildingStarted;
 
     public void Edit()
     {
         state.Operation = state.SelectedDeck.IsImmutable ? DeckBuilderOperation.View : DeckBuilderOperation.Edit;
-        navigation.NavigateToDeckBuilder();
+        deckBuildingStarted.Publish();
     }
 
     private void Update() => button.interactable = state.DeckIsSelected;

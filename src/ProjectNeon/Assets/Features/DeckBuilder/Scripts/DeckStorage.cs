@@ -20,10 +20,17 @@ public class DeckStorage : ScriptableObject
 
     public List<Deck> GetDecks()
     {
-        _decks = _decks.Where(x => x != null).ToList();
+        Init();
         return AssetDatabase.FindAssets("t:" + typeof(Deck).Name)
             .Select(x => AssetDatabase.LoadAssetAtPath<Deck>(AssetDatabase.GUIDToAssetPath(x)))
             .Concat(_decks)
             .ToList();
+    }
+
+    private void Init()
+    {
+        if (_decks == null)
+            _decks = new List<Deck>();
+        _decks = _decks.Where(x => x != null).ToList();
     }
 }

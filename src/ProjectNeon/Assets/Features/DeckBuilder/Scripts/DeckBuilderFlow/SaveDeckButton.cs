@@ -8,7 +8,7 @@ public class SaveDeckButton : MonoBehaviour
     [SerializeField] private IntReference deckSize;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private Button button;
-    [SerializeField] private DeckBuilderNavigation navigation;
+    [SerializeField] private GameEvent deckSelectionRequired;
     [SerializeField] private GameEvent decksChanged;
     [SerializeField] private DeckStorage storage;
 
@@ -19,7 +19,7 @@ public class SaveDeckButton : MonoBehaviour
         else if (state.Operation == DeckBuilderOperation.Edit)
             state.SelectedDeck.Import(state.TemporaryDeck);
         decksChanged.Publish();
-        navigation.NavigateToDeckSelection();
+        deckSelectionRequired.Publish();
     }
 
     private void Update() 

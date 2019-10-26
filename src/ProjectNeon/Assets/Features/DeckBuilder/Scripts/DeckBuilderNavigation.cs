@@ -6,15 +6,32 @@ public class DeckBuilderNavigation : MonoBehaviour
     [SerializeField] private GameObject deckSelection;
     [SerializeField] private GameObject deckBuilder;
     [SerializeField] private DeckBuilderState state;
+    [SerializeField] private GameEvent heroSelectionRequired;
+    [SerializeField] private GameEvent deckSelectionRequired;
+    [SerializeField] private GameEvent deckBuildingStarted;
 
-    public void NavigateToHeroSelection()
+    private void OnEnable()
+    {
+        heroSelectionRequired.Subscribe(NavigateToHeroSelection, this);
+        deckSelectionRequired.Subscribe(NavigateToDeckSelection, this);
+        deckBuildingStarted.Subscribe(NavigateToDeckBuilder, this);
+    }
+
+    private void OnDisable()
+    {
+        heroSelectionRequired.Unsubscribe(this);
+        deckSelectionRequired.Unsubscribe(this);
+        deckBuildingStarted.Unsubscribe(this);
+    }
+
+    private void NavigateToHeroSelection()
     {
         characterSelection.SetActive(true);
         deckSelection.SetActive(false);
         deckBuilder.SetActive(false);
     }
 
-    public void NavigateToDeckSelection()
+    private void NavigateToDeckSelection()
     {
         state.DeckIsSelected = false;
         characterSelection.SetActive(false);
@@ -22,7 +39,7 @@ public class DeckBuilderNavigation : MonoBehaviour
         deckBuilder.SetActive(false);
     }
 
-    public void NavigateToDeckBuilder()
+    private void NavigateToDeckBuilder()
     {
         state.TemporaryDeck = state.SelectedDeck.Export();
         characterSelection.SetActive(false);
