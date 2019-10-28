@@ -35,18 +35,17 @@ public class DeckUI : MonoBehaviour
     {
         _cardButtons = new List<CardInDeckButton>();
         pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.TemporaryDeck.Cards
-            .Select(x => x.Name)
-            .Distinct()
-            .Select(InitCardInDeckButton)
+            .GroupBy(x => x.Name)
+            .Select(x => InitCardInDeckButton(x.First()))
             .ToList(), x => {});
     }
 
-    private Action<GameObject> InitCardInDeckButton(string cardName)
+    private Action<GameObject> InitCardInDeckButton(Card card)
     {
         Action<GameObject> init = gameObj =>
         {
             var cardInDeckButton = gameObj.GetComponent<CardInDeckButton>();
-            cardInDeckButton.Init(cardName);
+            cardInDeckButton.Init(card);
             _cardButtons.Add(cardInDeckButton);
         };
         return init;
