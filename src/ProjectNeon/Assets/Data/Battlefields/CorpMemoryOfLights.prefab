@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6355859450270175972}
   - component: {fileID: 6823752570524095845}
   m_Layer: 0
-  m_Name: BluePAINT Light
+  m_Name: BluePAINT-Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791814483608084315}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 0.26666668, g: 0.54901963, b: 0.7490196, a: 1}
@@ -101,13 +101,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 791814483608084315}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3379eaefaa2717c45b513fec72b15561, type: 3}
+  m_Script: {fileID: 11500000, guid: ea66e3fd9b453374c80174b8eb4504a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 6355859450270175972}
-  minIntensity: 11.9
-  maxIntensity: 25.2
-  smoothing: 11
+  light: {fileID: 0}
+  minIntensity: 7
+  maxIntensity: 14
+  smoothing: 8
 --- !u!1 &1010727952575787446
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 3179077446713343915}
   - component: {fileID: 2084616798355292676}
   m_Layer: 0
-  m_Name: MAIN Light
+  m_Name: MAINLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -291,7 +291,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 648c385f49b0b934e87f8a51f93d64ca, type: 2}
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 816570506172774929, guid: 8cbb099cfa5e0ed4ab2c5a119a198cd5,
         type: 3}
       propertyPath: m_Color.a
