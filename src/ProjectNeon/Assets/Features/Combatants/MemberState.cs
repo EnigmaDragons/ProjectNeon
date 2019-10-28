@@ -30,7 +30,7 @@ public sealed class MemberState : IStats
     public float this[StatType statType] => CurrentStats[statType];
     public float this[TemporalStatType temporalStatType] => _counters[temporalStatType.ToString()].Amount;
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
-    
+
     public void ApplyTemporaryAdditive(ITemporalState mods) => _additiveMods.Add(mods);
     public void ApplyAdditiveUntilEndOfBattle(IStats mods) => _battleAdditiveMods.Add(mods);
     public void ApplyTemporaryMultiplier(ITemporalState mods) => _multiplierMods.Add(mods);
@@ -43,6 +43,18 @@ public sealed class MemberState : IStats
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
     public void TakePhysicalDamage(float amount) => ChangeHp((-(amount * ((1f - CurrentStats.Armor()) / 1f))) * CurrentStats.Damagability());
     private void ChangeHp(float amount) => Counter(TemporalStatType.HP).ChangeBy(amount);
+
+    public void Stun(int duration)
+    {
+        if (!_counters.ContainsKey("Stun"))
+        {
+            _counters["Stun"] = new BattleCounter(TemporalStatType.Stun, 0, () => 0);
+        }
+        Counter(TemporalStatType.Stun).Set(duration);
+    }
+
+    // @todo #380:30min Stun effect is created, but it does nothing. Implement Styun behaviort so a character
+    //  with the Stun TemporalStat won't be able to play a card in the current turn.
 
     // @todo #1:15min In The Battle Wrap Up Phase, Advance Turn on all members
     public void AdvanceTurn()
