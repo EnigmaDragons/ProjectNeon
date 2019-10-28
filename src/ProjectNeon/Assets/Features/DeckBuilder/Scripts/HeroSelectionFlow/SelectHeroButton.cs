@@ -5,7 +5,8 @@ public class SelectHeroButton : MonoBehaviour
 {
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private Image image;
-    [SerializeField] private GameEvent deckSelectionRequired; 
+    [SerializeField] private GameEvent deckSelectionRequired;
+    [SerializeField] private Image selected;
 
     private Hero _hero;
 
@@ -20,4 +21,6 @@ public class SelectHeroButton : MonoBehaviour
         state.SelectedHero = _hero;
         deckSelectionRequired.Publish();
     }
+
+    private void Update() => selected.gameObject.SetActive(state.SelectedHero == _hero);
 }
