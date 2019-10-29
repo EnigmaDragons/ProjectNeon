@@ -13,5 +13,5 @@ public enum EffectType
     ApplyVulnerable = 10,
     ShieldToughness = 11,
     ArmorFlat = 12,
-    TriggeredShieldFlat = 13
+    ShieldFlatOnAttack = 13
 }
