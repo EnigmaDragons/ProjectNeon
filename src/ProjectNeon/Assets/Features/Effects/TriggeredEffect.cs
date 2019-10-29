@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class TriggeredEffect<T> : Effect where T : GameEvent
 {
-    [SerializeField] protected Effect origin;
+    private Effect origin;
+    private T trigger;
 
-    [SerializeField] protected List<T> triggeredUpon;
-
-    public void Init()
+    public void Init(Effect origin, T trigger) 
     {
-        triggeredUpon.ForEach(evt => evt.Subscribe(new GameEventSubscription(evt.name, x => ProcessEvent(evt), this)));
+        Debug.Log("Initialçizing triggered effect");
+        Debug.Log("Event name: " + trigger.name);
+        Debug.Log("Event: " + trigger.GetHashCode());
+        trigger.Subscribe(new GameEventSubscription(trigger.name, x=> ProcessEvent(trigger), this));
     }
 
-    public void Apply(Member source, Target target)
-    {
-        origin.Apply(source, target);
-    }
-
+    public abstract void Apply(Member source, Target target);
     public abstract void ProcessEvent(T evt);
 }
