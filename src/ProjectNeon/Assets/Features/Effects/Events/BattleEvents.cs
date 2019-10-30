@@ -39,4 +39,3 @@ public sealed class BattleEvents
         _ownerSubscriptions.Remove(owner);
     }
 }
-}

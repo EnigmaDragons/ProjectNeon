@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class HeroBattleUIPresenter : MonoBehaviour
 {
     [SerializeField] private Image bust;
-    [SerializeField] private HPBarController hp;
+    [SerializeField] private UIHPBarController hp;
     [SerializeField] private BattleState state;
     [SerializeField] private ResourceCounterPresenter resource1;
     [SerializeField] private ResourceCounterPresenter resource2;
