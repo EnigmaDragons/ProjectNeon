@@ -24,7 +24,7 @@ public sealed class MemberState : IStats
         _baseStats = baseStats;
         _counters["HP"] = new BattleCounter(TemporalStatType.HP, _baseStats.MaxHP(), () => CurrentStats.MaxHP());
         _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.Toughness() * 2);
-        baseStats.ResourceTypes.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, 0, () => r.MaxAmount));
+        baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, 0, () => r.MaxAmount));
     }
 
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;

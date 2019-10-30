@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BattleState : ScriptableObject
 {
+    [SerializeField] private CardPlayZones cardPlayZones;
+    [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private EnemyArea enemies;
     [SerializeField] private GameObject nextBattlegroundPrototype;
