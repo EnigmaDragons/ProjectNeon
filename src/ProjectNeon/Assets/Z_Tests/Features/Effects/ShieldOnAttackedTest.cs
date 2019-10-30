@@ -5,8 +5,7 @@ public sealed class ShieldAttackedOnAttackTests
 {
     private EffectData ChangeShieldOnAttackBy(float amount) => 
         new EffectData { 
-            EffectType = EffectType.ShieldAttackedOnAttack
-            , 
+            EffectType = EffectType.ShieldAttackedOnAttack, 
             FloatAmount = new FloatReference(amount) 
         };
 
