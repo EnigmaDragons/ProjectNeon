@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 
-public sealed class BattleEventSubscription : ScriptableObject
+public sealed class BattleEventSubscription
 {
     public Type EventType { get; }
     public Action<object> OnEvent { get; }
