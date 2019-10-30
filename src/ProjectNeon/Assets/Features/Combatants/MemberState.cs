@@ -27,6 +27,7 @@ public sealed class MemberState : IStats
         baseStats.ResourceTypes.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, 0, () => r.MaxAmount));
     }
 
+    public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
     public float this[StatType statType] => CurrentStats[statType];
     public float this[TemporalStatType temporalStatType] => _counters[temporalStatType.ToString()].Amount;
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
@@ -43,6 +44,8 @@ public sealed class MemberState : IStats
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
     public void TakePhysicalDamage(float amount) => ChangeHp((-(amount * ((1f - CurrentStats.Armor()) / 1f))) * CurrentStats.Damagability());
     private void ChangeHp(float amount) => Counter(TemporalStatType.HP).ChangeBy(amount);
+    public void GainPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(numToGive);
+    private IResourceType PrimaryResource => ResourceTypes[0];
 
     public void Stun(int duration)
     {
@@ -62,4 +65,5 @@ public sealed class MemberState : IStats
         _additiveMods.ForEach(m => m.AdvanceTurn());
         _additiveMods.RemoveAll(m => !m.IsActive);
     }
+
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4600748930316163998}
   - component: {fileID: 4600748930316163999}
+  - component: {fileID: 8017947669627821744}
   m_Layer: 0
   m_Name: BattleTurnWrapUp
   m_TagString: Untagged
@@ -50,3 +51,20 @@ MonoBehaviour:
   playerTurnConfirmed: {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536,
     type: 2}
   turnStarted: {fileID: 11400000, guid: f2a9dd7e51ba2c642ad8b2147a76929e, type: 2}
+--- !u!114 &8017947669627821744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4600748930316163984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e145223c162954eb127aac6cf90e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  onTurnWrapUpStarted: {fileID: 11400000, guid: 7757a648372758c46afa3ba7c4cc6f20,
+    type: 2}
+  onFinished: {fileID: 11400000, guid: 77b5c9af201ae474487d83e081e5ec78, type: 2}
+  numToGive: 1
