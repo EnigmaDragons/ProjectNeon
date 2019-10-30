@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.Linq;
 
@@ -34,5 +33,4 @@ public static class BattleEvent
             EventSubs.Remove(x);
         });
     }
-}
 }
