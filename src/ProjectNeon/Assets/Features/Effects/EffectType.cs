@@ -15,5 +15,6 @@ public enum EffectType
     ArmorFlat = 12,
     Stun = 13,
     ShieldAttackedOnAttack = 14,
-    DamageAttackerOnAttack = 15
+    DamageAttackerOnAttack = 15,
+    StealLifeOnAttack = 16
 }

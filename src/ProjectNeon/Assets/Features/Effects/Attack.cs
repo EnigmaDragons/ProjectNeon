@@ -5,14 +5,12 @@ using UnityEngine.Events;
 
 public sealed class Attack 
 {
-    private Member attacker;
-    public Member Attacker { get { return this.attacker; } }
-    private Target target;
-    public Target Target { get { return this.target; } }
+    public Member Attacker { get; }
+    public Target Target { get; }
 
     public Attack(Member attacker, Target target)
     {
-        this.attacker = attacker;
-        this.target = target;
+        this.Attacker = attacker;
+        this.Target = target;
     }
 }

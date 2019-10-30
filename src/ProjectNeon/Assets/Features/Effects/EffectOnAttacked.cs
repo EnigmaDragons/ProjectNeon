@@ -6,24 +6,25 @@ using System.Collections;
  */
 public class EffectOnAttacked : Effect
 {
-    private Effect effect;
-    private Member performer;
-    private Target effectTarget;
+    private Effect _effect;
+    private Member _performer;
+    private Target _effectTarget;
 
     public EffectOnAttacked(Effect shield)
     {
-        this.effect = shield;
+        _effect = shield;
         BattleEvent.Subscribe<Attack>(attack => Execute(attack), this);
     }
 
     void Effect.Apply(Member source, Target target)
     {
-        this.performer = source;
-        this.effectTarget = target;
+        _performer = source;
+        _effectTarget = target;
     }
 
     void Execute(Attack attack)
     {
-        this.effect.Apply(this.performer, this.effectTarget);
+        if (attack.Target.Equals(_effectTarget))
+            _effect.Apply(_performer, _effectTarget);
     }
 }
