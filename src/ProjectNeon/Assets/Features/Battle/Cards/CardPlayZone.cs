@@ -10,8 +10,10 @@ public class CardPlayZone : ScriptableObject
     [SerializeField] private GameEvent onZoneCardsChanged;
 
     public int Count => cards.Length;
+    public int Max => maxCards.Value;
     public Card[] Cards => cards.ToArray();
     public GameEvent OnZoneCardsChanged => onZoneCardsChanged;
+    public bool IsFull => Count >= Max;
 
     public void Init(IEnumerable<Card> newCards)
     {

@@ -28,7 +28,9 @@ public class ConfirmPlayerTurn : MonoBehaviour
 
     public void Confirm()
     {
-        if (CanConfirm)
-            onConfirmed.Publish();
+        if (!CanConfirm) return;
+        
+        playArea.Clear();
+        onConfirmed.Publish();
     }
 }
