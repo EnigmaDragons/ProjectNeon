@@ -24,8 +24,7 @@ public class EffectOnAttacker : Effect
 
     void Execute(Attack attack)
     {
-        if (attack.Attacker.Equals(_performer))
-            _effect.Apply(_performer, new MemberAsTarget(attack.Attacker));
+        _effect.Apply(_performer, new MemberAsTarget(attack.Attacker));
     }
 
 }
