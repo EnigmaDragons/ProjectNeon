@@ -59,7 +59,6 @@ public sealed class MemberState : IStats
     // @todo #380:30min Stun effect is created, but it does nothing. Implement Styun behaviort so a character
     //  with the Stun TemporalStat won't be able to play a card in the current turn.
 
-    // @todo #1:15min In The Battle Wrap Up Phase, Advance Turn on all members
     public void AdvanceTurn()
     {
         _additiveMods.ForEach(m => m.AdvanceTurn());
