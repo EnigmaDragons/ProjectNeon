@@ -5,7 +5,7 @@ public class CardResolutionZone : ScriptableObject
 {
     [SerializeField] private List<PlayedCard> moves = new List<PlayedCard>();
     [SerializeField] private CardPlayZone physicalZone;
-
+    
     public void Add(PlayedCard played)
     {
         moves.Add(played);
@@ -15,8 +15,6 @@ public class CardResolutionZone : ScriptableObject
 
     public void Resolve()
     {
-        moves.ForEach(
-            played => played.Perform()
-        );
+        moves.ForEach(played => played.Perform());
     }
 }
