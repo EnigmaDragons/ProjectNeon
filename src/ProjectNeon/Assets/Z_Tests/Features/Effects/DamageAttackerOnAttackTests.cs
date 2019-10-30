@@ -24,13 +24,14 @@ public sealed class DamageAttackerOnAttackTests
     }
 
     [Test]
-    public void ShieldOnAttacked_ApplyEffect_TargetIsNotShieldedIfNoAttacked()
+    public void DamageOnAttacker_ApplyEffect_AttackerIsNotDamagedIfNotAttacks()
     {
-        Member paladin = TestMembers.With(StatType.Toughness, 5);
-        Member ally = TestMembers.With(StatType.Toughness, 10);
+        Member paladin = TestMembers.Any();
+        Member ally = TestMembers.Any();
+        Member attacker = TestMembers.Any();
 
         AllEffects.Apply(DamageAttackerOnAttack(1), paladin, new MemberAsTarget(ally));
 
-        Assert.AreEqual(0, ally.State[TemporalStatType.Shield]);
+        Assert.AreEqual(attacker.State.MaxHP(), attacker.State[TemporalStatType.HP]);
     }
 }
