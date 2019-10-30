@@ -5,16 +5,19 @@ public sealed class MultipliedStats : IStats
 {
     private readonly IStats _first;
     private readonly IStats _second;
+    private readonly ResourceTypeStats _resourceTypeStats;
 
     public float this[StatType statType] => _first[statType] * _second[statType];
-    
-    // @todo #1:15min Combine MaxResource Amounts
-    public IResourceType[] ResourceTypes => _first.ResourceTypes;
+
+    public IResourceType[] ResourceTypes => _resourceTypeStats.AsArray();
 
     public MultipliedStats(IStats first, IStats second)
     {
         _first = first;
         _second = second;
+        _resourceTypeStats = new ResourceTypeStats()
+            .WithAdded(first.ResourceTypes)
+            .WithMultiplied(second.ResourceTypes);
     }
 }
 
