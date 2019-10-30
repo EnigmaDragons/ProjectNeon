@@ -1,20 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public sealed class AddedStats : IStats
 {
     private readonly IStats _first;
     private readonly IStats _second;
-
+    private readonly ResourceTypeStats _resourceTypeStats;
+    
     public float this[StatType statType] => _first[statType] + _second[statType];
 
-    // @todo #1:15min Combine Added MaxResource Amounts
-    public IResourceType[] ResourceTypes => _first.ResourceTypes;
+    public IResourceType[] ResourceTypes => _resourceTypeStats.AsArray();
 
     public AddedStats(IStats first, IStats second)
     {
         _first = first;
         _second = second;
+        _resourceTypeStats = new ResourceTypeStats().WithAdded(_first.ResourceTypes).WithAdded(_second.ResourceTypes);
     }
 }
 

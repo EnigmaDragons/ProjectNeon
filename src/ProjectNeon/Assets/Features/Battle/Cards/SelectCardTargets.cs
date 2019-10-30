@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 class SelectCardTargets : MonoBehaviour
 {
+    [SerializeField] private CardResolutionZone cardResolutionZone;
     [SerializeField] private CardPlayZone selectedCardZone;
     [SerializeField] private CardPlayZone destinationCardZone;
     [SerializeField] private CardPlayZone sourceCardZone;
@@ -15,6 +17,7 @@ class SelectCardTargets : MonoBehaviour
 
     [ReadOnly, SerializeField, DTValidator.Optional] private Card _selectedCard;
     private bool _isReadyForSelection;
+    private Member _hero;
 
     private void Update()
     {
@@ -62,8 +65,8 @@ class SelectCardTargets : MonoBehaviour
         cardPresenter.Set(_selectedCard, () => { });
         uiView.SetActive(true);
 
-        var hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value));
-        if (hero == null)
+        _hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value));
+        if (_hero == null)
         {
             Debug.Log($"Could not find Party Member with Class {cardClass.Value}");
             return;
@@ -77,7 +80,7 @@ class SelectCardTargets : MonoBehaviour
             return;
         }
 
-        var possibleTargets = battleState.GetPossibleTargets(hero, _selectedCard.Actions[0].Group, _selectedCard.Actions[0].Scope);
+        var possibleTargets = battleState.GetPossibleTargets(_hero, _selectedCard.Actions[0].Group, _selectedCard.Actions[0].Scope);
         // @todo #207:30min Repeat target selection for all card actions. Currently we re just sorting possible targets for the first
         //  CardAction, but we need select target for all actions after the first one.
 
@@ -85,11 +88,15 @@ class SelectCardTargets : MonoBehaviour
     }
 
     private void OnCancelled() => OnSelectionComplete(sourceCardZone);
-    private void OnTargetConfirmed() => OnSelectionComplete(destinationCardZone);
+    private void OnTargetConfirmed()
+    {
+        // This needs to be updated once we implement multiple targeted actions.
+        cardResolutionZone.Add(new PlayedCard(_hero, targetingState.Current.AsArray(), _selectedCard));
+        OnSelectionComplete(destinationCardZone);
+    }
 
     private void OnSelectionComplete(CardPlayZone sendToZone)
     {
-        // @todo #1:15 Put in Card Resolution Zone
         sendToZone.PutOnBottom(selectedCardZone.DrawOneCard());
         _selectedCard = null;
         uiView.SetActive(false);

@@ -1,10 +1,23 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Deck : ScriptableObject
 {
-    [SerializeField] private List<Card> cards;
+    public string Name;
+    public StringVariable ClassName;
+    public List<Card> Cards;
+    public bool IsImmutable;
 
-    public List<Card> Cards => cards.ToList();
+    public Deck Export()
+    {
+        return Instantiate(this);
+    }
+
+    public void Import(Deck deck)
+    {
+        Name = deck.Name;
+        ClassName = deck.ClassName;
+        Cards = deck.Cards;
+        IsImmutable = false;
+    }
 }
