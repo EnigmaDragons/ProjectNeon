@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// @todo #1:15min Kill this class. Replace with Orchestration in Editor
 public class BattleTurnWrapUpPhase : MonoBehaviour
 {
     [SerializeField] private GameEvent battleTurnWrapUpStarted;
