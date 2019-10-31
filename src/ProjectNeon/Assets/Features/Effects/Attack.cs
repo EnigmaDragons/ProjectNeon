@@ -10,7 +10,7 @@ public sealed class Attack
 
     public Attack(Member attacker, Member target)
     {
-        this.Attacker = attacker;
-        this.Target = target;
+        Attacker = attacker;
+        Target = target;
     }
 }
