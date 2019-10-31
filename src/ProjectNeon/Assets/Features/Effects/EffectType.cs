@@ -13,5 +13,8 @@ public enum EffectType
     ApplyVulnerable = 10,
     ShieldToughness = 11,
     ArmorFlat = 12,
-    Stun = 13
+    Stun = 13,
+    ShieldAttackedOnAttack = 14,
+    DamageAttackerOnAttack = 15,
+    StealLifeOnAttack = 16
 }
