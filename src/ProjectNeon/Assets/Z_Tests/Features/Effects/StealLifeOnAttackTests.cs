@@ -2,13 +2,12 @@
 
 public sealed class StealLifeOnAttackTests
 {
-    private EffectData StealLifeOnAttack(float amount) => new EffectData {
-        EffectType = EffectType.StealLifeOnAttack,
-        FloatAmount = new FloatReference(amount)
+    private EffectData StealLifeOnAttack() => new EffectData {
+        EffectType = EffectType.StealLifeOnAttack
     }; 
     
     [Test]
-    public void ArmorFlat_ApplyEffect_ArmorIsChangedCorrectly()
+    public void StealLifeOnAttack_ApplyEffect_LifeIsStolenCorrectly()
     {
         Member caster = TestMembers.Any();
         Member attacker = TestMembers.Create(
@@ -17,9 +16,9 @@ public sealed class StealLifeOnAttackTests
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
         attacker.State.TakeRawDamage(6);
 
-        AllEffects.Apply(StealLifeOnAttack(1), caster, new MemberAsTarget(attacker));
-        BattleEvent.Publish(new Attack(attacker, target));
+        AllEffects.Apply(StealLifeOnAttack(), caster, new MemberAsTarget(attacker));
+        BattleEvent.Publish(new Attack(attacker, target, 5));
 
-        Assert.AreEqual(5, attacker.State[TemporalStatType.HP]);
+        Assert.AreEqual(9, attacker.State[TemporalStatType.HP]);
     }
 }
