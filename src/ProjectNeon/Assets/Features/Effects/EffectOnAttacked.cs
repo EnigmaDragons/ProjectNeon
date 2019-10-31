@@ -13,13 +13,13 @@ public class EffectOnAttacked : Effect
     public EffectOnAttacked(Effect shield)
     {
         _effect = shield;
-        BattleEvent.Subscribe<Attack>(attack => Execute(attack), this);
     }
 
     void Effect.Apply(Member source, Target target)
     {
         _performer = source;
         _effectTarget = target;
+        BattleEvent.Subscribe<Attack>(attack => Execute(attack), this);
     }
 
     void Execute(Attack attack)
