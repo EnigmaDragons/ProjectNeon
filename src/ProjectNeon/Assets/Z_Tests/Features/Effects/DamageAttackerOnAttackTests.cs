@@ -5,33 +5,33 @@ public sealed class DamageAttackerOnAttackTests
 {
     private EffectData DamageAttackerOnAttack(float amount) => 
         new EffectData { 
-            EffectType = EffectType.PhysicalDamage, 
+            EffectType = EffectType.DamageAttackerOnAttack, 
             FloatAmount = new FloatReference(amount) 
         };
 
     [Test]
     public void DamageOnAttacker_ApplyEffect_AttackerIsDamagedOnAttack()
     {
-        Member paladin = TestMembers.Create(s => s.With(StatType.Attack, 1f).With(StatType.Damagability, 1f));
+        Member paladin = TestMembers.Create(s => s.With(StatType.Attack, 1f));
         Member ally = TestMembers.Any();
-        Member attacker = TestMembers.Create(s => s.With(StatType.Attack, 1).With(StatType.Damagability, 1f).With(StatType.MaxHP, 10));
+        Member attacker = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
         AllEffects.Apply(DamageAttackerOnAttack(1), paladin, new MemberAsTarget(ally));
-        BattleEvent.Publish(new Attack(attacker, new MemberAsTarget(ally)));
+        BattleEvent.Publish(new Attack(attacker, ally));
 
-        Assert.AreEqual(8, attacker.State[TemporalStatType.HP]);
+        Assert.AreEqual(9, attacker.State[TemporalStatType.HP]);
     }
 
     [Test]
     public void DamageOnAttacker_ApplyEffect_AttackerIsNotDamagedOnAttackingOther()
     {
-        Member paladin = TestMembers.Any();
+        Member paladin = TestMembers.Create(s => s.With(StatType.Attack, 1f));
         Member ally = TestMembers.Any();
-        Member attacker = TestMembers.Any();
+        Member attacker = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
         AllEffects.Apply(DamageAttackerOnAttack(1), paladin, new MemberAsTarget(ally));
-        BattleEvent.Publish(new Attack(attacker, new MemberAsTarget(paladin)));
+        BattleEvent.Publish(new Attack(attacker, paladin));
 
-        Assert.AreEqual(attacker.State.MaxHP(), attacker.State[TemporalStatType.HP]);
+        Assert.AreEqual(10, attacker.State[TemporalStatType.HP]);
     }
 }

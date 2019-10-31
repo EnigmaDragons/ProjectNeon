@@ -24,7 +24,11 @@ public class EffectOnAttacked : Effect
 
     void Execute(Attack attack)
     {
-        if (attack.Target.Equals(_effectTarget))
-            _effect.Apply(_performer, _effectTarget);
+        _effectTarget.Members.ForEach(
+            target => {
+                    if (target.Equals(attack.Target))
+                        _effect.Apply(_performer, _effectTarget);
+                }
+        );
     }
 }

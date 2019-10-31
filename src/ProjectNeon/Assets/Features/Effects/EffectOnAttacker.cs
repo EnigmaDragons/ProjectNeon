@@ -2,7 +2,8 @@
 using System.Collections;
 
 /**
- * Effects that applies to the attacker on an attack event
+ * Effects that applies to the attacker on an attack event.
+ * 
  */
 public class EffectOnAttacker : Effect
 {
@@ -24,7 +25,12 @@ public class EffectOnAttacker : Effect
 
     void Execute(Attack attack)
     {
-        _effect.Apply(_performer, new MemberAsTarget(attack.Attacker));
+        _effectTarget.Members.ForEach(
+            target => {
+                if (target.Equals(attack.Target))
+                    _effect.Apply(_performer, new MemberAsTarget(attack.Attacker));
+            }
+        );
     }
 
 }

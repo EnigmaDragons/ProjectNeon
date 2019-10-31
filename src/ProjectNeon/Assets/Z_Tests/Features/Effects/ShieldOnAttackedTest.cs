@@ -17,8 +17,7 @@ public sealed class ShieldAttackedOnAttackTests
         Member attacker = TestMembers.Any();
 
         AllEffects.Apply(ChangeShieldOnAttackBy(1), paladin, new MemberAsTarget(ally));
-
-        BattleEvent.Publish(new Attack(attacker, new MemberAsTarget(ally)));
+        BattleEvent.Publish(new Attack(attacker, ally));
 
         Assert.AreEqual(5, ally.State[TemporalStatType.Shield]);
     }
@@ -28,8 +27,10 @@ public sealed class ShieldAttackedOnAttackTests
     {
         Member paladin = TestMembers.With(StatType.Toughness, 5);
         Member ally = TestMembers.With(StatType.Toughness, 10);
+        Member attacker = TestMembers.Any();
 
         AllEffects.Apply(ChangeShieldOnAttackBy(1), paladin, new MemberAsTarget(ally));
+        BattleEvent.Publish(new Attack(attacker, paladin));
 
         Assert.AreEqual(0, ally.State[TemporalStatType.Shield]);
     }
