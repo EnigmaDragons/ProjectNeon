@@ -16,5 +16,5 @@ public enum EffectType
     Stun = 13,
     ShieldAttackedOnAttack = 14,
     DamageAttackerOnAttack = 15,
-    StealLifeOnAttack = 16
+    StealLifeNextAttack = 16
 }
