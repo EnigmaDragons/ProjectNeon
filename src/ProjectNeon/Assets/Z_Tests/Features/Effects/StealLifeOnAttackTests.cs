@@ -3,7 +3,8 @@
 public sealed class StealLifeOnAttackTests
 {
     private EffectData StealLifeOnAttack() => new EffectData {
-        EffectType = EffectType.StealLifeOnAttack
+        EffectType = EffectType.StealLifeOnAttack,
+        FloatAmount = new FloatReference(1)
     }; 
     
     [Test]

@@ -9,6 +9,17 @@ public class StealLife : Effect
 {
     private Member _performer;
     private Target _effectTarget;
+    private float _ratio;
+
+    public StealLife() : this(1F)
+    {
+        
+    }
+
+    public StealLife(float ratio)
+    {
+        _ratio = ratio;
+    }
 
     void Effect.Apply(Member source, Target target)
     {
@@ -25,11 +36,11 @@ public class StealLife : Effect
                 if (target.Equals(attack.Attacker))
                 {
                     new SimpleEffect(
-                        m => m.GainHp(attack.Damage)
+                        m => m.GainHp(attack.Damage * _ratio)
                     ).Apply(_performer, new MemberAsTarget(target));
                 }
             }
-    );
+        );
     }
 
 }
