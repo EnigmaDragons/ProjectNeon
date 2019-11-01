@@ -7,10 +7,12 @@ public sealed class Attack
 {
     public Member Attacker { get; }
     public Member Target { get; }
+    public int Damage { get; }
 
-    public Attack(Member attacker, Member target)
+    public Attack(Member attacker, Member target, int damage)
     {
         Attacker = attacker;
         Target = target;
+        Damage = damage;
     }
 }
