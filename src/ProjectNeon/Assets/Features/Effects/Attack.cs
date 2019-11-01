@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public sealed class Attack 
 {
     public Member Attacker { get; }
-    public Member Target { get; }
+    public Member Target { get; set; }
     public int Damage { get; }
 
     public Attack(Member attacker, Member target, int damage)
