@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-public sealed class TimedTests
+public sealed class ForNumberOfTurnsTests
 {
     private EffectData DamageTarget(float amount) => new EffectData {
         EffectType = EffectType.PhysicalDamage,
@@ -8,9 +8,9 @@ public sealed class TimedTests
     };
 
     [Test]
-    public void Timed_ApplyEffect_ApplyWhenActive()
+    public void ForNumberOfTurns_ApplyEffect_ApplyWhenActive()
     {
-        Timed timedDamage = new Timed(
+        ForNumberOfTurns timedDamage = new ForNumberOfTurns(
             AllEffects.Create(DamageTarget(1)), 2
         );
 
@@ -29,9 +29,9 @@ public sealed class TimedTests
     }
 
     [Test]
-    public void Timed_ApplyEffect_DoesNotApplyWhenInactive()
+    public void ForNumberOfTurns_ApplyEffect_DoesNotApplyWhenInactive()
     {
-        Timed timedDamage = new Timed(AllEffects.Create(DamageTarget(1)));
+        ForNumberOfTurns timedDamage = new ForNumberOfTurns(AllEffects.Create(DamageTarget(1)));
 
         Member attacker = TestMembers.With(StatType.Attack, 1);
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
