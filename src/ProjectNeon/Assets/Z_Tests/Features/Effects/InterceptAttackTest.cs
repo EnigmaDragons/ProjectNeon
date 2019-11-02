@@ -11,7 +11,7 @@ public sealed class InterceptAttackTests
         Member attacker = TestMembers.With(StatType.Attack, 5);
         Attack attack = new Attack(attacker, ally, 5);
 
-        AllEffects.Apply(new EffectData { EffectType = EffectType.InterceptAttack }, paladin, new MemberAsTarget(ally));
+        AllEffects.Apply(new EffectData { EffectType = EffectType.InterceptAttackForTurns }, paladin, new MemberAsTarget(ally));
         BattleEvent.Publish(attack);
 
         Assert.AreEqual(
