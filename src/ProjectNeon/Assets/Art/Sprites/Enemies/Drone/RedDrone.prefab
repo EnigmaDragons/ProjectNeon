@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8113171154862728787}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5327321128623054617
 SpriteRenderer:
@@ -106,11 +106,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4741829828467902825}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3044163, y: -0.9948334, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.2176652, y: -3.9793336, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
-  m_Father: {fileID: 2950243104913625405}
-  m_RootOrder: 2
+  m_Father: {fileID: 8113171154862728787}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &168656622603682927
 SpriteRenderer:
@@ -190,6 +190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2950243104913625405}
+  - component: {fileID: 2176172194205730181}
   m_Layer: 0
   m_Name: RedDrone
   m_TagString: Untagged
@@ -208,12 +209,29 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4718110498334959858}
   - {fileID: 8113171154862728787}
-  - {fileID: 8321873374515205611}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2176172194205730181
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5951879466709863118}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 329c0e57a130ad9478481b9a9da4651e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8035432957247209771
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +261,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8113171154862728787}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8079154777247665607
 SpriteRenderer:
@@ -321,11 +339,13 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
+  - {fileID: 4718110498334959858}
+  - {fileID: 8321873374515205611}
   - {fileID: 7960860086659889433}
   - {fileID: 7296762821874771770}
   - {fileID: 4857546245915532720}
   m_Father: {fileID: 2950243104913625405}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9105476469420131697
 GameObject:
@@ -353,10 +373,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9105476469420131697}
   m_LocalRotation: {x: 0.061086453, y: 0.002453479, z: -0.99732536, w: -0.04005662}
-  m_LocalPosition: {x: 0.15, y: -0.53, z: -0.8}
-  m_LocalScale: {x: 3.1603, y: 3.1603, z: 3.1603}
+  m_LocalPosition: {x: 0.6, y: -2.12, z: -3.2}
+  m_LocalScale: {x: 12.641198, y: 12.641198, z: 12.6412}
   m_Children: []
-  m_Father: {fileID: 2950243104913625405}
+  m_Father: {fileID: 8113171154862728787}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -7.01, z: -184.6}
 --- !u!33 &4554681419895909508
@@ -434,7 +454,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8113171154862728787}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5141005127797878080
 SpriteRenderer:
