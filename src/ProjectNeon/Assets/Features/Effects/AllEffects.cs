@@ -26,7 +26,7 @@ public static class AllEffects
         { EffectType.Stun, e => new SimpleEffect(target => target.Stun(e.NumberOfTurns)) },
         { EffectType.ShieldAttackedOnAttack, e => new EffectOnAttacked(new SimpleEffect((src, m) => m.GainShield(e.IntAmount * src.State.Toughness()))) },
         { EffectType.DamageAttackerOnAttack, e => new EffectOnAttacker(new SimpleEffect((src, m) => m.TakePhysicalDamage(e.IntAmount * src.State.Attack()))) },
-        { EffectType.StealLifeNextAttack, e => new RecurrentEffect(new StealLife(e.IntAmount), 1)},
+        { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.IntAmount), 1)},
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
