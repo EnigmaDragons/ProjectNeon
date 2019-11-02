@@ -1,15 +1,34 @@
 ﻿
-public sealed class RecurrentEffect :  Effect
+/**
+ * Wraps the execution of an effect so it is only executed a certain number of times.
+ */
+public sealed class Recurrent :  Effect
 {
+    /**
+     * Number of times the effect will be executed
+     */
     private int _repetitions;
+
+    /**
+     * Tracks how many times the effect has already been executed.
+     */
     private int _count;
+
+    /**
+     * The wrapped effect.
+     */
     private Effect _effect;
 
-    public RecurrentEffect(Effect origin, int times)
+    public Recurrent(Effect origin, int times)
     {
         _effect = origin;
         _repetitions = times;
         _count = 0;
+    }
+
+    public Recurrent(Effect origin) : this(origin, 1)
+    {
+
     }
 
     public void Apply(Member source, Target target)
