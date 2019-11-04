@@ -12,6 +12,8 @@ public class EnemyVisualizer : MonoBehaviour
 {
     [SerializeField] private EnemyArea enemyArea;
     [SerializeField] private GameEvent onSetupFinished;
+    [SerializeField] private WorldHPBarController hpBarPrototype;
+    [SerializeField] private Vector3 hpBarOffset;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f; 
 
@@ -21,10 +23,15 @@ public class EnemyVisualizer : MonoBehaviour
         var positions = new Transform[enemies.Length];
         for (var i= 0; i < enemies.Length; i++)
         {
-            var enemy = Instantiate(enemies[i].Prefab, transform);
-            var t = enemy.transform;
+            var enemy = enemies[i];
+            
+            var enemyObject = Instantiate(enemies[i].Prefab, transform);
+            var t = enemyObject.transform;
             t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
             positions[i] = t;
+            
+            var hpBar = Instantiate(hpBarPrototype, enemyObject.transform.position + hpBarOffset, Quaternion.identity, enemyObject.transform);
+            hpBar.Init((int)enemy.Stats.MaxHP());
         }
 
         enemyArea.WithUiTransforms(positions);

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BattleState : ScriptableObject
 {
+    [SerializeField] private CardPlayZones cardPlayZones;
+    [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private EnemyArea enemies;
     [SerializeField] private GameObject nextBattlegroundPrototype;
@@ -14,6 +16,7 @@ public class BattleState : ScriptableObject
     public EnemyArea EnemyArea => enemies;
     public GameObject Battlefield => nextBattlegroundPrototype;
     public IReadOnlyDictionary<int, Member> Members => _membersById;
+    public Member[] Enemies => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
     private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();

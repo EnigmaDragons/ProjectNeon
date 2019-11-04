@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HPBarController : MonoBehaviour
+public class UIHPBarController : MonoBehaviour
 {
     [SerializeField] Image barImage;
     [SerializeField] TextMeshProUGUI barTextValue;

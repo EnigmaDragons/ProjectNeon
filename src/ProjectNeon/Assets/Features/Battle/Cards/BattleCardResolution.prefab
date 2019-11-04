@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4600748930316163984
+--- !u!1 &6007293817756268675
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,45 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4600748930316163998}
-  - component: {fileID: 4600748930316163999}
+  - component: {fileID: 4143051956286464742}
+  - component: {fileID: 292836633169652807}
   m_Layer: 0
-  m_Name: BattleTurnWrapUp
+  m_Name: BattleCardResolution
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4600748930316163998
+--- !u!4 &4143051956286464742
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4600748930316163984}
+  m_GameObject: {fileID: 6007293817756268675}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 554.3182, y: 469.79498, z: -147.875}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4600748930316163999
+--- !u!114 &292836633169652807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4600748930316163984}
+  m_GameObject: {fileID: 6007293817756268675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31ca2e237ec16ef44b29959fb313d92e, type: 3}
+  m_Script: {fileID: 11500000, guid: 808f20627e1349049bb1e9afebb4a34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleTurnWrapUpStarted: {fileID: 11400000, guid: 7757a648372758c46afa3ba7c4cc6f20,
-    type: 2}
-  battleTurnWrapUpFinished: {fileID: 11400000, guid: 91559c301cc95ca44a4456becff94f2b,
-    type: 2}
-  playerTurnConfirmed: {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536,
-    type: 2}
-  turnStarted: {fileID: 11400000, guid: f2a9dd7e51ba2c642ad8b2147a76929e, type: 2}
+  resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
+  trigger: {fileID: 11400000, guid: 86602994b57d0a24fbc87aa0ec9be3f5, type: 2}
+  onFinished: {fileID: 11400000, guid: 0f197aab719b742479f9ad8452088baa, type: 2}
