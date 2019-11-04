@@ -16,6 +16,6 @@ public class SaveDeckButton : MonoBehaviour
 
     private void Update() 
     {
-        button.interactable = state.HeroesDecks.All(x => x.Deck.Cards.Count == deckSize);
+        button.interactable = state.HeroesDecks.All(x => x.Deck.Count == deckSize);
     }
 }

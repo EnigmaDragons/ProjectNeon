@@ -23,7 +23,7 @@ public class CardInDeckButton : MonoBehaviour
 
     public void RemoveCard()
     {
-        state.SelectedHeroesDeck.Deck.Cards.Remove(state.SelectedHeroesDeck.Deck.Cards.First(x => x.Name == _card.Name));
+        state.SelectedHeroesDeck.Deck.Remove(state.SelectedHeroesDeck.Deck.First(x => x.Name == _card.Name));
         _count--;
         deckChanged.Publish();
     }
@@ -47,7 +47,7 @@ public class CardInDeckButton : MonoBehaviour
 
     private void UpdateInfo()
     {
-        _count = state.SelectedHeroesDeck.Deck.Cards.Count(x => x.Name == _card.Name);
+        _count = state.SelectedHeroesDeck.Deck.Count(x => x.Name == _card.Name);
         cardNameText.text = _card.Name;
         countText.text = _count.ToString();
     }

@@ -25,6 +25,6 @@ public class SelectHeroButton : MonoBehaviour
     private void Update()
     {
         selected.gameObject.SetActive(state.SelectedHeroesDeck == _heroesDeck);
-        toTint.color = _heroesDeck.Deck.Cards.Count == DeckSize.Value ? Color.white : Color.red;
+        toTint.color = _heroesDeck.Deck.Count == DeckSize.Value ? Color.white : Color.red;
     } 
 }

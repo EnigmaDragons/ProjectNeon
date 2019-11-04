@@ -34,7 +34,7 @@ public class DeckUI : MonoBehaviour
     private void GenerateDeck()
     {
         _cardButtons = new List<CardInDeckButton>();
-        pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.SelectedHeroesDeck.Deck.Cards
+        pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.SelectedHeroesDeck.Deck
             .GroupBy(x => x.Name)
             .Select(x => InitCardInDeckButton(x.First()))
             .ToList(), x => {});

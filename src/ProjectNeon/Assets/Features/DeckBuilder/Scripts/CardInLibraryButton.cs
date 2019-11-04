@@ -13,7 +13,7 @@ public class CardInLibraryButton : MonoBehaviour
 
     public void AddCard(Card card)
     {
-        state.SelectedHeroesDeck.Deck.Cards.Add(card);
+        state.SelectedHeroesDeck.Deck.Add(card);
         deckChanged.Publish();
     }
 }

@@ -23,6 +23,6 @@ public class DeckCountUI : MonoBehaviour
 
     private void UpdateCount()
     {
-        deckCount.text = $"Deck Size {state.SelectedHeroesDeck.Deck.Cards.Count}/{deckSize.Value}";
+        deckCount.text = $"Deck Size {state.SelectedHeroesDeck.Deck.Count}/{deckSize.Value}";
     }
 }

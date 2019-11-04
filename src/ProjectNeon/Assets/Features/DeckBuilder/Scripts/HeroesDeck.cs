@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class HeroesDeck
 {
     public Hero Hero;
-    public Deck Deck;
+    public List<Card> Deck;
 }
