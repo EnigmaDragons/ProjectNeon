@@ -33,7 +33,7 @@ Setup:
 - Architect: Silas Reinagel
 - Character Art: Yuliia Seliukova
 - Character Art: Herbert Losloso
-- Environment Art:
+- Environment Art: GraphicEdit
 - User Interface:
 - Game Battle Design: Caleb Reinagel
 - Game Progression Design: Caleb Reinagel
