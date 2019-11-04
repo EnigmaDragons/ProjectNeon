@@ -14,7 +14,8 @@ public class HeroSelectionUI : MonoBehaviour
     private void Start()
     {
         var buttons = new List<RectTransform>();
-        party.Heroes.ForEach(x =>
+        state.HeroesDecks = party.Decks.Select((deck, i) => new HeroesDeck { Deck = deck.Export(), Hero = party.Heroes[i]}).ToList();
+        state.HeroesDecks.ForEach(x =>
         {
             var button = Instantiate(selectHeroButtonTemplate, parent);
             button.GetComponent<SelectHeroButton>().Init(x);
@@ -22,6 +23,6 @@ public class HeroSelectionUI : MonoBehaviour
         });
         for (var i = 0; i < buttons.Count; i++)
             buttons[i].anchoredPosition = new Vector2((i - (buttons.Count / 2f - 0.5f)) * (buttons[i].sizeDelta.x + Padding), buttons[i].anchoredPosition.y);
-        state.SelectedHero = party.Heroes.First();
+        state.SelectedHeroesDeck = state.HeroesDecks.First();
     }
 }

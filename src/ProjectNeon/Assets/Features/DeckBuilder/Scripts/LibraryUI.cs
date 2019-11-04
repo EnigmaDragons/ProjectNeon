@@ -17,7 +17,7 @@ public class LibraryUI : MonoBehaviour
     private void GenerateLibrary()
     {
         pageViewer.Init(cardInLibraryButtonTemplate.gameObject, emptyCard, library.UnlockedCards
-            .Where(x => !x.LimitedToClass.IsPresent || x.LimitedToClass.Value == state.SelectedHero.ClassName.Value)
+            .Where(x => !x.LimitedToClass.IsPresent || x.LimitedToClass.Value == state.SelectedHeroesDeck.Hero.ClassName.Value)
             .Select(InitCardInLibraryButton)
             .ToList(), x => {});
     }

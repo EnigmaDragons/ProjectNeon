@@ -19,4 +19,9 @@ public sealed class Party : ScriptableObject
         decks = new[] { one.Deck, two.Deck, three.Deck };
         return this;
     }
+
+    public void UpdateDecks(Deck one, Deck two, Deck three)
+    {
+        decks = new[] { one, two, three };
+    }
 }

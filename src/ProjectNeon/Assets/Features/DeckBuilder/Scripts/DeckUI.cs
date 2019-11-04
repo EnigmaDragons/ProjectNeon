@@ -9,20 +9,20 @@ public class DeckUI : MonoBehaviour
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private CardInDeckButton cardInDeckButtonTemplate;
     [SerializeField] private GameObject emptyCard;
-    [SerializeField] private GameEvent deckChosen;
+    [SerializeField] private GameEvent heroChanged;
     [SerializeField] private GameEvent deckChanged;
 
     private List<CardInDeckButton> _cardButtons;
 
     private void OnEnable()
     {
-        deckChosen.Subscribe(GenerateDeck, this);
+        heroChanged.Subscribe(GenerateDeck, this);
         deckChanged.Subscribe(OnDeckChanged, this);
     }
 
     private void OnDisable()
     {
-        deckChosen.Unsubscribe(this);
+        heroChanged.Unsubscribe(this);
         deckChanged.Unsubscribe(this);
     }
 
@@ -34,7 +34,7 @@ public class DeckUI : MonoBehaviour
     private void GenerateDeck()
     {
         _cardButtons = new List<CardInDeckButton>();
-        pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.TemporaryDeck.Cards
+        pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.SelectedHeroesDeck.Deck.Cards
             .GroupBy(x => x.Name)
             .Select(x => InitCardInDeckButton(x.First()))
             .ToList(), x => {});

@@ -13,9 +13,7 @@ public class CardInLibraryButton : MonoBehaviour
 
     public void AddCard(Card card)
     {
-        if (state.TemporaryDeck == null || state.TemporaryDeck.IsImmutable)
-            return;
-        state.TemporaryDeck.Cards.Add(card);
+        state.SelectedHeroesDeck.Deck.Cards.Add(card);
         deckChanged.Publish();
     }
 }
