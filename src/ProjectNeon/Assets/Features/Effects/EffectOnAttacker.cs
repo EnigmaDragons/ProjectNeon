@@ -20,16 +20,19 @@ public class EffectOnAttacker : Effect
     {
         _performer = source;
         _effectTarget = target;
-        BattleEvent.Subscribe<Attack>(attack => Execute(attack), this);
+        BattleEvent.Subscribe<AttackPerformed>(attackPerformed => Execute(attackPerformed.Attack), this);
     }
 
     void Execute(Attack attack)
     {
         _effectTarget.Members.ForEach(
             target => {
-                if (target.Equals(attack.Target().Members[0]))
+                /**
+                 * @todo #454:15min Remove all attack.Target.Members[0] usages from code.
+                 */
+                if (target.Equals(attack.Target.Members[0]))
                 {
-                    _effect.Apply(_performer, new MemberAsTarget(attack.Attacker()));
+                    _effect.Apply(_performer, new MemberAsTarget(attack.Attacker));
                 }
                     
             }

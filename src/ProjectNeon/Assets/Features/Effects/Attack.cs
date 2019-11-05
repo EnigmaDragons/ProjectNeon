@@ -5,10 +5,8 @@ using UnityEngine;
 
 public sealed class Attack  : Effect
 {
-    private Member _attacker;
-    public Member Attacker() { return this._attacker; }
-    private Target _target;
-    public Target Target() { return this._target; }
+    public Member Attacker { get; private set; }
+    public Target Target { get; private set; }
     public int Damage { get; }
 
     public Attack(int damage)
@@ -18,10 +16,11 @@ public sealed class Attack  : Effect
 
     public void Apply(Member source, Target target)
     {
-        _attacker = source;
-        _target = target;
+        Attacker = source;
+        Target = target;
         if (target.Members.Length > 1)
         {
+            Target.ApplyToAll((damage, source, target) => );
             target.Members.ForEach(
                 member => {
                     new Attack(Damage).Apply(source, target);
@@ -29,14 +28,14 @@ public sealed class Attack  : Effect
             );
         } else
         {
-            AllEffects.Create(
-                new EffectData { EffectType = EffectType.PhysicalDamage, FloatAmount = new FloatReference(Damage) }
-            ).Apply(source, target);
-            BattleEvent.Publish(this);
+            new PhysicalDamage(Damage).Apply(source, target);
+            BattleEvent.Publish(
+                new AttackPerformed(this, source, target)
+            );
         }
     }
 
     public void Apply(Member source, Member target) {
-        this.Apply(source, new MemberAsTarget(target));
+        Apply(source, new MemberAsTarget(target));
     }
 }
