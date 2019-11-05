@@ -1,4 +1,6 @@
 ﻿
+using UnityEngine;
+
 class InterceptAttack : Effect
 {
     private Member _performer;
@@ -15,9 +17,9 @@ class InterceptAttack : Effect
     {
         _effectTarget.Members.ForEach(
             target => {
-                if (target.Equals(attack.Target))
+                if (target.Equals(attack.Target().Members[0]))
                 {
-                    attack.Target = _performer;
+                    new Attack(attack.Damage).Apply(attack.Attacker(), _performer);
                 }
             }
         );

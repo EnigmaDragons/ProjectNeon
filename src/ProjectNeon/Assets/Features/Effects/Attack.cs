@@ -1,18 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿
 
-public sealed class Attack 
+
+using UnityEngine;
+
+public sealed class Attack  : Effect
 {
-    public Member Attacker { get; }
-    public Member Target { get; set; }
+    private Member _attacker;
+    public Member Attacker() { return this._attacker; }
+    private Target _target;
+    public Target Target() { return this._target; }
     public int Damage { get; }
 
-    public Attack(Member attacker, Member target, int damage)
+    public Attack(int damage)
     {
-        Attacker = attacker;
-        Target = target;
         Damage = damage;
+    }
+
+    public void Apply(Member source, Target target)
+    {
+        _attacker = source;
+        _target = target;
+        if (target.Members.Length > 1)
+        {
+            target.Members.ForEach(
+                member => {
+                    new Attack(Damage).Apply(source, target);
+                }
+            );
+        } else
+        {
+            AllEffects.Create(
+                new EffectData { EffectType = EffectType.PhysicalDamage, FloatAmount = new FloatReference(Damage) }
+            ).Apply(source, target);
+            BattleEvent.Publish(this);
+        }
+    }
+
+    public void Apply(Member source, Member target) {
+        this.Apply(source, new MemberAsTarget(target));
     }
 }

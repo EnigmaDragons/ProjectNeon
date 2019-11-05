@@ -17,5 +17,6 @@ public enum EffectType
     ShieldAttackedOnAttack = 14,
     DamageAttackerOnAttack = 15,
     StealLifeNextAttack = 16,
-    InterceptAttackForTurns = 17
+    InterceptAttackForTurns = 18,
+    Attack = 17,
 }
