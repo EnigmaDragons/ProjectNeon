@@ -8,7 +8,7 @@ public static class AllEffects
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.HealFlat, e => new SimpleEffect(m => m.GainHp(e.IntAmount))},
-        { EffectType.PhysicalDamage, e => new SimpleEffect((src, m) => m.TakePhysicalDamage(src.State.Attack() * e.FloatAmount))},
+        { EffectType.PhysicalDamage, e => new PhysicalDamage(e.IntAmount) },
         { EffectType.BuffAttackFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Attack, e.IntAmount), e.NumberOfTurns)))},
         { EffectType.BuffAttackMultiplier, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new BuffedStats(new StatMultipliers().With(StatType.Attack, e.FloatAmount), e.NumberOfTurns)))},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.RemoveTemporaryEffects(effect => effect.IsDebuff))},
@@ -27,6 +27,7 @@ public static class AllEffects
         { EffectType.ShieldAttackedOnAttack, e => new EffectOnAttacked(new SimpleEffect((src, m) => m.GainShield(e.IntAmount * src.State.Toughness()))) },
         { EffectType.DamageAttackerOnAttack, e => new EffectOnAttacker(new SimpleEffect((src, m) => m.TakePhysicalDamage(e.IntAmount * src.State.Attack()))) },
         { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.IntAmount), 1)},
+        { EffectType.Attack, e => new Attack(e.IntAmount)}
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.

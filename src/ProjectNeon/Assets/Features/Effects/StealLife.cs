@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 /**
  * Heals the attacker based on the damage the attack inflicted.
@@ -25,7 +26,7 @@ public class StealLife : Effect
     {
         _performer = source;
         _effectTarget = target;
-        BattleEvent.Subscribe<Attack>(attack => Execute(attack), this);
+        BattleEvent.Subscribe<AttackPerformed>(attackPerformed => Execute(attackPerformed.Attack), this);
     }
 
     void Execute(Attack attack)
