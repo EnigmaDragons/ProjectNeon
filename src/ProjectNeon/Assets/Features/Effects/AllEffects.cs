@@ -8,7 +8,7 @@ public static class AllEffects
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.HealFlat, e => new SimpleEffect(m => m.GainHp(e.IntAmount))},
-        { EffectType.PhysicalDamage, e => new PhysicalDamage(Convert.ToInt32(e.FloatAmount)) },
+        { EffectType.PhysicalDamage, e => new PhysicalDamage(e.IntAmount) },
         { EffectType.BuffAttackFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Attack, e.IntAmount), e.NumberOfTurns)))},
         { EffectType.BuffAttackMultiplier, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new BuffedStats(new StatMultipliers().With(StatType.Attack, e.FloatAmount), e.NumberOfTurns)))},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.RemoveTemporaryEffects(effect => effect.IsDebuff))},

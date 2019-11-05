@@ -8,7 +8,7 @@ public sealed class AttackPerformed
 {
     public Attack Attack { get; }
 
-    public AttackPerformed(Attack attack, Member attacker, Target target)
+    public AttackPerformed(Attack attack)
     {
         Attack = attack;
     }

@@ -1,15 +1,15 @@
 ﻿public sealed class PhysicalDamage : Effect
 {
-    public int Damage { get; }
+    public float Multiplier { get; }
 
-    public PhysicalDamage(int damage)
+    public PhysicalDamage(float multiplier)
     {
-        Damage = damage;
+        Multiplier = multiplier;
     }
 
     public void Apply(Member source, Target target)
     {
-        target.Members[0].State.TakePhysicalDamage(source.State.Attack() * Damage);
+        target.Members[0].State.TakePhysicalDamage(source.State.Attack() * Multiplier);
     }
 
 }

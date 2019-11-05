@@ -21,6 +21,7 @@ public sealed class Attack  : Effect
         Target = target;
         if (target.Members.Length > 1)
         {
+            Target.ApplyToAll((damage, source, target) => );
             target.Members.ForEach(
                 member => {
                     new Attack(Damage).Apply(source, target);
