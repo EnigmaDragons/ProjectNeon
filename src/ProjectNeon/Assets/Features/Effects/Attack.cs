@@ -30,7 +30,7 @@ public sealed class Attack  : Effect
         {
             new PhysicalDamage(Damage).Apply(source, target);
             BattleEvent.Publish(
-                new AttackPerformed(this, source, target)
+                new AttackPerformed(this)
             );
         }
     }
