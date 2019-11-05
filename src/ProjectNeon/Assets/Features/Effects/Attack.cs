@@ -28,14 +28,14 @@ public sealed class Attack  : Effect
             );
         } else
         {
-            AllEffects.Create(
-                new EffectData { EffectType = EffectType.PhysicalDamage, FloatAmount = new FloatReference(Damage) }
-            ).Apply(source, target);
-            BattleEvent.Publish(this);
+            new PhysicalDamage(Damage).Apply(source, target);
+            BattleEvent.Publish(
+                new AttackPerformed(this, source, target)
+            );
         }
     }
 
     public void Apply(Member source, Member target) {
-        this.Apply(source, new MemberAsTarget(target));
+        Apply(source, new MemberAsTarget(target));
     }
 }
