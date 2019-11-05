@@ -5,10 +5,9 @@ using UnityEngine;
 
 public sealed class Attack  : Effect
 {
-    private Member _attacker;
-    public Member Attacker() { return this._attacker; }
-    private Target _target;
-    public Target Target() { return this._target; }
+
+    public Member Attacker { get; private set; }
+    public Target Target { get; private set; }
     public int Damage { get; }
 
     public Attack(int damage)
@@ -18,8 +17,8 @@ public sealed class Attack  : Effect
 
     public void Apply(Member source, Target target)
     {
-        _attacker = source;
-        _target = target;
+        Attacker = source;
+        Target = target;
         if (target.Members.Length > 1)
         {
             target.Members.ForEach(

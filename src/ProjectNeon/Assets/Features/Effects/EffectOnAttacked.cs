@@ -26,7 +26,7 @@ public class EffectOnAttacked : Effect
     {
         _effectTarget.Members.ForEach(
             target => {
-                    if (target.Equals(attack.Target().Members[0]))
+                    if (target.Equals(attack.Target.Members[0]))
                         _effect.Apply(_performer, _effectTarget);
                 }
         );

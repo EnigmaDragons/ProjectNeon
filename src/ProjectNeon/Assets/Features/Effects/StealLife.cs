@@ -34,7 +34,7 @@ public class StealLife : Effect
         _effectTarget.Members.ForEach(
             target =>
             {
-                if (target.Equals(attack.Attacker()))
+                if (target.Equals(attack.Attacker))
                 {
                     new SimpleEffect(
                         m => m.GainHp(attack.Damage * _ratio)
