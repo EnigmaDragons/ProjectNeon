@@ -25,7 +25,13 @@ public sealed class InterceptAttackTests
         Assert.AreEqual(
             5,
             paladin.State[TemporalStatType.HP],
-            "Paladin didn't intercepted attack"
+            "Paladin didn't received the interception damage"
+        );
+
+        Assert.AreEqual(
+            10,
+            ally.State[TemporalStatType.HP],
+            "Attack damaged ally"
         );
     }
 }

@@ -10,7 +10,7 @@ class InterceptAttack : Effect
     {
         _performer = source;
         _effectTarget = target;
-        BattleEvent.Subscribe<AttackPerformed>(attackPerformed => Execute(attackPerformed.Attack), this);
+        BattleEvent.Subscribe<AttackToPerform>(attackToPerform => Execute(attackToPerform.Attack), this);
     }
 
     void Execute(Attack attack)
@@ -19,7 +19,8 @@ class InterceptAttack : Effect
             target => {
                 if (target.Equals(attack.Target.Members[0]))
                 {
-                    new Attack(attack.Damage).Apply(attack.Attacker, _performer);
+                    new Negate(attack.Effect);
+//                    new Attack(attack.Damage).Apply(attack.Attacker, _performer);
                 }
             }
         );
