@@ -19,8 +19,8 @@ class InterceptAttack : Effect
             target => {
                 if (target.Equals(attack.Target.Members[0]))
                 {
-                    new Negate(attack.Effect);
-//                    new Attack(attack.Damage).Apply(attack.Attacker, _performer);
+                    attack.Effect = new NoEffect();
+                    new Attack(attack.Damage).Apply(attack.Attacker, _performer);
                 }
             }
         );

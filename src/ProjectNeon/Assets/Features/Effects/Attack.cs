@@ -1,11 +1,13 @@
 ﻿
+using UnityEngine;
+
 public sealed class Attack  : Effect
 {
 
-    public Member Attacker { get; private set; }
-    public Target Target { get; private set; }
-    public int Damage { get; }
-    public Effect Effect { get; private set; }
+    public Member Attacker { get; set; }
+    public Target Target { get; set; }
+    public int Damage { get; set; }
+    public Effect Effect { get; set; }
 
     public Attack(int damage)
     {
