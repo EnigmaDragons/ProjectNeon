@@ -3,16 +3,17 @@ using UnityEngine;
 
 public sealed class Attack  : Effect
 {
-
     public Member Attacker { get; set; }
     public Target Target { get; set; }
-    public float Multiplier { get; set; }
     public Effect Effect { get; set; }
+    public Damage Damage { get; set; }
+    public float Multiplier { get; set; }
 
     public Attack(float multiplier)
     {
         Multiplier = multiplier;
-        Effect = new PhysicalDamage(Multiplier);
+        Damage = new PhysicalDamage(Multiplier);
+        Effect = new DamageEffecto(Damage);
     }
 
     public void Apply(Member source, Target target)

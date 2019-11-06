@@ -1,17 +1,17 @@
-﻿public sealed class PhysicalDamage : Effect
+﻿using System;
+
+public sealed class PhysicalDamage : Damage
 {
     public float Multiplier { get; }
-    public float Damage { get; private set; }
 
     public PhysicalDamage(float multiplier)
     {
         Multiplier = multiplier;
     }
 
-    public void Apply(Member source, Target target)
+    public int Calculate(Member source, Target target)
     {
-        Damage = source.State.Attack() * Multiplier;
-        target.Members[0].State.TakePhysicalDamage(source.State.Attack() * Multiplier);
+        return Convert.ToInt32(source.State.Attack() * Multiplier * ((1f - target.Members[0].State.Armor()) / 1f));    
     }
 
 }
