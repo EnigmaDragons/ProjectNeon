@@ -20,7 +20,7 @@ class InterceptAttack : Effect
                 if (target.Equals(attack.Target.Members[0]))
                 {
                     attack.Effect = new NoEffect();
-                    new Attack(attack.Damage).Apply(attack.Attacker, _performer);
+                    new Attack(attack.Multiplier).Apply(attack.Attacker, _performer);
                 }
             }
         );

@@ -6,13 +6,13 @@ public sealed class Attack  : Effect
 
     public Member Attacker { get; set; }
     public Target Target { get; set; }
-    public int Damage { get; set; }
+    public float Multiplier { get; set; }
     public Effect Effect { get; set; }
 
-    public Attack(int damage)
+    public Attack(float multiplier)
     {
-        Damage = damage;
-        Effect = new PhysicalDamage(Damage);
+        Multiplier = multiplier;
+        Effect = new PhysicalDamage(Multiplier);
     }
 
     public void Apply(Member source, Target target)
@@ -23,7 +23,7 @@ public sealed class Attack  : Effect
         {
             target.Members.ForEach(
                 member => {
-                    new Attack(Damage).Apply(source, target);
+                    new Attack(Multiplier).Apply(source, target);
                 }
             );
         } else

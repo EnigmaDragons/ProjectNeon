@@ -37,7 +37,7 @@ public class StealLife : Effect
                 if (target.Equals(attack.Attacker))
                 {
                     new SimpleEffect(
-                        m => m.GainHp(attack.Damage * _ratio)
+                        m => m.GainHp(attack.Multiplier * _ratio)
                     ).Apply(_performer, new MemberAsTarget(target));
                 }
             }
