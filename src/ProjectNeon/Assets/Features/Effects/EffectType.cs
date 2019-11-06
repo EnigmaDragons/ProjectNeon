@@ -18,4 +18,5 @@ public enum EffectType
     DamageAttackerOnAttack = 15,
     StealLifeNextAttack = 16,
     Attack = 17,
+    InterceptAttackForTurns = 18,
 }
