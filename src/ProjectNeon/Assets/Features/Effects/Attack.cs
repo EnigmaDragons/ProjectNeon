@@ -1,18 +1,18 @@
 ﻿
-
-
 using UnityEngine;
 
 public sealed class Attack  : Effect
 {
 
-    public Member Attacker { get; private set; }
-    public Target Target { get; private set; }
-    public int Damage { get; }
+    public Member Attacker { get; set; }
+    public Target Target { get; set; }
+    public float Multiplier { get; set; }
+    public Effect Effect { get; set; }
 
-    public Attack(int damage)
+    public Attack(float multiplier)
     {
-        Damage = damage;
+        Multiplier = multiplier;
+        Effect = new PhysicalDamage(Multiplier);
     }
 
     public void Apply(Member source, Target target)
@@ -23,12 +23,15 @@ public sealed class Attack  : Effect
         {
             target.Members.ForEach(
                 member => {
-                    new Attack(Damage).Apply(source, target);
+                    new Attack(Multiplier).Apply(source, target);
                 }
             );
         } else
         {
-            new PhysicalDamage(Damage).Apply(source, target);
+            BattleEvent.Publish(
+                new AttackToPerform(this)
+            );
+            Effect.Apply(source, target);
             BattleEvent.Publish(
                 new AttackPerformed(this)
             );
