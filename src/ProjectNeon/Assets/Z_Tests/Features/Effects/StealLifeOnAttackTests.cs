@@ -20,6 +20,6 @@ public sealed class StealLifeOnAttackTests
         AllEffects.Apply(StealLifeOnAttack(), caster, new MemberAsTarget(attacker));
         new Attack(1).Apply(attacker, target);
 
-        Assert.AreEqual(9, attacker.State[TemporalStatType.HP]);
+        Assert.AreEqual(5, attacker.State[TemporalStatType.HP]);
     }
 }

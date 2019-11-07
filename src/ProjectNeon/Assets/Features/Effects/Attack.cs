@@ -13,7 +13,7 @@ public sealed class Attack  : Effect
     {
         Multiplier = multiplier;
         Damage = new PhysicalDamage(Multiplier);
-        Effect = new DamageEffecto(Damage);
+        Effect = new DamageApplied(Damage);
     }
 
     public void Apply(Member source, Target target)
