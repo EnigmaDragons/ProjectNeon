@@ -20,4 +20,7 @@ public enum EffectType
     Attack = 17,
     InterceptAttackForTurns = 18,
     EvadeAttacks = 19,
+    Regenerate = 20,
+    BuffStrengthFlat = 21,
+    BuffToughnessFlat = 21
 }

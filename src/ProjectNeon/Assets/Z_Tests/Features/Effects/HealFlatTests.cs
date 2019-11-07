@@ -5,10 +5,9 @@ public sealed class HealFlatTests
     [Test]
     public void HealFlat_ApplyEffect_DoesNotPassFullHealth()
     {
-        var heal5 = new EffectData { EffectType = EffectType.HealFlat, FloatAmount = new FloatReference(5) };
-        var target = TestMembers.With(StatType.MaxHP, 10);
-        
-        AllEffects.Apply(heal5, TestMembers.Any(), new MemberAsTarget(target));
+        Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
+
+        new Heal(5).Apply(TestMembers.Any(), target);
         
         Assert.AreEqual(10, target.State[TemporalStatType.HP]);
     }
@@ -16,12 +15,11 @@ public sealed class HealFlatTests
     [Test]
     public void HealFlat_Take6DamageAndThenHeal5_HpIsCorrect()
     {
-        var heal5 = new EffectData { EffectType = EffectType.HealFlat, FloatAmount = new FloatReference(5) };
-        var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
-        
+        Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
         target.State.TakeRawDamage(6);
-        AllEffects.Apply(heal5, TestMembers.Any(), new MemberAsTarget(target));
-        
+
+        new Heal(5).Apply(TestMembers.Any(), target);
+
         Assert.AreEqual(9, target.State[TemporalStatType.HP]);
     }
 }
