@@ -17,9 +17,9 @@ public sealed class ForNumberOfTurnsTests
         Member attacker = TestMembers.With(StatType.Attack, 1);
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        timedDamage.Apply(attacker, new MemberAsTarget(target));
+        timedDamage.Apply(attacker, new Single(target));
         timedDamage.AdvanceTurn();
-        timedDamage.Apply(attacker, new MemberAsTarget(target));
+        timedDamage.Apply(attacker, new Single(target));
         
         Assert.AreEqual(
             8, 
@@ -36,9 +36,9 @@ public sealed class ForNumberOfTurnsTests
         Member attacker = TestMembers.With(StatType.Attack, 1);
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        timedDamage.Apply(attacker, new MemberAsTarget(target));
+        timedDamage.Apply(attacker, new Single(target));
         timedDamage.AdvanceTurn();
-        timedDamage.Apply(attacker, new MemberAsTarget(target));
+        timedDamage.Apply(attacker, new Single(target));
 
         Assert.AreEqual(
             9,

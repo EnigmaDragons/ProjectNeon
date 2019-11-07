@@ -31,17 +31,12 @@ public class StealLife : Effect
 
     void Execute(Attack attack)
     {
-        _effectTarget.Members.ForEach(
-            target =>
-            {
-                if (target.Equals(attack.Attacker))
-                {
-                    new SimpleEffect(
-                        m => m.GainHp(attack.Damage.Calculate(attack.Attacker, attack.Target) * _ratio)
-                    ).Apply(_performer, new MemberAsTarget(target));
-                }
-            }
-        );
+        if (_effectTarget.Equals(attack.Attacker))
+        {
+            new SimpleEffect(
+		     m => m.GainHp(attack.Damage.Calculate(attack.Attacker, attack.Target) * _ratio)
+            ).Apply(_performer, _effectTarget);
+        }
     }
 
 }

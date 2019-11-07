@@ -21,7 +21,7 @@ public sealed class ResourceFlat
     [Test]
     public void ResourceFlat_ApplyEffect()
     {
-        AllEffects.Apply(data, performer, new MemberAsTarget(performer));
+        AllEffects.Apply(data, performer, new Single(performer));
         Assert.AreEqual(
             5,
             performer.State.ResourceTypes[0].MaxAmount

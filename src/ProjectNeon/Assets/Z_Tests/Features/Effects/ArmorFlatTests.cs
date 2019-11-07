@@ -10,7 +10,7 @@ public sealed class ArmorFlatTests
         var addArmorEffect = ChangeArmorBy(1);
         var target = TestMembers.With(StatType.Armor, 5);
         
-        AllEffects.Apply(addArmorEffect, TestMembers.Any(), new MemberAsTarget(target));
+        AllEffects.Apply(addArmorEffect, TestMembers.Any(), new Single(target));
         
         Assert.AreEqual(6, target.State.Armor());
     }

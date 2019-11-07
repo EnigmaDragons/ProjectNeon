@@ -17,7 +17,7 @@ public sealed class StealLifeOnAttackTests
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
         attacker.State.TakeRawDamage(6);
 
-        AllEffects.Apply(StealLifeOnAttack(), caster, new MemberAsTarget(attacker));
+        AllEffects.Apply(StealLifeOnAttack(), caster, new Single(attacker));
         new Attack(5).Apply(attacker, target);
 
         Assert.AreEqual(9, attacker.State[TemporalStatType.HP]);

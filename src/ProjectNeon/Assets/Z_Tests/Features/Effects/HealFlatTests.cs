@@ -7,7 +7,7 @@ public sealed class HealFlatTests
     {
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        new Heal(5).Apply(TestMembers.Any(), target);
+        new Heal(5).Apply(TestMembers.Any(), new Single(target));
         
         Assert.AreEqual(10, target.State[TemporalStatType.HP]);
     }
@@ -18,7 +18,7 @@ public sealed class HealFlatTests
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
         target.State.TakeRawDamage(6);
 
-        new Heal(5).Apply(TestMembers.Any(), target);
+        new Heal(5).Apply(TestMembers.Any(), new Single(target));
 
         Assert.AreEqual(9, target.State[TemporalStatType.HP]);
     }
