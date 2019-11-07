@@ -25,18 +25,9 @@ public class EffectOnAttacker : Effect
 
     void Execute(Attack attack)
     {
-        _effectTarget.Members.ForEach(
-            target => {
-                /**
-                 * @todo #454:15min Remove all attack.Target.Members[0] usages from code.
-                 */
-                if (target.Equals(attack.Target.Members[0]))
-                {
-                    _effect.Apply(_performer, new MemberAsTarget(attack.Attacker));
-                }
-                    
-            }
-        );
+        if (_effectTarget.Equals(attack.Target))
+            _effect.Apply(_performer, new Single(attack.Attacker));
+
     }
 
 }

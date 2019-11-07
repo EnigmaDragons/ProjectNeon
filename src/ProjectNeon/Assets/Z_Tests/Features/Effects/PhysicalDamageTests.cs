@@ -27,7 +27,7 @@ public sealed class PhysicalDamageTests
             s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f).With(StatType.Armor, 0.5F)
         );
 
-        new Damage(new PhysicalDamage(1)).Apply(attacker, new MemberAsTarget(target));
+        new Damage(new PhysicalDamage(1)).Apply(attacker, new Single(target));
 
         Assert.AreEqual(
             9,

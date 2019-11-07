@@ -1,12 +1,12 @@
 ﻿
 using UnityEngine;
 
-class InterceptAttack : Effect
+public class InterceptAttack : Effect
 {
     private Member _performer;
     private Target _effectTarget;
 
-    void Effect.Apply(Member source, Target target)
+    public void Apply(Member source, Target target)
     {
         _performer = source;
         _effectTarget = target;
@@ -15,15 +15,11 @@ class InterceptAttack : Effect
 
     void Execute(Attack attack)
     {
-        _effectTarget.Members.ForEach(
-            target => {
-                if (target.Equals(attack.Target.Members[0]))
-                {
-                    attack.Effect = new NoEffect();
-                    new Attack(attack.Multiplier).Apply(attack.Attacker, _performer);
-                }
-            }
-        );
+        if (_effectTarget.Equals(attack.Target))
+        {
+            attack.Effect = new NoEffect();
+            new Attack(attack.Multiplier).Apply(attack.Attacker, _performer);
+        };
     }
 }
 
