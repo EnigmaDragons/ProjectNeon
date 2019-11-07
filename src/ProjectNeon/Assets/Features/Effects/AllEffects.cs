@@ -29,7 +29,7 @@ public static class AllEffects
         { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.IntAmount), 1)},
         { EffectType.InterceptAttackForTurns, e => new ForNumberOfTurns(new InterceptAttack(), e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount)},
-        { EffectType.EvadeAttacks, e => new EvadeAttacks(e.IntAmount) },
+        { EffectType.EvadeAttacks, e => new Recurrent(new Evade(), e.IntAmount) },
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.

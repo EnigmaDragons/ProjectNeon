@@ -11,7 +11,7 @@ public sealed class EvadeTests
         Member evader = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
         Member attacker = TestMembers.With(StatType.Attack, 1);
 
-        new EvadeAttacks().Apply(evader, new MemberAsTarget(evader));
+        new Evade().Apply(evader, new MemberAsTarget(evader));
 
         new Attack(5).Apply(attacker, evader);
 
