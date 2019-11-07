@@ -3,33 +3,34 @@
 
 public sealed class PhysicalDamageTests
 {
-
-    private EffectData data = new EffectData { EffectType = EffectType.PhysicalDamage, FloatAmount = new FloatReference(2) } ;
-
-    private Member performer = new Member(
-        1,
-        "Good Dummy One",
-        "ElectroBlade",
-        TeamType.Party,
-        new StatAddends().With(StatType.Attack, 1).With(StatType.Damagability, 1f)
-    );
-
-    private Member target;
+    private Member attacker = TestMembers.With(StatType.Attack, 2);
 
     [Test]
-    public void PhysicalDamageUnarmoredTarget_ApplyEffect()
+    public void PhysicalDamage_DamageUnarmoredTarget_ApplyEffect()
     {
-        target = new Member(
-            2,
-            "Target Dummy",
-            "Soft Dummy",
-            TeamType.Enemies,
-            new StatAddends().With(StatType.Armor, 0).With(StatType.MaxHP, 10).With(StatType.Damagability, 1f)
-        );
+        Member attacker = TestMembers.With(StatType.Attack, 2);
+        Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        AllEffects.Apply(data, performer, new MemberAsTarget(target));
+        new Damage(new PhysicalDamage(1)).Apply(attacker, new MemberAsTarget(target));
+
         Assert.AreEqual(
             8,
+            target.State[TemporalStatType.HP]
+        );
+    }
+
+    [Test]
+    public void PhysicalDamage_DamageArmoredTarget_ApplyEffect()
+    {
+        
+        Member target = TestMembers.Create(
+            s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f).With(StatType.Armor, 0.5F)
+        );
+
+        new Damage(new PhysicalDamage(1)).Apply(attacker, new MemberAsTarget(target));
+
+        Assert.AreEqual(
+            9,
             target.State[TemporalStatType.HP]
         );
     }

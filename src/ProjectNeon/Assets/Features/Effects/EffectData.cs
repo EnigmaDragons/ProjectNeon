@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public sealed class EffectData
@@ -8,5 +9,5 @@ public sealed class EffectData
     public FloatReference FloatAmount = new FloatReference();
     public IntReference NumberOfTurns = new IntReference();
     public StringReference EffectScope = new StringReference();
-    public int IntAmount => Convert.ToInt32(Math.Ceiling(FloatAmount.Value));
+    public int IntAmount => Mathf.CeilToInt(FloatAmount.Value);
 }
