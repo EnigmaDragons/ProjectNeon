@@ -6,14 +6,14 @@ public sealed class Attack  : Effect
     public Member Attacker { get; set; }
     public Target Target { get; set; }
     public Effect Effect { get; set; }
-    public Damage Damage { get; set; }
+    public DamageCalculation Damage { get; set; }
     public float Multiplier { get; set; }
 
     public Attack(float multiplier)
     {
         Multiplier = multiplier;
         Damage = new PhysicalDamage(Multiplier);
-        Effect = new DamageApplied(Damage);
+        Effect = new Damage(Damage);
     }
 
     public void Apply(Member source, Target target)

@@ -8,7 +8,7 @@ public static class AllEffects
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.HealFlat, e => new SimpleEffect(m => m.GainHp(e.IntAmount))},
-        { EffectType.PhysicalDamage, e => new DamageApplied(new PhysicalDamage(e.IntAmount)) },
+        { EffectType.PhysicalDamage, e => new Damage(new PhysicalDamage(e.FloatAmount)) },
         { EffectType.BuffAttackFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Attack, e.IntAmount), e.NumberOfTurns)))},
         { EffectType.BuffAttackMultiplier, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new BuffedStats(new StatMultipliers().With(StatType.Attack, e.FloatAmount), e.NumberOfTurns)))},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.RemoveTemporaryEffects(effect => effect.IsDebuff))},
@@ -25,7 +25,7 @@ public static class AllEffects
         { EffectType.ArmorFlat, e => new SimpleEffect(m => m.GainArmor(e.IntAmount)) },
         { EffectType.Stun, e => new SimpleEffect(target => target.Stun(e.NumberOfTurns)) },
         { EffectType.ShieldAttackedOnAttack, e => new EffectOnAttacked(new SimpleEffect((src, m) => m.GainShield(e.IntAmount * src.State.Toughness()))) },
-        { EffectType.DamageAttackerOnAttack, e => new EffectOnAttacker(new DamageApplied(new PhysicalDamage(e.IntAmount))) },
+        { EffectType.DamageAttackerOnAttack, e => new EffectOnAttacker(new Damage(new PhysicalDamage(e.IntAmount))) },
         { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.FloatAmount), 1)},
         { EffectType.InterceptAttackForTurns, e => new ForNumberOfTurns(new InterceptAttack(), e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount)}
