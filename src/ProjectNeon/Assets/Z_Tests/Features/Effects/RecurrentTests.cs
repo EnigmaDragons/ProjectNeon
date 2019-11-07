@@ -18,8 +18,8 @@ public sealed class RecurrentTests
         Member attacker = TestMembers.With(StatType.Attack, 1);
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        oneTimer.Apply(attacker, new MemberAsTarget(target));
-        oneTimer.Apply(attacker, new MemberAsTarget(target));
+        oneTimer.Apply(attacker, new Single(target));
+        oneTimer.Apply(attacker, new Single(target));
 
         Assert.AreEqual(
             9,

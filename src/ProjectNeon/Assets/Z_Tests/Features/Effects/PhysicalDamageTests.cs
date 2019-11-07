@@ -27,7 +27,7 @@ public sealed class PhysicalDamageTests
             new StatAddends().With(StatType.Armor, 0).With(StatType.MaxHP, 10).With(StatType.Damagability, 1f)
         );
 
-        AllEffects.Apply(data, performer, new MemberAsTarget(target));
+        AllEffects.Apply(data, performer, new Single(target));
         Assert.AreEqual(
             8,
             target.State[TemporalStatType.HP]

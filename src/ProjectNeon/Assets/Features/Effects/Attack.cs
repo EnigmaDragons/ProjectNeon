@@ -39,6 +39,6 @@ public sealed class Attack  : Effect
     }
 
     public void Apply(Member source, Member target) {
-        Apply(source, new MemberAsTarget(target));
+        Apply(source, new Single(target));
     }
 }
