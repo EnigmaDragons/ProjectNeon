@@ -22,5 +22,5 @@ public enum EffectType
     EvadeAttacks = 19,
     Regenerate = 20,
     BuffStrengthFlat = 21,
-    BuffToughnessFlat = 21
+    BuffToughnessFlat = 22
 }

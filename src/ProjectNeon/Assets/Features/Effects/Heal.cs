@@ -11,19 +11,11 @@ public sealed class Heal : Effect
 
     public void Apply(Member source, Target target)
     {
-        if (target.Members.Length > 1)
-        {
-            target.Members.ForEach(
-                member => {
-                    new Heal(_amount).Apply(source, member);
-                }
-            );
-        }
-        else
-        {
-            Debug.Log("Healing...");
-            target.Members[0].State.GainHp(_amount);
-        }
+        target.Members.ForEach(
+            member => {
+                member.State.GainHp(_amount);
+            }
+        );
     }
 
     public void Apply(Member source, Member target)
