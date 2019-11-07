@@ -11,7 +11,7 @@ public sealed class PhysicalDamage : Damage
 
     public int Calculate(Member source, Target target)
     {
-        return Convert.ToInt32(source.State.Attack() * Multiplier * ((1f - target.Members[0].State.Armor()) / 1f));    
+        return Convert.ToInt32(Math.Ceiling(source.State.Attack() * Multiplier * ((1f - target.Members[0].State.Armor()) / 1f)));    
     }
 
 }

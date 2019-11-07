@@ -26,7 +26,7 @@ public static class AllEffects
         { EffectType.Stun, e => new SimpleEffect(target => target.Stun(e.NumberOfTurns)) },
         { EffectType.ShieldAttackedOnAttack, e => new EffectOnAttacked(new SimpleEffect((src, m) => m.GainShield(e.IntAmount * src.State.Toughness()))) },
         { EffectType.DamageAttackerOnAttack, e => new EffectOnAttacker(new DamageApplied(new PhysicalDamage(e.IntAmount))) },
-        { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.IntAmount), 1)},
+        { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.FloatAmount), 1)},
         { EffectType.InterceptAttackForTurns, e => new ForNumberOfTurns(new InterceptAttack(), e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount)}
     };
