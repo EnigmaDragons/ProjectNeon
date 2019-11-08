@@ -30,7 +30,7 @@ public static class AllEffects
         { EffectType.InterceptAttackForTurns, e => new ForNumberOfTurns(new InterceptAttack(), e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount)},
         { EffectType.EvadeAttacks, e => new Recurrent(new Evade(), e.IntAmount) },
-        { EffectType.Regenerate, e => new ForNumberOfTurns(new Heal(e.IntAmount), e.NumberOfTurns) },
+        { EffectType.HealFlatForTurnsOnTurnStart, e => new HealFlatForTurnsOnTurnStart(e.IntAmount, e.NumberOfTurns) },
         { EffectType.BuffStrengthFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Attack, e.IntAmount), e.NumberOfTurns)))},
         { EffectType.BuffToughnessFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Toughness, e.IntAmount), e.NumberOfTurns)))}
 

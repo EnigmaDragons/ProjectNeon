@@ -1,38 +1,32 @@
 ﻿
 /**
  * Wraps the execution of an effect so it is only executed for a certain amount of turns.
+ * 
+ * Turn ending decrease the remainingDuration in one. 
  */
-public class ForNumberOfTurns : ITemporalState, Effect
+public class ForNumberOfTurns : Effect
 {
     
     private int _remainingDuration;
 
     private Effect _effect;
 
-    private bool _isDebuff;
+    public bool IsActive => _remainingDuration >= 0;
 
-    public IStats Stats { get; } = new StatAddends();
-    public bool IsDebuff => _isDebuff;
-    public bool IsActive => _remainingDuration > 0;
-
-    public void AdvanceTurn()
+    private void AdvanceTurn()
     {
-        if (_remainingDuration <= 0) return;
-
-        _remainingDuration--;
-        
+        if (_remainingDuration < 0) return;
+            _remainingDuration--;
     }
 
-    public ForNumberOfTurns(Effect effect, int duration, bool isDebuff)
+    public ForNumberOfTurns(Effect effect, int duration)
     {
         _effect = effect;
         _remainingDuration = duration;
-        _isDebuff = isDebuff;
+        BattleEvent.Subscribe<TurnEnd>((turnEnd) => AdvanceTurn(), this);
     }
 
-    public ForNumberOfTurns(Effect effect, int duration) : this(effect, duration, true) { }
-
-    public ForNumberOfTurns(Effect effect) : this(effect, 1, true) { }
+    public ForNumberOfTurns(Effect effect) : this(effect, 1) { }
 
     public void Apply(Member source, Target target)
     {
