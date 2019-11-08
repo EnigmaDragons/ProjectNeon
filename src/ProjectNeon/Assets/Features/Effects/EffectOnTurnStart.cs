@@ -7,8 +7,6 @@ using System.Collections;
 public class EffectOnTurnStart : Effect
 {
     private Effect _effect;
-    private Member _performer;
-    private Target _effectTarget;
 
     public EffectOnTurnStart(Effect origin)
     {
@@ -17,14 +15,11 @@ public class EffectOnTurnStart : Effect
 
     public void Apply(Member source, Target target)
     {
-        _performer = source;
-        _effectTarget = target;
-        BattleEvent.Subscribe<TurnStart>((turnStart) => Execute(), this);
+        BattleEvent.Subscribe<TurnStart>(_ => Execute(source, target), this);
     }
 
-    void Execute()
+    void Execute(Member source, Target target)
     {
-        Debug.Log("Turn started!");
-        _effect.Apply(_performer, _effectTarget);
+        _effect.Apply(source, target);
     }
 }
