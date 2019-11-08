@@ -21,5 +21,6 @@ public class EffectOnTurnStart : Effect
     void Execute(Member source, Target target)
     {
         _effect.Apply(source, target);
+        BattleEvent.Unsubscribe(this);        
     }
 }
