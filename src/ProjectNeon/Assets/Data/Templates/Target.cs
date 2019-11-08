@@ -1,13 +1,10 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 public interface Target  
 {
     Member[] Members { get; }
 
-    public void GainHp(int amount);
 }
 
 public static class TargetExtensions
