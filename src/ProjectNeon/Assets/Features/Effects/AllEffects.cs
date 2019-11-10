@@ -7,7 +7,7 @@ public static class AllEffects
     private static readonly Dictionary<EffectType, Func<EffectData, Effect>> _createEffectOfType = new Dictionary<EffectType, Func<EffectData, Effect>>
     {
         { EffectType.Nothing, e => new NoEffect() },
-        { EffectType.HealFlat, e => new SimpleEffect(m => m.GainHp(e.IntAmount))},
+        { EffectType.HealFlat, e => new Heal(e.IntAmount) },
         { EffectType.PhysicalDamage, e => new Damage(new PhysicalDamage(e.FloatAmount)) },
         { EffectType.BuffAttackFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Attack, e.IntAmount), e.NumberOfTurns)))},
         { EffectType.BuffAttackMultiplier, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new BuffedStats(new StatMultipliers().With(StatType.Attack, e.FloatAmount), e.NumberOfTurns)))},
@@ -30,6 +30,10 @@ public static class AllEffects
         { EffectType.InterceptAttackForTurns, e => new ForNumberOfTurns(new InterceptAttack(), e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount)},
         { EffectType.EvadeAttacks, e => new Recurrent(new Evade(), e.IntAmount) },
+        { EffectType.HealFlatForTurnsOnTurnStart, e => new HealFlatForTurnsOnTurnStart(e.IntAmount, e.NumberOfTurns) },
+        { EffectType.BuffStrengthFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Attack, e.IntAmount), e.NumberOfTurns)))},
+        { EffectType.BuffToughnessFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Toughness, e.IntAmount), e.NumberOfTurns)))}
+
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
