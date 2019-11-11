@@ -10,4 +10,5 @@ public sealed class EffectData
     public IntReference NumberOfTurns = new IntReference();
     public StringReference EffectScope = new StringReference();
     public int IntAmount => Mathf.CeilToInt(FloatAmount.Value);
+    public EffectData origin;
 }

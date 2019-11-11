@@ -10,15 +10,21 @@ public sealed class CardAction
     [SerializeField] private EffectData effect1;
     [SerializeField] private EffectData effect2;
     [SerializeField] private EffectData effect3;
+    [SerializeField] private EffectData[] chainedEffects;
 
     private EffectData[] Effects => Array.Empty<EffectData>()
         .ConcatIf(effect1, e => e.ShouldApply)
         .ConcatIf(effect2, e => e.ShouldApply)
         .ConcatIf(effect3, e => e.ShouldApply)
+        .Concat(chainedEffects)
         .ToArray(); 
     
     public void Apply(Member source, Target target)
     {
+        EffectData chained = chainedEffects.Aggregate((decorator, decorated) =>
+            decorator.origin = decorated
+        );
+
         Effects.ForEach(
             effect => AllEffects.Apply(effect, source, target)
         );
