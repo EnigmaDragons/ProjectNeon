@@ -22,5 +22,10 @@ public enum EffectType
     EvadeAttacks = 19,
     HealFlatForTurnsOnTurnStart = 20,
     BuffStrengthFlat = 21,
-    BuffToughnessFlat = 22
+    BuffToughnessFlat = 22,
+    RandomizeTarget = 23,
+    RepeatEffect = 24,
+
+
+
 }

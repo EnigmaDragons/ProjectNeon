@@ -28,7 +28,7 @@ public class FloatReferenceDrawer : PropertyDrawer
         // Get properties
         SerializedProperty useConstant = property.FindPropertyRelative("UseConstant");
         SerializedProperty constantValue = property.FindPropertyRelative("ConstantValue");
-        SerializedProperty variable = property.FindPropertyRelative("Variable");
+        SerializedProperty variable = property.FindPropertyRelative("FloatVariable");
 
         // Calculate rect for configuration button
         Rect buttonRect = new Rect(position);
