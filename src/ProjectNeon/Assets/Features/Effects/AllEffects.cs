@@ -35,9 +35,10 @@ public static class AllEffects
         { EffectType.BuffToughnessFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Toughness, e.IntAmount), e.NumberOfTurns)))},
         { EffectType.HealFlatForTurnsOnTurnStart, e => new HealFlatForTurnsOnTurnStart(e.IntAmount, e.NumberOfTurns) },
         { EffectType.RepeatEffect, e => new RepeatEffect(Create(e.origin), e.IntAmount) },
-        { EffectType.RandomizeTarget, e => new RandomizeTarget(Create(e.origin)) }
-
-        //deal .5 attack for a random enemy 3 times
+        { EffectType.RandomizeTarget, e => new RandomizeTarget(Create(e.origin)) },
+        { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
+        { EffectType.OnAttacked, e => new EffectOnAttacked(Create(e.origin)) },
+        { EffectType.CostPrimaryResourceEffect, e => new CostPrimaryResourceEffect(Create(e.origin), e.IntAmount) }
 
     };
     /**
