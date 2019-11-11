@@ -21,7 +21,7 @@ public sealed class CardAction
     
     public void Apply(Member source, Target target)
     {
-        EffectData chained = chainedEffects.Aggregate((decorated, decorator) =>
+        EffectData chained = chainedEffects.Aggregate((decorator, decorated) =>
             decorator.origin = decorated
         );
 
