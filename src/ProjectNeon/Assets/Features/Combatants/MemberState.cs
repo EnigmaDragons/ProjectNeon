@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public sealed class MemberState : IStats
 {
@@ -24,6 +25,9 @@ public sealed class MemberState : IStats
         _baseStats = baseStats;
         _counters["HP"] = new BattleCounter(TemporalStatType.HP, _baseStats.MaxHP(), () => CurrentStats.MaxHP());
         _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.Toughness() * 2);
+        _counters[TemporalStatType.Lunar.ToString()] = new BattleCounter(TemporalStatType.Lunar, 0, () => 0);
+        _counters[TemporalStatType.Solar.ToString()] = new BattleCounter(TemporalStatType.Solar, 0, () => 0);
+        _counters[TemporalStatType.Stellar.ToString()] = new BattleCounter(TemporalStatType.Stellar, 0, () => 0);
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, 0, () => r.MaxAmount));
     }
 
@@ -45,6 +49,14 @@ public sealed class MemberState : IStats
     public void ChangeHp(float amount) => Counter(TemporalStatType.HP).ChangeBy(amount);
     public void GainPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(numToGive);
     private IResourceType PrimaryResource => ResourceTypes[0];
+
+    public void FeedOn(string feedType)
+    {
+        if (_counters.ContainsKey(feedType))
+        {
+            _counters[feedType] = new BattleCounter((TemporalStatType)Enum.Parse(typeof(TemporalStatType), feedType), 1, () => 1);
+        }
+    }
 
     public void Stun(int duration)
     {

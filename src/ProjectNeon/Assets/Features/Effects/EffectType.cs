@@ -25,7 +25,8 @@ public enum EffectType
     BuffToughnessFlat = 22,
     RandomizeTarget = 23,
     RepeatEffect = 24,
-
-
+    FeedOnEffect = 25,
+    ShieldBasedOnShieldValue = 26,
+    ExcludeSelfFromEffect = 27
 
 }

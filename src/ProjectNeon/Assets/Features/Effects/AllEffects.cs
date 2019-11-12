@@ -33,12 +33,11 @@ public static class AllEffects
         { EffectType.HealFlatForTurnsOnTurnStart, e => new HealFlatForTurnsOnTurnStart(e.IntAmount, e.NumberOfTurns) },
         { EffectType.BuffStrengthFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Attack, e.IntAmount), e.NumberOfTurns)))},
         { EffectType.BuffToughnessFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Toughness, e.IntAmount), e.NumberOfTurns)))},
-        { EffectType.HealFlatForTurnsOnTurnStart, e => new HealFlatForTurnsOnTurnStart(e.IntAmount, e.NumberOfTurns) },
         { EffectType.RepeatEffect, e => new RepeatEffect(Create(e.origin), e.IntAmount) },
-        { EffectType.RandomizeTarget, e => new RandomizeTarget(Create(e.origin)) }
-
-        //deal .5 attack for a random enemy 3 times
-
+        { EffectType.RandomizeTarget, e => new RandomizeTarget(Create(e.origin)) },
+        { EffectType.FeedOnEffect, e => new FeedOnEffect(Create(e.origin), e.EffectScope) },
+        { EffectType.ExcludeSelfFromEffect, e => new ExcludeSelfFromEffect(Create(e.origin)) },
+        { EffectType.ShieldBasedOnShieldValue, e => new SimpleEffect((src, m) => m.GainShield(e.FloatAmount * src.State[TemporalStatType.Shield])) },
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
