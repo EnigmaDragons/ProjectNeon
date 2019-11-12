@@ -11,8 +11,8 @@ public sealed class FeedOnEffectTests
         );
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        attacker.State.FeedOn("Lunar");
-        new FeedOnEffect(new Attack(1), "Lunar").Apply(attacker, new MemberAsTarget(target));
+        attacker.State.FeedOn(FeedType.LUNAR);
+        new FeedOnEffect(new Attack(1), "LUNAR").Apply(attacker, new MemberAsTarget(target));
 
         Assert.AreEqual(9, target.State[TemporalStatType.HP]);
     }
@@ -25,7 +25,7 @@ public sealed class FeedOnEffectTests
         );
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        new FeedOnEffect(new Attack(1), "Lunar").Apply(attacker, new MemberAsTarget(target));
+        new FeedOnEffect(new Attack(1), "LUNAR").Apply(attacker, new MemberAsTarget(target));
 
         Assert.AreEqual(10, target.State[TemporalStatType.HP]);
     }

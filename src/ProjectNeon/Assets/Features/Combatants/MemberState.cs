@@ -9,6 +9,7 @@ public sealed class MemberState : IStats
     private readonly List<IStats> _battleAdditiveMods = new List<IStats>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
+    public FeedType FeedType { get; private set; } = FeedType.NONE;
 
     private IStats CurrentStats => _baseStats
         .Plus(_battleAdditiveMods)
@@ -25,9 +26,7 @@ public sealed class MemberState : IStats
         _baseStats = baseStats;
         _counters["HP"] = new BattleCounter(TemporalStatType.HP, _baseStats.MaxHP(), () => CurrentStats.MaxHP());
         _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.Toughness() * 2);
-        _counters[TemporalStatType.Lunar.ToString()] = new BattleCounter(TemporalStatType.Lunar, 0, () => 0);
-        _counters[TemporalStatType.Solar.ToString()] = new BattleCounter(TemporalStatType.Solar, 0, () => 0);
-        _counters[TemporalStatType.Stellar.ToString()] = new BattleCounter(TemporalStatType.Stellar, 0, () => 0);
+
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, 0, () => r.MaxAmount));
     }
 
@@ -50,12 +49,9 @@ public sealed class MemberState : IStats
     public void GainPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(numToGive);
     private IResourceType PrimaryResource => ResourceTypes[0];
 
-    public void FeedOn(string feedType)
+    public void FeedOn(FeedType feedType)
     {
-        if (_counters.ContainsKey(feedType))
-        {
-            _counters[feedType] = new BattleCounter((TemporalStatType)Enum.Parse(typeof(TemporalStatType), feedType), 1, () => 1);
-        }
+        FeedType = feedType;
     }
 
     public void Stun(int duration)

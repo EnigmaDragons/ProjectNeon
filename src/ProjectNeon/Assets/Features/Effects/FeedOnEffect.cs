@@ -13,7 +13,6 @@ public sealed class FeedOnEffect : ConditionalEffect
 
     public override bool Condition()
     {
-        TemporalStatType type = (TemporalStatType)Enum.Parse(typeof(TemporalStatType), _attribute);
-        return _source.State[type] == 1;
+        return _source.State.FeedType == (FeedType)Enum.Parse(typeof(FeedType), _attribute);
     }
 }
