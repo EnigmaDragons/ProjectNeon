@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using UnityEngine;
 
 public sealed class AnyTargetHealthBelowThreshold : ConditionalEffect
@@ -12,6 +12,6 @@ public sealed class AnyTargetHealthBelowThreshold : ConditionalEffect
 
     public override bool Condition()
     {
-        return Array.Exists(_target.Members, element => element.State[TemporalStatType.HP] < element.State.MaxHP() * _threshold );
+        return Target.Members.Any(e => e.State[TemporalStatType.HP] < e.State.MaxHP() * _threshold );
     }
 }
