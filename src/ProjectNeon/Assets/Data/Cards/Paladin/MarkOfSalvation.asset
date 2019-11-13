@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: MarkOfSalvation
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 17059808f0b925049aae4140c048d868, type: 3}
+  art: {fileID: 21300000, guid: 2086b1e1fccd74e4c9be5af05f3dabe8, type: 3}
   description: Heal an ally for 5. If they are still below 50% life also Shield 5.
   typeDescription: Guardian
   onlyPlayableByClass: {fileID: 11400000, guid: eaccbb83ada6a874e817412fad35628a,
@@ -65,6 +65,33 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects:
+    - EffectType: 28
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0.5
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - EffectType: 6
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 5
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -110,3 +137,4 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []
