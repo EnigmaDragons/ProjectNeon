@@ -27,6 +27,6 @@ public enum EffectType
     RepeatEffect = 24,
     FeedOnEffect = 25,
     ShieldBasedOnShieldValue = 26,
-    ExcludeSelfFromEffect = 27
+    ExcludeSelfFromEffect = 27,
     AnyTargetHealthBelowThreshold = 28,
 }
