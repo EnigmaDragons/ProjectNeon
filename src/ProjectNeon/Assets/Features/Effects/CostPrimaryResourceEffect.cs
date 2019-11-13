@@ -14,7 +14,11 @@ public sealed class CostPrimaryResourceEffect : Effect
 
     void Effect.Apply(Member source, Target target)
     {
-        _effect.Apply(source, target);
-        source.State.SpendPrimaryResource(_cost);
+        Debug.Log("Resource :" + source.State[source.State.ResourceTypes[0]]);
+        if (source.State[source.State.ResourceTypes[0]] >= _cost)
+        {
+            _effect.Apply(source, target);
+            source.State.SpendPrimaryResource(_cost);
+        }
     }
 }

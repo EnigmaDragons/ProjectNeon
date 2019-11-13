@@ -17,7 +17,7 @@ public static class AllEffects
                 m.ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.MaxHP, e.IntAmount));
                 m.GainHp(e.IntAmount);
             })},
-        { EffectType.ShieldFlat, e => new SimpleEffect(m => m.GainShield(e.IntAmount)) },
+        { EffectType.ShieldFlat, e => new ShieldFlat(e.IntAmount) },
         { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new DebuffedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), e.NumberOfTurns))) },
@@ -33,13 +33,12 @@ public static class AllEffects
         { EffectType.HealFlatForTurnsOnTurnStart, e => new HealFlatForTurnsOnTurnStart(e.IntAmount, e.NumberOfTurns) },
         { EffectType.BuffStrengthFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Attack, e.IntAmount), e.NumberOfTurns)))},
         { EffectType.BuffToughnessFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Toughness, e.IntAmount), e.NumberOfTurns)))},
-        { EffectType.HealFlatForTurnsOnTurnStart, e => new HealFlatForTurnsOnTurnStart(e.IntAmount, e.NumberOfTurns) },
         { EffectType.RepeatEffect, e => new RepeatEffect(Create(e.origin), e.IntAmount) },
         { EffectType.RandomizeTarget, e => new RandomizeTarget(Create(e.origin)) },
         { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
         { EffectType.OnAttacked, e => new EffectOnAttacked(Create(e.origin)) },
-        { EffectType.CostPrimaryResourceEffect, e => new CostPrimaryResourceEffect(Create(e.origin), e.IntAmount) }
-
+        { EffectType.CostPrimaryResourceEffect, e => new CostPrimaryResourceEffect(Create(e.origin), e.IntAmount) },
+        { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) }
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
