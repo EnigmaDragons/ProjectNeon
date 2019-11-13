@@ -25,9 +25,5 @@ public enum EffectType
     BuffToughnessFlat = 22,
     RandomizeTarget = 23,
     RepeatEffect = 24,
-    AnyTargetHealthBelowThreshold = 28,
-
-
-
-
+    AnyTargetHealthBelowThreshold = 25,
 }
