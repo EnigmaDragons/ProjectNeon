@@ -17,7 +17,7 @@ public static class AllEffects
                 m.ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.MaxHP, e.IntAmount));
                 m.GainHp(e.IntAmount);
             })},
-        { EffectType.ShieldFlat, e => new SimpleEffect(m => m.GainShield(e.IntAmount)) },
+        { EffectType.ShieldFlat, e => new ShieldFlat(e.IntAmount) },
         { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new DebuffedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), e.NumberOfTurns))) },
@@ -38,6 +38,7 @@ public static class AllEffects
         { EffectType.FeedOnEffect, e => new FeedOnEffect(Create(e.origin), e.EffectScope) },
         { EffectType.ExcludeSelfFromEffect, e => new ExcludeSelfFromEffect(Create(e.origin)) },
         { EffectType.ShieldBasedOnShieldValue, e => new SimpleEffect((src, m) => m.GainShield(e.FloatAmount * src.State[TemporalStatType.Shield])) },
+        { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) }
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
