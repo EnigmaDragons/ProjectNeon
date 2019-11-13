@@ -49,10 +49,7 @@ public sealed class MemberState : IStats
     public void GainPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(numToGive);
     private IResourceType PrimaryResource => ResourceTypes[0];
 
-    public void FeedOn(FeedType feedType)
-    {
-        FeedType = feedType;
-    }
+
 
     public void Stun(int duration)
     {
