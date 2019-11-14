@@ -11,7 +11,7 @@ public sealed class FeedOnEffectTests
         );
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        attacker.State.FeedOn(FeedType.LUNAR);
+        attacker.State.ChangeStatus("FEED", "LUNAR");
         new FeedOnEffect(new Attack(1), "LUNAR").Apply(attacker, new MemberAsTarget(target));
 
         Assert.AreEqual(9, target.State[TemporalStatType.HP]);
