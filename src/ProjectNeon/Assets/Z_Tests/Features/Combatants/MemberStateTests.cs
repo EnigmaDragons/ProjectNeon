@@ -13,4 +13,13 @@ public sealed class MemberStateTests
         
         Assert.AreEqual(member[resource], 2);
     }
+
+    [Test]
+    public void MemberState_Resource_StartsWithCorrectNumber()
+    {
+        var resource = new InMemoryResourceType { Name = "SampleResource", StartingAmount = 8};
+        var member = new MemberState(new StatAddends { ResourceTypes = resource.AsArray() });
+
+        Assert.AreEqual(8, member[resource]);
+    }
 }

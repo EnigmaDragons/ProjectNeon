@@ -38,6 +38,9 @@ public static class AllEffects
         { EffectType.FeedOnEffect, e => new FeedOnEffect(Create(e.origin), e.EffectScope) },
         { EffectType.ExcludeSelfFromEffect, e => new ExcludeSelfFromEffect(Create(e.origin)) },
         { EffectType.ShieldBasedOnShieldValue, e => new SimpleEffect((src, m) => m.GainShield(e.FloatAmount * src.State[TemporalStatType.Shield])) },
+        { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
+        { EffectType.OnAttacked, e => new EffectOnAttacked(Create(e.origin)) },
+        { EffectType.CostPrimaryResourceEffect, e => new CostPrimaryResourceEffect(Create(e.origin), e.IntAmount) },
         { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) }
     };
     /**

@@ -52,6 +52,7 @@ public sealed class MemberState : IStats
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
     public void ChangeHp(float amount) => Counter(TemporalStatType.HP).ChangeBy(amount);
     public void GainPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(numToGive);
+    public void SpendPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(-numToGive);
     private IResourceType PrimaryResource => ResourceTypes[0];
 
     public void ChangeStatus(string status, string value)
