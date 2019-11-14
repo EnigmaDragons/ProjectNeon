@@ -9,7 +9,6 @@ public sealed class MemberState : IStats
     private readonly List<IStats> _battleAdditiveMods = new List<IStats>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
-    public FeedType FeedType { get; private set; } = FeedType.NONE;
 
     private IStats CurrentStats => _baseStats
         .Plus(_battleAdditiveMods)
@@ -17,6 +16,11 @@ public sealed class MemberState : IStats
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats));
 
     private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
+    private Dictionary<string, string> _status = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+    public Dictionary<string, string> Status()
+    {
+        return _status;
+    }
     private BattleCounter Counter(string name) => _counters[name];
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
@@ -33,6 +37,7 @@ public sealed class MemberState : IStats
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
     public float this[StatType statType] => CurrentStats[statType];
     public float this[TemporalStatType temporalStatType] => _counters[temporalStatType.ToString()].Amount;
+    public string this[string status] => _status[status];
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
 
     public void ApplyTemporaryAdditive(ITemporalState mods) => _additiveMods.Add(mods);
@@ -49,7 +54,10 @@ public sealed class MemberState : IStats
     public void GainPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(numToGive);
     private IResourceType PrimaryResource => ResourceTypes[0];
 
-
+    public void ChangeStatus(string status, string value)
+    {
+        _status[status] = value;
+    }
 
     public void Stun(int duration)
     {

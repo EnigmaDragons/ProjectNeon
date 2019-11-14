@@ -18,6 +18,6 @@ public sealed class FeedOnEffect : ConditionalEffect
 
     public override bool Condition()
     {
-        return Source.State.FeedType == _type;
+        return Source.State.Status().ContainsKey("Feed") && Source.State["Feed"] == Enum.GetName(typeof(FeedType), _type);
     }
 }
