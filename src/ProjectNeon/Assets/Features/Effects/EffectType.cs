@@ -26,4 +26,7 @@ public enum EffectType
     RandomizeTarget = 23,
     RepeatEffect = 24,
     AnyTargetHealthBelowThreshold = 25,
+    OnAttacked = 26,
+    CostPrimaryResourceEffect = 27,
+    ForNumberOfTurns = 28,    
 }
