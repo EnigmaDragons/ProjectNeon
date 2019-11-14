@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public sealed class MemberState : IStats
 {
@@ -15,6 +16,11 @@ public sealed class MemberState : IStats
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats));
 
     private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
+    private Dictionary<string, string> _status = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+    public Dictionary<string, string> Status()
+    {
+        return _status;
+    }
     private BattleCounter Counter(string name) => _counters[name];
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
@@ -24,12 +30,14 @@ public sealed class MemberState : IStats
         _baseStats = baseStats;
         _counters["HP"] = new BattleCounter(TemporalStatType.HP, _baseStats.MaxHP(), () => CurrentStats.MaxHP());
         _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.Toughness() * 2);
+
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, 0, () => r.MaxAmount));
     }
 
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
     public float this[StatType statType] => CurrentStats[statType];
     public float this[TemporalStatType temporalStatType] => _counters[temporalStatType.ToString()].Amount;
+    public string this[string status] => _status[status];
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
 
     public void ApplyTemporaryAdditive(ITemporalState mods) => _additiveMods.Add(mods);
@@ -44,7 +52,13 @@ public sealed class MemberState : IStats
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
     public void ChangeHp(float amount) => Counter(TemporalStatType.HP).ChangeBy(amount);
     public void GainPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(numToGive);
+    public void SpendPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(-numToGive);
     private IResourceType PrimaryResource => ResourceTypes[0];
+
+    public void ChangeStatus(string status, string value)
+    {
+        _status[status] = value;
+    }
 
     public void Stun(int duration)
     {
