@@ -28,5 +28,6 @@ public enum EffectType
     AnyTargetHealthBelowThreshold = 25,
     OnAttacked = 26,
     CostPrimaryResourceEffect = 27,
-    ForNumberOfTurns = 28,    
+    ForNumberOfTurns = 28,
+    RepeatOnPrimaryResource = 29
 }
