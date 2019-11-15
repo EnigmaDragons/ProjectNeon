@@ -29,5 +29,8 @@ public enum EffectType
     OnAttacked = 26,
     CostPrimaryResourceEffect = 27,
     ForNumberOfTurns = 28,
-    RepeatOnPrimaryResource = 29
+    FeedOnEffect = 29,
+    ShieldBasedOnShieldValue = 30,
+    ExcludeSelfFromEffect = 31,
+    RepeatOnPrimaryResource = 32,
 }
