@@ -32,4 +32,6 @@ public enum EffectType
     FeedOnEffect = 29,
     ShieldBasedOnShieldValue = 30,
     ExcludeSelfFromEffect = 31,
+    NotFeedOnEffect = 33,
+    FlatDamageEffect = 34,
 }

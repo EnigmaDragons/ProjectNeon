@@ -41,7 +41,9 @@ public static class AllEffects
         { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
         { EffectType.OnAttacked, e => new EffectOnAttacked(Create(e.origin)) },
         { EffectType.CostPrimaryResourceEffect, e => new CostPrimaryResourceEffect(Create(e.origin), e.IntAmount) },
-        { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) }
+        { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) },
+        { EffectType.NotFeedOnEffect, e => new NotFeedOnEffect(Create(e.origin), e.EffectScope) },
+        { EffectType.FlatDamageEffect, e => new FlatDamageEffect(e.FloatAmount) },
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
