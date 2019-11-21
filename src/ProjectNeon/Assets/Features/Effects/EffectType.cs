@@ -32,5 +32,5 @@ public enum EffectType
     FeedOnEffect = 29,
     ShieldBasedOnShieldValue = 30,
     ExcludeSelfFromEffect = 31,
-    RepeatOnPrimaryResource = 32,
+    RepeatUntilPrimaryResourceDepleted = 32,
 }

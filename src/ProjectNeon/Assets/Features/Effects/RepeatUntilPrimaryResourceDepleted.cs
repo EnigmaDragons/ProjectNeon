@@ -4,18 +4,20 @@ using System.Collections;
 /**
  * Apply an effect while there is enough Primary Resource
  */
-public class RepeatOnPrimaryResource : Effect
+public class RepeatUntilPrimaryResourceDepleted : Effect
 {
     private Effect _effect;
+    private int _effectCost;
 
-    public RepeatOnPrimaryResource(Effect effect)
+    public RepeatUntilPrimaryResourceDepleted(Effect effect, int cost)
     {
         _effect = effect;
+        _effectCost = cost;
     }
 
     void Effect.Apply(Member source, Target target)
     {
-        while (source.State[source.State.ResourceTypes[0]]  > 0)
+        while (source.State.PrimaryResourceAmount  >= _effectCost)
         {
             _effect.Apply(source, target);
         }
