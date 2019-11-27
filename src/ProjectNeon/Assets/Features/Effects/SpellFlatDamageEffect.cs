@@ -12,7 +12,7 @@ public sealed class SpellFlatDamageEffect : Effect
     public SpellFlatDamageEffect(float quantity)
     {
         _quantity = quantity;
-        _damage = new FlatDamage(_quantity);
+        _damage = new SpellFlatDamage(_quantity);
         _effect = new Damage(_damage);
     }
 
