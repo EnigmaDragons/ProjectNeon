@@ -33,4 +33,5 @@ public enum EffectType
     ShieldBasedOnShieldValue = 30,
     ExcludeSelfFromEffect = 31,
     RepeatUntilPrimaryResourceDepleted = 32,
+    SpellFlatDamageEffect = 33
 }
