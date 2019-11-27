@@ -42,8 +42,8 @@ public static class AllEffects
         { EffectType.OnAttacked, e => new EffectOnAttacked(Create(e.origin)) },
         { EffectType.CostPrimaryResourceEffect, e => new CostPrimaryResourceEffect(Create(e.origin), e.IntAmount) },
         { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) },
-        { EffectType.NotFeedOnEffect, e => new NotFeedOnEffect(Create(e.origin), e.EffectScope) },
-        { EffectType.FlatDamageEffect, e => new FlatDamageEffect(e.FloatAmount) },
+        { EffectType.SpellFlatDamageEffect, e => new SpellFlatDamageEffect(e.IntAmount) },
+        { EffectType.RepeatUntilPrimaryResourceDepleted, e => new RepeatUntilPrimaryResourceDepleted(Create(e.origin), e.IntAmount) }
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.

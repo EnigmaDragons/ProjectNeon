@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: BlindingLight
+  m_Name: BulletBarrage
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 910ec34034dfadf41a89c2729d3f31bd, type: 3}
-  description: Deal 3 damage to all characters. All characters deal -5 damage this
-    turn. This spell costs no mana
-  typeDescription: Tactical
-  onlyPlayableByClass: {fileID: 11400000, guid: 45350a9fc429c87448b15ea7f6894806,
+  art: {fileID: 21300000, guid: 825f5b5f57295f947a8435a3e48c9f62, type: 3}
+  description: Shot X random enemies and deal 0.5x ATK Damage to Each One At the Cost
+    of X Ammo
+  typeDescription: 
+  onlyPlayableByClass: {fileID: 11400000, guid: 71236f38e88664b4da51c15c994c435c,
     type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 0}
   cardAction1:
     targetScope: 1
-    targetGroup: 3
+    targetGroup: 1
     effect1:
-      EffectType: 33
+      EffectType: 0
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 3
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -67,23 +67,49 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
     chainedEffects:
-    - EffectType: 28
+    - EffectType: 32
       FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0
+        UseConstant: 1
+        ConstantValue: 1
         FloatVariable: {fileID: 0}
       NumberOfTurns:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
-    - EffectType: 3
+    - EffectType: 27
       FloatAmount:
         UseConstant: 1
-        ConstantValue: -5
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - EffectType: 23
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0.5
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - EffectType: 2
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0.5
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 0
@@ -97,10 +123,10 @@ MonoBehaviour:
     targetScope: 0
     targetGroup: 0
     effect1:
-      EffectType: 7
+      EffectType: 0
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -108,7 +134,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
-        ConstantValue: Mana
+        ConstantValue: 
         Variable: {fileID: 0}
     effect2:
       EffectType: 0
