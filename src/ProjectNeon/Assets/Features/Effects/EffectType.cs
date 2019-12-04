@@ -33,5 +33,6 @@ public enum EffectType
     ShieldBasedOnShieldValue = 30,
     ExcludeSelfFromEffect = 31,
     RepeatUntilPrimaryResourceDepleted = 32,
-    SpellFlatDamageEffect = 33
+    SpellFlatDamageEffect = 33,
+    OnNextTurnEffect = 34
 }
