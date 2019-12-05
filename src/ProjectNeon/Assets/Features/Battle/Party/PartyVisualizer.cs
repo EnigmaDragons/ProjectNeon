@@ -27,6 +27,14 @@ public class PartyVisualizer : MonoBehaviour
         if (hasBody)
         {
             Instantiate(hero.Body, heroOrigin.transform.position, Quaternion.identity, heroOrigin.transform);
+			
+			//FakeMirror
+			GameObject clone = Instantiate(hero.Body, heroOrigin.transform.position, Quaternion.identity, heroOrigin.transform); //new clone from Target with new position
+			clone.transform.localScale = new Vector3(1f,-1f,1f); //set clone obj new Scale flip y
+			clone.transform.position  += new Vector3(0,-1.55f,0); //set clone obj new position y
+			clone.GetComponentInChildren<SpriteRenderer>().color = new Color(1f,1f,1f, 0.3f); //set clone obj alpha opacity
+			clone.GetComponentInChildren<Renderer>().sortingOrder = 1;//set clone obj Order in Layer
+			
         }
         else
         {
