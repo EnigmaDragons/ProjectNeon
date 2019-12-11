@@ -35,5 +35,6 @@ public enum EffectType
     RepeatUntilPrimaryResourceDepleted = 32,
     SpellFlatDamageEffect = 33,
     OnNextTurnEffect = 34,
-    QueueEffect = 35
+    QueueEffect = 35,
+    EffectOnTurnStart = 36
 }
