@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Energy Blast
+  m_Name: EnergyBlast
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: eb84924357e9de54c8c4c1853991480c, type: 3}
   description: At the start of next turn deal 25 to all enemies.
@@ -65,10 +65,23 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
     chainedEffects:
-    - EffectType: 34
+    - EffectType: 35
       FloatAmount:
         UseConstant: 0
         ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - EffectType: 34
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 25
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 0

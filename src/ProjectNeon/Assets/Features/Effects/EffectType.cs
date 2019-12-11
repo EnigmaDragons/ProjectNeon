@@ -34,5 +34,6 @@ public enum EffectType
     ExcludeSelfFromEffect = 31,
     RepeatUntilPrimaryResourceDepleted = 32,
     SpellFlatDamageEffect = 33,
-    OnNextTurnEffect = 34
+    OnNextTurnEffect = 34,
+    QueueEffect = 35
 }

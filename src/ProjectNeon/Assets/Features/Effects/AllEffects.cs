@@ -44,7 +44,8 @@ public static class AllEffects
         { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) },
         { EffectType.SpellFlatDamageEffect, e => new SpellFlatDamageEffect(e.IntAmount) },
         { EffectType.RepeatUntilPrimaryResourceDepleted, e => new RepeatUntilPrimaryResourceDepleted(Create(e.origin), e.IntAmount) },
-        { EffectType.OnNextTurnEffect, e => new OnNextTurnEffect(Create(e.origin)) }
+        { EffectType.OnNextTurnEffect, e => new OnNextTurnEffect(Create(e.origin)) },
+        { EffectType.QueueEffect, e => new QueueEffect(Create(e.origin)) },
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
