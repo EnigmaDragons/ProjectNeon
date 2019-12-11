@@ -14,7 +14,8 @@ public class QueueEffect : Effect
 
     public void Apply(Member source, Target target)
     {
-        BattleEvent.Publish(new AddEffectToQueue(_effect));
-        BattleEvent.Subscribe<EffectApplied>(_ => new RemoveEffectFromQueue(_effect), this);
+        Effect effect = new UnqueueAfterExceuteEffect(_effect);
+        BattleEvent.Publish(new AddEffectToQueue(effect));
+        BattleEvent.Subscribe<EffectApplied>(_ => new RemoveEffectFromQueue(effect), this);
     }
 }
