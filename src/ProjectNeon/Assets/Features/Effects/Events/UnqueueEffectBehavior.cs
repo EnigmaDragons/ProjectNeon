@@ -6,7 +6,7 @@ public class UnqueueEffectBehavior : MonoBehaviour
 
     void OnEnable()
     {
-        BattleEvent.Subscribe<RemoveEffectFromQueue>((effect) => battleState.QueuedEffects.Remove(effect.Effect), this);
+        BattleEvent.Subscribe<RemoveEffectFromQueue>((msg) => battleState.QueuedEffects.Remove(msg.Effect), this);
     }
 
     void OnDisable()

@@ -15,6 +15,6 @@ public class UnqueueAfterExceuteEffect : Effect
     public void Apply(Member source, Target target)
     {
         _effect.Apply(source, target);
-        BattleEvent.Publish(new EffectApplied());
+        BattleEvent.Publish(new EffectApplied(_effect));
     }
 }

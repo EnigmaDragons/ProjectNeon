@@ -8,7 +8,7 @@ public class QueueEffectBehavior : MonoBehaviour
 
     void OnEnable()
     {
-        BattleEvent.Subscribe<AddEffectToQueue>((effect) => battleState.QueuedEffects.Add(effect.Effect), this);
+        BattleEvent.Subscribe<AddEffectToQueue>((msg) => battleState.QueuedEffects.Add(msg.Effect), this);
     }
 
     void OnDisable()
