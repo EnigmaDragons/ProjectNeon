@@ -20,7 +20,7 @@ public class QueueEffect : Effect
             (msg) => {
                 if (msg.Effect.Equals(_effect))
                 {
-                    new RemoveEffectFromQueue(msg.Effect);
+                    BattleEvent.Publish(new RemoveEffectFromQueue(msg.Effect));
                     BattleEvent.Unsubscribe(this);
                 }
             }, 
