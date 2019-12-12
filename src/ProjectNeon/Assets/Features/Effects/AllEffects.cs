@@ -35,7 +35,6 @@ public static class AllEffects
         { EffectType.BuffToughnessFlat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.Toughness, e.IntAmount), e.NumberOfTurns)))},
         { EffectType.RepeatEffect, e => new RepeatEffect(Create(e.origin), e.IntAmount) },
         { EffectType.RandomizeTarget, e => new RandomizeTarget(Create(e.origin)) },
-        { EffectType.FeedOnEffect, e => new FeedOnEffect(Create(e.origin), e.EffectScope) },
         { EffectType.ExcludeSelfFromEffect, e => new ExcludeSelfFromEffect(Create(e.origin)) },
         { EffectType.ShieldBasedOnShieldValue, e => new SimpleEffect((src, m) => m.GainShield(e.FloatAmount * src.State[TemporalStatType.Shield])) },
         { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
@@ -47,6 +46,9 @@ public static class AllEffects
         { EffectType.OnNextTurnEffect, e => new OnNextTurnEffect(Create(e.origin)) },
         { EffectType.QueueEffect, e => new QueueEffect(Create(e.origin)) },
         { EffectType.EffectOnTurnStart, e => new EffectOnTurnStart(Create(e.origin)) },
+        { EffectType.TriggerFeedEffects, e => new TriggerFeedEffects(Create(e.origin), e.EffectScope) },
+        { EffectType.SetFeedUpEffect, e => new SetFeedUpEffect(Create(e.origin), e.EffectScope) },
+
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
