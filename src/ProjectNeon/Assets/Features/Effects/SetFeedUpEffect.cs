@@ -31,14 +31,11 @@ public class SetFeedUpEffect : Effect
 
     public void Apply(Member source, Target target)
     {
-
-        Effect effect = new UnqueueAfterExceuteEffect(_effect);
-        BattleEvent.Publish(new AddEffectToQueue(effect));
-
+        new QueueEffect(_effect).Apply(source, target);
         BattleEvent.Subscribe<FeedCardResolutionStarted>(
             (msg) =>
             {
-                if (Enum.GetName(typeof(FeedType), _feedType) == msg.CardFeedType)
+                if (_feedType.ToString().Equals(msg.CardFeedType))
                     _effect.Apply(source, target);
                 BattleEvent.Unsubscribe(this);
             },
