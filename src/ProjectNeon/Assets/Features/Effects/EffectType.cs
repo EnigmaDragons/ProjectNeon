@@ -29,9 +29,14 @@ public enum EffectType
     OnAttacked = 26,
     CostPrimaryResourceEffect = 27,
     ForNumberOfTurns = 28,
-    FeedOnEffect = 29,
+    //FeedOnEffect = 29, unused effect
     ShieldBasedOnShieldValue = 30,
     ExcludeSelfFromEffect = 31,
     RepeatUntilPrimaryResourceDepleted = 32,
-    SpellFlatDamageEffect = 33
+    SpellFlatDamageEffect = 33,
+    OnNextTurnEffect = 34,
+    QueueEffect = 35,
+    EffectOnTurnStart = 36,
+    TriggerFeedEffects = 37,
+    SetFeedUpEffect = 37
 }

@@ -1,4 +1,4 @@
-﻿public sealed class TurnStart
+﻿public sealed class TurnEnd
 {
 
 }
