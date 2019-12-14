@@ -48,7 +48,7 @@ public static class AllEffects
         { EffectType.EffectOnTurnStart, e => new EffectOnTurnStart(Create(e.origin)) },
         { EffectType.TriggerFeedEffects, e => new TriggerFeedEffects(Create(e.origin), e.EffectScope) },
         { EffectType.SetFeedUpEffect, e => new SetFeedUpEffect(Create(e.origin), e.EffectScope) },
-        { EffectType.OnResourceEffect, e => new OnResourceEfect(Create(e.origin), (m) => m.ResourceTypes[e.EffectScope]) },
+        { EffectType.HealPrimaryResource, e => new SimpleEffect((src, m) => m.GainHp(src.State.PrimaryResourceAmount)) },
 
     };
     /**

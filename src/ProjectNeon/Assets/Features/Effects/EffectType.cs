@@ -39,5 +39,5 @@ public enum EffectType
     EffectOnTurnStart = 36,
     TriggerFeedEffects = 37,
     SetFeedUpEffect = 38,
-    OnResourceEffect = 39
+    HealPrimaryResource = 39
 }
