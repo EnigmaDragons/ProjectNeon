@@ -38,5 +38,7 @@ public enum EffectType
     QueueEffect = 35,
     EffectOnTurnStart = 36,
     TriggerFeedEffects = 37,
-    SetFeedUpEffect = 37
+    SetFeedUpEffect = 38,
+    ApplyOnShieldBelowValue = 40,
+    ApplyOnChance = 41
 }

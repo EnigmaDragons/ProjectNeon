@@ -48,7 +48,8 @@ public static class AllEffects
         { EffectType.EffectOnTurnStart, e => new EffectOnTurnStart(Create(e.origin)) },
         { EffectType.TriggerFeedEffects, e => new TriggerFeedEffects(Create(e.origin), e.EffectScope) },
         { EffectType.SetFeedUpEffect, e => new SetFeedUpEffect(Create(e.origin), e.EffectScope) },
-
+        { EffectType.ApplyOnShieldBelowValue, e => new ApplyOnShieldBelowValue(Create(e.origin), e.IntAmount) },
+        { EffectType.ApplyOnChance, e => new ApplyOnChance(Create(e.origin), e.FloatAmount) },
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
