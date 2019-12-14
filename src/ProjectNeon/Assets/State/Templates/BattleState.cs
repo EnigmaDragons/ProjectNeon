@@ -21,9 +21,11 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
+    public List<Effect> QueuedEffects { get; private set;  }
 
     public BattleState Initialized(PartyArea partyArea, EnemyArea enemyArea)
     {
+        this.QueuedEffects = new List<Effect>();
         this.partyArea = partyArea;
         this.enemies = enemyArea;
         return Init();

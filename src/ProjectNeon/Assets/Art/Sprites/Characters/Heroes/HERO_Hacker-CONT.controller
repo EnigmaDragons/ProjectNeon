@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1107 &-1344788826391708899
+--- !u!1107 &-8338128909675128801
 AnimatorStateMachine:
   serializedVersion: 5
   m_ObjectHideFlags: 1
@@ -10,26 +10,26 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -972525689093949316}
-    m_Position: {x: 60, y: 100, z: 0}
+    m_State: {fileID: -6710634745613009004}
+    m_Position: {x: 140, y: 70, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 60, y: 30, z: 0}
-  m_EntryPosition: {x: 70, y: 170, z: 0}
-  m_ExitPosition: {x: 240, y: 40, z: 0}
+  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_EntryPosition: {x: 140, y: 130, z: 0}
+  m_ExitPosition: {x: 70, y: -40, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -972525689093949316}
---- !u!1102 &-972525689093949316
+  m_DefaultState: {fileID: -6710634745613009004}
+--- !u!1102 &-6710634745613009004
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Soldier_IDLE-State
+  m_Name: Hacker_IDLE-State
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -42,7 +42,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1b3a4c98e23f37c419a5341b9878fd3b, type: 2}
+  m_Motion: {fileID: 7400000, guid: 0ef04e7792d9c1649980fc5341475684, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -54,13 +54,13 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Soldier_CONT
+  m_Name: HERO_Hacker-CONT
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
-    m_StateMachine: {fileID: -1344788826391708899}
+    m_StateMachine: {fileID: -8338128909675128801}
     m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
