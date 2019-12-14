@@ -19,13 +19,13 @@ MonoBehaviour:
   onlyPlayableByClass: {fileID: 11400000, guid: 45350a9fc429c87448b15ea7f6894806,
     type: 2}
   cost:
-    cost: 2
-    resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
+    cost: 0
+    resourceType: {fileID: 0}
   cardAction1:
     targetScope: 0
     targetGroup: 1
     effect1:
-      EffectType: 0
+      EffectType: 37
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
-        ConstantValue: 
+        ConstantValue: Stellar
         Variable: {fileID: 0}
     effect2:
       EffectType: 0
@@ -71,6 +71,19 @@ MonoBehaviour:
       FloatAmount:
         UseConstant: 1
         ConstantValue: 4
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - EffectType: 27
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 2
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 0
@@ -152,7 +165,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
     chainedEffects:
-    - EffectType: 29
+    - EffectType: 38
       FloatAmount:
         UseConstant: 0
         ConstantValue: 0
@@ -164,19 +177,6 @@ MonoBehaviour:
       EffectScope:
         UseConstant: 1
         ConstantValue: Solar
-        Variable: {fileID: 0}
-    - EffectType: 24
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 4
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
         Variable: {fileID: 0}
     - EffectType: 23
       FloatAmount:
