@@ -49,6 +49,7 @@ public static class AllEffects
         { EffectType.TriggerFeedEffects, e => new TriggerFeedEffects(Create(e.origin), e.EffectScope) },
         { EffectType.SetFeedUpEffect, e => new SetFeedUpEffect(Create(e.origin), e.EffectScope) },
         { EffectType.HealPrimaryResource, e => new SimpleEffect((src, m) => m.GainHp(src.State.PrimaryResourceAmount)) },
+        { EffectType.BuffMagicMultiplier, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new BuffedStats(new StatMultipliers().With(StatType.Magic, e.FloatAmount), e.NumberOfTurns)))},
 
     };
     /**

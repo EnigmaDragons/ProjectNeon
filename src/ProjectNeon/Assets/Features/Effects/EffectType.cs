@@ -39,5 +39,6 @@ public enum EffectType
     EffectOnTurnStart = 36,
     TriggerFeedEffects = 37,
     SetFeedUpEffect = 38,
-    HealPrimaryResource = 39
+    HealPrimaryResource = 39,
+    BuffMagicMultiplier = 42
 }
