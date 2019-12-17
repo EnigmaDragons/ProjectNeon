@@ -12,7 +12,6 @@ public sealed class ApplyOnShieldBelowValue : ConditionalEffect
 
     public override bool Condition()
     {
-        Debug.Log("Value: " + _value);
         return Target.Members.Any(e => e.State[TemporalStatType.Shield] < _value );
     }
 }
