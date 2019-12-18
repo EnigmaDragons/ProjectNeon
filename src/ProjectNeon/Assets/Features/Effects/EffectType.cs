@@ -41,5 +41,6 @@ public enum EffectType
     SetFeedUpEffect = 38,
     HealPrimaryResource = 39,
     ApplyOnShieldBelowValue = 40,
-    ApplyOnChance = 41
+    ApplyOnChance = 41,
+    ReplayLastCard = 42
 }

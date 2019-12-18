@@ -22,6 +22,7 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
     public List<Effect> QueuedEffects { get; private set;  }
+    public PlayedCard LastPlayed { get; set; }
 
     public BattleState Initialized(PartyArea partyArea, EnemyArea enemyArea)
     {
