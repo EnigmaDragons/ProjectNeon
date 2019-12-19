@@ -2,11 +2,11 @@
 
 public class ReplayLastCardBehavior : MonoBehaviour
 {
-    [SerializeField] private BattleState battleState;
+    [SerializeField] private CardResolutionZone cardResolutionZone;
 
     void OnEnable()
     {
-        BattleEvent.Subscribe<ReplayLastCard>(_ => battleState.LastPlayed.Perform(), this);
+        BattleEvent.Subscribe<ReplayLastCard>(_ => cardResolutionZone.LastPlayed.Perform(), this);
     }
 
     void OnDisable()
