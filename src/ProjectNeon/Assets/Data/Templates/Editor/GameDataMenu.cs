@@ -18,6 +18,15 @@ static class GameDataMenu
     [MenuItem("Assets/Create/GameContent/DumbAI")]
     static void DumbAI() => Create<DumbAI>();
 
+    [MenuItem("Assets/Create/Variable/Spell Hits Last Card Multiplier")]
+    static void SpellsHitLastTurn()
+    {
+        var asset = ScriptableObject.CreateInstance<SpellHitsLastCardMultiplier>();
+        var path = AssetDatabase.GetAssetPath(Selection.activeObject);
+        path += $"/New{nameof(SpellHitsLastCardMultiplier)}.asset";
+        ProjectWindowUtil.CreateAsset(asset, path);
+    }
+
     private static void Create<T>() where T : ScriptableObject
     {
         var asset = ScriptableObject.CreateInstance<T>();

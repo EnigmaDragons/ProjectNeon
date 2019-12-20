@@ -9,7 +9,8 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private CardPlayZone physicalZone;
     [SerializeField] private CardPlayZone playedDiscardZone;
     [SerializeField] private GameEvent onFinished;
-    
+    public int SpellHitsOnLastCard { get; set; }
+
     public void Add(PlayedCard played)
     {
         moves.Add(played);
@@ -34,6 +35,7 @@ public class CardResolutionZone : ScriptableObject
     
     private IEnumerator ResolveOneCard(PlayedCard played)
     {
+        SpellHitsOnLastCard = 0;
         var card = physicalZone.DrawOneCard();
         played.Perform();
         playedDiscardZone.PutOnBottom(card);
