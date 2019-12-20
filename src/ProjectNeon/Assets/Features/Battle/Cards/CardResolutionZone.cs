@@ -9,7 +9,8 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private CardPlayZone physicalZone;
     [SerializeField] private CardPlayZone playedDiscardZone;
     [SerializeField] private GameEvent onFinished;
-    
+    public PlayedCard LastPlayed { get; set; }
+
     public void Add(PlayedCard played)
     {
         moves.Add(played);
@@ -36,6 +37,7 @@ public class CardResolutionZone : ScriptableObject
     {
         var card = physicalZone.DrawOneCard();
         played.Perform();
+        LastPlayed = played;
         playedDiscardZone.PutOnBottom(card);
         yield break;
     }
