@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: 4d1526e3689c82842924c43eb8a6607b, type: 3}
   description: The next friendly attack has 100% Lifesteal.
-  typeDescription: Empowerement
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: eaccbb83ada6a874e817412fad35628a,
     type: 2}
   cost:
     cost: 0
-    resourceType: {fileID: 0}
+    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
   cardAction1:
     targetScope: 1
     targetGroup: 2
@@ -65,6 +65,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -110,3 +111,4 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []

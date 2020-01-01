@@ -10,23 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: StarSlash
+  m_Name: Astromancer-ShieldOfRadiance
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 61aae85128fd5c6408c2dd587ce5e30e, type: 3}
-  description: Deal .5 attack to an enemy.
-  typeDescription: 
-  onlyPlayableByClass: {fileID: 0}
+  art: {fileID: 21300000, guid: 2b4d7a3b71f64a14db72cad74d2bae9f, type: 3}
+  description: 'Shield 1x Defense. Feed-Lunar: Other allies get a Shield equal to
+    1/2 your Shields.'
+  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  onlyPlayableByClass: {fileID: 11400000, guid: 45350a9fc429c87448b15ea7f6894806,
+    type: 2}
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
   cardAction1:
     targetScope: 0
-    targetGroup: 1
+    targetGroup: 0
     effect1:
-      EffectType: 2
+      EffectType: 11
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0.5
+        ConstantValue: 1
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -66,13 +68,13 @@ MonoBehaviour:
         Variable: {fileID: 0}
     chainedEffects: []
   cardAction2:
-    targetScope: 0
-    targetGroup: 0
+    targetScope: 1
+    targetGroup: 2
     effect1:
-      EffectType: 7
+      EffectType: 0
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -80,10 +82,10 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
-        ConstantValue: Mana
+        ConstantValue: 
         Variable: {fileID: 0}
     effect2:
-      EffectType: 37
+      EffectType: 0
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -94,7 +96,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
-        ConstantValue: Stellar
+        ConstantValue: 
         Variable: {fileID: 0}
     effect3:
       EffectType: 0
@@ -111,7 +113,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
     chainedEffects:
-    - EffectType: 38
+    - EffectType: 29
       FloatAmount:
         UseConstant: 0
         ConstantValue: 0
@@ -122,9 +124,9 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
-        ConstantValue: Solar
+        ConstantValue: Lunar
         Variable: {fileID: 0}
-    - EffectType: 39
+    - EffectType: 31
       FloatAmount:
         UseConstant: 0
         ConstantValue: 0
@@ -135,5 +137,18 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
-        ConstantValue: Solar
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - EffectType: 30
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0.5
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
         Variable: {fileID: 0}

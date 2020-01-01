@@ -10,25 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Sunburn
+  m_Name: Astromancer-StarSlash
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 0d1a56474e428af4a9fdde734109a755, type: 3}
-  description: 'Deal 12 to all unshielded characters. Feed-Lunar: 20% Chance to recast
-    once.'
-  typeDescription: 
+  art: {fileID: 21300000, guid: 61aae85128fd5c6408c2dd587ce5e30e, type: 3}
+  description: Deal .5 attack to an enemy.
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: 45350a9fc429c87448b15ea7f6894806,
     type: 2}
   cost:
-    cost: 2
+    cost: 0
     resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
   cardAction1:
-    targetScope: 1
-    targetGroup: 3
+    targetScope: 0
+    targetGroup: 1
     effect1:
-      EffectType: 37
+      EffectType: 2
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 0.5
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -36,7 +35,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
-        ConstantValue: Solar
+        ConstantValue: 
         Variable: {fileID: 0}
     effect2:
       EffectType: 0
@@ -66,52 +65,26 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-    chainedEffects:
-    - EffectType: 40
+    chainedEffects: []
+  cardAction2:
+    targetScope: 0
+    targetGroup: 0
+    effect1:
+      EffectType: 7
       FloatAmount:
         UseConstant: 1
         ConstantValue: 1
         FloatVariable: {fileID: 0}
       NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-    - EffectType: 33
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 12
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-  cardAction2:
-    targetScope: 1
-    targetGroup: 3
-    effect1:
-      EffectType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
-        ConstantValue: 
+        ConstantValue: Mana
         Variable: {fileID: 0}
     effect2:
-      EffectType: 0
+      EffectType: 37
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -122,7 +95,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
-        ConstantValue: 
+        ConstantValue: Stellar
         Variable: {fileID: 0}
     effect3:
       EffectType: 0
@@ -150,12 +123,12 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
-        ConstantValue: Lunar
+        ConstantValue: Solar
         Variable: {fileID: 0}
-    - EffectType: 41
+    - EffectType: 39
       FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0.2
+        UseConstant: 0
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 0
@@ -163,18 +136,5 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-    - EffectType: 42
-      FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0.2
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
+        ConstantValue: Solar
         Variable: {fileID: 0}

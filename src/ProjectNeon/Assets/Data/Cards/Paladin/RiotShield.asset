@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: 29681aeecbd74e4439e488ec79235ed9, type: 3}
   description: Intercept all attacks this round. +2 Armor this round.
-  typeDescription: Guardian
+  typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: eaccbb83ada6a874e817412fad35628a,
     type: 2}
   cost:
@@ -65,6 +65,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []
   cardAction2:
     targetScope: 1
     targetGroup: 2
@@ -110,3 +111,4 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []

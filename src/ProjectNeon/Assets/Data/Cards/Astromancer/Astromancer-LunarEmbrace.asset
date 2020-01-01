@@ -10,25 +10,71 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: ShieldOfRadiance
+  m_Name: Astromancer-LunarEmbrace
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 2b4d7a3b71f64a14db72cad74d2bae9f, type: 3}
-  description: 'Shield 1x Defense. Feed-Lunar: Other allies get a Shield equal to
-    1/2 your Shields.'
-  typeDescription: Defensive
+  art: {fileID: 21300000, guid: 8726d98471582b34eb2363903b1f4f0a, type: 3}
+  description: Character gains Regen 3, +3 strength for 3 turns & +3 defense for 3
+    turns.
+  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: 45350a9fc429c87448b15ea7f6894806,
     type: 2}
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
   cardAction1:
     targetScope: 0
     targetGroup: 0
     effect1:
-      EffectType: 11
+      EffectType: 20
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 3
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 3
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    effect2:
+      EffectType: 21
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 3
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 3
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    effect3:
+      EffectType: 21
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 3
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 3
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    chainedEffects: []
+  cardAction2:
+    targetScope: 0
+    targetGroup: 0
+    effect1:
+      EffectType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -67,88 +113,3 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
     chainedEffects: []
-  cardAction2:
-    targetScope: 1
-    targetGroup: 2
-    effect1:
-      EffectType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-    effect2:
-      EffectType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-    effect3:
-      EffectType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-    chainedEffects:
-    - EffectType: 29
-      FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: Lunar
-        Variable: {fileID: 0}
-    - EffectType: 31
-      FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-    - EffectType: 30
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0.5
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}

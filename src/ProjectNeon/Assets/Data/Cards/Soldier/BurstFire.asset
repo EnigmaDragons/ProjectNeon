@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: dec03742c4a94c241925e1ab40814176, type: 3}
   description: Deal (1.5x ATK) damage
-  typeDescription: Combat
+  typeDescription: {fileID: 11400000, guid: 05396cecd1c61ab4dba3e9e72676792d, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: 71236f38e88664b4da51c15c994c435c,
     type: 2}
   cost:
@@ -29,18 +29,43 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 1.5
         FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
     effect2:
       EffectType: 0
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
     effect3:
       EffectType: 0
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    chainedEffects: []
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -50,15 +75,40 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
     effect2:
       EffectType: 0
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
     effect3:
       EffectType: 0
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    chainedEffects: []
