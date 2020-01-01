@@ -18,7 +18,6 @@ public class CardPlayZone : ScriptableObject
     public void Init(IEnumerable<Card> newCards)
     {
         cards = newCards.ToArray();
-        Debug.Log(newCards);
     }
     
     public Card DrawOneCard()
