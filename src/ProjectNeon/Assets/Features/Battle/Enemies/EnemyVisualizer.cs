@@ -15,10 +15,16 @@ public class EnemyVisualizer : MonoBehaviour
     [SerializeField] private WorldHPBarController hpBarPrototype;
     [SerializeField] private Vector3 hpBarOffset;
     [SerializeField] private float rowHeight = 1.5f;
-    [SerializeField] private float widthBetweenEnemies = 1.5f; 
+    [SerializeField] private float widthBetweenEnemies = 1.5f;
+
+    [ReadOnly, SerializeField] private GameObject[] visuals;
+    
+    private void OnEnable() => BattleEvent.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
+    private void OnDisable() => BattleEvent.Unsubscribe(this);
 
     public void SetupEnemies()
     {
+        visuals = new GameObject[enemyArea.Enemies.Length];
         var enemies = enemyArea.Enemies;
         var positions = new Transform[enemies.Length];
         for (var i= 0; i < enemies.Length; i++)
@@ -36,5 +42,14 @@ public class EnemyVisualizer : MonoBehaviour
 
         enemyArea.WithUiTransforms(positions);
         onSetupFinished.Publish();
+    }
+    
+    private void ResolveUnconscious(MemberUnconscious m)
+    {
+        if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
+        
+        for (var i = 0; i < enemyArea.Enemies.Length; i++)
+            if (enemyArea.name.Equals(m.Member.Name))
+                visuals[i].gameObject.SetActive(false);
     }
 }

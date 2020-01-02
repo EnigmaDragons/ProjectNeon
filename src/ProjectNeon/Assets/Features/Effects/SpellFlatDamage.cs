@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public sealed class SpellFlatDamage : DamageCalculation
 {
-    public float Quantity { get; }
+    private float Quantity { get; }
 
     public SpellFlatDamage(float quantity)
     {
@@ -14,5 +13,4 @@ public sealed class SpellFlatDamage : DamageCalculation
     {
         return Mathf.CeilToInt(Quantity * ((1f - target.Members[0].State.Resistance()) / 1f));
     }
-
 }
