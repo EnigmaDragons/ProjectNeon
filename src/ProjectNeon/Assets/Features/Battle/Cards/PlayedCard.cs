@@ -1,10 +1,9 @@
 ﻿
 public class PlayedCard
 {
-    private Card _card;
-    private Member _performer;
-
-    private Target[] _targets;
+    private readonly Card _card;
+    private readonly Member _performer;
+    private readonly Target[] _targets;
 
     public PlayedCard(Member performer, Target[] targets, Card card)
     {
@@ -19,6 +18,11 @@ public class PlayedCard
     public void Perform()
     {
         for (var index = 0; index < _card.Actions.Length; index++)
-            _card.Actions[index].Apply(_performer, _targets[index]);
+        {
+            var action = _card.Actions[index];
+            if (!string.IsNullOrWhiteSpace(action.CharacterAnimation))
+                BattleEvent.Publish(new CharacterAnimationRequested(_performer.Id, action.CharacterAnimation));
+            action.Apply(_performer, _targets[index]);
+        }
     }
 }

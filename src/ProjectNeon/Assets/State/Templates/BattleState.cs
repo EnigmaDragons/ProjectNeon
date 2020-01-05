@@ -13,6 +13,7 @@ public class BattleState : ScriptableObject
     public bool SelectionStarted = false;
 
     public Party Party => partyArea.Party;
+    public PartyArea PartyArea => partyArea;
     public EnemyArea EnemyArea => enemies;
     public GameObject Battlefield => nextBattlegroundPrototype;
     public IReadOnlyDictionary<int, Member> Members => _membersById;
@@ -64,9 +65,12 @@ public class BattleState : ScriptableObject
             .ToDictionary(x => x.Id, x => x);
 
         uiPositions = _uiTransformsById.Values.Select(x => x.position).ToArray();
+        Debug.Log("Finished Battle State Init");
         return this;
     }
-    
+
+    public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
+    public Hero GetHeroById(int memberId) => _heroesById[memberId];
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Vector3 GetPosition(int memberId) => _uiTransformsById[memberId].position;
     public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.Single(x => x.Value == hero).Key];

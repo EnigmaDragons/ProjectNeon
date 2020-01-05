@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: ShockBlast
+  m_Name: Drone-EnergyBlast
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 23c9a25cf823ee9409f29ebe89d42b03, type: 3}
-  description: Stun. Deal 1x attack.
+  art: {fileID: 21300000, guid: eb84924357e9de54c8c4c1853991480c, type: 3}
+  description: At the start of next turn deal 25 to all enemies.
   typeDescription: {fileID: 11400000, guid: 05396cecd1c61ab4dba3e9e72676792d, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: a332e6b758d6c764bafaed0aed27c90d,
     type: 2}
   cost:
-    cost: 2
+    cost: 3
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   cardAction1:
-    targetScope: 0
+    targetScope: 1
     targetGroup: 1
     effect1:
-      EffectType: 2
+      EffectType: 0
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -38,10 +38,10 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
     effect2:
-      EffectType: 13
+      EffectType: 0
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -65,7 +65,63 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-    chainedEffects: []
+    chainedEffects:
+    - EffectType: 35
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - EffectType: 36
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 25
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - EffectType: 34
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 25
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - EffectType: 33
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 25
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -112,3 +168,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
     chainedEffects: []
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
