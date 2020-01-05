@@ -39,7 +39,8 @@ public class CardResolutionZone : ScriptableObject
         var card = physicalZone.DrawOneCard();
         played.Perform();
         LastPlayed = played;
-        playedDiscardZone.PutOnBottom(card);
+        if (played.Member.TeamType.Equals(TeamType.Party))
+            playedDiscardZone.PutOnBottom(card);
         onCardResolved.Publish();
         yield break;
     }
