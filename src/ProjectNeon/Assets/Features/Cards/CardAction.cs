@@ -11,7 +11,8 @@ public sealed class CardAction
     [SerializeField] private EffectData effect2;
     [SerializeField] private EffectData effect3;
     [SerializeField] private EffectData[] chainedEffects;
-
+    [SerializeField] private StringReference characterAnimation;
+    
     private EffectData ComposedEffect => chainedEffects != null && chainedEffects.Length > 0
         ? chainedEffects.Aggregate((decorator, decorated) => decorator.origin = decorated)
         : EffectData.Nothing;
@@ -26,6 +27,7 @@ public sealed class CardAction
     public void Apply(Member source, Target target) 
         => Effects.ForEach(effect => AllEffects.Apply(effect, source, target));
 
+    public string CharacterAnimation => characterAnimation.Value;
     public Scope Scope => targetScope;
     public Group Group => targetGroup;
     public bool HasEffects => Effects != null && Effects.Length > 0;
