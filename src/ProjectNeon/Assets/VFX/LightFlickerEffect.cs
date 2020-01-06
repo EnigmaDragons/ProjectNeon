@@ -28,7 +28,7 @@ public sealed class LightFlickerEffect : MonoBehaviour
 
     public void Update() 
     {
-        if (light == null)
+        if (light == null || _smoothQueue == null)
             return;
 
         // pop off an item if too big

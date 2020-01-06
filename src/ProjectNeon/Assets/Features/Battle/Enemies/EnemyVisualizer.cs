@@ -6,10 +6,11 @@
  * Display enemies into screen in the following format (each number is enemies variable index):
  * 0 2 4 6
  *  1 3 5
- * Uses enemy sprites with default size of 100 x 200
+ * Uses enemy sprites with default size of 100 x 200ui
  */
 public class EnemyVisualizer : MonoBehaviour
 {
+    [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
     [SerializeField] private GameEvent onSetupFinished;
     [SerializeField] private WorldHPBarController hpBarPrototype;
@@ -27,21 +28,29 @@ public class EnemyVisualizer : MonoBehaviour
         visuals = new GameObject[enemyArea.Enemies.Length];
         var enemies = enemyArea.Enemies;
         var positions = new Transform[enemies.Length];
-        for (var i= 0; i < enemies.Length; i++)
+        for (var i = 0; i < enemies.Length; i++)
         {
-            var enemy = enemies[i];
-            
             var enemyObject = Instantiate(enemies[i].Prefab, transform);
             var t = enemyObject.transform;
             t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
             positions[i] = t;
-            
-            var hpBar = Instantiate(hpBarPrototype, enemyObject.transform.position + hpBarOffset, Quaternion.identity, enemyObject.transform);
-            hpBar.Init((int)enemy.Stats.MaxHP());
         }
 
         enemyArea.WithUiTransforms(positions);
         onSetupFinished.Publish();
+    }
+
+    public void SetupEnemySubscriptions()
+    {
+        var enemies = enemyArea.Enemies;
+        var positions = enemyArea.EnemyUiPositions;
+        for (var i = 0; i < enemies.Length; i++)
+        {
+            var enemyObject = positions[i].gameObject;
+            var hpBar = Instantiate(hpBarPrototype, enemyObject.transform.position + hpBarOffset, Quaternion.identity, enemyObject.transform);
+            var enemyMember = state.GetMemberByEnemyIndex(i);
+            hpBar.Init(enemyMember);
+        }
     }
     
     private void ResolveUnconscious(MemberUnconscious m)

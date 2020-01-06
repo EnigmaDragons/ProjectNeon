@@ -10,6 +10,7 @@ public class GameEvent : ScriptableObject
 
     public void Publish()
     {
+        //Debug.Log($"Publishing {name}");
         CleansedListeners.ForEach(l => l.OnEvent(l));
     }
 

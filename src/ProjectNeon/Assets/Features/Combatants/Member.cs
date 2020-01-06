@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class Member 
 {
@@ -10,6 +11,8 @@ public class Member
     
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats)
     {
+        if (baseStats.Damagability() < 0.01)
+            Debug.LogWarning($"Damagability of {name} is 0");
         Id = id;
         Name = name;
         Class = characterClass;
@@ -20,5 +23,6 @@ public class Member
     public void Apply(Action<MemberState> effect)
     {
         effect(State);
+        BattleEvent.Publish(new MemberStateChanged(this));
     }
 }

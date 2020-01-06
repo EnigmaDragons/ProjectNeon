@@ -15,8 +15,8 @@ public class Enemy : ScriptableObject
     public TurnAI AI => ai;
     public int PowerLevel => powerLevel;
     public GameObject Prefab => prefab;
-    public IStats Stats => new StatAddends
-    {
-        ResourceTypes = new IResourceType[] {resourceType}
-    }.With(StatType.MaxHP, maxHp);
+    
+    public IStats Stats => new StatAddends { ResourceTypes = new IResourceType[] {resourceType} }
+        .With(StatType.MaxHP, maxHp)
+        .With(StatType.Damagability, 1f);
 }
