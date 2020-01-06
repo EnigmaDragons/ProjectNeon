@@ -16,7 +16,7 @@ public class CardResolutionZone : ScriptableObject
     {
         moves.Add(played);
         physicalZone.PutOnBottom(played.Card);
-        Debug.Log($"{played.Member.Name} Played {played.Card.name}");
+        BattleLog.Write($"{played.Member.Name} Played {played.Card.name}");
     }
 
     public void Resolve(MonoBehaviour host)
@@ -37,6 +37,7 @@ public class CardResolutionZone : ScriptableObject
     private IEnumerator ResolveOneCard(PlayedCard played)
     {
         var card = physicalZone.DrawOneCard();
+        BattleLog.Write($"Began resolving {played.Card.Name}");
         played.Perform();
         LastPlayed = played;
         if (played.Member.TeamType.Equals(TeamType.Party))
