@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 public class PlayedCard
 {
     private readonly Card _card;
@@ -22,6 +23,9 @@ public class PlayedCard
             var action = _card.Actions[index];
             if (!string.IsNullOrWhiteSpace(action.CharacterAnimation))
                 BattleEvent.Publish(new CharacterAnimationRequested(_performer.Id, action.CharacterAnimation));
+            
+            if (_targets.Length <= index)
+                Debug.LogError($"Invalid Targets for {_card.Name}. Action {index}");
             action.Apply(_performer, _targets[index]);
         }
     }

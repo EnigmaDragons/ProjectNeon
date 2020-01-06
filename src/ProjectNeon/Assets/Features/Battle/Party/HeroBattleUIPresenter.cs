@@ -12,7 +12,7 @@ public class HeroBattleUIPresenter : MonoBehaviour
     public void Set(Hero hero)
     {
         bust.sprite = hero.Bust;
-        hp.Init((int)state.GetMemberByHero(hero).State.MaxHP());
+        hp.Init(state.GetMemberByHero(hero));
         InitResources(hero.Stats.ResourceTypes);
     }
 

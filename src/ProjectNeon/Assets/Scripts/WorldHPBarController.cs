@@ -1,66 +1,58 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class WorldHPBarController : MonoBehaviour
+// @todo #558: 15min Consolidate this class with UIHPBarController
+public class WorldHPBarController : OnBattleEvent<MemberStateChanged>
 {
     [SerializeField] private GameObject bar;
     [SerializeField] private TextMeshPro text;
 
-    int maxHP = 100;
+    private int _memberId = -1;
+    private int _maxHp = 100;
 
-    public int CurrentHP { get; private set; }
-    public int MaxHP
+    private int CurrentHp { get; set; }
+    private int MaxHp
     {
         set
         {
-            maxHP = value;
-            UpdateUI();
+            _maxHp = value;
+            UpdateUi();
         }
-        get
-        {
-            return maxHP;
-        }
+        get => _maxHp;
     }
+    
     private void Start()
     {
-        CurrentHP = maxHP;
-        UpdateUI();
-    }
-    public void ChangeMaxHP(int _maxHP)
-    {
-        maxHP += _maxHP;
-        UpdateUI();
-    }
-    public void ChangeHP(int value)
-    {
-        CurrentHP += value;
-        CorectHPValue();
-        UpdateUI();
-    }
-    void CorectHPValue()
-    {
-        Mathf.Clamp(CurrentHP, 0, maxHP);
-    }
-    void UpdateUI()
-    {
-        ChangeImage();
-        ChangeText();
-    }
-    void ChangeImage()
-    {
-        var originalScale = bar.transform.localScale;
-        bar.transform.localScale = new Vector3(MaxHP > 0 ? CurrentHP / maxHP : 0, originalScale.y, originalScale.z);
-    }
-    void ChangeText()
-    {
-        text.text = $"{CurrentHP}/{maxHP}";
+        CurrentHp = _maxHp;
+        UpdateUi();
     }
 
-    public void Init(int maxHp)
+    private void UpdateHp(int maxHp, int hp)
     {
-        MaxHP = maxHp;
-        CurrentHP = maxHp;
-        UpdateUI();
+        _maxHp = maxHp;
+        CurrentHp = hp;
+        UpdateUi();
+    }
+
+    private void UpdateUi()
+    {
+        var originalScale = bar.transform.localScale;
+        bar.transform.localScale = new Vector3(MaxHp > 0 ? CurrentHp / _maxHp : 0, originalScale.y, originalScale.z);
+        text.text = $"{CurrentHp}/{_maxHp}";
+    }
+
+    public void Init(Member m) => Init(Mathf.CeilToInt(m.State[StatType.MaxHP]), Mathf.CeilToInt(m.State[TemporalStatType.HP]), m.Id);
+    private void Init(int maxHp, int currentHp, int memberId)
+    {
+        MaxHp = maxHp;
+        CurrentHp = currentHp;
+        _memberId = memberId;
+        UpdateUi();
+    }
+
+    protected override void Execute(MemberStateChanged e)
+    {
+        if (e.Member.Id == _memberId) 
+            UpdateHp(Mathf.CeilToInt(e.Member.State[StatType.MaxHP]), Mathf.CeilToInt(e.Member.State[TemporalStatType.HP]));
     }
 }

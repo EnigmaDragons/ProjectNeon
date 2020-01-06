@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using UnityEngine;
 
 public static class BattleEvent 
 {
@@ -12,6 +13,7 @@ public static class BattleEvent
     public static void Publish(object payload)
     {
         BattleEvents.Publish(payload);
+        Debug.Log($"Publishing {payload.GetType()}");
     }
 
     public static void Subscribe<T>(Action<T> onEvent, object owner)

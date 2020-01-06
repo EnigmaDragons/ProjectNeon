@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnStepsCompleted: {fileID: 11400000, guid: cb35872cdfb402546bb1036ea2e637a5, type: 2}
   RequiredEvents: []
+  isRecurring: 0
   _isFinished: 0
   _finishedEvents: []
 --- !u!114 &385469686191321178
@@ -72,6 +73,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 55f03c186407e164889ff8ffb62ced78, type: 2}
   - {fileID: 11400000, guid: ac962bd1870cd7e47993e163cdf696b2, type: 2}
   - {fileID: 11400000, guid: 6e3ab1a49e5ecac47b51d8aec411595c, type: 2}
+  isRecurring: 0
   _isFinished: 0
   _finishedEvents: []
 --- !u!114 &5604113981998668911
@@ -304,11 +306,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4327990211393144517, guid: 572dca927ecc08847b4dad07c9f72e7a,
-        type: 3}
-      propertyPath: encounterBuilder
-      value: 
-      objectReference: {fileID: 3922927715355309994}
     m_RemovedComponents:
     - {fileID: 769716646490537199, guid: 572dca927ecc08847b4dad07c9f72e7a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 572dca927ecc08847b4dad07c9f72e7a, type: 3}
@@ -318,15 +315,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8144454666741432394}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3922927715355309994 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5149835004199368672, guid: 572dca927ecc08847b4dad07c9f72e7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 8144454666741432394}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc2318b02e74cf248a1c5f7dbb21c222, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

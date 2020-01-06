@@ -2,64 +2,57 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIHPBarController : MonoBehaviour
+public class UIHPBarController : OnBattleEvent<MemberStateChanged>
 {
-    [SerializeField] Image barImage;
-    [SerializeField] TextMeshProUGUI barTextValue;
+    [SerializeField] private Image barImage;
+    [SerializeField] private TextMeshProUGUI barTextValue;
 
-    int maxHP = 100;
+    private int _memberId = -1;
+    private int _maxHp = 100;
 
-    public int CurrentHP { get; private set; }
-    public int MaxHP
+    private int CurrentHp { get; set; }
+
+    private int MaxHp
     {
         set
         {
-            maxHP = value;
-            UpdateUI();
+            _maxHp = value;
+            UpdateUi();
         }
-        get
-        {
-            return maxHP;
-        }
+        get => _maxHp;
     }
+    
     private void Start()
     {
-        CurrentHP = maxHP;
-        UpdateUI();
-    }
-    public void ChangeMaxHP(int _maxHP)
-    {
-        maxHP += _maxHP;
-        UpdateUI();
-    }
-    public void ChangeHP(int value)
-    {
-        CurrentHP += value;
-        CorectHPValue();
-        UpdateUI();
-    }
-    void CorectHPValue()
-    {
-        Mathf.Clamp(CurrentHP, 0, maxHP);
-    }
-    void UpdateUI()
-    {
-        ChangeImage();
-        ChangeText();
-    }
-    void ChangeImage()
-    {
-        barImage.fillAmount = CurrentHP * 1f / maxHP * 1f;
-    }
-    void ChangeText()
-    {
-        barTextValue.text = $"{CurrentHP}/{maxHP}";
+        CurrentHp = _maxHp;
+        UpdateUi();
     }
 
-    public void Init(int maxHp)
+    private void UpdateHp(int maxHp, int hp)
     {
-        MaxHP = maxHp;
-        CurrentHP = maxHp;
-        UpdateUI();
+        _maxHp = maxHp;
+        CurrentHp = hp;
+        UpdateUi();
+    }
+
+    private void UpdateUi()
+    {
+        barImage.fillAmount = CurrentHp * 1f / _maxHp * 1f;
+        barTextValue.text = $"{CurrentHp}/{_maxHp}";
+    }
+
+    public void Init(Member m) => Init(Mathf.CeilToInt(m.State[StatType.MaxHP]), Mathf.CeilToInt(m.State[TemporalStatType.HP]), m.Id);
+    private void Init(int maxHp, int currentHp, int memberId)
+    {
+        MaxHp = maxHp;
+        CurrentHp = currentHp;
+        _memberId = memberId;
+        UpdateUi();
+    }
+
+    protected override void Execute(MemberStateChanged e)
+    {
+        if (e.Member.Id == _memberId) 
+            UpdateHp(Mathf.CeilToInt(e.Member.State[StatType.MaxHP]), Mathf.CeilToInt(e.Member.State[TemporalStatType.HP]));
     }
 }
