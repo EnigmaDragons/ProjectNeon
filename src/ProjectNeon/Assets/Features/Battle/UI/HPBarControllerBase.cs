@@ -1,12 +1,7 @@
-﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class UIHPBarController : OnBattleEvent<MemberStateChanged>
+public abstract class HPBarControllerBase : OnBattleEvent<MemberStateChanged>
 {
-    [SerializeField] private Image barImage;
-    [SerializeField] private TextMeshProUGUI barTextValue;
-
     private int _memberId = -1;
     private int _maxHp = 100;
 
@@ -21,7 +16,7 @@ public class UIHPBarController : OnBattleEvent<MemberStateChanged>
         }
         get => _maxHp;
     }
-    
+
     private void Start()
     {
         CurrentHp = _maxHp;
@@ -37,11 +32,13 @@ public class UIHPBarController : OnBattleEvent<MemberStateChanged>
 
     private void UpdateUi()
     {
-        barImage.fillAmount = CurrentHp * 1f / _maxHp * 1f;
-        barTextValue.text = $"{CurrentHp}/{_maxHp}";
+        var amount = _maxHp > 0 ? CurrentHp / _maxHp : 1;
+        SetFillAmount(amount);
+        SetText($"{CurrentHp}/{_maxHp}");
     }
 
     public void Init(Member m) => Init(Mathf.CeilToInt(m.State[StatType.MaxHP]), Mathf.CeilToInt(m.State[TemporalStatType.HP]), m.Id);
+
     private void Init(int maxHp, int currentHp, int memberId)
     {
         MaxHp = maxHp;
@@ -52,7 +49,10 @@ public class UIHPBarController : OnBattleEvent<MemberStateChanged>
 
     protected override void Execute(MemberStateChanged e)
     {
-        if (e.Member.Id == _memberId) 
+        if (e.Member.Id == _memberId)
             UpdateHp(Mathf.CeilToInt(e.Member.State[StatType.MaxHP]), Mathf.CeilToInt(e.Member.State[TemporalStatType.HP]));
     }
+
+    protected abstract void SetFillAmount(float amount);
+    protected abstract void SetText(string text);
 }

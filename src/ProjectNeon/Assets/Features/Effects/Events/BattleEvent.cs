@@ -13,7 +13,7 @@ public static class BattleEvent
     public static void Publish(object payload)
     {
         BattleEvents.Publish(payload);
-        Debug.Log($"Publishing {payload.GetType()}");
+        //Debug.Log($"Publishing {payload.GetType()}");
     }
 
     public static void Subscribe<T>(Action<T> onEvent, object owner)
