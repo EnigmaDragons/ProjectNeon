@@ -23,6 +23,5 @@ public class Member
     public void Apply(Action<MemberState> effect)
     {
         effect(State);
-        BattleEvent.Publish(new MemberStateChanged(this));
     }
 }

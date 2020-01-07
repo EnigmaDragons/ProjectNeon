@@ -24,7 +24,7 @@ public class PlayedCard
             if (!string.IsNullOrWhiteSpace(action.CharacterAnimation))
                 BattleEvent.Publish(new CharacterAnimationRequested(_performer.Id, action.CharacterAnimation));
             
-            if (_targets.Length <= index)
+            if (_targets.Length <= index) 
                 Debug.LogError($"Invalid Targets for {_card.Name}. Action {index}");
             action.Apply(_performer, _targets[index]);
         }

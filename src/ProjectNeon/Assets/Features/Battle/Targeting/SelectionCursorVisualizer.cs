@@ -28,6 +28,8 @@ public class SelectionCursorVisualizer : MonoBehaviour
     void UpdateTarget()
     {
         var firstTarget = targeting.Current;
+        if (firstTarget.Members.Length == 0) return;
+        
         var firstMember = firstTarget.Members[0];
         cursor.transform.position = battleState.GetPosition(firstMember.Id) + offset;
         if (firstTarget.Members.Length <= 1) return;

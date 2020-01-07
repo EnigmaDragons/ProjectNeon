@@ -16,6 +16,13 @@ public sealed class BattlePlayerTargetingState : ScriptableObject
     }
 
     public Target Current => _selector.Current;
+
+    public void Clear()
+    {
+        var emptyTargets = new Target[] { new Multiple(new Member[0]) };
+        _selector = new IndexSelector<Target>(emptyTargets);
+        OnTargetChanged.Publish();
+    }
     
     public void MoveNext()
     {

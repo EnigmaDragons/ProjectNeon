@@ -102,6 +102,7 @@ public sealed class SelectCardTargets : MonoBehaviour
     private void OnTargetConfirmed()
     {
         _actionTargets[_actionIndex] = targetingState.Current;
+        targetingState.Clear();
 
         if (_actionIndex + 1 == _numActions)
         {

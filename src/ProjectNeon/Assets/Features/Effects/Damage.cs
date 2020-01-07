@@ -12,7 +12,9 @@ public sealed class Damage : Effect
     public void Apply(Member source, Target target)
     {
         var amount = _damage.Calculate(source, target) * target.Members[0].State.Damagability();
-        if (amount < 1)
+        if (target.Members[0].State.Damagability() < 0.01)
+            Debug.LogWarning($"{target.Members[0].Name} is Invincible");
+        else if (amount < 1)
             Debug.LogWarning($"Dealing {amount} to {target.Members[0].Name}");
         else
             Debug.Log($"Dealing {amount} to {target.Members[0].Name}");
