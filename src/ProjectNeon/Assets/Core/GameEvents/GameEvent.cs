@@ -10,7 +10,7 @@ public class GameEvent : ScriptableObject
 
     public void Publish()
     {
-        //Debug.Log($"Publishing {name}");
+        Debug.Log($"Publishing {name} to {listeners.Count()} subscribers");
         CleansedListeners.ForEach(l => l.OnEvent(l));
     }
 

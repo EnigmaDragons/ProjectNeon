@@ -32,7 +32,7 @@ public abstract class HPBarControllerBase : OnBattleEvent<MemberStateChanged>
 
     private void UpdateUi()
     {
-        var amount = _maxHp > 0 ? CurrentHp / _maxHp : 1;
+        var amount = _maxHp > 0 ? ((float)CurrentHp / (float)_maxHp) : 1;
         SetFillAmount(amount);
         SetText($"{CurrentHp}/{_maxHp}");
     }
