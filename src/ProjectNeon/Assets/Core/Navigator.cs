@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public sealed class Navigator : ScriptableObject
 {
+    [SerializeField] private bool loggingEnabled;
+    
     public void NavigateToTitleScreen() => NavigateTo("TitleScreen");
     public void NavigateToSquadSelection() => NavigateTo("SquadSelection");
     public void NavigateToGameScene() => NavigateTo("GameScene");
@@ -15,7 +17,8 @@ public sealed class Navigator : ScriptableObject
 
     private void NavigateTo(string name)
     {
-        Debug.Log($"Navigating to {name}");
+        if (loggingEnabled)
+            Debug.Log($"Navigating to {name}");
         SceneManager.LoadScene(name);
     }
 }
