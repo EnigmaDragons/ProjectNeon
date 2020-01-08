@@ -15,6 +15,8 @@ public class EnemyVisualizer : MonoBehaviour
     [SerializeField] private GameEvent onSetupFinished;
     [SerializeField] private WorldHPBarController hpBarPrototype;
     [SerializeField] private Vector3 hpBarOffset;
+    [SerializeField] private DamageEffect damageEffect;
+    [SerializeField] private Vector3 damageEffectOffset;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
 
@@ -50,6 +52,8 @@ public class EnemyVisualizer : MonoBehaviour
             var hpBar = Instantiate(hpBarPrototype, enemyObject.transform.position + hpBarOffset, Quaternion.identity, enemyObject.transform);
             var enemyMember = state.GetMemberByEnemyIndex(i);
             hpBar.Init(enemyMember);
+            var dmg = Instantiate(damageEffect, enemyObject.transform.position + damageEffectOffset, Quaternion.identity, enemyObject.transform);
+            dmg.Init(enemyMember);
         }
     }
     

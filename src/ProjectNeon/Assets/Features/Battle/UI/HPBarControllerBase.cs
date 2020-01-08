@@ -50,7 +50,7 @@ public abstract class HPBarControllerBase : OnBattleEvent<MemberStateChanged>
     protected override void Execute(MemberStateChanged e)
     {
         if (e.Member.Id == _memberId)
-            UpdateHp(Mathf.CeilToInt(e.Member.State[StatType.MaxHP]), Mathf.CeilToInt(e.Member.State[TemporalStatType.HP]));
+            UpdateHp(Mathf.CeilToInt(e.Member.State[StatType.MaxHP]), e.Member.CurrentHp());
     }
 
     protected abstract void SetFillAmount(float amount);
