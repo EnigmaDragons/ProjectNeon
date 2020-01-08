@@ -25,3 +25,8 @@ public class Member
         effect(State);
     }
 }
+
+public static class MemberExtensions
+{
+    public static int CurrentHp(this Member m) => Mathf.CeilToInt(m.State[TemporalStatType.HP]);
+}

@@ -29,7 +29,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4663375817768108953}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51,6 +52,8 @@ MonoBehaviour:
   hpBarPrototype: {fileID: 2214576738474468287, guid: 4603e50852466ce41b1108e0cb82ee2a,
     type: 3}
   hpBarOffset: {x: 0, y: 1.5, z: 0}
+  damageEffect: {fileID: 237525876699209136}
+  damageEffectOffset: {x: 0, y: 1.5, z: 0}
   rowHeight: 2
   widthBetweenEnemies: 2.1
   visuals: []
@@ -112,3 +115,95 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1001 &1888114131232146536
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1114422754626317374}
+    m_Modifications:
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319788284829751274, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_Name
+      value: DamageEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 27041208057795139, guid: c6d796b3ec4fe4b498c2285b1627a565,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c6d796b3ec4fe4b498c2285b1627a565, type: 3}
+--- !u!4 &4663375817768108953 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6522424288246220785, guid: c6d796b3ec4fe4b498c2285b1627a565,
+    type: 3}
+  m_PrefabInstance: {fileID: 1888114131232146536}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &237525876699209136 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -7388100991735670312, guid: c6d796b3ec4fe4b498c2285b1627a565,
+    type: 3}
+  m_PrefabInstance: {fileID: 1888114131232146536}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d919272fee914146aeacf6bfc0710c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

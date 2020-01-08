@@ -9,9 +9,14 @@ public class PartyVisualizer : OnBattleEvent<CharacterAnimationRequested>
     [SerializeField] private GameObject hero3;
     [SerializeField] private GameEvent onPartySetupFinished;
 
-    // @todo #125:15min Dynamically create Heroes from a Prototype, instead of fixed slots
-
     private readonly Dictionary<Hero, Animator> _animators = new Dictionary<Hero, Animator>();
+    private readonly Dictionary<Hero, DamageEffect> _damage  = new Dictionary<Hero, DamageEffect>();
+
+    public void SetupDamageEffects()
+    {
+        _damage
+            .ForEach(x => x.Value.Init(battleState.GetMemberByHero(x.Key)));
+    }
     
     void Start()
     {
@@ -31,6 +36,11 @@ public class PartyVisualizer : OnBattleEvent<CharacterAnimationRequested>
         {
              var character = Instantiate(hero.Body, heroOrigin.transform.position, Quaternion.identity, heroOrigin.transform);
              _animators[hero] = character.GetComponentInChildren<Animator>();
+             var damageEffect = character.GetComponentInChildren<DamageEffect>();
+             if (damageEffect != null)
+                 _damage[hero] = damageEffect;
+             else
+                 Debug.LogWarning($"{hero.name} is missing DamageEffect");
         }
         else
         {
