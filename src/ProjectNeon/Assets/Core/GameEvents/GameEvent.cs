@@ -10,8 +10,12 @@ public class GameEvent : ScriptableObject
 
     public void Publish()
     {
-        Debug.Log($"Publishing {name} to {listeners.Count()} subscribers");
-        CleansedListeners.ForEach(l => l.OnEvent(l));
+        //Debug.Log($"Publishing {name} to {listeners.Count()} subscribers");
+        CleansedListeners.ForEach(l =>
+        {
+            //Debug.Log($"Publishing {name} to {l.Owner.GetType()}");
+            l.OnEvent(l);
+        });
     }
 
     public void Subscribe(Action action, object subscriber) => Subscribe(new GameEventSubscription(name, x => action(), subscriber));
@@ -25,6 +29,7 @@ public class GameEvent : ScriptableObject
 
     public void Unsubscribe(object owner)
     {
+        //Debug.Log($"Unsubscribed {owner.GetType()}");
         listeners = CleansedListeners.Where(l => !ReferenceEquals(l.Owner, owner));
     }
 

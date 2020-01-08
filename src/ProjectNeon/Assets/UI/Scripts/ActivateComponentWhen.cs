@@ -18,14 +18,12 @@ public sealed class ActivateComponentWhen : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log($"Disabled on {gameObject.name}");
         activateOn.ForEach(e => e.Unsubscribe(this));
         deactivateOn.ForEach(e => e.Unsubscribe(this));
     }
 
     void SetTargetState(bool active)
     {
-        Debug.Log($"Setting {target.name} to {active}");
         isActive = active;
         target.enabled = isActive;
     }
