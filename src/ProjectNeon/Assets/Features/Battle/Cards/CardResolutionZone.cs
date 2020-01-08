@@ -16,7 +16,16 @@ public class CardResolutionZone : ScriptableObject
     {
         moves.Add(played);
         physicalZone.PutOnBottom(played.Card);
+        played.Member.Apply(m => m.Pay(played.Card.Cost));
         BattleLog.Write($"{played.Member.Name} Played {played.Card.name}");
+    }
+
+    public void RemoveLastPlayedCard()
+    {
+        var played = moves.Last();
+        moves.RemoveAt(moves.Count - 1);
+        physicalZone.Take(physicalZone.Count - 1);
+        played.Member.Apply(m => m.Refund(played.Card.Cost));
     }
 
     public void Resolve(MonoBehaviour host)
