@@ -71,7 +71,7 @@ public class BattleState : ScriptableObject
 
         uiPositions = _uiTransformsById.Values.Select(x => x.position).ToArray();
         
-        Debug.Log("Finished Battle State Init");
+        BattleLog.Write("Finished Battle State Init");
         return this;
     }
 
