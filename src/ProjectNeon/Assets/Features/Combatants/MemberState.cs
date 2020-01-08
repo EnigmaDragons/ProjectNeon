@@ -41,6 +41,8 @@ public sealed class MemberState : IStats
     public void ApplyTemporaryMultiplier(ITemporalState mods) => _multiplierMods.Add(mods);
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => _additiveMods.RemoveAll(condition);
 
+    public void Refund(ResourceCost cardCost) => Counter(cardCost.ResourceType.Name).ChangeBy(cardCost.Cost);
+    public void Pay(ResourceCost cardCost) => Counter(cardCost.ResourceType.Name).ChangeBy(-cardCost.Cost);
     public void GainResource(string resourceName, int amount) => Counter(resourceName).ChangeBy(amount);
     public void GainHp(float amount) => ChangeHp(amount);
     public void GainShield(float amount) => Counter(TemporalStatType.Shield).ChangeBy(amount);
@@ -74,5 +76,4 @@ public sealed class MemberState : IStats
         _additiveMods.ForEach(m => m.AdvanceTurn());
         _additiveMods.RemoveAll(m => !m.IsActive);
     }
-
 }
