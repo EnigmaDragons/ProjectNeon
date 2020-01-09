@@ -13,4 +13,11 @@ public static class CollectionExtensions
     public static IEnumerable<T> Except<T>(this IEnumerable<T> items, T item) => items.Except(item.AsArray());
     public static bool None<T>(this IEnumerable<T> items) => !items.Any();
     public static IEnumerable<T> WrappedWith<T>(this IEnumerable<T> items, T wrapping) => wrapping.AsArray().Concat(items).Concat(wrapping);
+
+    public static TValue VerboseGetValue<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey k, Func<TKey, string> context)
+    {
+        if (!d.ContainsKey(k))
+            throw new KeyNotFoundException($"Entry not found for {context(k)}");
+        return d[k];
+    }
 }
