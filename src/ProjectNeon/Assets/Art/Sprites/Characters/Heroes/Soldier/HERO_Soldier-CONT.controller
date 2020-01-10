@@ -184,9 +184,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.57238716
+  m_TransitionDuration: 0.42967343
   m_TransitionOffset: 0
-  m_ExitTime: 0.39756426
+  m_ExitTime: 0.8240714
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -356,16 +356,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -972525689093949316}
-    m_Position: {x: 100, y: 220, z: 0}
+    m_Position: {x: 90, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1893029193585385483}
-    m_Position: {x: 320, y: 310, z: 0}
+    m_Position: {x: 340, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3626882229407997736}
-    m_Position: {x: 300, y: 100, z: 0}
+    m_Position: {x: 320, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3308268085116050748}
-    m_Position: {x: 320, y: 210, z: 0}
+    m_Position: {x: 350, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 226843612660591152}
     m_Position: {x: -100, y: 110, z: 0}
@@ -479,7 +479,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: GrenadeThrow
+  - m_Name: LaunchGrenade
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -509,7 +509,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: MediKit
+  - m_Name: MedKit
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -689,7 +689,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: MediKit
+    m_ConditionEvent: MedKit
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2315206056189442730}
@@ -697,9 +697,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.238574
-  m_TransitionOffset: 0
-  m_ExitTime: 0.8958333
+  m_TransitionDuration: 0.5141479
+  m_TransitionOffset: 0.0248938
+  m_ExitTime: 0.7810108
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -746,9 +746,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.7639073
+  m_TransitionDuration: 0.4521804
   m_TransitionOffset: 0
-  m_ExitTime: 0.6157189
+  m_ExitTime: 0.8502541
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -761,7 +761,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MediKit
+  m_Name: MedKit
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -978,7 +978,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: GrenadeThrow
+    m_ConditionEvent: LaunchGrenade
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3626882229407997736}
