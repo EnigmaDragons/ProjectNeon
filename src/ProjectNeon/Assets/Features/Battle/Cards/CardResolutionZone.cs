@@ -38,14 +38,15 @@ public class CardResolutionZone : ScriptableObject
         played.Member.Apply(m => m.Refund(played.Card.Cost));
     }
 
-    public void Resolve(MonoBehaviour host)
+    public void Resolve(MonoBehaviour host, float delay)
     {
-        host.StartCoroutine(ResolveAll());
+        host.StartCoroutine(ResolveAll(delay));
     }
 
-    private IEnumerator ResolveAll()
+    private IEnumerator ResolveAll(float delay)
     {
         _isResolving = true;
+        yield return new WaitForSeconds(delay);
         foreach (var move in moves.ToList())
         {
             yield return ResolveOneCard(move);
