@@ -78,7 +78,7 @@ public class BattleState : ScriptableObject
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
     public Hero GetHeroById(int memberId) => _heroesById[memberId];
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
-    public Vector3 GetPosition(int memberId) => _uiTransformsById[memberId].position;
+    public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
     public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.Single(x => x.Value == hero).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById[enemyIndex + EnemyStartingIndex];
 }

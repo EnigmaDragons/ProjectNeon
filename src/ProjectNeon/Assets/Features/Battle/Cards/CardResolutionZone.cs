@@ -40,6 +40,7 @@ public class CardResolutionZone : ScriptableObject
 
     public void Resolve(MonoBehaviour host, float delay)
     {
+        BattleLog.Write($"Card Resolution Began");
         host.StartCoroutine(ResolveAll(delay));
     }
 

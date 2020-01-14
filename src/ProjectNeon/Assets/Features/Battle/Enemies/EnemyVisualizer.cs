@@ -60,9 +60,8 @@ public class EnemyVisualizer : MonoBehaviour
     private void ResolveUnconscious(MemberUnconscious m)
     {
         if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
-        
-        for (var i = 0; i < enemyArea.Enemies.Length; i++)
-            if (enemyArea.name.Equals(m.Member.Name))
-                visuals[i].gameObject.SetActive(false);
+
+        var t = state.GetTransform(m.Member.Id);
+        t.gameObject.SetActive(false);
     }
 }
