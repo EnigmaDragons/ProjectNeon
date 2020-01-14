@@ -33,13 +33,13 @@ public static class BattleStateTargetingExtensions
 
     private static Target[] NonSelfTargetsFor(this BattleState state, TeamType myTeam, Group group, Scope scope)
     {
-            var opponentsAre = myTeam == TeamType.Party ? TeamType.Enemies : TeamType.Party;
-            var teamMembers = group == Group.Ally ? Get(state, myTeam) : Get(state, opponentsAre);
-            var membersAsTargets = teamMembers.Select(x => new MemberAsTarget(x)).ToArray();
+        var opponentsAre = myTeam == TeamType.Party ? TeamType.Enemies : TeamType.Party;
+        var teamMembers = group == Group.Ally ? Get(state, myTeam) : Get(state, opponentsAre);
+        var membersAsTargets = teamMembers.Select(x => new MemberAsTarget(x)).ToArray();
 
-            return scope == Scope.One
-                ? Targets(membersAsTargets)
-                : Targets(new Team(teamMembers));
+        return scope == Scope.One
+            ? Targets(membersAsTargets)
+            : Targets(new Team(teamMembers));
     }
 
     private static Target[] Targets(params Target[] targets) => targets;

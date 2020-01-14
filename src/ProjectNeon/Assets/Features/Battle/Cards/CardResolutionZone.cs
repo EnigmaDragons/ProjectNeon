@@ -59,8 +59,13 @@ public class CardResolutionZone : ScriptableObject
     
     private IEnumerator ResolveOneCard(PlayedCard played)
     {
-        var card = physicalZone.DrawOneCard();
         BattleLog.Write($"Began resolving {played.Card.Name}");
+        if (physicalZone.Count == 0)
+        {
+            Debug.Log($"Weird Physical Zone Draw bug.");
+            yield break;
+        }
+        var card = physicalZone.DrawOneCard();
         played.Perform();
         LastPlayed = played;
         if (played.Member.TeamType.Equals(TeamType.Party))
