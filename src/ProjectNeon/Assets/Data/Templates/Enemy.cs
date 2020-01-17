@@ -8,6 +8,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private TurnAI ai;
     [SerializeField] private int powerLevel;
     [SerializeField] private GameObject prefab;
+    [SerializeField] private StringReference deathEffect;
     
     [SerializeField] private int maxHp;
     [SerializeField] private int toughness;
@@ -22,7 +23,8 @@ public class Enemy : ScriptableObject
     public TurnAI AI => ai;
     public int PowerLevel => powerLevel;
     public GameObject Prefab => prefab;
-    
+    public string DeathEffect => deathEffect;
+
     public IStats Stats => new StatAddends
         {
             ResourceTypes = resourceType != null ? new IResourceType[] {resourceType} : Array.Empty<IResourceType>()

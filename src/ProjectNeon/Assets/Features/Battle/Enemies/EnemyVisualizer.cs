@@ -61,6 +61,19 @@ public class EnemyVisualizer : MonoBehaviour
     {
         if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
 
+        var enemy = state.GetEnemyById(m.Member.Id);
+        if (!string.IsNullOrWhiteSpace(enemy.DeathEffect))
+        {
+            BattleEvent.Publish(new BattleEffectAnimationRequested
+            {
+                EffectName = enemy.DeathEffect, 
+                Scope = Scope.One, 
+                Target = new Single(m.Member), 
+                Group = Group.Self,
+                PerformerId = m.Member.Id
+            });
+        }
+
         var t = state.GetTransform(m.Member.Id);
         t.gameObject.SetActive(false);
     }

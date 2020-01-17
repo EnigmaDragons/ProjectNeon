@@ -47,6 +47,7 @@ public class CardResolutionZone : ScriptableObject
     private IEnumerator ResolveAll(float delay)
     {
         _isResolving = true;
+        BattleLog.Write($"Num Cards To Resolve: {moves.Count}");
         yield return new WaitForSeconds(delay);
         foreach (var move in moves.ToList())
         {
@@ -55,6 +56,7 @@ public class CardResolutionZone : ScriptableObject
         }
 
         _isResolving = false;
+        moves.Clear();
         onFinished.Publish();
     }
     
@@ -72,6 +74,5 @@ public class CardResolutionZone : ScriptableObject
         if (played.Member.TeamType.Equals(TeamType.Party))
             playedDiscardZone.PutOnBottom(card);
         onCardResolved.Publish();
-        yield break;
     }
 }
