@@ -15,7 +15,12 @@ public class BattleVFXController : OnBattleEvent<BattleEffectAnimationRequested>
         if (f == null)
             Debug.Log($"No VFX of type {e.EffectName}");
         else if (e.Scope.Equals(Scope.One) || e.Group == Group.Self)
-            Debug.Log($"Single Target VFX not supported yet");
+        {
+            var location = state.GetTransform(e.PerformerId);
+            f.Effect.SetActive(false);
+            f.Effect.transform.position = location.position;
+            f.Effect.SetActive(true);
+        }
         else if (e.Group == Group.All)
             Debug.Log($"All Characters VFX not supported yet");
         else

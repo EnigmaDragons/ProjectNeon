@@ -10,9 +10,5 @@ public class BattleLog : OnBattleEvent<WriteBattleLogMessageRequested>
             Debug.Log($"Battle - {e.Message}");
     }
     
-    
     public static void Write(string message) => BattleEvent.Publish(new WriteBattleLogMessageRequested(message)); 
 }
-
-
-
