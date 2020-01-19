@@ -626,13 +626,13 @@ AnimatorStateMachine:
     m_Position: {x: 100, y: 40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -134455262243306090}
-    m_Position: {x: -180, y: 310, z: 0}
+    m_Position: {x: -180, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3142760564976684147}
-    m_Position: {x: -180, y: 60, z: 0}
+    m_Position: {x: 400, y: 90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1684705969467916892}
-    m_Position: {x: -180, y: 360, z: 0}
+    m_Position: {x: -180, y: 310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3248381273113560041}
     m_Position: {x: 100, y: 360, z: 0}
@@ -728,6 +728,12 @@ AnimatorController:
   m_Name: HERO_Soldier-CONT
   serializedVersion: 5
   m_AnimatorParameters:
+  - m_Name: BulletBarrage
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: ReadyToShoot1
     m_Type: 9
     m_DefaultFloat: 0
@@ -801,12 +807,6 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: CoordinatedAttack
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: BulletBarrage
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1452,9 +1452,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.7639073
+  m_TransitionDuration: 0.4
   m_TransitionOffset: 0
-  m_ExitTime: 0.6157189
+  m_ExitTime: 1
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
