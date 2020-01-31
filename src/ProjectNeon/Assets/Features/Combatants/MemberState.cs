@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public sealed class MemberState : IStats
 {
@@ -16,12 +15,8 @@ public sealed class MemberState : IStats
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats));
 
     private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
-    private Dictionary<string, string> _status = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-    public Dictionary<string, string> Status()
-    {
-        return _status;
-    }
-    private BattleCounter Counter(string name) => _counters[name];
+    private readonly Dictionary<string, string> _status = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+    private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter {n}");
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
 
@@ -32,8 +27,10 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.Toughness() * 2);
 
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, 0, () => r.MaxAmount));
+        _counters["None"] = new BattleCounter("None", 0, () => 0);
     }
 
+    public bool IsConscious => this[TemporalStatType.HP] > 0;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
     public float this[StatType statType] => CurrentStats[statType];
     public float this[TemporalStatType temporalStatType] => _counters[temporalStatType.ToString()].Amount;
@@ -45,6 +42,8 @@ public sealed class MemberState : IStats
     public void ApplyTemporaryMultiplier(ITemporalState mods) => _multiplierMods.Add(mods);
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => _additiveMods.RemoveAll(condition);
 
+    public void Refund(ResourceCost cardCost) => Counter(cardCost.ResourceType.Name).ChangeBy(cardCost.Cost);
+    public void Pay(ResourceCost cardCost) => Counter(cardCost.ResourceType.Name).ChangeBy(-cardCost.Cost);
     public void GainResource(string resourceName, int amount) => Counter(resourceName).ChangeBy(amount);
     public void GainHp(float amount) => ChangeHp(amount);
     public void GainShield(float amount) => Counter(TemporalStatType.Shield).ChangeBy(amount);
@@ -78,5 +77,4 @@ public sealed class MemberState : IStats
         _additiveMods.ForEach(m => m.AdvanceTurn());
         _additiveMods.RemoveAll(m => !m.IsActive);
     }
-
 }

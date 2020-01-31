@@ -40,5 +40,8 @@ public enum EffectType
     TriggerFeedEffects = 37,
     SetFeedUpEffect = 38,
     HealPrimaryResource = 39,
-    BuffMagicMultiplier = 42
+    ApplyOnShieldBelowValue = 40,
+    ApplyOnChance = 41,
+    ReplayLastCard = 42,
+    BuffMagicMultiplier = 43
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class Member 
 {
@@ -10,6 +11,8 @@ public class Member
     
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats)
     {
+        if (baseStats.Damagability() < 0.01)
+            Debug.LogWarning($"Damagability of {name} is 0");
         Id = id;
         Name = name;
         Class = characterClass;
@@ -21,4 +24,9 @@ public class Member
     {
         effect(State);
     }
+}
+
+public static class MemberExtensions
+{
+    public static int CurrentHp(this Member m) => Mathf.CeilToInt(m.State[TemporalStatType.HP]);
 }

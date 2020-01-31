@@ -11,25 +11,25 @@ public sealed class CardAction
     [SerializeField] private EffectData effect2;
     [SerializeField] private EffectData effect3;
     [SerializeField] private EffectData[] chainedEffects;
-
+    [SerializeField] private StringReference characterAnimation;
+    [SerializeField] private StringReference targetEffectAnimation;
+    
+    private EffectData ComposedEffect => chainedEffects != null && chainedEffects.Length > 0
+        ? chainedEffects.Aggregate((decorator, decorated) => decorator.origin = decorated)
+        : EffectData.Nothing;
+    
     private EffectData[] Effects => Array.Empty<EffectData>()
         .ConcatIf(effect1, e => e.ShouldApply)
         .ConcatIf(effect2, e => e.ShouldApply)
         .ConcatIf(effect3, e => e.ShouldApply)
-        .Concat(chainedEffects)
-        .ToArray(); 
+        .ConcatIf(ComposedEffect, e => e.ShouldApply)
+        .ToArray();
     
-    public void Apply(Member source, Target target)
-    {
-        EffectData chained = chainedEffects.Aggregate((decorator, decorated) =>
-            decorator.origin = decorated
-        );
+    public void Apply(Member source, Target target) 
+        => Effects.ForEach(effect => AllEffects.Apply(effect, source, target));
 
-        Effects.ForEach(
-            effect => AllEffects.Apply(effect, source, target)
-        );
-    }
-
+    public string CharacterAnimation => characterAnimation.Value;
+    public string EffectAnimation => targetEffectAnimation.Value;
     public Scope Scope => targetScope;
     public Group Group => targetGroup;
     public bool HasEffects => Effects != null && Effects.Length > 0;

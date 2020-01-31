@@ -48,7 +48,10 @@ public static class AllEffects
         { EffectType.EffectOnTurnStart, e => new EffectOnTurnStart(Create(e.origin)) },
         { EffectType.TriggerFeedEffects, e => new TriggerFeedEffects(Create(e.origin), e.EffectScope) },
         { EffectType.SetFeedUpEffect, e => new SetFeedUpEffect(Create(e.origin), e.EffectScope) },
+        { EffectType.ApplyOnShieldBelowValue, e => new ApplyOnShieldBelowValue(Create(e.origin), e.IntAmount) },
+        { EffectType.ApplyOnChance, e => new ApplyOnChance(Create(e.origin), e.FloatAmount) },
         { EffectType.HealPrimaryResource, e => new SimpleEffect((src, m) => m.GainHp(src.State.PrimaryResourceAmount)) },
+        { EffectType.ReplayLastCard, e => new ReplayLastCardEffect()},
         { EffectType.BuffMagicMultiplier, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new BuffedStats(new StatMultipliers().With(StatType.Magic, e.FloatAmount), e.NumberOfTurns)))},
 
     };
@@ -58,7 +61,10 @@ public static class AllEffects
     
     public static void Apply(EffectData effectData, Member source, Target target)
     {
-        Create(effectData).Apply(source, target);
+        var effect = Create(effectData);
+        BattleLog.Write($"Applying Effect of {effectData.EffectType} to {target.Members} members");
+        effect.Apply(source, target);
+        target.Members.ForEach(m => BattleEvent.Publish(new MemberStateChanged(m)));
     }
 
     public static Effect Create(EffectData effectData)

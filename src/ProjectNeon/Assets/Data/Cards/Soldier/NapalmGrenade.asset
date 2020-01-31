@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: 102e8c76f5861d24ca1329d4e9295118, type: 3}
   description: Deal 1.5x ATK damage to all enemies. Add Burn 3 for 3 turns.
-  typeDescription: Combat
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: 71236f38e88664b4da51c15c994c435c,
     type: 2}
   cost:
@@ -65,6 +65,11 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: NapalmGrenade
+      Variable: {fileID: 0}
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -110,3 +115,8 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}

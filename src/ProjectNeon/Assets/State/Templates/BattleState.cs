@@ -10,12 +10,15 @@ public class BattleState : ScriptableObject
     [SerializeField] private EnemyArea enemies;
     [SerializeField] private GameObject nextBattlegroundPrototype;
     [SerializeField, ReadOnly] private Vector3[] uiPositions;
+    [SerializeField, ReadOnly] private string[] memberNames;
     public bool SelectionStarted = false;
 
     public Party Party => partyArea.Party;
+    public PartyArea PartyArea => partyArea;
     public EnemyArea EnemyArea => enemies;
     public GameObject Battlefield => nextBattlegroundPrototype;
     public IReadOnlyDictionary<int, Member> Members => _membersById;
+    public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] Enemies => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
     private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
@@ -35,12 +38,14 @@ public class BattleState : ScriptableObject
     {
         nextBattlegroundPrototype = prototype;
     }
-    
+
+    private int EnemyStartingIndex => 2;
     public BattleState Init()
     {
         var id = 1;      
         var heroes = Party.Heroes;
-        
+
+        memberNames = new string[EnemyStartingIndex + enemies.Enemies.Length + 3];
         _uiTransformsById = new Dictionary<int, Transform>();
         _enemiesById = new Dictionary<int, Enemy>();
         for (var i = 0; i < enemies.Enemies.Length; i++)
@@ -48,6 +53,7 @@ public class BattleState : ScriptableObject
             id++;
             _enemiesById[id] = enemies.Enemies[i];
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
+            memberNames[id] = enemies.Enemies[i].name;
         }
         
         _heroesById = new Dictionary<int, Hero>();
@@ -56,6 +62,7 @@ public class BattleState : ScriptableObject
             id++;
             _heroesById[id] = heroes[i];
             _uiTransformsById[id] = partyArea.UiPositions[i];
+            memberNames[id] = heroes[i].name;
         }
         
         _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, h.Value.ClassName.Value, TeamType.Party, h.Value.Stats))
@@ -63,10 +70,15 @@ public class BattleState : ScriptableObject
             .ToDictionary(x => x.Id, x => x);
 
         uiPositions = _uiTransformsById.Values.Select(x => x.position).ToArray();
+        
+        BattleLog.Write("Finished Battle State Init");
         return this;
     }
-    
+
+    public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
+    public Hero GetHeroById(int memberId) => _heroesById[memberId];
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
-    public Vector3 GetPosition(int memberId) => _uiTransformsById[memberId].position;
+    public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
     public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.Single(x => x.Value == hero).Key];
+    public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById[enemyIndex + EnemyStartingIndex];
 }

@@ -1,10 +1,8 @@
-﻿
-using System;
+﻿using System;
 
 public interface Target  
 {
     Member[] Members { get; }
-
 }
 
 public static class TargetExtensions

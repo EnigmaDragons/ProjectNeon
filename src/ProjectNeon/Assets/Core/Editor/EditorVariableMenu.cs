@@ -3,6 +3,15 @@ using UnityEditor;
 
 static class EditorVariableMenu
 {
+    [MenuItem("Assets/Create/Variable/Bool Variable")]
+    static void BoolVariable()
+    {
+        var asset = ScriptableObject.CreateInstance<BoolVariable>();
+        var path = AssetDatabase.GetAssetPath(Selection.activeObject);
+        path += $"/New{nameof(BoolVariable)}.asset";
+        ProjectWindowUtil.CreateAsset(asset, path);
+    }
+    
     [MenuItem("Assets/Create/Variable/Int Variable")]
     static void IntVariable()
     {

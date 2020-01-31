@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: c601f14ece53b1d4f9f21952e6e28dbb, type: 3}
   description: Deal 1x ATK damage to all enemies
-  typeDescription: Combat
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: 71236f38e88664b4da51c15c994c435c,
     type: 2}
   cost:
@@ -65,6 +65,15 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: LaunchGrenade
+      Variable: {fileID: 0}
+    targetEffectAnimation:
+      UseConstant: 0
+      ConstantValue: BigExplosion
+      Variable: {fileID: 11400000, guid: 993ca890378938446a08719c5aca234e, type: 2}
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -110,3 +119,12 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    targetEffectAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}

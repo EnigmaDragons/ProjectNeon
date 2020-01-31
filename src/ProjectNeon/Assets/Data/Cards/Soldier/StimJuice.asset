@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: 21cf10f553f381a478790cbf5bb1b638, type: 3}
   description: Gain +3 ATK for 3 Turns
-  typeDescription: Combat
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: 71236f38e88664b4da51c15c994c435c,
     type: 2}
   cost:
@@ -33,6 +33,10 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 3
         Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
     effect2:
       EffectType: 0
       FloatAmount:
@@ -42,6 +46,10 @@ MonoBehaviour:
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
         Variable: {fileID: 0}
     effect3:
       EffectType: 0
@@ -53,6 +61,15 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    chainedEffects: []
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: StimJuice
+      Variable: {fileID: 0}
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -66,6 +83,10 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
     effect2:
       EffectType: 0
       FloatAmount:
@@ -75,6 +96,10 @@ MonoBehaviour:
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
         Variable: {fileID: 0}
     effect3:
       EffectType: 0
@@ -86,3 +111,12 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    chainedEffects: []
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}

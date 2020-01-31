@@ -130,51 +130,53 @@ namespace DTValidator {
             EditorGUILayout.EndVertical();
 
             ScrollPosition_ = EditorGUILayout.BeginScrollView(ScrollPosition_);
-				int index = 0;
-				Dictionary<string, IValidationError> _errorsByObjectName = new Dictionary<string, IValidationError>();
-				foreach (IValidationError error in validationErrors_.OrderBy(error => error.GetContextObjectName()))
-					_errorsByObjectName[error.GetContextObjectName()] = error;
-				
-				foreach (IValidationError error in _errorsByObjectName.Values) {
-					Color color = index % 2 == 0 ? kErrorEvenColor.Value : kErrorOddColor.Value;
+            
+			int index = 0;
+			var _errorsByObjectName = new Dictionary<string, IValidationError>();
+			foreach (var error in validationErrors_.Where(e => !string.IsNullOrWhiteSpace(e.GetContextObjectName())).OrderBy(error => error.GetContextObjectName()))
+				_errorsByObjectName[error.GetContextObjectName()] = error;
+			
+			foreach (var error in _errorsByObjectName.Values) {
+				var color = index % 2 == 0 ? kErrorEvenColor.Value : kErrorOddColor.Value;
 
-					EditorGUILayout.BeginVertical(EditorGUIStyleUtil.StyleWithBackgroundColor(color));
-						var horizontalStyle = EditorGUIStyleUtil.CachedStyle("DTValidatorWindow::HorizontalMarginStyle", GUIStyle.none, (style) => {
-							style.padding.top = 5;
-							style.padding.left = 5;
-							style.padding.bottom = 2;
-							style.margin.bottom = 3;
+				EditorGUILayout.BeginVertical(EditorGUIStyleUtil.StyleWithBackgroundColor(color));
+					var horizontalStyle = EditorGUIStyleUtil.CachedStyle("DTValidatorWindow::HorizontalMarginStyle", GUIStyle.none, (style) => {
+						style.padding.top = 5;
+						style.padding.left = 5;
+						style.padding.bottom = 2;
+						style.margin.bottom = 3;
+					});
+					EditorGUILayout.BeginHorizontal(horizontalStyle);
+						var boxStyle = EditorGUIStyleUtil.StyleWithTexture(error.GetContextIcon(), (GUIStyle style) => {
+							style.margin.top = 8;
 						});
-						EditorGUILayout.BeginHorizontal(horizontalStyle);
-							var boxStyle = EditorGUIStyleUtil.StyleWithTexture(error.GetContextIcon(), (GUIStyle style) => {
-								style.margin.top = 8;
-							});
-							GUILayout.Box("", boxStyle, GUILayout.Height(15.0f), GUILayout.Width(15.0f));
-							EditorGUILayout.BeginVertical();
-								EditorGUILayout.LabelField(error.GetContextObjectName(), EditorGUIStyleUtil.CachedLabelTitleStyle(), EditorGUIStyleUtil.TitleHeight);
+						GUILayout.Box("", boxStyle, GUILayout.Height(15.0f), GUILayout.Width(15.0f));
+						EditorGUILayout.BeginVertical();
+							EditorGUILayout.LabelField(error.GetContextObjectName(), EditorGUIStyleUtil.CachedLabelTitleStyle(), EditorGUIStyleUtil.TitleHeight);
 
-								var componentError = error as ComponentValidationError;
-								if (componentError != null) {
-									EditorGUILayout.LabelField(componentError.ComponentPath);
+							var componentError = error as ComponentValidationError;
+							if (componentError != null) {
+								EditorGUILayout.LabelField(componentError.ComponentPath);
+							}
+
+							EditorGUILayout.BeginHorizontal();
+								var missingMonoScriptError = error as MissingMonoScriptValidationError;
+								if (missingMonoScriptError != null && error.MemberInfo == null) {
+									EditorGUILayout.LabelField(string.Format("    >Missing script on '{0}'!", missingMonoScriptError.GameObjectPath));
+								} else {
+									EditorGUILayout.LabelField(string.Format("    >Missing '{1}' on script '{0}'", error.MemberInfo.DeclaringType.Name, error.MemberInfo.Name));
 								}
+								if (GUILayout.Button("Select In Editor", EditorGUIStyleUtil.CachedAlignedButtonStyle(), GUILayout.ExpandWidth(false))) {
+									error.SelectInEditor();
+								}
+							EditorGUILayout.EndHorizontal();
+						EditorGUILayout.EndVertical();
+					EditorGUILayout.EndHorizontal();
+				EditorGUILayout.EndVertical();
 
-								EditorGUILayout.BeginHorizontal();
-									var missingMonoScriptError = error as MissingMonoScriptValidationError;
-									if (missingMonoScriptError != null && error.MemberInfo == null) {
-										EditorGUILayout.LabelField(string.Format("    >Missing script on '{0}'!", missingMonoScriptError.GameObjectPath));
-									} else {
-										EditorGUILayout.LabelField(string.Format("    >Missing '{1}' on script '{0}'", error.MemberInfo.DeclaringType.Name, error.MemberInfo.Name));
-									}
-									if (GUILayout.Button("Select In Editor", EditorGUIStyleUtil.CachedAlignedButtonStyle(), GUILayout.ExpandWidth(false))) {
-										error.SelectInEditor();
-									}
-								EditorGUILayout.EndHorizontal();
-							EditorGUILayout.EndVertical();
-						EditorGUILayout.EndHorizontal();
-					EditorGUILayout.EndVertical();
-
-					index++;
-				}
+				index++;
+			}
+			
             EditorGUILayout.EndScrollView();
         }
 

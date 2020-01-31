@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: d94974f5498aa47499865518f1d2180a, type: 3}
   description: Generate 2 Energy. Deal 1x attack. Stun.
-  typeDescription: Tactical
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: 7070af4e46bb6ef4ab1c5870df0c383c,
     type: 2}
   cost:
@@ -65,6 +65,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -110,3 +111,4 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+    chainedEffects: []

@@ -10,7 +10,8 @@ using UnityEngine;
  * number of enemies is 7. it will also allow duplicate enemy types.
  */
 
-public class EncounterBuilder : MonoBehaviour
+[CreateAssetMenu]
+public class EncounterBuilder : ScriptableObject
 {
     [SerializeField] private IntReference difficulty;
     [SerializeField] private Enemy[] possible;

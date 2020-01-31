@@ -7,7 +7,8 @@ public class SelectionCursorVisualizer : MonoBehaviour
     [SerializeField] private GameObject cursor;
     [SerializeField] private BattlePlayerTargetingState targeting;
     [SerializeField] private BattleState battleState;
-    [SerializeField] private Vector3 offset;
+    [SerializeField] private Vector3 enemyOffset;
+    [SerializeField] private Vector3 partyOffset;
 
     private bool isActive;
     private GameObject[] extraCursors = new GameObject[0];
@@ -28,15 +29,23 @@ public class SelectionCursorVisualizer : MonoBehaviour
     void UpdateTarget()
     {
         var firstTarget = targeting.Current;
+        if (firstTarget.Members.Length == 0) return;
+        
         var firstMember = firstTarget.Members[0];
-        cursor.transform.position = battleState.GetPosition(firstMember.Id) + offset;
+        cursor.transform.position = battleState.GetTransform(firstMember.Id).position + Offset(firstMember);
         if (firstTarget.Members.Length <= 1) return;
         extraCursors = new GameObject[firstTarget.Members.Length - 1];
-        for (int i = 1; i < firstTarget.Members.Length; i++)
+        for (var i = 1; i < firstTarget.Members.Length; i++)
         {
-            extraCursors[i - 1] = Instantiate(cursor, battleState.GetPosition(firstTarget.Members[i].Id) + offset, cursor.transform.rotation);
+            extraCursors[i - 1] = Instantiate(cursor, 
+                battleState.GetTransform(firstTarget.Members[i].Id).position + Offset(firstTarget.Members[i]), 
+                cursor.transform.rotation, 
+                transform);
+            extraCursors[i - 1].SetActive(false);
         }
     }
+
+    private Vector3 Offset(Member m) => m.TeamType == TeamType.Enemies ? enemyOffset : partyOffset;
 
     void Activate()
     {
@@ -51,6 +60,7 @@ public class SelectionCursorVisualizer : MonoBehaviour
         cursor.SetActive(isActive);
         ExtraCursorsAction(isActive);
     }
+    
     void ExtraCursorsAction(bool needCursors)
     {
         if (extraCursors.Length == 0) return;
@@ -60,6 +70,5 @@ public class SelectionCursorVisualizer : MonoBehaviour
             extraCursors.ForEach(x => Destroy(x));
             extraCursors = new GameObject[0];
         }
-
     }
 }

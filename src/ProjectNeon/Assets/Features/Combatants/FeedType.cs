@@ -1,8 +1,8 @@
 ﻿public enum FeedType
 {
-    NONE =  0,
-    STELLAR = 1,
-    LUNAR = 2,
-    SOLAR = 3,
+    None =  0,
+    Stellar = 1,
+    Lunar = 2,
+    Solar = 3,
 }
 

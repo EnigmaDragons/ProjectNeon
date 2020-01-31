@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
-class SelectCardTargets : MonoBehaviour
+public sealed class SelectCardTargets : MonoBehaviour
 {
     [SerializeField] private CardResolutionZone cardResolutionZone;
     [SerializeField] private CardPlayZone selectedCardZone;
@@ -18,7 +17,10 @@ class SelectCardTargets : MonoBehaviour
     [ReadOnly, SerializeField, DTValidator.Optional] private Card _selectedCard;
     private bool _isReadyForSelection;
     private Member _hero;
-
+    private int _actionIndex;
+    private int _numActions;
+    private Target[] _actionTargets;
+    
     private void Update()
     {
         if (_selectedCard == null) return;
@@ -51,10 +53,12 @@ class SelectCardTargets : MonoBehaviour
     {
         if (selectedCardZone.Count < 1)
             return;
+        
         battleState.SelectionStarted = true;
         onTargetSelectionStarted.Publish();
         _selectedCard = selectedCardZone.Cards[0];
         _isReadyForSelection = false;
+        
         var cardClass = _selectedCard.LimitedToClass;
         if (!cardClass.IsPresent)
         {
@@ -72,27 +76,44 @@ class SelectCardTargets : MonoBehaviour
             return;
         }
 
-        var actions = _selectedCard.Actions;
-        if (actions.Length == 0)
+        _actionIndex = 0;
+        _numActions = _selectedCard.Actions.Length;
+        _actionTargets = new Target[_numActions];
+        if (_numActions == 0)
         {
             Debug.Log($"Card {_selectedCard.Name} has no Card Actions");
             OnTargetConfirmed();
             return;
         }
 
-        var possibleTargets = battleState.GetPossibleTargets(_hero, _selectedCard.Actions[0].Group, _selectedCard.Actions[0].Scope);
-        // @todo #207:30min Repeat target selection for all card actions. Currently we re just sorting possible targets for the first
-        //  CardAction, but we need select target for all actions after the first one.
+        PresentPossibleTargets();
+    }
 
+    private void PresentPossibleTargets()
+    {
+        var action = _selectedCard.Actions[_actionIndex];
+        var possibleTargets = battleState.GetPossibleTargets(_hero, action.Group, action.Scope);
         targetingState.WithPossibleTargets(possibleTargets);
+        if (possibleTargets.Length == 1)
+            OnTargetConfirmed();
     }
 
     private void OnCancelled() => OnSelectionComplete(sourceCardZone);
     private void OnTargetConfirmed()
     {
-        // This needs to be updated once we implement multiple targeted actions.
-        cardResolutionZone.Add(new PlayedCard(_hero, targetingState.Current.AsArray(), _selectedCard));
-        OnSelectionComplete(destinationCardZone);
+        _actionTargets[_actionIndex] = targetingState.Current;
+        targetingState.Clear();
+
+        if (_actionIndex + 1 == _numActions)
+        {
+            cardResolutionZone.Add(new PlayedCard(_hero, _actionTargets, _selectedCard));
+            OnSelectionComplete(destinationCardZone);
+        }
+        else
+        {
+            _actionIndex++;
+            PresentPossibleTargets();
+        }
     }
 
     private void OnSelectionComplete(CardPlayZone sendToZone)
