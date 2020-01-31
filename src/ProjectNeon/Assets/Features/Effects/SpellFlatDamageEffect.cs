@@ -31,11 +31,11 @@ public sealed class SpellFlatDamageEffect : Effect
         else
         {
             BattleEvent.Publish(
-                new SpellToPerform(this)
+                new EffectToPerform(this)
             );
             _effect.Apply(source, target);
             BattleEvent.Publish(
-                new SpellPerformed(this)
+                new EffectPerformed(this)
             );
         }
     }

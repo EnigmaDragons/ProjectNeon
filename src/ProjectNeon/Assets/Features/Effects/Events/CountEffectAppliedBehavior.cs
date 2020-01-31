@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CountSpellHitBehavior : MonoBehaviour
+public class CountEffectAppliedBehavior : MonoBehaviour
 {
     [SerializeField] private CardResolutionZone resolutionZone;
 
     void OnEnable()
     {
-        BattleEvent.Subscribe<SpellPerformed>((msg) => resolutionZone.SpellHitsOnLastCard++ , this);
+        BattleEvent.Subscribe<EffectPerformed>((msg) => resolutionZone.SpellHitsOnLastCard++ , this);
     }
 
     void OnDisable()
