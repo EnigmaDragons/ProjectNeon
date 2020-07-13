@@ -26,16 +26,20 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     {
         _onClick = onClick;
         _card = card;
+        
         nameLabel.text = _card.Name;
         description.text = _card.Description;
         type.text = _card.TypeDescription;
         art.sprite = _card.Art;
+        
         var cost = card.Cost;
         costLabel.text = cost.Cost.ToString();
         costResourceTypeIcon.sprite = cost.ResourceType.Icon;
         costPanel.SetActive(!cost.ResourceType.Name.Equals("None") && cost.Cost > 0);
+        
         tint.color = classTints.TintFor(card.LimitedToClass.OrDefault(() => ""));
     }
+    
     public void OnPointerDown(PointerEventData eventData)
     {
         if (battleState.SelectionStarted)

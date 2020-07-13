@@ -14,7 +14,7 @@
 
 Software Requirements:
 - Git
-- Unity 2019 (Version 2019.2.0f1)
+- Unity 2019 (Version 2019.4.3f1)
 - Any C# IDE
 
 Setup:
