@@ -1,38 +1,35 @@
 ﻿using System;
+using UnityEngine;
 
+[Serializable]
 public sealed class Maybe<T> where T : class
 {
-    private readonly T _value;
+    [SerializeField] private T value;
+    [SerializeField] private bool isPresent;
 
-    public bool IsPresent { get; }
-
-    public T Value
-    {
-        get
-        {
-            if (!IsPresent)
-                throw new InvalidOperationException($"Optional {typeof(T).Name} has no value.");
-            return _value;
-        }
-    }
+    public bool IsMissing => !isPresent;
+    public bool IsPresent => isPresent;
+    public T Value => value;
 
     public Maybe() { }
 
-    public Maybe(T value)
+    public Maybe(T obj)
     {
-        _value = value;
-        IsPresent = value != null;
+        value = obj;
+        isPresent = obj != null;
+    }
+    
+    public void IfPresent(Action<T> action)
+    {
+        if (IsPresent)
+            action(value);
     }
 
-    public bool IsTrue(Predicate<T> condition)
-    {
-        return IsPresent && condition(_value);
-    }
-
-    public bool IsFalse(Predicate<T> condition)
-    {
-        return IsPresent && !condition(_value);
-    }
+    public bool IsPresentAnd(Func<T, bool> condition) => IsPresent && condition(value);
 
     public T OrDefault(Func<T> createDefault) => IsPresent ? Value : createDefault();
+    
+    public static Maybe<T> Missing() => new Maybe<T>();
+    
+    public static implicit operator Maybe<T>(T obj) => new Maybe<T>(obj);
 }

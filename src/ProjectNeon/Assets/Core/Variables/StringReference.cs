@@ -5,7 +5,7 @@ public class StringReference
 {
     public bool UseConstant = true;
     public string ConstantValue;
-    [DTValidator.Optional] public StringVariable Variable;
+    public StringVariable Variable;
 
     public string Value => UseConstant ? ConstantValue : Variable.Value;
 
@@ -16,8 +16,6 @@ public class StringReference
         ConstantValue = value;
     }
 
-    public static implicit operator string(StringReference reference)
-    {
-        return reference.Value;
-    }
+    public static implicit operator string(StringReference reference) => reference.ToString();
+    public override string ToString() => Value;
 }

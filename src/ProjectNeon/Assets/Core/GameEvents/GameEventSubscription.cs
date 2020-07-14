@@ -6,7 +6,7 @@ public sealed class GameEventSubscription
     public Action<object> OnEvent { get; }
     public object Owner { get; }
 
-    internal GameEventSubscription(string eventType, Action<object> onEvent, object owner)
+    public GameEventSubscription(string eventType, Action<object> onEvent, object owner)
     {
         EventType = eventType;
         OnEvent = onEvent;
