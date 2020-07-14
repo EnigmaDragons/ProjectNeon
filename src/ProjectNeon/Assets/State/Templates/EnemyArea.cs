@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyArea : ScriptableObject
 {
     [SerializeField] private Enemy[] enemies;
-    [SerializeField, DTValidator.Optional] private Transform[] uiPositions;
+    [SerializeField] private Transform[] uiPositions;
 
     public Enemy[] Enemies => enemies;
     public Transform[] EnemyUiPositions => uiPositions;

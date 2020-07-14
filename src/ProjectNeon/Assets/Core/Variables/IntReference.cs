@@ -5,7 +5,7 @@ public class IntReference
 {
     public bool UseConstant = true;
     public int ConstantValue;
-    [DTValidator.Optional] public IntVariable Variable;
+    public IntVariable Variable;
 
     public int Value => UseConstant ? ConstantValue : Variable.Value;
 

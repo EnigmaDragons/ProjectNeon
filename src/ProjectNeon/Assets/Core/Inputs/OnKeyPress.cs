@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +8,13 @@ public sealed class OnKeyPress : MonoBehaviour
 
     private void Update()
     {
-        if (keys.Any(Input.GetKeyDown))
+        foreach (var k in keys)
+        {
+            if (!Input.GetKeyDown(k)) 
+                continue;
+            
             action.Invoke();
+            return;
+        }
     }
 }

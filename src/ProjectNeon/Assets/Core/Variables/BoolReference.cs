@@ -5,7 +5,7 @@ public class BoolReference
 {
     public bool UseConstant = true;
     public bool ConstantValue;
-    [DTValidator.Optional] public BoolVariable Variable;
+    public BoolVariable Variable;
 
     public bool Value => UseConstant ? ConstantValue : Variable.Value;
 

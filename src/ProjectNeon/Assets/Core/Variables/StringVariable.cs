@@ -10,4 +10,6 @@ public class StringVariable : ScriptableObject
         get { return value; }
         set { this.value = value; }
     }
+
+    public void SetValue(string str) => value = str;
 }

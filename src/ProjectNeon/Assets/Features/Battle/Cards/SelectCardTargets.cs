@@ -14,7 +14,7 @@ public sealed class SelectCardTargets : MonoBehaviour
     [SerializeField] private BattleState battleState;
     [SerializeField] private BattlePlayerTargetingState targetingState;
 
-    [ReadOnly, SerializeField, DTValidator.Optional] private Card _selectedCard;
+    [ReadOnly, SerializeField] private Card _selectedCard;
     private bool _isReadyForSelection;
     private Member _hero;
     private int _actionIndex;
