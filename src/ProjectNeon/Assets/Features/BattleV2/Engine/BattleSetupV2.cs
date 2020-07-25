@@ -7,9 +7,6 @@ public class BattleSetupV2 : MonoBehaviour
 {
     [SerializeField] private BattleState state;
     [SerializeField] private BattleWorldVisuals visuals;
-    
-    [Header("BattleField")]
-    [SerializeField] private float battleFieldScale = 0.929f;
 
     [Header("Party")]
     [SerializeField] private Party party;
@@ -32,7 +29,6 @@ public class BattleSetupV2 : MonoBehaviour
     public IEnumerator Execute()
     {
         ClearResolutionZone();
-        SetupBattleField();
         SetupEnemyEncounter();
         yield return visuals.Setup(); // Could Animate
         SetupPlayerCards(); // Could Animate
@@ -41,14 +37,13 @@ public class BattleSetupV2 : MonoBehaviour
     private void ClearResolutionZone()
     {
         resolutionZone.Clear();
+    }    
+    
+    private void SetupEnemyEncounter()
+    {
+        enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
     }
     
-    private void SetupBattleField()
-    {
-        var battlefield = Instantiate(state.Battlefield, new Vector3(0, 0, 10), Quaternion.identity, transform);
-        battlefield.transform.localScale = new Vector3(battleFieldScale, battleFieldScale, battleFieldScale);
-    }
-
     private void SetupPlayerCards()
     {
         if (!party.IsInitialized)
@@ -59,10 +54,5 @@ public class BattleSetupV2 : MonoBehaviour
         
         for (var c = 0; c < startingCards.Value; c++)
             Hand.PutOnBottom(Deck.DrawOneCard());
-    }
-
-    private void SetupEnemyEncounter()
-    {
-        enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
     }
 }

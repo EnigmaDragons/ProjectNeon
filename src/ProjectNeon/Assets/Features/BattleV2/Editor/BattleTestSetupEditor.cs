@@ -10,5 +10,7 @@ public class BattleTestSetupEditor : Editor
         DrawDefaultInspector();
         if(GUILayout.Button("Use Custom Party"))
             engine.UseCustomParty();
+        if(GUILayout.Button("Use Custom Battlefield"))
+            engine.UseCustomBattlefield();
     }
 }
