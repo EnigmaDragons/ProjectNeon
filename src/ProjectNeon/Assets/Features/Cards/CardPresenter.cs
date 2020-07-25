@@ -49,6 +49,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     public void SetHighlight(bool active)
     {
+        if (highlight.activeSelf == active)
+            return;
+        
         highlight.SetActive(active);
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
