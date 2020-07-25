@@ -1,10 +1,10 @@
-﻿public class PlayedCardV2
+﻿public class PlayedCardV2 : IPlayedCard
 {
-    private readonly CardV2 _card;
+    private readonly Card _card;
     private readonly Member _performer;
     private readonly Target[] _targets;
 
-    public PlayedCardV2(Member performer, Target[] targets, CardV2 card)
+    public PlayedCardV2(Member performer, Target[] targets, Card card)
     {
         _performer = performer;
         _targets = targets;
@@ -12,7 +12,7 @@
     }
 
     public Member Member => _performer;
-    public CardV2 Card => _card;
+    public Card Card => _card;
 
     public void Perform()
     {

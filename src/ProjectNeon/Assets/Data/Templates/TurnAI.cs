@@ -2,5 +2,5 @@
 
 public abstract class TurnAI : ScriptableObject
 {
-    public abstract PlayedCard Play(int memberId);
+    public abstract IPlayedCard Play(int memberId);
 }

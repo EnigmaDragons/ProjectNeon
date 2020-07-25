@@ -9,6 +9,8 @@ public class Card : ScriptableObject
     [SerializeField] private StringVariable typeDescription;
     [SerializeField] private StringVariable onlyPlayableByClass;
     [SerializeField] private ResourceCost cost;
+    [SerializeField] private CardCommandAction[] commandActions;
+    [SerializeField] private CardBattleActionV2[] battleActions;
     [SerializeField] private CardAction cardAction1;
     [SerializeField] private CardAction cardAction2;
 
@@ -18,7 +20,9 @@ public class Card : ScriptableObject
     public string Description => description;
     public string TypeDescription => typeDescription.Value;
     public Maybe<string> LimitedToClass => new Maybe<string>(onlyPlayableByClass.Value.Length > 0 ? onlyPlayableByClass.Value : null);
-    
+    public CardCommandAction[] CommandActions => commandActions.ToArray();
+    public CardBattleActionV2[] BattleActions => battleActions.ToArray();
+
     public CardAction[] Actions => Array.Empty<CardAction>()
         .ConcatIf(cardAction1, c => c.HasEffects)
         .ConcatIf(cardAction2, c => c.HasEffects)

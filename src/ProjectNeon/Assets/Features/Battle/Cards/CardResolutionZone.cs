@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class CardResolutionZone : ScriptableObject
 {
-    [SerializeField] private List<PlayedCard> moves = new List<PlayedCard>();
+    [SerializeField] private List<IPlayedCard> moves = new List<IPlayedCard>();
     [SerializeField] private CardPlayZone playerHand;
     [SerializeField] private CardPlayZone playerPlayArea;
     [SerializeField] private CardPlayZone physicalZone;
     [SerializeField] private CardPlayZone playedDiscardZone;
     [SerializeField] private GameEvent onFinished;
     [SerializeField] private GameEvent onCardResolved;
-    public PlayedCard LastPlayed { get; set; }
+    public IPlayedCard LastPlayed { get; set; }
 
     private bool _isResolving;
 
-    public void Add(PlayedCard played)
+    public void Add(IPlayedCard played)
     {
         if (_isResolving) return;
         
@@ -60,7 +60,7 @@ public class CardResolutionZone : ScriptableObject
         onFinished.Publish();
     }
     
-    private IEnumerator ResolveOneCard(PlayedCard played)
+    private IEnumerator ResolveOneCard(IPlayedCard played)
     {
         BattleLog.Write($"Began resolving {played.Card.Name}");
         if (physicalZone.Count == 0)

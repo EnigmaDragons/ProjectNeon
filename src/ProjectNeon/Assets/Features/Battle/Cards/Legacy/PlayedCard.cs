@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayedCard
+public class PlayedCard : IPlayedCard
 {
     private readonly Card _card;
     private readonly Member _performer;

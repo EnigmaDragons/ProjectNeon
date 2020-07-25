@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 
-[CustomEditor(typeof(CardV2))]
-public class CardV2Editor : Editor
+[CustomEditor(typeof(Card))]
+public class CardEditor : Editor
 {
     private SerializedProperty _art;
     private SerializedProperty _description;
@@ -21,13 +21,14 @@ public class CardV2Editor : Editor
         _classSpecial = serializedObject.FindProperty("classSpecial");
     }
 
-    public override void OnInspectorGUI()
+    /*public override void OnInspectorGUI()
     {
         EditorGUILayout.ObjectField(_art);
+        AssetPreview.GetAssetPreview(_art.objectReferenceValue);
         EditorGUILayout.ObjectField(_description);
         EditorGUILayout.ObjectField(_typeDescription);
         EditorGUILayout.ObjectField(_onlyPlayableByClass);
         EditorGUILayout.ObjectField(_cost);
         EditorGUILayout.ObjectField(_classSpecial);
-    }
+    }*/
 }
