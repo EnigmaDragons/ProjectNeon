@@ -8,6 +8,7 @@ public class BattleSetupV2 : MonoBehaviour
 {
     [SerializeField] private BattleState state;
     [SerializeField] private BattleWorldVisuals visuals;
+    [SerializeField] private BattleUiVisuals ui;
 
     [Header("Party")]
     [SerializeField] private Party party;
@@ -39,9 +40,12 @@ public class BattleSetupV2 : MonoBehaviour
         ClearResolutionZone();
         SetupEnemyEncounter();
         yield return visuals.Setup(); // Could Animate
-        SetupPlayerCards(); // Could Animate
+        
         state.Init();
         visuals.AfterBattleStateInitialized();
+        
+        SetupPlayerCards(); // Could Animate
+        ui.Setup();
     }
 
     private void ClearResolutionZone()
