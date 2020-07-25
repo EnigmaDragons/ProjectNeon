@@ -4,7 +4,7 @@ using UnityEngine;
 static class GameDataMenu
 {
     [MenuItem("Assets/Create/Card")]
-    static void Card() => Create<Card>();
+    static void Card() => Create<CardV2>();
 
     [MenuItem("Assets/Create/GameContent/Hero")]
     static void Hero() => Create<Hero>();
