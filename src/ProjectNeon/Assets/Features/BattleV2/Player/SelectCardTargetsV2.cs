@@ -102,7 +102,9 @@ public class SelectCardTargetsV2 : MonoBehaviour
 
         if (_actionIndex + 1 == _numActions)
         {
-            cardResolutionZone.Add(new PlayedCardV2(_hero, _actionTargets, _selectedCard, 0));
+            var resourcesSpent = new ResourcesSpent { ResourceType = _selectedCard.Cost.ResourceType };
+            resourcesSpent.Amount = _selectedCard.Cost.IsXCost ? battleState.Heroes.First(x => x.Id == _hero.Id).State[_selectedCard.Cost.ResourceType] : _selectedCard.Cost.Cost;
+            cardResolutionZone.Add(new PlayedCardV2(_hero, _actionTargets, _selectedCard, resourcesSpent));
             OnSelectionComplete(destinationCardZone);
         }
         else

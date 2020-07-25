@@ -15,6 +15,7 @@ public class PlayedCard : IPlayedCard
 
     public Member Member => _performer;
     public Card Card => _card;
+    public ResourcesSpent Spent => new ResourcesSpent { Amount = Card.Cost.Cost, ResourceType = Card.Cost.ResourceType };
     
     public void Perform()
     {

@@ -24,7 +24,7 @@ public sealed class PhysicalDamageTests
     {
         
         Member target = TestMembers.Create(
-            s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f).With(StatType.Armor, 0.5F)
+            s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f).With(StatType.Armor, 50F)
         );
 
         new Damage(new PhysicalDamage(1)).Apply(attacker, new Single(target));

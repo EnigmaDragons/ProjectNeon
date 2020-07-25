@@ -24,7 +24,7 @@ public class SetFeedUpEffect : Effect
         _feedType = feedType;
     }
 
-    public SetFeedUpEffect(Effect origin, string attribute) : this(origin, (FeedType)Enum.Parse(typeof(FeedType), attribute))
+    public SetFeedUpEffect(Effect origin, string attribute) : this(origin, string.IsNullOrWhiteSpace(attribute) ? FeedType.None : (FeedType)Enum.Parse(typeof(FeedType), attribute))
     {
 
     }

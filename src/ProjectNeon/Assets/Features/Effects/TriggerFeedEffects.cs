@@ -17,7 +17,7 @@ public sealed class TriggerFeedEffects : Effect
         _type = feedType;
     }
 
-    public TriggerFeedEffects(Effect origin, string attribute) : this(origin, (FeedType)Enum.Parse(typeof(FeedType), attribute))
+    public TriggerFeedEffects(Effect origin, string attribute) : this(origin, string.IsNullOrWhiteSpace(attribute) ? FeedType.None : (FeedType)Enum.Parse(typeof(FeedType), attribute))
     {
         
     }

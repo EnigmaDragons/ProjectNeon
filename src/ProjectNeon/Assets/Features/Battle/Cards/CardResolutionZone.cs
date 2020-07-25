@@ -22,7 +22,7 @@ public class CardResolutionZone : ScriptableObject
         
         moves.Add(played);
         physicalZone.PutOnBottom(played.Card);
-        played.Member.Apply(m => m.Pay(played.Card.Cost));
+        played.Member.Apply(m => m.LoseResource(played.Spent.ResourceType.Name, played.Spent.Amount));
         BattleLog.Write($"{played.Member.Name} Played {played.Card.name}");
     }
 
@@ -35,7 +35,7 @@ public class CardResolutionZone : ScriptableObject
         var card = physicalZone.Take(physicalZone.Count - 1);
         playerPlayArea.Take(playerPlayArea.Count - 1);
         playerHand.PutOnBottom(card);
-        played.Member.Apply(m => m.Refund(played.Card.Cost));
+        played.Member.Apply(m => m.GainResource(played.Spent.ResourceType.Name, played.Spent.Amount));
     }
 
     public void Resolve(MonoBehaviour host, float delay)
