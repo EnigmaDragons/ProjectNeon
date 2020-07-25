@@ -77,7 +77,7 @@ public class SelectCardTargetsV2 : MonoBehaviour
         }
 
         _actionIndex = 0;
-        _numActions = _selectedCard.CommandActions.Length;
+        _numActions = _selectedCard.ActionSequences.Length;
         _actionTargets = new Target[_numActions];
         if (_numActions == 0)
         {
@@ -91,8 +91,8 @@ public class SelectCardTargetsV2 : MonoBehaviour
 
     private void PresentPossibleTargets()
     {
-        var action = _selectedCard.CommandActions[_actionIndex];
-        var possibleTargets = battleState.GetPossibleTargets(_hero, action.TargetSelectionData.Group, action.TargetSelectionData.Scope);
+        var action = _selectedCard.ActionSequences[_actionIndex];
+        var possibleTargets = battleState.GetPossibleTargets(_hero, action.Group, action.Scope);
         targetingState.WithPossibleTargets(possibleTargets);
         if (possibleTargets.Length == 1)
             OnTargetConfirmed();

@@ -16,11 +16,31 @@
 
     public void Perform()
     {
-        for (var index = 0; index < _card.BattleActions.Length; index++)
+        Message.Subscribe<Finished<ApplyBattleEffect>>(_ => Continue(), this);
+        Message.Subscribe<Finished<CharacterAnimationRequested>>(_ => Continue(), this);
+        Message.Subscribe<Finished<BattleEffectAnimationRequested>>(_ => Continue(), this);
+        _sequenceIndex = 0;
+        _actionIndex = 0;
+        Continue();
+    }
+
+    private int _sequenceIndex;
+    private int _actionIndex;
+
+    public void Continue()
+    {
+        if (_card.ActionSequences.Length == _sequenceIndex 
+            || (_card.ActionSequences.Length - 1 == _sequenceIndex && _card.ActionSequences[_sequenceIndex].CardActions.Length == _actionIndex))
         {
-            var action = _card.BattleActions[index];
-            if (action.Type == CardBattleActionType.Battle)
-                action.Apply(_performer, _targets);
+            Message.Unsubscribe(this);
+            Message.Publish(new CardResolutionFinished());
+        }
+        _card.ActionSequences[_sequenceIndex].CardActions[_actionIndex].Resolve(_performer, _targets[_sequenceIndex], _card.ActionSequences[_sequenceIndex].Group, _card.ActionSequences[_sequenceIndex].Scope);
+        _actionIndex++;
+        if (_card.ActionSequences[_sequenceIndex].CardActions.Length == _actionIndex)
+        {
+            _sequenceIndex++;
+            _actionIndex = 0;
         }
     }
 }
