@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public sealed class ActivateObjectWhen : MonoBehaviour
@@ -10,10 +11,17 @@ public sealed class ActivateObjectWhen : MonoBehaviour
     
     private void OnEnable()
     {
-        isActive = startsActive;
-        target.SetActive(isActive);
-        activateOn.ForEach(e => e.Subscribe(() => SetTargetState(true), this));
-        deactivateOn.ForEach(e => e.Subscribe(() => SetTargetState(false), this));
+        try
+        {
+            isActive = startsActive;
+            target.SetActive(isActive);
+            activateOn.ForEach(e => e.Subscribe(() => SetTargetState(true), this));
+            deactivateOn.ForEach(e => e.Subscribe(() => SetTargetState(false), this));
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message, this);
+        }
     }
 
     private void OnDisable()

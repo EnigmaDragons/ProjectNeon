@@ -2,10 +2,22 @@ using UnityEngine;
 
 public abstract class OnMessage<T> : MonoBehaviour
 {
-    private void OnEnable() => Message.Subscribe<T>(Execute, this);
-    private void OnDisable() => Message.Unsubscribe(this);
+    private void OnEnable()
+    {
+        Message.Subscribe<T>(Execute, this);
+        AfterEnable();
+    }
+
+    private void OnDisable()
+    {
+        Message.Unsubscribe(this);
+        AfterDisable();
+    }
 
     protected abstract void Execute(T msg);
+    
+    protected virtual void AfterEnable() {}
+    protected virtual void AfterDisable() {}
 }
 
 public abstract class OnMessage<T1, T2> : MonoBehaviour
@@ -14,12 +26,20 @@ public abstract class OnMessage<T1, T2> : MonoBehaviour
     {
         Message.Subscribe<T1>(Execute, this);
         Message.Subscribe<T2>(Execute, this);
+        AfterEnable();
     }
 
-    private void OnDisable() => Message.Unsubscribe(this);
+    private void OnDisable()
+    {
+        Message.Unsubscribe(this);
+        AfterDisable();
+    }
 
     protected abstract void Execute(T1 msg);
     protected abstract void Execute(T2 msg);
+
+    protected virtual void AfterEnable() {}
+    protected virtual void AfterDisable() {}
 }
 
 public abstract class OnMessage<T1, T2, T3> : MonoBehaviour

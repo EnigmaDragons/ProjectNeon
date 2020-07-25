@@ -19,7 +19,7 @@ public class Card : ScriptableObject
     public string Description => description;
     public string TypeDescription => typeDescription.Value;
     public Maybe<string> LimitedToClass => new Maybe<string>(onlyPlayableByClass.Value.Length > 0 ? onlyPlayableByClass.Value : null);
-    public CardActionSequence[] ActionSequences => actionSequences.ToArray();
+    public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
 
     public CardAction[] Actions => Array.Empty<CardAction>()
         .ConcatIf(cardAction1, c => c.HasEffects)

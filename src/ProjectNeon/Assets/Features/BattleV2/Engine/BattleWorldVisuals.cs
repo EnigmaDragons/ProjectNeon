@@ -36,7 +36,7 @@ public class BattleWorldVisuals : MonoBehaviour
         if (_battlefield != null)
             Destroy(_battlefield);
         
-        var battlefield = Instantiate(state.Battlefield, new Vector3(0, 0, 10), Quaternion.identity, transform);
-        battlefield.transform.localScale = new Vector3(battleFieldScale, battleFieldScale, battleFieldScale);
+        _battlefield = Instantiate(state.Battlefield, new Vector3(0, 0, 10), Quaternion.identity, transform);
+        _battlefield.transform.localScale = new Vector3(battleFieldScale, battleFieldScale, battleFieldScale);
     }
 }

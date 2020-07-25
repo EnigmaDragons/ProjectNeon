@@ -21,6 +21,7 @@ public class BattleEngine : MonoBehaviour
         BeginPhase(BattleV2Phase.Setup);
         yield return setup.Execute();
         BeginPhase(BattleV2Phase.Action);
+        Message.Publish(new TurnStarted());
     }
 
     private void BeginPhase(BattleV2Phase newPhase)
