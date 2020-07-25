@@ -7,8 +7,6 @@ public class SelectCardTargetsV2 : MonoBehaviour
     [SerializeField] private CardPlayZone selectedCardZone;
     [SerializeField] private CardPlayZone destinationCardZone;
     [SerializeField] private CardPlayZone sourceCardZone;
-    [SerializeField] private GameEvent onTargetSelectionStarted;
-    [SerializeField] private GameEvent onTargetSelectionFinished;
     [SerializeField] private GameObject uiView;
     [SerializeField] private CardPresenter cardPresenter;
     [SerializeField] private BattleState battleState;
@@ -39,15 +37,8 @@ public class SelectCardTargetsV2 : MonoBehaviour
             OnCancelled();
     }
 
-    private void OnEnable()
-    {
-        selectedCardZone.OnZoneCardsChanged.Subscribe(BeginSelection, this);
-    }
-
-    private void OnDisable()
-    {
-        selectedCardZone.OnZoneCardsChanged.Unsubscribe(this);
-    }
+    protected void OnEnable() => selectedCardZone.OnZoneCardsChanged.Subscribe(BeginSelection, this);
+    protected void OnDisable() => selectedCardZone.OnZoneCardsChanged.Unsubscribe(this);
 
     private void BeginSelection()
     {
@@ -55,8 +46,8 @@ public class SelectCardTargetsV2 : MonoBehaviour
             return;
 
         battleState.SelectionStarted = true;
-        onTargetSelectionStarted.Publish();
         _selectedCard = selectedCardZone.Cards[0];
+        Message.Publish(new TargetSelectionBegun(_selectedCard));
         _isReadyForSelection = false;
 
         var cardClass = _selectedCard.LimitedToClass;
@@ -66,7 +57,7 @@ public class SelectCardTargetsV2 : MonoBehaviour
             return;
         }
 
-        //cardPresenter.Set(_selectedCard, () => { });
+        cardPresenter.Set(_selectedCard, () => { });
         uiView.SetActive(true);
 
         _hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value));
@@ -98,8 +89,8 @@ public class SelectCardTargetsV2 : MonoBehaviour
             OnTargetConfirmed();
     }
 
-    private void OnCancelled() => OnSelectionComplete(sourceCardZone);
-    private void OnTargetConfirmed()
+    public void OnCancelled() => OnSelectionComplete(sourceCardZone);
+    public void OnTargetConfirmed()
     {
         _actionTargets[_actionIndex] = targetingState.Current;
         targetingState.Clear();
@@ -121,7 +112,7 @@ public class SelectCardTargetsV2 : MonoBehaviour
         sendToZone.PutOnBottom(selectedCardZone.DrawOneCard());
         _selectedCard = null;
         uiView.SetActive(false);
-        onTargetSelectionFinished.Publish();
+        Message.Publish(new TargetSelectionFinished());
         battleState.SelectionStarted = false;
     }
 }

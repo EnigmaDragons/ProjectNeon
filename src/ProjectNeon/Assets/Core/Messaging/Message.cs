@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using UnityEngine;
 
 public static class Message 
 {
@@ -80,6 +81,7 @@ public static class Message
         private void Publish(object payload)
         {
             var eventType = payload.GetType().Name;
+            Debug.Log($"Published {eventType}");
 
             if (_eventActions.ContainsKey(eventType))
                 foreach (var action in _eventActions[eventType].ToList())

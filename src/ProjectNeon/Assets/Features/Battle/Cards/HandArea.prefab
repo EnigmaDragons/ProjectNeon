@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5882633125846672675}
   - component: {fileID: 8304905122166461790}
   - component: {fileID: 8693375296077520057}
+  - component: {fileID: 4919480366087728389}
   m_Layer: 5
   m_Name: HandArea
   m_TagString: Untagged
@@ -112,8 +113,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onRight:
     m_PersistentCalls:
       m_Calls:
@@ -128,18 +127,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onUp:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onDown:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &5882633125846672675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,13 +159,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onCancel:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &8304905122166461790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,3 +204,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 991ec1934f4579345ae33c9dfdd15536, type: 2}
   startsActive: 0
   target: {fileID: 5882633125846672675}
+--- !u!114 &4919480366087728389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726350066465214634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9d15bc3c5541819356c5a05e702017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cards: {fileID: 963235364}
