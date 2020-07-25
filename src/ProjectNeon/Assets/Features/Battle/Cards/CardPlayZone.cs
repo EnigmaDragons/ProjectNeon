@@ -15,11 +15,14 @@ public class CardPlayZone : ScriptableObject
     public GameEvent OnZoneCardsChanged => onZoneCardsChanged;
     public bool IsFull => Count >= Max;
 
-    public void Init(IEnumerable<Card> newCards)
+    public void Init(IEnumerable<Card> newCards) => cards = newCards.ToArray();
+
+    public void InitShuffled(IEnumerable<Card> cards)
     {
-        cards = newCards.ToArray();
+        Init(cards);
+        Shuffle();
     }
-    
+
     public Card DrawOneCard()
     {
         var newCard = cards[0];
