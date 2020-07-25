@@ -13,7 +13,7 @@ public class ParticleStrength : MonoBehaviour
 		particleA.Play();
 		particleB.Play();
 		particleC.Play();
-		particleD.Play();
+		if (particleD != null)
+			particleD.Play();
 	}        
-           
 }

@@ -9,6 +9,7 @@ public sealed class Party : ScriptableObject
     [SerializeField] private Hero heroThree;
     [SerializeField] private RuntimeDeck[] decks;
 
+    public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
     public RuntimeDeck[] Decks => decks.ToArray();
     public Hero[] Heroes => new []{ heroOne, heroTwo, heroThree };
 

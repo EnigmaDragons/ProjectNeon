@@ -1,13 +1,13 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class BattleSetupV2 : MonoBehaviour
 {
-    [SerializeField] private BattleState battleState;
-    
-    [Header("BattleField")]
-    [SerializeField] private float battleFieldScale = 0.929f;
+    [SerializeField] private BattleState state;
+    [SerializeField] private BattleWorldVisuals visuals;
 
     [Header("Party")]
     [SerializeField] private Party party;
@@ -23,38 +23,47 @@ public class BattleSetupV2 : MonoBehaviour
     
     private CardPlayZone Hand => playerCardPlayZones.HandZone;
     private CardPlayZone Deck => playerCardPlayZones.DrawZone;
-    
+    private bool _useCustomEncounter = false;
+
+    public void InitBattleField(GameObject battlefield) => state.SetNextBattleground(battlefield);
+    public void InitParty(Hero h1, Hero h2, Hero h3) => party.Initialized(h1, h2, h3);
+    public void InitEncounterBuilder(EncounterBuilder e) => encounterBuilder = e;
+    public void InitEncounter(IEnumerable<Enemy> enemies)
+    {
+        _useCustomEncounter = true;
+        enemyArea.Initialized(enemies);
+    }
+
     public IEnumerator Execute()
     {
         ClearResolutionZone();
-        SetupBattleField();
         SetupEnemyEncounter();
-        SetupPlayerCards();
-        yield break;
+        yield return visuals.Setup(); // Could Animate
+        SetupPlayerCards(); // Could Animate
+        state.Init();
+        visuals.AfterBattleStateInitialized();
     }
 
     private void ClearResolutionZone()
     {
         resolutionZone.Clear();
+    }    
+    
+    private void SetupEnemyEncounter()
+    {
+        if (enemyArea.Enemies.Length == 0 || !_useCustomEncounter)
+            enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
     }
     
-    private void SetupBattleField()
-    {
-        var battlefield = Instantiate(battleState.Battlefield, new Vector3(0, 0, 10), Quaternion.identity, transform);
-        battlefield.transform.localScale = new Vector3(battleFieldScale, battleFieldScale, battleFieldScale);
-    }
-
     private void SetupPlayerCards()
     {
+        if (!party.IsInitialized)
+            throw new Exception("Cannot Setup Player Cards, Party Is Not Initialized");
+
         playerCardPlayZones.ClearAll();
         Deck.InitShuffled(party.Decks.SelectMany(x => x.Cards));
         
         for (var c = 0; c < startingCards.Value; c++)
             Hand.PutOnBottom(Deck.DrawOneCard());
-    }
-
-    private void SetupEnemyEncounter()
-    {
-        enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
     }
 }

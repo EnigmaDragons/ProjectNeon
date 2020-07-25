@@ -23,6 +23,13 @@ public static class CollectionExtensions
     public static T[] AsArray<T>(this T item) => new [] {item};
     public static TValue ValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey key, Func<TValue> getDefault) => d.TryGetValue(key, out var value) ? value : getDefault();
 
+    public static TValue VerboseGetValue<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey key, string collectionName)
+    {
+        if (!d.TryGetValue(key, out var value))
+            throw new KeyNotFoundException($"{key} not found in {collectionName}. Found Keys are {string.Join(", ", d.Keys.Select(x => x.ToString()))}");
+        return value;
+    }
+
     public static void ForEach<T>(this T[] arr, Action<T> action)
     {
         foreach (var t in arr)
