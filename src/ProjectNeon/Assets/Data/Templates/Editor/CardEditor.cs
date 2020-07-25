@@ -1,12 +1,16 @@
-﻿using UnityEditor;
+﻿using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(Card))]
 public class CardEditor : Editor
 {
+    private Card targetCard;
     private SerializedProperty art, description, typeDescription, onlyPlayableByClass, cost, actionSequences, cardAction1, cardAction2;
 
     public void OnEnable()
     {
+        targetCard = (Card) target;
         art = serializedObject.FindProperty("art");
         description = serializedObject.FindProperty("description");
         typeDescription = serializedObject.FindProperty("typeDescription");
@@ -19,20 +23,40 @@ public class CardEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        DrawUnchanged(art);
-        DrawUnchanged(description);
-        DrawUnchanged(typeDescription);
-        DrawUnchanged(onlyPlayableByClass);
-        DrawUnchanged(cost);
-        DrawUnchanged(actionSequences);
-        DrawUnchanged(cardAction1);
-        DrawUnchanged(cardAction2);
+        PresentUnchanged(art);
+        PresentUnchanged(description);
+        PresentUnchanged(typeDescription);
+        PresentUnchanged(onlyPlayableByClass);
+        PresentUnchanged(cost);
+        PresentActionSequences();
+        PresentUnchanged(actionSequences);
+        PresentUnchanged(cardAction1);
+        PresentUnchanged(cardAction2);
     }
 
-    private void DrawUnchanged(SerializedProperty serializedProperty)
+    private void PresentUnchanged(SerializedProperty serializedProperty)
     {
         serializedObject.Update();
         EditorGUILayout.PropertyField(serializedProperty);
         serializedObject.ApplyModifiedProperties();
+    }
+
+    private void PresentActionSequences()
+    {
+        EditorGUILayout.PrefixLabel("Action Sequences");
+        var clickArea =  GUILayoutUtility.GetLastRect();
+        Event current = Event.current;
+        if (clickArea.Contains(current.mousePosition) && current.type == EventType.ContextClick)
+        {
+            GenericMenu menu = new GenericMenu();
+            menu.AddItem(new GUIContent("Insert New"), false, () =>
+            {
+                targetCard.actionSequences = new CardActionSequence[] {new CardActionSequence()}.Concat(targetCard.actionSequences).ToArray();
+                EditorUtility.SetDirty(target);
+            });
+            menu.ShowAsContext();
+            current.Use(); 
+        }
+
     }
 }
