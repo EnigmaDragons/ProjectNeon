@@ -40,4 +40,6 @@ public sealed class BattlePlayerTargetingState : ScriptableObject, IDirectionCon
         OnTargetChanged.Publish();
         Message.Publish(new TargetChanged(Current));
     }
+
+    public void LostFocus() {}
 }

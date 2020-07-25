@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
+[Obsolete("BattleV1")]
 public class PartyVisualizer : OnBattleEvent<CharacterAnimationRequested>
 {
     [SerializeField] private BattleState battleState;

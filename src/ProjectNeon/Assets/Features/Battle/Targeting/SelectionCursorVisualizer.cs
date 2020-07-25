@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[Obsolete("BattleV1")]
 public class SelectionCursorVisualizer : MonoBehaviour
 {
     [SerializeField] private GameEvent activateOn;

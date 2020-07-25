@@ -81,7 +81,7 @@ public static class Message
         private void Publish(object payload)
         {
             var eventType = payload.GetType().Name;
-            Debug.Log($"Published {eventType}");
+            Debug.Log($"Message - Published {eventType}");
 
             if (_eventActions.ContainsKey(eventType))
                 foreach (var action in _eventActions[eventType].ToList())

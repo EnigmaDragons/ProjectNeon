@@ -385,9 +385,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 8724697038198621520}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
   directionBinding: {fileID: 11400000, guid: d55cc821bfa5a0549b6865cc3d22b22b, type: 2}
   cardSelection: {fileID: 5901881830582814465}
   targeting: {fileID: 11400000, guid: 20a4cf61caaf22543944f4179628fc5f, type: 2}
+  confirmCancelBinding: {fileID: 11400000, guid: f893fbceb2a3f694883d32dd0e423149,
+    type: 2}
+  cardTargets: {fileID: 8212412892240668775}
+  turnConfirmation: {fileID: 8180807137793820481}
 --- !u!1 &1508781891360529586
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,7 +827,6 @@ GameObject:
   - component: {fileID: 3286205479928773663}
   - component: {fileID: 3111625186769332273}
   - component: {fileID: 8212412892240668775}
-  - component: {fileID: 66668149210841505}
   m_Layer: 0
   m_Name: TargetSelection
   m_TagString: Untagged
@@ -928,51 +933,10 @@ MonoBehaviour:
     type: 2}
   sourceCardZone: {fileID: 11400000, guid: d384cb3c3fffa7241a3f7e1555a17223, type: 2}
   uiView: {fileID: 8688332551121079727}
-  cardPresenter: {fileID: -1608072616277939871, guid: d0f241a069af80a4fbe58317fdb27254,
-    type: 3}
+  cardPresenter: {fileID: 3684002121787314529}
   battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   targetingState: {fileID: 11400000, guid: 20a4cf61caaf22543944f4179628fc5f, type: 2}
   _selectedCard: {fileID: 0}
---- !u!114 &66668149210841505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3199841868252422159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821c49dd6cfc48b2aae8816b8fc3f37a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSubmit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8212412892240668775}
-        m_MethodName: OnTargetConfirmed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onCancel:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8212412892240668775}
-        m_MethodName: OnCancelled
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &3476672061207136824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,7 +1234,6 @@ GameObject:
   - component: {fileID: 993386300510940079}
   - component: {fileID: 3014162107573107415}
   - component: {fileID: 5901881830582814465}
-  - component: {fileID: 2520531208037478934}
   m_Layer: 5
   m_Name: HandArea
   m_TagString: Untagged
@@ -1338,35 +1301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cards: {fileID: 3014162107573107415}
---- !u!114 &2520531208037478934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5091785064828231235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821c49dd6cfc48b2aae8816b8fc3f37a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSubmit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5901881830582814465}
-        m_MethodName: Select
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onCancel:
-    m_PersistentCalls:
-      m_Calls: []
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &6087095218944275643
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,7 +1313,6 @@ GameObject:
   - component: {fileID: 9162230361397466705}
   - component: {fileID: 4657776277654608219}
   - component: {fileID: 8180807137793820481}
-  - component: {fileID: 6712189607520023772}
   m_Layer: 5
   m_Name: TurnConfirmation
   m_TagString: Untagged
@@ -1428,35 +1362,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playArea: {fileID: 11400000, guid: 1911fbbf2065d4e44be1966051f09a92, type: 2}
   confirmUi: {fileID: 1508781891360529586}
---- !u!114 &6712189607520023772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6087095218944275643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821c49dd6cfc48b2aae8816b8fc3f37a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSubmit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8180807137793820481}
-        m_MethodName: Confirm
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onCancel:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &8395900291347911445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2389,6 +2294,18 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0f241a069af80a4fbe58317fdb27254, type: 3}
+--- !u!114 &3684002121787314529 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -1608072616277939871, guid: d0f241a069af80a4fbe58317fdb27254,
+    type: 3}
+  m_PrefabInstance: {fileID: 6525379480525174784}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b03b056ceb8dd43a4bd954d5fc7f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5747576138304042044 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1535076678857706556, guid: d0f241a069af80a4fbe58317fdb27254,

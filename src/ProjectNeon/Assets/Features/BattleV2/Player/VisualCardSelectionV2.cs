@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllable
+public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllable, IConfirmCancellable
 {
     [SerializeField] private CardsVisualizer cards;
+    [SerializeField] private BattleState state;
     
     private IndexSelector<GameObject> _indexSelector;
     private bool _isDirty = false;
@@ -13,7 +14,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     private void OnEnable()
     {
         Message.Subscribe<TurnStarted>(_ => Activate(), this);
-        Message.Subscribe<TargetSelectionFinished>(_ => Activate(), this);
+        Message.Subscribe<TargetSelectionFinished>(_ => ActivateIfSelecting(), this);
         Message.Subscribe<TargetSelectionBegun>(_ => Deactivate(), this);
         cards.SetOnShownCardsChanged(() => _isDirty = true);
         _isDirty = true;
@@ -21,6 +22,14 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
 
     private void OnDisable() => Message.Unsubscribe(this);
 
+    private void ActivateIfSelecting()
+    {
+        if (state.SelectionStarted)
+            Activate();
+        else
+            LostFocus();
+    }
+    
     private void Activate()
     {
         _isDirty = true;
@@ -49,8 +58,6 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
 
     public void MoveNext()
     {
-        if (!_allowInput) return;
-        
         DisableHighlight();
         _indexSelector.MoveNext();
         EnableHighlight();
@@ -58,17 +65,21 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     
     public void MovePrevious()
     {
-        if (!_allowInput) return;
-        
         DisableHighlight();
         _indexSelector.MovePrevious();
         EnableHighlight();
     }
 
+    public void LostFocus()
+    {
+        _shouldHighlight = false;
+        DisableHighlight();
+    }
+
+    public void Cancel() {}
+    public void Confirm() => Select();
     public void Select()
     {
-        if (!_allowInput) return;
-        
         DisableHighlight();
         _shouldHighlight = false;
         cards.SelectCard(_indexSelector.Index);

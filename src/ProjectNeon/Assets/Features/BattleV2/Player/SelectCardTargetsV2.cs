@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
-public class SelectCardTargetsV2 : MonoBehaviour
+public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
 {
     [SerializeField] private CardResolutionZone cardResolutionZone;
     [SerializeField] private CardPlayZone selectedCardZone;
@@ -14,7 +13,6 @@ public class SelectCardTargetsV2 : MonoBehaviour
     [SerializeField] private BattlePlayerTargetingState targetingState;
 
     [ReadOnly, SerializeField] private Card _selectedCard;
-    private bool IsSelectingTargets => _selectedCard != null;
     private Member _hero;
     private int _actionIndex;
     private int _numActions;
@@ -40,6 +38,7 @@ public class SelectCardTargetsV2 : MonoBehaviour
         }
 
         cardPresenter.Set(_selectedCard, () => { });
+        Debug.Log($"Showing Selected Card {_selectedCard.name}", gameObject);
         uiView.SetActive(true);
 
         _hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value));
@@ -71,32 +70,15 @@ public class SelectCardTargetsV2 : MonoBehaviour
             OnTargetConfirmed();
     }
 
+    public void Cancel() => OnCancelled();
     public void OnCancelled()
     {
-        if (!IsSelectingTargets)
-            return;
-        
         OnSelectionComplete(sourceCardZone);
     }
 
+    public void Confirm() => OnTargetConfirmed();
     public void OnTargetConfirmed()
-    {        
-        if (!IsSelectingTargets)
-            return;
-        
-        // TODO: Remove this once all cards are migrated
-        try
-        {
-            var _ = targetingState.Current;
-        }
-        catch(Exception e)
-        {
-            targetingState.Clear();
-            OnSelectionComplete(destinationCardZone);
-            Debug.LogError($"No possible target for {_selectedCard}, Action {_actionIndex + 1}");
-            return;
-        }
-        
+    {
         _actionTargets[_actionIndex] = targetingState.Current;
         targetingState.Clear();
 
@@ -119,7 +101,7 @@ public class SelectCardTargetsV2 : MonoBehaviour
         sendToZone.PutOnBottom(selectedCardZone.DrawOneCard());
         _selectedCard = null;
         uiView.SetActive(false);
-        Message.Publish(new TargetSelectionFinished());
         battleState.SelectionStarted = false;
+        Message.Publish(new TargetSelectionFinished());
     }
 }

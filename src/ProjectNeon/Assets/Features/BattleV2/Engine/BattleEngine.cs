@@ -1,13 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleEngine : MonoBehaviour
+public class BattleEngine : OnMessage<PlayerTurnConfirmed>
 {
+    [SerializeField] private CardPlayZones cards;
     [SerializeField] private BattleSetupV2 setup;
     [SerializeField] private BattleCommandPhase commandPhase;
+    [SerializeField] private BattleResolutionPhase resolutionPhase;
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
     [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
+
+    private void Awake()
+    {
+        cards.ClearAll();
+    }
     
     public void Start()
     {
@@ -16,7 +23,14 @@ public class BattleEngine : MonoBehaviour
     }
     
     public void Setup() => StartCoroutine(ExecuteSetupAsync());
-
+    
+    private IEnumerator ExecuteSetupAsync()
+    {
+        BeginPhase(BattleV2Phase.Setup);
+        yield return setup.Execute();
+        BeginCommandPhase();
+    }    
+    
     private void BeginCommandPhase()
     {
         BeginPhase(BattleV2Phase.Command);
@@ -24,11 +38,11 @@ public class BattleEngine : MonoBehaviour
         Message.Publish(new TurnStarted());
     }
     
-    private IEnumerator ExecuteSetupAsync()
+    protected override void Execute(PlayerTurnConfirmed msg)
     {
-        BeginPhase(BattleV2Phase.Setup);
-        yield return setup.Execute();
-        BeginCommandPhase();
+        commandPhase.Wrapup();
+        BeginPhase(BattleV2Phase.Resolution);
+        resolutionPhase.Execute();
     }
 
     private void BeginPhase(BattleV2Phase newPhase)
