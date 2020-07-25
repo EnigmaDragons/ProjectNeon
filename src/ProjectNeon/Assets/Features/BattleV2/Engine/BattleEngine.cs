@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleEngine : MonoBehaviour
+public class BattleEngine : OnMessage<TurnStarted>
 {
     [SerializeField] private BattleSetupV2 setup;
+    [SerializeField] private BattleCommandPhase commandPhase;
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
     [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
@@ -16,11 +17,16 @@ public class BattleEngine : MonoBehaviour
     
     public void Setup() => StartCoroutine(ExecuteSetupAsync());
 
+    protected override void Execute(TurnStarted msg)
+    {
+        commandPhase.Begin();
+    }
+    
     private IEnumerator ExecuteSetupAsync()
     {
         BeginPhase(BattleV2Phase.Setup);
         yield return setup.Execute();
-        BeginPhase(BattleV2Phase.Action);
+        BeginPhase(BattleV2Phase.Command);
         Message.Publish(new TurnStarted());
     }
 
@@ -42,8 +48,9 @@ public class BattleEngine : MonoBehaviour
     {
         NotBegun = 0,
         Setup = 20,
-        Action = 40,
+        Command = 40,
+        Resolution = 50,
         Wrapup = 60,
         Finished = 80
-    } 
+    }
 }

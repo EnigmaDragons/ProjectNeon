@@ -10,6 +10,7 @@
         {
             if (Input.GetButtonDown("Submit"))
                 onSubmit.Invoke();
+
             if (Input.GetButtonDown("Cancel"))
                 onCancel.Invoke();
         }

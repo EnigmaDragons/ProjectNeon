@@ -19,9 +19,12 @@ public class PartyVisualizerV2 : OnBattleEvent<CharacterAnimationRequested>
         _heroes.Clear();
         
         var heroes = battleState.Party.Heroes;
-        SetupHero(hero1, heroes[0]);
-        SetupHero(hero2, heroes[1]);
-        SetupHero(hero3, heroes[2]);
+        if (heroes.Length > 0)
+            SetupHero(hero1, heroes[0]);
+        if (heroes.Length > 1)
+            SetupHero(hero2, heroes[1]);
+        if (heroes.Length > 2)
+            SetupHero(hero3, heroes[2]);
         battleState.PartyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform });
         yield break;
     }

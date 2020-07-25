@@ -57,7 +57,7 @@ public class BattleState : ScriptableObject
         }
         
         _heroesById = new Dictionary<int, Hero>();
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < Party.Heroes.Length; i++)
         {
             id++;
             _heroesById[id] = heroes[i];
@@ -79,6 +79,6 @@ public class BattleState : ScriptableObject
     public Hero GetHeroById(int memberId) => _heroesById[memberId];
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
-    public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.Single(x => x.Value == hero).Key];
+    public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.First(x => x.Value == hero).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
 }

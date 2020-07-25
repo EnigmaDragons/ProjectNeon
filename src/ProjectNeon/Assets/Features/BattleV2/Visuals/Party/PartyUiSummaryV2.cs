@@ -31,7 +31,7 @@ public class PartyUiSummaryV2 : MonoBehaviour
         active.Clear();
         
         var position = transform.position;
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < partyArea.Party.Heroes.Length; i++)
         {
             var h = Instantiate(heroPresenter,
                 new Vector3(position.x + xOffset + xSpacing * i, position.y +yOffset + ySpacing * i, position.z), Quaternion.identity, gameObject.transform); 

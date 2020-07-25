@@ -6,6 +6,7 @@ using UnityEngine;
 public class BattleWorldVisuals : MonoBehaviour
 {
     [SerializeField] private BattleState state;
+    [SerializeField] private GameObject battlefieldParent;
     [SerializeField] private PartyVisualizerV2 party;
     [SerializeField] private EnemyVisualizerV2 enemies;
     [SerializeField] private float battleFieldScale = 0.929f;
@@ -36,7 +37,7 @@ public class BattleWorldVisuals : MonoBehaviour
         if (_battlefield != null)
             Destroy(_battlefield);
         
-        _battlefield = Instantiate(state.Battlefield, new Vector3(0, 0, 10), Quaternion.identity, transform);
+        _battlefield = Instantiate(state.Battlefield, new Vector3(0, 0, 10), Quaternion.identity, battlefieldParent.transform);
         _battlefield.transform.localScale = new Vector3(battleFieldScale, battleFieldScale, battleFieldScale);
     }
 }

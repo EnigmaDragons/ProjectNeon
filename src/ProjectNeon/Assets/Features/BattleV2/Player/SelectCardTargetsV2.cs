@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class SelectCardTargetsV2 : MonoBehaviour
@@ -13,30 +14,12 @@ public class SelectCardTargetsV2 : MonoBehaviour
     [SerializeField] private BattlePlayerTargetingState targetingState;
 
     [ReadOnly, SerializeField] private Card _selectedCard;
-    private bool _isReadyForSelection;
+    private bool IsSelectingTargets => _selectedCard != null;
     private Member _hero;
     private int _actionIndex;
     private int _numActions;
     private Target[] _actionTargets;
-
-    private void Update()
-    {
-        if (_selectedCard == null) return;
-        if (!_isReadyForSelection)
-        {
-            _isReadyForSelection = true;
-            return;
-        }
-
-        // @todo #1:15min Replace this with OnConfirmOrCancel script
-
-        if (Input.GetButtonDown("Submit"))
-            OnTargetConfirmed();
-
-        if (Input.GetButtonDown("Cancel"))
-            OnCancelled();
-    }
-
+    
     protected void OnEnable() => selectedCardZone.OnZoneCardsChanged.Subscribe(BeginSelection, this);
     protected void OnDisable() => selectedCardZone.OnZoneCardsChanged.Unsubscribe(this);
 
@@ -48,7 +31,6 @@ public class SelectCardTargetsV2 : MonoBehaviour
         battleState.SelectionStarted = true;
         _selectedCard = selectedCardZone.Cards[0];
         Message.Publish(new TargetSelectionBegun(_selectedCard));
-        _isReadyForSelection = false;
 
         var cardClass = _selectedCard.LimitedToClass;
         if (!cardClass.IsPresent)
@@ -89,9 +71,32 @@ public class SelectCardTargetsV2 : MonoBehaviour
             OnTargetConfirmed();
     }
 
-    public void OnCancelled() => OnSelectionComplete(sourceCardZone);
-    public void OnTargetConfirmed()
+    public void OnCancelled()
     {
+        if (!IsSelectingTargets)
+            return;
+        
+        OnSelectionComplete(sourceCardZone);
+    }
+
+    public void OnTargetConfirmed()
+    {        
+        if (!IsSelectingTargets)
+            return;
+        
+        // TODO: Remove this once all cards are migrated
+        try
+        {
+            var _ = targetingState.Current;
+        }
+        catch(Exception e)
+        {
+            targetingState.Clear();
+            OnSelectionComplete(destinationCardZone);
+            Debug.LogError($"No possible target for {_selectedCard}, Action {_actionIndex + 1}");
+            return;
+        }
+        
         _actionTargets[_actionIndex] = targetingState.Current;
         targetingState.Clear();
 

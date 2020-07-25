@@ -25,6 +25,9 @@ public class CardPlayZone : ScriptableObject
 
     public Card DrawOneCard()
     {
+        if (cards.Length == 0)
+            throw new InvalidOperationException($"{name} has no cards");
+
         var newCard = cards[0];
         Mutate(c => c.Skip(1).ToArray());
         return newCard;
