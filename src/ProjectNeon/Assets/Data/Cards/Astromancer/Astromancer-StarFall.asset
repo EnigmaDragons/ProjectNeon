@@ -21,6 +21,82 @@ MonoBehaviour:
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
+  actionSequences:
+  - scope: 1
+    group: 1
+    cardActions:
+    - type: 1
+      battleEffect:
+        EffectType: 37
+        FloatAmount:
+          UseConstant: 1
+          ConstantValue: 0
+          FloatVariable: {fileID: 0}
+        NumberOfTurns:
+          UseConstant: 1
+          ConstantValue: 0
+          Variable: {fileID: 0}
+        EffectScope:
+          UseConstant: 1
+          ConstantValue: Stellar
+          Variable: {fileID: 0}
+      characterAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      atTargetAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - type: 1
+      battleEffect:
+        EffectType: 33
+        FloatAmount:
+          UseConstant: 1
+          ConstantValue: 6
+          FloatVariable: {fileID: 0}
+        NumberOfTurns:
+          UseConstant: 0
+          ConstantValue: 0
+          Variable: {fileID: 0}
+        EffectScope:
+          UseConstant: 0
+          ConstantValue: 
+          Variable: {fileID: 0}
+      characterAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      atTargetAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+  - scope: 1
+    group: 2
+    cardActions:
+    - type: 1
+      battleEffect:
+        EffectType: 1
+        FloatAmount:
+          UseConstant: 1
+          ConstantValue: 4
+          FloatVariable: {fileID: 0}
+        NumberOfTurns:
+          UseConstant: 0
+          ConstantValue: 0
+          Variable: {fileID: 0}
+        EffectScope:
+          UseConstant: 0
+          ConstantValue: 
+          Variable: {fileID: 0}
+      characterAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      atTargetAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
   cardAction1:
     targetScope: 1
     targetGroup: 1
@@ -119,6 +195,14 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    targetEffectAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   cardAction2:
     targetScope: 1
     targetGroup: 2
@@ -204,3 +288,11 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    targetEffectAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}

@@ -20,6 +20,33 @@ MonoBehaviour:
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
+  actionSequences:
+  - scope: 0
+    group: 0
+    cardActions:
+    - type: 1
+      battleEffect:
+        EffectType: 7
+        FloatAmount:
+          UseConstant: 1
+          ConstantValue: 2
+          FloatVariable: {fileID: 0}
+        NumberOfTurns:
+          UseConstant: 1
+          ConstantValue: 0
+          Variable: {fileID: 0}
+        EffectScope:
+          UseConstant: 1
+          ConstantValue: Mana
+          Variable: {fileID: 0}
+      characterAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      atTargetAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
   cardAction1:
     targetScope: 0
     targetGroup: 0
@@ -66,6 +93,14 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
     chainedEffects: []
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    targetEffectAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -112,3 +147,11 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
     chainedEffects: []
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    targetEffectAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}

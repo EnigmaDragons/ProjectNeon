@@ -20,6 +20,56 @@ MonoBehaviour:
   cost:
     cost: 2
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
+  actionSequences:
+  - scope: 0
+    group: 1
+    cardActions:
+    - type: 30
+      battleEffect:
+        EffectType: 0
+        FloatAmount:
+          UseConstant: 1
+          ConstantValue: 0
+          FloatVariable: {fileID: 0}
+        NumberOfTurns:
+          UseConstant: 1
+          ConstantValue: 0
+          Variable: {fileID: 0}
+        EffectScope:
+          UseConstant: 1
+          ConstantValue: 
+          Variable: {fileID: 0}
+      characterAnimation:
+        UseConstant: 1
+        ConstantValue: BurstFire
+        Variable: {fileID: 0}
+      atTargetAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    - type: 1
+      battleEffect:
+        EffectType: 2
+        FloatAmount:
+          UseConstant: 1
+          ConstantValue: 1.5
+          FloatVariable: {fileID: 0}
+        NumberOfTurns:
+          UseConstant: 1
+          ConstantValue: 0
+          Variable: {fileID: 0}
+        EffectScope:
+          UseConstant: 1
+          ConstantValue: 
+          Variable: {fileID: 0}
+      characterAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      atTargetAnimation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
   cardAction1:
     targetScope: 0
     targetGroup: 1
@@ -70,6 +120,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: BurstFire
       Variable: {fileID: 0}
+    targetEffectAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   cardAction2:
     targetScope: 0
     targetGroup: 0
@@ -117,6 +171,10 @@ MonoBehaviour:
         Variable: {fileID: 0}
     chainedEffects: []
     characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    targetEffectAnimation:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
