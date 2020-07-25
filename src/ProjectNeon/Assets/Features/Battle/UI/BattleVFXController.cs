@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class BattleVFXController : OnBattleEvent<BattleEffectAnimationRequested>
+public class BattleVFXController : OnMessage<BattleEffectAnimationRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private BattleVFX[] fx;
@@ -33,5 +33,6 @@ public class BattleVFXController : OnBattleEvent<BattleEffectAnimationRequested>
             f.Effect.transform.position = location.position;
             f.Effect.SetActive(true);
         }
+        Message.Publish(new Finished<BattleEffectAnimationRequested>());
     }
 }

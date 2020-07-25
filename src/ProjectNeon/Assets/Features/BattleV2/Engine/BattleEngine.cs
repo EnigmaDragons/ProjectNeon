@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleEngine : OnMessage<PlayerTurnConfirmed>
+public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
 {
     [SerializeField] private CardPlayZones cards;
     [SerializeField] private BattleSetupV2 setup;
@@ -42,7 +42,12 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed>
     {
         commandPhase.Wrapup();
         BeginPhase(BattleV2Phase.Resolution);
-        resolutionPhase.Execute();
+        resolutionPhase.Begin();
+    }
+
+    protected override void Execute(ResolutionsFinished msg)
+    {
+        BeginPhase(BattleV2Phase.Wrapup);
     }
 
     private void BeginPhase(BattleV2Phase newPhase)

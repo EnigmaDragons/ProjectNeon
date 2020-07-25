@@ -26,7 +26,8 @@ public sealed class DumbAI : TurnAI
             }
         );
 
-        return new PlayedCard(me, targets.ToArray(), card);
+        var spentAmount = new ResourcesSpent {Amount = card.Cost.Cost, ResourceType = card.Cost.ResourceType};
+        return new PlayedCardV2(me, targets.ToArray(), card, spentAmount);
     }
 
 }

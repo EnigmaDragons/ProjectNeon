@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyVisualizerV2 : OnBattleEvent<CharacterAnimationRequested>
+public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested>
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private GameObject hero1;
@@ -65,5 +65,6 @@ public class PartyVisualizerV2 : OnBattleEvent<CharacterAnimationRequested>
             Debug.LogWarning($"No Animator found for {battleState.GetHeroById(e.MemberId).name}");
         else
             animator.Play(e.Animation);
+        Message.Publish(new Finished<CharacterAnimationRequested>());
     }
 }

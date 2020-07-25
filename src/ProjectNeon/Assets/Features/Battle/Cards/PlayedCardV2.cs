@@ -37,10 +37,15 @@
         {
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished());
+            return;
         }
-        _card.ActionSequences[_sequenceIndex].CardActions[_actionIndex].Resolve(_performer, _targets[_sequenceIndex], _card.ActionSequences[_sequenceIndex].Group, _card.ActionSequences[_sequenceIndex].Scope, _spent.Amount);
+
+        var seq = _card.ActionSequences[_sequenceIndex];
+        var action = seq.CardActions[_actionIndex];
+        action.Begin(_performer, _targets[_sequenceIndex], seq.Group, seq.Scope, _spent.Amount);
         _actionIndex++;
-        if (_card.ActionSequences[_sequenceIndex].CardActions.Length == _actionIndex)
+        
+        if (seq.CardActions.Length == _actionIndex)
         {
             _sequenceIndex++;
             _actionIndex = 0;
