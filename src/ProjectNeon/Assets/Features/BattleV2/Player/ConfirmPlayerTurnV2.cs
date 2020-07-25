@@ -1,14 +1,13 @@
 using UnityEngine;
 
-public class ConfirmPlayerTurnV2 : MonoBehaviour
+public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 {
     [SerializeField] private CardPlayZone playArea;
     [SerializeField] private GameObject confirmUi;
 
-    private bool CanConfirm => playArea.Cards.Length == 3;
+    public bool CanConfirm => playArea.Cards.Length == 3;
 
     private void OnEnable() => playArea.OnZoneCardsChanged.Subscribe(UpdateState, this);
-
     private void OnDisable() => playArea.OnZoneCardsChanged.Unsubscribe(this);
 
     private void UpdateState()
@@ -23,6 +22,9 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour
         if (!CanConfirm) return;
     
         playArea.Clear();
-            Message.Publish(new PlayerTurnConfirmed());
+        BattleLog.Write("Player Confirmed Turn");
+        Message.Publish(new PlayerTurnConfirmed());
     }
+
+    public void Cancel() {}
 }

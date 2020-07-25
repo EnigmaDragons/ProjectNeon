@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllable
+public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllable, IConfirmCancellable
 {
     [SerializeField] private CardsVisualizer cards;
     
@@ -65,6 +65,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         EnableHighlight();
     }
 
+    public void Cancel() {}
+    public void Confirm() => Select();
     public void Select()
     {
         if (!_allowInput) return;

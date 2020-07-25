@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 2115684586857430256}
   - component: {fileID: 2115684586857430257}
   - component: {fileID: 2115684586857430258}
+  - component: {fileID: 5842876336075822466}
   - component: {fileID: 2115684586857430255}
   m_Layer: 0
   m_Name: BattleEngine
@@ -130,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setup: {fileID: 2115684586857430258}
   commandPhase: {fileID: 625059707057930438}
+  resolutionPhase: {fileID: 5842876336075822466}
   logProcessSteps: 1
   setupOnStart: 1
   phase: 0
@@ -158,6 +160,23 @@ MonoBehaviour:
   enemyArea: {fileID: 11400000, guid: 3bafc84cd52b6d14591a4fe87a988953, type: 2}
   encounterBuilder: {fileID: 11400000, guid: 79e603a5fcf736f4dad0bb171a18dd5d, type: 2}
   resolutionZone: {fileID: 11400000, guid: 06e207c4a5e6c184c80921d8af605ead, type: 2}
+--- !u!114 &5842876336075822466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115684586857430259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a1e1a926a21457c872ba5ffc93875d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
+  delay:
+    UseConstant: 1
+    ConstantValue: 1.5
+    FloatVariable: {fileID: 0}
 --- !u!114 &2115684586857430255
 MonoBehaviour:
   m_ObjectHideFlags: 0

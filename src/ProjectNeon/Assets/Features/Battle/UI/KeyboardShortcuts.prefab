@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3502428870858316484}
   - component: {fileID: 7277176146635430506}
   - component: {fileID: 3754841256852537538}
+  - component: {fileID: 3174280805591808573}
   m_Layer: 5
   m_Name: KeyboardShortcuts
   m_TagString: Untagged
@@ -110,3 +111,43 @@ MonoBehaviour:
   onDown:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3174280805591808573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2870583477432808546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821c49dd6cfc48b2aae8816b8fc3f37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSubmit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f893fbceb2a3f694883d32dd0e423149, type: 2}
+        m_MethodName: Confirm
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onCancel:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f893fbceb2a3f694883d32dd0e423149, type: 2}
+        m_MethodName: Cancel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class SelectCardTargetsV2 : MonoBehaviour
+public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
 {
     [SerializeField] private CardResolutionZone cardResolutionZone;
     [SerializeField] private CardPlayZone selectedCardZone;
@@ -71,6 +71,7 @@ public class SelectCardTargetsV2 : MonoBehaviour
             OnTargetConfirmed();
     }
 
+    public void Cancel() => OnCancelled();
     public void OnCancelled()
     {
         if (!IsSelectingTargets)
@@ -79,6 +80,7 @@ public class SelectCardTargetsV2 : MonoBehaviour
         OnSelectionComplete(sourceCardZone);
     }
 
+    public void Confirm() => OnTargetConfirmed();
     public void OnTargetConfirmed()
     {        
         if (!IsSelectingTargets)
