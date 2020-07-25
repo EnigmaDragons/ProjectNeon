@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class VisualCardSelectionV2 : MonoBehaviour
+public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllable
 {
     [SerializeField] private CardsVisualizer cards;
     

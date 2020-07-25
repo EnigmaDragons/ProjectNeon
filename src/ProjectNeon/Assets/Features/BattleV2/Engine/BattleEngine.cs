@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleEngine : OnMessage<TurnStarted>
+public class BattleEngine : MonoBehaviour
 {
     [SerializeField] private BattleSetupV2 setup;
     [SerializeField] private BattleCommandPhase commandPhase;
@@ -17,17 +17,18 @@ public class BattleEngine : OnMessage<TurnStarted>
     
     public void Setup() => StartCoroutine(ExecuteSetupAsync());
 
-    protected override void Execute(TurnStarted msg)
+    private void BeginCommandPhase()
     {
+        BeginPhase(BattleV2Phase.Command);
         commandPhase.Begin();
+        Message.Publish(new TurnStarted());
     }
     
     private IEnumerator ExecuteSetupAsync()
     {
         BeginPhase(BattleV2Phase.Setup);
         yield return setup.Execute();
-        BeginPhase(BattleV2Phase.Command);
-        Message.Publish(new TurnStarted());
+        BeginCommandPhase();
     }
 
     private void BeginPhase(BattleV2Phase newPhase)

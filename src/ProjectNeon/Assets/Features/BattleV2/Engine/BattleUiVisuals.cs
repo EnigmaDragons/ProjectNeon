@@ -3,24 +3,26 @@ using UnityEngine;
 public class BattleUiVisuals : MonoBehaviour
 {
     [SerializeField] private PartyUiSummaryV2 partyUi;
-    [SerializeField] private GameObject turnConfirmation;
-    [SerializeField] private GameObject handArea;
-    [SerializeField] private GameObject targetSelection;
+    [SerializeField] private GameObject commandPhaseUi;
     
     public void Setup()
     {
         partyUi.Setup();
+        HideCommandPhaseUI();
+    }
+
+    private void HideCommandPhaseUI()
+    {
+        commandPhaseUi.SetActive(false);
     }
 
     public void BeginCommandPhase()
     {
-        turnConfirmation.gameObject.SetActive(true);
-        targetSelection.gameObject.SetActive(true);
+        commandPhaseUi.SetActive(true);
     }
 
     public void EndCommandPhase()
     {
-        turnConfirmation.gameObject.SetActive(false);
-        targetSelection.gameObject.SetActive(false);
+        HideCommandPhaseUI();
     }
 }
