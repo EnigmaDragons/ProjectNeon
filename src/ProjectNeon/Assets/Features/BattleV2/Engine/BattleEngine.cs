@@ -5,8 +5,15 @@ public class BattleEngine : MonoBehaviour
 {
     [SerializeField] private BattleSetupV2 setup;
     [SerializeField] private bool logProcessSteps;
+    [SerializeField] private bool setupOnStart;
     [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
-
+    
+    public void Start()
+    {
+        if (setupOnStart)
+            Setup();
+    }
+    
     public void Setup() => StartCoroutine(ExecuteSetupAsync());
 
     private IEnumerator ExecuteSetupAsync()

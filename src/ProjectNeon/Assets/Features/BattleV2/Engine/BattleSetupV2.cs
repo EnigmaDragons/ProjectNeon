@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 public class BattleSetupV2 : MonoBehaviour
 {
-    [SerializeField] private BattleState battleState;
+    [SerializeField] private BattleState state;
+    [SerializeField] private BattleWorldVisuals visuals;
     
     [Header("BattleField")]
     [SerializeField] private float battleFieldScale = 0.929f;
@@ -23,14 +25,17 @@ public class BattleSetupV2 : MonoBehaviour
     
     private CardPlayZone Hand => playerCardPlayZones.HandZone;
     private CardPlayZone Deck => playerCardPlayZones.DrawZone;
+
+    public void InitBattleField(GameObject battlefield) => state.SetNextBattleground(battlefield);
+    public void InitParty(Hero h1, Hero h2, Hero h3) => party.Initialized(h1, h2, h3);
     
     public IEnumerator Execute()
     {
         ClearResolutionZone();
         SetupBattleField();
         SetupEnemyEncounter();
-        SetupPlayerCards();
-        yield break;
+        yield return visuals.Setup(); // Could Animate
+        SetupPlayerCards(); // Could Animate
     }
 
     private void ClearResolutionZone()
@@ -40,12 +45,15 @@ public class BattleSetupV2 : MonoBehaviour
     
     private void SetupBattleField()
     {
-        var battlefield = Instantiate(battleState.Battlefield, new Vector3(0, 0, 10), Quaternion.identity, transform);
+        var battlefield = Instantiate(state.Battlefield, new Vector3(0, 0, 10), Quaternion.identity, transform);
         battlefield.transform.localScale = new Vector3(battleFieldScale, battleFieldScale, battleFieldScale);
     }
 
     private void SetupPlayerCards()
     {
+        if (!party.IsInitialized)
+            throw new Exception("Cannot Setup Player Cards, Party Is Not Initialized");
+
         playerCardPlayZones.ClearAll();
         Deck.InitShuffled(party.Decks.SelectMany(x => x.Cards));
         

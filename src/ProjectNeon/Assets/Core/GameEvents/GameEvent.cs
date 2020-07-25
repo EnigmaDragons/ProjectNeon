@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 [CreateAssetMenu(fileName = "New Game Event", menuName = "Game Event")]
+[Obsolete] 
 public class GameEvent : ScriptableObject
 {
     private IEnumerable<GameEventSubscription> listeners = Array.Empty<GameEventSubscription>();
