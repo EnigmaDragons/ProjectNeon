@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[Serializable]
 public class CardActionSequence
 {
     [SerializeField] private Scope scope;

@@ -3,32 +3,36 @@
 [CustomEditor(typeof(Card))]
 public class CardEditor : Editor
 {
-    private SerializedProperty _art;
-    private SerializedProperty _description;
-    private SerializedProperty _typeDescription;
-    private SerializedProperty _onlyPlayableByClass;
-    private SerializedProperty _cost;
-    private SerializedProperty _classSpecial;
-
+    private SerializedProperty art, description, typeDescription, onlyPlayableByClass, cost, actionSequences, cardAction1, cardAction2;
 
     public void OnEnable()
     {
-        _art = serializedObject.FindProperty("art");
-        _description = serializedObject.FindProperty("description");
-        _typeDescription = serializedObject.FindProperty("typeDescription");
-        _onlyPlayableByClass = serializedObject.FindProperty("onlyPlayableByClass");
-        _cost = serializedObject.FindProperty("cost");
-        _classSpecial = serializedObject.FindProperty("classSpecial");
+        art = serializedObject.FindProperty("art");
+        description = serializedObject.FindProperty("description");
+        typeDescription = serializedObject.FindProperty("typeDescription");
+        onlyPlayableByClass = serializedObject.FindProperty("onlyPlayableByClass");
+        cost = serializedObject.FindProperty("cost");
+        actionSequences = serializedObject.FindProperty("actionSequences");
+        cardAction1 = serializedObject.FindProperty("cardAction1");
+        cardAction2 = serializedObject.FindProperty("cardAction2");
     }
 
-    /*public override void OnInspectorGUI()
+    public override void OnInspectorGUI()
     {
-        EditorGUILayout.ObjectField(_art);
-        AssetPreview.GetAssetPreview(_art.objectReferenceValue);
-        EditorGUILayout.ObjectField(_description);
-        EditorGUILayout.ObjectField(_typeDescription);
-        EditorGUILayout.ObjectField(_onlyPlayableByClass);
-        EditorGUILayout.ObjectField(_cost);
-        EditorGUILayout.ObjectField(_classSpecial);
-    }*/
+        DrawUnchanged(art);
+        DrawUnchanged(description);
+        DrawUnchanged(typeDescription);
+        DrawUnchanged(onlyPlayableByClass);
+        DrawUnchanged(cost);
+        DrawUnchanged(actionSequences);
+        DrawUnchanged(cardAction1);
+        DrawUnchanged(cardAction2);
+    }
+
+    private void DrawUnchanged(SerializedProperty serializedProperty)
+    {
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(serializedProperty);
+        serializedObject.ApplyModifiedProperties();
+    }
 }
