@@ -13,4 +13,5 @@ public sealed class EffectData
     public StringReference EffectScope = new StringReference();
     public int IntAmount => Mathf.CeilToInt(FloatAmount.Value);
     public EffectData origin = Nothing;
+    public int TargetIndex = 0;
 }
