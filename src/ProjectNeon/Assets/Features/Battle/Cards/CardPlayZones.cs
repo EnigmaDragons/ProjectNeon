@@ -22,4 +22,11 @@ public class CardPlayZones : ScriptableObject
         discardZone.Clear();
         selectionZone.Clear();
     }
+
+    public void Reshuffle()
+    {
+        while (DiscardZone.Count > 0) 
+            DrawZone.PutOnBottom(DiscardZone.DrawOneCard());
+        DrawZone.Shuffle();
+    }
 }
