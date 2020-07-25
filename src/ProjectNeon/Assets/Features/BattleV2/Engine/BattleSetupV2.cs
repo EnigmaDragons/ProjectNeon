@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -22,16 +23,25 @@ public class BattleSetupV2 : MonoBehaviour
     
     private CardPlayZone Hand => playerCardPlayZones.HandZone;
     private CardPlayZone Deck => playerCardPlayZones.DrawZone;
+    private bool _useCustomEncounter = false;
 
     public void InitBattleField(GameObject battlefield) => state.SetNextBattleground(battlefield);
     public void InitParty(Hero h1, Hero h2, Hero h3) => party.Initialized(h1, h2, h3);
-    
+    public void InitEncounterBuilder(EncounterBuilder e) => encounterBuilder = e;
+    public void InitEncounter(IEnumerable<Enemy> enemies)
+    {
+        _useCustomEncounter = true;
+        enemyArea.Initialized(enemies);
+    }
+
     public IEnumerator Execute()
     {
         ClearResolutionZone();
         SetupEnemyEncounter();
         yield return visuals.Setup(); // Could Animate
         SetupPlayerCards(); // Could Animate
+        state.Init();
+        visuals.AfterBattleStateInitialized();
     }
 
     private void ClearResolutionZone()
@@ -41,7 +51,8 @@ public class BattleSetupV2 : MonoBehaviour
     
     private void SetupEnemyEncounter()
     {
-        enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
+        if (enemyArea.Enemies.Length == 0 || !_useCustomEncounter)
+            enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
     }
     
     private void SetupPlayerCards()

@@ -12,5 +12,9 @@ public class BattleTestSetupEditor : Editor
             engine.UseCustomParty();
         if(GUILayout.Button("Use Custom Battlefield"))
             engine.UseCustomBattlefield();
+        if(GUILayout.Button("Use Custom Enemies"))
+            engine.UseFixedEncounter();
+        if(GUILayout.Button("Use Custom Encounter Set"))
+            engine.UseCustomEncounterSet();
     }
 }

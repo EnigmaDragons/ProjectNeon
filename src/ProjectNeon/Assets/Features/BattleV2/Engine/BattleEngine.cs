@@ -25,8 +25,9 @@ public class BattleEngine : MonoBehaviour
 
     private void BeginPhase(BattleV2Phase newPhase)
     {
-        LogProcessStep($"Finished {phase}");
-        LogProcessStep($"Beginning {newPhase}");
+        if (phase != BattleV2Phase.NotBegun)
+            LogProcessStep($"Finished {phase} Phase");
+        LogProcessStep($"Beginning {newPhase} Phase");
         phase = newPhase;
     }
     

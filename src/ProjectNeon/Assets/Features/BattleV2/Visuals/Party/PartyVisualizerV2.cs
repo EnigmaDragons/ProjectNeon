@@ -23,8 +23,12 @@ public class PartyVisualizerV2 : OnBattleEvent<CharacterAnimationRequested>
         SetupHero(hero2, heroes[1]);
         SetupHero(hero3, heroes[2]);
         battleState.PartyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform });
-        _damage.ForEach(x => x.Value.Init(battleState.GetMemberByHero(x.Key)));
         yield break;
+    }
+
+    public void AfterBattleStateInitialized()
+    {
+        _damage.ForEach(x => x.Value.Init(battleState.GetMemberByHero(x.Key)));
     }
 
     private void SetupHero(GameObject heroOrigin, Hero hero)

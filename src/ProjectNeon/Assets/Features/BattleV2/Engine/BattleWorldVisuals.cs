@@ -7,6 +7,7 @@ public class BattleWorldVisuals : MonoBehaviour
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyVisualizerV2 party;
+    [SerializeField] private EnemyVisualizerV2 enemies;
     [SerializeField] private float battleFieldScale = 0.929f;
 
     private GameObject _battlefield;
@@ -14,7 +15,14 @@ public class BattleWorldVisuals : MonoBehaviour
     public IEnumerator Setup()
     {
         SetupBattleField();
+        yield return enemies.Setup();
         yield return party.Setup();
+    }
+
+    public void AfterBattleStateInitialized()
+    {
+        party.AfterBattleStateInitialized();
+        enemies.AfterBattleStateInitialized();
     }
     
     private void SetupBattleField()
