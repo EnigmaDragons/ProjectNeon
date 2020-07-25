@@ -14,12 +14,10 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private GameEvent onCardResolved;
     public IPlayedCard LastPlayed { get; set; }
 
-    private bool _isResolving;
-
+    public bool HasMore => moves.Any();
+    
     public void Add(IPlayedCard played)
     {
-        if (_isResolving) return;
-        
         moves.Add(played);
         physicalZone.PutOnBottom(played.Card);
         played.Member.Apply(m => m.LoseResource(played.Spent.ResourceType.Name, played.Spent.Amount));
@@ -28,7 +26,7 @@ public class CardResolutionZone : ScriptableObject
 
     public void RemoveLastPlayedCard()
     {
-        if (_isResolving || moves.None()) return;
+        if (moves.None()) return;
         
         var played = moves.Last();
         moves.RemoveAt(moves.Count - 1);
@@ -44,9 +42,18 @@ public class CardResolutionZone : ScriptableObject
         host.StartCoroutine(ResolveAll(delay));
     }
 
+    public IEnumerator ResolveNext(float delay)
+    {
+        BattleLog.Write($"Num Cards To Resolve: {moves.Count}");
+
+        var move = moves[0];
+        moves = moves.Skip(1).ToList();
+        yield return new WaitForSeconds(delay);
+        yield return ResolveOneCard(move);
+    }
+
     private IEnumerator ResolveAll(float delay)
     {
-        _isResolving = true;
         BattleLog.Write($"Num Cards To Resolve: {moves.Count}");
         yield return new WaitForSeconds(delay);
         foreach (var move in moves.ToList())
@@ -55,7 +62,6 @@ public class CardResolutionZone : ScriptableObject
             yield return new WaitForSeconds(1.1f);
         }
 
-        _isResolving = false;
         moves.Clear();
         onFinished.Publish();
     }

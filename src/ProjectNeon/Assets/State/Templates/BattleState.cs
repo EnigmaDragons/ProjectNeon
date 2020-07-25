@@ -75,6 +75,10 @@ public class BattleState : ScriptableObject
         return this;
     }
 
+    public void AdvanceTurn() => Members.Values.ForEach(m => m.State.AdvanceTurn());
+    public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);
+    public bool PlayerLoses() => Heroes.All(m => m.State.IsUnconscious);
+
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
     public Hero GetHeroById(int memberId) => _heroesById[memberId];
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
