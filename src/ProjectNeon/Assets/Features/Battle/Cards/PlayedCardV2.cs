@@ -3,12 +3,14 @@
     private readonly Card _card;
     private readonly Member _performer;
     private readonly Target[] _targets;
+    private readonly int _amountPaid;
 
-    public PlayedCardV2(Member performer, Target[] targets, Card card)
+    public PlayedCardV2(Member performer, Target[] targets, Card card, int amountPaid)
     {
         _performer = performer;
         _targets = targets;
         _card = card;
+        _amountPaid = amountPaid;
     }
 
     public Member Member => _performer;
@@ -35,7 +37,7 @@
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished());
         }
-        _card.ActionSequences[_sequenceIndex].CardActions[_actionIndex].Resolve(_performer, _targets[_sequenceIndex], _card.ActionSequences[_sequenceIndex].Group, _card.ActionSequences[_sequenceIndex].Scope);
+        _card.ActionSequences[_sequenceIndex].CardActions[_actionIndex].Resolve(_performer, _targets[_sequenceIndex], _card.ActionSequences[_sequenceIndex].Group, _card.ActionSequences[_sequenceIndex].Scope, _amountPaid);
         _actionIndex++;
         if (_card.ActionSequences[_sequenceIndex].CardActions.Length == _actionIndex)
         {

@@ -102,7 +102,7 @@ public class SelectCardTargetsV2 : MonoBehaviour
 
         if (_actionIndex + 1 == _numActions)
         {
-            cardResolutionZone.Add(new PlayedCardV2(_hero, _actionTargets, _selectedCard));
+            cardResolutionZone.Add(new PlayedCardV2(_hero, _actionTargets, _selectedCard, 0));
             OnSelectionComplete(destinationCardZone);
         }
         else

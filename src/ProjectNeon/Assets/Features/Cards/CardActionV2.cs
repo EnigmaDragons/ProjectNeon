@@ -9,7 +9,7 @@ public class CardActionV2
     [SerializeField] private StringReference characterAnimation;
     [SerializeField] private StringReference atTargetAnimation;
 
-    public void Resolve(Member source, Target target, Group group, Scope scope)
+    public void Resolve(Member source, Target target, Group group, Scope scope, int amountPaid)
     {
         if (type == CardBattleActionType.Battle)
             Message.Publish(new ApplyBattleEffect(battleEffect, source, target));
