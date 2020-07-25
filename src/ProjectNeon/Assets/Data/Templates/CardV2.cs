@@ -8,7 +8,9 @@ public class CardV2 : ScriptableObject
     [SerializeField] private StringVariable onlyPlayableByClass;
     [SerializeField] private ResourceCost cost;
     [SerializeField] private CardV2 classSpecial;
-    [SerializeField] private CardActionV2[] actions;
+    [SerializeField] private CardCommandAction[] commandActions;
+    [SerializeField] private CardBattleActionV2[] battleActions;
 
-    public CardActionV2[] Actions => actions;
+    public CardCommandAction[] CommandActions => commandActions;
+    public CardBattleActionV2[] BattleActions => battleActions;
 }

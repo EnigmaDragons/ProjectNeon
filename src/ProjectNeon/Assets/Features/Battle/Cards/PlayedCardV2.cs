@@ -16,10 +16,10 @@
 
     public void Perform()
     {
-        for (var index = 0; index < _card.Actions.Length; index++)
+        for (var index = 0; index < _card.BattleActions.Length; index++)
         {
-            var action = _card.Actions[index];
-            if (action.Type == CardActionType.Battle)
+            var action = _card.BattleActions[index];
+            if (action.Type == CardBattleActionType.Battle)
                 action.Apply(_performer, _targets);
         }
     }
