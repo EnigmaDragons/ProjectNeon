@@ -42,11 +42,16 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
 
     protected override void Execute(TargetSelectionFinished msg)
     {
-        directionBinding.Bind(cardSelection);
-        
-        var target = turnConfirmation.CanConfirm 
-            ? turnConfirmation 
-            : (IConfirmCancellable)cardSelection;
-        confirmCancelBinding.Bind(target);
+        var readyForTurnConfirm = turnConfirmation.CanConfirm;
+        if (readyForTurnConfirm)
+        {
+            directionBinding.Clear();
+            confirmCancelBinding.Bind(turnConfirmation);
+        }
+        else
+        {
+            directionBinding.Bind(cardSelection);
+            confirmCancelBinding.Bind(cardSelection);
+        }
     }
 }

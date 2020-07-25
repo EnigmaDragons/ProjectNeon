@@ -3,12 +3,18 @@ using UnityEngine;
 
 public class BattleEngine : OnMessage<PlayerTurnConfirmed>
 {
+    [SerializeField] private CardPlayZones cards;
     [SerializeField] private BattleSetupV2 setup;
     [SerializeField] private BattleCommandPhase commandPhase;
     [SerializeField] private BattleResolutionPhase resolutionPhase;
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
     [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
+
+    private void Awake()
+    {
+        cards.ClearAll();
+    }
     
     public void Start()
     {

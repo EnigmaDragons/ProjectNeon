@@ -99,7 +99,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         sendToZone.PutOnBottom(selectedCardZone.DrawOneCard());
         _selectedCard = null;
         uiView.SetActive(false);
-        Message.Publish(new TargetSelectionFinished());
         battleState.SelectionStarted = false;
+        Message.Publish(new TargetSelectionFinished());
     }
 }
