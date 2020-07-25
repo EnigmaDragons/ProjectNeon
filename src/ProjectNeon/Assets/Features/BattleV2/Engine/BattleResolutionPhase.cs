@@ -1,10 +1,15 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolutionFinished>
 {
     [SerializeField] private BattleUiVisuals ui;
+    [SerializeField] private BattleState state;
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private FloatReference delay = new FloatReference(1.5f);
+    
+    [ReadOnly, SerializeField] private List<Member> _unconscious = new List<Member>();
     
     public void Begin()
     {
@@ -17,6 +22,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
 
     private void ResolveNext()
     {
+        CheckForUnconsciousMembers();
         if (resolutionZone.HasMore)
             StartCoroutine(resolutionZone.ResolveNext(delay));
         else
@@ -35,5 +41,17 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     protected override void Execute(CardResolutionFinished msg)
     {
         ResolveNext();
+    }
+    
+    private void CheckForUnconsciousMembers()
+    {
+        state.Members.Values.ToList()
+            .Except(_unconscious)
+            .Where(m => !m.State.IsConscious)
+            .ForEach(m =>
+            {    
+                _unconscious.Add(m);
+                BattleEvent.Publish(new MemberUnconscious(m));
+            });
     }
 }

@@ -44,7 +44,7 @@ public class PartyUiSummaryV2 : MonoBehaviour
     {
         if (!m.Member.TeamType.Equals(TeamType.Party)) return;
         
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < Party.Heroes.Length; i++)
             if (Party.Heroes[i].name.Equals(m.Member.Name))
                 active[i].gameObject.SetActive(false);
     }
