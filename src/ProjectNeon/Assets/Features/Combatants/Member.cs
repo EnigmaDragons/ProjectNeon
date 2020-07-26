@@ -38,7 +38,6 @@ public static class MemberExtensions
     {
         var cost = c.ResourcesSpent(m);
         var remaining = m.State[cost.ResourceType] - cost.Amount;
-        Debug.Log($"Playing {c.Name} would leave {remaining} {cost.ResourceType.Name}");
         return remaining >= 0;
     }
 }

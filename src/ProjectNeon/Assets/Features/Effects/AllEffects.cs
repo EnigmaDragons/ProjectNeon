@@ -60,7 +60,7 @@ public static class AllEffects
     public static void Apply(EffectData effectData, Member source, Target target)
     {
         var effect = Create(effectData);
-        BattleLog.Write($"Applying Effect of {effectData.EffectType} to {target.Members} members");
+        BattleLog.Write($"Applying Effect of {effectData.EffectType} to {target.MembersDescriptions()}");
         effect.Apply(source, target);
         target.Members.ForEach(m =>
         {
