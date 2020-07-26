@@ -12,6 +12,6 @@ public class CardActionSequence
     public Group Group => group;
     public CardActionsData CardActions => cardActions;
 
-    public void Play(Member source, Target target, Group group, Scope scope, int amountPaid)
-        => cardActions.Play(source, target, group, scope, amountPaid);
+    public void Play(Member source, Target target, int amountPaid)
+        => SequenceMessage.Queue(cardActions.Play(source, target, group, scope, amountPaid));
 }

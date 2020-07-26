@@ -16,13 +16,16 @@ public class CardActionV2
     public StringReference CharacterAnimation => characterAnimation;
     public StringReference AtTargetAnimation => atTargetAnimation;
     
-    public void Play(Member source, Target target, Group group, Scope scope, int amountPaid)
+    public IPayloadProvider Play(Member source, Target target, Group group, Scope scope, int amountPaid)
     {
         if (type == CardBattleActionType.Battle)
-            Message.Publish(new ApplyBattleEffect(battleEffect, source, target));
-        else if (type == CardBattleActionType.AnimateCharacter)
-            Message.Publish(new CharacterAnimationRequested(source.Id, characterAnimation));
-        else if (type == CardBattleActionType.AnimateAtTarget)
-            Message.Publish(new BattleEffectAnimationRequested { EffectName = atTargetAnimation, PerformerId = source.Id, Target = target, Scope = scope, Group = group });
+            return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target));
+        if (type == CardBattleActionType.AnimateCharacter)
+            return new SinglePayload(new CharacterAnimationRequested(source.Id, characterAnimation));
+        if (type == CardBattleActionType.AnimateAtTarget)
+            return new SinglePayload(new BattleEffectAnimationRequested { EffectName = atTargetAnimation, PerformerId = source.Id, Target = target, Scope = scope, Group = group });
+        if (type == CardBattleActionType.Condition)
+            SequenceMessage.Queue(new DelayedPayload(() => AllConditions.Resolve(conditionData, source, target, group, scope, amountPaid)));
+        throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
     }
 }

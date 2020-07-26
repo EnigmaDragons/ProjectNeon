@@ -24,6 +24,6 @@
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished());
         }, this);
-        
+        Card.Play(_performer, _targets, _spent.Amount);
     }
 }
