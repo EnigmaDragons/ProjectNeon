@@ -5,7 +5,7 @@ using UnityEngine;
 public class Card : ScriptableObject
 {
     [PreviewSprite] [SerializeField] private Sprite art;
-    [SerializeField] private string description;
+    [SerializeField] [TextArea(1, 12)] private string description;
     [SerializeField] private StringVariable typeDescription;
     [SerializeField] private StringVariable onlyPlayableByClass;
     [SerializeField] private ResourceCost cost;

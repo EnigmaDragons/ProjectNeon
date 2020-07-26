@@ -1,5 +1,6 @@
 ﻿public enum ActionConditionType
 {
     Nothing,
-    PerformerHasResource
+    PerformerHasResource,
+    TargetIsBelowPercentageLife
 }
