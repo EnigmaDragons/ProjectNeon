@@ -92,7 +92,7 @@ public sealed class SelectCardTargets : MonoBehaviour
     private void PresentPossibleTargets()
     {
         var action = _selectedCard.Actions[_actionIndex];
-        var possibleTargets = battleState.GetPossibleTargets(_hero, action.Group, action.Scope);
+        var possibleTargets = battleState.GetPossibleConsciousTargets(_hero, action.Group, action.Scope);
         targetingState.WithPossibleTargets(possibleTargets);
         if (possibleTargets.Length == 1)
             OnTargetConfirmed();

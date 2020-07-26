@@ -20,7 +20,7 @@ public sealed class DumbAI : TurnAI
         card.Actions.ForEach(
             action =>
             {
-                var possibleTargets = battleState.GetPossibleTargets(me, action.Group, action.Scope);
+                var possibleTargets = battleState.GetPossibleConsciousTargets(me, action.Group, action.Scope);
                 var target = possibleTargets.Random();
                 targets.Add(target);
             }
