@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public sealed class WorldHPBarController : HPBarControllerBase
@@ -15,8 +16,7 @@ public sealed class WorldHPBarController : HPBarControllerBase
     
     protected override void SetFillAmount(float amount)
     {
-        var originalScale = bar.transform.localScale;
-        bar.transform.localScale = new Vector3(amount * _scaleX, originalScale.y, originalScale.z);
+        bar.transform.DOScaleX(amount * _scaleX, 2);
     }
 
     protected override void SetText(string text) => this.text.text = text;
