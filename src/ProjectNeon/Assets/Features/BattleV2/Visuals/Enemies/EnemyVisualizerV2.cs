@@ -12,19 +12,21 @@ public class EnemyVisualizerV2 : MonoBehaviour
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
 
-    [ReadOnly, SerializeField] private GameObject[] visuals;
+    [ReadOnly, SerializeField] private GameObject[] active = new GameObject[0];
     
     private void OnEnable() => BattleEvent.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
     private void OnDisable() => BattleEvent.Unsubscribe(this);
 
     public IEnumerator Setup()
     {
-        visuals = new GameObject[enemyArea.Enemies.Length];
+        active.ForEach(Destroy);
+        active = new GameObject[enemyArea.Enemies.Length];
         var enemies = enemyArea.Enemies;
         var positions = new Transform[enemies.Length];
         for (var i = 0; i < enemies.Length; i++)
         {
             var enemyObject = Instantiate(enemies[i].Prefab, transform);
+            active[i] = enemyObject;
             var t = enemyObject.transform;
             t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
             positions[i] = t;
