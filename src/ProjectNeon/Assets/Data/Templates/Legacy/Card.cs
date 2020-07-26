@@ -10,7 +10,7 @@ public class Card : ScriptableObject
     [SerializeField] private StringVariable onlyPlayableByClass;
     [SerializeField] private ResourceCost cost;
     [SerializeField] private ResourceCost onPlayGain;
-    [SerializeField] public CardActionSequence[] actionSequences;
+    [SerializeField] public CardActionSequence[] actionSequences = new CardActionSequence[0];
     [SerializeField] private CardAction cardAction1;
     [SerializeField] private CardAction cardAction2;
 
