@@ -11,7 +11,7 @@ public class BattleTestSetupEditor : Editor
         
         DrawUILine(Color.black);
         if(GUILayout.Button("Use Everything And Start Battle"))
-            engine.UseEverything();
+            engine.UseEverythingAndStartBattle();
         DrawUILine(Color.black);
         
         if(GUILayout.Button("1. Use Custom Battlefield"))

@@ -7,7 +7,8 @@ public sealed class InGameStartDisabled : MonoBehaviour
 
     private void Awake()
     {
-        target.SetActive(false);
+        var targetObj = target != null ? target : gameObject;
+        targetObj.SetActive(false);
         additional.ForEach(a => a.SetActive(false));
     }
 }
