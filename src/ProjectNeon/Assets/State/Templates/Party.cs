@@ -32,10 +32,11 @@ public sealed class Party : ScriptableObject
         return this;
     }
 
-    public void UpdateDecks(List<Card> one, List<Card> two, List<Card> three)
-    {
-        decks = new[] { CreateDeck(one), CreateDeck(two), CreateDeck(three) };
-    }
+    public void UpdateDecks(Deck one, Deck two, Deck three) 
+        => UpdateDecks(one.Cards, two.Cards, three.Cards);
+    
+    public void UpdateDecks(List<Card> one, List<Card> two, List<Card> three) 
+        => decks = new[] { CreateDeck(one), CreateDeck(two), CreateDeck(three) };
 
     private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.Cards);
     private RuntimeDeck CreateDeck(List<Card> cards) => new RuntimeDeck { Cards = cards };

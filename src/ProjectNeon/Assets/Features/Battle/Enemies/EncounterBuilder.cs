@@ -24,6 +24,7 @@ public class EncounterBuilder : ScriptableObject
     
     public List<Enemy> Generate()
     {
+        BattleLog.Write("Generated Encounter");
         /**
          * @todo #52:30min Evolve Encounter Generation after playtesting. 
          */
