@@ -59,6 +59,9 @@ public class BattleSetupV2 : MonoBehaviour
     {
         if (enemyArea.Enemies.Length == 0)
             enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
+        foreach (var enemy in enemyArea.Enemies)
+            if (enemy.Deck.Cards.All(c => c.Cost.Amount > 0))
+                throw new Exception($"{enemy.Name}'s Deck does not contain a 0-Cost Card.");
     }
     
     private void SetupPlayerCards()
