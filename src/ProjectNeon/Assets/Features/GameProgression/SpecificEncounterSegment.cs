@@ -4,13 +4,17 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu]
 class SpecificEncounterSegment : StageSegment
 {
+    [SerializeField] private GameObject battlefield;
     [SerializeField] private Enemy[] enemies;
+    [SerializeField] private BattleState battle;
 
     public override string Name => "Boss Battle";
     
     public override void Start()
     {
-        // @todo #1:30min Setup Custom Encounter, instead of letting Battle Scene randomly generate one
+        Debug.Log("Setting Up Specific Encounter");
+        battle.SetNextBattleground(battlefield);
+        battle.SetNextEncounter(enemies);
         SceneManager.LoadScene("BattleSceneV2");
     }
 }

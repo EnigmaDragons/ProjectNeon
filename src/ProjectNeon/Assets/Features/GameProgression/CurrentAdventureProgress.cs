@@ -6,13 +6,9 @@ public class CurrentAdventureProgress : MonoBehaviour
     [SerializeField] private AdventureProgress adventure;
     [SerializeField] private TextMeshProUGUI nextText;
 
-    private void OnEnable()
+    private void Awake()
     {
-        if (!adventure.HasStageBegun)
-        {
-            Debug.Log($"Is advancing the adventure. {adventure}");
-            adventure.Advance();
-        }
+        adventure.InitIfNeeded();
         nextText.text = adventure.CurrentStageSegment.Name;
     }
 }

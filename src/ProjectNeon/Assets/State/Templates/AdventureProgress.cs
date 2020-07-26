@@ -25,6 +25,14 @@ class AdventureProgress : ScriptableObject
 
     public override string ToString() =>
         $"Adventure: {currentAdventure.name}. Stage: {currentStageIndex}. StageSegment: {currentStageSegmentIndex}";
+
+    public void InitIfNeeded()
+    {
+        if (HasBegun) return;
+        
+        Debug.Log($"Is advancing the adventure. {this}");
+        Advance();
+    }
     
     public void Reset()
     {
