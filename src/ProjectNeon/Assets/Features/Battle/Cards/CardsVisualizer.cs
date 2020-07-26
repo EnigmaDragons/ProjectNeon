@@ -78,7 +78,6 @@ public class CardsVisualizer : MonoBehaviour
             {
                 if (c.Contains(old))
                 {
-                    Debug.Log($"Cleaned Old Card {old}");
                     c.Clear();
                     c.transform.position += new Vector3(1920, 0, 0);
                     break;
@@ -109,6 +108,7 @@ public class CardsVisualizer : MonoBehaviour
             c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.IsPlayable(state)));
             SwapCardPoolSpots(cardIndex, presenterIndex);
             c.transform.DOMove(targetPosition, 1);
+            c.SetTargetPosition(targetPosition);
         }
     }
 

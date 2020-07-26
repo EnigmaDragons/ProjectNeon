@@ -34,6 +34,8 @@ public static class MemberExtensions
     public static bool CanAfford(this Member m, Card c)
     {
         var cost = c.ResourcesSpent(m);
-        return m.State[cost.ResourceType] >= cost.Amount;
+        var remaining = m.State[cost.ResourceType] - cost.Amount;
+        Debug.Log($"Playing {c.Name} would leave {remaining} {cost.ResourceType.Name}");
+        return remaining >= 0;
     }
 }

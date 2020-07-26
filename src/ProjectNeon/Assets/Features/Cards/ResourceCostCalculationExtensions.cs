@@ -6,7 +6,7 @@ public static class ResourceCostCalculationExtensions
         var cost = card.Cost;
         return new ResourcesSpent
         {
-            ResourceType = card.Cost.ResourceType,
+            ResourceType = cost.ResourceType,
             Amount = cost.IsXCost
                 ? m.State[cost.ResourceType]
                 : cost.Cost

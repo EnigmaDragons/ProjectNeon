@@ -50,7 +50,7 @@ public class DamageEffect : OnMessage<LegacyMemberStateChanged>
 
     protected override void Execute(LegacyMemberStateChanged e)
     {
-        if (e.Member.Id != _member.Id) return;
+        if (_member == null || e.Member.Id != _member.Id) return;
 
         var hpDiff = e.Member.CurrentHp() - _hp;
         _hp = e.Member.CurrentHp();

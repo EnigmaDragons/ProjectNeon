@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +23,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     private Card _card;
     private Action _onClick;
+    private Vector3 _position;
 
     public bool Contains(Card c) => HasCard && _card == c;
     public bool HasCard => _card != null;
@@ -73,10 +75,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         if (highlight.activeSelf == active)
             return;
         
-        highlight.SetActive(active);
+        highlight.SetActive(IsPlayable && active);
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
-        transform.localScale = scale;
-        transform.localPosition += new Vector3(0, sign * 100f, sign * 2f);
+        var position = active ? _position + new Vector3(0, sign * 100f, sign * 2f) : _position;
+        transform.DOScale(scale, 0.4f);
+        transform.DOMove(position, 0.4f);
+    }
+
+    public void SetTargetPosition(Vector3 targetPosition)
+    {
+        _position = targetPosition;
     }
 }
