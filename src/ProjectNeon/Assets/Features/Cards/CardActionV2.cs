@@ -9,6 +9,11 @@ public class CardActionV2
     [SerializeField] private StringReference characterAnimation;
     [SerializeField] private StringReference atTargetAnimation;
 
+    public CardBattleActionType Type => type;
+    public EffectData BattleEffect => battleEffect;
+    public StringReference CharacterAnimation => characterAnimation;
+    public StringReference AtTargetAnimation => atTargetAnimation;
+    
     public void Begin(Member source, Target target, Group group, Scope scope, int amountPaid)
     {
         if (type == CardBattleActionType.Battle)

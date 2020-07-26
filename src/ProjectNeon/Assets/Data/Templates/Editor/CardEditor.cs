@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ public class CardEditor : Editor
         PresentUnchanged(onlyPlayableByClass);
         PresentUnchanged(cost);
         PresentActionSequences();
-        PresentUnchanged(actionSequences);
+        //PresentUnchanged(actionSequences);
         PresentUnchanged(cardAction1);
         PresentUnchanged(cardAction2);
     }
@@ -37,26 +38,99 @@ public class CardEditor : Editor
     private void PresentUnchanged(SerializedProperty serializedProperty)
     {
         serializedObject.Update();
-        EditorGUILayout.PropertyField(serializedProperty);
+        EditorGUILayout.PropertyField(serializedProperty, includeChildren: true);
         serializedObject.ApplyModifiedProperties();
     }
 
     private void PresentActionSequences()
     {
-        EditorGUILayout.PrefixLabel("Action Sequences");
+        EditorGUI.indentLevel = 0;
+        PresentLabelsWithControls("Action Sequences", menu => menu.AddItem(new GUIContent("Insert New"), false, () =>
+        {
+            targetCard.actionSequences = new CardActionSequence[] {new CardActionSequence()}.Concat(targetCard.actionSequences).ToArray();
+            EditorUtility.SetDirty(target);
+        }));
+        EditorGUI.indentLevel++;
+        var sequences = targetCard.actionSequences.ToArray();
+        for (var i = 0; i < sequences.Length; i++)
+        {
+            var refBrokenI = i;
+            var sequence = sequences[refBrokenI];
+            PresentLabelsWithControls($"Action Sequence {refBrokenI}", menu =>
+            {
+                menu.AddItem(new GUIContent("Add"), false, () =>
+                {
+                    targetCard.actionSequences = sequences.Take(Array.IndexOf(sequences, sequence) + 1)
+                        .Concat(new CardActionSequence[] {new CardActionSequence()})
+                        .Concat(sequences.Skip(Array.IndexOf(sequences, sequence) + 1))
+                        .ToArray();
+                    EditorUtility.SetDirty(target);
+                });
+                menu.AddItem(new GUIContent("Delete"), false, () =>
+                {
+                    targetCard.actionSequences = sequences.Where(x => x != sequence).ToArray();
+                    EditorUtility.SetDirty(target);
+                });
+            });
+            EditorGUI.indentLevel++;
+            PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].group"));
+            PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].scope"));
+            PresentLabelsWithControls("Actions", menu => menu.AddItem(new GUIContent("Insert New"), false, () =>
+            {
+                sequence.cardActions = new CardActionV2[] { new CardActionV2() }.Concat(sequence.cardActions).ToArray();
+                EditorUtility.SetDirty(target);
+            }));
+            EditorGUI.indentLevel++;
+            var actions = sequence.cardActions.ToArray();
+            for (var ii = 0; ii < actions.Length; ii++)
+            {
+                var refBrokenii = ii;
+                var action = actions[refBrokenii];
+                PresentLabelsWithControls($"Action {refBrokenii}", menu =>
+                {
+                    menu.AddItem(new GUIContent("Add"), false, () =>
+                    {
+                        sequence.cardActions = sequence.cardActions.Take(Array.IndexOf(sequence.cardActions, action) + 1)
+                            .Concat(new CardActionV2[] {new CardActionV2()})
+                            .Concat(sequence.cardActions.Skip(Array.IndexOf(sequence.cardActions, action) + 1))
+                            .ToArray();
+                        EditorUtility.SetDirty(target);
+                    });
+                    menu.AddItem(new GUIContent("Delete"), false, () =>
+                    {
+                        sequence.cardActions = sequence.cardActions.Where(x => x != action).ToArray();
+                        EditorUtility.SetDirty(target);
+                    });
+                });
+                EditorGUI.indentLevel++;
+                PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions.Array.data[{refBrokenii}].type"));
+                if (action.Type == CardBattleActionType.AnimateCharacter)
+                    PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions.Array.data[{refBrokenii}].characterAnimation"));
+                if (action.Type == CardBattleActionType.AnimateAtTarget)
+                    PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions.Array.data[{refBrokenii}].atTargetAnimation"));
+                if (action.Type == CardBattleActionType.Battle)
+                {
+                    
+                }
+                EditorGUI.indentLevel--;
+            }
+            EditorGUI.indentLevel--;
+            EditorGUI.indentLevel--;
+        }
+        EditorGUI.indentLevel--;
+    }
+    
+    private void PresentLabelsWithControls(string label, Action<GenericMenu> addToGenericMenu)
+    {
+        EditorGUILayout.LabelField(label);
         var clickArea =  GUILayoutUtility.GetLastRect();
-        Event current = Event.current;
+        var current = Event.current;
         if (clickArea.Contains(current.mousePosition) && current.type == EventType.ContextClick)
         {
             GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Insert New"), false, () =>
-            {
-                targetCard.actionSequences = new CardActionSequence[] {new CardActionSequence()}.Concat(targetCard.actionSequences).ToArray();
-                EditorUtility.SetDirty(target);
-            });
+            addToGenericMenu(menu);
             menu.ShowAsContext();
             current.Use(); 
         }
-
     }
 }
