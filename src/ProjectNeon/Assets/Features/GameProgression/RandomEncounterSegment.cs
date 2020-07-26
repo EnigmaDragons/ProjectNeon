@@ -10,6 +10,6 @@ public class RandomEncounterSegment : StageSegment
     public override void Start()
     {
         battleState.SetNextBattleground(possibleBattlegrounds.Random());
-        SceneManager.LoadScene("BattleScene");
+        SceneManager.LoadScene("BattleSceneV2");
     }
 }
