@@ -20,7 +20,7 @@ public class CardsVisualizer : MonoBehaviour
     private bool _isDirty = false;
     private Action _onShownCardsChanged = () => { };
 
-    public GameObject[] ShownCards => cardPool.Select(c => c.gameObject).ToArray();
+    public CardPresenter[] ShownCards => cardPool.ToArray();
 
     public void SetOnShownCardsChanged(Action action) => _onShownCardsChanged = action;
 
@@ -105,7 +105,7 @@ public class CardsVisualizer : MonoBehaviour
             var targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
 
             c.Set(card, () => SelectCard(cardIndex));
-            c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.IsPlayable(state)));
+            c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.IsPlayableByHero(state)));
             SwapCardPoolSpots(cardIndex, presenterIndex);
             c.transform.DOMove(targetPosition, 1);
             c.SetTargetPosition(targetPosition);

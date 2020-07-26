@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,6 +25,22 @@ public class CardResolutionZone : ScriptableObject
         BattleLog.Write($"{played.Member.Name} Played {played.Card.name} - {played.Spent}");
     }
 
+    public void ExpirePlayedCards(Func<IPlayedCard, bool> condition)
+    {
+        var movesCopy = moves.ToArray();
+        for (var i = 0; i < movesCopy.Length; i++)
+        {
+            var played = movesCopy[i];
+            if (!condition(played)) continue;
+            
+            BattleLog.Write($"Expired played card {played.Card.Name} by {played.Member.Name}");
+            moves.RemoveAt(i);
+            physicalZone.Take(i);
+            if (played.Member.TeamType == TeamType.Party)
+                playerHand.PutOnBottom(playerPlayArea.Take(i));
+        }
+    }
+    
     public void RemoveLastPlayedCard()
     {
         if (moves.None()) return;

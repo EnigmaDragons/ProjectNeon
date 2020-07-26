@@ -45,8 +45,9 @@ public class BattleSetupV2 : MonoBehaviour
         state.Init();
         visuals.AfterBattleStateInitialized();
         
-        SetupPlayerCards(); // Could Animate
         ui.Setup();
+        SetupPlayerCards();
+        yield return new WaitForSeconds(1);
     }
 
     private void ClearResolutionZone()

@@ -1,7 +1,14 @@
 
 public static class BattleStateExtensions
 {
-    public static bool IsPlayable(this Card c, BattleState b)
+    public static bool IsPlayableBy(this Card c, Member member)
+    {
+        if (!member.IsConscious())
+            return false;
+        return member.CanAfford(c);
+    }
+    
+    public static bool IsPlayableByHero(this Card c, BattleState b)
     {
         if (c.LimitedToClass.IsMissing)
             return false;

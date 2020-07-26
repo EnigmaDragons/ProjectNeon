@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -16,7 +17,10 @@ public sealed class DumbAI : TurnAI
     {
         var enemy = battleState.GetEnemyById(memberId);
         var me = battleState.Members[memberId];
-        var card = enemy.Deck.Cards.Where(c => c.IsPlayable(battleState)).Random();
+        var playableCards = enemy.Deck.Cards.Where(c => c.IsPlayableBy(me)).ToList();
+        if (!playableCards.Any())
+            throw new InvalidDataException($"{me.Name} {me.Id} has no playable cards in hand");
+        var card = playableCards.Random();
         var targets = new List<Target>();
         card.Actions.ForEach(
             action =>

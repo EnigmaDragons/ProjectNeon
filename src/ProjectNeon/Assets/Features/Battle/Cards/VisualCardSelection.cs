@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
 
+[Obsolete("V1 Battle")]
 public sealed class VisualCardSelection : MonoBehaviour
 {
     [SerializeField] private CardsVisualizer cards;
     [SerializeField] private GameEvent[] activateHighlightWhen;
     
-    private IndexSelector<GameObject> _indexSelector;
+    private IndexSelector<CardPresenter> _indexSelector;
     private bool _isDirty = false;
     private bool _shouldHighlight;
     
@@ -36,7 +37,7 @@ public sealed class VisualCardSelection : MonoBehaviour
         if (cards.ShownCards.Length < 1)
             return;
 
-        _indexSelector = new IndexSelector<GameObject>(cards.ShownCards);
+        _indexSelector = new IndexSelector<CardPresenter>(cards.ShownCards);
         if (_shouldHighlight)
             EnableHighlight();
     }

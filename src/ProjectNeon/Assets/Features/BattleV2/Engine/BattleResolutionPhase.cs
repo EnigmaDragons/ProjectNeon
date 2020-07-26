@@ -38,20 +38,18 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 
-    protected override void Execute(CardResolutionFinished msg)
-    {
-        ResolveNext();
-    }
-    
-    private void CheckForUnconsciousMembers()
-    {
-        state.Members.Values.ToList()
+    protected override void Execute(CardResolutionFinished msg) => ResolveNext();
+
+    private void CheckForUnconsciousMembers() 
+        => state.Members.Values.ToList()
             .Except(_unconscious)
             .Where(m => !m.State.IsConscious)
-            .ForEach(m =>
-            {    
-                _unconscious.Add(m);
-                Message.Publish(new MemberUnconscious(m));
-            });
+            .ForEach(ResolveUnconsciousMember);
+
+    private void ResolveUnconsciousMember(Member member)
+    {
+        resolutionZone.ExpirePlayedCards(card => card.Member.Id == member.Id);
+        _unconscious.Add(member);
+        Message.Publish(new MemberUnconscious(member));
     }
 }

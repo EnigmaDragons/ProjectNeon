@@ -5,7 +5,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     [SerializeField] private CardsVisualizer cards;
     [SerializeField] private BattleState state;
     
-    private IndexSelector<GameObject> _indexSelector;
+    private IndexSelector<CardPresenter> _indexSelector;
     private bool _isDirty = false;
     private bool _shouldHighlight;
     
@@ -13,6 +13,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         Message.Subscribe<TurnStarted>(_ => Activate(), this);
         Message.Subscribe<TargetSelectionFinished>(_ => Activate(), this);
+        Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
         Message.Subscribe<TargetSelectionBegun>(_ => Deactivate(), this);
         cards.SetOnShownCardsChanged(() => _isDirty = true);
         _isDirty = true;
@@ -47,7 +48,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         if (cards.ShownCards.Length < 1)
             return;
 
-        _indexSelector = new IndexSelector<GameObject>(cards.ShownCards);
+        _indexSelector = new IndexSelector<CardPresenter>(cards.ShownCards);
         if (_shouldHighlight)
             EnableHighlight();
     }
@@ -83,11 +84,12 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
 
     private void EnableHighlight()
     {
-        _indexSelector.Current.GetComponent<CardPresenter>().SetHighlight(true);
+        cards.ShownCards.ForEach(c => c.SetHighlight(false));
+        _indexSelector.Current.SetHighlight(true);
     }
     
     private void DisableHighlight()
     {
-        _indexSelector.Current.GetComponent<CardPresenter>().SetHighlight(false);
+        _indexSelector.Current.SetHighlight(false);
     }
 }
