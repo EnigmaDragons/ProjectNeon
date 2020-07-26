@@ -10,7 +10,8 @@ public class EffectDataEditor : PropertyDrawer
     {
         {EffectType.Nothing, new string[0]},
         {EffectType.OnAttacked, new []{ "NumberOfTurns", "ReferencedEffectSequence" }},
-        {EffectType.CostResource, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }}
+        {EffectType.CostResource, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
+        {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
