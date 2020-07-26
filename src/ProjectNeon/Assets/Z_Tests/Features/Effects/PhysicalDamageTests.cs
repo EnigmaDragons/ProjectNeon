@@ -34,4 +34,19 @@ public sealed class PhysicalDamageTests
             target.State[TemporalStatType.HP]
         );
     }
+    
+    [Test]
+    public void PhysicalDamage_DamageMultipleEnemies_ApplyEffect()
+    {
+        Member[] target = new Member[]
+        {
+            TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f).With(StatType.Armor, 0F)),
+            TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f).With(StatType.Armor, 0F))
+        };
+
+        new Damage(new PhysicalDamage(1)).Apply(attacker, new Multiple(target));
+
+        Assert.AreEqual(8, target[0].State[TemporalStatType.HP]);
+        Assert.AreEqual(8, target[1].State[TemporalStatType.HP]);
+    }
 }

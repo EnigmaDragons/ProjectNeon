@@ -27,7 +27,7 @@ public enum EffectType
     RepeatEffect = 24,
     AnyTargetHealthBelowThreshold = 25,
     OnAttacked = 26,
-    CostPrimaryResourceEffect = 27,
+    CostResource = 27,
     ForNumberOfTurns = 28,
     //FeedOnEffect = 29, unused effect
     ShieldBasedOnShieldValue = 30,
@@ -42,5 +42,5 @@ public enum EffectType
     HealPrimaryResource = 39,
     ApplyOnShieldBelowValue = 40,
     ApplyOnChance = 41,
-    ReplayLastCard = 42
+    ReplayLastCard = 42,
 }

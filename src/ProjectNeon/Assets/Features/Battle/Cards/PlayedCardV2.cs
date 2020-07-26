@@ -33,7 +33,7 @@
     public void Continue()
     {
         if (_card.ActionSequences.Length == _sequenceIndex 
-            || (_card.ActionSequences.Length - 1 == _sequenceIndex && _card.ActionSequences[_sequenceIndex].CardActions.Length == _actionIndex))
+            || (_card.ActionSequences.Length - 1 == _sequenceIndex && _card.ActionSequences[_sequenceIndex].CardActions.Actions.Length == _actionIndex))
         {
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished());
@@ -41,11 +41,11 @@
         }
 
         var seq = _card.ActionSequences[_sequenceIndex];
-        var action = seq.CardActions[_actionIndex];
+        var action = seq.CardActions.Actions[_actionIndex];
         action.Begin(_performer, _targets[_sequenceIndex], seq.Group, seq.Scope, _spent.Amount);
         _actionIndex++;
         
-        if (seq.CardActions.Length == _actionIndex)
+        if (seq.CardActions.Actions.Length == _actionIndex)
         {
             _sequenceIndex++;
             _actionIndex = 0;

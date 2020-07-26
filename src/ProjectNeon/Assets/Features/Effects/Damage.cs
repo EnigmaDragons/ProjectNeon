@@ -18,6 +18,6 @@ public sealed class Damage : Effect
             Debug.LogWarning($"Dealing {amount} to {target.Members[0].Name}");
         else
             Debug.Log($"Dealing {amount} to {target.Members[0].Name}");
-        target.Members[0].State.ChangeHp(-amount);
+        target.Members.ForEach(x => x.State.ChangeHp(-amount));
     }
 }

@@ -52,5 +52,6 @@ public class ResourceCostDrawer : PropertyDrawer
                 resourceType.objectReferenceValue = newVal;
         }
         EditorGUI.EndProperty();
+        EditorGUI.indentLevel -= 1;
     }
 }
