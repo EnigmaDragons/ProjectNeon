@@ -21,9 +21,10 @@ MonoBehaviour:
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
+    isXCost: 0
   actionSequences:
   - scope: 1
-    group: 1
+    group: 0
     cardActions:
     - type: 30
       battleEffect:
@@ -42,35 +43,15 @@ MonoBehaviour:
           Variable: {fileID: 0}
       characterAnimation:
         UseConstant: 1
-        ConstantValue: BulletBarrage
-        Variable: {fileID: 0}
-      atTargetAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-    - type: 1
-      battleEffect:
-        EffectType: 2
-        FloatAmount:
-          UseConstant: 1
-          ConstantValue: 0.5
-          FloatVariable: {fileID: 0}
-        NumberOfTurns:
-          UseConstant: 0
-          ConstantValue: 0
-          Variable: {fileID: 0}
-        EffectScope:
-          UseConstant: 0
-          ConstantValue: 
-          Variable: {fileID: 0}
-      characterAnimation:
-        UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       atTargetAnimation:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+  - scope: 0
+    group: 1
+    cardActions: []
   cardAction1:
     targetScope: 1
     targetGroup: 1
