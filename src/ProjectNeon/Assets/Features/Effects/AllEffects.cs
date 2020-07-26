@@ -62,7 +62,7 @@ public static class AllEffects
         var effect = Create(effectData);
         BattleLog.Write($"Applying Effect of {effectData.EffectType} to {target.Members} members");
         effect.Apply(source, target);
-        target.Members.ForEach(m => BattleEvent.Publish(new MemberStateChanged(m)));
+        target.Members.ForEach(m => Message.Publish(new LegacyMemberStateChanged(m)));
     }
 
     public static Effect Create(EffectData effectData)

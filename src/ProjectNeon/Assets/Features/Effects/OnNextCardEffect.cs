@@ -14,14 +14,14 @@ public class OnNextCardEffect : Effect
     private void NextCard()
     {
         _active = true;
-        BattleEvent.Unsubscribe(this);
+        Message.Unsubscribe(this);
     }
 
     public OnNextCardEffect(Effect effect)
     {
         _effect = effect;
         _active = false;
-        BattleEvent.Subscribe<CardResolutionStarted>((resolutionEnded) => NextCard(), this);
+        Message.Subscribe<CardResolutionStarted>((resolutionEnded) => NextCard(), this);
     }
 
     public void Apply(Member source, Target target)

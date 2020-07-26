@@ -21,7 +21,7 @@ public class CardResolutionZone : ScriptableObject
         moves.Add(played);
         physicalZone.PutOnBottom(played.Card);
         played.Member.Apply(m => m.LoseResource(played.Spent.ResourceType.Name, played.Spent.Amount));
-        BattleLog.Write($"{played.Member.Name} Played {played.Card.name}");
+        BattleLog.Write($"{played.Member.Name} Played {played.Card.name} - {played.Spent}");
     }
 
     public void RemoveLastPlayedCard()
@@ -29,6 +29,7 @@ public class CardResolutionZone : ScriptableObject
         if (moves.None()) return;
         
         var played = moves.Last();
+        BattleLog.Write($"Canceled playing {played.Card.Name}");
         moves.RemoveAt(moves.Count - 1);
         var card = physicalZone.Take(physicalZone.Count - 1);
         playerPlayArea.Take(playerPlayArea.Count - 1);

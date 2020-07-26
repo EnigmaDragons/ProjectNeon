@@ -20,8 +20,9 @@ public sealed class MemberState : IStats
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
 
-    public MemberState(IStats baseStats)
+    public MemberState(int id, IStats baseStats)
     {
+        MemberId = id;
         _baseStats = baseStats;
         _counters["HP"] = new BattleCounter(TemporalStatType.HP, _baseStats.MaxHP(), () => CurrentStats.MaxHP());
         _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.Toughness() * 2);
@@ -30,6 +31,7 @@ public sealed class MemberState : IStats
         _counters["None"] = new BattleCounter("None", 0, () => 0);
     }
 
+    public int MemberId { get; }
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
@@ -43,8 +45,8 @@ public sealed class MemberState : IStats
     public void ApplyTemporaryMultiplier(ITemporalState mods) => _multiplierMods.Add(mods);
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => _additiveMods.RemoveAll(condition);
 
-    public void GainResource(string resourceName, int amount) => Counter(resourceName).ChangeBy(amount);
-    public void LoseResource(string resourceName, int amount) => Counter(resourceName).ChangeBy(-amount);
+    public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
+    public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void GainHp(float amount) => ChangeHp(amount);
     public void GainShield(float amount) => Counter(TemporalStatType.Shield).ChangeBy(amount);
     public void GainArmor(float amount) => ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.Armor, amount));
@@ -76,5 +78,11 @@ public sealed class MemberState : IStats
     {
         _additiveMods.ForEach(m => m.AdvanceTurn());
         _additiveMods.RemoveAll(m => !m.IsActive);
+    }
+
+    private void PublishAfter(Action action)
+    {
+        action();
+        Message.Publish(new MemberStateChanged(this));
     }
 }

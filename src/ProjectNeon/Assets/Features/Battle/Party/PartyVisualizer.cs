@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Obsolete("BattleV1")]
-public class PartyVisualizer : OnBattleEvent<CharacterAnimationRequested>
+public class PartyVisualizer : OnMessage<CharacterAnimationRequested>
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private GameObject hero1;

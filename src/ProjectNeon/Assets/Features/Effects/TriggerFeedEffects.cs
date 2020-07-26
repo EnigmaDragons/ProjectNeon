@@ -25,7 +25,7 @@ public sealed class TriggerFeedEffects : Effect
     public void Apply(Member source, Target target)
     {
         _origin.Apply(source, target);
-        BattleEvent.Publish(new FeedCardResolutionStarted(_type.ToString()));
+        Message.Publish(new FeedCardResolutionStarted(_type.ToString()));
     }
 }
 

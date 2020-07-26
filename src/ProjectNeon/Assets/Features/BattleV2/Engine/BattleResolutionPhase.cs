@@ -51,7 +51,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
             .ForEach(m =>
             {    
                 _unconscious.Add(m);
-                BattleEvent.Publish(new MemberUnconscious(m));
+                Message.Publish(new MemberUnconscious(m));
             });
     }
 }

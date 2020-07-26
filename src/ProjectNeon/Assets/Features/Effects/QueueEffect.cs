@@ -15,13 +15,13 @@ public class QueueEffect : Effect
     public void Apply(Member source, Target target)
     {
         Effect effect = new UnqueueAfterExceuteEffect(_effect);
-        BattleEvent.Publish(new AddEffectToQueue(effect));
-        BattleEvent.Subscribe<EffectApplied>(
+        Message.Publish(new AddEffectToQueue(effect));
+        Message.Subscribe<EffectApplied>(
             (msg) => {
                 if (msg.Effect.Equals(_effect))
                 {
-                    BattleEvent.Publish(new RemoveEffectFromQueue(msg.Effect));
-                    BattleEvent.Unsubscribe(this);
+                    Message.Publish(new RemoveEffectFromQueue(msg.Effect));
+                    Message.Unsubscribe(this);
                 }
             }, 
         this);

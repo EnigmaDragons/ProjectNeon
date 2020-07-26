@@ -15,8 +15,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private TextMeshProUGUI costLabel;
     [SerializeField] private Image costResourceTypeIcon;
     [SerializeField] private Image art;
-    [SerializeField] private GameObject highlight;
     [SerializeField] private Image tint;
+    [SerializeField] private GameObject canPlayHighlight;
+    [SerializeField] private GameObject highlight;
     [SerializeField] private float highlightedScale = 1.7f;
 
     private Card _card;
@@ -24,6 +25,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     public bool Contains(Card c) => HasCard && _card == c;
     public bool HasCard => _card != null;
+    public bool IsPlayable => canPlayHighlight.activeSelf;
 
     public void ClearIfIs(Card c)
     {
@@ -40,6 +42,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     public void Set(Card card, Action onClick)
     {
         gameObject.SetActive(true);
+        canPlayHighlight.SetActive(false);
         _onClick = onClick;
         _card = card;
         
@@ -55,6 +58,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         
         tint.color = classTints.TintFor(card.LimitedToClass.OrDefault(() => ""));
     }
+
+    public void SetCanPlay(bool canPlay) => canPlayHighlight.SetActive(canPlay);
     
     public void OnPointerDown(PointerEventData eventData)
     {

@@ -22,8 +22,8 @@ public class EnemyVisualizer : MonoBehaviour
 
     [ReadOnly, SerializeField] private GameObject[] visuals;
     
-    private void OnEnable() => BattleEvent.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
-    private void OnDisable() => BattleEvent.Unsubscribe(this);
+    private void OnEnable() => Message.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
+    private void OnDisable() => Message.Unsubscribe(this);
 
     public void SetupEnemies()
     {
@@ -64,7 +64,7 @@ public class EnemyVisualizer : MonoBehaviour
         var enemy = state.GetEnemyById(m.Member.Id);
         if (!string.IsNullOrWhiteSpace(enemy.DeathEffect))
         {
-            BattleEvent.Publish(new BattleEffectAnimationRequested
+            Message.Publish(new BattleEffectAnimationRequested
             {
                 EffectName = enemy.DeathEffect, 
                 Scope = Scope.One, 

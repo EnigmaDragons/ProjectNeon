@@ -6,7 +6,7 @@ public class Evade : Effect
     public void Apply(Member source, Target target)
     {
         _effectTarget = target;
-        BattleEvent.Subscribe<AttackToPerform>(attackToPerform => Execute(attackToPerform.Attack), this);
+        Message.Subscribe<AttackToPerform>(attackToPerform => Execute(attackToPerform.Attack), this);
     }
 
     void Execute(Attack attack)

@@ -19,7 +19,7 @@ public class ForNumberOfTurns : Effect
     private void AdvanceTurn()
     {
         if (_remainingDuration < 0) {
-            BattleEvent.Unsubscribe(this);
+            Message.Unsubscribe(this);
             return;
         }
         _remainingDuration--;
@@ -30,7 +30,7 @@ public class ForNumberOfTurns : Effect
         _effect = effect;
         _remainingDuration = duration;
 	_isDebuff = isDebuff;
-        BattleEvent.Subscribe<TurnEnd>((turnEnd) => AdvanceTurn(), this);
+    Message.Subscribe<TurnEnd>((turnEnd) => AdvanceTurn(), this);
     }
 
     public ForNumberOfTurns(Effect effect, int duration) : this(effect, duration, true) { }
