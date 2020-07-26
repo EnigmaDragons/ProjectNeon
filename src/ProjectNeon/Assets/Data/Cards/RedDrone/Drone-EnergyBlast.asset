@@ -20,33 +20,11 @@ MonoBehaviour:
   cost:
     cost: 3
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+    isXCost: 0
   actionSequences:
   - scope: 1
     group: 1
-    cardActions:
-    - type: 1
-      battleEffect:
-        EffectType: 33
-        FloatAmount:
-          UseConstant: 1
-          ConstantValue: 25
-          FloatVariable: {fileID: 0}
-        NumberOfTurns:
-          UseConstant: 0
-          ConstantValue: 0
-          Variable: {fileID: 0}
-        EffectScope:
-          UseConstant: 0
-          ConstantValue: 
-          Variable: {fileID: 0}
-      characterAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      atTargetAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
+    cardActions: {fileID: 0}
   cardAction1:
     targetScope: 1
     targetGroup: 1
@@ -64,6 +42,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 0
       FloatAmount:
@@ -78,6 +57,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
       FloatAmount:
@@ -92,6 +72,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     chainedEffects:
     - EffectType: 35
       FloatAmount:
@@ -106,6 +87,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     - EffectType: 36
       FloatAmount:
         UseConstant: 0
@@ -119,6 +101,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     - EffectType: 34
       FloatAmount:
         UseConstant: 0
@@ -132,6 +115,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     - EffectType: 33
       FloatAmount:
         UseConstant: 1
@@ -145,6 +129,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     characterAnimation:
       UseConstant: 1
       ConstantValue: 
@@ -170,6 +155,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 0
       FloatAmount:
@@ -184,6 +170,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
       FloatAmount:
@@ -198,6 +185,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     chainedEffects: []
     characterAnimation:
       UseConstant: 1

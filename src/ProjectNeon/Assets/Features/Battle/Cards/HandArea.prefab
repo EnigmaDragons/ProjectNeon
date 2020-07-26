@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82a0ffc392d38f43a890a67ccc46413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: {fileID: 0}
   zone: {fileID: 11400000, guid: d384cb3c3fffa7241a3f7e1555a17223, type: 2}
   allowInteractions: 1
   onCardClickDestination: {fileID: 11400000, guid: 3717d6c6fb916bc4bbd27677b1d617d1,
@@ -70,7 +71,9 @@ MonoBehaviour:
   cardSpacingScreenPercent: 0.1
   cardPrototype: {fileID: -1608072616277939871, guid: d0f241a069af80a4fbe58317fdb27254,
     type: 3}
-  _shownCards: []
+  maxCards: 12
+  onlyAllowInteractingWithPlayables: 0
+  cardPool: []
 --- !u!114 &9171807529961977257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,3 +220,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cards: {fileID: 963235364}
+  state: {fileID: 0}

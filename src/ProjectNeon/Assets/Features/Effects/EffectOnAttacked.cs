@@ -6,13 +6,13 @@ using System.Collections;
  */
 public class EffectOnAttacked : Effect
 {
-    private Effect _effect;
+    private CardActionsData _effect;
     private Member _performer;
     private Target _effectTarget;
 
-    public EffectOnAttacked(Effect shield)
+    public EffectOnAttacked(CardActionsData effect)
     {
-        _effect = shield;
+        _effect = effect;
     }
 
     void Effect.Apply(Member source, Target target)
@@ -25,6 +25,6 @@ public class EffectOnAttacked : Effect
     void Execute(Attack attack)
     {
         if (_effectTarget.Equals(attack.Target))
-            _effect.Apply(_performer, _effectTarget);
+            SequenceMessage.Queue(_effect.Play(_performer, new Single(attack.Attacker), Group.Opponent, Scope.One, 0));
     }
 }

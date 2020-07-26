@@ -5,9 +5,10 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(ActionConditionData))]
 public class ActionConditionDataDrawer : PropertyDrawer
 {
-    private DictionaryWithDefault<ActionConditionType, string[]> _relevantProperties = new DictionaryWithDefault<ActionConditionType, string[]>(new string[] { })
+    private DictionaryWithDefault<ActionConditionType, string[]> _relevantProperties = new DictionaryWithDefault<ActionConditionType, string[]>(new string[] { "FloatAmount" })
     {
-        {ActionConditionType.PerformerHasResource, new string[] { "Cost" }}
+        {ActionConditionType.Nothing, new string[0]},
+        {ActionConditionType.PerformerHasResource, new [] { "FloatAmount", "EffectScope" }}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

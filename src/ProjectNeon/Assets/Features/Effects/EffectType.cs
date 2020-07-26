@@ -14,8 +14,8 @@ public enum EffectType
     ShieldToughness = 11,
     ArmorFlat = 12,
     Stun = 13,
-    ShieldAttackedOnAttack = 14,
-    DamageAttackerOnAttack = 15,
+    ShieldAttackedOnAttack = 14, //obsolete
+    DamageAttackerOnAttack = 15, //obsolete
     StealLifeNextAttack = 16,
     Attack = 17,
     InterceptAttackForTurns = 18,
