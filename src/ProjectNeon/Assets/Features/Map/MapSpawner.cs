@@ -24,6 +24,7 @@ public sealed class MapSpawner : MonoBehaviour
 
     private void SpawnToken()
     {
+        progress.InitIfNeeded();
         var o = Instantiate(tokenPrototype, transform);
         var rectTransform = o.GetComponent<RectTransform>();
         rectTransform.anchoredPosition += map.Locations[progress.CurrentStageSegmentIndex].GeoPosition;

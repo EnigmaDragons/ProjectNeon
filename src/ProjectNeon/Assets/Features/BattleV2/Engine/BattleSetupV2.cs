@@ -57,6 +57,8 @@ public class BattleSetupV2 : MonoBehaviour
     
     private void SetupEnemyEncounter()
     {
+        if (state.HasCustomEnemyEncounter)
+            state.SetupEnemyEncounter();
         if (enemyArea.Enemies.Length == 0)
             enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
         foreach (var enemy in enemyArea.Enemies)

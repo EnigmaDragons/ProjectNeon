@@ -8,9 +8,15 @@ public class BattleState : ScriptableObject
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private EnemyArea enemies;
+    
+    [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
+    [SerializeField] private Enemy[] nextEnemies;
+    
+    [Header("ReadOnly")]
     [SerializeField, ReadOnly] private Vector3[] uiPositions;
     [SerializeField, ReadOnly] private string[] memberNames;
+    
     public bool SelectionStarted = false;
 
     public Party Party => partyArea.Party;
@@ -34,17 +40,23 @@ public class BattleState : ScriptableObject
         return Init();
     }
 
-    public void SetNextBattleground(GameObject prototype)
+    public void SetNextBattleground(GameObject prototype) => nextBattlegroundPrototype = prototype;
+    public void SetNextEncounter(Enemy[] e) => nextEnemies = e;
+    public void SetupEnemyEncounter()
     {
-        nextBattlegroundPrototype = prototype;
+        EnemyArea.Initialized(nextEnemies);
+        nextEnemies = new Enemy[0];
+        Debug.Log("Battle State Setup Enemy Encounter");
     }
 
     private int EnemyStartingIndex => 2;
+    public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
+
     public BattleState Init()
     {
         var id = 1;      
         var heroes = Party.Heroes;
-
+        
         memberNames = new string[EnemyStartingIndex + enemies.Enemies.Length + 3];
         _uiTransformsById = new Dictionary<int, Transform>();
         _enemiesById = new Dictionary<int, Enemy>();
