@@ -107,11 +107,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: (Esc) Cancel
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -264,11 +263,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: (Enter) Confirm Target
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -440,11 +438,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6248099087060110452}
     m_Modifications:
-    - target: {fileID: 8438847975545394452, guid: d0f241a069af80a4fbe58317fdb27254,
-        type: 3}
-      propertyPath: m_Name
-      value: RectCardView
-      objectReference: {fileID: 0}
     - target: {fileID: 1535076678857706556, guid: d0f241a069af80a4fbe58317fdb27254,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -549,6 +542,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438847975545394452, guid: d0f241a069af80a4fbe58317fdb27254,
+        type: 3}
+      propertyPath: m_Name
+      value: RectCardView
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0f241a069af80a4fbe58317fdb27254, type: 3}

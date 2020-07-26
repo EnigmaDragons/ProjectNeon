@@ -8,6 +8,7 @@ public class TransformLegacyCards
     [MenuItem("Enigma Dragons/Transform legacy Card Data")]
     public static void GoTransformLegacyCards()
     {
+        AssetDatabase.ForceReserializeAssets();
         /*GetAllInstances<Card>().ForEach(card => card.actionSequences = card.Actions.Select(cardAction =>
         {
             var cardActions = new List<CardActionV2>();
@@ -22,6 +23,8 @@ public class TransformLegacyCards
         GetAllInstances<Card>().ForEach(EditorUtility.SetDirty);
         AssetDatabase.SaveAssets();*/
     }
+    
+    
 
     public static List<T> GetAllInstances<T>() where T : ScriptableObject
         => AssetDatabase.FindAssets("t:" + typeof(T).Name)

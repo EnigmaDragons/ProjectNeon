@@ -16,7 +16,7 @@ public class CardActionV2
     public StringReference CharacterAnimation => characterAnimation;
     public StringReference AtTargetAnimation => atTargetAnimation;
     
-    public void Begin(Member source, Target target, Group group, Scope scope, int amountPaid)
+    public void Play(Member source, Target target, Group group, Scope scope, int amountPaid)
     {
         if (type == CardBattleActionType.Battle)
             Message.Publish(new ApplyBattleEffect(battleEffect, source, target));

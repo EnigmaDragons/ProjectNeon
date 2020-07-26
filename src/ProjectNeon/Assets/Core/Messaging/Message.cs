@@ -19,7 +19,7 @@ public static class Message
         return msgs;
     }
 
-    private static void Subscribe(MessageSubscription subscription)
+    public static void Subscribe(MessageSubscription subscription)
     {
         Msgs.Subscribe(subscription);
         EventSubs.Add(subscription);

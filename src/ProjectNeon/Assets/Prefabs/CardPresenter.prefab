@@ -60,11 +60,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: x2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -208,11 +207,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b03b056ceb8dd43a4bd954d5fc7f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: {fileID: 0}
+  classTints: {fileID: 0}
+  battleState: {fileID: 0}
+  nameLabel: {fileID: 0}
   description: {fileID: 0}
   type: {fileID: 0}
+  costPanel: {fileID: 0}
+  costLabel: {fileID: 0}
+  costResourceTypeIcon: {fileID: 0}
   art: {fileID: 0}
+  tint: {fileID: 0}
+  canPlayHighlight: {fileID: 0}
   highlight: {fileID: 0}
+  highlightedScale: 1.7
 --- !u!1 &2356427760783205710
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,11 +280,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 9fa4e0b682ccb88469c1b8bca592823d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -348,11 +354,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Card name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

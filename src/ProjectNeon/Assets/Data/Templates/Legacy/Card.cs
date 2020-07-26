@@ -25,4 +25,7 @@ public class Card : ScriptableObject
         .ConcatIf(cardAction1, c => c.HasEffects)
         .ConcatIf(cardAction2, c => c.HasEffects)
         .ToArray();
+
+    public void Play(Member source, Target target, Group group, Scope scope, int amountPaid)
+        => ActionSequences.ForEach(x => x.Play(source, target, group, scope, amountPaid));
 }

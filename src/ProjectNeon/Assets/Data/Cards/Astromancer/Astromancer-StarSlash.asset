@@ -20,105 +20,14 @@ MonoBehaviour:
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
+    isXCost: 0
   actionSequences:
   - scope: 0
     group: 1
-    cardActions:
-    - type: 1
-      battleEffect:
-        EffectType: 2
-        FloatAmount:
-          UseConstant: 1
-          ConstantValue: 0.5
-          FloatVariable: {fileID: 0}
-        NumberOfTurns:
-          UseConstant: 1
-          ConstantValue: 0
-          Variable: {fileID: 0}
-        EffectScope:
-          UseConstant: 1
-          ConstantValue: 
-          Variable: {fileID: 0}
-      characterAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      atTargetAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
+    cardActions: {fileID: 0}
   - scope: 0
     group: 0
-    cardActions:
-    - type: 1
-      battleEffect:
-        EffectType: 7
-        FloatAmount:
-          UseConstant: 1
-          ConstantValue: 1
-          FloatVariable: {fileID: 0}
-        NumberOfTurns:
-          UseConstant: 1
-          ConstantValue: 0
-          Variable: {fileID: 0}
-        EffectScope:
-          UseConstant: 1
-          ConstantValue: Mana
-          Variable: {fileID: 0}
-      characterAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      atTargetAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-    - type: 1
-      battleEffect:
-        EffectType: 37
-        FloatAmount:
-          UseConstant: 1
-          ConstantValue: 0
-          FloatVariable: {fileID: 0}
-        NumberOfTurns:
-          UseConstant: 1
-          ConstantValue: 0
-          Variable: {fileID: 0}
-        EffectScope:
-          UseConstant: 1
-          ConstantValue: Stellar
-          Variable: {fileID: 0}
-      characterAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      atTargetAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-    - type: 1
-      battleEffect:
-        EffectType: 39
-        FloatAmount:
-          UseConstant: 0
-          ConstantValue: 0
-          FloatVariable: {fileID: 0}
-        NumberOfTurns:
-          UseConstant: 0
-          ConstantValue: 0
-          Variable: {fileID: 0}
-        EffectScope:
-          UseConstant: 0
-          ConstantValue: Solar
-          Variable: {fileID: 0}
-      characterAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      atTargetAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
+    cardActions: {fileID: 0}
   cardAction1:
     targetScope: 0
     targetGroup: 1
@@ -136,6 +45,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 0
       FloatAmount:
@@ -150,6 +60,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
       FloatAmount:
@@ -164,6 +75,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     chainedEffects: []
     characterAnimation:
       UseConstant: 1
@@ -190,6 +102,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Mana
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 37
       FloatAmount:
@@ -204,6 +117,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Stellar
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
       FloatAmount:
@@ -218,6 +132,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     chainedEffects:
     - EffectType: 38
       FloatAmount:
@@ -232,6 +147,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Solar
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     - EffectType: 39
       FloatAmount:
         UseConstant: 0
@@ -245,6 +161,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: Solar
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     characterAnimation:
       UseConstant: 1
       ConstantValue: 

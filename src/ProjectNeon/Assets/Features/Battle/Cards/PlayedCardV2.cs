@@ -19,36 +19,11 @@
 
     public void Perform()
     {
-        Message.Subscribe<Finished<ApplyBattleEffect>>(_ => Continue(), this);
-        Message.Subscribe<Finished<CharacterAnimationRequested>>(_ => Continue(), this);
-        Message.Subscribe<Finished<BattleEffectAnimationRequested>>(_ => Continue(), this);
-        _sequenceIndex = 0;
-        _actionIndex = 0;
-        Continue();
-    }
-
-    private int _sequenceIndex;
-    private int _actionIndex;
-
-    public void Continue()
-    {
-        if (_card.ActionSequences.Length == _sequenceIndex 
-            || (_card.ActionSequences.Length - 1 == _sequenceIndex && _card.ActionSequences[_sequenceIndex].CardActions.Actions.Length == _actionIndex))
+        Message.Subscribe<SequenceFinished>(_ =>
         {
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished());
-            return;
-        }
-
-        var seq = _card.ActionSequences[_sequenceIndex];
-        var action = seq.CardActions.Actions[_actionIndex];
-        action.Begin(_performer, _targets[_sequenceIndex], seq.Group, seq.Scope, _spent.Amount);
-        _actionIndex++;
+        }, this);
         
-        if (seq.CardActions.Actions.Length == _actionIndex)
-        {
-            _sequenceIndex++;
-            _actionIndex = 0;
-        }
     }
 }
