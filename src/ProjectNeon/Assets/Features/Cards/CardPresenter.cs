@@ -21,9 +21,25 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     private Card _card;
     private Action _onClick;
+
+    public bool Contains(Card c) => HasCard && _card == c;
+    public bool HasCard => _card != null;
+
+    public void ClearIfIs(Card c)
+    {
+        if (Contains(c))
+            Clear();
+    }
     
+    public void Clear()
+    {
+        gameObject.SetActive(false);
+        _card = null;
+    }
+
     public void Set(Card card, Action onClick)
     {
+        gameObject.SetActive(true);
         _onClick = onClick;
         _card = card;
         
