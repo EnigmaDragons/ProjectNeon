@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class EnemyVisualizerV2 : MonoBehaviour
@@ -69,6 +71,14 @@ public class EnemyVisualizerV2 : MonoBehaviour
         }
 
         var t = state.GetTransform(m.Member.Id);
-        t.gameObject.SetActive(false);
+        t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
+        t.DOSpiral(2);
+        StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
+    }
+
+    private IEnumerator ExecuteAfterDelay(Action a, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        a();
     }
 }
