@@ -72,7 +72,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     public void SetHighlight(bool active)
     {
-        if (!highlight.activeSelf && !active)
+        if (!highlight.activeSelf && !active&& Math.Abs(transform.localScale.x - 1.0f) < 0.05)
             return;
         
         highlight.SetActive(IsPlayable && active);

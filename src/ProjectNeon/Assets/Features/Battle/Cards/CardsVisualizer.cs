@@ -38,11 +38,13 @@ public class CardsVisualizer : MonoBehaviour
     {
         _isDirty = true;
         zone.OnZoneCardsChanged.Subscribe(new GameEventSubscription(zone.OnZoneCardsChanged.name, x => _isDirty = true, this));
+        Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
     }
 
     void OnDisable()
     {
         zone.OnZoneCardsChanged.Unsubscribe(this);
+        Message.Unsubscribe(this);
     }
 
     void Update()
@@ -88,6 +90,8 @@ public class CardsVisualizer : MonoBehaviour
 
     private void UpdateCurrentCards(Card[] cards)
     {
+        if (onlyAllowInteractingWithPlayables)
+            Debug.Log("Updating Current Playable Cards");
         var totalSpaceNeeded = Screen.width * (cardSpacingScreenPercent * cards.Length);
         var startX = (Screen.width - totalSpaceNeeded) / 2f;
 
