@@ -19,6 +19,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Image tint;
     [SerializeField] private GameObject canPlayHighlight;
     [SerializeField] private GameObject highlight;
+    [SerializeField] private GameObject darken;
     [SerializeField] private float highlightedScale = 1.7f;
 
     private Card _card;
@@ -62,6 +63,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     }
 
     public void SetCanPlay(bool canPlay) => canPlayHighlight.SetActive(canPlay);
+    public void SetDisabled(bool isDisabled) => darken.SetActive(isDisabled);
     
     public void OnPointerDown(PointerEventData eventData)
     {

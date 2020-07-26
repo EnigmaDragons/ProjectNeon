@@ -28,6 +28,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         _isConfirmingTurn = isConfirming;
         _isDirty = true;
+        cards.SetFocus(!_isConfirmingTurn);
     }
     
     private void Activate()
