@@ -109,9 +109,7 @@ public class CardEditor : Editor
                 if (action.Type == CardBattleActionType.AnimateAtTarget)
                     PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions.Array.data[{refBrokenii}].atTargetAnimation"));
                 if (action.Type == CardBattleActionType.Battle)
-                {
-                    
-                }
+                    PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions.Array.data[{refBrokenii}].battleEffect"));
                 EditorGUI.indentLevel--;
             }
             EditorGUI.indentLevel--;
