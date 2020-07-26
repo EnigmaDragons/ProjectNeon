@@ -1,0 +1,34 @@
+
+using UnityEngine;
+
+public sealed class MapSpawner : MonoBehaviour
+{
+    [SerializeField] private CurrentGameMap map;
+    [SerializeField] private MapLocationNode nodePrototype;
+    [SerializeField] private GameObject tokenPrototype;
+    [SerializeField] private AdventureProgress progress;
+
+    private void Awake()
+    {
+        map.Locations.ForEach(SpawnNode);
+        SpawnToken();
+    }
+
+    private void SpawnNode(MapLocation l)
+    {
+        var o = Instantiate(nodePrototype, transform);
+        var rectTransform = o.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = l.GeoPosition;
+        o.Init(map, l);
+    }
+
+    private void SpawnToken()
+    {
+        var o = Instantiate(tokenPrototype, transform);
+        var rectTransform = o.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition += map.Locations[progress.CurrentStageSegmentIndex].GeoPosition;
+        var floating = o.GetComponent<Floating>();
+        if (floating != null)
+            floating.enabled = true;
+    }
+}

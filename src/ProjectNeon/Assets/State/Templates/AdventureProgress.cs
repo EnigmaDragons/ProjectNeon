@@ -7,6 +7,7 @@ class AdventureProgress : ScriptableObject
     [SerializeField] private int currentStageIndex;
     [SerializeField] private int currentStageSegmentIndex;
 
+    public int CurrentStageSegmentIndex => currentStageSegmentIndex;
     public bool IsFinalStage => currentStageIndex == currentAdventure.Stages.Length - 1;
     public bool IsFinalStageSegment => IsFinalStage && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
     public Stage CurrentStage
