@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[Obsolete("Battle V1")]
 public class PlayedCard : IPlayedCard
 {
     private readonly Card _card;
@@ -15,7 +17,8 @@ public class PlayedCard : IPlayedCard
 
     public Member Member => _performer;
     public Card Card => _card;
-    public ResourcesSpent Spent => new ResourcesSpent { Amount = Card.Cost.Cost, ResourceType = Card.Cost.ResourceType };
+    public ResourceQuantity Spent => new ResourceQuantity { Amount = Card.Cost.Amount, ResourceType = Card.Cost.ResourceType };
+    public ResourceQuantity Gained => new ResourceQuantity { Amount = 0, ResourceType = Card.Cost.ResourceType};
     
     public void Perform()
     {

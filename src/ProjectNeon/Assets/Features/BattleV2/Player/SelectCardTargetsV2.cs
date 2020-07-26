@@ -12,7 +12,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     [SerializeField] private BattleState battleState;
     [SerializeField] private BattlePlayerTargetingState targetingState;
 
-    [ReadOnly, SerializeField] private Card _selectedCard;
+    [ReadOnly, SerializeField] private Card _card;
     private Member _hero;
     private int _actionIndex;
     private int _numActions;
@@ -27,18 +27,18 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
             return;
 
         battleState.SelectionStarted = true;
-        _selectedCard = selectedCardZone.Cards[0];
-        Message.Publish(new TargetSelectionBegun(_selectedCard));
+        _card = selectedCardZone.Cards[0];
+        Message.Publish(new TargetSelectionBegun(_card));
 
-        var cardClass = _selectedCard.LimitedToClass;
+        var cardClass = _card.LimitedToClass;
         if (!cardClass.IsPresent)
         {
-            Debug.Log($"Card {_selectedCard.Name} is not playable by Heroes", _selectedCard);
+            Debug.Log($"Card {_card.Name} is not playable by Heroes", _card);
             return;
         }
 
-        cardPresenter.Set(_selectedCard, () => { });
-        Debug.Log($"Showing Selected Card {_selectedCard.name}", gameObject);
+        cardPresenter.Set(_card, () => { });
+        Debug.Log($"Showing Selected Card {_card.name}", gameObject);
         uiView.SetActive(true);
 
         _hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value));
@@ -49,11 +49,11 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         }
 
         _actionIndex = 0;
-        _numActions = _selectedCard.ActionSequences.Length;
+        _numActions = _card.ActionSequences.Length;
         _actionTargets = new Target[_numActions];
         if (_numActions == 0)
         {
-            Debug.Log($"Card {_selectedCard.Name} has no Card Actions");
+            Debug.Log($"Card {_card.Name} has no Card Actions");
             OnTargetConfirmed();
             return;
         }
@@ -63,7 +63,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
 
     private void PresentPossibleTargets()
     {
-        var action = _selectedCard.ActionSequences[_actionIndex];
+        var action = _card.ActionSequences[_actionIndex];
         var possibleTargets = battleState.GetPossibleConsciousTargets(_hero, action.Group, action.Scope);
         targetingState.WithPossibleTargets(possibleTargets);
         if (possibleTargets.Length == 1)
@@ -85,7 +85,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         if (_actionIndex + 1 == _numActions)
         {
             var hero = battleState.Heroes.First(x => x.Id == _hero.Id);
-            var playedCard = new PlayedCardV2(_hero, _actionTargets, _selectedCard, _selectedCard.ResourcesSpent(hero));
+            var playedCard = new PlayedCardV2(hero, _actionTargets, _card);
             cardResolutionZone.Add(playedCard);
             OnSelectionComplete(destinationCardZone);
         }
@@ -99,7 +99,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     private void OnSelectionComplete(CardPlayZone sendToZone)
     {
         sendToZone.PutOnBottom(selectedCardZone.DrawOneCard());
-        _selectedCard = null;
+        _card = null;
         uiView.SetActive(false);
         battleState.SelectionStarted = false;
         Message.Publish(new TargetSelectionFinished());

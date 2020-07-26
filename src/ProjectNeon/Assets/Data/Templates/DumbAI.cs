@@ -31,7 +31,7 @@ public sealed class DumbAI : TurnAI
             }
         );
 
-        return new PlayedCardV2(me, targets.ToArray(), card,  card.ResourcesSpent(me));
+        return new PlayedCardV2(me, targets.ToArray(), card);
     }
 
 }

@@ -8,7 +8,7 @@ public sealed class ResourceCost
     [SerializeField] private ResourceType resourceType;
     [SerializeField] private bool isXCost;
 
-    public int Cost => cost;
+    public int Amount => cost;
     public ResourceType ResourceType => resourceType;
     public bool IsXCost => isXCost;
 }

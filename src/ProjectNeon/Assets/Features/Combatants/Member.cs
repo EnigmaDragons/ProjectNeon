@@ -28,8 +28,11 @@ public class Member
 
 public static class MemberExtensions
 {
-    public static int CurrentHp(this Member m) => Mathf.CeilToInt(m.State[TemporalStatType.HP]);
+    private static int RoundUp(float v) => Mathf.CeilToInt(v);
+    
+    public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);
     public static bool IsConscious(this Member m) => m.State.IsConscious;
+    public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
 
     public static bool CanAfford(this Member m, Card c)
     {

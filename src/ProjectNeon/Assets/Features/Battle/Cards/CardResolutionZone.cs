@@ -21,8 +21,12 @@ public class CardResolutionZone : ScriptableObject
     {
         moves.Add(played);
         physicalZone.PutOnBottom(played.Card);
-        played.Member.Apply(m => m.LoseResource(played.Spent.ResourceType.Name, played.Spent.Amount));
-        BattleLog.Write($"{played.Member.Name} Played {played.Card.name} - {played.Spent}");
+        played.Member.Apply(m =>
+        {
+            m.Lose(played.Spent);
+            m.Gain(played.Gained);
+        });
+        BattleLog.Write($"{played.Member.Name} Played {played.Card.name} - Spent {played.Spent} - Gained {played.Gained}");
     }
 
     public void ExpirePlayedCards(Func<IPlayedCard, bool> condition)
@@ -46,11 +50,13 @@ public class CardResolutionZone : ScriptableObject
         if (moves.None()) return;
         
         var played = moves.Last();
+        
         BattleLog.Write($"Canceled playing {played.Card.Name}");
         moves.RemoveAt(moves.Count - 1);
         var card = physicalZone.Take(physicalZone.Count - 1);
         playerPlayArea.Take(playerPlayArea.Count - 1);
         playerHand.PutOnBottom(card);
+        
         played.Member.Apply(m => m.GainResource(played.Spent.ResourceType.Name, played.Spent.Amount));
     }
 
