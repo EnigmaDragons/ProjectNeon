@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 public interface Target  
 {
@@ -11,4 +12,7 @@ public static class TargetExtensions
     {
         target.Members.ForEach(m => m.Apply(effect));
     }
+
+    public static string MembersDescriptions(this Target target) =>
+        string.Join(", ", target.Members.Select(m => $"{m.Name} {m.Id}"));
 }

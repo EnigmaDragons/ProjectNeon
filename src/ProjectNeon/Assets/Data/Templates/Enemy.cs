@@ -18,6 +18,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private float resistance;
     [SerializeField] private ResourceType resourceType;
 
+    public string Name => enemyName;
     public Deck Deck => deck;
     public Member AsMember(int id) => new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats);
     public TurnAI AI => ai;

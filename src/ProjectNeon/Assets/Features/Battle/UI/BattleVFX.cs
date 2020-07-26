@@ -1,9 +1,12 @@
-using System;
 using UnityEngine;
 
-[Serializable]
-public class BattleVFX
+public class BattleVFX : MonoBehaviour
 {
-    public StringReference Name;
-    public GameObject Effect;
+    [SerializeField] private StringVariable effectName;
+    [SerializeField] private float durationSeconds;
+    [SerializeField] private bool waitForCompletion = true;
+
+    public string EffectName => effectName.Value;
+    public float DurationSeconds => durationSeconds;
+    public bool WaitForCompletion => waitForCompletion;
 }

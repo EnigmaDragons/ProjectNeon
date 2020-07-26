@@ -45,7 +45,7 @@ public static class CollectionExtensions
     public static TValue VerboseGetValue<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey k, Func<TKey, string> context)
     {
         if (!d.TryGetValue(k, out var value))
-            throw new KeyNotFoundException($"Entry not found for {context(k)}");
+            throw new KeyNotFoundException($"Entry not found for '{context(k)}'");
         return value;
     }
 

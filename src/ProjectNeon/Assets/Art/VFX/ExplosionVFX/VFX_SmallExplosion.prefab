@@ -9554,13 +9554,14 @@ GameObject:
   - component: {fileID: 4361801158873524}
   - component: {fileID: 198656289721292014}
   - component: {fileID: 199514137936353666}
+  - component: {fileID: 54416617718123063}
   m_Layer: 0
   m_Name: VFX_SmallExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4361801158873524
 Transform:
   m_ObjectHideFlags: 0
@@ -9569,7 +9570,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828176872806910}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.5, y: 0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4009803976983246}
@@ -14385,6 +14386,21 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &54416617718123063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828176872806910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d284b8ed5534779b304627a61717062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectName: {fileID: 11400000, guid: ae00ac1e3d7503d46897593b22ce1734, type: 2}
+  durationSeconds: 2
+  waitForCompletion: 1
 --- !u!1 &1834016579923706
 GameObject:
   m_ObjectHideFlags: 0

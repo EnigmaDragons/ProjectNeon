@@ -14,11 +14,15 @@ public class CardsVisualizer : MonoBehaviour
     [SerializeField] private CardPresenter cardPrototype;
     [SerializeField] private int maxCards = 12;
     [SerializeField] private bool onlyAllowInteractingWithPlayables = false;
+    [SerializeField] private Vector3 unfocusedOffset = new Vector3(0, 400, 0);
     
     [ReadOnly] [SerializeField] private CardPresenter[] cardPool;
     private Card[] _oldCards = new Card[0];
     private bool _isDirty = false;
     private Action _onShownCardsChanged = () => { };
+    private Vector3 _defaultPosition;
+    private Vector3 _unfocusedPosition;
+    private bool _isFocused = true;
 
     public CardPresenter[] ShownCards => cardPool.ToArray();
 
@@ -26,6 +30,8 @@ public class CardsVisualizer : MonoBehaviour
 
     private void Awake()
     {
+        _defaultPosition = transform.position;
+        _unfocusedPosition = _defaultPosition - unfocusedOffset;
         cardPool = new CardPresenter[maxCards];
         for (var i = 0; i < maxCards; i++)
         {
@@ -38,11 +44,13 @@ public class CardsVisualizer : MonoBehaviour
     {
         _isDirty = true;
         zone.OnZoneCardsChanged.Subscribe(new GameEventSubscription(zone.OnZoneCardsChanged.name, x => _isDirty = true, this));
+        Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
     }
 
     void OnDisable()
     {
         zone.OnZoneCardsChanged.Unsubscribe(this);
+        Message.Unsubscribe(this);
     }
 
     void Update()
@@ -88,24 +96,28 @@ public class CardsVisualizer : MonoBehaviour
 
     private void UpdateCurrentCards(Card[] cards)
     {
+        if (onlyAllowInteractingWithPlayables)
+            Debug.Log("Updating Current Playable Cards");
         var totalSpaceNeeded = Screen.width * (cardSpacingScreenPercent * cards.Length);
         var startX = (Screen.width - totalSpaceNeeded) / 2f;
 
         for (var i = 0; i < cards.Length; i++)
         {
+            var effectivePosition = _isFocused ? _defaultPosition : _unfocusedPosition;
             var cardIndex = i;
             var card = cards[cardIndex];
             var (presenterIndex, presenter) = GetCardPresenter(cardIndex, card);
             var c = presenter;
             
             if (!c.HasCard)
-                c.transform.position = new Vector3(1920, transform.position.y, transform.position.z);
+                c.transform.position = new Vector3(1920, effectivePosition.y, effectivePosition.z);
             
             var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * Screen.width;
-            var targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
+            var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
             c.Set(card, () => SelectCard(cardIndex));
             c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.IsPlayableByHero(state)));
+            c.SetDisabled(!_isFocused);
             SwapCardPoolSpots(cardIndex, presenterIndex);
             c.transform.DOMove(targetPosition, 1);
             c.SetTargetPosition(targetPosition);
@@ -151,5 +163,14 @@ public class CardsVisualizer : MonoBehaviour
         if (allowInteractions)
             if (cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
                 onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
+    }
+
+    public void SetFocus(bool isFocused)
+    {
+        if (_isFocused == isFocused)
+            return;
+        
+        _isFocused = isFocused;
+        _isDirty = true;
     }
 }

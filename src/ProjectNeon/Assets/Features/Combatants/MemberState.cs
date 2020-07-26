@@ -39,12 +39,15 @@ public sealed class MemberState : IStats
     public float this[TemporalStatType temporalStatType] => _counters[temporalStatType.ToString()].Amount;
     public string this[string status] => _status[status];
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
+    public float Max(string name) => _counters[name].Max;
 
     public void ApplyTemporaryAdditive(ITemporalState mods) => _additiveMods.Add(mods);
     public void ApplyAdditiveUntilEndOfBattle(IStats mods) => _battleAdditiveMods.Add(mods);
     public void ApplyTemporaryMultiplier(ITemporalState mods) => _multiplierMods.Add(mods);
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => _additiveMods.RemoveAll(condition);
 
+    public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType.Name, qty.Amount);
+    public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType.Name, qty.Amount);
     public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
     public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void GainHp(float amount) => ChangeHp(amount);

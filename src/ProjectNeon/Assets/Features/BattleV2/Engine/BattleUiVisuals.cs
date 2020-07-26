@@ -5,6 +5,7 @@ public class BattleUiVisuals : MonoBehaviour
     [SerializeField] private PartyUiSummaryV2 partyUi;
     [SerializeField] private GameObject commandPhaseUi;
     [SerializeField] private GameObject resolutionPhaseUi;
+    [SerializeField] private GameObject hand;
     
     public void Setup()
     {
@@ -17,7 +18,17 @@ public class BattleUiVisuals : MonoBehaviour
     public void BeginCommandPhase() => commandPhaseUi.SetActive(true);
     public void EndCommandPhase() => HideCommandPhaseUI();
 
-    public void BeginResolutionPhase() => resolutionPhaseUi.SetActive(true);
-    public void EndResolutionPhase() => HideCommandPhaseUI();
+    public void BeginResolutionPhase()
+    {
+        resolutionPhaseUi.SetActive(true);
+        hand.SetActive(false);
+    }
+
+    public void EndResolutionPhase()
+    {
+        HideResolutionPhaseUI();
+        hand.SetActive(true);
+    }
+
     private void HideResolutionPhaseUI() => resolutionPhaseUi.SetActive(false);
 }

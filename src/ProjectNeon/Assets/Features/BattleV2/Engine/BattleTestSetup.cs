@@ -7,6 +7,7 @@ public class BattleTestSetup : MonoBehaviour
 {
     [SerializeField] private BattleEngine engine;
     [SerializeField] private BattleSetupV2 setup;
+    [SerializeField] private BattleState state;
     
     [Header("Party")] 
     [SerializeField] private Hero hero1;
@@ -23,6 +24,12 @@ public class BattleTestSetup : MonoBehaviour
     [SerializeField] private List<Enemy> enemies;
     [SerializeField] private EncounterBuilder encounterBuilder;
 
+    private void Awake()
+    {
+        if (!state.Party.IsInitialized)
+            UseEverything();
+    }
+    
     public void UseCustomParty()
     {
         setup.InitParty(hero1, hero2, hero3);
@@ -35,7 +42,13 @@ public class BattleTestSetup : MonoBehaviour
     public void UseCustomEncounterSet() => setup.InitEncounterBuilder(encounterBuilder);
     public void SetupBattle() => engine.Setup();
 
-    public void UseEverything()
+    public void UseEverythingAndStartBattle()
+    {
+        UseEverything();
+        SetupBattle();
+    }
+
+    private void UseEverything()
     {
         if (hero1 != null)
             UseCustomParty();
@@ -45,6 +58,5 @@ public class BattleTestSetup : MonoBehaviour
             UseFixedEncounter();
         else if (encounterBuilder != null)
             UseCustomBattlefield();
-        SetupBattle();
     }
 }

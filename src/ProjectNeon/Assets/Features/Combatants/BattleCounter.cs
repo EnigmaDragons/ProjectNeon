@@ -6,6 +6,7 @@ public sealed class BattleCounter
     private readonly Func<float> _getCurrentMaxAmount;
     public string Name { get; }
     public int Amount { get; private set; }
+    public int Max => RoundUp(_getCurrentMaxAmount());
 
     public BattleCounter(TemporalStatType type, float initialAmount, Func<float> getCurrentMaxAmount) 
         : this(type.ToString(), initialAmount, getCurrentMaxAmount) {}

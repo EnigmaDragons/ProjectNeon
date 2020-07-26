@@ -9,7 +9,7 @@ public class EnemyCardSelection : MonoBehaviour
  
     public void ChooseCards()
     {
-        battle.Members.Where(x => x.Value.TeamType == TeamType.Enemies)
+        battle.Members.Where(x => x.Value.TeamType == TeamType.Enemies && x.Value.IsConscious())
             .ForEach(e => resolutionZone.Add(battle.GetEnemyById(e.Key).AI.Play(e.Key)));
         onEnemyTurnsConfirmed.Publish();
     }

@@ -5,6 +5,8 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     [SerializeField] private CardPlayZone playArea;
     [SerializeField] private GameObject confirmUi;
 
+    private bool _isConfirming = false;
+    
     public bool CanConfirm => playArea.Cards.Length == 3;
 
     private void OnEnable() => playArea.OnZoneCardsChanged.Subscribe(UpdateState, this);
@@ -12,9 +14,15 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private void UpdateState()
     {
-        confirmUi.SetActive(CanConfirm);
-        if (CanConfirm)
-            Message.Publish(new PlayerConfirmationStarted());
+        if (_isConfirming == CanConfirm)
+            return;
+        
+        _isConfirming = CanConfirm;
+        confirmUi.SetActive(_isConfirming);
+        if (_isConfirming)
+            Message.Publish(new PlayerTurnConfirmationStarted());
+        else
+            Message.Publish(new PlayerTurnConfirmationAborted());
     }
 
     public void Confirm()

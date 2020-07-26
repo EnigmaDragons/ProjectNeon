@@ -23,6 +23,9 @@ public class BattleConclusion : OnMessage<BattleFinished>
     
     protected override void Execute(BattleFinished msg)
     {
-        Advance();
+        if (msg.Winner == TeamType.Party)
+            Advance();
+        else
+            navigator.NavigateToDefeatScene();
     }
 }

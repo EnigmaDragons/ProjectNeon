@@ -8,25 +8,27 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     private IndexSelector<CardPresenter> _indexSelector;
     private bool _isDirty = false;
     private bool _shouldHighlight;
+    private bool _isConfirmingTurn = false;
     
     private void OnEnable()
     {
+        Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
         Message.Subscribe<TurnStarted>(_ => Activate(), this);
         Message.Subscribe<TargetSelectionFinished>(_ => Activate(), this);
-        Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
+        Message.Subscribe<PlayerTurnConfirmationAborted>(_ => SetIsConfirming(false), this);
         Message.Subscribe<TargetSelectionBegun>(_ => Deactivate(), this);
+        Message.Subscribe<PlayerTurnConfirmationStarted>(_ => SetIsConfirming(true), this);
         cards.SetOnShownCardsChanged(() => _isDirty = true);
         _isDirty = true;
     }
 
     private void OnDisable() => Message.Unsubscribe(this);
 
-    private void ActivateIfSelecting()
+    private void SetIsConfirming(bool isConfirming)
     {
-        if (state.SelectionStarted)
-            Activate();
-        else
-            LostFocus();
+        _isConfirmingTurn = isConfirming;
+        _isDirty = true;
+        cards.SetFocus(!_isConfirmingTurn);
     }
     
     private void Activate()
@@ -37,6 +39,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
 
     private void Deactivate()
     {
+        _isDirty = true;
+        _shouldHighlight = false;
     }
     
     private void Update()
@@ -48,15 +52,22 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         if (cards.ShownCards.Length < 1)
             return;
 
+        if (_isConfirmingTurn)
+            _shouldHighlight = false;
+
         _indexSelector = new IndexSelector<CardPresenter>(cards.ShownCards);
         if (_shouldHighlight)
             EnableHighlight();
+        else
+            DisableHighlight();
     }
 
     public void MoveNext()
     {
         DisableHighlight();
         _indexSelector.MoveNext();
+        while(!_indexSelector.Current.HasCard)
+            _indexSelector.MoveNext();
         EnableHighlight();
     }
     
@@ -64,6 +75,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         DisableHighlight();
         _indexSelector.MovePrevious();
+        while(!_indexSelector.Current.HasCard)
+            _indexSelector.MovePrevious();
         EnableHighlight();
     }
 

@@ -19,6 +19,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Image tint;
     [SerializeField] private GameObject canPlayHighlight;
     [SerializeField] private GameObject highlight;
+    [SerializeField] private GameObject darken;
     [SerializeField] private float highlightedScale = 1.7f;
 
     private Card _card;
@@ -54,14 +55,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         art.sprite = _card.Art;
         
         var cost = card.Cost;
-        costLabel.text = cost.Cost.ToString();
+        costLabel.text = cost.Amount.ToString();
         costResourceTypeIcon.sprite = cost.ResourceType.Icon;
-        costPanel.SetActive(!cost.ResourceType.Name.Equals("None") && cost.Cost > 0);
+        costPanel.SetActive(!cost.ResourceType.Name.Equals("None") && cost.Amount > 0);
         
         tint.color = classTints.TintFor(card.LimitedToClass.OrDefault(() => ""));
     }
 
     public void SetCanPlay(bool canPlay) => canPlayHighlight.SetActive(canPlay);
+    public void SetDisabled(bool isDisabled) => darken.SetActive(isDisabled);
     
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -72,7 +74,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     public void SetHighlight(bool active)
     {
-        if (!highlight.activeSelf && !active)
+        if (!highlight.activeSelf && !active&& Math.Abs(transform.localScale.x - 1.0f) < 0.05)
             return;
         
         highlight.SetActive(IsPlayable && active);

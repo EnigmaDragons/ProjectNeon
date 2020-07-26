@@ -2,7 +2,8 @@
 {
     Member Member { get; }
     Card Card { get; }
-    ResourcesSpent Spent { get; }
+    ResourceQuantity Spent { get; }
+    ResourceQuantity Gained { get; }
 
     void Perform();
 }

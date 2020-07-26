@@ -9,12 +9,14 @@ public class Card : ScriptableObject
     [SerializeField] private StringVariable typeDescription;
     [SerializeField] private StringVariable onlyPlayableByClass;
     [SerializeField] private ResourceCost cost;
+    [SerializeField] private ResourceCost onPlayGain;
     [SerializeField] public CardActionSequence[] actionSequences;
     [SerializeField] private CardAction cardAction1;
     [SerializeField] private CardAction cardAction2;
 
     public string Name => name.SkipThroughFirstDash().WithSpaceBetweenWords();
     public ResourceCost Cost => cost;
+    public ResourceCost Gain => onPlayGain;
     public Sprite Art => art;
     public string Description => description;
     public string TypeDescription => typeDescription.Value;
