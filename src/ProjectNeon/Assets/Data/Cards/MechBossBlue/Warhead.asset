@@ -12,22 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Warhead
   m_EditorClassIdentifier: 
-  art: {fileID: 0}
-  description: 
-  typeDescription: {fileID: 0}
-  onlyPlayableByClass: {fileID: 0}
+  art: {fileID: 21300000, guid: bf0bb6f035f330f44b8dd3f12c1602b8, type: 3}
+  description: Deal (1 x ATK) damage to everyone and deal 3 damage to each opponent
+    for the rest of the battle
+  typeDescription: {fileID: 11400000, guid: 05396cecd1c61ab4dba3e9e72676792d, type: 2}
+  onlyPlayableByClass: {fileID: 11400000, guid: a332e6b758d6c764bafaed0aed27c90d,
+    type: 2}
   cost:
-    cost: 0
-    resourceType: {fileID: 0}
+    cost: 1
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     isXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 0}
     isXCost: 0
-  actionSequences: []
+  actionSequences:
+  - scope: 1
+    group: 3
+    cardActions: {fileID: 11400000, guid: 3275416c6416b154eb63140ee2787462, type: 2}
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: 7a6f8fee04de8864f8857ff7ee04cb56, type: 2}
   cardAction1:
-    targetScope: 0
-    targetGroup: 0
+    targetScope: 1
+    targetGroup: 3
     effect1:
       EffectType: 0
       FloatAmount:

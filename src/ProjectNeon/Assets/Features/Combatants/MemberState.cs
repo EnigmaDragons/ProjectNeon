@@ -54,6 +54,14 @@ public sealed class MemberState : IStats
     public void GainShield(float amount) => Counter(TemporalStatType.Shield).ChangeBy(amount);
     public void GainArmor(float amount) => ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.Armor, amount));
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
+    public void TakeDamage(int amount)
+    {
+        var shieldModificationAmount = Math.Min(amount, Counter(TemporalStatType.Shield).Amount);
+        amount -= shieldModificationAmount;
+        GainShield(-shieldModificationAmount);
+        if (amount > 0)
+            ChangeHp(-amount);
+    }
     public void ChangeHp(float amount) => Counter(TemporalStatType.HP).ChangeBy(amount);
     public void GainPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(numToGive);
     public void SpendPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(-numToGive);
