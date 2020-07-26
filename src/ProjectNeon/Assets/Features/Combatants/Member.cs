@@ -8,6 +8,8 @@ public class Member
     public string Class { get; }
     public TeamType TeamType { get; }
     public MemberState State { get; }
+
+    public override string ToString() => $"{Name} {Id}";
     
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats)
     {

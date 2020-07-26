@@ -73,6 +73,9 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested>
         var layer = 0;
         animator.Play(animationName, layer);
         
+        yield return new WaitForSeconds(0.1f);
+        elapsed += 0.1f;
+        
         bool AnimationIsActive() => animator.GetCurrentAnimatorStateInfo(layer).IsName(animationName);
         bool AnimationIsStillPlaying() => animator.GetCurrentAnimatorStateInfo(layer).normalizedTime < 1.0f;
         while (AnimationIsActive() && AnimationIsStillPlaying())
