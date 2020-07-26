@@ -20,79 +20,11 @@ MonoBehaviour:
   cost:
     cost: 6
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
+    isXCost: 0
   actionSequences:
   - scope: 1
     group: 1
-    cardActions:
-    - type: 30
-      battleEffect:
-        EffectType: 0
-        FloatAmount:
-          UseConstant: 1
-          ConstantValue: 0
-          FloatVariable: {fileID: 0}
-        NumberOfTurns:
-          UseConstant: 1
-          ConstantValue: 0
-          Variable: {fileID: 0}
-        EffectScope:
-          UseConstant: 1
-          ConstantValue: 
-          Variable: {fileID: 0}
-      characterAnimation:
-        UseConstant: 1
-        ConstantValue: NapalmGrenade
-        Variable: {fileID: 0}
-      atTargetAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-    - type: 1
-      battleEffect:
-        EffectType: 2
-        FloatAmount:
-          UseConstant: 1
-          ConstantValue: 1.5
-          FloatVariable: {fileID: 0}
-        NumberOfTurns:
-          UseConstant: 1
-          ConstantValue: 0
-          Variable: {fileID: 0}
-        EffectScope:
-          UseConstant: 1
-          ConstantValue: 
-          Variable: {fileID: 0}
-      characterAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      atTargetAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-    - type: 1
-      battleEffect:
-        EffectType: 8
-        FloatAmount:
-          UseConstant: 1
-          ConstantValue: 3
-          FloatVariable: {fileID: 0}
-        NumberOfTurns:
-          UseConstant: 1
-          ConstantValue: 3
-          Variable: {fileID: 0}
-        EffectScope:
-          UseConstant: 1
-          ConstantValue: Burn
-          Variable: {fileID: 0}
-      characterAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      atTargetAnimation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
+    cardActions: {fileID: 11400000, guid: 8a799f37cbdd39142bfe130a6160a758, type: 2}
   cardAction1:
     targetScope: 1
     targetGroup: 1
@@ -110,6 +42,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 8
       FloatAmount:
@@ -124,6 +57,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Burn
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
       FloatAmount:
@@ -138,6 +72,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     chainedEffects: []
     characterAnimation:
       UseConstant: 1
@@ -164,6 +99,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 0
       FloatAmount:
@@ -178,6 +114,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
       FloatAmount:
@@ -192,6 +129,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedEffectSequence: {fileID: 0}
     chainedEffects: []
     characterAnimation:
       UseConstant: 1

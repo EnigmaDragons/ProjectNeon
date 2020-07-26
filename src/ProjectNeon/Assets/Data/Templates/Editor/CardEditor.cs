@@ -28,9 +28,10 @@ public class CardEditor : Editor
         PresentUnchanged(description);
         PresentUnchanged(typeDescription);
         PresentUnchanged(onlyPlayableByClass);
+        DrawUILine(Color.black);
         PresentUnchanged(cost);
         PresentActionSequences();
-        //PresentUnchanged(actionSequences);
+        DrawUILine(Color.black);
         PresentUnchanged(cardAction1);
         PresentUnchanged(cardAction2);
     }
@@ -41,11 +42,18 @@ public class CardEditor : Editor
         EditorGUILayout.PropertyField(serializedProperty, includeChildren: true);
         serializedObject.ApplyModifiedProperties();
     }
+    
+    private void PresentUnchanged(SerializedProperty serializedProperty, string label)
+    {
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(serializedProperty, new GUIContent(label), includeChildren: true);
+        serializedObject.ApplyModifiedProperties();
+    }
 
     private void PresentActionSequences()
     {
         EditorGUI.indentLevel = 0;
-        PresentLabelsWithControls("Action Sequences", menu => menu.AddItem(new GUIContent("Insert New"), false, () =>
+        PresentLabelsWithControls("Command Sequence", menu => menu.AddItem(new GUIContent("Insert New"), false, () =>
         {
             targetCard.actionSequences = new CardActionSequence[] {new CardActionSequence()}.Concat(targetCard.actionSequences).ToArray();
             EditorUtility.SetDirty(target);
@@ -56,7 +64,7 @@ public class CardEditor : Editor
         {
             var refBrokenI = i;
             var sequence = sequences[refBrokenI];
-            PresentLabelsWithControls($"Action Sequence {refBrokenI}", menu =>
+            PresentLabelsWithControls($"Command {refBrokenI}", menu =>
             {
                 menu.AddItem(new GUIContent("Add"), false, () =>
                 {
@@ -75,44 +83,7 @@ public class CardEditor : Editor
             EditorGUI.indentLevel++;
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].group"));
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].scope"));
-            PresentLabelsWithControls("Actions", menu => menu.AddItem(new GUIContent("Insert New"), false, () =>
-            {
-                sequence.cardActions = new CardActionV2[] { new CardActionV2() }.Concat(sequence.cardActions).ToArray();
-                EditorUtility.SetDirty(target);
-            }));
-            EditorGUI.indentLevel++;
-            var actions = sequence.cardActions.ToArray();
-            for (var ii = 0; ii < actions.Length; ii++)
-            {
-                var refBrokenii = ii;
-                var action = actions[refBrokenii];
-                PresentLabelsWithControls($"Action {refBrokenii}", menu =>
-                {
-                    menu.AddItem(new GUIContent("Add"), false, () =>
-                    {
-                        sequence.cardActions = sequence.cardActions.Take(Array.IndexOf(sequence.cardActions, action) + 1)
-                            .Concat(new CardActionV2[] {new CardActionV2()})
-                            .Concat(sequence.cardActions.Skip(Array.IndexOf(sequence.cardActions, action) + 1))
-                            .ToArray();
-                        EditorUtility.SetDirty(target);
-                    });
-                    menu.AddItem(new GUIContent("Delete"), false, () =>
-                    {
-                        sequence.cardActions = sequence.cardActions.Where(x => x != action).ToArray();
-                        EditorUtility.SetDirty(target);
-                    });
-                });
-                EditorGUI.indentLevel++;
-                PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions.Array.data[{refBrokenii}].type"));
-                if (action.Type == CardBattleActionType.AnimateCharacter)
-                    PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions.Array.data[{refBrokenii}].characterAnimation"));
-                if (action.Type == CardBattleActionType.AnimateAtTarget)
-                    PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions.Array.data[{refBrokenii}].atTargetAnimation"));
-                if (action.Type == CardBattleActionType.Battle)
-                    PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions.Array.data[{refBrokenii}].battleEffect"));
-                EditorGUI.indentLevel--;
-            }
-            EditorGUI.indentLevel--;
+            PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions"), "Effect Sequence");
             EditorGUI.indentLevel--;
         }
         EditorGUI.indentLevel--;
@@ -130,5 +101,15 @@ public class CardEditor : Editor
             menu.ShowAsContext();
             current.Use(); 
         }
+    }
+    
+    private void DrawUILine(Color color, int thickness = 2, int padding = 10)
+    {
+        Rect r = EditorGUILayout.GetControlRect(GUILayout.Height(padding+thickness));
+        r.height = thickness;
+        r.y+=padding/2;
+        r.x-=2;
+        r.width +=6;
+        EditorGUI.DrawRect(r, color);
     }
 }
