@@ -60,10 +60,11 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9c818e38fc080324f81aa4d27aec83da, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9ca51a83ade8c1443898cbd254b8ba38, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -85,7 +86,7 @@ GameObject:
   - component: {fileID: 5216674476589688635}
   - component: {fileID: 5216674476589688632}
   - component: {fileID: 5216674476589688633}
-  - component: {fileID: 4248790594229933678}
+  - component: {fileID: 4528895742305771507}
   m_Layer: 5
   m_Name: MapUI
   m_TagString: Untagged
@@ -173,7 +174,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 55
---- !u!114 &4248790594229933678
+--- !u!114 &4528895742305771507
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,10 +183,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5216674476589688614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ce39cc667e1471cbf774f1bb698a406, type: 3}
+  m_Script: {fileID: 11500000, guid: 1df2d3cd4927abf4da113d1c7d57414d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 11400000, guid: 7cac53b18444c8b4d9b12188d905b631, type: 2}
-  nodePrototype: {fileID: -2262932856117359118, guid: 9a3bc08eda157174ab5d11107b3a3ff5,
+  map: {fileID: 11400000, guid: eb860c63799abc34dbce2248adcc28f6, type: 2}
+  nodePrototype: {fileID: 8735785579392061029, guid: 9a3bc08eda157174ab5d11107b3a3ff5,
     type: 3}
-  scientistPrototype: {fileID: 0}
+  tokenPrototype: {fileID: 62304065873535587, guid: a4775238501ca3445aad9d5cd06aaa55,
+    type: 3}
+  progress: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
