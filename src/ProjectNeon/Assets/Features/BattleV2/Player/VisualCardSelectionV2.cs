@@ -66,6 +66,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         DisableHighlight();
         _indexSelector.MoveNext();
+        while(!_indexSelector.Current.HasCard)
+            _indexSelector.MoveNext();
         EnableHighlight();
     }
     
@@ -73,6 +75,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         DisableHighlight();
         _indexSelector.MovePrevious();
+        while(!_indexSelector.Current.HasCard)
+            _indexSelector.MovePrevious();
         EnableHighlight();
     }
 
