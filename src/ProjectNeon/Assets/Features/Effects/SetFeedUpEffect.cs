@@ -32,12 +32,12 @@ public class SetFeedUpEffect : Effect
     public void Apply(Member source, Target target)
     {
         new QueueEffect(_effect).Apply(source, target);
-        BattleEvent.Subscribe<FeedCardResolutionStarted>(
+        Message.Subscribe<FeedCardResolutionStarted>(
             (msg) =>
             {
                 if (_feedType.ToString().Equals(msg.CardFeedType))
                     _effect.Apply(source, target);
-                BattleEvent.Unsubscribe(this);
+                Message.Unsubscribe(this);
             },
         this);
     }

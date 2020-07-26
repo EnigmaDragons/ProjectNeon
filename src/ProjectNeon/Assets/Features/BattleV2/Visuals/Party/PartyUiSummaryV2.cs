@@ -17,12 +17,12 @@ public class PartyUiSummaryV2 : MonoBehaviour
     
     private void OnEnable()
     {
-        BattleEvent.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
+        Message.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
     }
 
     private void OnDisable()
     {
-        BattleEvent.Unsubscribe(this);
+        Message.Unsubscribe(this);
     }
 
     public void Setup()

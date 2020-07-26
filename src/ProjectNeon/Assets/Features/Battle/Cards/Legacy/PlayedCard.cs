@@ -23,9 +23,9 @@ public class PlayedCard : IPlayedCard
         {
             var action = _card.Actions[index];
             if (!string.IsNullOrWhiteSpace(action.CharacterAnimation))
-                BattleEvent.Publish(new CharacterAnimationRequested(_performer.Id, action.CharacterAnimation));
+                Message.Publish(new CharacterAnimationRequested(_performer.Id, action.CharacterAnimation));
             if (!string.IsNullOrWhiteSpace(action.EffectAnimation))
-                BattleEvent.Publish(new BattleEffectAnimationRequested
+                Message.Publish(new BattleEffectAnimationRequested
                 {
                     PerformerId = _performer.Id,
                     EffectName = action.EffectAnimation,

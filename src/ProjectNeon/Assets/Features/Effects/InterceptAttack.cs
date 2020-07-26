@@ -10,7 +10,7 @@ public class InterceptAttack : Effect
     {
         _performer = source;
         _effectTarget = target;
-        BattleEvent.Subscribe<AttackToPerform>(attackToPerform => Execute(attackToPerform.Attack), this);
+        Message.Subscribe<AttackToPerform>(attackToPerform => Execute(attackToPerform.Attack), this);
     }
 
     void Execute(Attack attack)

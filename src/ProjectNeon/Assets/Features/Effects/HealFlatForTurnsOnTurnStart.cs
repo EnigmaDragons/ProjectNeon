@@ -12,5 +12,4 @@
     {
         new EffectOnTurnStart(new ForNumberOfTurns(new Heal(_amount), _turns)).Apply(source, target);
     }
-
 }

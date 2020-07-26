@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public sealed class VisualCardSelection : MonoBehaviour
@@ -11,6 +12,7 @@ public sealed class VisualCardSelection : MonoBehaviour
     
     private void OnEnable()
     {
+        Message.Subscribe<TargetSelectionFinished>(_ => _isDirty = true, this);
         activateHighlightWhen.ForEach(e => e.Subscribe(() =>
         {
             _shouldHighlight = true;
@@ -18,6 +20,11 @@ public sealed class VisualCardSelection : MonoBehaviour
         }, this));
         cards.SetOnShownCardsChanged(() => _isDirty = true);
         _isDirty = true;
+    }
+
+    private void OnDisable()
+    {
+        Message.Unsubscribe(this);
     }
 
     private void Update()

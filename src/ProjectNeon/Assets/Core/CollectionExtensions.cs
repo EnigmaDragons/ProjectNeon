@@ -48,4 +48,7 @@ public static class CollectionExtensions
             throw new KeyNotFoundException($"Entry not found for {context(k)}");
         return value;
     }
+
+    public static Maybe<T> FirstOrMaybe<T>(this IEnumerable<T> items, Func<T, bool> condition) where T : class 
+        => new Maybe<T>(items.FirstOrDefault(condition));
 }

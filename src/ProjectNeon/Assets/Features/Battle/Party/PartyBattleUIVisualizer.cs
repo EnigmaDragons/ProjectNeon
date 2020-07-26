@@ -18,13 +18,13 @@ public sealed class PartyBattleUIVisualizer : MonoBehaviour
     
     private void OnEnable()
     {
-        BattleEvent.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
+        Message.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
         setupAfter.Subscribe(Setup, this);
     }
 
     private void OnDisable()
     {
-        BattleEvent.Unsubscribe(this);
+        Message.Unsubscribe(this);
         setupAfter.Unsubscribe(this);
     }
 

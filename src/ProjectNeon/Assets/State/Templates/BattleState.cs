@@ -84,5 +84,6 @@ public class BattleState : ScriptableObject
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
     public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.First(x => x.Value == hero).Key];
+    public Member GetMemberByClass(string memberClass) => _membersById[_heroesById.First(x => x.Value.ClassName.Value.Equals(memberClass)).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
 }

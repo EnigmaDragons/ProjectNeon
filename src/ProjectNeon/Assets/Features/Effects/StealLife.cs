@@ -26,7 +26,7 @@ public class StealLife : Effect
     {
         _performer = source;
         _effectTarget = target;
-        BattleEvent.Subscribe<AttackPerformed>(attackPerformed => Execute(attackPerformed.Attack), this);
+        Message.Subscribe<AttackPerformed>(attackPerformed => Execute(attackPerformed.Attack), this);
     }
 
     void Execute(Attack attack)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BattleLog : OnBattleEvent<WriteBattleLogMessageRequested>
+public class BattleLog : OnMessage<WriteBattleLogMessageRequested>
 {
     [SerializeField] private BoolReference loggingEnabled;
     
@@ -10,5 +10,5 @@ public class BattleLog : OnBattleEvent<WriteBattleLogMessageRequested>
             Debug.Log($"Battle - {e.Message}");
     }
     
-    public static void Write(string message) => BattleEvent.Publish(new WriteBattleLogMessageRequested(message)); 
+    public static void Write(string message) => Message.Publish(new WriteBattleLogMessageRequested(message)); 
 }

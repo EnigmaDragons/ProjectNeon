@@ -64,7 +64,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     private void PresentPossibleTargets()
     {
         var action = _selectedCard.ActionSequences[_actionIndex];
-        var possibleTargets = battleState.GetPossibleTargets(_hero, action.Group, action.Scope);
+        var possibleTargets = battleState.GetPossibleConsciousTargets(_hero, action.Group, action.Scope);
         targetingState.WithPossibleTargets(possibleTargets);
         if (possibleTargets.Length == 1)
             OnTargetConfirmed();

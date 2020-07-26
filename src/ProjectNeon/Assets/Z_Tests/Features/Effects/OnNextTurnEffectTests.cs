@@ -18,7 +18,7 @@ public sealed class OnNextTurnEffectTests
         Member attacker = TestMembers.With(StatType.Attack, 1);
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        BattleEvent.Publish(new TurnEnd());
+        Message.Publish(new TurnEnd());
         timedDamage.Apply(attacker, new Single(target));
         
         Assert.AreEqual(

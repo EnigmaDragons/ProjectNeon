@@ -15,12 +15,12 @@ public class EffectOnTurnStart : Effect
 
     public void Apply(Member source, Target target)
     {
-        BattleEvent.Subscribe<TurnStart>(_ => Execute(source, target), this);
+        Message.Subscribe<TurnStart>(_ => Execute(source, target), this);
     }
 
     void Execute(Member source, Target target)
     {
         _effect.Apply(source, target);
-        BattleEvent.Unsubscribe(this);        
+        Message.Unsubscribe(this);        
     }
 }

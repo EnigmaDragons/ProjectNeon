@@ -8,13 +8,11 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     private IndexSelector<GameObject> _indexSelector;
     private bool _isDirty = false;
     private bool _shouldHighlight;
-
-    private bool _allowInput = false;
     
     private void OnEnable()
     {
         Message.Subscribe<TurnStarted>(_ => Activate(), this);
-        Message.Subscribe<TargetSelectionFinished>(_ => ActivateIfSelecting(), this);
+        Message.Subscribe<TargetSelectionFinished>(_ => Activate(), this);
         Message.Subscribe<TargetSelectionBegun>(_ => Deactivate(), this);
         cards.SetOnShownCardsChanged(() => _isDirty = true);
         _isDirty = true;
@@ -34,12 +32,10 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         _isDirty = true;
         _shouldHighlight = true;
-        _allowInput = true;
     }
 
     private void Deactivate()
     {
-        _allowInput = false;
     }
     
     private void Update()

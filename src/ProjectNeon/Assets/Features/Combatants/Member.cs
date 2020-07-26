@@ -17,7 +17,7 @@ public class Member
         Name = name;
         Class = characterClass;
         TeamType = team;
-        State = new MemberState(baseStats);
+        State = new MemberState(id, baseStats);
     }
 
     public void Apply(Action<MemberState> effect)
@@ -29,4 +29,13 @@ public class Member
 public static class MemberExtensions
 {
     public static int CurrentHp(this Member m) => Mathf.CeilToInt(m.State[TemporalStatType.HP]);
+    public static bool IsConscious(this Member m) => m.State.IsConscious;
+
+    public static bool CanAfford(this Member m, Card c)
+    {
+        var cost = c.ResourcesSpent(m);
+        var remaining = m.State[cost.ResourceType] - cost.Amount;
+        Debug.Log($"Playing {c.Name} would leave {remaining} {cost.ResourceType.Name}");
+        return remaining >= 0;
+    }
 }

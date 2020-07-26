@@ -6,11 +6,11 @@ public class ReplayLastCardBehavior : MonoBehaviour
 
     void OnEnable()
     {
-        BattleEvent.Subscribe<ReplayLastCard>(_ => cardResolutionZone.LastPlayed.Perform(), this);
+        Message.Subscribe<ReplayLastCard>(_ => cardResolutionZone.LastPlayed.Perform(), this);
     }
 
     void OnDisable()
     {
-        BattleEvent.Unsubscribe(this);
+        Message.Unsubscribe(this);
     }
 }

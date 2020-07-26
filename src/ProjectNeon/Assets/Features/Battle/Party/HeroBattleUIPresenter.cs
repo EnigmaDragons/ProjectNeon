@@ -14,18 +14,18 @@ public class HeroBattleUIPresenter : MonoBehaviour
         var member = state.GetMemberByHero(hero);
         bust.sprite = hero.Bust;
         hp.Init(member);
-        InitResources(hero.Stats.ResourceTypes);
+        InitResources(member, hero.Stats.ResourceTypes);
     }
 
-    private void InitResources(IResourceType[] resources)
+    private void InitResources(Member member, IResourceType[] resources)
     {
         if (resources.Length > 0 && resources[0].MaxAmount > 0)
-            resource1.Init(resources[0]);
+            resource1.Init(member, resources[0]);
         else
             resource1.Hide();
 
         if (resources.Length > 1 && resources[1].MaxAmount > 0)
-            resource2.Init(resources[1]);
+            resource2.Init(member, resources[1]);
         else
             resource2.Hide();
     }

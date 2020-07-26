@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class CardsVisualizer : MonoBehaviour
 {
+    [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZone zone;
     [SerializeField] private bool allowInteractions = true;
     [SerializeField] private CardPlayZone onCardClickDestination;
     [SerializeField] private float cardSpacingScreenPercent = 0.15f;
     [SerializeField] private CardPresenter cardPrototype;
     [SerializeField] private int maxCards = 12;
+    [SerializeField] private bool onlyAllowInteractingWithPlayables = false;
     
     [ReadOnly] [SerializeField] private CardPresenter[] cardPool;
     private Card[] _oldCards = new Card[0];
@@ -76,7 +78,6 @@ public class CardsVisualizer : MonoBehaviour
             {
                 if (c.Contains(old))
                 {
-                    Debug.Log($"Cleaned Old Card {old}");
                     c.Clear();
                     c.transform.position += new Vector3(1920, 0, 0);
                     break;
@@ -104,8 +105,10 @@ public class CardsVisualizer : MonoBehaviour
             var targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
 
             c.Set(card, () => SelectCard(cardIndex));
+            c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.IsPlayable(state)));
             SwapCardPoolSpots(cardIndex, presenterIndex);
             c.transform.DOMove(targetPosition, 1);
+            c.SetTargetPosition(targetPosition);
         }
     }
 
@@ -146,6 +149,7 @@ public class CardsVisualizer : MonoBehaviour
     public void SelectCard(int cardIndex)
     {
         if (allowInteractions)
-            onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
+            if (cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
+                onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
     }
 }

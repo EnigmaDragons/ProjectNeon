@@ -1,6 +1,4 @@
 ﻿
-using UnityEngine;
-
 public sealed class Attack  : Effect
 {
     public Member Attacker { get; set; }
@@ -29,11 +27,11 @@ public sealed class Attack  : Effect
             );
         } else
         {
-            BattleEvent.Publish(
+            Message.Publish(
                 new AttackToPerform(this)
             );
             Effect.Apply(source, target);
-            BattleEvent.Publish(
+            Message.Publish(
                 new AttackPerformed(this)
             );
         }

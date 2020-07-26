@@ -17,32 +17,32 @@ public sealed class HealFlatForTurnsOnTurnStartTests
 
         new HealFlatForTurnsOnTurnStart(1, 3).Apply(caster, new Single(target));
         
-        BattleEvent.Publish(new TurnEnd());
-        BattleEvent.Publish(new TurnStart());
+        Message.Publish(new TurnEnd());
+        Message.Publish(new TurnStart());
         Assert.AreEqual(
             6,
             target.State[TemporalStatType.HP],
             "Effect did not applied on turn 1."
         );
 
-        BattleEvent.Publish(new TurnEnd());
-        BattleEvent.Publish(new TurnStart());
+        Message.Publish(new TurnEnd());
+        Message.Publish(new TurnStart());
         Assert.AreEqual(
             7,
             target.State[TemporalStatType.HP],
             "Effect did not applied on turn 2."
         );
 
-        BattleEvent.Publish(new TurnEnd());
-        BattleEvent.Publish(new TurnStart());
+        Message.Publish(new TurnEnd());
+        Message.Publish(new TurnStart());
         Assert.AreEqual(
             8,
             target.State[TemporalStatType.HP],
             "Effect did not applied on turn 3."
         );
 
-        BattleEvent.Publish(new TurnEnd());
-        BattleEvent.Publish(new TurnStart());
+        Message.Publish(new TurnEnd());
+        Message.Publish(new TurnStart());
         Assert.AreEqual(
             8,
             target.State[TemporalStatType.HP],

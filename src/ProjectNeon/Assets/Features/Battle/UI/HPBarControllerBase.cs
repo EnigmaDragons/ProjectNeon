@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class HPBarControllerBase : OnBattleEvent<MemberStateChanged>
+public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
 {
     private int _memberId = -1;
     private int _maxHp = 100;
@@ -47,7 +47,7 @@ public abstract class HPBarControllerBase : OnBattleEvent<MemberStateChanged>
         UpdateUi();
     }
 
-    protected override void Execute(MemberStateChanged e)
+    protected override void Execute(LegacyMemberStateChanged e)
     {
         if (e.Member.Id == _memberId)
             UpdateHp(Mathf.CeilToInt(e.Member.State[StatType.MaxHP]), e.Member.CurrentHp());

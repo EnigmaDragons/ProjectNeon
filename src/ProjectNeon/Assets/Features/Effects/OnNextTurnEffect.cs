@@ -14,13 +14,13 @@ public class OnNextTurnEffect : Effect
     private void AdvanceTurn()
     {
         _active = true;
-        BattleEvent.Unsubscribe(this);
+        Message.Unsubscribe(this);
     }
 
     public OnNextTurnEffect(Effect effect)
     {
         _effect = effect;
-        BattleEvent.Subscribe<TurnEnd>((turnEnd) => AdvanceTurn(), this);
+        Message.Subscribe<TurnEnd>((turnEnd) => AdvanceTurn(), this);
     }
 
     public void Apply(Member source, Target target)

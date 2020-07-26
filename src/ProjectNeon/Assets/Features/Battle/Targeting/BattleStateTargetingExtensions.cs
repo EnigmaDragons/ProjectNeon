@@ -2,12 +2,12 @@
 
 public static class BattleStateTargetingExtensions
 {
-    private static Member[] Get(this BattleState state, TeamType team)
+    private static Member[] GetConscious(this BattleState state, TeamType team)
     {
-        return state.Members.Values.Where(x => x.TeamType == team).ToArray();
+        return state.Members.Values.Where(x => x.TeamType == team && x.IsConscious()).ToArray();
     }
 
-    public static Target[] GetPossibleTargets(this BattleState state, Member self, Group group, Scope scope)
+    public static Target[] GetPossibleConsciousTargets(this BattleState state, Member self, Group group, Scope scope)
     {
         Target[] targets = new Target[0];
         switch (group)
@@ -17,13 +17,13 @@ public static class BattleStateTargetingExtensions
                 break;
             }
             case Group.All:  {
-                targets = Targets(new Team(state.Members.Values));
+                targets = Targets(new Team(state.Members.Values.Where(m => m.IsConscious())));
                 break;
             }
             case Group.Opponent:
             case Group.Ally:
             {
-                targets = NonSelfTargetsFor(state, self.TeamType, group, scope);
+                targets = NonSelfConsciousTargetsFor(state, self.TeamType, group, scope);
                 break;
             }
         }
@@ -31,10 +31,10 @@ public static class BattleStateTargetingExtensions
     }
 
 
-    private static Target[] NonSelfTargetsFor(this BattleState state, TeamType myTeam, Group group, Scope scope)
+    private static Target[] NonSelfConsciousTargetsFor(this BattleState state, TeamType myTeam, Group group, Scope scope)
     {
         var opponentsAre = myTeam == TeamType.Party ? TeamType.Enemies : TeamType.Party;
-        var teamMembers = group == Group.Ally ? Get(state, myTeam) : Get(state, opponentsAre);
+        var teamMembers = group == Group.Ally ? GetConscious(state, myTeam) : GetConscious(state, opponentsAre);
         var membersAsTargets = teamMembers.Select(x => new MemberAsTarget(x)).ToArray();
 
         return scope == Scope.One
