@@ -17,10 +17,17 @@ public class Enemy : ScriptableObject
     [SerializeField] private float armor;
     [SerializeField] private float resistance;
     [SerializeField] private ResourceType resourceType;
+    [SerializeField] private int startingResourceAmount;
 
     public string Name => enemyName;
     public Deck Deck => deck;
-    public Member AsMember(int id) => new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats);
+    public Member AsMember(int id)
+    {
+        var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats);
+        m.State.InitResourceAmount(resourceType, startingResourceAmount);
+        return m;
+    }
+
     public TurnAI AI => ai;
     public int PowerLevel => powerLevel;
     public GameObject Prefab => prefab;

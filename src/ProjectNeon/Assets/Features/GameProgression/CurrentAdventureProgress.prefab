@@ -46,20 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   adventure: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
   nextText: {fileID: 8245394735020862085}
---- !u!114 &6243731175777882598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1942337563276531100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe399b055637ca145bae7429a1fef5ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  adventure: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
-  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
 --- !u!114 &8280189791053977277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,12 +58,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64c0fdeae8a04ce78d21bbf450093a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keys: 00000000
+  keys: 0d000000
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6243731175777882598}
-        m_MethodName: StartNextStageSegment
+      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+        m_MethodName: StartNextStage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -265,11 +251,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc,
+        type: 2}
     - target: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartNextStageSegment
+      value: StartNextStage
       objectReference: {fileID: 0}
     - target: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9,
         type: 3}

@@ -65,6 +65,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
             Message.Publish(new BattleFinished(TeamType.Enemies));
         else if (state.PlayerWins())
             Message.Publish(new BattleFinished(TeamType.Party));
+        state.EnemyArea.Clear();
         BeginPhase(BattleV2Phase.Finished);
     }
 

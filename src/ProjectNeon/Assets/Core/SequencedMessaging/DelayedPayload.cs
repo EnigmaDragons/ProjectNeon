@@ -24,8 +24,8 @@ public sealed class DelayedPayload : IPayloadProvider
     {
         if (!_isInitialized)
         {
-            _isInitialized = true;
             _payloadProvider = _getPayloadProvider();
+            _isInitialized = true;
         }
     }
 }
