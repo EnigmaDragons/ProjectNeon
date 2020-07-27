@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
@@ -116,7 +115,7 @@ public class CardsVisualizer : MonoBehaviour
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
             c.Set(card, () => SelectCard(cardIndex));
-            c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.IsPlayableByHero(state)));
+            c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.Type.IsPlayableByHero(state)));
             c.SetDisabled(!_isFocused);
             SwapCardPoolSpots(cardIndex, presenterIndex);
             c.transform.DOMove(targetPosition, 1);

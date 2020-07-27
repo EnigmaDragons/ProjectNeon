@@ -40,7 +40,7 @@ public class DeckUI : MonoBehaviour
             .ToList(), x => {});
     }
 
-    private Action<GameObject> InitCardInDeckButton(Card card)
+    private Action<GameObject> InitCardInDeckButton(CardType card)
     {
         Action<GameObject> init = gameObj =>
         {

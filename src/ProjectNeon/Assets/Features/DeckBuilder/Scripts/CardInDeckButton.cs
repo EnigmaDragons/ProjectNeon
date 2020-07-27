@@ -11,11 +11,11 @@ public class CardInDeckButton : MonoBehaviour
     [SerializeField] private HoverCard hoverCard;
 
     private Canvas _canvas;
-    private Card _card;
+    private CardType _card;
     private int _count;
     private GameObject _hoverCard;
 
-    public void Init(Card card)
+    public void Init(CardType card)
     {
         _card = card;
         UpdateInfo();

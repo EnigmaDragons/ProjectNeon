@@ -26,7 +26,7 @@ public class CardResolutionZone : ScriptableObject
             m.Lose(played.Spent);
             m.Gain(played.Gained);
         });
-        BattleLog.Write($"{played.Member.Name} Played {played.Card.name} - Spent {played.Spent} - Gained {played.Gained}");
+        BattleLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
     }
 
     public void ExpirePlayedCards(Func<IPlayedCard, bool> condition)

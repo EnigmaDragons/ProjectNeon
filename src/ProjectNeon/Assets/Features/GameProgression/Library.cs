@@ -3,8 +3,8 @@
 public class Library : ScriptableObject
 {
     [SerializeField] private Hero[] unlockedHeroes;
-    [SerializeField] private Card[] unlockedCards;
+    [SerializeField] private CardType[] unlockedCards;
 
     public Hero[] UnlockedHeroes => unlockedHeroes;
-    public Card[] UnlockedCards => unlockedCards;
+    public CardType[] UnlockedCards => unlockedCards;
 }

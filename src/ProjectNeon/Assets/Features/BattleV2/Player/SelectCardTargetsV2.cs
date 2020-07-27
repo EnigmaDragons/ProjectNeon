@@ -38,7 +38,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         }
 
         cardPresenter.Set(_card, () => { });
-        Debug.Log($"Showing Selected Card {_card.name}", gameObject);
+        Debug.Log($"Showing Selected Card {_card.Name}", gameObject);
         uiView.SetActive(true);
 
         _hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value));

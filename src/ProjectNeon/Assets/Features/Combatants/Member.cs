@@ -37,7 +37,7 @@ public static class MemberExtensions
     public static bool IsConscious(this Member m) => m.State.IsConscious;
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
 
-    public static bool CanAfford(this Member m, Card c)
+    public static bool CanAfford(this Member m, CardType c)
     {
         if (!c.Cost.IsXCost && c.Cost.Amount == 0)
             return true;

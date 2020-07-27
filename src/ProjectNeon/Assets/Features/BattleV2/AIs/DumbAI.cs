@@ -36,7 +36,10 @@ public sealed class DumbAI : TurnAI
             }
         );
 
-        return new PlayedCardV2(me, targets.ToArray(), card);
+        // TODO: We probably need to have Real Enemy Cards, Eventually
+        var cardInstance = card.CreateInstance(battleState.GetNextCardId());
+        
+        return new PlayedCardV2(me, targets.ToArray(), cardInstance);
     }
 
 }

@@ -5,5 +5,5 @@ using System.Collections.Generic;
 public class HeroesDeck
 {
     public Hero Hero;
-    public List<Card> Deck;
+    public List<CardType> Deck;
 }

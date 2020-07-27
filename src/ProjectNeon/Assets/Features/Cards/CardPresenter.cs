@@ -22,15 +22,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private GameObject darken;
     [SerializeField] private float highlightedScale = 1.7f;
 
-    private Card _card;
+    private CardType _card;
     private Action _onClick;
     private Vector3 _position;
 
-    public bool Contains(Card c) => HasCard && _card == c;
+    public bool Contains(CardType c) => HasCard && _card == c;
     public bool HasCard => _card != null;
     public bool IsPlayable => canPlayHighlight.activeSelf;
 
-    public void ClearIfIs(Card c)
+    public void ClearIfIs(CardType c)
     {
         if (Contains(c))
             Clear();
@@ -42,7 +42,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         _card = null;
     }
 
-    public void Set(Card card, Action onClick)
+    public void Set(CardType card, Action onClick)
     {
         gameObject.SetActive(true);
         canPlayHighlight.SetActive(false);

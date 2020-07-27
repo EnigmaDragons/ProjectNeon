@@ -22,7 +22,7 @@ public class LibraryUI : MonoBehaviour
             .ToList(), x => {});
     }
 
-    private Action<GameObject> InitCardInLibraryButton(Card card)
+    private Action<GameObject> InitCardInLibraryButton(CardType card)
     {
         Action<GameObject> init = gameObj => gameObj.GetComponent<CardInLibraryButton>().Init(card);
         return init;

@@ -16,13 +16,13 @@ public class Hero : ScriptableObject
     [SerializeField] private float armor;
     [SerializeField] private float resistance;
     [SerializeField] private ResourceType resource1;
-    [SerializeField] private Card heroCard;
+    [SerializeField] private CardType heroCard;
 
     public Sprite Bust => bust;
     public GameObject Body => body;
     public StringVariable ClassName => className;
     public Deck Deck => startingDeck;
-    public Card HeroCard => heroCard;
+    public CardType HeroCard => heroCard;
 
     public IStats Stats => new StatAddends
         {

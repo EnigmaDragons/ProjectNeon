@@ -9,6 +9,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private EnemyArea enemies;
     [SerializeField] private bool needsCleanup;
+    [SerializeField] private int nextCardId;
     
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
@@ -39,7 +40,7 @@ public class BattleState : ScriptableObject
         this.QueuedEffects = new List<Effect>();
         this.partyArea = partyArea;
         this.enemies = enemyArea;
-        return Init();
+        return FinishSetup();
     }
 
     public void SetNextBattleground(GameObject prototype) => nextBattlegroundPrototype = prototype;
@@ -53,7 +54,14 @@ public class BattleState : ScriptableObject
     private int EnemyStartingIndex => 2;
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
 
-    public BattleState Init()
+    public void Init()
+    {
+        nextCardId = 0;
+    }
+
+    public int GetNextCardId() => nextCardId++;
+    
+    public BattleState FinishSetup()
     {
         var id = 1;      
         var heroes = Party.Heroes;

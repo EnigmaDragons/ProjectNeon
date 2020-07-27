@@ -7,7 +7,7 @@
     private readonly ResourceQuantity _gained;
 
     public PlayedCardV2(Member performer, Target[] targets, Card card)
-        : this(performer, targets, card, card.ResourcesSpent(performer), card.ResourcesGained(performer)) {}
+        : this(performer, targets, card, card.Type.ResourcesSpent(performer), card.Type.ResourcesGained(performer)) {}
     public PlayedCardV2(Member performer, Target[] targets, Card card, ResourceQuantity spent, ResourceQuantity gained)
     {
         _performer = performer;

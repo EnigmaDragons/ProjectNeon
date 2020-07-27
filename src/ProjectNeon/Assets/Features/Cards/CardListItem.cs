@@ -12,10 +12,10 @@ public class CardListItem : MonoBehaviour, IPointerDownHandler
 
     [SerializeField] private GameObject highlight;
 
-    private Card _card;
+    private CardType _card;
     private Action _onClick;
 
-    public void Set(Card card, Action onClick)
+    public void Set(CardType card, Action onClick)
     {
         _onClick = onClick;
         _card = card;

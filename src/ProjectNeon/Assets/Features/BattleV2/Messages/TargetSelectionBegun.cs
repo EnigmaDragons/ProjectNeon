@@ -1,7 +1,7 @@
 
 public class TargetSelectionBegun
 {
-    public Card Card { get; }
+    public CardType Card { get; }
 
-    public TargetSelectionBegun(Card c) => Card = c;
+    public TargetSelectionBegun(CardType c) => Card = c;
 }

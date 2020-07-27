@@ -39,11 +39,12 @@ public class BattleSetupV2 : MonoBehaviour
     public IEnumerator Execute()
     {
         state.CleanupIfNeeded();
+        state.Init();
         ClearResolutionZone();
         SetupEnemyEncounter();
         yield return visuals.Setup(); // Could Animate
         
-        state.Init();
+        state.FinishSetup();
         visuals.AfterBattleStateInitialized();
         
         ui.Setup();
@@ -82,7 +83,10 @@ public class BattleSetupV2 : MonoBehaviour
             throw new Exception("Cannot Setup Player Cards, Party Is Not Initialized");
 
         playerCardPlayZones.ClearAll();
-        Deck.InitShuffled(party.Decks.SelectMany(x => x.Cards));
+        var cards = party.Decks
+            .SelectMany(x => x.Cards)
+            .Select(x => x.CreateInstance(state.GetNextCardId()));
+        Deck.InitShuffled(cards);
         
         for (var c = 0; c < startingCards.Value; c++)
             Hand.PutOnBottom(Deck.DrawOneCard());

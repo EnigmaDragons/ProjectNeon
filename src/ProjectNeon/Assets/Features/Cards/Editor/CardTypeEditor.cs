@@ -3,15 +3,15 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Card))]
-public class CardEditor : Editor
+[CustomEditor(typeof(CardType))]
+public class CardTypeEditor : Editor
 {
-    private Card targetCard;
+    private CardType targetCard;
     private SerializedProperty art, description, typeDescription, onlyPlayableByClass, cost, gain, actionSequences, cardAction1, cardAction2;
 
     public void OnEnable()
     {
-        targetCard = (Card) target;
+        targetCard = (CardType) target;
         art = serializedObject.FindProperty("art");
         description = serializedObject.FindProperty("description");
         typeDescription = serializedObject.FindProperty("typeDescription");

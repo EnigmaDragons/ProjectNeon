@@ -6,12 +6,12 @@ public class CardInLibraryButton : MonoBehaviour
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private GameEvent deckChanged;
 
-    public void Init(Card card)
+    public void Init(CardType card)
     {
         presenter.Set(card, () => AddCard(card));
     }
 
-    public void AddCard(Card card)
+    public void AddCard(CardType card)
     {
         state.SelectedHeroesDeck.Deck.Add(card);
         deckChanged.Publish();
