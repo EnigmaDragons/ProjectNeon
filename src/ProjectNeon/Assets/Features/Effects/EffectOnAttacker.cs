@@ -20,7 +20,7 @@ public class EffectOnAttacker : Effect
     {
         _performer = source;
         _effectTarget = target;
-        Message.Subscribe<AttackPerformed>(attackPerformed => Execute(attackPerformed.Attack), this);
+        //implement
     }
 
     void Execute(Attack attack)

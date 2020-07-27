@@ -22,7 +22,10 @@ public sealed class DelayedPayload : IPayloadProvider
 
     private void EnsureInitialized()
     {
-        if (_isInitialized)
+        if (!_isInitialized)
+        {
+            _isInitialized = true;
             _payloadProvider = _getPayloadProvider();
+        }
     }
 }

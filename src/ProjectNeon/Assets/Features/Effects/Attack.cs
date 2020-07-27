@@ -18,16 +18,9 @@ public sealed class Attack  : Effect
     {
         Attacker = source;
         Target = target;
-        Message.Publish(
-            new AttackToPerform(this)
-        );
-        Effect.Apply(source, target);
-        Message.Publish(
-            new AttackPerformed(this)
-        );
-    }
-
-    public void Apply(Member source, Member target) {
-        Apply(source, new Single(target));
+        //PROPOSALS SHOULD NOT GO THROUGH THE EVENT SYSTEM
+        Message.Publish(new Proposed<Attack> { Message = this });
+        Effect.Apply(Attacker, Target);
+        Message.Publish(new Finished<Attack> { Message = this });
     }
 }

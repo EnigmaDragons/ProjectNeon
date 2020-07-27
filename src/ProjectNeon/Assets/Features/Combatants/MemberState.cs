@@ -8,6 +8,7 @@ public sealed class MemberState : IStats
     private readonly List<IStats> _battleAdditiveMods = new List<IStats>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
+    private readonly List<ITemporalState> _reactiveStates = new List<ITemporalState>();
 
     private IStats CurrentStats => _baseStats
         .Plus(_battleAdditiveMods)
@@ -45,6 +46,8 @@ public sealed class MemberState : IStats
     public void ApplyAdditiveUntilEndOfBattle(IStats mods) => _battleAdditiveMods.Add(mods);
     public void ApplyTemporaryMultiplier(ITemporalState mods) => _multiplierMods.Add(mods);
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => _additiveMods.RemoveAll(condition);
+    public void AddReactiveState(ITemporalState state) => _reactiveStates.Add(state);
+    public void RemoveReactiveState(ITemporalState state) => _reactiveStates.Remove(state);
 
     public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType.Name, qty.Amount);
     public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType.Name, qty.Amount);
@@ -89,6 +92,10 @@ public sealed class MemberState : IStats
     {
         _additiveMods.ForEach(m => m.AdvanceTurn());
         _additiveMods.RemoveAll(m => !m.IsActive);
+        _multiplierMods.ForEach(m => m.AdvanceTurn());
+        _multiplierMods.RemoveAll(m => !m.IsActive);
+        _reactiveStates.ForEach(m => m.AdvanceTurn());
+        _reactiveStates.RemoveAll(m => !m.IsActive);
     }
 
     private void PublishAfter(Action action)

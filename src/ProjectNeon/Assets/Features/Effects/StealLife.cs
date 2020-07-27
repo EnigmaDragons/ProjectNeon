@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 /**
  * Heals the attacker based on the damage the attack inflicted.
@@ -11,31 +12,33 @@ public class StealLife : Effect
     private Member _performer;
     private Target _effectTarget;
     private float _ratio;
-
-    public StealLife() : this(1F)
-    {
-        
-    }
-
-    public StealLife(float ratio)
+    private int _duration;
+    private Dictionary<Member, ReactiveState> _buffs = new Dictionary<Member, ReactiveState>();
+    
+    public StealLife(float ratio, int duration)
     {
         _ratio = ratio;
+        _duration = duration;
     }
 
     void Effect.Apply(Member source, Target target)
     {
         _performer = source;
         _effectTarget = target;
-        Message.Subscribe<AttackPerformed>(attackPerformed => Execute(attackPerformed.Attack), this);
+        foreach (var member in target.Members)
+        {
+            var state = new ReactiveState(x => Message.Subscribe<Finished<Attack>>(attack => Execute(attack.Message, member), x), _duration, false);
+            _buffs[member] = state;
+            member.State.AddReactiveState(state);
+        }
     }
 
-    void Execute(Attack attack)
+    void Execute(Attack attack, Member member)
     {
-        if (_effectTarget.Equals(attack.Attacker))
+        if (member.Name.Equals(attack.Attacker.Name))
         {
-            new SimpleEffect(
-		     m => m.GainHp(attack.Damage.Calculate(attack.Attacker, attack.Target) * _ratio)
-            ).Apply(_performer, _effectTarget);
+            member.State.RemoveReactiveState(_buffs[member]);
+            new SimpleEffect(m => m.GainHp(attack.Damage.Calculate(attack.Attacker, attack.Target) * _ratio)).Apply(_performer, new Single(member));
         }
     }
 
