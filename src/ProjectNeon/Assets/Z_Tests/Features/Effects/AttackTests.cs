@@ -11,7 +11,7 @@ public sealed class AttackTests
         );
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        new Attack(1).Apply(attacker, target);
+        new Attack(1).Apply(attacker, new Single(attacker));
 
         Assert.AreEqual(9, target.State[TemporalStatType.HP]);
     }

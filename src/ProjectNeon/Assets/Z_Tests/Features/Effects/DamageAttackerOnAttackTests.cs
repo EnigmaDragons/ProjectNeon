@@ -17,7 +17,7 @@ public sealed class DamageAttackerOnAttackTests
         Member attacker = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
         AllEffects.Apply(DamageAttackerOnAttack(1), paladin, new Single(ally));
-        new Attack(0).Apply(attacker, ally);
+        new Attack(0).Apply(attacker, new Single(ally));
 
         Assert.AreEqual(9, attacker.State[TemporalStatType.HP]);
     }
@@ -30,7 +30,7 @@ public sealed class DamageAttackerOnAttackTests
         Member attacker = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
         AllEffects.Apply(DamageAttackerOnAttack(1), paladin, new Single(ally));
-        new Attack(0).Apply(attacker, paladin);
+        new Attack(0).Apply(attacker, new Single(paladin));
 
         Assert.AreEqual(10, attacker.State[TemporalStatType.HP]);
     }

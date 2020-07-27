@@ -25,7 +25,7 @@ public class CardActionV2
         if (type == CardBattleActionType.AnimateAtTarget)
             return new SinglePayload(new BattleEffectAnimationRequested { EffectName = atTargetAnimation, PerformerId = source.Id, Target = target, Scope = scope, Group = group });
         if (type == CardBattleActionType.Condition)
-            SequenceMessage.Queue(new DelayedPayload(() => AllConditions.Resolve(conditionData, source, target, group, scope, amountPaid)));
+            return new DelayedPayload(() => AllConditions.Resolve(conditionData, source, target, group, scope, amountPaid));
         throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
     }
 }

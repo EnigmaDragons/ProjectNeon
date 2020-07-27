@@ -6,7 +6,7 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(EffectData))]
 public class EffectDataEditor : PropertyDrawer
 {
-    private DictionaryWithDefault<EffectType, string[]> _relevantProperties = new DictionaryWithDefault<EffectType, string[]>(new string[] { "FloatAmount", "NumberOfTurns" })
+    private DictionaryWithDefault<EffectType, string[]> _relevantProperties = new DictionaryWithDefault<EffectType, string[]>(new string[] { "FloatAmount", "NumberOfTurns", "HitsRandomTargetMember" })
     {
         {EffectType.Nothing, new string[0]},
         {EffectType.OnAttacked, new []{ "NumberOfTurns", "ReferencedEffectSequence" }},
