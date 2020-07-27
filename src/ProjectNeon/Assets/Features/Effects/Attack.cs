@@ -18,23 +18,13 @@ public sealed class Attack  : Effect
     {
         Attacker = source;
         Target = target;
-        if (target.Members.Length > 1)
-        {
-            target.Members.ForEach(
-                member => {
-                    new Attack(Multiplier).Apply(source, target);
-                }
-            );
-        } else
-        {
-            Message.Publish(
-                new AttackToPerform(this)
-            );
-            Effect.Apply(source, target);
-            Message.Publish(
-                new AttackPerformed(this)
-            );
-        }
+        Message.Publish(
+            new AttackToPerform(this)
+        );
+        Effect.Apply(source, target);
+        Message.Publish(
+            new AttackPerformed(this)
+        );
     }
 
     public void Apply(Member source, Member target) {
