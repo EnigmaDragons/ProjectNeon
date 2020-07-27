@@ -15,6 +15,7 @@ public class Member
     {
         if (baseStats.Damagability() < 0.01)
             Debug.LogWarning($"Damagability of {name} is 0");
+        
         Id = id;
         Name = name;
         Class = characterClass;
