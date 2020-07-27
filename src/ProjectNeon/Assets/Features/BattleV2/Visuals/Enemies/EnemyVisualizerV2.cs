@@ -3,7 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
-public class EnemyVisualizerV2 : MonoBehaviour
+public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimationRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
@@ -16,9 +16,6 @@ public class EnemyVisualizerV2 : MonoBehaviour
 
     [ReadOnly, SerializeField] private GameObject[] active = new GameObject[0];
     
-    private void OnEnable() => Message.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
-    private void OnDisable() => Message.Unsubscribe(this);
-
     public IEnumerator Setup()
     {
         active.ForEach(Destroy);
@@ -53,7 +50,13 @@ public class EnemyVisualizerV2 : MonoBehaviour
         }
     }
     
-    private void ResolveUnconscious(MemberUnconscious m)
+    private IEnumerator ExecuteAfterDelay(Action a, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        a();
+    }
+
+    protected override void Execute(MemberUnconscious m)
     {
         if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
 
@@ -76,9 +79,21 @@ public class EnemyVisualizerV2 : MonoBehaviour
         StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
     }
 
-    private IEnumerator ExecuteAfterDelay(Action a, float delay)
+    protected override void Execute(CharacterAnimationRequested e)
     {
-        yield return new WaitForSeconds(delay);
-        a();
+        if (!state.IsEnemy(e.MemberId)) return;
+
+        var enemyIndex = state.GetEnemyIndexByMemberId(e.MemberId);
+        var enemy = active[enemyIndex];
+        Debug.Log($"Began Animation for {enemy.name}");
+        var animator = enemy.GetComponentInChildren<Animator>();
+        if (animator == null)
+            Debug.LogWarning($"No Animator found for {enemy.name}");
+        else
+            StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation, elapsed =>
+            {
+                BattleLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
+                Message.Publish(new Finished<CharacterAnimationRequested>());
+            }));
     }
 }

@@ -96,8 +96,8 @@ public class CardsVisualizer : MonoBehaviour
 
     private void UpdateCurrentCards(Card[] cards)
     {
-        if (onlyAllowInteractingWithPlayables)
-            Debug.Log("Updating Current Playable Cards");
+//        if (onlyAllowInteractingWithPlayables)
+//            Debug.Log("Updating Current Playable Cards");
         var totalSpaceNeeded = Screen.width * (cardSpacingScreenPercent * cards.Length);
         var startX = (Screen.width - totalSpaceNeeded) / 2f;
 

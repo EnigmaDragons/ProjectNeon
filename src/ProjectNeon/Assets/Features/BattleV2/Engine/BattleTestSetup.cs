@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -38,7 +37,7 @@ public class BattleTestSetup : MonoBehaviour
     }
 
     public void UseCustomBattlefield() => setup.InitBattleField(battlefield);
-    public void UseFixedEncounter() => setup.InitEncounter(enemies);
+    public void UseFixedEncounter() => state.SetNextEncounter(enemies);
     public void UseCustomEncounterSet() => setup.InitEncounterBuilder(encounterBuilder);
     public void SetupBattle() => engine.Setup();
 

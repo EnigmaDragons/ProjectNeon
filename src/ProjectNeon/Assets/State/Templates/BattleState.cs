@@ -43,7 +43,7 @@ public class BattleState : ScriptableObject
     }
 
     public void SetNextBattleground(GameObject prototype) => nextBattlegroundPrototype = prototype;
-    public void SetNextEncounter(Enemy[] e) => nextEnemies = e;
+    public void SetNextEncounter(IEnumerable<Enemy> e) => nextEnemies = e.ToArray();
     public void SetupEnemyEncounter()
     {
         EnemyArea.Initialized(nextEnemies);
@@ -103,10 +103,12 @@ public class BattleState : ScriptableObject
     public bool PlayerLoses() => Heroes.All(m => m.State.IsUnconscious);
 
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
+    public bool IsEnemy(int memberId) => _enemiesById.ContainsKey(memberId);
     public Hero GetHeroById(int memberId) => _heroesById[memberId];
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
     public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.First(x => x.Value == hero).Key];
     public Member GetMemberByClass(string memberClass) => _membersById[_heroesById.First(x => x.Value.ClassName.Value.Equals(memberClass)).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
+    public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
 }
