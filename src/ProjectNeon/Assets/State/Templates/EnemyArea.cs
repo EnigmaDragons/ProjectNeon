@@ -21,4 +21,6 @@ public class EnemyArea : ScriptableObject
         uiPositions = positions.ToArray();
         return this;
     }
+
+    public void Clear() => enemies = new Enemy[0];
 }

@@ -38,6 +38,7 @@ public class BattleSetupV2 : MonoBehaviour
 
     public IEnumerator Execute()
     {
+        state.CleanupIfNeeded();
         ClearResolutionZone();
         SetupEnemyEncounter();
         yield return visuals.Setup(); // Could Animate
@@ -57,10 +58,19 @@ public class BattleSetupV2 : MonoBehaviour
     
     private void SetupEnemyEncounter()
     {
+        BattleLog.Write("Setting Up Enemies");
         if (state.HasCustomEnemyEncounter)
+        {
+            BattleLog.Write("Setting Up Custom Encounter");
             state.SetupEnemyEncounter();
+        }
+
         if (enemyArea.Enemies.Length == 0)
+        {
+            BattleLog.Write("Setting Up Random Encounter");
             enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
+        }
+            
         foreach (var enemy in enemyArea.Enemies)
             if (enemy.Deck.Cards.All(c => c.Cost.Amount > 0))
                 throw new Exception($"{enemy.Name}'s Deck does not contain a 0-Cost Card.");

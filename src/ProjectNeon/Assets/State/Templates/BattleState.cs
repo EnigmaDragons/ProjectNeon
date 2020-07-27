@@ -8,6 +8,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private EnemyArea enemies;
+    [SerializeField] private bool needsCleanup;
     
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
@@ -19,6 +20,7 @@ public class BattleState : ScriptableObject
     
     public bool SelectionStarted = false;
 
+    public bool NeedsCleanup => needsCleanup;
     public Party Party => partyArea.Party;
     public PartyArea PartyArea => partyArea;
     public EnemyArea EnemyArea => enemies;
@@ -46,7 +48,6 @@ public class BattleState : ScriptableObject
     {
         EnemyArea.Initialized(nextEnemies);
         nextEnemies = new Enemy[0];
-        Debug.Log("Battle State Setup Enemy Encounter");
     }
 
     private int EnemyStartingIndex => 2;
@@ -82,9 +83,19 @@ public class BattleState : ScriptableObject
             .ToDictionary(x => x.Id, x => x);
 
         uiPositions = _uiTransformsById.Values.Select(x => x.position).ToArray();
+        needsCleanup = true;
         
         BattleLog.Write("Finished Battle State Init");
         return this;
+    }
+
+    public void CleanupIfNeeded()
+    {
+        if (!NeedsCleanup) return;
+        
+        EnemyArea.Clear();
+        needsCleanup = false;
+        BattleLog.Write("Finished Battle State Cleanup");
     }
 
     public void AdvanceTurn() => Members.Values.ForEach(m => m.State.AdvanceTurn());
