@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested>
+public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious>
 {
-    [SerializeField] private BattleState battleState;
+    [SerializeField] private BattleState state;
     [SerializeField] private GameObject hero1;
     [SerializeField] private GameObject hero2;
     [SerializeField] private GameObject hero3;
@@ -18,20 +20,20 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested>
         _heroes.ForEach(Destroy);
         _heroes.Clear();
         
-        var heroes = battleState.Party.Heroes;
+        var heroes = state.Party.Heroes;
         if (heroes.Length > 0)
             SetupHero(hero1, heroes[0]);
         if (heroes.Length > 1)
             SetupHero(hero2, heroes[1]);
         if (heroes.Length > 2)
             SetupHero(hero3, heroes[2]);
-        battleState.PartyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform });
+        state.PartyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform });
         yield break;
     }
 
     public void AfterBattleStateInitialized()
     {
-        _damage.ForEach(x => x.Value.Init(battleState.GetMemberByHero(x.Key)));
+        _damage.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
     private void SetupHero(GameObject heroOrigin, Hero hero)
@@ -57,17 +59,35 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested>
 
     protected override void Execute(CharacterAnimationRequested e)
     {
-        if (!battleState.IsHero(e.MemberId)) return;
+        if (!state.IsHero(e.MemberId)) return;
         
-        var hero = battleState.GetHeroById(e.MemberId);
+        var hero = state.GetHeroById(e.MemberId);
         var animator = _animators[hero];
         if (animator == null)
-            Debug.LogWarning($"No Animator found for {battleState.GetHeroById(e.MemberId).name}");
+            Debug.LogWarning($"No Animator found for {state.GetHeroById(e.MemberId).name}");
         else
             StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation, elapsed =>
             {
                 BattleLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
+    }
+    
+    protected override void Execute(MemberUnconscious m)
+    {
+        if (!m.Member.TeamType.Equals(TeamType.Party)) return;
+        
+        // TODO: Handle custom unconscious animation 
+
+        var t = state.GetTransform(m.Member.Id);
+        t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
+        t.DOSpiral(2);
+        StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
+    }
+    
+    private IEnumerator ExecuteAfterDelay(Action a, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        a();
     }
 }
