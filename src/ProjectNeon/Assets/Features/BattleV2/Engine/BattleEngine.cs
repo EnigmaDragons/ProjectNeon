@@ -71,9 +71,9 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
 
     private void BeginPhase(BattleV2Phase newPhase)
     {
-        if (phase != BattleV2Phase.NotBegun)
-            LogProcessStep($"Finished {phase} Phase");
-        LogProcessStep($"Beginning {newPhase} Phase");
+        var finishedMessage = phase != BattleV2Phase.NotBegun ? $"Finished {phase} Phase -> " : "";
+        var message = $"{finishedMessage}Beginning {newPhase} Phase";
+        LogProcessStep(message);
         phase = newPhase;
     }
     

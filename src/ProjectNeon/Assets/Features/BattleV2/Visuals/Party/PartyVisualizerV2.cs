@@ -64,27 +64,10 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested>
         if (animator == null)
             Debug.LogWarning($"No Animator found for {battleState.GetHeroById(e.MemberId).name}");
         else
-            StartCoroutine(PlayAnimation(animator, e.Animation));
-    }
-
-    private IEnumerator PlayAnimation(Animator animator, string animationName)
-    {
-        var elapsed = 0f; 
-        var layer = 0;
-        animator.Play(animationName, layer);
-        
-        yield return new WaitForSeconds(0.1f);
-        elapsed += 0.1f;
-        
-        bool AnimationIsActive() => animator.GetCurrentAnimatorStateInfo(layer).IsName(animationName);
-        bool AnimationIsStillPlaying() => animator.GetCurrentAnimatorStateInfo(layer).normalizedTime < 1.0f;
-        while (AnimationIsActive() && AnimationIsStillPlaying())
-        {
-            yield return new WaitForSeconds(0.1f);
-            elapsed += 0.1f;
-        }
-
-        BattleLog.Write($"Finished {animationName} in {elapsed} seconds.");
-        Message.Publish(new Finished<CharacterAnimationRequested>());
+            StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation, elapsed =>
+            {
+                BattleLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
+                Message.Publish(new Finished<CharacterAnimationRequested>());
+            }));
     }
 }

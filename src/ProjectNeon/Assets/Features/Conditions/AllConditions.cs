@@ -23,7 +23,7 @@ public class AllConditions
         var condtionType = conditionData.ConditionType;
         if (!_createConditionOfType.ContainsKey(condtionType))
         {
-            Debug.LogError($"No EffectType of {condtionType} exists in {nameof(AllEffects)}");
+            Debug.LogError($"No EffectType of {condtionType} exists in {nameof(AllConditions)}");
             return _createConditionOfType[ActionConditionType.Nothing](conditionData);
         }
         return _createConditionOfType[condtionType](conditionData);
