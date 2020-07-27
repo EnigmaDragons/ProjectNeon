@@ -1,4 +1,4 @@
-
+using System.Linq;
 using UnityEngine;
 
 public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectionFinished>
@@ -31,6 +31,7 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
     private void ChooseEnemyCards()
     {
         state.Enemies
+            .Where(e => e.IsConscious())
             .ForEach(e => resolutionZone.Add(state.GetEnemyById(e.Id).AI.Play(e.Id)));
     }
     

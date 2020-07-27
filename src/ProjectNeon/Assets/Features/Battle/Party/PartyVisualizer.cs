@@ -17,7 +17,7 @@ public class PartyVisualizer : OnMessage<CharacterAnimationRequested>
     public void SetupDamageEffects()
     {
         _damage
-            .ForEach(x => x.Value.Init(battleState.GetMemberByHero(x.Key)));
+            .CopiedForEach(x => x.Value.Init(battleState.GetMemberByHero(x.Key)));
     }
     
     void Start()

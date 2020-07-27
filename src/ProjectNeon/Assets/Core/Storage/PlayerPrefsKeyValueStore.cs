@@ -23,7 +23,7 @@ public sealed class PlayerPrefsKeyValueStore
     public T GetOrDefault<T>(string key, T defaultValue) => ForType(typeof(T)).GetOrDefaultAsType(key, defaultValue);
     public void Put(string key, object obj) => ForType(obj.GetType()).Put(key, obj);
     public void Remove<T>(string key) => ForType(typeof(T)).Remove(key);
-    public void Clear() => _stores.ForEach(x => x.Value.Clear());
+    public void Clear() => _stores.CopiedForEach(x => x.Value.Clear());
     public void Update<T>(string key, T defaultValue, Func<T, T> getNewValue)
     {
         var existing = GetOrDefault(key, defaultValue);

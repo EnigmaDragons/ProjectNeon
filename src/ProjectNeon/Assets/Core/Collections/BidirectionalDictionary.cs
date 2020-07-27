@@ -9,7 +9,7 @@ public sealed class BidirectionalDictionary<T1, T2> : IEnumerable<KeyValuePair<T
     public BidirectionalDictionary() { }
     public BidirectionalDictionary(IEnumerable<KeyValuePair<T1, T2>> items)
     {
-        items.ForEach(x => Add(x.Key, x.Value));
+        items.CopiedForEach(x => Add(x.Key, x.Value));
     }
 
     public void Add(T1 item1, T2 item2)

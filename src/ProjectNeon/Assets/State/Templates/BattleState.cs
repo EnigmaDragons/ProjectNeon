@@ -98,7 +98,7 @@ public class BattleState : ScriptableObject
         BattleLog.Write("Finished Battle State Cleanup");
     }
 
-    public void AdvanceTurn() => Members.Values.ForEach(m => m.State.AdvanceTurn());
+    public void AdvanceTurn() => Members.Values.CopiedForEach(m => m.State.AdvanceTurn());
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);
     public bool PlayerLoses() => Heroes.All(m => m.State.IsUnconscious);
 

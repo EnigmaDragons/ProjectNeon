@@ -33,7 +33,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
 
     public void AfterBattleStateInitialized()
     {
-        _damage.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _damage.CopiedForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
     private void SetupHero(GameObject heroOrigin, Hero hero)

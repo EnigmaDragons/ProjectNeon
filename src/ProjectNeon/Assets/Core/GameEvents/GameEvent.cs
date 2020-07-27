@@ -9,7 +9,7 @@ public class GameEvent : ScriptableObject
 {
     private IEnumerable<GameEventSubscription> listeners = Array.Empty<GameEventSubscription>();
 
-    public void Publish() => CleansedListeners.ForEach(l => l.OnEvent(l));
+    public void Publish() => CleansedListeners.CopiedForEach(l => l.OnEvent(l));
 
     public void Subscribe(Action action, object subscriber) => Subscribe(new GameEventSubscription(name, x => action(), subscriber));
     public void Subscribe(GameEventListener listener) => Subscribe(new GameEventSubscription(name, x => listener.OnEventRaised(), listener));

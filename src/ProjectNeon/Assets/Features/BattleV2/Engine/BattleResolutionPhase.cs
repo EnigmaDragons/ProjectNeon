@@ -44,7 +44,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
         => state.Members.Values.ToList()
             .Except(_unconscious)
             .Where(m => !m.State.IsConscious)
-            .ForEach(ResolveUnconsciousMember);
+            .CopiedForEach(ResolveUnconsciousMember);
 
     private void ResolveUnconsciousMember(Member member)
     {

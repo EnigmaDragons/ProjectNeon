@@ -11,7 +11,7 @@ public class UpdateTurnEndMemberStates : MonoBehaviour
 
     private void Execute()
     {
-        battleState.Members.Values.ForEach(m => m.State.AdvanceTurn());
+        battleState.Members.Values.CopiedForEach(m => m.State.AdvanceTurn());
         onFinished.Publish();
     }
 }

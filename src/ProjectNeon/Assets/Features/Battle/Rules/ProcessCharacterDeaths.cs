@@ -12,7 +12,7 @@ public sealed class ProcessCharacterDeaths : GameEventActionScript
         state.Members.Values.ToList()
             .Except(_unconscious)
             .Where(m => !m.State.IsConscious)
-            .ForEach(m =>
+            .CopiedForEach(m =>
             {    
                 _unconscious.Add(m);
                 Message.Publish(new MemberUnconscious(m));

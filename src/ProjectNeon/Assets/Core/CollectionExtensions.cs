@@ -5,7 +5,7 @@ using System.Linq;
 public static class CollectionExtensions
 {    
     [Obsolete] public static bool None<T>(this IEnumerable<T> items, Func<T, bool> condition) => !items.Any(condition);
-    [Obsolete] public static void ForEach<T>(this IEnumerable<T> items, Action<T> action) => items.ToList().ForEach(action);
+    [Obsolete] public static void CopiedForEach<T>(this IEnumerable<T> items, Action<T> action) => items.ToList().ForEach(action);
     [Obsolete] public static IEnumerable<T> Concat<T>(this IEnumerable<T> items, T item) => items.Concat(item.AsArray());
     [Obsolete] public static IEnumerable<T> Concat<T>(this T item, IEnumerable<T> items) => items.Concat(item.AsArray());
     [Obsolete] public static IEnumerable<T> ConcatIf<T>(this IEnumerable<T> items, T item, Func<T, bool> condition) 
@@ -30,16 +30,22 @@ public static class CollectionExtensions
         return value;
     }
 
-    public static void ForEach<T>(this T[] arr, Action<T> action)
+//    public static void ForEach<T>(this T[] arr, Action<T> action)
+//    {
+//        foreach (var t in arr)
+//            action(t);
+//    }
+//    
+//    public static void ForEach<T>(this HashSet<T> set, Action<T> action)
+//    {
+//        foreach (var t in set)
+//            action(t);
+//    }
+
+    public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
     {
-        foreach (var t in arr)
-            action(t);
-    }
-    
-    public static void ForEach<T>(this HashSet<T> set, Action<T> action)
-    {
-        foreach (var t in set)
-            action(t);
+        foreach (var item in items) 
+            action(item);
     }
 
     public static TValue VerboseGetValue<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey k, Func<TKey, string> context)

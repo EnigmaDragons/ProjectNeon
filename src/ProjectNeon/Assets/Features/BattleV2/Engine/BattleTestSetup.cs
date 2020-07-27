@@ -7,6 +7,8 @@ public class BattleTestSetup : MonoBehaviour
     [SerializeField] private BattleEngine engine;
     [SerializeField] private BattleSetupV2 setup;
     [SerializeField] private BattleState state;
+
+    [SerializeField] private bool setupOnAwake = false;
     
     [Header("Party")] 
     [SerializeField] private Hero hero1;
@@ -25,7 +27,7 @@ public class BattleTestSetup : MonoBehaviour
 
     private void Awake()
     {
-        if (!state.Party.IsInitialized)
+        if (setupOnAwake || !state.Party.IsInitialized)
             UseEverything();
     }
     
