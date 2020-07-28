@@ -37,7 +37,7 @@ public sealed class DumbAI : TurnAI
         );
 
         // TODO: We probably need to have Real Enemy Cards, Eventually
-        var cardInstance = card.CreateInstance(battleState.GetNextCardId());
+        var cardInstance = card.CreateInstance(battleState.GetNextCardId(), me);
         
         return new PlayedCardV2(me, targets.ToArray(), cardInstance);
     }

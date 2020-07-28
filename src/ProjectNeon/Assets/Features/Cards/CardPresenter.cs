@@ -55,6 +55,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     {
         _card = card;
         Set(card.Type, onClick);
+        description.text = card.InterpolatedDescription();
     }
 
     public void Set(CardType card, Action onClick)
@@ -65,7 +66,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         _cardType = card;
         
         nameLabel.text = _cardType.Name;
-        description.text = _cardType.Description;
+        description.text = _cardType.InterpolatedDescription(Maybe<Member>.Missing());
         type.text = _cardType.TypeDescription;
         art.sprite = _cardType.Art;
         

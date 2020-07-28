@@ -17,6 +17,8 @@ public class FloatReference
         ConstantValue = value;
     }
 
+    public override string ToString() => Value.ToString();
+
     public static implicit operator float(FloatReference reference)
     {
         return reference.Value;

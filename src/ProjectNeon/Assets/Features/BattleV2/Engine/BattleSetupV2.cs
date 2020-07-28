@@ -83,9 +83,16 @@ public class BattleSetupV2 : MonoBehaviour
             throw new Exception("Cannot Setup Player Cards, Party Is Not Initialized");
 
         playerCardPlayZones.ClearAll();
-        var cards = party.Decks
-            .SelectMany(x => x.Cards)
-            .Select(x => x.CreateInstance(state.GetNextCardId()));
+        var cards = new List<Card>();
+        for (var i = 0; i < party.Heroes.Length; i++)
+        {
+            var hero = party.Heroes[i];
+            if (hero == null || hero.name.Equals(""))
+                 continue;
+            
+            cards.AddRange(party.Decks[i].Cards.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero))));
+        }
+
         Deck.InitShuffled(cards);
         
         for (var c = 0; c < startingCards.Value; c++)

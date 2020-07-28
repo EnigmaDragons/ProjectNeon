@@ -23,7 +23,7 @@ public class CardType : ScriptableObject
     public Maybe<CharacterClass> LimitedToClass => new Maybe<CharacterClass>(onlyPlayableByClass != null ? onlyPlayableByClass : null);
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
 
-    public Card CreateInstance(int id) => new Card(id, this);
+    public Card CreateInstance(int id, Member owner) => new Card(id, owner, this);
     
     public CardAction[] Actions => Array.Empty<CardAction>()
         .ConcatIf(cardAction1, c => c.HasEffects)
