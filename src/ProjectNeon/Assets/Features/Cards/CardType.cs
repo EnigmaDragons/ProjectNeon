@@ -7,7 +7,7 @@ public class CardType : ScriptableObject
     [PreviewSprite] [SerializeField] private Sprite art;
     [SerializeField] [TextArea(1, 12)] private string description;
     [SerializeField] private StringVariable typeDescription;
-    [SerializeField] private StringVariable onlyPlayableByClass;
+    [SerializeField] private CharacterClass onlyPlayableByClass;
     [SerializeField] private ResourceCost cost;
     [SerializeField] private ResourceCost onPlayGain;
     [SerializeField] public CardActionSequence[] actionSequences = new CardActionSequence[0];
@@ -20,7 +20,7 @@ public class CardType : ScriptableObject
     public Sprite Art => art;
     public string Description => description;
     public string TypeDescription => typeDescription.Value;
-    public Maybe<string> LimitedToClass => new Maybe<string>(onlyPlayableByClass.Value.Length > 0 ? onlyPlayableByClass.Value : null);
+    public Maybe<CharacterClass> LimitedToClass => new Maybe<CharacterClass>(onlyPlayableByClass != null ? onlyPlayableByClass : null);
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
 
     public Card CreateInstance(int id) => new Card(id, this);

@@ -41,7 +41,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         Debug.Log($"Showing Selected Card {_card.Name}", gameObject);
         uiView.SetActive(true);
 
-        _hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value));
+        _hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value.Name));
         if (_hero == null)
         {
             Debug.Log($"Could not find Party Member with Class {cardClass.Value}");

@@ -9,11 +9,17 @@ static class GameDataMenu
     [MenuItem("Assets/Create/Effect")]
     static void CreateSequence() => Create<CardActionsData>();
 
+    [MenuItem("Assets/Create/GameContent", priority = 1)]
+    static void Nothing() {}
+    
     [MenuItem("Assets/Create/GameContent/Hero")]
     static void Hero() => Create<Hero>();
     [MenuItem("Assets/Create/GameContent/Enemy")]
     static void Enemy() => Create<Enemy>();
 
+    [MenuItem("Assets/Create/GameContent/Class")]
+    static void Class() => Create<CharacterClass>();
+    
     [MenuItem("Assets/Create/GameContent/SimpleResourceType")]
     static void SimpleResourceType() => Create<SimpleResourceType>();
     [MenuItem("Assets/Create/GameContent/Deck")]

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class CardPresenter : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private ClassTints classTints;
     [SerializeField] private BattleState battleState;
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private TextMeshProUGUI description;
@@ -58,8 +57,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         costLabel.text = cost.Amount.ToString();
         costResourceTypeIcon.sprite = cost.ResourceType.Icon;
         costPanel.SetActive(!cost.ResourceType.Name.Equals("None") && cost.Amount > 0);
-        
-        tint.color = classTints.TintFor(card.LimitedToClass.OrDefault(() => ""));
+
+        Debug.Log($"{card.Name} {card.LimitedToClass?.Value?.Name}");
+        card.LimitedToClass.IfPresent(c => tint.color = c.Tint);
     }
 
     public void SetCanPlay(bool canPlay) => canPlayHighlight.SetActive(canPlay);

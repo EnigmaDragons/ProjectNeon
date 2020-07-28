@@ -86,7 +86,7 @@ public class BattleState : ScriptableObject
             memberNames[id] = heroes[i].name;
         }
         
-        _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, h.Value.ClassName.Value, TeamType.Party, h.Value.Stats))
+        _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, h.Value.Class.Name, TeamType.Party, h.Value.Stats))
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
 
@@ -116,7 +116,8 @@ public class BattleState : ScriptableObject
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
     public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.First(x => x.Value == hero).Key];
-    public Member GetMemberByClass(string memberClass) => _membersById[_heroesById.First(x => x.Value.ClassName.Value.Equals(memberClass)).Key];
+    public Member GetMemberByClass(CharacterClass memberClass) => _membersById[_heroesById.First(x => x.Value.Class.Name.Equals(memberClass.Name)).Key];
+    public Member GetMemberByClass(string memberClass) => _membersById[_heroesById.First(x => x.Value.Class.Name.Equals(memberClass)).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
 }

@@ -5,7 +5,7 @@ public class Hero : ScriptableObject
 {
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
-    [SerializeField] private StringVariable className;
+    [SerializeField] private CharacterClass characterClass;
     [SerializeField] private Deck startingDeck;
     
     // Stats
@@ -16,13 +16,12 @@ public class Hero : ScriptableObject
     [SerializeField] private float armor;
     [SerializeField] private float resistance;
     [SerializeField] private ResourceType resource1;
-    [SerializeField] private CardType heroCard;
 
     public Sprite Bust => bust;
     public GameObject Body => body;
-    public StringVariable ClassName => className;
+    public CharacterClass Class => characterClass;
     public Deck Deck => startingDeck;
-    public CardType HeroCard => heroCard;
+    public CardType ClassCard => Class.BasicCard;
 
     public IStats Stats => new StatAddends
         {

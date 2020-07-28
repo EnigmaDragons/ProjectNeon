@@ -16,7 +16,7 @@ public sealed class Card
     public Sprite Art => type.Art;
     public string Description => type.Description;
     public string TypeDescription => type.TypeDescription;
-    public Maybe<string> LimitedToClass => type.LimitedToClass;
+    public Maybe<CharacterClass> LimitedToClass => type.LimitedToClass;
     public CardActionSequence[] ActionSequences => type.ActionSequences;
 
     public Card(int id, CardType type)
