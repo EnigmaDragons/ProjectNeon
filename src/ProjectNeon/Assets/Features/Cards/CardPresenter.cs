@@ -21,14 +21,23 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private GameObject darken;
     [SerializeField] private float highlightedScale = 1.7f;
 
-    private CardType _card;
+    private Card _card;
+    private CardType _cardType;
+    
     private Action _onClick;
     private Vector3 _position;
 
-    public bool Contains(CardType c) => HasCard && _card == c;
-    public bool HasCard => _card != null;
+    public bool Contains(Card c) => HasCard && c.Id == _card.Id;
+    public bool Contains(CardType c) => HasCard && _cardType == c;
+    public bool HasCard => _cardType != null;
     public bool IsPlayable => canPlayHighlight.activeSelf;
 
+    public void ClearIfIs(Card c)
+    {
+        if (Contains(c))
+            Clear();
+    }
+    
     public void ClearIfIs(CardType c)
     {
         if (Contains(c))
@@ -39,6 +48,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     {
         gameObject.SetActive(false);
         _card = null;
+        _cardType = null;
+    }
+
+    public void Set(Card card, Action onClick)
+    {
+        _card = card;
+        Set(card.Type, onClick);
     }
 
     public void Set(CardType card, Action onClick)
@@ -46,12 +62,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         gameObject.SetActive(true);
         canPlayHighlight.SetActive(false);
         _onClick = onClick;
-        _card = card;
+        _cardType = card;
         
-        nameLabel.text = _card.Name;
-        description.text = _card.Description;
-        type.text = _card.TypeDescription;
-        art.sprite = _card.Art;
+        nameLabel.text = _cardType.Name;
+        description.text = _cardType.Description;
+        type.text = _cardType.TypeDescription;
+        art.sprite = _cardType.Art;
         
         var cost = card.Cost;
         costLabel.text = cost.Amount.ToString();
@@ -59,6 +75,27 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         costPanel.SetActive(!cost.ResourceType.Name.Equals("None") && cost.Amount > 0);
 
         card.LimitedToClass.IfPresent(c => tint.color = c.Tint);
+    }
+
+    public void ToggleAsBasic()
+    {
+        if (_card == null)
+            throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
+        SetAsBasic(!_card.UseAsBasic);
+    }
+    
+    private void SetAsBasic(bool asBasic)
+    {
+        if (_card == null)
+            throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
+        var canPlay = canPlayHighlight.activeSelf;
+        var useHighlight = highlight.activeSelf;
+        
+        _card.UseAsBasic = asBasic;
+        Set(_card, _onClick);
+        
+        canPlayHighlight.SetActive(canPlay);
+        highlight.SetActive(IsPlayable && useHighlight);
     }
 
     public void SetCanPlay(bool canPlay) => canPlayHighlight.SetActive(canPlay);
@@ -73,7 +110,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     {
         if (battleState.SelectionStarted)
             return;
-        _onClick();
+        if (eventData.button == PointerEventData.InputButton.Left)
+            _onClick();
+        if (_card != null && eventData.button == PointerEventData.InputButton.Right)
+            ToggleAsBasic();
     }
 
     public void SetHighlight(bool active)

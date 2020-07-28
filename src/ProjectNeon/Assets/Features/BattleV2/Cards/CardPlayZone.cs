@@ -32,7 +32,7 @@ public class CardPlayZone : ScriptableObject
         Mutate(c => c.Skip(1).ToArray());
         return newCard;
     }
-
+    
     public Card Take(int index)
     {
         var card = cards[index];

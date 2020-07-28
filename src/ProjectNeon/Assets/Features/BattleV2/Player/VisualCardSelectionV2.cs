@@ -18,6 +18,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         Message.Subscribe<PlayerTurnConfirmationAborted>(_ => SetIsConfirming(false), this);
         Message.Subscribe<TargetSelectionBegun>(_ => Deactivate(), this);
         Message.Subscribe<PlayerTurnConfirmationStarted>(_ => SetIsConfirming(true), this);
+        Message.Subscribe<ToggleUseCardAsBasic>(_ => _indexSelector.Current.ToggleAsBasic(), this);
         cards.SetOnShownCardsChanged(() => _isDirty = true);
         _isDirty = true;
     }
@@ -85,7 +86,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _shouldHighlight = false;
         DisableHighlight();
     }
-
+    
     public void Cancel() {}
     public void Confirm() => Select();
     public void Select()

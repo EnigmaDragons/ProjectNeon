@@ -8,7 +8,12 @@ public sealed class Card
     [SerializeField] private int id;
     [SerializeField] private CardType type;
 
-    public CardType Type => type;
+    public bool UseAsBasic;
+    
+    public CardType Type => UseAsBasic && LimitedToClass.IsPresent 
+        ? LimitedToClass.Value.BasicCard 
+        : type;
+    
     public int Id => id;
     public string Name => type.Name;
     public ResourceCost Cost => type.Cost;
