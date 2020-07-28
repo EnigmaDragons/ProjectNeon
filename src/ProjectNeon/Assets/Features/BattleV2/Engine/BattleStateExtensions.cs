@@ -19,4 +19,9 @@ public static class BattleStateExtensions
 
         return member.CanAfford(c);
     }
+
+    public static bool HeroIsConscious(this Card c, BattleState b)
+    {
+        return b.GetMemberByClass(c.LimitedToClass.Value).IsConscious();
+    }
 }

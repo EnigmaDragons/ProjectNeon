@@ -15,11 +15,15 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 61aae85128fd5c6408c2dd587ce5e30e, type: 3}
   description: Deal .5 attack to an enemy.
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  onlyPlayableByClass: {fileID: 11400000, guid: 45350a9fc429c87448b15ea7f6894806,
+  onlyPlayableByClass: {fileID: 11400000, guid: c71a105ad3c8e7745a58700ca44063a0,
     type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
+    isXCost: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 0}
     isXCost: 0
   actionSequences:
   - scope: 0
@@ -45,6 +49,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 0
@@ -60,6 +65,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
@@ -75,6 +81,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     chainedEffects: []
     characterAnimation:
@@ -102,6 +109,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Mana
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 37
@@ -117,6 +125,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Stellar
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
@@ -132,6 +141,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     chainedEffects:
     - EffectType: 38
@@ -147,6 +157,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Solar
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     - EffectType: 39
       FloatAmount:
@@ -161,6 +172,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: Solar
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     characterAnimation:
       UseConstant: 1

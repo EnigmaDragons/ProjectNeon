@@ -117,6 +117,8 @@ public class CardsVisualizer : MonoBehaviour
             c.Set(card, () => SelectCard(cardIndex));
             c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.Type.IsPlayableByHero(state)));
             c.SetDisabled(!_isFocused);
+            if (card.LimitedToClass.IsPresent && !card.HeroIsConscious(state))
+                c.SetDisabled(true);
             SwapCardPoolSpots(cardIndex, presenterIndex);
             c.transform.DOMove(targetPosition, 1);
             c.SetTargetPosition(targetPosition);

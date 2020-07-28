@@ -16,11 +16,15 @@ MonoBehaviour:
   description: 'Deal 12 to all unshielded characters. Feed-Lunar: 20% Chance to recast
     once.'
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
-  onlyPlayableByClass: {fileID: 11400000, guid: 45350a9fc429c87448b15ea7f6894806,
+  onlyPlayableByClass: {fileID: 11400000, guid: c71a105ad3c8e7745a58700ca44063a0,
     type: 2}
   cost:
     cost: 2
     resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
+    isXCost: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 0}
     isXCost: 0
   actionSequences:
   - scope: 1
@@ -46,6 +50,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Solar
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 0
@@ -61,6 +66,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
@@ -76,6 +82,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     chainedEffects:
     - EffectType: 40
@@ -91,6 +98,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     - EffectType: 33
       FloatAmount:
@@ -105,6 +113,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     characterAnimation:
       UseConstant: 1
@@ -131,6 +140,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 0
@@ -146,6 +156,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
@@ -161,6 +172,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     chainedEffects:
     - EffectType: 38
@@ -176,6 +188,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Lunar
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     - EffectType: 41
       FloatAmount:
@@ -190,6 +203,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     - EffectType: 42
       FloatAmount:
@@ -204,6 +218,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     characterAnimation:
       UseConstant: 1

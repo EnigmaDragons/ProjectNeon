@@ -15,11 +15,15 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: b514e690094a7574c8552d57026fe1c5, type: 3}
   description: Add 2 mana to hero.
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
-  onlyPlayableByClass: {fileID: 11400000, guid: 45350a9fc429c87448b15ea7f6894806,
+  onlyPlayableByClass: {fileID: 11400000, guid: c71a105ad3c8e7745a58700ca44063a0,
     type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
+    isXCost: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 0}
     isXCost: 0
   actionSequences:
   - scope: 0
@@ -42,6 +46,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Mana
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 0
@@ -57,6 +62,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
@@ -72,6 +78,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     chainedEffects: []
     characterAnimation:
@@ -99,6 +106,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect2:
       EffectType: 0
@@ -114,6 +122,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     effect3:
       EffectType: 0
@@ -129,6 +138,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     chainedEffects: []
     characterAnimation:

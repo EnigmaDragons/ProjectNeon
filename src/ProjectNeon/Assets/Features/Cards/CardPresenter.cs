@@ -58,13 +58,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         costResourceTypeIcon.sprite = cost.ResourceType.Icon;
         costPanel.SetActive(!cost.ResourceType.Name.Equals("None") && cost.Amount > 0);
 
-        Debug.Log($"{card.Name} {card.LimitedToClass?.Value?.Name}");
         card.LimitedToClass.IfPresent(c => tint.color = c.Tint);
     }
 
     public void SetCanPlay(bool canPlay) => canPlayHighlight.SetActive(canPlay);
-    public void SetDisabled(bool isDisabled) => darken.SetActive(isDisabled);
-    
+    public void SetDisabled(bool isDisabled)
+    {
+        if (isDisabled)
+            SetCanPlay(false);
+        darken.SetActive(isDisabled);
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (battleState.SelectionStarted)
