@@ -11,8 +11,7 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private CardPlayZone playerPlayArea;
     [SerializeField] private CardPlayZone physicalZone;
     [SerializeField] private CardPlayZone playedDiscardZone;
-    [SerializeField] private GameEvent onFinished;
-    [SerializeField] private GameEvent onCardResolved;
+    [SerializeField] private bool isResolving;
     public IPlayedCard LastPlayed { get; set; }
 
     public bool HasMore => moves.Any();
@@ -47,7 +46,7 @@ public class CardResolutionZone : ScriptableObject
     
     public void RemoveLastPlayedCard()
     {
-        if (moves.None()) return;
+        if (moves.None() || isResolving) return;
         
         var played = moves.Last();
         
@@ -60,36 +59,17 @@ public class CardResolutionZone : ScriptableObject
         played.Member.Apply(m => m.GainResource(played.Spent.ResourceType.Name, played.Spent.Amount));
     }
 
-    public void Resolve(MonoBehaviour host, float delay)
-    {
-        BattleLog.Write($"Card Resolution Began");
-        host.StartCoroutine(ResolveAll(delay));
-    }
-
     public IEnumerator ResolveNext(float delay)
     {
         BattleLog.Write($"Num Cards To Resolve: {moves.Count}");
 
+        isResolving = true;
         var move = moves[0];
         moves = moves.Skip(1).ToList();
         yield return new WaitForSeconds(delay);
         yield return ResolveOneCard(move);
     }
 
-    private IEnumerator ResolveAll(float delay)
-    {
-        BattleLog.Write($"Num Cards To Resolve: {moves.Count}");
-        yield return new WaitForSeconds(delay);
-        foreach (var move in moves.ToList())
-        {
-            yield return ResolveOneCard(move);
-            yield return new WaitForSeconds(1.1f);
-        }
-
-        moves.Clear();
-        onFinished.Publish();
-    }
-    
     private IEnumerator ResolveOneCard(IPlayedCard played)
     {
         BattleLog.Write($"Began resolving {played.Card.Name}");
@@ -103,6 +83,6 @@ public class CardResolutionZone : ScriptableObject
         LastPlayed = played;
         if (played.Member.TeamType.Equals(TeamType.Party))
             playedDiscardZone.PutOnBottom(card);
-        onCardResolved.Publish();
+        isResolving = moves.Any();
     }
 }

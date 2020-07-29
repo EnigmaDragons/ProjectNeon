@@ -15,7 +15,12 @@ public class BattleUiVisuals : MonoBehaviour
     }
 
     private void HideCommandPhaseUI() => commandPhaseUi.SetActive(false);
-    public void BeginCommandPhase() => commandPhaseUi.SetActive(true);
+    public void BeginCommandPhase()
+    {
+        commandPhaseUi.SetActive(true);
+        resolutionPhaseUi.SetActive(true);
+    }
+
     public void EndCommandPhase() => HideCommandPhaseUI();
 
     public void BeginResolutionPhase()

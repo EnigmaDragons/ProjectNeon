@@ -30,18 +30,6 @@ public static class CollectionExtensions
         return value;
     }
 
-//    public static void ForEach<T>(this T[] arr, Action<T> action)
-//    {
-//        foreach (var t in arr)
-//            action(t);
-//    }
-//    
-//    public static void ForEach<T>(this HashSet<T> set, Action<T> action)
-//    {
-//        foreach (var t in set)
-//            action(t);
-//    }
-
     public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
     {
         foreach (var item in items) 
