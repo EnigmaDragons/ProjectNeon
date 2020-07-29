@@ -14,7 +14,7 @@ public sealed class InitAudioVolumeLevel : MonoBehaviour
     {
         var volume = PlayerPrefs.GetFloat(valueName, 0.5f);
         var mixerVolume = (Mathf.Log10(volume) * 20) - reductionDb;
-        //Debug.Log($"Init - Set Audio Level for {valueName} to {volume} ({mixerVolume}db)", gameObject);
+        Debug.Log($"Init - Set Audio Level for {valueName} to {volume} ({mixerVolume}db)", gameObject);
         mixer.SetFloat(valueName, mixerVolume);
         if (player != null && demoSound != null)
             player.PlayOneShot(demoSound, 1f);

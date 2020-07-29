@@ -73,6 +73,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     public void Cancel() => OnCancelled();
     public void OnCancelled()
     {
+        Message.Publish(new PlayerCardCanceled());
         OnSelectionComplete(sourceCardZone);
     }
 
@@ -87,6 +88,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
             var hero = battleState.Heroes.First(x => x.Id == _hero.Id);
             var playedCard = new PlayedCardV2(hero, _actionTargets, _card);
             cardResolutionZone.Add(playedCard);
+            Message.Publish(new PlayerCardSelected());;
             OnSelectionComplete(destinationCardZone);
         }
         else

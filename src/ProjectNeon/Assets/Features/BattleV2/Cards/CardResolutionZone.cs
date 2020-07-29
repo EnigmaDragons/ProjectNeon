@@ -51,6 +51,7 @@ public class CardResolutionZone : ScriptableObject
         var played = moves.Last();
         
         BattleLog.Write($"Canceled playing {played.Card.Name}");
+        Message.Publish(new PlayerCardCanceled());
         moves.RemoveAt(moves.Count - 1);
         var card = physicalZone.Take(physicalZone.Count - 1);
         playerPlayArea.Take(playerPlayArea.Count - 1);

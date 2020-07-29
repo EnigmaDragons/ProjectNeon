@@ -93,6 +93,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         DisableHighlight();
         _shouldHighlight = false;
+        Message.Publish(new PlayerCardSelected());
         cards.SelectCard(_indexSelector.Index);
     }
 
