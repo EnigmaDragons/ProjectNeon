@@ -9,6 +9,7 @@ public class BattleTestSetup : MonoBehaviour
     [SerializeField] private BattleState state;
 
     [SerializeField] private bool setupOnAwake = false;
+    [SerializeField] private bool setupCardTest = false;
     
     [Header("Party")] 
     [SerializeField] private Hero hero1;
@@ -25,17 +26,28 @@ public class BattleTestSetup : MonoBehaviour
     [SerializeField] private List<Enemy> enemies;
     [SerializeField] private EncounterBuilder encounterBuilder;
 
+    [Header("Card Test")] 
+    [SerializeField] private CardType card;
+    [SerializeField] private Hero[] allHeroes;
+    [SerializeField] private Hero noHero;
+
     private void Awake()
     {
-        if (setupOnAwake || !state.Party.IsInitialized)
+        if (!setupOnAwake && state.Party.IsInitialized) 
+            return;
+        
+        if (setupCardTest)
+            SetupCardTest();
+        else
             UseEverything();
+
     }
     
     public void UseCustomParty()
     {
         setup.InitParty(hero1, hero2, hero3);
         if (hero1Deck != null)
-            setup.InitPartyDecks(hero1Deck, hero2Deck, hero3Deck);
+            setup.InitPartyDecks(hero1Deck.Cards, hero2Deck.Cards, hero3Deck.Cards);
     }
 
     public void UseCustomBattlefield() => setup.InitBattleField(battlefield);
@@ -53,6 +65,26 @@ public class BattleTestSetup : MonoBehaviour
     {
         if (hero1 != null)
             UseCustomParty();
+        if (battlefield != null)
+            UseCustomBattlefield();
+        if (enemies != null && enemies.Any())
+            UseFixedEncounter();
+        else if (encounterBuilder != null)
+            UseCustomBattlefield();
+    }
+
+    public void SetupCardTestAndStartBattle()
+    {
+        SetupCardTest();
+        SetupBattle();
+    }
+    
+    public void SetupCardTest()
+    {
+        var hero = allHeroes.First(h => h.Class.Equals(card.LimitedToClass.Value));
+        setup.InitParty(hero, noHero, noHero);
+        setup.InitPartyDecks(Enumerable.Range(0, 12).Select(i => card).ToList(), new List<CardType>(), new List<CardType>());
+        
         if (battlefield != null)
             UseCustomBattlefield();
         if (enemies != null && enemies.Any())

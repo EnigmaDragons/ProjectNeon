@@ -28,7 +28,7 @@ public class BattleSetupV2 : MonoBehaviour
 
     public void InitBattleField(GameObject battlefield) => state.SetNextBattleground(battlefield);
     public void InitParty(Hero h1, Hero h2, Hero h3) => party.Initialized(h1, h2, h3);
-    public void InitPartyDecks(Deck d1, Deck d2, Deck d3) => party.UpdateDecks(d1, d2, d3);
+    public void InitPartyDecks(List<CardType> d1, List<CardType> d2, List<CardType> d3) => party.UpdateDecks(d1, d2, d3);
     public void InitEncounterBuilder(EncounterBuilder e) => encounterBuilder = e;
     public void InitEncounter(IEnumerable<Enemy> enemies)
     {

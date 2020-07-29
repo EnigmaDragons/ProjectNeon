@@ -12,8 +12,12 @@ public class BattleTestSetupEditor : Editor
         DrawUILine(Color.black);
         if(GUILayout.Button("Use Everything And Start Battle"))
             engine.UseEverythingAndStartBattle();
-        DrawUILine(Color.black);
         
+        DrawUILine(Color.black);
+        if(GUILayout.Button("Start Single Card Test"))
+            engine.SetupCardTestAndStartBattle();
+        
+        DrawUILine(Color.black);
         if(GUILayout.Button("1. Use Custom Battlefield"))
             engine.UseCustomBattlefield();
         if(GUILayout.Button("2. Use Custom Party"))
