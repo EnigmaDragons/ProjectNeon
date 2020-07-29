@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class BattleVFXController : OnMessage<BattleEffectAnimationRequested>
+public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, PlayRawBattleEffect>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private BattleVFX[] fx;
@@ -20,7 +20,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested>
         else if (e.Scope.Equals(Scope.One) || e.Group == Group.Self)
         {
             var location = state.GetTransform(e.PerformerId);
-            PlayEffect(f, location);
+            PlayEffect(f, location.position);
         }
         else if (e.Group == Group.All)
             Debug.Log($"All Characters VFX not supported yet");
@@ -30,13 +30,23 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested>
             var opponentTeam = performerTeam == TeamType.Enemies ? TeamType.Party : TeamType.Enemies;
             var targetTeam = e.Group == Group.Opponent ? opponentTeam : performerTeam;
             var location = targetTeam == TeamType.Enemies ? enemyGroupLocation : heroesGroupLocation;
-            PlayEffect(f, location);
+            PlayEffect(f, location.position);
         }
     }
 
-    private void PlayEffect(BattleVFX f, Transform location)
+    protected override void Execute(PlayRawBattleEffect e)
+    {        
+        Debug.Log($"VFX Requested {e.EffectName}");
+        var f = fx.FirstOrDefault(x => x.EffectName.Equals(e.EffectName));
+        if (f == null)
+            Debug.Log($"No VFX of type {e.EffectName}");
+        
+        PlayEffect(f, e.Target);
+    }
+
+    private void PlayEffect(BattleVFX f, Vector3 target)
     {
-        var o = Instantiate(f.gameObject, location, gameObject);
+        var o = Instantiate(f.gameObject, target, Quaternion.identity, gameObject.transform);
         o.SetActive(true);
         if (f.WaitForCompletion)
             StartCoroutine(AwaitAnimationFinish(f));
