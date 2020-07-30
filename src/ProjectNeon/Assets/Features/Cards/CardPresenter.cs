@@ -31,6 +31,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     public bool Contains(CardType c) => HasCard && _cardType == c;
     public bool HasCard => _cardType != null;
     public bool IsPlayable => canPlayHighlight.activeSelf;
+    public bool IsHighlighted => highlight.activeSelf;
 
     public void ClearIfIs(Card c)
     {
@@ -62,6 +63,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     {
         gameObject.SetActive(true);
         canPlayHighlight.SetActive(false);
+        highlight.SetActive(false);
         _onClick = onClick;
         _cardType = card;
         
@@ -119,13 +121,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     public void SetHighlight(bool active)
     {
-        if (!highlight.activeSelf && !active&& Math.Abs(transform.localScale.x - 1.0f) < 0.05)
+        if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
         
         highlight.SetActive(IsPlayable && active);
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
         var position = active ? _position + new Vector3(0, sign * 100f, sign * 2f) : _position;
+        if (AreCloseEnough(scale.x, transform.localScale.x) && AreCloseEnough(position.y, transform.position.y))
+            return;
+        
+        // TODO: Track down why cards move when switching between Basic and Normal
+        Debug.Log($"Moving Card {_cardType.Name} to {active} Highlighted position {position}. Target Position is {_position}");
         transform.DOScale(scale, 0.4f);
         transform.DOMove(position, 0.4f);
     }
@@ -134,4 +141,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     {
         _position = targetPosition;
     }
+
+    private bool AreCloseEnough(float first, float second) => WithinEpsilon(first - second);
+    private bool WithinEpsilon(float f) => Math.Abs(f) < 0.05;
 }

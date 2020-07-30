@@ -27,6 +27,8 @@ public class CardsVisualizer : MonoBehaviour
 
     public void SetOnShownCardsChanged(Action action) => _onShownCardsChanged = action;
 
+    public void ReProcess() => UpdateCurrentCards(zone.Cards.ToArray());
+
     private void Awake()
     {
         _defaultPosition = transform.position;
@@ -105,6 +107,7 @@ public class CardsVisualizer : MonoBehaviour
             var card = cards[cardIndex];
             var (presenterIndex, presenter) = GetCardPresenter(cardIndex, card);
             var c = presenter;
+            var isHighlighted = c.IsHighlighted;
             
             if (!c.HasCard)
                 c.transform.position = new Vector3(1920, effectivePosition.y, effectivePosition.z);
@@ -118,6 +121,7 @@ public class CardsVisualizer : MonoBehaviour
             if (card.LimitedToClass.IsPresent && !card.HeroIsConscious(state))
                 c.SetDisabled(true);
             SwapCardPoolSpots(cardIndex, presenterIndex);
+            c.SetHighlight(isHighlighted);
             c.transform.DOMove(targetPosition, 1);
             c.SetTargetPosition(targetPosition);
         }

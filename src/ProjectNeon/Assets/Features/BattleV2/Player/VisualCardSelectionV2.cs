@@ -18,13 +18,19 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         Message.Subscribe<PlayerTurnConfirmationAborted>(_ => SetIsConfirming(false), this);
         Message.Subscribe<TargetSelectionBegun>(_ => Deactivate(), this);
         Message.Subscribe<PlayerTurnConfirmationStarted>(_ => SetIsConfirming(true), this);
-        Message.Subscribe<ToggleUseCardAsBasic>(_ => _indexSelector.Current.ToggleAsBasic(), this);
+        Message.Subscribe<ToggleUseCardAsBasic>(_ => ToggleAsBasic(), this);
         cards.SetOnShownCardsChanged(() => _isDirty = true);
         _isDirty = true;
     }
 
     private void OnDisable() => Message.Unsubscribe(this);
 
+    private void ToggleAsBasic()
+    {
+        _indexSelector.Current.ToggleAsBasic();
+        cards.ReProcess();
+    }
+    
     private void SetIsConfirming(bool isConfirming)
     {
         _isConfirmingTurn = isConfirming;
