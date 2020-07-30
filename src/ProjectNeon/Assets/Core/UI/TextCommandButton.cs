@@ -21,7 +21,7 @@ public sealed class TextCommandButton : MonoBehaviour
     public void Init(string commandText, Action cmd)
     {
         label.text = commandText;
-        _button.onClick.AddListener(() => cmd.Invoke());
+        _button.onClick.AddListener(cmd.Invoke);
     }
     
     public void Init(NamedCommand cmd)
