@@ -1,23 +1,23 @@
-
 using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>
 {
     [SerializeField] private AdventureProgress adventure;
     [SerializeField] private Navigator navigator;
+    [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
 
     private void Advance()
     {
         if (adventure.IsFinalStageSegment)
         {
             Debug.Log("Navigating to victory screen");
-            navigator.NavigateToVictoryScene();
+            this.ExecuteAfterDelay(() => navigator.NavigateToVictoryScene(), secondsBeforeReturnToAdventure);
         }
         else
         {
             Debug.Log("Advancing to next Stage Segment.");
             adventure.Advance();
-            navigator.NavigateToGameScene();
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }
     }
     
@@ -26,6 +26,6 @@ public class BattleConclusion : OnMessage<BattleFinished>
         if (msg.Winner == TeamType.Party)
             Advance();
         else
-            navigator.NavigateToDefeatScene();
+            this.ExecuteAfterDelay(() => navigator.NavigateToDefeatScene(), secondsBeforeReturnToAdventure);
     }
 }
