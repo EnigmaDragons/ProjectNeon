@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class BattleUiVisuals : MonoBehaviour
+public class BattleUiVisuals : OnMessage<BattleFinished>
 {
     [SerializeField] private PartyUiSummaryV2 partyUi;
     [SerializeField] private GameObject commandPhaseUi;
     [SerializeField] private GameObject resolutionPhaseUi;
     [SerializeField] private GameObject hand;
+    [SerializeField] private GameObject defeatUi;
     
     public void Setup()
     {
@@ -36,4 +37,10 @@ public class BattleUiVisuals : MonoBehaviour
     }
 
     private void HideResolutionPhaseUI() => resolutionPhaseUi.SetActive(false);
+    
+    protected override void Execute(BattleFinished msg)
+    {
+        if (msg.Winner == TeamType.Enemies)
+            defeatUi.SetActive(true);
+    }
 }

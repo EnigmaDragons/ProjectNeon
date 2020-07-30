@@ -12,6 +12,7 @@ public sealed class Card
 
     public bool UseAsBasic;
     
+    public Maybe<CharacterClass> LimitedToClass => type.LimitedToClass;
     public CardType Type => UseAsBasic && LimitedToClass.IsPresent 
         ? LimitedToClass.Value.BasicCard 
         : type;
@@ -19,14 +20,13 @@ public sealed class Card
     public Member Owner => owner;
     
     public int Id => id;
-    public string Name => type.Name;
-    public ResourceCost Cost => type.Cost;
-    public ResourceCost Gain => type.Gain;
-    public Sprite Art => type.Art;
-    public string Description => type.Description;
-    public string TypeDescription => type.TypeDescription;
-    public Maybe<CharacterClass> LimitedToClass => type.LimitedToClass;
-    public CardActionSequence[] ActionSequences => type.ActionSequences;
+    public string Name => Type.Name;
+    public ResourceCost Cost => Type.Cost;
+    public ResourceCost Gain => Type.Gain;
+    public Sprite Art => Type.Art;
+    public string Description => Type.Description;
+    public string TypeDescription => Type.TypeDescription;
+    public CardActionSequence[] ActionSequences => Type.ActionSequences;
 
     public Card(int id, Member owner, CardType type)
     {
@@ -35,8 +35,6 @@ public sealed class Card
         this.type = type;
     }
 
-    public void Play(Target[] targets, int amountPaid) => type.Play(owner, targets, amountPaid);
-    public void Play(Member source, Target[] targets, int amountPaid) => type.Play(source, targets, amountPaid);
-    
-    public static implicit operator CardType(Card card) => card.type;
+    public void Play(Target[] targets, int amountPaid) => Type.Play(owner, targets, amountPaid);
+    public void Play(Member source, Target[] targets, int amountPaid) => Type.Play(source, targets, amountPaid);
 }

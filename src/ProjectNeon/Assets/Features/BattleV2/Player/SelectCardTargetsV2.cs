@@ -28,12 +28,12 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
 
         battleState.SelectionStarted = true;
         _card = selectedCardZone.Cards[0];
-        Message.Publish(new TargetSelectionBegun(_card));
+        Message.Publish(new TargetSelectionBegun(_card.Type));
 
         var cardClass = _card.LimitedToClass;
         if (!cardClass.IsPresent)
         {
-            Debug.Log($"Card {_card.Name} is not playable by Heroes", _card);
+            Debug.Log($"Card {_card.Name} is not playable by Heroes", _card.Type);
             return;
         }
 
