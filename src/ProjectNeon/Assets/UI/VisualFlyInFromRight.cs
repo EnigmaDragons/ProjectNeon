@@ -10,8 +10,11 @@ public class VisualFlyInFromRight : MonoBehaviour
     [SerializeField] private float glideDistance = 200;
     [SerializeField] private bool shouldFlyOut = true;
     [SerializeField] private float flyOutDuration = 1.8f;
-    
+
+    private Vector3 _initialPosition;
     private bool _isAnimating;
+
+    private void Awake() => _initialPosition = transform.position;
     
     private void OnEnable() => StartCoroutine(Animate());
 
@@ -20,20 +23,24 @@ public class VisualFlyInFromRight : MonoBehaviour
         if (_isAnimating)
             yield break;
 
-        var initial = gameObject.transform.position;
-        
         _isAnimating = true;
-        transform.DOMove(new Vector3(shouldGlide ? 0 + glideDistance / 2 : 0, 0, 0), flyInDuration);
+        transform.position = _initialPosition;
+        var initialTarget = new Vector3(0, _initialPosition.y, _initialPosition.z);
+        var glideOffset = glideDistance / (shouldFlyOut ? 2 : 1);
+        if (shouldGlide)
+            initialTarget += new Vector3(glideOffset, 0, 0);
+        
+        transform.DOLocalMoveX(initialTarget.x, flyInDuration);
         yield return new WaitForSeconds(flyInDuration);
         if (shouldGlide)
         {
-            transform.DOMove(new Vector3(0 - glideDistance / 2, 0, 0), glideDuration);
+            transform.DOLocalMoveX(0 - glideOffset, glideDuration);
             yield return new WaitForSeconds(glideDuration);
         }
 
         if (shouldFlyOut)
         {
-            transform.DOMove(new Vector3(0, 0, 0) - initial, flyOutDuration);
+            transform.DOLocalMoveX(-_initialPosition.x, flyOutDuration);
             yield return new WaitForSeconds(flyOutDuration);
         }
         

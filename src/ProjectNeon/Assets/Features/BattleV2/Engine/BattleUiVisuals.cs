@@ -7,6 +7,7 @@ public class BattleUiVisuals : OnMessage<BattleFinished>
     [SerializeField] private GameObject resolutionPhaseUi;
     [SerializeField] private GameObject hand;
     [SerializeField] private GameObject defeatUi;
+    [SerializeField] private GameObject victoryUi;
     
     public void Setup()
     {
@@ -42,5 +43,7 @@ public class BattleUiVisuals : OnMessage<BattleFinished>
     {
         if (msg.Winner == TeamType.Enemies)
             defeatUi.SetActive(true);
+        else
+            victoryUi.SetActive(true);
     }
 }
