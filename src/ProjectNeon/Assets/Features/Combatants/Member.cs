@@ -34,6 +34,9 @@ public static class MemberExtensions
     private static int RoundUp(float v) => Mathf.CeilToInt(v);
     
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);
+    public static int MaxHp(this Member m) => RoundUp(m.State.MaxHP());
+    public static int CurrentShield(this Member m) => RoundUp(m.State[TemporalStatType.Shield]);
+    public static int MaxShield(this Member m) => RoundUp(m.State[StatType.Toughness] * 2); 
     public static bool IsConscious(this Member m) => m.State.IsConscious;
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
 

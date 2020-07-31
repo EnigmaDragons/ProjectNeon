@@ -2,57 +2,53 @@ using UnityEngine;
 
 public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
 {
-    private int _memberId = -1;
-    private int _maxHp = 100;
+    private Member _member = new Member(-1, "None", "", TeamType.Party, new StatAddends());
+    private int MemberId => _member.Id;
+    private int MaxHp => _member.MaxHp();
+    private int MaxShield => _member.MaxShield();
+    private int CurrentHp => _member.CurrentHp();
+    private int CurrentShield => _member.CurrentShield();
 
-    private int CurrentHp { get; set; }
+    private void Start() => UpdateUi();
 
-    private int MaxHp
-    {
-        set
-        {
-            _maxHp = value;
-            UpdateUi();
-        }
-        get => _maxHp;
-    }
-
-    private void Start()
-    {
-        CurrentHp = _maxHp;
-        UpdateUi();
-    }
-
-    private void UpdateHp(int maxHp, int hp)
-    {
-        _maxHp = maxHp;
-        CurrentHp = hp;
-        UpdateUi();
-    }
-
+//    private void UpdateHp(int maxHp, int hp)
+//    {
+//        MaxHp = maxHp;
+//        CurrentHp = hp;
+//        UpdateUi();
+//    }
+    
     private void UpdateUi()
     {
-        var amount = _maxHp > 0 ? ((float)CurrentHp / (float)_maxHp) : 1;
-        SetFillAmount(amount);
-        SetText($"{CurrentHp}/{_maxHp}");
+        Debug.Log($"Updated {_member.Name} HP Bar");
+        var amount = MaxHp > 0 ? ((float)CurrentHp / (float)MaxHp) : 1;
+        SetHpFillAmount(amount);
+        SetHpText($"{CurrentHp}/{MaxHp}");
+        
+        SetShieldText(CurrentShield > 0 ? $"{CurrentShield}" : "");
     }
 
-    public void Init(Member m) => Init(Mathf.CeilToInt(m.State[StatType.MaxHP]), Mathf.CeilToInt(m.State[TemporalStatType.HP]), m.Id);
-
-    private void Init(int maxHp, int currentHp, int memberId)
+    public void Init(Member m)
     {
-        MaxHp = maxHp;
-        CurrentHp = currentHp;
-        _memberId = memberId;
+        _member = m;
         UpdateUi();
     }
+
+//    private void Init(int maxHp, int currentHp, int memberId, int maxShield, int shield)
+//    {
+//        MaxHp = maxHp;
+//        CurrentHp = currentHp;
+//        _memberId = memberId;
+//        UpdateUi();
+//    }
 
     protected override void Execute(LegacyMemberStateChanged e)
     {
-        if (e.Member.Id == _memberId)
-            UpdateHp(Mathf.CeilToInt(e.Member.State[StatType.MaxHP]), e.Member.CurrentHp());
+        if (e.Member.Id == MemberId)
+            UpdateUi();
     }
 
-    protected abstract void SetFillAmount(float amount);
-    protected abstract void SetText(string text);
+    protected abstract void SetHpFillAmount(float amount);
+    protected abstract void SetHpText(string text);
+    protected abstract void SetShieldText(string text);
 }

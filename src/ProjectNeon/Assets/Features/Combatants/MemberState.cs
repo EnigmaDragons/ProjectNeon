@@ -56,7 +56,7 @@ public sealed class MemberState : IStats
     public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
     public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void GainHp(float amount) => ChangeHp(amount);
-    public void GainShield(float amount) => Counter(TemporalStatType.Shield).ChangeBy(amount);
+    public void GainShield(float amount) => PublishAfter(() => Counter(TemporalStatType.Shield).ChangeBy(amount));
     public void GainArmor(float amount) => ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.Armor, amount));
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
     public void TakeDamage(int amount)

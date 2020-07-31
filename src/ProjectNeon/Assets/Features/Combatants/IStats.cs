@@ -1,4 +1,6 @@
 ﻿
+using UnityEngine;
+
 public interface IStats
 {
     float this[StatType statType] { get; }
@@ -7,11 +9,12 @@ public interface IStats
 
 public static class StatsExtensions
 {
-    public static float MaxHP(this IStats stats) => stats[StatType.MaxHP];
-    public static float Toughness(this IStats stats) => stats[StatType.Toughness];
-    public static float Attack(this IStats stats) => stats[StatType.Attack];
-    public static float Magic(this IStats stats) => stats[StatType.Magic];
-    public static float Armor(this IStats stats) => stats[StatType.Armor];
-    public static float Resistance(this IStats stats) => stats[StatType.Resistance];
-    public static float Damagability(this IStats stats) => stats[StatType.Damagability];
+    private static int RoundUp(this float v) => Mathf.CeilToInt(v);
+    public static int MaxHP(this IStats stats) => stats[StatType.MaxHP].RoundUp();
+    public static int Toughness(this IStats stats) => stats[StatType.Toughness].RoundUp();
+    public static int Attack(this IStats stats) => stats[StatType.Attack].RoundUp();
+    public static int Magic(this IStats stats) => stats[StatType.Magic].RoundUp();
+    public static int Armor(this IStats stats) => stats[StatType.Armor].RoundUp();
+    public static int Resistance(this IStats stats) => stats[StatType.Resistance].RoundUp();
+    public static int Damagability(this IStats stats) => stats[StatType.Damagability].RoundUp();
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public sealed class WorldHPBarController : HPBarControllerBase
 {
     [SerializeField] private GameObject bar;
-    [SerializeField] private TextMeshPro text;
+    [SerializeField] private TextMeshPro hpText;
+    [SerializeField] private TextMeshPro shieldText;
 
     private float _scaleX;
 
@@ -14,10 +15,11 @@ public sealed class WorldHPBarController : HPBarControllerBase
         _scaleX = bar.transform.localScale.x;
     }
     
-    protected override void SetFillAmount(float amount)
+    protected override void SetHpFillAmount(float amount)
     {
         bar.transform.DOScaleX(amount * _scaleX, 2);
     }
 
-    protected override void SetText(string text) => this.text.text = text;
+    protected override void SetHpText(string t) => hpText.text = t;
+    protected override void SetShieldText(string t) => shieldText.text = t;
 }
