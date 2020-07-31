@@ -13,7 +13,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
 
     private readonly List<GameObject> _heroes = new List<GameObject>();
     private readonly Dictionary<Hero, Animator> _animators = new Dictionary<Hero, Animator>();
-    private readonly Dictionary<Hero, DamageEffect> _damage  = new Dictionary<Hero, DamageEffect>();
+    private readonly Dictionary<Hero, DamageEffect[]> _damage  = new Dictionary<Hero, DamageEffect[]>();
     
     public IEnumerator Setup()
     {
@@ -33,7 +33,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
 
     public void AfterBattleStateInitialized()
     {
-        _damage.CopiedForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _damage.ForEach(x => x.Value.ForEach(d => d.Init(state.GetMemberByHero(x.Key))));
     }
 
     private void SetupHero(GameObject heroOrigin, Hero hero)
@@ -45,11 +45,11 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
              _heroes.Add(character);
              _animators[hero] = character.GetComponentInChildren<Animator>();
              
-             var damageEffect = character.GetComponentInChildren<DamageEffect>();
-             if (damageEffect != null)
-                 _damage[hero] = damageEffect;
+             var damageEffects = character.GetComponentsInChildren<DamageEffect>();
+             if (damageEffects.Length < 2)
+                 Debug.LogWarning($"{hero.name} is missing one or more text DamageEffects");
              else
-                 Debug.LogWarning($"{hero.name} is missing DamageEffect");
+                 _damage[hero] = damageEffects;
         }
         else
         {

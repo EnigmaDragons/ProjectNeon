@@ -7,10 +7,13 @@ public class DamageEffect : OnMessage<LegacyMemberStateChanged>
     [SerializeField] TextMeshPro text;
     [SerializeField] private float driftDistance = 0.1f;
     [SerializeField] private float duration = 2f;
-
+    [SerializeField] private TemporalStatType statType = TemporalStatType.HP;
+    [SerializeField] private Color positiveChangeColor = Color.green;
+    [SerializeField] private Color negativeChangeColor = Color.red;
+    
     private Vector3 _startPos;
     private Member _member;
-    private int _hp;
+    private int _value;
     private float _remaining;
     
     private void Start()
@@ -21,13 +24,13 @@ public class DamageEffect : OnMessage<LegacyMemberStateChanged>
     public void Init(Member member)
     {
         _member = member;
-        _hp = (int)member.State[TemporalStatType.HP];
+        _value = (int)member.State[statType];
     }
     
-    private void SetDamage(int damage)
+    private void DisplayChange(int damage)
     {
         text.gameObject.SetActive(true);
-        text.color = damage > 0 ? Color.green : Color.red;
+        text.color = damage > 0 ? positiveChangeColor : negativeChangeColor;
         text.text = Mathf.Abs(damage).ToString();
         text.transform.position = _startPos;
         _remaining = duration;
@@ -52,9 +55,10 @@ public class DamageEffect : OnMessage<LegacyMemberStateChanged>
     {
         if (_member == null || e.Member.Id != _member.Id) return;
 
-        var hpDiff = e.Member.CurrentHp() - _hp;
-        _hp = e.Member.CurrentHp();
-        if (hpDiff != 0)
-            SetDamage(hpDiff);
+        var newValue = (int) (e.Member.State[statType]);
+        var diff = newValue - _value;
+        _value = newValue;
+        if (diff != 0)
+            DisplayChange(diff);
     }
 }

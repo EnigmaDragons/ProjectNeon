@@ -13,7 +13,7 @@ public class Member
     
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats)
     {
-        if (baseStats.Damagability() < 0.01)
+        if (id > -1 && baseStats.Damagability() < 0.01)
             Debug.LogWarning($"Damagability of {name} is 0");
         
         Id = id;
