@@ -18,6 +18,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private float resistance;
     [SerializeField] private ResourceType resourceType;
     [SerializeField] private int startingResourceAmount;
+    [SerializeField] private int cardsPerTurn = 1;
 
     public string Name => enemyName;
     public Deck Deck => deck;
@@ -43,5 +44,6 @@ public class Enemy : ScriptableObject
         .With(StatType.Magic, magic)
         .With(StatType.Armor, armor)
         .With(StatType.Resistance, resistance)
-        .With(StatType.Damagability, 1f);
+        .With(StatType.Damagability, 1f)
+        .With(StatType.ExtraCardPlays, cardsPerTurn);
 }

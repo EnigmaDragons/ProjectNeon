@@ -17,4 +17,5 @@ public static class StatsExtensions
     public static int Armor(this IStats stats) => stats[StatType.Armor].RoundUp();
     public static int Resistance(this IStats stats) => stats[StatType.Resistance].RoundUp();
     public static int Damagability(this IStats stats) => stats[StatType.Damagability].RoundUp();
+    public static int ExtraCardPlays(this IStats stats) => stats[StatType.ExtraCardPlays].RoundUp();
 }

@@ -33,7 +33,7 @@ public sealed class MemberState : IStats
     }
 
     public void InitResourceAmount(IResourceType resourceType, int amount) => _counters[resourceType.Name].Set(amount);
-    
+
     public int MemberId { get; }
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;

@@ -8,4 +8,5 @@ public enum StatType
     Armor = 4,
     Resistance = 5,
     Damagability = 6,
+    ExtraCardPlays = 30,
 }
