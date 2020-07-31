@@ -11,6 +11,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
     [SerializeField] private Vector3 hpBarOffset;
     [SerializeField] private DamageEffect damageEffect;
     [SerializeField] private Vector3 damageEffectOffset;
+    [SerializeField] private DamageEffect shieldNumbers;
+    [SerializeField] private Vector3 shieldNumberOffset;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
 
@@ -47,6 +49,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
             hpBar.Init(enemyMember);
             var dmg = Instantiate(damageEffect, enemyObject.transform.position + damageEffectOffset, Quaternion.identity, enemyObject.transform);
             dmg.Init(enemyMember);
+            var shield = Instantiate(shieldNumbers, enemyObject.transform.position + shieldNumberOffset, Quaternion.identity, enemyObject.transform);
+            shield.Init(enemyMember);
         }
     }
     

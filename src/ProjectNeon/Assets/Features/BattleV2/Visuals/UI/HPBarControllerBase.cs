@@ -13,12 +13,12 @@ public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
 
     private void UpdateUi()
     {
-        var totalEffectiveHp = MaxHp + CurrentShield;
-        var amount = totalEffectiveHp > 0 ? ((float)CurrentHp / (float)totalEffectiveHp) : 1;
+        float totalEffectiveHp = MaxHp + CurrentShield;
+        var amount = totalEffectiveHp > 0 ? (CurrentHp / totalEffectiveHp) : 1;
         SetHpFillAmount(amount);
         SetHpText($"{CurrentHp}/{MaxHp}");
         
-        var shieldAmount = CurrentShield > 0 ? ((float)CurrentHp + CurrentShield / (float)totalEffectiveHp) : 0;
+        var shieldAmount = CurrentShield > 0 ? ((CurrentHp + CurrentShield) / totalEffectiveHp) : 0;
         SetShieldFillAmount(shieldAmount);
         SetShieldText(CurrentShield > 0 ? $"{CurrentShield}" : "");
     }

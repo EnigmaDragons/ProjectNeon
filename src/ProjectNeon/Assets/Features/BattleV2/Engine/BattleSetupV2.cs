@@ -20,7 +20,7 @@ public class BattleSetupV2 : MonoBehaviour
     [SerializeField] private EncounterBuilder encounterBuilder;
     
     [Header("Technical")]
-    [SerializeField] private CardPlayZone resolutionZone;
+    [SerializeField] private CardResolutionZone resolutionZone;
     
     private CardPlayZone Hand => playerCardPlayZones.HandZone;
     private CardPlayZone Deck => playerCardPlayZones.DrawZone;
@@ -54,7 +54,7 @@ public class BattleSetupV2 : MonoBehaviour
 
     private void ClearResolutionZone()
     {
-        resolutionZone.Clear();
+        resolutionZone.Init();
     }    
     
     private void SetupEnemyEncounter()

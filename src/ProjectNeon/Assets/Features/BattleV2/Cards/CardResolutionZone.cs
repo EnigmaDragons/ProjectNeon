@@ -14,6 +14,12 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private bool isResolving;
     public IPlayedCard LastPlayed { get; set; }
 
+    public void Init()
+    {
+        physicalZone.Clear();
+        isResolving = false;
+    }
+
     public bool HasMore => moves.Any();
     
     public void Add(IPlayedCard played)
