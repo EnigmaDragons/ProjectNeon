@@ -9,22 +9,17 @@ public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
     private int CurrentHp => _member.CurrentHp();
     private int CurrentShield => _member.CurrentShield();
 
-    private void Start() => UpdateUi();
+    private void Start() => SetHpFillAmount(1);
 
-//    private void UpdateHp(int maxHp, int hp)
-//    {
-//        MaxHp = maxHp;
-//        CurrentHp = hp;
-//        UpdateUi();
-//    }
-    
     private void UpdateUi()
     {
-        Debug.Log($"Updated {_member.Name} HP Bar");
-        var amount = MaxHp > 0 ? ((float)CurrentHp / (float)MaxHp) : 1;
+        var totalEffectiveHp = MaxHp + CurrentShield;
+        var amount = totalEffectiveHp > 0 ? ((float)CurrentHp / (float)totalEffectiveHp) : 1;
         SetHpFillAmount(amount);
         SetHpText($"{CurrentHp}/{MaxHp}");
         
+        var shieldAmount = CurrentShield > 0 ? ((float)CurrentHp + CurrentShield / (float)totalEffectiveHp) : 0;
+        SetShieldFillAmount(shieldAmount);
         SetShieldText(CurrentShield > 0 ? $"{CurrentShield}" : "");
     }
 
@@ -33,14 +28,6 @@ public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
         _member = m;
         UpdateUi();
     }
-
-//    private void Init(int maxHp, int currentHp, int memberId, int maxShield, int shield)
-//    {
-//        MaxHp = maxHp;
-//        CurrentHp = currentHp;
-//        _memberId = memberId;
-//        UpdateUi();
-//    }
 
     protected override void Execute(LegacyMemberStateChanged e)
     {
@@ -51,4 +38,5 @@ public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
     protected abstract void SetHpFillAmount(float amount);
     protected abstract void SetHpText(string text);
     protected abstract void SetShieldText(string text);
+    protected abstract void SetShieldFillAmount(float amount);
 }
