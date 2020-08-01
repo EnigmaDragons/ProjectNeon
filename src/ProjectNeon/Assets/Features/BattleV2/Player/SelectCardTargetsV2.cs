@@ -13,7 +13,6 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     [SerializeField] private BattlePlayerTargetingState targetingState;
 
     [ReadOnly, SerializeField] private Card _card;
-    private Member _hero;
     private int _actionIndex;
     private int _numActions;
     private Target[] _actionTargets;
@@ -30,23 +29,10 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         _card = selectedCardZone.Cards[0];
         Message.Publish(new TargetSelectionBegun(_card.Type));
 
-        var cardClass = _card.LimitedToClass;
-        if (!cardClass.IsPresent)
-        {
-            Debug.Log($"Card {_card.Name} is not playable by Heroes", _card.Type);
-            return;
-        }
-
         cardPresenter.Set(_card, () => { });
+        cardPresenter.SetHighlightGraphicState(true);
         Debug.Log($"Showing Selected Card {_card.Name}", gameObject);
         uiView.SetActive(true);
-
-        _hero = battleState.Members.Values.FirstOrDefault(x => x.Class.Equals(cardClass.Value.Name));
-        if (_hero == null)
-        {
-            Debug.Log($"Could not find Party Member with Class {cardClass.Value}");
-            return;
-        }
 
         _actionIndex = 0;
         _numActions = _card.ActionSequences.Length;
@@ -64,7 +50,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     private void PresentPossibleTargets()
     {
         var action = _card.ActionSequences[_actionIndex];
-        var possibleTargets = battleState.GetPossibleConsciousTargets(_hero, action.Group, action.Scope);
+        var possibleTargets = battleState.GetPossibleConsciousTargets(_card.Owner, action.Group, action.Scope);
         targetingState.WithPossibleTargets(possibleTargets);
         if (possibleTargets.Length == 1)
             OnTargetConfirmed();
@@ -85,8 +71,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
 
         if (_actionIndex + 1 == _numActions)
         {
-            var hero = battleState.Heroes.First(x => x.Id == _hero.Id);
-            var playedCard = new PlayedCardV2(hero, _actionTargets, _card);
+            var playedCard = new PlayedCardV2(_card.Owner, _actionTargets, _card);
             cardResolutionZone.Add(playedCard);
             Message.Publish(new PlayerCardSelected());;
             OnSelectionComplete(destinationCardZone);
