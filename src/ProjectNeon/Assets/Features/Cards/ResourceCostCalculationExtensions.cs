@@ -3,6 +3,9 @@ public static class ResourceCostCalculationExtensions
 {
     public static ResourceQuantity ResourcesSpent(this CardType card, Member m)
     {
+        if (card.Cost == null || card.Cost.ResourceType == null)
+            return new ResourceQuantity {Amount = 0, ResourceType = new InMemoryResourceType()};
+        
         var cost = card.Cost;
         return new ResourceQuantity
         {

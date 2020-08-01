@@ -27,7 +27,7 @@ public sealed class DumbAI : TurnAI
         
         var card = playableCards.Random();
         var targets = new List<Target>();
-        card.Actions.ForEach(
+        card.ActionSequences.ForEach(
             action =>
             {
                 var possibleTargets = battleState.GetPossibleConsciousTargets(me, action.Group, action.Scope);
@@ -38,6 +38,9 @@ public sealed class DumbAI : TurnAI
 
         // TODO: We probably need to have Real Enemy Cards, Eventually
         var cardInstance = card.CreateInstance(battleState.GetNextCardId(), me);
+        
+        if (targets.Count < card.Actions.Length)
+            Debug.LogError($"Only selected {targets.Count} for {card.Actions.Length} actions");
         
         return new PlayedCardV2(me, targets.ToArray(), cardInstance);
     }

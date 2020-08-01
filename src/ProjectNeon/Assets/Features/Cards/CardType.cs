@@ -25,13 +25,16 @@ public class CardType : ScriptableObject
 
     public Card CreateInstance(int id, Member owner) => new Card(id, owner, this);
     
-    public CardAction[] Actions => Array.Empty<CardAction>()
+    [Obsolete] public CardAction[] Actions => Array.Empty<CardAction>()
         .ConcatIf(cardAction1, c => c.HasEffects)
         .ConcatIf(cardAction2, c => c.HasEffects)
         .ToArray();
 
     public void Play(Member source, Target[] targets, int amountPaid)
     {
+        if (ActionSequences.Length > targets.Length)
+            Debug.LogError($"{Name}: For {ActionSequences.Length} there are only {targets.Length} targets");
+        
         for (var i = 0; i < ActionSequences.Length; i++)
             ActionSequences[i].Play(source, targets[i], amountPaid);
     }

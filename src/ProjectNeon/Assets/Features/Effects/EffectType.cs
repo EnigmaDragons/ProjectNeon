@@ -43,4 +43,5 @@ public enum EffectType
     ApplyOnShieldBelowValue = 40,
     ApplyOnChance = 41,
     ReplayLastCard = 42,
+    PlayExtraCards = 43,
 }
