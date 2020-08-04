@@ -72,6 +72,7 @@ public static class AllEffects
             if (m == null)
                 throw new InvalidOperationException("Target had a null Member");
             Message.Publish(new LegacyMemberStateChanged(m));
+            Message.Publish(new MemberStateChanged(m.State));
         });
     }
 

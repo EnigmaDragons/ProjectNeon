@@ -79,7 +79,7 @@ public sealed class MemberState : IStats
 
     public void ChangeStatus(string status, string value) => _status[status] = value;
 
-    public void AdvanceTurn()
+    public void AdvanceTurn() => PublishAfter(() =>
     {
         _additiveMods.ForEach(m => m.AdvanceTurn());
         _additiveMods.RemoveAll(m => !m.IsActive);
@@ -87,7 +87,7 @@ public sealed class MemberState : IStats
         _multiplierMods.RemoveAll(m => !m.IsActive);
         _reactiveStates.ForEach(m => m.AdvanceTurn());
         _reactiveStates.RemoveAll(m => !m.IsActive);
-    }
+    });
 
     private void PublishAfter(Action action)
     {
