@@ -8,7 +8,19 @@ public sealed class StatAddends : IStats
         set => _values[statType.ToString()] = value;
     }
 
+    public float this[TemporalStatType statType] 
+    {
+        get => _values[statType.ToString()];
+        set => _values[statType.ToString()] = value;
+    }
+    
     public StatAddends With(StatType statType, float value)
+    {
+        this[statType] = value;
+        return this;
+    }
+
+    public StatAddends With(TemporalStatType statType, float value)
     {
         this[statType] = value;
         return this;

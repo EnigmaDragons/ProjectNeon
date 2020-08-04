@@ -4,6 +4,7 @@ using UnityEngine;
 public interface IStats
 {
     float this[StatType statType] { get; }
+    float this[TemporalStatType statType] { get; }
     IResourceType[] ResourceTypes { get; }
 }
 

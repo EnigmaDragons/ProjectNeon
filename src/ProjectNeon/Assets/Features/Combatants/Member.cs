@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 
 public class Member 
@@ -14,7 +15,7 @@ public class Member
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
-            Debug.LogWarning($"Damagability of {name} is 0");
+            throw new InvalidDataException($"Damagability of {name} is 0");
         
         Id = id;
         Name = name;
@@ -38,6 +39,7 @@ public static class MemberExtensions
     public static int CurrentShield(this Member m) => RoundUp(m.State[TemporalStatType.Shield]);
     public static int MaxShield(this Member m) => RoundUp(m.State[StatType.Toughness] * 2); 
     public static bool IsConscious(this Member m) => m.State.IsConscious;
+    public static bool IsStunnedForCurrentTurn(this Member m) => m.State[TemporalStatType.TurnStun] > 0;
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
 
     public static bool CanAfford(this Member m, CardType c)

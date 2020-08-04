@@ -13,7 +13,8 @@ public enum EffectType
     ApplyVulnerable = 10,
     ShieldToughness = 11,
     ArmorFlat = 12,
-    Stun = 13,
+    StunForTurns = 13,
+    StunForNumberOfCards = 44,
     ShieldAttackedOnAttack = 14, //obsolete
     DamageAttackerOnAttack = 15, //obsolete
     StealLifeNextAttack = 16,

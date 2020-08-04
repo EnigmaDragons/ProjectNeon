@@ -7,7 +7,13 @@ public sealed class StatMultipliers : IStats
         get => _values[statType.ToString()];
         set => _values[statType.ToString()] = value;
     }
-    
+
+    public float this[TemporalStatType statType] 
+    {
+        get => _values[statType.ToString()];
+        set => _values[statType.ToString()] = value;
+    }
+
     public StatMultipliers With(StatType statType, float value)
     {
         this[statType] = value;

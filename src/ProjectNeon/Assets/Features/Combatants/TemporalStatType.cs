@@ -2,5 +2,6 @@ public enum TemporalStatType
 {
     HP = 0,
     Shield = 1,
-    Stun = 2,
+    TurnStun = 2,
+    CardStun = 3,
 }

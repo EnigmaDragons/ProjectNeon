@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Features.Effects;
 using UnityEngine;
 
 public static class AllEffects
@@ -23,7 +24,7 @@ public static class AllEffects
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new DebuffedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), e.NumberOfTurns))) },
         { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.GainShield(e.IntAmount * src.State.Toughness())) },
         { EffectType.ArmorFlat, e => new SimpleEffect(m => m.GainArmor(e.IntAmount)) },
-        { EffectType.Stun, e => new SimpleEffect(target => target.Stun(e.NumberOfTurns)) },
+        { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
         { EffectType.ShieldAttackedOnAttack, e => new NoEffect() },
         { EffectType.DamageAttackerOnAttack, e => new NoEffect() },
         { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.FloatAmount, e.NumberOfTurns), 1)},
@@ -57,6 +58,9 @@ public static class AllEffects
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
      */
+    
+    public static void Apply(EffectData effectData, Member source, Member target)
+        => Apply(effectData, source, new Single(target));
     
     public static void Apply(EffectData effectData, Member source, Target target)
     {

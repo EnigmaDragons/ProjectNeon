@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public sealed class AddedStats : IStats
 {
@@ -10,6 +8,8 @@ public sealed class AddedStats : IStats
     private readonly ResourceTypeStats _resourceTypeStats;
     
     public float this[StatType statType] => _first[statType] + _second[statType];
+
+    public float this[TemporalStatType statType] => _first[statType] + _second[statType];
 
     public IResourceType[] ResourceTypes => _resourceTypeStats.AsArray();
 
