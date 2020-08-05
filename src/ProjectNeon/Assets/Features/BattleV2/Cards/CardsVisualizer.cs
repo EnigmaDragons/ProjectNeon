@@ -14,6 +14,8 @@ public class CardsVisualizer : MonoBehaviour
     [SerializeField] private int maxCards = 12;
     [SerializeField] private bool onlyAllowInteractingWithPlayables = false;
     [SerializeField] private Vector3 unfocusedOffset = new Vector3(0, 400, 0);
+    [SerializeField] private CardPlayZone onCardRecycleDestination;
+    [SerializeField] private CardPlayZone cardRecycleSource;
     
     [ReadOnly] [SerializeField] private CardPresenter[] cardPool;
     private Card[] _oldCards = new Card[0];
@@ -166,6 +168,19 @@ public class CardsVisualizer : MonoBehaviour
         if (allowInteractions)
             if (cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
                 onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
+    }
+
+    public void RecycleCard(int cardIndex)
+    {
+        if (state.NumberOfRecyclesRemainingThisTurn < 1)
+            return;
+        
+        if (cardRecycleSource.Count < 1)
+            throw new NotImplementedException("Need to implement deck reshuffle for Card Recycle.");
+
+        state.NumberOfRecyclesRemainingThisTurn--;
+        onCardRecycleDestination.PutOnBottom(zone.Take(cardIndex));
+        zone.PutOnBottom(cardRecycleSource.DrawOneCard());
     }
 
     public void SetFocus(bool isFocused)

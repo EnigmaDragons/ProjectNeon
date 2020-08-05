@@ -19,7 +19,10 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private Vector3[] uiPositions;
     [SerializeField, ReadOnly] private string[] memberNames;
     
+    private int NumRecyclesPerTurn = 2;
+    
     public bool SelectionStarted = false;
+    public int NumberOfRecyclesRemainingThisTurn = 0;
 
     public bool NeedsCleanup => needsCleanup;
     public Party Party => partyArea.Party;
@@ -91,6 +94,7 @@ public class BattleState : ScriptableObject
             .ToDictionary(x => x.Id, x => x);
 
         uiPositions = _uiTransformsById.Values.Select(x => x.position).ToArray();
+        NumberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
         needsCleanup = true;
         
         BattleLog.Write("Finished Battle State Init");
@@ -106,7 +110,12 @@ public class BattleState : ScriptableObject
         BattleLog.Write("Finished Battle State Cleanup");
     }
 
-    public void AdvanceTurn() => Members.Values.CopiedForEach(m => m.State.AdvanceTurn());
+    public void AdvanceTurn()
+    {
+        NumberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
+        Members.Values.CopiedForEach(m => m.State.AdvanceTurn());
+    }
+
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);
     public bool PlayerLoses() => Heroes.All(m => m.State.IsUnconscious);
 

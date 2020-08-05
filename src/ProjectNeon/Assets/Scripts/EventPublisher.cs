@@ -8,4 +8,5 @@ public class EventPublisher : ScriptableObject
     public void StartNewGame() => Message.Publish(new StartNewGame());
     public void StartNextStage() => Message.Publish(new StartNextStage());
     public void ToggleUseCardAsBasic() => Message.Publish(new ToggleUseCardAsBasic());
+    public void RecycleCard() => Message.Publish(new RecycleCard());
 }

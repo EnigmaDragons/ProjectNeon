@@ -19,6 +19,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         Message.Subscribe<TargetSelectionBegun>(_ => Deactivate(), this);
         Message.Subscribe<PlayerTurnConfirmationStarted>(_ => SetIsConfirming(true), this);
         Message.Subscribe<ToggleUseCardAsBasic>(_ => ToggleAsBasic(), this);
+        Message.Subscribe<RecycleCard>(_ => Recycle(), this);
         cards.SetOnShownCardsChanged(() => _isDirty = true);
         _isDirty = true;
     }
@@ -36,6 +37,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _isConfirmingTurn = isConfirming;
         _isDirty = true;
         cards.SetFocus(!_isConfirmingTurn);
+        if (!isConfirming)
+            _shouldHighlight = true;
     }
     
     private void Activate()
@@ -101,6 +104,15 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _shouldHighlight = false;
         Message.Publish(new PlayerCardSelected());
         cards.SelectCard(_indexSelector.Index);
+    }
+
+    private void Recycle()
+    {
+        if (state.NumberOfRecyclesRemainingThisTurn < 1)
+            return;
+        
+        cards.RecycleCard(_indexSelector.Index);
+        _isDirty = true;
     }
 
     private void EnableHighlight()
