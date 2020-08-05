@@ -32,10 +32,13 @@ public sealed class StatusBar : OnMessage<MemberStateChanged>
 
     private void UpdateUi()
     {
-        Debug.Log($"Updating {_member.Name} Status Bar");
         var statuses = new List<CurrentStatusValue>();
         if (_member.State[TemporalStatType.TurnStun] > 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.TurnStun].Icon, Text = _member.State[TemporalStatType.TurnStun].ToString() });
+
+        var attackBuffAmount = _member.State[StatType.Attack].CeilingInt() - _member.State.BaseStats.Attack();
+        if (attackBuffAmount != 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Attack].Icon, Text = attackBuffAmount.ToString() });
 
         for (var i = 0; i < Math.Max(statuses.Count, _icons.Count); i++)
         {

@@ -10,6 +10,8 @@ public sealed class MemberState : IStats
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _reactiveStates = new List<ITemporalState>();
 
+    public IStats BaseStats => _baseStats;
+    
     private IStats CurrentStats => _baseStats
         .Plus(_battleAdditiveMods)
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats))
