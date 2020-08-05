@@ -52,7 +52,7 @@ public static class InterpolatedCardDescriptions
             if (effectIndex >= effects.Length)
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {effects.Length} Battle Effects");
                 
-            result = desc.Replace(replacementToken, Bold(GenerateEffectDescription(effects[effectIndex], owner)));
+            result = result.Replace(replacementToken, Bold(GenerateEffectDescription(effects[effectIndex], owner)));
         }
             
         return result;
@@ -64,6 +64,10 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
                 : $"{data.FloatAmount}x ATK";
+        if (data.EffectType == EffectType.ShieldToughness)
+            return owner.IsPresent
+                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
+                : $"{data.FloatAmount}x TGH";
         
         Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
         return "%%";
