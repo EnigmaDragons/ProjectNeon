@@ -43,7 +43,8 @@ public class CardResolutionZone : ScriptableObject
             if (!condition(played)) continue;
             
             BattleLog.Write($"Expired played card {played.Card.Name} by {played.Member.Name}");
-            moves.RemoveAt(i);
+            if (moves.Count > i)
+                moves.RemoveAt(i);
             physicalZone.Take(i);
             if (played.Member.TeamType == TeamType.Party)
                 playerHand.PutOnBottom(playerPlayArea.Take(i));

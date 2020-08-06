@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: MeleeBasicAttack
+  m_Name: Basic-MeleeAttack
   m_EditorClassIdentifier: 
-  art: {fileID: 0}
-  description: 
-  typeDescription: {fileID: 0}
-  onlyPlayableByClass: {fileID: 0}
+  art: {fileID: 21300000, guid: 1e87a1c3687e75543942e16ec8845927, type: 3}
+  description: Deal {E[0]} damage
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  onlyPlayableByClass: {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062,
+    type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 0}
@@ -24,7 +25,10 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 0}
     isXCost: 0
-  actionSequences: []
+  actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 4457239d1b66aa84488bb9127e62ab03, type: 2}
   cardAction1:
     targetScope: 0
     targetGroup: 0
