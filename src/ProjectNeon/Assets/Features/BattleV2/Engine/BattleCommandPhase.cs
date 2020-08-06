@@ -1,7 +1,8 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
-public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectionFinished>
+public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectionFinished, PlayerTurnConfirmationStarted, PlayerTurnConfirmationAborted>
 {
     [SerializeField] private BattleUiVisuals ui;
     [SerializeField] private BattleState state;
@@ -42,7 +43,11 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
         confirmCancelBinding.Bind(cardTargets);
     }
 
-    protected override void Execute(TargetSelectionFinished msg)
+    protected override void Execute(TargetSelectionFinished msg) => UpdateConfirmationState();
+    protected override void Execute(PlayerTurnConfirmationStarted msg) => UpdateConfirmationState();
+    protected override void Execute(PlayerTurnConfirmationAborted msg) => UpdateConfirmationState();
+
+    private void UpdateConfirmationState()
     {
         var readyForTurnConfirm = turnConfirmation.CanConfirm;
         if (readyForTurnConfirm)
