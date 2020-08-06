@@ -178,7 +178,7 @@ public class CardsVisualizer : MonoBehaviour
         if (cardRecycleSource.Count < 1)
             throw new NotImplementedException("Need to implement deck reshuffle for Card Recycle.");
 
-        state.NumberOfRecyclesRemainingThisTurn--;
+        state.UseRecycle();
         onCardRecycleDestination.PutOnBottom(zone.Take(cardIndex));
         zone.PutOnBottom(cardRecycleSource.DrawOneCard());
     }

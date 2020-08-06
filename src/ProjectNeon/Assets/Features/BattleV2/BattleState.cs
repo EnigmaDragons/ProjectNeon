@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -20,9 +21,10 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private string[] memberNames;
     
     private int NumRecyclesPerTurn = 2;
+    private int _numberOfRecyclesRemainingThisTurn = 0;
     
     public bool SelectionStarted = false;
-    public int NumberOfRecyclesRemainingThisTurn = 0;
+    public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
 
     public bool NeedsCleanup => needsCleanup;
     public Party Party => partyArea.Party;
@@ -38,6 +40,8 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
     public List<Effect> QueuedEffects { get; private set;  }
 
+    
+    // Commands
     public BattleState Initialized(PartyArea partyArea, EnemyArea enemyArea)
     {
         this.QueuedEffects = new List<Effect>();
@@ -94,7 +98,7 @@ public class BattleState : ScriptableObject
             .ToDictionary(x => x.Id, x => x);
 
         uiPositions = _uiTransformsById.Values.Select(x => x.position).ToArray();
-        NumberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
+        _numberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
         needsCleanup = true;
         
         BattleLog.Write("Finished Battle State Init");
@@ -110,12 +114,16 @@ public class BattleState : ScriptableObject
         BattleLog.Write("Finished Battle State Cleanup");
     }
 
-    public void AdvanceTurn()
-    {
-        NumberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
-        Members.Values.CopiedForEach(m => m.State.AdvanceTurn());
-    }
+    public void AdvanceTurn() =>
+        UpdateState(() =>
+        {
+            _numberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
+            Members.Values.CopiedForEach(m => m.State.AdvanceTurn()); 
+        });
 
+    public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
+    
+    // Queries
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);
     public bool PlayerLoses() => Heroes.All(m => m.State.IsUnconscious);
 
@@ -129,4 +137,10 @@ public class BattleState : ScriptableObject
     public Member GetMemberByClass(string memberClass) => _membersById[_heroesById.First(x => x.Value.Class.Name.Equals(memberClass)).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
+
+    private void UpdateState(Action update)
+    {
+        update();
+        Message.Publish(new BattleStateChanged(this));
+    }
 }
