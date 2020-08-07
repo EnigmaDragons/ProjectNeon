@@ -15,6 +15,7 @@ public class CardsVisualizer : MonoBehaviour
     [SerializeField] private Vector3 unfocusedOffset = new Vector3(0, 400, 0);
     [SerializeField] private CardPlayZone onCardRecycleDestination;
     [SerializeField] private CardPlayZone cardRecycleSource;
+    [SerializeField] private Vector3 cardRotation;
     
     [ReadOnly] [SerializeField] private CardPresenter[] cardPool;
     private Card[] _oldCards = new Card[0];
@@ -39,6 +40,7 @@ public class CardsVisualizer : MonoBehaviour
         {
             cardPool[i] = Instantiate(cardPrototype, transform);
             cardPool[i].Clear();
+            cardPool[i].transform.rotation = Quaternion.Euler(cardRotation);
         }
     }
     
