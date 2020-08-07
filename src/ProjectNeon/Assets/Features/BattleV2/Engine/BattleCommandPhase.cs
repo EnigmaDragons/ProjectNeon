@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -23,10 +24,11 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
         confirmCancelBinding.Bind(cardSelection);
     }
 
-    public void Wrapup()
+    public IEnumerator Wrapup()
     {
-        ChooseEnemyCards();
         ui.EndCommandPhase();
+        ChooseEnemyCards();
+        yield return new WaitForSeconds(1);
     }
 
     private void ChooseEnemyCards()

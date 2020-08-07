@@ -140,9 +140,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
 
+    public void MoveTo(Vector3 targetPosition)
+    {
+        transform.position = targetPosition;
+    }
+    
     public void SetTargetPosition(Vector3 targetPosition)
     {
         _position = targetPosition;
+        transform.DOMove(targetPosition, 1);
     }
 
     private bool AreCloseEnough(float first, float second) => WithinEpsilon(first - second);

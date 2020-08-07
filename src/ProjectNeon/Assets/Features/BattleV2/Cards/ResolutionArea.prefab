@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7125729051783674151}
   - component: {fileID: 7392035684649506785}
   - component: {fileID: 5660898827745958289}
+  - component: {fileID: 1291914829372462979}
   m_Layer: 5
   m_Name: ResolutionArea
   m_TagString: Untagged
@@ -27,14 +28,14 @@ RectTransform:
   m_GameObject: {fileID: 6574824835696816587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -180}
+  m_AnchoredPosition: {x: 0, y: 960}
   m_SizeDelta: {x: 1920, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7392035684649506785
@@ -62,10 +63,26 @@ MonoBehaviour:
   allowInteractions: 0
   onCardClickDestination: {fileID: 11400000, guid: 06e207c4a5e6c184c80921d8af605ead,
     type: 2}
-  cardSpacingScreenPercent: 0.1
+  cardSpacingScreenPercent: 0.075
   cardPrototype: {fileID: -1608072616277939871, guid: d0f241a069af80a4fbe58317fdb27254,
     type: 3}
   maxCards: 12
   onlyAllowInteractingWithPlayables: 0
   unfocusedOffset: {x: 0, y: 400, z: 0}
+  onCardRecycleDestination: {fileID: 0}
+  cardRecycleSource: {fileID: 0}
   cardPool: []
+--- !u!114 &1291914829372462979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6574824835696816587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dafa42163a047e3b467e73aeadc1a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yOffset: -880
+  cards: {fileID: 5660898827745958289}

@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class BattleUiVisuals : OnMessage<BattleFinished>
 {
     [SerializeField] private PartyUiSummaryV2 partyUi;
     [SerializeField] private GameObject commandPhaseUi;
-    [SerializeField] private GameObject resolutionPhaseUi;
+    [SerializeField] private ResolutionZoneOffset resolutionPhaseUi;
     [SerializeField] private GameObject hand;
     [SerializeField] private GameObject defeatUi;
     [SerializeField] private GameObject victoryUi;
@@ -20,24 +21,29 @@ public class BattleUiVisuals : OnMessage<BattleFinished>
     public void BeginCommandPhase()
     {
         commandPhaseUi.SetActive(true);
-        resolutionPhaseUi.SetActive(true);
+        resolutionPhaseUi.gameObject.SetActive(true);
     }
 
-    public void EndCommandPhase() => HideCommandPhaseUI();
-
-    public void BeginResolutionPhase()
+    public void EndCommandPhase()
     {
-        resolutionPhaseUi.SetActive(true);
+        HideCommandPhaseUI();
         hand.SetActive(false);
+    }
+
+    public IEnumerator BeginResolutionPhase()
+    {
+        resolutionPhaseUi.gameObject.SetActive(true);
+        yield return resolutionPhaseUi.BeginResolutionPhase();
     }
 
     public void EndResolutionPhase()
     {
+        resolutionPhaseUi.EndResolutionPhase();
         HideResolutionPhaseUI();
         hand.SetActive(true);
     }
 
-    private void HideResolutionPhaseUI() => resolutionPhaseUi.SetActive(false);
+    private void HideResolutionPhaseUI() => resolutionPhaseUi.gameObject.SetActive(false);
     
     protected override void Execute(BattleFinished msg)
     {

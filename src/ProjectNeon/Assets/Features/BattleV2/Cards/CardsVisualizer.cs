@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using DG.Tweening;
 using UnityEngine;
 
 public class CardsVisualizer : MonoBehaviour
@@ -99,8 +98,9 @@ public class CardsVisualizer : MonoBehaviour
 
     private void UpdateCurrentCards(Card[] cards)
     {
-        var totalSpaceNeeded = Screen.width * (cardSpacingScreenPercent * cards.Length);
-        var startX = (Screen.width - totalSpaceNeeded) / 2f;
+        var screenWidth = Screen.width;
+        var totalSpaceNeeded = screenWidth * (cardSpacingScreenPercent * cards.Length);
+        var startX = (screenWidth - totalSpaceNeeded) / 2f;
 
         for (var i = 0; i < cards.Length; i++)
         {
@@ -112,9 +112,9 @@ public class CardsVisualizer : MonoBehaviour
             var isHighlighted = c.IsHighlighted;
             
             if (!c.HasCard)
-                c.transform.position = new Vector3(1920, effectivePosition.y, effectivePosition.z);
+                c.MoveTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
             
-            var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * Screen.width;
+            var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
             c.Set(card, () => SelectCard(cardIndex));
@@ -124,7 +124,6 @@ public class CardsVisualizer : MonoBehaviour
                 c.SetDisabled(true);
             SwapCardPoolSpots(cardIndex, presenterIndex);
             c.SetHighlight(isHighlighted);
-            c.transform.DOMove(targetPosition, 1);
             c.SetTargetPosition(targetPosition);
         }
     }
@@ -190,5 +189,12 @@ public class CardsVisualizer : MonoBehaviour
         
         _isFocused = isFocused;
         _isDirty = true;
+    }
+
+    public void RefreshPositions()
+    {
+        _defaultPosition = transform.position;
+        _unfocusedPosition = _defaultPosition - unfocusedOffset;
+        UpdateCurrentCards(_oldCards);
     }
 }

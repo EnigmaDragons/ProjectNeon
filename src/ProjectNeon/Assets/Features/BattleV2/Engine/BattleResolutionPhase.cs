@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,12 +12,10 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     
     [ReadOnly, SerializeField] private List<Member> _unconscious = new List<Member>();
     
-    public void Begin()
+    public IEnumerator Begin()
     {
         BattleLog.Write($"Card Resolution Began");
-        if (ui == null)
-            Debug.LogError("Ui is Null");
-        ui.BeginResolutionPhase();
+        yield return ui.BeginResolutionPhase();
         ResolveNext();
     }
 

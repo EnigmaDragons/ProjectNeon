@@ -39,12 +39,17 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
         commandPhase.Begin();
         Message.Publish(new TurnStarted());
     }
+
+    private IEnumerator TransitionToResolutionPhase()
+    {
+        yield return commandPhase.Wrapup();
+        BeginPhase(BattleV2Phase.Resolution);
+        yield return resolutionPhase.Begin();
+    }
     
     protected override void Execute(PlayerTurnConfirmed msg)
     {
-        commandPhase.Wrapup();
-        BeginPhase(BattleV2Phase.Resolution);
-        resolutionPhase.Begin();
+        StartCoroutine(TransitionToResolutionPhase());
     }
 
     protected override void Execute(ResolutionsFinished msg)
