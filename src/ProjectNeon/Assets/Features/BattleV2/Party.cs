@@ -44,6 +44,7 @@ public sealed class Party : ScriptableObject
         => decks = new[] { CreateDeck(one), CreateDeck(two), CreateDeck(three) };
 
     public void UpdateAdventureHp(int[] hps) => nonBattleHp = hps;
+    public void UpdateCreditsBy(int amount) => credits += amount;
     
     private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.Cards);
     private RuntimeDeck CreateDeck(List<CardType> cards) => new RuntimeDeck { Cards = cards };

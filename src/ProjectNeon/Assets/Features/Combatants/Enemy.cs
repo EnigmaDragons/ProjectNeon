@@ -32,6 +32,7 @@ public class Enemy : ScriptableObject
 
     public TurnAI AI => ai;
     public int PowerLevel => powerLevel;
+    public int RewardCredits => rewardCredits;
     public GameObject Prefab => prefab;
     public string DeathEffect => deathEffect;
 

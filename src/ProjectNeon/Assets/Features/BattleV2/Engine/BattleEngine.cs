@@ -55,13 +55,15 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
     protected override void Execute(ResolutionsFinished msg)
     {
         BeginPhase(BattleV2Phase.Wrapup);
-        turnWrapUp.Execute();
         
         var battleIsOver = state.PlayerLoses() || state.PlayerWins();
         if (battleIsOver)
             FinishBattle();
         else
+        {
+            turnWrapUp.Execute();
             BeginCommandPhase();
+        }
     }
 
     private void FinishBattle()
@@ -70,8 +72,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
             Message.Publish(new BattleFinished(TeamType.Enemies));
         else if (state.PlayerWins())
             Message.Publish(new BattleFinished(TeamType.Party));
-        state.RecordPartyAdventureHp();
-        state.EnemyArea.Clear();
+        state.Wrapup();
         BeginPhase(BattleV2Phase.Finished);
     }
 

@@ -19,12 +19,15 @@ public class BattleState : ScriptableObject
     [Header("ReadOnly")]
     [SerializeField, ReadOnly] private Vector3[] uiPositions;
     [SerializeField, ReadOnly] private string[] memberNames;
+    [SerializeField, ReadOnly] private int rewardCredits;
     
     private int NumRecyclesPerTurn = 2;
     private int _numberOfRecyclesRemainingThisTurn = 0;
     
     public bool SelectionStarted = false;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
+    public int RewardCredits => rewardCredits;
+    public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
 
     public bool NeedsCleanup => needsCleanup;
     public Party Party => partyArea.Party;
@@ -40,7 +43,7 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
     public List<Effect> QueuedEffects { get; private set;  }
 
-    // Commands
+    // Setup
     public BattleState Initialized(PartyArea partyArea, EnemyArea enemyArea)
     {
         this.QueuedEffects = new List<Effect>();
@@ -57,9 +60,6 @@ public class BattleState : ScriptableObject
         nextEnemies = new Enemy[0];
     }
 
-    private int EnemyStartingIndex => 4;
-    public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
-
     public void Init()
     {
         nextCardId = 0;
@@ -67,6 +67,7 @@ public class BattleState : ScriptableObject
 
     public int GetNextCardId() => nextCardId++;
     
+    private int EnemyStartingIndex => 4;
     public BattleState FinishSetup()
     {
         var id = 0;      
@@ -98,12 +99,13 @@ public class BattleState : ScriptableObject
 
         uiPositions = _uiTransformsById.Values.Select(x => x.position).ToArray();
         _numberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
+        rewardCredits = 0;
         needsCleanup = true;
         
         BattleLog.Write("Finished Battle State Init");
         return this;
     }
-
+    
     public void CleanupIfNeeded()
     {
         if (!NeedsCleanup) return;
@@ -113,6 +115,7 @@ public class BattleState : ScriptableObject
         BattleLog.Write("Finished Battle State Cleanup");
     }
 
+    // During Battle State Tracking
     public void AdvanceTurn() =>
         UpdateState(() =>
         {
@@ -121,8 +124,18 @@ public class BattleState : ScriptableObject
         });
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
-
-    public void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => h.CurrentHp()).ToArray());
+    public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
+    
+    // Battle Wrapup
+    public void Wrapup()
+    {
+        RecordPartyAdventureHp();
+        GrantRewardCredits();
+        EnemyArea.Clear();
+    }
+    
+    private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => h.CurrentHp()).ToArray());
+    private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits);
     
     // Queries
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);
@@ -134,8 +147,6 @@ public class BattleState : ScriptableObject
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
     public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.First(x => x.Value == hero).Key];
-    public Member GetMemberByClass(CharacterClass memberClass) => _membersById[_heroesById.First(x => x.Value.Class.Name.Equals(memberClass.Name)).Key];
-    public Member GetMemberByClass(string memberClass) => _membersById[_heroesById.First(x => x.Value.Class.Name.Equals(memberClass)).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
 

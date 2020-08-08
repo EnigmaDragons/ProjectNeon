@@ -49,6 +49,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     {
         resolutionZone.ExpirePlayedCards(card => card.Member.Id == member.Id);
         _unconscious.Add(member);
+        state.AddRewardCredits(state.GetEnemyById(member.Id).RewardCredits);
         Message.Publish(new MemberUnconscious(member));
     }
 }
