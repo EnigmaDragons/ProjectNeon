@@ -8,7 +8,6 @@ public sealed class AdventureHeroUiSummary : MonoBehaviour
     public void Init(Hero hero, int hp)
     {
         hpUi.Init(hero, hp);
-        healButton.gameObject.SetActive(hp < hero.Stats.MaxHP());
         healButton.Init(hero);
     }
 }

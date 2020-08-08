@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class HealHeroButton : MonoBehaviour
+public sealed class HealHeroButton : OnMessage<PartyAdventureStateChanged>
 {
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private Button button;
@@ -14,6 +14,7 @@ public sealed class HealHeroButton : MonoBehaviour
     public void Init(Hero h)
     {
         _hero = h;
+        gameObject.SetActive(party.CurrentHpOf(_hero) < _hero.Stats.MaxHP());
     }
 
     private void HealToFullIfCanAfford()
@@ -24,5 +25,10 @@ public sealed class HealHeroButton : MonoBehaviour
             party.HealHeroToFull(_hero);
             gameObject.SetActive(false);
         }
+    }
+
+    protected override void Execute(PartyAdventureStateChanged msg)
+    {
+        Init(_hero);
     }
 }
