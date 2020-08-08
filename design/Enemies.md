@@ -48,7 +48,8 @@ Stats:
 Cards:
   - Shield Toughness - 1 Ally
   - Ranged Basic Attack - 1 Enemy
-  - Pit Stop - 1 Ally - Heal 16 damage
+  - Pit Stop - 1 Ally - Heal 2 MAG
+  - Nano Repair Crew - 3 TP - All Allies - Heal 4 MAG
 
 ### Riot Bot
 Role: Tank
