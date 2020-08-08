@@ -1,4 +1,3 @@
-using UnityEngine;
 
 public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
 {
@@ -23,10 +22,21 @@ public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
         SetShieldText(CurrentShield > 0 ? $"{CurrentShield}" : "");
     }
 
+    private void InitUi()
+    {
+        float totalEffectiveHp = MaxHp + CurrentShield;
+        var amount = totalEffectiveHp > 0 ? (CurrentHp / totalEffectiveHp) : 1;
+        var shieldAmount = CurrentShield > 0 ? ((CurrentHp + CurrentShield) / totalEffectiveHp) : 0;
+        
+        SetHpText($"{CurrentHp}/{MaxHp}");
+        SetShieldText(CurrentShield > 0 ? $"{CurrentShield}" : "");
+        Init(amount, shieldAmount);
+    }
+
     public void Init(Member m)
     {
         _member = m;
-        UpdateUi();
+        InitUi();
     }
 
     protected override void Execute(LegacyMemberStateChanged e)
@@ -35,6 +45,7 @@ public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
             UpdateUi();
     }
 
+    protected abstract void Init(float hpAmount, float shieldAmount);
     protected abstract void SetHpFillAmount(float amount);
     protected abstract void SetHpText(string text);
     protected abstract void SetShieldText(string text);

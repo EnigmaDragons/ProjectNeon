@@ -10,6 +10,12 @@ public sealed class UIHPBarController : HPBarControllerBase
     [SerializeField] private Image shieldImage;
     [SerializeField] private TextMeshProUGUI shieldTextValue;
 
+    protected override void Init(float hpAmount, float shieldAmount)
+    {
+        barImage.fillAmount = hpAmount;
+        shieldImage.fillAmount = shieldAmount;
+    }
+    
     protected override void SetHpFillAmount(float amount)
     {
         barImage.DOFillAmount(amount, 2);
