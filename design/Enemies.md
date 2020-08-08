@@ -62,7 +62,7 @@ Role: Physical Striker (Area)
 
 Cards:
   - Ranged Basic Attack - 1 Enemy
-  - Fire Shots - Deal 0.5x Magic to all Enemies
+  - Fire Shots - Deal 0.5x Attack to all Enemies
   - Explosive Blast - 3 TP - Deal 25 Damage to all Enemies
 
 ### Robot Canine
@@ -70,6 +70,9 @@ Role: Physical Striker (Single)
 
 Cards:
   - Melee Basic Attack - 1 Enemy
+
+### 
+Role: Controller
 
 ### Tax Bot
 Role: Specialist

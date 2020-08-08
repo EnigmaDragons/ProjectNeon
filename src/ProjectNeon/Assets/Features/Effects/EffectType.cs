@@ -46,4 +46,5 @@ public enum EffectType
     PlayExtraCards = 43,
     StunForNumberOfCards = 44,
     HealMagic = 45,
+    GivePrimaryResource = 46,
 }
