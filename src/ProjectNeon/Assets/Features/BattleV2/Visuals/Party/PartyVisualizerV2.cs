@@ -22,11 +22,11 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         
         var heroes = state.Party.Heroes;
         if (heroes.Length > 0)
-            SetupHero(hero1, heroes[0]);
+            SetupHero(hero1, heroes[0], 5);
         if (heroes.Length > 1)
-            SetupHero(hero2, heroes[1]);
+            SetupHero(hero2, heroes[1], 9);
         if (heroes.Length > 2)
-            SetupHero(hero3, heroes[2]);
+            SetupHero(hero3, heroes[2], 1);
         state.PartyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform });
         yield break;
     }
@@ -36,7 +36,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         _damage.ForEach(x => x.Value.ForEach(d => d.Init(state.GetMemberByHero(x.Key))));
     }
 
-    private void SetupHero(GameObject heroOrigin, Hero hero)
+    private void SetupHero(GameObject heroOrigin, Hero hero, int visualOrder)
     {
         var hasBody = !hero.Body.name.Equals("BodyPlaceholder");
         if (hasBody)
@@ -50,6 +50,8 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
                  Debug.LogWarning($"{hero.name} is missing one or more text DamageEffects");
              else
                  _damage[hero] = damageEffects;
+
+             character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
         }
         else
         {
