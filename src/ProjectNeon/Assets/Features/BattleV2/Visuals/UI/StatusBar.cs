@@ -36,7 +36,7 @@ public sealed class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State[TemporalStatType.TurnStun] > 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.TurnStun].Icon, Text = _member.State[TemporalStatType.TurnStun].ToString() });
 
-        var attackBuffAmount = _member.State[StatType.Attack].CeilingInt() - _member.State.BaseStats.Attack();
+        var attackBuffAmount = CeilingInt(_member.State[StatType.Attack]) - _member.State.BaseStats.Attack();
         if (attackBuffAmount != 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Attack].Icon, Text = attackBuffAmount.ToString() });
 
@@ -48,4 +48,6 @@ public sealed class StatusBar : OnMessage<MemberStateChanged>
                 _icons[i].gameObject.SetActive(false);
         }
     }
+    
+    private static int CeilingInt(float v) => Convert.ToInt32(Math.Ceiling(v));
 }

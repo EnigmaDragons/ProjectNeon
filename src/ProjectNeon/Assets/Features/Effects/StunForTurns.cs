@@ -1,3 +1,5 @@
+using System;
+
 namespace Features.Effects
 {
     public sealed class StunForTurns : ITemporalState
@@ -9,6 +11,8 @@ namespace Features.Effects
         public bool IsActive => _remainingDuration > 0;
         public void AdvanceTurn() => _remainingDuration--;
 
-        public StunForTurns(float duration) => _remainingDuration = duration.CeilingInt();
+        public StunForTurns(float duration) => _remainingDuration = CeilingInt(duration);
+        
+        private static int CeilingInt(float v) => Convert.ToInt32(Math.Ceiling(v));
     }
 }

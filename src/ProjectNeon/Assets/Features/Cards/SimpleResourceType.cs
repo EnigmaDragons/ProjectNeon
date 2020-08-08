@@ -3,7 +3,7 @@
 public sealed class SimpleResourceType : ResourceType
 {
     [SerializeField] private int maxAmount;
-    [SerializeField] private Sprite icon;
+    [SerializeField] [PreviewSprite] private Sprite icon;
     [SerializeField] private int startingAmount;
 
     public override string Name => name;
