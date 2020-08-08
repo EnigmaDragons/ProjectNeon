@@ -14,7 +14,6 @@ public enum EffectType
     ShieldToughness = 11,
     ArmorFlat = 12,
     StunForTurns = 13,
-    StunForNumberOfCards = 44,
     ShieldAttackedOnAttack = 14, //obsolete
     DamageAttackerOnAttack = 15, //obsolete
     StealLifeNextAttack = 16,
@@ -45,4 +44,6 @@ public enum EffectType
     ApplyOnChance = 41,
     ReplayLastCard = 42,
     PlayExtraCards = 43,
+    StunForNumberOfCards = 44,
+    HealMagic = 45,
 }

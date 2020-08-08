@@ -53,7 +53,8 @@ public static class AllEffects
         { EffectType.ApplyOnChance, e => new ApplyOnChance(Create(e.origin), e.FloatAmount) },
         { EffectType.HealPrimaryResource, e => new SimpleEffect((src, m) => m.GainHp(src.State.PrimaryResourceAmount)) },
         { EffectType.ReplayLastCard, e => new ReplayLastCardEffect()},
-        { EffectType.PlayExtraCards, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.ExtraCardPlays, e.IntAmount), e.NumberOfTurns))) }
+        { EffectType.PlayExtraCards, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new BuffedStats(new StatAddends().With(StatType.ExtraCardPlays, e.IntAmount), e.NumberOfTurns))) },
+        { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
     };
     /**
      * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.

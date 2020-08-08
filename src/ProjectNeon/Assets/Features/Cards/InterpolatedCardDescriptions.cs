@@ -68,6 +68,10 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";
+        if (data.EffectType == EffectType.HealMagic)
+            return owner.IsPresent
+                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
+                : $"{data.FloatAmount}x MAG";
         
         Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
         return "%%";
