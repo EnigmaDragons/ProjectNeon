@@ -13,6 +13,9 @@ public class Member
     public override string ToString() => $"{Name} {Id}";
     
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats)
+        : this(id, name, characterClass, team, baseStats, baseStats.MaxHP()) {}
+    
+    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, int initialHp)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {name} is 0");
@@ -21,7 +24,7 @@ public class Member
         Name = name;
         Class = characterClass;
         TeamType = team;
-        State = new MemberState(id, baseStats);
+        State = new MemberState(id, baseStats, initialHp);
     }
 
     public void Apply(Action<MemberState> effect)

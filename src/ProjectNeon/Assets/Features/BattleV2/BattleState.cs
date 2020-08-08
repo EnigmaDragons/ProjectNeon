@@ -57,7 +57,7 @@ public class BattleState : ScriptableObject
         nextEnemies = new Enemy[0];
     }
 
-    private int EnemyStartingIndex => 2;
+    private int EnemyStartingIndex => 4;
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
 
     public void Init()
@@ -69,20 +69,11 @@ public class BattleState : ScriptableObject
     
     public BattleState FinishSetup()
     {
-        var id = 1;      
-        var heroes = Party.Heroes;
-        
+        var id = 0;      
         memberNames = new string[EnemyStartingIndex + enemies.Enemies.Length + 3];
         _uiTransformsById = new Dictionary<int, Transform>();
-        _enemiesById = new Dictionary<int, Enemy>();
-        for (var i = 0; i < enemies.Enemies.Length; i++)
-        {
-            id++;
-            _enemiesById[id] = enemies.Enemies[i];
-            _uiTransformsById[id] = enemies.EnemyUiPositions[i];
-            memberNames[id] = enemies.Enemies[i].name;
-        }
         
+        var heroes = Party.Heroes;
         _heroesById = new Dictionary<int, Hero>();
         for (var i = 0; i < Party.Heroes.Length; i++)
         {
@@ -92,7 +83,16 @@ public class BattleState : ScriptableObject
             memberNames[id] = heroes[i].name;
         }
         
-        _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, h.Value.Class.Name, TeamType.Party, h.Value.Stats))
+        _enemiesById = new Dictionary<int, Enemy>();
+        for (var i = 0; i < enemies.Enemies.Length; i++)
+        {
+            id++;
+            _enemiesById[id] = enemies.Enemies[i];
+            _uiTransformsById[id] = enemies.EnemyUiPositions[i];
+            memberNames[id] = enemies.Enemies[i].name;
+        }
+        
+        _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, h.Value.Class.Name, TeamType.Party, h.Value.Stats, Party.Hp[h.Key - 1]))
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
 
