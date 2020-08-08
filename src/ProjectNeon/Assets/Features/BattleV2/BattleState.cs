@@ -40,7 +40,6 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
     public List<Effect> QueuedEffects { get; private set;  }
 
-    
     // Commands
     public BattleState Initialized(PartyArea partyArea, EnemyArea enemyArea)
     {
@@ -122,6 +121,8 @@ public class BattleState : ScriptableObject
         });
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
+
+    public void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => h.CurrentHp()).ToArray());
     
     // Queries
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);

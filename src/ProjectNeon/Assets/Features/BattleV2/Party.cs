@@ -9,10 +9,12 @@ public sealed class Party : ScriptableObject
     [SerializeField] private Hero heroThree;
     [SerializeField] private RuntimeDeck[] decks;
     [SerializeField] private int credits;
+    [SerializeField] private int[] nonBattleHp;
 
     private List<Hero> _heroes = new List<Hero>();
 
     public int Credits => credits;
+    public int[] Hp => nonBattleHp.ToArray();
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
     public RuntimeDeck[] Decks => decks.ToArray();
     public Hero[] Heroes => _heroes.ToArray();
@@ -31,6 +33,7 @@ public sealed class Party : ScriptableObject
             _heroes.Add(heroThree);
         _heroes.ForEach(h => Debug.Log($"Party Hero: {h.name}"));
         decks = _heroes.Select(h => CreateDeck(h.Deck)).ToArray();
+        nonBattleHp = _heroes.Select(h => h.Stats.MaxHP()).ToArray();
         return this;
     }
 
@@ -40,6 +43,8 @@ public sealed class Party : ScriptableObject
     public void UpdateDecks(List<CardType> one, List<CardType> two, List<CardType> three) 
         => decks = new[] { CreateDeck(one), CreateDeck(two), CreateDeck(three) };
 
+    public void UpdateAdventureHp(int[] hps) => nonBattleHp = hps;
+    
     private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.Cards);
     private RuntimeDeck CreateDeck(List<CardType> cards) => new RuntimeDeck { Cards = cards };
 }
