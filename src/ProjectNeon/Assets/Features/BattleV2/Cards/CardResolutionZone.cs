@@ -37,7 +37,7 @@ public class CardResolutionZone : ScriptableObject
     public void ExpirePlayedCards(Func<IPlayedCard, bool> condition)
     {
         var movesCopy = moves.ToArray();
-        for (var i = movesCopy.Length; i > -1; i--)
+        for (var i = movesCopy.Length - 1; i > -1; i--)
         {
             var played = movesCopy[i];
             if (!condition(played)) continue;

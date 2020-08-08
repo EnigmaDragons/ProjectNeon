@@ -4,13 +4,13 @@ using UnityEngine;
 public class PartyAdventureUiSummary : MonoBehaviour
 {
     [SerializeField] private Party party;
-    [SerializeField] private HeroHpPresenter heroPresenter;
+    [SerializeField] private AdventureHeroUiSummary heroPresenter;
     [SerializeField] private float ySpacing;
     [SerializeField] private float xSpacing;
     [SerializeField] private float xOffset;
     [SerializeField] private float yOffset;
     
-    [ReadOnly, SerializeField] private List<HeroHpPresenter> active = new List<HeroHpPresenter>();
+    [ReadOnly, SerializeField] private List<AdventureHeroUiSummary> active = new List<AdventureHeroUiSummary>();
     
     private void Awake()
     {
