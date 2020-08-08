@@ -7,6 +7,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private Deck deck;
     [SerializeField] private TurnAI ai;
     [SerializeField] private int powerLevel;
+    [SerializeField] private int rewardCredits = 25;
     [SerializeField] private GameObject prefab;
     [SerializeField] private StringReference deathEffect;
     
