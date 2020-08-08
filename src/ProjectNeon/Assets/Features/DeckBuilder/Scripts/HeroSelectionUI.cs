@@ -6,7 +6,7 @@ public class HeroSelectionUI : MonoBehaviour
 {
     private const float Padding = 10;
 
-    [SerializeField] private Party party;
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private SelectHeroButton selectHeroButtonTemplate;
     [SerializeField] private Transform parent;

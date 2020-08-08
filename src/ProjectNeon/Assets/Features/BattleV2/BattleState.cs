@@ -8,6 +8,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private CardPlayZones cardPlayZones;
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private PartyArea partyArea;
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private EnemyArea enemies;
     [SerializeField] private bool needsCleanup;
     [SerializeField] private int nextCardId;
@@ -30,7 +31,7 @@ public class BattleState : ScriptableObject
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
 
     public bool NeedsCleanup => needsCleanup;
-    public Party Party => partyArea.Party;
+    public PartyAdventureState Party => party;
     public PartyArea PartyArea => partyArea;
     public EnemyArea EnemyArea => enemies;
     public GameObject Battlefield => nextBattlegroundPrototype;

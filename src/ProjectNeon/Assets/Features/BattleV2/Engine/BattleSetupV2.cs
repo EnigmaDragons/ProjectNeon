@@ -10,8 +10,8 @@ public class BattleSetupV2 : MonoBehaviour
     [SerializeField] private BattleWorldVisuals visuals;
     [SerializeField] private BattleUiVisuals ui;
 
-    [Header("Party")]
-    [SerializeField] private Party party;
+    [Header("Party")] 
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private CardPlayZones playerCardPlayZones;
     [SerializeField] private IntReference startingCards;
     

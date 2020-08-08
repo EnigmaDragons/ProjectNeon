@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PartyAdventureUiSummary : MonoBehaviour
 {
-    [SerializeField] private Party party;
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private AdventureHeroUiSummary heroPresenter;
     [SerializeField] private float ySpacing;
     [SerializeField] private float xSpacing;

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public sealed class HealHeroButton : MonoBehaviour
 {
-    [SerializeField] private Party party;
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private Button button;
     [SerializeField] private int cost;
 

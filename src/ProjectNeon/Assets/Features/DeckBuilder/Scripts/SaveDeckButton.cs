@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SaveDeckButton : MonoBehaviour
 {
-    [SerializeField] private Party party;
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private IntReference deckSize;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private Button button;

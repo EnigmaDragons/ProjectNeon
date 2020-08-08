@@ -5,7 +5,7 @@ public class OnStartNewGame : OnMessage<StartNewGame>
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private Hero[] heroes;
-    [SerializeField] private Party party;
+    [SerializeField] private PartyAdventureState party;
     
     protected override void Execute(StartNewGame msg)
     {

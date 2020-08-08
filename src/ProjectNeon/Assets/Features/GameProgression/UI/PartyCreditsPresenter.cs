@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PartyCreditsPresenter : OnMessage<PartyStateChanged>
 {
-    [SerializeField] private Party party;
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private TextMeshProUGUI label;
 
     void Awake() => label.text = party.Credits.ToString();
