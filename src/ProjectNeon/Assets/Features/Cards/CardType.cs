@@ -14,7 +14,7 @@ public class CardType : ScriptableObject
     [SerializeField] private CardAction cardAction1;
     [SerializeField] private CardAction cardAction2;
 
-    public string Name => name.SkipThroughFirstDash().WithSpaceBetweenWords();
+    public string Name => name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
     public ResourceCost Cost => cost;
     public ResourceCost Gain => onPlayGain;
     public Sprite Art => art;
