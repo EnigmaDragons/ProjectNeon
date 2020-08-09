@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Drone-EnergyBlast
+  m_Name: Drone_EnergyBlast
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: eb84924357e9de54c8c4c1853991480c, type: 3}
-  description: At the start of next turn deal <b>25</b> to all enemies.
+  description: Deal {E[0]} to all enemies.
   typeDescription: {fileID: 11400000, guid: 05396cecd1c61ab4dba3e9e72676792d, type: 2}
   onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
     type: 2}
@@ -28,7 +28,7 @@ MonoBehaviour:
   actionSequences:
   - scope: 1
     group: 1
-    cardActions: {fileID: 0}
+    cardActions: {fileID: 11400000, guid: 4f3af8963835eda4ca332f2174cb0410, type: 2}
   cardAction1:
     targetScope: 1
     targetGroup: 1
