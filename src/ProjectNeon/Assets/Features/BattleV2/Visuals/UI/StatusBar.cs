@@ -34,6 +34,9 @@ public sealed class StatusBar : OnMessage<MemberStateChanged>
     {
         var statuses = new List<CurrentStatusValue>();
         
+        if (_member.State[StatType.Armor] > 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Armor].Icon, Text = _member.State[StatType.Armor].ToString() });
+        
         if (_member.State[TemporalStatType.TurnStun] > 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.TurnStun].Icon, Text = _member.State[TemporalStatType.TurnStun].ToString() });
 
