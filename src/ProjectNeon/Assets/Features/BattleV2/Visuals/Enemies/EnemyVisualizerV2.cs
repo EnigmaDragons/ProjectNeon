@@ -16,6 +16,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
     [SerializeField] private Vector3 shieldNumberOffset;
     [SerializeField] private VisualResourceCounterPresenter resourceCounterPrototype;
     [SerializeField] private Vector3 resourceCounterOffset;
+    [SerializeField] private WorldStatusBar statusBarPrototype;
+    [SerializeField] private Vector3 statusBarOffset;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
 
@@ -56,6 +58,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
             var shield = Instantiate(shieldNumbers, pos + shieldNumberOffset, Quaternion.identity, enemyObject.transform);
             shield.Init(enemyMember);
             Instantiate(resourceCounterPrototype, pos + resourceCounterOffset, Quaternion.identity, enemyObject.transform)
+                .Initialized(enemyMember);
+            Instantiate(statusBarPrototype, pos + statusBarOffset, Quaternion.identity, enemyObject.transform)
                 .Initialized(enemyMember);
         }
     }
