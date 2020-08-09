@@ -11,13 +11,16 @@ public sealed class Damage : Effect
 
     public void Apply(Member source, Target target)
     {
-        var amount = Mathf.CeilToInt(_damage.Calculate(source, target) * target.Members[0].State.Damagability());
-        if (target.Members[0].State.Damagability() < 0.01)
-            BattleLog.Write($"{target.Members[0].Name} is Invincible");
-        else if (amount < 1)
-            BattleLog.Write($"Dealing {amount} to {target.Members[0].Name}");
-        else
-            BattleLog.Write($"Dealing {amount} to {target.Members[0].Name}");
-        target.Members.ForEach(x => x.State.TakeDamage(amount));
+        target.Members.ForEach(m =>
+        {
+            var amount = Mathf.CeilToInt(_damage.Calculate(source, m) * m.State.Damagability());
+            if (target.Members[0].State.Damagability() < 0.01)
+                BattleLog.Write($"{m.Name} is Invincible");
+            else if (amount < 1)
+                BattleLog.Write($"Dealing {amount} to {m.Name}");
+            else
+                BattleLog.Write($"Dealing {amount} to {m.Name}");
+            m.State.TakeDamage(amount);
+        });
     }
 }

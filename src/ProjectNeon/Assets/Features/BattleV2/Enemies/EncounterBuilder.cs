@@ -22,7 +22,7 @@ public class EncounterBuilder : ScriptableObject
     
     public List<Enemy> Generate(int difficulty)
     {
-        BattleLog.Write("Started generating encounter");
+        BattleLog.Write($"Started generating encounter of difficulty {difficulty}");
         /**
          * @todo #52:30min Evolve Encounter Generation after playtesting. 
          */

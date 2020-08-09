@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 /**
  * Heals the attacker based on the damage the attack inflicted.
@@ -38,7 +35,7 @@ public class StealLife : Effect
         if (member.Name.Equals(attack.Attacker.Name))
         {
             member.State.RemoveReactiveState(_buffs[member]);
-            new SimpleEffect(m => m.GainHp(attack.Damage.Calculate(attack.Attacker, attack.Target) * _ratio)).Apply(_performer, new Single(member));
+            new SimpleEffect(m => m.GainHp(attack.Damage.Calculate(attack.Attacker, attack.Target.Members[0]) * _ratio)).Apply(_performer, new Single(member));
         }
     }
 

@@ -135,7 +135,7 @@ public class BattleState : ScriptableObject
         EnemyArea.Clear();
     }
     
-    private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => h.CurrentHp()).ToArray());
+    private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => Math.Min(h.CurrentHp(), h.MaxHp())).ToArray());
     private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits);
     
     // Queries

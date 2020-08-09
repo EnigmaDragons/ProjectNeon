@@ -70,7 +70,7 @@ public class CardResolutionZone : ScriptableObject
 
     public IEnumerator ResolveNext(float delay)
     {
-        BattleLog.Write($"Num Cards To Resolve: {moves.Count}");
+        //BattleLog.Write($"Num Cards To Resolve: {moves.Count}");
 
         isResolving = true;
         var move = moves[0];
