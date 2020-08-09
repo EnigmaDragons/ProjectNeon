@@ -76,8 +76,14 @@ Cards:
   - Get Pumped - Self - +5 Attack for 3 Turns
   - Savage Charge - 3 TP - 1 Enemy - 3x ATK
 
-### 
+### Enforcer
 Role: Controller
+
+Cards:
+  - Ranged Basic Attack - 1 Enemy
+  - Scattering Field - All Enemies - -3 ATK for 3 Turns
+  - EMP Grenade - All Enemies - Remove All Shields
+  - Stun Bolt - 2 TP - 1 Enemy - Stun for 1 Turn
 
 ### Tax Bot
 Role: Specialist
