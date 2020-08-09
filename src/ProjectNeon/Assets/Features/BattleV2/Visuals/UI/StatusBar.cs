@@ -47,6 +47,9 @@ public sealed class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State[StatType.ExtraCardPlays] > 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.ExtraCardPlays].Icon, Text = _member.State[StatType.ExtraCardPlays].ToString() });
         
+        if (_member.State[StatType.Damagability] > 1f)
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Damagability].Icon, Text = "" });
+        
         for (var i = 0; i < Math.Max(statuses.Count, _icons.Count); i++)
         {
             if (i < statuses.Count)
