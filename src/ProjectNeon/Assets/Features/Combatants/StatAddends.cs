@@ -25,6 +25,12 @@ public sealed class StatAddends : IStats
         this[statType] = value;
         return this;
     }
+
+    public StatAddends With(IResourceType[] resourceTypes)
+    {
+        ResourceTypes = resourceTypes;
+        return this;
+    }
     
     public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
 }

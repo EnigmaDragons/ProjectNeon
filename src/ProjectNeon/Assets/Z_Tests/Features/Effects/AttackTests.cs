@@ -2,16 +2,13 @@
 
 public sealed class AttackTests
 {
-    
     [Test]
     public void Attack_ApplyEffect_AttackIsAppliedCorrectly()
     {
-        Member attacker = TestMembers.Create(
-            s => s.With(StatType.Attack, 1f).With(StatType.MaxHP, 10).With(StatType.Damagability, 1f)
-        );
-        Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
+        var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1f));
+        var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
 
-        new Attack(1).Apply(attacker, new Single(attacker));
+        new Attack(1).Apply(attacker, new Single(target));
 
         Assert.AreEqual(9, target.State[TemporalStatType.HP]);
     }

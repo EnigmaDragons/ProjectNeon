@@ -12,6 +12,6 @@ public sealed class ApplyOnChance : ConditionalEffect
 
     public override bool Condition()
     {
-        return Random.Range(0.0f, 1.0f) <= _chance;
+        return Rng.Dbl() <= _chance;
     }
 }

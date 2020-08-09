@@ -83,7 +83,7 @@ public static class AllEffects
         var effectType = effectData.EffectType;
         if (!_createEffectOfType.ContainsKey(effectData.EffectType))
         {
-            Debug.LogError($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
+            BattleLog.Write($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
             return _createEffectOfType[EffectType.Nothing](effectData);
         }
         return _createEffectOfType[effectType](effectData);

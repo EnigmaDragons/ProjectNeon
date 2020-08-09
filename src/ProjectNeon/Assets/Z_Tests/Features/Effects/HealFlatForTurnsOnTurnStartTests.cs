@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using UnityEngine;
 
 public sealed class HealFlatForTurnsOnTurnStartTests
 {
@@ -12,8 +11,6 @@ public sealed class HealFlatForTurnsOnTurnStartTests
 
         //creating damage
         new Attack(5).Apply(attacker, new Single(target));
-
-        Debug.Log("Target has " + target.State[TemporalStatType.HP] + "HP");
 
         new HealFlatForTurnsOnTurnStart(1, 3).Apply(caster, new Single(target));
         

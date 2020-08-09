@@ -1,27 +1,15 @@
 ﻿using NUnit.Framework;
-using UnityEngine;
 using System.Linq;
 
 public sealed class CostResourcesEffectTest
 {
-    private EffectData DamageTarget(float amount) => new EffectData
-    {
-        EffectType = EffectType.PhysicalDamage,
-        FloatAmount = new FloatReference(amount), 
-        EffectScope = new StringReference("Ammo")
-    };
-
     [Test]
     public void CostResourcesEffect_ApplyEffect_ApplyWhenHaveResource()
     {
-        Effect oneTimer = new CostResourceEffect(
-            1,
-            "Ammo"
-        );
-        Member perfromer = TestMembers.Create(
+        var effect = new CostResourceEffect(1, "Ammo");
+        var member = TestMembers.Create(
             s => {
-                StatAddends addend = new StatAddends();
-                addend.ResourceTypes = addend.ResourceTypes.Concat(
+                s.ResourceTypes = s.ResourceTypes.Concat(
                     new InMemoryResourceType
                     {
                         Name = "Ammo",
@@ -29,12 +17,12 @@ public sealed class CostResourcesEffectTest
                         MaxAmount = 2
                     }
                 ).ToArray();
-                return addend;
+                return s;
             }
         );
         
-        oneTimer.Apply(perfromer, new Single(perfromer));
+        effect.Apply(member, new Single(member));
 
-        Assert.AreEqual(1, perfromer.State[new InMemoryResourceType { Name = "Ammo" }]);
+        Assert.AreEqual(1, member.State[new InMemoryResourceType { Name = "Ammo" }]);
     }
 }

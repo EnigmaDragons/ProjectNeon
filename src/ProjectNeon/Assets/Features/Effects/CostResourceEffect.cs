@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public sealed class CostResourceEffect : Effect
 {
@@ -11,7 +10,7 @@ public sealed class CostResourceEffect : Effect
         _cost = cost;
     }
 
-    void Effect.Apply(Member source, Target target)
+    public void Apply(Member source, Target target)
     {
         Debug.Log("Resource :" + source.State[new InMemoryResourceType { Name = _resourceType }]);
         source.State.SpendPrimaryResource(_cost);
