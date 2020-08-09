@@ -10,60 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: E_StaticCharge
+  m_Name: MegaBlast_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 26
+      EffectType: 17
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 2.5
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 1
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedEffectSequence: {fileID: 11400000, guid: 95365ecacc86c894e846d6873583212f,
-        type: 2}
-    conditionData:
-      ConditionType: 0
-      FloatAmount:
-        UseConstant: 1
         ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedEffect: {fileID: 0}
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-    atTargetAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - type: 1
-    battleEffect:
-      EffectType: 9
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0.5
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 1
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
       ReferencedEffectSequence: {fileID: 0}
     conditionData:
       ConditionType: 0
