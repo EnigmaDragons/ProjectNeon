@@ -73,9 +73,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         art.sprite = _cardType.Art;
         
         var cost = card.Cost;
-        costLabel.text = cost.Amount.ToString();
-        costResourceTypeIcon.sprite = cost.ResourceType.Icon;
-        costPanel.SetActive(!cost.ResourceType.Name.Equals("None") && cost.Amount > 0);
+        var hasCost = !cost.ResourceType.Name.Equals("None") && cost.Amount > 0;
+        costPanel.SetActive(hasCost);
+        if (hasCost)
+        {
+            costLabel.text = cost.Amount.ToString();
+            costResourceTypeIcon.sprite = cost.ResourceType.Icon;
+        }
 
         card.LimitedToClass.IfPresent(c => tint.color = c.Tint);
     }
