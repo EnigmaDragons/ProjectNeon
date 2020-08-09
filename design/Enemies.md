@@ -68,11 +68,13 @@ Cards:
   - Fire Shots - Deal 0.5x Attack to all Enemies
   - Explosive Blast - 3 TP - Deal 25 Damage to all Enemies
 
-### Robot Canine
+### Spider Bot
 Role: Physical Striker (Single)
 
 Cards:
   - Melee Basic Attack - 1 Enemy
+  - Get Pumped - Self - +5 Attack for 3 Turns
+  - Savage Charge - 3 TP - 1 Enemy - 3x ATK
 
 ### 
 Role: Controller

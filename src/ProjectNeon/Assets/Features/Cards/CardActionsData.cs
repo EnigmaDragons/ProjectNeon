@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Effect")]
 public class CardActionsData : ScriptableObject
 {
     public CardActionV2[] Actions = new CardActionV2[0];
