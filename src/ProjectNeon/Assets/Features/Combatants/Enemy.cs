@@ -48,4 +48,6 @@ public class Enemy : ScriptableObject
         .With(StatType.Resistance, resistance)
         .With(StatType.Damagability, 1f)
         .With(StatType.ExtraCardPlays, cardsPerTurn);
+
+    public bool IsReadyForPlay => Deck != null;
 }

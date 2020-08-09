@@ -68,13 +68,17 @@ public class BattleSetupV2 : MonoBehaviour
 
         if (enemyArea.Enemies.Length == 0)
         {
-            BattleLog.Write("Setting Up Random Encounter");
-            enemyArea = enemyArea.Initialized(encounterBuilder.Generate());
+            BattleLog.Write("Setting Up Fallback Random Encounter");
+            enemyArea = enemyArea.Initialized(encounterBuilder.Generate(3));
         }
-            
+
         foreach (var enemy in enemyArea.Enemies)
+        {
+            if (!enemy.IsReadyForPlay)
+                throw new Exception($"{enemy.Name}'s is not ready for play.");
             if (enemy.Deck.Cards.All(c => c.Cost.Amount > 0))
                 throw new Exception($"{enemy.Name}'s Deck does not contain a 0-Cost Card.");
+        }
     }
     
     private void SetupPlayerCards()

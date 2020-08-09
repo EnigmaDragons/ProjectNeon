@@ -13,18 +13,16 @@ using UnityEngine;
 [CreateAssetMenu]
 public class EncounterBuilder : ScriptableObject
 {
-    [SerializeField] private IntReference difficulty;
     [SerializeField] private Enemy[] possible;
 
-    public void Init(IEnumerable<Enemy> possibleEnemies, int newDifficulty)
+    public void Init(IEnumerable<Enemy> possibleEnemies)
     {
         possible = possibleEnemies.ToArray();
-        difficulty = new IntReference(newDifficulty);
     }
     
-    public List<Enemy> Generate()
+    public List<Enemy> Generate(int difficulty)
     {
-        BattleLog.Write("Generated Encounter");
+        BattleLog.Write("Started generating encounter");
         /**
          * @todo #52:30min Evolve Encounter Generation after playtesting. 
          */
@@ -35,12 +33,15 @@ public class EncounterBuilder : ScriptableObject
         while (currentDifficulty < difficulty && enemies.Count < 7)
         {
             var maximum = difficulty - currentDifficulty;
-            var nextEnemy = possible.ToList().FindAll(
+            var nextEnemy = possible.Where(
                 enemy => enemy.PowerLevel <= maximum
             ).Random();
             enemies.Add(nextEnemy);
+            BattleLog.Write($"Added {nextEnemy.Name} to Encounter");
             currentDifficulty = currentDifficulty + nextEnemy.PowerLevel;
         }
+        
+        BattleLog.Write("Finished generating encounter");
         return enemies;
     }
 }

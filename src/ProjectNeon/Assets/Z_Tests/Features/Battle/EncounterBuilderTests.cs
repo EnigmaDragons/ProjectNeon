@@ -8,11 +8,10 @@ public class EncounterBuilderTests
     {
         var enemy = TestableObjectFactory.Create<Enemy>();
         var encounterBuilder = TestableObjectFactory.Create<EncounterBuilder>();
-        encounterBuilder.Init(enemy.AsArray(), 10);
+        encounterBuilder.Init(enemy.AsArray());
 
-        var encounter = encounterBuilder.Generate();
+        var encounter = encounterBuilder.Generate(10);
 
         Assert.IsTrue(encounter.Any());
     }
 }
-
