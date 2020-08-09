@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Card")]
 public class CardType : ScriptableObject
 {
     [PreviewSprite] [SerializeField] private Sprite art;

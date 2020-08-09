@@ -37,7 +37,6 @@ Cards:
   - Ranged Basic Attack - 1 Enemy
   - Designate Target - 1 Enemy - Give Vulnerable
   - Weapon Systems Calibration - All Allies - Buff Attack
-  - Defense Systems Calibration - All Allies - Grant Armor
   - Supercharge - 1 Ally - Grant 3 Tech Points
   - Focus Fire - 3 Tech Points - 1 Enemy - All Allies immediate make one basic attack against target
 
@@ -55,6 +54,9 @@ Cards:
 Role: Tank
 
 Cards:
+  - Melee Basic Attack - 1 Enemy
+  - Shield Toughness - 1 Ally
+  - Defense Systems Calibration - All Allies - Grant +1 Armor for 3 Turns
   - Shields Up - 3 Tech Points - All Allies - Gain Max Shield
 
 ### Aerial Combat Drone

@@ -3,8 +3,8 @@ using UnityEngine;
 
 static class GameDataMenu
 {
-    [MenuItem("Assets/Create/Card")]
-    static void Card() => Create<CardType>();
+//    [MenuItem("Assets/Create/Card")]
+//    static void Card() => Create<CardType>();
     
     [MenuItem("Assets/Create/Effect")]
     static void CreateSequence() => Create<CardActionsData>();
