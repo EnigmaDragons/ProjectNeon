@@ -33,6 +33,7 @@ public sealed class StatusBar : OnMessage<MemberStateChanged>
     private void UpdateUi()
     {
         var statuses = new List<CurrentStatusValue>();
+        
         if (_member.State[TemporalStatType.TurnStun] > 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.TurnStun].Icon, Text = _member.State[TemporalStatType.TurnStun].ToString() });
 
@@ -40,6 +41,9 @@ public sealed class StatusBar : OnMessage<MemberStateChanged>
         if (attackBuffAmount != 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Attack].Icon, Text = attackBuffAmount.ToString() });
 
+        if (_member.State[StatType.ExtraCardPlays] > 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.ExtraCardPlays].Icon, Text = _member.State[StatType.ExtraCardPlays].ToString() });
+        
         for (var i = 0; i < Math.Max(statuses.Count, _icons.Count); i++)
         {
             if (i < statuses.Count)
