@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -38,7 +39,7 @@ public class EncounterBuilder : ScriptableObject
             ).Random();
             enemies.Add(nextEnemy);
             BattleLog.Write($"Added {nextEnemy.Name} to Encounter");
-            currentDifficulty = currentDifficulty + nextEnemy.PowerLevel;
+            currentDifficulty = currentDifficulty + Math.Max(nextEnemy.PowerLevel, 1);
         }
         
         BattleLog.Write("Finished generating encounter");
