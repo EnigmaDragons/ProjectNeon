@@ -2125,8 +2125,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3433742603543600447}
   - component: {fileID: 993386300510940079}
-  - component: {fileID: 3014162107573107415}
   - component: {fileID: 5901881830582814465}
+  - component: {fileID: 4345073453475892801}
   m_Layer: 5
   m_Name: HandArea
   m_TagString: Untagged
@@ -2161,34 +2161,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5091785064828231235}
   m_CullTransparentMesh: 0
---- !u!114 &3014162107573107415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5091785064828231235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b82a0ffc392d38f43a890a67ccc46413, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
-  zone: {fileID: 11400000, guid: d384cb3c3fffa7241a3f7e1555a17223, type: 2}
-  allowInteractions: 1
-  onCardClickDestination: {fileID: 11400000, guid: 3717d6c6fb916bc4bbd27677b1d617d1,
-    type: 2}
-  cardSpacingScreenPercent: 0.1
-  cardPrototype: {fileID: -1608072616277939871, guid: d0f241a069af80a4fbe58317fdb27254,
-    type: 3}
-  maxCards: 12
-  onlyAllowInteractingWithPlayables: 1
-  unfocusedOffset: {x: 0, y: 400, z: 0}
-  onCardRecycleDestination: {fileID: 11400000, guid: 5700f8e61c3b8cb459cd501b74155f94,
-    type: 2}
-  cardRecycleSource: {fileID: 11400000, guid: a1365d47520fd6f47a5d8c09ae1fc0a8, type: 2}
-  cardRotation: {x: 0, y: 0, z: 0}
-  cardPool: []
 --- !u!114 &5901881830582814465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2201,8 +2173,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9d15bc3c5541819356c5a05e702017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: {fileID: 3014162107573107415}
+  cards: {fileID: 4345073453475892801}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &4345073453475892801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5091785064828231235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111d053185364e61b4ed7f7f15d45116, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  zone: {fileID: 11400000, guid: d384cb3c3fffa7241a3f7e1555a17223, type: 2}
+  allowInteractions: 1
+  onCardClickDestination: {fileID: 11400000, guid: 3717d6c6fb916bc4bbd27677b1d617d1,
+    type: 2}
+  cardSpacingScreenPercent: 0.08
+  cardPrototype: {fileID: -1608072616277939871, guid: d0f241a069af80a4fbe58317fdb27254,
+    type: 3}
+  maxCards: 12
+  onlyAllowInteractingWithPlayables: 1
+  unfocusedOffset: {x: 0, y: 400, z: 0}
+  onCardRecycleDestination: {fileID: 11400000, guid: 5700f8e61c3b8cb459cd501b74155f94,
+    type: 2}
+  cardRecycleSource: {fileID: 11400000, guid: a1365d47520fd6f47a5d8c09ae1fc0a8, type: 2}
+  cardRotation: {x: 0, y: 0, z: 0}
+  cardPool: []
 --- !u!1 &5190085308954272685
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Linq;
 using UnityEngine;
 
-public class CardsVisualizer : MonoBehaviour
+public class HandVisualizer : MonoBehaviour
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZone zone;
@@ -12,13 +12,17 @@ public class CardsVisualizer : MonoBehaviour
     [SerializeField] private CardPresenter cardPrototype;
     [SerializeField] private int maxCards = 12;
     [SerializeField] private bool onlyAllowInteractingWithPlayables = false;
+    [SerializeField] private Vector3 unfocusedOffset = new Vector3(0, 400, 0);
+    [SerializeField] private CardPlayZone onCardRecycleDestination;
+    [SerializeField] private CardPlayZone cardRecycleSource;
     [SerializeField] private Vector3 cardRotation;
     
     [ReadOnly] [SerializeField] private CardPresenter[] cardPool;
-    
     private Card[] _oldCards = new Card[0];
     private bool _isDirty = false;
     private Action _onShownCardsChanged = () => { };
+    private Vector3 _defaultPosition;
+    private Vector3 _unfocusedPosition;
     private bool _isFocused = true;
 
     public CardPresenter[] ShownCards => cardPool.ToArray();
@@ -29,6 +33,8 @@ public class CardsVisualizer : MonoBehaviour
 
     private void Awake()
     {
+        _defaultPosition = transform.position;
+        _unfocusedPosition = _defaultPosition - unfocusedOffset;
         cardPool = new CardPresenter[maxCards];
         for (var i = 0; i < maxCards; i++)
         {
@@ -100,7 +106,7 @@ public class CardsVisualizer : MonoBehaviour
 
         for (var i = 0; i < cards.Length; i++)
         {
-            var effectivePosition = transform.position;
+            var effectivePosition = _isFocused ? _defaultPosition : _unfocusedPosition;
             var cardIndex = i;
             var card = cards[cardIndex];
             var (presenterIndex, presenter) = GetCardPresenter(cardIndex, card);
@@ -118,22 +124,12 @@ public class CardsVisualizer : MonoBehaviour
             c.SetDisabled(!_isFocused);
             if (!card.Owner.IsConscious() || card.Owner.IsStunnedForCurrentTurn())
                 c.SetDisabled(true);
-            SwapCardPoolSpots(cardIndex, presenterIndex);
+            cardPool.SwapItems(cardIndex, presenterIndex);
             c.SetHighlight(isHighlighted);
             c.SetTargetPosition(targetPosition);
         }
     }
 
-    private void SwapCardPoolSpots(int first, int second)
-    {
-        if (first == second)
-            return;
-        
-        var tmp = cardPool[first];
-        cardPool[first] = cardPool[second];
-        cardPool[second] = tmp;
-    }
-    
     private (int, CardPresenter) GetCardPresenter(int startAtIndex, Card c)
     {
         CardPresenter emptyCard = null;
@@ -165,6 +161,19 @@ public class CardsVisualizer : MonoBehaviour
                 onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
     }
 
+    public void RecycleCard(int cardIndex)
+    {
+        if (state.NumberOfRecyclesRemainingThisTurn < 1)
+            return;
+        
+        if (cardRecycleSource.Count < 1)
+            throw new NotImplementedException("Need to implement deck reshuffle for Card Recycle.");
+
+        state.UseRecycle();
+        onCardRecycleDestination.PutOnBottom(zone.Take(cardIndex));
+        zone.PutOnBottom(cardRecycleSource.DrawOneCard());
+    }
+
     public void SetFocus(bool isFocused)
     {
         if (_isFocused == isFocused)
@@ -176,6 +185,8 @@ public class CardsVisualizer : MonoBehaviour
 
     public void RefreshPositions()
     {
+        _defaultPosition = transform.position;
+        _unfocusedPosition = _defaultPosition - unfocusedOffset;
         UpdateCurrentCards(_oldCards);
     }
 }

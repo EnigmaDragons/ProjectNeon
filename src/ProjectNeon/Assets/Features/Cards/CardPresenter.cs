@@ -128,6 +128,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
 
+        if (active)
+            transform.SetAsLastSibling();
         highlight.SetActive(IsPlayable && active);
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
