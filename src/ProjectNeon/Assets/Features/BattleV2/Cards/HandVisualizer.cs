@@ -2,22 +2,20 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class HandVisualizer : MonoBehaviour
+public sealed class HandVisualizer : MonoBehaviour
 {
     [SerializeField] private BattleState state;
-    [SerializeField] private CardPlayZone zone;
+    [SerializeField] private CardPlayZones zones;
     [SerializeField] private bool allowInteractions = true;
-    [SerializeField] private CardPlayZone onCardClickDestination;
     [SerializeField] private float cardSpacingScreenPercent = 0.15f;
     [SerializeField] private CardPresenter cardPrototype;
     [SerializeField] private int maxCards = 12;
     [SerializeField] private bool onlyAllowInteractingWithPlayables = false;
     [SerializeField] private Vector3 unfocusedOffset = new Vector3(0, 400, 0);
-    [SerializeField] private CardPlayZone onCardRecycleDestination;
-    [SerializeField] private CardPlayZone cardRecycleSource;
     [SerializeField] private Vector3 cardRotation;
-    
-    [ReadOnly] [SerializeField] private CardPresenter[] cardPool;
+
+    private CardPlayZone Hand => zones.HandZone;
+    private CardPool _cardPool;
     private Card[] _oldCards = new Card[0];
     private bool _isDirty = false;
     private Action _onShownCardsChanged = () => { };
@@ -25,35 +23,29 @@ public class HandVisualizer : MonoBehaviour
     private Vector3 _unfocusedPosition;
     private bool _isFocused = true;
 
-    public CardPresenter[] ShownCards => cardPool.ToArray();
+    public CardPresenter[] ShownCards => _cardPool.ShownCards;
 
     public void SetOnShownCardsChanged(Action action) => _onShownCardsChanged = action;
 
-    public void ReProcess() => UpdateCurrentCards(zone.Cards.ToArray());
+    public void ReProcess() => UpdateCurrentCards(Hand.Cards.ToArray());
 
     private void Awake()
     {
         _defaultPosition = transform.position;
         _unfocusedPosition = _defaultPosition - unfocusedOffset;
-        cardPool = new CardPresenter[maxCards];
-        for (var i = 0; i < maxCards; i++)
-        {
-            cardPool[i] = Instantiate(cardPrototype, transform);
-            cardPool[i].Clear();
-            cardPool[i].transform.rotation = Quaternion.Euler(cardRotation);
-        }
+        _cardPool = new CardPool(maxCards, this, cardPrototype, cardRotation);
     }
     
     void OnEnable()
     {
         _isDirty = true;
-        zone.OnZoneCardsChanged.Subscribe(new GameEventSubscription(zone.OnZoneCardsChanged.name, x => _isDirty = true, this));
+        Hand.OnZoneCardsChanged.Subscribe(new GameEventSubscription(Hand.OnZoneCardsChanged.name, x => _isDirty = true, this));
         Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
     }
 
     void OnDisable()
     {
-        zone.OnZoneCardsChanged.Unsubscribe(this);
+        Hand.OnZoneCardsChanged.Unsubscribe(this);
         Message.Unsubscribe(this);
     }
 
@@ -68,7 +60,7 @@ public class HandVisualizer : MonoBehaviour
     
     void UpdateVisibleCards()
     {
-        var newCards = zone.Cards.ToArray();
+        var newCards = Hand.Cards.ToArray();
         CleanRemovedCards(newCards);
         UpdateCurrentCards(newCards);
         _oldCards = newCards;
@@ -86,7 +78,7 @@ public class HandVisualizer : MonoBehaviour
                 continue;
             }
 
-            foreach (var c in cardPool)
+            foreach (var c in _cardPool.ShownCards)
             {
                 if (c.Contains(old))
                 {
@@ -109,7 +101,7 @@ public class HandVisualizer : MonoBehaviour
             var effectivePosition = _isFocused ? _defaultPosition : _unfocusedPosition;
             var cardIndex = i;
             var card = cards[cardIndex];
-            var (presenterIndex, presenter) = GetCardPresenter(cardIndex, card);
+            var (presenterIndex, presenter) = _cardPool.GetCardPresenter(cardIndex, card);
             var c = presenter;
             var isHighlighted = c.IsHighlighted;
             
@@ -124,41 +116,17 @@ public class HandVisualizer : MonoBehaviour
             c.SetDisabled(!_isFocused);
             if (!card.Owner.IsConscious() || card.Owner.IsStunnedForCurrentTurn())
                 c.SetDisabled(true);
-            cardPool.SwapItems(cardIndex, presenterIndex);
+            _cardPool.SwapItems(cardIndex, presenterIndex);
             c.SetHighlight(isHighlighted);
             c.SetTargetPosition(targetPosition);
         }
-    }
-
-    private (int, CardPresenter) GetCardPresenter(int startAtIndex, Card c)
-    {
-        CardPresenter emptyCard = null;
-        var emptyCardIndex = -1;
-        
-        for (var i = startAtIndex; i < cardPool.Length; i++)
-        {
-            var cp = cardPool[i];
-            
-            // Find First Unused Card Presenter
-            if (emptyCard == null && !cp.HasCard)
-            {
-                emptyCard = cp;
-                emptyCardIndex = i;
-            }
-
-            // Return Matching Card
-            if (cp.Contains(c))
-                return (i, cp);
-        }
-
-        return (emptyCardIndex, emptyCard);
     }
     
     public void SelectCard(int cardIndex)
     {
         if (allowInteractions)
-            if (cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
-                onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
+            if (_cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
+                zones.SelectionZone.PutOnBottom(Hand.Take(cardIndex));
     }
 
     public void RecycleCard(int cardIndex)
@@ -166,12 +134,12 @@ public class HandVisualizer : MonoBehaviour
         if (state.NumberOfRecyclesRemainingThisTurn < 1)
             return;
         
-        if (cardRecycleSource.Count < 1)
-            throw new NotImplementedException("Need to implement deck reshuffle for Card Recycle.");
+        if (zones.DrawZone.Count < 1)
+            zones.Reshuffle();
 
         state.UseRecycle();
-        onCardRecycleDestination.PutOnBottom(zone.Take(cardIndex));
-        zone.PutOnBottom(cardRecycleSource.DrawOneCard());
+        zones.DiscardZone.PutOnBottom(Hand.Take(cardIndex));
+        Hand.PutOnBottom(zones.DrawZone.DrawOneCard());
     }
 
     public void SetFocus(bool isFocused)
