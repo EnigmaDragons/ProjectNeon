@@ -32,6 +32,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State[TemporalStatType.TurnStun] > 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.TurnStun].Icon, Text = _member.State[TemporalStatType.TurnStun].ToString() });
 
+        if (_member.State[TemporalStatType.CardStun] > 0)
+            statuses.Add(new CurrentStatusValue {Icon = icons[TemporalStatType.TurnStun].Icon, Text = _member.State[TemporalStatType.CardStun].ToString() });
+
         var attackBuffAmount = CeilingInt(_member.State[StatType.Attack]) - _member.State.BaseStats.Attack();
         if (attackBuffAmount != 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Attack].Icon, Text = attackBuffAmount.ToString() });

@@ -40,7 +40,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     protected override void Execute(CardResolutionFinished msg) => ResolveNext();
 
     private void CheckForUnconsciousMembers() 
-        => state.Members.Values.ToList()
+        => state.Members.Values
             .Except(_unconscious)
             .Where(m => !m.State.IsConscious)
             .CopiedForEach(ResolveUnconsciousMember);

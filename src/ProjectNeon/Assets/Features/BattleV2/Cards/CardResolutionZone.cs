@@ -70,8 +70,6 @@ public class CardResolutionZone : ScriptableObject
 
     public IEnumerator ResolveNext(float delay)
     {
-        //BattleLog.Write($"Num Cards To Resolve: {moves.Count}");
-
         isResolving = true;
         var move = moves[0];
         moves = moves.Skip(1).ToList();
@@ -87,11 +85,21 @@ public class CardResolutionZone : ScriptableObject
             Debug.Log($"Weird Physical Zone Draw bug.");
             yield break;
         }
+        
         var card = physicalZone.DrawOneCard();
-        played.Perform();
+        
         LastPlayed = played;
         if (played.Member.TeamType.Equals(TeamType.Party))
             playedDiscardZone.PutOnBottom(card);
         isResolving = moves.Any();
+        
+        if (card.Owner.IsStunnedForCard())
+        {
+            BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
+            card.Owner.Apply(m => m.ApplyAdditiveUntilEndOfBattle(new StatAddends().With(TemporalStatType.CardStun, -1)));
+            Message.Publish(new CardResolutionFinished());
+        }
+        else
+            played.Perform();
     }
 }

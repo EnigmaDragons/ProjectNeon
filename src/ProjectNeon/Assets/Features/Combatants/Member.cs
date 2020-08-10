@@ -43,6 +43,7 @@ public static class MemberExtensions
     public static int MaxShield(this Member m) => RoundUp(m.State[StatType.Toughness] * 2); 
     public static bool IsConscious(this Member m) => m.State.IsConscious;
     public static bool IsStunnedForCurrentTurn(this Member m) => m.State[TemporalStatType.TurnStun] > 0;
+    public static bool IsStunnedForCard(this Member m) => m.State[TemporalStatType.CardStun] > 0;
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
 
     public static bool CanAfford(this Member m, CardType c)

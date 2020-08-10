@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Features.Effects;
-using UnityEngine;
 
 public static class AllEffects
 {
@@ -25,6 +23,7 @@ public static class AllEffects
         { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.GainShield(e.IntAmount * src.State.Toughness())) },
         { EffectType.ArmorFlat, e => new SimpleEffect(m => m.GainArmor(e.IntAmount)) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
+        { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => m.ApplyAdditiveUntilEndOfBattle(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount))) },
         { EffectType.ShieldAttackedOnAttack, e => new NoEffect() },
         { EffectType.DamageAttackerOnAttack, e => new NoEffect() },
         { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.FloatAmount, e.NumberOfTurns), 1)},
