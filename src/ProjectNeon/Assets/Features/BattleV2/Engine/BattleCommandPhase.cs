@@ -35,7 +35,7 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
         state.Enemies
             .Where(e => e.IsConscious())
             .ForEach(e => Enumerable.Range(0, e.State.ExtraCardPlays())
-                .ForEach(c => resolutionZone.Add(state.GetEnemyById(e.Id).AI.Play(e.Id))));
+                .ForEach(c => resolutionZone.Add(state.GetEnemyById(e.Id).AI.Play(e.Id, state))));
     }
     
     protected override void Execute(TargetSelectionBegun msg)

@@ -8,11 +8,12 @@ public interface Target
 
 public static class TargetExtensions
 {
-    public static void ApplyToAll(this Target target, Action<MemberState> effect)
-    {
-        target.Members.ForEach(m => m.Apply(effect));
-    }
+    public static void ApplyToAll(this Target t, Action<MemberState> effect) 
+        => t.Members.ForEach(m => m.Apply(effect));
 
-    public static string MembersDescriptions(this Target target) =>
-        string.Join(", ", target.Members.Select(m => $"{m.Name} {m.Id}"));
+    public static string MembersDescriptions(this Target t) 
+        => string.Join(", ", t.Members.Select(m => $"{m.Name} {m.Id}"));
+
+    public static int TotalHpAndShields(this Target t) 
+        => t.Members.Sum(m => m.CurrentShield() + m.CurrentHp());
 }
