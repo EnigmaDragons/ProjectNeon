@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,13 +28,14 @@ public class PartyUiSummaryV2 : MonoBehaviour
     {
         active.ForEach(Destroy);
         active.Clear();
-        
+
+        var heroes = Party.Heroes;
         var position = transform.position;
-        for (var i = 0; i < Party.Heroes.Length; i++)
+        for (var i = 0; i < heroes.Length; i++)
         {
             var h = Instantiate(heroPresenter,
                 new Vector3(position.x + xOffset + xSpacing * i, position.y +yOffset + ySpacing * i, position.z), Quaternion.identity, gameObject.transform); 
-            h.Set(Party.Heroes[i]);
+            h.Set(heroes[i]);
             active.Add(h);
         }
     }
