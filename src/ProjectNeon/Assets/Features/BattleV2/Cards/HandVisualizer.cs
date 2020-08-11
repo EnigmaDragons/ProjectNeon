@@ -96,6 +96,7 @@ public sealed class HandVisualizer : MonoBehaviour
         var totalSpaceNeeded = screenWidth * (cardSpacingScreenPercent * cards.Length);
         var startX = (screenWidth - totalSpaceNeeded) / 2f;
 
+        var highlightedCardIndex = -1;
         for (var i = 0; i < cards.Length; i++)
         {
             var effectivePosition = _isFocused ? _defaultPosition : _unfocusedPosition;
@@ -104,6 +105,8 @@ public sealed class HandVisualizer : MonoBehaviour
             var (presenterIndex, presenter) = _cardPool.GetCardPresenter(cardIndex, card);
             var c = presenter;
             var isHighlighted = c.IsHighlighted;
+            if (isHighlighted)
+                highlightedCardIndex = presenterIndex;
             
             if (!c.HasCard)
                 c.MoveTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
@@ -119,7 +122,11 @@ public sealed class HandVisualizer : MonoBehaviour
             _cardPool.SwapItems(cardIndex, presenterIndex);
             c.SetHighlight(isHighlighted);
             c.SetTargetPosition(targetPosition);
+            c.transform.SetAsLastSibling();
         }
+        
+        if (highlightedCardIndex > -1)
+            _cardPool.ShownCards[highlightedCardIndex].transform.SetAsLastSibling();
     }
     
     public void SelectCard(int cardIndex)

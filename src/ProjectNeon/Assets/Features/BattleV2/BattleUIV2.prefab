@@ -2143,14 +2143,14 @@ RectTransform:
   m_GameObject: {fileID: 5091785064828231235}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.59999996, y: 0.59999996, z: 0.59999996}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 5033347768014667300}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 100}
+  m_AnchoredPosition: {x: 0, y: 60}
   m_SizeDelta: {x: 1920, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &993386300510940079
@@ -2188,21 +2188,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
-  zone: {fileID: 11400000, guid: d384cb3c3fffa7241a3f7e1555a17223, type: 2}
+  zones: {fileID: 11400000, guid: 0a8497e1383588d4ab9b06ee1c09e8e1, type: 2}
   allowInteractions: 1
-  onCardClickDestination: {fileID: 11400000, guid: 3717d6c6fb916bc4bbd27677b1d617d1,
-    type: 2}
-  cardSpacingScreenPercent: 0.08
+  cardSpacingScreenPercent: 0.045
   cardPrototype: {fileID: -1608072616277939871, guid: d0f241a069af80a4fbe58317fdb27254,
     type: 3}
   maxCards: 12
   onlyAllowInteractingWithPlayables: 1
-  unfocusedOffset: {x: 0, y: 400, z: 0}
-  onCardRecycleDestination: {fileID: 11400000, guid: 5700f8e61c3b8cb459cd501b74155f94,
-    type: 2}
-  cardRecycleSource: {fileID: 11400000, guid: a1365d47520fd6f47a5d8c09ae1fc0a8, type: 2}
+  unfocusedOffset: {x: 0, y: 360, z: 0}
   cardRotation: {x: 0, y: 0, z: 0}
-  cardPool: []
 --- !u!1 &5190085308954272685
 GameObject:
   m_ObjectHideFlags: 0
