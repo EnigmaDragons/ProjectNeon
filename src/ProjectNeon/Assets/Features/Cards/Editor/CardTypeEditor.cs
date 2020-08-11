@@ -7,7 +7,7 @@ using UnityEngine;
 public class CardTypeEditor : Editor
 {
     private CardType targetCard;
-    private SerializedProperty art, description, typeDescription, onlyPlayableByClass, cost, gain, actionSequences, cardAction1, cardAction2;
+    private SerializedProperty art, description, typeDescription, tags, onlyPlayableByClass, cost, gain, actionSequences, cardAction1, cardAction2;
 
     public void OnEnable()
     {
@@ -15,6 +15,7 @@ public class CardTypeEditor : Editor
         art = serializedObject.FindProperty("art");
         description = serializedObject.FindProperty("description");
         typeDescription = serializedObject.FindProperty("typeDescription");
+        tags = serializedObject.FindProperty("tags");
         onlyPlayableByClass = serializedObject.FindProperty("onlyPlayableByClass");
         cost = serializedObject.FindProperty("cost");
         gain = serializedObject.FindProperty("onPlayGain");
@@ -33,6 +34,8 @@ public class CardTypeEditor : Editor
         PresentUnchanged(cost);
         PresentUnchanged(gain);
         PresentActionSequences();
+        DrawUILine(Color.black);
+        PresentUnchanged(tags);
         DrawUILine(Color.black);
         PresentUnchanged(cardAction1);
         PresentUnchanged(cardAction2);

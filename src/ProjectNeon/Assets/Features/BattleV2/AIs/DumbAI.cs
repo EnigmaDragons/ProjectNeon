@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 public sealed class DumbAI : TurnAI
 {
@@ -8,16 +8,12 @@ public sealed class DumbAI : TurnAI
         var playableCards = battleState.GetPlayableCards(memberId);
         
         var card = playableCards.Random();
-        var targets = new List<Target>();
-        
-        card.ActionSequences.ForEach(
-            action =>
+        var targets = card.ActionSequences.Select(action => 
             {
                 var possibleTargets = battleState.GetPossibleConsciousTargets(me, action.Group, action.Scope);
                 var target = possibleTargets.Random();
-                targets.Add(target);
-            }
-        );
+                return target;
+            });
 
         var cardInstance = card.CreateInstance(battleState.GetNextCardId(), me);
         
