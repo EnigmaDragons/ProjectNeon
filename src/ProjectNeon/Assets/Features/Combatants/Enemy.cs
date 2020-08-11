@@ -6,6 +6,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private string enemyName;
     [SerializeField] private Deck deck;
     [SerializeField] private TurnAI ai;
+    [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private int powerLevel = 1;
     [SerializeField] private int rewardCredits = 25;
     [SerializeField] private GameObject prefab;
@@ -32,6 +33,7 @@ public class Enemy : ScriptableObject
 
     public TurnAI AI => ai;
     public int PowerLevel => powerLevel;
+    public int PreferredTurnOrder => preferredTurnOrder;
     public int RewardCredits => rewardCredits;
     public GameObject Prefab => prefab;
     public string DeathEffect => deathEffect;

@@ -34,6 +34,7 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
     {
         state.Enemies
             .Where(e => e.IsConscious())
+            .OrderBy(e => state.GetEnemyById(e.Id).PreferredTurnOrder)
             .ForEach(e => Enumerable.Range(0, e.State.ExtraCardPlays())
                 .ForEach(c => resolutionZone.Add(state.GetEnemyById(e.Id).AI.Play(e.Id, state))));
     }
