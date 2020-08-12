@@ -22,4 +22,7 @@ public static class TargetExtensions
 
     public static int TotalRemainingShieldCapacity(this Target t)
         => t.Members.Sum(m => m.RemainingShieldCapacity());
+
+    public static bool HasShield(this Target t)
+        => t.Members.Sum(m => m.CurrentShield()) > 0;
 }

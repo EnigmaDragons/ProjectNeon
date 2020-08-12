@@ -40,9 +40,16 @@ public sealed class MedicAI : TurnAI
         {
             var possibleTargets = battleState.GetPossibleConsciousTargets(me, action.Group, action.Scope);
             if (card.TypeDescription == "Healing")
-                return possibleTargets.OrderByDescending(x => x.TotalMissingHp()).First();
+                return possibleTargets.MostDamaged();
             if (card.TypeDescription == "Defense" && card.Tags.Contains(CardTag.Shield))
+            {
+                if (possibleTargets.Any(x => !x.HasShield()))
+                    return possibleTargets.Where(x => !x.HasShield())
+                        .MostVulnerable();
+                // Or, use shield to whomever could use the most
                 return possibleTargets.OrderByDescending(x => x.TotalRemainingShieldCapacity()).First();
+            }
+
             if (card.TypeDescription == "Attack")
                 return possibleTargets.MostVulnerable();
             return possibleTargets.Random();

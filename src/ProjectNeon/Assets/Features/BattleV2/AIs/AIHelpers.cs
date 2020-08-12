@@ -30,4 +30,10 @@ public static class AIHelpers
         .Shuffled()
         .OrderBy(t => t.TotalHpAndShields())
         .First();
+
+    public static Target MostDamaged(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(x => x.TotalMissingHp())
+        .First();
 }
