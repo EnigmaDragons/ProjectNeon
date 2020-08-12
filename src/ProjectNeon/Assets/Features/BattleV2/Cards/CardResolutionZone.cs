@@ -87,19 +87,27 @@ public class CardResolutionZone : ScriptableObject
         }
         
         var card = physicalZone.DrawOneCard();
-        
-        LastPlayed = played;
-        if (played.Member.TeamType.Equals(TeamType.Party))
-            playedDiscardZone.PutOnBottom(card);
-        isResolving = moves.Any();
-        
         if (card.Owner.IsStunnedForCard())
         {
             BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
             card.Owner.Apply(m => m.ApplyAdditiveUntilEndOfBattle(new StatAddends().With(TemporalStatType.CardStun, -1)));
+            WrapupCard(played, card);
             Message.Publish(new CardResolutionFinished());
         }
         else
+        {
             played.Perform();
+            WrapupCard(played, card);
+        }
+    }
+
+    private void WrapupCard(IPlayedCard played, Card physicalCard)
+    {
+        LastPlayed = played;
+        if (physicalCard.UseAsBasic)
+            physicalCard.UseAsBasic = false;
+        if (played.Member.TeamType.Equals(TeamType.Party))
+            playedDiscardZone.PutOnBottom(physicalCard);
+        isResolving = moves.Any();
     }
 }
