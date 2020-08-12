@@ -104,10 +104,8 @@ public class CardResolutionZone : ScriptableObject
     private void WrapupCard(IPlayedCard played, Card physicalCard)
     {
         LastPlayed = played;
-        if (physicalCard.UseAsBasic)
-            physicalCard.UseAsBasic = false;
         if (played.Member.TeamType.Equals(TeamType.Party))
-            playedDiscardZone.PutOnBottom(physicalCard);
+            playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());
         isResolving = moves.Any();
     }
 }

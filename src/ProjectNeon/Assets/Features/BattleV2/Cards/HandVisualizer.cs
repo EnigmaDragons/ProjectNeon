@@ -145,7 +145,7 @@ public sealed class HandVisualizer : MonoBehaviour
             zones.Reshuffle();
 
         state.UseRecycle();
-        zones.DiscardZone.PutOnBottom(Hand.Take(cardIndex));
+        zones.DiscardZone.PutOnBottom(Hand.Take(cardIndex).RevertedToStandard());
         Hand.PutOnBottom(zones.DrawZone.DrawOneCard());
     }
 

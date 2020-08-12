@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -37,4 +35,10 @@ public sealed class Card
 
     public void Play(Target[] targets, int amountPaid) => Type.Play(owner, targets, amountPaid);
     public void Play(Member source, Target[] targets, int amountPaid) => Type.Play(source, targets, amountPaid);
+
+    public Card RevertedToStandard()
+    {
+        UseAsBasic = false;
+        return this;
+    }
 }
