@@ -103,6 +103,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         DisableHighlight();
         _shouldHighlight = false;
         Message.Publish(new PlayerCardSelected());
+        _indexSelector.Current.SetCardHandControlsVisible(false);
         cards.SelectCard(_indexSelector.Index);
     }
 
@@ -119,10 +120,12 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         cards.ShownCards.ForEach(c => c.SetHighlight(false));
         _indexSelector.Current.SetHighlight(true);
+        _indexSelector.Current.SetCardHandControlsVisible(true);
     }
     
     private void DisableHighlight()
     {
         _indexSelector.Current.SetHighlight(false);
+        _indexSelector.Current.SetCardHandControlsVisible(false);
     }
 }
