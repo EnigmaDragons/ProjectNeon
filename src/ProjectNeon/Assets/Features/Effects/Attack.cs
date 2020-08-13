@@ -1,4 +1,6 @@
-﻿
+﻿using System;
+
+[Obsolete("Needs to be replaced with the final Attack Performed data. Should be separated from Attack Proposals.")]
 public sealed class Attack  : Effect
 {
     public Member Attacker { get; set; }

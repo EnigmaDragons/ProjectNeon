@@ -36,6 +36,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
     private void BeginCommandPhase()
     {
         BeginPhase(BattleV2Phase.Command);
+        state.StartTurn();
         commandPhase.Begin();
         Message.Publish(new TurnStarted());
     }

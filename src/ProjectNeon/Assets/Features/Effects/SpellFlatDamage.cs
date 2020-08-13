@@ -11,6 +11,6 @@ public sealed class SpellFlatDamage : DamageCalculation
 
     public int Calculate(Member source, Member target)
     {
-        return Mathf.CeilToInt(Quantity * ((1f - target.State.Resistance()) / 1f));
+        return Mathf.CeilToInt(Quantity - target.State.Resistance());
     }
 }

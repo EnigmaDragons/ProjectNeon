@@ -52,7 +52,7 @@ public static class MemberExtensions
         if (!c.Cost.IsXCost && c.Cost.Amount == 0)
             return true;
         var cost = c.ResourcesSpent(m);
-        var remaining = m.State[cost.ResourceType] - cost.Amount;
+        var remaining = m.State.ResourceAmount(cost.ResourceType) - cost.Amount;
         return remaining >= 0;
     }
 }

@@ -1,6 +1,4 @@
 ﻿
-
-
 public sealed class ReplayLastCardEffect : Effect
 {
     public void Apply(Member source, Target target)
@@ -8,4 +6,3 @@ public sealed class ReplayLastCardEffect : Effect
         Message.Publish(new ReplayLastCard());
     }
 }
-

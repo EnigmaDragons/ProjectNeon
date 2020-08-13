@@ -19,8 +19,6 @@ public sealed class MemberState : IStats
 
     // TODO: Are these counters needed?
     private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
-    // TODO: Are these statuses needed?
-    private readonly Dictionary<string, string> _status = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter {n}");
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
@@ -47,9 +45,9 @@ public sealed class MemberState : IStats
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
+    public int ResourceAmount(string resourceType) => _counters[resourceType].Amount;
     public float this[StatType statType] => CurrentStats[statType];
     public float this[TemporalStatType statType] => _counters[statType.ToString()].Amount + CurrentStats[statType];
-    public string this[string status] => _status[status];
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
     public float Max(string name) => _counters[name].Max;
 
@@ -60,8 +58,8 @@ public sealed class MemberState : IStats
     public void AddReactiveState(ITemporalState state) => _reactiveStates.Add(state);
     public void RemoveReactiveState(ITemporalState state) => _reactiveStates.Remove(state);
 
-    public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType.Name, qty.Amount);
-    public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType.Name, qty.Amount);
+    public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
+    public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType, qty.Amount);
     public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
     public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void GainHp(float amount) => ChangeHp(amount);
@@ -82,15 +80,20 @@ public sealed class MemberState : IStats
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
     private IResourceType PrimaryResource => ResourceTypes[0];
 
-    public void ChangeStatus(string status, string value) => _status[status] = value;
-
-    public void AdvanceTurn() => PublishAfter(() =>
+    public void OnTurnStart()
     {
-        _additiveMods.ForEach(m => m.AdvanceTurn());
+        _additiveMods.ForEach(m => m.OnTurnStart());
+        _multiplierMods.ForEach(m => m.OnTurnStart());
+        _reactiveStates.ForEach(m => m.OnTurnStart());
+    }
+    
+    public void OnTurnEnd() => PublishAfter(() =>
+    {
+        _additiveMods.ForEach(m => m.OnTurnEnd());
         _additiveMods.RemoveAll(m => !m.IsActive);
-        _multiplierMods.ForEach(m => m.AdvanceTurn());
+        _multiplierMods.ForEach(m => m.OnTurnEnd());
         _multiplierMods.RemoveAll(m => !m.IsActive);
-        _reactiveStates.ForEach(m => m.AdvanceTurn());
+        _reactiveStates.ForEach(m => m.OnTurnEnd());
         _reactiveStates.RemoveAll(m => !m.IsActive);
     });
 

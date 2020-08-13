@@ -64,8 +64,8 @@ public class CardResolutionZone : ScriptableObject
         playerPlayArea.Take(playerPlayArea.Count - 1);
         playerHand.PutOnBottom(card);
         
-        played.Member.Apply(m => m.LoseResource(played.Gained.ResourceType.Name, played.Gained.Amount));
-        played.Member.Apply(m => m.GainResource(played.Spent.ResourceType.Name, played.Spent.Amount));
+        played.Member.Apply(m => m.LoseResource(played.Gained.ResourceType, played.Gained.Amount));
+        played.Member.Apply(m => m.GainResource(played.Spent.ResourceType, played.Spent.Amount));
     }
 
     public IEnumerator ResolveNext(float delay)

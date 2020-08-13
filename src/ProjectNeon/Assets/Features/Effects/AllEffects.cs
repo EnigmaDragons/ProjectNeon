@@ -24,8 +24,8 @@ public static class AllEffects
         { EffectType.ArmorFlat, e => new SimpleEffect(m => m.GainArmor(e.IntAmount)) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
         { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => m.ApplyAdditiveUntilEndOfBattle(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount))) },
-        { EffectType.ShieldAttackedOnAttack, e => new NoEffect() },
-        { EffectType.DamageAttackerOnAttack, e => new NoEffect() },
+        { EffectType.ShieldAttackedOnAttack, e => new NoEffect() }, // TODO: Implement
+        { EffectType.DamageAttackerOnAttack, e => new NoEffect() }, // TODO: Implement
         { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.FloatAmount, e.NumberOfTurns), 1)},
         { EffectType.InterceptAttackForTurns, e => new InterceptAttack(e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount)},
@@ -39,7 +39,7 @@ public static class AllEffects
         { EffectType.ShieldBasedOnShieldValue, e => new SimpleEffect((src, m) => m.GainShield(e.FloatAmount * src.State[TemporalStatType.Shield])) },
         { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
         { EffectType.OnAttacked, e => new EffectOnAttacked(e.ReferencedEffectSequence, e.NumberOfTurns) },
-        { EffectType.CostResource, e => new CostResourceEffect(e.IntAmount, e.EffectScope) },
+        { EffectType.CostResource, e => new SimpleEffect(m => m.Lose(new ResourceQuantity { Amount = e.IntAmount, ResourceType = e.EffectScope.Value }))},
         { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) },
         { EffectType.SpellFlatDamageEffect, e => new SpellFlatDamageEffect(e.IntAmount) },
         { EffectType.RepeatUntilPrimaryResourceDepleted, e => new RepeatUntilPrimaryResourceDepleted(Create(e.origin), e.IntAmount) },

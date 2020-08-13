@@ -8,12 +8,17 @@ public sealed class DamageOverTime : ITemporalState, Effect
     public IStats Stats { get; } = new StatAddends();
     public bool IsDebuff => true;
     public bool IsActive => _remainingDuration > 0;
-    public void AdvanceTurn()
+
+    public void OnTurnStart()
     {
         if (_remainingDuration <= 0) return;
         
         _remainingDuration--;
-        _target.ApplyToAll(m => m.TakeRawDamage(_amount));
+        _target.ApplyToAll(m => m.TakeRawDamage(_amount));   
+    }
+    
+    public void OnTurnEnd()
+    {
     }
 
     public DamageOverTime(EffectData data)

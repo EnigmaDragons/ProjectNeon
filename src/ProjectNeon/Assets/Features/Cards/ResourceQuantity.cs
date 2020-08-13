@@ -1,7 +1,7 @@
 ﻿public class ResourceQuantity
 {
     public int Amount;
-    public IResourceType ResourceType;
+    public string ResourceType;
 
-    public override string ToString() => $"{Amount} {ResourceType.Name}";
+    public override string ToString() => $"{Amount} {ResourceType}";
 }

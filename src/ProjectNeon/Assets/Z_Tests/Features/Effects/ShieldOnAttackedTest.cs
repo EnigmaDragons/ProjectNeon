@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 
+[Ignore("Needs to be reworked.")]
 public sealed class ShieldAttackedOnAttackTests
 {
     private EffectData ChangeShieldOnAttackBy(float amount) => 
@@ -8,13 +9,15 @@ public sealed class ShieldAttackedOnAttackTests
             EffectType = EffectType.ShieldAttackedOnAttack, 
             FloatAmount = new FloatReference(amount) 
         };
+    
+    public ShieldAttackedOnAttackTests() => Debug.logger.logEnabled = false;
 
     [Test]
     public void ShieldOnAttacked_ApplyEffect_TargetIsShieldedOnAttack()
     {
-        Member paladin = TestMembers.With(StatType.Toughness, 5);
-        Member ally = TestMembers.With(StatType.Toughness, 10);
-        Member attacker = TestMembers.Any();
+        var paladin = TestMembers.With(StatType.Toughness, 5);
+        var ally = TestMembers.With(StatType.Toughness, 10);
+        var attacker = TestMembers.Any();
 
         AllEffects.Apply(ChangeShieldOnAttackBy(1), paladin, new Single(ally));
         new Attack(0).Apply(attacker, new Single(ally));
@@ -25,9 +28,9 @@ public sealed class ShieldAttackedOnAttackTests
     [Test]
     public void ShieldOnAttacked_ApplyEffect_TargetIsNotShieldedIfNoAttacked()
     {
-        Member paladin = TestMembers.With(StatType.Toughness, 5);
-        Member ally = TestMembers.With(StatType.Toughness, 10);
-        Member attacker = TestMembers.Any();
+        var paladin = TestMembers.With(StatType.Toughness, 5);
+        var ally = TestMembers.With(StatType.Toughness, 10);
+        var attacker = TestMembers.Any();
 
         AllEffects.Apply(ChangeShieldOnAttackBy(1), paladin, new Single(ally));
         new Attack(0).Apply(attacker, new Single(paladin));

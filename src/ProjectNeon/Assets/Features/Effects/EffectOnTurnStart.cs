@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 
 /**
  * Effects that trigger on Turn Start.
  */
+[Obsolete("This should be a Temporal State, not an Effect")]
 public class EffectOnTurnStart : Effect
 {
     private Effect _effect;

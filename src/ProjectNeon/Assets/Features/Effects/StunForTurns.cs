@@ -7,7 +7,8 @@ public sealed class StunForTurns : ITemporalState
     public IStats Stats => new StatAddends().With(TemporalStatType.TurnStun, _remainingDuration);
     public bool IsDebuff => true;
     public bool IsActive => _remainingDuration > 0;
-    public void AdvanceTurn() => _remainingDuration--;
+    public void OnTurnStart() {}
+    public void OnTurnEnd() => _remainingDuration--;
 
     public StunForTurns(float duration) => _remainingDuration = CeilingInt(duration);
     

@@ -1,7 +1,10 @@
-﻿
+﻿using System;
+
 /**
  * Wraps the execution of an effect so it is only executed a certain number of times.
  */
+
+[Obsolete]
 public sealed class Recurrent :  Effect
 {
     /**

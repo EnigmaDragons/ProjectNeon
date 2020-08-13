@@ -7,14 +7,15 @@ public sealed class StealLifeOnAttackTests
         FloatAmount = new FloatReference(1)
     }; 
     
+    [Ignore("Needs to have a working Attack Resolution system")]
     [Test]
     public void StealLifeOnAttack_ApplyEffect_LifeIsStolenCorrectly()
     {
-        Member caster = TestMembers.Any();
-        Member attacker = TestMembers.Create(
+        var caster = TestMembers.Any();
+        var attacker = TestMembers.Create(
             s => s.With(StatType.Attack, 1f).With(StatType.MaxHP, 10).With(StatType.Damagability, 1f)
         );
-        Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
+        var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
         attacker.State.TakeRawDamage(6);
 
         AllEffects.Apply(StealLifeOnAttack(), caster, new Single(attacker));

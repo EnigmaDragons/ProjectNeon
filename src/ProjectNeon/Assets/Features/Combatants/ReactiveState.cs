@@ -1,5 +1,6 @@
 ﻿using System;
 
+[Obsolete]
 public class ReactiveState : ITemporalState
 {
     private int _remainingTurnDuration;
@@ -19,7 +20,7 @@ public class ReactiveState : ITemporalState
     public IStats Stats { get; }
     public bool IsDebuff { get; }
     public bool IsActive => _remainingTurnDuration > 0;
-    public void AdvanceTurn()
+    public void OnTurnEnd()
     {
         if (!IsActive)
             return;
@@ -27,4 +28,5 @@ public class ReactiveState : ITemporalState
         if (!IsActive)
             Message.Unsubscribe(this);
     }
+    public void OnTurnStart() {}
 }

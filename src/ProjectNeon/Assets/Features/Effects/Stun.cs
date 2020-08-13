@@ -7,7 +7,8 @@ public sealed class Stun : ITemporalState, Effect
     public IStats Stats { get; } = new StatAddends();
     public bool IsDebuff => true;
     public bool IsActive => _remainingDuration > 0;
-    public void AdvanceTurn()
+    public void OnTurnStart() {}
+    public void OnTurnEnd()
     {
         if (_remainingDuration <= 0) return;
         

@@ -7,7 +7,8 @@ public sealed class DebuffedStats : ITemporalState
     public IStats Stats { get; }
     public bool IsDebuff => true;
     public bool IsActive => _remainingTurnDuration > 0;
-    public void AdvanceTurn() => _remainingTurnDuration = Math.Max(_remainingTurnDuration - 1, 0);
+    public void OnTurnStart() {}
+    public void OnTurnEnd() => _remainingTurnDuration = Math.Max(_remainingTurnDuration - 1, 0);
 
     public DebuffedStats(IStats stats, int duration)
     {

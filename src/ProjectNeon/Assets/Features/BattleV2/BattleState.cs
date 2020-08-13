@@ -117,11 +117,13 @@ public class BattleState : ScriptableObject
     }
 
     // During Battle State Tracking
+    public void StartTurn() =>UpdateState(() => { Members.Values.ForEach(m => m.State.OnTurnStart()); });
+    
     public void AdvanceTurn() =>
         UpdateState(() =>
         {
             _numberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
-            Members.Values.CopiedForEach(m => m.State.AdvanceTurn()); 
+            Members.Values.ForEach(m => m.State.OnTurnEnd()); 
         });
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
