@@ -10,7 +10,7 @@ public sealed class ShieldAttackedOnAttackTests
             FloatAmount = new FloatReference(amount) 
         };
     
-    public ShieldAttackedOnAttackTests() => Debug.logger.logEnabled = false;
+    public ShieldAttackedOnAttackTests() => Debug.unityLogger.logEnabled = false;
 
     [Test]
     public void ShieldOnAttacked_ApplyEffect_TargetIsShieldedOnAttack()

@@ -10,7 +10,7 @@ public sealed class DamageAttackerOnAttackTests
             FloatAmount = new FloatReference(amount) 
         };
 
-    public DamageAttackerOnAttackTests() => Debug.logger.logEnabled = false;
+    public DamageAttackerOnAttackTests() => Debug.unityLogger.logEnabled = false;
     
     [Test]
     public void DamageOnAttacker_ApplyEffect_AttackerIsDamagedOnAttack()
