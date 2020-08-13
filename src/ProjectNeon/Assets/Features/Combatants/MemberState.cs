@@ -17,7 +17,6 @@ public sealed class MemberState : IStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats))
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats));
 
-    // TODO: Are these counters needed?
     private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter {n}");
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];

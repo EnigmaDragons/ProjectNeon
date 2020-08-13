@@ -56,9 +56,6 @@ public static class AllEffects
         { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
         { EffectType.GivePrimaryResource, e => new SimpleEffect(m => m.GainPrimaryResource(e.IntAmount)) },
     };
-    /**
-     * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
-     */
     
     public static void Apply(EffectData effectData, Member source, Member target)
         => Apply(effectData, source, new Single(target));
@@ -82,7 +79,7 @@ public static class AllEffects
         var effectType = effectData.EffectType;
         if (!_createEffectOfType.ContainsKey(effectData.EffectType))
         {
-            BattleLog.Write($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
+            Log.Error($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
             return _createEffectOfType[EffectType.Nothing](effectData);
         }
         return _createEffectOfType[effectType](effectData);
