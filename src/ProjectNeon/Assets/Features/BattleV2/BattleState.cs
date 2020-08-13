@@ -50,7 +50,7 @@ public class BattleState : ScriptableObject
     {
         _queuedEffects = new Queue<Effect>();
         this.partyArea = partyArea;
-        this.enemies = enemyArea;
+        enemies = enemyArea;
         return FinishSetup();
     }
 
@@ -129,6 +129,14 @@ public class BattleState : ScriptableObject
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
+
+    public void Queue(Effect e) => UpdateState(() => _queuedEffects.Enqueue(e));
+    public Effect DequeueEffect()
+    {
+        var e = _queuedEffects.Dequeue();
+        Message.Publish(new BattleStateChanged(this));
+        return e;
+    }
     
     // Battle Wrapup
     public void Wrapup()

@@ -2,6 +2,7 @@
 public class MemberStateChanged
 {
     public MemberState State { get; }
+    public MemberStateSnapshot BeforeState { get; }
 
-    public MemberStateChanged(MemberState s) => State = s;
+    public MemberStateChanged(MemberStateSnapshot before, MemberState after) => State = after;
 }
