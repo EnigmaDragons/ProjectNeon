@@ -13,7 +13,7 @@ public class RandomEncounterSegment : StageSegment
     
     public override void Start()
     {
-        Debug.Log("Setting Up Random Encounter");
+        Log.Info("Setting Up Random Encounter");
         battleState.SetNextBattleground(possibleBattlegrounds.Random());
         battleState.SetNextEncounter(encounterBuilder.Generate(encounterDifficulty));
         SceneManager.LoadScene("BattleSceneV2");

@@ -14,7 +14,7 @@ public sealed class BattleVFXTester : MonoBehaviour
         if (!Input.GetMouseButtonDown(0))
             return;
 
-        Debug.Log("Clicked Mouse Button");
+        Log.Info("Clicked Mouse Button");
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
 
         if(Physics.Raycast(ray, out var hit, 500f))

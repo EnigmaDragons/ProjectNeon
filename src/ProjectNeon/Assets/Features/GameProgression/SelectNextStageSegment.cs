@@ -10,12 +10,12 @@ public class SelectNextStageSegment : MonoBehaviour
     {
         if (adventure.IsFinalStageSegment)
         {
-            Debug.Log("Navigating to victory srceen");
+            Log.Info("Navigating to victory srceen");
             navigator.NavigateToVictoryScene();
         }
         else
         {
-            Debug.Log("Advancing to next Stage Segment.");
+            Log.Info("Advancing to next Stage Segment.");
             adventure.Advance();
         }
     }

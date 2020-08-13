@@ -31,7 +31,7 @@ public static class InterpolatedCardDescriptions
         }
         catch (Exception e)
         {
-            Debug.LogError($"Unable to Generate Interpolated Description for {card.Name}");
+            Log.Error($"Unable to Generate Interpolated Description for {card.Name}");
             Debug.LogException(e);
             return desc;
         }

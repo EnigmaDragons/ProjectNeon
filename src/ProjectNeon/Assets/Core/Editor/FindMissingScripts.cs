@@ -27,7 +27,7 @@ public class SelectGameObjectsWithMissingScripts : Editor
                     //Add the sinner to our naughty-list
                     objectsWithDeadLinks.Add(g);
                     Selection.activeGameObject = g;
-                    Debug.Log(g + " has a missing script!");
+                    Log.Info(g + " has a missing script!");
                     break;
                 }
             }
@@ -39,7 +39,7 @@ public class SelectGameObjectsWithMissingScripts : Editor
         }
         else
         {
-            Debug.Log("No GameObjects in '" + currentScene.name + "' have missing scripts! Yay!");
+            Log.Info("No GameObjects in '" + currentScene.name + "' have missing scripts! Yay!");
         }
     }
 }

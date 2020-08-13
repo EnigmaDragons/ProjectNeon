@@ -123,7 +123,7 @@
                  if (fileHeader != null) f.Write(fileHeader, 0, fileHeader.Length);
                  f.Write(fileData, 0, fileData.Length);
                  f.Close();
-                 Debug.Log($"Screenshot {filename}");
+                 Log.Info($"Screenshot {filename}");
              }).Start();
  
              // unhide optional game object if set

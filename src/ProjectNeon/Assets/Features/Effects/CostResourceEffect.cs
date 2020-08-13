@@ -12,7 +12,7 @@ public sealed class CostResourceEffect : Effect
 
     public void Apply(Member source, Target target)
     {
-        Debug.Log("Resource :" + source.State[new InMemoryResourceType { Name = _resourceType }]);
+        Log.Info("Resource :" + source.State[new InMemoryResourceType { Name = _resourceType }]);
         source.State.SpendPrimaryResource(_cost);
     }
 }

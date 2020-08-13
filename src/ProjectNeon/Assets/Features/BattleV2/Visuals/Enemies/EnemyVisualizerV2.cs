@@ -99,14 +99,14 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
 
         var enemyIndex = state.GetEnemyIndexByMemberId(e.MemberId);
         var enemy = active[enemyIndex];
-        Debug.Log($"Began Animation for {enemy.name}");
+        Log.Info($"Began Animation for {enemy.name}");
         var animator = enemy.GetComponentInChildren<Animator>();
         if (animator == null)
             Debug.LogWarning($"No Animator found for {enemy.name}");
         else
             StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation, elapsed =>
             {
-                BattleLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
+                Log.Info($"Finished {e.Animation} in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
     }

@@ -7,7 +7,7 @@ public class BattleLog : OnMessage<WriteBattleLogMessageRequested>
     protected override void Execute(WriteBattleLogMessageRequested e)
     {
         if (loggingEnabled)
-            Debug.Log($"Battle - {e.Message}");
+            Log.Info($"Battle - {e.Message}");
     }
     
     public static void Write(string message) => Message.Publish(new WriteBattleLogMessageRequested(message)); 

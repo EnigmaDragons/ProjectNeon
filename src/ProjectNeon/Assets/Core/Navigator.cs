@@ -18,7 +18,7 @@ public sealed class Navigator : ScriptableObject
     private void NavigateTo(string name)
     {
         if (loggingEnabled)
-            Debug.Log($"Navigating to {name}");
+            Log.Info($"Navigating to {name}");
         SceneManager.LoadScene(name);
     }
 }

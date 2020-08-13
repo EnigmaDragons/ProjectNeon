@@ -14,7 +14,7 @@ public sealed class PhysicalDamage : DamageCalculation
     {
         var amount = Mathf.CeilToInt(source.State.Attack() * Multiplier - target.State.Armor());
         if (amount < 1)
-            BattleLog.Write($"{target.Name} is taking 0 physical damage");
+            Log.Warn($"{target.Name} is taking 0 physical damage");
         return amount;
     }
 }

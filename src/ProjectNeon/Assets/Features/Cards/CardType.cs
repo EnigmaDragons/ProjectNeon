@@ -37,7 +37,7 @@ public class CardType : ScriptableObject
     public void Play(Member source, Target[] targets, int amountPaid)
     {
         if (ActionSequences.Length > targets.Length)
-            Debug.LogError($"{Name}: For {ActionSequences.Length} there are only {targets.Length} targets");
+            Log.Error($"{Name}: For {ActionSequences.Length} there are only {targets.Length} targets");
         
         for (var i = 0; i < ActionSequences.Length; i++)
             ActionSequences[i].Play(source, targets[i], amountPaid);

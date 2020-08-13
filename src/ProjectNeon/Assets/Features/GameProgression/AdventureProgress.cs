@@ -13,7 +13,7 @@ class AdventureProgress : ScriptableObject
     public Stage CurrentStage
     {
         get { if (currentStageIndex < 0 || currentStageIndex >= currentAdventure.Stages.Length)
-            Debug.LogError($"Adventure Stage is illegal. {this}");
+            Log.Error($"Adventure Stage is illegal. {this}");
             return currentAdventure.Stages[currentStageIndex]; }
     }
 
@@ -30,7 +30,7 @@ class AdventureProgress : ScriptableObject
     {
         if (HasBegun) return;
         
-        Debug.Log($"Is advancing the adventure. {this}");
+        Log.Info($"Is advancing the adventure. {this}");
         Advance();
     }
     
@@ -39,7 +39,7 @@ class AdventureProgress : ScriptableObject
         currentStageIndex = -1;
         currentStageSegmentIndex = -1;
         if (currentAdventure.Stages.Length < 1)
-            Debug.LogError("The adventure must have a least one stage!");
+            Log.Error("The adventure must have a least one stage!");
     }
 
     public StageSegment Advance()
@@ -51,12 +51,12 @@ class AdventureProgress : ScriptableObject
 
         if (currentStageSegmentIndex >= CurrentStage.Segments.Length)
         {
-            Debug.LogError("Why the f**k are we advancing out of bounds?");
-            Debug.Log(this);
+            Log.Error("Why the f**k are we advancing out of bounds?");
+            Log.Info(this);
             return CurrentStageSegment;
         }
         currentStageSegmentIndex++;
-        Debug.Log(ToString());
+        Log.Info(ToString());
         return CurrentStageSegment;
     }
 
@@ -68,7 +68,7 @@ class AdventureProgress : ScriptableObject
             currentStageSegmentIndex = -1;
         } else
         {
-            Debug.Log("Can't advance: is final stage");
+            Log.Info("Can't advance: is final stage");
         } 
     }
 }

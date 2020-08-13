@@ -10,12 +10,12 @@ public class BattleConclusion : OnMessage<BattleFinished>
     {
         if (adventure.IsFinalStageSegment)
         {
-            Debug.Log("Navigating to victory screen");
+            Log.Info("Navigating to victory screen");
             this.ExecuteAfterDelay(() => navigator.NavigateToVictoryScene(), secondsBeforeReturnToAdventure);
         }
         else
         {
-            Debug.Log("Advancing to next Stage Segment.");
+            Log.Info("Advancing to next Stage Segment.");
             adventure.Advance();
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }

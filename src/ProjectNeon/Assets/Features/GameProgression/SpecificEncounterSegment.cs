@@ -13,7 +13,7 @@ class SpecificEncounterSegment : StageSegment
     
     public override void Start()
     {
-        Debug.Log("Setting Up Specific Encounter");
+        Log.Info("Setting Up Specific Encounter");
         battle.SetNextBattleground(battlefield);
         battle.SetNextEncounter(enemies);
         SceneManager.LoadScene("BattleSceneV2");

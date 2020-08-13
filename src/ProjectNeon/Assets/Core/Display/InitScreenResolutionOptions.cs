@@ -32,7 +32,7 @@ public sealed class InitScreenResolutionOptions : MonoBehaviour
             if (comparer.Equals(_resolutions[i], current))
             {
                 dropdownMenu.value = i;
-                Debug.Log($"Matching Resolution Option is {i}");
+                Log.Info($"Matching Resolution Option is {i}");
             }
         }
 

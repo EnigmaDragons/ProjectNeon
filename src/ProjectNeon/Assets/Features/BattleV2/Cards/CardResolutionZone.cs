@@ -82,7 +82,7 @@ public class CardResolutionZone : ScriptableObject
         BattleLog.Write($"Began resolving {played.Card.Name}");
         if (physicalZone.Count == 0)
         {
-            Debug.Log($"Weird Physical Zone Draw bug.");
+            Log.Info($"Weird Physical Zone Draw bug.");
             yield break;
         }
         

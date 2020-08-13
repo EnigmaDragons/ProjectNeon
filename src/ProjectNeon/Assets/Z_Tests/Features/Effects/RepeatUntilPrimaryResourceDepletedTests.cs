@@ -38,11 +38,11 @@ public sealed class RepeatUntilPrimaryResourceDepletedTest
         attacker.State.GainPrimaryResource(2);
         Member target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        Debug.Log("Let's go");
+        Log.Info("Let's go");
 
         twoTimer.Apply(attacker, new Single(target));
 
-        Debug.Log("Done!");
+        Log.Info("Done!");
 
         Assert.AreEqual(
             8,

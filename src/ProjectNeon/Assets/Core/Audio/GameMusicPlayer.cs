@@ -26,7 +26,7 @@ public sealed class GameMusicPlayer : ScriptableObject
     {
         if (musicSource == null)
         {
-            Debug.LogError($"nameof(musicSource) has not been initialized");
+            Log.Error($"nameof(musicSource) has not been initialized");
             return;
         }
         
@@ -43,7 +43,7 @@ public sealed class GameMusicPlayer : ScriptableObject
     {
         if (musicSource == null)
         {
-            Debug.LogError($"nameof(musicSource) has not been initialized");
+            Log.Error($"nameof(musicSource) has not been initialized");
             return;
         }
         

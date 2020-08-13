@@ -12,7 +12,7 @@ public class BoolVariable : ScriptableObject
         {
             this.value = value;
             if (logChanges)
-                Debug.Log($"{name} changed to {value}");
+                Log.Info($"{name} changed to {value}");
         }
     }
 

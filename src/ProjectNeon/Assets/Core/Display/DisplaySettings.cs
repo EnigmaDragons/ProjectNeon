@@ -25,7 +25,7 @@ public sealed class DisplaySettings : ScriptableObject
         if (newHash != old)
         {
             Screen.SetResolution(screenSize.x, screenSize.y, isFullscreen);
-            Debug.Log($"Changed Display/ Old: {old}. New: {newHash}");
+            Log.Info($"Changed Display/ Old: {old}. New: {newHash}");
         }
     }
 }

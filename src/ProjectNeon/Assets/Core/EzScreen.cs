@@ -25,7 +25,7 @@ public class EzScreen : CrossSceneSingleInstance
         {
             var n = $"{filename}_{_counter++}.png";
             ScreenCapture.CaptureScreenshot(n);
-            Debug.Log($"Captured screenshot: {n}");
+            Log.Info($"Captured screenshot: {n}");
         }
     }
 }

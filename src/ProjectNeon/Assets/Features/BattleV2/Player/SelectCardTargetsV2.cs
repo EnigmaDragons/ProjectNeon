@@ -31,7 +31,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
 
         cardPresenter.Set(_card, () => { });
         cardPresenter.SetHighlightGraphicState(true);
-        Debug.Log($"Showing Selected Card {_card.Name}", gameObject);
+        Log.Info($"Showing Selected Card {_card.Name}", gameObject);
         uiView.SetActive(true);
 
         _actionIndex = 0;
@@ -39,7 +39,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         _actionTargets = new Target[_numActions];
         if (_numActions == 0)
         {
-            Debug.Log($"Card {_card.Name} has no Card Actions");
+            Log.Info($"Card {_card.Name} has no Card Actions");
             OnTargetConfirmed();
             return;
         }

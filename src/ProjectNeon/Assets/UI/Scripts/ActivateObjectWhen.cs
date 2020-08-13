@@ -20,7 +20,7 @@ public sealed class ActivateObjectWhen : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError(e.Message, this);
+            Log.Error(e.Message, this);
         }
     }
 

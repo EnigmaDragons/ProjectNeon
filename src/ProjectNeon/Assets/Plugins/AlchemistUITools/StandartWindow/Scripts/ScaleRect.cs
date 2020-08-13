@@ -25,7 +25,6 @@ public class ScaleRect : MonoBehaviour {
         {
             float koef = 0.5f + Mathf.Sin(Time.time / scaleObjects[i].period * 2 * Mathf.PI) / 2f;
             scaleObjects[i].rect.localScale = Vector3.Lerp(scaleObjects[i].first, scaleObjects[i].second, koef);
-            //Debug.Log("koef = " + koef);
         }
 
     }

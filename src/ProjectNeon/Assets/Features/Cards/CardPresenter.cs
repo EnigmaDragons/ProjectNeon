@@ -145,7 +145,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
         // TODO: Track down why cards move when switching between Basic and Normal
         // if (_cardType != null)
-        //    Debug.Log($"Moving Card {_cardType.Name} to {active} Highlighted position {position}. Target Position is {_position}");
+        //    Log.Info($"Moving Card {_cardType.Name} to {active} Highlighted position {position}. Target Position is {_position}");
         transform.DOScale(scale, 0.4f);
         transform.DOMove(position, 0.4f);
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class AllConditions
 {
@@ -14,7 +13,7 @@ public class AllConditions
     public static IPayloadProvider Resolve(ActionConditionData conditionData, Member source, Target target, Group group, Scope scope, int amountPaid)
     {
         var condition = Create(conditionData);
-        BattleLog.Write($"Checking {conditionData.ConditionType}");
+        Log.Info($"Checking {conditionData.ConditionType}");
         return condition.Resolve(source, target, group, scope, amountPaid);
     }
 
@@ -23,7 +22,7 @@ public class AllConditions
         var condtionType = conditionData.ConditionType;
         if (!_createConditionOfType.ContainsKey(condtionType))
         {
-            Debug.LogError($"No EffectType of {condtionType} exists in {nameof(AllConditions)}");
+            Log.Error($"No EffectType of {condtionType} exists in {nameof(AllConditions)}");
             return _createConditionOfType[ActionConditionType.Nothing](conditionData);
         }
         return _createConditionOfType[condtionType](conditionData);

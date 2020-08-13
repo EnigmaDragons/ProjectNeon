@@ -33,7 +33,7 @@ public sealed class JsonFileStored<T> : Stored<T>
         }
         catch (Exception e)
         {
-            Debug.LogError($"Reading {typeof(T)} from file {_filename} - {e}");
+            Log.Error($"Reading {typeof(T)} from file {_filename} - {e}");
             _item = _getDefaultValue();
         }
     }
@@ -48,7 +48,7 @@ public sealed class JsonFileStored<T> : Stored<T>
         }
         catch (Exception e)
         {
-            Debug.LogError($"Writing {typeof(T)} to file {_filename} - {e}"); 
+            Log.Error($"Writing {typeof(T)} to file {_filename} - {e}"); 
         }
     }
 }

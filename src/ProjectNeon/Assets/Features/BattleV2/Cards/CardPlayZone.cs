@@ -36,7 +36,7 @@ public class CardPlayZone : ScriptableObject
     public Card Take(int index)
     {
         if (cards.Length < index)
-            Debug.LogError($"Cannot Take Card {index} from {cards.Length} cards.");
+            Log.Error($"Cannot Take Card {index} from {cards.Length} cards.");
         
         var card = cards[index];
         Mutate(c => c.Where((v, i) => i != index));
