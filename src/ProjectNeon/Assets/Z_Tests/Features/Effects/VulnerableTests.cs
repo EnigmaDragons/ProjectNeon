@@ -12,9 +12,9 @@ public sealed class VulnerableTests
         {
             EffectType = EffectType.ApplyVulnerable,
             NumberOfTurns = new IntReference(3)
-        }, target, target);
+        }, attacker, target);
         
-        new Attack(1).Apply(attacker, new Single(target));
+        new Attack(1).Apply(attacker, target);
         
         Assert.AreEqual(1.33f, target.State[StatType.Damagability]);
         Assert.AreEqual(16, target.CurrentHp());

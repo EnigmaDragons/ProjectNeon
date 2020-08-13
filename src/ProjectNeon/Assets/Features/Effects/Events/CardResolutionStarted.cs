@@ -1,5 +1,1 @@
-﻿public sealed class CardResolutionStarted
-{
-
-}
-
+﻿public sealed class CardResolutionStarted {}

@@ -4,6 +4,8 @@ using System.Linq;
 
 public sealed class MemberState : IStats
 {
+    private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
+    
     private readonly IStats _baseStats;
     private readonly List<IStats> _battleAdditiveMods = new List<IStats>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
@@ -17,12 +19,13 @@ public sealed class MemberState : IStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats))
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats));
 
-    // TODO: Are these counters needed?
-    private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter {n}");
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
+    private IResourceType PrimaryResource => ResourceTypes[0];
 
+    public int MemberId { get; }
+    
     public MemberState(int id, IStats baseStats)
         : this(id, baseStats, baseStats.MaxHP()) {}
     
@@ -41,7 +44,8 @@ public sealed class MemberState : IStats
 
     public void InitResourceAmount(IResourceType resourceType, int amount) => _counters[resourceType.Name].Set(amount);
 
-    public int MemberId { get; }
+    // Queries
+    public MemberStateSnapshot ToSnapshot() => new MemberStateSnapshot(MemberId, CurrentStats, _counters.ToDictionary(c => c.Key, c => c.Value.Amount));
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
@@ -50,21 +54,19 @@ public sealed class MemberState : IStats
     public float this[TemporalStatType statType] => _counters[statType.ToString()].Amount + CurrentStats[statType];
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
     public float Max(string name) => _counters[name].Max;
+    public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
 
-    public void ApplyTemporaryAdditive(ITemporalState mods) => _additiveMods.Add(mods);
-    public void ApplyAdditiveUntilEndOfBattle(IStats mods) => _battleAdditiveMods.Add(mods);
-    public void ApplyTemporaryMultiplier(ITemporalState mods) => _multiplierMods.Add(mods);
-    public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => _additiveMods.RemoveAll(condition);
-    public void AddReactiveState(ITemporalState state) => _reactiveStates.Add(state);
-    public void RemoveReactiveState(ITemporalState state) => _reactiveStates.Remove(state);
-
-    public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
-    public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType, qty.Amount);
-    public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
-    public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
-    public void GainHp(float amount) => ChangeHp(amount);
-    public void GainShield(float amount) => PublishAfter(() => Counter(TemporalStatType.Shield).ChangeBy(amount));
+    // Modifier Commands
     public void GainArmor(float amount) => ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.Armor, amount));
+    public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() => _additiveMods.Add(mods));
+    public void ApplyAdditiveUntilEndOfBattle(IStats mods) => PublishAfter(() => _battleAdditiveMods.Add(mods));
+    public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() => _multiplierMods.Add(mods));
+    public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() => _additiveMods.RemoveAll(condition));
+    public void AddReactiveState(ITemporalState state) => PublishAfter(() => _reactiveStates.Add(state));
+    public void RemoveReactiveState(ITemporalState state) => PublishAfter(() => _reactiveStates.Remove(state));
+
+    // HP Commands
+    public void GainHp(float amount) => ChangeHp(amount);
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
     public void TakeDamage(int amount)
     {
@@ -74,11 +76,16 @@ public sealed class MemberState : IStats
         if (amount > 0)
             ChangeHp(-amount);
     }
-    public void ChangeHp(float amount) => Counter(TemporalStatType.HP).ChangeBy(amount);
-    public void GainPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(numToGive);
-    public void SpendPrimaryResource(int numToGive) => _counters[PrimaryResource.Name].ChangeBy(-numToGive);
-    public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
-    private IResourceType PrimaryResource => ResourceTypes[0];
+    public void GainShield(float amount) => PublishAfter(() => Counter(TemporalStatType.Shield).ChangeBy(amount));
+    private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
+    
+    // Resource Commands
+    public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
+    public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
+    public void GainPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
+    public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType, qty.Amount);
+    public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
+    public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
     public void OnTurnStart()
     {
@@ -100,6 +107,6 @@ public sealed class MemberState : IStats
     private void PublishAfter(Action action)
     {
         action();
-        Message.Publish(new MemberStateChanged(this));
+        Message.Publish(new MemberStateChanged(ToSnapshot(), this));
     }
 }

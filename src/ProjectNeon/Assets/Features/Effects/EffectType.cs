@@ -14,8 +14,6 @@ public enum EffectType
     ShieldToughness = 11,
     ArmorFlat = 12,
     StunForTurns = 13,
-    ShieldAttackedOnAttack = 14, //obsolete
-    DamageAttackerOnAttack = 15, //obsolete
     StealLifeNextAttack = 16,
     Attack = 17,
     InterceptAttackForTurns = 18,
@@ -29,16 +27,13 @@ public enum EffectType
     OnAttacked = 26,
     CostResource = 27,
     ForNumberOfTurns = 28,
-    //FeedOnEffect = 29, unused effect
     ShieldBasedOnShieldValue = 30,
     ExcludeSelfFromEffect = 31,
     RepeatUntilPrimaryResourceDepleted = 32,
     SpellFlatDamageEffect = 33,
     OnNextTurnEffect = 34,
-    QueueEffect = 35,
     EffectOnTurnStart = 36,
     TriggerFeedEffects = 37,
-    SetFeedUpEffect = 38,
     HealPrimaryResource = 39,
     ApplyOnShieldBelowValue = 40,
     ApplyOnChance = 41,

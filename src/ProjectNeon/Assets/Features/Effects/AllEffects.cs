@@ -24,8 +24,6 @@ public static class AllEffects
         { EffectType.ArmorFlat, e => new SimpleEffect(m => m.GainArmor(e.IntAmount)) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
         { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => m.ApplyAdditiveUntilEndOfBattle(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount))) },
-        { EffectType.ShieldAttackedOnAttack, e => new NoEffect() }, // TODO: Implement
-        { EffectType.DamageAttackerOnAttack, e => new NoEffect() }, // TODO: Implement
         { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.FloatAmount, e.NumberOfTurns), 1)},
         { EffectType.InterceptAttackForTurns, e => new InterceptAttack(e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount)},
@@ -44,10 +42,8 @@ public static class AllEffects
         { EffectType.SpellFlatDamageEffect, e => new SpellFlatDamageEffect(e.IntAmount) },
         { EffectType.RepeatUntilPrimaryResourceDepleted, e => new RepeatUntilPrimaryResourceDepleted(Create(e.origin), e.IntAmount) },
         { EffectType.OnNextTurnEffect, e => new OnNextTurnEffect(Create(e.origin)) },
-        { EffectType.QueueEffect, e => new QueueEffect(Create(e.origin)) },
         { EffectType.EffectOnTurnStart, e => new EffectOnTurnStart(Create(e.origin)) },
         { EffectType.TriggerFeedEffects, e => new TriggerFeedEffects(Create(e.origin), e.EffectScope) },
-        { EffectType.SetFeedUpEffect, e => new SetFeedUpEffect(Create(e.origin), e.EffectScope) },
         { EffectType.ApplyOnShieldBelowValue, e => new ApplyOnShieldBelowValue(Create(e.origin), e.IntAmount) },
         { EffectType.ApplyOnChance, e => new ApplyOnChance(Create(e.origin), e.FloatAmount) },
         { EffectType.HealPrimaryResource, e => new SimpleEffect((src, m) => m.GainHp(src.State.PrimaryResourceAmount)) },
@@ -56,9 +52,6 @@ public static class AllEffects
         { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
         { EffectType.GivePrimaryResource, e => new SimpleEffect(m => m.GainPrimaryResource(e.IntAmount)) },
     };
-    /**
-     * @todo #361:30min We sdhould be able to chain effects conditionally, as in MarkOfSalvation paladin card.
-     */
     
     public static void Apply(EffectData effectData, Member source, Member target)
         => Apply(effectData, source, new Single(target));
@@ -68,13 +61,6 @@ public static class AllEffects
         var effect = Create(effectData);
         BattleLog.Write($"Applying Effect of {effectData.EffectType} to {target.MembersDescriptions()}");
         effect.Apply(source, target);
-        target.Members.ForEach(m =>
-        {
-            if (m == null)
-                throw new InvalidOperationException("Target had a null Member");
-            Message.Publish(new LegacyMemberStateChanged(m));
-            Message.Publish(new MemberStateChanged(m.State));
-        });
     }
 
     public static Effect Create(EffectData effectData)
@@ -82,7 +68,7 @@ public static class AllEffects
         var effectType = effectData.EffectType;
         if (!_createEffectOfType.ContainsKey(effectData.EffectType))
         {
-            BattleLog.Write($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
+            Log.Error($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
             return _createEffectOfType[EffectType.Nothing](effectData);
         }
         return _createEffectOfType[effectType](effectData);

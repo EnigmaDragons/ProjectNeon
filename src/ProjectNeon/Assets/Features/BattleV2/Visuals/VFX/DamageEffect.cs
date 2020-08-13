@@ -2,7 +2,7 @@
 using UnityEngine;
 using TMPro;
 
-public class DamageEffect : OnMessage<LegacyMemberStateChanged>
+public class DamageEffect : OnMessage<MemberStateChanged>
 {
     [SerializeField] TextMeshPro text;
     [SerializeField] private float driftDistance = 0.1f;
@@ -51,11 +51,11 @@ public class DamageEffect : OnMessage<LegacyMemberStateChanged>
         yield return null;
     }
 
-    protected override void Execute(LegacyMemberStateChanged e)
+    protected override void Execute(MemberStateChanged e)
     {
-        if (_member == null || e.Member.Id != _member.Id) return;
+        if (_member == null || e.State.MemberId != _member.Id) return;
 
-        var newValue = (int) (e.Member.State[statType]);
+        var newValue = (int) (e.State[statType]);
         var diff = newValue - _value;
         _value = newValue;
         if (diff != 0)

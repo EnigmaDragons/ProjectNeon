@@ -18,9 +18,11 @@ public class BattleState : ScriptableObject
     [SerializeField] private Enemy[] nextEnemies;
     
     [Header("ReadOnly")]
-    [SerializeField, ReadOnly] private Vector3[] uiPositions;
     [SerializeField, ReadOnly] private string[] memberNames;
     [SerializeField, ReadOnly] private int rewardCredits;
+
+    private Queue<Effect> _queuedEffects = new Queue<Effect>();
+    public Effect[] QueuedEffects => _queuedEffects.ToArray();
     
     private int NumRecyclesPerTurn = 2;
     private int _numberOfRecyclesRemainingThisTurn = 0;
@@ -42,14 +44,13 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
-    public List<Effect> QueuedEffects { get; private set;  }
 
     // Setup
     public BattleState Initialized(PartyArea partyArea, EnemyArea enemyArea)
     {
-        this.QueuedEffects = new List<Effect>();
+        _queuedEffects = new Queue<Effect>();
         this.partyArea = partyArea;
-        this.enemies = enemyArea;
+        enemies = enemyArea;
         return FinishSetup();
     }
 
@@ -98,10 +99,10 @@ public class BattleState : ScriptableObject
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
 
-        uiPositions = _uiTransformsById.Values.Select(x => x.position).ToArray();
         _numberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
         rewardCredits = 0;
         needsCleanup = true;
+        _queuedEffects = new Queue<Effect>();
         
         BattleLog.Write("Finished Battle State Init");
         return this;
@@ -128,6 +129,14 @@ public class BattleState : ScriptableObject
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
+
+    public void Queue(Effect e) => UpdateState(() => _queuedEffects.Enqueue(e));
+    public Effect DequeueEffect()
+    {
+        var e = _queuedEffects.Dequeue();
+        Message.Publish(new BattleStateChanged(this));
+        return e;
+    }
     
     // Battle Wrapup
     public void Wrapup()

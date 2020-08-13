@@ -1,5 +1,5 @@
 
-public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
+public abstract class HPBarControllerBase : OnMessage<MemberStateChanged>
 {
     private Member _member = new Member(-1, "None", "", TeamType.Party, new StatAddends());
     private int MemberId => _member.Id;
@@ -39,9 +39,9 @@ public abstract class HPBarControllerBase : OnMessage<LegacyMemberStateChanged>
         InitUi();
     }
 
-    protected override void Execute(LegacyMemberStateChanged e)
+    protected override void Execute(MemberStateChanged e)
     {
-        if (e.Member.Id == MemberId)
+        if (e.State.MemberId == MemberId)
             UpdateUi();
     }
 
