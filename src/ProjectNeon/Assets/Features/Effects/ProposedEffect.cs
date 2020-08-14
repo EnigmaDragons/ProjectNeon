@@ -1,8 +1,16 @@
 public class ProposedEffect
 {
-    public EffectData EffectData { get; }
+    public CardActionsData Action { get; }
     public Member Source { get; }
     public Target Target { get; }
 
-    public void Execute() => AllEffects.Apply(EffectData, Source, Target);
+    public ProposedEffect(CardActionsData a, Member source, Member target)
+        : this(a, source, new Single(target)) {}
+    
+    public ProposedEffect(CardActionsData a, Member source, Target target)
+    {
+        Action = a;
+        Source = source;
+        Target = target;
+    }
 }

@@ -4,14 +4,14 @@ using System.Linq;
 
 public sealed class MemberState : IStats
 {
-    private List<ProposedEffect> _reactions = new List<ProposedEffect>();
+    private int _versionNumber;
     private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
     
     private readonly IStats _baseStats;
     private readonly List<IStats> _battleAdditiveMods = new List<IStats>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
-    private readonly List<ITemporalState> _reactiveStates = new List<ITemporalState>();
+    private readonly List<ReactiveStateV2> _reactiveStates = new List<ReactiveStateV2>();
 
     public IStats BaseStats => _baseStats;
     
@@ -46,7 +46,7 @@ public sealed class MemberState : IStats
     public void InitResourceAmount(IResourceType resourceType, int amount) => _counters[resourceType.Name].Set(amount);
 
     // Queries
-    public MemberStateSnapshot ToSnapshot() => new MemberStateSnapshot(MemberId, CurrentStats, _counters.ToDictionary(c => c.Key, c => c.Value.Amount));
+    public MemberStateSnapshot ToSnapshot() => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats, _counters.ToDictionary(c => c.Key, c => c.Value.Amount));
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
@@ -56,12 +56,14 @@ public sealed class MemberState : IStats
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
     public float Max(string name) => _counters[name].Max;
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
-    public ProposedEffect[] ConsumeAllReactions()
-    {
-        var result = _reactions.ToArray();
-        _reactions.Clear();
-        return result;
-    }
+    
+    // Reaction Commands
+    public ProposedEffect[] GetReactions(EffectResolved e) =>
+        _reactiveStates
+            .Select(x => x.OnEffectResolved(e))
+            .Where(x => x.IsPresent)
+            .Select(x => x.Value)
+            .ToArray();
 
     // Modifier Commands
     public void GainArmor(float amount) => ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.Armor, amount));
@@ -69,8 +71,8 @@ public sealed class MemberState : IStats
     public void ApplyAdditiveUntilEndOfBattle(IStats mods) => PublishAfter(() => _battleAdditiveMods.Add(mods));
     public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() => _multiplierMods.Add(mods));
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() => _additiveMods.RemoveAll(condition));
-    public void AddReactiveState(ITemporalState state) => PublishAfter(() => _reactiveStates.Add(state));
-    public void RemoveReactiveState(ITemporalState state) => PublishAfter(() => _reactiveStates.Remove(state));
+    public void AddReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Add(state));
+    public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
 
     // HP Commands
     public void GainHp(float amount) => ChangeHp(amount);
@@ -113,7 +115,9 @@ public sealed class MemberState : IStats
 
     private void PublishAfter(Action action)
     {
+        var before = ToSnapshot();
+        _versionNumber++;
         action();
-        Message.Publish(new MemberStateChanged(ToSnapshot(), this));
+        Message.Publish(new MemberStateChanged(before, this));
     }
 }

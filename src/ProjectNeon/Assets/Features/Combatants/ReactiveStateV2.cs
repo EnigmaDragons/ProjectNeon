@@ -1,4 +1,4 @@
 public interface ReactiveStateV2 : ITemporalState
 {
-    Maybe<ProposedEffect> GetReaction();
+    Maybe<ProposedEffect> OnEffectResolved(EffectResolved e);
 }

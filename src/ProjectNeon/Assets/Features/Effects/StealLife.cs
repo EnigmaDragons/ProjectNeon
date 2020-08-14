@@ -24,9 +24,10 @@ public class StealLife : Effect
         _effectTarget = target;
         foreach (var member in target.Members)
         {
-            var state = new ReactiveState(x => Message.Subscribe<Finished<Attack>>(attack => Execute(attack.Message, member), x), _duration, false);
-            _buffs[member] = state;
-            member.State.AddReactiveState(state);
+            // TODO: Implement
+            //var state = new ReactiveState(x => Message.Subscribe<Finished<Attack>>(attack => Execute(attack.Message, member), x), _duration, false);
+            //_buffs[member] = state;
+            //member.State.AddReactiveState(state);
         }
     }
 
@@ -34,7 +35,7 @@ public class StealLife : Effect
     {
         if (member.Name.Equals(attack.Attacker.Name))
         {
-            member.State.RemoveReactiveState(_buffs[member]);
+            //member.State.RemoveReactiveState(_buffs[member]);
             new SimpleEffect(m => m.GainHp(attack.Damage.Calculate(attack.Attacker, attack.Target.Members[0]) * _ratio)).Apply(_performer, new Single(member));
         }
     }

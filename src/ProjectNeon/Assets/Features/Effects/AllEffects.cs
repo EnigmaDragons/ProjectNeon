@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public static class AllEffects
 {
@@ -37,7 +36,7 @@ public static class AllEffects
         { EffectType.ExcludeSelfFromEffect, e => new ExcludeSelfFromEffect(Create(e.origin)) },
         { EffectType.ShieldBasedOnShieldValue, e => new SimpleEffect((src, m) => m.GainShield(e.FloatAmount * src.State[TemporalStatType.Shield])) },
         { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
-        { EffectType.OnAttacked, e => new EffectOnAttacked(e.ReferencedEffectSequence, e.NumberOfTurns) },
+        { EffectType.OnAttacked, e => new EffectOnAttacked(false, e.IntAmount, e.NumberOfTurns, e.ReferencedEffectSequence) },
         { EffectType.CostResource, e => new SimpleEffect(m => m.Lose(new ResourceQuantity { Amount = e.IntAmount, ResourceType = e.EffectScope.Value }))},
         { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) },
         { EffectType.SpellFlatDamageEffect, e => new SpellFlatDamageEffect(e.IntAmount) },
@@ -53,17 +52,6 @@ public static class AllEffects
         { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
         { EffectType.GivePrimaryResource, e => new SimpleEffect(m => m.GainPrimaryResource(e.IntAmount)) },
     };
-
-    [Obsolete("Experimental")]
-    public static ProposedEffect[] ApplyAndGetReactiveEffects(EffectData effectData, Member source, Member target)
-        => ApplyAndGetReactiveEffects(effectData, source, new Single(target));
-    
-    [Obsolete("Experimental")]
-    public static ProposedEffect[] ApplyAndGetReactiveEffects(EffectData effectData, Member source, Target target)
-    {
-        Apply(effectData, source, target);
-        return target.Members.SelectMany(t => t.State.ConsumeAllReactions()).ToArray();
-    }
     
     public static void Apply(EffectData effectData, Member source, Member target)
         => Apply(effectData, source, new Single(target));

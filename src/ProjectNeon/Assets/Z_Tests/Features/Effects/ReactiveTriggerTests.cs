@@ -1,6 +1,6 @@
+using System.Linq;
 using NUnit.Framework;
 
-[Ignore("WIP")]
 public sealed class ReactiveTriggerTests
 {
     [Test]
@@ -16,15 +16,29 @@ public sealed class ReactiveTriggerTests
                 FloatAmount = new FloatReference(1)
             }) 
         };
-        
-        var reactions = AllEffects.ApplyAndGetReactiveEffects(new EffectData
+
+        AllEffects.Apply(new EffectData
         {
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
             ReferencedEffectSequence = reactiveEffect
-        }, attacker, target);
+        }, target, target);
         
-        reactions.ForEach(r => r.Execute());
+        var battleSnapshotBefore = new BattleStateSnapshot(target.GetSnapshot());
+        var attackEffectData = new EffectData
+        {
+            EffectType = EffectType.Attack,
+            FloatAmount = new FloatReference(1),
+        };
+        AllEffects.Apply(attackEffectData, attacker, target);
+        var battleSnapshotAfter = new BattleStateSnapshot(target.GetSnapshot());
+        
+        var effectResolved = new EffectResolved(attackEffectData, attacker, new Single(target), battleSnapshotBefore, battleSnapshotAfter);
+
+        var reactions = target.State.GetReactions(effectResolved);
+        reactions.ForEach(r => r.Action.Actions
+            .Where(a => a.Type == CardBattleActionType.Battle)
+            .ForEach(be => AllEffects.Apply(be.BattleEffect, r.Source, r.Target)));
         
         Assert.AreEqual(1, target.State.Armor());
     }

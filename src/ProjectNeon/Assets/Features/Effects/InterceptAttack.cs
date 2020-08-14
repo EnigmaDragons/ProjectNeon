@@ -1,8 +1,4 @@
 ﻿
-using System;
-using System.Linq;
-using UnityEngine;
-
 public class InterceptAttack : Effect
 {
     private Member _performer;
@@ -16,7 +12,7 @@ public class InterceptAttack : Effect
     {
         _performer = source;
         _effectTarget = target;
-        target.Members.ForEach(member => member.State.AddReactiveState(new ReactiveState(state => Message.Subscribe<Proposed<Attack>>(proposal => Execute(proposal.Message, member), state), _duration, false)));
+        // TODO: Implement
     }
 
     void Execute(Attack attack, Member member)
@@ -25,4 +21,3 @@ public class InterceptAttack : Effect
             attack.Target = new Single(_performer);
     }
 }
-
