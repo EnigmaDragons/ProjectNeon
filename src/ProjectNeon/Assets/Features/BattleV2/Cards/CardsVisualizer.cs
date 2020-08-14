@@ -21,12 +21,6 @@ public class CardsVisualizer : MonoBehaviour
     private Action _onShownCardsChanged = () => { };
     private bool _isFocused = true;
 
-    public CardPresenter[] ShownCards => cardPool.ToArray();
-
-    public void SetOnShownCardsChanged(Action action) => _onShownCardsChanged = action;
-
-    public void ReProcess() => UpdateCurrentCards(zone.Cards.ToArray());
-
     private void Awake()
     {
         cardPool = new CardPresenter[maxCards];
