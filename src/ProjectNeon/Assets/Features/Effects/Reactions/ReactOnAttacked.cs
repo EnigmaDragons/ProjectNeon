@@ -27,16 +27,20 @@ public sealed class ReactOnAttacked : ReactiveEffectV2Base
     public ReactOnAttacked(bool isDebuff, int numberOfUses, int maxDurationTurns, int possessingMemberId, Member originator, ReactionCardType reaction)
         : base(isDebuff, maxDurationTurns, numberOfUses, effect =>
         {
-            // TODO: Need to be able to target the Reaction Effect. Should it be attached member? Attacker? Originator?
             var reactingMaybeMember = effect.Target.Members.Where(m => m.Id == possessingMemberId);
             if (effect.EffectData.EffectType != EffectType.Attack || reactingMaybeMember.None())
                 return Maybe<ProposedReaction>.Missing();
 
+            var possessor = reactingMaybeMember.First();
             var action = reaction.ActionSequence;
-            var reactor = action.Reactor == ReactiveMember.Originator ? originator : reactingMaybeMember.First();
-            return effect.EffectData.EffectType == EffectType.Attack && reactingMaybeMember.Any()
-                ? new ProposedReaction(reaction, reactor, reactingMaybeMember.First())
-                : Maybe<ProposedReaction>.Missing();
+            var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
+            
+            var target = possessor;
+            if (action.Scope == ReactiveTargetScope.Attacker)
+                target = effect.Source;
+            // TODO: Implement other scopes
+            
+            return new ProposedReaction(reaction, reactor, target);
         })
     {
     }

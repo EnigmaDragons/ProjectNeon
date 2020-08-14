@@ -4,24 +4,15 @@ using NUnit.Framework;
 public sealed class ReactiveTriggerTests
 {
     [Test]
-    public void ReactiveTrigger_OnLostHp_GainedOneArmor()
+    public void ReactiveTrigger_OnAttacked_GainedOneArmor()
     {
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
 
-        // Make a Test Reactive Card factory
-        var resourceType = TestableObjectFactory.Create<TestResourceType>().Initialized("Ammo");
-        var reactionCardType = TestableObjectFactory.Create<ReactionCardType>()
-            .Initialized(
-                new ResourceCost(0, resourceType),
-                new ResourceCost(0, resourceType),
-                new CardReactionSequence(ReactiveMember.Originator, ReactiveTargetScope.Self,
-                    TestableObjectFactory.Create<CardActionsData>()
-                        .Initialized(new CardActionV2(new EffectData
-                        {
-                            EffectType = EffectType.ArmorFlat,
-                            FloatAmount = new FloatReference(1)
-                        }))));
+        var reactionCardType = TestCards.Reaction(
+            ReactiveMember.Possessor, 
+            ReactiveTargetScope.Self, 
+            new EffectData { EffectType = EffectType.ArmorFlat, FloatAmount = new FloatReference(1) });
 
         AllEffects.Apply(new EffectData
         {
@@ -37,8 +28,35 @@ public sealed class ReactiveTriggerTests
             EffectScope = new StringReference(ReactiveTargetScope.Self.ToString())
         }, attacker, target);
         
-        // Assert
         Assert.AreEqual(1, target.State.Armor());
+    }
+
+    [Test]
+    public void ReactiveTrigger_OnAttacked_AttackerHitForOneDamage()
+    {
+        var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Attack, 1));
+        var attacker = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Attack, 1));
+
+        var reactionCardType = TestCards.Reaction(
+            ReactiveMember.Originator, 
+            ReactiveTargetScope.Attacker, 
+            new EffectData { EffectType = EffectType.Attack, FloatAmount = new FloatReference(1) });
+
+        AllEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.OnAttacked,
+            NumberOfTurns = new IntReference(3),
+            ReactionSequence = reactionCardType
+        }, target, target);
+        
+        ApplyEffectAndReactions(new EffectData
+        {
+            EffectType = EffectType.Attack,
+            FloatAmount = new FloatReference(1),
+            EffectScope = new StringReference(ReactiveTargetScope.Self.ToString())
+        }, attacker, target);
+        
+        Assert.AreEqual(9, attacker.CurrentHp());
     }
 
     private void ApplyEffectAndReactions(EffectData e, Member source, Member target)
