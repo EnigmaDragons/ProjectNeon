@@ -14,5 +14,6 @@ public sealed class EffectData
     public bool HitsRandomTargetMember;
     public int IntAmount => Mathf.CeilToInt(FloatAmount.Value);
     public CardActionsData ReferencedEffectSequence;
+    public ReactionCardType ReactionSequence;
     public EffectData origin = Nothing; //obsolete, but can't delete yet for data loss reasons
 }

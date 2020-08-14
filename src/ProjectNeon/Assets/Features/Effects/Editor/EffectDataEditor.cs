@@ -9,9 +9,9 @@ public class EffectDataEditor : PropertyDrawer
     private DictionaryWithDefault<EffectType, string[]> _relevantProperties = new DictionaryWithDefault<EffectType, string[]>(new string[] { "FloatAmount", "NumberOfTurns", "HitsRandomTargetMember" })
     {
         {EffectType.Nothing, new string[0]},
-        {EffectType.OnAttacked, new []{ "NumberOfTurns", "ReferencedEffectSequence" }},
+        {EffectType.OnAttacked, new []{ "NumberOfTurns", "ReactionSequence" }},
         {EffectType.CostResource, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
-        {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }}
+        {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

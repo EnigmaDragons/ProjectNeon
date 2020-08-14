@@ -8,4 +8,13 @@ public class CardActionsData : ScriptableObject
     
     public IPayloadProvider Play(Member source, Target target, Group group, Scope scope, int amountPaid)
         => new MultiplePayloads(Actions.Select(x => x.Play(source, target, group, scope, amountPaid)).ToArray());
+    
+    public IPayloadProvider Play(Member source, Target target, ReactiveTargetScope scope, int amountPaid)
+        => new MultiplePayloads(Actions.Select(x => x.Play(source, target, scope, amountPaid)).ToArray());
+
+    public CardActionsData Initialized(params CardActionV2[] actions)
+    {
+        Actions = actions;
+        return this;
+    }
 }

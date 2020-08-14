@@ -58,7 +58,7 @@ public sealed class MemberState : IStats
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
     
     // Reaction Commands
-    public ProposedEffect[] GetReactions(EffectResolved e) =>
+    public ProposedReaction[] GetReactions(EffectResolved e) =>
         _reactiveStates
             .Select(x => x.OnEffectResolved(e))
             .Where(x => x.IsPresent)

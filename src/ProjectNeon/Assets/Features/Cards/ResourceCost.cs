@@ -11,4 +11,12 @@ public sealed class ResourceCost
     public int Amount => cost;
     public ResourceType ResourceType => resourceType;
     public bool IsXCost => isXCost;
+    
+    public ResourceCost() {}
+
+    public ResourceCost(int cost, ResourceType resourceType)
+    {
+        this.cost = cost;
+        this.resourceType = resourceType;
+    }
 }

@@ -1,6 +1,6 @@
 public sealed class EffectProposed
 {
-    public ProposedEffect Proposed { get; }
+    public ProposedReaction Proposed { get; }
 
-    public EffectProposed(ProposedEffect e) => Proposed = e;
+    public EffectProposed(ProposedReaction e) => Proposed = e;
 }

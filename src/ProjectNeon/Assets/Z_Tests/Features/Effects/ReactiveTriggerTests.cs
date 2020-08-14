@@ -9,37 +9,48 @@ public sealed class ReactiveTriggerTests
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
 
-        var reactiveEffect = TestableObjectFactory.Create<CardActionsData>();
-        reactiveEffect.Actions = new [] { new CardActionV2(new EffectData
-            {
-                EffectType = EffectType.ArmorFlat,
-                FloatAmount = new FloatReference(1)
-            }) 
-        };
+        // Make a Test Reactive Card factory
+        var resourceType = TestableObjectFactory.Create<TestResourceType>().Initialized("Ammo");
+        var reactionCardType = TestableObjectFactory.Create<ReactionCardType>()
+            .Initialized(
+                new ResourceCost(0, resourceType),
+                new ResourceCost(0, resourceType),
+                new CardReactionSequence(ReactiveMember.Originator, ReactiveTargetScope.Self,
+                    TestableObjectFactory.Create<CardActionsData>()
+                        .Initialized(new CardActionV2(new EffectData
+                        {
+                            EffectType = EffectType.ArmorFlat,
+                            FloatAmount = new FloatReference(1)
+                        }))));
 
         AllEffects.Apply(new EffectData
         {
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
-            ReferencedEffectSequence = reactiveEffect
+            ReactionSequence = reactionCardType
         }, target, target);
         
-        var battleSnapshotBefore = new BattleStateSnapshot(target.GetSnapshot());
-        var attackEffectData = new EffectData
+        ApplyEffectAndReactions(new EffectData
         {
             EffectType = EffectType.Attack,
             FloatAmount = new FloatReference(1),
-        };
-        AllEffects.Apply(attackEffectData, attacker, target);
+            EffectScope = new StringReference(ReactiveTargetScope.Self.ToString())
+        }, attacker, target);
+        
+        // Assert
+        Assert.AreEqual(1, target.State.Armor());
+    }
+
+    private void ApplyEffectAndReactions(EffectData e, Member source, Member target)
+    {
+        var battleSnapshotBefore = new BattleStateSnapshot(target.GetSnapshot());
+        AllEffects.Apply(e, source, target);
         var battleSnapshotAfter = new BattleStateSnapshot(target.GetSnapshot());
         
-        var effectResolved = new EffectResolved(attackEffectData, attacker, new Single(target), battleSnapshotBefore, battleSnapshotAfter);
+        var effectResolved = new EffectResolved(e, source, new Single(target), battleSnapshotBefore, battleSnapshotAfter);
 
         var reactions = target.State.GetReactions(effectResolved);
-        reactions.ForEach(r => r.Action.Actions
-            .Where(a => a.Type == CardBattleActionType.Battle)
+        reactions.ForEach(r => r.Reaction.ActionSequence.CardActions.Actions.Where(a => a.Type == CardBattleActionType.Battle)
             .ForEach(be => AllEffects.Apply(be.BattleEffect, r.Source, r.Target)));
-        
-        Assert.AreEqual(1, target.State.Armor());
     }
 }

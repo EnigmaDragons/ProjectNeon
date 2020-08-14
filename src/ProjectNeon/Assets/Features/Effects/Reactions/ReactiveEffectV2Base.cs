@@ -4,7 +4,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 {
     private int _remainingDurationTurns;
     private int _remainingUses;
-    private readonly Func<EffectResolved, Maybe<ProposedEffect>> _createMaybeEffect;
+    private readonly Func<EffectResolved, Maybe<ProposedReaction>> _createMaybeEffect;
     private bool HasMoreUses => _remainingUses != 0;
     private bool HasMoreTurns => _remainingDurationTurns != 0;
 
@@ -12,7 +12,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     public bool IsDebuff { get; }
     public bool IsActive => HasMoreUses && HasMoreTurns;
 
-    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedEffect>> createMaybeEffect)
+    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
     {
         _remainingDurationTurns = maxDurationTurns;
         _remainingUses = maxUses;
@@ -28,7 +28,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
             _remainingDurationTurns--;
     }
 
-    public Maybe<ProposedEffect> OnEffectResolved(EffectResolved e)
+    public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
     {
         var maybeEffect = _createMaybeEffect(e);
         if (maybeEffect.IsPresent)

@@ -29,6 +29,19 @@ public class CardActionV2
         throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
     }
     
+    public IPayloadProvider Play(Member source, Target target, ReactiveTargetScope scope, int amountPaid)
+    {
+        if (type == CardBattleActionType.Battle)
+            return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target));
+        if (type == CardBattleActionType.AnimateCharacter)
+            return new SinglePayload(new CharacterAnimationRequested(source.Id, characterAnimation));
+        //if (type == CardBattleActionType.AnimateAtTarget)
+            // TODO: Implement Reactive Scope Animations
+        //if (type == CardBattleActionType.Condition)
+            // TODO: Implement Conditional Reactive Effects if needed (probably not needed)
+        throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
+    }
+    
     public CardActionV2() {}
     public CardActionV2(EffectData e)
     {
