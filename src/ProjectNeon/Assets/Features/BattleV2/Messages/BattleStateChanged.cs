@@ -1,6 +1,11 @@
 public sealed class BattleStateChanged
 {
+    public BattleStateSnapshot Before { get; }
     public BattleState State { get; }
 
-    public BattleStateChanged(BattleState s) => State = s;
+    public BattleStateChanged(BattleStateSnapshot before, BattleState after)
+    {
+        Before = before;
+        State = after;
+    }
 }

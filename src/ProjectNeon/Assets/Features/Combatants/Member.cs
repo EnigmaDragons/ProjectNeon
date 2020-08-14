@@ -37,6 +37,7 @@ public static class MemberExtensions
 {
     private static int RoundUp(float v) => Mathf.CeilToInt(v);
     
+    public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.Name, m.Class, m.TeamType, m.State.ToSnapshot());
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);
     public static int MaxHp(this Member m) => RoundUp(m.State.MaxHP());
     public static int RemainingShieldCapacity(this Member m) => m.MaxShield() - m.CurrentHp(); 

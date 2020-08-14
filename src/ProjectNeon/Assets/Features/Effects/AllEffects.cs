@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public static class AllEffects
 {
@@ -52,6 +53,17 @@ public static class AllEffects
         { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
         { EffectType.GivePrimaryResource, e => new SimpleEffect(m => m.GainPrimaryResource(e.IntAmount)) },
     };
+
+    [Obsolete("Experimental")]
+    public static ProposedEffect[] ApplyAndGetReactiveEffects(EffectData effectData, Member source, Member target)
+        => ApplyAndGetReactiveEffects(effectData, source, new Single(target));
+    
+    [Obsolete("Experimental")]
+    public static ProposedEffect[] ApplyAndGetReactiveEffects(EffectData effectData, Member source, Target target)
+    {
+        Apply(effectData, source, target);
+        return target.Members.SelectMany(t => t.State.ConsumeAllReactions()).ToArray();
+    }
     
     public static void Apply(EffectData effectData, Member source, Member target)
         => Apply(effectData, source, new Single(target));

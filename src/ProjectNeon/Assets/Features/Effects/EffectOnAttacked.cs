@@ -1,10 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Linq;
+﻿using System.Linq;
 
-/**
- * Effects that trigger to the target of an attack upon an attack event
- */
 public class EffectOnAttacked : Effect
 {
     private CardActionsData _effect;

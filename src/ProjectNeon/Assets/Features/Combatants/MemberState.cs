@@ -4,6 +4,7 @@ using System.Linq;
 
 public sealed class MemberState : IStats
 {
+    private List<ProposedEffect> _reactions = new List<ProposedEffect>();
     private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
     
     private readonly IStats _baseStats;
@@ -55,6 +56,12 @@ public sealed class MemberState : IStats
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
     public float Max(string name) => _counters[name].Max;
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
+    public ProposedEffect[] ConsumeAllReactions()
+    {
+        var result = _reactions.ToArray();
+        _reactions.Clear();
+        return result;
+    }
 
     // Modifier Commands
     public void GainArmor(float amount) => ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.Armor, amount));

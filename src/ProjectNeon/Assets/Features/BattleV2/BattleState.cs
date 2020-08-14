@@ -133,8 +133,9 @@ public class BattleState : ScriptableObject
     public void Queue(Effect e) => UpdateState(() => _queuedEffects.Enqueue(e));
     public Effect DequeueEffect()
     {
+        var before = GetSnapshot();
         var e = _queuedEffects.Dequeue();
-        Message.Publish(new BattleStateChanged(this));
+        Message.Publish(new BattleStateChanged(before, this));
         return e;
     }
     
@@ -161,10 +162,18 @@ public class BattleState : ScriptableObject
     public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.First(x => x.Value == hero).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
+    public BattleStateSnapshot GetSnapshot()
+    {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        var snapshot = new BattleStateSnapshot(_membersById.ToDictionary(m => m.Key, m => m.Value.GetSnapshot()));
+        Debug.Log($"Generate BattleStateSnapshot in {sw.Elapsed}ms");
+        return snapshot;
+    }
 
     private void UpdateState(Action update)
     {
+        var before = GetSnapshot();
         update();
-        Message.Publish(new BattleStateChanged(this));
+        Message.Publish(new BattleStateChanged(before, this));
     }
 }

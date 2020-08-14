@@ -28,4 +28,10 @@ public class CardActionV2
             return new DelayedPayload(() => AllConditions.Resolve(conditionData, source, target, group, scope, amountPaid));
         throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
     }
+    
+    public CardActionV2() {}
+    public CardActionV2(EffectData e)
+    {
+        battleEffect = e;
+    }
 }

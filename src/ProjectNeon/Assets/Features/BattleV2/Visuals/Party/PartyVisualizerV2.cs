@@ -70,7 +70,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         else
             StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation, elapsed =>
             {
-                BattleLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
+                BattleLog.Write($"Finished {e.Animation} Animation in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
     }
