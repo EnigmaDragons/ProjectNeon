@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -14,8 +13,6 @@ public class CardType : ScriptableObject
     [SerializeField] private ResourceCost cost;
     [SerializeField] private ResourceCost onPlayGain;
     [SerializeField] public CardActionSequence[] actionSequences = new CardActionSequence[0];
-    [SerializeField] private CardAction cardAction1;
-    [SerializeField] private CardAction cardAction2;
 
     public string Name => name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
     public ResourceCost Cost => cost;
@@ -29,11 +26,6 @@ public class CardType : ScriptableObject
 
     public Card CreateInstance(int id, Member owner) => new Card(id, owner, this);
     
-    [Obsolete] public CardAction[] Actions => Array.Empty<CardAction>()
-        .ConcatIf(cardAction1, c => c.HasEffects)
-        .ConcatIf(cardAction2, c => c.HasEffects)
-        .ToArray();
-
     public void Play(Member source, Target[] targets, int amountPaid)
     {
         if (ActionSequences.Length > targets.Length)

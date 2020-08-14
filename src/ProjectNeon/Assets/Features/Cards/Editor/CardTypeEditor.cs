@@ -20,8 +20,6 @@ public class CardTypeEditor : Editor
         cost = serializedObject.FindProperty("cost");
         gain = serializedObject.FindProperty("onPlayGain");
         actionSequences = serializedObject.FindProperty("actionSequences");
-        cardAction1 = serializedObject.FindProperty("cardAction1");
-        cardAction2 = serializedObject.FindProperty("cardAction2");
     }
 
     public override void OnInspectorGUI()
@@ -36,9 +34,6 @@ public class CardTypeEditor : Editor
         PresentActionSequences();
         DrawUILine(Color.black);
         PresentUnchanged(tags);
-        DrawUILine(Color.black);
-        PresentUnchanged(cardAction1);
-        PresentUnchanged(cardAction2);
     }
 
     private void PresentUnchanged(SerializedProperty serializedProperty)
