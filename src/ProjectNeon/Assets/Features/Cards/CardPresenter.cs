@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPointerEnterHandler
+public class CardPresenter : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private TextMeshProUGUI nameLabel;
@@ -25,7 +25,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerExitHan
     private Card _card;
     private CardType _cardType;
 
-    private bool _wasPointerHighlighted;
     private bool _canHighlight;
     private Action _onClick;
     private Vector3 _position;
@@ -139,8 +138,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerExitHan
 
         if (active)
             transform.SetAsLastSibling();
-        if (!active)
-            _wasPointerHighlighted = false;
         highlight.SetActive(IsPlayable && active);
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
@@ -170,21 +167,4 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerExitHan
 
     private bool AreCloseEnough(float first, float second) => WithinEpsilon(first - second);
     private bool WithinEpsilon(float f) => Math.Abs(f) < 0.05;
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (IsHighlighted && _wasPointerHighlighted)
-        {
-            _wasPointerHighlighted = false;
-            SetHighlight(false);
-        }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (!_canHighlight)
-            return;
-
-        _wasPointerHighlighted = true;
-        SetHighlight(true);
-    }
 }
