@@ -22,7 +22,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     private void ResolveNext()
     {
         CheckForUnconsciousMembers();
-        if (resolutionZone.HasMore)
+        if (!state.BattleIsOver() && resolutionZone.HasMore)
             StartCoroutine(resolutionZone.ResolveNext(delay));
         else
         {

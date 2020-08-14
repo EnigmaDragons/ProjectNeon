@@ -153,6 +153,7 @@ public class BattleState : ScriptableObject
     // Queries
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);
     public bool PlayerLoses() => Heroes.All(m => m.State.IsUnconscious);
+    public bool BattleIsOver() => PlayerWins() || PlayerLoses();
 
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
     public bool IsEnemy(int memberId) => _enemiesById.ContainsKey(memberId);

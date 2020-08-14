@@ -57,8 +57,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
     {
         BeginPhase(BattleV2Phase.Wrapup);
         
-        var battleIsOver = state.PlayerLoses() || state.PlayerWins();
-        if (battleIsOver)
+        if (state.BattleIsOver())
             FinishBattle();
         else
         {
