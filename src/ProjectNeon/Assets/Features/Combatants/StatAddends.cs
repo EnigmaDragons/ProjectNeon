@@ -5,13 +5,13 @@ public sealed class StatAddends : IStats
     public float this[StatType statType]
     {
         get => _values[statType.ToString()];
-        set => _values[statType.ToString()] = value;
+        private set => _values[statType.ToString()] = value;
     }
 
     public float this[TemporalStatType statType] 
     {
         get => _values[statType.ToString()];
-        set => _values[statType.ToString()] = value;
+        private set => _values[statType.ToString()] = value;
     }
     
     public StatAddends With(StatType statType, float value)
@@ -29,6 +29,12 @@ public sealed class StatAddends : IStats
     public StatAddends With(IResourceType[] resourceTypes)
     {
         ResourceTypes = resourceTypes;
+        return this;
+    }
+
+    public StatAddends WithRaw(string statType, float value)
+    {
+        _values[statType] = value;
         return this;
     }
     
