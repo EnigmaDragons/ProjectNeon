@@ -8,6 +8,9 @@ public interface Target
 
 public static class TargetExtensions
 {
+    public static void ApplyToAllConscious(this Target t, Action<MemberState> effect)
+        => t.Members.Where(x => x.IsConscious()).ForEach(m => m.Apply(effect));
+    
     public static void ApplyToAll(this Target t, Action<MemberState> effect) 
         => t.Members.ForEach(m => m.Apply(effect));
 

@@ -7,5 +7,5 @@ public class HealMagic : Effect
         => _multiplier = multiplier;
 
     public void Apply(Member source, Target target) 
-        => target.ApplyToAll(m => m.GainHp(_multiplier * source.State.Magic()));
+        => target.ApplyToAllConscious(m => m.GainHp(_multiplier * source.State.Magic()));
 }

@@ -6,8 +6,6 @@ public sealed class BattleSpeed : OnMessage<ToggleGameSpeed>
 
     public float CurrentFactor => currentFactor;
 
-    private void Awake() => Time.timeScale = currentFactor;
-    
     private void ChangeTimeFactor()
     {
         currentFactor = currentFactor * 2;
