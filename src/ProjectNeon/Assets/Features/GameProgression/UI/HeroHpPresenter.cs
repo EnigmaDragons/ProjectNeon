@@ -13,7 +13,7 @@ public class HeroHpPresenter : OnMessage<PartyAdventureStateChanged>
     {
         _hero = hero;
         bust.sprite = hero.Bust;
-        hpText.text = $"{hp}/{hero.Stats.MaxHP()}";
+        hpText.text = $"{hp}/{hero.Stats.MaxHp()}";
     }
 
     protected override void Execute(PartyAdventureStateChanged msg)

@@ -12,6 +12,6 @@ public sealed class AnyTargetHealthBelowThreshold : ConditionalEffect
 
     public override bool Condition()
     {
-        return Target.Members.Any(e => e.State[TemporalStatType.HP] < e.State.MaxHP() * _threshold );
+        return Target.Members.Any(e => e.State[TemporalStatType.HP] < e.State.MaxHp() * _threshold );
     }
 }

@@ -14,7 +14,7 @@ public sealed class HealHeroButton : OnMessage<PartyAdventureStateChanged>
     public void Init(Hero h)
     {
         _hero = h;
-        gameObject.SetActive(party.CurrentHpOf(_hero) < _hero.Stats.MaxHP());
+        gameObject.SetActive(party.CurrentHpOf(_hero) < _hero.Stats.MaxHp());
     }
 
     private void HealToFullIfCanAfford()

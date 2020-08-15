@@ -13,7 +13,7 @@ public class Member
     public override string ToString() => $"{Name} {Id}";
     
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats)
-        : this(id, name, characterClass, team, baseStats, baseStats.MaxHP()) {}
+        : this(id, name, characterClass, team, baseStats, baseStats.MaxHp()) {}
     
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, int initialHp)
     {
@@ -39,7 +39,7 @@ public static class MemberExtensions
     
     public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.Name, m.Class, m.TeamType, m.State.ToSnapshot());
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);
-    public static int MaxHp(this Member m) => RoundUp(m.State.MaxHP());
+    public static int MaxHp(this Member m) => RoundUp(m.State.MaxHp());
     public static int RemainingShieldCapacity(this Member m) => m.MaxShield() - m.CurrentHp(); 
     public static int CurrentShield(this Member m) => RoundUp(m.State[TemporalStatType.Shield]);
     public static int MaxShield(this Member m) => RoundUp(m.State[StatType.Toughness] * 2); 

@@ -13,7 +13,7 @@ public class TargetIsBelowPercentageLifeCondition : Condition
     
     public IPayloadProvider Resolve(Member source, Target target, Group @group, Scope scope, int amountPaid)
     {
-        var applicapleMembers = target.Members.Where(x => x.State[TemporalStatType.HP] < x.State.MaxHP() * _percentage).ToArray();
+        var applicapleMembers = target.Members.Where(x => x.State[TemporalStatType.HP] < x.State.MaxHp() * _percentage).ToArray();
         if (applicapleMembers.Any())
             return _effect.Play(source, new Multiple(applicapleMembers), group, scope, amountPaid);
         return new NoPayload();

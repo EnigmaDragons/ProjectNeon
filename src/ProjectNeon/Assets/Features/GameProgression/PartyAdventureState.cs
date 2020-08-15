@@ -23,7 +23,7 @@ public sealed class PartyAdventureState : ScriptableObject
     {
         party.Initialized(one, two, three);
         decks = Heroes.Select(h => CreateDeck(h.Deck)).ToArray();
-        nonBattleHp = Heroes.Select(h => h.Stats.MaxHP()).ToArray();
+        nonBattleHp = Heroes.Select(h => h.Stats.MaxHp()).ToArray();
         credits = 0;
         return this;
     }
@@ -36,7 +36,7 @@ public sealed class PartyAdventureState : ScriptableObject
         => UpdateState(() =>
         {
             var index = IndexOf(hero);
-            nonBattleHp[index] = Heroes[index].Stats.MaxHP();
+            nonBattleHp[index] = Heroes[index].Stats.MaxHp();
         });
 
     private int IndexOf(Hero hero)
