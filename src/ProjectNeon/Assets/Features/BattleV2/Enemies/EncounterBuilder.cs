@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-/**
- * Generates an anemy encounter based on the difficulty set.
- * 
- * The script will add a random enemy up to the difficult level set and
- * will add more enemies until the desired difficulty is reached, or the
- * number of enemies is 7. it will also allow duplicate enemy types.
- */
-
 [CreateAssetMenu]
 public class EncounterBuilder : ScriptableObject
 {
     [SerializeField] private Enemy[] possible;
+    [SerializeField] private Enemy[] mustIncludePossibilities;
+    [SerializeField] private int numMustIncludes;
 
     public void Init(IEnumerable<Enemy> possibleEnemies)
     {
@@ -24,13 +18,20 @@ public class EncounterBuilder : ScriptableObject
     public List<Enemy> Generate(int difficulty)
     {
         BattleLog.Write($"Started generating encounter of difficulty {difficulty}");
-        /**
-         * @todo #52:30min Evolve Encounter Generation after playtesting. 
-         */
 
         var currentDifficulty = 0;
+        var numRemainingMustIncludes = numMustIncludes;
         var enemies = new List<Enemy>();
 
+        while (numRemainingMustIncludes > 0)
+        {
+            var nextEnemy = mustIncludePossibilities.Random();
+            enemies.Add(nextEnemy);
+            BattleLog.Write($"Added \"Must Include\" {nextEnemy.Name} to Encounter");
+            numRemainingMustIncludes--;
+            currentDifficulty = currentDifficulty + Math.Max(nextEnemy.PowerLevel, 1);
+        }
+        
         while (currentDifficulty < difficulty && enemies.Count < 7)
         {
             var maximum = difficulty - currentDifficulty;
