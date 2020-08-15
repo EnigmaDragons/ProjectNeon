@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllable, IConfirmCancellable
@@ -9,6 +10,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     private bool _isDirty = false;
     private bool _shouldHighlight;
     private bool _isConfirmingTurn = false;
+    private int _lastIndex;
     
     private void OnEnable()
     {
@@ -65,7 +67,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         if (_isConfirmingTurn)
             _shouldHighlight = false;
 
-        _indexSelector = new IndexSelector<CardPresenter>(cards.ShownCards);
+        _indexSelector = new IndexSelector<CardPresenter>(cards.ShownCards, Math.Min(cards.ShownCards.Length, _lastIndex));
+        _lastIndex = _indexSelector.Index;
         if (_shouldHighlight)
             EnableHighlight();
         else
@@ -78,6 +81,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _indexSelector.MoveNext();
         while(!_indexSelector.Current.HasCard)
             _indexSelector.MoveNext();
+        _lastIndex = _indexSelector.Index;
         EnableHighlight();
     }
     
@@ -87,6 +91,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _indexSelector.MovePrevious();
         while(!_indexSelector.Current.HasCard)
             _indexSelector.MovePrevious();
+        _lastIndex = _indexSelector.Index;
         EnableHighlight();
     }
 
