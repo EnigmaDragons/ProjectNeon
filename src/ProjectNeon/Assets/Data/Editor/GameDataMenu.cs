@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+
+using UnityEditor;
 using UnityEngine;
 
 static class GameDataMenu
@@ -26,3 +28,5 @@ static class GameDataMenu
         ProjectWindowUtil.CreateAsset(asset, path);
     }
 }
+
+#endif

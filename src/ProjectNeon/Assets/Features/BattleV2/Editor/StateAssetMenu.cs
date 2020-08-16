@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+
+using UnityEditor;
 using UnityEngine;
 
 static class StateAssetMenu
@@ -26,3 +28,5 @@ static class StateAssetMenu
         ProjectWindowUtil.CreateAsset(asset, path);
     }
 }
+
+#endif

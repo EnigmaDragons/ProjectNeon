@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEngine;
 using UnityEditor;
 
@@ -40,3 +42,5 @@ public class BattleTestSetupEditor : Editor
         EditorGUI.DrawRect(r, color);
     }
 }
+
+#endif

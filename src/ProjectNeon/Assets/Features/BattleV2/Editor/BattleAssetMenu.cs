@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+
+using UnityEditor;
 using UnityEngine;
 
 class BattleAssetMenu
@@ -25,3 +27,5 @@ class BattleAssetMenu
         ProjectWindowUtil.CreateAsset(asset, path);
     }
 }
+
+#endif

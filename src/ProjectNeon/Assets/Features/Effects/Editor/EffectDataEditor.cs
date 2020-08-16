@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -43,3 +45,5 @@ public class EffectDataEditor : PropertyDrawer
         return (EffectType)Enum.GetValues(typeof(EffectType)).GetValue(effectType.enumValueIndex);
     }
 }
+
+#endif

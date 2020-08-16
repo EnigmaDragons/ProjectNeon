@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -42,3 +44,5 @@ public class ActionConditionDataDrawer : PropertyDrawer
         return (ActionConditionType)Enum.GetValues(typeof(EffectType)).GetValue(effectType.enumValueIndex);
     }
 }
+
+#endif

@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+
+using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(ResourceCost))]
@@ -55,3 +57,5 @@ public class ResourceCostDrawer : PropertyDrawer
         EditorGUI.indentLevel -= 1;
     }
 }
+
+#endif
