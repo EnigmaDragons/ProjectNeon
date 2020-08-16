@@ -46,6 +46,8 @@ public static class MemberExtensions
     public static bool IsConscious(this Member m) => m.State.IsConscious;
     public static bool IsStunnedForCurrentTurn(this Member m) => m.State[TemporalStatType.TurnStun] > 0;
     public static bool IsStunnedForCard(this Member m) => m.State[TemporalStatType.CardStun] > 0;
+    public static bool HasAttackBuff(this Member m) => m.State.DifferenceFromBase(StatType.Attack) > 0;
+    public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
 
     public static bool CanAfford(this Member m, CardType c)

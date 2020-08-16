@@ -23,7 +23,6 @@ public sealed class MemberState : IStats
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter {n}");
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
-    private IResourceType PrimaryResource => ResourceTypes[0];
 
     public int MemberId { get; }
     
@@ -55,7 +54,9 @@ public sealed class MemberState : IStats
     public float this[TemporalStatType statType] => _counters[statType.ToString()].Amount + CurrentStats[statType];
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
     public float Max(string name) => _counters[name].Max;
+    public IResourceType PrimaryResource => ResourceTypes[0];
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
+    public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
     
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
