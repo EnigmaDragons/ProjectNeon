@@ -1,4 +1,6 @@
 
+using System;
+
 public sealed class IndexSelector<T>
 {
     private readonly T[] _items;
@@ -6,7 +8,7 @@ public sealed class IndexSelector<T>
 
     public IndexSelector(T[] items, int index = 0)
     {
-        _index = index;
+        _index = Math.Min(index, items.Length);
         _items = items;
     }
 

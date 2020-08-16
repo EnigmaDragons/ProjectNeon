@@ -67,7 +67,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         if (_isConfirmingTurn)
             _shouldHighlight = false;
 
-        _indexSelector = new IndexSelector<CardPresenter>(cards.ShownCards, Math.Min(cards.ShownCards.Length, _lastIndex));
+        _indexSelector = new IndexSelector<CardPresenter>(cards.ShownCards, Math.Min(cards.ShownCards.Length - 1, _lastIndex));
         _lastIndex = _indexSelector.Index;
         if (_shouldHighlight)
             EnableHighlight();
