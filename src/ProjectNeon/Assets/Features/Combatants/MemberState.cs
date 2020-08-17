@@ -58,6 +58,7 @@ public sealed class MemberState : IStats
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
     public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
     public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Tag == tag);
+    public ReactiveStateV2[] ReactiveStates => _reactiveStates.ToArray();
     
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
@@ -73,7 +74,13 @@ public sealed class MemberState : IStats
     public void ApplyAdditiveUntilEndOfBattle(IStats mods) => PublishAfter(() => _battleAdditiveMods.Add(mods));
     public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() => _multiplierMods.Add(mods));
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() => _additiveMods.RemoveAll(condition));
-    public void AddReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Add(state));
+    public void AddReactiveState(ReactiveStateV2 state) 
+        => PublishAfter(() =>
+        {
+            _reactiveStates.RemoveAll(r => r.Tag == state.Tag);
+            _reactiveStates.Add(state);
+        });
+
     public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
 
     // HP Commands
