@@ -50,12 +50,12 @@ public static class MemberExtensions
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
 
-    public static bool CanAfford(this Member m, CardType c)
+    public static bool CanAfford(this Member m, ResourceCost c)
     {
-        if (!c.Cost.IsXCost && c.Cost.Amount == 0)
+        if (!c.IsXCost && c.Amount == 0)
             return true;
-        var cost = c.ResourcesSpent(m);
-        var remaining = m.State.ResourceAmount(cost.ResourceType) - cost.Amount;
+        var costAmount = c.ResourcesSpent(m);
+        var remaining = m.State.ResourceAmount(costAmount.ResourceType) - costAmount.Amount;
         return remaining >= 0;
     }
 }

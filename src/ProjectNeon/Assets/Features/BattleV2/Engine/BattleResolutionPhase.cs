@@ -11,6 +11,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     [SerializeField] private FloatReference delay = new FloatReference(1.5f);
     
     [ReadOnly, SerializeField] private List<Member> _unconscious = new List<Member>();
+    private readonly Queue<ProposedReaction> _reactions = new Queue<ProposedReaction>();
     
     public IEnumerator Begin()
     {
@@ -22,7 +23,9 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     private void ResolveNext()
     {
         CheckForUnconsciousMembers();
-        if (!state.BattleIsOver() && resolutionZone.HasMore)
+        if (_reactions.Any())
+            StartCoroutine(ResolveAllReactions());
+        else if (!state.BattleIsOver() && resolutionZone.HasMore)
             StartCoroutine(resolutionZone.ResolveNext(delay));
         else
         {
@@ -33,12 +36,36 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
 
     protected override void Execute(ApplyBattleEffect msg)
     {
+        var battleSnapshotBefore = state.GetSnapshot();
         AllEffects.Apply(msg.Effect, msg.Source, msg.Target);
+        var battleSnapshotAfter = state.GetSnapshot();
+        var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter);
+
+        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(effectResolved));
+        reactions.ForEach(r => _reactions.Enqueue(r));
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 
     protected override void Execute(CardResolutionFinished msg) => ResolveNext();
 
+    private IEnumerator ResolveAllReactions()
+    {
+        while (_reactions.Any())
+        {
+            yield return new WaitForSeconds(delay);
+            var r = _reactions.Dequeue();
+            var cost = r.Reaction.Cost;
+            // TODO: Implement Gains if applicable
+            // TODO: Animate the resolution of this effect, showing card on screen
+            if (r.Source.CanAfford(cost))
+            {
+                var expense = cost.ResourcesSpent(r.Source);
+                r.Source.Apply(s => s.Lose(expense));
+                r.Reaction.ActionSequence.Perform(r.Source, r.Target, expense.Amount);
+            }
+        }
+    }
+    
     private void CheckForUnconsciousMembers() 
         => state.Members.Values
             .Except(_unconscious)

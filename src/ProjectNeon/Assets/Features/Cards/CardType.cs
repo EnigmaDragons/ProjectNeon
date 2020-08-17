@@ -25,13 +25,4 @@ public class CardType : ScriptableObject
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
 
     public Card CreateInstance(int id, Member owner) => new Card(id, owner, this);
-    
-    public void Play(Member source, Target[] targets, int amountPaid)
-    {
-        if (ActionSequences.Length > targets.Length)
-            Log.Error($"{Name}: For {ActionSequences.Length} there are only {targets.Length} targets");
-        
-        for (var i = 0; i < ActionSequences.Length; i++)
-            ActionSequences[i].Play(source, targets[i], amountPaid);
-    }
 }

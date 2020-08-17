@@ -29,7 +29,7 @@ public class CardActionV2
         throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
     }
     
-    public IPayloadProvider Play(Member source, Target target, ReactiveTargetScope scope, int amountPaid)
+    public IPayloadProvider Play(Member source, Target target, int amountPaid)
     {
         if (type == CardBattleActionType.Battle)
             return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target));

@@ -1,12 +1,11 @@
 
 public static class ResourceCostCalculationExtensions
 {
-    public static ResourceQuantity ResourcesSpent(this CardType card, Member m)
+    public static ResourceQuantity ResourcesSpent(this ResourceCost cost, Member m)
     {
-        if (card.Cost == null || card.Cost.ResourceType == null)
+        if (cost == null || cost.ResourceType == null)
             return new ResourceQuantity {Amount = 0, ResourceType = ""};
-        
-        var cost = card.Cost;
+    
         return new ResourceQuantity
         {
             ResourceType = cost.ResourceType.Name,

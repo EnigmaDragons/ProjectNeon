@@ -9,7 +9,7 @@ public class PlayedCardV2 : IPlayedCard
     private readonly ResourceQuantity _gained;
 
     public PlayedCardV2(Member performer, Target[] targets, Card card)
-        : this(performer, targets, card, card.Type.ResourcesSpent(performer), card.Type.ResourcesGained(performer)) {}
+        : this(performer, targets, card, card.Cost.ResourcesSpent(performer), card.Type.ResourcesGained(performer)) {}
     public PlayedCardV2(Member performer, Target[] targets, Card card, ResourceQuantity spent, ResourceQuantity gained)
     {
         if (targets.Length < card.ActionSequences.Length)

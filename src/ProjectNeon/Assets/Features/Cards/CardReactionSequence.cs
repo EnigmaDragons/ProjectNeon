@@ -11,9 +11,16 @@ public sealed class CardReactionSequence
     public ReactiveMember Reactor => reactor;
     public ReactiveTargetScope Scope => scope;
     public CardActionsData CardActions => cardActions;
-
-    public void Play(Member source, Target target, int amountPaid)
-        => SequenceMessage.Queue(cardActions.Play(source, target, scope, amountPaid));
+    
+    public void Perform(Member source, Target target, int amountPaid)
+    {
+        Message.Subscribe<SequenceFinished>(_ =>
+        {
+            Message.Unsubscribe(this);
+            Message.Publish(new CardResolutionFinished());
+        }, this);
+        SequenceMessage.Queue(cardActions.Play(source, target, amountPaid));
+    }
     
     public CardReactionSequence() {}
     public CardReactionSequence(ReactiveMember source, ReactiveTargetScope s, CardActionsData actions)

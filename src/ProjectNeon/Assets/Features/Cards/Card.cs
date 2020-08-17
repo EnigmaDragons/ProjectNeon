@@ -33,8 +33,17 @@ public sealed class Card
         this.type = type;
     }
 
-    public void Play(Target[] targets, int amountPaid) => Type.Play(owner, targets, amountPaid);
-    public void Play(Member source, Target[] targets, int amountPaid) => Type.Play(source, targets, amountPaid);
+    public void Play(Target[] targets, int amountPaid)
+    {
+        if (ActionSequences.Length > targets.Length)
+            Log.Error($"{Name}: For {ActionSequences.Length} there are only {targets.Length} targets");
+
+        for (var i = 0; i < ActionSequences.Length; i++)
+        {
+            var seq = ActionSequences[i];
+            SequenceMessage.Queue(seq.cardActions.Play(Owner, targets[i], seq.Group, seq.Scope, amountPaid));
+        }
+    }
 
     public Card RevertedToStandard()
     {
