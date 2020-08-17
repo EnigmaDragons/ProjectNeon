@@ -10,6 +10,7 @@ public class StatusIcons : ScriptableObject
     public Dictionary<string, StatusIconDefinition> Icons => statusIcons.ToDictionary(x => x.Name, x => x);
     public StatusIconDefinition this[TemporalStatType stat] => Icons[stat.ToString()];
     public StatusIconDefinition this[StatType stat] => Icons[stat.ToString()];
+    public StatusIconDefinition this[StatusTag status] => Icons[status.ToString()];
 
 
 }

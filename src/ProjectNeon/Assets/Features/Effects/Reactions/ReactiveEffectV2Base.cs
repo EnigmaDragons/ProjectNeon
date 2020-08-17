@@ -28,6 +28,8 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
             _remainingDurationTurns--;
     }
 
+    public abstract StatusTag Tag { get; }
+
     public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
     {
         var maybeEffect = _createMaybeEffect(e);

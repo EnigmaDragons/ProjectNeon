@@ -44,4 +44,6 @@ public sealed class ReactOnAttacked : ReactiveEffectV2Base
         })
     {
     }
+
+    public override StatusTag Tag => StatusTag.CounterAttack;
 }

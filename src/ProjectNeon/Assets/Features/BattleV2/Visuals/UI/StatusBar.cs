@@ -45,6 +45,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         if (_member.State[StatType.Damagability] > 1f)
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Damagability].Icon, Text = "" });
+
+        if (_member.State.HasStatus(StatusTag.CounterAttack))
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.CounterAttack].Icon, Text = "" }); 
         
         UpdateStatuses(statuses);
     }
