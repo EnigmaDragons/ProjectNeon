@@ -42,7 +42,11 @@ public static class MemberExtensions
     public static int MaxHp(this Member m) => RoundUp(m.State.MaxHp());
     public static int RemainingShieldCapacity(this Member m) => m.MaxShield() - m.CurrentHp(); 
     public static int CurrentShield(this Member m) => RoundUp(m.State[TemporalStatType.Shield]);
-    public static int MaxShield(this Member m) => RoundUp(m.State[StatType.Toughness] * 2); 
+    public static int MaxShield(this Member m) => RoundUp(m.State[StatType.Toughness] * 2);
+    public static int Attack(this Member m) => m.State.Attack();
+    public static int Magic(this Member m) => m.State.Magic();
+    public static int Armor(this Member m) => m.State.Armor();
+    public static int Resistance(this Member m) => m.State.Resistance();
     public static bool IsConscious(this Member m) => m.State.IsConscious;
     public static bool IsStunnedForCurrentTurn(this Member m) => m.State[TemporalStatType.TurnStun] > 0;
     public static bool IsStunnedForCard(this Member m) => m.State[TemporalStatType.CardStun] > 0;

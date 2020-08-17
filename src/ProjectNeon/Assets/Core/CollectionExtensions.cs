@@ -4,6 +4,8 @@ using System.Linq;
 
 public static class CollectionExtensions
 {    
+    public static bool None<T>(this IEnumerable<T> items) => !items.Any();
+    
     [Obsolete] public static bool None<T>(this IEnumerable<T> items, Func<T, bool> condition) => !items.Any(condition);
     [Obsolete] public static void CopiedForEach<T>(this IEnumerable<T> items, Action<T> action) => items.ToList().ForEach(action);
     [Obsolete] public static IEnumerable<T> Concat<T>(this IEnumerable<T> items, T item) => items.Concat(item.AsArray());
@@ -11,7 +13,6 @@ public static class CollectionExtensions
     [Obsolete] public static IEnumerable<T> ConcatIf<T>(this IEnumerable<T> items, T item, Func<T, bool> condition) 
         => item != null && condition(item) ? items.Concat(item) : items;
     [Obsolete] public static IEnumerable<T> Except<T>(this IEnumerable<T> items, T item) => items.Except(new[] {item});
-    [Obsolete] public static bool None<T>(this IEnumerable<T> items) => !items.Any();
     [Obsolete] public static List<T> With<T>(this IEnumerable<T> list, T item) => list.Concat(new[] {item}).ToList();
     [Obsolete] public static List<T> Without<T>(this IEnumerable<T> list, T item)
     {

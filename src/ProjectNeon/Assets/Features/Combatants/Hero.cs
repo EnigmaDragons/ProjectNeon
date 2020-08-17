@@ -17,6 +17,7 @@ public class Hero : ScriptableObject
     [SerializeField] private float resistance;
     [SerializeField] private ResourceType resource1;
 
+    public string Name => name;
     public Sprite Bust => bust;
     public GameObject Body => body;
     public CharacterClass Class => characterClass;
