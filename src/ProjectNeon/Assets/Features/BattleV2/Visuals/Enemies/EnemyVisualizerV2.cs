@@ -1,23 +1,13 @@
 using System;
 using System.Collections;
 using DG.Tweening;
-using Features.BattleV2.Visuals.Enemies;
 using UnityEngine;
 
 public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimationRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
-    [SerializeField] private WorldHPBarController hpBarPrototype;
-    [SerializeField] private Vector3 hpBarOffset;
-    [SerializeField] private DamageEffect damageEffect;
-    [SerializeField] private Vector3 damageEffectOffset;
-    [SerializeField] private DamageEffect shieldNumbers;
-    [SerializeField] private Vector3 shieldNumberOffset;
-    [SerializeField] private VisualResourceCounterPresenter resourceCounterPrototype;
-    [SerializeField] private Vector3 resourceCounterOffset;
-    [SerializeField] private WorldStatusBar statusBarPrototype;
-    [SerializeField] private Vector3 statusBarOffset;
+    [SerializeField] private EnemyBattleUIPresenter ui;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
 
@@ -51,16 +41,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
             var enemyObject = positions[i].gameObject;
             var enemyMember = state.GetMemberByEnemyIndex(i);
             var pos = enemyObject.transform.position;
-            var hpBar = Instantiate(hpBarPrototype, pos + hpBarOffset, Quaternion.identity, enemyObject.transform);
-            hpBar.Init(enemyMember);
-            var dmg = Instantiate(damageEffect, pos + damageEffectOffset, Quaternion.identity, enemyObject.transform);
-            dmg.Init(enemyMember);
-            var shield = Instantiate(shieldNumbers, pos + shieldNumberOffset, Quaternion.identity, enemyObject.transform);
-            shield.Init(enemyMember);
-            Instantiate(resourceCounterPrototype, pos + resourceCounterOffset, Quaternion.identity, enemyObject.transform)
-                .Initialized(enemyMember);
-            Instantiate(statusBarPrototype, pos + statusBarOffset, Quaternion.identity, enemyObject.transform)
-                .Initialized(enemyMember);
+            Instantiate(ui, pos, Quaternion.identity, transform)
+                .Initialized(enemyObject,pos, enemyMember);
         }
     }
     
