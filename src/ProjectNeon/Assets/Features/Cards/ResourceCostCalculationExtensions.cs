@@ -15,12 +15,11 @@ public static class ResourceCostCalculationExtensions
         };
     }
     
-    public static ResourceQuantity ResourcesGained(this CardType card, Member m)
+    public static ResourceQuantity ResourcesGained(this ResourceCost gain, Member m)
     {
-        if (card.Gain == null || card.Gain.ResourceType == null)
+        if (gain == null || gain.ResourceType == null)
             return new ResourceQuantity {Amount = 0, ResourceType = ""};
         
-        var gain = card.Gain;
         return new ResourceQuantity
         {
             ResourceType = gain.ResourceType.Name,

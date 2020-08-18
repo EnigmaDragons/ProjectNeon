@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Card")]
-public class CardType : ScriptableObject
+public class CardType : ScriptableObject, CardTypeData
 {
     [PreviewSprite] [SerializeField] private Sprite art;
     [SerializeField] [TextArea(1, 12)] private string description;
@@ -23,6 +23,7 @@ public class CardType : ScriptableObject
     public string TypeDescription => typeDescription.Value;
     public Maybe<CharacterClass> LimitedToClass => new Maybe<CharacterClass>(onlyPlayableByClass != null ? onlyPlayableByClass : null);
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
+    public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();
 
     public Card CreateInstance(int id, Member owner) => new Card(id, owner, this);
 }

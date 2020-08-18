@@ -5,13 +5,13 @@ using UnityEngine;
 public sealed class Card
 {
     [SerializeField] private int id;
-    [SerializeField] private CardType type;
+    [SerializeField] private CardTypeData type;
     [SerializeField] private Member owner;
 
     public bool UseAsBasic;
     
     public Maybe<CharacterClass> LimitedToClass => type.LimitedToClass;
-    public CardType Type => UseAsBasic && LimitedToClass.IsPresent 
+    public CardTypeData Type => UseAsBasic && LimitedToClass.IsPresent 
         ? LimitedToClass.Value.BasicCard 
         : type;
 
@@ -26,7 +26,7 @@ public sealed class Card
     public string TypeDescription => Type.TypeDescription;
     public CardActionSequence[] ActionSequences => Type.ActionSequences;
 
-    public Card(int id, Member owner, CardType type)
+    public Card(int id, Member owner, CardTypeData type)
     {
         this.owner = owner;
         this.id = id;

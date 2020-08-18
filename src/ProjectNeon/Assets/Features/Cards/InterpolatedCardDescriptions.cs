@@ -10,18 +10,18 @@ public static class InterpolatedCardDescriptions
     private static string Bold(this string s) => $"<b>{s}</b>";
 
     public static string InterpolatedDescription(this Card card) => card.Type.InterpolatedDescription(card.Owner);
-    public static string InterpolatedDescription(this CardType card, Maybe<Member> owner)
+    public static string InterpolatedDescription(this CardTypeData card, Maybe<Member> owner)
     {
         var desc = card.Description;
 
         try
         {
-            if (card.ActionSequences == null || card.ActionSequences.Length < 0)
+            if (card.Actions == null || card.Actions.Length < 0)
                 return desc;
             
-            var battleEffects = card.ActionSequences
-                .Where(x => x.CardActions != null)
-                .SelectMany(a => a.CardActions.Actions
+            var battleEffects = card.Actions
+                .Where(x => x != null)
+                .SelectMany(a => a.Actions
                     .Where(c => c.Type == CardBattleActionType.Battle))
                     .Select(b => b.BattleEffect)
                 .ToArray();

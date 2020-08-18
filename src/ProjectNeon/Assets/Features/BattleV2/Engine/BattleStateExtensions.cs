@@ -1,7 +1,7 @@
 
 public static class BattleStateExtensions
 {
-    public static bool IsPlayableBy(this CardType c, Member member)
+    public static bool IsPlayableBy(this CardTypeData c, Member member)
     {
         if (!member.IsConscious())
             return false;

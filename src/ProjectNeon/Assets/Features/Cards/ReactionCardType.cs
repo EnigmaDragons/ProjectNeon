@@ -1,7 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public sealed class ReactionCardType : ScriptableObject
+public sealed class ReactionCardType : ScriptableObject, CardTypeData
 {
     [PreviewSprite] [SerializeField] private Sprite art;
     [SerializeField] [TextArea(1, 12)] private string description;
@@ -16,6 +17,10 @@ public sealed class ReactionCardType : ScriptableObject
     public ResourceCost Cost => cost;
     public ResourceCost Gain => onPlayGain;
     public CardReactionSequence ActionSequence => actionSequence;
+    public HashSet<CardTag> Tags => new HashSet<CardTag>();
+    public Maybe<CharacterClass> LimitedToClass => Maybe<CharacterClass>.Missing();
+    public CardActionSequence[] ActionSequences => new CardActionSequence[0];
+    public CardActionsData[] Actions => new[] { ActionSequence.CardActions };
 
     public ReactionCardType Initialized(ResourceCost cost, ResourceCost gain, CardReactionSequence action)
     {

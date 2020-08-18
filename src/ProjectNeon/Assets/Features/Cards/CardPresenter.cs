@@ -23,7 +23,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private float highlightedScale = 1.7f;
 
     private Card _card;
-    private CardType _cardType;
+    private CardTypeData _cardType;
 
     private bool _canHighlight;
     private Action _onClick;
@@ -61,7 +61,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         description.text = card.InterpolatedDescription();
     }
 
-    public void Set(CardType card, Action onClick, bool canHighlight = false)
+    public void Set(CardTypeData card, Action onClick, bool canHighlight = false)
     {
         gameObject.SetActive(true);
         canPlayHighlight.SetActive(false);
