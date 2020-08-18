@@ -6,6 +6,7 @@ public class CardZoneCountPresenter : MonoBehaviour
     [SerializeField] private CardPlayZone zone;
     [SerializeField] private TextMeshProUGUI textField;
     [SerializeField] private GameObject deckVisual;
+    [SerializeField] private bool showWithZeroCards = false;
 
     private void OnEnable()
     {
@@ -21,7 +22,7 @@ public class CardZoneCountPresenter : MonoBehaviour
     {
         var count = zone.Cards.Length;
         textField.text = count.ToString();
-        textField.enabled = count > 0;
-        deckVisual.SetActive(count > 0);
+        textField.enabled = count > 0 || showWithZeroCards;
+        deckVisual.SetActive(count > 0 || showWithZeroCards);
     }
 }
