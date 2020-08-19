@@ -3,20 +3,20 @@ using UnityEngine;
 
 public sealed class Party : ScriptableObject
 {
-    [SerializeField] private Hero heroOne;
-    [SerializeField] private Hero heroTwo;
-    [SerializeField] private Hero heroThree;
+    [SerializeField] private BaseHero heroOne;
+    [SerializeField] private BaseHero heroTwo;
+    [SerializeField] private BaseHero heroThree;
     
-    private List<Hero> _heroes = new List<Hero>();
+    private List<BaseHero> _heroes = new List<BaseHero>();
     
-    public Hero[] Heroes => _heroes.ToArray();
+    public BaseHero[] Heroes => _heroes.ToArray();
 
-    public Party Initialized(Hero one, Hero two, Hero three)
+    public Party Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
         heroOne = one;
         heroTwo = two;
         heroThree = three;
-        _heroes = new List<Hero>();
+        _heroes = new List<BaseHero>();
         if (heroOne != null && !heroOne.name.Equals("NoHero"))
             _heroes.Add(heroOne);
         if (heroTwo != null && !heroTwo.name.Equals("NoHero"))

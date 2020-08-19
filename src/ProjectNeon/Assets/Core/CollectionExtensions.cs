@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 public static class CollectionExtensions
@@ -12,6 +13,8 @@ public static class CollectionExtensions
     [Obsolete] public static IEnumerable<T> Concat<T>(this T item, IEnumerable<T> items) => items.Concat(item.AsArray());
     [Obsolete] public static IEnumerable<T> ConcatIf<T>(this IEnumerable<T> items, T item, Func<T, bool> condition) 
         => item != null && condition(item) ? items.Concat(item) : items;
+    [Obsolete] public static IEnumerable<T> ConcatIfNotNull<T>(this IEnumerable<T> items, T item) 
+        => item != null ? items.Concat(item) : items;
     [Obsolete] public static IEnumerable<T> Except<T>(this IEnumerable<T> items, T item) => items.Except(new[] {item});
     [Obsolete] public static List<T> With<T>(this IEnumerable<T> list, T item) => list.Concat(new[] {item}).ToList();
     [Obsolete] public static List<T> Without<T>(this IEnumerable<T> list, T item)
@@ -37,6 +40,12 @@ public static class CollectionExtensions
             action(item);
     }
 
+    public static void ForEachIndex<T>(this T[] items, Action<T, int> action)
+    {
+        for (var i = 0; i < items.Length; i++)
+            action(items[i], i);
+    }
+    
     public static TValue VerboseGetValue<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey k, Func<TKey, string> context)
     {
         if (!d.TryGetValue(k, out var value))

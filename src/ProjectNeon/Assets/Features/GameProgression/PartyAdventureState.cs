@@ -8,52 +8,54 @@ public sealed class PartyAdventureState : ScriptableObject
 {
     [SerializeField] private Party party;
     [SerializeField] private int credits;
-    [SerializeField] private int[] nonBattleHp;
-    [SerializeField] private RuntimeDeck[] decks;
 
     public int Credits => credits;
     
-    // These probably need to become a structure
-    public Hero[] Heroes => party.Heroes;
-    public int[] Hp => nonBattleHp.ToArray();
-    public RuntimeDeck[] Decks => decks.ToArray();
+    public BaseHero[] Heroes => _heroes.Select(h => h.BaseHero).ToArray();
+    public int[] Hp =>  _heroes.Select(h => h.CurrentHp).ToArray();
+    public RuntimeDeck[] Decks => _heroes.Select(h => h.Deck).ToArray();
+
+    private Hero[] _heroes = new Hero[0];
     
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
-    public PartyAdventureState Initialized(Hero one, Hero two, Hero three)
+    public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
         party.Initialized(one, two, three);
-        decks = Heroes.Select(h => CreateDeck(h.Deck)).ToArray();
-        nonBattleHp = Heroes.Select(h => h.Stats.MaxHp()).ToArray();
+        _heroes = party.Heroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
         credits = 0;
         return this;
     }
     
-    public void UpdateAdventureHp(int[] hps) => UpdateState(() => nonBattleHp = hps);
+    public void UpdateAdventureHp(int[] hps) => UpdateState(() => hps.ForEachIndex((hp, i) => _heroes[i].SetHp(hp)));
     public void UpdateCreditsBy(int amount) => UpdateState(() => credits += amount);
 
-    public int CurrentHpOf(Hero hero) => Hp[IndexOf(hero)];
-    public void HealHeroToFull(Hero hero)
+    public int CurrentHpOf(BaseHero hero) => Hp[IndexOf(hero)];
+    public void HealHeroToFull(BaseHero hero)
         => UpdateState(() =>
         {
             var index = IndexOf(hero);
-            nonBattleHp[index] = Heroes[index].Stats.MaxHp();
+            _heroes[index].HealToFull();
         });
 
-    private int IndexOf(Hero hero)
+    private int IndexOf(BaseHero hero)
     {
         var index = 0;
-        for (; index < Heroes.Length; index++)
+        for (; index < _heroes.Length; index++)
         {
-            if (Heroes[index].Equals(hero))
+            if (_heroes[index].BaseHero.Equals(hero))
                 return index;
         }
         throw new KeyNotFoundException($"Hero {hero.name} not found in Party");
     }
     public void UpdateDecks(Deck one, Deck two, Deck three) 
         => UpdateDecks(one.Cards, two.Cards, three.Cards);
-    
-    public void UpdateDecks(List<CardType> one, List<CardType> two, List<CardType> three) 
-        => decks = new[] { CreateDeck(one), CreateDeck(two), CreateDeck(three) };
+
+    public void UpdateDecks(List<CardType> one, List<CardType> two, List<CardType> three)
+    {
+        _heroes[0].SetDeck(CreateDeck(one));
+        _heroes[1].SetDeck(CreateDeck(two));
+        _heroes[2].SetDeck(CreateDeck(three));
+    }
 
     private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.Cards);
     private RuntimeDeck CreateDeck(List<CardType> cards) => new RuntimeDeck { Cards = cards };

@@ -6,7 +6,7 @@ using UnityEngine;
 static class GameDataMenu
 {
     [MenuItem("Assets/Create/GameContent/Hero")]
-    static void Hero() => Create<Hero>();
+    static void Hero() => Create<BaseHero>();
     [MenuItem("Assets/Create/GameContent/Enemy")]
     static void Enemy() => Create<Enemy>();
 

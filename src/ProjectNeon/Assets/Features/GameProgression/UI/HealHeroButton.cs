@@ -7,11 +7,11 @@ public sealed class HealHeroButton : OnMessage<PartyAdventureStateChanged>
     [SerializeField] private Button button;
     [SerializeField] private int cost;
 
-    private Hero _hero;
+    private BaseHero _hero;
     
     private void Awake() => button.onClick.AddListener(HealToFullIfCanAfford);
 
-    public void Init(Hero h)
+    public void Init(BaseHero h)
     {
         _hero = h;
         gameObject.SetActive(party.CurrentHpOf(_hero) < _hero.Stats.MaxHp());

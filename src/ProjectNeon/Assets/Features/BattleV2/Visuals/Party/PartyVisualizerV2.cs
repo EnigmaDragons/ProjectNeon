@@ -12,8 +12,8 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     [SerializeField] private GameObject hero3;
 
     private readonly List<GameObject> _heroes = new List<GameObject>();
-    private readonly Dictionary<Hero, Animator> _animators = new Dictionary<Hero, Animator>();
-    private readonly Dictionary<Hero, DamageEffect[]> _damage  = new Dictionary<Hero, DamageEffect[]>();
+    private readonly Dictionary<BaseHero, Animator> _animators = new Dictionary<BaseHero, Animator>();
+    private readonly Dictionary<BaseHero, DamageEffect[]> _damage  = new Dictionary<BaseHero, DamageEffect[]>();
     
     public IEnumerator Setup()
     {
@@ -36,7 +36,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         _damage.ForEach(x => x.Value.ForEach(d => d.Init(state.GetMemberByHero(x.Key))));
     }
 
-    private void SetupHero(GameObject heroOrigin, Hero hero, int visualOrder)
+    private void SetupHero(GameObject heroOrigin, BaseHero hero, int visualOrder)
     {
         var hasBody = !hero.Body.name.Equals("BodyPlaceholder");
         if (hasBody)

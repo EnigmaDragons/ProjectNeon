@@ -4,7 +4,7 @@ using UnityEngine;
 public class OnStartNewGame : OnMessage<StartNewGame>
 {
     [SerializeField] private Navigator navigator;
-    [SerializeField] private Hero[] heroes;
+    [SerializeField] private BaseHero[] heroes;
     [SerializeField] private PartyAdventureState party;
     
     protected override void Execute(StartNewGame msg)

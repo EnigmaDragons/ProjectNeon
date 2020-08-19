@@ -6,12 +6,12 @@ using UnityEngine;
 public sealed class HeroPool : ScriptableObject
 {
     [SerializeField] private Library library;
-    [SerializeField] private Hero[] selected;
+    [SerializeField] private BaseHero[] selected;
 
-    public IEnumerable<Hero> AvailableHeroes => library.UnlockedHeroes.Except(selected).ToArray();
-    public Hero[] SelectedHeroes => selected.ToArray();
+    public IEnumerable<BaseHero> AvailableHeroes => library.UnlockedHeroes.Except(selected).ToArray();
+    public BaseHero[] SelectedHeroes => selected.ToArray();
 
-    public void ClearSelections() => selected = Array.Empty<Hero>();
-    public void Select(Hero c) => selected = selected.Concat(c).ToArray();
-    public void Unselect(Hero c) => selected = selected.Except(c).ToArray();
+    public void ClearSelections() => selected = Array.Empty<BaseHero>();
+    public void Select(BaseHero c) => selected = selected.Concat(c).ToArray();
+    public void Unselect(BaseHero c) => selected = selected.Except(c).ToArray();
 }

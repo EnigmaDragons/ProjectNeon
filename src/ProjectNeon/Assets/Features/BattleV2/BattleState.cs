@@ -41,7 +41,7 @@ public class BattleState : ScriptableObject
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] Enemies => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
     private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
-    private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
+    private Dictionary<int, BaseHero> _heroesById = new Dictionary<int, BaseHero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
 
@@ -77,7 +77,7 @@ public class BattleState : ScriptableObject
         _uiTransformsById = new Dictionary<int, Transform>();
         
         var heroes = Party.Heroes;
-        _heroesById = new Dictionary<int, Hero>();
+        _heroesById = new Dictionary<int, BaseHero>();
         for (var i = 0; i < Party.Heroes.Length; i++)
         {
             id++;
@@ -158,10 +158,10 @@ public class BattleState : ScriptableObject
 
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
     public bool IsEnemy(int memberId) => _enemiesById.ContainsKey(memberId);
-    public Hero GetHeroById(int memberId) => _heroesById[memberId];
+    public BaseHero GetHeroById(int memberId) => _heroesById[memberId];
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
-    public Member GetMemberByHero(Hero hero) => _membersById[_heroesById.First(x => x.Value == hero).Key];
+    public Member GetMemberByHero(BaseHero hero) => _membersById[_heroesById.First(x => x.Value == hero).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
     public BattleStateSnapshot GetSnapshot()

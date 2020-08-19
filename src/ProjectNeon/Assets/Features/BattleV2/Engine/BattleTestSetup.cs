@@ -12,9 +12,9 @@ public class BattleTestSetup : MonoBehaviour
     [SerializeField] private bool setupCardTest = false;
     
     [Header("Party")] 
-    [SerializeField] private Hero hero1;
-    [SerializeField] private Hero hero2;
-    [SerializeField] private Hero hero3;
+    [SerializeField] private BaseHero hero1;
+    [SerializeField] private BaseHero hero2;
+    [SerializeField] private BaseHero hero3;
     [SerializeField] private Deck hero1Deck;
     [SerializeField] private Deck hero2Deck;
     [SerializeField] private Deck hero3Deck;
@@ -28,8 +28,8 @@ public class BattleTestSetup : MonoBehaviour
 
     [Header("Card Test")] 
     [SerializeField] private CardType card;
-    [SerializeField] private Hero[] allHeroes;
-    [SerializeField] private Hero noHero;
+    [SerializeField] private BaseHero[] allHeroes;
+    [SerializeField] private BaseHero noHero;
 
     private void Awake()
     {

@@ -4,6 +4,6 @@ using System.Collections.Generic;
 [Serializable]
 public class HeroesDeck
 {
-    public Hero Hero;
+    public BaseHero Hero;
     public List<CardType> Deck;
 }

@@ -10,7 +10,7 @@ public class HeroBattleUIPresenter : MonoBehaviour
     [SerializeField] private ResourceCounterPresenter resource2;
     [SerializeField] private StatusBar statusBar;
     
-    public void Set(Hero hero)
+    public void Set(BaseHero hero)
     {
         var member = state.GetMemberByHero(hero);
         bust.sprite = hero.Bust;

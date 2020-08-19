@@ -9,7 +9,7 @@ public sealed class HeroDetailsPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI classLabel;
     [SerializeField] private MemberStatPanel stats;
 
-    public HeroDetailsPanel Initialized(Hero h, Member m)
+    public HeroDetailsPanel Initialized(BaseHero h, Member m)
     {
         nameLabel.text = h.Name;
         classLabel.text = h.Class.Name;

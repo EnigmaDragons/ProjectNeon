@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class HeroDisplayPresenter : MonoBehaviour
 {
-    [SerializeField] private Hero currentHero;
+    [SerializeField] private BaseHero currentHero;
     [SerializeField] private Image heroBust;
     [SerializeField] private TextMeshProUGUI heroName;
     [SerializeField] private TextMeshProUGUI heroClassName;
@@ -15,7 +15,7 @@ public class HeroDisplayPresenter : MonoBehaviour
             Select(currentHero);
     }
 
-    public void Select(Hero c)
+    public void Select(BaseHero c)
     {
         currentHero = c;
         heroBust.sprite = c.Bust;
