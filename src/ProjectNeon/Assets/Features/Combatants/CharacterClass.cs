@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class CharacterClass : ScriptableObject
 {
+    [SerializeField] private string className;
     [SerializeField] private CardType basicCard;
     [SerializeField] private Color tint;
 
-    public string Name => _name ?? name.SkipThroughFirstDash().WithSpaceBetweenWords();
+    public string Name => className;
+
     public CardType BasicCard => basicCard;
     public Color Tint => tint;
 
-    private string _name;
-
     public CharacterClass Initialized(string className)
     {
-        _name = className;
+        this.className = className;
         return this;
     }
 }
