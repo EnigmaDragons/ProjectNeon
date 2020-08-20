@@ -1,4 +1,4 @@
-
+using System.Collections.Generic;
 using System.Linq;
 
 public class ShopSelectionPicker
@@ -8,12 +8,26 @@ public class ShopSelectionPicker
     
     public ShopSelection GenerateSelection(ShopCardPool cards, EquipmentPool equipment, PartyAdventureState party)
     {
-        // TODO: Only select cards that can be equipped by the party
+        var partyClasses = new HashSet<string>(party.Heroes.Select(h => h.Class.Name).Concat("None"));
+        
         // TODO: Weight by rarity
-        var selectedCards = cards.All.ToArray().Shuffled().Take(NumCards).ToList();
-        // TODO: Only select equipment that can be equipped by the party
+        var selectedCards = cards
+            .All
+            .Where(x => x.LimitedToClass.IsMissingOr(c => partyClasses.Contains(c.Name)))
+            .ToArray()
+            .Shuffled()
+            .Take(NumCards)
+            .ToList();
+        
         // TODO: Weight by rarity
-        var selectedEquipment = equipment.All.ToArray().Shuffled().Take(NumEquipment).ToList();
+        var selectedEquipment = equipment
+            .All
+            .Where(x => x.Classes.Any(c => partyClasses.Contains(c.Name)))
+            .ToArray()
+            .Shuffled()
+            .Take(NumEquipment)
+            .ToList();
+        
         return new ShopSelection(selectedEquipment, selectedCards);
     }
 }
