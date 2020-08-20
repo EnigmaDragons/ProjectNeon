@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Enemy_Warhead
+  m_EditorClassIdentifier: 
+  art: {fileID: 21300000, guid: bf0bb6f035f330f44b8dd3f12c1602b8, type: 3}
+  description: Deal (1 x ATK) damage to everyone and deal 3 damage to each opponent
+    for the rest of the battle
+  typeDescription: {fileID: 11400000, guid: 05396cecd1c61ab4dba3e9e72676792d, type: 2}
+  tags: 
+  onlyPlayableByClass: {fileID: 0}
+  cost:
+    cost: 1
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+    isXCost: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+    isXCost: 0
+  rarity: 0
+  actionSequences:
+  - scope: 1
+    group: 3
+    cardActions: {fileID: 11400000, guid: 3275416c6416b154eb63140ee2787462, type: 2}
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: 7a6f8fee04de8864f8857ff7ee04cb56, type: 2}
