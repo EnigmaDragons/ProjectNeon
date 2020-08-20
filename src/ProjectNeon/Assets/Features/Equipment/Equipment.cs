@@ -1,16 +1,18 @@
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Equipment/Equipment")]
 public class Equipment : ScriptableObject
 {
     [SerializeField] private string displayName;
     [SerializeField] private string description;
+    [SerializeField] private Rarity rarity;
     [SerializeField] private EquipmentSlot slot;
     [SerializeField] private int cost;
     [SerializeField] private CharacterClass[] canUseClasses = new CharacterClass[1];
     [SerializeField] private EquipmentStatModifier[] modifiers = new EquipmentStatModifier[1];
 
+    public Rarity Rarity => rarity;
     public CharacterClass[] Classes => canUseClasses;
     public EquipmentSlot Slot => slot;
     
