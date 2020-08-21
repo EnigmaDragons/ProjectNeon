@@ -9,8 +9,13 @@ public sealed class TextCommandButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI label;
 
     private Button _button;
+    private Action _cmd = () => { };
 
-    private void Awake() => _button = GetComponent<Button>();
+    private void Awake()
+    {
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(() => _cmd());
+    }
 
     public TextCommandButton Initialized(NamedCommand cmd)
     {
@@ -21,7 +26,7 @@ public sealed class TextCommandButton : MonoBehaviour
     public void Init(string commandText, Action cmd)
     {
         label.text = commandText;
-        _button.onClick.AddListener(cmd.Invoke);
+        _cmd = cmd;
     }
     
     public void Init(NamedCommand cmd)
