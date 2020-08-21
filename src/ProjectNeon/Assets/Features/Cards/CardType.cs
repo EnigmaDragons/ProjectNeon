@@ -28,4 +28,8 @@ public class CardType : ScriptableObject, CardTypeData
     public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();
 
     public Card CreateInstance(int id, Member owner) => new Card(id, owner, this);
+
+    public override string ToString() => Name;
+    public override int GetHashCode() => ToString().GetHashCode();
+    public override bool Equals(object other) => other is CardType && other.ToString() == ToString();
 }

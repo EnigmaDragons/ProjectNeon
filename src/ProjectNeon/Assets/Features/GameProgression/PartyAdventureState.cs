@@ -8,12 +8,14 @@ public sealed class PartyAdventureState : ScriptableObject
 {
     [SerializeField] private Party party;
     [SerializeField] private int credits;
-
+    [SerializeField] private PartyCardCollection cards;
+    
     public int Credits => credits;
     
     public BaseHero[] Heroes => _heroes.Select(h => h.BaseHero).ToArray();
     public int[] Hp =>  _heroes.Select(h => h.CurrentHp).ToArray();
     public RuntimeDeck[] Decks => _heroes.Select(h => h.Deck).ToArray();
+    public PartyCardCollection Cards => cards;
 
     private Hero[] _heroes = new Hero[0];
     
@@ -23,6 +25,7 @@ public sealed class PartyAdventureState : ScriptableObject
         party.Initialized(one, two, three);
         _heroes = party.Heroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
         credits = 0;
+        cards.Initialized(Decks.SelectMany(d => d.Cards));
         return this;
     }
     
