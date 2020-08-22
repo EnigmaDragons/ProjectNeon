@@ -2,5 +2,6 @@
 {
     Nothing,
     PerformerHasResource,
-    TargetIsBelowPercentageLife
+    TargetIsBelowPercentageLife,
+    RepeatForSpent
 }
