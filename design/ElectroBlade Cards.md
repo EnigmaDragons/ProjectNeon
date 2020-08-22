@@ -18,8 +18,6 @@
 
 ### Defensive
 
-- Lightning Reflexes - 1 Energy. ElectroBlade gains Evade 1 this turn. When he evades an attack this way he deals 1x attack to the attacker.
-
+- Lightning Reflexes - 2 Energy. ElectroBlade gains Evade 1. If he evades this turn, he counter strikes with an attack that deals 1xATK damage to the attacker.
 - CounterShock - 1 Energy. ElectroBlade gains Spellshield 1 this turn. If he mitigates a spell this way he deals 8 to the caster. If nothing is mitigated this way, his next spell gets +50% Spell Power.
-
 - Static Barrier - 1 Energy. .5x Defense. When ElectroBlade's Shield is broken he deals 3 to all enemies.

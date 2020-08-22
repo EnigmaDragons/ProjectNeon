@@ -4,7 +4,6 @@
 ### Survival:
 
 - MediKit - Self - Heal 16 HP
-- Stim Juice - Self - 3 Turns - +3 ATK
 - Shake It Off - Self - Remove all Debuffs. Heal 8 HP
 - Tough It Out - Self - Gain +5 Max HP for fight, +5 HP. Gain 1 TGH Shield
 - Psych Up - Self - Heal 6 HP, Gain +2 ATK for 3 Turns
