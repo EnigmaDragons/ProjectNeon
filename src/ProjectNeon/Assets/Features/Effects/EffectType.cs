@@ -17,7 +17,7 @@ public enum EffectType
     Attack = 17,
     InterceptAttackForTurns = 18,
     EvadeAttacks = 19,
-    HealFlatForTurnsOnTurnStart = 20,
+    HealOverTime = 20,
     OnShieldBroken = 21,
     RemoveShields = 22,
     RandomizeTarget = 23,
