@@ -420,8 +420,8 @@ GameObject:
   - component: {fileID: 7492745598565810349}
   - component: {fileID: 7492745598565810346}
   - component: {fileID: 7492745598565810347}
-  - component: {fileID: 6628759147188605568}
   - component: {fileID: 9159133970296671844}
+  - component: {fileID: 3840373524667443381}
   m_Layer: 0
   m_Name: TitleScreenUI
   m_TagString: Untagged
@@ -512,33 +512,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6628759147188605568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7492745598565810345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64c0fdeae8a04ce78d21bbf450093a1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keys: 0d000000
-  action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
-        m_MethodName: NavigateToSquadSelection
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &9159133970296671844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,6 +526,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btn: {fileID: 7910516045894693117}
   text: Start Game
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+        m_MethodName: StartNewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3840373524667443381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7492745598565810345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c0fdeae8a04ce78d21bbf450093a1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: 0d000000
   action:
     m_PersistentCalls:
       m_Calls:
