@@ -11,4 +11,6 @@ public class EventPublisher : ScriptableObject
     public void RecycleCard() => Message.Publish(new RecycleCard());
     public void BeginTurnConfirmation() => Message.Publish(new BeginPlayerTurnConfirmation());
     public void ToggleGameSpeed() => Message.Publish(new ToggleGameSpeed());
+    public void ToggleShop() => Message.Publish(new ToggleShop());
+    public void TogglePartyDetails() => Message.Publish(new TogglePartyDetails());
 }
