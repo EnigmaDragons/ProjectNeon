@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public sealed class EnemyBattleUIPresenter : MonoBehaviour
+public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
 {
     [SerializeField] private WorldHPBarController hpBar;
     [SerializeField] private DamageEffect hpNumbers;
@@ -9,9 +9,12 @@ public sealed class EnemyBattleUIPresenter : MonoBehaviour
     [SerializeField] private VisualResourceCounterPresenter resourceCounter;
     [SerializeField] private WorldStatusBar statusBar;
     [SerializeField] private TextMeshPro nameLabel;
+
+    private Member _member;
     
-    public EnemyBattleUIPresenter Initialized(GameObject parent, Vector3 pos, Member m)
+    public EnemyBattleUIPresenter Initialized(Member m)
     {
+        _member = m;
         hpBar.Init(m);
         hpNumbers.Init(m);
         shieldNumbers.Init(m);
@@ -19,5 +22,11 @@ public sealed class EnemyBattleUIPresenter : MonoBehaviour
         statusBar.Initialized(m);
         nameLabel.text = m.Name;
         return this;
+    }
+
+    protected override void Execute(MemberUnconscious msg)
+    {
+        if (msg.Member.Equals(_member))
+            gameObject.SetActive(false);
     }
 }
