@@ -1,7 +1,6 @@
 ﻿#if UNITY_EDITOR
 
 using System;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,6 +13,9 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.OnAttacked, new []{ "NumberOfTurns", "ReactionSequence" }},
         {EffectType.CostResource, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
+        {EffectType.RemoveDebuffs, new [] { "NumberOfTurns" }},
+        {EffectType.AdjustStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
+        {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

@@ -12,7 +12,7 @@ public sealed class ReactiveTriggerTests
         var reactionCardType = TestCards.Reaction(
             ReactiveMember.Possessor, 
             ReactiveTargetScope.Self, 
-            new EffectData { EffectType = EffectType.ArmorFlat, FloatAmount = new FloatReference(1) });
+            new EffectData { EffectType = EffectType.AdjustStatAdditively, FloatAmount = new FloatReference(1), EffectScope = new StringReference("Armor"), NumberOfTurns = new IntReference(-1) });
 
         AllEffects.Apply(new EffectData
         {

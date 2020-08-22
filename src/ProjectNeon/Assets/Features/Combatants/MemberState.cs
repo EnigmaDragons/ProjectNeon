@@ -8,7 +8,6 @@ public sealed class MemberState : IStats
     private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
     
     private readonly IStats _baseStats;
-    private readonly List<IStats> _battleAdditiveMods = new List<IStats>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
     private readonly List<ReactiveStateV2> _reactiveStates = new List<ReactiveStateV2>();
@@ -16,7 +15,6 @@ public sealed class MemberState : IStats
     public IStats BaseStats => _baseStats;
     
     private IStats CurrentStats => _baseStats
-        .Plus(_battleAdditiveMods)
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats))
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats));
 
@@ -69,11 +67,14 @@ public sealed class MemberState : IStats
             .ToArray();
 
     // Modifier Commands
-    public void GainArmor(float amount) => ApplyAdditiveUntilEndOfBattle(new StatAddends().With(StatType.Armor, amount));
     public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() => _additiveMods.Add(mods));
-    public void ApplyAdditiveUntilEndOfBattle(IStats mods) => PublishAfter(() => _battleAdditiveMods.Add(mods));
     public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() => _multiplierMods.Add(mods));
-    public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() => _additiveMods.RemoveAll(condition));
+    public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() =>
+    {
+        _additiveMods.RemoveAll(condition);
+        _multiplierMods.RemoveAll(condition);
+        _reactiveStates.RemoveAll(condition);
+    });
     public void AddReactiveState(ReactiveStateV2 state) 
         => PublishAfter(() =>
         {

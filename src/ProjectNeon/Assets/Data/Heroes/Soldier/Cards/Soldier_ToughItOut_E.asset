@@ -15,14 +15,51 @@ MonoBehaviour:
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 5
+      EffectType: 3
       FloatAmount:
         UseConstant: 1
         ConstantValue: 5
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 999
+        ConstantValue: -1
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: MaxHP
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReferencedEffectSequence: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    atTargetAnimation:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - type: 1
+    battleEffect:
+      EffectType: 1
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 5
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
