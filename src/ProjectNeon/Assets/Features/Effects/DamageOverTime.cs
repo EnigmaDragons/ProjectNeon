@@ -1,34 +1,16 @@
-
-public sealed class DamageOverTime : ITemporalState, Effect
+public sealed class DamageOverTime : Effect
 {
     private readonly int _amount;
-    private Target _target;
-    private int _remainingDuration;
-    
-    public IStats Stats { get; } = new StatAddends();
-    public bool IsDebuff => true;
-    public bool IsActive => _remainingDuration > 0;
-
-    public void OnTurnStart()
-    {
-        if (_remainingDuration <= 0) return;
-        
-        _remainingDuration--;
-        _target.ApplyToAll(m => m.TakeRawDamage(_amount));   
-    }
-    
-    public void OnTurnEnd()
-    {
-    }
+    private readonly int _turns;
 
     public DamageOverTime(EffectData data)
     {
         _amount = data.IntAmount;
-        _remainingDuration = data.NumberOfTurns;
+        _turns = data.NumberOfTurns;
     }
 
     public void Apply(Member source, Target target)
     {
-        _target = target;
+        target.Members.ForEach(x => x.State.ApplyTemporaryAdditive(new DamageOverTimeState(_amount, x, _turns)));
     }
 }

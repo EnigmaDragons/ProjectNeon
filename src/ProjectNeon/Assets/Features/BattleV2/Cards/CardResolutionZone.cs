@@ -90,7 +90,7 @@ public class CardResolutionZone : ScriptableObject
         if (card.Owner.IsStunnedForCard())
         {
             BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
-            card.Owner.Apply(m => m.ApplyAdditiveUntilEndOfBattle(new StatAddends().With(TemporalStatType.CardStun, -1)));
+            card.Owner.Apply(m => m.ApplyTemporaryAdditive(AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, -1), true)));
             WrapupCard(played, card);
             Message.Publish(new CardResolutionFinished());
         }
