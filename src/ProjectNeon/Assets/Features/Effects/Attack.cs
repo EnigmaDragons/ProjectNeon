@@ -26,7 +26,8 @@ public sealed class Attack  : Effect
         Target = target;
         //PROPOSALS SHOULD NOT GO THROUGH THE EVENT SYSTEM
         Message.Publish(new Proposed<Attack> { Message = this });
-        Effect.Apply(Attacker, _hitsRandomTarget ? new Single(Target.Members.Where(x => x.IsConscious()).Random()) : Target);
+        var applicableTargets = Target.Members.Where(x => x.IsConscious()).ToArray();
+        Effect.Apply(Attacker, _hitsRandomTarget && applicableTargets.Any() ? new Single(applicableTargets.Random()) : Target);
         Message.Publish(new Finished<Attack> { Message = this });
     }
 }
