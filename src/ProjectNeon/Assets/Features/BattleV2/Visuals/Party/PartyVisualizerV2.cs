@@ -20,7 +20,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         _heroes.ForEach(Destroy);
         _heroes.Clear();
         
-        var heroes = state.Party.Heroes;
+        var heroes = state.Party.BaseHeroes;
         if (heroes.Length > 0)
             SetupHero(hero1, heroes[0], 5);
         if (heroes.Length > 1)

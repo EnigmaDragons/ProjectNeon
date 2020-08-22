@@ -14,10 +14,7 @@ public sealed class PartyDetailsUI : MonoBehaviour
     {
         if (_panels.None())
             Enumerable.Range(0, 3).ForEach(_ => _panels.Add(Instantiate(panelPrototype, parent)));
-        for (var i = 0; i < party.Heroes.Length; i++)
-        {
-            var hero = party.Heroes[i];
-            _panels[i].Initialized(hero, new Member(i, hero.Name, hero.Class.Name, TeamType.Party, hero.Stats, party.CurrentHpOf(hero)));
-        }
+        for (var i = 0; i < party.BaseHeroes.Length; i++)
+            _panels[i].Initialized(party.Heroes[i], party.Heroes[i].AsMember(i));
     }
 }

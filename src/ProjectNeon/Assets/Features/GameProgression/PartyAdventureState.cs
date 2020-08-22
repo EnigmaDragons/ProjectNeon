@@ -13,7 +13,8 @@ public sealed class PartyAdventureState : ScriptableObject
     
     public int Credits => credits;
     
-    public BaseHero[] Heroes => _heroes.Select(h => h.BaseHero).ToArray();
+    public BaseHero[] BaseHeroes => _heroes.Select(h => h.BaseHero).ToArray();
+    public Hero[] Heroes => _heroes;
     public int[] Hp =>  _heroes.Select(h => h.CurrentHp).ToArray();
     public RuntimeDeck[] Decks => _heroes.Select(h => h.Deck).ToArray();
     public PartyCardCollection Cards => cards;
