@@ -15,7 +15,7 @@ public class HeroEquipmentTests
     {
         var heroEquipment = new HeroEquipment(TestClasses.Soldier);
 
-        var sword = TestableObjectFactory.Create<Equipment>().Initialized(TestClasses.Paladin);
+        var sword = TestableObjectFactory.Create<StaticEquipment>().Initialized(TestClasses.Paladin);
         
         Assert.IsFalse(heroEquipment.CanEquip(sword));
     }
@@ -25,7 +25,7 @@ public class HeroEquipmentTests
     {
         var heroEquipment = new HeroEquipment(TestClasses.Soldier);
 
-        var gun = TestableObjectFactory.Create<Equipment>().Initialized(TestClasses.Soldier);
+        var gun = TestableObjectFactory.Create<StaticEquipment>().Initialized(TestClasses.Soldier);
         
         Assert.IsTrue(heroEquipment.CanEquip(gun));
     }
@@ -34,7 +34,7 @@ public class HeroEquipmentTests
     public void HeroEquipment_EquipWeapon_IsEquipped()
     {
         var heroEquipment = new HeroEquipment(TestClasses.Soldier);
-        var gun = TestableObjectFactory.Create<Equipment>().Initialized(TestClasses.Soldier);
+        var gun = TestableObjectFactory.Create<StaticEquipment>().Initialized(TestClasses.Soldier);
         
         heroEquipment.Equip(gun);
 
