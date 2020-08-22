@@ -18,6 +18,7 @@ public class Hero
         equipment = new HeroEquipment(character.Class);
     }
 
+    public CharacterClass Class => character.Class;
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
     public int CurrentHp => currentHp;
