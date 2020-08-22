@@ -15,11 +15,17 @@ public sealed class MedicAI : TurnAI
     {
         var me = battleState.Members[memberId];
         var playableCards = battleState.GetPlayableCards(memberId);
-        var allies = me.TeamType == TeamType.Enemies ? battleState.Enemies : battleState.Heroes;
+        var allies = me.TeamType == TeamType.Enemies 
+            ? battleState.Enemies.Where(m => m.IsConscious()) 
+            : battleState.Heroes.Where(m => m.IsConscious());
         
         var maybeCard = new Maybe<CardType>();
         IEnumerable<CardType> cardOptions = playableCards;
         // TODO: Dealing killing blow if possible with an attack card
+
+        if (allies.Count() == 1 && cardOptions.Any(c => c.TypeDescription.Contains("Attack")))
+            maybeCard = cardOptions.Where(c => c.TypeDescription.Contains("Attack"))
+                .MostExpensive();
         
         if (allies.All(a => a.CurrentHp() >= a.MaxHp() * 0.9))
             cardOptions = cardOptions.Where(x => x.TypeDescription != "Healing");
