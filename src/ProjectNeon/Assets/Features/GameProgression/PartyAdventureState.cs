@@ -66,8 +66,17 @@ public sealed class PartyAdventureState : ScriptableObject
         });
 
     public void Add(Equipment e) => UpdateState(() => equipment.Add(e));
-    public void EquipTo(Equipment e, Hero h) => UpdateState(() => h.Equip(e));
-    public void UnequipFrom(Equipment e, Hero h) => UpdateState(() => h.Unequip(e));
+    public void EquipTo(Equipment e, Hero h) => UpdateState(() =>
+    {
+        h.Equip(e);
+        equipment.MarkEquipped(e);
+    });
+
+    public void UnequipFrom(Equipment e, Hero h) => UpdateState(() =>
+    {
+        h.Unequip(e);
+        Equipment.MarkUnequipped(e);
+    });
 
     private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.Cards);
     private RuntimeDeck CreateDeck(List<CardType> cards) => new RuntimeDeck { Cards = cards };
