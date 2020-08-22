@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu]
-class ShopSegment : StageSegment
+[CreateAssetMenu(menuName = "Adventure/ShopSegment")]
+public class ShopSegment : StageSegment
 {
     public override string Name => "Shop";
 

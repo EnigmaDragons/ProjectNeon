@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Battle/CardPlayZone")]
 public class CardPlayZone : ScriptableObject
 {
     [SerializeField] private IntReference maxCards = new IntReference(6);

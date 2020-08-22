@@ -1,7 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-class AdventureProgress : ScriptableObject
+[CreateAssetMenu(menuName = "GameState/AdventureProgress")]
+public class AdventureProgress : ScriptableObject
 {
     [SerializeField] private Adventure currentAdventure;
     [SerializeField] private int currentStageIndex;

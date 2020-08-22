@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "GameContent/HeroCharacter")]
 public class BaseHero : ScriptableObject, HeroCharacter
 {
     [SerializeField] private Sprite bust;

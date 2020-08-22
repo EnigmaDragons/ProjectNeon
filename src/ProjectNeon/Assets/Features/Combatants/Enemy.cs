@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "GameContent/Enemy")]
 public class Enemy : ScriptableObject
 {
     [SerializeField] private string enemyName;

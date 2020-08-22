@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "GameState/DeckBuilder")]
 public class DeckBuilderState : ScriptableObject
 {
     [SerializeField] private GameEvent heroSelected;

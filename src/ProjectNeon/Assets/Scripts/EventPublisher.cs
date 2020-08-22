@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "OnlyOnce/EventPublisher")]
 public class EventPublisher : ScriptableObject
 {
     public void WinBattle() => Message.Publish(new BattleFinished(TeamType.Party));

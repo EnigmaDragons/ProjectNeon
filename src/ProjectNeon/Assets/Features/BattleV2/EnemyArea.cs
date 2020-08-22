@@ -2,6 +2,8 @@
 using System.Linq;
 using UnityEngine;
 
+
+[CreateAssetMenu(menuName = "Battle/EnemyArea")]
 public class EnemyArea : ScriptableObject
 {
     [SerializeField] private Enemy[] enemies;

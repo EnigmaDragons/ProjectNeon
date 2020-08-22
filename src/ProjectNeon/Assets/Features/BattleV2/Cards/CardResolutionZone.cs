@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Battle/CardResolutionZone")]
 public class CardResolutionZone : ScriptableObject
 {
     [SerializeField] private List<IPlayedCard> moves = new List<IPlayedCard>();
