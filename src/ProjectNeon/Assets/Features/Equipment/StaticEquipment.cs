@@ -14,6 +14,7 @@ public class StaticEquipment : ScriptableObject, Equipment
 
     public string Name => displayName;
     public string Description => description;
+    public int Price => cost;
     public Rarity Rarity => rarity;
     public CharacterClass[] Classes => canUseClasses;
     public EquipmentSlot Slot => slot;
