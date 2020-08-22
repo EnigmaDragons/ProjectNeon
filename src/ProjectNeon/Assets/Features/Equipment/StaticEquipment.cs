@@ -16,8 +16,9 @@ public class StaticEquipment : ScriptableObject, Equipment
     public string Description => description;
     public int Price => cost;
     public Rarity Rarity => rarity;
-    public CharacterClass[] Classes => canUseClasses;
+    public string[] Classes => canUseClasses.Select(c => c.Name).ToArray();
     public EquipmentSlot Slot => slot;
+    public EquipmentStatModifier[] Modifiers => modifiers.ToArray();
     
     public IStats AdditiveStats()
     {

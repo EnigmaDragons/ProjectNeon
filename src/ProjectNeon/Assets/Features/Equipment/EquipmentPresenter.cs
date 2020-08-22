@@ -19,9 +19,9 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
         _onClick = onClick;
         nameLabel.text = e.Name;
         slotLabel.text = $"{e.Slot}";
-        var classesText = e.Classes.Any(c => c.Name.Equals("None"))
-            ? "All"
-            : string.Join(",", e.Classes.Select(c => c.Name));
+        var classesText = e.Classes.Any(c => c.Equals(CharacterClass.All))
+            ? CharacterClass.All
+            : string.Join(",", e.Classes.Select(c => c));
         classesLabel.text = $"Classes: {classesText}";
         descriptionLabel.text = e.Description;
         gameObject.SetActive(true);
