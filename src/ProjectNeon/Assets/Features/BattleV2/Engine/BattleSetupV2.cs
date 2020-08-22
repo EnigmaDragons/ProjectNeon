@@ -91,7 +91,7 @@ public class BattleSetupV2 : MonoBehaviour
         for (var i = 0; i < party.BaseHeroes.Length; i++)
         {
             var hero = party.BaseHeroes[i];
-            if (hero == null || hero.name.Equals(""))
+            if (hero == null || hero.Name.Equals(""))
                  continue;
             
             cards.AddRange(party.Decks[i].Cards.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero))));

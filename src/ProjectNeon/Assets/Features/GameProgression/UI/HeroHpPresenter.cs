@@ -7,9 +7,9 @@ public class HeroHpPresenter : OnMessage<PartyAdventureStateChanged>
     [SerializeField] private Image bust;
     [SerializeField] private TextMeshProUGUI hpText;
 
-    private BaseHero _hero;
+    private HeroCharacter _hero;
     
-    public void Init(BaseHero hero, int hp)
+    public void Init(HeroCharacter hero, int hp)
     {
         _hero = hero;
         bust.sprite = hero.Bust;

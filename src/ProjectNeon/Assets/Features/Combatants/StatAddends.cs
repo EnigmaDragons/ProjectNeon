@@ -1,7 +1,14 @@
+
+using System.Collections.Generic;
+
 public sealed class StatAddends : IStats
 {
-    private readonly DictionaryWithDefault<string, float> _values = new DictionaryWithDefault<string, float>(0);
+    private readonly DictionaryWithDefault<string, float> _values ;
 
+    public StatAddends() : this(new DictionaryWithDefault<string, float>(0)) {}
+    public StatAddends(Dictionary<string, float> values) : this(new DictionaryWithDefault<string, float>(0, values)) {}
+    private StatAddends(DictionaryWithDefault<string, float> values) => _values = values;
+    
     public float this[StatType statType]
     {
         get => _values[statType.ToString()];

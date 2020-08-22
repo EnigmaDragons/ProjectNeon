@@ -54,7 +54,7 @@ public class HeroEquipmentPanel : MonoBehaviour
 
     private void BeginEquipmentSelection(Hero h, Maybe<Equipment> equip)
     {
-        equip.IfPresent(h.Unequip);;
+        equip.IfPresent(e => party.UnequipFrom(e, h));
         Message.Publish(new GetUserSelectedEquipment(party.Equipment.All, selection => selection.IfPresent(e => party.EquipTo(e, h))));
     }
 }

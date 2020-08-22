@@ -12,9 +12,9 @@ public sealed class HeroDetailsPanel : MonoBehaviour
 
     public HeroDetailsPanel Initialized(Hero h, Member m)
     {
-        nameLabel.text = h.BaseHero.Name;
-        classLabel.text = h.BaseHero.Class.Name;
-        heroBust.sprite = h.BaseHero.Bust;
+        nameLabel.text = h.Character.Name;
+        classLabel.text = h.Character.Class.Name;
+        heroBust.sprite = h.Character.Bust;
         stats.Initialized(m);
         equipment.Initialized(h);
         return this;
