@@ -24,7 +24,7 @@ public static class AllEffects
         { EffectType.InterceptAttackForTurns, e => new InterceptAttack(e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount, e.HitsRandomTargetMember)},
         { EffectType.EvadeAttacks, e => new Evade(e.IntAmount) },
-        { EffectType.HealFlatForTurnsOnTurnStart, e => new HealFlatForTurnsOnTurnStart(e.IntAmount, e.NumberOfTurns) },
+        { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.NumberOfTurns) },
         { EffectType.RepeatEffect, e => new RepeatEffect(Create(e.origin), e.IntAmount) },
         { EffectType.RandomizeTarget, e => new RandomizeTarget(Create(e.origin)) },
         { EffectType.ExcludeSelfFromEffect, e => new ExcludeSelfFromEffect(Create(e.origin)) },

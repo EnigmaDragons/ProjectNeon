@@ -12,7 +12,7 @@ public sealed class HealFlatForTurnsOnTurnStartTests
 
         new Attack(5).Apply(attacker, new Single(target));
 
-        new HealFlatForTurnsOnTurnStart(1, 3).Apply(caster, new Single(target));
+        new HealOverTime(1, 3).Apply(caster, new Single(target));
         
         target.State.OnTurnStart();
         target.State.OnTurnEnd();
