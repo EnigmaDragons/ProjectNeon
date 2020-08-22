@@ -12,8 +12,8 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     [SerializeField] private GameObject hero3;
 
     private readonly List<GameObject> _heroes = new List<GameObject>();
-    private readonly Dictionary<BaseHero, Animator> _animators = new Dictionary<BaseHero, Animator>();
-    private readonly Dictionary<BaseHero, DamageEffect[]> _damage  = new Dictionary<BaseHero, DamageEffect[]>();
+    private readonly Dictionary<HeroCharacter, Animator> _animators = new Dictionary<HeroCharacter, Animator>();
+    private readonly Dictionary<HeroCharacter, DamageEffect[]> _damage  = new Dictionary<HeroCharacter, DamageEffect[]>();
     
     public IEnumerator Setup()
     {
@@ -36,7 +36,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         _damage.ForEach(x => x.Value.ForEach(d => d.Init(state.GetMemberByHero(x.Key))));
     }
 
-    private void SetupHero(GameObject heroOrigin, BaseHero hero, int visualOrder)
+    private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
     {
         var hasBody = !hero.Body.name.Equals("BodyPlaceholder");
         if (hasBody)
@@ -47,7 +47,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
              
              var damageEffects = character.GetComponentsInChildren<DamageEffect>();
              if (damageEffects.Length < 2)
-                 Debug.LogWarning($"{hero.name} is missing one or more text DamageEffects");
+                 Debug.LogWarning($"{hero.Name} is missing one or more text DamageEffects");
              else
                  _damage[hero] = damageEffects;
 
@@ -66,7 +66,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         var hero = state.GetHeroById(e.MemberId);
         var animator = _animators[hero];
         if (animator == null)
-            Debug.LogWarning($"No Animator found for {state.GetHeroById(e.MemberId).name}");
+            Debug.LogWarning($"No Animator found for {state.GetHeroById(e.MemberId).Name}");
         else
             StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation, elapsed =>
             {

@@ -1,14 +1,43 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 [Serializable]
 public class PartyEquipmentCollection
 {
-    [SerializeField] private List<Equipment> all = new List<Equipment>();
-
-    public List<Equipment> All => all.ToList();
+    private List<Equipment> _all = new List<Equipment>();
+    private List<Equipment> _available = new List<Equipment>();
+    private List<Equipment> _equipped = new List<Equipment>();
     
-    public void Add(Equipment e) => all.Add(e);
+    public List<Equipment> All => _all.ToList();
+    public List<Equipment> Available => _available.ToList();
+
+    public IEnumerable<Equipment> AvailableFor(CharacterClass c) =>
+        Available.Where(e => e.Classes.Contains(CharacterClass.All) || e.Classes.Contains(c.Name)).ToList();
+    
+    public void Add(Equipment e)
+    {
+        _all.Add(e);
+        _available.Add(e);
+    }
+
+    public void MarkEquipped(Equipment e)
+    {
+        var indexOf = _available.IndexOf(e);
+        if (indexOf < 0)
+            throw new InvalidOperationException();
+        
+        _available.RemoveAt(indexOf);
+        _equipped.Add(e);
+    }
+
+    public void MarkUnequipped(Equipment e)
+    {
+        var indexOf = _equipped.IndexOf(e);
+        if (indexOf < 0)
+            throw new InvalidOperationException();
+        
+        _equipped.RemoveAt(indexOf);
+        _available.Add(e);
+    }
 }

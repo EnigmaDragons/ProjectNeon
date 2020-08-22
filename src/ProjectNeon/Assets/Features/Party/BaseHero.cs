@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class BaseHero : ScriptableObject
+public class BaseHero : ScriptableObject, HeroCharacter
 {
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;

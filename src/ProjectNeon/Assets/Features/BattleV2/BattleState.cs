@@ -41,7 +41,7 @@ public class BattleState : ScriptableObject
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] Enemies => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
     private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
-    private Dictionary<int, BaseHero> _heroesById = new Dictionary<int, BaseHero>();
+    private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
 
@@ -76,14 +76,14 @@ public class BattleState : ScriptableObject
         memberNames = new string[EnemyStartingIndex + enemies.Enemies.Length + 3];
         _uiTransformsById = new Dictionary<int, Transform>();
         
-        var heroes = Party.BaseHeroes;
-        _heroesById = new Dictionary<int, BaseHero>();
+        var heroes = Party.Heroes;
+        _heroesById = new Dictionary<int, Hero>();
         for (var i = 0; i < Party.BaseHeroes.Length; i++)
         {
             id++;
             _heroesById[id] = heroes[i];
             _uiTransformsById[id] = partyArea.UiPositions[i];
-            memberNames[id] = heroes[i].name;
+            memberNames[id] = heroes[i].Character.Name;
         }
 
         id = EnemyStartingIndex - 1;
@@ -96,7 +96,7 @@ public class BattleState : ScriptableObject
             memberNames[id] = enemies.Enemies[i].name;
         }
         
-        _membersById = _heroesById.Select(h => new Member(h.Key, h.Value.name, h.Value.Class.Name, TeamType.Party, h.Value.Stats, Party.Hp[h.Key - 1]))
+        _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
 
@@ -119,7 +119,7 @@ public class BattleState : ScriptableObject
     }
 
     // During Battle State Tracking
-    public void StartTurn() =>UpdateState(() => { Members.Values.ForEach(m => m.State.OnTurnStart()); });
+    public void StartTurn() => UpdateState(() => { Members.Values.ForEach(m => m.State.OnTurnStart()); });
     
     public void AdvanceTurn() =>
         UpdateState(() =>
@@ -158,10 +158,10 @@ public class BattleState : ScriptableObject
 
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
     public bool IsEnemy(int memberId) => _enemiesById.ContainsKey(memberId);
-    public BaseHero GetHeroById(int memberId) => _heroesById[memberId];
+    public HeroCharacter GetHeroById(int memberId) => _heroesById[memberId].Character;
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
-    public Member GetMemberByHero(BaseHero hero) => _membersById[_heroesById.First(x => x.Value == hero).Key];
+    public Member GetMemberByHero(HeroCharacter hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
     public BattleStateSnapshot GetSnapshot()
