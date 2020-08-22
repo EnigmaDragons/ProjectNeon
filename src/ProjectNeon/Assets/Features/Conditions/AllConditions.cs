@@ -7,7 +7,8 @@ public class AllConditions
     {
         { ActionConditionType.Nothing, e => new NoCondition()},
         { ActionConditionType.PerformerHasResource, e => new PerformerHasResourceCondition(e.IntAmount, e.EffectScope, e.ReferencedEffect)},
-        { ActionConditionType.TargetIsBelowPercentageLife, e => new TargetIsBelowPercentageLifeCondition(e.FloatAmount, e.ReferencedEffect)}
+        { ActionConditionType.TargetIsBelowPercentageLife, e => new TargetIsBelowPercentageLifeCondition(e.FloatAmount, e.ReferencedEffect)},
+        { ActionConditionType.RepeatForSpent, e => new RepeatForSpentCondition(e.ReferencedEffect) }
     };
     
     public static IPayloadProvider Resolve(ActionConditionData conditionData, Member source, Target target, Group group, Scope scope, int amountPaid)

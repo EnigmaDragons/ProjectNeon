@@ -10,7 +10,8 @@ public class ActionConditionDataDrawer : PropertyDrawer
     private DictionaryWithDefault<ActionConditionType, string[]> _relevantProperties = new DictionaryWithDefault<ActionConditionType, string[]>(new string[] { "FloatAmount" })
     {
         {ActionConditionType.Nothing, new string[0]},
-        {ActionConditionType.PerformerHasResource, new [] { "FloatAmount", "EffectScope" }}
+        {ActionConditionType.PerformerHasResource, new [] { "FloatAmount", "EffectScope" }},
+        {ActionConditionType.RepeatForSpent, new string[0]},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

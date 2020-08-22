@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Linq;
 
 [Obsolete("Needs to be replaced with the final Attack Performed data. Should be separated from Attack Proposals.")]
 public sealed class Attack  : Effect
 {
+    private readonly bool _hitsRandomTarget;
+
     public Member Attacker { get; set; }
     public Target Target { get; set; }
     public Effect Effect { get; set; }
     public DamageCalculation Damage { get; set; }
     public float Multiplier { get; set; }
 
-    public Attack(float multiplier)
+    public Attack(float multiplier, bool hitsRandomTarget = false)
     {
         Multiplier = multiplier;
         Damage = new PhysicalDamage(Multiplier);
         Effect = new Damage(Damage);
+        _hitsRandomTarget = hitsRandomTarget;
     }
 
     public void Apply(Member source, Target target)
@@ -22,7 +26,7 @@ public sealed class Attack  : Effect
         Target = target;
         //PROPOSALS SHOULD NOT GO THROUGH THE EVENT SYSTEM
         Message.Publish(new Proposed<Attack> { Message = this });
-        Effect.Apply(Attacker, Target);
+        Effect.Apply(Attacker, _hitsRandomTarget ? new Single(Target.Members.Where(x => x.IsConscious()).Random()) : Target);
         Message.Publish(new Finished<Attack> { Message = this });
     }
 }
