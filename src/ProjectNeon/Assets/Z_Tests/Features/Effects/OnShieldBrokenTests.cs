@@ -1,15 +1,17 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 
-public class OnEvadedTests
+public class OnShieldBrokenTests
 {
-    [Test]
-    public void OnAttacked_ApplyTwice_OnlyGeneratesOneReaction()
+    [TestCase(0, false)]
+    [TestCase(1, true)]
+    [TestCase(2, false)]
+    public void OnShieldBroken_Attacked_TriggersCorrectly(int startingShields, bool triggered)
     {
         AllEffects.InitBattleState(ScriptableObject.CreateInstance<BattleState>());
-        var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
+        var target = TestMembers.Create(x => x.With(StatType.MaxHP, 10).With(StatType.Toughness, 1));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
-        target.State.AdjustEvade(1);
+        target.State.GainShield(startingShields);
 
         var reactionCardType = TestCards.Reaction(
             ReactiveMember.Possessor,
@@ -18,7 +20,7 @@ public class OnEvadedTests
 
         AllEffects.Apply(new EffectData
         {
-            EffectType = EffectType.OnEvaded,
+            EffectType = EffectType.OnShieldBroken,
             NumberOfTurns = new IntReference(3),
             ReactionSequence = reactionCardType
         }, target, target);
@@ -30,7 +32,6 @@ public class OnEvadedTests
             EffectScope = new StringReference(ReactiveTargetScope.Self.ToString())
         }, attacker, target);
 
-        Assert.AreEqual(10, target.State[TemporalStatType.HP]);
-        Assert.AreEqual(1, target.State.Armor());
+        Assert.AreEqual(triggered ? 1 : 0, target.State.Armor());
     }
 }

@@ -12,6 +12,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.Nothing, new string[0]},
         {EffectType.OnAttacked, new []{ "NumberOfTurns", "ReactionSequence" }},
         {EffectType.OnEvaded, new []{ "FloatAmount", "NumberOfTurns", "ReactionSequence" }},
+        {EffectType.OnShieldBroken, new []{ "NumberOfTurns", "ReactionSequence" }},
         {EffectType.CostResource, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.RemoveDebuffs, new [] { "NumberOfTurns" }},

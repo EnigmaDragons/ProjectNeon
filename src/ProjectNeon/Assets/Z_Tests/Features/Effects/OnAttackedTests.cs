@@ -1,10 +1,12 @@
 using NUnit.Framework;
+using UnityEngine;
 
 public sealed class OnAttackedTests
 {
     [Test]
     public void OnAttacked_ApplyTwice_OnlyGeneratesOneReaction()
     {
+        AllEffects.InitBattleState(ScriptableObject.CreateInstance<BattleState>());
         var target = TestMembers.Any();
         
         var reactionCardType = TestCards.Reaction(
