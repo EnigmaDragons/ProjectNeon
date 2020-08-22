@@ -56,8 +56,10 @@ public sealed class PartyAdventureState : ScriptableObject
     public void UpdateDecks(List<CardType> one, List<CardType> two, List<CardType> three)
     {
         _heroes[0].SetDeck(CreateDeck(one));
-        _heroes[1].SetDeck(CreateDeck(two));
-        _heroes[2].SetDeck(CreateDeck(three));
+        if (_heroes.Length > 1)
+            _heroes[1]?.SetDeck(CreateDeck(two));
+        if (_heroes.Length > 2)
+            _heroes[2]?.SetDeck(CreateDeck(three));
     }
 
     private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.Cards);

@@ -9,6 +9,12 @@ public sealed class ShopPresenter : MonoBehaviour
     [SerializeField] private GameObject cardParent;
     
     private ShopSelection _selection;
+
+    private void Awake()
+    {
+        foreach (Transform c in cardParent.transform) 
+            Destroy(c.gameObject);
+    }
     
     private void Start()
     {
