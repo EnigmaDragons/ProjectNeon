@@ -16,6 +16,8 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
     [SerializeField] private SelectCardTargetsV2 cardTargets;
     [SerializeField] private ConfirmPlayerTurnV2 turnConfirmation;
     
+    private readonly AIStrategyGenerator _enemyStrategy = new AIStrategyGenerator(TeamType.Enemies);
+    
     public void Begin()
     {
         ui.BeginCommandPhase();
@@ -32,11 +34,12 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
 
     private void ChooseEnemyCards()
     {
+        var strategy = _enemyStrategy.Generate(state);
         state.Enemies
             .Where(e => e.IsConscious())
             .OrderBy(e => state.GetEnemyById(e.Id).PreferredTurnOrder)
             .ForEach(e => Enumerable.Range(0, e.State.ExtraCardPlays())
-                .ForEach(c => resolutionZone.Add(state.GetEnemyById(e.Id).AI.Play(e.Id, state))));
+                .ForEach(c => resolutionZone.Add(state.GetEnemyById(e.Id).AI.Play(e.Id, state, strategy))));
     }
     
     protected override void Execute(TargetSelectionBegun msg)

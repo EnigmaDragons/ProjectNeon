@@ -11,7 +11,7 @@ public sealed class MedicAI : TurnAI
         { "Defense", 2 },
     };
     
-    public override IPlayedCard Play(int memberId, BattleState battleState)
+    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
     {
         var me = battleState.Members[memberId];
         var playableCards = battleState.GetPlayableCards(memberId);
@@ -57,7 +57,7 @@ public sealed class MedicAI : TurnAI
             }
 
             if (card.TypeDescription == "Attack")
-                return possibleTargets.MostVulnerable();
+                return strategy.AttackTargetFor(action);
             return possibleTargets.Random();
         });
 

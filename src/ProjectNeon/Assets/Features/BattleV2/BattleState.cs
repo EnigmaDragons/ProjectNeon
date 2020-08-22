@@ -165,13 +165,7 @@ public class BattleState : ScriptableObject
     public Member GetMemberByHero(HeroCharacter hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
-    public BattleStateSnapshot GetSnapshot()
-    {
-        var sw = System.Diagnostics.Stopwatch.StartNew();
-        var snapshot = new BattleStateSnapshot(_membersById.ToDictionary(m => m.Key, m => m.Value.GetSnapshot()));
-        Debug.Log($"Generate BattleStateSnapshot in {sw.Elapsed}ms");
-        return snapshot;
-    }
+    public BattleStateSnapshot GetSnapshot() => new BattleStateSnapshot(_membersById.ToDictionary(m => m.Key, m => m.Value.GetSnapshot()));
 
     private void UpdateState(Action update)
     {
