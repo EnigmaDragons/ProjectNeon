@@ -2,7 +2,7 @@ using UnityEngine;
 
 public sealed class ToggleTarget : MonoBehaviour
 {
-    [SerializeField] private GameObject[] targets;
+    [SerializeField] private GameObject[] targets = new GameObject[1];
     
     public void Toggle()
     {
