@@ -19,7 +19,7 @@ public enum EffectType
     EvadeAttacks = 19,
     HealFlatForTurnsOnTurnStart = 20,
     OnShieldBroken = 21,
-
+    RemoveShields = 22,
     RandomizeTarget = 23,
     RepeatEffect = 24,
     AnyTargetHealthBelowThreshold = 25,
