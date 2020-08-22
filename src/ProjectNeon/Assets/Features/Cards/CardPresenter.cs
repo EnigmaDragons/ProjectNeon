@@ -72,6 +72,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         
         nameLabel.text = _cardType.Name;
         description.text = _cardType.InterpolatedDescription(Maybe<Member>.Missing());
+        if (string.IsNullOrWhiteSpace(_cardType.TypeDescription))
+            Log.Error($"{_cardType} is missing it's Type Description");
         type.text = _cardType.TypeDescription;
         art.sprite = _cardType.Art;
         

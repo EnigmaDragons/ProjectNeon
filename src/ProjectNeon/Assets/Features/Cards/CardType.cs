@@ -21,7 +21,7 @@ public class CardType : ScriptableObject, CardTypeData
     public Sprite Art => art;
     public string Description => description;
     public HashSet<CardTag> Tags => new HashSet<CardTag>(tags);
-    public string TypeDescription => typeDescription.Value;
+    public string TypeDescription => typeDescription?.Value ?? "";
     public Rarity Rarity => rarity;
     public Maybe<CharacterClass> LimitedToClass => new Maybe<CharacterClass>(onlyPlayableByClass != null ? onlyPlayableByClass : null);
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
