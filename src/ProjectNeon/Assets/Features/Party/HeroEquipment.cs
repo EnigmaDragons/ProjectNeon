@@ -28,7 +28,7 @@ public class HeroEquipment
     
     public bool CanEquip(Equipment e)
     {
-        return e.Classes.Any(c => c.Name.Equals("None") || c.Name.Equals(characterClass.Name));
+        return e.Classes.Any(c => c.Equals(CharacterClass.All) || c.Equals(characterClass.Name));
     }
 
     public void Unequip(Equipment e)

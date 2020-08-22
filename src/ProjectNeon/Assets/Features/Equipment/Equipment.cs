@@ -5,6 +5,7 @@ public interface Equipment
     string Description { get; }
     int Price { get; }
     Rarity Rarity { get; }
-    CharacterClass[] Classes { get; }
+    string[] Classes { get; }
     EquipmentSlot Slot { get; }
+    EquipmentStatModifier[] Modifiers { get; }
 }

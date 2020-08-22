@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CharacterClass : ScriptableObject
 {
+    public static string All => "All";
+    
     [SerializeField] private string className;
     [SerializeField] private CardType basicCard;
     [SerializeField] private Color tint;

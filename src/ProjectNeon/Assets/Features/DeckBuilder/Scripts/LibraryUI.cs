@@ -8,7 +8,7 @@ public class LibraryUI : MonoBehaviour
     [SerializeField] private CardInLibraryButton cardInLibraryButtonTemplate;
     [SerializeField] private GameObject emptyCard;
     [SerializeField] private GameEvent heroSelected;
-    [SerializeField] private Library library;
+    [SerializeField] private PartyCardCollection partyCards;
     [SerializeField] private DeckBuilderState state;
 
     private void OnEnable() => heroSelected.Subscribe(GenerateLibrary, this);
@@ -19,7 +19,7 @@ public class LibraryUI : MonoBehaviour
         pageViewer.Init(
             cardInLibraryButtonTemplate.gameObject, 
             emptyCard, 
-            library.UnlockedCards
+            partyCards.AllCards.Keys
                 .Where(x => !x.LimitedToClass.IsPresent || x.LimitedToClass.Value.Name == state.SelectedHeroesDeck.Hero.Class.Name)
                 .Select(InitCardInLibraryButton)
                 .ToList(), 
