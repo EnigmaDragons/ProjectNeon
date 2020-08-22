@@ -6,24 +6,28 @@ using UnityEngine;
 public class HeroEquipment
 {
     [SerializeField] private CharacterClass characterClass;
-    [SerializeField] private StaticEquipment weapon;
-    [SerializeField] private StaticEquipment armor;
-    [SerializeField] private StaticEquipment[] augments = new StaticEquipment[3];
+    [SerializeField] private Equipment weapon;
+    [SerializeField] private Equipment armor;
+    [SerializeField] private Equipment[] augments = new Equipment[3];
 
     public HeroEquipment() {}
-    public HeroEquipment(CharacterClass c) => characterClass = c; 
+    public HeroEquipment(CharacterClass c) => characterClass = c;
+
+    public Maybe<Equipment> Weapon => new Maybe<Equipment>(weapon);
+    public Maybe<Equipment> Armor => new Maybe<Equipment>(armor);
+    public Equipment[] Augments => augments.Where(a => a?.Classes != null).ToArray();
     
-    public StaticEquipment[] All => new []{ weapon, armor }
+    public Equipment[] All => new []{ weapon, armor }
         .Concat(augments)
         .Where(a => a?.Classes != null) // Nasty Hack to make this both handle optional serializables and make this work for Standalone Unit Tests
         .ToArray();
     
-    public bool CanEquip(StaticEquipment e)
+    public bool CanEquip(Equipment e)
     {
         return e.Classes.Any(c => c.Name.Equals(characterClass.Name));
     }
 
-    public void Unequip(StaticEquipment e)
+    public void Unequip(Equipment e)
     {
         if (weapon == e)
             weapon = null;
@@ -34,7 +38,7 @@ public class HeroEquipment
                 augments[i] = null;
     }
 
-    public void Equip(StaticEquipment e)
+    public void Equip(Equipment e)
     {
         if (!CanEquip(e))
             throw new InvalidOperationException();

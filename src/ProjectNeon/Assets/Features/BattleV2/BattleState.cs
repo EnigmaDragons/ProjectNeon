@@ -76,9 +76,9 @@ public class BattleState : ScriptableObject
         memberNames = new string[EnemyStartingIndex + enemies.Enemies.Length + 3];
         _uiTransformsById = new Dictionary<int, Transform>();
         
-        var heroes = Party.Heroes;
+        var heroes = Party.BaseHeroes;
         _heroesById = new Dictionary<int, BaseHero>();
-        for (var i = 0; i < Party.Heroes.Length; i++)
+        for (var i = 0; i < Party.BaseHeroes.Length; i++)
         {
             id++;
             _heroesById[id] = heroes[i];

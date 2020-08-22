@@ -20,6 +20,7 @@ public class Hero
     public BaseHero BaseHero => baseHero;
     public RuntimeDeck Deck => deck;
     public int CurrentHp => currentHp;
+    public HeroEquipment Equipment => equipment;
 
     public void HealToFull() => currentHp = baseHero.Stats.MaxHp();
     public void SetHp(int hp) => currentHp = hp;
@@ -27,4 +28,6 @@ public class Hero
     public void Equip(StaticEquipment e) => equipment.Equip(e);
     public void Unequip(StaticEquipment e) => equipment.Unequip(e);
     public bool CanEquip(StaticEquipment e) => equipment.CanEquip(e);
+    
+    public Member AsMember(int id) => new Member(id, BaseHero.Name, BaseHero.Class.Name, TeamType.Party, BaseHero.Stats, CurrentHp);
 }

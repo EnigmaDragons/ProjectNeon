@@ -18,11 +18,11 @@ public class PartyAdventureUiSummary : MonoBehaviour
         active.Clear();
         
         var position = transform.position;
-        for (var i = 0; i < party.Heroes.Length; i++)
+        for (var i = 0; i < party.BaseHeroes.Length; i++)
         {
             var h = Instantiate(heroPresenter,
                 new Vector3(position.x + xOffset + xSpacing * i, position.y + yOffset + ySpacing * i, position.z), Quaternion.identity, gameObject.transform); 
-            h.Init(party.Heroes[i], party.Hp[i]);
+            h.Init(party.BaseHeroes[i], party.Hp[i]);
             active.Add(h);
         }
     }

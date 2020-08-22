@@ -8,7 +8,7 @@ public class ShopSelectionPicker
     
     public ShopSelection GenerateSelection(ShopCardPool cards, EquipmentPool equipment, PartyAdventureState party)
     {
-        var partyClasses = new HashSet<string>(party.Heroes.Select(h => h.Class.Name).Concat("None"));
+        var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat("None"));
         
         // TODO: Weight by rarity
         var selectedCards = cards

@@ -88,9 +88,9 @@ public class BattleSetupV2 : MonoBehaviour
 
         playerCardPlayZones.ClearAll();
         var cards = new List<Card>();
-        for (var i = 0; i < party.Heroes.Length; i++)
+        for (var i = 0; i < party.BaseHeroes.Length; i++)
         {
-            var hero = party.Heroes[i];
+            var hero = party.BaseHeroes[i];
             if (hero == null || hero.name.Equals(""))
                  continue;
             
