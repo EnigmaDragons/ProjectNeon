@@ -31,7 +31,7 @@ public static class AllEffects
         { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
         { EffectType.OnAttacked, e => new EffectOnAttacked(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence, _battleState.Members) },
         { EffectType.OnEvaded, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence, _battleState.Members) },
-        { EffectType.OnShieldBroken, e => new EffectOnShieldBroken(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence, _battleState.Members) },
+        { EffectType.OnShieldBroken, e => new EffectOnShieldBroken(false, e.NumberOfTurns, e.ReactionSequence, _battleState.Members) },
         { EffectType.CostResource, e => new SimpleEffect(m => m.Lose(new ResourceQuantity { Amount = e.IntAmount, ResourceType = e.EffectScope.Value }))},
         { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) },
         { EffectType.SpellFlatDamageEffect, e => new SpellFlatDamageEffect(e.IntAmount) },
