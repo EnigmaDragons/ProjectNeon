@@ -9,7 +9,7 @@ public enum EffectType
     ShieldFlat = 6,
     ResourceFlat = 7,
     DamageOverTimeFlat = 8,
-
+    OnEvaded = 9,
     ApplyVulnerable = 10,
     ShieldToughness = 11,
     StunForTurns = 13,

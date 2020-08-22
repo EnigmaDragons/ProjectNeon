@@ -11,11 +11,13 @@ public class EffectDataEditor : PropertyDrawer
     {
         {EffectType.Nothing, new string[0]},
         {EffectType.OnAttacked, new []{ "NumberOfTurns", "ReactionSequence" }},
+        {EffectType.OnEvaded, new []{ "FloatAmount", "NumberOfTurns", "ReactionSequence" }},
         {EffectType.CostResource, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.RemoveDebuffs, new [] { "NumberOfTurns" }},
         {EffectType.AdjustStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
+        {EffectType.EvadeAttacks, new [] { "FloatAmount" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

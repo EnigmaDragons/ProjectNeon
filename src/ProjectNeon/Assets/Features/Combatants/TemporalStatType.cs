@@ -4,4 +4,5 @@ public enum TemporalStatType
     Shield = 1,
     TurnStun = 2,
     CardStun = 3,
+    Evade = 4,
 }

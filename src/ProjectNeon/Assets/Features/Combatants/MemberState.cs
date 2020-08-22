@@ -35,7 +35,7 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.Toughness() * 2);
         _counters[TemporalStatType.TurnStun.ToString()] = new BattleCounter(TemporalStatType.TurnStun, 0, () => int.MaxValue);
         _counters[TemporalStatType.CardStun.ToString()] = new BattleCounter(TemporalStatType.CardStun, 0, () => int.MaxValue);
-
+        _counters[TemporalStatType.Evade.ToString()] = new BattleCounter(TemporalStatType.Evade, 0, () => int.MaxValue);
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
     }
@@ -97,7 +97,15 @@ public sealed class MemberState : IStats
     }
     public void GainShield(float amount) => PublishAfter(() => Counter(TemporalStatType.Shield).ChangeBy(amount));
     private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
-    
+
+    public void AdjustEvade(float amount) => PublishAfter(() => Counter(TemporalStatType.Evade).ChangeBy(amount));
+
+    public void Evade()
+    {
+        PublishAfter(() => Counter(TemporalStatType.Evade).ChangeBy(-1));
+
+    } 
+
     // Resource Commands
     public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
     public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));

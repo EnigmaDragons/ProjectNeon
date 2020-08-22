@@ -1,23 +1,12 @@
 ﻿
 public class Evade : Effect
 {
-    private Target _effectTarget;
+    private int _number;
+
+    public Evade(int number) => _number = number;
 
     public void Apply(Member source, Target target)
     {
-        _effectTarget = target;
-        //implement
-    }
-
-    void Execute(Attack attack)
-    {
-        _effectTarget.Members.ForEach(
-            target => {
-                if (target.Equals(attack.Target.Members[0]))
-                {
-                    attack.Effect = new NoEffect();
-                }
-            }
-        );
+        target.ApplyToAll(x => x.AdjustEvade(_number));
     }
 }
