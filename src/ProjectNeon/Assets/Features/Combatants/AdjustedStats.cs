@@ -7,7 +7,7 @@ public class AdjustedStats : ITemporalState
 
     public IStats Stats { get; }
     public bool IsDebuff { get; }
-    public bool IsActive => _remainingTurnDuration == 0 && !_indefinite;
+    public bool IsActive => _remainingTurnDuration > 0 || _indefinite;
     public void OnTurnStart() { }
     public void OnTurnEnd() => _remainingTurnDuration = Math.Max(_remainingTurnDuration - 1, 0);
 
