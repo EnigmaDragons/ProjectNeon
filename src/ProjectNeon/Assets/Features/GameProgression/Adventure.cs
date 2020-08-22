@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-class Adventure : ScriptableObject
+
+[CreateAssetMenu(menuName = "Adventure/Adventure")]
+public class Adventure : ScriptableObject
 {
     [SerializeField] private Stage[] stages;
 

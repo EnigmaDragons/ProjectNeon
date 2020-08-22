@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "GameState/BattleState")]
 public class BattleState : ScriptableObject
 {
     [SerializeField] private CardPlayZones cardPlayZones;

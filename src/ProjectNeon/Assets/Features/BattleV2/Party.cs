@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+
+[CreateAssetMenu(menuName = "GameState/Party")]
 public sealed class Party : ScriptableObject
 {
     [SerializeField] private BaseHero heroOne;

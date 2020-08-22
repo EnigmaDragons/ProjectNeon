@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+
+[CreateAssetMenu(menuName = "Battle/BattlePlayerTargettingState")]
 public sealed class BattlePlayerTargetingState : ScriptableObject, IDirectionControllable
 {
     [SerializeField] private GameEvent onTargetChanged;

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "GameContent/CharacterClass")]
 public class CharacterClass : ScriptableObject
 {
     public static string All => "All";

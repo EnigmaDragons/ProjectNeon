@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "GameState/HeroPool")]
 public sealed class HeroPool : ScriptableObject
 {
     [SerializeField] private Library library;

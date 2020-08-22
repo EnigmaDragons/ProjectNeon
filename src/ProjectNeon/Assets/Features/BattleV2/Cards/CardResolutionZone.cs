@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Battle/CardResolutionZone")]
 public class CardResolutionZone : ScriptableObject
 {
     [SerializeField] private List<IPlayedCard> moves = new List<IPlayedCard>();
@@ -70,23 +71,23 @@ public class CardResolutionZone : ScriptableObject
 
     public IEnumerator ResolveNext(float delay)
     {
+        BattleLog.Write("Requested Resolve Next Card");
         isResolving = true;
         var move = moves[0];
         moves = moves.Skip(1).ToList();
         yield return new WaitForSeconds(delay);
-        yield return ResolveOneCard(move);
+        StartResolvingOneCard(move);
     }
 
-    private IEnumerator ResolveOneCard(IPlayedCard played)
+    private void StartResolvingOneCard(IPlayedCard played)
     {
         BattleLog.Write($"Began resolving {played.Card.Name}");
         if (physicalZone.Count == 0)
-        {
             Log.Info($"Weird Physical Zone Draw bug.");
-            yield break;
-        }
+        else
+            physicalZone.DrawOneCard();
         
-        var card = physicalZone.DrawOneCard();
+        var card = played.Card;
         if (card.Owner.IsStunnedForCard())
         {
             BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");

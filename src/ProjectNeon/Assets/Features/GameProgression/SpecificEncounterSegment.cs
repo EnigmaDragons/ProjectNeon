@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Adventure/FixedEncounter")]
 class SpecificEncounterSegment : StageSegment
 {
     [SerializeField] private GameObject battlefield;

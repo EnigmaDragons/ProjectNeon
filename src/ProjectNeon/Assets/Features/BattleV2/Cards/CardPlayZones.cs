@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[CreateAssetMenu(menuName = "Battle/CardPlayZones")]
 public class CardPlayZones : ScriptableObject
 {
     [SerializeField] private CardPlayZone drawZone;
