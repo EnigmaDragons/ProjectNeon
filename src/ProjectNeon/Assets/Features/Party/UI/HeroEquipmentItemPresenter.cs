@@ -1,13 +1,20 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class HeroEquipmentItemPresenter : MonoBehaviour
+public class HeroEquipmentItemPresenter : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private TextMeshProUGUI nameLabel;
 
-    public HeroEquipmentItemPresenter Initialized(Equipment e)
+    private Action _onClick = () => {};
+    
+    public HeroEquipmentItemPresenter Initialized(Maybe<Equipment> e, Action onClick)
     {
-        nameLabel.text = e.Name;
+        _onClick = onClick;
+        nameLabel.text = e.IsPresent ? e.Value.Name : "---";
         return this;
     }
+
+    public void OnPointerDown(PointerEventData eventData) => _onClick();
 }

@@ -1,7 +1,7 @@
-
 using System;
 using System.Collections;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public static class GameObjectExtensions
 {
@@ -12,5 +12,11 @@ public static class GameObjectExtensions
     {
         yield return new WaitForSeconds(secondsDelay);
         a();
+    }
+
+    public static void DestroyAllChildren(this GameObject o)
+    {
+        foreach(Transform child in o.transform)
+            Object.Destroy(child.gameObject);
     }
 }
