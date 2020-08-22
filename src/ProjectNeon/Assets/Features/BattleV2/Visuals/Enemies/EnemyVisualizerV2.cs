@@ -41,8 +41,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
             var enemyObject = positions[i].gameObject;
             var enemyMember = state.GetMemberByEnemyIndex(i);
             var pos = enemyObject.transform.position;
-            Instantiate(ui, pos, Quaternion.identity, transform)
-                .Initialized(enemyObject,pos, enemyMember);
+            Instantiate(ui, pos, Quaternion.identity, enemyObject.transform)
+                .Initialized(enemyObject, pos, enemyMember);
         }
     }
     
