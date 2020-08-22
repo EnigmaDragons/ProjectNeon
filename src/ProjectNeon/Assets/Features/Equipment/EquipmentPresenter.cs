@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
 {
@@ -17,12 +18,13 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
     {
         _onClick = onClick;
         nameLabel.text = e.Name;
-        slotLabel.text = $"Slot: {e.Slot}";
+        slotLabel.text = $"{e.Slot}";
         var classesText = e.Classes.Any(c => c.Name.Equals("None"))
             ? "All"
             : string.Join(",", e.Classes.Select(c => c.Name));
         classesLabel.text = $"Classes: {classesText}";
         descriptionLabel.text = e.Description;
+        gameObject.SetActive(true);
         return this;
     }
 

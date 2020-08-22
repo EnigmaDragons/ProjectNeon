@@ -9,6 +9,7 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private Party party;
     [SerializeField] private int credits;
     [SerializeField] private PartyCardCollection cards;
+    [SerializeField] private PartyEquipmentCollection equipment;
     
     public int Credits => credits;
     
@@ -22,10 +23,10 @@ public sealed class PartyAdventureState : ScriptableObject
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
-        party.Initialized(one, two, three);
-        _heroes = party.Heroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
+        _heroes = party.Initialized(one, two, three).Heroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
         credits = 0;
         cards.Initialized(Decks.SelectMany(d => d.Cards));
+        equipment = new PartyEquipmentCollection();
         return this;
     }
     
@@ -61,6 +62,8 @@ public sealed class PartyAdventureState : ScriptableObject
         if (_heroes.Length > 2)
             _heroes[2]?.SetDeck(CreateDeck(three));
     }
+
+    public void Add(Equipment e) => equipment.Add(e);
 
     private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.Cards);
     private RuntimeDeck CreateDeck(List<CardType> cards) => new RuntimeDeck { Cards = cards };

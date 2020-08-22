@@ -40,7 +40,6 @@ public class BattleTestSetup : MonoBehaviour
             SetupCardTest();
         else
             UseEverything();
-
     }
     
     public void UseCustomParty()
