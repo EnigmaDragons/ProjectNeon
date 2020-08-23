@@ -8,14 +8,15 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private GameObject body;
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private Deck startingDeck;
+    [SerializeField] private int startingCredits = 100;
     
     // Stats
-    [SerializeField] private int maxHp;
-    [SerializeField] private int toughness;
-    [SerializeField] private int attack;
-    [SerializeField] private int magic;
-    [SerializeField] private float armor;
-    [SerializeField] private float resistance;
+    [SerializeField] private int maxHp = 40;
+    [SerializeField] private int toughness = 6;
+    [SerializeField] private int attack = 8;
+    [SerializeField] private int magic = 0;
+    [SerializeField] private float armor = 0;
+    [SerializeField] private float resistance = 0;
     [SerializeField] private ResourceType resource1;
 
     public string Name => name;
@@ -24,6 +25,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public CharacterClass Class => characterClass;
     public Deck Deck => startingDeck;
     public CardType ClassCard => Class.BasicCard;
+    public int StartingCredits => startingCredits;
 
     public IStats Stats => new StatAddends
         {

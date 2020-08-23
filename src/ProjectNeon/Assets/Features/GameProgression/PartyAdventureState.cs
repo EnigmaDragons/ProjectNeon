@@ -25,7 +25,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
         heroes = party.Initialized(one, two, three).Heroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
-        credits = 0;
+        credits = heroes.Sum(h => h.Character.StartingCredits);
         cards.Initialized(Decks.SelectMany(d => d.Cards));
         equipment = new PartyEquipmentCollection();
         return this;

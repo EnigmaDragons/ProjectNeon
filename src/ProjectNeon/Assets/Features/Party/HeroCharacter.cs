@@ -9,6 +9,7 @@ public interface HeroCharacter
     Deck Deck { get; }
     CardType ClassCard { get; }
     IStats Stats { get; }
+    int StartingCredits { get; }
 }
 
 public class InMemoryHeroCharacter : HeroCharacter
@@ -20,4 +21,5 @@ public class InMemoryHeroCharacter : HeroCharacter
     public Deck Deck { get; set; }
     public CardType ClassCard { get; set; }
     public IStats Stats { get; set; } = new StatAddends();
+    public int StartingCredits { get; set; } = 100;
 }
