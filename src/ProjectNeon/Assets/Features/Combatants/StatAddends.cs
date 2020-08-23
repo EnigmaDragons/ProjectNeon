@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.IO;
 
 public sealed class StatAddends : IStats
 {
@@ -41,6 +42,9 @@ public sealed class StatAddends : IStats
 
     public StatAddends WithRaw(string statType, float value)
     {
+        if (string.IsNullOrWhiteSpace(statType))
+            throw new InvalidDataException($"Cannot add blank Stat");
+        
         _values[statType] = value;
         return this;
     }
