@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public sealed class ShopCardPurchaseSlot : MonoBehaviour
+public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
 {
     [SerializeField] private TextMeshProUGUI costLabel;
     [SerializeField] private CardPresenter cardPresenter;
@@ -16,12 +16,17 @@ public sealed class ShopCardPurchaseSlot : MonoBehaviour
     {
         _card = c;
         _price = c.ShopPrice();
+        costLabel.text = _price.ToString();
+        UpdateAffordability();
+        return this;
+    }
+
+    private void UpdateAffordability()
+    {
         var canAfford = party.Credits >= _price;
-        cardPresenter.Set(c, canAfford ? PurchaseCard : (Action)(() => { }));
+        cardPresenter.Set(_card, canAfford ? PurchaseCard : (Action)(() => { }));
         if (!canAfford)
             cardPresenter.SetDisabled(true);
-        costLabel.text = _price.ToString();
-        return this;
     }
 
     private void PurchaseCard()
@@ -31,4 +36,6 @@ public sealed class ShopCardPurchaseSlot : MonoBehaviour
         party.UpdateCreditsBy(-_price);
         party.Cards.Add(_card);
     }
+
+    protected override void Execute(PartyAdventureStateChanged msg) => UpdateAffordability();
 }
