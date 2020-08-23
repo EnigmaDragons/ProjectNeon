@@ -21,7 +21,7 @@
 
     public void OnTurnStart()
     {
-        if (!IsActive) return;
+        if (!IsActive || !_target.IsConscious()) return;
 
         _remainingDuration--;
         _target.State.GainHp(_amount);
