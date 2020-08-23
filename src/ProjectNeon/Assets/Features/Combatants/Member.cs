@@ -8,14 +8,15 @@ public class Member
     public string Name { get; }
     public string Class { get; }
     public TeamType TeamType { get; }
+    public BattleRole BattleRole { get; }
     public MemberState State { get; }
 
     public override string ToString() => $"{Name} {Id}";
     
-    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats)
-        : this(id, name, characterClass, team, baseStats, baseStats.MaxHp()) {}
+    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole)
+        : this(id, name, characterClass, team, baseStats, battleRole, baseStats.MaxHp()) {}
     
-    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, int initialHp)
+    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, int initialHp)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {name} is 0");
@@ -24,6 +25,7 @@ public class Member
         Name = name;
         Class = characterClass;
         TeamType = team;
+        BattleRole = battleRole;
         State = new MemberState(id, baseStats, initialHp);
     }
 

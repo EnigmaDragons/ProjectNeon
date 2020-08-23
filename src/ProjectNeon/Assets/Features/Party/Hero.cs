@@ -37,7 +37,7 @@ public class Hero
             .Plus(Equipment.All.Select(e => e.AdditiveStats()))
             .Times(Equipment.All.Select(e => e.MultiplierStats()));
         
-        var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, stats, CurrentHp);
+        var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, stats, Character.Class.BattleRole, CurrentHp);
         return m;
     }
 }

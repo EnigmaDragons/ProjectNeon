@@ -18,6 +18,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.RemoveDebuffs, new [] { "NumberOfTurns" }},
         {EffectType.AdjustStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
+        {EffectType.AdjustTemporaryStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.EvadeAttacks, new [] { "FloatAmount" }},
     };

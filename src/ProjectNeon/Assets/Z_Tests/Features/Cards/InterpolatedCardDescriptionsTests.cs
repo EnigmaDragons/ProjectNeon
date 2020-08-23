@@ -4,7 +4,7 @@ public sealed class InterpolatedCardDescriptionsTests
 {
     private readonly Member Owner = new Member(0, "", "", TeamType.Enemies, new StatAddends()
         .With(StatType.Damagability, 1)
-        .With(StatType.Attack, 8));
+        .With(StatType.Attack, 8), BattleRole.Unknown);
 
     private readonly EffectData BasicAttack = new EffectData
     {
