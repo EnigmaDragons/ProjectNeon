@@ -17,7 +17,7 @@ public sealed class EffectOnShieldBroken : Effect
 
     public void Apply(Member source, Target target)
     {
-        target.ApplyToAll(m =>
+        target.ApplyToAllConscious(m =>
             m.AddReactiveState(new ReactOnShieldBroken(_isDebuff, 1, _maxDurationTurns, _allMembers, m.MemberId, source, _reaction)));
     }
 }

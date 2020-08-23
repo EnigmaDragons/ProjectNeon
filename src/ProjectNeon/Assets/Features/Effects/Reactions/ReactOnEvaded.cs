@@ -20,7 +20,7 @@ public sealed class EffectOnEvaded : Effect
 
     public void Apply(Member source, Target target)
     {
-        target.ApplyToAll(m =>
+        target.ApplyToAllConscious(m =>
             m.AddReactiveState(new ReactOnEvaded(_isDebuff, _numberOfUses, _maxDurationTurns, _allMembers, m.MemberId, source, _reaction)));
     }
 }

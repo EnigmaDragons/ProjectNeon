@@ -7,6 +7,6 @@ public class Evade : Effect
 
     public void Apply(Member source, Target target)
     {
-        target.ApplyToAll(x => x.AdjustEvade(_number));
+        target.ApplyToAllConscious(x => x.AdjustEvade(_number));
     }
 }
