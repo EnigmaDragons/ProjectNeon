@@ -23,6 +23,15 @@ public static class TargetExtensions
     public static int TotalRemainingShieldCapacity(this Target t)
         => t.Members.Sum(m => m.RemainingShieldCapacity());
 
+    public static int TotalAttack(this Target t)
+        => t.Members.Sum(m => m.Attack());
+
+    public static int TotalMagic(this Target t)
+        => t.Members.Sum(m => m.Magic());
+
+    public static int TotalOffense(this Target t)
+        => t.TotalAttack() + t.TotalMagic();
+    
     public static bool HasShield(this Target t)
         => t.Members.Sum(m => m.CurrentShield()) > 0;
 

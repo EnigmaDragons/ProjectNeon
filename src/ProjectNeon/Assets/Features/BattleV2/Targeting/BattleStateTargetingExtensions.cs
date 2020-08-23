@@ -2,10 +2,16 @@
 
 public static class BattleStateTargetingExtensions
 {
-    private static Member[] GetConscious(this BattleState state, TeamType team)
-    {
-        return state.Members.Values.Where(x => x.TeamType == team && x.IsConscious()).ToArray();
-    }
+    public static Member[] GetConsciousAllies(this BattleState s, Member m)
+        => s.GetConscious(m.TeamType);
+
+    public static Member[] GetConsciousEnemies(this BattleState s, Member m)
+        => s.GetConscious(m.TeamType == TeamType.Enemies 
+            ? TeamType.Party 
+            : TeamType.Enemies); 
+    
+    public static Member[] GetConscious(this BattleState state, TeamType team) 
+        => state.Members.Values.Where(x => x.TeamType == team && x.IsConscious()).ToArray();
 
     public static Target[] GetPossibleConsciousTargets(this BattleState state, Member self, Group group, Scope scope)
     {

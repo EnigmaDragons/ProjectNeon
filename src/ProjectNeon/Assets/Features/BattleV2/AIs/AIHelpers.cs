@@ -31,6 +31,12 @@ public static class AIHelpers
         .OrderBy(t => t.TotalHpAndShields())
         .First();
 
+    public static Target MostPowerful(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(t => t.TotalOffense())
+        .First();
+
     public static Target MostDamaged(this IEnumerable<Target> targets) => targets
         .ToArray()
         .Shuffled()
