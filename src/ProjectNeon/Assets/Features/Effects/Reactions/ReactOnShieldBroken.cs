@@ -4,10 +4,11 @@ public sealed class EffectOnShieldBroken : Effect
 {
     private readonly bool _isDebuff;
     private readonly int _maxDurationTurns;
+    private readonly ReactiveTriggerScope _triggerScope;
     private readonly ReactionCardType _reaction;
     private readonly IReadOnlyDictionary<int, Member> _allMembers;
 
-    public EffectOnShieldBroken(bool isDebuff, int maxDurationTurns, ReactionCardType reaction, IReadOnlyDictionary<int, Member> allMembers)
+    public EffectOnShieldBroken(bool isDebuff, int maxDurationTurns, ReactiveTriggerScope triggerScope, ReactionCardType reaction, IReadOnlyDictionary<int, Member> allMembers)
     {
         _isDebuff = isDebuff;
         _maxDurationTurns = maxDurationTurns;

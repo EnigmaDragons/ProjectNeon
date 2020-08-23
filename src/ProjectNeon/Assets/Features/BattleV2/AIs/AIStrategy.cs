@@ -29,6 +29,12 @@ public sealed class AIStrategy
             return new Multiple(allConciousMembers);
         if (a.Group == Group.All && a.Scope == Scope.One)
             return new Single(allConciousMembers.Random());
+        if (a.Group == Group.All && a.Scope == Scope.AllExcept)
+            return new Multiple(allConciousMembers.Shuffled().Skip(1).ToArray());
+        if (a.Group == Group.Ally && a.Scope == Scope.AllExcept)
+            return new Multiple(allConciousMembers.Where(x => x.TeamType == me.TeamType).ToArray().Shuffled().Skip(1).ToArray());
+        if (a.Group == Group.Opponent && a.Scope == Scope.AllExcept)
+            return new Multiple(allConciousMembers.Where(x => x.TeamType != me.TeamType).ToArray().Shuffled().Skip(1).ToArray());
         throw new Exception("Couldn't find a valid target scope, what the hell happened!");
     }
 }

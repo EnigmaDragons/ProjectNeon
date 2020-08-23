@@ -2,5 +2,6 @@
 public enum Scope
 {
     One,
-    All
+    All,
+    AllExcept
 }
