@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
 {
@@ -39,7 +40,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         if (_numActions == 0)
         {
             Log.Info($"Card {_card.Name} has no Card Actions");
-            OnTargetConfirmed();
+            OnTargetConfirmed(Group.All, Scope.All);
             return;
         }
 
@@ -49,10 +50,10 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     private void PresentPossibleTargets()
     {
         var action = _card.ActionSequences[_actionIndex];
-        var possibleTargets = battleState.GetPossibleConsciousTargets(_card.Owner, action.Group, action.Scope);
+        var possibleTargets = battleState.GetPossibleConsciousTargets(_card.Owner, action.Group, action.Scope == Scope.AllExcept ? Scope.One : action.Scope);
         targetingState.WithPossibleTargets(possibleTargets);
         if (possibleTargets.Length == 1)
-            OnTargetConfirmed();
+            OnTargetConfirmed(action.Group, action.Scope);
     }
 
     public void Cancel() => OnCancelled();
@@ -62,10 +63,14 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         OnSelectionComplete(sourceCardZone);
     }
 
-    public void Confirm() => OnTargetConfirmed();
-    public void OnTargetConfirmed()
+    public void Confirm() => OnTargetConfirmed(_card.ActionSequences[_actionIndex].Group, _card.ActionSequences[_actionIndex].Scope);
+    public void OnTargetConfirmed(Group group, Scope scope)
     {
-        _actionTargets[_actionIndex] = targetingState.Current;
+        if (scope != Scope.AllExcept)
+            _actionTargets[_actionIndex] = targetingState.Current;
+        else
+            _actionTargets[_actionIndex] = battleState.GetPossibleConsciousTargets(_card.Owner, group, scope)
+                .First(target => target.Members.All(member => member != targetingState.Current.Members[0]));
         targetingState.Clear();
 
         if (_actionIndex + 1 == _numActions)

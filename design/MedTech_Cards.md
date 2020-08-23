@@ -15,6 +15,7 @@ Collaborate - 0 Chem - Self - Party draws +1 Card for 3 Turns
 Scan - 0 Chem - 1 Enemy - Give Vulnerable until end of turn. Show Enemy Info.
 Bold Ploy - 0 Chem - Self - Gain 2 Chem. Party plays 1 extra card next turn
 Planning Ahead - 0 Chem - Self - Gain 1 Chem at the start of turn for 3 Turns. Return a discarded card to hand.
+Limitless Dose - 1 Chem - 1 Ally - Stun all other party members party plays 1 extra card and you gain 4 additional cycles next turn
 
 ### Support:
 

@@ -40,11 +40,12 @@ public static class BattleStateTargetingExtensions
     {
         var opponentsAre = myTeam == TeamType.Party ? TeamType.Enemies : TeamType.Party;
         var teamMembers = group == Group.Ally ? GetConscious(state, myTeam) : GetConscious(state, opponentsAre);
-        var membersAsTargets = teamMembers.Select(x => new MemberAsTarget(x)).ToArray();
 
-        return scope == Scope.One
-            ? Targets(membersAsTargets)
-            : Targets(new Team(teamMembers));
+        if (scope == Scope.One)
+            return Targets(teamMembers.Select(x => new MemberAsTarget(x)).ToArray());
+        if (scope == Scope.AllExcept)
+            return Targets(teamMembers.Select(exclusion => new Multiple(teamMembers.Where(x => x != exclusion).ToArray())).ToArray());
+        return Targets(new Team(teamMembers));
     }
 
     private static Target[] Targets(params Target[] targets) => targets;
