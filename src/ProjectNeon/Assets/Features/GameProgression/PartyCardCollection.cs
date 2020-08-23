@@ -21,11 +21,14 @@ public sealed class PartyCardCollection : ScriptableObject
         return this;
     }
 
-    public void Add(CardType c)
+    public void Add(params CardType[] cards)
     {
-        allCards.Add(c);
-        if (!cardsWithCounts.ContainsKey(c))
-            cardsWithCounts[c] = 0;
-        cardsWithCounts[c] = cardsWithCounts[c] + 1;
+        cards.ForEach(c =>
+        {
+            allCards.Add(c);
+            if (!cardsWithCounts.ContainsKey(c))
+                cardsWithCounts[c] = 0;
+            cardsWithCounts[c] = cardsWithCounts[c] + 1;
+        });
     }
 }
