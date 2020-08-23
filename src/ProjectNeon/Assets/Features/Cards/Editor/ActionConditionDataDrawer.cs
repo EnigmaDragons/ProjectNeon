@@ -12,6 +12,7 @@ public class ActionConditionDataDrawer : PropertyDrawer
         {ActionConditionType.Nothing, new string[0]},
         {ActionConditionType.PerformerHasResource, new [] { "FloatAmount", "EffectScope" }},
         {ActionConditionType.RepeatForSpent, new string[0]},
+        {ActionConditionType.TargetSufferedDamage, new string[0]},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

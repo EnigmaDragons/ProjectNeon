@@ -13,6 +13,7 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private CardPlayZone physicalZone;
     [SerializeField] private CardPlayZone playedDiscardZone;
     [SerializeField] private bool isResolving;
+    [SerializeField] private BattleState battleState;
     public IPlayedCard LastPlayed { get; set; }
 
     public void Init()
@@ -97,6 +98,7 @@ public class CardResolutionZone : ScriptableObject
         }
         else
         {
+            AllConditions.InitCardPlaying(battleState.GetSnapshot());
             played.Perform();
             WrapupCard(played, card);
         }
