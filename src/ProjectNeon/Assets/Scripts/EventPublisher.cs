@@ -13,5 +13,7 @@ public class EventPublisher : ScriptableObject
     public void ToggleGameSpeed() => Message.Publish(new ToggleGameSpeed());
     public void ToggleShop() => Message.Publish(new ToggleShop());
     public void TogglePartyDetails() => Message.Publish(new TogglePartyDetails());
+    public void ShowDeckBuilder() => Message.Publish(new ShowDeckBuilder());
+    public void CloseDeckBuilder() => Message.Publish(new CloseDeckBuilder());
     public void GivePlayerTonsOfCredits() => Message.Publish(new GivePartyCredits(1000000));
 }
