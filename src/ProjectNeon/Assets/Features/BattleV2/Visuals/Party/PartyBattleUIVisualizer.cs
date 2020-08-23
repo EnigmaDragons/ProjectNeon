@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Obsolete]
 public sealed class PartyBattleUIVisualizer : MonoBehaviour
 {
     [SerializeField] private PartyArea partyArea;
