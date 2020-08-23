@@ -4,8 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameState/DeckBuilder")]
 public class DeckBuilderState : ScriptableObject
 {
-    [SerializeField] private GameEvent heroSelected;
-
     private HeroesDeck _selectedHeroesDeck;
 
     public List<HeroesDeck> HeroesDecks { get; set; }
@@ -16,7 +14,7 @@ public class DeckBuilderState : ScriptableObject
         set
         {
             _selectedHeroesDeck = value;
-            heroSelected.Publish();
+            Message.Publish(new DeckBuilderHeroSelected(_selectedHeroesDeck));
         }
     }
 }

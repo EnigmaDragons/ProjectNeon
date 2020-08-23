@@ -2,19 +2,22 @@
 using TMPro;
 using UnityEngine;
 
-public class CardInDeckButton : MonoBehaviour
+public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
 {
     [SerializeField] private TextMeshProUGUI cardNameText;
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private DeckBuilderState state;
-    [SerializeField] private GameEvent deckChanged;
     [SerializeField] private HoverCard hoverCard;
 
     private Canvas _canvas;
     private CardType _card;
     private int _count;
     private GameObject _hoverCard;
-
+    
+    private void Awake() => _canvas = FindObjectOfType<Canvas>();
+    private void OnDestroy() => OnExit();
+    protected override void Execute(DeckBuilderCurrentDeckChanged msg) => UpdateInfo();
+    
     public void Init(CardType card)
     {
         _card = card;
@@ -25,7 +28,7 @@ public class CardInDeckButton : MonoBehaviour
     {
         state.SelectedHeroesDeck.Deck.Remove(state.SelectedHeroesDeck.Deck.First(x => x.Name == _card.Name));
         _count--;
-        deckChanged.Publish();
+        Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
     }
 
     public void OnHover()
@@ -39,11 +42,6 @@ public class CardInDeckButton : MonoBehaviour
         if (_hoverCard != null)
             Destroy(_hoverCard);
     }
-
-    private void Awake() => _canvas = FindObjectOfType<Canvas>();
-    private void OnEnable() => deckChanged.Subscribe(UpdateInfo, this);
-    private void OnDisable() => deckChanged.Unsubscribe(this);
-    private void OnDestroy() => OnExit();
 
     private void UpdateInfo()
     {

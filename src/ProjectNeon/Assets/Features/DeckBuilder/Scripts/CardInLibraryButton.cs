@@ -1,19 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using TMPro;
+using UnityEngine;
 
 public class CardInLibraryButton : MonoBehaviour
 {
     [SerializeField] private CardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
-    [SerializeField] private GameEvent deckChanged;
+    [SerializeField] private TextMeshProUGUI numCopiesLabel;
 
-    public void Init(CardType card)
+    public void Init(CardType card, int numTotal, int numAvailable)
     {
-        presenter.Set(card, () => AddCard(card));
+        var action = numAvailable > 0 
+            ? (Action)(() => AddCard(card))
+            : () => { };
+        presenter.Set(card, action);
+        numCopiesLabel.text = $"{numAvailable}/{numTotal}";
     }
 
     public void AddCard(CardType card)
     {
         state.SelectedHeroesDeck.Deck.Add(card);
-        deckChanged.Publish();
+        Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
     }
 }
