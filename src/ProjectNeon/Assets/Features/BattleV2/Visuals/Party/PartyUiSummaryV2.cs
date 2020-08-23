@@ -35,7 +35,7 @@ public class PartyUiSummaryV2 : MonoBehaviour
         {
             var h = Instantiate(heroPresenter,
                 new Vector3(position.x + xOffset + xSpacing * i, position.y +yOffset + ySpacing * i, position.z), Quaternion.identity, gameObject.transform); 
-            h.Set(heroes[i]);
+            h.Set(heroes[heroes.Length - 1 - i]);
             active.Add(h);
         }
     }

@@ -47,7 +47,13 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Damagability].Icon, Text = "" });
 
         if (_member.State.HasStatus(StatusTag.CounterAttack))
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.CounterAttack].Icon, Text = "" }); 
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.CounterAttack].Icon, Text = "" });
+        
+        if (_member.State.HasStatus(StatusTag.DamageOverTime))
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.DamageOverTime].Icon, Text = "" });
+        
+        if (_member.State.HasStatus(StatusTag.HealOverTime))
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.HealOverTime].Icon, Text = "" });
         
         UpdateStatuses(statuses);
     }

@@ -21,7 +21,7 @@ public static class AllEffects
         { EffectType.RemoveShields, e => new SimpleEffect((src, m) => m.GainShield(-999)) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
         { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount), true))) },
-        { EffectType.StealLifeNextAttack, e => new Recurrent(new StealLife(e.FloatAmount, e.NumberOfTurns), 1)},
+        { EffectType.StealLifeNextAttack, e => new NoEffect() }, // TODO: Implement Life Steal
         { EffectType.InterceptAttackForTurns, e => new InterceptAttack(e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount, e.HitsRandomTargetMember)},
         { EffectType.EvadeAttacks, e => new Evade(e.IntAmount) },

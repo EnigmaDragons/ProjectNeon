@@ -27,6 +27,7 @@ public class AdventureProgress : ScriptableObject
     {
         currentAdventure = a;
         Reset();
+        Log.Info($"Init Adventure. {this}");
     }
     
     public override string ToString() =>

@@ -55,8 +55,10 @@ public sealed class MemberState : IStats
     public IResourceType PrimaryResource => ResourceTypes[0];
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
     public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
-    public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Tag == tag);
     public ReactiveStateV2[] ReactiveStates => _reactiveStates.ToArray();
+    public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Tag == tag) 
+                                            || _additiveMods.Any(r => r.Tag == tag) 
+                                            || _multiplierMods.Any(r => r.Tag == tag);
     
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
