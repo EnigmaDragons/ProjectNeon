@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class CardPresenter : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private BattleState battleState;
+    [SerializeField] private CardRarityPresenter rarity;
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI type;
@@ -76,6 +77,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
             Log.Error($"{_cardType} is missing it's Type Description");
         type.text = _cardType.TypeDescription;
         art.sprite = _cardType.Art;
+        rarity.Set(card.Rarity);
         
         var cost = card.Cost;
         var hasCost = !cost.ResourceType.Name.Equals("None") && cost.Amount > 0;
