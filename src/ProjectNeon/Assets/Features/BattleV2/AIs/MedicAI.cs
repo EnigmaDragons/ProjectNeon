@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/MedicAI")]
 public sealed class MedicAI : TurnAI
 {
-    private static readonly DictionaryWithDefault<string, int> CardTypePriority = new DictionaryWithDefault<string, int>(99)
+    private static readonly DictionaryWithDefault<CardTag, int> CardTypePriority = new DictionaryWithDefault<CardTag, int>(99)
     {
-        { "Healing", 1 },
-        { "Defense", 2 },
+        { CardTag.Healing, 1 },
+        { CardTag.Defense, 2 },
     };
     
     public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
@@ -19,19 +19,21 @@ public sealed class MedicAI : TurnAI
             ? battleState.Enemies.Where(m => m.IsConscious()) 
             : battleState.Heroes.Where(m => m.IsConscious());
         
-        var maybeCard = new Maybe<CardType>();
-        IEnumerable<CardType> cardOptions = playableCards;
+        var maybeCard = new Maybe<CardTypeData>();
+        IEnumerable<CardTypeData> cardOptions = playableCards;
         // TODO: Dealing killing blow if possible with an attack card
 
-        if (allies.Count() == 1 && cardOptions.Any(c => c.TypeDescription.Contains("Attack")))
-            maybeCard = cardOptions.Where(c => c.TypeDescription.Contains("Attack"))
-                .MostExpensive();
+        var attackCards = cardOptions.Where(c => c.Is(CardTag.Attack)).ToList();
+        if (allies.Count() == 1 && attackCards.Any())
+            maybeCard = new Maybe<CardTypeData>(attackCards.MostExpensive());
         
+        // Don't play a heal if all allies are very healthy
         if (allies.All(a => a.CurrentHp() >= a.MaxHp() * 0.9))
-            cardOptions = cardOptions.Where(x => x.TypeDescription != "Healing");
+            cardOptions = cardOptions.Where(c => !c.Is(CardTag.Healing));
 
+        // Don't play a shield if all allies are already shielded
         if (allies.All(a => a.RemainingShieldCapacity() > a.MaxShield() * 0.7))
-            cardOptions = cardOptions.Where(x => !(x.TypeDescription == "Defense" && x.Tags.Contains(CardTag.Shield)));
+            cardOptions = cardOptions.Where(x => !x.Is(CardTag.Defense, CardTag.Shield));
 
         var card = maybeCard.IsPresent 
             ? maybeCard.Value 
@@ -39,15 +41,15 @@ public sealed class MedicAI : TurnAI
                 .ToArray()
                 .Shuffled()
                 .OrderByDescending(c => c.Cost.Amount)
-                .ThenBy(c => CardTypePriority[c.TypeDescription])
+                .ThenBy(c => CardTypePriority[c.Tags.First()]) // Maybe needs a better way to prioritze
                 .First();
         
         var targets = card.ActionSequences.Select(action => 
         {
             var possibleTargets = battleState.GetPossibleConsciousTargets(me, action.Group, action.Scope);
-            if (card.TypeDescription == "Healing")
+            if (card.Is(CardTag.Healing))
                 return possibleTargets.MostDamaged();
-            if (card.TypeDescription == "Defense" && card.Tags.Contains(CardTag.Shield))
+            if (card.Is(CardTag.Defense, CardTag.Shield))
             {
                 if (possibleTargets.Any(x => !x.HasShield()))
                     return possibleTargets.Where(x => !x.HasShield())
@@ -56,7 +58,7 @@ public sealed class MedicAI : TurnAI
                 return possibleTargets.OrderByDescending(x => x.TotalRemainingShieldCapacity()).First();
             }
 
-            if (card.TypeDescription == "Attack")
+            if (card.Is(CardTag.Attack))
                 return strategy.AttackTargetFor(action);
             return possibleTargets.Random();
         });

@@ -27,16 +27,16 @@ public class HypervisorAI : TurnAI
 
         if (allies.Length == 1)
         {
-            var attackCard = playableCards.Where(c => c.TypeDescription.Contains("Attack")).Random()
+            var attackCard = playableCards.Where(c => c.Is(CardTag.Attack)).Random()
                 .CreateInstance(battleState.GetNextCardId(), me);
             return new PlayedCardV2(me, attackCard.ActionSequences.Select(strategy.AttackTargetFor).ToArray(), attackCard);
         }
         else
-            playableCards = playableCards.Where(x => !x.TypeDescription.Contains("Attack")).ToArray();
+            playableCards = playableCards.Where(x => !x.Is(CardTag.Attack)).ToArray();
         if (allies.Length == 2)
-            playableCards = playableCards.Where(cardType => cardType.actionSequences.Any(sequence => sequence.Group != Group.Ally || sequence.Scope != Scope.All)).ToArray();
+            playableCards = playableCards.Where(cardType => cardType.ActionSequences.Any(sequence => sequence.Group != Group.Ally || sequence.Scope != Scope.All)).ToArray();
         var card = playableCards.Random();
-        return new PlayedCardV2(me, card.actionSequences.Select(action =>
+        return new PlayedCardV2(me, card.ActionSequences.Select(action =>
         {
             if (action.Group == Group.Ally && action.Scope == Scope.One)
             {

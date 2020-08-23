@@ -10,12 +10,12 @@ public sealed class StrikerAI : TurnAI
         var me = battleState.Members[memberId];
         var playableCards = battleState.GetPlayableCards(memberId);
 
-        IEnumerable<CardType> cardOptions = playableCards;
-        Maybe<CardType> maybeCard = Maybe<CardType>.Missing();
+        IEnumerable<CardTypeData> cardOptions = playableCards;
+        var maybeCard = Maybe<CardTypeData>.Missing();
         
         // Always play a Super Card if charged
         if (me.HasMaxPrimaryResource())
-            maybeCard = playableCards.MostExpensive();
+            maybeCard = new Maybe<CardTypeData>(playableCards.MostExpensive());
         
         // Don't buff self if already buffed
         if (me.HasAttackBuff())

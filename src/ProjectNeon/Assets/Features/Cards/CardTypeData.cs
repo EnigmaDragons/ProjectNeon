@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public interface CardTypeData 
@@ -15,4 +16,11 @@ public interface CardTypeData
     [Obsolete] CardActionSequence[] ActionSequences  { get; }
     CardActionsData[] Actions { get; }
     Rarity Rarity { get; }
+}
+
+public static class CardTypeDataExtensions
+{
+    public static bool Is(this CardTypeData c, params CardTag[] tags) => tags.All(tag => c.Tags.Contains(tag));
+    
+    public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c);
 }

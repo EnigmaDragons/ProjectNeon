@@ -8,10 +8,12 @@ public sealed class PartyAdventureState : ScriptableObject
 {
     [SerializeField] private Party party;
     [SerializeField] private int credits;
+    [SerializeField] private int numShopRestocks;
     [SerializeField] private PartyCardCollection cards;
     [SerializeField] private PartyEquipmentCollection equipment;
     [SerializeField] private Hero[] heroes = new Hero[0];
-    
+
+    public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
     
     public HeroCharacter[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
@@ -25,7 +27,8 @@ public sealed class PartyAdventureState : ScriptableObject
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
         heroes = party.Initialized(one, two, three).Heroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
-        credits = 0;
+        credits = heroes.Sum(h => h.Character.StartingCredits);
+        numShopRestocks = 2;
         cards.Initialized(Decks.SelectMany(d => d.Cards));
         equipment = new PartyEquipmentCollection();
         return this;
@@ -33,6 +36,7 @@ public sealed class PartyAdventureState : ScriptableObject
     
     public void UpdateAdventureHp(int[] hps) => UpdateState(() => hps.ForEachIndex((hp, i) => heroes[i].SetHp(hp)));
     public void UpdateCreditsBy(int amount) => UpdateState(() => credits += amount);
+    public void UpdateNumShopRestocksBy(int amount) => UpdateState(() => numShopRestocks += amount);
 
     public int CurrentHpOf(HeroCharacter hero) => Hp[IndexOf(hero)];
     public void HealHeroToFull(HeroCharacter hero)

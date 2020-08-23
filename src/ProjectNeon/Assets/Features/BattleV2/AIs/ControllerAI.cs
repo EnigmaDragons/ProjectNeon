@@ -12,15 +12,15 @@ public class ControllerAI : TurnAI
         var allies = battleState.GetConsciousAllies(me);
         var enemies = battleState.GetConsciousEnemies(me);
 
-        var maybeCard = new Maybe<CardType>();
-        IEnumerable<CardType> cardOptions = playableCards;
+        var maybeCard = new Maybe<CardTypeData>();
+        IEnumerable<CardTypeData> cardOptions = playableCards;
         
         // Go Ham if Alone
         if (allies.Count() == 1 && cardOptions.Any(c => c.Tags.Contains(CardTag.Attack)))
-            maybeCard = cardOptions.Where(c => c.Tags.Contains(CardTag.Attack)).MostExpensive();
+            maybeCard = new Maybe<CardTypeData>(cardOptions.Where(c => c.Tags.Contains(CardTag.Attack)).MostExpensive());
         // Play Ultimate
         else if (cardOptions.Any(c => c.Tags.Contains(CardTag.Ultimate)))
-            maybeCard = cardOptions.Where(c => c.Tags.Contains(CardTag.Ultimate)).MostExpensive();
+            maybeCard = new Maybe<CardTypeData>(cardOptions.Where(c => c.Tags.Contains(CardTag.Ultimate)).MostExpensive());
 
         // Don't Hit Enemy Shields if the play isn't very effective
         if (enemies.Sum(e => e.CurrentShield()) < 15)

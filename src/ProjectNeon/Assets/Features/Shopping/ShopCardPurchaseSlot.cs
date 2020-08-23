@@ -15,6 +15,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
     
     public ShopCardPurchaseSlot Initialized(CardType c)
     {
+        soldVisual.SetActive(false);
         _card = c;
         _price = c.ShopPrice();
         costLabel.text = _price.ToString();
