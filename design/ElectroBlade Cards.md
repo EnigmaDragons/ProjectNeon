@@ -15,7 +15,8 @@
 - Current Slash - 1 Enemy - Gain 1 Energy. 0.8x attack. 
 - OmniSlash - X Energy - 1 Enemy - 1x attack + 2 per Energy Spent. 
 - Surge Break - 6 Energy - All Enemies - remove shields + stun
-- Static Strike - o Energy - Attack for 0.7xAtk, each time you hit that target for the turn gain 1 Energy
+- Static Strike - 0 Energy - Attack for 0.7xAtk, each time you hit that target for the turn gain 1 Energy
+- Shock And Awe - 0 Energy - Gain 1 Energy, Attack for 0.5 2 random targets
 
 ### Defensive
 
