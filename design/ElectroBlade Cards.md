@@ -7,7 +7,7 @@
 - Jolt - 4 Energy. Deal 1x attack. Stun.
 - Energize Blade - 1 Energy - Enchant(ElectroBlade enchants his blade for 3 turns) Attacks deal 5 bonus damage. 
 - Energize - Self - +2 Energy.
-- Power Slash - 1 Enemy - Deal 0.5fxATK, if the enemy took any damage to their health Gain 1 Energy and the Enemy Loses 1 Tech Point 
+- Power Siphon - 1 Enemy - Deal 0.5xATK, if the enemy took any damage to their health Gain 1 Energy and the Enemy Loses 1 Tech Point 
 
 ### Offensive
 

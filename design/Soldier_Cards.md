@@ -14,7 +14,7 @@
 - Burst Fire - 2 Ammo - 1 Enemy - Deal 1.5x ATK damage
 - Grenade - 3 Ammo - All Enemies - Deal 1x ATK damage
 - Naplam Grenade - 6 Ammo - All Enemies - Deal 1.5x ATK damage. Add Burn 3 for 3 turns
-- Covering Fire - 1 Ammo - Deal 1x ATK damage. Enemy has -0.3x Attack for the turn
+- Covering Fire - 2 Ammo - Deal 1.2x ATK damage. Enemy has -0.3x Attack for the turn
 - Bullet Barrage - X Ammo - X Random Enemies - Deals 0.5x ATK
 	(Total number of shots is X)
 
