@@ -59,7 +59,6 @@ public class EquipmentGenerator
         selectedStats.Add(primarySelectedStat.ToString());
         var slot = SlotFor(primarySelectedStat);
         var name = NameFor(slot, rarity);
-        Debug.Log($"Generating {rarity} Equipment: {name}");
         
         var remainingPointsToSpend = totalPowerLevel;
         var selectedStat = primarySelectedStat;
@@ -68,7 +67,6 @@ public class EquipmentGenerator
             var attributePointsToSpend = Rng.Int(1, remainingPointsToSpend + 1);
             remainingPointsToSpend -= attributePointsToSpend;
 
-            Debug.Log($"Selected Stat {selectedStat}");
             modifiers.Add(AdditiveModifier(attributePointsToSpend, selectedStat));
             description += modifiers.Last().Describe();
             
@@ -76,7 +74,6 @@ public class EquipmentGenerator
             {
                 description += " ";
                 selectedStat = GeneratableStats.Where(s => !selectedStats.Contains(s.ToString())).Random();
-                Debug.Log($"New Selected Stat {selectedStat}");
                 selectedStats.Add(selectedStat.ToString());
             }
         }
