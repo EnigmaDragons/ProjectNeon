@@ -3,28 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class DeckUI : MonoBehaviour
+public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckChanged>
 {
     [SerializeField] private PageViewer pageViewer;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private CardInDeckButton cardInDeckButtonTemplate;
     [SerializeField] private GameObject emptyCard;
-    [SerializeField] private GameEvent heroChanged;
-    [SerializeField] private GameEvent deckChanged;
 
     private List<CardInDeckButton> _cardButtons;
 
-    private void OnEnable()
-    {
-        heroChanged.Subscribe(GenerateDeck, this);
-        deckChanged.Subscribe(OnDeckChanged, this);
-    }
-
-    private void OnDisable()
-    {
-        heroChanged.Unsubscribe(this);
-        deckChanged.Unsubscribe(this);
-    }
+    protected override void Execute(DeckBuilderHeroSelected msg) => GenerateDeck();
+    protected override void Execute(DeckBuilderCurrentDeckChanged msg) => OnDeckChanged();
 
     private void OnDeckChanged()
     {
