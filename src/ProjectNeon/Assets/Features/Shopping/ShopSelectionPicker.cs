@@ -5,8 +5,8 @@ public class ShopSelectionPicker
 {
     private static readonly int NumCards = 4;
     private static readonly int NumEquipment = 2;
-    
-    public ShopSelection GenerateSelection(ShopCardPool cards, EquipmentPool equipment, PartyAdventureState party)
+
+    public CardType[] PickCards(PartyAdventureState party, ShopCardPool cards, int numCards)
     {
         var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All));
 
@@ -18,8 +18,17 @@ public class ShopSelectionPicker
             .Shuffled();
 
         var selectedCards = new HashSet<CardType>();
-        for (var i = 0; i < weightedCards.Length && selectedCards.Count < NumCards; i++)
+        for (var i = 0; i < weightedCards.Length && selectedCards.Count < numCards; i++)
             selectedCards.Add(weightedCards[i]);
+        
+        return selectedCards.ToArray();
+    }
+    
+    public ShopSelection GenerateSelection(ShopCardPool cards, EquipmentPool equipment, PartyAdventureState party)
+    {
+        var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All));
+
+        var selectedCards = PickCards(party, cards, NumCards);
 
         var weightedEquipment = equipment
             .All

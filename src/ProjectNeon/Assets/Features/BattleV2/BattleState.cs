@@ -21,7 +21,8 @@ public class BattleState : ScriptableObject
     [Header("ReadOnly")]
     [SerializeField, ReadOnly] private string[] memberNames;
     [SerializeField, ReadOnly] private int rewardCredits;
-
+    [SerializeField, ReadOnly] private CardType[] rewardCards;
+    
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
     public Effect[] QueuedEffects => _queuedEffects.ToArray();
     
@@ -30,6 +31,7 @@ public class BattleState : ScriptableObject
     public bool SelectionStarted = false;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
     public int RewardCredits => rewardCredits;
+    public CardType[] RewardCards => rewardCards; 
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
 
     public bool NeedsCleanup => needsCleanup;
@@ -106,6 +108,7 @@ public class BattleState : ScriptableObject
         
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;
+        rewardCards = new CardType[0];
         needsCleanup = true;
         _queuedEffects = new Queue<Effect>();
         
@@ -141,6 +144,7 @@ public class BattleState : ScriptableObject
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
+    public void SetRewardCards(CardType[] cards) => UpdateState(() => rewardCards = cards);
 
     public void Queue(Effect e) => UpdateState(() => _queuedEffects.Enqueue(e));
     public Effect DequeueEffect()
@@ -156,11 +160,13 @@ public class BattleState : ScriptableObject
     {
         RecordPartyAdventureHp();
         GrantRewardCredits();
+        GrantRewardCards();
         EnemyArea.Clear();
     }
     
     private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => Math.Min(h.CurrentHp(), h.State.BaseStats.MaxHp())).ToArray());
     private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits);
+    private void GrantRewardCards() => Party.Cards.Add(rewardCards);
     
     // Queries
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);

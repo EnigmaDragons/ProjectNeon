@@ -53,7 +53,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         _card = null;
         _cardType = null;
     }
-
+    
     public void Set(Card card, Action onClick, bool canHighlight = false)
     {
         _card = card;

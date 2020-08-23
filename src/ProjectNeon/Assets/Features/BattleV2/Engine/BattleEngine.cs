@@ -9,6 +9,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
     [SerializeField] private BattleCommandPhase commandPhase;
     [SerializeField] private BattleResolutionPhase resolutionPhase;
     [SerializeField] private BattleTurnWrapUp turnWrapUp;
+    [SerializeField] private ShopCardPool cardPrizePool;
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
     [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
@@ -71,7 +72,12 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
         if (state.PlayerLoses())
             Message.Publish(new BattleFinished(TeamType.Enemies));
         else if (state.PlayerWins())
+        {
+            var rewardPicker = new ShopSelectionPicker();
+            state.SetRewardCards(rewardPicker.PickCards(state.Party, cardPrizePool, 2));
             Message.Publish(new BattleFinished(TeamType.Party));
+        }
+
         state.Wrapup();
         BeginPhase(BattleV2Phase.Finished);
     }
