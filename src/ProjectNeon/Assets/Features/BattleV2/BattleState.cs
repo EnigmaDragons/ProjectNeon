@@ -13,7 +13,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private EnemyArea enemies;
     [SerializeField] private bool needsCleanup;
     [SerializeField] private int nextCardId;
-    
+
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
     [SerializeField] private Enemy[] nextEnemies;
@@ -25,7 +25,6 @@ public class BattleState : ScriptableObject
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
     public Effect[] QueuedEffects => _queuedEffects.ToArray();
     
-    private int NumRecyclesPerTurn = 2;
     private int _numberOfRecyclesRemainingThisTurn = 0;
     
     public bool SelectionStarted = false;
@@ -41,10 +40,12 @@ public class BattleState : ScriptableObject
     public IReadOnlyDictionary<int, Member> Members => _membersById;
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] Enemies => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
+    public PlayerState PlayerState => _playerState;
     private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
+    private PlayerState _playerState = new PlayerState();
 
     // Setup
     public BattleState Initialized(PartyArea partyArea, EnemyArea enemyArea)
@@ -100,12 +101,15 @@ public class BattleState : ScriptableObject
         _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
-
-        _numberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
+        
+        _playerState = new PlayerState();
+        
+        _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;
         needsCleanup = true;
         _queuedEffects = new Queue<Effect>();
         
+        AllEffects.InitTurnStart(Members, PlayerState);
         BattleLog.Write("Finished Battle State Init");
         return this;
     }
@@ -120,13 +124,19 @@ public class BattleState : ScriptableObject
     }
 
     // During Battle State Tracking
-    public void StartTurn() => UpdateState(() => { Members.Values.ForEach(m => m.State.OnTurnStart()); });
+    public void StartTurn() => UpdateState(() =>
+    {
+        Members.Values.ForEach(m => m.State.OnTurnStart());
+        PlayerState.OnTurnStart();
+        AllEffects.InitTurnStart(Members, PlayerState);
+    });
     
     public void AdvanceTurn() =>
         UpdateState(() =>
         {
-            _numberOfRecyclesRemainingThisTurn = NumRecyclesPerTurn;
+            _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
             Members.Values.ForEach(m => m.State.OnTurnEnd()); 
+            PlayerState.OnTurnEnd();
         });
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);

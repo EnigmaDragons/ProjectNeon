@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Battle/CardPlayZone")]
 public class CardPlayZone : ScriptableObject
 {
-    [SerializeField] private IntReference maxCards = new IntReference(6);
+    [SerializeField] private IntReference maxCards = new IntReference(10);
     [SerializeField] private Card[] cards;
     [SerializeField] private GameEvent onZoneCardsChanged;
 

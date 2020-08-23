@@ -8,7 +8,6 @@ public class OnShieldBrokenTests
     [TestCase(2, false)]
     public void OnShieldBroken_Attacked_TriggersCorrectly(int startingShields, bool triggered)
     {
-        AllEffects.InitBattleState(ScriptableObject.CreateInstance<BattleState>());
         var target = TestMembers.Create(x => x.With(StatType.MaxHP, 10).With(StatType.Toughness, 1));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
         target.State.GainShield(startingShields);
