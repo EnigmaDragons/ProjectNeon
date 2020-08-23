@@ -6,7 +6,7 @@ using UnityEngine;
 public class Hero
 {
     [SerializeField] private HeroCharacter character;
-    [SerializeField] private int currentHp;
+    [SerializeField] private int missingHp;
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
 
@@ -14,30 +14,28 @@ public class Hero
     {
         this.character = character;
         this.deck = deck;
-        currentHp = character.Stats.MaxHp();
+        missingHp = 0;
         equipment = new HeroEquipment(character.Class);
     }
 
     public CharacterClass Class => character.Class;
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
-    public int CurrentHp => currentHp;
+    public int CurrentHp => Stats.MaxHp() - missingHp;
     public HeroEquipment Equipment => equipment;
+    
+    // TODO: Maybe don't calculate this every time
+    private IStats Stats => Character.Stats
+        .Plus(Equipment.All.Select(e => e.AdditiveStats()))
+        .Times(Equipment.All.Select(e => e.MultiplierStats()));
 
-    public void HealToFull() => currentHp = character.Stats.MaxHp();
-    public void SetHp(int hp) => currentHp = hp;
+    public void HealToFull() => missingHp = 0;
+    public void SetHp(int hp) => missingHp = Stats.MaxHp() - hp;
     public void SetDeck(RuntimeDeck d) => deck = d;
     public void Equip(Equipment e) => equipment.Equip(e);
     public void Unequip(Equipment e) => equipment.Unequip(e);
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
-    
+
     public Member AsMember(int id)
-    {
-        var stats = Character.Stats
-            .Plus(Equipment.All.Select(e => e.AdditiveStats()))
-            .Times(Equipment.All.Select(e => e.MultiplierStats()));
-        
-        var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, stats, Character.Class.BattleRole, CurrentHp);
-        return m;
-    }
+        => new Member(id, Character.Name, Character.Class.Name, TeamType.Party, Stats, Character.Class.BattleRole, CurrentHp);
 }

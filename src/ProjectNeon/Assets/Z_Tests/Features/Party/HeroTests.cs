@@ -25,4 +25,29 @@ public class HeroTests
         
         Assert.AreEqual(10, member.Attack());
     }
+
+    [Test]
+    public void Hero_EquipmentBoostsMaxHp_CurrentHpAdjustedCorrectly()
+    {
+        var hpBooster = new InMemoryEquipment
+        {
+            Modifiers = new EquipmentStatModifier[1]
+            {
+                new EquipmentStatModifier
+                    {Amount = 2, StatType = StatType.MaxHP.ToString(), ModifierType = StatMathOperator.Additive}
+            }
+        };
+        
+        var hero = new Hero(new InMemoryHeroCharacter
+        {
+            Class = TestClasses.Soldier,
+            Stats = new StatAddends()
+                .With(StatType.MaxHP, 10)
+        }, new RuntimeDeck());
+        
+        hero.Equip(hpBooster);
+        Assert.AreEqual(12, hero.CurrentHp);
+        hero.Unequip(hpBooster);
+        Assert.AreEqual(10, hero.CurrentHp);
+    }
 }

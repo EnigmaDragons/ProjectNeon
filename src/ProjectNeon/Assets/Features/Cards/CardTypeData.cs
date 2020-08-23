@@ -14,4 +14,5 @@ public interface CardTypeData
     Maybe<CharacterClass> LimitedToClass  { get; }
     [Obsolete] CardActionSequence[] ActionSequences  { get; }
     CardActionsData[] Actions { get; }
+    Rarity Rarity { get; }
 }

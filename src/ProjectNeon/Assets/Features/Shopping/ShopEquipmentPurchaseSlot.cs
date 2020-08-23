@@ -11,6 +11,7 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
     [SerializeField] private GameObject darken;
 
     private Equipment _equipment;
+    private bool _purchased;
     
     public ShopEquipmentPurchaseSlot Initialized(Equipment e)
     {
@@ -22,6 +23,9 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
 
     private void UpdateAffordability()
     {
+        if (_purchased)
+            return;
+        
         var canAfford = party.Credits >= _equipment.Price;
         equipmentPresenter.Initialized(_equipment, canAfford ? Purchase : (Action) (() => { }));
         if (!canAfford)
@@ -30,6 +34,7 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
 
     private void Purchase()
     {
+        _purchased = true;
         equipmentPresenter.gameObject.SetActive(false);
         soldVisual.SetActive(true);
         party.UpdateCreditsBy(-_equipment.Price);
