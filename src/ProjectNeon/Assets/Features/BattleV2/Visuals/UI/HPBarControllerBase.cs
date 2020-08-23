@@ -8,8 +8,6 @@ public abstract class HPBarControllerBase : OnMessage<MemberStateChanged>
     private int CurrentHp => _member.CurrentHp();
     private int CurrentShield => _member.CurrentShield();
 
-    private void Start() => SetHpFillAmount(1);
-
     private void UpdateUi()
     {
         float totalEffectiveHp = MaxHp + CurrentShield;
