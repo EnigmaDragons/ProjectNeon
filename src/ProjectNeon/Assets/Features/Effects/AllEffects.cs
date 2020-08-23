@@ -11,9 +11,9 @@ public static class AllEffects
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.HealFlat, e => new Heal(e.IntAmount) },
         { EffectType.PhysicalDamage, e => new Damage(new PhysicalDamage(e.FloatAmount)) },
-        { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With((StatType)Enum.Parse(typeof(StatType), e.EffectScope, true), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
-        { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With((StatType)Enum.Parse(typeof(StatType), e.EffectScope, true), e.FloatAmount), e.NumberOfTurns, e.IntAmount < 0, e.IntAmount == -1)))},
-        { EffectType.AdjustTemporaryStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With((TemporalStatType)Enum.Parse(typeof(TemporalStatType), e.EffectScope, true), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
+        { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
+        { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.NumberOfTurns, e.IntAmount < 0, e.IntAmount == -1)))},
+        { EffectType.AdjustTemporaryStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.RemoveTemporaryEffects(effect => effect.IsDebuff))},
         { EffectType.ShieldFlat, e => new ShieldFlat(e.IntAmount) },
         { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
@@ -65,13 +65,22 @@ public static class AllEffects
 
     public static Effect Create(EffectData effectData)
     {
-        var effectType = effectData.EffectType;
-        if (!_createEffectOfType.ContainsKey(effectData.EffectType))
+        try
         {
-            Log.Error($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
+            var effectType = effectData.EffectType;
+            if (!_createEffectOfType.ContainsKey(effectData.EffectType))
+            {
+                Log.Error($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
+                return _createEffectOfType[EffectType.Nothing](effectData);
+            }
+
+            return _createEffectOfType[effectType](effectData);
+        }
+        catch (Exception e)
+        {
+            Log.Error($"EffectType {effectData.EffectType} is broken {e}");
             return _createEffectOfType[EffectType.Nothing](effectData);
         }
-        return _createEffectOfType[effectType](effectData);
     }
 
     public static void InitTurnStart(IReadOnlyDictionary<int, Member> members, PlayerState playerState)

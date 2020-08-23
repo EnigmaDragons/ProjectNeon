@@ -26,5 +26,11 @@ public sealed class StatMultipliers : IStats
         return this;
     }
 
+    public StatMultipliers WithRaw(string statType, float value)
+    {
+        _values[statType] = value;
+        return this;
+    }
+    
     public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
 }
