@@ -12,7 +12,10 @@ public enum EffectType
     OnEvaded = 9,
     ApplyVulnerable = 10,
     ShieldToughness = 11,
+    AdjustTemporaryStatAdditively = 12,
     StunForTurns = 13,
+    
+    
     StealLifeNextAttack = 16,
     Attack = 17,
     InterceptAttackForTurns = 18,
@@ -26,6 +29,7 @@ public enum EffectType
     OnAttacked = 26,
     CostResource = 27,
     ForNumberOfTurns = 28,
+    
     ShieldBasedOnShieldValue = 30,
     ExcludeSelfFromEffect = 31,
     RepeatUntilPrimaryResourceDepleted = 32,
@@ -42,5 +46,7 @@ public enum EffectType
     HealMagic = 45,
     GivePrimaryResource = 46,
 
+    
+    
     AdjustPlayerStats = 49,
 }

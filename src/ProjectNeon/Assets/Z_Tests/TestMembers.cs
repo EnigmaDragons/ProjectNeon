@@ -15,7 +15,8 @@ public static class TestMembers
             "Any Name",
             "Any Class",
             TeamType.Party,
-            initStats(DefaultStats())
+            initStats(DefaultStats()),
+            BattleRole.Unknown
         );
     
     public static Member Create(Func<StatAddends, StatAddends> initStats, params IResourceType[] resources) => 
@@ -24,6 +25,7 @@ public static class TestMembers
             "Any Name",
             "Any Class",
             TeamType.Party,
-            initStats(DefaultStats().With(resources))
+            initStats(DefaultStats().With(resources)),
+            BattleRole.Unknown
         );
 }

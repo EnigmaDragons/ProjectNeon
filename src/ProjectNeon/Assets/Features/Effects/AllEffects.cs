@@ -12,6 +12,7 @@ public static class AllEffects
         { EffectType.PhysicalDamage, e => new Damage(new PhysicalDamage(e.FloatAmount)) },
         { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With((StatType)Enum.Parse(typeof(StatType), e.EffectScope, true), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With((StatType)Enum.Parse(typeof(StatType), e.EffectScope, true), e.FloatAmount), e.NumberOfTurns, e.IntAmount < 0, e.IntAmount == -1)))},
+        { EffectType.AdjustTemporaryStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With((TemporalStatType)Enum.Parse(typeof(TemporalStatType), e.EffectScope, true), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.RemoveTemporaryEffects(effect => effect.IsDebuff))},
         { EffectType.ShieldFlat, e => new ShieldFlat(e.IntAmount) },
         { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},

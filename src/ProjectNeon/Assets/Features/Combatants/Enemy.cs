@@ -12,6 +12,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private int rewardCredits = 25;
     [SerializeField] private GameObject prefab;
     [SerializeField] private StringReference deathEffect;
+    [SerializeField] private BattleRole battleRole;
     
     [SerializeField] private int maxHp;
     [SerializeField] private int toughness;
@@ -27,7 +28,7 @@ public class Enemy : ScriptableObject
     public Deck Deck => deck;
     public Member AsMember(int id)
     {
-        var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats);
+        var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats, battleRole);
         m.State.InitResourceAmount(resourceType, startingResourceAmount);
         return m;
     }
