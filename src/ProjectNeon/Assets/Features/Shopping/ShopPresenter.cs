@@ -20,8 +20,14 @@ public sealed class ShopPresenter : MonoBehaviour
             Destroy(c.gameObject);
     }
     
-    private void Start()
+    private void Start() => GetMoreInventory();
+
+    public void GetMoreInventory()
     {
+        foreach (Transform c in cardParent.transform) 
+            Destroy(c.gameObject);
+        foreach (Transform c in equipmentParent.transform) 
+            Destroy(c.gameObject);
         _selection = new ShopSelectionPicker()
             .GenerateSelection(cards, equipment, party);
         _selection.Cards.ForEach(c => 

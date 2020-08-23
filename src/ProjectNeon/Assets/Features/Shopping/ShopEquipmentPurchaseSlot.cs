@@ -15,6 +15,7 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
     
     public ShopEquipmentPurchaseSlot Initialized(Equipment e)
     {
+        soldVisual.SetActive(false);
         _equipment = e;
         UpdateAffordability();
         costLabel.text = e.Price.ToString();
