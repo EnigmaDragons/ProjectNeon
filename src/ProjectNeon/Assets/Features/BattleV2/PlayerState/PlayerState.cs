@@ -12,7 +12,7 @@ public class PlayerState
     public PlayerState()
     {
         _playerBaseStats = new PlayerStatAddends()
-            .With(PlayerStatType.CardDraw, 6)
+            .With(PlayerStatType.CardDraws, 6)
             .With(PlayerStatType.CardPlays, 3)
             .With(PlayerStatType.CardCycles, 2);
     }

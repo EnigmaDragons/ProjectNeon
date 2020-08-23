@@ -47,7 +47,7 @@ public static class AllEffects
         { EffectType.ReplayLastCard, e => new ReplayLastCardEffect()},
         { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
         { EffectType.GivePrimaryResource, e => new SimpleEffect(m => m.GainPrimaryResource(e.IntAmount)) },
-        { EffectType.DrawCardsOverTime, e => new DrawCardsOverTime(_playerState, e.IntAmount, e.NumberOfTurns) },
+        { EffectType.AdjustPlayerStats, e => new SimpleEffect(() => _playerState.AddState(new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns < 0))) }
     };
 
     public static void Apply(EffectData effectData, Member source, Member target)
