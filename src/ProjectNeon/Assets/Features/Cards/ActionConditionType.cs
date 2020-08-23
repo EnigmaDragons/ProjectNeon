@@ -1,7 +1,8 @@
 ﻿public enum ActionConditionType
 {
-    Nothing,
-    PerformerHasResource,
-    TargetIsBelowPercentageLife,
-    RepeatForSpent
+    Nothing = 0,
+    PerformerHasResource = 1,
+    TargetIsBelowPercentageLife = 2,
+    RepeatForSpent = 3,
+    TargetSufferedDamage = 4,
 }

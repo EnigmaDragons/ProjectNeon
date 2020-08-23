@@ -11,7 +11,7 @@ public class TargetIsBelowPercentageLifeCondition : Condition
         _effect = effect;
     }
     
-    public IPayloadProvider Resolve(Member source, Target target, Group @group, Scope scope, int amountPaid)
+    public IPayloadProvider Resolve(BattleStateSnapshot beforeCard, Member source, Target target, Group @group, Scope scope, int amountPaid)
     {
         var applicapleMembers = target.Members.Where(x => x.State[TemporalStatType.HP] < x.State.MaxHp() * _percentage).ToArray();
         if (applicapleMembers.Any())
