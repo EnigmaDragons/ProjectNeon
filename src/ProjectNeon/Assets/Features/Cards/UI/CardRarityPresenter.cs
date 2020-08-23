@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +27,9 @@ public class CardRarityPresenter : MonoBehaviour
         
     public void Set(Rarity r)
     {
+        if (_sprites == null)
+            Awake();
+        
         image.sprite = _sprites[r];
     }
 }
