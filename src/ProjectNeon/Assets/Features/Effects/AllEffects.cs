@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class AllEffects
 {
@@ -48,7 +49,8 @@ public static class AllEffects
         { EffectType.ReplayLastCard, e => new ReplayLastCardEffect()},
         { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
         { EffectType.GivePrimaryResource, e => new SimpleEffect(m => m.GainPrimaryResource(e.IntAmount)) },
-        { EffectType.AdjustPlayerStats, e => new SimpleEffect(() => _playerState.AddState(new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns < 0))) }
+        { EffectType.AdjustPlayerStats, e => new SimpleEffect(() => _playerState.AddState(new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns < 0))) },
+        { EffectType.AdjustStatAdditivelyBaseOnMagicStat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With((StatType)Enum.Parse(typeof(StatType), e.EffectScope, true), Mathf.CeilToInt(e.IntAmount * m[StatType.Magic])), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
     };
 
     public static void Apply(EffectData effectData, Member source, Member target)

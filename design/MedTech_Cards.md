@@ -4,8 +4,8 @@
 
 ### Healing:
 
-Bandage - 1 Chem - 1 Ally - Heal 10 HP
-Nano Repairs - 3 Chem - 1 Ally - Heal 32 HP. Gain 5 Shield.
+Bandage - 1 Chem - 1 Ally - Heal 1 MAG HP
+Nano Repairs - 3 Chem - 1 Ally - Heal 3.2 MAG. Gain 0.5 MAG Shield.
 Antioxidant Blend - 1 Chem - 1 Ally - Heal 0.3 magic HP at the start of each turn for 4 turns.
 MedPrep - 0 Chem - Self - Gain 5 Chem
 
@@ -19,4 +19,4 @@ Planning Ahead - 0 Chem - Self - Gain 1 Chem at the start of turn for 3 Turns. R
 ### Support:
 
 Combat Stim - 1 Chem - 1 Ally - +3 STR for 3 Turns
-Body Stim - 2 Chem - 1 Ally - +6HP +6 MaxHP, +1 Armor for the whole battle
+Body Stim - 2 Chem - 1 Ally - + 0.5 MaxHP + 1 MAG Heal, +1 Armor for the whole battle

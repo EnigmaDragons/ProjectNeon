@@ -14,7 +14,7 @@ public enum EffectType
     ShieldToughness = 11,
     AdjustTemporaryStatAdditively = 12,
     StunForTurns = 13,
-    
+    AdjustStatAdditivelyBaseOnMagicStat = 14,
     
     StealLifeNextAttack = 16,
     Attack = 17,

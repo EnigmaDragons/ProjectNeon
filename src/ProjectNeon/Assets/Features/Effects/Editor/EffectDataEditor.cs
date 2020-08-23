@@ -19,6 +19,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustTemporaryStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
+        {EffectType.AdjustStatAdditivelyBaseOnMagicStat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.EvadeAttacks, new [] { "FloatAmount" }},
     };
