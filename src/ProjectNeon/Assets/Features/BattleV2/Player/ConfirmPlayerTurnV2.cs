@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 {
+    [SerializeField] private BattleState battleState;
     [SerializeField] private CardPlayZone playArea;
     [SerializeField] private GameObject confirmUi;
 
     private bool _isConfirming = false;
     private bool _confirmRequested;
     
-    public bool CanConfirm => playArea.Cards.Length == 3 || _confirmRequested;
+    public bool CanConfirm => playArea.Cards.Length == battleState.PlayerState.CurrentStats.CardPlays() || _confirmRequested;
 
     private void OnEnable()
     {

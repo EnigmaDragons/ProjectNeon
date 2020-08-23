@@ -41,4 +41,5 @@ public enum EffectType
     StunForNumberOfCards = 44,
     HealMagic = 45,
     GivePrimaryResource = 46,
+    DrawCardsOverTime = 48
 }

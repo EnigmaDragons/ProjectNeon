@@ -6,7 +6,6 @@ public sealed class ReactiveTriggerTests
     [Test]
     public void ReactiveTrigger_OnAttacked_GainedOneArmor()
     {
-        AllEffects.InitBattleState(ScriptableObject.CreateInstance<BattleState>());
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
 
@@ -35,7 +34,6 @@ public sealed class ReactiveTriggerTests
     [Test]
     public void ReactiveTrigger_OnAttacked_AttackerHitForOneDamage()
     {
-        AllEffects.InitBattleState(new BattleState());
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Attack, 1));
         var attacker = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Attack, 1));
 

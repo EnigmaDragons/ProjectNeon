@@ -6,7 +6,7 @@
 
 Bandage - 1 Chem - 1 Ally - Heal 10 HP
 Nano Repairs - 3 Chem - 1 Ally - Heal 32 HP. Gain 5 Shield.
-Antioxidant Blend - 1 Chem - 1 Ally - Heal 3 HP at the start of each turn for 4 turns.
+Antioxidant Blend - 1 Chem - 1 Ally - Heal 0.3 magic HP at the start of each turn for 4 turns.
 MedPrep - 0 Chem - Self - Gain 5 Chem
 
 ### Strategy:

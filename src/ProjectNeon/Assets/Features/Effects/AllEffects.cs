@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 public static class AllEffects
 {
-    private static BattleState _battleState;
+    private static IReadOnlyDictionary<int, Member> _members;
+    private static PlayerState _playerState;
     private static readonly Dictionary<EffectType, Func<EffectData, Effect>> _createEffectOfType = new Dictionary<EffectType, Func<EffectData, Effect>>
     {
         { EffectType.Nothing, e => new NoEffect() },
@@ -30,9 +31,9 @@ public static class AllEffects
         { EffectType.ExcludeSelfFromEffect, e => new ExcludeSelfFromEffect(Create(e.origin)) },
         { EffectType.ShieldBasedOnShieldValue, e => new SimpleEffect((src, m) => m.GainShield(e.FloatAmount * src.State[TemporalStatType.Shield])) },
         { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
-        { EffectType.OnAttacked, e => new EffectOnAttacked(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence, _battleState.Members) },
-        { EffectType.OnEvaded, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence, _battleState.Members) },
-        { EffectType.OnShieldBroken, e => new EffectOnShieldBroken(false, e.NumberOfTurns, e.ReactionSequence, _battleState.Members) },
+        { EffectType.OnAttacked, e => new EffectOnAttacked(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence, _members) },
+        { EffectType.OnEvaded, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence, _members) },
+        { EffectType.OnShieldBroken, e => new EffectOnShieldBroken(false, e.NumberOfTurns, e.ReactionSequence, _members) },
         { EffectType.CostResource, e => new SimpleEffect(m => m.Lose(new ResourceQuantity { Amount = e.IntAmount, ResourceType = e.EffectScope.Value }))},
         { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) },
         { EffectType.SpellFlatDamageEffect, e => new SpellFlatDamageEffect(e.IntAmount) },
@@ -46,6 +47,7 @@ public static class AllEffects
         { EffectType.ReplayLastCard, e => new ReplayLastCardEffect()},
         { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
         { EffectType.GivePrimaryResource, e => new SimpleEffect(m => m.GainPrimaryResource(e.IntAmount)) },
+        { EffectType.DrawCardsOverTime, e => new DrawCardsOverTime(_playerState, e.IntAmount, e.NumberOfTurns) },
     };
 
     public static void Apply(EffectData effectData, Member source, Member target)
@@ -69,5 +71,9 @@ public static class AllEffects
         return _createEffectOfType[effectType](effectData);
     }
 
-    public static void InitBattleState(BattleState battleState) => _battleState = battleState;
+    public static void InitTurnStart(IReadOnlyDictionary<int, Member> members, PlayerState playerState)
+    {
+        _members = members;
+        _playerState = playerState;
+    }
 }

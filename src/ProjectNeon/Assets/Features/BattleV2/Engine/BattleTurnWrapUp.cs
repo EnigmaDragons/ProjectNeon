@@ -18,7 +18,7 @@ public class BattleTurnWrapUp : MonoBehaviour
     
     private void DrawNewPlayerHand()
     {
-        while (!Hand.IsFull)
+        while (!Hand.IsFull && Hand.Cards.Length < state.PlayerState.CurrentStats.CardDraw())
         {
             if (Draw.Count == 0)
                 zones.Reshuffle();

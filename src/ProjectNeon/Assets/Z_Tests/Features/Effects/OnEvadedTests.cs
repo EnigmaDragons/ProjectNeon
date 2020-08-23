@@ -6,7 +6,6 @@ public class OnEvadedTests
     [Test]
     public void OnAttacked_ApplyTwice_OnlyGeneratesOneReaction()
     {
-        AllEffects.InitBattleState(ScriptableObject.CreateInstance<BattleState>());
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
         target.State.AdjustEvade(1);
