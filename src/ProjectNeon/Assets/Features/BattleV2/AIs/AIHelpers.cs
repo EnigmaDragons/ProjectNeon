@@ -5,20 +5,20 @@ using System.Linq;
 
 public static class AIHelpers
 {
-    public static CardType[] GetPlayableCards(this BattleState s, int memberId)
+    public static CardTypeData[] GetPlayableCards(this BattleState s, int memberId)
     {
         var enemy = s.GetEnemyById(memberId);
         var me = s.Members[memberId];
         if (!me.IsConscious())
             throw new InvalidOperationException($"{me} is unconscious, but has been asked to play a card");
         
-        var playableCards = enemy.Deck.Cards.Where(c => c.IsPlayableBy(me)).ToArray();
+        var playableCards = enemy.Deck.Cards.Where(c => c.IsPlayableBy(me)).Cast<CardTypeData>().ToArray();
         if (!playableCards.Any())
             throw new InvalidDataException($"{me} has no playable cards in hand");
         return playableCards;
     }
 
-    public static CardType MostExpensive(this IEnumerable<CardType> cards) => cards
+    public static CardTypeData MostExpensive(this IEnumerable<CardTypeData> cards) => cards
         .ToArray()
         .Shuffled()
         .OrderByDescending(x => x.Cost.Amount)
