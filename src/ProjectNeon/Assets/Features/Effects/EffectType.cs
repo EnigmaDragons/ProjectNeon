@@ -15,7 +15,7 @@ public enum EffectType
     AdjustTemporaryStatAdditively = 12,
     StunForTurns = 13,
     AdjustStatAdditivelyBaseOnMagicStat = 14,
-    
+    OnDamaged = 15,
     StealLifeNextAttack = 16,
     Attack = 17,
     InterceptAttackForTurns = 18,
