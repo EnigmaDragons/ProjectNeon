@@ -1,41 +1,109 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class EquipmentGenerator
 {
     private static readonly string Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-";
+
+    private Dictionary<EquipmentSlot, string[]> SlotNames = new Dictionary<EquipmentSlot, string[]>
+    {
+        { EquipmentSlot.Weapon, new [] {
+            "Blaster",
+            "Zapper",
+            "HandLaz",
+            "Rifle",
+            "Shooter"
+        }},
+        { EquipmentSlot.Armor, new []{
+            "Power Suit",
+            "ExoComp",
+            "Cuirass",
+            "Gauntlet",
+            "Kevlar Jacket",
+            "Flak Gear",
+            "Linear Frame"
+        }},
+        { EquipmentSlot.Augmentation, new[] {
+            "Booster",
+            "Enhancer",
+            "Stimulator",
+        }}
+    };
+   
+    private static readonly StatType[] GeneratableStats = { StatType.MaxHP, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance };
     
     public Equipment GenerateRandomCommon()
-    {
-        var attributePointsToSpend = new [] {2, 3}.Random();
-        var description = "";
-        var selectedStat = new[] { StatType.MaxHP, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance }.Random();
-        var slot = new[] {StatType.Attack, StatType.Magic}.Contains(selectedStat)
+        => Generate(new [] { 2, 3 }.Random(), Rarity.Common);
+    
+    public Equipment GenerateRandomUncommon() 
+        => Generate(new [] { 4, 5 }.Random(), Rarity.Uncommon);
+    
+    private EquipmentSlot SlotFor(StatType primaryStatType)
+        => new[] {StatType.Attack, StatType.Magic}.Contains(primaryStatType)
             ? EquipmentSlot.Weapon
-            : new[] {StatType.Armor, StatType.Resistance}.Contains(selectedStat)
+            : new[] {StatType.Armor, StatType.Resistance}.Contains(primaryStatType)
                 ? EquipmentSlot.Armor
                 : EquipmentSlot.Augmentation;
+    
+    private string NameFor(EquipmentSlot slot, Rarity rarity)
+        => $"{string.Join("", Enumerable.Range(0, Rng.Int(3, 6)).Select(_ => Letters.Random()))} {SlotNames[slot].Random()}";
+
+    private Equipment Generate(int totalPowerLevel, Rarity rarity)
+    {
+        var description = "";
         var modifiers = new List<EquipmentStatModifier>();
-        modifiers.Add(new EquipmentStatModifier 
-        { 
-            StatType = selectedStat.ToString(), 
-            ModifierType = StatMathOperator.Additive, 
-            Amount = (AdditiveStatsChartPerPoint[selectedStat] * attributePointsToSpend).FlooredInt()
-        });
-        description += modifiers[0].Describe();
+        
+        var selectedStats = new HashSet<string>();
+        var primarySelectedStat = GeneratableStats.Random();
+        selectedStats.Add(primarySelectedStat.ToString());
+        var slot = SlotFor(primarySelectedStat);
+        var name = NameFor(slot, rarity);
+        Debug.Log($"Generating {rarity} Equipment: {name}");
+        
+        var remainingPointsToSpend = totalPowerLevel;
+        var selectedStat = primarySelectedStat;
+        while (remainingPointsToSpend > 0)
+        {
+            var attributePointsToSpend = Rng.Int(1, remainingPointsToSpend + 1);
+            remainingPointsToSpend -= attributePointsToSpend;
+
+            Debug.Log($"Selected Stat {selectedStat}");
+            modifiers.Add(AdditiveModifier(attributePointsToSpend, selectedStat));
+            description += modifiers.Last().Describe();
+            
+            if (remainingPointsToSpend > 0)
+            {
+                description += " ";
+                selectedStat = GeneratableStats.Where(s => !selectedStats.Contains(s.ToString())).Random();
+                Debug.Log($"New Selected Stat {selectedStat}");
+                selectedStats.Add(selectedStat.ToString());
+            }
+        }
         
         return new InMemoryEquipment
         {
-            Name = string.Join("", Enumerable.Range(0, Rng.Int(5, 16)).Select(_ => Letters.Random())),
-            Rarity = Rarity.Common,
-            Price = Rng.Int(18, 32),
+            Name = name,
+            Rarity = rarity,
+            Price = (totalPowerLevel * 20).WithShopPricingVariance(),
             Classes = new [] { CharacterClass.All },
             Description = description,
             Modifiers = modifiers.ToArray(),
             Slot = slot
         };
     }
-    
+
+    private EquipmentStatModifier AdditiveModifier(int powerLevel, StatType stat)
+    {
+        var rawAmount = AdditiveStatsChartPerPoint[stat] * powerLevel;
+        return new EquipmentStatModifier
+        {
+            StatType = stat.ToString(),
+            ModifierType = StatMathOperator.Additive,
+            Amount = Mathf.Max(rawAmount.FlooredInt(), 1)
+        };
+    }
+
     private static readonly Dictionary<StatType, float> AdditiveStatsChartPerPoint = new Dictionary<StatType, float>
     {
         { StatType.MaxHP, 5 },
