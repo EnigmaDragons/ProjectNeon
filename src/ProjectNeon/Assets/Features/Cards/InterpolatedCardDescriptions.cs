@@ -83,6 +83,7 @@ public static class InterpolatedCardDescriptions
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
                 : $"{data.FloatAmount}x Magic";
         
+        
         Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }
