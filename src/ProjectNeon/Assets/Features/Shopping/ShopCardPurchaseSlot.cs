@@ -11,6 +11,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
 
     private CardType _card;
     private int _price;
+    private bool _purchased;
     
     public ShopCardPurchaseSlot Initialized(CardType c)
     {
@@ -23,6 +24,9 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
 
     private void UpdateAffordability()
     {
+        if (_purchased)
+            return;
+        
         var canAfford = party.Credits >= _price;
         cardPresenter.Set(_card, canAfford ? PurchaseCard : (Action)(() => { }));
         if (!canAfford)
@@ -31,6 +35,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
 
     private void PurchaseCard()
     {
+        _purchased = true;
         cardPresenter.Clear();
         soldVisual.SetActive(true);
         party.UpdateCreditsBy(-_price);
