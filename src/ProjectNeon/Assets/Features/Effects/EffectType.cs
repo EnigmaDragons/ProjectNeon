@@ -37,9 +37,10 @@ public enum EffectType
     ApplyOnShieldBelowValue = 40,
     ApplyOnChance = 41,
     ReplayLastCard = 42,
-    //PlayExtraCards = 43,
+
     StunForNumberOfCards = 44,
     HealMagic = 45,
     GivePrimaryResource = 46,
-    DrawCardsOverTime = 48
+
+    AdjustPlayerStats = 49,
 }

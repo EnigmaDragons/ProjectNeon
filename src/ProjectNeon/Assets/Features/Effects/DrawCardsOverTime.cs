@@ -13,6 +13,6 @@
     
     public void Apply(Member source, Target target)
     {
-        _playerState.AddState(new AdjustedPlayerStats(new PlayerStatAddends().With(PlayerStatType.CardDraw, _amount), _turns, _amount < 0, _turns < 0));
+        _playerState.AddState(new AdjustedPlayerStats(new PlayerStatAddends().With(PlayerStatType.CardDraws, _amount), _turns, _amount < 0, _turns < 0));
     }
 }
