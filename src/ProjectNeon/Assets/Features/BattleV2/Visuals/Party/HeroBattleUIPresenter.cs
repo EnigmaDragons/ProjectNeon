@@ -9,9 +9,14 @@ public class HeroBattleUIPresenter : MonoBehaviour
     [SerializeField] private ResourceCounterPresenter resource1;
     [SerializeField] private ResourceCounterPresenter resource2;
     [SerializeField] private StatusBar statusBar;
+
+    private BaseHero _hero;
+
+    public bool Contains(string heroName) => _hero.Name.Equals(heroName);
     
     public void Set(BaseHero hero)
     {
+        _hero = hero;
         var member = state.GetMemberByHero(hero);
         bust.sprite = hero.Bust;
         hp.Init(member);

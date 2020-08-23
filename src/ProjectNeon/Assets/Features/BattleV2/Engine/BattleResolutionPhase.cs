@@ -80,6 +80,8 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
         _unconscious.Add(member);
         if (member.TeamType == TeamType.Enemies)
             state.AddRewardCredits(state.GetEnemyById(member.Id).RewardCredits);
+        else
+            BattleLog.Write($"{member.Name} - {member.Id} is unconscious");
         Message.Publish(new MemberUnconscious(member));
     }
 }
