@@ -1,5 +1,8 @@
 public static class TestCards
 {
+    public static ReactionCardType AnyReaction() =>
+        Reaction(ReactiveMember.Originator, ReactiveTargetScope.Attacker, EffectData.Nothing);
+    
     public static ReactionCardType Reaction(ReactiveMember src, ReactiveTargetScope target, EffectData e)
     {
         var resourceType = TestableObjectFactory.Create<TestResourceType>().Initialized("Ammo");

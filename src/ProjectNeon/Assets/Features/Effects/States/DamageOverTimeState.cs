@@ -6,6 +6,7 @@
     private int _remainingDuration;
 
     public IStats Stats { get; }
+    public StatusTag Tag => StatusTag.DamageOverTime;
     public bool IsDebuff => true;
     public bool IsActive => _remainingDuration > 0 || _indefinite;
 

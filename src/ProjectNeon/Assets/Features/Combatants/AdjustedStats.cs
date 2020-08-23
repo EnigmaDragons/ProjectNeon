@@ -6,6 +6,7 @@ public class AdjustedStats : ITemporalState
     private bool _indefinite;
 
     public IStats Stats { get; }
+    public StatusTag Tag => StatusTag.None;
     public bool IsDebuff { get; }
     public bool IsActive => _remainingTurnDuration > 0 || _indefinite;
     public void OnTurnStart() { }
