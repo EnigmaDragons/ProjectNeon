@@ -131,9 +131,12 @@ public sealed class HandVisualizer : MonoBehaviour
     
     public void SelectCard(int cardIndex)
     {
-        if (allowInteractions)
+        if (allowInteractions && Hand.Count > cardIndex)
             if (_cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
+            {
                 zones.SelectionZone.PutOnBottom(Hand.Take(cardIndex));
+                UpdateVisibleCards();
+            }
     }
 
     public void RecycleCard(int cardIndex)

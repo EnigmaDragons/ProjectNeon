@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OnStartNextStage : OnMessage<StartNextStage>
+public class StartNextStageHandler : OnMessage<StartNextStage>
 {
     [SerializeField] private AdventureProgress adventure;
     

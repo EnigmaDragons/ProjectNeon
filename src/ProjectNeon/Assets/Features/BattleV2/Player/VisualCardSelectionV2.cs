@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllable, IConfirmCancellable
@@ -64,10 +65,19 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         if (cards.ShownCards.Length < 1)
             return;
 
+        UpdateUi();
+    }
+
+    private void UpdateUi()
+    {
         if (_isConfirmingTurn)
             _shouldHighlight = false;
 
-        _indexSelector = new IndexSelector<CardPresenter>(cards.ShownCards, Math.Min(cards.ShownCards.Length - 1, _lastIndex));
+        var activeCards = cards.ShownCards;
+        _indexSelector = new IndexSelector<CardPresenter>(activeCards, Math.Min(activeCards.Length - 1, _lastIndex));
+        if (activeCards.Any(c => c.HasCard))
+            while (!_indexSelector.Current.HasCard)
+                _indexSelector.MovePrevious();
         _lastIndex = _indexSelector.Index;
         if (_shouldHighlight)
             EnableHighlight();
@@ -110,6 +120,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         Message.Publish(new PlayerCardSelected());
         _indexSelector.Current.SetCardHandControlsVisible(false);
         cards.SelectCard(_indexSelector.Index);
+        UpdateUi();
     }
 
     private void Recycle()

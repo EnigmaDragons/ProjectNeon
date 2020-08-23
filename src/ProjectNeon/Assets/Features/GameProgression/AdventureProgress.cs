@@ -23,6 +23,12 @@ public class AdventureProgress : ScriptableObject
     private bool HasBegun => currentStageIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
 
+    public void Init(Adventure a)
+    {
+        currentAdventure = a;
+        Reset();
+    }
+    
     public override string ToString() =>
         $"Adventure: {currentAdventure.name}. Stage: {currentStageIndex}. StageSegment: {currentStageSegmentIndex}";
 

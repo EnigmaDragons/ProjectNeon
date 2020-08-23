@@ -30,7 +30,6 @@ public static class BattleStateTargetingExtensions
         return targets;
     }
 
-
     private static Target[] NonSelfConsciousTargetsFor(this BattleState state, TeamType myTeam, Group group, Scope scope)
     {
         var opponentsAre = myTeam == TeamType.Party ? TeamType.Enemies : TeamType.Party;

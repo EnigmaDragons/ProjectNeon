@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/Striker")]
 public sealed class StrikerAI : TurnAI
 {
-    public override IPlayedCard Play(int memberId, BattleState battleState)
+    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
     {
         var me = battleState.Members[memberId];
         var playableCards = battleState.GetPlayableCards(memberId);
@@ -30,8 +30,13 @@ public sealed class StrikerAI : TurnAI
         card.ActionSequences.ForEach(
             action =>
             {
-                var possibleTargets = battleState.GetPossibleConsciousTargets(me, action.Group, action.Scope);
-                targets.Add(possibleTargets.MostVulnerable());
+                if (action.Group == Group.Opponent)
+                    targets.Add(strategy.AttackTargetFor(action));
+                else
+                {
+                    var possibleTargets = battleState.GetPossibleConsciousTargets(me, action.Group, action.Scope);   
+                    targets.Add(possibleTargets.MostVulnerable());
+                }
             }
         );
 

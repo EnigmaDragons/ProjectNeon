@@ -2,7 +2,7 @@
 
 public sealed class DumbAI : TurnAI
 {
-    public override IPlayedCard Play(int memberId, BattleState battleState)
+    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
     {
         var me = battleState.Members[memberId];
         var playableCards = battleState.GetPlayableCards(memberId);
