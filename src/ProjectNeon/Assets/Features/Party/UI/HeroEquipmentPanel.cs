@@ -15,8 +15,8 @@ public class HeroEquipmentPanel : MonoBehaviour
     {
         var equipment = h.Equipment;
 
-        weaponSlot.Initialized(equipment.Weapon, () => BeginEquipmentSelection(h, EquipmentSlot.Weapon, equipment.Weapon));
-        armorSlot.Initialized(equipment.Armor, () => BeginEquipmentSelection(h, EquipmentSlot.Armor, equipment.Armor));
+        weaponSlot.Initialized(EquipmentSlot.Weapon, equipment.Weapon, () => BeginEquipmentSelection(h, EquipmentSlot.Weapon, equipment.Weapon));
+        armorSlot.Initialized(EquipmentSlot.Armor, equipment.Armor, () => BeginEquipmentSelection(h, EquipmentSlot.Armor, equipment.Armor));
         InitAugmentSlots(h, equipment);
         return this;
     }
@@ -34,7 +34,7 @@ public class HeroEquipmentPanel : MonoBehaviour
         var a3 = augments.Length > 2
             ? new Maybe<Equipment>(augments[2])
             : Maybe<Equipment>.Missing();
-        augment3Slot.Initialized(a3, () => BeginEquipmentSelection(h, EquipmentSlot.Augmentation, a3));
+        augment3Slot.Initialized(EquipmentSlot.Augmentation, a3, () => BeginEquipmentSelection(h, EquipmentSlot.Augmentation, a3));
     }
 
     private void InitAugmentSlot2(Hero h, Equipment[] augments)
@@ -42,7 +42,7 @@ public class HeroEquipmentPanel : MonoBehaviour
         var a2 = augments.Length > 1
             ? new Maybe<Equipment>(augments[1])
             : Maybe<Equipment>.Missing();
-        augment2Slot.Initialized(a2, () => BeginEquipmentSelection(h, EquipmentSlot.Augmentation, a2));
+        augment2Slot.Initialized(EquipmentSlot.Augmentation, a2, () => BeginEquipmentSelection(h, EquipmentSlot.Augmentation, a2));
     }
 
     private void InitAugmentSlot1(Hero h, Equipment[] augments)
@@ -50,7 +50,7 @@ public class HeroEquipmentPanel : MonoBehaviour
         var a1 = augments.Length > 0
             ? new Maybe<Equipment>(augments[0])
             : Maybe<Equipment>.Missing();
-        augment1Slot.Initialized(a1, () => BeginEquipmentSelection(h, EquipmentSlot.Augmentation, a1));
+        augment1Slot.Initialized(EquipmentSlot.Augmentation, a1, () => BeginEquipmentSelection(h, EquipmentSlot.Augmentation, a1));
     }
 
     private void BeginEquipmentSelection(Hero h, EquipmentSlot slot, Maybe<Equipment> equip)
