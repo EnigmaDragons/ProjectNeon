@@ -18,7 +18,7 @@ public sealed class MemberState : IStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats))
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats));
 
-    private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter {n}");
+    private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter '{n}'");
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
 
@@ -38,6 +38,7 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Evade.ToString()] = new BattleCounter(TemporalStatType.Evade, 0, () => int.MaxValue);
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
+        _counters[""] = new BattleCounter("", 0, () => 0);
     }
 
     public void InitResourceAmount(IResourceType resourceType, int amount) => _counters[resourceType.Name].Set(amount);
@@ -98,15 +99,9 @@ public sealed class MemberState : IStats
             ChangeHp(-amount);
     }
     public void GainShield(float amount) => PublishAfter(() => Counter(TemporalStatType.Shield).ChangeBy(amount));
-    private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
-
     public void AdjustEvade(float amount) => PublishAfter(() => Counter(TemporalStatType.Evade).ChangeBy(amount));
-
-    public void Evade()
-    {
-        PublishAfter(() => Counter(TemporalStatType.Evade).ChangeBy(-1));
-
-    } 
+    public void Evade() => PublishAfter(() => Counter(TemporalStatType.Evade).ChangeBy(-1));
+    private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
 
     // Resource Commands
     public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
