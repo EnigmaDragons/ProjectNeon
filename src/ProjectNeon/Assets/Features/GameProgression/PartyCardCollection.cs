@@ -31,4 +31,12 @@ public sealed class PartyCardCollection : ScriptableObject
             cardsWithCounts[c] = cardsWithCounts[c] + 1;
         });
     }
+
+    public void EnsureHasAtLeast(CardType c, int numCopies)
+    {
+        var amount = cardsWithCounts.ContainsKey(c) ? cardsWithCounts[c] : 0;
+        var numAdditionalNeeded = numCopies - amount;
+        if (numAdditionalNeeded > 0)
+            Enumerable.Range(0, numAdditionalNeeded).ForEach(_ => Add(c));
+    }
 }
