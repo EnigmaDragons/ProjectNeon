@@ -29,7 +29,11 @@ public sealed class PartyAdventureState : ScriptableObject
         heroes = party.Initialized(one, two, three).Heroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
         credits = heroes.Sum(h => h.Character.StartingCredits);
         numShopRestocks = 2;
-        cards.Initialized(Decks.SelectMany(d => d.Cards));
+        
+        var allStartingCards = Decks.SelectMany(d => d.Cards).ToList();
+        cards.Initialized(allStartingCards);
+        allStartingCards.Distinct().ForEach(c => cards.EnsureHasAtLeast(c, 4));
+        
         equipment = new PartyEquipmentCollection();
         return this;
     }
