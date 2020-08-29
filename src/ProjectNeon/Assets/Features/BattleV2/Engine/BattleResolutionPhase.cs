@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolutionFinished>
+public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolutionFinished, MemberUnconscious>
 {
     [SerializeField] private BattleUiVisuals ui;
     [SerializeField] private BattleState state;
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private CardPlayZone reactionZone;
     [SerializeField] private FloatReference delay = new FloatReference(1.5f);
-    
-    [ReadOnly, SerializeField] private List<Member> _unconscious = new List<Member>();
+
+    private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
     private readonly Queue<ProposedReaction> _reactions = new Queue<ProposedReaction>();
     
     public IEnumerator Begin()
@@ -23,7 +23,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
 
     private void ResolveNext()
     {
-        CheckForUnconsciousMembers();
+        _unconsciousness.ProcessUnconsciousMembers(state);
         if (reactionZone.Count > 0)
             reactionZone.Clear();
         if (_reactions.Any())
@@ -50,6 +50,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     }
 
     protected override void Execute(CardResolutionFinished msg) => ResolveNext();
+    protected override void Execute(MemberUnconscious msg) => resolutionZone.ExpirePlayedCards(c => c.Member.Id == msg.Member.Id);
 
     private IEnumerator ResolveNextReaction()
     {
@@ -66,22 +67,5 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
             r.Source.Apply(s => s.Gain(gains));
             r.Reaction.ActionSequence.Perform(r.Source, r.Target, expense.Amount);
         }
-    }
-    
-    private void CheckForUnconsciousMembers() 
-        => state.Members.Values
-            .Except(_unconscious)
-            .Where(m => !m.State.IsConscious)
-            .CopiedForEach(ResolveUnconsciousMember);
-
-    private void ResolveUnconsciousMember(Member member)
-    {
-        resolutionZone.ExpirePlayedCards(card => card.Member.Id == member.Id);
-        _unconscious.Add(member);
-        if (member.TeamType == TeamType.Enemies)
-            state.AddRewardCredits(state.GetEnemyById(member.Id).RewardCredits);
-        else
-            BattleLog.Write($"{member.Name} - {member.Id} is unconscious");
-        Message.Publish(new MemberUnconscious(member));
     }
 }

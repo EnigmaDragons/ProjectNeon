@@ -48,6 +48,7 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
     private PlayerState _playerState = new PlayerState();
+    private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
 
     // Setup
     public BattleState Initialized(PartyArea partyArea, EnemyArea enemyArea)
@@ -111,6 +112,7 @@ public class BattleState : ScriptableObject
         rewardCards = new CardType[0];
         needsCleanup = true;
         _queuedEffects = new Queue<Effect>();
+        _unconsciousMembers = new Dictionary<int, Member>();
         
         AllEffects.InitTurnStart(Members, PlayerState);
         BattleLog.Write("Finished Battle State Init");
@@ -133,6 +135,17 @@ public class BattleState : ScriptableObject
         PlayerState.OnTurnStart();
         AllEffects.InitTurnStart(Members, PlayerState);
     });
+
+    public IEnumerable<Member> GetAllNewlyUnconsciousMembers()
+    {
+        var newlyUnconscious = Members
+            .Where(m => !_unconsciousMembers.ContainsKey(m.Key))
+            .Select(m => m.Value)
+            .Where(m => !m.State.IsConscious)
+            .ToList();
+        newlyUnconscious.ForEach(r => _unconsciousMembers[r.Id] = r);
+        return newlyUnconscious;
+    }
     
     public void AdvanceTurn() =>
         UpdateState(() =>
@@ -146,15 +159,6 @@ public class BattleState : ScriptableObject
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void SetRewardCards(CardType[] cards) => UpdateState(() => rewardCards = cards);
 
-    public void Queue(Effect e) => UpdateState(() => _queuedEffects.Enqueue(e));
-    public Effect DequeueEffect()
-    {
-        var before = GetSnapshot();
-        var e = _queuedEffects.Dequeue();
-        Message.Publish(new BattleStateChanged(before, this));
-        return e;
-    }
-    
     // Battle Wrapup
     public void Wrapup()
     {

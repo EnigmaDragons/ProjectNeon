@@ -14,6 +14,8 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
     [SerializeField] private bool setupOnStart;
     [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
 
+    private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
+    
     private void Awake()
     {
         cards.ClearAll();
@@ -38,6 +40,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
     {
         BeginPhase(BattleV2Phase.Command);
         state.StartTurn();
+        _unconsciousness.ProcessUnconsciousMembers(state);
         commandPhase.Begin();
         Message.Publish(new TurnStarted());
     }
