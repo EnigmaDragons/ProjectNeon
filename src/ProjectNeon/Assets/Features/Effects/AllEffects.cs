@@ -4,21 +4,28 @@ using UnityEngine;
 
 public static class AllEffects
 {
+    [Obsolete("Major Design Flaw!! No State In This Class Allowed!!")]
     private static IReadOnlyDictionary<int, Member> _members;
+    [Obsolete("Major Design Flaw!! No State In This Class Allowed!!")]
     private static PlayerState _playerState;
+    
     private static readonly Dictionary<EffectType, Func<EffectData, Effect>> _createEffectOfType = new Dictionary<EffectType, Func<EffectData, Effect>>
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.HealFlat, e => new Heal(e.IntAmount) },
         { EffectType.PhysicalDamage, e => new Damage(new PhysicalDamage(e.FloatAmount)) },
-        { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
-        { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.NumberOfTurns, e.IntAmount < 0, e.IntAmount == -1)))},
-        { EffectType.AdjustTemporaryStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
+        { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
+        { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
+            new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.NumberOfTurns, e.IntAmount < 0, e.IntAmount == -1, StatusTag.None)))},
+        { EffectType.AdjustTemporaryStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.RemoveTemporaryEffects(effect => effect.IsDebuff))},
         { EffectType.ShieldFlat, e => new ShieldFlat(e.IntAmount) },
         { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
-        { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), e.NumberOfTurns, true, e.NumberOfTurns == -1))) },
+        { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
+            new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), e.NumberOfTurns, true, e.NumberOfTurns == -1, StatusTag.Vulnerable))) },
         { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.GainShield(e.IntAmount * src.State.Toughness())) },
         { EffectType.RemoveShields, e => new SimpleEffect((src, m) => m.GainShield(-999)) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
@@ -50,8 +57,10 @@ public static class AllEffects
         { EffectType.ReplayLastCard, e => new ReplayLastCardEffect()},
         { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
         { EffectType.GivePrimaryResource, e => new SimpleEffect(m => m.GainPrimaryResource(e.IntAmount)) },
-        { EffectType.AdjustPlayerStats, e => new SimpleEffect(() => _playerState.AddState(new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns < 0))) },
-        { EffectType.AdjustStatAdditivelyBaseOnMagicStat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With((StatType)Enum.Parse(typeof(StatType), e.EffectScope, true), Mathf.CeilToInt(e.IntAmount * m[StatType.Magic])), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1)))},
+        { EffectType.AdjustPlayerStats, e => new SimpleEffect(() => _playerState.AddState(
+            new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns < 0))) },
+        { EffectType.AdjustStatAdditivelyBaseOnMagicStat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.IntAmount * m[StatType.Magic])), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
     };
 
     public static void Apply(EffectData effectData, Member source, Member target)
@@ -84,6 +93,7 @@ public static class AllEffects
         }
     }
 
+    [Obsolete("Major Design Flaw!! No State In This Class Allowed!!")]
     public static void InitTurnStart(IReadOnlyDictionary<int, Member> members, PlayerState playerState)
     {
         _members = members;

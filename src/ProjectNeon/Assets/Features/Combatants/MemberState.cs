@@ -70,8 +70,22 @@ public sealed class MemberState : IStats
             .ToArray();
 
     // Modifier Commands
-    public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() => _additiveMods.Add(mods));
-    public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() => _multiplierMods.Add(mods));
+    private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag> { StatusTag.Vulnerable };
+    
+    public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() =>
+    {
+        if (NonStackingStatuses.Contains(mods.Tag))
+            _additiveMods.RemoveAll(m => m.Tag == mods.Tag);
+        _additiveMods.Add(mods);
+    });
+    
+    public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() => 
+    {        
+        if (NonStackingStatuses.Contains(mods.Tag))
+            _multiplierMods.RemoveAll(m => m.Tag == mods.Tag);
+        _multiplierMods.Add(mods);
+    });
+    
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() =>
     {
         _additiveMods.RemoveAll(condition);

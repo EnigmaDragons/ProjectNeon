@@ -13,9 +13,6 @@ public class AdjustedPlayerStats : ITemporalPlayerState
 
     public void OnTurnEnd() => _remainingTurnDuration = Math.Max(_remainingTurnDuration - 1, 0);
 
-    public static AdjustedStats CreateIndefinite(IStats stats, bool isDebuff)
-        => new AdjustedStats(stats, 0, isDebuff, true);
-
     public AdjustedPlayerStats(IPlayerStats stats, int duration, bool isDebuff, bool indefinite)
     {
         PlayerStats = stats;

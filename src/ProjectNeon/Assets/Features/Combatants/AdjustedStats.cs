@@ -3,19 +3,22 @@
 public class AdjustedStats : ITemporalState
 {
     private int _remainingTurnDuration;
-    private bool _indefinite;
+    private readonly bool _indefinite;
+    private readonly StatusTag _tag;
 
     public IStats Stats { get; }
-    public StatusTag Tag => StatusTag.None;
+    public StatusTag Tag => _tag;
     public bool IsDebuff { get; }
     public bool IsActive => _remainingTurnDuration > 0 || _indefinite;
     public void OnTurnStart() { }
     public void OnTurnEnd() => _remainingTurnDuration = Math.Max(_remainingTurnDuration - 1, 0);
 
     public static AdjustedStats CreateIndefinite(IStats stats, bool isDebuff)
-        => new AdjustedStats(stats, 0, isDebuff, true);
-    public AdjustedStats(IStats stats, int duration, bool isDebuff, bool indefinite)
+        => new AdjustedStats(stats, 0, isDebuff, true, StatusTag.None);
+    
+    public AdjustedStats(IStats stats, int duration, bool isDebuff, bool indefinite, StatusTag tag)
     {
+        _tag = tag;
         Stats = stats;
         IsDebuff = isDebuff;
         // This makes it so that for 1 Turns in the UI will last until the End of the Subsequent Turn. 

@@ -8,7 +8,7 @@ public class RemoveDebuffsTests
     {
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
-        target.State.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(StatType.Attack, -5), 5, true, false));
+        target.State.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(StatType.Attack, -5), 5, true, false, StatusTag.None));
 
         AllEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
@@ -20,7 +20,7 @@ public class RemoveDebuffsTests
     {
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
-        target.State.ApplyTemporaryMultiplier(new AdjustedStats(new StatAddends().With(StatType.Attack, -5), 5, true, false));
+        target.State.ApplyTemporaryMultiplier(new AdjustedStats(new StatAddends().With(StatType.Attack, -5), 5, true, false, StatusTag.None));
 
         AllEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 

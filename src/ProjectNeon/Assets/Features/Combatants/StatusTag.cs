@@ -4,4 +4,5 @@ public enum StatusTag
     CounterAttack = 1,
     DamageOverTime = 2,
     HealOverTime = 3,
+    Vulnerable = 4,
 }
