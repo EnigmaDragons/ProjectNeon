@@ -40,7 +40,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     protected override void Execute(ApplyBattleEffect msg)
     {
         var battleSnapshotBefore = state.GetSnapshot();
-        AllEffects.Apply(msg.Effect, msg.Source, msg.Target);
+        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, state.PlayerState, state.Members));
         var battleSnapshotAfter = state.GetSnapshot();
         var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter);
 
