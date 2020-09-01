@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 public static class AllEffects
 {
-    [Obsolete("Major Design Flaw!! No State In This Class Allowed!!")]
-    private static IReadOnlyDictionary<int, Member> _members;
-    [Obsolete("Major Design Flaw!! No State In This Class Allowed!!")]
-    private static PlayerState _playerState;
-    
-    private static readonly Dictionary<EffectType, Func<EffectData, Effect>> _createEffectOfType = new Dictionary<EffectType, Func<EffectData, Effect>>
+    private static readonly Dictionary<EffectType, Func<EffectData, Effect>> CreateEffectOfType = new Dictionary<EffectType, Func<EffectData, Effect>>
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.HealFlat, e => new Heal(e.IntAmount) },
@@ -35,42 +31,39 @@ public static class AllEffects
         { EffectType.Attack, e => new Attack(e.FloatAmount, e.HitsRandomTargetMember)},
         { EffectType.EvadeAttacks, e => new Evade(e.IntAmount) },
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.NumberOfTurns) },
-        { EffectType.RepeatEffect, e => new RepeatEffect(Create(e.origin), e.IntAmount) },
-        { EffectType.RandomizeTarget, e => new RandomizeTarget(Create(e.origin)) },
         { EffectType.ExcludeSelfFromEffect, e => new ExcludeSelfFromEffect(Create(e.origin)) },
         { EffectType.ShieldBasedOnShieldValue, e => new SimpleEffect((src, m) => m.GainShield(e.FloatAmount * src.State[TemporalStatType.Shield])) },
-        { EffectType.ForNumberOfTurns, e => new ForNumberOfTurns(Create(e.origin), e.IntAmount) },
-        { EffectType.OnAttacked, e => new EffectOnAttacked(false, e.IntAmount, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionSequence, _members) },
-        { EffectType.OnEvaded, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence, _members) },
-        { EffectType.OnShieldBroken, e => new EffectOnShieldBroken(false, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence, _members) },
-        { EffectType.OnDamaged, e => new EffectOnDamaged(false, e.NumberOfTurns, e.IntAmount, e.ReactionSequence, _members) },
+        { EffectType.OnAttacked, e => new EffectOnAttacked(false, e.IntAmount, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionSequence) },
+        { EffectType.OnEvaded, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence) },
+        { EffectType.OnShieldBroken, e => new EffectOnShieldBroken(false, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence) },
+        { EffectType.OnDamaged, e => new EffectOnDamaged(false, e.NumberOfTurns, e.IntAmount, e.ReactionSequence) },
         { EffectType.CostResource, e => new SimpleEffect(m => m.Lose(new ResourceQuantity { Amount = e.IntAmount, ResourceType = e.EffectScope.Value }))},
         { EffectType.AnyTargetHealthBelowThreshold, e => new AnyTargetHealthBelowThreshold(Create(e.origin), e.FloatAmount) },
         { EffectType.SpellFlatDamageEffect, e => new SpellFlatDamageEffect(e.IntAmount) },
-        { EffectType.RepeatUntilPrimaryResourceDepleted, e => new RepeatUntilPrimaryResourceDepleted(Create(e.origin), e.IntAmount) },
-        { EffectType.OnNextTurnEffect, e => new OnNextTurnEffect(Create(e.origin)) },
-        { EffectType.EffectOnTurnStart, e => new EffectOnTurnStart(Create(e.origin)) },
-        { EffectType.TriggerFeedEffects, e => new TriggerFeedEffects(Create(e.origin), e.EffectScope) },
         { EffectType.ApplyOnShieldBelowValue, e => new ApplyOnShieldBelowValue(Create(e.origin), e.IntAmount) },
         { EffectType.ApplyOnChance, e => new ApplyOnChance(Create(e.origin), e.FloatAmount) },
         { EffectType.HealPrimaryResource, e => new SimpleEffect((src, m) => m.GainHp(src.State.PrimaryResourceAmount)) },
-        { EffectType.ReplayLastCard, e => new ReplayLastCardEffect()},
         { EffectType.HealMagic, e => new HealMagic(e.FloatAmount) },
         { EffectType.GivePrimaryResource, e => new SimpleEffect(m => m.GainPrimaryResource(e.IntAmount)) },
-        { EffectType.AdjustPlayerStats, e => new SimpleEffect(() => _playerState.AddState(
+        { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns < 0))) },
         { EffectType.AdjustStatAdditivelyBaseOnMagicStat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.IntAmount * m[StatType.Magic])), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
     };
 
+    [Obsolete]
     public static void Apply(EffectData effectData, Member source, Member target)
-        => Apply(effectData, source, new Single(target));
-    
+        => Apply(effectData, new EffectContext(source, new Single(target)));
+
+    [Obsolete]
     public static void Apply(EffectData effectData, Member source, Target target)
+        => Apply(effectData, new EffectContext(source, target, new PlayerState(), new Dictionary<int, Member>()));
+    
+    public static void Apply(EffectData effectData, EffectContext ctx)
     {
         var effect = Create(effectData);
-        BattleLog.Write($"Applying Effect of {effectData.EffectType} to {target.MembersDescriptions()}");
-        effect.Apply(source, target);
+        BattleLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}");
+        effect.Apply(ctx);
     }
 
     public static Effect Create(EffectData effectData)
@@ -78,25 +71,18 @@ public static class AllEffects
         try
         {
             var effectType = effectData.EffectType;
-            if (!_createEffectOfType.ContainsKey(effectData.EffectType))
+            if (!CreateEffectOfType.ContainsKey(effectData.EffectType))
             {
                 Log.Error($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
-                return _createEffectOfType[EffectType.Nothing](effectData);
+                return CreateEffectOfType[EffectType.Nothing](effectData);
             }
 
-            return _createEffectOfType[effectType](effectData);
+            return CreateEffectOfType[effectType](effectData);
         }
         catch (Exception e)
         {
             Log.Error($"EffectType {effectData.EffectType} is broken {e}");
-            return _createEffectOfType[EffectType.Nothing](effectData);
+            return CreateEffectOfType[EffectType.Nothing](effectData);
         }
-    }
-
-    [Obsolete("Major Design Flaw!! No State In This Class Allowed!!")]
-    public static void InitTurnStart(IReadOnlyDictionary<int, Member> members, PlayerState playerState)
-    {
-        _members = members;
-        _playerState = playerState;
     }
 }

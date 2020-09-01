@@ -8,10 +8,10 @@ public class InterceptAttack : Effect
     public InterceptAttack(int duration)
         => _duration = duration;
 
-    public void Apply(Member source, Target target)
+    public void Apply(EffectContext ctx)
     {
-        _performer = source;
-        _effectTarget = target;
+        _performer = ctx.Source;
+        _effectTarget = ctx.Target;
         // TODO: Implement
     }
 

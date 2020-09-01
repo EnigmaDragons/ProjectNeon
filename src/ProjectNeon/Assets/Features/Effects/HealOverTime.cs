@@ -9,9 +9,8 @@ public sealed class HealOverTime : Effect
         _turns = turns;
         _multiplier = multiplier;
     }
-
-    public void Apply(Member source, Target target)
+    public void Apply(EffectContext ctx)
     {
-        target.Members.ForEach(x => x.State.ApplyTemporaryAdditive(new HealOverTimeState((int)Math.Ceiling(_multiplier * source.Magic()), x, _turns)));
+        ctx.Target.Members.ForEach(x => x.State.ApplyTemporaryAdditive(new HealOverTimeState((int)Math.Ceiling(_multiplier * ctx.Source.Magic()), x, _turns)));
     }
 }

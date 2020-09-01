@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
-using UnityEngine;
 
 public class OnEvadedTests
 {
     [Test]
-    public void OnAttacked_ApplyTwice_OnlyGeneratesOneReaction()
+    public void OnEvaded_ApplyTwice_OnlyGeneratesOneReaction()
     {
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
@@ -20,7 +19,7 @@ public class OnEvadedTests
             EffectType = EffectType.OnEvaded,
             NumberOfTurns = new IntReference(3),
             ReactionSequence = reactionCardType
-        }, target, target);
+        }, new EffectContext(target, new Single(target)));
 
         ReactiveTestUtilities.ApplyEffectAndReactions(new EffectData
         {

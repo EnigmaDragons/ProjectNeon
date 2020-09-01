@@ -114,7 +114,6 @@ public class BattleState : ScriptableObject
         _queuedEffects = new Queue<Effect>();
         _unconsciousMembers = new Dictionary<int, Member>();
         
-        AllEffects.InitTurnStart(Members, PlayerState);
         BattleLog.Write("Finished Battle State Init");
         return this;
     }
@@ -133,7 +132,6 @@ public class BattleState : ScriptableObject
     {
         Members.Values.ForEach(m => m.State.OnTurnStart());
         PlayerState.OnTurnStart();
-        AllEffects.InitTurnStart(Members, PlayerState);
     });
 
     public IEnumerable<Member> GetAllNewlyUnconsciousMembers()

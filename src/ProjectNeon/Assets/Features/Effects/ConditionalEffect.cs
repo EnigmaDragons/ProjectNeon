@@ -1,26 +1,22 @@
 ﻿
-using System;
-using UnityEngine;
-
 public abstract class ConditionalEffect : Effect
 {
     protected Effect Effect;
     protected Member Source;
     protected Target Target;
 
-
     public ConditionalEffect(Effect effect)
     {
         Effect = effect;
     }
 
-    public void Apply(Member source, Target target)
+    public void Apply(EffectContext ctx)
     {
-        Source = source;
-        Target = target;
+        Source = ctx.Source;
+        Target = ctx.Target;
         if (Condition())
         {
-            Effect.Apply(source, target);
+            Effect.Apply(ctx);
         }
 
     }

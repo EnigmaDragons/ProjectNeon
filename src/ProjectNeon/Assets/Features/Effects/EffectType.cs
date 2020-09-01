@@ -1,3 +1,5 @@
+using System;
+
 public enum EffectType
 {
     Nothing = 0,
@@ -23,30 +25,25 @@ public enum EffectType
     HealOverTime = 20,
     OnShieldBroken = 21,
     RemoveShields = 22,
-    RandomizeTarget = 23,
-    RepeatEffect = 24,
+    //[Obsolete]RandomizeTarget = 23,
+    //[Obsolete]RepeatEffect = 24,
     AnyTargetHealthBelowThreshold = 25,
     OnAttacked = 26,
     CostResource = 27,
-    ForNumberOfTurns = 28,
-    
+    //[Obsolete]ForNumberOfTurns = 28,
     ShieldBasedOnShieldValue = 30,
     ExcludeSelfFromEffect = 31,
-    RepeatUntilPrimaryResourceDepleted = 32,
+    //[Obsolete]RepeatUntilPrimaryResourceDepleted = 32,
     SpellFlatDamageEffect = 33,
-    OnNextTurnEffect = 34,
-    EffectOnTurnStart = 36,
-    TriggerFeedEffects = 37,
+    //[Obsolete]OnNextTurnEffect = 34,
+    //[Obsolete]EffectOnTurnStart = 36,
+    //[Obsolete]TriggerFeedEffects = 37,
     HealPrimaryResource = 39,
     ApplyOnShieldBelowValue = 40,
     ApplyOnChance = 41,
-    ReplayLastCard = 42,
-
+    //[Obsolete]ReplayLastCard = 42,
     StunForNumberOfCards = 44,
     HealMagic = 45,
     GivePrimaryResource = 46,
-
-    
-    
     AdjustPlayerStats = 49,
 }

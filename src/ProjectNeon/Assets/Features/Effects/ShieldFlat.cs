@@ -9,9 +9,9 @@ public sealed class ShieldFlat : Effect
         _amount = amount;
     }
 
-    public void Apply(Member source, Target target)
+    public void Apply(EffectContext ctx)
     {
-        target.Members.ForEach(
+        ctx.Target.Members.ForEach(
             member => member.State.GainShield(_amount)
         );
     }

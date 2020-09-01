@@ -20,10 +20,10 @@ public sealed class Attack  : Effect
         _hitsRandomTarget = hitsRandomTarget;
     }
 
-    public void Apply(Member source, Target target)
+    public void Apply(EffectContext ctx)
     {
-        Attacker = source;
-        Target = target;
+        Attacker = ctx.Source;
+        Target = ctx.Target;
         //PROPOSALS SHOULD NOT GO THROUGH THE EVENT SYSTEM
         Message.Publish(new Proposed<Attack> { Message = this });
         var applicableTargets = Target.Members.Where(x => x.IsConscious()).ToArray();

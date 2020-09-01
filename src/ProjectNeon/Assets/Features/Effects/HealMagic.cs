@@ -6,6 +6,6 @@ public class HealMagic : Effect
     public HealMagic(float multiplier) 
         => _multiplier = multiplier;
 
-    public void Apply(Member source, Target target) 
-        => target.ApplyToAllConscious(m => m.GainHp(_multiplier * source.State.Magic()));
+    public void Apply(EffectContext ctx)
+        => ctx.Target.ApplyToAllConscious(m => m.GainHp(_multiplier * ctx.Source.State.Magic()));
 }

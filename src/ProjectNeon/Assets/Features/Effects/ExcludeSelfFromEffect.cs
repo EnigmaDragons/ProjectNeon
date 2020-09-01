@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿
 using System.Linq;
 
 public class ExcludeSelfFromEffect : Effect
@@ -11,8 +10,14 @@ public class ExcludeSelfFromEffect : Effect
         _origin = origin;
     }
 
-    public void Apply(Member source, Target target)
+    public void Apply(EffectContext ctx)
     {
-        _origin.Apply(source, new Multiple(target.Members.Except(source).ToArray()));
+        var newContext = new EffectContext(
+            ctx.Source,
+            new Multiple(ctx.Target.Members.Except(ctx.Source).ToArray()), 
+            ctx.PlayerState, 
+            ctx.BattleMembers);
+        
+        _origin.Apply(newContext);
     }
 }
