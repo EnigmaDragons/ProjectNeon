@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_Energize
+  m_Name: Electroblade_ElectroSlash
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: cc76da89df85c6a45942304bd7e7060b, type: 3}
-  description: Gain 3 Energy
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  art: {fileID: 21300000, guid: 719cc6f5457052141bf65c0758f45a67, type: 3}
+  description: Deal {E[0]} damage
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe,
     type: 2}
   cost:
+    cost: 2
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+    isXCost: 0
+  onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     isXCost: 0
-  onPlayGain:
-    cost: 3
-    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-    isXCost: 0
-  rarity: 0
+  rarity: 2
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: bb7a4b19bec2a1d43b07fc191247faea, type: 2}
+    group: 1
+    cardActions: {fileID: 11400000, guid: b66b88254938ba1429b9395975520c6f, type: 2}
