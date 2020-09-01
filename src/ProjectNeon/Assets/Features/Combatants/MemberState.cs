@@ -16,7 +16,8 @@ public sealed class MemberState : IStats
     
     private IStats CurrentStats => _baseStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats))
-        .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats));
+        .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats))
+        .NotBelow(0);
 
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter '{n}'");
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
