@@ -25,7 +25,7 @@ public class Hero
     public HeroEquipment Equipment => equipment;
     
     // TODO: Maybe don't calculate this every time
-    private IStats Stats => Character.Stats
+    public IStats Stats => Character.Stats
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
         .Times(Equipment.All.Select(e => e.MultiplierStats()));
 
