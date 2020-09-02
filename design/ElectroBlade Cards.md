@@ -31,3 +31,8 @@ Rare:
 - OmniSlash - X Energy - 1 Enemy - 1x attack + 2 per Energy Spent.
 - Power Siphon - 1 Enemy - Deal 0.5x ATK, if the enemy took HP damage, gain 1 Energy and the enemy loses 1 Tech Point 
 - CounterShock - 1 Energy. Gain Spellshield 1 this turn. If he mitigates a spell this way he deals 8 to the caster. If nothing is mitigated this way, his next spell gets +50% Spell Power.
+
+## New Ideas:
+
+Rare - Faster Than Light - 5 Energy - Draw 2 Electroblade immediately takes 2 additional Actions
+Uncommon - Electric Barrier - X Energy - Gain X x .6 MGC Shield 
