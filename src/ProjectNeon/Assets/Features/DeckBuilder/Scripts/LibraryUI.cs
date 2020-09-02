@@ -10,11 +10,15 @@ public class LibraryUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDe
     [SerializeField] private PartyCardCollection partyCards;
     [SerializeField] private DeckBuilderState state;
 
+    private HeroCharacter _selectedHero;
+    
     protected override void Execute(DeckBuilderHeroSelected msg) => GenerateLibrary();
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => GenerateLibrary();
     
     private void GenerateLibrary()
     {
+        var heroChanged = state.SelectedHeroesDeck.Hero != _selectedHero;
+        _selectedHero = state.SelectedHeroesDeck.Hero;
         var cardsForHero = partyCards.AllCards
             .Where(x => !x.Key.LimitedToClass.IsPresent || x.Key.LimitedToClass.Value.Name == state.SelectedHeroesDeck.Hero.Class.Name);
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
@@ -25,7 +29,8 @@ public class LibraryUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDe
             cardUsage
                 .Select(x => InitCardInLibraryButton(x.Key, x.Value.Item1, x.Value.Item2))
                 .ToList(), 
-            x => {});
+            x => {},
+            !heroChanged);
     }
 
     private Action<GameObject> InitCardInLibraryButton(CardType card, int numTotal, int numAvailable)
