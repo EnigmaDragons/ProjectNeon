@@ -50,4 +50,36 @@ public class HeroTests
         hero.Unequip(hpBooster);
         Assert.AreEqual(10, hero.CurrentHp);
     }
+
+    [Test]
+    public void Hero_WithEquipmentWithStartOfTurnEffect_IsApplied()
+    {
+        var turtleGloves = new InMemoryEquipment
+        {
+            TurnStartEffects = new [] 
+            { 
+                new EffectData
+                {
+                    EffectType = EffectType.AdjustStatAdditively,
+                    FloatAmount = new FloatReference(1),
+                    EffectScope = new StringReference(StatType.Armor.ToString())
+                }
+            }
+        };
+        
+        var hero = new Hero(new InMemoryHeroCharacter
+        {
+            Class = TestClasses.Soldier,
+            Stats = new StatAddends()
+                .With(StatType.Damagability, 1f)
+                .With(StatType.MaxHP, 10)
+        }, new RuntimeDeck());
+        
+        hero.Equip(turtleGloves);
+
+        var member = hero.AsMember(1);
+        member.State.OnTurnStart();
+        
+        Assert.AreEqual(1, member.Armor());
+    }
 }

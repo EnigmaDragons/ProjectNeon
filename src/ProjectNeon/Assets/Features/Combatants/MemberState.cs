@@ -8,6 +8,7 @@ public sealed class MemberState : IStats
     private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
     
     private readonly IStats _baseStats;
+    private readonly List<IPersistentState> _persistentStates = new List<IPersistentState>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
     private readonly List<ReactiveStateV2> _reactiveStates = new List<ReactiveStateV2>();
@@ -72,6 +73,8 @@ public sealed class MemberState : IStats
 
     // Modifier Commands
     private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag> { StatusTag.Vulnerable };
+
+    public void ApplyPersistentState(IPersistentState state) => _persistentStates.Add(state);
     
     public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() =>
     {
@@ -128,6 +131,7 @@ public sealed class MemberState : IStats
 
     public void OnTurnStart()
     {
+        _persistentStates.ForEach(m => m.OnTurnStart());
         _additiveMods.ForEach(m => m.OnTurnStart());
         _multiplierMods.ForEach(m => m.OnTurnStart());
         _reactiveStates.ForEach(m => m.OnTurnStart());
@@ -135,6 +139,7 @@ public sealed class MemberState : IStats
     
     public void OnTurnEnd() => PublishAfter(() =>
     {
+        _persistentStates.ForEach(m => m.OnTurnEnd());
         _additiveMods.ForEach(m => m.OnTurnEnd());
         _additiveMods.RemoveAll(m => !m.IsActive);
         _multiplierMods.ForEach(m => m.OnTurnEnd());

@@ -37,5 +37,9 @@ public class Hero
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
 
     public Member AsMember(int id)
-        => new Member(id, Character.Name, Character.Class.Name, TeamType.Party, Stats, Character.Class.BattleRole, CurrentHp);
+    {
+        var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, Stats, Character.Class.BattleRole, CurrentHp);
+        Equipment.All.ForEach(e => m.Apply(s => s.ApplyPersistentState(new EquipmentPersistentState(e, m))));
+        return m;
+    }
 }
