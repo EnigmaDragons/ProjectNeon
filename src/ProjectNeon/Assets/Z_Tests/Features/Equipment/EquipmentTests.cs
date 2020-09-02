@@ -1,9 +1,9 @@
 using NUnit.Framework;
 
-public class HeroTests
+public class EquipmentTests
 {
     [Test]
-    public void Hero_WithGun_HasCorrectAttack()
+    public void Equipment_WithStatModifier_IsCorrect()
     {
         var hero = new Hero(new InMemoryHeroCharacter
         {
@@ -27,7 +27,7 @@ public class HeroTests
     }
 
     [Test]
-    public void Hero_EquipmentBoostsMaxHp_CurrentHpAdjustedCorrectly()
+    public void Equipment_BoostsMaxHp_CurrentHpAdjustedCorrectly()
     {
         var hpBooster = new InMemoryEquipment
         {
@@ -52,7 +52,7 @@ public class HeroTests
     }
 
     [Test]
-    public void Hero_WithEquipmentWithStartOfTurnEffect_IsApplied()
+    public void Equiped_StartOfTurnEffect_IsApplied()
     {
         var turtleGloves = new InMemoryEquipment
         {
@@ -81,5 +81,36 @@ public class HeroTests
         member.State.OnTurnStart();
         
         Assert.AreEqual(1, member.Armor());
+    }
+    
+    [Test]
+    public void Equipment_ResourceMaxMods_IsCorrect()
+    {
+        var extendedClip = new InMemoryEquipment
+        {
+            ResourceModifiers = new IResourceType[]
+            {
+                new InMemoryResourceModifications 
+                {
+                    Name = "Ammo",
+                    MaxAmount = 2,
+                    StartingAmount = 2
+                }
+            }
+        };
+        var hero = new Hero(new InMemoryHeroCharacter
+        {
+            Class = TestClasses.Soldier,
+            Stats = new StatAddends()
+                .With(StatType.Damagability, 1f)
+                .With(StatType.MaxHP, 10)
+                .With(new InMemoryResourceType("Ammo") { MaxAmount = 6, StartingAmount = 6 })
+        }, new RuntimeDeck());
+        hero.Equip(extendedClip);
+        
+        var member = hero.AsMember(1);
+        
+        Assert.AreEqual(8, member.ResourceMax(new InMemoryResourceType("Ammo")));
+        Assert.AreEqual(8, member.ResourceAmount(new InMemoryResourceType("Ammo")));
     }
 }

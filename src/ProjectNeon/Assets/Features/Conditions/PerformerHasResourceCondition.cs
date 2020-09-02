@@ -13,7 +13,7 @@
 
     public IPayloadProvider Resolve(BattleStateSnapshot beforeCard, Member source, Target target, Group @group, Scope scope, int amountPaid)
     {
-        if (source.State[new InMemoryResourceType { Name = _resource }] >= _amount)
+        if (source.State[new InMemoryResourceType(_resource)] >= _amount)
             return _effect.Play(source, target, group, scope, amountPaid);
         return new NoPayload();
     }

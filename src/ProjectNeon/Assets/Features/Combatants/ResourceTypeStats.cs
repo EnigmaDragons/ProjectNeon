@@ -50,3 +50,9 @@ public class ResourceTypeStats
         }
     }
 }
+
+public static class AddedResourceTypeExtensions
+{
+    public static IStats Plus(this IResourceType first, IResourceType second) 
+        => new StatAddends().With(first, second);
+}

@@ -34,7 +34,7 @@ public sealed class StatAddends : IStats
         return this;
     }
 
-    public StatAddends With(IResourceType[] resourceTypes)
+    public StatAddends With(params IResourceType[] resourceTypes)
     {
         ResourceTypes = resourceTypes;
         return this;

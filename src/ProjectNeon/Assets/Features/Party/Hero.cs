@@ -26,6 +26,7 @@ public class Hero
     
     // TODO: Maybe don't calculate this every time
     public IStats Stats => Character.Stats
+        .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers).ToArray()))
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
         .Times(Equipment.All.Select(e => e.MultiplierStats()));
 

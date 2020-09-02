@@ -9,6 +9,7 @@ public interface Equipment
     string[] Classes { get; }
     EquipmentSlot Slot { get; }
     EquipmentStatModifier[] Modifiers { get; }
+    IResourceType[] ResourceModifiers { get; }
     EffectData[] TurnStartEffects { get; }
     EffectData[] TurnEndEffects { get; }
 }

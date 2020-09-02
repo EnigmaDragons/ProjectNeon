@@ -55,6 +55,7 @@ public static class MemberExtensions
     public static bool HasAttackBuff(this Member m) => m.State.DifferenceFromBase(StatType.Attack) > 0;
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
+    public static int ResourceAmount(this Member m, IResourceType resourceType) => RoundUp(m.State[resourceType]);
 
     public static bool CanAfford(this Member m, ResourceCost c)
     {
