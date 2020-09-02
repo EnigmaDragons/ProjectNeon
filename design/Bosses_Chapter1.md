@@ -20,11 +20,6 @@ A Routine 4:
 Retaliation Stance & Breaker Punch
 Breaker Punch & Double First
 
-
-
-
-
-
 Spin-Slam - Deal .4xATK  to all enemies
 Breaker-Punch - Deal 1xATK Apply -2 armor
 3 Double-Fist Mega-Punch - Deal 2xATK to an enemy

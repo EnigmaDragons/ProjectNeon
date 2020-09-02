@@ -9,7 +9,7 @@ public class ArmorTests
         var member = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 5));
         
-        AllEffects.Apply(new EffectData
+        TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.AdjustStatAdditively,
             EffectScope = new StringReference(StatType.Armor.ToString()),

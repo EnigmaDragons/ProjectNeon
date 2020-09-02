@@ -10,7 +10,7 @@ public class RemoveDebuffsTests
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
         target.State.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(StatType.Attack, -5), 5, true, false, StatusTag.None));
 
-        AllEffects.Apply(removeDebuffs, TestMembers.Any(), target);
+        TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
         Assert.AreEqual(10, target.State[StatType.Attack]);
     }
@@ -22,7 +22,7 @@ public class RemoveDebuffsTests
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
         target.State.ApplyTemporaryMultiplier(new AdjustedStats(new StatAddends().With(StatType.Attack, -5), 5, true, false, StatusTag.None));
 
-        AllEffects.Apply(removeDebuffs, TestMembers.Any(), target);
+        TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
         Assert.AreEqual(10, target.State[StatType.Attack]);
     }
@@ -34,7 +34,7 @@ public class RemoveDebuffsTests
         var target = TestMembers.Create(s => s);
         target.State.AddReactiveState(new ReactOnAttacked(true, 2, 2, ReactiveTriggerScope.All, new Dictionary<int, Member>(), 1, target, TestCards.AnyReaction()));
 
-        AllEffects.Apply(removeDebuffs, TestMembers.Any(), target);
+        TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
         Assert.False(target.State.HasStatus(StatusTag.CounterAttack));
     }
@@ -46,7 +46,7 @@ public class RemoveDebuffsTests
         var target = TestMembers.Create(s => s);
         target.State.AddReactiveState(new ReactOnAttacked(false, 2, 2, ReactiveTriggerScope.All, new Dictionary<int, Member>(), 1,  target, TestCards.AnyReaction()));
 
-        AllEffects.Apply(removeDebuffs, TestMembers.Any(), target);
+        TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
         Assert.True(target.State.HasStatus(StatusTag.CounterAttack));
     }

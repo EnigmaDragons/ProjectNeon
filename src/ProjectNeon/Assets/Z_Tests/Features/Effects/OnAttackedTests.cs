@@ -13,14 +13,14 @@ public sealed class OnAttackedTests
             ReactiveTargetScope.Attacker, 
             new EffectData { EffectType = EffectType.Attack, FloatAmount = new FloatReference(1) });
         
-        AllEffects.Apply(new EffectData
+        TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
             ReactionSequence = reactionCardType
         }, target, target);
 
-        AllEffects.Apply(new EffectData
+        TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),

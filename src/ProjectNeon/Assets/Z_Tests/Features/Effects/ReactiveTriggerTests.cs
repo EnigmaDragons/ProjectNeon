@@ -14,7 +14,7 @@ public sealed class ReactiveTriggerTests
             ReactiveTargetScope.Self, 
             new EffectData { EffectType = EffectType.AdjustStatAdditively, FloatAmount = new FloatReference(1), EffectScope = new StringReference("Armor"), NumberOfTurns = new IntReference(-1) });
 
-        AllEffects.Apply(new EffectData
+        TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
@@ -42,7 +42,7 @@ public sealed class ReactiveTriggerTests
             ReactiveTargetScope.Attacker, 
             new EffectData { EffectType = EffectType.Attack, FloatAmount = new FloatReference(1) });
 
-        AllEffects.Apply(new EffectData
+        TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),

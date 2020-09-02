@@ -15,7 +15,7 @@ public sealed class ResourceFlat
     {
         var performer = TestMembers.Create(s => s, Ammo);
         
-        AllEffects.Apply(data, performer, new Single(performer));
+        TestEffects.Apply(data, performer, new Single(performer));
         
         Assert.AreEqual(5, performer.State[Ammo]);
     }

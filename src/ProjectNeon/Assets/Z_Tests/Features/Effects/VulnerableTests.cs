@@ -10,7 +10,7 @@ public sealed class VulnerableTests
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 10));
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 30));
         
-        AllEffects.Apply(Vulnerable(), attacker, target);
+        TestEffects.Apply(Vulnerable(), attacker, target);
         
         new Attack(1).Apply(attacker, target);
         
@@ -24,8 +24,8 @@ public sealed class VulnerableTests
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 10));
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 30));
         
-        AllEffects.Apply(Vulnerable(), attacker, target);
-        AllEffects.Apply(Vulnerable(), attacker, target);
+        TestEffects.Apply(Vulnerable(), attacker, target);
+        TestEffects.Apply(Vulnerable(), attacker, target);
         
         new Attack(1).Apply(attacker, target);
         

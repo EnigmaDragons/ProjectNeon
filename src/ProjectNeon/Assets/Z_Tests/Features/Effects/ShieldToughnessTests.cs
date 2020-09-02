@@ -10,7 +10,7 @@ public sealed class ShieldToughnessTests
         var performer = TestMembers.With(StatType.Toughness, 5);
         var target = TestMembers.With(StatType.Toughness, 10);
         
-        AllEffects.Apply(shieldTarget, performer, new Single(target));
+        TestEffects.Apply(shieldTarget, performer, new Single(target));
         Assert.AreEqual(5, target.State[TemporalStatType.Shield]);
     }
 }

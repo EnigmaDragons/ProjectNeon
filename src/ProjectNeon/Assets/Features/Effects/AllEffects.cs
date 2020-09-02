@@ -50,14 +50,6 @@ public static class AllEffects
         { EffectType.AdjustStatAdditivelyBaseOnMagicStat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.IntAmount * m[StatType.Magic])), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
     };
-
-    [Obsolete]
-    public static void Apply(EffectData effectData, Member source, Member target)
-        => Apply(effectData, new EffectContext(source, new Single(target)));
-
-    [Obsolete]
-    public static void Apply(EffectData effectData, Member source, Target target)
-        => Apply(effectData, new EffectContext(source, target, new PlayerState(), new Dictionary<int, Member>()));
     
     public static void Apply(EffectData effectData, EffectContext ctx)
     {

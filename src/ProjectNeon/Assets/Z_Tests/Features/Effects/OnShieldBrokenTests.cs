@@ -17,7 +17,7 @@ public class OnShieldBrokenTests
             ReactiveTargetScope.Self,
             new EffectData { EffectType = EffectType.AdjustStatAdditively, FloatAmount = new FloatReference(1), EffectScope = new StringReference("Armor"), NumberOfTurns = new IntReference(-1) });
 
-        AllEffects.Apply(new EffectData
+        TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.OnShieldBroken,
             NumberOfTurns = new IntReference(3),
