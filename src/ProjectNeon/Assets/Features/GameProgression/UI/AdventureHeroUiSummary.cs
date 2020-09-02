@@ -1,13 +1,23 @@
 using UnityEngine;
 
-public sealed class AdventureHeroUiSummary : MonoBehaviour
+public sealed class AdventureHeroUiSummary : OnMessage<PartyStateChanged>
 {
     [SerializeField] private HeroHpPresenter hpUi;
     [SerializeField] private HealHeroButton healButton;
 
-    public void Init(HeroCharacter hero, int hp)
+    private Hero _hero;
+    
+    public void Init(Hero hero)
     {
-        hpUi.Init(hero, hp);
-        healButton.Init(hero);
+        _hero = hero;
+        UpdateUi();
+    }
+
+    protected override void Execute(PartyStateChanged msg) => UpdateUi();
+
+    private void UpdateUi()
+    {
+        hpUi.Init(_hero);
+        healButton.Init(_hero.Character);
     }
 }

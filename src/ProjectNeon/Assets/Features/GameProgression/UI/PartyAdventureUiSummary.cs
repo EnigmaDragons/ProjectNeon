@@ -22,7 +22,7 @@ public class PartyAdventureUiSummary : MonoBehaviour
         {
             var h = Instantiate(heroPresenter,
                 new Vector3(position.x + xOffset + xSpacing * i, position.y + yOffset + ySpacing * i, position.z), Quaternion.identity, gameObject.transform); 
-            h.Init(party.BaseHeroes[i], party.Hp[i]);
+            h.Init(party.Heroes[i]);
             active.Add(h);
         }
     }

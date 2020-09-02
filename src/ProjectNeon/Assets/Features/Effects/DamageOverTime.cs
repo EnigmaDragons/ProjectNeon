@@ -9,8 +9,8 @@ public sealed class DamageOverTime : Effect
         _turns = data.NumberOfTurns;
     }
 
-    public void Apply(Member source, Target target)
+    public void Apply(EffectContext ctx)
     {
-        target.Members.ForEach(x => x.State.ApplyTemporaryAdditive(new DamageOverTimeState(_amount, x, _turns)));
+        ctx.Target.Members.ForEach(x => x.State.ApplyTemporaryAdditive(new DamageOverTimeState(_amount, x, _turns)));
     }
 }

@@ -5,8 +5,8 @@ public class Evade : Effect
 
     public Evade(int number) => _number = number;
 
-    public void Apply(Member source, Target target)
+    public void Apply(EffectContext ctx)
     {
-        target.ApplyToAllConscious(x => x.AdjustEvade(_number));
+        ctx.Target.ApplyToAllConscious(x => x.AdjustEvade(_number));
     }
 }

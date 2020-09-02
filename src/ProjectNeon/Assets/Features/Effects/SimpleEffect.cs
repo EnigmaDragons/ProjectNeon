@@ -10,5 +10,5 @@
         public SimpleEffect(Action<Target> apply) : this((src, t) => apply(t)) {}
         public SimpleEffect(Action<Member, Target> apply) => _apply = apply;
 
-        public void Apply(Member source, Target target) => _apply(source, target);
+        public void Apply(EffectContext ctx) => _apply(ctx.Source, ctx.Target);
     }

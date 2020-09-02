@@ -7,17 +7,17 @@ public class HeroHpPresenter : OnMessage<PartyAdventureStateChanged>
     [SerializeField] private Image bust;
     [SerializeField] private TextMeshProUGUI hpText;
 
-    private HeroCharacter _hero;
+    private Hero _hero;
     
-    public void Init(HeroCharacter hero, int hp)
+    public void Init(Hero hero)
     {
         _hero = hero;
-        bust.sprite = hero.Bust;
-        hpText.text = $"{hp}/{hero.Stats.MaxHp()}";
+        bust.sprite = hero.Character.Bust;
+        hpText.text = $"{hero.CurrentHp}/{hero.Stats.MaxHp()}";
     }
 
     protected override void Execute(PartyAdventureStateChanged msg)
     {
-        Init(_hero, msg.State.CurrentHpOf(_hero));
+        Init(_hero);
     }
 }

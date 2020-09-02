@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using UnityEngine;
 
 public static class CollectionExtensions
 {    
@@ -65,5 +66,13 @@ public static class CollectionExtensions
         items[first] = items[second];
         items[second] = tmp;
         return items;
+    }
+
+    public static Dictionary<TKey, TValue> SafeToDictionary<T, TKey, TValue>(this IEnumerable<T> items,
+        Func<T, TKey> keySelector, Func<T, TValue> valueSelector)
+    {
+        var dictionary = new Dictionary<TKey, TValue>();
+        items.ForEach(i => dictionary[keySelector(i)] = valueSelector(i));
+        return dictionary;
     }
 }

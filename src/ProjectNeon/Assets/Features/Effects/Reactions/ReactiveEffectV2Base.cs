@@ -40,23 +40,24 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         return maybeEffect;
     }
 
-    protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(IReadOnlyDictionary<int, Member> members, int possessingMemberId, Member originator, ReactionCardType reaction, Func<EffectResolved, bool> condition) => effect =>
-    {
-        var reactingMaybeMember = effect.Target.Members.Where(m => m.Id == possessingMemberId);
-        if (reactingMaybeMember.None() || !condition(effect))
-            return Maybe<ProposedReaction>.Missing();
+    protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(IDictionary<int, Member> members, int possessingMemberId, Member originator, ReactionCardType reaction, Func<EffectResolved, bool> condition) => 
+        effect =>
+        {
+            var reactingMaybeMember = effect.Target.Members.Where(m => m.Id == possessingMemberId);
+            if (reactingMaybeMember.None() || !condition(effect))
+                return Maybe<ProposedReaction>.Missing();
 
-        var possessor = reactingMaybeMember.First();
-        var action = reaction.ActionSequence;
-        var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
+            var possessor = reactingMaybeMember.First();
+            var action = reaction.ActionSequence;
+            var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
 
-        Target target = new Single(possessor);
-        if (action.Scope == ReactiveTargetScope.Attacker)
-            target = new Single(effect.Source);
-        if (action.Scope == ReactiveTargetScope.AllEnemies)
-            target = new Multiple(members.Values.Where(x => x.IsConscious() && x.TeamType == TeamType.Enemies).ToArray());
-        // TODO: Implement other scopes
+            Target target = new Single(possessor);
+            if (action.Scope == ReactiveTargetScope.Attacker)
+                target = new Single(effect.Source);
+            if (action.Scope == ReactiveTargetScope.AllEnemies)
+                target = new Multiple(members.Values.Where(x => x.IsConscious() && x.TeamType == TeamType.Enemies).ToArray());
+            // TODO: Implement other scopes
 
-        return new ProposedReaction(reaction, reactor, target);
-    };
+            return new ProposedReaction(reaction, reactor, target);
+        };
 }

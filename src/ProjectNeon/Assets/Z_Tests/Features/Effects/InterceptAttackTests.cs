@@ -4,6 +4,7 @@ using UnityEngine;
 
 public sealed class InterceptAttackTests
 {
+    [Ignore("Not Implemented")]
     [Test]
     public void InterceptAttack_ApplyEffect_AttackIsIntercepted()
     {

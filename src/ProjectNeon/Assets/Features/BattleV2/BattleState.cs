@@ -39,7 +39,7 @@ public class BattleState : ScriptableObject
     public PartyArea PartyArea => partyArea;
     public EnemyArea EnemyArea => enemies;
     public GameObject Battlefield => nextBattlegroundPrototype;
-    public IReadOnlyDictionary<int, Member> Members => _membersById;
+    public IDictionary<int, Member> Members => _membersById;
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] Enemies => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
     public PlayerState PlayerState => _playerState;
@@ -114,7 +114,6 @@ public class BattleState : ScriptableObject
         _queuedEffects = new Queue<Effect>();
         _unconsciousMembers = new Dictionary<int, Member>();
         
-        AllEffects.InitTurnStart(Members, PlayerState);
         BattleLog.Write("Finished Battle State Init");
         return this;
     }
@@ -133,7 +132,6 @@ public class BattleState : ScriptableObject
     {
         Members.Values.ForEach(m => m.State.OnTurnStart());
         PlayerState.OnTurnStart();
-        AllEffects.InitTurnStart(Members, PlayerState);
     });
 
     public Member[] GetAllNewlyUnconsciousMembers()

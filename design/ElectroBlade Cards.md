@@ -1,26 +1,33 @@
 # ElectroBlade Cards:
 
+## Role: Striker / Controller
+
 ### Basic Card: Energize
 
-### Tactical
+Rarity:
 
+Starter:
+- Energize - Self - +3 Energy.
 - Jolt - 4 Energy. Deal 1x attack. Stun.
-- Energize Blade - 1 Energy - Enchant(ElectroBlade enchants his blade for 3 turns) Attacks deal 5 bonus damage. 
-- Energize - Self - +2 Energy.
-- Power Siphon - 1 Enemy - Deal 0.5xATK, if the enemy took any damage to their health Gain 1 Energy and the Enemy Loses 1 Tech Point 
-- Overcharge - Self - Gain vulnerable this turn and gain 4 Energy for next turn
+- Current Slash - 1 Enemy - Gain 1 Energy. 0.67x attack.
+- Thrust - 1 Enemy - 1x ATK
+- Electrify Blade - Self - 1 Energy - Enchant - +5 ATK for 3 Turns. 
+- Lightning Reflexes - 1 Energy. Gain Evade 1. If evading this turn, deal 1x ATK damage to attacker.
 
-### Offensive
+Common:
+- Slice - 1 Enemy - -2 Armor & 0.7x attack.
+- Static Barrier - Self - 1 Energy - Gain 1 Toughness Shield. When shield is broken, deal 0.5x ATK to all enemies.
+- Static Strike - 1 Enemy - Deal 0.67x ATK damage. Each time you hit that target this turn, gain 1 Energy
 
-- Slice - 1 Enemy - -1 Armor & 1x attack.
-- Current Slash - 1 Enemy - Gain 1 Energy. 0.8x attack. 
-- OmniSlash - X Energy - 1 Enemy - 1x attack + 2 per Energy Spent. 
-- Surge Break - 6 Energy - All Enemies - remove shields + stun
-- Static Strike - 0 Energy - Attack for 0.7xAtk, each time you hit that target for the turn gain 1 Energy
-- Shock And Awe - 0 Energy - Gain 1 Energy, Attack for 0.5 2 random targets
+Uncommon:
+- Overcharge - Self - Gain vulnerable this turn and gain 5 Energy for next turn
+- Electro Slash - 1 Enemy - 2 Energy - Deal 1.8x ATK damage.
+- Shock And Awe - 1 Enemy - Gain 1 Energy. Attack 2 random enemies for 0.4x ATK
 
-### Defensive
+Rare:
+- Surge Break - 6 Energy - All Enemies - Remove shields and Stun.
 
-- Lightning Reflexes - 2 Energy. ElectroBlade gains Evade 1. If he evades this turn, he counter strikes with an attack that deals 1xATK damage to the attacker.
-- CounterShock - 1 Energy. ElectroBlade gains Spellshield 1 this turn. If he mitigates a spell this way he deals 8 to the caster. If nothing is mitigated this way, his next spell gets +50% Spell Power.
-- Static Barrier - 2 Energy. .5x Defense. When ElectroBlade's Shield is broken he deals 0.5atk to all enemies.
+## To Be Implemented:
+- OmniSlash - X Energy - 1 Enemy - 1x attack + 2 per Energy Spent.
+- Power Siphon - 1 Enemy - Deal 0.5x ATK, if the enemy took HP damage, gain 1 Energy and the enemy loses 1 Tech Point 
+- CounterShock - 1 Energy. Gain Spellshield 1 this turn. If he mitigates a spell this way he deals 8 to the caster. If nothing is mitigated this way, his next spell gets +50% Spell Power.
