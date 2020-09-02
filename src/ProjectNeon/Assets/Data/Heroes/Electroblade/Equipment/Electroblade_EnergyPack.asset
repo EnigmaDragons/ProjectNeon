@@ -10,15 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Soldier-ExpandedAmmoClip
+  m_Name: Electroblade_EnergyPack
   m_EditorClassIdentifier: 
-  displayName: Expanded Ammo Clip
-  description: +2 Ammo Capacity
+  displayName: Energy Pack V1
+  description: +2 Starting Energy
+  rarity: 3
   slot: 2
-  cost: 100
+  cost: 125
   canUseClasses:
-  - {fileID: 11400000, guid: 1a326935dbf5d6941acd1038e9c4d77f, type: 2}
+  - {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe, type: 2}
   modifiers:
   - ModifierType: 0
-    Amount: 2
-    StatType: Ammo
+    Amount: 0
+    StatType: 
+  resourceModifiers:
+  - baseResource: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+    maxAdjustment: 0
+    startingAdjustment: 2
+  turnStartEffects: []
+  turnEndEffects: []

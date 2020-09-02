@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: ExtendedClip
+  m_Name: Soldier_AutoMagRifle
   m_EditorClassIdentifier: 
-  displayName: Extended Clip
-  description: +2 Max Ammo
+  displayName: Auto-Mag Rifle
+  description: Reloads 1 ammo at the end of turn
   rarity: 2
-  slot: 2
+  slot: 0
   cost: 75
   canUseClasses:
   - {fileID: 11400000, guid: 1a326935dbf5d6941acd1038e9c4d77f, type: 2}
@@ -23,9 +23,22 @@ MonoBehaviour:
   - ModifierType: 0
     Amount: 0
     StatType: 
-  resourceModifiers:
-  - baseResource: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
-    maxAdjustment: 2
-    startingAdjustment: 2
-  turnStartEffects: []
+  resourceModifiers: []
+  turnStartEffects:
+  - EffectType: 46
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 1
+      FloatVariable: {fileID: 0}
+    NumberOfTurns:
+      UseConstant: 1
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    ReferencedEffectSequence: {fileID: 0}
+    ReactionSequence: {fileID: 0}
   turnEndEffects: []
