@@ -70,13 +70,12 @@ public class CardResolutionZone : ScriptableObject
         played.Member.Apply(m => m.GainResource(played.Spent.ResourceType, played.Spent.Amount));
     }
 
-    public IEnumerator ResolveNext(float delay)
+    public void BeginResolvingNext()
     {
         BattleLog.Write("Requested Resolve Next Card");
         isResolving = true;
         var move = moves[0];
         moves = moves.Skip(1).ToList();
-        yield return new WaitForSeconds(delay);
         StartResolvingOneCard(move);
     }
 

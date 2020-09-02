@@ -30,7 +30,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
         if (_reactions.Any())
             StartCoroutine(ResolveNextReaction());
         else if (!state.BattleIsOver() && resolutionZone.HasMore)
-            StartCoroutine(resolutionZone.ResolveNext(delay));
+            this.ExecuteAfterDelay(() => resolutionZone.BeginResolvingNext(), delay);
         else
         {
             ui.EndResolutionPhase();
