@@ -136,13 +136,13 @@ public class BattleState : ScriptableObject
         AllEffects.InitTurnStart(Members, PlayerState);
     });
 
-    public IEnumerable<Member> GetAllNewlyUnconsciousMembers()
+    public Member[] GetAllNewlyUnconsciousMembers()
     {
         var newlyUnconscious = Members
             .Where(m => !_unconsciousMembers.ContainsKey(m.Key))
             .Select(m => m.Value)
             .Where(m => !m.State.IsConscious)
-            .ToList();
+            .ToArray();
         newlyUnconscious.ForEach(r => _unconsciousMembers[r.Id] = r);
         return newlyUnconscious;
     }

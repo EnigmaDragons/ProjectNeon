@@ -11,7 +11,9 @@ public class StaticEquipment : ScriptableObject, Equipment
     [SerializeField] private int cost;
     [SerializeField] private CharacterClass[] canUseClasses = new CharacterClass[1];
     [SerializeField] private EquipmentStatModifier[] modifiers = new EquipmentStatModifier[1];
-
+    [SerializeField] private EffectData[] turnStartEffects = new EffectData[0];
+    [SerializeField] private EffectData[] turnEndEffects = new EffectData[0];
+    
     public string Name => displayName;
     public string Description => description;
     public int Price => cost;
@@ -19,7 +21,9 @@ public class StaticEquipment : ScriptableObject, Equipment
     public string[] Classes => canUseClasses.Select(c => c.Name).ToArray();
     public EquipmentSlot Slot => slot;
     public EquipmentStatModifier[] Modifiers => modifiers.ToArray();
-    
+    public EffectData[] TurnStartEffects => turnStartEffects;
+    public EffectData[] TurnEndEffects => turnEndEffects;
+
     public IStats AdditiveStats()
     {
         var stats = new StatAddends();

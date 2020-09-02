@@ -9,6 +9,8 @@ public interface Equipment
     string[] Classes { get; }
     EquipmentSlot Slot { get; }
     EquipmentStatModifier[] Modifiers { get; }
+    EffectData[] TurnStartEffects { get; }
+    EffectData[] TurnEndEffects { get; }
 }
 
 public static class EquipmentExtensions

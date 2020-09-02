@@ -7,7 +7,10 @@ public class InMemoryEquipment : Equipment
     public Rarity Rarity { set; get; }
     public string[] Classes { set; get; } = new string[1] { CharacterClass.All };
     public EquipmentSlot Slot { set; get; }
-    public EquipmentStatModifier[] Modifiers { get; set; }
+    public EquipmentStatModifier[] Modifiers { get; set; } = new EquipmentStatModifier[0];
+    public EffectData[] TurnStartEffects { get; set; } = new EffectData[0];
+    public EffectData[] TurnEndEffects { get; set; } = new EffectData[0];
+
 
     public Equipment Initialized(CharacterClass characterClass)
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolutionFinished, MemberUnconscious>
+public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolutionFinished>
 {
     [SerializeField] private BattleUiVisuals ui;
     [SerializeField] private BattleState state;
@@ -23,7 +23,8 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
 
     private void ResolveNext()
     {
-        _unconsciousness.ProcessUnconsciousMembers(state);
+        _unconsciousness.ProcessUnconsciousMembers(state)
+            .ForEach(m => resolutionZone.ExpirePlayedCards(c => c.Member.Id == m.Id));
         if (reactionZone.Count > 0)
             reactionZone.Clear();
         if (_reactions.Any())
@@ -50,7 +51,6 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
     }
 
     protected override void Execute(CardResolutionFinished msg) => ResolveNext();
-    protected override void Execute(MemberUnconscious msg) => resolutionZone.ExpirePlayedCards(c => c.Member.Id == msg.Member.Id);
 
     private IEnumerator ResolveNextReaction()
     {

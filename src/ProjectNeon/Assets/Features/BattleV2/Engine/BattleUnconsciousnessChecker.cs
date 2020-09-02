@@ -1,7 +1,14 @@
+using System.Collections.Generic;
+using System.Linq;
+
 public sealed class BattleUnconsciousnessChecker
 {
-    public void ProcessUnconsciousMembers(BattleState s) 
-        => s.GetAllNewlyUnconsciousMembers().ForEach(m => ResolveUnconsciousMember(m, s));
+    public List<Member> ProcessUnconsciousMembers(BattleState s)
+    {
+        var unconscious = s.GetAllNewlyUnconsciousMembers().ToList();
+        unconscious.ForEach(m => ResolveUnconsciousMember(m, s));
+        return unconscious;
+    }
 
     private void ResolveUnconsciousMember(Member member, BattleState state)
     {

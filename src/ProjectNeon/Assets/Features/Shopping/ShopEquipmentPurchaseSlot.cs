@@ -12,7 +12,12 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
 
     private Equipment _equipment;
     private bool _purchased;
-    
+
+    private void OnEnable()
+    {
+        UpdateAffordability();
+    }
+
     public ShopEquipmentPurchaseSlot Initialized(Equipment e)
     {
         soldVisual.SetActive(false);
@@ -24,7 +29,7 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
 
     private void UpdateAffordability()
     {
-        if (_purchased)
+        if (_equipment == null || _purchased)
             return;
         
         var canAfford = party.Credits >= _equipment.Price;
