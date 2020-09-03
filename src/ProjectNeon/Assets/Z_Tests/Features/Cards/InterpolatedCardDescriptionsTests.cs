@@ -24,6 +24,11 @@ public sealed class InterpolatedCardDescriptionsTests
     public void Interpolated_AttackWithOwner_IsCorrect() 
         => Assert.AreEqual("8", ForEffect(BasicAttack, Owner));
 
+    [Test]
+    public void Interpolated_Duration_IsCorrect()
+        => AssertMatchesIgnoreStyling("Deal 3 for 2 Turns.", 
+            Description("Deal 3 {D[0]}", new EffectData {NumberOfTurns = new IntReference(2)}, Owner));
+
     private string Description(string s, EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.InterpolatedDescription(s, new[] {e}, owner);
     private string ForEffect(EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.GenerateEffectDescription(e, owner);
 

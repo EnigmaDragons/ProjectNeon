@@ -44,17 +44,20 @@ public static class InterpolatedCardDescriptions
         var tokens = Regex.Matches(desc, "{(.*?)}");
         foreach (Match token in tokens)
         {
-            if (!token.Value.StartsWith("{E"))
-                throw new InvalidDataException($"Unable to interpolate for non Battle Effects");
-            
+            if (!token.Value.StartsWith("{E") && !token.Value.StartsWith("{D"))
+                throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects and Durations");
+
             var effectIndex = int.Parse(Regex.Match(token.Result("$1"), "\\[(.*?)\\]").Result("$1"));
-            var replacementToken = "{E[" + effectIndex + "]}";
             if (effectIndex >= effects.Length)
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {effects.Length} Battle Effects");
-                
-            result = result.Replace(replacementToken, Bold(GenerateEffectDescription(effects[effectIndex], owner)));
+
+            var effectReplacementToken = "{E[" + effectIndex + "]}";
+            if (result.Contains("{E["))
+                result = result.Replace(effectReplacementToken, Bold(GenerateEffectDescription(effects[effectIndex], owner)));
+
+            var durationReplacementToken = "{D[" + effectIndex + "]}";
+            result = result.Replace(durationReplacementToken, GenerateDurationDescription(effects[effectIndex]));
         }
-            
         return result;
     }
     
@@ -83,8 +86,18 @@ public static class InterpolatedCardDescriptions
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
                 : $"{data.FloatAmount}x Magic";
         
-        
         Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
         return "%%";
+    }
+    
+    private static string GenerateDurationDescription(EffectData data)
+    {
+        var value = data.NumberOfTurns.Value;
+        var turnString = value < 0
+                        ? "the Battle." 
+                        : value < 2
+                            ? "Current Turn." 
+                            : $"{value} Turns.";
+        return $"for {turnString}";
     }
 }
