@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: BigBad_DoubleFistMegaPunch
+  m_Name: BigBad_PrePunchBuildup
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 569c0e7cf6b6fc644841af392898ad5a, type: 3}
-  description: Deal {E[0]} damage
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  art: {fileID: 21300000, guid: cbd47ad31678e0c42be2931b1f607b64, type: 3}
+  description: Gain <b>+2 ATK</b> for 2 Turns. Apply <b>Vulnerable 2<b>
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
     type: 2}
   cost:
-    cost: 3
-    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     isXCost: 0
   onPlayGain:
     cost: 0
@@ -29,5 +29,8 @@ MonoBehaviour:
   rarity: 0
   actionSequences:
   - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 8f66d0b1219931a4aab4775b7583a73b, type: 2}
+  - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 17567eafbb8deed4099e9c3924738215, type: 2}
+    cardActions: {fileID: 11400000, guid: de4194ae361cfee478e449bedd9154ca, type: 2}
