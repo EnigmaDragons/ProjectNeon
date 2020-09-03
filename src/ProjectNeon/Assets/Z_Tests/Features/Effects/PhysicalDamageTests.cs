@@ -10,7 +10,7 @@ public sealed class PhysicalDamageTests
         var attacker = TestMembers.With(StatType.Attack, 2);
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        new Damage(new PhysicalDamage(1)).Apply(attacker, new MemberAsTarget(target));
+        new DealDamage(new PhysicalDamage(1)).Apply(attacker, new MemberAsTarget(target));
 
         Assert.AreEqual(8, target.State[TemporalStatType.HP]);
     }
@@ -20,7 +20,7 @@ public sealed class PhysicalDamageTests
     {
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Armor, 1));
 
-        new Damage(new PhysicalDamage(1)).Apply(_attacker, new Single(target));
+        new DealDamage(new PhysicalDamage(1)).Apply(_attacker, new Single(target));
 
         Assert.AreEqual(9, target.State[TemporalStatType.HP]);
     }
@@ -34,7 +34,7 @@ public sealed class PhysicalDamageTests
             TestMembers.Create(s => s.With(StatType.MaxHP, 10))
         };
 
-        new Damage(new PhysicalDamage(1)).Apply(_attacker, new Multiple(target));
+        new DealDamage(new PhysicalDamage(1)).Apply(_attacker, new Multiple(target));
 
         Assert.AreEqual(8, target[0].State[TemporalStatType.HP]);
         Assert.AreEqual(8, target[1].State[TemporalStatType.HP]);

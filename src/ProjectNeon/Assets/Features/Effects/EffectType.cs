@@ -3,6 +3,8 @@ using System;
 public enum EffectType
 {
     Nothing = 0,
+    Attack = 17,
+    DamageSpell = 50,
     HealFlat = 1,
     PhysicalDamage = 2,
     AdjustStatAdditively = 3,
@@ -19,7 +21,6 @@ public enum EffectType
     AdjustStatAdditivelyBaseOnMagicStat = 14,
     OnDamaged = 15,
     StealLifeNextAttack = 16,
-    Attack = 17,
     InterceptAttackForTurns = 18,
     EvadeAttacks = 19,
     HealOverTime = 20,

@@ -6,17 +6,17 @@ public sealed class Attack  : Effect
 {
     private readonly bool _hitsRandomTarget;
 
-    public Member Attacker { get; set; }
     public Target Target { get; set; }
-    public Effect Effect { get; set; }
-    public DamageCalculation Damage { get; set; }
-    public float Multiplier { get; set; }
+    private Member Attacker { get; set; }
+    private Effect Effect { get; set; }
+    private DamageCalculation Damage { get; set; }
+    private float Multiplier { get; set; }
 
     public Attack(float multiplier, bool hitsRandomTarget = false)
     {
         Multiplier = multiplier;
         Damage = new PhysicalDamage(Multiplier);
-        Effect = new Damage(Damage);
+        Effect = new DealDamage(Damage);
         _hitsRandomTarget = hitsRandomTarget;
     }
 

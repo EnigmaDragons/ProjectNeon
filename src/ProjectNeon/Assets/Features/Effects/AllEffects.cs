@@ -9,7 +9,7 @@ public static class AllEffects
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.HealFlat, e => new Heal(e.IntAmount) },
-        { EffectType.PhysicalDamage, e => new Damage(new PhysicalDamage(e.FloatAmount)) },
+        { EffectType.PhysicalDamage, e => new DealDamage(new PhysicalDamage(e.FloatAmount)) },
         { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
@@ -49,6 +49,7 @@ public static class AllEffects
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns < 0))) },
         { EffectType.AdjustStatAdditivelyBaseOnMagicStat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.IntAmount * m[StatType.Magic])), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
+        { EffectType.DamageSpell, e => new MagicAttack(e.FloatAmount, e.HitsRandomTargetMember) }
     };
     
     public static void Apply(EffectData effectData, EffectContext ctx)

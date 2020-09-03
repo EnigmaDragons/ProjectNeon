@@ -38,6 +38,7 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.TurnStun.ToString()] = new BattleCounter(TemporalStatType.TurnStun, 0, () => int.MaxValue);
         _counters[TemporalStatType.CardStun.ToString()] = new BattleCounter(TemporalStatType.CardStun, 0, () => int.MaxValue);
         _counters[TemporalStatType.Evade.ToString()] = new BattleCounter(TemporalStatType.Evade, 0, () => int.MaxValue);
+        _counters[TemporalStatType.Spellshield.ToString()] = new BattleCounter(TemporalStatType.Evade, 0, () => int.MaxValue);
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
         _counters[""] = new BattleCounter("", 0, () => 0);
@@ -116,8 +117,10 @@ public sealed class MemberState : IStats
         if (amount > 0)
             ChangeHp(-amount);
     }
+   
     public void GainShield(float amount) => PublishAfter(() => Counter(TemporalStatType.Shield).ChangeBy(amount));
     public void AdjustEvade(float amount) => PublishAfter(() => Counter(TemporalStatType.Evade).ChangeBy(amount));
+    public void AdjustSpellshield(float amount) => PublishAfter(() => Counter(TemporalStatType.Spellshield).ChangeBy(amount));
     public void Evade() => PublishAfter(() => Counter(TemporalStatType.Evade).ChangeBy(-1));
     private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
 
@@ -155,4 +158,5 @@ public sealed class MemberState : IStats
         action();
         Message.Publish(new MemberStateChanged(before, this));
     }
+
 }

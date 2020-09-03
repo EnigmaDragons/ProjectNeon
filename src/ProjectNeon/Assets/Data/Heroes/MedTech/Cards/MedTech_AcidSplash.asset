@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: MedTech_Collaborate
+  m_Name: MedTech_AcidSplash
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 0437cda0ab936e04aa1d283b584cbf57, type: 3}
-  description: Gain 1 Chem. Draw +2 cards for 3 turns
-  typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
+  art: {fileID: 21300000, guid: 10d99a96d25fe104396662466a9006f0, type: 3}
+  description: Deal 1x MAG damage
+  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
   tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: a6db77c3bda412d42b6a422b91d39c05,
     type: 2}
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 5f59f3b05e7d8f44386acdc4edce5618, type: 2}
-    isXCost: 0
-  onPlayGain:
     cost: 1
     resourceType: {fileID: 11400000, guid: 5f59f3b05e7d8f44386acdc4edce5618, type: 2}
     isXCost: 0
-  rarity: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    isXCost: 0
+  rarity: 1
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: 5e0a0e0c10fdad84fa6030d083a6a5ef, type: 2}
+    group: 1
+    cardActions: {fileID: 11400000, guid: 5e65febe03cacdb488fba2c076d4ddcc, type: 2}

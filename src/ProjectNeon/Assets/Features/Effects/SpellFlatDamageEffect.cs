@@ -6,7 +6,7 @@
 
     public SpellFlatDamageEffect(float quantity)
     {
-        _effect = new Damage(new SpellFlatDamage(quantity));
+        _effect = new DealDamage(new SpellFlatDamage(quantity));
     }
     public void Apply(EffectContext ctx)
     {
