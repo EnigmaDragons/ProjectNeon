@@ -66,7 +66,7 @@ public class BattleSetupV2 : MonoBehaviour
             state.SetupEnemyEncounter();
         }
 
-        if (enemyArea.Enemies.Length == 0)
+        if (enemyArea.Enemies.Count == 0)
         {
             BattleLog.Write("Setting Up Fallback Random Encounter");
             enemyArea = enemyArea.Initialized(encounterBuilder.Generate(3));

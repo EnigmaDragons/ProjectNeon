@@ -9,6 +9,7 @@ public class CardActionV2
     [SerializeField] private ActionConditionData conditionData = new ActionConditionData();
     [SerializeField] private StringReference characterAnimation;
     [SerializeField] private StringReference atTargetAnimation;
+    [SerializeField] private Enemy enemyToSpawn;
 
     public CardBattleActionType Type => type;
     public EffectData BattleEffect => battleEffect;
@@ -20,6 +21,8 @@ public class CardActionV2
     {
         if (type == CardBattleActionType.Battle)
             return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target));
+        if (type == CardBattleActionType.SpawnEnemy)
+            return new SinglePayload(new SpawnEnemy(enemyToSpawn));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(new CharacterAnimationRequested(source.Id, characterAnimation));
         if (type == CardBattleActionType.AnimateAtTarget)

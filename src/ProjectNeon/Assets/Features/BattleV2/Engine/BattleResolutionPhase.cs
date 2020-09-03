@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolutionFinished>
+public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, CardResolutionFinished>
 {
     [SerializeField] private BattleUiVisuals ui;
     [SerializeField] private BattleState state;
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private CardPlayZone reactionZone;
+    [SerializeField] private EnemyVisualizerV2 enemies;
     [SerializeField] private FloatReference delay = new FloatReference(1.5f);
 
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
@@ -48,6 +49,12 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, CardResolution
         var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(effectResolved));
         reactions.ForEach(r => _reactions.Enqueue(r));
         Message.Publish(new Finished<ApplyBattleEffect>());
+    }
+
+    protected override void Execute(SpawnEnemy msg)
+    {
+        enemies.Spawn(msg.Enemy);
+        Message.Publish(new CardResolutionFinished());
     }
 
     protected override void Execute(CardResolutionFinished msg) => ResolveNext();

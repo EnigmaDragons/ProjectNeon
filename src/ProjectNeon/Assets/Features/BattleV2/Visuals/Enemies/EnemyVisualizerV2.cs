@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -11,41 +13,54 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
 
-    [ReadOnly, SerializeField] private GameObject[] active = new GameObject[0];
+    [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
     
     public IEnumerator Setup()
     {
         active.ForEach(Destroy);
-        active = new GameObject[enemyArea.Enemies.Length];
+        active = new List<GameObject>();
         var enemies = enemyArea.Enemies;
-        var positions = new Transform[enemies.Length];
-        for (var i = 0; i < enemies.Length; i++)
-        {
-            var enemyObject = Instantiate(enemies[i].Prefab, transform);
-            active[i] = enemyObject;
-            var t = enemyObject.transform;
-            t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, 0);
-            positions[i] = t;
-        }
+        for (var i = 0; i < enemies.Count; i++) 
+            InstantiateEnemyVisuals(enemies[i].Prefab, i);
 
-        enemyArea.WithUiTransforms(positions);
         yield break;
     }
 
+    private Transform InstantiateEnemyVisuals(GameObject prefab, int i)
+    {
+        var enemyObject = Instantiate(prefab, transform);
+        active.Add(enemyObject);
+        var t = enemyObject.transform;
+        t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
+        enemyArea.WithUiTransforms(active.Select(a => a.transform));
+        return t;
+    }
+    
     public void AfterBattleStateInitialized()
     {
         var enemies = enemyArea.Enemies;
         var positions = enemyArea.EnemyUiPositions;
-        for (var i = 0; i < enemies.Length; i++)
-        {
-            var enemyObject = positions[i].gameObject;
-            var enemyMember = state.GetMemberByEnemyIndex(i);
-            var pos = enemyObject.transform.position;
-            Instantiate(ui, pos, Quaternion.identity, enemyObject.transform)
-                .Initialized(enemyMember);
-        }
+        for (var i = 0; i < enemies.Count; i++)
+            InstantiateEnemyUi(i, positions[i].gameObject.transform);
     }
-    
+
+    public void Spawn(Enemy enemy)
+    {
+        BattleLog.Write($"Spawning {enemy.Name}");
+        var index = active.Count;
+        var enemyObject = InstantiateEnemyVisuals(enemy.Prefab, index);
+        state.AddEnemy(enemy, enemyObject);
+        InstantiateEnemyUi(index, enemyObject);
+    }
+
+    private void InstantiateEnemyUi(int index, Transform enemyObject)
+    {
+        var enemyMember = state.GetMemberByEnemyIndex(index);
+        var pos = enemyObject.transform.position;
+        Instantiate(ui, pos, Quaternion.identity, enemyObject)
+            .Initialized(enemyMember);
+    }
+
     private IEnumerator ExecuteAfterDelay(Action a, float delay)
     {
         yield return new WaitForSeconds(delay);

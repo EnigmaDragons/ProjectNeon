@@ -19,7 +19,7 @@ public class BattleWorldVisuals : MonoBehaviour
         yield return enemies.Setup();
         yield return party.Setup();
     }
-
+    
     public void AfterBattleStateInitialized()
     {
         party.AfterBattleStateInitialized();

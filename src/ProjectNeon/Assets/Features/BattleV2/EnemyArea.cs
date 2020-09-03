@@ -2,27 +2,32 @@
 using System.Linq;
 using UnityEngine;
 
-
 [CreateAssetMenu(menuName = "Battle/EnemyArea")]
 public class EnemyArea : ScriptableObject
 {
-    [SerializeField] private Enemy[] enemies;
-    [SerializeField] private Transform[] uiPositions;
+    [SerializeField] private List<Enemy> enemies;
+    [SerializeField] private List<Transform> uiPositions;
 
-    public Enemy[] Enemies => enemies;
-    public Transform[] EnemyUiPositions => uiPositions;
+    public List<Enemy> Enemies => enemies;
+    public List<Transform> EnemyUiPositions => uiPositions;
 
     public EnemyArea Initialized(IEnumerable<Enemy> newEnemies)
     {
-        enemies = newEnemies.ToArray();
+        enemies = newEnemies.ToList();
         return this;
     }
 
     public EnemyArea WithUiTransforms(IEnumerable<Transform> positions)
     {
-        uiPositions = positions.ToArray();
+        uiPositions = positions.ToList();
         return this;
     }
 
-    public void Clear() => enemies = new Enemy[0];
+    public void Add(Enemy e, Transform uiPosition)
+    {
+        enemies.Add(e);
+        uiPositions.Add(uiPosition);
+    }
+    
+    public void Clear() => enemies = new List<Enemy>();
 }

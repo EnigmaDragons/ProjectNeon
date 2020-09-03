@@ -75,10 +75,11 @@ public class BattleState : ScriptableObject
     public int GetNextCardId() => nextCardId++;
     
     private int EnemyStartingIndex => 4;
+    private int _nextEnemyId = 0;
     public BattleState FinishSetup()
     {
         var id = 0;      
-        memberNames = new string[EnemyStartingIndex + enemies.Enemies.Length + 3];
+        memberNames = new string[EnemyStartingIndex + enemies.Enemies.Count + 3];
         _uiTransformsById = new Dictionary<int, Transform>();
         
         var heroes = Party.Heroes;
@@ -93,13 +94,14 @@ public class BattleState : ScriptableObject
 
         id = EnemyStartingIndex - 1;
         _enemiesById = new Dictionary<int, Enemy>();
-        for (var i = 0; i < enemies.Enemies.Length; i++)
+        for (var i = 0; i < enemies.Enemies.Count; i++)
         {
             id++;
             _enemiesById[id] = enemies.Enemies[i];
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
             memberNames[id] = enemies.Enemies[i].name;
         }
+        _nextEnemyId = id + 1;
         
         _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
@@ -156,6 +158,17 @@ public class BattleState : ScriptableObject
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void SetRewardCards(CardType[] cards) => UpdateState(() => rewardCards = cards);
+
+    public void AddEnemy(Enemy e, Transform uiPosition) 
+        => UpdateState(() =>
+        {
+            var id = _nextEnemyId++;
+            EnemyArea.Add(e, uiPosition);
+            _enemiesById[id] = e;
+            _membersById[id] = e.AsMember(id);
+            _uiTransformsById[id] = uiPosition;
+            memberNames[id] = e.name;
+        });
 
     // Battle Wrapup
     public void Wrapup()
