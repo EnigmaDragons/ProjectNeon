@@ -1,4 +1,6 @@
 
+using System;
+
 public static class ResourceCostCalculationExtensions
 {
     public static ResourceQuantity ResourcesSpent(this ResourceCost cost, Member m)
@@ -19,13 +21,15 @@ public static class ResourceCostCalculationExtensions
     {
         if (gain == null || gain.ResourceType == null)
             return new ResourceQuantity {Amount = 0, ResourceType = ""};
-        
+
+        var resourceType = gain.ResourceType;
+        var remainingResourceAmount = m.ResourceMax(resourceType) - m.ResourceAmount(resourceType);
         return new ResourceQuantity
         {
-            ResourceType = gain.ResourceType.Name,
+            ResourceType = resourceType.Name,
             Amount = gain.IsXCost
-                ? m.ResourceMax(gain.ResourceType)
-                : gain.Amount
+                ? remainingResourceAmount
+                : Math.Min(gain.Amount, remainingResourceAmount)
         };
     }
 }
