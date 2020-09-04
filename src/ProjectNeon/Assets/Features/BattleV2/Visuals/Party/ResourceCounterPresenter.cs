@@ -20,13 +20,19 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>
         _member = member;
         _resourceType = resource;
         icon.sprite = resource.Icon;
-        counter.text = $"{resource.StartingAmount}/{resource.MaxAmount}";
+        UpdateUi(member.State);
     }
-
+    
     protected override void Execute(MemberStateChanged msg)
     {
         if (msg.State.MemberId != _member.Id) return;
         
-        counter.text = $"{msg.State[_resourceType]}/{_resourceType.MaxAmount}";
+        UpdateUi(msg.State);
     }
+    
+    private void UpdateUi(MemberState state)
+    {
+        counter.text = $"{state[_resourceType]}/{state.Max(_resourceType.Name)}";
+    }
+
 }
