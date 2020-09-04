@@ -42,7 +42,12 @@ public static class BattleStateTargetingExtensions
         var teamMembers = group == Group.Ally ? GetConscious(state, myTeam) : GetConscious(state, opponentsAre);
 
         if (scope == Scope.One)
-            return Targets(teamMembers.Select(x => new Single(x)).Cast<Target>().ToArray());
+        {
+            var membersWithTaunt = teamMembers.Where(m => m.HasTaunt()).ToArray();
+            var members = membersWithTaunt.Any() ? membersWithTaunt : teamMembers;
+            return Targets(members.Select(m => new Single(m)).Cast<Target>().ToArray());
+        }
+
         if (scope == Scope.AllExcept)
             return Targets(teamMembers.Select(exclusion => new Multiple(teamMembers.Where(x => x != exclusion).ToArray())).Cast<Target>().ToArray());
         return Targets(new Team(teamMembers));

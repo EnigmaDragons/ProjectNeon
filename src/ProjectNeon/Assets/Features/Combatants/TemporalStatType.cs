@@ -6,4 +6,5 @@ public enum TemporalStatType
     CardStun = 3,
     Evade = 4,
     Spellshield = 5,
+    Taunt = 6,
 }

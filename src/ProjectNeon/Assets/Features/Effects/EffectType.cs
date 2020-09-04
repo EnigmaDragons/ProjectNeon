@@ -1,5 +1,6 @@
 using System;
 
+// WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER. EVENTUALLY WE NEED A TOOL TO FIND USAGES
 public enum EffectType
 {
     Nothing = 0,
@@ -47,4 +48,5 @@ public enum EffectType
     HealMagic = 45,
     GivePrimaryResource = 46,
     AdjustPlayerStats = 49,
+    ApplyTaunt = 51,
 }
