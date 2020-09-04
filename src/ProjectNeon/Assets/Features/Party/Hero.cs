@@ -40,7 +40,11 @@ public class Hero
     public Member AsMember(int id)
     {
         var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, Stats, Character.Class.BattleRole, CurrentHp);
-        Equipment.All.ForEach(e => m.Apply(s => s.ApplyPersistentState(new EquipmentPersistentState(e, m))));
+        Equipment.All.ForEach(e =>
+        {
+            m.Apply(s => s.ApplyPersistentState(new EquipmentPersistentState(e, m)));
+            e.BattleStartEffects.ForEach(effect => AllEffects.Apply(effect, new EffectContext(m, new Single(m))));
+        });
         return m;
     }
 }

@@ -11,6 +11,7 @@ public class InMemoryEquipment : Equipment
     public IResourceType[] ResourceModifiers { get; set; } = new IResourceType[0];
     public EffectData[] TurnStartEffects { get; set; } = new EffectData[0];
     public EffectData[] TurnEndEffects { get; set; } = new EffectData[0];
+    public EffectData[] BattleStartEffects { get; set; } = new EffectData[0];
 
     public Equipment Initialized(CharacterClass characterClass)
     {

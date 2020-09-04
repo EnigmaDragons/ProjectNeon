@@ -12,6 +12,7 @@ public interface Equipment
     IResourceType[] ResourceModifiers { get; }
     EffectData[] TurnStartEffects { get; }
     EffectData[] TurnEndEffects { get; }
+    EffectData[] BattleStartEffects { get; }
 }
 
 public static class EquipmentExtensions

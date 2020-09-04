@@ -14,6 +14,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     [SerializeField] private ResourceTypeModifications[] resourceModifiers = new ResourceTypeModifications[0];
     [SerializeField] private EffectData[] turnStartEffects = new EffectData[0];
     [SerializeField] private EffectData[] turnEndEffects = new EffectData[0];
+    [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
     
     public string Name => displayName;
     public string Description => description;
@@ -25,6 +26,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     public IResourceType[] ResourceModifiers => resourceModifiers;
     public EffectData[] TurnStartEffects => turnStartEffects;
     public EffectData[] TurnEndEffects => turnEndEffects;
+    public EffectData[] BattleStartEffects => battleStartEffects;
 
     public IStats AdditiveStats()
     {
