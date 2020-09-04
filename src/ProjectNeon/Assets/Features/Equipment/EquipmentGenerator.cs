@@ -82,7 +82,7 @@ public class EquipmentGenerator
         {
             Name = name,
             Rarity = rarity,
-            Price = (totalPowerLevel * 20).WithShopPricingVariance(),
+            Price = (totalPowerLevel * 40).WithShopPricingVariance(),
             Classes = new [] { CharacterClass.All },
             Description = description,
             Modifiers = modifiers.ToArray(),
@@ -103,7 +103,7 @@ public class EquipmentGenerator
 
     private static readonly Dictionary<StatType, float> AdditiveStatsChartPerPoint = new Dictionary<StatType, float>
     {
-        { StatType.MaxHP, 5 },
+        { StatType.MaxHP, 4 },
         { StatType.Armor, 1 },
         { StatType.Resistance, 1 },
         { StatType.Attack, 0.5f },
