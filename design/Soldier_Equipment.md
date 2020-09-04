@@ -7,7 +7,7 @@ Soldier Slots:
 +2 ATK while attacking bloody enemies
 
 
-Weapons:
+## Weapons:
 
 Legendary - When you kill an enemy recast the card used to kill on another random enemy 
 Legendary - Ammo-costing cards increase your strength for the turn by the amount of ammo they cost(Chaingun) 
@@ -25,17 +25,14 @@ Common - Start of combat: Add a random ammo-costing card to your hand, it costs 
 Common - Gain 4 shield when you reload
 Common - Reload now loads exactly 6 bullets. 50 ammo.(You still start with 6) +2 slots
 
-
-Armor:
+## Armor:
 Legendary - Once per battle: When you would die instead set your life equal to your ammo and lose all ammo.(Guardian Ammo)
 Uncommon - Gain 1 Shield per ammo spent
 Common - When you play reload gain 1 Shield/bullet in the chamber.(E.g. You reload with 2 ammo left, you get 2 Shield)
 Rare - After playing 3 moves that don’t cost ammo gain 6 shield
 Uncommon - Reload grants +2 armor for the turn
 
-
-
-Augment:
+## Augment:
 Common - Once per battle: Reload when you have 0 ammo
 Common - Your first ammo-costing move each turn costs 1 less ammo
 Common - You deal +20% damage to the frontmost enemy

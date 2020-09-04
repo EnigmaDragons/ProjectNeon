@@ -14,7 +14,12 @@ public sealed class AIStrategyGenerator
         var relevantEnemies = _forTeam == TeamType.Enemies 
             ? s.Heroes.Where(h => h.IsConscious()) 
             : s.Enemies.Where(e => e.IsConscious());
+
+        var vulnerableEnemies = relevantEnemies.Where(e => e.IsVulnerable()).ToArray();
+        var preferredSingleTarget = vulnerableEnemies.Any() 
+            ? vulnerableEnemies.Random() 
+            : relevantEnemies.Random();
         
-        return new AIStrategy(relevantEnemies.Random(), new Multiple(relevantEnemies.ToArray()));
+        return new AIStrategy(preferredSingleTarget, new Multiple(relevantEnemies.ToArray()));
     }
 }

@@ -50,6 +50,7 @@ public static class MemberExtensions
     public static int Armor(this Member m) => m.State.Armor();
     public static int Resistance(this Member m) => m.State.Resistance();
     public static bool IsConscious(this Member m) => m.State.IsConscious;
+    public static bool IsVulnerable(this Member m) => m.State.Damagability() > 1;
     public static bool IsStunnedForCurrentTurn(this Member m) => m.State[TemporalStatType.TurnStun] > 0;
     public static bool IsStunnedForCard(this Member m) => m.State[TemporalStatType.CardStun] > 0;
     public static bool HasAttackBuff(this Member m) => m.State.DifferenceFromBase(StatType.Attack) > 0;
