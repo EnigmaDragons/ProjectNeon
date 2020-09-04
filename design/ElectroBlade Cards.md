@@ -23,6 +23,7 @@ Uncommon:
 - Overcharge - Self - Gain vulnerable this turn and gain 5 Energy for next turn
 - Electro Slash - 1 Enemy - 2 Energy - Deal 1.8x ATK damage.
 - Shock And Awe - 1 Enemy - Gain 1 Energy. Attack 2 random enemies for 0.4x ATK
+- Disorienting Strike - 1 Enemy - Deal 0.7x Damage. Remove 1 Enemy Resource.
 
 Rare:
 - Surge Break - 6 Energy - All Enemies - Remove shields and Stun.

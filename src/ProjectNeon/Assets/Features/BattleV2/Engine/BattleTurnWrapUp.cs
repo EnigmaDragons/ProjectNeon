@@ -13,7 +13,7 @@ public class BattleTurnWrapUp : MonoBehaviour
     {
         DrawNewPlayerHand();
         state.AdvanceTurn();
-        state.Enemies.ForEach(e => e.State.GainPrimaryResource(1));
+        state.Enemies.ForEach(e => e.State.AdjustPrimaryResource(1));
     }
     
     private void DrawNewPlayerHand()

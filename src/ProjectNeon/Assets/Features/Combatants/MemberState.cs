@@ -118,18 +118,18 @@ public sealed class MemberState : IStats
         if (amount > 0)
             ChangeHp(-amount);
     }
+    private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
 
+    // Status Counters Commands
     public void Adjust(TemporalStatType t, float amount) => PublishAfter(() => Counter(t.ToString()).ChangeBy(amount));
     public void GainShield(float amount) => Adjust(TemporalStatType.Shield, amount);
     public void AdjustEvade(float amount) => Adjust(TemporalStatType.Evade, amount);
     public void AdjustSpellshield(float amount) => Adjust(TemporalStatType.Spellshield, amount);
-    public void AdjustTaunt(float amount) => Adjust(TemporalStatType.Taunt, amount);
-    private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
 
     // Resource Commands
     public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
     public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
-    public void GainPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
+    public void AdjustPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
     public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType, qty.Amount);
     public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));

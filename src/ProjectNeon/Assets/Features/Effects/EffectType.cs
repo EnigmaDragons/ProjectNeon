@@ -46,7 +46,7 @@ public enum EffectType
     //[Obsolete]ReplayLastCard = 42,
     StunForNumberOfCards = 44,
     HealMagic = 45,
-    GivePrimaryResource = 46,
+    AdjustPrimaryResource = 46,
     AdjustPlayerStats = 49,
     ApplyTaunt = 51,
 }

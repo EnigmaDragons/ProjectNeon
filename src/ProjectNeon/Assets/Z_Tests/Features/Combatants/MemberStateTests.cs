@@ -9,7 +9,7 @@ public sealed class MemberStateTests
         var resource = new InMemoryResourceType {Name = "SampleResource", MaxAmount = 3};
         var member = new MemberState(1, new StatAddends { ResourceTypes = resource.AsArray() });
         
-        member.GainPrimaryResource(2);
+        member.AdjustPrimaryResource(2);
         
         Assert.AreEqual(member[resource], 2);
     }

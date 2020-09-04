@@ -25,7 +25,7 @@ public sealed class HealPrimaryResourceTests
             }
         );
         performer.State.TakeRawDamage(6);
-        performer.State.GainPrimaryResource(2);
+        performer.State.AdjustPrimaryResource(2);
         
         TestEffects.Apply(healPrimary, performer, new Single(performer));
         Assert.AreEqual(
