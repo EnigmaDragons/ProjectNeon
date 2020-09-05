@@ -29,4 +29,17 @@ public static class Rng
         }
         return shuffled;
     }
+    
+    public static List<T> Shuffled<T>(this List<T> list)
+    {
+        var shuffled = list.ToList();
+        for (var n = shuffled.Count - 1; n > 1; n--)
+        {
+            var k = Instance.Next(n + 1);
+            var value = shuffled[k];
+            shuffled[k] = shuffled[n];
+            shuffled[n] = value;
+        }
+        return shuffled;
+    }
 }

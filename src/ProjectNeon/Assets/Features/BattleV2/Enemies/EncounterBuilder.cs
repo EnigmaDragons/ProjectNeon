@@ -35,15 +35,19 @@ public class EncounterBuilder : ScriptableObject
         while (currentDifficulty < difficulty && enemies.Count < 7)
         {
             var maximum = difficulty - currentDifficulty;
-            var nextEnemy = possible.Where(
-                enemy => enemy.PowerLevel <= maximum
-            ).Random();
+            var enemyRolesOverrepresented = enemies
+                .GroupBy(e => e.Role)
+                .Where(g => g.Sum(e => e.PowerLevel) >= (difficulty / 2f))
+                .Select(e => e.Key);
+            var nextEnemy = possible
+                .Where(e => !enemyRolesOverrepresented.Contains(e.Role))
+                .Where(e => e.PowerLevel <= maximum).Random();
             enemies.Add(nextEnemy);
             BattleLog.Write($"Added {nextEnemy.Name} to Encounter");
             currentDifficulty = currentDifficulty + Math.Max(nextEnemy.PowerLevel, 1);
         }
         
         BattleLog.Write("Finished generating encounter");
-        return enemies;
+        return enemies.ToList().Shuffled();
     }
 }

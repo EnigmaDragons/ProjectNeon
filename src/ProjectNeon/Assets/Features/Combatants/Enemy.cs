@@ -39,6 +39,7 @@ public class Enemy : ScriptableObject
     public int RewardCredits => rewardCredits;
     public GameObject Prefab => prefab;
     public string DeathEffect => deathEffect;
+    public BattleRole Role => battleRole;
 
     public IStats Stats => new StatAddends
         {
