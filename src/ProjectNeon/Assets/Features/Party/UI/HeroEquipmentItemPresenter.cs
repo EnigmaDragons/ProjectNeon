@@ -8,9 +8,7 @@ public class HeroEquipmentItemPresenter : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private Image slotIcon;
-    [SerializeField] private Sprite armorIcon;
-    [SerializeField] private Sprite weaponIcon;
-    [SerializeField] private Sprite augmentIcon;
+    [SerializeField] private EquipmentSlotIcons icons;
 
     private Action _onClick = () => {};
     
@@ -18,10 +16,7 @@ public class HeroEquipmentItemPresenter : MonoBehaviour, IPointerDownHandler
     {
         _onClick = onClick;
         nameLabel.text = e.IsPresent ? e.Value.Name : "---";
-        slotIcon.sprite = slot == EquipmentSlot.Weapon 
-            ? weaponIcon 
-            : slot == EquipmentSlot.Armor 
-                ? armorIcon : augmentIcon;
+        slotIcon.sprite = icons.All[slot];
         return this;
     }
 

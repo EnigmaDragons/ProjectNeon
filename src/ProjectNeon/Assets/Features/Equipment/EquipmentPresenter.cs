@@ -12,6 +12,8 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private TextMeshProUGUI descriptionLabel;
     [SerializeField] private TextMeshProUGUI classesLabel;
     [SerializeField] private CardRarityPresenter rarity;
+    [SerializeField] private Image slotIcon;
+    [SerializeField] private EquipmentSlotIcons slotIcons;
 
     private Action _onClick = () => { };
     
@@ -26,6 +28,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
         classesLabel.text = $"Classes: {classesText}";
         descriptionLabel.text = e.Description;
         rarity.Set(e.Rarity);
+        slotIcon.sprite = slotIcons.All[e.Slot];
         gameObject.SetActive(true);
         return this;
     }
