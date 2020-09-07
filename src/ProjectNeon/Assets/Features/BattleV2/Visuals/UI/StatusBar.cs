@@ -61,6 +61,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State[TemporalStatType.Evade] > 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.Evade].Icon, Text = _member.State[TemporalStatType.Evade].ToString() });
         
+        if (_member.State.HasStatus(StatusTag.OnHit))
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.OnHit].Icon, Text = "" });
+        
         UpdateStatuses(statuses);
     }
 

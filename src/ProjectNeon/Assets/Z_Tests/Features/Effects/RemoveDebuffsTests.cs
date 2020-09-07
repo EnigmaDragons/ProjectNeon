@@ -32,7 +32,7 @@ public class RemoveDebuffsTests
     {
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s);
-        target.State.AddReactiveState(new ReactOnAttacked(true, 2, 2, ReactiveTriggerScope.All, new Dictionary<int, Member>(), 1, target, TestCards.AnyReaction()));
+        target.State.AddReactiveState(new ReactOnAttacked(true, 2, 2, StatusTag.CounterAttack, ReactiveTriggerScope.All, new Dictionary<int, Member>(), 1, target, TestCards.AnyReaction()));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
@@ -44,7 +44,7 @@ public class RemoveDebuffsTests
     {
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s);
-        target.State.AddReactiveState(new ReactOnAttacked(false, 2, 2, ReactiveTriggerScope.All, new Dictionary<int, Member>(), 1,  target, TestCards.AnyReaction()));
+        target.State.AddReactiveState(new ReactOnAttacked(false, 2, 2, StatusTag.CounterAttack, ReactiveTriggerScope.All, new Dictionary<int, Member>(), 1,  target, TestCards.AnyReaction()));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 

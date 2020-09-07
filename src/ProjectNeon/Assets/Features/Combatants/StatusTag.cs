@@ -5,4 +5,5 @@ public enum StatusTag
     DamageOverTime = 2,
     HealOverTime = 3,
     Vulnerable = 4,
+    OnHit = 5,
 }
