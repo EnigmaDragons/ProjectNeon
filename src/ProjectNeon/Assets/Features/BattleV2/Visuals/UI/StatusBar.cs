@@ -26,6 +26,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     {
         var statuses = new List<CurrentStatusValue>();
         
+        if (_member.State[TemporalStatType.Taunt] > 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.Taunt].Icon, Text = _member.State[TemporalStatType.Taunt].ToString() });
+        
         if (_member.State[StatType.Armor] > 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Armor].Icon, Text = _member.State[StatType.Armor].ToString() });
         
@@ -54,6 +57,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         if (_member.State.HasStatus(StatusTag.HealOverTime))
             statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.HealOverTime].Icon, Text = "" });
+        
+        if (_member.State[TemporalStatType.Evade] > 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.Evade].Icon, Text = _member.State[TemporalStatType.Evade].ToString() });
         
         UpdateStatuses(statuses);
     }
