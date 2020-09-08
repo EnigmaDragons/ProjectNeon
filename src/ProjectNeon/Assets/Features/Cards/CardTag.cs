@@ -8,4 +8,5 @@ public enum CardTag
     Stun = 5,
     Healing = 6,
     Defense = 7,
+    Vulnerable = 8,
 }

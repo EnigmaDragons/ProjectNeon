@@ -14,7 +14,14 @@ public static class AITargetSelectionLogic
         {
             var possibleTargets = ctx.State.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
             if (card.Is(CardTag.Stun))
-                return possibleTargets.MostPowerful();
+            {
+                var stunnedTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsStunnedForCurrentTurn()));
+                var stunSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Stun, out var targets) ? targets : new HashSet<Target>();
+                var saneTargets = possibleTargets.Except(stunSelectedTargets).Except(stunnedTargets);
+                var actualTargets = saneTargets.Any() ? saneTargets : possibleTargets;
+                return actualTargets.MostPowerful();
+            }
+
             if (card.Is(CardTag.Attack))
                 return ctx.Strategy.AttackTargetFor(action);
             if (card.Is(CardTag.Healing))
@@ -36,6 +43,8 @@ public static class AITargetSelectionLogic
     {
         var targets = ctx.SelectedTargets();
         var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);
+        if (ctx.SelectedCard.Value.Is(CardTag.Stun))
+            targets.ForEach(t => ctx.Strategy.RecordNonStackingTarget(CardTag.Stun, t));
         return new PlayedCardV2(ctx.Member, targets, card);
     }
     

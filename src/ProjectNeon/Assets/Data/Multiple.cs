@@ -1,11 +1,15 @@
-﻿public class Multiple : Target
+﻿using System.Linq;
+
+public class Multiple : Target
 {
-    private Member[] _members;
+    public Member[] Members { get; }
 
     public Multiple(Member[] members)
     {
-        _members = members;
+        Members = members;
     }
 
-    public Member[] Members => _members;
+    public override bool Equals(object obj) => obj is Multiple && obj.ToString() == Members.ToString();
+    public override int GetHashCode() => ToString().GetHashCode();
+    public override string ToString() => string.Join(",", Members.Select(m => m.Id.ToString()));
 }

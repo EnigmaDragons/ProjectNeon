@@ -11,6 +11,8 @@ public class Member
     public BattleRole BattleRole { get; }
     public MemberState State { get; }
 
+    public override bool Equals(object obj) => obj is Member && ((Member)obj).Id == Id;
+    public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{Name} {Id}";
     
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole)
