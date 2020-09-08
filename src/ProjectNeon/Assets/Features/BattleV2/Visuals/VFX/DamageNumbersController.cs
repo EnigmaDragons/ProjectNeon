@@ -22,9 +22,7 @@ public sealed class DamageNumbersController : OnMessage<MemberStateChanged>
             return;
 
         var current = msg.State.ToSnapshot();
-
         var hpChange = current.Hp - msg.BeforeState.Hp;
-        Debug.Log($"HP Change for {_m.Name} is {hpChange}.");
         if (hpChange != 0)
             Instantiate(hpNumberPrototype, transform.position + hpNumOffset, Quaternion.identity, transform).Initialized(hpChange);
         
