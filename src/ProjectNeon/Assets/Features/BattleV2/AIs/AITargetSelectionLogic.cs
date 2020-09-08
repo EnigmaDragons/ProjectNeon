@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public static class AITargetSelectionLogic
@@ -37,4 +38,23 @@ public static class AITargetSelectionLogic
         var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);
         return new PlayedCardV2(ctx.Member, targets, card);
     }
+    
+    // TODO: In the future, factor in armor/resist/vulnerable
+    public static Target MostVulnerable(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderBy(t => t.TotalHpAndShields())
+        .First();
+
+    public static Target MostPowerful(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(t => t.TotalOffense())
+        .First();
+
+    public static Target MostDamaged(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(x => x.TotalMissingHp())
+        .First();
 }

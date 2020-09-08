@@ -6,15 +6,30 @@ public static class AICardSelectionLogic
 {
     public static CardSelectionContext WithSelectedDesignatedAttackerCardIfApplicable(this CardSelectionContext ctx) 
         => ctx.SelectedCard.IsMissing && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
-            ? ctx.withSelectedCard(ctx.SelectAttackCard())
+            ? ctx.WithSelectedCard(ctx.SelectAttackCard())
             : ctx;
 
     public static CardSelectionContext WithSelectedUltimateIfAvailable(this CardSelectionContext ctx)
         => ctx.SelectedCard.IsMissing && ctx.CardOptions.Any(c => c.Tags.Contains(CardTag.Ultimate))
-            ? ctx.withSelectedCard(ctx.CardOptions.Where(c => c.Tags.Contains(CardTag.Ultimate)).MostExpensive())
+            ? ctx.WithSelectedCard(ctx.CardOptions.Where(c => c.Tags.Contains(CardTag.Ultimate)).MostExpensive())
             : ctx;
 
-    public static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
+    public static CardSelectionContext WithCommonSenseSelections(this CardSelectionContext ctx)
+        => ctx
+            .DontPlayHealsIfAlliesDontNeedHealing()
+            .DontPlayShieldsIfAlliesDontNeedShielding()
+            .DontPlayShieldAttackIfOpponentsDontHaveManyShields();
+    
+    private static CardSelectionContext DontPlayShieldAttackIfOpponentsDontHaveManyShields(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < 15, CardTag.Shield, CardTag.Attack);
+
+    private static CardSelectionContext DontPlayHealsIfAlliesDontNeedHealing(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentHp() >= a.MaxHp() * 0.9), CardTag.Healing);
+
+    private static CardSelectionContext DontPlayShieldsIfAlliesDontNeedShielding(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.RemainingShieldCapacity() > a.MaxShield() * 0.7), CardTag.Defense, CardTag.Shield);
+
+    private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
         => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).MostExpensive();
 
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx)
@@ -22,13 +37,10 @@ public static class AICardSelectionLogic
     
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority)
         => ctx.SelectedCard.IsMissing
-            ? ctx.withSelectedCard(FinalizeCardSelection(ctx, typePriority))
+            ? ctx.WithSelectedCard(FinalizeCardSelection(ctx, typePriority))
             : ctx;
 
-    public static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx)
-        => ctx.FinalizeCardSelection(_ => 0);
-    
-    public static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority) 
+    private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority) 
         => ctx.SelectedCard.IsPresent 
             ? ctx.SelectedCard.Value
             : ctx.CardOptions
@@ -44,22 +56,4 @@ public static class AICardSelectionLogic
         .OrderByDescending(x => x.Cost.Amount)
         .First();
 
-    // TODO: In the future, factor in armor/resist/vulnerable
-    public static Target MostVulnerable(this IEnumerable<Target> targets) => targets
-        .ToArray()
-        .Shuffled()
-        .OrderBy(t => t.TotalHpAndShields())
-        .First();
-
-    public static Target MostPowerful(this IEnumerable<Target> targets) => targets
-        .ToArray()
-        .Shuffled()
-        .OrderByDescending(t => t.TotalOffense())
-        .First();
-
-    public static Target MostDamaged(this IEnumerable<Target> targets) => targets
-        .ToArray()
-        .Shuffled()
-        .OrderByDescending(x => x.TotalMissingHp())
-        .First();
 }
