@@ -9,31 +9,21 @@ public class ControllerAI : TurnAI
     {        
         var me = battleState.Members[memberId];
         var playableCards = battleState.GetPlayableCards(memberId);
-        var allies = battleState.GetConsciousAllies(me);
         var enemies = battleState.GetConsciousEnemies(me);
 
-        var maybeCard = new Maybe<CardTypeData>();
         IEnumerable<CardTypeData> cardOptions = playableCards;
-        
-        // Go Ham if Alone
-        if (allies.Count() == 1 && cardOptions.Any(c => c.Tags.Contains(CardTag.Attack)))
-            maybeCard = new Maybe<CardTypeData>(cardOptions.Where(c => c.Tags.Contains(CardTag.Attack)).MostExpensive());
-        // Play Ultimate
-        else if (cardOptions.Any(c => c.Tags.Contains(CardTag.Ultimate)))
-            maybeCard = new Maybe<CardTypeData>(cardOptions.Where(c => c.Tags.Contains(CardTag.Ultimate)).MostExpensive());
 
+        var ctx = new CardSelectionContext(me, battleState, strategy)
+            .WithOptions(playableCards)
+            .WithSelectedDesignatedAttackerCardIfApplicable()
+            .WithSelectedUltimateIfAvailable();
+        
         // Don't Hit Enemy Shields if the play isn't very effective
         if (enemies.Sum(e => e.CurrentShield()) < 15)
             cardOptions = cardOptions.Where(c => !c.Tags.Contains(CardTag.Shield));
         
-        // Pick any other highest-cost card
-        var card = maybeCard.IsPresent 
-            ? maybeCard.Value 
-            : cardOptions
-                .ToArray()
-                .Shuffled()
-                .OrderByDescending(c => c.Cost.Amount)
-                .First();
+        var card = ctx.WithOptions(cardOptions)
+            .FinalizeCardSelection();
         
         var targets = card.ActionSequences.Select(action => 
         {

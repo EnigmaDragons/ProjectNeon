@@ -10,20 +10,18 @@ public sealed class StrikerAI : TurnAI
         var me = battleState.Members[memberId];
         var playableCards = battleState.GetPlayableCards(memberId);
 
+        var ctx = new CardSelectionContext(me, battleState, strategy)
+            .WithOptions(playableCards)
+            .WithSelectedDesignatedAttackerCardIfApplicable()
+            .WithSelectedUltimateIfAvailable();
+        
         IEnumerable<CardTypeData> cardOptions = playableCards;
-        var maybeCard = Maybe<CardTypeData>.Missing();
-        
-        // Always play a Super Card if charged
-        if (me.HasMaxPrimaryResource())
-            maybeCard = new Maybe<CardTypeData>(playableCards.MostExpensive());
-        
         // Don't buff self if already buffed
         if (me.HasAttackBuff())
             cardOptions = cardOptions.Where(c => !c.Tags.Contains(CardTag.BuffAttack));
 
-        var card = maybeCard.IsPresent
-            ? maybeCard.Value
-            : cardOptions.MostExpensive();
+        var card = ctx.WithOptions(cardOptions)
+            .FinalizeCardSelection();
         
         var targets = new List<Target>();
         

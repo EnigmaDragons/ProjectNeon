@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 public sealed class AIStrategyGenerator
@@ -20,6 +21,14 @@ public sealed class AIStrategyGenerator
             ? vulnerableEnemies.Random() 
             : relevantEnemies.Random();
         
-        return new AIStrategy(preferredSingleTarget, new Multiple(relevantEnemies.ToArray()));
+        var team = _forTeam == TeamType.Enemies
+                   ? s.Enemies.Where(h => h.IsConscious()) 
+                   : s.Heroes.Where(e => e.IsConscious());
+        var designatedAttacker = team
+            .OrderByDescending(e => e.BattleRole == BattleRole.Striker ? 1 : 0)
+            .ThenByDescending(e => Math.Max(e.State.Attack(), e.State.Magic()))
+            .First();
+        
+        return new AIStrategy(preferredSingleTarget, new Multiple(relevantEnemies.ToArray()), designatedAttacker);
     }
 }

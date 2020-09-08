@@ -13,6 +13,16 @@ public class HypervisorAI : TurnAI
         var allies = me.TeamType == TeamType.Enemies 
             ? battleState.Enemies.Where(m => m.IsConscious()).ToArray() 
             : battleState.Heroes.Where(m => m.IsConscious()).ToArray();
+        
+        var ctx = new CardSelectionContext(me, battleState, strategy)
+            .WithOptions(playableCards)
+            .WithSelectedDesignatedAttackerCardIfApplicable();
+        if (ctx.SelectedCard.IsPresent)
+        {
+            var selectedCard = ctx.SelectedCard.Value;
+            return new PlayedCardV2(me, selectedCard.ActionSequences.Select(strategy.AttackTargetFor).ToArray(),
+                selectedCard.CreateInstance(battleState.GetNextCardId(), me));
+        }
 
         if (playableCards.MostExpensive().Cost.Amount > 1 && allies.Any(x => x.CurrentHp() + x.CurrentShield() > x.MaxHp() * 0.5f))
         {

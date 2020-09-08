@@ -16,10 +16,10 @@ public static class InterpolatedCardDescriptions
 
         try
         {
-            if (card.Actions == null || card.Actions.Length < 0)
+            if (card.Actions() == null || card.Actions().Length < 0)
                 return desc;
             
-            var battleEffects = card.Actions
+            var battleEffects = card.Actions()
                 .Where(x => x != null)
                 .SelectMany(a => a.Actions
                     .Where(c => c.Type == CardBattleActionType.Battle))

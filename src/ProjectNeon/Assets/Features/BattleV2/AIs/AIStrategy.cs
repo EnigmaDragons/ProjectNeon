@@ -5,11 +5,13 @@ public sealed class AIStrategy
 {
     private Member SingleMemberAttackTarget { get; }
     private Target GroupAttackTarget { get; }
+    public Member DesignatedAttacker { get; }
 
-    public AIStrategy(Member singleMemberAttackTarget, Target groupAttackTarget)
+    public AIStrategy(Member singleMemberAttackTarget, Target groupAttackTarget, Member designatedAttacker)
     {
         SingleMemberAttackTarget = singleMemberAttackTarget;
         GroupAttackTarget = groupAttackTarget;
+        DesignatedAttacker = designatedAttacker;
     }
 
     public Target AttackTargetFor(CardActionSequence a) 

@@ -19,26 +19,19 @@ public sealed class TankAI : TurnAI
             ? battleState.Enemies.Where(m => m.IsConscious()) 
             : battleState.Heroes.Where(m => m.IsConscious());
         
-        var maybeCard = new Maybe<CardTypeData>();
-        IEnumerable<CardTypeData> cardOptions = playableCards;
         // TODO: Dealing killing blow if possible with an attack card
 
-        var attackCards = cardOptions.Where(c => c.Is(CardTag.Attack)).ToList();
-        if (allies.Count() == 1 && attackCards.Any())
-            maybeCard = new Maybe<CardTypeData>(attackCards.MostExpensive());
+        var ctx = new CardSelectionContext(me, battleState, strategy)
+            .WithOptions(playableCards)
+            .WithSelectedDesignatedAttackerCardIfApplicable();
         
+        IEnumerable<CardTypeData> cardOptions = playableCards;
         // Don't play a shield if all allies are already shielded
         if (allies.All(a => a.RemainingShieldCapacity() > a.MaxShield() * 0.7))
             cardOptions = cardOptions.Where(x => !x.Is(CardTag.Defense, CardTag.Shield));
 
-        var card = maybeCard.IsPresent 
-            ? maybeCard.Value 
-            : cardOptions
-                .ToArray()
-                .Shuffled()
-                .OrderByDescending(c => c.Cost.Amount)
-                .ThenBy(c => CardTypePriority[c.Tags.First()]) // Maybe needs a better way to prioritze
-                .First();
+        var card = ctx.WithOptions(cardOptions)
+            .FinalizeCardSelection(c => CardTypePriority[c.Tags.First()]);
         
         var targets = card.ActionSequences.Select(action => 
         {

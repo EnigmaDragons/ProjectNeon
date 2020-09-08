@@ -9,11 +9,11 @@ public class GeneralAI : TurnAI
         var me = battleState.Members[memberId];
         var playableCards = battleState.GetPlayableCards(memberId);
         
-        var card = playableCards
-            .ToArray()
-            .Shuffled()
-            .OrderByDescending(c => c.Cost.Amount)
-            .First();
+        var ctx = new CardSelectionContext(me, battleState, strategy)
+            .WithOptions(playableCards)
+            .WithSelectedDesignatedAttackerCardIfApplicable();
+
+        var card = ctx.FinalizeCardSelection();
         
         var targets = card.ActionSequences.Select(action => 
         {

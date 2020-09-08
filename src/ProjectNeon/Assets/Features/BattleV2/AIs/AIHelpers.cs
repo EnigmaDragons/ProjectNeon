@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -17,29 +16,4 @@ public static class AIHelpers
             throw new InvalidDataException($"{me} has no playable cards in hand");
         return playableCards;
     }
-
-    public static CardTypeData MostExpensive(this IEnumerable<CardTypeData> cards) => cards
-        .ToArray()
-        .Shuffled()
-        .OrderByDescending(x => x.Cost.Amount)
-        .First();
-
-    // TODO: In the future, factor in armor/resist/vulnerable
-    public static Target MostVulnerable(this IEnumerable<Target> targets) => targets
-        .ToArray()
-        .Shuffled()
-        .OrderBy(t => t.TotalHpAndShields())
-        .First();
-
-    public static Target MostPowerful(this IEnumerable<Target> targets) => targets
-        .ToArray()
-        .Shuffled()
-        .OrderByDescending(t => t.TotalOffense())
-        .First();
-
-    public static Target MostDamaged(this IEnumerable<Target> targets) => targets
-        .ToArray()
-        .Shuffled()
-        .OrderByDescending(x => x.TotalMissingHp())
-        .First();
 }
