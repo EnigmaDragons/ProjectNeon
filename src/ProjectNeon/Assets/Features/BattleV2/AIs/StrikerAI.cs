@@ -20,25 +20,8 @@ public sealed class StrikerAI : TurnAI
         if (me.HasAttackBuff())
             cardOptions = cardOptions.Where(c => !c.Tags.Contains(CardTag.BuffAttack));
 
-        var card = ctx.WithOptions(cardOptions)
-            .FinalizeCardSelection();
-        
-        var targets = new List<Target>();
-        
-        card.ActionSequences.ForEach(
-            action =>
-            {
-                if (action.Group == Group.Opponent)
-                    targets.Add(strategy.AttackTargetFor(action));
-                else
-                {
-                    var possibleTargets = battleState.GetPossibleConsciousTargets(me, action.Group, action.Scope);   
-                    targets.Add(possibleTargets.MostVulnerable());
-                }
-            }
-        );
-
-        var cardInstance = card.CreateInstance(battleState.GetNextCardId(), me);
-        return new PlayedCardV2(me, targets.ToArray(), cardInstance);
+        return ctx.WithOptions(cardOptions)
+            .WithFinalizedCardSelection()
+            .WithSelectedTargetsPlayedCard();
     }
 }

@@ -16,15 +16,17 @@ public static class AICardSelectionLogic
 
     public static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
         => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).MostExpensive();
+
+    public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx)
+        => ctx.WithFinalizedCardSelection(_ => 0);
     
-    public static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx) 
-        => ctx.SelectedCard.IsPresent 
-            ? ctx.SelectedCard.Value
-            : ctx.CardOptions
-                .ToArray()
-                .Shuffled()
-                .OrderByDescending(c => c.Cost.Amount)
-                .First();
+    public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority)
+        => ctx.SelectedCard.IsMissing
+            ? ctx.withSelectedCard(FinalizeCardSelection(ctx, typePriority))
+            : ctx;
+
+    public static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx)
+        => ctx.FinalizeCardSelection(_ => 0);
     
     public static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority) 
         => ctx.SelectedCard.IsPresent 

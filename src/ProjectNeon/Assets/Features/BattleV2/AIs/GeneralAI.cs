@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/GeneralAI")]
@@ -13,28 +12,7 @@ public class GeneralAI : TurnAI
             .WithOptions(playableCards)
             .WithSelectedDesignatedAttackerCardIfApplicable();
 
-        var card = ctx.FinalizeCardSelection();
-        
-        var targets = card.ActionSequences.Select(action => 
-        {
-            var possibleTargets = battleState.GetPossibleConsciousTargets(me, action.Group, action.Scope);
-            if (card.Is(CardTag.Healing))
-                return possibleTargets.MostDamaged();
-            if (card.Is(CardTag.Defense, CardTag.Shield))
-            {
-                if (possibleTargets.Any(x => !x.HasShield()))
-                    return possibleTargets.Where(x => !x.HasShield()).MostVulnerable();
-                // Or, use shield to whomever could use the most
-                return possibleTargets.OrderByDescending(x => x.TotalRemainingShieldCapacity()).First();
-            }
-
-            if (card.Is(CardTag.Attack))
-                return strategy.AttackTargetFor(action);
-            return possibleTargets.Random();
-        });
-        
-        var cardInstance = card.CreateInstance(battleState.GetNextCardId(), me);
-        
-        return new PlayedCardV2(me, targets.ToArray(), cardInstance);
+        return ctx.WithFinalizedCardSelection()
+            .WithSelectedTargetsPlayedCard();
     }
 }
