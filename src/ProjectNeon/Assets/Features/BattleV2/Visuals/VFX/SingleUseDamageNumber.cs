@@ -1,41 +1,33 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
-public class DamageEffect : OnMessage<MemberStateChanged>
+public class SingleUseDamageNumber : MonoBehaviour
 {
     [SerializeField] TextMeshPro text;
     [SerializeField] private float driftDistance = 0.1f;
     [SerializeField] private float duration = 2f;
-    [SerializeField] private TemporalStatType statType = TemporalStatType.HP;
     [SerializeField] private Color positiveChangeColor = Color.green;
     [SerializeField] private Color negativeChangeColor = Color.red;
     
-    private Vector3 _startPos;
-    private Member _member;
     private int _value;
     private float _remaining;
     
-    private void Start()
+    public SingleUseDamageNumber Initialized(int amount)
     {
-        _startPos = text.transform.position;
+        DisplayChange(amount);
+        return this;
     }
 
-    public void Init(Member member)
-    {
-        _member = member;
-        _value = (int)member.State[statType];
-    }
-
-    public void DisplayChange(int damage)
+    private void DisplayChange(int damage)
     {
         if (damage == 0)
             return;
         
+        Debug.Log($"Displaying Number {damage}");
         text.gameObject.SetActive(true);
         text.color = damage > 0 ? positiveChangeColor : negativeChangeColor;
         text.text = Mathf.Abs(damage).ToString();
-        text.transform.position = _startPos;
         _remaining = duration;
         StartCoroutine(DamageAnim());
     }
@@ -48,20 +40,9 @@ public class DamageEffect : OnMessage<MemberStateChanged>
             text.transform.position += new Vector3(0, driftDistance, 0);
             _remaining -= 0.033f;
         }
-        text.transform.position = _startPos;
         text.text = "";
         text.gameObject.SetActive(false);
+        Destroy(gameObject);
         yield return null;
-    }
-
-    protected override void Execute(MemberStateChanged e)
-    {
-        if (_member == null || e.State.MemberId != _member.Id) return;
-
-        var newValue = (int) (e.State[statType]);
-        var diff = newValue - _value;
-        _value = newValue;
-        if (diff != 0)
-            DisplayChange(diff);
     }
 }
