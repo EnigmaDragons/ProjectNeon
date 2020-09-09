@@ -7,6 +7,7 @@ public static class Rng
     private static readonly Random Instance = new Random(Guid.NewGuid().GetHashCode());
 
     public static bool Bool() => Int(2) == 1;
+    public static bool Chance(double percent) => Instance.NextDouble() < percent;
     public static int Int() => Int(int.MaxValue);
     public static int Int(int max) => Instance.Next(max);
     public static int Int(int min, int max) => Instance.Next(min, max);

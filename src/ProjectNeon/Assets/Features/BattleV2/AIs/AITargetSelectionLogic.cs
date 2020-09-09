@@ -27,7 +27,7 @@ public static class AITargetSelectionLogic
             if (card.Is(CardTag.BuffAttack))
                 return possibleTargets.BestAttackerToBuff(ctx.Strategy); 
             if (card.Is(CardTag.Attack))
-                return ctx.Strategy.AttackTargetFor(action);
+                return Rng.Chance(0.80) ? ctx.Strategy.AttackTargetFor(action) : possibleTargets.Random();
             if (card.Is(CardTag.Healing))
                 return possibleTargets.MostDamaged();
             if (card.Is(CardTag.Defense, CardTag.Shield))
