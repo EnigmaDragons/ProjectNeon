@@ -41,8 +41,14 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
         BeginPhase(BattleV2Phase.Command);
         state.StartTurn();
         _unconsciousness.ProcessUnconsciousMembers(state);
-        commandPhase.Begin();
-        Message.Publish(new TurnStarted());
+        
+        if (state.BattleIsOver())
+            FinishBattle();
+        else
+        {
+            commandPhase.Begin();
+            Message.Publish(new TurnStarted());
+        }
     }
 
     private IEnumerator TransitionToResolutionPhase()
