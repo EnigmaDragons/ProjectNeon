@@ -45,6 +45,9 @@ public static class AITargetSelectionLogic
 
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx)
     {
+        if (ctx.SelectedCard.IsMissing)
+            ctx = ctx.WithFinalizedCardSelection();
+        
         var targets = ctx.SelectedTargets();
         
         var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);

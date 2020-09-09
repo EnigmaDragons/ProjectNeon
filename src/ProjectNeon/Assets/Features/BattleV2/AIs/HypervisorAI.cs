@@ -11,6 +11,7 @@ public class HypervisorAI : TurnAI
             .WithSelectedUltimateIfAvailable()
             .IfTrueDontPlayType(c => c.Allies.Length > 1, CardTag.Attack)
             .IfTrueDontPlayType(c => c.Allies.Length < 3, CardTag.Group, CardTag.BuffAttack)
+            .WithFinalizedCardSelection()
             .WithSelectedTargetsPlayedCard();
     }
 }
