@@ -9,7 +9,8 @@ public sealed class Card
     [SerializeField] private Member owner;
 
     public bool UseAsBasic;
-    
+
+    public CardTypeData BasicType => LimitedToClass.Value.BasicCard;
     public Maybe<CharacterClass> LimitedToClass => type.LimitedToClass;
     public CardTypeData Type => UseAsBasic && LimitedToClass.IsPresent 
         ? LimitedToClass.Value.BasicCard 

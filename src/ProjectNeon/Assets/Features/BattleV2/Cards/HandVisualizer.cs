@@ -117,7 +117,7 @@ public sealed class HandVisualizer : MonoBehaviour
             c.Set(card, () => SelectCard(cardIndex), true);
             c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.IsPlayableByHero(state)));
             c.SetDisabled(!_isFocused);
-            if (!card.Owner.IsConscious() || card.Owner.IsStunnedForCurrentTurn())
+            if (!card.Owner.CanPlayCards())
                 c.SetDisabled(true);
             _cardPool.SwapItems(cardIndex, presenterIndex);
             c.SetHighlight(isHighlighted);
@@ -127,6 +127,9 @@ public sealed class HandVisualizer : MonoBehaviour
         
         if (highlightedCardIndex > -1)
             _cardPool.ShownCards[highlightedCardIndex].transform.SetAsLastSibling();
+        
+        if (state.NumberOfRecyclesRemainingThisTurn == 0 && cards.All(c => !c.IsAnyFormPlayableByHero() || !c.Owner.CanPlayCards()))
+            Message.Publish(new BeginPlayerTurnConfirmation());
     }
     
     public void SelectCard(int cardIndex)

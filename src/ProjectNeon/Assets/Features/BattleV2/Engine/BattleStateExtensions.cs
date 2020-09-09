@@ -14,4 +14,7 @@ public static class BattleStateExtensions
     {
         return c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner);
     }
+
+    public static bool IsAnyFormPlayableByHero(this Card c)
+        => c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner) || IsPlayableBy(c.BasicType, c.Owner);
 }
