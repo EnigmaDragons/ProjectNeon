@@ -1,0 +1,1 @@
+dotnet run --project tools/changelog-generator/changelog-generator.csproj
