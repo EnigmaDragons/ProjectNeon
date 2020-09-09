@@ -20,7 +20,7 @@ public class CardActionV2
     public IPayloadProvider Play(Member source, Target target, Group group, Scope scope, int amountPaid)
     {
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target));
+            return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target, group, scope));
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(enemyToSpawn));
         if (type == CardBattleActionType.AnimateCharacter)

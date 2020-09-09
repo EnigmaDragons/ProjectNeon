@@ -42,13 +42,28 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     protected override void Execute(ApplyBattleEffect msg)
     {
         var battleSnapshotBefore = state.GetSnapshot();
-        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, state.PlayerState, state.Members));
+        ApplyEffectsWithRetargetingIsAllTargetsUnconscious(msg);
         var battleSnapshotAfter = state.GetSnapshot();
         var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter);
 
         var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(effectResolved));
         reactions.ForEach(r => _reactions.Enqueue(r));
         Message.Publish(new Finished<ApplyBattleEffect>());
+    }
+
+    private void ApplyEffectsWithRetargetingIsAllTargetsUnconscious(ApplyBattleEffect msg)
+    {
+        if (msg.CanRetarget && msg.Target.Members.All(m => !m.IsConscious()))
+        {
+            var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
+            if (newTargets.Any())
+            {
+                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), state.PlayerState, state.Members));
+                return;
+            }
+        }
+        
+        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, state.PlayerState, state.Members));   
     }
 
     protected override void Execute(SpawnEnemy msg)
