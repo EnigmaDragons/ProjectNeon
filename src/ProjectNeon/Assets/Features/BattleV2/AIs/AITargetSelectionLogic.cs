@@ -22,6 +22,10 @@ public static class AITargetSelectionLogic
                 return actualTargets.MostPowerful();
             }
 
+            if (card.Is(CardTag.BuffResource))
+                return possibleTargets.MostPowerful();
+            if (card.Is(CardTag.BuffAttack))
+                return possibleTargets.BestAttackerToBuff(ctx.Strategy); 
             if (card.Is(CardTag.Attack))
                 return ctx.Strategy.AttackTargetFor(action);
             if (card.Is(CardTag.Healing))
@@ -42,9 +46,11 @@ public static class AITargetSelectionLogic
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx)
     {
         var targets = ctx.SelectedTargets();
+        
         var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);
         if (ctx.SelectedCard.Value.Is(CardTag.Stun))
             targets.ForEach(t => ctx.Strategy.RecordNonStackingTarget(CardTag.Stun, t));
+        
         return new PlayedCardV2(ctx.Member, targets, card);
     }
     
@@ -58,7 +64,7 @@ public static class AITargetSelectionLogic
     public static Target MostPowerful(this IEnumerable<Target> targets) => targets
         .ToArray()
         .Shuffled()
-        .OrderByDescending(t => t.TotalOffense())
+        .OrderByDescending(t => t.TotalOffense() * 50 + t.TotalHpAndShields() * 20)
         .First();
 
     public static Target MostDamaged(this IEnumerable<Target> targets) => targets
@@ -66,4 +72,14 @@ public static class AITargetSelectionLogic
         .Shuffled()
         .OrderByDescending(x => x.TotalMissingHp())
         .First();
+    
+    public static Target BestAttackerToBuff(this IEnumerable<Target> targets, AIStrategy strategy) =>
+        targets
+            .ToArray()
+            .Shuffled()
+            .OrderByDescending(p =>
+                (p.Members.Contains(strategy.DesignatedAttacker) ? 1 : 0) * 100 // Prefer Designated Attack for immediate power
+                + p.Members.Count(x => x.BattleRole == BattleRole.Striker) * 50  // Prefer Strikers
+                + p.TotalAttack()) // Prefer more effective
+            .First();
 }

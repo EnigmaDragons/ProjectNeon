@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using UnityEngine;
 
 public static class CollectionExtensions
 {    
     public static bool None<T>(this IEnumerable<T> items) => !items.Any();
-    
-    [Obsolete] public static bool None<T>(this IEnumerable<T> items, Func<T, bool> condition) => !items.Any(condition);
+    public static bool None<T>(this IEnumerable<T> items, Func<T, bool> condition) => !items.Any(condition);
     [Obsolete] public static void CopiedForEach<T>(this IEnumerable<T> items, Action<T> action) => items.ToList().ForEach(action);
     [Obsolete] public static IEnumerable<T> Concat<T>(this IEnumerable<T> items, T item) => items.Concat(item.AsArray());
     [Obsolete] public static IEnumerable<T> Concat<T>(this T item, IEnumerable<T> items) => items.Concat(item.AsArray());
