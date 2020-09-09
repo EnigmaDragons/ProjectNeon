@@ -1,0 +1,19 @@
+name: Generate Changelog
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  generate_changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Generate Changelog
+      - name: Changelog Generator
+        uses: timfallmk/github-changelog-generator-action@0.0.2
+  
