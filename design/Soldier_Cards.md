@@ -26,13 +26,13 @@ Uncommon:
 - Tactical Reload -Self - Gain Max Ammo. Gain Evade 1
 
 Rare:
+- Focus Fire - 2 Ammo - 1 Enemy - 1x ATK. Target is vulnerable until end of turn
 - Bullet Barrage - X Ammo - X Random Enemies - Deals 0.35x ATK
 - Napalm Grenade - 6 Ammo - All Enemies - Deal 1.25x ATK damage. Add Burn 3 for 3 turns
 
 Epic:
 
 ### Not Yet Implemented
-- Focus Fire - 2 Ammo - 1 Enemy - 1x ATK. Target is vulnerable until end of turn
 - Psych Up - Self - Heal 6 HP, Gain +2 ATK for 3 Turns
 - Flank Them All - All Enemies - -3 Armor for 3 Turns
 
