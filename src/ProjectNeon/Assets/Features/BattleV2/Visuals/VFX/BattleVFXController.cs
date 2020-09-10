@@ -17,9 +17,9 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         var f = fx.FirstOrDefault(x => x.EffectName.Equals(e.EffectName));
         if (f == null)
             Log.Info($"No VFX of type {e.EffectName}");
-        else if (e.Scope.Equals(Scope.One) || e.Group == Group.Self)
+        else if (e.Scope.Equals(Scope.One))
         {
-            var location = state.GetTransform(e.PerformerId);
+            var location = state.GetTransform(e.Target.Members[0].Id);
             PlayEffect(f, location.position);
         }
         else if (e.Group == Group.All)

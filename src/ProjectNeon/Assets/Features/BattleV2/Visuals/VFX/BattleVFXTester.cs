@@ -19,5 +19,7 @@ public sealed class BattleVFXTester : MonoBehaviour
 
         if(Physics.Raycast(ray, out var hit, 500f))
             Message.Publish(new PlayRawBattleEffect(fx, hit.point));
+        else
+            Log.Info("Didn't Hit Anything");
     }
 }
