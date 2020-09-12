@@ -14,7 +14,7 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private bool isResolving;
     [SerializeField] private BattleState battleState;
     public IPlayedCard LastPlayed { get; set; }
-
+    
     public void Init()
     {
         physicalZone.Clear();
@@ -22,6 +22,25 @@ public class CardResolutionZone : ScriptableObject
     }
 
     public bool HasMore => moves.Any();
+    
+    private bool CanChain => moves.Select(m => m.Member.Id).Distinct().Count() == 1 && moves.Last().Card.ChainedCard.IsPresent;
+
+    public void AddChainedCardIfApplicable()
+    {
+        if (!CanChain) return;
+        
+        var chainingMove = moves.Last();
+        var owner = chainingMove.Member;
+        var card = chainingMove.Card.ChainedCard.Value;
+        var targets = new Target[card.ActionSequences.Length];
+        for (var i = 0; i < targets.Length; i++)
+        {
+            var action = card.ActionSequences[i];
+            targets[i] = battleState.GetPossibleConsciousTargets(chainingMove.Member, action.Group, action.Scope).First();
+        }
+
+        Add(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner)));
+    }
     
     public void Add(IPlayedCard played)
     {

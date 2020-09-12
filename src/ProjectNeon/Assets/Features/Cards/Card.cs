@@ -26,6 +26,7 @@ public sealed class Card
     public string Description => Type.Description;
     public string TypeDescription => Type.TypeDescription;
     public CardActionSequence[] ActionSequences => Type.ActionSequences;
+    public Maybe<CardTypeData> ChainedCard => Type.ChainedCard;
 
     public Card(int id, Member owner, CardTypeData type)
     {
