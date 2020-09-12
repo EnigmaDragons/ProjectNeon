@@ -11,10 +11,10 @@
         _effect = effect;
     }
 
-    public IPayloadProvider Resolve(BattleStateSnapshot beforeCard, Member source, Target target, Group @group, Scope scope, int amountPaid)
+    public IPayloadProvider Resolve(CardActionContext ctx)
     {
-        if (source.State[new InMemoryResourceType(_resource)] >= _amount)
-            return _effect.Play(source, target, group, scope, amountPaid);
+        if (ctx.Source.State[new InMemoryResourceType(_resource)] >= _amount)
+            return _effect.Play(ctx.Source, ctx.Target, ctx.AmountPaid.Amount);
         return new NoPayload();
     }
 }

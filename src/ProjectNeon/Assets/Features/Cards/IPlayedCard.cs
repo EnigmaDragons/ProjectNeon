@@ -5,5 +5,5 @@
     ResourceQuantity Spent { get; }
     ResourceQuantity Gained { get; }
 
-    void Perform();
+    void Perform(BattleStateSnapshot beforeCard);
 }

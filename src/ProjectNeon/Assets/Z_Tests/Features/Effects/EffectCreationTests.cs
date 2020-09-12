@@ -10,6 +10,15 @@ public sealed class EffectCreationTests
         var types = Enum.GetValues(typeof(EffectType)).Cast<EffectType>().Select(t => new EffectData {EffectType = t});
 
         foreach (var effectData in types)
-            Assert.IsNotNull(AllEffects.Create(effectData), $"Could not create Effect of Type {effectData.EffectType.ToString()}");
+        {
+            try
+            {
+                Assert.IsNotNull(AllEffects.Create(effectData), $"Could not create Effect of Type '{effectData.EffectType.ToString()}'");
+            }
+            catch (Exception e)
+            {
+                Assert.Fail($"Could not create Effect of Type '{effectData.EffectType.ToString()}'");
+            }
+        }
     }
 }

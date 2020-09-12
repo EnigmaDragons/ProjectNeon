@@ -1,4 +1,0 @@
-﻿public sealed class ReplayLastCard
-{
-
-}

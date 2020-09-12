@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -97,8 +96,7 @@ public class CardResolutionZone : ScriptableObject
         }
         else
         {
-            AllConditions.InitCardPlaying(battleState.GetSnapshot());
-            played.Perform();
+            played.Perform(battleState.GetSnapshot());
             WrapupCard(played, card);
         }
     }

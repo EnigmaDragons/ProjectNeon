@@ -16,19 +16,19 @@ public class CardActionV2
     public ActionConditionData ConditionData => conditionData;
     public StringReference CharacterAnimation => characterAnimation;
     public StringReference AtTargetAnimation => atTargetAnimation;
-    
-    public IPayloadProvider Play(Member source, Target target, Group group, Scope scope, int amountPaid)
+
+    public IPayloadProvider Play(CardActionContext ctx)
     {
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target, group, scope));
+            return new SinglePayload(new ApplyBattleEffect(battleEffect, ctx.Source, ctx.Target, ctx.Group, ctx.Scope));
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(enemyToSpawn));
         if (type == CardBattleActionType.AnimateCharacter)
-            return new SinglePayload(new CharacterAnimationRequested(source.Id, characterAnimation));
+            return new SinglePayload(new CharacterAnimationRequested(ctx.Source.Id, characterAnimation));
         if (type == CardBattleActionType.AnimateAtTarget)
-            return new SinglePayload(new BattleEffectAnimationRequested { EffectName = atTargetAnimation, PerformerId = source.Id, Target = target, Scope = scope, Group = group });
+            return new SinglePayload(new BattleEffectAnimationRequested { EffectName = atTargetAnimation, PerformerId = ctx.Source.Id, Target = ctx.Target, Scope = ctx.Scope, Group = ctx.Group });
         if (type == CardBattleActionType.Condition)
-            return new DelayedPayload(() => AllConditions.Resolve(conditionData, source, target, group, scope, amountPaid));
+            return new DelayedPayload(() => AllConditions.Resolve(conditionData, ctx));
         throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
     }
     

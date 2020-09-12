@@ -2,20 +2,20 @@
 
 public class TargetIsBelowPercentageLifeCondition : Condition
 {
-    private float _percentage;
-    private CardActionsData _effect;
+    private readonly float _percentage;
+    private readonly CardActionsData _effect;
 
     public TargetIsBelowPercentageLifeCondition(float percentage, CardActionsData effect)
     {
         _percentage = percentage;
         _effect = effect;
     }
-    
-    public IPayloadProvider Resolve(BattleStateSnapshot beforeCard, Member source, Target target, Group @group, Scope scope, int amountPaid)
+
+    public IPayloadProvider Resolve(CardActionContext ctx)
     {
-        var applicapleMembers = target.Members.Where(x => x.State[TemporalStatType.HP] < x.State.MaxHp() * _percentage).ToArray();
-        if (applicapleMembers.Any())
-            return _effect.Play(source, new Multiple(applicapleMembers), group, scope, amountPaid);
+        var applicableMembers = ctx.Target.Members.Where(x => x.State[TemporalStatType.HP] < x.State.MaxHp() * _percentage).ToArray();
+        if (applicableMembers.Any())
+            return _effect.Play(ctx.WithTarget(new Multiple(applicableMembers)));
         return new NoPayload();
     }
 }

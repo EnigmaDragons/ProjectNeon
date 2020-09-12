@@ -1,10 +1,14 @@
-﻿public sealed class MultiplePayloads : IPayloadProvider
+﻿using System.Collections.Generic;
+using System.Linq;
+
+public sealed class MultiplePayloads : IPayloadProvider
 {
-    private IPayloadProvider[] _payloadProviders;
+    private readonly IPayloadProvider[] _payloadProviders;
     private int _index;
 
-    public MultiplePayloads(IPayloadProvider[] payloadProviders) => _payloadProviders = payloadProviders;
-        
+    public MultiplePayloads(IEnumerable<IPayloadProvider> payloadProviders) : this(payloadProviders.ToArray()) {}   
+    public MultiplePayloads(params IPayloadProvider[] payloadProviders) => _payloadProviders = payloadProviders; 
+    
     public bool IsFinished()
     {
         while (_index < _payloadProviders.Length && _payloadProviders[_index].IsFinished())

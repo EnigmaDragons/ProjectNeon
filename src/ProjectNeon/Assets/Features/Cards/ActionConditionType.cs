@@ -5,4 +5,5 @@
     TargetIsBelowPercentageLife = 2,
     RepeatForSpent = 3,
     TargetSufferedDamage = 4,
+    Chain = 5,
 }

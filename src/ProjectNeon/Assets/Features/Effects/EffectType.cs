@@ -1,6 +1,7 @@
 using System;
 
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER. EVENTUALLY WE NEED A TOOL TO FIND USAGES
+// Next Number Is 53
 public enum EffectType
 {
     Nothing = 0,
@@ -49,4 +50,5 @@ public enum EffectType
     AdjustPrimaryResource = 46,
     AdjustPlayerStats = 49,
     ApplyTaunt = 51,
+    //Chain = 52
 }

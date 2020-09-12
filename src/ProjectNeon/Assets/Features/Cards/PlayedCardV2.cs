@@ -27,13 +27,13 @@ public class PlayedCardV2 : IPlayedCard
     public ResourceQuantity Spent => _spent;
     public ResourceQuantity Gained => _gained;
 
-    public void Perform()
+    public void Perform(BattleStateSnapshot beforeCard)
     {
         Message.Subscribe<SequenceFinished>(_ =>
         {
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished());
         }, this);
-        Card.Play(_targets, _spent.Amount);
+        Card.Play(_targets, _spent, beforeCard);
     }
 }
