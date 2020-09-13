@@ -36,7 +36,11 @@ public class CardResolutionZone : ScriptableObject
         for (var i = 0; i < targets.Length; i++)
         {
             var action = card.ActionSequences[i];
-            targets[i] = battleState.GetPossibleConsciousTargets(chainingMove.Member, action.Group, action.Scope).First();
+            var possibleTargets = battleState.GetPossibleConsciousTargets(chainingMove.Member, action.Group, action.Scope);
+            targets[i] = possibleTargets.First();
+            foreach(var previousTarget in chainingMove.Targets)
+                if (possibleTargets.Contains(previousTarget))
+                    targets[i] = previousTarget;
         }
 
         Add(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner)));

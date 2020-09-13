@@ -24,6 +24,7 @@ public class PlayedCardV2 : IPlayedCard
 
     public Member Member => _performer;
     public Card Card => _card;
+    public Target[] Targets => _targets;
     public ResourceQuantity Spent => _spent;
     public ResourceQuantity Gained => _gained;
 
