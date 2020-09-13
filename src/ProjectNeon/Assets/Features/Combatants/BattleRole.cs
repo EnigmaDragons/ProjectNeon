@@ -4,5 +4,6 @@
     Striker = 1,
     Healer = 2,
     Tank = 3,
-    Utility = 4
+    Utility = 4,
+    Boss = 5
 }

@@ -74,6 +74,7 @@ public class BattleSetupV2 : MonoBehaviour
 
         foreach (var enemy in enemyArea.Enemies)
         {
+            enemy.AI.InitForBattle();
             if (!enemy.IsReadyForPlay)
                 throw new Exception($"{enemy.Name}'s is not ready for play.");
             if (enemy.Deck.Cards.All(c => c.Cost.Amount > 0))

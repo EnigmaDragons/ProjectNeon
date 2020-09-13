@@ -4,6 +4,11 @@ using System.Linq;
 
 public static class AICardSelectionLogic
 {
+    public static CardSelectionContext WithSelectedCardByNameIfPresent(this CardSelectionContext ctx, string cardName)
+        => ctx.CardOptions.Any(c => c.Name.Equals(cardName))
+            ? ctx.WithSelectedCard(ctx.CardOptions.First(c => c.Name.Equals(cardName)))
+            : ctx;
+    
     public static CardSelectionContext WithSelectedDesignatedAttackerCardIfApplicable(this CardSelectionContext ctx) 
         => ctx.SelectedCard.IsMissing && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
             ? ctx.WithSelectedCard(ctx.SelectAttackCard())

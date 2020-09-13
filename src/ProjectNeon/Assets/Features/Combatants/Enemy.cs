@@ -21,7 +21,8 @@ public class Enemy : ScriptableObject
     [SerializeField] private float armor;
     [SerializeField] private float resistance;
     [SerializeField] private ResourceType resourceType;
-    [SerializeField] private int startingResourceAmount;
+    [SerializeField] private int startingResourceAmount = 0;
+    [SerializeField] private int resourceGainPerTurn = 1;
     [SerializeField] private int cardsPerTurn = 1;
 
     public string Name => enemyName;
@@ -37,6 +38,7 @@ public class Enemy : ScriptableObject
     public int PowerLevel => powerLevel;
     public int PreferredTurnOrder => preferredTurnOrder;
     public int RewardCredits => rewardCredits;
+    public int ResourceGainPerTurn => resourceGainPerTurn;
     public GameObject Prefab => prefab;
     public string DeathEffect => deathEffect;
     public BattleRole Role => battleRole;

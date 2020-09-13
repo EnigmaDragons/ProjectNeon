@@ -28,7 +28,6 @@ public sealed class CardSelectionContext
     
     public CardSelectionContext WithOptions(IEnumerable<CardTypeData> options) 
         => new CardSelectionContext(Member, State, Strategy, options) { SelectedCard = SelectedCard };
-
     
     public CardSelectionContext IfTrueDontPlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] excludedTagsCombination)
         => shouldRefine(this)
