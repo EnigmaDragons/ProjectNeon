@@ -11,4 +11,10 @@ public class CardActionSequence
     public Scope Scope => scope;
     public Group Group => group;
     public CardActionsData CardActions => cardActions;
+    
+    public static CardActionSequence ForReaction(CardActionsData d)
+    {
+        var c = new CardActionSequence {cardActions = d};
+        return c;
+    }
 }

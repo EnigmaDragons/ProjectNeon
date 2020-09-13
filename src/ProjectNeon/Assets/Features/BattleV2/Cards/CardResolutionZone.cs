@@ -126,7 +126,7 @@ public class CardResolutionZone : ScriptableObject
             WrapupCard(played, card);
         }
     }
-
+    
     private void WrapupCard(IPlayedCard played, Card physicalCard)
     {
         LastPlayed = played;
