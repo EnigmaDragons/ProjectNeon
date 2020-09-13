@@ -28,7 +28,7 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
     public IEnumerator Wrapup()
     {
         ui.EndCommandPhase();
-        resolutionZone.AddChainedCardIfApplicable();
+        yield return resolutionZone.AddChainedCardIfApplicable();
         ChooseEnemyCards();
         yield return new WaitForSeconds(1);
     }

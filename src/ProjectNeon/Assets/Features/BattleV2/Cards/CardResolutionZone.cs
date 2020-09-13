@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -25,9 +26,9 @@ public class CardResolutionZone : ScriptableObject
     
     private bool CanChain => moves.Select(m => m.Member.Id).Distinct().Count() == 1 && moves.Last().Card.ChainedCard.IsPresent;
 
-    public void AddChainedCardIfApplicable()
+    public IEnumerator AddChainedCardIfApplicable()
     {
-        if (!CanChain) return;
+        if (!CanChain) yield break;
         
         var chainingMove = moves.Last();
         var owner = chainingMove.Member;
@@ -44,6 +45,8 @@ public class CardResolutionZone : ScriptableObject
         }
 
         Add(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner)));
+        Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
+        yield return new WaitForSeconds(1.6f);
     }
     
     public void Add(IPlayedCard played)
