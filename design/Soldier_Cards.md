@@ -31,6 +31,7 @@ Rare:
 - Napalm Grenade - 6 Ammo - All Enemies - Deal 1.25x ATK damage. Add Burn 3 for 3 turns
 
 Epic:
+- The Best Offense - 2 Ammo - 1 Enemy - Deal 1.5 ATK damage. Chain: Tough It Out
 
 ### Not Yet Implemented
 - Psych Up - Self - Heal 6 HP, Gain +2 ATK for 3 Turns
