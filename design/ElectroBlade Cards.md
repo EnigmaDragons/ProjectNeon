@@ -28,6 +28,7 @@ Uncommon:
 
 Rare:
 - Surge Break - 6 Energy - All Enemies - Remove shields and Stun.
+- Hypervibration - 1 Energy - 1 Enemy - Deal 0.8x ATK damage. Chain: Stun
 
 ## To Be Implemented:
 - OmniSlash - X Energy - 1 Enemy - 1x attack + 2 per Energy Spent.
