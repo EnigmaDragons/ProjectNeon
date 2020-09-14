@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class BattleTurnWrapUp : MonoBehaviour
@@ -13,7 +12,6 @@ public class BattleTurnWrapUp : MonoBehaviour
     {
         DrawNewPlayerHand();
         state.AdvanceTurn();
-        state.Enemies.ForEach(e => e.State.AdjustPrimaryResource(1));
     }
     
     private void DrawNewPlayerHand()

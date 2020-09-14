@@ -65,7 +65,6 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.OnHit].Icon, Text = "" });
         
         UpdateStatuses(statuses);
-        Debug.Log($"{_member.Name} Has Counterattack: {_member.State.HasStatus(StatusTag.CounterAttack)}");
     }
 
     protected abstract void UpdateStatuses(List<CurrentStatusValue> statuses);

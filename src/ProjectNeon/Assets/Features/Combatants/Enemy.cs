@@ -31,6 +31,8 @@ public class Enemy : ScriptableObject
     {
         var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats, battleRole);
         m.State.InitResourceAmount(resourceType, startingResourceAmount);
+        m.State.ApplyPersistentState(
+            new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resourceType.Name, Amount = resourceGainPerTurn}, m));
         return m;
     }
 
@@ -38,7 +40,6 @@ public class Enemy : ScriptableObject
     public int PowerLevel => powerLevel;
     public int PreferredTurnOrder => preferredTurnOrder;
     public int RewardCredits => rewardCredits;
-    public int ResourceGainPerTurn => resourceGainPerTurn;
     public GameObject Prefab => prefab;
     public string DeathEffect => deathEffect;
     public BattleRole Role => battleRole;
