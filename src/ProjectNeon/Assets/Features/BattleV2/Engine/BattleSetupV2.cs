@@ -98,6 +98,7 @@ public class BattleSetupV2 : MonoBehaviour
             cards.AddRange(party.Decks[i].Cards.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero))));
         }
 
+        BattleLog.Write("Setting Up Player Hand");
         Deck.InitShuffled(cards);
         
         for (var c = 0; c < startingCards.Value; c++)
