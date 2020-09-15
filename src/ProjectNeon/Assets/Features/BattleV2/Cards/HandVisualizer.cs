@@ -127,9 +127,12 @@ public sealed class HandVisualizer : MonoBehaviour
         
         if (highlightedCardIndex > -1)
             _cardPool.ShownCards[highlightedCardIndex].transform.SetAsLastSibling();
-        
-        if (state.NumberOfRecyclesRemainingThisTurn == 0 && cards.All(c => !c.IsAnyFormPlayableByHero() || !c.Owner.CanPlayCards()))
+
+        if (cards.Any() && state.NumberOfRecyclesRemainingThisTurn == 0 && cards.All(c => !c.IsAnyFormPlayableByHero() || !c.Owner.CanPlayCards()))
+        {
+            BattleLog.Write("No playable cards. Requesting early turn Confirmation.");
             Message.Publish(new BeginPlayerTurnConfirmation());
+        }
     }
     
     public void SelectCard(int cardIndex)
