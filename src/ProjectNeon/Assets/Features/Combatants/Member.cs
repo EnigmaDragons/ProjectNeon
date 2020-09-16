@@ -31,9 +31,10 @@ public class Member
         State = new MemberState(id, baseStats, initialHp);
     }
 
-    public void Apply(Action<MemberState> effect)
+    public Member Apply(Action<MemberState> effect)
     {
         effect(State);
+        return this;
     }
 }
 

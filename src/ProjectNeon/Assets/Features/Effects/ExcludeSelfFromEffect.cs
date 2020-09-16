@@ -15,6 +15,7 @@ public class ExcludeSelfFromEffect : Effect
         var newContext = new EffectContext(
             ctx.Source,
             new Multiple(ctx.Target.Members.Except(ctx.Source).ToArray()), 
+            PartyAdventureState.InMemory(),
             ctx.PlayerState, 
             ctx.BattleMembers);
         

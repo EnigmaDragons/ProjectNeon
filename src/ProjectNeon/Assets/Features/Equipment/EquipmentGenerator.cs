@@ -6,7 +6,7 @@ public class EquipmentGenerator
 {
     private static readonly string Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-";
 
-    private Dictionary<EquipmentSlot, string[]> SlotNames = new Dictionary<EquipmentSlot, string[]>
+    private static readonly Dictionary<EquipmentSlot, string[]> _slotNames = new Dictionary<EquipmentSlot, string[]>
     {
         { EquipmentSlot.Weapon, new [] {
             "Blaster",
@@ -46,8 +46,8 @@ public class EquipmentGenerator
                 ? EquipmentSlot.Armor
                 : EquipmentSlot.Augmentation;
     
-    private string NameFor(EquipmentSlot slot, Rarity rarity)
-        => $"{string.Join("", Enumerable.Range(0, Rng.Int(3, 6)).Select(_ => Letters.Random()))} {SlotNames[slot].Random()}";
+    public static string NameFor(EquipmentSlot slot, Rarity rarity)
+        => $"{string.Join("", Enumerable.Range(0, Rng.Int(3, 6)).Select(_ => Letters.Random()))} {_slotNames[slot].Random()}";
 
     private Equipment Generate(int totalPowerLevel, Rarity rarity)
     {

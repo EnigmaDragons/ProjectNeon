@@ -5,7 +5,7 @@ public class PlayerState
 {
     private readonly IPlayerStats _playerBaseStats;
     private readonly List<ITemporalPlayerState> _mods = new List<ITemporalPlayerState>();
-
+    
     public IPlayerStats CurrentStats => _playerBaseStats
         .Plus(_mods.Where(x => x.IsActive).Select(x => x.PlayerStats));
 
@@ -17,8 +17,10 @@ public class PlayerState
             .With(PlayerStatType.CardCycles, 2);
     }
 
-    public void AddState(ITemporalPlayerState mod) => _mods.Add(mod); 
-    
+    public void AddState(ITemporalPlayerState mod) => _mods.Add(mod);
+
+    public int BonusCredits { get; set; }
+
     public void OnTurnStart()
     {
         _mods.ForEach(m => m.OnTurnStart());

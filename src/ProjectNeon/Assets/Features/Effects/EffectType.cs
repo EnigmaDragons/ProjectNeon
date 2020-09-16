@@ -50,5 +50,5 @@ public enum EffectType
     AdjustPrimaryResource = 46,
     AdjustPlayerStats = 49,
     ApplyTaunt = 51,
-    Chain = 52
+    GainCredits = 52,
 }

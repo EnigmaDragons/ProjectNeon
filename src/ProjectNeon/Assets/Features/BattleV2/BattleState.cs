@@ -180,7 +180,7 @@ public class BattleState : ScriptableObject
     }
     
     private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => Math.Min(h.CurrentHp(), h.State.BaseStats.MaxHp())).ToArray());
-    private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits);
+    private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits + _playerState.BonusCredits);
     private void GrantRewardCards() => Party.Cards.Add(rewardCards);
     
     // Queries

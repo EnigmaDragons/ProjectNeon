@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "OnlyOnce/PartyAdventureState")]
@@ -95,4 +96,5 @@ public sealed class PartyAdventureState : ScriptableObject
         Message.Publish(new PartyAdventureStateChanged(this));
     }
 
+    public static PartyAdventureState InMemory() => (PartyAdventureState) FormatterServices.GetUninitializedObject(typeof(PartyAdventureState));
 }
