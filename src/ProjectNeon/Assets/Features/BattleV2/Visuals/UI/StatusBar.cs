@@ -27,10 +27,11 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         var statuses = new List<CurrentStatusValue>();
         
         if (_member.State[TemporalStatType.Taunt] > 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.Taunt].Icon, Text = _member.State[TemporalStatType.Taunt].ToString() });
-        
-        if (_member.State[StatType.Armor] > 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Armor].Icon, Text = _member.State[StatType.Armor].ToString() });
+            statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.Taunt].Icon, Text = _member.State[TemporalStatType.Taunt].ToString(), Tooltip = "Taunt" });
+
+        var armor = _member.State[StatType.Armor]; 
+        if (armor > 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Armor].Icon, Text = armor.ToString(), Tooltip = $"Reduces Attack Damage by {armor}"});
         
         if (_member.State[TemporalStatType.TurnStun] > 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.TurnStun].Icon, Text = _member.State[TemporalStatType.TurnStun].ToString() });
