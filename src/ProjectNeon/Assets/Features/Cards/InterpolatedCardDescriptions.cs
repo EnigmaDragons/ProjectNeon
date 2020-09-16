@@ -18,15 +18,18 @@ public static class InterpolatedCardDescriptions
         {
             if (card.Actions() == null || card.Actions().Length < 0)
                 return desc;
-            
+
             var battleEffects = card.Actions()
                 .Where(x => x != null)
-                .SelectMany(a => a.Actions
-                    .Where(c => c.Type == CardBattleActionType.Battle))
-                    .Select(b => b.BattleEffect)
-                .ToArray();
+                .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Battle))
+                .Select(b => b.BattleEffect);
+
+            var conditionalBattleEffects = card.Actions()
+                .Where(x => x != null)
+                .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
+                .SelectMany(b => b.ConditionData.ReferencedEffect.Actions.Select(a => a.BattleEffect));
             
-            return InterpolatedDescription(desc, battleEffects, owner);
+            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), owner);
 
         }
         catch (Exception e)
