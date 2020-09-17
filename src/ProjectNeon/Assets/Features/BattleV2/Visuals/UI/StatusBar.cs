@@ -26,46 +26,48 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     {
         var statuses = new List<CurrentStatusValue>();
         
-        if (_member.State[TemporalStatType.Taunt] > 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.Taunt].Icon, Text = _member.State[TemporalStatType.Taunt].ToString(), Tooltip = "Taunt" });
-
-        var armor = _member.State[StatType.Armor]; 
-        if (armor > 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Armor].Icon, Text = armor.ToString(), Tooltip = $"Reduces Attack Damage by {armor}"});
-        
-        if (_member.State[TemporalStatType.TurnStun] > 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.TurnStun].Icon, Text = _member.State[TemporalStatType.TurnStun].ToString() });
-
-        if (_member.State[TemporalStatType.CardStun] > 0)
-            statuses.Add(new CurrentStatusValue {Icon = icons[TemporalStatType.TurnStun].Icon, Text = _member.State[TemporalStatType.CardStun].ToString() });
-
-        var attackBuffAmount = CeilingInt(_member.State[StatType.Attack]) - _member.State.BaseStats.Attack();
-        if (attackBuffAmount != 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Attack].Icon, Text = attackBuffAmount.ToString() });
+        AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
+        AddStatusIconIfApplicable(statuses, StatType.Attack, true, v => $"+{v} Attack");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => $"Taunt for {v} Turns");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.TurnStun, true, v => $"Stunned for {v} Turns");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.CardStun, true, v => $"Stunned for {v} Cards");
 
         var extraCardBuffAmount = CeilingInt(_member.State[StatType.ExtraCardPlays] - _member.State.BaseStats.ExtraCardPlays());
         if (extraCardBuffAmount != 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.ExtraCardPlays].Icon, Text = extraCardBuffAmount.ToString() });
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.ExtraCardPlays].Icon, Text = extraCardBuffAmount.ToString(), Tooltip = $"Play {extraCardBuffAmount} Extra Cards"});
         
-        if (_member.State[StatType.Damagability] > 1f)
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Damagability].Icon, Text = "" });
-
+        AddStatusIconIfApplicable(statuses, StatType.Damagability, false, v => $"Vulnerable (Takes 33% more damage)");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Evade, true, v => $"Evades the next {v} attacks");
+        
         if (_member.State.HasStatus(StatusTag.CounterAttack))
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.CounterAttack].Icon, Text = "" });
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.CounterAttack].Icon, Tooltip = "Counterattack"});
         
         if (_member.State.HasStatus(StatusTag.DamageOverTime))
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.DamageOverTime].Icon, Text = "" });
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.DamageOverTime].Icon, Tooltip = "Takes Damage At The Start of Turn"});
         
         if (_member.State.HasStatus(StatusTag.HealOverTime))
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.HealOverTime].Icon, Text = "" });
-        
-        if (_member.State[TemporalStatType.Evade] > 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[TemporalStatType.Evade].Icon, Text = _member.State[TemporalStatType.Evade].ToString() });
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
         
         if (_member.State.HasStatus(StatusTag.OnHit))
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.OnHit].Icon, Text = "" });
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.OnHit].Icon, Tooltip = "Has On Hit Effect" });
         
         UpdateStatuses(statuses);
+    }
+
+    private void AddStatusIconIfApplicable(List<CurrentStatusValue> statuses, TemporalStatType stat, bool showNumber, Func<float, string> makeTooltip)
+    {
+        var value = _member.State[stat];
+        var text = showNumber ? value.ToString() : "";
+        if (value > 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
+    }
+
+    private void AddStatusIconIfApplicable(List<CurrentStatusValue> statuses, StatType stat, bool showNumber, Func<float, string> makeTooltip)
+    {
+        var value = _member.State[stat];
+        var text = showNumber ? value.ToString() : "";
+        if (value > 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
     }
 
     protected abstract void UpdateStatuses(List<CurrentStatusValue> statuses);

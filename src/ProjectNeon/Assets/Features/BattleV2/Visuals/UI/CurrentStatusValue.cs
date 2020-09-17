@@ -5,6 +5,6 @@ using UnityEngine;
 public sealed class CurrentStatusValue
 {
     public Sprite Icon;
-    public string Text;
+    public string Text = "";
     public string Tooltip = "";
 }
