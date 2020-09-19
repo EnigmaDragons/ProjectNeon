@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OnStartNewGame : OnMessage<StartNewGame>
+public class QuickStartNewGame : OnMessage<StartNewGame>
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private BaseHero[] heroes;

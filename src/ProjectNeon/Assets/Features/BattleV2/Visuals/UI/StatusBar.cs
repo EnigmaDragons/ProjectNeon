@@ -36,8 +36,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (extraCardBuffAmount != 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.ExtraCardPlays].Icon, Text = extraCardBuffAmount.ToString(), Tooltip = $"Play {extraCardBuffAmount} Extra Cards"});
         
-        AddStatusIconIfApplicable(statuses, StatType.Damagability, false, v => $"Vulnerable (Takes 33% more damage)");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Evade, true, v => $"Evades the next {v} attacks");
+        if (_member.State.Damagability() > 1)
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Damagability].Icon, Tooltip = "Vulnerable (Takes 33% more damage)"});
         
         if (_member.State.HasStatus(StatusTag.CounterAttack))
             statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.CounterAttack].Icon, Tooltip = "Counterattack"});

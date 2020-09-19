@@ -3,7 +3,7 @@
 public class SetupPartyWithSelectedHeroes : MonoBehaviour
 {
     [SerializeField] private HeroPool pool;
-    [SerializeField] private Party party;
+    [SerializeField] private PartyAdventureState party;
 
     public void SetupParty()
     {

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class InterpolatedCardDescriptions
 {
-    private static int RoundUp(float f) => Mathf.RoundToInt(f);
+    private static int RoundUp(float f) => Mathf.CeilToInt(f);
     private static string Bold(this string s) => $"<b>{s}</b>";
 
     public static string InterpolatedDescription(this Card card) => card.Type.InterpolatedDescription(card.Owner);
@@ -70,24 +70,20 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
                 : $"{data.FloatAmount}x ATK";
+        if (data.EffectType == EffectType.DamageSpell 
+                || data.EffectType == EffectType.MagicDamageOverTime 
+                || data.EffectType == EffectType.HealMagic
+                || data.EffectType == EffectType.HealOverTime
+                || data.EffectType == EffectType.AdjustStatAdditivelyBaseOnMagicStat)
+            return owner.IsPresent
+                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
+                : $"{data.FloatAmount}x MAG";
         if (data.EffectType == EffectType.ShieldToughness)
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";
-        if (data.EffectType == EffectType.HealMagic)
-            return owner.IsPresent
-                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
-                : $"{data.FloatAmount}x MAG";
         if (data.EffectType == EffectType.HealFlat)
             return RoundUp(data.FloatAmount).ToString();
-        if (data.EffectType == EffectType.HealOverTime)
-            return owner.IsPresent
-                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
-                : $"{data.FloatAmount}x Magic";
-        if (data.EffectType == EffectType.AdjustStatAdditivelyBaseOnMagicStat)
-            return owner.IsPresent
-                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
-                : $"{data.FloatAmount}x Magic";
         
         Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
         return "%%";

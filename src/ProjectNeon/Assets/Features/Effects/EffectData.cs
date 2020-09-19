@@ -12,7 +12,7 @@ public sealed class EffectData
     public StringReference EffectScope = new StringReference();
     public bool HitsRandomTargetMember;
     public int IntAmount => Mathf.CeilToInt(FloatAmount.Value);
-    public CardActionsData ReferencedEffectSequence;
+    public CardActionsData ReferencedSequence;
     public ReactionCardType ReactionSequence;
     public StatusTag StatusTag;
     [Obsolete] public EffectData origin = Nothing; //obsolete, but can't delete yet for data loss reasons
