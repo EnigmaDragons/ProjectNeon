@@ -11,6 +11,7 @@ public interface IStats
 public static class StatsExtensions
 {
     private static int RoundUp(this float v) => Mathf.CeilToInt(v);
+    public static int MissingHp(this IStats stats) => stats.MaxHp() - stats.Hp();
     public static int MaxHp(this IStats stats) => stats[StatType.MaxHP].RoundUp();
     public static int Hp(this IStats stats) => stats[TemporalStatType.HP].RoundUp();
     public static int Toughness(this IStats stats) => stats[StatType.Toughness].RoundUp();

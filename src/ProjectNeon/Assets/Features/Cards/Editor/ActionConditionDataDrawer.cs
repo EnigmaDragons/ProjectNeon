@@ -13,6 +13,7 @@ public class ActionConditionDataDrawer : PropertyDrawer
         {ActionConditionType.PerformerHasResource, new [] { "FloatAmount", "EffectScope" }},
         {ActionConditionType.RepeatForSpent, new string[0]},
         {ActionConditionType.TargetSufferedDamage, new string[0]},
+        {ActionConditionType.AllyIsUnconscious, new string[0]},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

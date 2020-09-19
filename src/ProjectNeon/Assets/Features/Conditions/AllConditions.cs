@@ -10,6 +10,7 @@ public class AllConditions
         { ActionConditionType.TargetIsBelowPercentageLife, e => new TargetIsBelowPercentageLifeCondition(e.FloatAmount, e.ReferencedEffect)},
         { ActionConditionType.RepeatForSpent, e => new RepeatForSpentCondition(e.ReferencedEffect) },
         { ActionConditionType.TargetSufferedDamage, e => new TargetSufferedDamageCondition(e.ReferencedEffect) },
+        { ActionConditionType.AllyIsUnconscious, e => new UnconsciousAllyCondition(e.ReferencedEffect) }
     };
 
     public static IPayloadProvider Resolve(ActionConditionData conditionData, CardActionContext ctx)

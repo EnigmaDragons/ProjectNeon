@@ -53,6 +53,7 @@ public static class AllEffects
         { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.IntAmount)) },
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
         { EffectType.MagicDamageOverTime, e => new MagicDamageOverTime(e)},
+        { EffectType.HealPercentMissingHealth, e => new SimpleEffect(m => m.GainHp(Mathf.CeilToInt(m.MissingHp() * e.FloatAmount))) }
     };
     
     public static void Apply(EffectData effectData, EffectContext ctx)

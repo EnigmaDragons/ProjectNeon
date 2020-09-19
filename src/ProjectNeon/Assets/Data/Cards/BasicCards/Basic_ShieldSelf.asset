@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Basic-ShieldAlly
+  m_Name: Basic_ShieldSelf
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: ccfd42f3e25fbb24eb30be40c5dae692, type: 3}
-  description: Grant {E[0]} shield
+  description: Gain {E[0]} shield
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
-  tags: 0700000001000000
+  tags: 01000000
   onlyPlayableByClass: {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062,
     type: 2}
   cost:
@@ -29,5 +29,6 @@ MonoBehaviour:
   rarity: 0
   actionSequences:
   - scope: 0
-    group: 2
+    group: 0
     cardActions: {fileID: 11400000, guid: 59485e72ac91f0d4ab77966aad9871a8, type: 2}
+  chainedCard: {fileID: 0}

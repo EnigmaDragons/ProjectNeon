@@ -6,4 +6,5 @@
     RepeatForSpent = 3,
     TargetSufferedDamage = 4,
     TargetSlain = 5,
+    AllyIsUnconscious = 6,
 }

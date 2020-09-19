@@ -24,3 +24,8 @@ public sealed class MemberSnapshot
         return State.VersionNumber == s.State.VersionNumber;
     }
 }
+
+public static class MemberSnapshotExtensions
+{
+    public static bool IsUnconscious(this MemberSnapshot m) => m.State.Hp < 1;
+}
