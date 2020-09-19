@@ -68,7 +68,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         if (animator == null)
             Debug.LogWarning($"No Animator found for {state.GetHeroById(e.MemberId).Name}");
         else
-            StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation, elapsed =>
+            StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
             {
                 BattleLog.Write($"Finished {e.Animation} Animation in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());

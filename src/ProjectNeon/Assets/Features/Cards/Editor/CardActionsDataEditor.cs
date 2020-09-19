@@ -48,7 +48,10 @@ public class CardActionsDataEditor : Editor
             EditorGUI.indentLevel++;
             PresentUnchanged(serializedObject.FindProperty($"Actions.Array.data[{refBrokeni}].type"));
             if (action.Type == CardBattleActionType.AnimateCharacter)
-                PresentUnchanged(serializedObject.FindProperty($"Actions.Array.data[{refBrokeni}].characterAnimation"));
+            {
+                PresentUnchanged(serializedObject.FindProperty($"Actions.Array.data[{refBrokeni}].characterAnimation"));   
+                PresentUnchanged(serializedObject.FindProperty($"Actions.Array.data[{refBrokeni}].animation"));  
+            }
             if (action.Type == CardBattleActionType.AnimateAtTarget)
                 PresentUnchanged(serializedObject.FindProperty($"Actions.Array.data[{refBrokeni}].atTargetAnimation"));
             if (action.Type == CardBattleActionType.Battle)

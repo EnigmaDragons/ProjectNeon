@@ -101,7 +101,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
         if (animator == null)
             Debug.LogWarning($"No Animator found for {enemy.name}");
         else
-            StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation, elapsed =>
+            StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
             {
                 Log.Info($"Finished {e.Animation} in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
