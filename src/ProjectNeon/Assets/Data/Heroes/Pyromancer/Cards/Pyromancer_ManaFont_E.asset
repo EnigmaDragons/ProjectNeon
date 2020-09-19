@@ -10,26 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Electroblade_CurrentSlash_E
+  m_Name: Pyromancer_ManaFont_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 17
+      EffectType: 54
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0.67
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 8
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 00bcf075f7d389342a98696feec684b2,
+        type: 2}
       ReactionSequence: {fileID: 0}
       StatusTag: 0
     conditionData:

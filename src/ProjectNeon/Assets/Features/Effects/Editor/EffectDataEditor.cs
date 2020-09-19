@@ -23,6 +23,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustStatAdditivelyBaseOnMagicStat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.EvadeAttacks, new [] { "FloatAmount" }},
+        {EffectType.AtStartOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

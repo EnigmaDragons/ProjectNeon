@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class InterpolatedCardDescriptions
 {
-    private static int RoundUp(float f) => Mathf.RoundToInt(f);
+    private static int RoundUp(float f) => Mathf.CeilToInt(f);
     private static string Bold(this string s) => $"<b>{s}</b>";
 
     public static string InterpolatedDescription(this Card card) => card.Type.InterpolatedDescription(card.Owner);
@@ -70,6 +70,10 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
                 : $"{data.FloatAmount}x ATK";
+        if (data.EffectType == EffectType.DamageSpell)
+            return owner.IsPresent
+                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
+                : $"{data.FloatAmount}x MAG";
         if (data.EffectType == EffectType.ShieldToughness)
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
