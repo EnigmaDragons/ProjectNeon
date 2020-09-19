@@ -2,7 +2,7 @@
 
 ## Role: Multi-Target Striker
 
-### Basic: Meditate
+### Basic: Stoke The Embers
 
 ### Stats:
 - 40 Hp
@@ -15,8 +15,8 @@
 ### Cards Rarity:
 
 Starter:
-- Meditate - +3 Mana - Self
-- Mana Font - 0 Mana - Self - Gain 1 Mana for 7 turns
+- Stoke The Embers - +3 Mana - Self
+- Flaming Embers - 0 Mana - Self - Gain 1 Mana for 7 turns
 - Fiery Hand - 0 Mana - 1 Enemy - Deal 0.4x MAG damage for 3 Turns
 - Fire Bolt - 1 Mana - 1 Enemy - Deal 1x MAG 
 - Fireball - 2 Mana - All Enemies - Deal 1x MAG damage

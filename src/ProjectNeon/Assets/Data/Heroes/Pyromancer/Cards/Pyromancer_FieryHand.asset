@@ -13,19 +13,22 @@ MonoBehaviour:
   m_Name: Pyromancer_FieryHand
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: 5ff64d005f72dae49b94055a452f7081, type: 3}
-  description: Deal 0.4x MAG damage for 3 Turns
+  description: Deals {E[0]} damage {D[0]}
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
   tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: 63722b0aa1473de4cb961f4e32a9d50d,
     type: 2}
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
+    resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
     isXCost: 0
   onPlayGain:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 0a9bf8c8643826b4a92b563d9197d066, type: 2}
+    resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
     isXCost: 0
   rarity: 0
-  actionSequences: []
+  actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: eab6b6c35efea38408cee60d4586595c, type: 2}
   chainedCard: {fileID: 0}
