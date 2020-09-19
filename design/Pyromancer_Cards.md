@@ -22,7 +22,7 @@ Starter:
 - Fireball - 2 Mana - All Enemies - Deal 1x MAG damage
 - Wall of Flames - 1 Mana - All Allies - When Attacked, deal 0.4x MAG damage to Attacker
 
-Common:
+Common:q
 - Conjured Wildfire - X Mana - All Enemies - Deal 0.3x MAG damage
 - Engulfing Blaze - 2 Mana - All Enemies - Deal 0.4x MAG damage for 3 Turns
 - Rampant Conflagration - 1 Mana - All - Deal 2x MAG damage
