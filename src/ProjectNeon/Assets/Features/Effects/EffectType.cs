@@ -54,4 +54,5 @@ public enum EffectType
     AtStartOfTurn = 54,
     MagicDamageOverTime = 55,
     HealPercentMissingHealth = 56,
+    EnterStealth = 57,
 }
