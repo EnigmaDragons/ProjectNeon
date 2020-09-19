@@ -13,6 +13,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private GameObject prefab;
     [SerializeField] private StringReference deathEffect;
     [SerializeField] private BattleRole battleRole;
+    [SerializeField] private bool unique;
     
     [SerializeField] private int maxHp;
     [SerializeField] private int toughness;
@@ -43,6 +44,7 @@ public class Enemy : ScriptableObject
     public GameObject Prefab => prefab;
     public string DeathEffect => deathEffect;
     public BattleRole Role => battleRole;
+    public bool IsUnique => unique;
 
     public IStats Stats => new StatAddends
         {

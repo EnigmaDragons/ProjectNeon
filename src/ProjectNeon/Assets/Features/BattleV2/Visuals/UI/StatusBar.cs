@@ -27,6 +27,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         var statuses = new List<CurrentStatusValue>();
         
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => $"Double Damage for next {v} effects");
         AddStatusIconIfApplicable(statuses, StatType.Attack, true, v => $"+{v} Attack");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => $"Taunt for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Stealth, true, v => $"Stealth for {v} Turns");

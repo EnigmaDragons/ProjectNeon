@@ -55,6 +55,7 @@ public static class AllEffects
         { EffectType.MagicDamageOverTime, e => new MagicDamageOverTime(e)},
         { EffectType.HealPercentMissingHealth, e => new SimpleEffect(m => m.GainHp(Mathf.CeilToInt(m.MissingHp() * e.FloatAmount))) },
         { EffectType.EnterStealth, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Stealth, e.NumberOfTurns)) },
+        { EffectType.GainDoubleDamage, e => new SimpleEffect(m => m.Adjust(TemporalStatType.DoubleDamage, e.IntAmount))}
     };
     
     public static void Apply(EffectData effectData, EffectContext ctx)

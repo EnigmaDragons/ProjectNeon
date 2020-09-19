@@ -8,6 +8,8 @@ public sealed class PhysicalDamage : DamageCalculation
     {
         Multiplier = multiplier;
     }
+    
+    public PhysicalDamage WithFactor(float factor) => new PhysicalDamage(Multiplier * factor);
 
     public int Calculate(Member source, Member target)
     {

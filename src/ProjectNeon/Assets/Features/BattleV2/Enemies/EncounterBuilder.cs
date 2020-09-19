@@ -39,8 +39,10 @@ public class EncounterBuilder : ScriptableObject
                 .GroupBy(e => e.Role)
                 .Where(g => g.Sum(e => e.PowerLevel) >= (difficulty / 2f))
                 .Select(e => e.Key);
+            var uniqueEnemies = enemies.Where(e => e.IsUnique);
             var nextEnemy = possible
                 .Where(e => !enemyRolesOverrepresented.Contains(e.Role))
+                .Where(e => !uniqueEnemies.Contains(e))
                 .Where(e => e.PowerLevel <= maximum).Random();
             enemies.Add(nextEnemy);
             BattleLog.Write($"Added {nextEnemy.Name} to Encounter");

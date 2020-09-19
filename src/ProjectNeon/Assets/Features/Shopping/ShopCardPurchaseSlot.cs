@@ -13,7 +13,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
     private int _price;
     private bool _purchased;
 
-    private void OnEnable()
+    private void AfterEnable()
     {
         UpdateAffordability();
     }

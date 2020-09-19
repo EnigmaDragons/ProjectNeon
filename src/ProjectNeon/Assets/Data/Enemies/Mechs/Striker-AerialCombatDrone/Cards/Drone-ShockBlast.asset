@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Drone-ShockBlast
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: 23c9a25cf823ee9409f29ebe89d42b03, type: 3}
-  description: ' Deal {E[0]} damage. <b>Stun</b>.'
+  description: ' Deal {E[0]} damage. <b>Stun 1</b>.'
   typeDescription: {fileID: 11400000, guid: 05396cecd1c61ab4dba3e9e72676792d, type: 2}
+  tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
     type: 2}
   cost:
@@ -25,127 +26,9 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     isXCost: 0
+  rarity: 0
   actionSequences:
   - scope: 0
     group: 1
     cardActions: {fileID: 11400000, guid: 9df1a274c21c13d4d8f693291cde01a1, type: 2}
-  cardAction1:
-    targetScope: 0
-    targetGroup: 1
-    effect1:
-      EffectType: 2
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 1
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
-    effect2:
-      EffectType: 13
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 1
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
-    effect3:
-      EffectType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
-    chainedEffects: []
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-    targetEffectAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  cardAction2:
-    targetScope: 0
-    targetGroup: 0
-    effect1:
-      EffectType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
-    effect2:
-      EffectType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
-    effect3:
-      EffectType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
-    chainedEffects: []
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-    targetEffectAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+  chainedCard: {fileID: 0}

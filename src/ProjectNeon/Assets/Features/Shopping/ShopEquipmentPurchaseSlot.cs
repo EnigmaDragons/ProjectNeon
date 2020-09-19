@@ -13,7 +13,7 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
     private Equipment _equipment;
     private bool _purchased;
 
-    private void OnEnable()
+    private void AfterEnable()
     {
         UpdateAffordability();
     }
