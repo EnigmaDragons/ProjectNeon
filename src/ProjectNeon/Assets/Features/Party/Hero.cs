@@ -10,6 +10,10 @@ public class Hero
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
 
+    public int LevelUpPoints { get; private set; }
+
+    private IStats _levelUpStats = new StatAddends();
+    
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
         this.character = character;
@@ -26,6 +30,7 @@ public class Hero
     
     // TODO: Maybe don't calculate this every time
     public IStats Stats => Character.Stats
+        .Plus(_levelUpStats)
         .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers).ToArray()))
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
         .Times(Equipment.All.Select(e => e.MultiplierStats()));
@@ -36,6 +41,8 @@ public class Hero
     public void Equip(Equipment e) => equipment.Equip(e);
     public void Unequip(Equipment e) => equipment.Unequip(e);
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
+    public void AdjustLevelUpPoints(int numPoints) => LevelUpPoints += numPoints;
+    public void AddLevelUpStat(StatAddends stats) => _levelUpStats = _levelUpStats.Plus(stats);
 
     public Member AsMember(int id)
     {
