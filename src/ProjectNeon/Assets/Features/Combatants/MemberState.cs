@@ -40,6 +40,7 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Evade.ToString()] = new BattleCounter(TemporalStatType.Evade, 0, () => int.MaxValue);
         _counters[TemporalStatType.Spellshield.ToString()] = new BattleCounter(TemporalStatType.Evade, 0, () => int.MaxValue);
         _counters[TemporalStatType.Taunt.ToString()] = new BattleCounter(TemporalStatType.Taunt, 0, () => int.MaxValue);
+        _counters[TemporalStatType.DoubleDamage.ToString()] = new BattleCounter(TemporalStatType.DoubleDamage, 0, () => int.MaxValue);
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
         _counters[""] = new BattleCounter("", 0, () => 0);
@@ -125,6 +126,7 @@ public sealed class MemberState : IStats
     public void GainShield(float amount) => Adjust(TemporalStatType.Shield, amount);
     public void AdjustEvade(float amount) => Adjust(TemporalStatType.Evade, amount);
     public void AdjustSpellshield(float amount) => Adjust(TemporalStatType.Spellshield, amount);
+    public void AdjustDoubleDamage(float amount) => Adjust(TemporalStatType.DoubleDamage, amount);
 
     // Resource Commands
     public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);

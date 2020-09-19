@@ -7,4 +7,5 @@ public enum TemporalStatType
     Evade = 4,
     Spellshield = 5,
     Taunt = 6,
+    DoubleDamage = 7,
 }

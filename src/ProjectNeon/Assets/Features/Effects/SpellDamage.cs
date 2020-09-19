@@ -8,6 +8,8 @@ public class SpellDamage : DamageCalculation
     {
         _multiplier = multiplier;
     }
+    
+    public SpellDamage WithFactor(float factor) => new SpellDamage(_multiplier * factor);
 
     public int Calculate(Member attacker, Member target)
     {        

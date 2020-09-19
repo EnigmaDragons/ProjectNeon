@@ -1,7 +1,7 @@
 using System;
 
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER. EVENTUALLY WE NEED A TOOL TO FIND USAGES
-// Next Number Is 57
+// Next Number Is 58
 public enum EffectType
 {
     Nothing = 0,
@@ -54,4 +54,5 @@ public enum EffectType
     AtStartOfTurn = 54,
     MagicDamageOverTime = 55,
     HealPercentMissingHealth = 56,
+    GainDoubleDamage = 57,
 }

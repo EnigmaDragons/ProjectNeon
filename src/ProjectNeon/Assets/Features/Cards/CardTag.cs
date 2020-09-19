@@ -1,4 +1,5 @@
-// Next tag number is 11
+// Optimized for UI Order
+// Next tag number is 12
 public enum CardTag
 {
     None = 0,
@@ -12,4 +13,5 @@ public enum CardTag
     Defense = 7,
     Vulnerable = 8,
     Group = 9,
+    DoubleDamage = 11,
 }
