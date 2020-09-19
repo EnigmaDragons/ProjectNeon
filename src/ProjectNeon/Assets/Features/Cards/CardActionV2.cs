@@ -7,14 +7,14 @@ public class CardActionV2
     [SerializeField] private CardBattleActionType type = CardBattleActionType.Battle;
     [SerializeField] private EffectData battleEffect = new EffectData();
     [SerializeField] private ActionConditionData conditionData = new ActionConditionData();
-    [SerializeField] private StringReference characterAnimation;
+    [SerializeField] private AnimationData characterAnimation;
     [SerializeField] private StringReference atTargetAnimation;
     [SerializeField] private Enemy enemyToSpawn;
 
     public CardBattleActionType Type => type;
     public EffectData BattleEffect => battleEffect;
     public ActionConditionData ConditionData => conditionData;
-    public StringReference CharacterAnimation => characterAnimation;
+    public AnimationData CharacterAnimation => characterAnimation;
     public StringReference AtTargetAnimation => atTargetAnimation;
 
     public IPayloadProvider Play(CardActionContext ctx)
