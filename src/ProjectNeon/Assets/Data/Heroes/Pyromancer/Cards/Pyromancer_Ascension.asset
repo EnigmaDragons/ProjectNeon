@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Pyromancer_RampantConflagration
+  m_Name: Pyromancer_Ascension
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 6f4f3d9c9bb1c9640bca1de791a382f1, type: 3}
-  description: Deals {E[0]} to everyone
-  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  art: {fileID: 21300000, guid: 26acf7754c520244c8ecffc225973829, type: 3}
+  description: Gain +4 MAG {D[0]}. Gain Max Shield. Gain 2 Flames at the start of
+    next 3 turns.
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: 63722b0aa1473de4cb961f4e32a9d50d,
     type: 2}
   cost:
-    cost: 1
+    cost: 0
     resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
     isXCost: 0
   onPlayGain:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
     isXCost: 0
-  rarity: 1
+  rarity: 4
   actionSequences:
-  - scope: 1
-    group: 3
-    cardActions: {fileID: 11400000, guid: 1dc45fa6d72a8f340999941ca11b5636, type: 2}
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 4643e1e7c2814314783e811bf3556502, type: 2}
   chainedCard: {fileID: 0}
