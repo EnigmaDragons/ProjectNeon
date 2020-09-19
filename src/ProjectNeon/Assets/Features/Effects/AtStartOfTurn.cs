@@ -1,4 +1,6 @@
 
+using System;
+
 public class StartOfTurnEffect : Effect
 {
     private readonly EffectData _source;
@@ -11,7 +13,7 @@ public class StartOfTurnEffect : Effect
     public void Apply(EffectContext ctx)
     {
         ctx.Target.ApplyToAllConscious(m => m.ApplyTemporaryAdditive(
-            new AtStartOfTurn(ctx, _source.ReferencedSequence, _source.IntAmount, _source.EffectScope.Value.Equals("Debuff"))));
+            new AtStartOfTurn(ctx, _source.ReferencedSequence, _source.NumberOfTurns, _source.EffectScope.Value.Equals("Debuff"))));
     }
 }
 
@@ -38,7 +40,7 @@ public class AtStartOfTurn : ITemporalState
     }
     
     public void OnTurnStart()
-    {        
+    {
         if (!IsActive) return;
 
         _remainingDuration--;
