@@ -15,7 +15,6 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private Rarity rarity;
     [SerializeField] public CardActionSequence[] actionSequences = new CardActionSequence[0];
     [SerializeField] private CardType chainedCard;
-    [SerializeField] private bool instant;
 
     public string Name => name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
     public ResourceCost Cost => cost;
@@ -29,7 +28,6 @@ public class CardType : ScriptableObject, CardTypeData
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
     public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();
     public Maybe<CardTypeData> ChainedCard => chainedCard;
-    public bool Instant => instant;
 
     public override string ToString() => Name;
     public override int GetHashCode() => ToString().GetHashCode();
