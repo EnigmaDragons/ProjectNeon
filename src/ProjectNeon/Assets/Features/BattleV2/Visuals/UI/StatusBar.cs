@@ -49,7 +49,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Damagability].Icon, Tooltip = "Vulnerable (Takes 33% more damage)"});
         
         if (_member.State.Healability() < 1)
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Healability].Icon, Tooltip = "Anti Heal (Only get 50% healing)"});
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.AntiHeal].Icon, Tooltip = "Anti Heal (Only get 50% healing)"});
         
         if (_member.State.HasStatus(StatusTag.CounterAttack))
             statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.CounterAttack].Icon, Tooltip = "Counterattack"});
