@@ -26,7 +26,7 @@ public class MagicAttack : Effect
             if (member.State[TemporalStatType.Spellshield] > 0)
                 member.State.AdjustSpellshield(-1);
             else
-                effect.Apply(ctx);
+                effect.Apply(ctx.Source, member);
         }
     }
 }
