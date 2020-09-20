@@ -10,21 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: New Card Type
+  m_Name: CorporateMagiChemist_DrugInducedHysteria
   m_EditorClassIdentifier: 
-  art: {fileID: 0}
-  description: 
-  typeDescription: {fileID: 0}
+  art: {fileID: 21300000, guid: 9fd243eed9935cf42806cf52d74913e9, type: 3}
+  description: Confuse all enemies for 1 turn.
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
-  onlyPlayableByClass: {fileID: 0}
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
+    type: 2}
   cost:
     cost: 0
-    resourceType: {fileID: 0}
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     isXCost: 0
   onPlayGain:
     cost: 0
-    resourceType: {fileID: 0}
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     isXCost: 0
   rarity: 0
-  actionSequences: []
+  actionSequences:
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: d6847650bf78ba042a55fe26b92d57d9, type: 2}
   chainedCard: {fileID: 0}

@@ -42,6 +42,7 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Taunt.ToString()] = new BattleCounter(TemporalStatType.Taunt, 0, () => int.MaxValue);
         _counters[TemporalStatType.Stealth.ToString()] = new BattleCounter(TemporalStatType.Stealth, 0, () => int.MaxValue);
         _counters[TemporalStatType.DoubleDamage.ToString()] = new BattleCounter(TemporalStatType.DoubleDamage, 0, () => int.MaxValue);
+        _counters[TemporalStatType.Confusion.ToString()] = new BattleCounter(TemporalStatType.Confusion, 0, () => int.MaxValue);
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
         _counters[""] = new BattleCounter("", 0, () => 0);
@@ -146,7 +147,7 @@ public sealed class MemberState : IStats
         _reactiveStates.ForEach(m => m.OnTurnStart());
     }
     
-    private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType> { TemporalStatType.Taunt, TemporalStatType.Stealth };
+    private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType> { TemporalStatType.Taunt, TemporalStatType.Stealth, TemporalStatType.Confusion };
     
     public void OnTurnEnd() => PublishAfter(() =>
     {

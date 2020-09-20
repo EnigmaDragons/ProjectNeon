@@ -33,6 +33,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Stealth, true, v => $"Stealth for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.TurnStun, true, v => $"Stunned for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.CardStun, true, v => $"Stunned for {v} Cards");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Confusion, true, v => $"Confused for {v} Turns");
 
         var extraCardBuffAmount = CeilingInt(_member.State[StatType.ExtraCardPlays] - _member.State.BaseStats.ExtraCardPlays());
         if (extraCardBuffAmount != 0)

@@ -59,7 +59,8 @@ public static class AllEffects
         { EffectType.GainDoubleDamage, e => new SimpleEffect(m => m.Adjust(TemporalStatType.DoubleDamage, e.IntAmount))},
         { EffectType.AntiHeal, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().With(StatType.Healability, 0.5f), e.NumberOfTurns, true, e.NumberOfTurns == -1, StatusTag.AntiHeal))) },
-        { EffectType.FullyReviveAllAllies, e => new FullyReviveAllAllies() }
+        { EffectType.FullyReviveAllAllies, e => new FullyReviveAllAllies() },
+        { EffectType.ApplyConfusion, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Confusion, e.NumberOfTurns + 1)) },
     };
     
     public static void Apply(EffectData effectData, EffectContext ctx)

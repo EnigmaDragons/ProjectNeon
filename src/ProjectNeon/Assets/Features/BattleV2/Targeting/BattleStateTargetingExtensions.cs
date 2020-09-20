@@ -29,32 +29,39 @@ public static class BattleStateTargetingExtensions
             case Group.Opponent:
             case Group.Ally:
             {
-                targets = NonSelfConsciousTargetsFor(state, self.TeamType, group, scope);
+                targets = NonSelfConsciousTargetsFor(state, self, self.TeamType, group, scope);
                 break;
             }
         }
         return targets;
     }
 
-    private static Target[] NonSelfConsciousTargetsFor(this BattleState state, TeamType myTeam, Group group, Scope scope)
+    private static Target[] NonSelfConsciousTargetsFor(this BattleState state, Member originator, TeamType myTeam, Group group, Scope scope)
     {
         var opponentsAre = myTeam == TeamType.Party ? TeamType.Enemies : TeamType.Party;
         var teamMembers = group == Group.Ally ? GetConscious(state, myTeam) : GetConscious(state, opponentsAre);
 
         if (scope == Scope.One)
         {
-            var membersWithTaunt = teamMembers.Where(m => m.HasTaunt()).ToArray();
-            var membersWithoutStealth = teamMembers.Where(m => !m.IsStealth()).ToArray();
+            var membersWithTaunt = teamMembers.Where(m => m.HasTaunt() || m.TeamType == myTeam).ToArray();
+            var membersWithoutStealth = teamMembers.Where(m => !m.IsStealth() || m.TeamType == myTeam).ToArray();
             var members = membersWithTaunt.Any() 
                 ? membersWithTaunt 
                 : membersWithoutStealth.Any() 
                     ? membersWithoutStealth 
                     : teamMembers;
-            return Targets(members.Select(m => new Single(m)).Cast<Target>().ToArray());
+            var targets = members.Select(m => new Single(m)).Cast<Target>().ToArray();
+            return Targets(originator.IsConfused() ? new Target[] { targets.Shuffled().First() } : targets);
         }
 
         if (scope == Scope.AllExcept)
-            return Targets(teamMembers.Select(exclusion => new Multiple(teamMembers.Where(x => x != exclusion).ToArray())).Cast<Target>().ToArray());
+        {
+            var targets = teamMembers
+                .Select(exclusion => new Multiple(teamMembers.Where(x => x != exclusion).ToArray()))
+                .Cast<Target>()
+                .ToArray();
+            return Targets(originator.IsConfused() ? new Target[] { targets.Shuffled().First() } : targets);   
+        }
         return Targets(new Team(teamMembers));
     }
 
