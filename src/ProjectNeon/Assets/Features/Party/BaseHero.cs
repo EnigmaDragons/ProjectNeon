@@ -37,5 +37,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
         .With(StatType.Magic, magic)
         .With(StatType.Armor, armor)
         .With(StatType.Resistance, resistance)
-        .With(StatType.Damagability, 1f);
+        .With(StatType.Damagability, 1f)
+        .With(StatType.Healability, 1f);
 }

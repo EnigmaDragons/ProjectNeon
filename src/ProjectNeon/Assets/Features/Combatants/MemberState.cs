@@ -76,7 +76,7 @@ public sealed class MemberState : IStats
             .ToArray();
 
     // Modifier Commands
-    private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag> { StatusTag.Vulnerable };
+    private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag> { StatusTag.Vulnerable, StatusTag.AntiHeal };
 
     public void ApplyPersistentState(IPersistentState state) => _persistentStates.Add(state);
     
@@ -110,7 +110,7 @@ public sealed class MemberState : IStats
     public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
 
     // HP Commands
-    public void GainHp(float amount) => ChangeHp(amount);
+    public void GainHp(float amount) => ChangeHp(amount * CurrentStats.Healability());
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
     public void TakeDamage(int amount)
     {

@@ -66,7 +66,8 @@ public static class InterpolatedCardDescriptions
     
     public static string GenerateEffectDescription(EffectData data, Maybe<Member> owner)
     {
-        if (data.EffectType == EffectType.Attack)
+        if (data.EffectType == EffectType.Attack
+            || data.EffectType == EffectType.PhysicalDamageOverTime)
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
                 : $"{data.FloatAmount}x ATK";

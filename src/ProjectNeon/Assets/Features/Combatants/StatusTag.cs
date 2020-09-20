@@ -6,4 +6,5 @@ public enum StatusTag
     HealOverTime = 3,
     Vulnerable = 4,
     OnHit = 5,
+    AntiHeal = 6,
 }
