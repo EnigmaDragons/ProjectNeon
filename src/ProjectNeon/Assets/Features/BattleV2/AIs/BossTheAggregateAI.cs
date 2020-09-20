@@ -1,4 +1,5 @@
 
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/BossTheAggregateAI")]
@@ -26,10 +27,13 @@ public class BossTheAggregateAI : TurnAI
             _cooldownBeforeRepair = 3;
         }
 
-        return ctx
+        ctx
             .IfTruePlayType(_ => componentsDestroyed, CardTag.Attack)
             .IfTrueDontPlayType(_ => !componentsDestroyed, CardTag.Attack)
             .IfTrueDontPlayType(_ => !componentsDestroyed, CardTag.Ultimate)
-            .WithSelectedTargetsPlayedCard();
+            .WithFinalizedCardSelection();
+            return ctx.SelectedCard.IsPresentAnd(c => c.TypeDescription.Equals("Leadership"))
+                ? ctx.WithSelectedTargetsPlayedCard(t => !t.Members.Any(m => m.BattleRole == BattleRole.Boss))
+                : ctx.WithSelectedTargetsPlayedCard();
     }
 }
