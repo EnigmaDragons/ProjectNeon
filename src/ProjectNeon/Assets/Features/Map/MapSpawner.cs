@@ -10,6 +10,7 @@ public sealed class MapSpawner : MonoBehaviour
 
     private void Awake()
     {
+        Instantiate(map.ArtPrototype, transform);
         map.Locations.ForEach(SpawnNode);
         SpawnToken();
     }

@@ -3,6 +3,7 @@
 [CreateAssetMenu(menuName = "GameState/AdventureProgress")]
 public class AdventureProgress : ScriptableObject
 {
+    [SerializeField] private CurrentGameMap currentMap;
     [SerializeField] private Adventure currentAdventure;
     [SerializeField] private int currentStageIndex;
     [SerializeField] private int currentStageSegmentIndex;
@@ -12,9 +13,11 @@ public class AdventureProgress : ScriptableObject
     public bool IsFinalStageSegment => IsFinalStage && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
     public Stage CurrentStage
     {
-        get { if (currentStageIndex < 0 || currentStageIndex >= currentAdventure.Stages.Length)
-            Log.Error($"Adventure Stage is illegal. {this}");
-            return currentAdventure.Stages[currentStageIndex]; }
+        get { 
+            if (currentStageIndex < 0 || currentStageIndex >= currentAdventure.Stages.Length)
+                Log.Error($"Adventure Stage is illegal. {this}");
+            return currentAdventure.Stages[currentStageIndex]; 
+        }
     }
 
     public StageSegment CurrentStageSegment => CurrentStage.Segments[currentStageSegmentIndex];
@@ -64,6 +67,7 @@ public class AdventureProgress : ScriptableObject
         }
         currentStageSegmentIndex++;
         Log.Info(ToString());
+        currentMap.SetMap(CurrentStage.Map);
         return CurrentStageSegment;
     }
 
