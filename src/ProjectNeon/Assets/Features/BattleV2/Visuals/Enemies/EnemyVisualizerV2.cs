@@ -89,7 +89,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var t = state.GetTransform(m.Member.Id);
         t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
         t.DOSpiral(2);
-        StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
+        StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2.2f));
     }
 
     protected override void Execute(MemberRevived m)
