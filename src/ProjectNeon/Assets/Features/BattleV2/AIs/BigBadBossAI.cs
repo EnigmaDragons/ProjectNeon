@@ -13,10 +13,10 @@ public class BigBadBossAI : TurnAI
     
     private static readonly List<string[]> Routines = new List<string[]>
     {
-        new [] { Hide, BreakerPunch, SpinSlam, DoubleFist },
-        new [] { BreakerPunch, SpinSlam, Hide, ShieldBot },
-        new [] { BreakerPunch, Retaliation, Hide, ShieldBot },
-        new [] { Retaliation, BreakerPunch, BreakerPunch, DoubleFist }
+        new [] { Hide, BreakerPunch, DoubleFist, SpinSlam },
+        new [] { BreakerPunch, SpinSlam, ShieldBot, Hide },
+        new [] { BreakerPunch, Retaliation, ShieldBot, Hide },
+        new [] { Retaliation, BreakerPunch, DoubleFist, BreakerPunch }
     };
     
     private readonly Queue<string> _currentRoutine = new Queue<string>();
