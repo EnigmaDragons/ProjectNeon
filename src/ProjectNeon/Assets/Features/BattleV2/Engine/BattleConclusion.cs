@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>
 {
+    [SerializeField] private PartyAdventureState party;
+    [SerializeField] private IntReference levelUpPoints = new IntReference(8);
     [SerializeField] private AdventureProgress adventure;
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
@@ -15,6 +17,11 @@ public class BattleConclusion : OnMessage<BattleFinished>
         }
         else
         {
+            if (adventure.IsLastSegmentOfStage)
+            {
+                Log.Info("Party is levelling up");
+                party.AwardLevelUpPoints(levelUpPoints);
+            }
             Log.Info("Advancing to next Stage Segment.");
             adventure.Advance();
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
