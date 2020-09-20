@@ -4,7 +4,7 @@ using System.Linq;
 public class ShopSelectionPicker
 {
     private static readonly int NumCards = 4;
-    private static readonly int NumEquipment = 2;
+    private static readonly int NumEquipment = 4;
 
     public CardType[] PickCards(PartyAdventureState party, ShopCardPool cards, int numCards)
     {
