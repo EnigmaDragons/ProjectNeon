@@ -82,7 +82,7 @@ public class EquipmentGenerator
         {
             Name = name,
             Rarity = rarity,
-            Price = (totalPowerLevel * 40).WithShopPricingVariance(),
+            Price = (totalPowerLevel * 30).WithShopPricingVariance(),
             Classes = new [] { CharacterClass.All },
             Description = description,
             Modifiers = modifiers.ToArray(),
