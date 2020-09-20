@@ -26,9 +26,9 @@ public static class AICardSelectionLogic
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
             .DontRemoveResourcesIfOpponentsDontHaveMany();
     
-    public static CardSelectionContext DontPlayShieldAttackIfOpponentsDontHaveManyShields(this CardSelectionContext ctx, int tolerance = 15)
-        => ctx.IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < tolerance, CardTag.Shield, CardTag.Attack)
-            .IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < tolerance, CardTag.RemoveShields);
+    public static CardSelectionContext DontPlayShieldAttackIfOpponentsDontHaveManyShields(this CardSelectionContext ctx, int minShields = 15)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < minShields, CardTag.Shield, CardTag.Attack)
+            .IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < minShields, CardTag.RemoveShields);
 
     private static CardSelectionContext DontPlayHealsIfAlliesDontNeedHealing(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentHp() >= a.MaxHp() * 0.9), CardTag.Healing);
@@ -50,8 +50,10 @@ public static class AICardSelectionLogic
             ? ctx.WithSelectedCard(FinalizeCardSelection(ctx, typePriority))
             : ctx;
 
-    private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority) 
-        => ctx.SelectedCard.IsPresent 
+    private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx,
+        Func<CardTypeData, int> typePriority)
+    {
+        var card = ctx.SelectedCard.IsPresent 
             ? ctx.SelectedCard.Value
             : ctx.CardOptions
                 .ToArray()
@@ -59,7 +61,10 @@ public static class AICardSelectionLogic
                 .OrderByDescending(c => c.Cost.Amount)
                 .ThenBy(typePriority)
                 .First();
-    
+        BattleLog.Write($"{ctx.Member.Name} choose {card.Name} out of [{string.Join(", ", ctx.CardOptions.Select(x => x.Name))}]");
+        return card;
+    }
+
     public static CardTypeData MostExpensive(this IEnumerable<CardTypeData> cards) => cards
         .ToArray()
         .Shuffled()
