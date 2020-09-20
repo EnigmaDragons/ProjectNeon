@@ -5,7 +5,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimationRequested>
+public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, CharacterAnimationRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
@@ -14,6 +14,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
     [SerializeField] private float widthBetweenEnemies = 1.5f;
 
     [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
+    [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
     
     public IEnumerator Setup()
     {
@@ -57,7 +58,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
     {
         var enemyMember = state.GetMemberByEnemyIndex(index);
         var pos = enemyObject.transform.position;
-        Instantiate(ui, pos, Quaternion.identity, enemyObject)
+        uis[index] = Instantiate(ui, pos, Quaternion.identity, enemyObject)
             .Initialized(enemyMember);
     }
 
@@ -88,6 +89,14 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, CharacterAnimation
         t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
         t.DOSpiral(2);
         StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
+    }
+
+    protected override void Execute(MemberRevived m)
+    {
+        if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
+
+        state.GetTransform(m.Member.Id).gameObject.SetActive(true);
+        uis.Where(u => u.Contains(m.Member)).ForEach(u => u.gameObject.SetActive(true));
     }
 
     protected override void Execute(CharacterAnimationRequested e)

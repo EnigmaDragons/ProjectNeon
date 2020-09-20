@@ -146,6 +146,17 @@ public class BattleState : ScriptableObject
         newlyUnconscious.ForEach(r => _unconsciousMembers[r.Id] = r);
         return newlyUnconscious;
     }
+
+    public Member[] GetAllNewlyRevivedMembers()
+    {
+        var newlyConscious = Members
+            .Where(m => _unconsciousMembers.ContainsKey(m.Key))
+            .Select(m => m.Value)
+            .Where(m => m.State.IsConscious)
+            .ToArray();
+        newlyConscious.ForEach(r => _unconsciousMembers.Remove(r.Id));
+        return newlyConscious;
+    }
     
     public void AdvanceTurn() =>
         UpdateState(() =>

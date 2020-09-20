@@ -93,7 +93,8 @@ public sealed class MemberState : IStats
             _multiplierMods.RemoveAll(m => m.Tag == mods.Tag);
         _multiplierMods.Add(mods);
     });
-    
+
+    public void CleanseDebuffs() => RemoveTemporaryEffects(s => s.IsDebuff);
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() =>
     {
         _additiveMods.RemoveAll(condition);
@@ -166,5 +167,4 @@ public sealed class MemberState : IStats
         action();
         Message.Publish(new MemberStateChanged(before, this));
     }
-
 }
