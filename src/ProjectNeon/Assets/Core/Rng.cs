@@ -21,12 +21,13 @@ public static class Rng
     public static T[] Shuffled<T>(this T[] arr)
     {
         var shuffled = arr.ToArray();
-        for (var n = shuffled.Length - 1; n > 1; n--)
+        var i = shuffled.Length;
+        while (i > 1) 
         {
-            var k = Instance.Next(n + 1);
-            var value = shuffled[k];
-            shuffled[k] = shuffled[n];
-            shuffled[n] = value;
+            var k = Instance.Next(i--);
+            var temp = shuffled[i];
+            shuffled[i] = shuffled[k];
+            shuffled[k] = temp;
         }
         return shuffled;
     }
@@ -34,12 +35,13 @@ public static class Rng
     public static List<T> Shuffled<T>(this List<T> list)
     {
         var shuffled = list.ToList();
-        for (var n = shuffled.Count - 1; n > 1; n--)
+        var i = shuffled.Count;
+        while (i > 1) 
         {
-            var k = Instance.Next(n + 1);
-            var value = shuffled[k];
-            shuffled[k] = shuffled[n];
-            shuffled[n] = value;
+            var k = Instance.Next(i--);
+            var temp = shuffled[i];
+            shuffled[i] = shuffled[k];
+            shuffled[k] = temp;
         }
         return shuffled;
     }

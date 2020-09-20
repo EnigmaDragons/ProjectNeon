@@ -51,8 +51,16 @@ public class CardResolutionZone : ScriptableObject
     
     public void Add(IPlayedCard played)
     {
-        moves.Add(played);
-        physicalZone.PutOnBottom(played.Card);
+        if (played.Card.Instant)
+        {
+            moves.Insert(0, played); 
+            physicalZone.PutOnTop(played.Card); 
+        }
+        else
+        {
+            moves.Add(played);
+            physicalZone.PutOnBottom(played.Card); 
+        }
         played.Member.Apply(m =>
         {
             m.Lose(played.Spent);

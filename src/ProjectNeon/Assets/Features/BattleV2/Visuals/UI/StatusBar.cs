@@ -27,6 +27,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         var statuses = new List<CurrentStatusValue>();
         
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
+        AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => $"Reduces magic damage taken by {v}");
         AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => $"Double Damage for next {v} effects");
 
         var attackBuffAmount = CeilingInt(_member.State[StatType.Attack] - _member.State.BaseStats.Attack());
