@@ -55,4 +55,5 @@ public enum EffectType
     MagicDamageOverTime = 55,
     HealPercentMissingHealth = 56,
     GainDoubleDamage = 57,
+    EnterStealth = 58,
 }

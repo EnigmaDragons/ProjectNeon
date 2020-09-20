@@ -44,7 +44,12 @@ public static class BattleStateTargetingExtensions
         if (scope == Scope.One)
         {
             var membersWithTaunt = teamMembers.Where(m => m.HasTaunt()).ToArray();
-            var members = membersWithTaunt.Any() ? membersWithTaunt : teamMembers;
+            var membersWithoutStealth = teamMembers.Where(m => !m.IsStealth()).ToArray();
+            var members = membersWithTaunt.Any() 
+                ? membersWithTaunt 
+                : membersWithoutStealth.Any() 
+                    ? membersWithoutStealth 
+                    : teamMembers;
             return Targets(members.Select(m => new Single(m)).Cast<Target>().ToArray());
         }
 
