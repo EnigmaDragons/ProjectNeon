@@ -69,9 +69,16 @@ public static class AllEffects
     
     public static void Apply(EffectData effectData, EffectContext ctx)
     {
-        var effect = Create(effectData);
-        BattleLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}");
-        effect.Apply(ctx);
+        try
+        {
+            var effect = Create(effectData);
+            BattleLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}");
+            effect.Apply(ctx);
+        }
+        catch (Exception e)
+        {
+            Log.Error($"EffectType {effectData.EffectType} is broken {e}");
+        }
     }
 
     public static Effect Create(EffectData effectData)
