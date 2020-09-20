@@ -54,6 +54,12 @@ public static class BattleStateTargetingExtensions
             return Targets(originator.IsConfused() ? new Target[] { targets.Shuffled().First() } : targets);
         }
 
+        if (scope == Scope.OneExceptSelf)
+        {
+            return NonSelfConsciousTargetsFor(state, originator, myTeam, group, Scope.One)
+                .Where(x => !x.Members.Contains(originator)).ToArray();
+        }
+
         if (scope == Scope.AllExcept)
         {
             var targets = teamMembers

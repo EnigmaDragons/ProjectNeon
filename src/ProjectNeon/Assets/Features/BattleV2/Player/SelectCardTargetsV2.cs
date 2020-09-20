@@ -70,7 +70,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
             _actionTargets[_actionIndex] = targetingState.Current;
         else
             _actionTargets[_actionIndex] = battleState.GetPossibleConsciousTargets(_card.Owner, group, scope)
-                .First(target => target.Members.All(member => member != targetingState.Current.Members[0]));
+                .First(target => target.Members.All(member => !member.Equals(targetingState.Current.Members[0])));
         targetingState.Clear();
 
         if (_actionIndex + 1 == _numActions)
