@@ -61,7 +61,6 @@ public static class AICardSelectionLogic
                 .OrderByDescending(c => c.Cost.Amount)
                 .ThenBy(typePriority)
                 .First();
-        BattleLog.Write($"{ctx.Member.Name} choose {card.Name} out of [{string.Join(", ", ctx.CardOptions.Select(x => x.Name))}]");
         return card;
     }
 
