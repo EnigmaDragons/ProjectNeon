@@ -72,6 +72,8 @@ public static class AITargetSelectionLogic
         if (ctx.SelectedCard.IsMissing)
             ctx = ctx.WithFinalizedCardSelection();
         
+        BattleLog.Write($"{ctx.Member.Name} choose {ctx.SelectedCard.Value.Name} out of [{string.Join(", ", ctx.CardOptions.Select(x => x.Name))}]");
+        
         var targets = ctx.SelectedTargets(isPreferredTarget);
         
         var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);
