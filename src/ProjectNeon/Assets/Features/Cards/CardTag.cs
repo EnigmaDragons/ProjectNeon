@@ -21,4 +21,5 @@ public enum CardTag
     Leadership = 16,
     RemoveResources = 17,
     Confusion = 18,
+    Haste = 19,
 }

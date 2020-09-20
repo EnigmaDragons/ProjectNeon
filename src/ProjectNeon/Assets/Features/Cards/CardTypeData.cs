@@ -15,7 +15,6 @@ public interface CardTypeData
     CardActionSequence[] ActionSequences  { get; }
     Maybe<CardTypeData> ChainedCard { get; }
     Rarity Rarity { get; }
-    bool Instant { get; }
 }
 
 public static class CardTypeDataExtensions
