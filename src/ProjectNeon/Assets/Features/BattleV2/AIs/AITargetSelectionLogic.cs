@@ -25,7 +25,20 @@ public static class AITargetSelectionLogic
             if (card.Is(CardTag.BuffResource))
                 return possibleTargets.MostPowerful();
             if (card.Is(CardTag.BuffAttack))
-                return possibleTargets.BestAttackerToBuff(ctx.Strategy); 
+                return possibleTargets.BestAttackerToBuff(ctx.Strategy);
+            if (card.Is(CardTag.RemoveShields) || card.Is(CardTag.Attack, CardTag.Shield))
+                return possibleTargets.MostShielded();
+            if (card.Is(CardTag.Vulnerable))
+            {
+                var vulnerableTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsVulnerable()));
+                var vulnerableSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Vulnerable, out var targets) ? targets : new HashSet<Target>();
+                var saneTargets = possibleTargets.Except(vulnerableSelectedTargets).Except(vulnerableTargets).ToArray();
+                return saneTargets.Any(x => x == ctx.Strategy.AttackTargetFor(action)) 
+                    ? ctx.Strategy.AttackTargetFor(action) 
+                    : saneTargets.Any() 
+                        ? saneTargets.Random() 
+                        : possibleTargets.Random();
+            }
             if (card.Is(CardTag.Attack))
                 return Rng.Chance(0.80) ? ctx.Strategy.AttackTargetFor(action) : possibleTargets.Random();
             if (card.Is(CardTag.Healing))
@@ -53,6 +66,8 @@ public static class AITargetSelectionLogic
         var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);
         if (ctx.SelectedCard.Value.Is(CardTag.Stun))
             targets.ForEach(t => ctx.Strategy.RecordNonStackingTarget(CardTag.Stun, t));
+        if (ctx.SelectedCard.Value.Is(CardTag.Vulnerable))
+            targets.ForEach(t => ctx.Strategy.RecordNonStackingTarget(CardTag.Vulnerable, t));
         
         return new PlayedCardV2(ctx.Member, targets, card);
     }
@@ -85,4 +100,10 @@ public static class AITargetSelectionLogic
                 + p.Members.Count(x => x.BattleRole == BattleRole.Striker) * 50  // Prefer Strikers
                 + p.TotalAttack()) // Prefer more effective
             .First();
+    
+    public static Target MostShielded(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(x => x.TotalShields())
+        .First();
 }

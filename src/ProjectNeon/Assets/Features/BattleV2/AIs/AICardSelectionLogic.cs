@@ -25,8 +25,9 @@ public static class AICardSelectionLogic
             .DontPlayShieldsIfAlliesDontNeedShielding()
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields();
     
-    private static CardSelectionContext DontPlayShieldAttackIfOpponentsDontHaveManyShields(this CardSelectionContext ctx)
-        => ctx.IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < 15, CardTag.Shield, CardTag.Attack);
+    public static CardSelectionContext DontPlayShieldAttackIfOpponentsDontHaveManyShields(this CardSelectionContext ctx, int tolerance = 15)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < tolerance, CardTag.Shield, CardTag.Attack)
+            .IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < tolerance, CardTag.RemoveShields);
 
     private static CardSelectionContext DontPlayHealsIfAlliesDontNeedHealing(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentHp() >= a.MaxHp() * 0.9), CardTag.Healing);

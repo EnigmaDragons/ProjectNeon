@@ -33,6 +33,11 @@ public sealed class CardSelectionContext
         => shouldRefine(this)
             ? new CardSelectionContext(Member, State, Strategy, CardOptions.Where(o => !o.Is(excludedTagsCombination))) { SelectedCard = SelectedCard }
             : this;
+    
+    public CardSelectionContext IfTruePlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] includeTagsCombination)
+        => shouldRefine(this)
+            ? new CardSelectionContext(Member, State, Strategy, CardOptions.Where(o => o.Is(includeTagsCombination))) { SelectedCard = SelectedCard }
+            : this;
 
     public CardSelectionContext WithSelectedCard(CardTypeData card)
         => new CardSelectionContext(Member, State, Strategy, CardOptions) { SelectedCard = new Maybe<CardTypeData>(card)};

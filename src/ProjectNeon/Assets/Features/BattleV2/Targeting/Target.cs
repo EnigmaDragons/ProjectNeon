@@ -14,6 +14,9 @@ public static class TargetExtensions
     public static string MembersDescriptions(this Target t) 
         => string.Join(", ", t.Members.Select(m => $"{m.Name} {m.Id}"));
 
+    public static int TotalShields(this Target t) 
+        => t.Members.Sum(m => m.CurrentShield());
+    
     public static int TotalHpAndShields(this Target t) 
         => t.Members.Sum(m => m.CurrentShield() + m.CurrentHp());
 

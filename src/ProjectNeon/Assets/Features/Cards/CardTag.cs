@@ -14,4 +14,7 @@ public enum CardTag
     Vulnerable = 8,
     Group = 9,
     DoubleDamage = 11,
+    Stealth = 12,
+    AntiHeal = 13,
+    RemoveShields = 14,
 }
