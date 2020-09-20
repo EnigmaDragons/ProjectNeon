@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: MedTech_Bandage_E
+  m_Name: AssassinDrone_LingeringStrike_E
   m_EditorClassIdentifier: 
   Actions:
-  - type: 31
+  - type: 1
     battleEffect:
-      EffectType: 0
+      EffectType: 17
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 0.4
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -46,19 +46,19 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     atTargetAnimation:
       UseConstant: 1
-      ConstantValue: Heal
+      ConstantValue: 
       Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 45
+      EffectType: 59
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0.9
+        ConstantValue: 0.4
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 2
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1

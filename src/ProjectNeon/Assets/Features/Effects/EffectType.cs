@@ -56,4 +56,6 @@ public enum EffectType
     HealPercentMissingHealth = 56,
     GainDoubleDamage = 57,
     EnterStealth = 58,
+    PhysicalDamageOverTime = 59,
+    AntiHeal = 60,
 }

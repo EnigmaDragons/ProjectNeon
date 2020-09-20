@@ -12,19 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: AssassinDrone_ShiftySlash
   m_EditorClassIdentifier: 
-  art: {fileID: 0}
-  description: 
-  typeDescription: {fileID: 0}
-  tags: 
-  onlyPlayableByClass: {fileID: 0}
+  art: {fileID: 21300000, guid: 3d3e0dddaeba6704991bd6de7b3ed534, type: 3}
+  description: Deal {E[0]} Damage. Bleed {E[1]} Damage for 2 turns. Gain 1 Evade.
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  tags: 0400000007000000
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
+    type: 2}
   cost:
-    cost: 0
-    resourceType: {fileID: 0}
+    cost: 2
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     isXCost: 0
   onPlayGain:
     cost: 0
-    resourceType: {fileID: 0}
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     isXCost: 0
   rarity: 0
-  actionSequences: []
+  actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 5332bdffa0412e64da354b92fce6b89c, type: 2}
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: bfc73b1199625d445a56eca64b05ad33, type: 2}
   chainedCard: {fileID: 0}
