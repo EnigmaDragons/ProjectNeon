@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
@@ -83,6 +84,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
             Message.Publish(new BattleFinished(TeamType.Enemies));
         else if (state.PlayerWins())
         {
+            state.Heroes.Where(x => x.IsConscious()).ForEach(x => x.State.SetHp(x.MaxHp()) );
             var rewardPicker = new ShopSelectionPicker();
             state.SetRewardCards(rewardPicker.PickCards(state.Party, cardPrizePool, 2));
             Message.Publish(new BattleFinished(TeamType.Party));
