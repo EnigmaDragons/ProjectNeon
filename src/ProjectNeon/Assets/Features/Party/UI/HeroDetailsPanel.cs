@@ -16,7 +16,8 @@ public sealed class HeroDetailsPanel : MonoBehaviour
         classLabel.text = h.Character.Class.Name;
         heroBust.sprite = h.Character.Bust;
         stats.Initialized(m);
-        equipment.Initialized(h);
+        if (equipment != null)
+            equipment.Initialized(h);
         return this;
     }
 }
