@@ -11,14 +11,14 @@ public sealed class HeroDetailsPanel : MonoBehaviour
     [SerializeField] private HeroEquipmentPanel equipment;
     [SerializeField] private TextCommandButton levelUpButton;
 
-    public HeroDetailsPanel Initialized(Hero h, Member m)
+    public HeroDetailsPanel Initialized(Hero h, Member m, bool canInteractWithEquipment)
     {
         nameLabel.text = h.Name;
         classLabel.text = h.Class.Name;
         heroBust.sprite = h.Character.Bust;
         stats.Initialized(m);
         if (equipment != null)
-            equipment.Initialized(h);
+            equipment.Initialized(h, !canInteractWithEquipment);
         
         levelUpButton?.gameObject.SetActive(false);
         if (levelUpButton != null && h.LevelUpPoints > 0)

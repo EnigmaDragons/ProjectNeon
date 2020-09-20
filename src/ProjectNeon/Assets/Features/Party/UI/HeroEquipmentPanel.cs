@@ -1,4 +1,5 @@
 
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -10,13 +11,17 @@ public class HeroEquipmentPanel : MonoBehaviour
     [SerializeField] private HeroEquipmentItemPresenter augment1Slot;
     [SerializeField] private HeroEquipmentItemPresenter augment2Slot;
     [SerializeField] private HeroEquipmentItemPresenter augment3Slot;
+
+    private Action _doNothing = () => { };
     
-    public HeroEquipmentPanel Initialized(Hero h)
+    public HeroEquipmentPanel Initialized(Hero h, bool isReadOnly = false)
     {
         var equipment = h.Equipment;
 
-        weaponSlot.Initialized(EquipmentSlot.Weapon, equipment.Weapon, () => BeginEquipmentSelection(h, EquipmentSlot.Weapon, equipment.Weapon));
-        armorSlot.Initialized(EquipmentSlot.Armor, equipment.Armor, () => BeginEquipmentSelection(h, EquipmentSlot.Armor, equipment.Armor));
+        weaponSlot.Initialized(EquipmentSlot.Weapon, equipment.Weapon, 
+            isReadOnly ? _doNothing : () => BeginEquipmentSelection(h, EquipmentSlot.Weapon, equipment.Weapon));
+        armorSlot.Initialized(EquipmentSlot.Armor, equipment.Armor, 
+            isReadOnly ? _doNothing : () => BeginEquipmentSelection(h, EquipmentSlot.Armor, equipment.Armor));
         InitAugmentSlots(h, equipment);
         return this;
     }

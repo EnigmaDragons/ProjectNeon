@@ -20,7 +20,7 @@ public sealed class PartyDetailsUI : OnMessage<PartyAdventureStateChanged>
     private void UpdateUi()
     {
         for (var i = 0; i < party.BaseHeroes.Length; i++)
-            _panels[i].Initialized(party.Heroes[i], party.Heroes[i].AsMember(i));
+            _panels[i].Initialized(party.Heroes[i], party.Heroes[i].AsMember(i), canInteractWithEquipment: true);
     }
 
     protected override void Execute(PartyAdventureStateChanged msg) => UpdateUi();
