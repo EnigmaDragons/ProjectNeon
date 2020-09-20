@@ -16,5 +16,6 @@ public class EventPublisher : ScriptableObject
     public void ShowDeckBuilder() => Message.Publish(new ShowDeckBuilder());
     public void CloseDeckBuilder() => Message.Publish(new CloseDeckBuilder());
     public void GivePlayerTonsOfCredits() => Message.Publish(new GivePartyCredits(1000000));
+    public void LevelUpParty() => Message.Publish(new GrantPartyLevelUp());
     public void ToggleBattleLogView() => Message.Publish(new ToggleBattleLogView());
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class HeroFlexibleLevelUpPresenter : MonoBehaviour
 {
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private TextCommandButton[] buttons;
 
     private readonly HeroLevelUp _levelUp = new HeroLevelUp();
@@ -23,7 +24,7 @@ public class HeroFlexibleLevelUpPresenter : MonoBehaviour
     private void InitButton(TextCommandButton b, StatType s)
         => b.Init(ButtonName(s), () =>
         {
-            _levelUp.LevelUp(_hero, s);
+            _levelUp.LevelUp(party, _hero, s);
             FinishLevelUpIfDone();
         });
 

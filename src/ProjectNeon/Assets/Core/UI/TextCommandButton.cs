@@ -27,6 +27,7 @@ public sealed class TextCommandButton : MonoBehaviour
     {
         label.text = commandText;
         _cmd = cmd;
+        gameObject.SetActive(true);
     }
     
     public void Init(NamedCommand cmd)
