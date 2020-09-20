@@ -8,6 +8,8 @@ public class CardPlayZones : ScriptableObject
     [SerializeField] private CardPlayZone playZone;
     [SerializeField] private CardPlayZone discardZone;
     [SerializeField] private CardPlayZone selectionZone;
+    [SerializeField] private CardPlayZone resolutionZone;
+    [SerializeField] private CardPlayZone reactionZone;
 
     public CardPlayZone DrawZone => drawZone;
     public CardPlayZone HandZone => handZone;
@@ -22,6 +24,8 @@ public class CardPlayZones : ScriptableObject
         playZone.Clear();
         discardZone.Clear();
         selectionZone.Clear();
+        resolutionZone.Clear();
+        reactionZone.Clear();
     }
 
     public void Reshuffle()
