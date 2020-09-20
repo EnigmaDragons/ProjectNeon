@@ -62,6 +62,21 @@ public sealed class MemberState : IStats
     public float Max(string name) => _counters[name].Max;
     public IResourceType PrimaryResource => ResourceTypes[0];
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
+    public float PrimaryResourceValue 
+    {
+        get
+        {
+            if (PrimaryResource.Name == "Ammo")
+                return PrimaryResourceAmount * (1f / 6f);
+            if (PrimaryResource.Name == "Chems")
+                return PrimaryResourceAmount * (1f / 5f);
+            if (PrimaryResource.Name == "Energy")
+                return PrimaryResourceAmount * (1f / 3f);
+            if (PrimaryResource.Name == "Flames")
+                return PrimaryResourceAmount * (1f / 3f);
+            return 0f;
+        } 
+    }
     public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
     public ReactiveStateV2[] ReactiveStates => _reactiveStates.ToArray();
     public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Tag == tag) 
@@ -114,6 +129,7 @@ public sealed class MemberState : IStats
     // HP Commands
     public void GainHp(float amount) => ChangeHp(amount * CurrentStats.Healability());
     public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
+    public void SetHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).Set(amount));
     public void TakeDamage(int amount)
     {
         var shieldModificationAmount = Math.Min(amount, Counter(TemporalStatType.Shield).Amount);

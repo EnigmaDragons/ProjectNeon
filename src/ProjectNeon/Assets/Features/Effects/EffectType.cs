@@ -60,4 +60,6 @@ public enum EffectType
     AntiHeal = 60,
     FullyReviveAllAllies = 61,
     ApplyConfusion = 62,
+    AdjustStatAdditivelyWithMagic = 63,
+    SwapLifeForce = 64,
 }

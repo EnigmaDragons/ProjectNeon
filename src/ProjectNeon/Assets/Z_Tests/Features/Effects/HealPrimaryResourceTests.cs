@@ -20,7 +20,7 @@ public sealed class HealPrimaryResourceTests
                         MaxAmount = 2
                     }
                 ).ToArray();
-                addend.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f);
+                addend.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f).With(StatType.Healability, 1f);
                 return addend;
             }
         );

@@ -17,4 +17,5 @@ public enum CardTag
     Stealth = 12,
     AntiHeal = 13,
     RemoveShields = 14,
+    RemoveResources = 15,
 }

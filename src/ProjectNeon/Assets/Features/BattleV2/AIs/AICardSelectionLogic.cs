@@ -23,7 +23,8 @@ public static class AICardSelectionLogic
         => ctx
             .DontPlayHealsIfAlliesDontNeedHealing()
             .DontPlayShieldsIfAlliesDontNeedShielding()
-            .DontPlayShieldAttackIfOpponentsDontHaveManyShields();
+            .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
+            .DontRemoveResourcesIfOpponentsDontHaveMany();
     
     public static CardSelectionContext DontPlayShieldAttackIfOpponentsDontHaveManyShields(this CardSelectionContext ctx, int tolerance = 15)
         => ctx.IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < tolerance, CardTag.Shield, CardTag.Attack)
@@ -34,6 +35,9 @@ public static class AICardSelectionLogic
 
     private static CardSelectionContext DontPlayShieldsIfAlliesDontNeedShielding(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.RemainingShieldCapacity() > a.MaxShield() * 0.7), CardTag.Defense, CardTag.Shield);
+
+    private static CardSelectionContext DontRemoveResourcesIfOpponentsDontHaveMany(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State.PrimaryResourceValue < 1f), CardTag.RemoveResources);
 
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
         => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).MostExpensive();

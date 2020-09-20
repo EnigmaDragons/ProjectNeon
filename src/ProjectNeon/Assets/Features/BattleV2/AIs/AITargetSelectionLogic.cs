@@ -22,13 +22,15 @@ public static class AITargetSelectionLogic
                 return actualTargets.MostPowerful();
             }
 
-            if (card.Is(CardTag.BuffResource))
+            if (card.Is(CardTag.BuffResource) && action.Group == Group.Ally)
                 return possibleTargets.MostPowerful();
-            if (card.Is(CardTag.BuffAttack))
+            if (card.Is(CardTag.BuffAttack) && action.Group == Group.Ally)
                 return possibleTargets.BestAttackerToBuff(ctx.Strategy);
-            if (card.Is(CardTag.RemoveShields) || card.Is(CardTag.Attack, CardTag.Shield))
+            if (card.Is(CardTag.RemoveResources) && action.Group == Group.Opponent)
+                return possibleTargets.MostResources();
+            if ((card.Is(CardTag.RemoveShields) || card.Is(CardTag.Attack, CardTag.Shield)) && action.Group == Group.Opponent)
                 return possibleTargets.MostShielded();
-            if (card.Is(CardTag.Vulnerable))
+            if (card.Is(CardTag.Vulnerable) && action.Group == Group.Opponent)
             {
                 var vulnerableTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsVulnerable()));
                 var vulnerableSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Vulnerable, out var targets) ? targets : new HashSet<Target>();
@@ -39,11 +41,11 @@ public static class AITargetSelectionLogic
                         ? saneTargets.Random() 
                         : possibleTargets.Random();
             }
-            if (card.Is(CardTag.Attack))
+            if (card.Is(CardTag.Attack) && action.Group == Group.Opponent)
                 return Rng.Chance(0.80) ? ctx.Strategy.AttackTargetFor(action) : possibleTargets.Random();
-            if (card.Is(CardTag.Healing))
+            if (card.Is(CardTag.Healing) && action.Group == Group.Ally)
                 return possibleTargets.MostDamaged();
-            if (card.Is(CardTag.Defense, CardTag.Shield))
+            if (card.Is(CardTag.Defense, CardTag.Shield) && action.Group == Group.Ally)
             {
                 if (possibleTargets.Any(x => !x.HasShield()))
                     return possibleTargets.Where(x => !x.HasShield())
@@ -105,5 +107,11 @@ public static class AITargetSelectionLogic
         .ToArray()
         .Shuffled()
         .OrderByDescending(x => x.TotalShields())
+        .First();
+
+    public static Target MostResources(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(x => x.TotalResourceValue())
         .First();
 }

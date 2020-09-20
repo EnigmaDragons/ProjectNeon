@@ -35,6 +35,9 @@ public static class TargetExtensions
     public static int TotalOffense(this Target t)
         => t.TotalAttack() + t.TotalMagic();
     
+    public static float TotalResourceValue(this Target t) 
+        => t.Members.Sum(m => m.State.PrimaryResourceValue);
+
     public static bool HasShield(this Target t)
         => t.Members.Sum(m => m.CurrentShield()) > 0;
 
