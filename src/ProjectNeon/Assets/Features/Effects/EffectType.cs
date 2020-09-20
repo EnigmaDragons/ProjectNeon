@@ -59,4 +59,5 @@ public enum EffectType
     PhysicalDamageOverTime = 59,
     AntiHeal = 60,
     FullyReviveAllAllies = 61,
+    ApplyConfusion = 62,
 }

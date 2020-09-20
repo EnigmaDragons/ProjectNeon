@@ -9,4 +9,5 @@ public enum TemporalStatType
     Taunt = 6,
     DoubleDamage = 7,
     Stealth = 8,
+    Confusion = 9,
 }
