@@ -101,6 +101,8 @@ public sealed class MemberState : IStats
         if (NonStackingStatuses.Contains(mods.Tag))
             _additiveMods.RemoveAll(m => m.Tag == mods.Tag);
         _additiveMods.Add(mods);
+        if (CurrentStats.MaxHp() < CurrentStats.Hp())
+            SetHp(CurrentStats.MaxHp());
     });
     
     public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() => 

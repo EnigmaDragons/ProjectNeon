@@ -1,12 +1,14 @@
 ﻿using System.Linq;
+using UnityEngine;
 
+[CreateAssetMenu(menuName = "AI/MagiChemist")]
 public class MagiChemistAI : TurnAI
 {
     private bool _hasAttackedLastTurn;
     
     public override void InitForBattle()
     {
-        _hasAttackedLastTurn = Rng.Bool();
+        _hasAttackedLastTurn = false;
     }
     
     public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
@@ -15,7 +17,7 @@ public class MagiChemistAI : TurnAI
             .IfTrueDontPlayType(ctx => ctx.Member.CurrentHp() == ctx.Member.MaxHp() || ctx.Enemies.Any(e => e.CurrentHp() >= (ctx.Member.CurrentHp() + 15)), CardTag.Ultimate)
             .WithSelectedUltimateIfAvailable()
             .WithSelectedDesignatedAttackerCardIfApplicable()
-            .IfTrueDontPlayType(_ => _hasAttackedLastTurn, CardTag.Attack)
+            .IfTrueDontPlayType(ctx => _hasAttackedLastTurn && ctx.Member.State.PrimaryResourceAmount > 0, CardTag.Attack)
             .IfTruePlayType(_ => !_hasAttackedLastTurn, CardTag.Attack)
             .WithCommonSenseSelections()
             .WithFinalizedCardSelection();
