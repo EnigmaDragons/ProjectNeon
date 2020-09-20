@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "OnlyOnce/EventPublisher")]
 public class EventPublisher : ScriptableObject
 {
-    public void WinBattle() => Message.Publish(new BattleFinished(TeamType.Party));
+    public void WinBattle() => Message.Publish(new WinBattleWithRewards());
     public void LoseBattle() => Message.Publish(new BattleFinished(TeamType.Enemies));
     public void StartNewGame() => Message.Publish(new StartNewGame());
     public void StartNextStage() => Message.Publish(new StartNextStage());
