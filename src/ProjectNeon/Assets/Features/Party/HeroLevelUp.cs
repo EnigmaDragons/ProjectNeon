@@ -10,7 +10,7 @@ public class HeroLevelUp
     private int armorPerPoint = 2;
     private int resistPerPoint = 2;
 
-    private Dictionary<StatType, int> Increases => new Dictionary<StatType,int>
+    public Dictionary<StatType, int> Increases => new Dictionary<StatType,int>
     {
         { StatType.MaxHP, maxHpPerPoint },
         { StatType.Toughness, toughnessPerPoint },
