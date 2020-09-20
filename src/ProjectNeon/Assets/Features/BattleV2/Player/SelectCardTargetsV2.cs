@@ -66,6 +66,14 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     public void Confirm() => OnTargetConfirmed(_card.ActionSequences[_actionIndex].Group, _card.ActionSequences[_actionIndex].Scope);
     public void OnTargetConfirmed(Group group, Scope scope)
     {
+        if (_actionTargets.Length == 0)
+        {
+            var playedCard = new PlayedCardV2(_card.Owner, new Target[] { new Single(_card.Owner), }, _card);
+            cardResolutionZone.Add(playedCard);
+            Message.Publish(new PlayerCardSelected());;
+            OnSelectionComplete(destinationCardZone);
+        }
+        
         if (scope != Scope.AllExcept)
             _actionTargets[_actionIndex] = targetingState.Current;
         else
