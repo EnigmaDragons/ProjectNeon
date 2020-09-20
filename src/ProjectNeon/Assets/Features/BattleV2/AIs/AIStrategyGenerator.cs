@@ -25,7 +25,10 @@ public sealed class AIStrategyGenerator
                    ? s.Enemies.Where(h => h.IsConscious()) 
                    : s.Heroes.Where(e => e.IsConscious());
         var designatedAttacker = team
-            .OrderByDescending(e => e.BattleRole == BattleRole.Striker ? 1 : 0)
+            .OrderByDescending(e => 
+                e.BattleRole == BattleRole.Striker ? 2 : 
+                e.BattleRole == BattleRole.Bruiser ? 1 : 
+                0)
             .ThenByDescending(e => Math.Max(e.State.Attack(), e.State.Magic()))
             .First();
         
