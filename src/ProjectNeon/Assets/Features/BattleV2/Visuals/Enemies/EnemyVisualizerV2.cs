@@ -20,6 +20,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     {
         active.ForEach(Destroy);
         active = new List<GameObject>();
+        uis = new List<EnemyBattleUIPresenter>();
         var enemies = enemyArea.Enemies;
         for (var i = 0; i < enemies.Count; i++) 
             InstantiateEnemyVisuals(enemies[i].Prefab, i);
@@ -58,8 +59,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     {
         var enemyMember = state.GetMemberByEnemyIndex(index);
         var pos = enemyObject.transform.position;
-        uis[index] = Instantiate(ui, pos, Quaternion.identity, enemyObject)
-            .Initialized(enemyMember);
+        uis.Add(Instantiate(ui, pos, Quaternion.identity, enemyObject)
+            .Initialized(enemyMember));
     }
 
     private IEnumerator ExecuteAfterDelay(Action a, float delay)

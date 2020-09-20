@@ -5,6 +5,9 @@ using System.Linq;
 public static class AITargetSelectionLogic
 {
     public static Target[] SelectedTargets(this CardSelectionContext ctx)
+        => SelectedTargets(ctx, _ => true);
+    
+    public static Target[] SelectedTargets(this CardSelectionContext ctx, Func<Target, bool> isPreferredTarget)
     {
         if (ctx.SelectedCard.IsMissing)
             throw new InvalidOperationException("Cannot select targets before a card is selected");
@@ -13,6 +16,9 @@ public static class AITargetSelectionLogic
         return card.ActionSequences.Select(action =>
         {
             var possibleTargets = ctx.State.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
+            if (possibleTargets.Where(isPreferredTarget).Any())
+                possibleTargets = possibleTargets.Where(isPreferredTarget).ToArray();
+            
             if (card.Is(CardTag.Stun))
             {
                 var stunnedTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsStunnedForCurrentTurn()));
@@ -57,11 +63,14 @@ public static class AITargetSelectionLogic
     }
 
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx)
+        => WithSelectedTargetsPlayedCard(ctx, _ => true);
+    
+    public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx, Func<Target, bool> isPreferredTarget)
     {
         if (ctx.SelectedCard.IsMissing)
             ctx = ctx.WithFinalizedCardSelection();
         
-        var targets = ctx.SelectedTargets();
+        var targets = ctx.SelectedTargets(isPreferredTarget);
         
         var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);
         if (ctx.SelectedCard.Value.Is(CardTag.Stun))

@@ -1,5 +1,5 @@
 // Optimized for UI Order
-// Next tag number is 12
+// Next tag number is 16
 public enum CardTag
 {
     None = 0,
@@ -17,4 +17,5 @@ public enum CardTag
     Stealth = 12,
     AntiHeal = 13,
     RemoveShields = 14,
+    Buff = 15,
 }

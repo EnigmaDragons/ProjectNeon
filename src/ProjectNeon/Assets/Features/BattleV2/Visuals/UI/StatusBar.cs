@@ -28,7 +28,11 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
         AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => $"Double Damage for next {v} effects");
-        AddStatusIconIfApplicable(statuses, StatType.Attack, true, v => $"+{v} Attack");
+
+        var attackBuffAmount = CeilingInt(_member.State[StatType.Attack] - _member.State.BaseStats.Attack());
+        if (attackBuffAmount != 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Attack].Icon, Text = attackBuffAmount.ToString(), Tooltip = $"+{attackBuffAmount} Attack"});
+        
         AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => $"Taunt for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Stealth, true, v => $"Stealth for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.TurnStun, true, v => $"Stunned for {v} Turns");
