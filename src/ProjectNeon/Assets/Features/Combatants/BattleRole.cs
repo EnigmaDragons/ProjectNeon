@@ -7,4 +7,5 @@
     Utility = 4,
     Boss = 5,
     Bruiser = 6,
+    Controller = 7,
 }

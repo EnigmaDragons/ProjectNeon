@@ -11,6 +11,8 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
     [SerializeField] private TextMeshPro nameLabel;
 
     private Member _member;
+
+    public bool Contains(Member m) => _member.Equals(m);
     
     public EnemyBattleUIPresenter Initialized(Member m)
     {
@@ -23,7 +25,7 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
         nameLabel.text = m.Name;
         return this;
     }
-
+    
     protected override void Execute(MemberUnconscious msg)
     {
         if (msg.Member.Equals(_member))

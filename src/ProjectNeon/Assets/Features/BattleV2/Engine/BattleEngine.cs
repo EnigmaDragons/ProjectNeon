@@ -41,6 +41,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
         BeginPhase(BattleV2Phase.Command);
         state.StartTurn();
         _unconsciousness.ProcessUnconsciousMembers(state);
+        _unconsciousness.ProcessRevivedMembers(state);
         
         if (state.BattleIsOver())
             FinishBattle();

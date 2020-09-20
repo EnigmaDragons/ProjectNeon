@@ -56,6 +56,9 @@ public abstract class OnMessage<T1, T2, T3> : MonoBehaviour
     protected abstract void Execute(T1 msg);
     protected abstract void Execute(T2 msg);
     protected abstract void Execute(T3 msg);
+    
+    protected virtual void AfterEnable() {}
+    protected virtual void AfterDisable() {}
 }
 
 public abstract class OnMessage<T1, T2, T3, T4> : MonoBehaviour
@@ -74,6 +77,9 @@ public abstract class OnMessage<T1, T2, T3, T4> : MonoBehaviour
     protected abstract void Execute(T2 msg);
     protected abstract void Execute(T3 msg);
     protected abstract void Execute(T4 msg);
+    
+    protected virtual void AfterEnable() {}
+    protected virtual void AfterDisable() {}
 }
 
 public abstract class OnMessage<T1, T2, T3, T4, T5> : MonoBehaviour
@@ -94,4 +100,7 @@ public abstract class OnMessage<T1, T2, T3, T4, T5> : MonoBehaviour
     protected abstract void Execute(T3 msg);
     protected abstract void Execute(T4 msg);
     protected abstract void Execute(T5 msg);
+    
+    protected virtual void AfterEnable() {}
+    protected virtual void AfterDisable() {}
 }

@@ -27,6 +27,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     {
         _unconsciousness.ProcessUnconsciousMembers(state)
             .ForEach(m => resolutionZone.ExpirePlayedCards(c => c.Member.Id == m.Id));
+        _unconsciousness.ProcessRevivedMembers(state);
         if (reactionZone.Count > 0)
             reactionZone.Clear();
         if (_reactions.Any())
