@@ -43,6 +43,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public void UpdateAdventureHp(int[] hps) => UpdateState(() => hps.ForEachIndex((hp, i) => heroes[i].SetHp(hp)));
     public void UpdateCreditsBy(int amount) => UpdateState(() => credits += amount);
     public void UpdateNumShopRestocksBy(int amount) => UpdateState(() => numShopRestocks += amount);
+    public void ApplyLevelUpPoint(Hero hero, StatAddends stats) => UpdateState(() => hero.ApplyLevelUpPoint(stats)); 
 
     public int CurrentHpOf(HeroCharacter hero) => Hp[IndexOf(hero)];
     public void HealHeroToFull(HeroCharacter hero)

@@ -19,9 +19,11 @@ public class Hero
         this.character = character;
         this.deck = deck;
         missingHp = 0;
+        LevelUpPoints = 0;
         equipment = new HeroEquipment(character.Class);
     }
 
+    public string Name => character.Name;
     public CharacterClass Class => character.Class;
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
@@ -42,7 +44,13 @@ public class Hero
     public void Unequip(Equipment e) => equipment.Unequip(e);
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
     public void AdjustLevelUpPoints(int numPoints) => LevelUpPoints += numPoints;
-    public void AddLevelUpStat(StatAddends stats) => _levelUpStats = _levelUpStats.Plus(stats);
+    private void AddLevelUpStat(StatAddends stats) => _levelUpStats = _levelUpStats.Plus(stats);
+
+    public void ApplyLevelUpPoint(StatAddends stats)
+    {
+        AdjustLevelUpPoints(-1);
+        AddLevelUpStat(stats);
+    }
 
     public Member AsMember(int id)
     {

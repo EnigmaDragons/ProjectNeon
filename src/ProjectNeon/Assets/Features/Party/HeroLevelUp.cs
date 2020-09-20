@@ -20,14 +20,15 @@ public class HeroLevelUp
         { StatType.Resistance, resistPerPoint },
     };
     
-    public void LevelUp(Hero h, StatType s) => SpendOnePoint(h, new StatAddends().With(s, Increases[s]));
+    public void LevelUp(PartyAdventureState p, Hero h, StatType s) 
+        => SpendOnePoint(p, h, new StatAddends().With(s, Increases[s]));
     
-    private void SpendOnePoint(Hero h, StatAddends stats)
+    private void SpendOnePoint(PartyAdventureState p, Hero h, StatAddends stats)
     {
         if (h.LevelUpPoints < 1)
             return;
         
-        h.AdjustLevelUpPoints(-1);
-        h.AddLevelUpStat(stats);
+        p.ApplyLevelUpPoint(h, stats);
+        Log.Info($"Leveled Up {h.Character.Name} - Remaining Points {h.LevelUpPoints}");
     }
 }

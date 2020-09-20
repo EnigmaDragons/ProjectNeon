@@ -8,5 +8,6 @@ class InitializeAdventureOnEnable : MonoBehaviour
     private void OnEnable()
     {
         adventure.Reset();
+        adventure.InitIfNeeded();
     }
 }
