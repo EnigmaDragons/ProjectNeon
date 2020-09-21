@@ -16,8 +16,9 @@ namespace ChangeLogGenerator
             var logCommand = "git log --oneline " + lastTag + "..@ --pretty=format:%s%b";
 
             var changeLines = Bat(logCommand).Split("\n");
-            var patchNotes = GeneratePatchNotes(changeLines);
+            var patchNotes = GeneratePatchNotes(nextVersion, changeLines);
 
+            patchNotes.ForEach(l => Console.WriteLine(l));
             File.WriteAllLines($"./patchnotes/{nextVersion}.md", patchNotes);
         }
 
@@ -28,7 +29,7 @@ namespace ChangeLogGenerator
             return $"{majorMinor}{patchVersion + 1}";
         }
 
-        private static List<string> GeneratePatchNotes(IEnumerable<string> commitLog)
+        private static List<string> GeneratePatchNotes(string version, IEnumerable<string> commitLog)
         {
             var filteredLines = commitLog.Where(c => c.Contains("Close") || c.Contains("(#"));
             var cleansedLines = commitLog.Select(c => {
@@ -37,9 +38,81 @@ namespace ChangeLogGenerator
                 return cleaned.Length > 0 ? "- " + cleaned : "";
             }).Where(c => c.Length > 0);
 
-            foreach(var l in cleansedLines)
-                Console.WriteLine(l);
-            return cleansedLines.ToList();
+            var categorized = cleansedLines.Select(l => GetCategorizedLine(l))
+                .GroupBy(x => x.Item1)
+                .ToDictionary(x => x.Key, x => x.Select(l => l.Item2).ToList());
+
+            var patchNotes = new List<string>();
+            patchNotes.Add($"## Patch Notes - {version}");
+            patchNotes.Add("----");
+            patchNotes.Add("");
+
+            foreach(var c in categorized.OrderBy(x => _categoryOrder[x.Key]))
+            {
+                patchNotes.Add(c.Key + ":");
+                c.Value
+                    .OrderBy(l => l)
+                    .ToList()
+                    .ForEach(line => patchNotes.Add(CleanupRawLine(line)));
+                patchNotes.Add("");
+            }
+            return patchNotes;
+        }
+
+        private static Dictionary<string, int> _categoryOrder = new Dictionary<string, int>
+        {
+            { "New Content", 1 },
+            { "New Features", 10 },
+            { "Balance Changes", 20 },
+            { "Card Improvements", 40 },
+            { "Art/UI Improvements", 50 },
+            { "Bug Fixes", 85 },
+            { "Miscellaneous", 99 },
+        };
+
+        private static Dictionary<string, string> _containsTextThenCategory = new Dictionary<string,string>
+        {
+            { "New Card:", "New Content" },
+            { "Cards", "New Content" },
+            { "cards", "New Content" },
+            { "New Enemy:", "New Content" },
+            { "New Boss:", "New Content" },
+            { "Map:", "New Content" },
+            { "Zone", "New Content" },
+            { "New Hero:", "New Content" },
+            { "Bug:", "Bug Fixes" },
+            { "Fixed", "Bug Fixes" },
+            { "UI:", "Art/UI Improvements" },
+            { "UI", "Art/UI Improvements" },
+            { "Tooltip", "Art/UI Improvements" },
+            { "View", "Art/UI Improvements" },
+            { "Art:", "Art/UI Improvements" },
+            { "Art", "Art/UI Improvements" },
+            { "Wording", "Card Improvements" },
+            { "Interpolate", "Card Improvements" },
+            { "Card Text", "Card Improvements" },
+            { "Effect:", "New Features" },
+            { "New Feature:", "New Features" },
+            { "Rebalance:", "Balance Changes" },
+            { "Rebalanced:", "Balance Changes" },
+            { "Progression", "Balance Changes" },
+            { "AI", "Balance Changes" },
+            { "New Battle Role", "Balance Changes" },
+        };
+
+        private static Tuple<string, string> GetCategorizedLine(string rawLine)
+        {
+            var matches = _containsTextThenCategory.Where(x => rawLine.ToLowerInvariant().Contains(x.Key.ToLowerInvariant()));
+            return matches.Any()
+                ? new Tuple<string, string>(matches.First().Value, rawLine)
+                : new Tuple<string, string>("Miscellaneous", rawLine);
+        }
+
+        private static string CleanupRawLine(string rawLine)
+        {
+            var line = rawLine.Trim();
+            line = line.EndsWith('.') ? line.Substring(0, line.Length - 1) : line;
+            return line;
         }
 
         public static string Bat(string cmd)
