@@ -9,5 +9,6 @@ public enum StatType
     Resistance = 5,
     Damagability = 6,
     Healability = 7,
+    Leadership = 8,
     ExtraCardPlays = 30,
 }
