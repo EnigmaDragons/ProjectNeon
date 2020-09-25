@@ -44,7 +44,7 @@ public sealed class JsonFileStored<T> : Stored<T>
         try
         {
             using (var writer = new StreamWriter(_filename))
-                writer.Write(JsonUtility.ToJson(_item));
+                writer.Write(JsonUtility.ToJson(_item, true));
         }
         catch (Exception e)
         {

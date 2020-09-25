@@ -1,3 +1,4 @@
+using Features.GameProgression.Messages;
 using UnityEngine;
 
 public class StartNextStageHandler : OnMessage<StartNextStage>
@@ -6,6 +7,7 @@ public class StartNextStageHandler : OnMessage<StartNextStage>
     
     protected override void Execute(StartNextStage msg)
     {
+        Message.Publish(new AutoSaveRequested());
         adventure.CurrentStageSegment.Start();
     }
 }

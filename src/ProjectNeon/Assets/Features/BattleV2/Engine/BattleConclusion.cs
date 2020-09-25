@@ -1,3 +1,4 @@
+using Features.GameProgression.Messages;
 using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>
@@ -14,6 +15,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         if (adventure.IsFinalStageSegment)
         {
             Log.Info("Navigating to victory screen");
+            Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToVictoryScene(), secondsBeforeReturnToAdventure);
         }
         else
@@ -25,6 +27,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
             }
             Log.Info("Advancing to next Stage Segment.");
             adventure.Advance();
+            Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }
     }
