@@ -12,7 +12,7 @@ public sealed class TargetSlainCondition : Condition
     public IPayloadProvider Resolve(CardActionContext ctx)
     {        
         if (ctx.Target.Members.Any(m => !m.IsConscious()))
-            return _effect.Play(ctx.Source, ctx.Target, ctx.AmountPaid.Amount);
+            return _effect.Play(ctx);
         return new NoPayload();
     }
 }

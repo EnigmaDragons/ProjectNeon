@@ -20,7 +20,7 @@ public class CardActionV2
     public IPayloadProvider Play(CardActionContext ctx)
     {
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(battleEffect, ctx.Source, ctx.Target, ctx.Group, ctx.Scope));
+            return new SinglePayload(new ApplyBattleEffect(battleEffect, ctx.Source, ctx.Target, ctx.Group, ctx.Scope, isReaction: false));
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(enemyToSpawn));
         if (type == CardBattleActionType.AnimateCharacter)
@@ -32,7 +32,7 @@ public class CardActionV2
         throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
     }
     
-    public IPayloadProvider Play(Member source, Target target, int amountPaid)
+    public IPayloadProvider PlayReaction(Member source, Target target, int amountPaid)
     {
         if (type == CardBattleActionType.Battle)
             return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target));

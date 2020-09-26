@@ -46,7 +46,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         var battleSnapshotBefore = state.GetSnapshot();
         ApplyEffectsWithRetargetingIsAllTargetsUnconscious(msg);
         var battleSnapshotAfter = state.GetSnapshot();
-        var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter);
+        var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction);
 
         var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(effectResolved));
         reactions.ForEach(r => _reactions.Enqueue(r));

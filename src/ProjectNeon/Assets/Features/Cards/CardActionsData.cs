@@ -9,8 +9,8 @@ public class CardActionsData : ScriptableObject
     public IPayloadProvider Play(CardActionContext ctx)
         => new MultiplePayloads(Actions.Select(x => x.Play(ctx)));
     
-    public IPayloadProvider Play(Member source, Target target, int amountPaid)
-        => new MultiplePayloads(Actions.Select(x => x.Play(source, target, amountPaid)).ToArray());
+    public IPayloadProvider PlayAsReaction(Member source, Target target, int amountPaid)
+        => new MultiplePayloads(Actions.Select(x => x.PlayReaction(source, target, amountPaid)).ToArray());
 
     public CardActionsData Initialized(params CardActionV2[] actions)
     {

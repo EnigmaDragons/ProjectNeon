@@ -13,7 +13,7 @@ public class UnconsciousAllyCondition : Condition
     {
         var team = ctx.Source.TeamType;
         if (ctx.BeforeState.Members.Values.Where(m => m.TeamType == team).Any(m => m.IsUnconscious()))
-            return _effect.Play(ctx.Source, ctx.Target, ctx.AmountPaid.Amount);
+            return _effect.Play(ctx);
         return new NoPayload();
     }
 }

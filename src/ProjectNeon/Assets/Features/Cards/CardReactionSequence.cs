@@ -19,7 +19,7 @@ public sealed class CardReactionSequence
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished());
         }, this);
-        SequenceMessage.Queue(cardActions.Play(source, target, amountPaid));
+        SequenceMessage.Queue(cardActions.PlayAsReaction(source, target, amountPaid));
     }
     
     public CardReactionSequence() {}

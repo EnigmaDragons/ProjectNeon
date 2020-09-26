@@ -14,7 +14,7 @@
     public IPayloadProvider Resolve(CardActionContext ctx)
     {
         if (ctx.Source.State[new InMemoryResourceType(_resource)] >= _amount)
-            return _effect.Play(ctx.Source, ctx.Target, ctx.AmountPaid.Amount);
+            return _effect.Play(ctx);
         return new NoPayload();
     }
 }
