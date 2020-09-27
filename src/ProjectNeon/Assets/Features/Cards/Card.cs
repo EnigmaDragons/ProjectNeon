@@ -36,7 +36,7 @@ public sealed class Card
         this.type = type;
     }
 
-    public void Play(Target[] targets, ResourceQuantity amountPaid, BattleStateSnapshot battleStateSnapshot)
+    public void Play(Target[] targets, ResourceQuantity xAmountPaid, BattleStateSnapshot battleStateSnapshot)
     {
         if (ActionSequences.Length > targets.Length)
             Log.Error($"{Name}: For {ActionSequences.Length} there are only {targets.Length} targets");
@@ -44,7 +44,7 @@ public sealed class Card
         for (var i = 0; i < ActionSequences.Length; i++)
         {
             var seq = ActionSequences[i];
-            SequenceMessage.Queue(seq.cardActions.Play(new CardActionContext(Owner, targets[i], seq.Group, seq.Scope, amountPaid, battleStateSnapshot)));
+            SequenceMessage.Queue(seq.cardActions.Play(new CardActionContext(Owner, targets[i], seq.Group, seq.Scope, xAmountPaid, battleStateSnapshot)));
         }
     }
 

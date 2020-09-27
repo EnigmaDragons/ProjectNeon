@@ -6,19 +6,19 @@ public sealed class CardActionContext
     public Target Target { get; } 
     public Group Group { get; } 
     public Scope Scope { get; }
-    public ResourceQuantity AmountPaid { get; }
+    public ResourceQuantity XPaidAmount { get; }
     public BattleStateSnapshot BeforeState { get; }
 
-    public CardActionContext(Member source, Target target, Group group, Scope scope, ResourceQuantity amountPaid, BattleStateSnapshot beforeState)
+    public CardActionContext(Member source, Target target, Group group, Scope scope, ResourceQuantity xPaidAmount, BattleStateSnapshot beforeState)
     {
         Source = source;
         Target = target;
         Group = @group;
         Scope = scope;
-        AmountPaid = amountPaid;
+        XPaidAmount = xPaidAmount;
         BeforeState = beforeState;
     }
     
     public CardActionContext WithTarget(Target target)
-        => new CardActionContext(Source, target, Group, Scope, AmountPaid, BeforeState);
+        => new CardActionContext(Source, target, Group, Scope, XPaidAmount, BeforeState);
 }

@@ -77,7 +77,7 @@ public class BattleSetupV2 : MonoBehaviour
             enemy.AI.InitForBattle();
             if (!enemy.IsReadyForPlay)
                 throw new Exception($"{enemy.Name}'s is not ready for play.");
-            if (enemy.Deck.Cards.All(c => c.Cost.Amount > 0))
+            if (enemy.Deck.Cards.All(c => c.Cost.BaseAmount > 0))
                 throw new Exception($"{enemy.Name}'s Deck does not contain a 0-Cost Card.");
         }
     }

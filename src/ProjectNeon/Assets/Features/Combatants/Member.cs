@@ -69,7 +69,7 @@ public static class MemberExtensions
 
     public static bool CanAfford(this Member m, ResourceCost c)
     {
-        if (!c.IsXCost && c.Amount == 0)
+        if (!c.PlusXCost && c.BaseAmount == 0)
             return true;
         var costAmount = c.ResourcesSpent(m);
         var remaining = m.State.ResourceAmount(costAmount.ResourceType) - costAmount.Amount;

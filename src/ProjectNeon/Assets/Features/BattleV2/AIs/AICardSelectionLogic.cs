@@ -58,7 +58,7 @@ public static class AICardSelectionLogic
             : ctx.CardOptions
                 .ToArray()
                 .Shuffled()
-                .OrderByDescending(c => c.Cost.Amount)
+                .OrderByDescending(c => c.Cost.BaseAmount)
                 .ThenBy(typePriority)
                 .First();
         return card;
@@ -67,7 +67,7 @@ public static class AICardSelectionLogic
     public static CardTypeData MostExpensive(this IEnumerable<CardTypeData> cards) => cards
         .ToArray()
         .Shuffled()
-        .OrderByDescending(x => x.Cost.Amount)
+        .OrderByDescending(x => x.Cost.BaseAmount)
         .First();
 
 }

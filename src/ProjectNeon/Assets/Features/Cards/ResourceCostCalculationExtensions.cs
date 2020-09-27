@@ -3,6 +3,20 @@ using System;
 
 public static class ResourceCostCalculationExtensions
 {
+    public static ResourceQuantity XAmountSpent(this ResourceCost cost, Member m)
+    {
+        if (cost == null || cost.ResourceType == null)
+            return new ResourceQuantity {Amount = 0, ResourceType = ""};
+    
+        return new ResourceQuantity
+        {
+            ResourceType = cost.ResourceType.Name,
+            Amount = cost.PlusXCost
+                ? m.State[cost.ResourceType] - cost.BaseAmount
+                : cost.BaseAmount
+        };
+    }
+    
     public static ResourceQuantity ResourcesSpent(this ResourceCost cost, Member m)
     {
         if (cost == null || cost.ResourceType == null)
@@ -11,9 +25,9 @@ public static class ResourceCostCalculationExtensions
         return new ResourceQuantity
         {
             ResourceType = cost.ResourceType.Name,
-            Amount = cost.IsXCost
+            Amount = cost.PlusXCost
                 ? m.State[cost.ResourceType]
-                : cost.Amount
+                : cost.BaseAmount
         };
     }
     
@@ -27,9 +41,9 @@ public static class ResourceCostCalculationExtensions
         return new ResourceQuantity
         {
             ResourceType = resourceType.Name,
-            Amount = gain.IsXCost
+            Amount = gain.PlusXCost
                 ? remainingResourceAmount
-                : Math.Min(gain.Amount, remainingResourceAmount)
+                : Math.Min(gain.BaseAmount, remainingResourceAmount)
         };
     }
 }

@@ -80,15 +80,26 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         rarity.Set(card.Rarity);
         
         var cost = card.Cost;
-        var hasCost = !cost.ResourceType.Name.Equals("None") && cost.Amount > 0 || cost.IsXCost;
+        var hasCost = !cost.ResourceType.Name.Equals("None") && cost.BaseAmount > 0 || cost.PlusXCost;
         costPanel.SetActive(hasCost);
         if (hasCost)
         {
-            costLabel.text = cost.IsXCost ? "X" : cost.Amount.ToString();
+            costLabel.text = CostLabel(cost);
             costResourceTypeIcon.sprite = cost.ResourceType.Icon;
         }
 
         card.LimitedToClass.IfPresent(c => tint.color = c.Tint);
+    }
+
+    private string CostLabel(ResourceCost cost)
+    {
+        var numericAmount = cost.BaseAmount.ToString();
+        if (!cost.PlusXCost)
+            return numericAmount;
+        else if (cost.BaseAmount == 0)
+            return "X";
+        else
+            return $"{numericAmount}+X";
     }
 
     public void ToggleAsBasic()
