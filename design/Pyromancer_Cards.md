@@ -31,9 +31,9 @@ Common:
 Uncommon:
 / - Stoke the Flames - 2 Flames - All Enemies - Apply another copy of each DoT
  - Fire Stream - X Mana - 1 Enemy - Deal 0.7x MAG damage
-/ - Sear - 3 Flames - 1 Enemy - Deal 1x MAG damage. If enemy is taking ongoing damage, Stun 1
+ - Sear - 3 Flames - 1 Enemy - Deal 1x MAG damage. If enemy is taking ongoing damage, Stun 1
 / - Fire Blast - 1 Mana - 1 Enemy - Instant: Deal 0.5x MAG damage
-/ - Ignition - 1 Mana - 1 Enemy - Deal 1x MAG damage. If enemy is taking ongoing damage, deal 1x MAG damage more
+ - Ignition - 1 Mana - 1 Enemy - Deal 0.8x MAG damage. If enemy is taking ongoing damage, deal 0.8x MAG damage more
 
 Rare:
 / - Bouncing Inferno - 8 Mana - 1 Enemy - Deal 3x MAG, then bounce once to each enemy with diminishing power
