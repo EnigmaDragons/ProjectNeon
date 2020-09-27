@@ -12,7 +12,7 @@ public sealed class HeroPool : ScriptableObject
     public IEnumerable<BaseHero> AvailableHeroes => library.UnlockedHeroes.Except(selected).ToArray();
     public BaseHero[] SelectedHeroes => selected.ToArray();
 
-    public void ClearSelections() => selected = Array.Empty<BaseHero>();
-    public void Select(BaseHero c) => selected = selected.Concat(c).ToArray();
-    public void Unselect(BaseHero c) => selected = selected.Except(c).ToArray();
+    public void ClearSelections() => selected = new BaseHero[3];
+    public void Select(int index, BaseHero c) => selected[index] = c;
+    public void Unselect(int index, BaseHero c) => selected[index] = null;
 }

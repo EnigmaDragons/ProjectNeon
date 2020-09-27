@@ -8,25 +8,31 @@ public class SquadSlot : MonoBehaviour
     [SerializeField] private HeroDisplayPresenter presenter;
     
     [ReadOnly, SerializeField] private BaseHero current;
-
+    private int _index;
+    
+    public void Init(int index)
+    {
+        _index = index;
+    }
+    
     public void SelectNextHero()
     {
         if (current != null)
-            heroPool.Unselect(current);
-        SelectHero(AvailableHeroes.SkipWhile(x => current != null && x != current).Skip(1).First());
+            heroPool.Unselect(_index, current);
+        SelectHero(_index, AvailableHeroes.Concat(AvailableHeroes).SkipWhile(x => current != null && x != current).Skip(1).First());
     }
 
     public void SelectPreviousHero()
     {
         if (current != null)
-            heroPool.Unselect(current);
-        SelectHero(AvailableHeroes.Reverse().SkipWhile(x => current != null && x != current).Skip(1).First());
+            heroPool.Unselect(_index, current);
+        SelectHero(_index, AvailableHeroes.Concat(AvailableHeroes).Reverse().SkipWhile(x => current != null && x != current).Skip(1).First());
     }
 
-    private void SelectHero(BaseHero c)
+    private void SelectHero(int index, BaseHero c)
     {
         current = c;
-        heroPool.Select(c);
+        heroPool.Select(index, c);
         presenter.Select(c);
     }
 
