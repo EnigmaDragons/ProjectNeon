@@ -7,7 +7,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Battle/CardResolutionZone")]
 public class CardResolutionZone : ScriptableObject
 {
-    [SerializeField] private List<IPlayedCard> moves = new List<IPlayedCard>();
     [SerializeField] private CardPlayZone playerHand;
     [SerializeField] private CardPlayZone playerPlayArea;
     [SerializeField] private CardPlayZone physicalZone;
@@ -16,21 +15,24 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private BattleState battleState;
     public IPlayedCard LastPlayed { get; set; }
     
+    private List<IPlayedCard> _moves = new List<IPlayedCard>();
+    
     public void Init()
     {
         physicalZone.Clear();
+        _moves.Clear();
         isResolving = false;
     }
 
-    public bool HasMore => moves.Any();
+    public bool HasMore => _moves.Any();
     
-    private bool CanChain => moves.Select(m => m.Member.Id).Distinct().Count() == 1 && moves.Last().Card.ChainedCard.IsPresent;
+    private bool CanChain => _moves.Select(m => m.Member.Id).Distinct().Count() == 1 && _moves.Last().Card.ChainedCard.IsPresent;
 
     public IEnumerator AddChainedCardIfApplicable()
     {
         if (!CanChain) yield break;
         
-        var chainingMove = moves.Last();
+        var chainingMove = _moves.Last();
         var owner = chainingMove.Member;
         var card = chainingMove.Card.ChainedCard.Value;
         var targets = new Target[card.ActionSequences.Length];
@@ -53,12 +55,12 @@ public class CardResolutionZone : ScriptableObject
     {
         if (played.Card.Instant)
         {
-            moves.Insert(0, played); 
+            _moves.Insert(0, played); 
             physicalZone.PutOnTop(played.Card); 
         }
         else
         {
-            moves.Add(played);
+            _moves.Add(played);
             physicalZone.PutOnBottom(played.Card); 
         }
         played.Member.Apply(m =>
@@ -71,15 +73,15 @@ public class CardResolutionZone : ScriptableObject
 
     public void ExpirePlayedCards(Func<IPlayedCard, bool> condition)
     {
-        var movesCopy = moves.ToArray();
+        var movesCopy = _moves.ToArray();
         for (var i = movesCopy.Length - 1; i > -1; i--)
         {
             var played = movesCopy[i];
             if (!condition(played)) continue;
             
             BattleLog.Write($"Expired played card {played.Card.Name} by {played.Member.Name}");
-            if (moves.Count > i)
-                moves.RemoveAt(i);
+            if (_moves.Count > i)
+                _moves.RemoveAt(i);
             physicalZone.Remove(played.Card);
             if (played.Member.TeamType == TeamType.Party)
                 playerHand.PutOnBottom(playerPlayArea.Take(i));
@@ -88,13 +90,13 @@ public class CardResolutionZone : ScriptableObject
     
     public void RemoveLastPlayedCard()
     {
-        if (moves.None() || isResolving) return;
+        if (_moves.None() || isResolving) return;
         
-        var played = moves.Last();
+        var played = _moves.Last();
         
         BattleLog.Write($"Canceled playing {played.Card.Name}");
         Message.Publish(new PlayerCardCanceled());
-        moves.RemoveAt(moves.Count - 1);
+        _moves.RemoveAt(_moves.Count - 1);
         var card = physicalZone.Take(physicalZone.Count - 1);
         playerPlayArea.Take(playerPlayArea.Count - 1);
         playerHand.PutOnBottom(card);
@@ -107,8 +109,8 @@ public class CardResolutionZone : ScriptableObject
     {
         BattleLog.Write("Requested Resolve Next Card");
         isResolving = true;
-        var move = moves[0];
-        moves = moves.Skip(1).ToList();
+        var move = _moves[0];
+        _moves = _moves.Skip(1).ToList();
         StartResolvingOneCard(move);
     }
 
@@ -140,6 +142,6 @@ public class CardResolutionZone : ScriptableObject
         LastPlayed = played;
         if (played.Member.TeamType.Equals(TeamType.Party))
             playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());
-        isResolving = moves.Any();
+        isResolving = _moves.Any();
     }
 }
