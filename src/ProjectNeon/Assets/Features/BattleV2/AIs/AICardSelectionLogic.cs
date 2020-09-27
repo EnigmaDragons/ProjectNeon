@@ -24,7 +24,11 @@ public static class AICardSelectionLogic
             .DontPlayHealsIfAlliesDontNeedHealing()
             .DontPlayShieldsIfAlliesDontNeedShielding()
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
-            .DontRemoveResourcesIfOpponentsDontHaveMany();
+            .DontRemoveResourcesIfOpponentsDontHaveMany()
+            .DontPlayTauntIfAnyAllyIsPlayingOne();
+
+    public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Strategy.SelectedNonStackingTargets.ContainsKey(CardTag.Taunt));
     
     public static CardSelectionContext DontPlayShieldAttackIfOpponentsDontHaveManyShields(this CardSelectionContext ctx, int minShields = 15)
         => ctx.IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < minShields, CardTag.Shield, CardTag.Attack)

@@ -77,12 +77,17 @@ public static class AITargetSelectionLogic
         var targets = ctx.SelectedTargets(isPreferredTarget);
         
         var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);
-        if (ctx.SelectedCard.Value.Is(CardTag.Stun))
-            targets.ForEach(t => ctx.Strategy.RecordNonStackingTarget(CardTag.Stun, t));
-        if (ctx.SelectedCard.Value.Is(CardTag.Vulnerable))
-            targets.ForEach(t => ctx.Strategy.RecordNonStackingTarget(CardTag.Vulnerable, t));
+        RecordNonStackingTags(CardTag.Stun, ctx, targets);
+        RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
+        RecordNonStackingTags(CardTag.Taunt, ctx, targets);
         
         return new PlayedCardV2(ctx.Member, targets, card);
+    }
+
+    private static void RecordNonStackingTags(CardTag tag, CardSelectionContext ctx, Target[] targets)
+    {
+        if (ctx.SelectedCard.Value.Is(tag))
+            targets.ForEach(t => ctx.Strategy.RecordNonStackingTarget(tag, t));
     }
     
     // TODO: In the future, factor in armor/resist/vulnerable
