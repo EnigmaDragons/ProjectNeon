@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class AllConditions
 {
@@ -10,7 +11,9 @@ public class AllConditions
         { ActionConditionType.TargetIsBelowPercentageLife, e => new TargetIsBelowPercentageLifeCondition(e.FloatAmount, e.ReferencedEffect)},
         { ActionConditionType.RepeatForSpent, e => new RepeatForSpentCondition(e.ReferencedEffect) },
         { ActionConditionType.TargetSufferedDamage, e => new TargetSufferedDamageCondition(e.ReferencedEffect) },
-        { ActionConditionType.AllyIsUnconscious, e => new UnconsciousAllyCondition(e.ReferencedEffect) }
+        { ActionConditionType.AllyIsUnconscious, e => new UnconsciousAllyCondition(e.ReferencedEffect) },
+        { ActionConditionType.TargetHasDamageOverTime, e => new SimpleCondition(e.ReferencedEffect, 
+            ctx => ctx.Target.Members.All(m => m.State.HasStatus(StatusTag.DamageOverTime))) }
     };
 
     public static IPayloadProvider Resolve(ActionConditionData conditionData, CardActionContext ctx)

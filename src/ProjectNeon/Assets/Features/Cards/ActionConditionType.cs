@@ -7,4 +7,5 @@
     TargetSufferedDamage = 4,
     TargetSlain = 5,
     AllyIsUnconscious = 6,
+    TargetHasDamageOverTime = 7,
 }

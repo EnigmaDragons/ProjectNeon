@@ -29,9 +29,9 @@ Common:
 / - Osmose - 0 Mana - Self - Gain 7 Mana at the end of turn if you have none
 
 Uncommon:
-/ - Stoke the Flames - 2 Mana - All Enemies - Apply another copy of each DoT
+/ - Stoke the Flames - 2 Flames - All Enemies - Apply another copy of each DoT
  - Fire Stream - X Mana - 1 Enemy - Deal 0.7x MAG damage
-/ - Sear - 3 Mana - 1 Enemy - Deal 1x MAG damage. If enemy is taking ongoing damage, Stun 1
+/ - Sear - 3 Flames - 1 Enemy - Deal 1x MAG damage. If enemy is taking ongoing damage, Stun 1
 / - Fire Blast - 1 Mana - 1 Enemy - Instant: Deal 0.5x MAG damage
 / - Ignition - 1 Mana - 1 Enemy - Deal 1x MAG damage. If enemy is taking ongoing damage, deal 1x MAG damage more
 
