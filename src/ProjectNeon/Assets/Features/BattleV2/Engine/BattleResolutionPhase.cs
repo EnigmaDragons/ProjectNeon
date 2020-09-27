@@ -25,22 +25,38 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
 
     private void ResolveNext()
     {
+        PerformConsciousnessUpdate();
+        if (reactionZone.Count > 0)
+            reactionZone.Clear();
+        if (IsDoneResolving)
+            FinishResolutionPhase();
+        else
+            ProcessNextCardOrReaction();
+    }
+
+    private void PerformConsciousnessUpdate()
+    {
         _unconsciousness.ProcessUnconsciousMembers(state)
             .ForEach(m => resolutionZone.ExpirePlayedCards(c => c.Member.Id == m.Id));
         _unconsciousness.ProcessRevivedMembers(state);
-        if (reactionZone.Count > 0)
-            reactionZone.Clear();
-        if (_reactions.Any())
-            StartCoroutine(ResolveNextReaction());
-        else if (!state.BattleIsOver() && resolutionZone.HasMore)
-            this.ExecuteAfterDelay(() => resolutionZone.BeginResolvingNext(), delay);
-        else
-        {
-            ui.EndResolutionPhase();
-            Message.Publish(new ResolutionsFinished());
-        }
     }
 
+    private void ProcessNextCardOrReaction()
+    {
+        if (_reactions.Any())
+            this.ExecuteAfterDelay(() => StartCoroutine(ResolveNextReaction()), delay);
+        else if (resolutionZone.HasMore)
+            this.ExecuteAfterDelay(() => resolutionZone.BeginResolvingNext(), delay);
+    }
+
+    private void FinishResolutionPhase()
+    {
+        ui.EndResolutionPhase();
+        Message.Publish(new ResolutionsFinished());
+    }
+
+    private bool IsDoneResolving => state.BattleIsOver() || _reactions.None() && !resolutionZone.HasMore;
+    
     protected override void Execute(ApplyBattleEffect msg)
     {
         var battleSnapshotBefore = state.GetSnapshot();

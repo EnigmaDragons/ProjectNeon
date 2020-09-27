@@ -53,6 +53,9 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
                     return Maybe<ProposedReaction>.Missing();
 
                 var possessor = reactingMaybeMember.First();
+                if (!possessor.IsConscious())
+                    return Maybe<ProposedReaction>.Missing();
+                
                 var action = reaction.ActionSequence;
                 var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
 
