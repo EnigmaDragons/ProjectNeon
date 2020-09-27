@@ -5,8 +5,8 @@ using TMPro;
 public class SingleUseDamageNumber : MonoBehaviour
 {
     [SerializeField] TextMeshPro text;
-    [SerializeField] private float driftDistance = 0.1f;
-    [SerializeField] private float duration = 2f;
+    [SerializeField] private float driftDistance = 0.18f;
+    [SerializeField] private float duration = 1.8f;
     [SerializeField] private Color positiveChangeColor = Color.green;
     [SerializeField] private Color negativeChangeColor = Color.red;
     
