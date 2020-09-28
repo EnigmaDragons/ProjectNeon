@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
+public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, ResolutionsFinished>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones cards;
@@ -11,6 +11,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
     [SerializeField] private BattleResolutionPhase resolutionPhase;
     [SerializeField] private BattleTurnWrapUp turnWrapUp;
     [SerializeField] private ShopCardPool cardPrizePool;
+    [SerializeField] private BattleStatusEffects statusPhase;
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
     [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
@@ -34,16 +35,21 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
     {
         BeginPhase(BattleV2Phase.Setup);
         yield return setup.Execute();
-        BeginCommandPhase();
-    }    
+        BeginStartOfTurn();
+    }
+
+    private void BeginStartOfTurn()
+    {
+        BeginPhase(BattleV2Phase.StartOfTurnEffects);
+        state.StartTurn();
+        statusPhase.ProcessStartOfTurnEffects();
+    }
     
     private void BeginCommandPhase()
     {
         BeginPhase(BattleV2Phase.Command);
-        state.StartTurn();
         _unconsciousness.ProcessUnconsciousMembers(state);
         _unconsciousness.ProcessRevivedMembers(state);
-        
         if (state.BattleIsOver())
             FinishBattle();
         else
@@ -65,6 +71,16 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
         StartCoroutine(TransitionToResolutionPhase());
     }
 
+    protected override void Execute(StartOfTurnEffectsStatusResolved msg)
+    {
+        BeginCommandPhase();
+    }
+
+    protected override void Execute(EndOfTurnStatusEffectsResolved msg)
+    {
+        BeginStartOfTurn();
+    }
+
     protected override void Execute(ResolutionsFinished msg)
     {
         BeginPhase(BattleV2Phase.Wrapup);
@@ -74,7 +90,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
         else
         {
             turnWrapUp.Execute();
-            BeginCommandPhase();
+            statusPhase.ProcessEndOfTurnEffects();
         }
     }
 
@@ -112,9 +128,11 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, ResolutionsFinished>
     {
         NotBegun = 0,
         Setup = 20,
+        StartOfTurnEffects = 30,
         Command = 40,
         Resolution = 50,
-        Wrapup = 60,
+        EndOfTurnEffects = 60,
+        Wrapup = 70,
         Finished = 80
     }
 }

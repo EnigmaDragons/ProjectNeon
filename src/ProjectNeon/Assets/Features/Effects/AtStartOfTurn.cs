@@ -3,15 +3,12 @@ public class StartOfTurnEffect : Effect
 {
     private readonly EffectData _source;
 
-    public StartOfTurnEffect(EffectData source)
-    {
-        _source = source;
-    }
-    
+    public StartOfTurnEffect(EffectData source) => _source = source;
+
     public void Apply(EffectContext ctx)
     {
-        ctx.Target.ApplyToAllConscious(m => m.ApplyTemporaryAdditive(
-            new AtStartOfTurn(ctx, _source.ReferencedSequence, 
+        ctx.Target.ApplyToAllConsciousMembers(m => m.State.ApplyTemporaryAdditive(
+            new AtStartOfTurn(ctx, m, _source.ReferencedSequence, 
                 TemporalStateMetadata.ForDuration(_source.NumberOfTurns, _source.EffectScope.Value.Equals("Debuff")))));
     }
 }
@@ -20,6 +17,7 @@ public class AtStartOfTurn : ITemporalState
 {
     private readonly TemporalStateTracker _tracker;
     private readonly EffectContext _ctx;
+    private readonly Member _member;
     private readonly CardActionsData _data;
 
     public IStats Stats { get; } = new StatAddends();
@@ -27,23 +25,23 @@ public class AtStartOfTurn : ITemporalState
     public bool IsDebuff => _tracker.IsDebuff;
     public bool IsActive => _tracker.IsActive;
 
-    public AtStartOfTurn(EffectContext ctx, CardActionsData data, TemporalStateMetadata metaData)
+    public AtStartOfTurn(EffectContext ctx, Member member, CardActionsData data, TemporalStateMetadata metaData)
     {
         _ctx = ctx;
+        _member = member;
         _data = data;
         _tracker = metaData.CreateTracker();
     }
     
-    public void OnTurnStart()
+    public IPayloadProvider OnTurnStart()
     {
-        if (!IsActive) return;
+        if (!IsActive) 
+            return new NoPayload();
 
         _tracker.AdvanceTurn();
-        foreach(var action in _data.Actions)
-            if (action.Type == CardBattleActionType.Battle)
-                AllEffects.Apply(action.BattleEffect, _ctx);
+        return _data.Play(new StatusEffectContext(_member));
     }
 
-    public void OnTurnEnd() {}
-    public ITemporalState CloneOriginal() => new AtStartOfTurn(_ctx, _data, _tracker.Metadata);
+    public IPayloadProvider OnTurnEnd() => new NoPayload();
+    public ITemporalState CloneOriginal() => new AtStartOfTurn(_ctx, _member, _data, _tracker.Metadata);
 }

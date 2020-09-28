@@ -78,7 +78,7 @@ public class EquipmentTests
         hero.Equip(turtleGloves);
 
         var member = hero.AsMember(1);
-        member.State.OnTurnStart();
+        member.State.GetTurnStartEffects();
         
         Assert.AreEqual(1, member.Armor());
     }

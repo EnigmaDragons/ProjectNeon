@@ -4,8 +4,8 @@ public interface ITemporalState
     StatusTag Tag { get; }
     bool IsDebuff { get; }
     bool IsActive { get; }
-    void OnTurnStart();
-    void OnTurnEnd();
+    IPayloadProvider OnTurnStart();
+    IPayloadProvider OnTurnEnd();
     
     ITemporalState CloneOriginal();
 }

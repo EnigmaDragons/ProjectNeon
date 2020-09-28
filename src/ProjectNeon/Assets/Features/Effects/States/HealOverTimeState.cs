@@ -20,15 +20,18 @@
         _tracker = new TemporalStateTracker(metadata);
     }
 
-    public void OnTurnStart()
+    public IPayloadProvider OnTurnStart()
     {
-        if (!IsActive || !_target.IsConscious()) return;
+        if (!IsActive || !_target.IsConscious()) 
+            return new NoPayload();
 
         _tracker.AdvanceTurn();
         _target.State.GainHp(_amount);
+        // TODO: Plug in animations
+        return new NoPayload();
     }
 
-    public void OnTurnEnd() {}
+    public IPayloadProvider OnTurnEnd() => new NoPayload();
     
     public ITemporalState CloneOriginal() => new HealOverTimeState(_amount, _target, _tracker.Metadata);
 }

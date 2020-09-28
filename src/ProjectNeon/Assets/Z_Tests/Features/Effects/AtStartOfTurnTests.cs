@@ -19,7 +19,7 @@ public class AtStartOfTurnTests
             }))
         }, member, member);
         
-        member.State.OnTurnStart();
+        member.ExecuteStartOfTurnEffects();
         
         Assert.AreEqual(2f, member.CurrentHp());
     }

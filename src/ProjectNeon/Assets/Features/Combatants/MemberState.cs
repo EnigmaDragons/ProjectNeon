@@ -164,27 +164,36 @@ public sealed class MemberState : IStats
     public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
-    public void OnTurnStart()
+    public IPayloadProvider GetTurnStartEffects()
     {
+        var payload = new MultiplePayloads(
+            _additiveMods.Select(m => m.OnTurnStart()),
+            _multiplierMods.Select(m => m.OnTurnStart()),
+            _reactiveStates.Select(m => m.OnTurnStart()));
         _persistentStates.ForEach(m => m.OnTurnStart());
-        _additiveMods.ForEach(m => m.OnTurnStart());
-        _multiplierMods.ForEach(m => m.OnTurnStart());
-        _reactiveStates.ForEach(m => m.OnTurnStart());
+        return payload;
     }
-    
+
+    public void CleanExpiredStates() => 
+        PublishAfter(() =>
+        {
+            _additiveMods.RemoveAll(m => !m.IsActive);
+            _multiplierMods.RemoveAll(m => !m.IsActive);
+            _reactiveStates.RemoveAll(m => !m.IsActive);
+        });
+
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType> { TemporalStatType.Taunt, TemporalStatType.Stealth, TemporalStatType.Confusion };
     
-    public void OnTurnEnd() => PublishAfter(() =>
+    public IPayloadProvider GetTurnEndEffects()
     {
+        var payload = new MultiplePayloads(
+            _additiveMods.Select(m => m.OnTurnEnd()),
+            _multiplierMods.Select(m => m.OnTurnEnd()),
+            _reactiveStates.Select(m => m.OnTurnEnd()));
         _persistentStates.ForEach(m => m.OnTurnEnd());
-        _additiveMods.ForEach(m => m.OnTurnEnd());
-        _additiveMods.RemoveAll(m => !m.IsActive);
-        _multiplierMods.ForEach(m => m.OnTurnEnd());
-        _multiplierMods.RemoveAll(m => !m.IsActive);
-        _reactiveStates.ForEach(m => m.OnTurnEnd());
-        _reactiveStates.RemoveAll(m => !m.IsActive);
         _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
-    });
+        return payload;
+    }
 
     private void PublishAfter(Action action)
     {

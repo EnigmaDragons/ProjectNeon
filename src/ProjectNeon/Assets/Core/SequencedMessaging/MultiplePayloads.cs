@@ -6,7 +6,12 @@ public sealed class MultiplePayloads : IPayloadProvider
     private readonly IPayloadProvider[] _payloadProviders;
     private int _index;
 
-    public MultiplePayloads(IEnumerable<IPayloadProvider> payloadProviders) : this(payloadProviders.ToArray()) {}   
+    public MultiplePayloads() 
+        : this(new IPayloadProvider[0]) {}
+    public MultiplePayloads(params IEnumerable<IPayloadProvider>[] payloadProviders) 
+        : this(payloadProviders.SelectMany(p => p).ToArray()) {}
+    public MultiplePayloads(IEnumerable<IPayloadProvider> payloadProviders) 
+        : this(payloadProviders.ToArray()) {}
     public MultiplePayloads(params IPayloadProvider[] payloadProviders) => _payloadProviders = payloadProviders; 
     
     public bool IsFinished()

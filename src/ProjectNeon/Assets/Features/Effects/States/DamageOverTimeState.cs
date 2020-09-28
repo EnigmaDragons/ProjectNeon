@@ -21,15 +21,18 @@
         _remainingDuration = turns;
     }
 
-    public void OnTurnStart()
+    public IPayloadProvider OnTurnStart()
     {
-        if (!IsActive) return;
+        if (!IsActive) 
+            return new NoPayload();
 
         _remainingDuration--;
         _target.State.TakeRawDamage(_amount);
+        // TODO: Plug in animations
+        return new NoPayload();
     }
 
-    public void OnTurnEnd() {}
+    public IPayloadProvider OnTurnEnd() => new NoPayload();
     
     public ITemporalState CloneOriginal() => new DamageOverTimeState(_amount, _target, _originalDuration);
 }

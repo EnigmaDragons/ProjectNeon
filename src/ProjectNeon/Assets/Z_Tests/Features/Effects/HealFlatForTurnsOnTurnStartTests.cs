@@ -14,32 +14,32 @@ public sealed class HealFlatForTurnsOnTurnStartTests
 
         new HealOverTime(1, 3).Apply(caster, new Single(target));
         
-        target.State.OnTurnStart();
-        target.State.OnTurnEnd();
+        target.State.GetTurnStartEffects();
+        target.State.GetTurnEndEffects();
         Assert.AreEqual(
             6,
             target.State[TemporalStatType.HP],
             "Effect did not applied on turn 1."
         );
 
-        target.State.OnTurnStart();
-        target.State.OnTurnEnd();
+        target.State.GetTurnStartEffects();
+        target.State.GetTurnEndEffects();
         Assert.AreEqual(
             7,
             target.State[TemporalStatType.HP],
             "Effect did not applied on turn 2."
         );
 
-        target.State.OnTurnStart();
-        target.State.OnTurnEnd();
+        target.State.GetTurnStartEffects();
+        target.State.GetTurnEndEffects();
         Assert.AreEqual(
             8,
             target.State[TemporalStatType.HP],
             "Effect did not applied on turn 3."
         );
 
-        target.State.OnTurnStart();
-        target.State.OnTurnEnd();
+        target.State.GetTurnStartEffects();
+        target.State.GetTurnEndEffects();
         Assert.AreEqual(
             8,
             target.State[TemporalStatType.HP],

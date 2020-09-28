@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2115684586857430258}
   - component: {fileID: 5842876336075822466}
   - component: {fileID: 5587667412285573489}
+  - component: {fileID: 2536713459739284403}
   - component: {fileID: 2115684586857430255}
   - component: {fileID: 8334402703165493310}
   - component: {fileID: 4827819642098112035}
@@ -58,6 +59,7 @@ MonoBehaviour:
   resolutionPhase: {fileID: 5842876336075822466}
   turnWrapUp: {fileID: 5587667412285573489}
   cardPrizePool: {fileID: 11400000, guid: 0ef9d251e58658f49b2e3bd7b77960fa, type: 2}
+  statusPhase: {fileID: 2536713459739284403}
   logProcessSteps: 1
   setupOnStart: 1
   phase: 0
@@ -123,6 +125,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   zones: {fileID: 11400000, guid: 0a8497e1383588d4ab9b06ee1c09e8e1, type: 2}
+--- !u!114 &2536713459739284403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115684586857430259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbc67a739598495189b01bc03b2dac22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!114 &2115684586857430255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +174,7 @@ MonoBehaviour:
   adventure: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
   secondsBeforeReturnToAdventure: 3.2
+  zones: {fileID: 0}
 --- !u!114 &4827819642098112035
 MonoBehaviour:
   m_ObjectHideFlags: 0

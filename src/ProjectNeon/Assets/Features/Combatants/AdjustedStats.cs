@@ -10,8 +10,13 @@ public class AdjustedStats : ITemporalState
     public StatusTag Tag => _tag;
     public bool IsDebuff { get; }
     public bool IsActive => _remainingTurnDuration > 0 || _indefinite;
-    public void OnTurnStart() { }
-    public void OnTurnEnd() => _remainingTurnDuration = Math.Max(_remainingTurnDuration - 1, 0);
+    public IPayloadProvider OnTurnStart() => new NoPayload();
+    public IPayloadProvider OnTurnEnd()
+    {
+        _remainingTurnDuration = Math.Max(_remainingTurnDuration - 1, 0);
+        return new NoPayload();
+    }
+
     public ITemporalState CloneOriginal()
     {
         throw new NotImplementedException();

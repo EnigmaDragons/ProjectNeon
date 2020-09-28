@@ -17,6 +17,10 @@ public class CardActionV2
     public AnimationData CharacterAnimation => characterAnimation;
     public StringReference AtTargetAnimation => atTargetAnimation;
 
+    public IPayloadProvider Play(StatusEffectContext ctx)
+        => Play(new CardActionContext(ctx.Member, new Single(ctx.Member), Group.Self, Scope.One, new ResourceQuantity(),
+            new BattleStateSnapshot()));
+    
     public IPayloadProvider Play(CardActionContext ctx)
     {
         if (type == CardBattleActionType.Battle)
@@ -45,6 +49,19 @@ public class CardActionV2
         throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
     }
     
+//    public IPayloadProvider PlayAsStatusEffect(Member source, Target target)
+//    {
+//        if (type == CardBattleActionType.Battle)
+//            return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target));
+//        if (type == CardBattleActionType.AnimateCharacter)
+//            return new SinglePayload(new CharacterAnimationRequested(source.Id, characterAnimation));
+//        //if (type == CardBattleActionType.AnimateAtTarget)
+//        // TODO: Implement Reactive Scope Animations
+//        if (type == CardBattleActionType.Condition)
+//            return new DelayedPayload(() => AllConditions.Resolve(conditionData, new Card));
+//        throw new Exception($"Unrecognized card battle action type: {Enum.GetName(typeof(CardBattleActionType), Type)}");
+//    }
+//    
     public CardActionV2() {}
     public CardActionV2(EffectData e)
     {

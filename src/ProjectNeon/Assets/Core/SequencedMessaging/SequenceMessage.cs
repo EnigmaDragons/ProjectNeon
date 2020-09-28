@@ -3,10 +3,10 @@
 public static class SequenceMessage
 {
     private static SequencedMessageQueue Msgs = new SequencedMessageQueue();
-    public static void Queue(object payload) => Msgs.Queue(new SinglePayload(payload));
+    //public static void Queue(object payload) => Msgs.Queue(new SinglePayload(payload));
     public static void Queue(IPayloadProvider payloadProvider) => Msgs.Queue(payloadProvider);
     
-    public sealed class SequencedMessageQueue
+    private sealed class SequencedMessageQueue
     {
         private readonly Queue<IPayloadProvider> _enqueuedPayloadQueues = new Queue<IPayloadProvider>();
         private IPayloadProvider _currentPayloadQueue = new NoPayload();

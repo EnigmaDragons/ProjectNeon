@@ -27,12 +27,13 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         IsDebuff = isDebuff;
     }
     
-    public void OnTurnStart() {}
+    public IPayloadProvider OnTurnStart() => new NoPayload();
 
-    public void OnTurnEnd()
+    public IPayloadProvider OnTurnEnd()
     {
         if (_remainingDurationTurns > -1)
             _remainingDurationTurns--;
+        return new NoPayload();
     }
 
     public ITemporalState CloneOriginal() =>

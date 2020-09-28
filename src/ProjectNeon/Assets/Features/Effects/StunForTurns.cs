@@ -8,8 +8,13 @@ public sealed class StunForTurns : ITemporalState
     public StatusTag Tag => StatusTag.None;
     public bool IsDebuff => true;
     public bool IsActive => _remainingDuration > 0;
-    public void OnTurnStart() {}
-    public void OnTurnEnd() => _remainingDuration--;
+    public IPayloadProvider OnTurnStart() => new NoPayload();
+    public IPayloadProvider OnTurnEnd()
+    {
+        _remainingDuration--;
+        return new NoPayload();
+    }
+
     public ITemporalState CloneOriginal() => new StunForTurns(_originalDuration);
     
     public StunForTurns(int duration)

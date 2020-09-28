@@ -38,7 +38,7 @@ public sealed class TurnStunTests
         var target = TestMembers.Any();
 
         TestEffects.Apply(stunForTurns, TestMembers.Any(), target);
-        target.State.OnTurnEnd();
+        target.State.GetTurnEndEffects();
         
         Assert.AreEqual(4, target.State[TemporalStatType.TurnStun]);
     }

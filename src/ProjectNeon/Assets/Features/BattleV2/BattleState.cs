@@ -130,11 +130,7 @@ public class BattleState : ScriptableObject
     }
 
     // During Battle State Tracking
-    public void StartTurn() => UpdateState(() =>
-    {
-        Members.Values.ForEach(m => m.State.OnTurnStart());
-        PlayerState.OnTurnStart();
-    });
+    public void StartTurn() => UpdateState(() => PlayerState.OnTurnStart());
 
     public Member[] GetAllNewlyUnconsciousMembers()
     {
@@ -162,7 +158,6 @@ public class BattleState : ScriptableObject
         UpdateState(() =>
         {
             _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
-            Members.Values.ForEach(m => m.State.OnTurnEnd()); 
             PlayerState.OnTurnEnd();
         });
 
