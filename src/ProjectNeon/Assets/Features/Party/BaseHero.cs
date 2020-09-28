@@ -20,6 +20,8 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private int leadership = 0;
     [SerializeField] private ResourceType resource1;
 
+    [SerializeField] private HeroFlavorDetails flavorDetails;
+
     public string Name => name;
     public Sprite Bust => bust;
     public GameObject Body => body;
