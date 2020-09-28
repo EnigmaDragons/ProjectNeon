@@ -5,6 +5,7 @@ using UnityEngine;
 public class BattleStatusEffects : OnMessage<StatusEffectResolved>
 {
     [SerializeField] private BattleState state;
+    [SerializeField] private FloatReference delay = new FloatReference(0.8f);
 
     private readonly Queue<Member> _membersToProcess = new Queue<Member>();
     private bool _isProcessingStartOfTurn;
@@ -22,15 +23,13 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
         _isProcessingStartOfTurn = false;
         foreach (var member in state.Members.Values) 
             _membersToProcess.Enqueue(member);
-        ResolveNext();
+        this.ExecuteAfterDelay(ResolveNext, delay);
     }
 
     private void ResolveNext()
     {
-        Debug.Log("Resolve Next");
         if (_membersToProcess.Any())
-        {        
-            Debug.Log("Resolve Next - More Members");
+        {   
             Message.Subscribe<SequenceFinished>(_ =>
             {
                 Message.Unsubscribe(this);
@@ -42,11 +41,13 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
             var effectPayloadProvider = _isProcessingStartOfTurn
                 ? member.GetTurnStartEffects()
                 : member.GetTurnEndEffects();
-            SequenceMessage.Queue(effectPayloadProvider);
+            if (!effectPayloadProvider.IsFinished())
+                SequenceMessage.Queue(effectPayloadProvider);
+            else
+                ResolveNext();
         }
         else
         {
-            Debug.Log("Resolve Next - Finished All Members");
             if (_isProcessingStartOfTurn)
                 Message.Publish(new StartOfTurnEffectsStatusResolved());
             else
@@ -56,7 +57,6 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
 
     protected override void Execute(StatusEffectResolved msg)
     {
-        Debug.Log("Received Status Effect Resolved");
-        ResolveNext();
+        this.ExecuteAfterDelay(ResolveNext, delay);
     }
 }
