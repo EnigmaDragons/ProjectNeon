@@ -17,6 +17,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private int magic = 0;
     [SerializeField] private float armor = 0;
     [SerializeField] private float resistance = 0;
+    [SerializeField] private int leadership = 0;
     [SerializeField] private ResourceType resource1;
 
     public string Name => name;
@@ -37,6 +38,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
         .With(StatType.Magic, magic)
         .With(StatType.Armor, armor)
         .With(StatType.Resistance, resistance)
+        .With(StatType.Leadership, leadership)
         .With(StatType.Damagability, 1f)
         .With(StatType.Healability, 1f);
 }
