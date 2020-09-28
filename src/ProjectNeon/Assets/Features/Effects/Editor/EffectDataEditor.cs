@@ -25,6 +25,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.EvadeAttacks, new [] { "FloatAmount" }},
         {EffectType.AtStartOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence" }},
+        {EffectType.AtEndOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence" }},
         {EffectType.DuplicateStatesOfType, new [] { "StatusTag"}},
     };
 

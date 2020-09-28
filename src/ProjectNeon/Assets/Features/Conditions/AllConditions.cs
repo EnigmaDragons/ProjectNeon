@@ -13,7 +13,9 @@ public class AllConditions
         { ActionConditionType.TargetSufferedDamage, e => new TargetSufferedDamageCondition(e.ReferencedEffect) },
         { ActionConditionType.AllyIsUnconscious, e => new UnconsciousAllyCondition(e.ReferencedEffect) },
         { ActionConditionType.TargetHasDamageOverTime, e => new SimpleCondition(e.ReferencedEffect, 
-            ctx => ctx.Target.Members.All(m => m.State.HasStatus(StatusTag.DamageOverTime))) }
+            ctx => ctx.Target.Members.All(m => m.State.HasStatus(StatusTag.DamageOverTime))) },
+        { ActionConditionType.PerformerHasNoPrimaryResources, e => new SimpleCondition(e.ReferencedEffect, 
+            ctx => ctx.Target.Members.All(m => m.PrimaryResourceAmount() == 0)) },
     };
 
     public static IPayloadProvider Resolve(ActionConditionData conditionData, CardActionContext ctx)

@@ -14,8 +14,15 @@ public class TemporalStateMetadata
         IsIndefinite = isIndefinite;
     }
     
+    public static TemporalStateMetadata ForDuration(int numTurns, bool isDebuff) 
+        => new TemporalStateMetadata(isDebuff, -1, numTurns, numTurns < 0);
     public static TemporalStateMetadata DebuffForDuration(int numTurns) 
         => new TemporalStateMetadata(true, -1, numTurns, numTurns < 0);
     public static TemporalStateMetadata BuffForDuration(int numTurns) 
         => new TemporalStateMetadata(false, -1, numTurns, numTurns < 0);
+}
+
+public static class TemporalStateMetadataExtesions
+{
+    public static TemporalStateTracker CreateTracker(this TemporalStateMetadata m) => new TemporalStateTracker(m);
 }

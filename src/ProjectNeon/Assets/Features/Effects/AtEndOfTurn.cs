@@ -1,9 +1,10 @@
+using UnityEngine;
 
-public class StartOfTurnEffect : Effect
+public class EndOfTurnEffect : Effect
 {
     private readonly EffectData _source;
 
-    public StartOfTurnEffect(EffectData source)
+    public EndOfTurnEffect(EffectData source)
     {
         _source = source;
     }
@@ -11,12 +12,12 @@ public class StartOfTurnEffect : Effect
     public void Apply(EffectContext ctx)
     {
         ctx.Target.ApplyToAllConscious(m => m.ApplyTemporaryAdditive(
-            new AtStartOfTurn(ctx, _source.ReferencedSequence, 
+            new AtEndOfTurn(ctx, _source.ReferencedSequence, 
                 TemporalStateMetadata.ForDuration(_source.NumberOfTurns, _source.EffectScope.Value.Equals("Debuff")))));
     }
 }
 
-public class AtStartOfTurn : ITemporalState
+public class AtEndOfTurn : ITemporalState
 {
     private readonly TemporalStateTracker _tracker;
     private readonly EffectContext _ctx;
@@ -27,23 +28,26 @@ public class AtStartOfTurn : ITemporalState
     public bool IsDebuff => _tracker.IsDebuff;
     public bool IsActive => _tracker.IsActive;
 
-    public AtStartOfTurn(EffectContext ctx, CardActionsData data, TemporalStateMetadata metaData)
+    public AtEndOfTurn(EffectContext ctx, CardActionsData data, TemporalStateMetadata metadata)
     {
+        _tracker = metadata.CreateTracker();
         _ctx = ctx;
         _data = data;
-        _tracker = metaData.CreateTracker();
     }
     
-    public void OnTurnStart()
+    public void OnTurnStart() {}
+
+    public void OnTurnEnd()
     {
         if (!IsActive) return;
 
+        BattleLog.Write($"Applying End of Turn effect. {_data.name}");
         _tracker.AdvanceTurn();
-        foreach(var action in _data.Actions)
+        foreach (var action in _data.Actions)
             if (action.Type == CardBattleActionType.Battle)
                 AllEffects.Apply(action.BattleEffect, _ctx);
+            // TODO: Needs to be able to resolve PayloadProviders
     }
 
-    public void OnTurnEnd() {}
-    public ITemporalState CloneOriginal() => new AtStartOfTurn(_ctx, _data, _tracker.Metadata);
+    public ITemporalState CloneOriginal() => new AtEndOfTurn(_ctx, _data, _tracker.Metadata);
 }
