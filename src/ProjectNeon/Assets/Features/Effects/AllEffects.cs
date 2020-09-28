@@ -64,7 +64,8 @@ public static class AllEffects
         { EffectType.ApplyConfusion, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Confusion, e.NumberOfTurns + 1)) },
         { EffectType.AdjustStatAdditivelyWithMagic, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Magic())), e.NumberOfTurns, Mathf.CeilToInt(e.FloatAmount * src.Magic()) < 0, e.NumberOfTurns == -1, StatusTag.None)))},
-        { EffectType.SwapLifeForce, e =>  new SwapLifeForce() },
+        { EffectType.SwapLifeForce, e => new SwapLifeForce() },
+        { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)}
     };
     
     public static void Apply(EffectData effectData, EffectContext ctx)

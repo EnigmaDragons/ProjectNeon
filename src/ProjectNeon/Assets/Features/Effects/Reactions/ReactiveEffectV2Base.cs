@@ -4,6 +4,9 @@ using System.Linq;
 
 public abstract class ReactiveEffectV2Base : ReactiveStateV2
 {
+    private readonly int _maxDurationTurns;
+    private readonly int _maxUses;
+    
     private int _remainingDurationTurns;
     private int _remainingUses;
     private readonly Func<EffectResolved, Maybe<ProposedReaction>> _createMaybeEffect;
@@ -16,6 +19,8 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
     public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
     {
+        _maxDurationTurns = maxDurationTurns;
+        _maxUses = maxUses;
         _remainingDurationTurns = maxDurationTurns;
         _remainingUses = maxUses;
         _createMaybeEffect = createMaybeEffect;
@@ -29,6 +34,9 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         if (_remainingDurationTurns > -1)
             _remainingDurationTurns--;
     }
+
+    public ITemporalState CloneOriginal() =>
+        new ClonedReactiveEffect(Tag, IsDebuff, _maxDurationTurns, _maxUses, _createMaybeEffect);
 
     public abstract StatusTag Tag { get; }
 
@@ -68,4 +76,15 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
                 return new ProposedReaction(reaction, reactor, target);
             };
+}
+
+public class ClonedReactiveEffect : ReactiveEffectV2Base
+{
+    public ClonedReactiveEffect(StatusTag tag, bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect) 
+        : base(isDebuff, maxDurationTurns, maxUses, createMaybeEffect)
+    {
+        Tag = tag;
+    }
+
+    public override StatusTag Tag { get; }
 }

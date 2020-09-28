@@ -27,7 +27,7 @@ public class BattleTestSetup : MonoBehaviour
     [SerializeField] private EncounterBuilder encounterBuilder;
 
     [Header("Card Test")] 
-    [SerializeField] private CardType card;
+    [SerializeField] private CardType[] cards;
     [SerializeField] private BaseHero[] allHeroes;
     [SerializeField] private BaseHero noHero;
 
@@ -80,9 +80,9 @@ public class BattleTestSetup : MonoBehaviour
     
     public void SetupCardTest()
     {
-        var hero = allHeroes.First(h => h.Class.Equals(card.LimitedToClass.Value));
+        var hero = allHeroes.First(h => h.Class.Equals(cards.First().LimitedToClass.Value));
         setup.InitParty(hero, noHero, noHero);
-        setup.InitPartyDecks(Enumerable.Range(0, 12).Select(i => card).ToList(), new List<CardType>(), new List<CardType>());
+        setup.InitPartyDecks(Enumerable.Range(0, 12).Select(i => cards[i % cards.Length]).ToList(), new List<CardType>(), new List<CardType>());
         
         if (battlefield != null)
             UseCustomBattlefield();

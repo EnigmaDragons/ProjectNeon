@@ -1,7 +1,7 @@
-using System;
 
 public sealed class StunForTurns : ITemporalState
 {
+    private readonly int _originalDuration;
     private int _remainingDuration;
 
     public IStats Stats => new StatAddends().With(TemporalStatType.TurnStun, _remainingDuration);
@@ -10,8 +10,11 @@ public sealed class StunForTurns : ITemporalState
     public bool IsActive => _remainingDuration > 0;
     public void OnTurnStart() {}
     public void OnTurnEnd() => _remainingDuration--;
-
-    public StunForTurns(float duration) => _remainingDuration = CeilingInt(duration);
+    public ITemporalState CloneOriginal() => new StunForTurns(_originalDuration);
     
-    private static int CeilingInt(float v) => Convert.ToInt32(Math.Ceiling(v));
+    public StunForTurns(int duration)
+    {
+        _originalDuration = duration;
+        _remainingDuration = duration;
+    }
 }

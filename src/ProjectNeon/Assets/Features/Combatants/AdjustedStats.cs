@@ -12,6 +12,10 @@ public class AdjustedStats : ITemporalState
     public bool IsActive => _remainingTurnDuration > 0 || _indefinite;
     public void OnTurnStart() { }
     public void OnTurnEnd() => _remainingTurnDuration = Math.Max(_remainingTurnDuration - 1, 0);
+    public ITemporalState CloneOriginal()
+    {
+        throw new NotImplementedException();
+    }
 
     public static AdjustedStats CreateIndefinite(IStats stats, bool isDebuff)
         => new AdjustedStats(stats, 0, isDebuff, true, StatusTag.None);

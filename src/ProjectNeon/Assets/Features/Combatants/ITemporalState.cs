@@ -6,4 +6,6 @@ public interface ITemporalState
     bool IsActive { get; }
     void OnTurnStart();
     void OnTurnEnd();
+    
+    ITemporalState CloneOriginal();
 }

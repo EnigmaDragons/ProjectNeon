@@ -82,7 +82,14 @@ public sealed class MemberState : IStats
     public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Tag == tag) 
                                             || _additiveMods.Any(r => r.Tag == tag) 
                                             || _multiplierMods.Any(r => r.Tag == tag);
-    
+
+    public void DuplicateStatesOfType(StatusTag tag)
+    {
+        _additiveMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryAdditive);
+        _multiplierMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryMultiplier);
+        _reactiveStates.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddReactiveState((ReactiveStateV2)s));
+    }
+
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
         _reactiveStates

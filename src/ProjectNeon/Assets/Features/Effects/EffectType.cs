@@ -1,7 +1,6 @@
 using System;
 
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER. EVENTUALLY WE NEED A TOOL TO FIND USAGES
-// Next Number Is 62
 public enum EffectType
 {
     Nothing = 0,
@@ -62,4 +61,5 @@ public enum EffectType
     ApplyConfusion = 62,
     AdjustStatAdditivelyWithMagic = 63,
     SwapLifeForce = 64,
+    DuplicateStatesOfType = 65,
 }

@@ -3,6 +3,7 @@
     private readonly int _amount;
     private readonly Member _target;
     private readonly bool _indefinite;
+    private readonly int _originalDuration;
     private int _remainingDuration;
 
     public IStats Stats { get; }
@@ -15,6 +16,7 @@
         Stats = new StatAddends();
         _amount = amount;
         _target = target;
+        _originalDuration = turns;
         _indefinite = turns < 0;
         _remainingDuration = turns;
     }
@@ -28,4 +30,6 @@
     }
 
     public void OnTurnEnd() {}
+    
+    public ITemporalState CloneOriginal() => new DamageOverTimeState(_amount, _target, _originalDuration);
 }

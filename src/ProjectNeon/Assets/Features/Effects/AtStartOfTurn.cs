@@ -1,4 +1,3 @@
-
 using System;
 
 public class StartOfTurnEffect : Effect
@@ -19,6 +18,7 @@ public class StartOfTurnEffect : Effect
 
 public class AtStartOfTurn : ITemporalState
 {
+    private readonly int _originalTurns;
     private readonly bool _indefinite;
     private readonly EffectContext _ctx;
     private readonly CardActionsData _data;
@@ -37,6 +37,7 @@ public class AtStartOfTurn : ITemporalState
         _ctx = ctx;
         _data = data;
         _remainingDuration = turns;
+        _originalTurns = turns;
     }
     
     public void OnTurnStart()
@@ -50,4 +51,5 @@ public class AtStartOfTurn : ITemporalState
     }
 
     public void OnTurnEnd() {}
+    public ITemporalState CloneOriginal() => new AtStartOfTurn(_ctx, _data, _originalTurns, IsDebuff);
 }
