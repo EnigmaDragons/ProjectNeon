@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public interface Effect
 {
@@ -35,4 +36,36 @@ public static class EffectExtensions
     public static void Apply(this Effect effect, Member source, Member target) 
         => effect.Apply(new EffectContext(source, new Single(target), PartyAdventureState.InMemory(), new PlayerState(), 
             new [] { source, target }.SafeToDictionary(m => m.Id, m => m)));
+}
+
+public sealed class NoEffect : Effect
+{
+    public void Apply(EffectContext ctx) {}
+}
+
+
+public sealed class SimpleEffect : Effect
+{
+    private readonly Action<Member, Target> _apply;
+
+    public SimpleEffect(Action apply) => _apply = (_, __) => apply();
+    public SimpleEffect(Action<Member, MemberState> applyToOne) : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, member))) { }
+    public SimpleEffect(Action<MemberState> applyToOne) : this((src, t) => t.ApplyToAllConscious(applyToOne)) {}
+    public SimpleEffect(Action<Target> apply) : this((src, t) => apply(t)) {}
+    public SimpleEffect(Action<Member, Target> apply) => _apply = apply;
+
+    public void Apply(EffectContext ctx) => _apply(ctx.Source, ctx.Target);
+}
+
+public class FullContextEffect : Effect
+{
+    private readonly Action<EffectContext, Target> _apply;
+
+    public FullContextEffect(Action apply) => _apply = (_, __) => apply();
+    public FullContextEffect(Action<EffectContext, MemberState> applyToOne) : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, member))) { }
+    public FullContextEffect(Action<MemberState> applyToOne) : this((src, t) => t.ApplyToAllConscious(applyToOne)) {}
+    public FullContextEffect(Action<Target> apply) : this((src, t) => apply(t)) {}
+    public FullContextEffect(Action<EffectContext, Target> apply) => _apply = apply;
+
+    public void Apply(EffectContext ctx) => _apply(ctx, ctx.Target);
 }

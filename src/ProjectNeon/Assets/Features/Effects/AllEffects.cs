@@ -11,17 +11,17 @@ public static class AllEffects
         { EffectType.HealFlat, e => new Heal(e.IntAmount) },
         { EffectType.PhysicalDamage, e => new DealDamage(new PhysicalDamage(e.FloatAmount)) },
         { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
-            new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
+            new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustTemporaryStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.RemoveTemporaryEffects(effect => effect.IsDebuff))},
         { EffectType.ShieldFlat, e => new ShieldFlat(e.IntAmount) },
         { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
-            new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), e.NumberOfTurns, true, e.NumberOfTurns == -1, StatusTag.Vulnerable))) },
+            new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f),  TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, StatusTag.Vulnerable)))) },
         { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.GainShield(e.IntAmount * src.State.Toughness())) },
         { EffectType.RemoveShields, e => new SimpleEffect((src, m) => m.GainShield(-999)) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
@@ -48,7 +48,7 @@ public static class AllEffects
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns < 0))) },
         { EffectType.AdjustStatAdditivelyBaseOnMagicStat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.IntAmount * m[StatType.Magic])), e.NumberOfTurns, e.IntAmount < 0, e.NumberOfTurns == -1, StatusTag.None)))},
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.IntAmount * m[StatType.Magic])), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.DamageSpell, e => new MagicAttack(e.FloatAmount, e.HitsRandomTargetMember) },
         { EffectType.ApplyTaunt, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Taunt, e.NumberOfTurns)) },
         { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.IntAmount)) },
@@ -60,11 +60,11 @@ public static class AllEffects
         { EffectType.EnterStealth, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Stealth, e.NumberOfTurns + 1)) },
         { EffectType.GainDoubleDamage, e => new SimpleEffect(m => m.Adjust(TemporalStatType.DoubleDamage, e.IntAmount))},
         { EffectType.AntiHeal, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
-            new AdjustedStats(new StatMultipliers().With(StatType.Healability, 0.5f), e.NumberOfTurns, true, e.NumberOfTurns == -1, StatusTag.AntiHeal))) },
+            new AdjustedStats(new StatMultipliers().With(StatType.Healability, 0.5f),  TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, StatusTag.AntiHeal))))},
         { EffectType.FullyReviveAllAllies, e => new FullyReviveAllAllies() },
         { EffectType.ApplyConfusion, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Confusion, e.NumberOfTurns + 1)) },
         { EffectType.AdjustStatAdditivelyWithMagic, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Magic())), e.NumberOfTurns, Mathf.CeilToInt(e.FloatAmount * src.Magic()) < 0, e.NumberOfTurns == -1, StatusTag.None)))},
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Magic())), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)}
     };

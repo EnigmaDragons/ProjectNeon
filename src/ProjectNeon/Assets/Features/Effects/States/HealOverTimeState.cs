@@ -1,37 +1,31 @@
-﻿public class HealOverTimeState : ITemporalState
+﻿public class HealOverTimeState : TemporalStateBase
 {
-    private readonly TemporalStateTracker _tracker;
     private readonly int _amount;
     private readonly Member _target;
 
-    public IStats Stats { get; }
-    public StatusTag Tag => StatusTag.HealOverTime;
-    public bool IsDebuff => false;
-    public bool IsActive => _tracker.IsActive;
-
     public HealOverTimeState(int amount, Member target, int turns)
-        : this(amount, target, TemporalStateMetadata.BuffForDuration(turns)) {}
+        : this(amount, target, TemporalStateMetadata.BuffForDuration(turns, StatusTag.HealOverTime)) {}
     
     public HealOverTimeState(int amount, Member target, TemporalStateMetadata metadata)
+        : base(metadata) 
     {
-        Stats = new StatAddends();
         _amount = amount;
         _target = target;
-        _tracker = new TemporalStateTracker(metadata);
     }
 
-    public IPayloadProvider OnTurnStart()
+    public override ITemporalState CloneOriginal() => new HealOverTimeState(_amount, _target, Tracker.Metadata);
+    public override IStats Stats { get; } = new StatAddends();
+    
+    public override IPayloadProvider OnTurnStart()
     {
         if (!IsActive || !_target.IsConscious()) 
             return new NoPayload();
 
-        _tracker.AdvanceTurn();
+        Tracker.AdvanceTurn();
         _target.State.GainHp(_amount);
         // TODO: Plug in animations
         return new NoPayload();
     }
 
-    public IPayloadProvider OnTurnEnd() => new NoPayload();
-    
-    public ITemporalState CloneOriginal() => new HealOverTimeState(_amount, _target, _tracker.Metadata);
+    public override IPayloadProvider OnTurnEnd() => new NoPayload();
 }

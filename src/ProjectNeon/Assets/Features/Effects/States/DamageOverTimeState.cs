@@ -1,38 +1,31 @@
-﻿public class DamageOverTimeState : ITemporalState
+﻿public class DamageOverTimeState : TemporalStateBase
 {
     private readonly int _amount;
     private readonly Member _target;
-    private readonly bool _indefinite;
-    private readonly int _originalDuration;
-    private int _remainingDuration;
-
-    public IStats Stats { get; }
-    public StatusTag Tag => StatusTag.DamageOverTime;
-    public bool IsDebuff => true;
-    public bool IsActive => _remainingDuration > 0 || _indefinite;
 
     public DamageOverTimeState(int amount, Member target, int turns)
+        : this(amount, target, TemporalStateMetadata.DebuffForDuration(turns, StatusTag.DamageOverTime)) {}
+    
+    public DamageOverTimeState(int amount, Member target, TemporalStateMetadata metadata)
+        : base(metadata) 
     {
-        Stats = new StatAddends();
         _amount = amount;
         _target = target;
-        _originalDuration = turns;
-        _indefinite = turns < 0;
-        _remainingDuration = turns;
     }
 
-    public IPayloadProvider OnTurnStart()
+    public override ITemporalState CloneOriginal() => new DamageOverTimeState(_amount, _target, Tracker.Metadata);
+    public override IStats Stats { get; } = new StatAddends();
+    
+    public override IPayloadProvider OnTurnStart()
     {
         if (!IsActive) 
             return new NoPayload();
 
-        _remainingDuration--;
+        Tracker.AdvanceTurn();
         _target.State.TakeRawDamage(_amount);
         // TODO: Plug in animations
         return new NoPayload();
     }
 
-    public IPayloadProvider OnTurnEnd() => new NoPayload();
-    
-    public ITemporalState CloneOriginal() => new DamageOverTimeState(_amount, _target, _originalDuration);
+    public override IPayloadProvider OnTurnEnd() => new NoPayload();
 }
