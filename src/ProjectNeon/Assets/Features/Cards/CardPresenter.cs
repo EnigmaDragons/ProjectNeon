@@ -9,6 +9,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardRarityPresenter rarity;
+    [SerializeField] private CardTargetPresenter target;
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI type;
@@ -78,6 +79,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         type.text = _cardType.TypeDescription;
         art.sprite = _cardType.Art;
         rarity.Set(card.Rarity);
+        target.Set(card);
         
         var cost = card.Cost;
         var hasCost = !cost.ResourceType.Name.Equals("None") && cost.BaseAmount > 0 || cost.PlusXCost;
