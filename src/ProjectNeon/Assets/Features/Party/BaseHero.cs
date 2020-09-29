@@ -29,6 +29,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public Deck Deck => startingDeck;
     public CardType ClassCard => Class.BasicCard;
     public int StartingCredits => startingCredits;
+    public HeroFlavorDetails Flavor => flavorDetails;
 
     public IStats Stats => new StatAddends
         {

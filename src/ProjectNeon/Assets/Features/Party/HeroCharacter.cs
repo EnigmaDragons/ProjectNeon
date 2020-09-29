@@ -10,6 +10,7 @@ public interface HeroCharacter
     CardType ClassCard { get; }
     IStats Stats { get; }
     int StartingCredits { get; }
+    HeroFlavorDetails Flavor { get; }
 }
 
 public class InMemoryHeroCharacter : HeroCharacter
@@ -22,4 +23,6 @@ public class InMemoryHeroCharacter : HeroCharacter
     public CardType ClassCard { get; set; }
     public IStats Stats { get; set; } = new StatAddends();
     public int StartingCredits { get; set; } = 100;
+    public HeroFlavorDetails Flavor { get; set; } 
+        = new HeroFlavorDetails { HeroDescription = "Desc", RoleDescription = "Desc", BackStory = "BackStory" };
 }

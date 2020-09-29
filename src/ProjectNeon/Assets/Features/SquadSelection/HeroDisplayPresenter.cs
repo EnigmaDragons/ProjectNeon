@@ -8,6 +8,9 @@ public class HeroDisplayPresenter : MonoBehaviour
     [SerializeField] private Image heroBust;
     [SerializeField] private TextMeshProUGUI heroName;
     [SerializeField] private TextMeshProUGUI heroClassName;
+    [SerializeField] private TextMeshProUGUI heroDescription;
+    [SerializeField] private TextMeshProUGUI roleDescription;
+    [SerializeField] private TextMeshProUGUI backstory;
 
     private void Start()
     {
@@ -21,5 +24,8 @@ public class HeroDisplayPresenter : MonoBehaviour
         heroBust.sprite = c.Bust;
         heroName.text = c.Name;
         heroClassName.text = c.Class.Name;
+        heroDescription.text = c.Flavor.HeroDescription;
+        roleDescription.text = "Role: " + c.Flavor.RoleDescription;
+        backstory.text = c.Flavor.BackStory;
     }
 }
