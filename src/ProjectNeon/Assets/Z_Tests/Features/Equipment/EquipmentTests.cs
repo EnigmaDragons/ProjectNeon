@@ -62,7 +62,8 @@ public class EquipmentTests
                 {
                     EffectType = EffectType.AdjustStatAdditively,
                     FloatAmount = new FloatReference(1),
-                    EffectScope = new StringReference(StatType.Armor.ToString())
+                    EffectScope = new StringReference(StatType.Armor.ToString()),
+                    NumberOfTurns = new IntReference(-1)
                 }
             }
         };
@@ -78,7 +79,7 @@ public class EquipmentTests
         hero.Equip(turtleGloves);
 
         var member = hero.AsMember(1);
-        member.State.GetTurnStartEffects();
+        member.ExecuteStartOfTurnEffects();
         
         Assert.AreEqual(1, member.Armor());
     }

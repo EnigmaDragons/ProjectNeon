@@ -79,7 +79,8 @@ public static class AllEffects
         }
         catch (Exception e)
         {
-            Log.Error($"EffectType {effectData.EffectType} is broken {e}");
+            SafeLogError($"EffectType {effectData.EffectType} is broken {e}");
+            throw;
         }
     }
 
@@ -90,7 +91,7 @@ public static class AllEffects
             var effectType = effectData.EffectType;
             if (!CreateEffectOfType.ContainsKey(effectData.EffectType))
             {
-                Log.Error($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
+                SafeLogError($"No EffectType of {effectData.EffectType} exists in {nameof(AllEffects)}");
                 return CreateEffectOfType[EffectType.Nothing](effectData);
             }
 
@@ -98,8 +99,14 @@ public static class AllEffects
         }
         catch (Exception e)
         {
-            Log.Error($"EffectType {effectData.EffectType} is broken {e}");
+            SafeLogError($"EffectType {effectData.EffectType} is broken {e}");
             return CreateEffectOfType[EffectType.Nothing](effectData);
         }
+    }
+
+    private static void SafeLogError(string message)
+    {
+        try{ Log.Error(message);} 
+        catch(Exception e) {}
     }
 }

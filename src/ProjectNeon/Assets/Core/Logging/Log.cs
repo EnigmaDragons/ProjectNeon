@@ -1,46 +1,25 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public static class Log
 {
-    public static void Info(string msg)
-    {
-#if UNITY_EDITOR
-        Debug.Log(msg);
-#endif
-    }
-    
-    public static void Info(string msg, Object context)
-    {
-#if UNITY_EDITOR
-        Debug.Log(msg, context);
-#endif
-    }
-    
-    public static void Info(Object obj)
-    {
-#if UNITY_EDITOR
-        Debug.Log(obj);
-#endif
-    }
+    public static void Info(string msg) => IgnoreExceptions(() => Debug.Log(msg));
+    public static void Info(string msg, Object context) => IgnoreExceptions(() => Debug.Log(msg, context));
+    public static void Info(Object obj) => IgnoreExceptions(() => Debug.Log(obj));
+    public static void Error(string msg) => IgnoreExceptions(() => Debug.LogError(msg));
+    public static void Error(string msg, Object context) => IgnoreExceptions(() => Debug.LogError(msg, context));
+    public static void Warn(string msg) => IgnoreExceptions(() => Debug.LogWarning(msg));
 
-    public static void Error(string msg)
+    private static void IgnoreExceptions(Action a)
     {
-#if UNITY_EDITOR
-        Debug.LogError(msg);
-#endif
-    }
-
-    public static void Error(string msg, Object context)
-    {
-#if UNITY_EDITOR
-        Debug.LogError(msg, context);
-#endif
-    }
-
-    public static void Warn(string msg)
-    {
-#if UNITY_EDITOR
-        Debug.LogWarning(msg);
-#endif
+        try
+        {
+            a();
+        }
+        catch (Exception e)
+        {
+            
+        }
     }
 }
