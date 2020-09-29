@@ -11,6 +11,7 @@ public class Adventure : ScriptableObject
 
     // @todo #1:15min Design. What happens when the adventure is won?
 
+    public string Title => adventureTitle;
     public string Story => story;
     public Stage[] Stages => stages.ToArray();
 }
