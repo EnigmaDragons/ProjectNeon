@@ -97,7 +97,8 @@ public static class AllEffects
                 {
                     EffectType = EffectType.AtStartOfTurn,
                     NumberOfTurns = new IntReference(1),
-                    ReferencedSequence = AsCardActionsData(effectData.Immediately())
+                    ReferencedSequence = AsCardActionsData(effectData.Immediately()),
+                    StatusTag = StatusTag.StartOfTurnTrigger
                 });
             
             var effectType = effectData.EffectType;

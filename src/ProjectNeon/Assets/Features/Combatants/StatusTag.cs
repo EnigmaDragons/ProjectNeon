@@ -7,4 +7,6 @@ public enum StatusTag
     Vulnerable = 4,
     OnHit = 5,
     AntiHeal = 6,
+    StartOfTurnTrigger = 7,
+    EndOfTurnTrigger = 8,
 }

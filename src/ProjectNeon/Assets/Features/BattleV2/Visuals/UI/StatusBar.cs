@@ -63,7 +63,14 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
         
         if (_member.State.HasStatus(StatusTag.OnHit))
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.OnHit].Icon, Tooltip = "Has On Hit Effect" });
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.OnHit].Icon, Tooltip = "Special On Hit Effect" });
+        
+        if (_member.State.HasStatus(StatusTag.StartOfTurnTrigger))
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.StartOfTurnTrigger].Icon, Tooltip = "Start of Turn Effect Trigger" });
+        
+        if (_member.State.HasStatus(StatusTag.EndOfTurnTrigger))
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.EndOfTurnTrigger].Icon, Tooltip = "End of Turn Effect Trigger" });
+            
         
         UpdateStatuses(statuses);
     }
