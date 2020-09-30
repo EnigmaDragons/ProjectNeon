@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class TemporalStateMetadata
 {
     public bool IsDebuff { get; }
@@ -9,6 +11,9 @@ public class TemporalStateMetadata
 
     public TemporalStateMetadata(bool isDebuff, int maxUses, int maxDurationTurns, bool isIndefinite, StatusTag tag)
     {
+        if (MaxDurationTurns == 0 && !isIndefinite || MaxUses == 0)
+            Log.Warn("Created Effect is permanently inactive");
+        
         IsDebuff = isDebuff;
         MaxUses = maxUses;
         MaxDurationTurns = maxDurationTurns;
