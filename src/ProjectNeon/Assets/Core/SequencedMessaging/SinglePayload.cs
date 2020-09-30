@@ -6,6 +6,7 @@
     public SinglePayload(object payload) : this(new PayloadData(payload)) {}
     public SinglePayload(PayloadData payload) => _payload = payload;
 
+    public int Count => 1;
     public bool IsFinished() => _isFinished;
 
     public PayloadData GetNext()

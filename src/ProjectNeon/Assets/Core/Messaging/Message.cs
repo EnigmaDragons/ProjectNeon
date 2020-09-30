@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
-using UnityEngine;
 
 public static class Message 
 {
@@ -43,7 +42,6 @@ public static class Message
 
         public void Enqueue(object payload)
         {
-            Debug.Log($"Publishing Type {payload.GetType()}");
             _eventQueue.Enqueue(payload);
             ProcessQueuedMessages();
         }

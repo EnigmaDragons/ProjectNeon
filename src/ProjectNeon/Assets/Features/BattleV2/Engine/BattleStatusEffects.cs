@@ -29,21 +29,39 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
     private void ResolveNext()
     {
         if (_membersToProcess.Any())
+            ResolveNextMemberStatusEffects();
+        else
         {
-            BattleLog.Write("Requested Resolve Status Effect");   
-            var member = _membersToProcess.Dequeue();
+            if (_isProcessingStartOfTurn)
+                Message.Publish(new StartOfTurnEffectsStatusResolved());
+            else
+                Message.Publish(new EndOfTurnStatusEffectsResolved());
+        }
+    }
+
+    private void ResolveNextMemberStatusEffects()
+    {
+        var member = _membersToProcess.Dequeue();
+        if (!member.State.HasAnyTemporalStates)
+        {
+            ResolveNext();
+        }
+        else
+        {
             var effectPayloadProvider = _isProcessingStartOfTurn
                 ? member.State.GetTurnStartEffects()
                 : member.State.GetTurnEndEffects();
+            BattleLog.Write($"Resolving {effectPayloadProvider.Count} Status Effects for {member.Name}");
             if (!effectPayloadProvider.IsFinished())
             {
                 SequenceMessage.Queue(effectPayloadProvider);
-                
+
                 Message.Subscribe<SequenceFinished>(_ =>
                 {
                     Message.Unsubscribe(this);
                     Message.Subscribe<StatusEffectResolved>(Execute, this);
-                    Message.Publish(new StatusEffectResolved(member));;
+                    Message.Publish(new StatusEffectResolved(member));
+                    ;
                 }, this);
             }
             else
@@ -51,16 +69,9 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
                 this.ExecuteAfterDelay(() =>
                 {
                     member.State.CleanExpiredStates();
-                    ResolveNext(); 
-                }, member.State.HasAnyTemporalStates ? delay : 0f);
+                    ResolveNext();
+                }, delay);
             }
-        }
-        else
-        {
-            if (_isProcessingStartOfTurn)
-                Message.Publish(new StartOfTurnEffectsStatusResolved());
-            else
-                Message.Publish(new EndOfTurnStatusEffectsResolved());
         }
     }
 

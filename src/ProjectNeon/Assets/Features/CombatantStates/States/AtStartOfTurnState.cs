@@ -1,10 +1,12 @@
-public class AtStartOfTurn : TemporalStateBase
+using UnityEngine;
+
+public class AtStartOfTurnState : TemporalStateBase
 {
     private readonly EffectContext _ctx;
     private readonly Member _member;
     private readonly CardActionsData _data;
 
-    public AtStartOfTurn(EffectContext ctx, Member member, CardActionsData data, TemporalStateMetadata metaData)
+    public AtStartOfTurnState(EffectContext ctx, Member member, CardActionsData data, TemporalStateMetadata metaData)
         : base(metaData)
     {
         _ctx = ctx;
@@ -12,7 +14,7 @@ public class AtStartOfTurn : TemporalStateBase
         _data = data;
     }
     
-    public override ITemporalState CloneOriginal() => new AtStartOfTurn(_ctx, _member, _data, Tracker.Metadata);
+    public override ITemporalState CloneOriginal() => new AtStartOfTurnState(_ctx, _member, _data, Tracker.Metadata);
     public override IStats Stats { get; } = new StatAddends();
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
 

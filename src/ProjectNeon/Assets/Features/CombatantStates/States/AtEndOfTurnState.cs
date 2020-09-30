@@ -1,11 +1,11 @@
 
-public class AtEndOfTurn : TemporalStateBase
+public class AtEndOfTurnState : TemporalStateBase
 {
     private readonly EffectContext _ctx;
     private readonly Member _member;
     private readonly CardActionsData _data;
 
-    public AtEndOfTurn(EffectContext ctx, Member member, CardActionsData data, TemporalStateMetadata metadata)
+    public AtEndOfTurnState(EffectContext ctx, Member member, CardActionsData data, TemporalStateMetadata metadata)
         : base(metadata)
     {
         _ctx = ctx;
@@ -13,7 +13,7 @@ public class AtEndOfTurn : TemporalStateBase
         _data = data;
     }
     
-    public override ITemporalState CloneOriginal() => new AtEndOfTurn(_ctx, _member, _data, Tracker.Metadata);
+    public override ITemporalState CloneOriginal() => new AtEndOfTurnState(_ctx, _member, _data, Tracker.Metadata);
     public override IStats Stats { get; } = new StatAddends();
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
     public override IPayloadProvider OnTurnStart() => new NoPayload();

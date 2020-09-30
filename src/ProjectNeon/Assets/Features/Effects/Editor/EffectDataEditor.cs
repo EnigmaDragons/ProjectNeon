@@ -1,12 +1,15 @@
 ﻿#if UNITY_EDITOR
 
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(EffectData))]
 public class EffectDataEditor : PropertyDrawer
 {
+    private List<string> _globalProperties = new List<string> { "AtStartOfNextTurn" };
+    
     private DictionaryWithDefault<EffectType, string[]> _relevantProperties = new DictionaryWithDefault<EffectType, string[]>(new string[] { "FloatAmount", "NumberOfTurns", "HitsRandomTargetMember" })
     {
         {EffectType.Nothing, new string[0]},
@@ -26,13 +29,15 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.EvadeAttacks, new [] { "FloatAmount" }},
         {EffectType.AtStartOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence" }},
         {EffectType.AtEndOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence" }},
-        {EffectType.DuplicateStatesOfType, new [] { "StatusTag"}},
+        {EffectType.DuplicateStatesOfType, new [] { "StatusTag" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         var height = EditorGUI.GetPropertyHeight(property.FindPropertyRelative("EffectType"));
         foreach (var prop in _relevantProperties[GetEffectType(property)])
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative(prop)) + 2;
+        foreach (var prop in _globalProperties)
             height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative(prop)) + 2;
         return height;
     }
@@ -47,6 +52,13 @@ public class EffectDataEditor : PropertyDrawer
         for (var i = 0; i < properties.Length; i++)
         {
             var prop = property.FindPropertyRelative(properties[i]);
+            EditorGUI.PropertyField(position, prop);
+            position.y += EditorGUI.GetPropertyHeight(effectType) + 2;
+        }
+
+        for (var i = 0; i < _globalProperties.Count; i++)
+        {
+            var prop = property.FindPropertyRelative(_globalProperties[i]);
             EditorGUI.PropertyField(position, prop);
             position.y += EditorGUI.GetPropertyHeight(effectType) + 2;
         }

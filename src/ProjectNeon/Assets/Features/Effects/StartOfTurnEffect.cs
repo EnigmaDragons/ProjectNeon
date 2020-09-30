@@ -8,7 +8,7 @@ public class StartOfTurnEffect : Effect
     public void Apply(EffectContext ctx)
     {
         ctx.Target.ApplyToAllConsciousMembers(m => m.State.ApplyTemporaryAdditive(
-            new AtStartOfTurn(ctx, m, _source.ReferencedSequence, 
+            new AtStartOfTurnState(ctx, m, _source.ReferencedSequence, 
                 TemporalStateMetadata.ForDuration(_source.NumberOfTurns, _source.EffectScope.Value.Equals("Debuff"), _source.StatusTag))));
     }
 }

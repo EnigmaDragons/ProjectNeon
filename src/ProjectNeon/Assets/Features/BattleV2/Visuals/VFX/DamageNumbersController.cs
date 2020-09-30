@@ -40,7 +40,6 @@ public sealed class DamageNumbersController : OnMessage<MemberStateChanged>
         {
             var current = msg.State.ToSnapshot();
             var last = _last ?? msg.BeforeState;
-            Debug.Log($"Before HP {last.Hp} -> Current HP {current.Hp}.");
             var hpChange = current.Hp - last.Hp;
             var shieldChange = current.Shield - last.Shield;
 

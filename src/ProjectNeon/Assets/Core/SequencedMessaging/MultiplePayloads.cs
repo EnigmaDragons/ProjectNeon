@@ -12,8 +12,10 @@ public sealed class MultiplePayloads : IPayloadProvider
         : this(payloadProviders.SelectMany(p => p).ToArray()) {}
     public MultiplePayloads(IEnumerable<IPayloadProvider> payloadProviders) 
         : this(payloadProviders.ToArray()) {}
-    public MultiplePayloads(params IPayloadProvider[] payloadProviders) => _payloadProviders = payloadProviders; 
-    
+    public MultiplePayloads(params IPayloadProvider[] payloadProviders) => _payloadProviders = payloadProviders;
+
+    public int Count => _payloadProviders.Length;
+
     public bool IsFinished()
     {
         while (_index < _payloadProviders.Length && _payloadProviders[_index].IsFinished())

@@ -15,5 +15,23 @@ public sealed class EffectData
     public CardActionsData ReferencedSequence;
     public ReactionCardType ReactionSequence;
     public StatusTag StatusTag;
+    public bool AtStartOfNextTurn;
     [Obsolete] public EffectData origin = Nothing; //obsolete, but can't delete yet for data loss reasons
+}
+
+public static class EffectDataExtensions
+{
+    public static EffectData Immediately(this EffectData e)
+        => new EffectData
+        {
+            EffectType = e.EffectType,
+            FloatAmount = e.FloatAmount,
+            NumberOfTurns = e.NumberOfTurns,
+            EffectScope = e.EffectScope,
+            HitsRandomTargetMember = e.HitsRandomTargetMember,
+            ReferencedSequence = e.ReferencedSequence,
+            ReactionSequence = e.ReactionSequence,
+            StatusTag = e.StatusTag,
+            AtStartOfNextTurn = false
+        };
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -73,8 +74,12 @@ public static class AllEffects
     {
         try
         {
+            if (ctx.Target.Members.Length == 0)
+                return;
+            
             var effect = Create(effectData);
-            BattleLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}");
+            var whenClause = effectData.AtStartOfNextTurn ? " at the start of next turn" : "";
+            BattleLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
             effect.Apply(ctx);
         }
         catch (Exception e)
@@ -87,6 +92,14 @@ public static class AllEffects
     {
         try
         {
+            if (effectData.AtStartOfNextTurn)
+                return Create(new EffectData
+                {
+                    EffectType = EffectType.AtStartOfTurn,
+                    NumberOfTurns = new IntReference(1),
+                    ReferencedSequence = AsCardActionsData(effectData.Immediately())
+                });
+            
             var effectType = effectData.EffectType;
             if (!CreateEffectOfType.ContainsKey(effectData.EffectType))
             {
@@ -102,4 +115,8 @@ public static class AllEffects
             return CreateEffectOfType[EffectType.Nothing](effectData);
         }
     }
+    
+    private static CardActionsData AsCardActionsData(EffectData effectData)
+        => ((CardActionsData)FormatterServices.GetUninitializedObject(typeof(CardActionsData)))
+            .Initialized(new CardActionV2(effectData));
 }
