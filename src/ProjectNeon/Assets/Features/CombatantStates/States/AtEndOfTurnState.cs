@@ -15,6 +15,7 @@ public class AtEndOfTurn : TemporalStateBase
     
     public override ITemporalState CloneOriginal() => new AtEndOfTurn(_ctx, _member, _data, Tracker.Metadata);
     public override IStats Stats { get; } = new StatAddends();
+    public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
     public override IPayloadProvider OnTurnStart() => new NoPayload();
     public override IPayloadProvider OnTurnEnd()
     {

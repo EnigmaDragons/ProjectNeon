@@ -24,7 +24,7 @@ public class CardType : ScriptableObject, CardTypeData
     public HashSet<CardTag> Tags => new HashSet<CardTag>(tags);
     public string TypeDescription => typeDescription?.Value ?? "";
     public Rarity Rarity => rarity;
-    public Maybe<CharacterClass> LimitedToClass => new Maybe<CharacterClass>(onlyPlayableByClass != null ? onlyPlayableByClass : null);
+    public Maybe<CharacterClass> LimitedToClass => onlyPlayableByClass;
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
     public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();
     public Maybe<CardTypeData> ChainedCard => chainedCard;

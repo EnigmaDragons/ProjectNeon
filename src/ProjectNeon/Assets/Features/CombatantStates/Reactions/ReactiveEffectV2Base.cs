@@ -16,6 +16,8 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     public IStats Stats => new StatAddends();
     public bool IsDebuff { get; }
     public bool IsActive => HasMoreUses && HasMoreTurns;
+    public Maybe<int> Amount => _remainingUses;
+    public Maybe<int> RemainingTurns => _remainingDurationTurns;
 
     public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
     {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class StatusBar : OnMessage<MemberStateChanged>
@@ -54,8 +55,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State.HasStatus(StatusTag.CounterAttack))
             statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.CounterAttack].Icon, Tooltip = "Counterattack"});
         
-        if (_member.State.HasStatus(StatusTag.DamageOverTime))
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.DamageOverTime].Icon, Tooltip = "Takes Damage At The Start of Turn"});
+        statuses.AddRange(_member.State.StatusesOfType(StatusTag.DamageOverTime)
+            .Select(s => new CurrentStatusValue { Icon = icons[StatusTag.DamageOverTime].Icon, Text = s.RemainingTurns.Select(r => r.ToString(), () => ""), 
+                Tooltip = $"Takes {s.Amount} at the Start of the next {s.RemainingTurns} turns"}));
         
         if (_member.State.HasStatus(StatusTag.HealOverTime))
             statuses.Add(new CurrentStatusValue { Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });

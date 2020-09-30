@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public sealed class Maybe<T> where T : class
+public sealed class Maybe<T>
 {
     [SerializeField] private T value;
     [SerializeField] private bool isPresent;
@@ -11,12 +11,13 @@ public sealed class Maybe<T> where T : class
     public bool IsPresent => isPresent;
     public T Value => value;
 
-    public Maybe() { }
-
     public Maybe(T obj)
+        : this(obj, obj != null && !obj.Equals(default(T))) {}
+    
+    public Maybe(T obj, bool isPresent)
     {
         value = obj;
-        isPresent = obj != null;
+        this.isPresent = isPresent;
     }
     
     public void IfPresent(Action<T> action)
@@ -30,7 +31,12 @@ public sealed class Maybe<T> where T : class
 
     public T OrDefault(Func<T> createDefault) => IsPresent ? Value : createDefault();
     
-    public static Maybe<T> Missing() => new Maybe<T>();
+    public static Maybe<T> Missing() => new Maybe<T>(default(T), false);
     
     public static implicit operator Maybe<T>(T obj) => new Maybe<T>(obj);
+
+    public T2 Select<T2>(Func<T, T2> ifPresent, Func<T2> createDefault)
+        => IsPresent 
+            ? ifPresent(value) 
+            : createDefault();
 }

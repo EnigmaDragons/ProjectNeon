@@ -83,12 +83,18 @@ public sealed class MemberState : IStats
                                             || _additiveMods.Any(r => r.Tag == tag) 
                                             || _multiplierMods.Any(r => r.Tag == tag);
 
+    public ITemporalState[] StatusesOfType(StatusTag tag)
+        => OfType(_additiveMods, tag).Concat(OfType(_multiplierMods, tag)).Concat(OfType(_reactiveStates, tag)).ToArray();
+    
     public void DuplicateStatesOfType(StatusTag tag)
     {
         _additiveMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryAdditive);
         _multiplierMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryMultiplier);
         _reactiveStates.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddReactiveState((ReactiveStateV2)s));
     }
+
+    private IEnumerable<ITemporalState> OfType(IEnumerable<ITemporalState> states, StatusTag tag)
+        => states.Where(s => s.Tag == tag);
 
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>

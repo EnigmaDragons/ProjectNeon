@@ -14,7 +14,8 @@ public class AtStartOfTurn : TemporalStateBase
     
     public override ITemporalState CloneOriginal() => new AtStartOfTurn(_ctx, _member, _data, Tracker.Metadata);
     public override IStats Stats { get; } = new StatAddends();
-    
+    public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
+
     public override IPayloadProvider OnTurnStart()
     {
         if (!IsActive) 
