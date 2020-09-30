@@ -29,22 +29,28 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
     private void ResolveNext()
     {
         if (_membersToProcess.Any())
-        {   
-            Message.Subscribe<SequenceFinished>(_ =>
-            {
-                Message.Unsubscribe(this);
-                Message.Subscribe<StatusEffectResolved>(Execute, this);
-                Message.Publish(new StatusEffectResolved());;
-            }, this);
-            
-            var member = _membersToProcess.Dequeue().State;
+        {
+            BattleLog.Write("Requested Resolve Status Effect");   
+            var member = _membersToProcess.Dequeue();
             var effectPayloadProvider = _isProcessingStartOfTurn
-                ? member.GetTurnStartEffects()
-                : member.GetTurnEndEffects();
+                ? member.State.GetTurnStartEffects()
+                : member.State.GetTurnEndEffects();
             if (!effectPayloadProvider.IsFinished())
+            {
                 SequenceMessage.Queue(effectPayloadProvider);
+                
+                Message.Subscribe<SequenceFinished>(_ =>
+                {
+                    Message.Unsubscribe(this);
+                    Message.Subscribe<StatusEffectResolved>(Execute, this);
+                    Message.Publish(new StatusEffectResolved(member));;
+                }, this);
+            }
             else
+            {
+                member.State.CleanExpiredStates();
                 ResolveNext();
+            }
         }
         else
         {
@@ -57,6 +63,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
 
     protected override void Execute(StatusEffectResolved msg)
     {
+        msg.Member.State.CleanExpiredStates();
         this.ExecuteAfterDelay(ResolveNext, delay);
     }
 }

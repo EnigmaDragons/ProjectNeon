@@ -20,6 +20,7 @@ public class BattleUiVisuals : OnMessage<BattleFinished>
     private void HideCommandPhaseUI() => commandPhaseUi.SetActive(false);
     public void BeginCommandPhase()
     {
+        hand.SetActive(true);
         commandPhaseUi.SetActive(true);
         resolutionPhaseUi.gameObject.SetActive(true);
     }
@@ -40,7 +41,7 @@ public class BattleUiVisuals : OnMessage<BattleFinished>
     {
         resolutionPhaseUi.EndResolutionPhase();
         HideResolutionPhaseUI();
-        hand.SetActive(true);
+        hand.SetActive(false);
     }
 
     private void HideResolutionPhaseUI() => resolutionPhaseUi.gameObject.SetActive(false);

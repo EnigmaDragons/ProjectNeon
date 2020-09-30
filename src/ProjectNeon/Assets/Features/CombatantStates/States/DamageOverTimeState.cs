@@ -1,4 +1,5 @@
-﻿public class DamageOverTimeState : TemporalStateBase
+﻿
+public class DamageOverTimeState : TemporalStateBase
 {
     private readonly int _amount;
     private readonly Member _target;
@@ -23,6 +24,7 @@
             return new NoPayload();
 
         Tracker.AdvanceTurn();
+        BattleLog.Write($"Began resolving DoT for {_target.Name}");
         _target.State.TakeRawDamage(_amount);
         // TODO: Plug in animations
         return new NoPayload();
