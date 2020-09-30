@@ -1,6 +1,4 @@
 
-using UnityEngine;
-
 public class TemporalStateMetadata
 {
     public bool IsDebuff { get; }

@@ -10,7 +10,7 @@ public class OnShieldBrokenTests
     {
         var target = TestMembers.Create(x => x.With(StatType.MaxHP, 10).With(StatType.Toughness, 1));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
-        target.State.GainShield(startingShields);
+        target.State.AdjustShield(startingShields);
 
         var reactionCardType = TestCards.Reaction(
             ReactiveMember.Possessor,

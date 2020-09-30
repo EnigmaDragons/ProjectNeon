@@ -48,12 +48,11 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
             }
             else
             {
-                // This delay is temporarily needed while not all States have animations/payloads
                 this.ExecuteAfterDelay(() =>
                 {
                     member.State.CleanExpiredStates();
                     ResolveNext(); 
-                }, delay);
+                }, member.State.HasAnyTemporalStates ? delay : 0f);
             }
         }
         else

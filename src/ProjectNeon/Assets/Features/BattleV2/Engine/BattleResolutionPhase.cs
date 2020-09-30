@@ -51,8 +51,11 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
 
     private void FinishResolutionPhase()
     {
-        ui.EndResolutionPhase();
-        Message.Publish(new ResolutionsFinished());
+        this.ExecuteAfterDelay(() =>
+        {
+            ui.EndResolutionPhase();
+            Message.Publish(new ResolutionsFinished());
+        }, delay);
     }
 
     private bool IsDoneResolving => state.BattleIsOver() || _reactions.None() && !resolutionZone.HasMore;

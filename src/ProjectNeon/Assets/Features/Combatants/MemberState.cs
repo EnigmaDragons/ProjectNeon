@@ -149,7 +149,7 @@ public sealed class MemberState : IStats
     {
         var shieldModificationAmount = Math.Min(amount, Counter(TemporalStatType.Shield).Amount);
         amount -= shieldModificationAmount;
-        GainShield(-shieldModificationAmount);
+        AdjustShieldNoPublish(-shieldModificationAmount);
         if (amount > 0)
             ChangeHp(-amount);
     }
@@ -157,7 +157,8 @@ public sealed class MemberState : IStats
 
     // Status Counters Commands
     public void Adjust(TemporalStatType t, float amount) => PublishAfter(() => Counter(t.ToString()).ChangeBy(amount));
-    public void GainShield(float amount) => Adjust(TemporalStatType.Shield, amount);
+    public void AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
+    private void AdjustShieldNoPublish(float amount) => Counter(TemporalStatType.Shield.ToString()).ChangeBy(amount);
     public void AdjustEvade(float amount) => Adjust(TemporalStatType.Evade, amount);
     public void AdjustSpellshield(float amount) => Adjust(TemporalStatType.Spellshield, amount);
     public void AdjustDoubleDamage(float amount) => Adjust(TemporalStatType.DoubleDamage, amount);
@@ -170,6 +171,7 @@ public sealed class MemberState : IStats
     public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
+    public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any(); 
     public IPayloadProvider GetTurnStartEffects()
     {
         var payload = new MultiplePayloads(

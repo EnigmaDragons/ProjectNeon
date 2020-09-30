@@ -17,4 +17,5 @@ public sealed class MemberStateSnapshot
     }
 
     public int Hp => Counters[TemporalStatType.HP.ToString()];
+    public int Shield => Counters[TemporalStatType.Shield.ToString()];
 }

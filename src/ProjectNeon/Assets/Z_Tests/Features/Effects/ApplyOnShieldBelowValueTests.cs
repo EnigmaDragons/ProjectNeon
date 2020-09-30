@@ -32,7 +32,7 @@ public class ApplyOnShieldBelowValueTests
                 .With(StatType.Toughness, 1f)
         );
 
-        target.State.GainShield(1);
+        target.State.AdjustShield(1);
 
         new ApplyOnShieldBelowValue(
             new SpellFlatDamageEffect(1), 1

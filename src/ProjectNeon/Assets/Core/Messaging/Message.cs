@@ -43,6 +43,7 @@ public static class Message
 
         public void Enqueue(object payload)
         {
+            Debug.Log($"Publishing Type {payload.GetType()}");
             _eventQueue.Enqueue(payload);
             ProcessQueuedMessages();
         }

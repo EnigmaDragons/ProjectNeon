@@ -12,7 +12,7 @@ public sealed class ShieldFlat : Effect
     public void Apply(EffectContext ctx)
     {
         ctx.Target.Members.ForEach(
-            member => member.State.GainShield(_amount)
+            member => member.State.AdjustShield(_amount)
         );
     }
 }
