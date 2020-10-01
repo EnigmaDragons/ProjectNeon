@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
@@ -25,9 +26,23 @@ public class FindAllEffectsOfTypeEditor : EditorWindow
         if (GUILayout.Button("Search")) 
         {
             var effects = GetAllEffectsWithType(_effectType);
-            var result = GetWindow<ListDisplayWindow>();
-            result.Init($"{_effectType} - {effects.Length} uses", effects);
-            result.Show();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_effectType} - {effects.Length} uses", effects)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+
+        if (GUILayout.Button("Show All Unused Effects"))
+        {
+            var zeroUsageResults = Enum.GetValues(typeof(EffectType)).Cast<EffectType>()
+                .Select(effectType => (effectType, GetAllEffectsWithType(effectType)))
+                .Where(e => e.Item2.Length == 0)
+                .Where(e => e.effectType != EffectType.Nothing)
+                .Select(e => e.effectType.ToString())
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized("Unused Effect Types", zeroUsageResults)
+                .Show();
             GUIUtility.ExitGUI();
         }
     }

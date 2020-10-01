@@ -1,4 +1,3 @@
-using System;
 
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER. EVENTUALLY WE NEED A TOOL TO FIND USAGES
 public enum EffectType
@@ -30,10 +29,6 @@ public enum EffectType
     OnShieldBroken = 21,
     RemoveShields = 22,
     OnAttacked = 26,
-    ShieldBasedOnShieldValue = 30,
-    HealPrimaryResource = 39,
-    ApplyOnShieldBelowValue = 40,
-    ApplyOnChance = 41,
     StunForNumberOfCards = 44,
     HealMagic = 45,
     AdjustPrimaryResource = 46,

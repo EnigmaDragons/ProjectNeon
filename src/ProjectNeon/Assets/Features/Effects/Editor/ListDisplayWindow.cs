@@ -6,10 +6,11 @@ public sealed class ListDisplayWindow : EditorWindow
     public string[] Items;
     public string Title;
 
-    public void Init(string title, string[] items)
+    public ListDisplayWindow Initialized(string title, string[] items)
     {
         Title = title;
         Items = items;
+        return this;
     }
     
     public void OnGUI()
