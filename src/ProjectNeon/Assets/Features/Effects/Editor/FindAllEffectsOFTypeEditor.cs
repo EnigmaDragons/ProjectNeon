@@ -26,7 +26,7 @@ public class FindAllEffectsOfTypeEditor : EditorWindow
         {
             var effects = GetAllEffectsWithType(_effectType);
             var result = GetWindow<ListDisplayWindow>();
-            result.Items = effects;
+            result.Init($"{_effectType} - {effects.Length} uses", effects);
             result.Show();
             GUIUtility.ExitGUI();
         }
@@ -34,9 +34,9 @@ public class FindAllEffectsOfTypeEditor : EditorWindow
     
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
-        var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);  //FindAssets uses tags check documentation for more info
+        var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);
         var a = new T[guids.Length];
-        for(int i =0; i<guids.Length; i++)         //probably could get optimized 
+        for(int i =0; i<guids.Length; i++)
         {
             string path = AssetDatabase.GUIDToAssetPath(guids[i]);
             a[i] = AssetDatabase.LoadAssetAtPath<T>(path);

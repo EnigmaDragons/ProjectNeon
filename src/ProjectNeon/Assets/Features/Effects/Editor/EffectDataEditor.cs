@@ -17,7 +17,6 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.OnEvaded, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "ReactionSequence" }},
         {EffectType.OnShieldBroken, new []{ "NumberOfTurns", "EffectScope", "ReactionSequence" }},
         {EffectType.OnDamaged, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "ReactionSequence" }},
-        {EffectType.CostResource, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.RemoveDebuffs, new [] { "NumberOfTurns" }},
         {EffectType.AdjustStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
