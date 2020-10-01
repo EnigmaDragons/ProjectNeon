@@ -77,19 +77,22 @@ public static class InterpolatedCardDescriptions
                 || data.EffectType == EffectType.HealOverTime
                 || data.EffectType == EffectType.AdjustStatAdditivelyBaseOnMagicStat)
             return owner.IsPresent
-                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
-                : $"{data.FloatAmount}x MAG";
+                ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
+                : WithBaseAmount(data, $"{data.FloatAmount}x MAG");
         if (data.EffectType == EffectType.ShieldToughness)
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";
-        if (data.EffectType == EffectType.HealFlat)
-            return RoundUp(data.FloatAmount).ToString();
         
         Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }
-    
+
+    private static string WithBaseAmount(EffectData data, string restOfString) 
+        => data.BaseAmount != 0 
+            ? $"{data.BaseAmount} + {restOfString}" 
+            : restOfString;
+
     private static string GenerateDurationDescription(EffectData data)
     {
         var value = data.NumberOfTurns.Value;

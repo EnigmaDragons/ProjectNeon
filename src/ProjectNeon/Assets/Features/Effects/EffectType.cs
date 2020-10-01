@@ -7,7 +7,6 @@ public enum EffectType
     DamageSpell = 50,
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
-    HealFlat = 1,
     PhysicalDamage = 2,
     AdjustStatAdditively = 3,
     RemoveDebuffs = 4,

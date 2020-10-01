@@ -15,10 +15,10 @@ MonoBehaviour:
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 1
+      EffectType: 45
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 5
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -28,7 +28,15 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedEffectSequence: {fileID: 0}
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 5
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReferencedSequence: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      StatusTag: 0
+      AtStartOfNextTurn: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -40,14 +48,12 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+    characterAnimation: {fileID: 0}
     atTargetAnimation:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    enemyToSpawn: {fileID: 0}
   - type: 20
     battleEffect:
       EffectType: 0
@@ -63,7 +69,15 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedEffectSequence: {fileID: 0}
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReferencedSequence: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      StatusTag: 0
+      AtStartOfNextTurn: 0
     conditionData:
       ConditionType: 2
       FloatAmount:
@@ -76,11 +90,9 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 11400000, guid: 51feb79e63d55d441a6b130e3a25e3ba,
         type: 2}
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+    characterAnimation: {fileID: 0}
     atTargetAnimation:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    enemyToSpawn: {fileID: 0}

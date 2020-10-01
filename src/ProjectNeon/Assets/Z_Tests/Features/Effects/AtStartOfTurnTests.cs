@@ -14,8 +14,8 @@ public class AtStartOfTurnTests
             NumberOfTurns = new IntReference(3),
             ReferencedSequence = TestableObjectFactory.Create<CardActionsData>().Initialized(new CardActionV2(new EffectData
             {
-                EffectType = EffectType.HealFlat,
-                FloatAmount = new FloatReference(1)
+                EffectType = EffectType.HealMagic,
+                BaseAmount = new IntReference(1)
             }))
         }, member, member);
         
