@@ -10,7 +10,7 @@ public class EffectDataEditor : PropertyDrawer
 {
     private List<string> _globalProperties = new List<string> { "AtStartOfNextTurn" };
     
-    private DictionaryWithDefault<EffectType, string[]> _relevantProperties = new DictionaryWithDefault<EffectType, string[]>(new string[] { "FloatAmount", "NumberOfTurns", "HitsRandomTargetMember", "BaseAmount" })
+    private DictionaryWithDefault<EffectType, string[]> _relevantProperties = new DictionaryWithDefault<EffectType, string[]>(new string[] { "BaseAmount", "FloatAmount", "NumberOfTurns", "HitsRandomTargetMember" })
     {
         {EffectType.Nothing, new string[0]},
         {EffectType.OnAttacked, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "ReactionSequence" }},
@@ -22,7 +22,6 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatAdditivelyWithMagic, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
-        {EffectType.AdjustTemporaryStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatAdditivelyBaseOnMagicStat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.EvadeAttacks, new [] { "FloatAmount" }},
