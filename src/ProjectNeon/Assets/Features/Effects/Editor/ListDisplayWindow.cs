@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEditor;
 using UnityEngine;
 
@@ -37,3 +39,4 @@ public sealed class ListDisplayWindow : EditorWindow
     }
 }
 
+#endif
