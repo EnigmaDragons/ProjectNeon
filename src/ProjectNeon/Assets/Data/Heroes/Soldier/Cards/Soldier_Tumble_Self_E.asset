@@ -15,22 +15,28 @@ MonoBehaviour:
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 19
-      FloatAmount:
+      EffectType: 67
+      BaseAmount:
         UseConstant: 1
         ConstantValue: 1
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: -1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
+        UseConstant: 0
+        ConstantValue: Evade
+        Variable: {fileID: 11400000, guid: bd06351127f63d4499e84d7f994d1c91, type: 2}
       HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
+      StatusTag: 0
+      AtStartOfNextTurn: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -42,10 +48,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+    characterAnimation: {fileID: 0}
     atTargetAnimation:
       UseConstant: 1
       ConstantValue: 

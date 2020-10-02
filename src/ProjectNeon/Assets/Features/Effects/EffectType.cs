@@ -11,6 +11,7 @@ public enum EffectType
     AdjustStatAdditively = 3,
     AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyWithMagic = 63,
+    AdjustCounter = 67,
     
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
@@ -21,7 +22,6 @@ public enum EffectType
     ResourceFlat = 7,
     DamageOverTimeFlat = 8,
     
-    EvadeAttacks = 19,
     AntiHeal = 60,
     ApplyVulnerable = 10,
     StunForNumberOfCards = 44,

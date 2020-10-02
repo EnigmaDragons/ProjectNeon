@@ -7,7 +7,7 @@ public class StringReference
     public string ConstantValue;
     public StringVariable Variable;
 
-    public string Value => UseConstant ? ConstantValue : Variable.Value;
+    public string Value => UseConstant || Variable == null ? ConstantValue : Variable.Value;
 
     public StringReference() : this(string.Empty) {}
     public StringReference(string value)

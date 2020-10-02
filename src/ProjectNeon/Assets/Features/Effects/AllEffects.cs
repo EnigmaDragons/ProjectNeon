@@ -26,7 +26,6 @@ public static class AllEffects
         { EffectType.StealLifeNextAttack, e => new NoEffect() }, // TODO: Implement Life Steal
         { EffectType.InterceptAttackForTurns, e => new InterceptAttack(e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.FloatAmount, e.HitsRandomTargetMember)},
-        { EffectType.EvadeAttacks, e => new Evade(e.IntAmount) },
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.NumberOfTurns) },
         { EffectType.OnAttacked, e => new EffectOnAttacked(false, e.IntAmount, e.NumberOfTurns, e.StatusTag, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionSequence) },
         { EffectType.OnEvaded, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence) },
@@ -55,7 +54,8 @@ public static class AllEffects
         { EffectType.AdjustStatAdditivelyWithMagic, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Magic())), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
-        { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)}
+        { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
+        { EffectType.AdjustCounter, e => new SimpleEffect(m => m.Adjust(e.EffectScope, e.IntAmount + e.BaseAmount))},
     };
     
     public static void Apply(EffectData effectData, EffectContext ctx)

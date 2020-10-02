@@ -15,7 +15,11 @@ MonoBehaviour:
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 19
+      EffectType: 67
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
         ConstantValue: 1
@@ -25,12 +29,14 @@ MonoBehaviour:
         ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: bd06351127f63d4499e84d7f994d1c91, type: 2}
       HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
+      StatusTag: 0
+      AtStartOfNextTurn: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -42,17 +48,19 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+    characterAnimation: {fileID: 0}
     atTargetAnimation:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
       EffectType: 9
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
         ConstantValue: 1
@@ -66,9 +74,11 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 11400000, guid: 42fd8e5aef2723d4d802f9c6b3aad732,
         type: 2}
+      StatusTag: 0
+      AtStartOfNextTurn: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -80,11 +90,9 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+    characterAnimation: {fileID: 0}
     atTargetAnimation:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    enemyToSpawn: {fileID: 0}
