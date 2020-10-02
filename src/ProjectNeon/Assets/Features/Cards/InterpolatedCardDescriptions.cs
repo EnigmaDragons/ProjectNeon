@@ -83,6 +83,8 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";
+        if (data.EffectType == EffectType.AdjustCounter)
+            return $"{data.EffectScope} {data.IntAmount + data.BaseAmount}";
         
         Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
         return "%%";
@@ -90,7 +92,7 @@ public static class InterpolatedCardDescriptions
 
     private static string WithBaseAmount(EffectData data, string restOfString) 
         => data.BaseAmount != 0 
-            ? $"{data.BaseAmount} + {restOfString}" 
+            ? $"{data.BaseAmount.Value} + {restOfString}" 
             : restOfString;
 
     private static string GenerateDurationDescription(EffectData data)

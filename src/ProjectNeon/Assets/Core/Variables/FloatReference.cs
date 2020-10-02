@@ -18,9 +18,5 @@ public class FloatReference
     }
 
     public override string ToString() => Value.ToString();
-
-    public static implicit operator float(FloatReference reference)
-    {
-        return reference.Value;
-    }
+    public static implicit operator float(FloatReference reference) => reference.Value;
 }
