@@ -13,6 +13,5 @@ public sealed class BattleSpeedPresenter : OnMessage<BattleSpeedChanged>
     private void UpdateUi(int factor)
     {
         speedLabel.text = "x" + factor;
-        panel.SetActive(factor > 1);
     }
 }
