@@ -66,14 +66,14 @@ public sealed class PartyAdventureState : ScriptableObject
     public void UpdateDecks(Deck one, Deck two, Deck three) 
         => UpdateDecks(one.Cards, two.Cards, three.Cards);
 
-    public void UpdateDecks(List<CardType> one, List<CardType> two, List<CardType> three) =>
+    public void UpdateDecks(params List<CardType>[] decks) =>
         UpdateState(() =>
         {
-            heroes[0].SetDeck(CreateDeck(one));
+            heroes[0].SetDeck(CreateDeck(decks[0]));
             if (heroes.Length > 1)
-                heroes[1]?.SetDeck(CreateDeck(two));
+                heroes[1]?.SetDeck(CreateDeck(decks[1]));
             if (heroes.Length > 2)
-                heroes[2]?.SetDeck(CreateDeck(three));
+                heroes[2]?.SetDeck(CreateDeck(decks[2]));
         });
 
     public void Add(Equipment e) => UpdateState(() => equipment.Add(e));
