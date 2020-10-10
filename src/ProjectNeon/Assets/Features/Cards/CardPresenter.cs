@@ -196,7 +196,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (!_canHighlight)
             return;
         
-        Log.Info($"Enter - {CardName}");
         Message.Publish(new CardHoverEnter(this));
     }
 

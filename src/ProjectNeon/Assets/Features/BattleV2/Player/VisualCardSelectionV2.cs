@@ -108,7 +108,6 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
 
     public void MoveTo(CardPresenter c)
     {
-        Debug.Log($"Moving to {c.CardName}");
         DisableHighlight();
         while(_indexSelector.Current != c)
             _indexSelector.MoveNext();
