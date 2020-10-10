@@ -8,12 +8,13 @@ public class PlayedCardV2 : IPlayedCard
     private readonly ResourceQuantity _spent;
     private readonly ResourceQuantity _gained;
     private readonly ResourceQuantity _xAmountSpent;
+    private readonly bool _isTransient;
 
-    public PlayedCardV2(Member performer, Target[] targets, Card card)
-        : this(performer, targets, card, 
+    public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient = false)
+        : this(performer, targets, card, isTransient,
             card.Cost.ResourcesSpent(performer), card.Type.Gain.ResourcesGained(performer), card.Type.Cost.XAmountSpent(performer)) {}
     
-    public PlayedCardV2(Member performer, Target[] targets, Card card, ResourceQuantity spent, ResourceQuantity gained, ResourceQuantity xAmountSpent)
+    public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient, ResourceQuantity spent, ResourceQuantity gained, ResourceQuantity xAmountSpent)
     {
         if (targets.Length < card.ActionSequences.Length)
             throw new InvalidDataException($"Cannot play {card.Name} with only {targets.Length}");
@@ -24,6 +25,7 @@ public class PlayedCardV2 : IPlayedCard
         _spent = spent;
         _gained = gained;
         _xAmountSpent = xAmountSpent;
+        _isTransient = isTransient;
     }
 
     public Member Member => _performer;
@@ -31,6 +33,7 @@ public class PlayedCardV2 : IPlayedCard
     public Target[] Targets => _targets;
     public ResourceQuantity Spent => _spent;
     public ResourceQuantity Gained => _gained;
+    public bool IsTransient => _isTransient;
 
     public void Perform(BattleStateSnapshot beforeCard)
     {
