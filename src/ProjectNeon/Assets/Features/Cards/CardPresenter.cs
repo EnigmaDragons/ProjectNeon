@@ -175,6 +175,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
 
+        if (!active)
+            SetCardHandControlsVisible(false);
         if (active)
             transform.SetAsLastSibling();
         highlight.SetActive(IsPlayable && active);

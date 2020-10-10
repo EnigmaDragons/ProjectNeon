@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public sealed class WorldStatusIconPresenter : StatusIcon
 {
@@ -16,11 +17,6 @@ public sealed class WorldStatusIconPresenter : StatusIcon
         _tooltip = tooltip;
     }
     
-    public void OnMouseEnter()
-    {
-        Debug.Log("Mouse Enter");
-        Message.Publish(new ShowTooltip(_tooltip));
-    }
-
-    public void OnMouseExit() => Message.Publish(new HideTooltip());
+    public void ShowTooltip() => Message.Publish(new ShowTooltip(_tooltip));
+    public void HideTooltip() => Message.Publish(new HideTooltip());
 }
