@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 436117402524171940}
   - component: {fileID: 4616138757886509911}
   - component: {fileID: 4889758969259994493}
-  m_Layer: 0
+  - component: {fileID: 1645932937954822950}
+  - component: {fileID: 8975472216860748642}
+  m_Layer: 10
   m_Name: Shield-Bot_CHAR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,10 +117,48 @@ MonoBehaviour:
   - {fileID: 9152543325551221689}
   - {fileID: 2279881937137690221}
   m_Bounds:
-    m_Center: {x: 1.4757562, y: 8.582182, z: 0}
+    m_Center: {x: 1.4757552, y: 8.582182, z: 0}
     m_Extent: {x: 4.9707904, y: 5.835251, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
+--- !u!61 &1645932937954822950
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331473935290368353}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.9581654, y: 8.596721}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 19.5, y: 14.71}
+    newSize: {x: 19.51171, y: 14.71}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.783315, y: 11.453928}
+  m_EdgeRadius: 0
+--- !u!114 &8975472216860748642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331473935290368353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32693d8fb104481e97454d66da937092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &881331259407605726
 GameObject:
   m_ObjectHideFlags: 0

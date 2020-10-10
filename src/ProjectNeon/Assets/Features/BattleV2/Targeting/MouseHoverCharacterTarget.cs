@@ -18,7 +18,7 @@ public class MouseHoverCharacterTarget : MonoBehaviour
         var v2 = new Vector2(wp.x, wp.y);
         if (Physics2D.RaycastNonAlloc(v2, Vector2.zero, _hits, 100f) > 0)
         {
-            var firstHit = _hits.FirstOrDefault(x => x.collider.gameObject.layer == characterLayer);
+            var firstHit = _hits.FirstOrDefault(x => (x.collider?.gameObject?.layer ?? 0) == characterLayer);
             var hoverChar = firstHit.transform.gameObject.GetComponentInChildren<HoverCharacter>();
             if (hoverChar == null)
             {

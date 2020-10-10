@@ -22,6 +22,7 @@ public sealed class HandVisualizer : MonoBehaviour
     private Vector3 _defaultPosition;
     private Vector3 _unfocusedPosition;
     private bool _isFocused = true;
+    private bool _useRecycle = false;
 
     public CardPresenter[] ShownCards => _cardPool.ShownCards;
 
@@ -122,6 +123,7 @@ public sealed class HandVisualizer : MonoBehaviour
             _cardPool.SwapItems(cardIndex, presenterIndex);
             c.SetHighlight(isHighlighted);
             c.SetTargetPosition(targetPosition);
+            c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.transform.SetAsLastSibling();
         }
         

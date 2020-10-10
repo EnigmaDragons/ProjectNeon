@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
@@ -29,7 +30,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     private bool _canHighlight;
     private Action _onClick;
+    private Action _onMiddleMouse;
     private Vector3 _position;
+    private bool _isDragging;
 
     public string CardName => _cardType.Name;
     public bool Contains(Card c) => HasCard && c.Id == _card.Id;
@@ -48,6 +51,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         if (Contains(c))
             Clear();
+    }
+
+    private void Update()
+    {
+        if (!_isDragging)
+            return;
     }
     
     public void Clear()
@@ -71,6 +80,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         highlight.SetActive(false);
         _canHighlight = canHighlight;
         _onClick = onClick;
+        _onMiddleMouse = () => { };
         _cardType = card;
         
         nameLabel.text = _cardType.Name;
@@ -92,6 +102,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         }
 
         card.LimitedToClass.IfPresent(c => tint.color = c.Tint);
+    }
+
+    public void SetMiddleButtonAction(Action action)
+    {
+        _onMiddleMouse = action;
     }
 
     private string CostLabel(ResourceCost cost)
@@ -148,6 +163,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             Log.Info($"Clicked {CardName}");
             _onClick();
         }
+        
+        if (eventData.button == PointerEventData.InputButton.Middle) 
+            _onMiddleMouse();
         if (_card != null && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
     }
