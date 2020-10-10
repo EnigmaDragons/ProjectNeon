@@ -11,7 +11,7 @@ public class SaveDeckButton : MonoBehaviour
 
     public void Save()
     {
-        party.UpdateDecks(state.HeroesDecks[0].Deck, state.HeroesDecks[1].Deck, state.HeroesDecks[2].Deck);
+        party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
     }
 
     private void Update() 

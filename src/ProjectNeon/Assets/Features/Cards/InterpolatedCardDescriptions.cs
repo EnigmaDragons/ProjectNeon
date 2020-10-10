@@ -78,7 +78,7 @@ public static class InterpolatedCardDescriptions
                 || data.EffectType == EffectType.AdjustStatAdditivelyBaseOnMagicStat)
             return owner.IsPresent
                 ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
-                : WithBaseAmount(data, $"{data.FloatAmount}x MAG");
+                : WithBaseAmount(data, "x MAG");
         if (data.EffectType == EffectType.ShieldToughness)
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
@@ -90,10 +90,12 @@ public static class InterpolatedCardDescriptions
         return "%%";
     }
 
-    private static string WithBaseAmount(EffectData data, string restOfString) 
-        => data.BaseAmount != 0 
-            ? $"{data.BaseAmount.Value} + {restOfString}" 
-            : restOfString;
+    private static string WithBaseAmount(EffectData data, string floatString)
+    {
+        var baseAmount = data.BaseAmount != 0 ? $"{data.BaseAmount.Value}" : "";
+        var floatAmount = data.FloatAmount > 0 ? $"{data.FloatAmount.Value}{floatString}" : "";
+        return baseAmount + floatAmount;
+    }
 
     private static string GenerateDurationDescription(EffectData data)
     {

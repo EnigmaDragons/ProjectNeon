@@ -3,9 +3,10 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
-public class CardPresenter : MonoBehaviour, IPointerDownHandler
+public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardRarityPresenter rarity;
@@ -29,10 +30,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     private bool _canHighlight;
     private Action _onClick;
+    private Action _onMiddleMouse;
     private Vector3 _position;
+    private bool _isDragging;
 
+    public string CardName => _cardType.Name;
     public bool Contains(Card c) => HasCard && c.Id == _card.Id;
-    public bool Contains(CardType c) => HasCard && _cardType == c;
+    public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
     public bool IsPlayable => canPlayHighlight.activeSelf;
     public bool IsHighlighted => highlight.activeSelf;
@@ -47,6 +51,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     {
         if (Contains(c))
             Clear();
+    }
+
+    private void Update()
+    {
+        if (!_isDragging)
+            return;
     }
     
     public void Clear()
@@ -70,6 +80,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         highlight.SetActive(false);
         _canHighlight = canHighlight;
         _onClick = onClick;
+        _onMiddleMouse = () => { };
         _cardType = card;
         
         nameLabel.text = _cardType.Name;
@@ -91,6 +102,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         }
 
         card.LimitedToClass.IfPresent(c => tint.color = c.Tint);
+    }
+
+    public void SetMiddleButtonAction(Action action)
+    {
+        _onMiddleMouse = action;
     }
 
     private string CostLabel(ResourceCost cost)
@@ -143,7 +159,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         if (battleState.SelectionStarted)
             return;
         if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            Log.Info($"Clicked {CardName}");
             _onClick();
+        }
+        
+        if (eventData.button == PointerEventData.InputButton.Middle) 
+            _onMiddleMouse();
         if (_card != null && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
     }
@@ -167,6 +189,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         //    Log.Info($"Moving Card {_cardType.Name} to {active} Highlighted position {position}. Target Position is {_position}");
         transform.DOScale(scale, 0.4f);
         transform.DOMove(position, 0.4f);
+        if (active && _card != null)
+            Message.Publish(new HighlightCardOwner(_card.Owner));
     }
 
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
@@ -184,4 +208,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     private bool AreCloseEnough(float first, float second) => WithinEpsilon(first - second);
     private bool WithinEpsilon(float f) => Math.Abs(f) < 0.05;
+    
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!_canHighlight)
+            return;
+        
+        Message.Publish(new CardHoverEnter(this));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        SetHighlight(false);
+    }
 }

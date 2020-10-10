@@ -28,11 +28,18 @@ public sealed class CardSelectionContext
     
     public CardSelectionContext WithOptions(IEnumerable<CardTypeData> options) 
         => new CardSelectionContext(Member, State, Strategy, options) { SelectedCard = SelectedCard };
-    
+
     public CardSelectionContext IfTrueDontPlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] excludedTagsCombination)
-        => shouldRefine(this)
+    {
+        if (!excludedTagsCombination.Any())
+        {
+            Log.Error($"{Member.Name} attempted to exclude all card types");
+            return this;
+        }
+        return shouldRefine(this)
             ? new CardSelectionContext(Member, State, Strategy, CardOptions.Where(o => !o.Is(excludedTagsCombination))) { SelectedCard = SelectedCard }
             : this;
+    }
     
     public CardSelectionContext IfTruePlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] includeTagsCombination)
         => shouldRefine(this)

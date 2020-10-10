@@ -46,7 +46,7 @@ public class CardResolutionZone : ScriptableObject
                     targets[i] = previousTarget;
         }
 
-        Add(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner)));
+        Add(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true));
         Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
         yield return new WaitForSeconds(1.6f);
     }
@@ -140,7 +140,7 @@ public class CardResolutionZone : ScriptableObject
     private void WrapupCard(IPlayedCard played, Card physicalCard)
     {
         LastPlayed = played;
-        if (played.Member.TeamType.Equals(TeamType.Party))
+        if (played.Member.TeamType.Equals(TeamType.Party) && !played.IsTransient)
             playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());
         isResolving = _moves.Any();
     }

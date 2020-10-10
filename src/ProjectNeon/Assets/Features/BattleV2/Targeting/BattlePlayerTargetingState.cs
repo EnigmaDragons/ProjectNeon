@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 [CreateAssetMenu(menuName = "Battle/BattlePlayerTargettingState")]
 public sealed class BattlePlayerTargetingState : ScriptableObject, IDirectionControllable
 {
@@ -9,11 +8,14 @@ public sealed class BattlePlayerTargetingState : ScriptableObject, IDirectionCon
 
     private IndexSelector<Target> _selector;
     
+    public Target[] Targets { get; private set; }
+    
     [Obsolete] public GameEvent OnTargetChanged => onTargetChanged;
 
     public BattlePlayerTargetingState WithPossibleTargets(Target[] targets)
     {
         _selector = new IndexSelector<Target>(targets);
+        Targets = targets;
         OnTargetChanged.Publish();
         Message.Publish(new TargetChanged(Current));
         return this;
