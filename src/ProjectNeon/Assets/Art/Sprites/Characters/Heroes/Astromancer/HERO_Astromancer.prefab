@@ -394,7 +394,9 @@ GameObject:
   - component: {fileID: 3513925849450735462}
   - component: {fileID: 9054776125561654805}
   - component: {fileID: 1564111934129560024}
-  m_Layer: 0
+  - component: {fileID: 2339973117626116771}
+  - component: {fileID: 8162181638713516103}
+  m_Layer: 10
   m_Name: Astromancer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,6 +580,44 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &2339973117626116771
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754442760279177856}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.25284553, y: 8.309955}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 14.003417, y: 16.869999}
+    newSize: {x: 14.003417, y: 16.869999}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.105869, y: 16.510271}
+  m_EdgeRadius: 0
+--- !u!114 &8162181638713516103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754442760279177856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32693d8fb104481e97454d66da937092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1764028405809782239
 GameObject:
   m_ObjectHideFlags: 0

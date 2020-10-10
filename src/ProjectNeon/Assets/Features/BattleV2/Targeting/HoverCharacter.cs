@@ -18,17 +18,11 @@ public class HoverCharacter : MonoBehaviour
     {
         if (!_hovered)
             return;
-        
+
         if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log($"UI - Confirm for {Member.Name}");
             _confirmAction();
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            Debug.Log($"UI - Cancel for {Member.Name}");
+        else if (Input.GetMouseButtonDown(1)) 
             _cancelAction();
-        }
     }
     
     private void Awake()
@@ -39,7 +33,6 @@ public class HoverCharacter : MonoBehaviour
     
     public void Init(Member m)
     {
-        Debug.Log($"Hover - Setup Hover Character {m}");
         _member = m;
     }
 
