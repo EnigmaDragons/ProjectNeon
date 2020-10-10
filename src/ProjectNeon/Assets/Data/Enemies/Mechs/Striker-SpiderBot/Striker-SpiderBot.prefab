@@ -1339,7 +1339,9 @@ GameObject:
   - component: {fileID: 5215460328098068467}
   - component: {fileID: 509324850629206580}
   - component: {fileID: 2532016192193525786}
-  m_Layer: 0
+  - component: {fileID: 8795155630094449675}
+  - component: {fileID: 2962128112023151743}
+  m_Layer: 10
   m_Name: 4-Legged-Robot_SILVER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1499,6 +1501,44 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &8795155630094449675
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186779838814199509}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.19750404, y: 2.880507}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 23.619026, y: 19.5}
+    newSize: {x: 23.619026, y: 19.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 18.369247, y: 13.224134}
+  m_EdgeRadius: 0
+--- !u!114 &2962128112023151743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186779838814199509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32693d8fb104481e97454d66da937092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8471020679210559314
 GameObject:
   m_ObjectHideFlags: 0

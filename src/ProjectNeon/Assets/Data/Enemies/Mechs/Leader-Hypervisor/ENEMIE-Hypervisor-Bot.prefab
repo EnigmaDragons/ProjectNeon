@@ -104,7 +104,9 @@ GameObject:
   - component: {fileID: 5067739940744379162}
   - component: {fileID: 8023040756497986825}
   - component: {fileID: 1275370825472012828}
-  m_Layer: 0
+  - component: {fileID: 1166193369145054390}
+  - component: {fileID: 5300899430312075586}
+  m_Layer: 10
   m_Name: HypervisorBot_CHAR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,6 +206,44 @@ MonoBehaviour:
     m_Extent: {x: 10.005291, y: 6.4355893, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
+--- !u!61 &1166193369145054390
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3177872715982708401}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.634122, y: 15.415607}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 15.036717, y: 20.259998}
+    newSize: {x: 15.036717, y: 20.259998}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 15.907063, y: 12.871178}
+  m_EdgeRadius: 0
+--- !u!114 &5300899430312075586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3177872715982708401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32693d8fb104481e97454d66da937092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3469543593361764492
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class MouseHoverProcessor : MonoBehaviour
 {
-    [SerializeField] private Material hoverMaterial;
+    [SerializeField] private MouseTargetHoverCharacter character;
     
     private Camera _cam;
     private readonly RaycastHit2D[] _hits = new RaycastHit2D[100];
-    private MouseHoverCharacter _hoverCharacter;
     private MouseHoverStatusIcon _statusIcon;
 
     private void Awake()
     {
         _cam = Camera.main;
-        _hoverCharacter = new MouseHoverCharacter(hoverMaterial);
         _statusIcon = new MouseHoverStatusIcon();
     }
 
@@ -27,7 +25,6 @@ public class MouseHoverProcessor : MonoBehaviour
 
         var hoverCharacter = Maybe<HoverCharacter>.Missing();
         var hoverStatusIcon = Maybe<WorldStatusIconPresenter>.Missing();
-        Debug.Log($"Num Raycast Hits {numHits}");
         if (numHits > 0)
         {
             for (var i = 0; i < numHits; i++)
@@ -52,7 +49,7 @@ public class MouseHoverProcessor : MonoBehaviour
                         hoverStatusIcon = c;
                 }
         }
-        _hoverCharacter.Update(hoverCharacter);
+        character.UpdateHover(hoverCharacter);
         _statusIcon.Update(hoverStatusIcon);
     }
 }

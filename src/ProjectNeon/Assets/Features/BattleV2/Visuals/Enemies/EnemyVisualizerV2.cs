@@ -23,14 +23,14 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         uis = new List<EnemyBattleUIPresenter>();
         var enemies = enemyArea.Enemies;
         for (var i = 0; i < enemies.Count; i++) 
-            InstantiateEnemyVisuals(enemies[i].Prefab, i);
+            InstantiateEnemyVisuals(enemies[i], i);
 
         yield break;
     }
 
-    private Transform InstantiateEnemyVisuals(GameObject prefab, int i)
+    private Transform InstantiateEnemyVisuals(Enemy enemy, int i)
     {
-        var enemyObject = Instantiate(prefab, transform);
+        var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
         var t = enemyObject.transform;
         t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
@@ -44,13 +44,22 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var positions = enemyArea.EnemyUiPositions;
         for (var i = 0; i < enemies.Count; i++)
             InstantiateEnemyUi(i, positions[i].gameObject.transform);
+
+        for (var i = 0; i < enemies.Count; i++)
+        {
+            var hoverCharacter = active[i].GetComponentInChildren<HoverCharacter>();
+            if (hoverCharacter == null)
+                Log.Error($"{enemies[i].Name} is missing a {nameof(HoverCharacter)}");
+            else
+                hoverCharacter.Init(state.GetMemberByEnemyIndex(i));
+        }
     }
 
     public void Spawn(Enemy enemy)
     {
         BattleLog.Write($"Spawning {enemy.Name}");
         var index = active.Count;
-        var enemyObject = InstantiateEnemyVisuals(enemy.Prefab, index);
+        var enemyObject = InstantiateEnemyVisuals(enemy, index);
         state.AddEnemy(enemy, enemyObject);
         InstantiateEnemyUi(index, enemyObject);
     }

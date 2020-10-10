@@ -156,11 +156,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Log.Info($"UI - Pointer Down - {CardName}");
         if (battleState.SelectionStarted)
             return;
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            Log.Info($"Clicked {CardName}");
+            Log.Info($"UI - Clicked {CardName}");
             _onClick();
         }
         

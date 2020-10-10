@@ -16,6 +16,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     private readonly List<GameObject> _heroes = new List<GameObject>();
     private readonly Dictionary<HeroCharacter, Animator> _animators = new Dictionary<HeroCharacter, Animator>();
     private readonly Dictionary<HeroCharacter, SpriteRenderer> _renderers = new Dictionary<HeroCharacter, SpriteRenderer>();
+    private readonly Dictionary<HeroCharacter, HoverCharacter> _hovers  = new Dictionary<HeroCharacter, HoverCharacter>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     
     public IEnumerator Setup()
@@ -37,6 +38,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     public void AfterBattleStateInitialized()
     {
         _damagesNew.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _hovers.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
     private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
@@ -55,6 +57,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
                  Debug.LogWarning($"{hero.Name} is missing a DamageNumbersController");
              else
                  _damagesNew[hero] = damageEffectController;
+
+             var hoverEffectController = character.GetComponentInChildren<HoverCharacter>();
+             if (hoverEffectController == null)
+                 Debug.LogWarning($"{hero.Name} is missing a HoverCharacter");
+             else
+                 _hovers[hero] = hoverEffectController;
 
              character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
         }

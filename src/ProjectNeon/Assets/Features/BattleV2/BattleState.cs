@@ -70,6 +70,7 @@ public class BattleState : ScriptableObject
     public void Init()
     {
         nextCardId = 0;
+        SelectionStarted = false;
     }
 
     public int GetNextCardId() => nextCardId++;

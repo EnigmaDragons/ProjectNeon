@@ -201,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7701796310407436850}
   m_Layer: 0
-  m_Name: Striker-AerialCombatDrone
+  m_Name: Striker_CombatDrone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,7 +316,9 @@ GameObject:
   - component: {fileID: 8618575022813634937}
   - component: {fileID: 3219495795001425136}
   - component: {fileID: 8886642378047290267}
-  m_Layer: 0
+  - component: {fileID: 6929110447299020552}
+  - component: {fileID: 925824201982573439}
+  m_Layer: 10
   m_Name: Main-Drone_RED
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,6 +438,44 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &6929110447299020552
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751774933570943776}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.00574255, y: 1.3127711}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.41, y: 8.489863}
+    newSize: {x: 7.41, y: 8.489863}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 7.2762847, y: 5.787161}
+  m_EdgeRadius: 0
+--- !u!114 &925824201982573439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751774933570943776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32693d8fb104481e97454d66da937092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5435602632903596011
 GameObject:
   m_ObjectHideFlags: 0

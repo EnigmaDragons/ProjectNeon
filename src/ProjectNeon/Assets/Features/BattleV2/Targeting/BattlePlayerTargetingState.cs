@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Battle/BattlePlayerTargettingState")]
@@ -41,6 +42,14 @@ public sealed class BattlePlayerTargetingState : ScriptableObject, IDirectionCon
     public void MovePrevious()
     {
         _selector.MovePrevious();
+        OnTargetChanged.Publish();
+        Message.Publish(new TargetChanged(Current));
+    }
+
+    public void MoveTo(int memberId)
+    {
+        while(_selector.Current.Members.All(m => m.Id != memberId))
+            _selector.MoveNext();
         OnTargetChanged.Publish();
         Message.Publish(new TargetChanged(Current));
     }
