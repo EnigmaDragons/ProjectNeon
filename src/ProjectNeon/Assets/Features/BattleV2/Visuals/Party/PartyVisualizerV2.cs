@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious>
+public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private GameObject hero1;
     [SerializeField] private GameObject hero2;
     [SerializeField] private GameObject hero3;
+    [SerializeField] private Material defaultSpriteMaterial;
+    [SerializeField] private Material cardOwnerMaterial;
 
     private readonly List<GameObject> _heroes = new List<GameObject>();
     private readonly Dictionary<HeroCharacter, Animator> _animators = new Dictionary<HeroCharacter, Animator>();
+    private readonly Dictionary<HeroCharacter, SpriteRenderer> _renderers = new Dictionary<HeroCharacter, SpriteRenderer>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     
     public IEnumerator Setup()
@@ -44,6 +47,8 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
              var character = Instantiate(hero.Body, heroOrigin.transform.position, Quaternion.identity, heroOrigin.transform);
              _heroes.Add(character);
              _animators[hero] = character.GetComponentInChildren<Animator>();
+             _renderers[hero] = character.GetComponentInChildren<SpriteRenderer>();
+             _renderers[hero].material = defaultSpriteMaterial;
              
              var damageEffectController = character.GetComponentInChildren<DamageNumbersController>();
              if (damageEffectController == null)
@@ -86,7 +91,17 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         t.DOSpiral(2);
         StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
     }
-    
+
+    protected override void Execute(HighlightCardOwner msg)
+    { 
+        _renderers.ForEach(kv =>
+        {
+            kv.Value.material = msg.Member.Name == kv.Key.Name
+                ? cardOwnerMaterial
+                : defaultSpriteMaterial;
+        });
+    }
+
     private IEnumerator ExecuteAfterDelay(Action a, float delay)
     {
         yield return new WaitForSeconds(delay);

@@ -167,6 +167,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         //    Log.Info($"Moving Card {_cardType.Name} to {active} Highlighted position {position}. Target Position is {_position}");
         transform.DOScale(scale, 0.4f);
         transform.DOMove(position, 0.4f);
+        Message.Publish(new HighlightCardOwner(_card.Owner));
     }
 
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
