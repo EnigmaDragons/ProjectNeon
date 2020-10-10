@@ -16,10 +16,10 @@ public static class RarityExtensions
     public static readonly Dictionary<Rarity, int> RarityFactors = new Dictionary<Rarity, int>
     {
         { Rarity.Starter, 8 },
-        { Rarity.Common, 16 },
-        { Rarity.Uncommon, 10},
-        { Rarity.Rare, 6},
-        { Rarity.Epic, 2}
+        { Rarity.Common, 80 },
+        { Rarity.Uncommon, 24 },
+        { Rarity.Rare, 6 },
+        { Rarity.Epic, 2 }
     };
 
     private static IEnumerable<Rarity> Factored(Rarity r) => Enumerable.Range(0, RarityFactors[r]).Select(_ => r);
