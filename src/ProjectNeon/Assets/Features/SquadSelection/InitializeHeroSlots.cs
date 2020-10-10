@@ -4,19 +4,21 @@ using UnityEngine;
 public class InitializeHeroSlots : MonoBehaviour
 {
     [SerializeField] private HeroPool heroPool;
-    [SerializeField] private SquadSlot[] slots;
+    [SerializeField] private GameObject container;
+    [SerializeField] private SquadSlot slotPrefab;
+    [SerializeField] private AdventureProgress adventureProgress;
 
     private void OnEnable()
     {
         heroPool.ClearSelections();
         if (heroPool.AvailableHeroes.None())
             throw new InvalidOperationException("No Available Heroes");
-        for (var i = 0; i < slots.Length; i++)
+        for (var i = 0; i < adventureProgress.Adventure.PartySize; i++)
         {
-            var s = slots[i];
+            var s = Instantiate(slotPrefab, container.transform);
             s.Init(i);
-            s.SelectNextHero();
-            s.SelectPreviousHero();
+            if (adventureProgress.Adventure.RequiredHeroes.Length > i)
+                s.SelectRequiredHero(adventureProgress.Adventure.RequiredHeroes[i]);
         }
     }
 }

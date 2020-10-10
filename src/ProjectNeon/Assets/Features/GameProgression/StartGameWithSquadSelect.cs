@@ -9,6 +9,6 @@ public class StartGameWithSquadSelect : OnMessage<StartNewGame>
     protected override void Execute(StartNewGame msg)
     {
         io.ClearCurrentSlot();
-        _navigator.NavigateToSquadSelection();
+        _navigator.NavigateToAdventureSelection();
     }
 }
