@@ -5,6 +5,7 @@
     Target[] Targets { get; }
     ResourceQuantity Spent { get; }
     ResourceQuantity Gained { get; }
+    bool IsTransient { get; }
 
     void Perform(BattleStateSnapshot beforeCard);
 }
