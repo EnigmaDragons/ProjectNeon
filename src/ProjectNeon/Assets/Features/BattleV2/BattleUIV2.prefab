@@ -485,7 +485,7 @@ RectTransform:
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
   m_Father: {fileID: 1045856409360972380}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -3244,13 +3244,14 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   zones: {fileID: 11400000, guid: 0a8497e1383588d4ab9b06ee1c09e8e1, type: 2}
   allowInteractions: 1
-  cardSpacingScreenPercent: 0.045
+  cardSpacingScreenPercent: 0.06
   cardPrototype: {fileID: -1608072616277939871, guid: d0f241a069af80a4fbe58317fdb27254,
     type: 3}
   maxCards: 12
   onlyAllowInteractingWithPlayables: 1
   unfocusedOffset: {x: 0, y: 360, z: 0}
   cardRotation: {x: 0, y: 0, z: 0}
+  spread: 0
 --- !u!1 &5190085308954272685
 GameObject:
   m_ObjectHideFlags: 0
@@ -5134,17 +5135,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8504407756149610973}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
   m_Father: {fileID: 1045856409360972380}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: 357}
-  m_SizeDelta: {x: 600, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 420}
+  m_SizeDelta: {x: 0, y: -860}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &585585718295649011
 MonoBehaviour:
@@ -5194,7 +5195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.003921569}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5718,8 +5719,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 308625068084424465}
-  - {fileID: 8955959355697548119}
   - {fileID: 2960460483531018563}
+  - {fileID: 8955959355697548119}
   m_Father: {fileID: 5524449074993072346}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

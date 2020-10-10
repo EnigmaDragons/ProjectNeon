@@ -23,6 +23,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         Message.Subscribe<PlayerTurnConfirmationStarted>(_ => SetIsConfirming(true), this);
         Message.Subscribe<ToggleUseCardAsBasic>(_ => ToggleAsBasic(), this);
         Message.Subscribe<RecycleCard>(_ => Recycle(), this);
+        Message.Subscribe<CardHoverEnter>(c => MoveTo(c.Card), this);
         cards.SetOnShownCardsChanged(() => _isDirty = true);
         _isDirty = true;
     }
@@ -101,6 +102,16 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _indexSelector.MovePrevious();
         while(!_indexSelector.Current.HasCard)
             _indexSelector.MovePrevious();
+        _lastIndex = _indexSelector.Index;
+        EnableHighlight();
+    }
+
+    public void MoveTo(CardPresenter c)
+    {
+        Debug.Log($"Moving to {c.CardName}");
+        DisableHighlight();
+        while(_indexSelector.Current != c)
+            _indexSelector.MoveNext();
         _lastIndex = _indexSelector.Index;
         EnableHighlight();
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardPresenter : MonoBehaviour, IPointerDownHandler
+public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardRarityPresenter rarity;
@@ -31,8 +31,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
     private Action _onClick;
     private Vector3 _position;
 
+    public string CardName => _cardType.Name;
     public bool Contains(Card c) => HasCard && c.Id == _card.Id;
-    public bool Contains(CardType c) => HasCard && _cardType == c;
+    public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
     public bool IsPlayable => canPlayHighlight.activeSelf;
     public bool IsHighlighted => highlight.activeSelf;
@@ -143,7 +144,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         if (battleState.SelectionStarted)
             return;
         if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            Log.Info($"Clicked {CardName}");
             _onClick();
+        }
         if (_card != null && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
     }
@@ -167,7 +171,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
         //    Log.Info($"Moving Card {_cardType.Name} to {active} Highlighted position {position}. Target Position is {_position}");
         transform.DOScale(scale, 0.4f);
         transform.DOMove(position, 0.4f);
-        Message.Publish(new HighlightCardOwner(_card.Owner));
+        if (active && _card != null)
+            Message.Publish(new HighlightCardOwner(_card.Owner));
     }
 
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
@@ -185,4 +190,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler
 
     private bool AreCloseEnough(float first, float second) => WithinEpsilon(first - second);
     private bool WithinEpsilon(float f) => Math.Abs(f) < 0.05;
+    
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!_canHighlight)
+            return;
+        
+        Log.Info($"Enter - {CardName}");
+        Message.Publish(new CardHoverEnter(this));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        SetHighlight(false);
+    }
 }
