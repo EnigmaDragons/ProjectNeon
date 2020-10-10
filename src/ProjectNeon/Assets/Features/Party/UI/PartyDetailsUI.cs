@@ -13,7 +13,7 @@ public sealed class PartyDetailsUI : OnMessage<PartyAdventureStateChanged>
     protected override void AfterEnable()
     {
         if (_panels.None())
-            Enumerable.Range(0, 3).ForEach(_ => _panels.Add(Instantiate(panelPrototype, parent)));
+            Enumerable.Range(0, party.BaseHeroes.Length).ForEach(_ => _panels.Add(Instantiate(panelPrototype, parent)));
         UpdateUi();
     }
 
