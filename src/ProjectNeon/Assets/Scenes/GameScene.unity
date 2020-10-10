@@ -255,10 +255,55 @@ PrefabInstance:
     - target: {fileID: 3678068816973108755, guid: 957849cdc03141d42b6077ebbd714d4d,
         type: 3}
       propertyPath: m_Name
-      value: SceneMusic
+      value: MusicPlayer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 957849cdc03141d42b6077ebbd714d4d, type: 3}
+--- !u!1 &915418579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 915418581}
+  - component: {fileID: 915418580}
+  m_Layer: 0
+  m_Name: SceneMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &915418580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915418579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99582a5cdf6e48ff98728f552df87ec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 8300000, guid: d00803fa9574a844c88f98ccba4f3132, type: 3}
+  musicPlayer: {fileID: 11400000, guid: bb968fa8fe7df6140b8d296d1edd49af, type: 2}
+--- !u!4 &915418581
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915418579}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1567084925
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +490,7 @@ PrefabInstance:
     - target: {fileID: 742529811534488448, guid: 252cb80a44234454c88a2d0f0c1f29ff,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000030546444
+      value: -0.00009891815
       objectReference: {fileID: 0}
     - target: {fileID: 742529811534488448, guid: 252cb80a44234454c88a2d0f0c1f29ff,
         type: 3}
