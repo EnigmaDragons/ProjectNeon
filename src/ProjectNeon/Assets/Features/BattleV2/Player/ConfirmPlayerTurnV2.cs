@@ -1,16 +1,23 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardPlayZone playArea;
-    [SerializeField] private GameObject confirmUi;
+    [SerializeField] private Button confirmUi;
 
     private bool _isConfirming = false;
     private bool _confirmRequested;
     
     public bool CanConfirm => playArea.Cards.Length == battleState.PlayerState.CurrentStats.CardPlays() || _confirmRequested;
 
+    private void Awake()
+    {
+        confirmUi.gameObject.SetActive(false);
+        confirmUi.onClick.AddListener(Confirm);
+    }
+    
     private void OnEnable()
     {
         Message.Subscribe<BeginPlayerTurnConfirmation>(_ => OnConfirmationRequested(), this);
@@ -35,7 +42,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
             return;
         
         _isConfirming = CanConfirm;
-        confirmUi.SetActive(_isConfirming);
+        confirmUi.gameObject.SetActive(_isConfirming);
         if (_isConfirming)
             Message.Publish(new PlayerTurnConfirmationStarted());
         else
@@ -47,6 +54,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         if (!CanConfirm) return;
 
         _confirmRequested = false;
+        confirmUi.gameObject.SetActive(false);
         playArea.Clear();
         BattleLog.Write("Player Confirmed Turn");
         Message.Publish(new PlayerTurnConfirmed());
