@@ -9,8 +9,8 @@ public class TemporalStateMetadata
 
     public TemporalStateMetadata(bool isDebuff, int maxUses, int maxDurationTurns, bool isIndefinite, StatusTag tag)
     {
-        if (MaxDurationTurns == 0 && !isIndefinite || MaxUses == 0)
-            Log.Warn("Created Effect is permanently inactive");
+        if (!isIndefinite && MaxDurationTurns == 0 && MaxUses == 0)
+            Log.Warn($"Created Effect is permanently inactive. Max Uses {maxUses}. Max Duration Turn {maxDurationTurns}.");
         
         IsDebuff = isDebuff;
         MaxUses = maxUses;

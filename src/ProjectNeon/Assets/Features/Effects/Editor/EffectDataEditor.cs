@@ -25,7 +25,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustStatAdditivelyBaseOnMagicStat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustCounter, new [] {"BaseAmount", "EffectScope" }},
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
-        {EffectType.AtStartOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence" }},
+        {EffectType.AtStartOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence", "StatusTag" }},
         {EffectType.AtEndOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence" }},
         {EffectType.DuplicateStatesOfType, new [] { "StatusTag" }},
     };
