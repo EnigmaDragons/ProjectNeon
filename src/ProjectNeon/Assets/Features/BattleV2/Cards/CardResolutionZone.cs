@@ -90,6 +90,7 @@ public class CardResolutionZone : ScriptableObject
     
     public void RemoveLastPlayedCard()
     {
+        Debug.Log("UI - Remove Last Played Card");
         if (_moves.None() || isResolving) return;
         
         var played = _moves.Last();
