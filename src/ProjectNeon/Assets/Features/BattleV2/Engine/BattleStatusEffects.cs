@@ -61,7 +61,6 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
                     Message.Unsubscribe(this);
                     Message.Subscribe<StatusEffectResolved>(Execute, this);
                     Message.Publish(new StatusEffectResolved(member));
-                    ;
                 }, this);
             }
             else
