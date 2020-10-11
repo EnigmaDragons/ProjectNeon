@@ -122,7 +122,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     protected override void Execute(CharacterAnimationRequested e)
     {
         if (!state.IsEnemy(e.MemberId)) return;
-        animationContext.Update(e);
+        animationContext.SetAnimation(e);
             
         var enemyIndex = state.GetEnemyIndexByMemberId(e.MemberId);
         var enemy = active[enemyIndex];

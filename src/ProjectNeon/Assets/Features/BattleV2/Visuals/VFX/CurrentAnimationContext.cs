@@ -7,7 +7,7 @@ public class CurrentAnimationContext : ScriptableObject
     public AnimationData AnimationData;
     public Target Target;
 
-    public void Update(CharacterAnimationRequested animation)
+    public void SetAnimation(CharacterAnimationRequested animation)
     {
         MemberId = animation.MemberId;
         AnimationData = animation.Animation;
