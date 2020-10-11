@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7605820688483639389}
   - component: {fileID: 6085893019110610764}
   - component: {fileID: 8958766670079056163}
+  - component: {fileID: 8223741770832325139}
   m_Layer: 0
   m_Name: MouseControls
   m_TagString: Untagged
@@ -59,6 +60,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targeting: {fileID: 11400000, guid: 20a4cf61caaf22543944f4179628fc5f, type: 2}
   hoverMaterial: {fileID: 2100000, guid: 5a1ff2e690b01dd458b4d7db975f233c, type: 2}
+--- !u!114 &8223741770832325139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33737200336344242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b2c3351a024a159c20aa625ce6df55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons: 01000000
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f893fbceb2a3f694883d32dd0e423149, type: 2}
+        m_MethodName: Cancel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &165632996793638704
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,14 +594,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82a0ffc392d38f43a890a67ccc46413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   zone: {fileID: 11400000, guid: 69ea9d8ec0e73e64499d227be3823c82, type: 2}
-  allowInteractions: 0
-  onCardClickDestination: {fileID: 0}
   cardSpacingScreenPercent: 0.15
   cardPrototype: {fileID: 3684002121787314529}
   maxCards: 1
-  onlyAllowInteractingWithPlayables: 0
   cardRotation: {x: 0, y: 0, z: 0}
   cardPool: []
 --- !u!1 &1459209702498056341
@@ -3104,6 +3128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a100f274915f1e84b88d6be57849ad22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: {fileID: 0}
   counter: {fileID: 8787316799056094897}
 --- !u!1 &5223746016782438790
 GameObject:
@@ -6582,12 +6607,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcd052460bf41fb4f8708cace118e4ff, type: 3}
---- !u!224 &308625068084424465 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7125729051783674151, guid: dcd052460bf41fb4f8708cace118e4ff,
-    type: 3}
-  m_PrefabInstance: {fileID: 7398244361601603126}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8594580844033786293 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1291914829372462979, guid: dcd052460bf41fb4f8708cace118e4ff,
@@ -6600,6 +6619,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dafa42163a047e3b467e73aeadc1a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &308625068084424465 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7125729051783674151, guid: dcd052460bf41fb4f8708cace118e4ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 7398244361601603126}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8151282302876218393
 PrefabInstance:
   m_ObjectHideFlags: 0
