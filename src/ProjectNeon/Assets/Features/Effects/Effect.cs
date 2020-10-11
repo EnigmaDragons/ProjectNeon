@@ -30,11 +30,11 @@ public class EffectContext
 public static class EffectExtensions
 {
     public static void Apply(this Effect effect, Member source, Target target) 
-        => effect.Apply(new EffectContext(source, target, PartyAdventureState.InMemory(), new PlayerState(), 
+        => effect.Apply(new EffectContext(source, target, PartyAdventureState.InMemory(), new PlayerState(0), 
             target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m)));
     
     public static void Apply(this Effect effect, Member source, Member target) 
-        => effect.Apply(new EffectContext(source, new Single(target), PartyAdventureState.InMemory(), new PlayerState(), 
+        => effect.Apply(new EffectContext(source, new Single(target), PartyAdventureState.InMemory(), new PlayerState(0), 
             new [] { source, target }.SafeToDictionary(m => m.Id, m => m)));
 }
 

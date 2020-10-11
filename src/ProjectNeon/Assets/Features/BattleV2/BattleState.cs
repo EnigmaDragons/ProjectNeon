@@ -11,6 +11,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private EnemyArea enemies;
+    [SerializeField] private AdventureProgress adventure;
     [SerializeField] private bool needsCleanup;
     [SerializeField] private int nextCardId;
 
@@ -47,7 +48,7 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
-    private PlayerState _playerState = new PlayerState();
+    private PlayerState _playerState = new PlayerState(0);
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
 
     // Setup
@@ -108,7 +109,7 @@ public class BattleState : ScriptableObject
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
         
-        _playerState = new PlayerState();
+        _playerState = new PlayerState(adventure.PartyCardCycles);
         
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;
