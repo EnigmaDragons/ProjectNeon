@@ -10,27 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: TestDebuff_E
+  m_Name: Samurai_CounterStance_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 3
+      EffectType: 26
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: -10
+        ConstantValue: -1
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: -1
+        ConstantValue: 1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
-        ConstantValue: Attack
+        UseConstant: 0
+        ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 807e25dcc1699944aaae59df86d21b1f,
+        type: 2}
+      StatusTag: 1
+      AtStartOfNextTurn: 1
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -42,11 +49,9 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+    characterAnimation: {fileID: 0}
     atTargetAnimation:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    enemyToSpawn: {fileID: 0}

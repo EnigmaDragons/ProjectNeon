@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleStatusEffects : OnMessage<StatusEffectResolved>
 {
     [SerializeField] private BattleState state;
-    [SerializeField] private FloatReference delay = new FloatReference(0.8f);
+    [SerializeField] private FloatReference delay = new FloatReference(0.5f);
 
     private readonly Queue<Member> _membersToProcess = new Queue<Member>();
     private bool _isProcessingStartOfTurn;
