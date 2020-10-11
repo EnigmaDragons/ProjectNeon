@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class PlayerState
 {
-    private readonly IPlayerStats _playerBaseStats;
+    private IPlayerStats _playerBaseStats;
     private readonly List<ITemporalPlayerState> _mods = new List<ITemporalPlayerState>();
     
     public IPlayerStats CurrentStats => _playerBaseStats
         .Plus(_mods.Where(x => x.IsActive).Select(x => x.PlayerStats));
 
-    public PlayerState()
+    public PlayerState(int numCardCycles = 0)
     {
         _playerBaseStats = new PlayerStatAddends()
             .With(PlayerStatType.CardDraws, 6)
             .With(PlayerStatType.CardPlays, 3)
-            .With(PlayerStatType.CardCycles, 2);
+            .With(PlayerStatType.CardCycles, numCardCycles);
     }
 
     public void AddState(ITemporalPlayerState mod) => PublishAfter(() => _mods.Add(mod));

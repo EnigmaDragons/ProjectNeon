@@ -5,7 +5,7 @@ using UnityEngine;
 public class BaseHero : ScriptableObject, HeroCharacter
 {
     [SerializeField] private Sprite bust;
-    [SerializeField] private CenterPoint body;
+    [SerializeField] private GameObject body;
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private Deck startingDeck;
     [SerializeField] private int startingCredits = 100;
@@ -24,7 +24,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
 
     public string Name => name;
     public Sprite Bust => bust;
-    public CenterPoint Body => body;
+    public GameObject Body => body;
     public CharacterClass Class => characterClass;
     public Deck Deck => startingDeck;
     public CardType ClassCard => Class.BasicCard;

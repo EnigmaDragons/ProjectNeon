@@ -10,10 +10,12 @@ public class InitializeAdventureSelection : MonoBehaviour
 
     private void Start()
     {
-        foreach (var adventure in library.UnlockedAdventures)
+        for (var i = 0; i < library.UnlockedAdventures.Length; i++)
         {
+            var adventure = library.UnlockedAdventures[i];
             var adventureInstance = Instantiate(adventureDisplayPrefab, container.transform);
-            adventureInstance.Init(adventure);
+            var currentIndex = i;
+            adventureInstance.Init(adventure, () => BeginAdventure(currentIndex));
         }
     }
 
@@ -24,6 +26,7 @@ public class InitializeAdventureSelection : MonoBehaviour
             var adventure = library.UnlockedAdventures[index];
             adventureProgress.Init(adventure);
             navigator.NavigateToSquadSelection();
+            
         }
     }
 }

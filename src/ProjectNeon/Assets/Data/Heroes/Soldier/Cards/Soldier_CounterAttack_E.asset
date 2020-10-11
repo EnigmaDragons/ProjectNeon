@@ -16,6 +16,10 @@ MonoBehaviour:
   - type: 30
     battleEffect:
       EffectType: 0
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -29,9 +33,10 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
       StatusTag: 0
+      AtStartOfNextTurn: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -45,7 +50,6 @@ MonoBehaviour:
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 11400000, guid: 779ea0a92bea0d245aeb0c8f5734c057,
       type: 2}
-    animation: {fileID: 11400000, guid: 779ea0a92bea0d245aeb0c8f5734c057, type: 2}
     atTargetAnimation:
       UseConstant: 1
       ConstantValue: 
@@ -54,23 +58,28 @@ MonoBehaviour:
   - type: 1
     battleEffect:
       EffectType: 26
-      FloatAmount:
+      BaseAmount:
         UseConstant: 1
         ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 1
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 11400000, guid: 90807d9a261d17545a515682317294db,
         type: 2}
       StatusTag: 1
+      AtStartOfNextTurn: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -83,7 +92,6 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
-    animation: {fileID: 0}
     atTargetAnimation:
       UseConstant: 1
       ConstantValue: 

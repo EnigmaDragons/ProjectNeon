@@ -14,13 +14,13 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     [SerializeField] private float widthBetweenEnemies = 1.5f;
     [SerializeField] private CurrentAnimationContext animationContext;
     
-    [ReadOnly, SerializeField] private List<CenterPoint> active = new List<CenterPoint>();
+    [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
     [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
     
     public IEnumerator Setup()
     {
         active.ForEach(Destroy);
-        active = new List<CenterPoint>();
+        active = new List<GameObject>();
         uis = new List<EnemyBattleUIPresenter>();
         var enemies = enemyArea.Enemies;
         for (var i = 0; i < enemies.Count; i++) 
@@ -29,13 +29,22 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         yield break;
     }
 
-    private CenterPoint InstantiateEnemyVisuals(Enemy enemy, int i)
+    private GameObject InstantiateEnemyVisuals(Enemy enemy, int i)
     {
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
         var t = enemyObject.transform;
         t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
-        enemyArea.WithUiTransforms(active.Select(a => a.transform), active.Select(a => a.Position));
+        enemyArea.WithUiTransforms(active.Select(a => a.transform), active.Select(a =>
+        {
+            var centerPoint = a.GetComponentInChildren<CenterPoint>();
+            if (centerPoint == null)
+            {
+                Log.Error($"{enemy.Name} is missing a CenterPoint");
+                return Vector3.zero;
+            }
+            return centerPoint.transform.position;
+        }));
         return enemyObject;
     }
     

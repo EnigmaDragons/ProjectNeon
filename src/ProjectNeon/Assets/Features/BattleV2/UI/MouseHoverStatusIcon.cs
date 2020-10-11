@@ -12,13 +12,11 @@ public class MouseHoverStatusIcon
         
         if (icon.IsPresent && _last.Value != icon.Value)
         {
-            Debug.Log($"Show Tooltip for {icon.Value.name}");
             _last = icon.Value;
             _last.Value.ShowTooltip();
         }
         else if (icon.IsMissing)
         {
-            Debug.Log($"Hide Tooltip");
             _last = Maybe<WorldStatusIconPresenter>.Missing();
             Message.Publish(new HideTooltip());
         }

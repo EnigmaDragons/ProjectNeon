@@ -5,21 +5,24 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner>
+public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner, UnhighlightCardOwner, DisplaySpriteEffect>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private GameObject hero1;
     [SerializeField] private GameObject hero2;
     [SerializeField] private GameObject hero3;
+    // TODO: Pull this material management out into separate class
     [SerializeField] private Material defaultSpriteMaterial;
     [SerializeField] private Material cardOwnerMaterial;
     [SerializeField] private CurrentAnimationContext animationContext;
-    
-    private readonly List<CenterPoint> _heroes = new List<CenterPoint>();
+    [SerializeField] private Material evadeMaterial;
+    private readonly List<GameObject> _heroes = new List<GameObject>();
+
     private readonly Dictionary<HeroCharacter, Animator> _animators = new Dictionary<HeroCharacter, Animator>();
     private readonly Dictionary<HeroCharacter, SpriteRenderer> _renderers = new Dictionary<HeroCharacter, SpriteRenderer>();
     private readonly Dictionary<HeroCharacter, HoverCharacter> _hovers  = new Dictionary<HeroCharacter, HoverCharacter>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
+    private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
     
     public IEnumerator Setup()
     {
@@ -33,7 +36,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
             SetupHero(hero2, heroes[1], 9);
         if (heroes.Length > 2)
             SetupHero(hero3, heroes[2], 1);
-        var centerPoints = Enumerable.Range(0, 3).Select(x => _heroes.Count > x ? heroes[x].Body.Position : Vector3.zero);
+        var centerPoints = Enumerable.Range(0, 3).Select(x => _heroes.Count > x && _centers.ContainsKey(heroes[x]) ? _centers[heroes[x]].transform.position : Vector3.zero);
         state.PartyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform }, centerPoints);
         yield break;
     }
@@ -66,6 +69,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
                  Debug.LogWarning($"{hero.Name} is missing a HoverCharacter");
              else
                  _hovers[hero] = hoverEffectController;
+             
+             var centerPoint = character.GetComponentInChildren<CenterPoint>();
+             if (centerPoint == null)
+                 Debug.LogWarning($"{hero.Name} is missing a CenterPoint");
+             else
+                 _centers[hero] = centerPoint;
 
              character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
         }
@@ -105,13 +114,38 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     }
 
     protected override void Execute(HighlightCardOwner msg)
-    { 
+    {
+        if (_renderers.Count < 2)
+            return;
+        
         _renderers.ForEach(kv =>
         {
             kv.Value.material = msg.Member.Name == kv.Key.Name
                 ? cardOwnerMaterial
                 : defaultSpriteMaterial;
         });
+    }
+
+    protected override void Execute(UnhighlightCardOwner msg) => RevertMaterial(msg.Member.Name);
+
+    protected override void Execute(DisplaySpriteEffect msg)
+    {
+        if (msg.EffectType == SpriteEffectType.Evade)
+        {
+            _renderers
+                .Where(kv => kv.Key.Name == msg.Target.Name)
+                .ForEach(kv => kv.Value.material = evadeMaterial);
+            StartCoroutine(ExecuteAfterDelay(() => RevertMaterial(msg.Target.Name), 1.4f));
+        }
+        else
+            Log.Error($"Unknown Sprite Effect Type {msg.EffectType}");
+    }
+
+    private void RevertMaterial(string memberName)
+    {
+        _renderers
+            .Where(kv => memberName.Equals(kv.Key.Name))
+            .ForEach(kv => kv.Value.material = defaultSpriteMaterial);
     }
 
     private IEnumerator ExecuteAfterDelay(Action a, float delay)

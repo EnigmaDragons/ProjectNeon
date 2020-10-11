@@ -13,6 +13,7 @@ public class AdventureProgress : ScriptableObject
     public bool IsFinalStage => currentStageIndex == currentAdventure.Stages.Length - 1;
     public bool IsLastSegmentOfStage => currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
+    public int PartyCardCycles => currentAdventure.BaseNumberOfCardCycles;
     public Stage CurrentStage
     {
         get { 

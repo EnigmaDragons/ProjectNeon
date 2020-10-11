@@ -4,7 +4,7 @@ public interface HeroCharacter
 {
     string Name { get; }
     Sprite Bust { get; }
-    CenterPoint Body { get; }
+    GameObject Body { get; }
     CharacterClass Class { get; }
     Deck Deck { get; }
     CardType ClassCard { get; }
@@ -17,7 +17,7 @@ public class InMemoryHeroCharacter : HeroCharacter
 {
     public string Name { get; set; } = "Unknown";
     public Sprite Bust { get; set; }
-    public CenterPoint Body { get; set; }
+    public GameObject Body { get; set; }
     public CharacterClass Class { get; set; }
     public Deck Deck { get; set; }
     public CardType ClassCard { get; set; }

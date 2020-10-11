@@ -11,6 +11,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private EnemyArea enemies;
+    [SerializeField] private AdventureProgress adventure;
     [SerializeField] private bool needsCleanup;
     [SerializeField] private int nextCardId;
 
@@ -48,7 +49,7 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
     private Dictionary<int, Vector3> _centerPointsById = new Dictionary<int, Vector3>();
-    private PlayerState _playerState = new PlayerState();
+    private PlayerState _playerState = new PlayerState(0);
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
 
     // Setup
@@ -112,7 +113,7 @@ public class BattleState : ScriptableObject
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
         
-        _playerState = new PlayerState();
+        _playerState = new PlayerState(adventure.PartyCardCycles);
         
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;
@@ -170,15 +171,22 @@ public class BattleState : ScriptableObject
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void SetRewardCards(CardType[] cards) => UpdateState(() => rewardCards = cards);
 
-    public void AddEnemy(Enemy e, CenterPoint uiPosition) 
+    public void AddEnemy(Enemy e, GameObject gameObject) 
         => UpdateState(() =>
         {
             var id = _nextEnemyId++;
-            EnemyArea.Add(e, uiPosition.transform);
+            EnemyArea.Add(e, gameObject.transform);
             _enemiesById[id] = e;
             _membersById[id] = e.AsMember(id);
-            _uiTransformsById[id] = uiPosition.transform;
-            _centerPointsById[id] = uiPosition.Position;
+            _uiTransformsById[id] = gameObject.transform;
+            var centerPoint = gameObject.GetComponentInChildren<CenterPoint>();
+            if (centerPoint == null)
+            {
+                Log.Error($"{e.Name} is missing a CenterPoint");
+                _centerPointsById[id] = Vector3.zero;
+            }
+            else
+                _centerPointsById[id] = centerPoint.transform.position;
             memberNames[id] = e.name;
         });
 
