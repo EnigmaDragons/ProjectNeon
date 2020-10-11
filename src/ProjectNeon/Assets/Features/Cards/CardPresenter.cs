@@ -155,10 +155,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         
         transform.DOScale(scale, 0.4f);
         transform.DOMove(position, 0.4f);
-        if (active && _card != null)
-            Message.Publish(new HighlightCardOwner(_card.Owner));
-        else
-            Message.Publish(new UnhighlightCardOwner(_card.Owner));
+        if (_card != null)
+            if (active)
+                Message.Publish(new HighlightCardOwner(_card.Owner));
+            else
+                Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
 
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
