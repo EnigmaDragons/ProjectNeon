@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public sealed class ReactionCardType : ScriptableObject, CardTypeData
 {
+    [SerializeField] private string displayName;
     [PreviewSprite] [SerializeField] private Sprite art;
     [SerializeField] [TextArea(1, 12)] private string description;
     [SerializeField] private ResourceCost cost;
@@ -11,7 +12,9 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private CardReactionSequence actionSequence;
     
-    public string Name => name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
+    public string Name => string.IsNullOrWhiteSpace(displayName) 
+        ? name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords() 
+        : displayName;
     public Sprite Art => art;
     public string Description => description;
     public string TypeDescription => "Reaction";
