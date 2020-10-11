@@ -3,13 +3,11 @@
 [CreateAssetMenu(menuName = "GameContent/Animation")]
 public class AnimationData : ScriptableObject
 {
-    [SerializeField] private string animationName;
-    [SerializeField] private AnimationPosition position;
-    [SerializeField] private Vector2 offset;
-    [SerializeField] private bool flipped;
+    [SerializeField] private StringReference animationName;
+    [SerializeField] private IntReference intAmount;
+    [SerializeField] private FloatReference timeAmount;
 
     public string AnimationName => animationName;
-    public AnimationPosition Position => position;
-    public Vector2 Offset => offset;
-    public bool Flipped => flipped;
+    public int IntAmount => intAmount;
+    public float TimeAmount => timeAmount;
 }

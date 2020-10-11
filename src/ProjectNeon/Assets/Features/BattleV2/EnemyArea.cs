@@ -7,9 +7,11 @@ public class EnemyArea : ScriptableObject
 {
     [SerializeField] private List<Enemy> enemies;
     [SerializeField] private List<Transform> uiPositions;
+    [SerializeField] private List<Vector3> centerPoints;
 
     public List<Enemy> Enemies => enemies;
     public List<Transform> EnemyUiPositions => uiPositions;
+    public List<Vector3> CenterPoints => centerPoints;
 
     public EnemyArea Initialized(IEnumerable<Enemy> newEnemies)
     {
@@ -17,9 +19,10 @@ public class EnemyArea : ScriptableObject
         return this;
     }
 
-    public EnemyArea WithUiTransforms(IEnumerable<Transform> positions)
+    public EnemyArea WithUiTransforms(IEnumerable<Transform> positions, IEnumerable<Vector3> centers)
     {
         uiPositions = positions.ToList();
+        centerPoints = centers.ToList();
         return this;
     }
 

@@ -12,14 +12,15 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     [SerializeField] private EnemyBattleUIPresenter ui;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
-
-    [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
+    [SerializeField] private CurrentAnimationContext animationContext;
+    
+    [ReadOnly, SerializeField] private List<CenterPoint> active = new List<CenterPoint>();
     [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
     
     public IEnumerator Setup()
     {
         active.ForEach(Destroy);
-        active = new List<GameObject>();
+        active = new List<CenterPoint>();
         uis = new List<EnemyBattleUIPresenter>();
         var enemies = enemyArea.Enemies;
         for (var i = 0; i < enemies.Count; i++) 
@@ -28,14 +29,14 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         yield break;
     }
 
-    private Transform InstantiateEnemyVisuals(Enemy enemy, int i)
+    private CenterPoint InstantiateEnemyVisuals(Enemy enemy, int i)
     {
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
         var t = enemyObject.transform;
         t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
-        enemyArea.WithUiTransforms(active.Select(a => a.transform));
-        return t;
+        enemyArea.WithUiTransforms(active.Select(a => a.transform), active.Select(a => a.Position));
+        return enemyObject;
     }
     
     public void AfterBattleStateInitialized()
@@ -61,7 +62,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var index = active.Count;
         var enemyObject = InstantiateEnemyVisuals(enemy, index);
         state.AddEnemy(enemy, enemyObject);
-        InstantiateEnemyUi(index, enemyObject);
+        InstantiateEnemyUi(index, enemyObject.transform);
     }
 
     private void InstantiateEnemyUi(int index, Transform enemyObject)
@@ -112,7 +113,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     protected override void Execute(CharacterAnimationRequested e)
     {
         if (!state.IsEnemy(e.MemberId)) return;
-
+        animationContext.Update(e);
+            
         var enemyIndex = state.GetEnemyIndexByMemberId(e.MemberId);
         var enemy = active[enemyIndex];
         Log.Info($"Began Animation for {enemy.name}");

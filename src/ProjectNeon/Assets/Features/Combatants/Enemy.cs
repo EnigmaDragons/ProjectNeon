@@ -10,7 +10,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private int powerLevel = 1;
     [SerializeField] private int rewardCredits = 25;
-    [SerializeField] private GameObject prefab;
+    [SerializeField] private CenterPoint prefab;
     [SerializeField] private StringReference deathEffect;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private bool unique;
@@ -41,7 +41,7 @@ public class Enemy : ScriptableObject
     public int PowerLevel => powerLevel;
     public int PreferredTurnOrder => preferredTurnOrder;
     public int RewardCredits => rewardCredits;
-    public GameObject Prefab => prefab;
+    public CenterPoint Prefab => prefab;
     public string DeathEffect => deathEffect;
     public BattleRole Role => battleRole;
     public bool IsUnique => unique;

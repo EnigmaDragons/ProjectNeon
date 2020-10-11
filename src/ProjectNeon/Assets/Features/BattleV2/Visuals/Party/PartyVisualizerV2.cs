@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -12,8 +13,9 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     [SerializeField] private GameObject hero3;
     [SerializeField] private Material defaultSpriteMaterial;
     [SerializeField] private Material cardOwnerMaterial;
-
-    private readonly List<GameObject> _heroes = new List<GameObject>();
+    [SerializeField] private CurrentAnimationContext animationContext;
+    
+    private readonly List<CenterPoint> _heroes = new List<CenterPoint>();
     private readonly Dictionary<HeroCharacter, Animator> _animators = new Dictionary<HeroCharacter, Animator>();
     private readonly Dictionary<HeroCharacter, SpriteRenderer> _renderers = new Dictionary<HeroCharacter, SpriteRenderer>();
     private readonly Dictionary<HeroCharacter, HoverCharacter> _hovers  = new Dictionary<HeroCharacter, HoverCharacter>();
@@ -31,7 +33,8 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
             SetupHero(hero2, heroes[1], 9);
         if (heroes.Length > 2)
             SetupHero(hero3, heroes[2], 1);
-        state.PartyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform });
+        var centerPoints = Enumerable.Range(0, 3).Select(x => _heroes.Count > x ? heroes[x].Body.Position : Vector3.zero);
+        state.PartyArea.WithUiPositions(new[] { hero1.transform, hero2.transform, hero3.transform }, centerPoints);
         yield break;
     }
 
@@ -75,6 +78,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     protected override void Execute(CharacterAnimationRequested e)
     {
         if (!state.IsHero(e.MemberId)) return;
+        animationContext.Update(e);
         
         var hero = state.GetHeroById(e.MemberId);
         var animator = _animators[hero];
