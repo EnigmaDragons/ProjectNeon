@@ -125,7 +125,15 @@ public sealed class MemberState : IStats
         _multiplierMods.Add(mods);
     });
 
-    public void CleanseDebuffs() => RemoveTemporaryEffects(s => s.IsDebuff);
+    public void CleanseDebuffs()
+    {
+        RemoveTemporaryEffects(s => s.IsDebuff);
+        _counters[TemporalStatType.TurnStun.ToString()].Set(0);
+        _counters[TemporalStatType.CardStun.ToString()].Set(0);
+        _counters[TemporalStatType.Confusion.ToString()].Set(0);
+        _counters[TemporalStatType.Blind.ToString()].Set(0);
+    }
+
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() =>
     {
         _additiveMods.RemoveAll(condition);
