@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Soldier_MediKit
+  m_Name: Soldier_CoordinatedAttack
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 40fd504cd19f6e24b9628f639e1d3bd0, type: 3}
-  description: Heal yourself {E[0]} HP
-  typeDescription: {fileID: 11400000, guid: 75170a5ed09ccd446acf355ca119f761, type: 2}
-  tags: 
+  art: {fileID: 21300000, guid: e241d0a11dcaeb84aba1350b792ce969, type: 3}
+  description: All Allies gain 0.25xLeadership ATK for 5 Turns
+  typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
+  tags: 02000000
   onlyPlayableByClass: {fileID: 11400000, guid: 1a326935dbf5d6941acd1038e9c4d77f,
     type: 2}
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
     plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
-  - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: 442d868119eb49a4ca5aaa24f53c5c9c, type: 2}
+  - scope: 1
+    group: 2
+    cardActions: {fileID: 0}
   chainedCard: {fileID: 0}

@@ -21,6 +21,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.RemoveDebuffs, new [] { "NumberOfTurns" }},
         {EffectType.AdjustStatAdditively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatAdditivelyWithMagic, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
+        {EffectType.AdjustStatAdditivelyWithLeadership, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatAdditivelyBaseOnMagicStat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustCounter, new [] {"BaseAmount", "EffectScope" }},
@@ -28,6 +29,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AtStartOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence", "StatusTag" }},
         {EffectType.AtEndOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence" }},
         {EffectType.DuplicateStatesOfType, new [] { "StatusTag" }},
+        {EffectType.DamageOverTime, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" } }
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

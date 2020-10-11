@@ -50,6 +50,7 @@ public static class MemberExtensions
     public static int MaxShield(this Member m) => RoundUp(m.State[StatType.Toughness] * 2);
     public static int Attack(this Member m) => m.State.Attack();
     public static int Magic(this Member m) => m.State.Magic();
+    public static int Leadership(this Member m) => m.State.Leadership();
     public static int Armor(this Member m) => m.State.Armor();
     public static int Resistance(this Member m) => m.State.Resistance();
     public static int Toughness(this Member m) => m.State.Toughness();
