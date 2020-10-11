@@ -32,7 +32,7 @@ public class SelectCardTargetsV2 : OnMessage<ConfirmTargetSelectionRequested, Ca
         Message.Publish(new TargetSelectionBegun(_card.Type));
 
         cardPresenter.Set(_card, () => { }, (_, __) => false);
-        cardPresenter.SetHighlightGraphicState(true);
+        cardPresenter.SetHighlightGraphicState(false);
         Log.Info($"Showing Selected Card {_card.Name}", gameObject);
         uiView.SetActive(true);
 

@@ -30,19 +30,28 @@ public sealed class Attack  : Effect
         // Processing Double Damage
         var damage = Attacker.State[TemporalStatType.DoubleDamage] > 0 ? Damage.WithFactor(2) : Damage;
         Attacker.State.AdjustDoubleDamage(-1);
-        var effect = new DealDamage(damage);
-        
-        foreach (var member in selectedTarget.Members)
+
+        if (Attacker.State[TemporalStatType.Blind] > 0)
         {
-            if (member.State[TemporalStatType.Evade] > 0)
-            {
-                member.State.AdjustEvade(-1);
-                Message.Publish(new DisplaySpriteEffect(SpriteEffectType.Evade, member));
-            }
-            else 
-                effect.Apply(Attacker, member);
+            Attacker.State.Adjust(TemporalStatType.Blind, -1);
+            BattleLog.Write($"{Attacker.Name} was blinded, so their attack missed.");
         }
-        
+        else
+        {
+            var effect = new DealDamage(damage);
+
+            foreach (var member in selectedTarget.Members)
+            {
+                if (member.State[TemporalStatType.Evade] > 0)
+                {
+                    member.State.AdjustEvade(-1);
+                    Message.Publish(new DisplaySpriteEffect(SpriteEffectType.Evade, member));
+                }
+                else
+                    effect.Apply(Attacker, member);
+            }
+        }
+
         Message.Publish(new Finished<Attack> { Message = this });
     }
 }

@@ -236,7 +236,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             ToggleAsBasic();
     }
     
-    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new CardHoverEnter(this));
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (IsPlayable)
+            Message.Publish(new CardHoverEnter(this));
+    }
+
     public void OnPointerExit(PointerEventData eventData) => SetHandHighlight(false);
 
     #endregion

@@ -87,7 +87,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     protected override void Execute(CharacterAnimationRequested e)
     {
         if (!state.IsHero(e.MemberId)) return;
-        animationContext.Update(e);
+        animationContext.SetAnimation(e);
         
         var hero = state.GetHeroById(e.MemberId);
         var animator = _animators[hero];
