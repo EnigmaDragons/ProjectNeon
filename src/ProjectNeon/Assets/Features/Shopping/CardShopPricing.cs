@@ -3,13 +3,13 @@ public static class CardPricing
     public static int ShopPrice(this CardType c)
     {
         if (c.Rarity == Rarity.Common)
-            return WithShopPricingVariance(50);
+            return WithShopPricingVariance(40);
         if (c.Rarity == Rarity.Uncommon)
-            return WithShopPricingVariance(75);
+            return WithShopPricingVariance(80);
         if (c.Rarity == Rarity.Rare)
-            return WithShopPricingVariance(125);
+            return WithShopPricingVariance(160);
         if (c.Rarity == Rarity.Epic)
-            return WithShopPricingVariance(175);
+            return WithShopPricingVariance(320);
         return WithShopPricingVariance(25);
     }
 
