@@ -3,6 +3,7 @@ using UnityEngine;
 
 public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
 {
+    [SerializeField] private GameObject panel;
     [SerializeField] private WorldHPBarController hpBar;
     [SerializeField] private DamageEffect hpNumbers;
     [SerializeField] private DamageEffect shieldNumbers;
@@ -13,9 +14,12 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
     private Member _member;
 
     public bool Contains(Member m) => _member.Equals(m);
+
+    private void Awake() => panel.SetActive(false);
     
     public EnemyBattleUIPresenter Initialized(Member m)
     {
+        panel.SetActive(true);
         _member = m;
         hpBar.Init(m);
         hpNumbers.Init(m);

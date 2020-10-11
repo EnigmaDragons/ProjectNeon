@@ -35,16 +35,18 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         active.Add(enemyObject);
         var t = enemyObject.transform;
         t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
-        enemyArea.WithUiTransforms(active.Select(a => a.transform), active.Select(a =>
-        {
-            var centerPoint = a.GetComponentInChildren<CenterPoint>();
-            if (centerPoint == null)
+        enemyArea.WithUiTransforms(
+            active.Select(a => a.transform), 
+            active.Select(a =>
             {
-                Log.Error($"{enemy.Name} is missing a CenterPoint");
-                return Vector3.zero;
-            }
-            return centerPoint.transform.position;
-        }));
+                var centerPoint = a.GetComponentInChildren<CenterPoint>();
+                if (centerPoint == null)
+                {
+                    Log.Error($"{enemy.Name} is missing a CenterPoint");
+                    return Vector3.zero;
+                }
+                return centerPoint.transform.position;
+            }));
         return enemyObject;
     }
     
@@ -53,7 +55,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var enemies = enemyArea.Enemies;
         var positions = enemyArea.EnemyUiPositions;
         for (var i = 0; i < enemies.Count; i++)
-            InstantiateEnemyUi(i, positions[i].gameObject.transform);
+            SetupEnemyUi(i, positions[i].gameObject.transform);
 
         for (var i = 0; i < enemies.Count; i++)
         {
@@ -71,15 +73,17 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var index = active.Count;
         var enemyObject = InstantiateEnemyVisuals(enemy, index);
         state.AddEnemy(enemy, enemyObject);
-        InstantiateEnemyUi(index, enemyObject.transform);
+        SetupEnemyUi(index, enemyObject.transform);
     }
 
-    private void InstantiateEnemyUi(int index, Transform enemyObject)
+    private void SetupEnemyUi(int index, Transform enemyObject)
     {
         var enemyMember = state.GetMemberByEnemyIndex(index);
         var pos = enemyObject.transform.position;
-        uis.Add(Instantiate(ui, pos, Quaternion.identity, enemyObject)
-            .Initialized(enemyMember));
+        var customUi = enemyObject.GetComponentInChildren<EnemyBattleUIPresenter>();
+        uis.Add(customUi != null
+            ? customUi.Initialized(enemyMember)
+            : Instantiate(ui, pos, Quaternion.identity, enemyObject).Initialized(enemyMember));
     }
 
     private IEnumerator ExecuteAfterDelay(Action a, float delay)
