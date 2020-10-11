@@ -10,27 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Drone-CoveringFire
+  m_Name: Drone_ShockBlast
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: 825f5b5f57295f947a8435a3e48c9f62, type: 3}
-  description: Deal {E[0]} damage. Gain {E[1]} shield.
+  art: {fileID: 21300000, guid: 23c9a25cf823ee9409f29ebe89d42b03, type: 3}
+  description: ' Deal {E[0]} magic damage. <b>Stun 1</b>.'
   typeDescription: {fileID: 11400000, guid: 05396cecd1c61ab4dba3e9e72676792d, type: 2}
-  tags: 0400000001000000
+  tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
     type: 2}
   cost:
-    cost: 0
+    cost: 2
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-    isXCost: 0
+    plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-    isXCost: 0
+    plusXCost: 0
   rarity: 0
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: dfebb0482d99a594ea7216cc48bb99e2, type: 2}
-  - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: b827927846ffa5e4f9d542e22d491758, type: 2}
+    cardActions: {fileID: 11400000, guid: 9df1a274c21c13d4d8f693291cde01a1, type: 2}
+  chainedCard: {fileID: 0}
