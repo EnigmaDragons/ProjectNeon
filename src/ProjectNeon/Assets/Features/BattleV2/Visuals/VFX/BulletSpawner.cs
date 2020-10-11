@@ -14,7 +14,10 @@ public class BulletSpawner : MonoBehaviour
         for (var i = 0; i < animationContext.AnimationData.IntAmount; i++)
         {
             var position = transform.position;
-            Instantiate(bullet, position, Quaternion.LookRotation((battleState.GetCenterPoint(animationContext.Target) - position).normalized));
+            var targetPosition = battleState.GetCenterPoint(animationContext.Target);
+            var direction = (targetPosition - position).normalized;
+            var rotation = Quaternion.LookRotation(direction);
+            Instantiate(bullet, position, rotation);
             yield return new WaitForSeconds(animationContext.AnimationData.TimeAmount);
         }
         gameObject.SetActive(false);
