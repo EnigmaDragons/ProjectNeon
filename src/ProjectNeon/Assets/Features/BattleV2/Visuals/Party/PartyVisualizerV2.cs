@@ -5,14 +5,16 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner, UnhighlightCardOwner>
+public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner, UnhighlightCardOwner, DisplaySpriteEffect>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private GameObject hero1;
     [SerializeField] private GameObject hero2;
     [SerializeField] private GameObject hero3;
+    // TODO: Pull this material management out into separate class
     [SerializeField] private Material defaultSpriteMaterial;
     [SerializeField] private Material cardOwnerMaterial;
+    [SerializeField] private Material evadeMaterial;
 
     private readonly List<GameObject> _heroes = new List<GameObject>();
     private readonly Dictionary<HeroCharacter, Animator> _animators = new Dictionary<HeroCharacter, Animator>();
@@ -114,10 +116,25 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         });
     }
 
-    protected override void Execute(UnhighlightCardOwner msg)
+    protected override void Execute(UnhighlightCardOwner msg) => RevertMaterial(msg.Member.Name);
+
+    protected override void Execute(DisplaySpriteEffect msg)
+    {
+        if (msg.EffectType == SpriteEffectType.Evade)
+        {
+            _renderers
+                .Where(kv => kv.Key.Name == msg.Target.Name)
+                .ForEach(kv => kv.Value.material = evadeMaterial);
+            StartCoroutine(ExecuteAfterDelay(() => RevertMaterial(msg.Target.Name), 1.4f));
+        }
+        else
+            Log.Error($"Unknown Sprite Effect Type {msg.EffectType}");
+    }
+
+    private void RevertMaterial(string memberName)
     {
         _renderers
-            .Where(kv => kv.Key.Name == msg.Member.Name)
+            .Where(kv => memberName.Equals(kv.Key.Name))
             .ForEach(kv => kv.Value.material = defaultSpriteMaterial);
     }
 
