@@ -7,10 +7,10 @@ using UnityEngine;
 
 public static class AnimationExtensions
 {
-    public static void DOPunchScaleStandard(this Transform t, Vector3 originalScale)
+    public static void DOPunchScaleStandard(this Transform t, Vector3 originalScale, float factor = 1.28f)
     {
         t.localScale = originalScale;
-        t.DOPunchScale(new Vector3(1.28f, 1.28f, 1.28f), 1f, 1);
+        t.DOPunchScale(new Vector3(factor, factor, factor), 1f, 1);
     }
 
     public static IEnumerator PlayAnimationUntilFinished(this Animator animator, string animationName, Action<float> onFinished, int layer = 0, float maxTime = 5f)

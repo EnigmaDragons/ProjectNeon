@@ -62,7 +62,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         statuses.AddRange(_member.State.StatusesOfType(StatusTag.DamageOverTime)
             .Select(s => new CurrentStatusValue { Type = StatusTag.DamageOverTime.ToString(), Icon = icons[StatusTag.DamageOverTime].Icon, Text = s.RemainingTurns.Select(r => r.ToString(), () => ""), 
-                Tooltip = $"Takes {s.Amount} at the Start of the next {s.RemainingTurns} turns"}));
+                Tooltip = $"Takes {s.Amount.Value} at the Start of the next {s.RemainingTurns.Value} turns"}));
         
         if (_member.State.HasStatus(StatusTag.HealOverTime))
             statuses.Add(new CurrentStatusValue {  Type = StatusTag.HealOverTime.ToString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });

@@ -197,7 +197,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             costResourceTypeIcon.sprite = cost.ResourceType.Icon;
         }
 
-        _cardType.LimitedToClass.IfPresent(c => tint.color = c.Tint);
+        tint.color = _cardType.LimitedToClass.Select(c => c.Tint, () => Color.white);
         canPlayHighlight.SetActive(IsPlayable);
         highlight.SetActive(IsPlayable);
     }
