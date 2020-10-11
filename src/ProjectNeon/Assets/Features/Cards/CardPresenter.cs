@@ -3,7 +3,6 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
@@ -27,6 +26,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     private Card _card;
     private CardTypeData _cardType;
+    private bool _debug = false;
 
     private Func<BattleState, Card, bool> _getCanPlay;
     private Action _onClick;
@@ -108,7 +108,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (_card == null)
             throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
         
-        Debug.Log($"UI - Toggle as Basic {CardName}");
+        DebugLog($"UI - Toggle as Basic {CardName}");
         
         _card.UseAsBasic = asBasic;
         _cardType = _card.Type;
@@ -121,7 +121,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         if (isDisabled)
         {
-            Debug.Log($"{CardName} is disabled.");
+            DebugLog($"{CardName} is disabled.");
             canPlayHighlight.SetActive(false);
             controls.SetActive(false);
         }
@@ -133,7 +133,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
 
-        Debug.Log($"Setting Highlight {active}");
+        DebugLog($"Setting Highlight {active}");
         controls.SetActive(active);
         if (active)
             transform.SetAsLastSibling();
@@ -196,19 +196,25 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private bool CheckIfCanPlay()
     {
         var result = _card != null && _getCanPlay(battleState, _card);
-        Debug.Log($"Can Play {CardName}: {result}");
+        DebugLog($"Can Play {CardName}: {result}");
         return result;
     }
 
+    private void DebugLog(string msg)
+    {
+        if (_debug)
+            Log.Info(msg);
+    }
+    
     #region Mouse Controls
     public void OnPointerDown(PointerEventData eventData)
     {
-        Log.Info($"UI - Pointer Down - {CardName}");
+        DebugLog($"UI - Pointer Down - {CardName}");
         if (battleState.SelectionStarted)
             return;
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            Log.Info($"UI - Clicked {CardName}");
+            DebugLog($"UI - Clicked {CardName}");
             _onClick();
         }
         

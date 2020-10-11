@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class CardsVisualizer : MonoBehaviour
 {
-    [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZone zone;
-    [SerializeField] private CardPlayZone onCardClickDestination;
     [SerializeField] private float cardSpacingScreenPercent = 0.15f;
     [SerializeField] private CardPresenter cardPrototype;
     [SerializeField] private int maxCards = 12;
@@ -149,19 +147,7 @@ public class CardsVisualizer : MonoBehaviour
         return (emptyCardIndex, emptyCard);
     }
     
-    public void SelectCard(int cardIndex) => Debug.LogError("Can no longer select cards from Card Sets except hand");
-
-//    public void SetFocus(bool isFocused)
-//    {
-//        if (_isFocused == isFocused)
-//            return;
-//        
-//        _isFocused = isFocused;
-//        _isDirty = true;
-//    }
-
-    public void RefreshPositions()
-    {
-        UpdateCurrentCards(_oldCards);
-    }
+    [Obsolete] public void SelectCard(int cardIndex) => Debug.LogError("Can no longer select cards from Card Sets except hand");
+    
+    public void RefreshPositions() => UpdateCurrentCards(_oldCards);
 }
