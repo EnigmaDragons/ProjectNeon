@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7605820688483639389}
   - component: {fileID: 6085893019110610764}
+  - component: {fileID: 8958766670079056163}
   m_Layer: 0
   m_Name: MouseControls
   m_TagString: Untagged
@@ -43,6 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c03c58047224790b90dd4896eb3e064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 8958766670079056163}
+--- !u!114 &8958766670079056163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33737200336344242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19572c74bd3a44818c1ba90208931e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targeting: {fileID: 11400000, guid: 20a4cf61caaf22543944f4179628fc5f, type: 2}
   hoverMaterial: {fileID: 2100000, guid: 5a1ff2e690b01dd458b4d7db975f233c, type: 2}
 --- !u!1 &165632996793638704
 GameObject:
@@ -5171,8 +5186,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursor: {fileID: 3476672061207136824}
   battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
-  enemyOffset: {x: 0, y: 1.2, z: 0}
-  partyOffset: {x: 0, y: 3, z: 0}
+  enemyOffset: {x: 0, y: 4, z: 0}
+  partyOffset: {x: 0, y: 4, z: 0}
 --- !u!1 &8688332551121079727
 GameObject:
   m_ObjectHideFlags: 0

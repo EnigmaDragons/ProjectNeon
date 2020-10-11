@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class CardsVisualizer : MonoBehaviour
 {
-    [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZone zone;
-    [SerializeField] private bool allowInteractions = true;
-    [SerializeField] private CardPlayZone onCardClickDestination;
     [SerializeField] private float cardSpacingScreenPercent = 0.15f;
     [SerializeField] private CardPresenter cardPrototype;
     [SerializeField] private int maxCards = 12;
-    [SerializeField] private bool onlyAllowInteractingWithPlayables = false;
     [SerializeField] private Vector3 cardRotation;
     
     [ReadOnly] [SerializeField] private CardPresenter[] cardPool;
@@ -102,18 +98,17 @@ public class CardsVisualizer : MonoBehaviour
             var isHighlighted = c.IsHighlighted;
             
             if (!c.HasCard)
-                c.MoveTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
+                c.TeleportTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
             
             var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
-            c.Set(card, () => SelectCard(cardIndex));
-            c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.IsPlayableByHero(state)));
+            c.Set(card, () => SelectCard(cardIndex), (_, __) => false);
             c.SetDisabled(!_isFocused);
             if (!card.Owner.IsConscious() || card.Owner.IsStunnedForCurrentTurn())
                 c.SetDisabled(true);
             SwapCardPoolSpots(cardIndex, presenterIndex);
-            c.SetHighlight(isHighlighted);
+            c.SetHandHighlight(isHighlighted);
             c.SetTargetPosition(targetPosition);
         }
     }
@@ -152,24 +147,7 @@ public class CardsVisualizer : MonoBehaviour
         return (emptyCardIndex, emptyCard);
     }
     
-    public void SelectCard(int cardIndex)
-    {
-        if (allowInteractions)
-            if (cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
-                onCardClickDestination.PutOnBottom(zone.Take(cardIndex));
-    }
-
-    public void SetFocus(bool isFocused)
-    {
-        if (_isFocused == isFocused)
-            return;
-        
-        _isFocused = isFocused;
-        _isDirty = true;
-    }
-
-    public void RefreshPositions()
-    {
-        UpdateCurrentCards(_oldCards);
-    }
+    [Obsolete] public void SelectCard(int cardIndex) => Debug.LogError("Can no longer select cards from Card Sets except hand");
+    
+    public void RefreshPositions() => UpdateCurrentCards(_oldCards);
 }
