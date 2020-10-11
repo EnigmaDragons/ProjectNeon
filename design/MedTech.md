@@ -2,14 +2,14 @@
 
 ----
 
-##Role Descriptor:
+## Role Descriptor:
 - Healing
 - Strategy
 - Support
 
-##Main Mechanic:
-The MedTech provide best healing
-The MedTech can empower the team, or individual combatants.
+## Main Mechanic:
+- The MedTech provide best healing
+- The MedTech can empower the team, or individual combatants.
 
 ### Healing cards can:
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChanged>
@@ -10,6 +11,7 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
 
     private readonly List<SpriteRenderer> _icons = new List<SpriteRenderer>();
 
+    private int _lastAmount;
     private Member _member;
     
     public VisualResourceCounterPresenter Initialized(Member m)
@@ -39,6 +41,10 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
                 _icons[i].gameObject.SetActive(i < resourceAmount);
             
             _icons[i].sprite = primaryResourceIcon;
+            if (i + 1 > _lastAmount)
+                _icons[i].transform.DOPunchScaleStandard(spritePrototype.transform.localScale);
         }
+
+        _lastAmount = resourceAmount;
     }
 }

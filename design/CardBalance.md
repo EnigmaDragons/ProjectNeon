@@ -1,17 +1,19 @@
-Characters Defaults:
+Characters Reference Baselines:
 40      health
 10      primary stat
 8       secondary stat
 6       weak stat
 0       dead stat
 
+
 Card Rarity Power Level:
 0.8 * Stat      Starter
-1 * Stat        Basic
 1.2 * Stat      Common
 1.5 * Stat      Uncommon
 1.8 * Stat      Rare
 2.5 * Stat      Epic
+
+1 * Stat        (Basic)
 
 Scope Multipliers:
 0.8     Self 
@@ -47,7 +49,7 @@ Effect Value:
 1                       Damage
 0.9                     Shield
 0.8                     Heal
-Primary Stat * 0.6      Vulnerable
+0.6 (No Scaling Factor) Vulnerable
 1.5                     Stat Buff
 2 x Primary Stat        Stun
 Primary Stat            Evade/Spellshield

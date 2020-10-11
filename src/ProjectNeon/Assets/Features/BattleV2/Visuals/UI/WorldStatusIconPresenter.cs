@@ -1,4 +1,3 @@
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -21,9 +20,8 @@ public sealed class WorldStatusIconPresenter : StatusIcon
         label.text = s.Text;
         gameObject.SetActive(true);
         _tooltip = s.Tooltip;
-        icon.transform.localScale = _originalIconScale;
         if (s.IsChanged)
-            gameObject.transform.DOPunchScale(new Vector3(1.28f, 1.28f, 1.28f), 1f, 1);
+            gameObject.transform.DOPunchScaleStandard(_originalIconScale);
     }
     
     public void ShowTooltip() => Message.Publish(new ShowTooltip(_tooltip));
