@@ -16,9 +16,13 @@ MonoBehaviour:
   - type: 1
     battleEffect:
       EffectType: 17
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0.98
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
@@ -29,8 +33,10 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedEffectSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
+      StatusTag: 0
+      AtStartOfNextTurn: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -42,10 +48,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+    characterAnimation: {fileID: 0}
     atTargetAnimation:
       UseConstant: 1
       ConstantValue: 
