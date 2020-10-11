@@ -79,7 +79,8 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
                 : WithBaseAmount(data, "x MAG");
-        if (data.EffectType == EffectType.ShieldToughness)
+        if (data.EffectType == EffectType.ShieldToughness
+            || data.EffectType == EffectType.HealToughness)
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";

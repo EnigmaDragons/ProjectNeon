@@ -31,7 +31,8 @@ public static class AllEffects
         { EffectType.OnEvaded, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence) },
         { EffectType.OnShieldBroken, e => new EffectOnShieldBroken(false, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence) },
         { EffectType.OnDamaged, e => new EffectOnDamaged(false, e.NumberOfTurns, e.IntAmount, e.ReactionSequence) },
-        { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount) },
+        { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Magic) },
+        { EffectType.HealToughness, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Toughness) },
         { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => m.AdjustPrimaryResource(e.IntAmount)) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
@@ -53,6 +54,8 @@ public static class AllEffects
         { EffectType.ApplyConfusion, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Confusion, e.NumberOfTurns + 1)) },
         { EffectType.AdjustStatAdditivelyWithMagic, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Magic())), e.ForSimpleDurationStatAdjustment())))},
+        { EffectType.AdjustStatAdditivelyWithLeadership, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Leadership())), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.AdjustCounter, e => new SimpleEffect(m => m.Adjust(e.EffectScope, e.IntAmount + e.BaseAmount))},
