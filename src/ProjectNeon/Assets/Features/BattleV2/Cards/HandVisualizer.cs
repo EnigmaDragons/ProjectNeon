@@ -110,20 +110,20 @@ public sealed class HandVisualizer : MonoBehaviour
                 highlightedCardIndex = presenterIndex;
             
             if (!c.HasCard)
-                c.MoveTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
+                c.TeleportTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
             
             var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
-            c.Set(card, () => SelectCard(cardIndex), true);
-            c.SetCanPlay(allowInteractions && (!onlyAllowInteractingWithPlayables || card.IsPlayableByHero(state)));
-            c.SetDisabled(!_isFocused);
-            if (!card.Owner.CanPlayCards())
-                c.SetDisabled(true);
-            _cardPool.SwapItems(cardIndex, presenterIndex);
-            c.SetHighlight(isHighlighted);
-            c.SetTargetPosition(targetPosition);
+            c.Set(card, 
+                () => SelectCard(cardIndex), 
+                (battleState, c2) => allowInteractions && (!onlyAllowInteractingWithPlayables || c2.IsPlayableByHero(state)));
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
+            c.SetDisabled(!card.Owner.CanPlayCards() || !_isFocused);
+            c.SetHandHighlight(isHighlighted);
+            
+            _cardPool.SwapItems(cardIndex, presenterIndex);
+            c.SetTargetPosition(targetPosition);
             c.transform.SetAsLastSibling();
         }
         

@@ -28,7 +28,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private Card _card;
     private CardTypeData _cardType;
 
-    private bool _canHighlight;
+    private Func<BattleState, Card, bool> _getCanPlay;
     private Action _onClick;
     private Action _onMiddleMouse;
     private Vector3 _position;
@@ -38,21 +38,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public bool Contains(Card c) => HasCard && c.Id == _card.Id;
     public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
-    public bool IsPlayable => canPlayHighlight.activeSelf;
     public bool IsHighlighted => highlight.activeSelf;
-
-    public void ClearIfIs(Card c)
-    {
-        if (Contains(c))
-            Clear();
-    }
+    public bool IsPlayable { get; private set; }
     
-    public void ClearIfIs(CardType c)
-    {
-        if (Contains(c))
-            Clear();
-    }
-
     private void Update()
     {
         if (!_isDragging)
@@ -66,48 +54,36 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         _cardType = null;
     }
     
-    public void Set(Card card, Action onClick, bool canHighlight = false)
+    public void Set(Card card, Action onClick, Func<BattleState, Card, bool> getCanPlay)
     {
+        InitFreshCard(onClick);
+
         _card = card;
-        Set(card.Type, onClick, canHighlight);
-        description.text = card.InterpolatedDescription();
+        _cardType = card.Type;
+        _getCanPlay = getCanPlay;
+        RenderCardType();
+    }
+    
+    public void Set(CardTypeData cardType, Action onClick)
+    {
+        InitFreshCard(onClick);
+
+        _card = null;
+        _cardType = cardType;
+        _getCanPlay = (_, __) => false;
+        RenderCardType();
     }
 
-    public void Set(CardTypeData card, Action onClick, bool canHighlight = false)
+    private void InitFreshCard(Action onClick)
     {
         gameObject.SetActive(true);
         canPlayHighlight.SetActive(false);
         highlight.SetActive(false);
-        _canHighlight = canHighlight;
         _onClick = onClick;
         _onMiddleMouse = () => { };
-        _cardType = card;
-        
-        nameLabel.text = _cardType.Name;
-        description.text = _cardType.InterpolatedDescription(Maybe<Member>.Missing());
-        if (string.IsNullOrWhiteSpace(_cardType.TypeDescription))
-            Log.Error($"{_cardType} is missing it's Type Description");
-        type.text = _cardType.TypeDescription;
-        art.sprite = _cardType.Art;
-        rarity.Set(card.Rarity);
-        target.Set(card);
-        
-        var cost = card.Cost;
-        var hasCost = !cost.ResourceType.Name.Equals("None") && cost.BaseAmount > 0 || cost.PlusXCost;
-        costPanel.SetActive(hasCost);
-        if (hasCost)
-        {
-            costLabel.text = CostLabel(cost);
-            costResourceTypeIcon.sprite = cost.ResourceType.Icon;
-        }
-
-        card.LimitedToClass.IfPresent(c => tint.color = c.Tint);
     }
 
-    public void SetMiddleButtonAction(Action action)
-    {
-        _onMiddleMouse = action;
-    }
+    public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
 
     private string CostLabel(ResourceCost cost)
     {
@@ -131,29 +107,100 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         if (_card == null)
             throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
-        var canPlay = canPlayHighlight.activeSelf;
-        var useHighlight = highlight.activeSelf;
+        
+        Debug.Log($"UI - Toggle as Basic {CardName}");
         
         _card.UseAsBasic = asBasic;
-        Set(_card, _onClick);
-        
-        canPlayHighlight.SetActive(canPlay);
-        highlight.SetActive(IsPlayable && useHighlight);
+        _cardType = _card.Type;
+        RenderCardType();
+        if (IsPlayable)
+            SetHandHighlight(true);
     }
-
-    public void SetCanPlay(bool canPlay) => canPlayHighlight.SetActive(canPlay);
+    
     public void SetDisabled(bool isDisabled)
     {
         if (isDisabled)
         {
-            SetCanPlay(false);
-            SetCardHandControlsVisible(false);
+            Debug.Log($"{CardName} is disabled.");
+            canPlayHighlight.SetActive(false);
+            controls.SetActive(false);
         }
         darken.SetActive(isDisabled);
     }
+    
+    public void SetHandHighlight(bool active)
+    {
+        if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
+            return;
 
-    public void SetCardHandControlsVisible(bool isActive) => controls.SetActive(isActive);
+        Debug.Log($"Setting Highlight {active}");
+        controls.SetActive(active);
+        if (active)
+            transform.SetAsLastSibling();
+        highlight.SetActive(IsPlayable && active);
+        var sign = active ? 1 : -1;
+        var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
+        var position = active ? _position + new Vector3(0, sign * 100f, sign * 2f) : _position;
+        if (AreCloseEnough(scale.x, transform.localScale.x) && AreCloseEnough(position.y, transform.position.y))
+            return;
+        
+        transform.DOScale(scale, 0.4f);
+        transform.DOMove(position, 0.4f);
+        if (active && _card != null)
+            Message.Publish(new HighlightCardOwner(_card.Owner));
+    }
 
+    public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
+
+    public void TeleportTo(Vector3 targetPosition)
+    {
+        transform.position = targetPosition;
+        _position = targetPosition;
+    }
+    
+    public void SetTargetPosition(Vector3 targetPosition)
+    {
+        _position = targetPosition;
+        transform.DOMove(targetPosition, 1);
+    }
+
+    private void RenderCardType()
+    {
+        IsPlayable = CheckIfCanPlay();
+        nameLabel.text = _cardType.Name;
+        description.text = _card != null 
+            ? _cardType.InterpolatedDescription(_card.Owner) 
+            : _cardType.InterpolatedDescription(Maybe<Member>.Missing());
+        type.text = _cardType.TypeDescription;
+        art.sprite = _cardType.Art;
+        rarity.Set(_cardType.Rarity);
+        target.Set(_cardType);
+
+        var cost = _cardType.Cost;
+        var hasCost = !cost.ResourceType.Name.Equals("None") && cost.BaseAmount > 0 || cost.PlusXCost;
+        costPanel.SetActive(hasCost);
+        if (hasCost)
+        {
+            costLabel.text = CostLabel(cost);
+            costResourceTypeIcon.sprite = cost.ResourceType.Icon;
+        }
+
+        _cardType.LimitedToClass.IfPresent(c => tint.color = c.Tint);
+        canPlayHighlight.SetActive(IsPlayable);
+        highlight.SetActive(IsPlayable);
+    }
+    
+    private bool AreCloseEnough(float first, float second) => WithinEpsilon(first - second);
+    private bool WithinEpsilon(float f) => Math.Abs(f) < 0.05;
+
+    private bool CheckIfCanPlay()
+    {
+        var result = _card != null && _getCanPlay(battleState, _card);
+        Debug.Log($"Can Play {CardName}: {result}");
+        return result;
+    }
+
+    #region Mouse Controls
     public void OnPointerDown(PointerEventData eventData)
     {
         Log.Info($"UI - Pointer Down - {CardName}");
@@ -170,58 +217,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (_card != null && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
     }
-
-    public void SetHighlight(bool active)
-    {
-        if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
-            return;
-
-        if (!active)
-            SetCardHandControlsVisible(false);
-        if (active)
-            transform.SetAsLastSibling();
-        highlight.SetActive(IsPlayable && active);
-        var sign = active ? 1 : -1;
-        var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
-        var position = active ? _position + new Vector3(0, sign * 100f, sign * 2f) : _position;
-        if (AreCloseEnough(scale.x, transform.localScale.x) && AreCloseEnough(position.y, transform.position.y))
-            return;
-
-        // TODO: Track down why cards move when switching between Basic and Normal
-        // if (_cardType != null)
-        //    Log.Info($"Moving Card {_cardType.Name} to {active} Highlighted position {position}. Target Position is {_position}");
-        transform.DOScale(scale, 0.4f);
-        transform.DOMove(position, 0.4f);
-        if (active && _card != null)
-            Message.Publish(new HighlightCardOwner(_card.Owner));
-    }
-
-    public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
-
-    public void MoveTo(Vector3 targetPosition)
-    {
-        transform.position = targetPosition;
-    }
-    
-    public void SetTargetPosition(Vector3 targetPosition)
-    {
-        _position = targetPosition;
-        transform.DOMove(targetPosition, 1);
-    }
-
-    private bool AreCloseEnough(float first, float second) => WithinEpsilon(first - second);
-    private bool WithinEpsilon(float f) => Math.Abs(f) < 0.05;
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!_canHighlight)
+        if (!IsPlayable)
             return;
         
         Message.Publish(new CardHoverEnter(this));
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        SetHighlight(false);
-    }
+    public void OnPointerExit(PointerEventData eventData) => SetHandHighlight(false);
+
+    #endregion
 }
