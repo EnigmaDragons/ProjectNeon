@@ -22,9 +22,10 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
         icon.sprite = s.Icon;
         label.text = s.Text;
         gameObject.SetActive(true);
-        _tooltip = s.Tooltip;
+        _tooltip = s.Tooltip;icon.transform.localScale = _originalIconScale;
         if (s.IsChanged)
-            gameObject.transform.DOPunchScaleStandard(_originalIconScale);
+            gameObject.transform.DOPunchScale(new Vector3(1.28f, 1.28f, 1.28f), 1f, 1);
+
     }
 
     public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new ShowTooltip(_tooltip));

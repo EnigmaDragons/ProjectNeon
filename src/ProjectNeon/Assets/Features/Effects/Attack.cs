@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using UnityEngine;
 
 [Obsolete("Needs to be replaced with the final Attack Performed data. Should be separated from Attack Proposals.")]
 public sealed class Attack  : Effect
@@ -35,6 +36,7 @@ public sealed class Attack  : Effect
         {
             Attacker.State.Adjust(TemporalStatType.Blind, -1);
             BattleLog.Write($"{Attacker.Name} was blinded, so their attack missed.");
+            Message.Publish(new PlayRawBattleEffect("MissedText", Vector3.zero));
         }
         else
         {
@@ -46,6 +48,7 @@ public sealed class Attack  : Effect
                 {
                     member.State.AdjustEvade(-1);
                     Message.Publish(new DisplaySpriteEffect(SpriteEffectType.Evade, member));
+                    Message.Publish(new PlayRawBattleEffect("EvadedText", Vector3.zero));
                 }
                 else
                     effect.Apply(Attacker, member);

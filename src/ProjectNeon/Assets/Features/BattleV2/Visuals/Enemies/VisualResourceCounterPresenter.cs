@@ -41,8 +41,9 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
                 _icons[i].gameObject.SetActive(i < resourceAmount);
             
             _icons[i].sprite = primaryResourceIcon;
+            _icons[i].transform.localScale = spritePrototype.transform.localScale;
             if (i + 1 > _lastAmount)
-                _icons[i].transform.DOPunchScaleStandard(spritePrototype.transform.localScale);
+                _icons[i].transform.DOPunchScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f, 1);
         }
 
         _lastAmount = resourceAmount;
