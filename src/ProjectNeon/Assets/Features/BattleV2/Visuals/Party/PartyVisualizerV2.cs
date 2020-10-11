@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner>
+public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner, UnhighlightCardOwner>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private GameObject hero1;
@@ -101,13 +102,23 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     }
 
     protected override void Execute(HighlightCardOwner msg)
-    { 
+    {
+        if (_renderers.Count < 2)
+            return;
+        
         _renderers.ForEach(kv =>
         {
             kv.Value.material = msg.Member.Name == kv.Key.Name
                 ? cardOwnerMaterial
                 : defaultSpriteMaterial;
         });
+    }
+
+    protected override void Execute(UnhighlightCardOwner msg)
+    {
+        _renderers
+            .Where(kv => kv.Key.Name == msg.Member.Name)
+            .ForEach(kv => kv.Value.material = defaultSpriteMaterial);
     }
 
     private IEnumerator ExecuteAfterDelay(Action a, float delay)

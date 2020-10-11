@@ -27,6 +27,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private Card _card;
     private CardTypeData _cardType;
     private bool _debug = false;
+    private int _preHighlightSiblingIndex;
 
     private Func<BattleState, Card, bool> _getCanPlay;
     private Action _onClick;
@@ -132,11 +133,19 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
-
+        
         DebugLog($"Setting Highlight {active}");
         controls.SetActive(active);
         if (active)
+        {
+            _preHighlightSiblingIndex = transform.GetSiblingIndex();
             transform.SetAsLastSibling();
+        }
+        else
+        {
+            transform.SetSiblingIndex(_preHighlightSiblingIndex);
+        }
+
         highlight.SetActive(IsPlayable && active);
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
@@ -148,6 +157,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         transform.DOMove(position, 0.4f);
         if (active && _card != null)
             Message.Publish(new HighlightCardOwner(_card.Owner));
+        else
+            Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
 
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
@@ -224,14 +235,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             ToggleAsBasic();
     }
     
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (!IsPlayable)
-            return;
-        
-        Message.Publish(new CardHoverEnter(this));
-    }
-
+    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new CardHoverEnter(this));
     public void OnPointerExit(PointerEventData eventData) => SetHandHighlight(false);
 
     #endregion
