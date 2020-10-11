@@ -27,13 +27,15 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         _remainingUses = maxUses;
         _createMaybeEffect = createMaybeEffect;
         IsDebuff = isDebuff;
+        if (!IsActive)
+            Log.Error($"{GetType()} was created inactive with {maxUses} Uses and {maxDurationTurns} Turns");
     }
     
     public IPayloadProvider OnTurnStart() => new NoPayload();
 
     public IPayloadProvider OnTurnEnd()
     {
-        if (_remainingDurationTurns > -1)
+        if (_remainingDurationTurns > 0)
             _remainingDurationTurns--;
         return new NoPayload();
     }
@@ -45,6 +47,9 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
     public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
     {
+        if (!IsActive)
+            return Maybe<ProposedReaction>.Missing();
+        
         var maybeEffect = _createMaybeEffect(e);
         if (maybeEffect.IsPresent)
             _remainingUses--;
