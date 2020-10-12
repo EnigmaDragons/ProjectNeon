@@ -69,7 +69,7 @@ public static class AllEffects
                 return;
             
             var effect = Create(effectData);
-            var whenClause = effectData.AtStartOfNextTurn ? " at the start of next turn" : "";
+            var whenClause = effectData.TurnDelay > 0 ? " at the start of next turn" : "";
             BattleLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
             effect.Apply(ctx);
         }
@@ -83,11 +83,11 @@ public static class AllEffects
     {
         try
         {
-            if (effectData.AtStartOfNextTurn)
+            if (effectData.TurnDelay > 0)
                 return Create(new EffectData
                 {
                     EffectType = EffectType.AtStartOfTurn,
-                    NumberOfTurns = new IntReference(1),
+                    NumberOfTurns = new IntReference(effectData.TurnDelay),
                     ReferencedSequence = AsCardActionsData(effectData.Immediately()),
                     StatusTag = StatusTag.StartOfTurnTrigger
                 });
