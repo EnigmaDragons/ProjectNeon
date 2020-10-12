@@ -19,7 +19,7 @@ public static class AllEffects
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f),  TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, StatusTag.Vulnerable)))) },
-        { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.AdjustShield(e.IntAmount * src.State.Toughness())) },
+        { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.AdjustShield(e.FloatAmount * src.State.Toughness())) },
         { EffectType.RemoveShields, e => new SimpleEffect((src, m) => m.AdjustShield(-999)) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
         { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount), true))) },
@@ -43,6 +43,7 @@ public static class AllEffects
         { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.IntAmount)) },
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
         { EffectType.AtEndOfTurn, e => new EndOfTurnEffect(e) },
+        { EffectType.DelayedStartOfTurn, e => new DelayedStartOfTurnEffect(e) },
         { EffectType.MagicDamageOverTime, e => new MagicDamageOverTime(e)},
         { EffectType.PhysicalDamageOverTime, e => new PhysicalDamageOverTime(e)},
         { EffectType.HealPercentMissingHealth, e => new SimpleEffect(m => m.GainHp(Mathf.CeilToInt(m.MissingHp() * e.FloatAmount))) },
@@ -86,7 +87,7 @@ public static class AllEffects
             if (effectData.TurnDelay > 0)
                 return Create(new EffectData
                 {
-                    EffectType = EffectType.AtStartOfTurn,
+                    EffectType = EffectType.DelayedStartOfTurn,
                     NumberOfTurns = new IntReference(effectData.TurnDelay),
                     ReferencedSequence = AsCardActionsData(effectData.Immediately()),
                     StatusTag = StatusTag.StartOfTurnTrigger

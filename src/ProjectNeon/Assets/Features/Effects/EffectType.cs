@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER. EVENTUALLY WE NEED A TOOL TO FIND USAGES
-// NUMBERS AVAILABLE: 23-25, 27-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 24-25, 27-43, 47, 48, 53, 
 // LAST NUMBER USED: 67
 public enum EffectType
 {
@@ -17,6 +17,7 @@ public enum EffectType
     
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
+    DelayedStartOfTurn = 23,
     
     PhysicalDamage = 2,
     RemoveDebuffs = 4,
