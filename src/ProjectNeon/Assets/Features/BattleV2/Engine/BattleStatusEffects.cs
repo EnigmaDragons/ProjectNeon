@@ -55,14 +55,14 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
                 BattleLog.Write($"Resolving {effectPayloadProvider.Count} Status Effects for {member.Name}");
             if (!effectPayloadProvider.IsFinished())
             {
-                SequenceMessage.Queue(effectPayloadProvider);
-
                 Message.Subscribe<SequenceFinished>(_ =>
                 {
                     Message.Unsubscribe(this);
                     Message.Subscribe<StatusEffectResolved>(Execute, this);
                     Message.Publish(new StatusEffectResolved(member));
                 }, this);
+                
+                SequenceMessage.Queue(effectPayloadProvider);
             }
             else
             {
