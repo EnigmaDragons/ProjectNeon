@@ -24,7 +24,7 @@ public enum EffectType
     ResourceFlat = 7,
     DamageOverTimeFlat = 8,
     DamageOverTime = 19,
-    
+
     AntiHeal = 60,
     ApplyVulnerable = 10,
     StunForNumberOfCards = 44,

@@ -16,7 +16,7 @@ public sealed class EffectData
     public CardActionsData ReferencedSequence;
     public ReactionCardType ReactionSequence;
     public StatusTag StatusTag;
-    public bool AtStartOfNextTurn;
+    public int TurnDelay;
 }
 
 public static class EffectDataExtensions
@@ -32,6 +32,6 @@ public static class EffectDataExtensions
             ReferencedSequence = e.ReferencedSequence,
             ReactionSequence = e.ReactionSequence,
             StatusTag = e.StatusTag,
-            AtStartOfNextTurn = false
+            TurnDelay = 0
         };
 }
