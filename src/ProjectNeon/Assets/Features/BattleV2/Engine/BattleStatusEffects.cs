@@ -51,7 +51,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
             var effectPayloadProvider = _isProcessingStartOfTurn
                 ? member.State.GetTurnStartEffects()
                 : member.State.GetTurnEndEffects();
-            BattleLog.Write($"Resolving {effectPayloadProvider.Count} Status Effects for {member.Name}");
+            if (effectPayloadProvider.Count > 0)
+                BattleLog.Write($"Resolving {effectPayloadProvider.Count} Status Effects for {member.Name}");
             if (!effectPayloadProvider.IsFinished())
             {
                 SequenceMessage.Queue(effectPayloadProvider);
