@@ -142,7 +142,10 @@ public sealed class HandVisualizer : MonoBehaviour
         if (allowInteractions && Hand.Count > cardIndex)
             if (_cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
             {
-                zones.SelectionZone.PutOnBottom(Hand.Take(cardIndex));
+                if (zones.SelectionZone.IsFull)
+                    Log.Error($"Selection card zone has the card {zones.SelectionZone.Cards[0].Name}");
+                else
+                    zones.SelectionZone.PutOnBottom(Hand.Take(cardIndex));
                 UpdateVisibleCards();
             }
     }
