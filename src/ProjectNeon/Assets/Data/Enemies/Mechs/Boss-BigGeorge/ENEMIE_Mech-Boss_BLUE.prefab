@@ -74,7 +74,9 @@ GameObject:
   - component: {fileID: 6461546182288895392}
   - component: {fileID: 1099596549231893862}
   - component: {fileID: 2535224455626580753}
-  m_Layer: 0
+  - component: {fileID: 7400954066066703311}
+  - component: {fileID: 2760265237150262489}
+  m_Layer: 10
   m_Name: Mech-Boss_BLUE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,6 +233,44 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &7400954066066703311
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201622732786513308}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.095837116, y: 0.102098465}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 18.2, y: 18.787096}
+    newSize: {x: 18.2, y: 18.787096}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 12.951164, y: 14.948805}
+  m_EdgeRadius: 0
+--- !u!114 &2760265237150262489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201622732786513308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32693d8fb104481e97454d66da937092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1471164134084403821
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +395,49 @@ Transform:
   m_Father: {fileID: 5533793240828602926}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -75.785}
+--- !u!1 &1980658817355750500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7162259975210080416}
+  - component: {fileID: 8454099075860562851}
+  m_Layer: 0
+  m_Name: CenterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7162259975210080416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980658817355750500}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6636504907562065330}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8454099075860562851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980658817355750500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbe4a51ad8894488a2030c84d1789266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2219068185750972222
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +657,7 @@ Transform:
   - {fileID: 4889673023590450374}
   - {fileID: 5565184630723820314}
   m_Father: {fileID: 6636504907562065330}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3787417624142885149
 GameObject:
@@ -758,7 +841,7 @@ Transform:
   - {fileID: 2954545398990266525}
   - {fileID: 8790978794605199639}
   m_Father: {fileID: 6636504907562065330}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5388270873689870148
 GameObject:
@@ -1037,6 +1120,7 @@ Transform:
   m_LocalPosition: {x: -0.163194, y: -9.318818, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 7162259975210080416}
   - {fileID: 6601045665577960643}
   - {fileID: 1764165518495987194}
   m_Father: {fileID: 2994339944853487381}

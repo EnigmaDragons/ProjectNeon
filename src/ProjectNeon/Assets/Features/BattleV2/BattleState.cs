@@ -11,6 +11,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private PartyArea partyArea;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private EnemyArea enemies;
+    [SerializeField] private AdventureProgress adventure;
     [SerializeField] private bool needsCleanup;
     [SerializeField] private int nextCardId;
 
@@ -47,7 +48,8 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
-    private PlayerState _playerState = new PlayerState();
+    private Dictionary<int, Vector3> _centerPointsById = new Dictionary<int, Vector3>();
+    private PlayerState _playerState = new PlayerState(0);
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
 
     // Setup
@@ -70,6 +72,7 @@ public class BattleState : ScriptableObject
     public void Init()
     {
         nextCardId = 0;
+        SelectionStarted = false;
     }
 
     public int GetNextCardId() => nextCardId++;
@@ -81,6 +84,7 @@ public class BattleState : ScriptableObject
         var id = 0;      
         memberNames = new string[EnemyStartingIndex + enemies.Enemies.Count + 3];
         _uiTransformsById = new Dictionary<int, Transform>();
+        _centerPointsById = new Dictionary<int, Vector3>();
         
         var heroes = Party.Heroes;
         _heroesById = new Dictionary<int, Hero>();
@@ -89,6 +93,7 @@ public class BattleState : ScriptableObject
             id++;
             _heroesById[id] = heroes[i];
             _uiTransformsById[id] = partyArea.UiPositions[i];
+            _centerPointsById[id] = partyArea.CenterPositions[i];
             memberNames[id] = heroes[i].Character.Name;
         }
 
@@ -99,6 +104,7 @@ public class BattleState : ScriptableObject
             id++;
             _enemiesById[id] = enemies.Enemies[i];
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
+            _centerPointsById[id] = enemies.CenterPoints[i];
             memberNames[id] = enemies.Enemies[i].name;
         }
         _nextEnemyId = id + 1;
@@ -107,7 +113,7 @@ public class BattleState : ScriptableObject
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
         
-        _playerState = new PlayerState();
+        _playerState = new PlayerState(adventure.PartyCardCycles);
         
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;
@@ -165,14 +171,22 @@ public class BattleState : ScriptableObject
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void SetRewardCards(CardType[] cards) => UpdateState(() => rewardCards = cards);
 
-    public void AddEnemy(Enemy e, Transform uiPosition) 
+    public void AddEnemy(Enemy e, GameObject gameObject) 
         => UpdateState(() =>
         {
             var id = _nextEnemyId++;
-            EnemyArea.Add(e, uiPosition);
+            EnemyArea.Add(e, gameObject.transform);
             _enemiesById[id] = e;
             _membersById[id] = e.AsMember(id);
-            _uiTransformsById[id] = uiPosition;
+            _uiTransformsById[id] = gameObject.transform;
+            var centerPoint = gameObject.GetComponentInChildren<CenterPoint>();
+            if (centerPoint == null)
+            {
+                Log.Error($"{e.Name} is missing a CenterPoint");
+                _centerPointsById[id] = Vector3.zero;
+            }
+            else
+                _centerPointsById[id] = centerPoint.transform.position;
             memberNames[id] = e.name;
         });
 
@@ -199,6 +213,17 @@ public class BattleState : ScriptableObject
     public HeroCharacter GetHeroById(int memberId) => _heroesById[memberId].Character;
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
+    public Vector3 GetCenterPoint(int memberId) => _centerPointsById[memberId];
+
+    public Vector3 GetCenterPoint(Target target)
+    {
+        if (target.Members.Length == 0)
+            return Vector3.zero;
+        var bounds = new Bounds(GetCenterPoint(target.Members[0].Id), Vector3.zero);
+        for (var i = 1; i < target.Members.Length; i++)
+            bounds.Encapsulate(GetCenterPoint(target.Members[i].Id)); 
+        return bounds.center;
+    }
     public Member GetMemberByHero(HeroCharacter hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;

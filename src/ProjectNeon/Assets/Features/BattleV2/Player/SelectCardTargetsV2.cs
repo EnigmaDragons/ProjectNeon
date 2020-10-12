@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
+public class SelectCardTargetsV2 : OnMessage<ConfirmTargetSelectionRequested, CancelTargetSelectionRequested>, IConfirmCancellable
 {
     [SerializeField] private CardResolutionZone cardResolutionZone;
     [SerializeField] private CardPlayZone selectedCardZone;
@@ -17,8 +17,10 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     private int _numActions;
     private Target[] _actionTargets;
     
-    protected void OnEnable() => selectedCardZone.OnZoneCardsChanged.Subscribe(BeginSelection, this);
-    protected void OnDisable() => selectedCardZone.OnZoneCardsChanged.Unsubscribe(this);
+    protected override void AfterEnable() => selectedCardZone.OnZoneCardsChanged.Subscribe(BeginSelection, this);
+    protected override void AfterDisable() => selectedCardZone.OnZoneCardsChanged.Unsubscribe(this);
+    protected override void Execute(ConfirmTargetSelectionRequested msg) => Confirm();
+    protected override void Execute(CancelTargetSelectionRequested msg) => Cancel();
 
     private void BeginSelection()
     {
@@ -29,8 +31,8 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         _card = selectedCardZone.Cards[0];
         Message.Publish(new TargetSelectionBegun(_card.Type));
 
-        cardPresenter.Set(_card, () => { });
-        cardPresenter.SetHighlightGraphicState(true);
+        cardPresenter.Set(_card, () => { }, (_, __) => false);
+        cardPresenter.SetHighlightGraphicState(false);
         Log.Info($"Showing Selected Card {_card.Name}", gameObject);
         uiView.SetActive(true);
 
@@ -54,6 +56,8 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
         targetingState.WithPossibleTargets(possibleTargets);
         if (possibleTargets.Length == 1)
             OnTargetConfirmed(action.Group, action.Scope);
+        else
+            Message.Publish(new SelectionPossibleTargetsAvailable(possibleTargets));
     }
 
     public void Cancel() => OnCancelled();
@@ -66,6 +70,7 @@ public class SelectCardTargetsV2 : MonoBehaviour, IConfirmCancellable
     public void Confirm() => OnTargetConfirmed(_card.ActionSequences[_actionIndex].Group, _card.ActionSequences[_actionIndex].Scope);
     public void OnTargetConfirmed(Group group, Scope scope)
     {
+        Debug.Log("Confirmed Target");
         if (_actionTargets.Length == 0)
         {
             var playedCard = new PlayedCardV2(_card.Owner, new Target[] { new Single(_card.Owner), }, _card);

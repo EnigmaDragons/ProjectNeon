@@ -19,7 +19,7 @@ public static class AllEffects
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f),  TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, StatusTag.Vulnerable)))) },
-        { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.AdjustShield(e.IntAmount * src.State.Toughness())) },
+        { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.AdjustShield(e.FloatAmount * src.State.Toughness())) },
         { EffectType.RemoveShields, e => new SimpleEffect((src, m) => m.AdjustShield(-999)) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
         { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount), true))) },
@@ -31,7 +31,8 @@ public static class AllEffects
         { EffectType.OnEvaded, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence) },
         { EffectType.OnShieldBroken, e => new EffectOnShieldBroken(false, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence) },
         { EffectType.OnDamaged, e => new EffectOnDamaged(false, e.NumberOfTurns, e.IntAmount, e.ReactionSequence) },
-        { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount) },
+        { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Magic) },
+        { EffectType.HealToughness, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Toughness) },
         { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => m.AdjustPrimaryResource(e.IntAmount)) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
@@ -42,6 +43,7 @@ public static class AllEffects
         { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.IntAmount)) },
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
         { EffectType.AtEndOfTurn, e => new EndOfTurnEffect(e) },
+        { EffectType.DelayedStartOfTurn, e => new DelayedStartOfTurnEffect(e) },
         { EffectType.MagicDamageOverTime, e => new MagicDamageOverTime(e)},
         { EffectType.PhysicalDamageOverTime, e => new PhysicalDamageOverTime(e)},
         { EffectType.HealPercentMissingHealth, e => new SimpleEffect(m => m.GainHp(Mathf.CeilToInt(m.MissingHp() * e.FloatAmount))) },
@@ -53,6 +55,8 @@ public static class AllEffects
         { EffectType.ApplyConfusion, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Confusion, e.NumberOfTurns + 1)) },
         { EffectType.AdjustStatAdditivelyWithMagic, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Magic())), e.ForSimpleDurationStatAdjustment())))},
+        { EffectType.AdjustStatAdditivelyWithLeadership, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Leadership())), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.AdjustCounter, e => new SimpleEffect(m => m.Adjust(e.EffectScope, e.IntAmount + e.BaseAmount))},
@@ -66,7 +70,7 @@ public static class AllEffects
                 return;
             
             var effect = Create(effectData);
-            var whenClause = effectData.AtStartOfNextTurn ? " at the start of next turn" : "";
+            var whenClause = effectData.TurnDelay > 0 ? " at the start of next turn" : "";
             BattleLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
             effect.Apply(ctx);
         }
@@ -80,11 +84,11 @@ public static class AllEffects
     {
         try
         {
-            if (effectData.AtStartOfNextTurn)
+            if (effectData.TurnDelay > 0)
                 return Create(new EffectData
                 {
-                    EffectType = EffectType.AtStartOfTurn,
-                    NumberOfTurns = new IntReference(1),
+                    EffectType = EffectType.DelayedStartOfTurn,
+                    NumberOfTurns = new IntReference(effectData.TurnDelay),
                     ReferencedSequence = AsCardActionsData(effectData.Immediately()),
                     StatusTag = StatusTag.StartOfTurnTrigger
                 });

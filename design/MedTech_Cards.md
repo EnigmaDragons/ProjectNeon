@@ -37,9 +37,9 @@ Epic:
 
 ### New Ideas:
 
-Common - Tactical Analysis - All Enemies - Reveal Enemy Intents for 3 Turns
-Uncommon - Epiphany - Self - Instant: Draw 3 Cards. Gain 1 Chem.
-Uncommon - Strategic Planning - Look at 3 Medtech cards, resolve 1 at the start of next turn
-Uncommon - Poison Dart - 3 Chem - Apply .5 MAG Poison
-Rare - Tranquilize - 5 Chem - Stun a target for 2 turns. Heal 1 MAG at the start of turn for 2 turns.
-Rare - Experimental Stims - 6 Chem - Randomly gets Lifesteal 1, 5 Armor, 5 Resistance, or 5 ATK
+- Common - Tactical Analysis - All Enemies - Reveal Enemy Intents for 3 Turns
+- Uncommon - Epiphany - Self - Instant: Draw 3 Cards. Gain 1 Chem.
+- Uncommon - Strategic Planning - Look at 3 Medtech cards, resolve 1 at the start of next turn
+- Uncommon - Poison Dart - 3 Chem - Apply .5 MAG Poison
+- Rare - Tranquilize - 5 Chem - Stun a target for 2 turns. Heal 1 MAG at the start of turn for 2 turns.
+- Rare - Experimental Stims - 6 Chem - Randomly gets Lifesteal 1, 5 Armor, 5 Resistance, or 5 ATK

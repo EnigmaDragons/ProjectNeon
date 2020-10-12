@@ -43,6 +43,7 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Stealth.ToString()] = new BattleCounter(TemporalStatType.Stealth, 0, () => int.MaxValue);
         _counters[TemporalStatType.DoubleDamage.ToString()] = new BattleCounter(TemporalStatType.DoubleDamage, 0, () => int.MaxValue);
         _counters[TemporalStatType.Confusion.ToString()] = new BattleCounter(TemporalStatType.Confusion, 0, () => int.MaxValue);
+        _counters[TemporalStatType.Blind.ToString()] = new BattleCounter(TemporalStatType.Confusion, 0, () => int.MaxValue);
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
         _counters[""] = new BattleCounter("", 0, () => 0);
@@ -125,7 +126,15 @@ public sealed class MemberState : IStats
         _multiplierMods.Add(mods);
     });
 
-    public void CleanseDebuffs() => RemoveTemporaryEffects(s => s.IsDebuff);
+    public void CleanseDebuffs()
+    {
+        RemoveTemporaryEffects(s => s.IsDebuff);
+        _counters[TemporalStatType.TurnStun.ToString()].Set(0);
+        _counters[TemporalStatType.CardStun.ToString()].Set(0);
+        _counters[TemporalStatType.Confusion.ToString()].Set(0);
+        _counters[TemporalStatType.Blind.ToString()].Set(0);
+    }
+
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() =>
     {
         _additiveMods.RemoveAll(condition);
@@ -172,7 +181,7 @@ public sealed class MemberState : IStats
     public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
-    public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any(); 
+    public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any(); 
     public IPayloadProvider GetTurnStartEffects()
     {
         var payload = new MultiplePayloads(

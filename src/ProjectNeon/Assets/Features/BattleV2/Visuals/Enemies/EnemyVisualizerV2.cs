@@ -12,7 +12,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     [SerializeField] private EnemyBattleUIPresenter ui;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
-
+    [SerializeField] private CurrentAnimationContext animationContext;
+    
     [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
     [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
     
@@ -23,19 +24,30 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         uis = new List<EnemyBattleUIPresenter>();
         var enemies = enemyArea.Enemies;
         for (var i = 0; i < enemies.Count; i++) 
-            InstantiateEnemyVisuals(enemies[i].Prefab, i);
+            InstantiateEnemyVisuals(enemies[i], i);
 
         yield break;
     }
 
-    private Transform InstantiateEnemyVisuals(GameObject prefab, int i)
+    private GameObject InstantiateEnemyVisuals(Enemy enemy, int i)
     {
-        var enemyObject = Instantiate(prefab, transform);
+        var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
         var t = enemyObject.transform;
         t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
-        enemyArea.WithUiTransforms(active.Select(a => a.transform));
-        return t;
+        enemyArea.WithUiTransforms(
+            active.Select(a => a.transform), 
+            active.Select(a =>
+            {
+                var centerPoint = a.GetComponentInChildren<CenterPoint>();
+                if (centerPoint == null)
+                {
+                    Log.Error($"{enemy.Name} is missing a CenterPoint");
+                    return Vector3.zero;
+                }
+                return centerPoint.transform.position;
+            }));
+        return enemyObject;
     }
     
     public void AfterBattleStateInitialized()
@@ -43,24 +55,35 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var enemies = enemyArea.Enemies;
         var positions = enemyArea.EnemyUiPositions;
         for (var i = 0; i < enemies.Count; i++)
-            InstantiateEnemyUi(i, positions[i].gameObject.transform);
+            SetupEnemyUi(i, positions[i].gameObject.transform);
+
+        for (var i = 0; i < enemies.Count; i++)
+        {
+            var hoverCharacter = active[i].GetComponentInChildren<HoverCharacter>();
+            if (hoverCharacter == null)
+                Log.Error($"{enemies[i].Name} is missing a {nameof(HoverCharacter)}");
+            else
+                hoverCharacter.Init(state.GetMemberByEnemyIndex(i));
+        }
     }
 
     public void Spawn(Enemy enemy)
     {
         BattleLog.Write($"Spawning {enemy.Name}");
         var index = active.Count;
-        var enemyObject = InstantiateEnemyVisuals(enemy.Prefab, index);
+        var enemyObject = InstantiateEnemyVisuals(enemy, index);
         state.AddEnemy(enemy, enemyObject);
-        InstantiateEnemyUi(index, enemyObject);
+        SetupEnemyUi(index, enemyObject.transform);
     }
 
-    private void InstantiateEnemyUi(int index, Transform enemyObject)
+    private void SetupEnemyUi(int index, Transform enemyObject)
     {
         var enemyMember = state.GetMemberByEnemyIndex(index);
         var pos = enemyObject.transform.position;
-        uis.Add(Instantiate(ui, pos, Quaternion.identity, enemyObject)
-            .Initialized(enemyMember));
+        var customUi = enemyObject.GetComponentInChildren<EnemyBattleUIPresenter>();
+        uis.Add(customUi != null
+            ? customUi.Initialized(enemyMember)
+            : Instantiate(ui, pos, Quaternion.identity, enemyObject).Initialized(enemyMember));
     }
 
     private IEnumerator ExecuteAfterDelay(Action a, float delay)
@@ -103,7 +126,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     protected override void Execute(CharacterAnimationRequested e)
     {
         if (!state.IsEnemy(e.MemberId)) return;
-
+        animationContext.SetAnimation(e);
+            
         var enemyIndex = state.GetEnemyIndexByMemberId(e.MemberId);
         var enemy = active[enemyIndex];
         Log.Info($"Began Animation for {enemy.name}");

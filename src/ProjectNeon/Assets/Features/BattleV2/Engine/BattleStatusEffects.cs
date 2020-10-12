@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleStatusEffects : OnMessage<StatusEffectResolved>
 {
     [SerializeField] private BattleState state;
-    [SerializeField] private FloatReference delay = new FloatReference(0.8f);
+    [SerializeField] private FloatReference delay = new FloatReference(0.5f);
 
     private readonly Queue<Member> _membersToProcess = new Queue<Member>();
     private bool _isProcessingStartOfTurn;
@@ -51,18 +51,18 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
             var effectPayloadProvider = _isProcessingStartOfTurn
                 ? member.State.GetTurnStartEffects()
                 : member.State.GetTurnEndEffects();
-            BattleLog.Write($"Resolving {effectPayloadProvider.Count} Status Effects for {member.Name}");
+            if (effectPayloadProvider.Count > 0)
+                BattleLog.Write($"Resolving {effectPayloadProvider.Count} Status Effects for {member.Name}");
             if (!effectPayloadProvider.IsFinished())
             {
-                SequenceMessage.Queue(effectPayloadProvider);
-
                 Message.Subscribe<SequenceFinished>(_ =>
                 {
                     Message.Unsubscribe(this);
                     Message.Subscribe<StatusEffectResolved>(Execute, this);
                     Message.Publish(new StatusEffectResolved(member));
-                    ;
                 }, this);
+                
+                SequenceMessage.Queue(effectPayloadProvider);
             }
             else
             {

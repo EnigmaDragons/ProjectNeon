@@ -18,7 +18,7 @@ public class CardActionV2
     public StringReference AtTargetAnimation => atTargetAnimation;
 
     public IPayloadProvider Play(StatusEffectContext ctx)
-        => Play(new CardActionContext(ctx.Member, new Single(ctx.Member), Group.Self, Scope.One, new ResourceQuantity(),
+        => Play(new CardActionContext(ctx.Source, new Single(ctx.Member), Group.Self, Scope.One, new ResourceQuantity(),
             new BattleStateSnapshot()));
     
     public IPayloadProvider Play(CardActionContext ctx)
@@ -28,7 +28,7 @@ public class CardActionV2
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(enemyToSpawn));
         if (type == CardBattleActionType.AnimateCharacter)
-            return new SinglePayload(new CharacterAnimationRequested(ctx.Source.Id, characterAnimation));
+            return new SinglePayload(new CharacterAnimationRequested(ctx.Source.Id, characterAnimation, ctx.Target));
         if (type == CardBattleActionType.AnimateAtTarget)
             return new SinglePayload(new BattleEffectAnimationRequested { EffectName = atTargetAnimation, PerformerId = ctx.Source.Id, Target = ctx.Target, Scope = ctx.Scope, Group = ctx.Group });
         if (type == CardBattleActionType.Condition)
@@ -41,7 +41,7 @@ public class CardActionV2
         if (type == CardBattleActionType.Battle)
             return new SinglePayload(new ApplyBattleEffect(battleEffect, source, target));
         if (type == CardBattleActionType.AnimateCharacter)
-            return new SinglePayload(new CharacterAnimationRequested(source.Id, characterAnimation));
+            return new SinglePayload(new CharacterAnimationRequested(source.Id, characterAnimation, target));
         //if (type == CardBattleActionType.AnimateAtTarget)
             // TODO: Implement Reactive Scope Animations
         //if (type == CardBattleActionType.Condition)

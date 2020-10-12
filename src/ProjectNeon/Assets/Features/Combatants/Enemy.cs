@@ -60,5 +60,5 @@ public class Enemy : ScriptableObject
         .With(StatType.Healability, 1f)
         .With(StatType.ExtraCardPlays, cardsPerTurn);
 
-    public bool IsReadyForPlay => Deck != null;
+    public bool IsReadyForPlay => Deck != null && Prefab != null;
 }

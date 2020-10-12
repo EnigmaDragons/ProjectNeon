@@ -1,28 +1,43 @@
 
 using System;
 using System.Collections;
+using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public static class AnimationExtensions
 {
+    public static void DOPunchScaleStandard(this Transform t, Vector3 originalScale, float factor = 1.28f)
+    {
+        t.localScale = originalScale;
+        t.DOPunchScale(new Vector3(factor, factor, factor), 1f, 1);
+    }
+
     public static IEnumerator PlayAnimationUntilFinished(this Animator animator, string animationName, Action<float> onFinished, int layer = 0, float maxTime = 5f)
     {
-        var elapsed = 0f; 
-        animator.Play(animationName, layer);
-    
-        yield return new WaitForSeconds(0.1f);
-        elapsed += 0.1f;
-    
-        bool AnimationIsActive() => animator.GetCurrentAnimatorStateInfo(layer).IsName(animationName);
-        bool AnimationIsStillPlaying() => animator.GetCurrentAnimatorStateInfo(layer).normalizedTime < 1.0f;
-        while (AnimationIsActive() && AnimationIsStillPlaying())
+        if (animator.parameters.Any(x => x.name == animationName))
         {
-            yield return new WaitForSeconds(0.1f);
-            elapsed += 0.1f;
-            if (elapsed > maxTime)
-                break;
+            var elapsed = 0f; 
+            animator.SetTrigger(animationName);
+            bool hasStartedAnimated = false;
+            while (elapsed < maxTime)
+            {
+                yield return new WaitForSeconds(0.1f);
+                elapsed += 0.1f;
+                var isPlayingAnimation = animator.GetCurrentAnimatorStateInfo(layer).IsName(animationName);
+                if (isPlayingAnimation && !hasStartedAnimated)
+                    hasStartedAnimated = true;
+                if (!isPlayingAnimation && hasStartedAnimated)
+                    break;
+            }
+            if (!hasStartedAnimated)
+                Log.Error($"Animation: {animationName} never started");
+            onFinished(elapsed);
         }
-
-        onFinished(elapsed);
+        else
+        {
+            Log.Error($"Animation: {animationName} not found");
+            onFinished(0);
+        }
     }
 }

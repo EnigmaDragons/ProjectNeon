@@ -23,6 +23,6 @@ public class AtEndOfTurnState : TemporalStateBase
             return new NoPayload();
 
         Tracker.AdvanceTurn();
-        return _data.Play(new StatusEffectContext(_member));
+        return _data.Play(new StatusEffectContext(_ctx.Source, _member));
     }
 }

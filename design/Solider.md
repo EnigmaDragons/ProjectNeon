@@ -3,9 +3,9 @@
 ----
 
 ## Main Mechanic:
-Like to shoot guns, throw grenades, and try out some wild techniques with his guns. 
-Simple, easy to play.
-Holds his own, and is well-rounded.
+- Like to shoot guns, throw grenades, and try out some wild techniques with his guns. 
+- Simple, easy to play.
+- Holds his own, and is well-rounded.
 
 ### Role Descriptors:
 - Tough
@@ -31,7 +31,7 @@ Holds his own, and is well-rounded.
 - Improve his efficiency
 - Reduce enemy defences
 
-##Paragon:
+## Paragon:
 Combat Path - Increased damage, and more ammunition. 
 
 Survival Path - Significantly upgraded tankiness

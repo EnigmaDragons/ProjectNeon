@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -527,13 +527,13 @@ PrefabInstance:
         type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: f3aebb6f265fbef4c82e5bdd3214c366,
+      objectReference: {fileID: 11400000, guid: 15bf2ec14f10307478a49ea6530469cc,
         type: 2}
     - target: {fileID: 3691897982828414568, guid: 25a3dcff827d55546b1cb09ba320f42f,
         type: 3}
       propertyPath: enemies.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 883be83dd2ff2c74299767e3b515b932,
+      objectReference: {fileID: 11400000, guid: f3aebb6f265fbef4c82e5bdd3214c366,
         type: 2}
     - target: {fileID: 3691897982828414568, guid: 25a3dcff827d55546b1cb09ba320f42f,
         type: 3}
@@ -551,19 +551,19 @@ PrefabInstance:
         type: 3}
       propertyPath: hero2
       value: 
-      objectReference: {fileID: 11400000, guid: 02fa37bb233476843b8562495adcc958,
+      objectReference: {fileID: 11400000, guid: cd46417b8b4e7394892d8f84aacae2ce,
         type: 2}
     - target: {fileID: 3691897982828414568, guid: 25a3dcff827d55546b1cb09ba320f42f,
         type: 3}
       propertyPath: hero3
       value: 
-      objectReference: {fileID: 11400000, guid: 3a343530eff1ccc42b820cc6b7d5f318,
+      objectReference: {fileID: 11400000, guid: cd46417b8b4e7394892d8f84aacae2ce,
         type: 2}
     - target: {fileID: 3691897982828414568, guid: 25a3dcff827d55546b1cb09ba320f42f,
         type: 3}
       propertyPath: battlefield
       value: 
-      objectReference: {fileID: 3587310122726096197, guid: a158ee0959e662c45a1f13cb85027e46,
+      objectReference: {fileID: 1468162810460551795, guid: 89fc8dab2733c13498c9cd5aca33fe8b,
         type: 3}
     - target: {fileID: 3691897982828414568, guid: 25a3dcff827d55546b1cb09ba320f42f,
         type: 3}
@@ -575,7 +575,7 @@ PrefabInstance:
         type: 3}
       propertyPath: cards.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: ffb4dfd398deae74aaf0c5122a27e297,
+      objectReference: {fileID: 11400000, guid: 9c27e7e8d99897d40ae29070fb721d87,
         type: 2}
     - target: {fileID: 3691897982828414568, guid: 25a3dcff827d55546b1cb09ba320f42f,
         type: 3}
@@ -677,6 +677,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7452378958606525374, guid: 25a3dcff827d55546b1cb09ba320f42f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -20.899902
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25a3dcff827d55546b1cb09ba320f42f, type: 3}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Drone_EnergyBlast
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: eb84924357e9de54c8c4c1853991480c, type: 3}
-  description: Deal {E[0]} to all enemies.
+  description: Deal {E[0]} magic damage to all enemies.
   typeDescription: {fileID: 11400000, guid: 05396cecd1c61ab4dba3e9e72676792d, type: 2}
   tags: 0300000004000000
   onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
@@ -21,13 +21,14 @@ MonoBehaviour:
   cost:
     cost: 3
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-    isXCost: 0
+    plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-    isXCost: 0
+    plusXCost: 0
   rarity: 0
   actionSequences:
   - scope: 1
     group: 1
     cardActions: {fileID: 11400000, guid: 4f3af8963835eda4ca332f2174cb0410, type: 2}
+  chainedCard: {fileID: 0}

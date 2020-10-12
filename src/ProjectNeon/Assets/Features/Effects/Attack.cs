@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using UnityEngine;
 
 [Obsolete("Needs to be replaced with the final Attack Performed data. Should be separated from Attack Proposals.")]
 public sealed class Attack  : Effect
@@ -30,16 +31,30 @@ public sealed class Attack  : Effect
         // Processing Double Damage
         var damage = Attacker.State[TemporalStatType.DoubleDamage] > 0 ? Damage.WithFactor(2) : Damage;
         Attacker.State.AdjustDoubleDamage(-1);
-        var effect = new DealDamage(damage);
-        
-        foreach (var member in selectedTarget.Members)
+
+        if (Attacker.State[TemporalStatType.Blind] > 0)
         {
-            if (member.State[TemporalStatType.Evade] > 0)
-                member.State.AdjustEvade(-1);
-            else 
-                effect.Apply(Attacker, member);
+            Attacker.State.Adjust(TemporalStatType.Blind, -1);
+            BattleLog.Write($"{Attacker.Name} was blinded, so their attack missed.");
+            Message.Publish(new PlayRawBattleEffect("MissedText", Vector3.zero));
         }
-        
+        else
+        {
+            var effect = new DealDamage(damage);
+
+            foreach (var member in selectedTarget.Members)
+            {
+                if (member.State[TemporalStatType.Evade] > 0)
+                {
+                    member.State.AdjustEvade(-1);
+                    Message.Publish(new DisplaySpriteEffect(SpriteEffectType.Evade, member));
+                    Message.Publish(new PlayRawBattleEffect("EvadedText", Vector3.zero));
+                }
+                else
+                    effect.Apply(Attacker, member);
+            }
+        }
+
         Message.Publish(new Finished<Attack> { Message = this });
     }
 }

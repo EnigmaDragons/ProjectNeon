@@ -71,6 +71,10 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
                 : $"{data.FloatAmount}x ATK";
+        if (data.EffectType == EffectType.AdjustStatAdditivelyWithLeadership)
+            return owner.IsPresent
+                ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Leadership]).ToString()
+                : WithBaseAmount(data, "x LEAD");
         if (data.EffectType == EffectType.DamageSpell 
                 || data.EffectType == EffectType.MagicDamageOverTime 
                 || data.EffectType == EffectType.HealMagic
@@ -79,7 +83,8 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
                 : WithBaseAmount(data, "x MAG");
-        if (data.EffectType == EffectType.ShieldToughness)
+        if (data.EffectType == EffectType.ShieldToughness
+            || data.EffectType == EffectType.HealToughness)
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";
@@ -104,7 +109,7 @@ public static class InterpolatedCardDescriptions
                         ? "the Battle." 
                         : value < 2
                             ? "Current Turn." 
-                            : $"{value} Turns.";
+                            : $"{Bold(value.ToString())} Turns.";
         return $"for {turnString}";
     }
 }
