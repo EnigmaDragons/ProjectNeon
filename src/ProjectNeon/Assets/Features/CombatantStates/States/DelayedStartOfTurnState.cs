@@ -22,7 +22,7 @@
             return new NoPayload();
 
         Tracker.AdvanceTurn();
-        return Tracker.IsActive ? new NoPayload() : _data.Play(new StatusEffectContext(_member));
+        return Tracker.IsActive ? new NoPayload() : _data.Play(new StatusEffectContext(_ctx.Source, _member));
     }
 
     public override IPayloadProvider OnTurnEnd() => new NoPayload();

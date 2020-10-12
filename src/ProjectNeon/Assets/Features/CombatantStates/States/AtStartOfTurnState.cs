@@ -24,7 +24,7 @@ public class AtStartOfTurnState : TemporalStateBase
             return new NoPayload();
 
         Tracker.AdvanceTurn();
-        return _data.Play(new StatusEffectContext(_member));
+        return _data.Play(new StatusEffectContext(_ctx.Source, _member));
     }
 
     public override IPayloadProvider OnTurnEnd() => new NoPayload();

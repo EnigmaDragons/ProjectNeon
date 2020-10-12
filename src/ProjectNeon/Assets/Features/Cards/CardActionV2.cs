@@ -18,7 +18,7 @@ public class CardActionV2
     public StringReference AtTargetAnimation => atTargetAnimation;
 
     public IPayloadProvider Play(StatusEffectContext ctx)
-        => Play(new CardActionContext(ctx.Member, new Single(ctx.Member), Group.Self, Scope.One, new ResourceQuantity(),
+        => Play(new CardActionContext(ctx.Source, new Single(ctx.Member), Group.Self, Scope.One, new ResourceQuantity(),
             new BattleStateSnapshot()));
     
     public IPayloadProvider Play(CardActionContext ctx)
