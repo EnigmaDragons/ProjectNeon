@@ -216,22 +216,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     
     #region Mouse Controls
     public void OnPointerDown(PointerEventData eventData)
-    {
-        if (!_isHand)
-            return;
-        
+    { 
         DebugLog($"UI - Pointer Down - {CardName}");
         if (battleState.SelectionStarted)
             return;
         if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            DebugLog($"UI - Clicked {CardName}");
             _onClick();
-        }
-        
         if (eventData.button == PointerEventData.InputButton.Middle) 
             _onMiddleMouse();
-        if (_card != null && eventData.button == PointerEventData.InputButton.Right)
+        if (_isHand && _card != null && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
     }
     
