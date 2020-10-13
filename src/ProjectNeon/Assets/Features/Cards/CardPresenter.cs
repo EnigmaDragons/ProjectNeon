@@ -33,7 +33,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private Action _onClick;
     private Action _onMiddleMouse;
     private Vector3 _position;
-    private bool _isDragging;
+    private bool _isHand;
 
     public string CardName => _cardType.Name;
     public bool Contains(Card c) => HasCard && c.Id == _card.Id;
@@ -41,13 +41,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public bool HasCard => _cardType != null;
     public bool IsHighlighted => highlight.activeSelf;
     public bool IsPlayable { get; private set; }
-    
-    private void Update()
-    {
-        if (!_isDragging)
-            return;
-    }
-    
+
     public void Clear()
     {
         gameObject.SetActive(false);
@@ -55,13 +49,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         _cardType = null;
     }
     
-    public void Set(Card card, Action onClick, Func<BattleState, Card, bool> getCanPlay)
+    public void Set(bool isHand, Card card, Action onClick, Func<BattleState, Card, bool> getCanPlay)
     {
         InitFreshCard(onClick);
 
         _card = card;
         _cardType = card.Type;
         _getCanPlay = getCanPlay;
+        _isHand = isHand;
         RenderCardType();
     }
     
@@ -72,6 +67,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         _card = null;
         _cardType = cardType;
         _getCanPlay = (_, __) => false;
+        _isHand = false;
         RenderCardType();
     }
 
@@ -221,6 +217,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     #region Mouse Controls
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!_isHand)
+            return;
+        
         DebugLog($"UI - Pointer Down - {CardName}");
         if (battleState.SelectionStarted)
             return;
@@ -238,7 +237,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsPlayable)
+        if (_isHand)
             Message.Publish(new CardHoverEnter(this));
     }
 
