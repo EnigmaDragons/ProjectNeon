@@ -27,7 +27,7 @@
   - Paladin Equipment
 - [Electroblade](Classes/ElectroBlade.md)
   - [Electroblade Cards](Cards/ElectroBlade_Cards.md)
-  - [Electroblade Equipment](Equipment/ElectroBlade_Equipment.md) 
+  - [Electroblade Equipment](Equipment/Electroblade_Equipment.md) 
 - Hacker
   - Hacker Cards
   - Hacker Equipment
