@@ -1,3 +1,5 @@
+# Chapter 2 Boss
+
 Concept: Multi-Part Boss
 
 Component A: AoE attacks every turn

@@ -1,4 +1,4 @@
-##Effects:
+## Effects:
 
 Stunned X - Mitigates next action X times
 
@@ -30,7 +30,7 @@ Evade X - Mitigates X attacks
 
 
 
-##Potential effects:
+## Potential effects:
 
 Bleeding
 

@@ -1,4 +1,4 @@
-Soldier
+#### Soldier
 - Aspiring Hero	Upgrade	0		Raises STR 1+ self for 3 turns; 2+ if  below 50%; 3+ below 25%.
 - Bravado	Upgrade	0		Heal self 75% MAG and raise STR by 1+/2+ for 3 turns.
 - To Victory	Upgrade	0		Raise all allies STR by 1+/2+ for 3 turns.

@@ -1,6 +1,6 @@
-#Core Elements
-<br>
-##Shown:
+# Core Elements
+
+## Shown:
 
 Cost
 
@@ -11,7 +11,7 @@ Card-Type
 Card Aspects(e.g. Lifesteal, Dual-Cast)
 
 
-##Read:
+## Read:
 
 1. The Actor | ElectroBlade
 
@@ -21,9 +21,9 @@ Card Aspects(e.g. Lifesteal, Dual-Cast)
 
 4. Doing X
 
-(5. Conditionally do Y) 
+5. (Conditionally do Y) 
 
-##X = 
+## X = 
 
 Apply [Status effect] (for [Duration]) | Apply Vulnerable 2
 
@@ -36,7 +36,7 @@ Shield X (over [Duration])
 
 
 
-##Conditionally:
+## Conditionally:
 
 If | If an enemy is killed this way, repeat this action. 
 

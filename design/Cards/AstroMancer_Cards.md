@@ -1,4 +1,4 @@
-##AstroMancer Cards
+## AstroMancer Cards
 
 Any AstroMancer card can be played as Manaflow.
 
@@ -10,9 +10,9 @@ Manaflow - Self - Gain 2 Mana
 ### Solar:
 
 Blinding Light - Gain +1 Mana - All Characters 
-    - Deal 3 magic damage
-    - All characters deal -5 damage this turn
-    - Feed-Lunar: This spell costs no mana
+   - Deal 3 magic damage
+   - All characters deal -5 damage this turn
+   - Feed-Lunar: This spell costs no mana
 
 Shield of Radiance - Self
   - Shield 1x Defense.
