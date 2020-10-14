@@ -1,4 +1,4 @@
-#The game revolves around this stage format:
+# The game revolves around this stage format:
 Each stage has unique rules.
 
 X-1: Mob then a random party member levels up by adding a card to their deck.(Cards might have stat points attached to them)
@@ -11,7 +11,7 @@ X-4: The player chooses a reward among options.
 
 X-5: Stage boss battle.
 
-##Game Overview:
+## Game Overview:
 Start by selecting your party of 3
 
 - Shop
@@ -29,7 +29,7 @@ Start by selecting your party of 3
 - Final Dungeon Stage
 
 
-##X-4 Reward options list:
+## X-4 Reward options list:
 - Healing
 - An Item
 - Item Upgrade

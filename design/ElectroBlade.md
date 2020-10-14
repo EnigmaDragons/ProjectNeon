@@ -1,6 +1,6 @@
-#ElectroBlade
-<br>
-##Main Mechanic:
+# ElectroBlade
+
+## Main Mechanic:
 
 He brings a blend of utility, pseudo-tankiness & damage that scales up during a fight. 
 He's fun to play because of his feast-or-famine playstyle that comes from his combos and counters.
@@ -8,32 +8,32 @@ He's fun to play because of his feast-or-famine playstyle that comes from his co
 
 
 
-##Role Descriptor
+## Role Descriptor
 - Combos
 - Late-fight hypercarry
 - Anti-boss
  
-####All Cards can be played to generate 2 Energy.
+#### All Cards can be played to generate 2 Energy.
 
-###Electro effects can:
+### Electro effects can:
 - Temporarily enchant his blade
 - Stun Enemies
 - Be multi-target
 
 
 
-###Counter effects can:
+### Counter effects can:
 - Do nothing when not triggered
 - Mitigate enemy effects
 - Be extremely powerful
 
 
-###Slashing effects can:
+### Slashing effects can:
 - Deal heavy single target damage
 - Apply Bleeds
 - Apply Vulnerable
 
-##Paragon
+## Paragon
 
 The Electro Path turns ElectroBlade into a stunning off-tank that helps control the tempo of the battle. He automatically stuns enemies when he takes large amounts of damage. His Electro cards combo with each other to make them AoE and add more stuns.
 

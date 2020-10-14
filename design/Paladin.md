@@ -2,12 +2,12 @@
 
 ----
 
-##Role Descriptor:
+## Role Descriptor:
 - Guardian
 - Support
 - Punisher
 
-##Main Mechanic:
+## Main Mechanic:
 The Paladin is easy to play.
 The Paladin is built to cover your team's weaknesses.
 

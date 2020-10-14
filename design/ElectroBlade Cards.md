@@ -37,8 +37,8 @@ Rare:
 
 ## New Ideas:
 
-Common - Kata Complete - 1 Energy - 1 Enemy - Deal 1.1x ATK damage. Chain: Energize
-Common - No Pain, No Gain - Self - For 3 Turns, Gain +2 ATK and 1 Energy each time hit
-Uncommon - Electric Barrier - X Energy - Gain X x .6 MGC Shield 
-Rare - Blade Frenzy - All Enemies - Deal 0.5x to a random enemy, twice. Chain Do it 3 more times
-Rare - Faster Than Light - 5 Energy - Draw 2 Electroblade immediately takes 2 additional Actions
+- Common - Kata Complete - 1 Energy - 1 Enemy - Deal 1.1x ATK damage. Chain: Energize
+- Common - No Pain, No Gain - Self - For 3 Turns, Gain +2 ATK and 1 Energy each time hit
+- Uncommon - Electric Barrier - X Energy - Gain X x .6 MGC Shield 
+- Rare - Blade Frenzy - All Enemies - Deal 0.5x to a random enemy, twice. Chain Do it 3 more times
+- Rare - Faster Than Light - 5 Energy - Draw 2 Electroblade immediately takes 2 additional Actions

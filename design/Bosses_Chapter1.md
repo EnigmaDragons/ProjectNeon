@@ -1,4 +1,4 @@
-Big, Bad and Buff:
+### Big, Bad and Buff:
 2 Actions/turn
 
 Pre-Punch Routine is paired with an attack this turn and 2 attacks next turn. Then he takes a break to do a pair of defensive moves.
@@ -33,7 +33,7 @@ Pre-Punch Routine - +2 ATK & Apply Vulnerable 2(Obviously he attacks the vulnera
 
 
 
-Blade “Master”:
+### Blade “Master”:
 
 Routine 1:
 Self Mastery & Single Strike 
@@ -73,7 +73,7 @@ If he thinks he can get a takedown(If he would have lethal if they don’t heal)
 
 
 
-DoubleMind:
+### DoubleMind:
 
 Card-playing Logic:
 Red: He doesn’t like to burn retaliation points unless they have 3. Then he focuses on whoever has the most retaliation points until they are all below 3. Then he attacks the person with the fewest.

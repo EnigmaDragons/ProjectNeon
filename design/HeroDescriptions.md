@@ -1,6 +1,6 @@
 ----
 
-Weldon
+#### Weldon
 
 Class: Solider
 
@@ -14,7 +14,7 @@ Backstory: Ex-military officer for NAUSF (North American Union Special Force), W
 
 ----
 
-Lexi
+#### Lexi
 
 Class: MedTech
 
@@ -28,7 +28,7 @@ Backstory: Child prodigy from a wealthy corporate family. Lexi has explored many
 
 ----
 
-Dominik
+#### Dominik
 
 Class: Electoblade
 
@@ -42,7 +42,7 @@ Backstory: Raised in the countryside, Dominik loved to playfight with sticks as 
 
 ----
 
-Andi
+#### Andi
 
 Class: Pyromancer
 

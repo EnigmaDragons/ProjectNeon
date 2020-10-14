@@ -32,11 +32,11 @@ Uncommon:
  - Gas On The Fire - 2 Flames - All Enemies - Apply another copy of each DoT
  - Fire Stream - X Flames - 1 Enemy - Deal 0.7x MAG damage
  - Sear - 3 Flames - 1 Enemy - Deal 1x MAG damage. If enemy is taking ongoing damage, Stun 1
-/ - Fire Blast - 1 Flames - 1 Enemy - Instant: Deal 0.5x MAG damage
+ - Fire Blast - 1 Flames - 1 Enemy - Instant: Deal 0.5x MAG damage
  - Ignition - 1 Flames - 1 Enemy - Deal 0.8x MAG damage. If enemy is taking ongoing damage, deal 0.8x MAG damage more
 
 Rare:
-/ - Bouncing Inferno - 8 Flames - 1 Enemy - Deal 3x MAG, then bounce once to each enemy with diminishing power
+ - Bouncing Inferno - 8 Flames - 1 Enemy - Deal 3x MAG, then bounce once to each enemy with diminishing power
  - Fiery Soul - 2 Flames - Self - Double your MAG for the turn
 
 Epic:
