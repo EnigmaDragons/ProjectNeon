@@ -9,7 +9,7 @@
 - [Status Effects](GameMechanics/StatusEffects.md)
 
 ## Heroes
-- [Hero Descriptions](Heroes/HeroDescriptions)
+- [Hero Descriptions](Heroes/HeroDescriptions.md)
 ## Classes
 ##### [Classes Overview](Classes/Classes.md)
 ##### [Neutral Equipment](Equipment/Neutral_Equipment.md)
@@ -26,8 +26,8 @@
   - [Paladin Cards](Cards/Paladin_Cards.md)
   - Paladin Equipment
 - [Electroblade](Classes/ElectroBlade.md)
-  - [Electroblade Cards](Cards/Electroblade_Cards.md)
-  - [Electroblade Equipment](Equipment/Electroblade_Equipment.md) 
+  - [Electroblade Cards](Cards/ElectroBlade_Cards.md)
+  - [Electroblade Equipment](Equipment/ElectroBlade_Equipment.md) 
 - Hacker
   - Hacker Cards
   - Hacker Equipment
