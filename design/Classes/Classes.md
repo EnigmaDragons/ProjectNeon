@@ -1,4 +1,4 @@
-# General Hero Designs
+# General Class Designs
 
 ## Roles:
 

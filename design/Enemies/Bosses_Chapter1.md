@@ -1,3 +1,4 @@
+# Chapter 1 Bosses
 ### Big, Bad and Buff:
 2 Actions/turn
 
