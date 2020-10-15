@@ -36,6 +36,8 @@ public static class AITargetSelectionLogic
                 return possibleTargets.MostResources();
             if ((card.Is(CardTag.RemoveShields) || card.Is(CardTag.Attack, CardTag.Shield)) && action.Group == Group.Opponent)
                 return possibleTargets.MostShielded();
+            if (card.Is(CardTag.Blind))
+                return possibleTargets.MostAttack();
             if (card.Is(CardTag.Vulnerable) && action.Group == Group.Opponent)
             {
                 var vulnerableTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsVulnerable()));
@@ -101,6 +103,12 @@ public static class AITargetSelectionLogic
         .ToArray()
         .Shuffled()
         .OrderByDescending(t => t.TotalOffense() * 50 + t.TotalHpAndShields() * 20)
+        .First();
+    
+    public static Target MostAttack(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(t => t.TotalAttack())
         .First();
 
     public static Target MostDamaged(this IEnumerable<Target> targets) => targets
