@@ -10,6 +10,7 @@ public sealed class MemberStatPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI armorLabel;
     [SerializeField] private TextMeshProUGUI resistLabel;
     [SerializeField] private TextMeshProUGUI toughLabel;
+    [SerializeField] private TextMeshProUGUI leaderLabel;
 
     public MemberStatPanel Initialized(Member m)
     {
@@ -20,6 +21,7 @@ public sealed class MemberStatPanel : MonoBehaviour
         armorLabel.text = $"{m.Armor()}";
         resistLabel.text = $"{m.Resistance()}";
         toughLabel.text = $"{m.Toughness()}";
+        leaderLabel.text = $"{m.Leadership()}";
         
         return this;
     }
