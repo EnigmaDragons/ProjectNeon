@@ -21,7 +21,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     [SerializeField] private GameObject canPlayHighlight;
     [SerializeField] private GameObject highlight;
     [SerializeField] private GameObject darken;
-    [SerializeField] private GameObject controls;
+    [SerializeField] private CardControlsPresenter controls;
     [SerializeField] private float highlightedScale = 1.7f;
 
     private Card _card;
