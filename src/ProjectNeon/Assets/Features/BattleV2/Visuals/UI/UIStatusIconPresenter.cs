@@ -9,12 +9,12 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI label;
 
-    private Vector3 _originalIconScale;
+    private Vector3 _originalScale;
     private string _tooltip = "";
 
     private void Awake()
     {
-        _originalIconScale = icon.transform.localScale;
+        _originalScale = gameObject.transform.localScale;
     }
     
     public override void Show(CurrentStatusValue s)
@@ -22,9 +22,13 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
         icon.sprite = s.Icon;
         label.text = s.Text;
         gameObject.SetActive(true);
-        _tooltip = s.Tooltip;icon.transform.localScale = _originalIconScale;
+        _tooltip = s.Tooltip;
         if (s.IsChanged)
-            gameObject.transform.DOPunchScale(new Vector3(1.28f, 1.28f, 1.28f), 1f, 1);
+        {
+            transform.localScale = _originalScale;
+            transform.DOKill(false);
+            transform.DOPunchScale(new Vector3(1.28f, 1.28f, 1.28f), 1f, 1);
+        }
 
     }
 
