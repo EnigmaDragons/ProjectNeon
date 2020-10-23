@@ -21,12 +21,7 @@ public class MagicAttack : Effect
         ctx.Source.State.AdjustDoubleDamage(-1);
         var effect = new DealDamage(damage);
         
-        foreach (var member in selectedTarget.Members)
-        {
-            if (member.State[TemporalStatType.Spellshield] > 0)
-                member.State.AdjustSpellshield(-1);
-            else
-                effect.Apply(ctx.Source, member);
-        }
+        foreach (var member in selectedTarget.Members) 
+            effect.Apply(ctx.Source, member);
     }
 }

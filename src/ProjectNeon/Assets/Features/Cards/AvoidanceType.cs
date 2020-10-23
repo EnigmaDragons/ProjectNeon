@@ -1,5 +1,5 @@
 
-public enum CardAvoidanceType
+public enum AvoidanceType
 {
     None,
     Evade,

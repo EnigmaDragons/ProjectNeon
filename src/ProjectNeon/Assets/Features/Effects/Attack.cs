@@ -44,14 +44,7 @@ public sealed class Attack  : Effect
 
             foreach (var member in selectedTarget.Members)
             {
-                if (member.State[TemporalStatType.Evade] > 0)
-                {
-                    member.State.AdjustEvade(-1);
-                    Message.Publish(new DisplaySpriteEffect(SpriteEffectType.Evade, member));
-                    Message.Publish(new PlayRawBattleEffect("EvadedText", Vector3.zero));
-                }
-                else
-                    effect.Apply(Attacker, member);
+                effect.Apply(Attacker, member);
             }
         }
 

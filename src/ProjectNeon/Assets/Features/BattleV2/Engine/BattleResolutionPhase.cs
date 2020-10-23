@@ -63,7 +63,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     protected override void Execute(ApplyBattleEffect msg)
     {
         var battleSnapshotBefore = state.GetSnapshot();
-        ApplyEffectsWithRetargetingIsAllTargetsUnconscious(msg);
+        ApplyEffectsWithRetargetingIfAllTargetsUnconscious(msg);
         var battleSnapshotAfter = state.GetSnapshot();
         var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction);
 
@@ -72,10 +72,11 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 
-    private void ApplyEffectsWithRetargetingIsAllTargetsUnconscious(ApplyBattleEffect msg)
+    private void ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
     {
         if (msg.CanRetarget && msg.Target.Members.All(m => !m.IsConscious()))
         {
+            Log.Info("Retargeting Battle Effect");
             var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
             if (newTargets.Any())
             {
