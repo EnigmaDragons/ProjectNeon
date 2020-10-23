@@ -1,7 +1,8 @@
 
 public enum AvoidanceType
 {
-    None,
-    Evade,
-    Spellshield
+    NotSpecified = 0,
+    Evade = 1,
+    Spellshield = 2,
+    UnavoidableNotHostile = 999,
 }
