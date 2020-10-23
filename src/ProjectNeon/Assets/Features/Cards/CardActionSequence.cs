@@ -6,6 +6,7 @@ public class CardActionSequence
 {
     [SerializeField] private Scope scope;
     [SerializeField] private Group group;
+    [SerializeField] private CardAvoidanceType avoidance;
     [SerializeField] public CardActionsData cardActions;
 
     public Scope Scope => scope;
