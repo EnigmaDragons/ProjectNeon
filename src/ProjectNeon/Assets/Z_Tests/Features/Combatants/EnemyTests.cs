@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 [TestFixture]
-public sealed class EnemyTest
+public sealed class EnemyTests
 {
     [Test]
     public void CorrectEnforcerTest()
