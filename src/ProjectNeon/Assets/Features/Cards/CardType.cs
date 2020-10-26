@@ -15,6 +15,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private Rarity rarity;
     [SerializeField] public CardActionSequence[] actionSequences = new CardActionSequence[0];
     [SerializeField] private CardType chainedCard;
+    [SerializeField] private string functionalityIssues;
 
     public string Name => name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
     public ResourceCost Cost => cost;

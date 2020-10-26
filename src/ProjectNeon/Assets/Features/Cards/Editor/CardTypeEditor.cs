@@ -9,7 +9,7 @@ using UnityEngine;
 public class CardTypeEditor : Editor
 {
     private CardType targetCard;
-    private SerializedProperty art, description, typeDescription, tags, onlyPlayableByClass, cost, gain, rarity, actionSequences, cardAction1, cardAction2, chainedCard;
+    private SerializedProperty functionalityIssues, art, description, typeDescription, tags, onlyPlayableByClass, cost, gain, rarity, actionSequences, cardAction1, cardAction2, chainedCard;
 
     public void OnEnable()
     {
@@ -24,6 +24,7 @@ public class CardTypeEditor : Editor
         rarity = serializedObject.FindProperty("rarity");
         actionSequences = serializedObject.FindProperty("actionSequences");
         chainedCard = serializedObject.FindProperty("chainedCard");
+        functionalityIssues = serializedObject.FindProperty("functionalityIssues");
     }
 
     public override void OnInspectorGUI()
@@ -40,6 +41,8 @@ public class CardTypeEditor : Editor
         PresentUnchanged(chainedCard);
         DrawUILine(Color.black);
         PresentUnchanged(tags);
+        DrawUILine(Color.black);
+        PresentUnchanged(functionalityIssues);
     }
 
     private void PresentUnchanged(SerializedProperty serializedProperty)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Samurai_RollingSlash
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: 545418b3f8ac07540ab49ea286420b12, type: 3}
-  description: Gain {E[0]}. Deal {E[1]} damage.
+  description: 'Deal {E[0]} damage. Gain {E[1]}. '
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 0400000007000000
   onlyPlayableByClass: {fileID: 0}
@@ -28,9 +28,12 @@ MonoBehaviour:
   rarity: 0
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: ebf1c06089262bb4a90030b728ff27be, type: 2}
-  - scope: 0
     group: 1
+    avoidance: 1
     cardActions: {fileID: 11400000, guid: 749284946fcd4fd4eb46d6c9b1a16a9a, type: 2}
+  - scope: 0
+    group: 0
+    avoidance: 999
+    cardActions: {fileID: 11400000, guid: ebf1c06089262bb4a90030b728ff27be, type: 2}
   chainedCard: {fileID: 0}
+  functionalityIssues: 
