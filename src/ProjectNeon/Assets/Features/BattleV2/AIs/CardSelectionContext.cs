@@ -5,11 +5,12 @@ using System.Linq;
 public sealed class CardSelectionContext
 {
     public Member Member { get; }
-    public Member[] Enemies => State.GetConsciousEnemies(Member);
-    public Member[] Allies => State.GetConsciousAllies(Member);
-    public BattleState State { get; }
+    public Member[] Enemies => AllMembers.GetConsciousEnemies(Member);
+    public Member[] Allies => AllMembers.GetConsciousAllies(Member);
+    public Member[] AllMembers { get; }
     public AIStrategy Strategy { get; }
-    public IEnumerable<CardTypeData> CardOptions { get; } = new List<CardTypeData>();
+    public IEnumerable<CardTypeData> CardOptions { get; }
+    
     public Maybe<CardTypeData> SelectedCard { get; private set; } = Maybe<CardTypeData>.Missing();
     
     public CardSelectionContext(int memberId, BattleState state, AIStrategy strategy)
@@ -19,16 +20,16 @@ public sealed class CardSelectionContext
         : this(member, state, strategy, state.GetPlayableCards(member.Id)) {}
     
     public CardSelectionContext(Member member, BattleState state, AIStrategy strategy, IEnumerable<CardTypeData> options)
+        : this(member, state.MembersWithoutIds, strategy, options) {}
+    
+    public CardSelectionContext(Member member, Member[] allMembers, AIStrategy strategy, IEnumerable<CardTypeData> options)
     {
         Member = member;
-        State = state;
+        AllMembers = allMembers;
         Strategy = strategy;
         CardOptions = options;
     }
     
-    public CardSelectionContext WithOptions(IEnumerable<CardTypeData> options) 
-        => new CardSelectionContext(Member, State, Strategy, options) { SelectedCard = SelectedCard };
-
     public CardSelectionContext IfTrueDontPlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] excludedTagsCombination)
     {
         if (!excludedTagsCombination.Any())
@@ -37,15 +38,15 @@ public sealed class CardSelectionContext
             return this;
         }
         return shouldRefine(this)
-            ? new CardSelectionContext(Member, State, Strategy, CardOptions.Where(o => !o.Is(excludedTagsCombination))) { SelectedCard = SelectedCard }
+            ? new CardSelectionContext(Member, AllMembers, Strategy, CardOptions.Where(o => !o.Is(excludedTagsCombination))) { SelectedCard = SelectedCard }
             : this;
     }
     
     public CardSelectionContext IfTruePlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] includeTagsCombination)
         => shouldRefine(this)
-            ? new CardSelectionContext(Member, State, Strategy, CardOptions.Where(o => o.Is(includeTagsCombination))) { SelectedCard = SelectedCard }
+            ? new CardSelectionContext(Member, AllMembers, Strategy, CardOptions.Where(o => o.Is(includeTagsCombination))) { SelectedCard = SelectedCard }
             : this;
 
     public CardSelectionContext WithSelectedCard(CardTypeData card)
-        => new CardSelectionContext(Member, State, Strategy, CardOptions) { SelectedCard = new Maybe<CardTypeData>(card)};
+        => new CardSelectionContext(Member, AllMembers, Strategy, CardOptions) { SelectedCard = new Maybe<CardTypeData>(card)};
 }

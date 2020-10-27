@@ -2,18 +2,33 @@
 
 public static class BattleStateTargetingExtensions
 {
+    private static TeamType EnemyTeamType(this Member m)
+        => m.TeamType == TeamType.Enemies
+            ? TeamType.Party
+            : TeamType.Enemies;
+    
+    public static Member[] GetConsciousEnemies(this Member[] members, Member self)
+        => members.GetConscious(self.EnemyTeamType()); 
+    
+    public static Member[] GetConsciousAllies(this Member[] members, Member self)
+        => members.GetConscious(self.TeamType);
+    
+    public static Member[] GetConscious(this BattleState state, TeamType team)
+        => state.MembersWithoutIds.GetConscious(team);
+    
+    public static Member[] GetConscious(this Member[] members, TeamType team) 
+        => members.Where(x => x.TeamType == team && x.IsConscious()).ToArray();
+    
     public static Member[] GetConsciousAllies(this BattleState s, Member m)
-        => s.GetConscious(m.TeamType);
+        => s.MembersWithoutIds.GetConscious(m.TeamType);
 
     public static Member[] GetConsciousEnemies(this BattleState s, Member m)
-        => s.GetConscious(m.TeamType == TeamType.Enemies 
-            ? TeamType.Party 
-            : TeamType.Enemies); 
-    
-    public static Member[] GetConscious(this BattleState state, TeamType team) 
-        => state.Members.Values.Where(x => x.TeamType == team && x.IsConscious()).ToArray();
+        => s.MembersWithoutIds.GetConscious(m.EnemyTeamType());
 
-    public static Target[] GetPossibleConsciousTargets(this BattleState state, Member self, Group group, Scope scope)
+    public static Target[] GetPossibleConsciousTargets(this BattleState s, Member self, Group group, Scope scope)
+        => GetPossibleConsciousTargets(s.MembersWithoutIds, self, group, scope);
+    
+    public static Target[] GetPossibleConsciousTargets(this Member[] allMembers, Member self, Group group, Scope scope)
     {
         Target[] targets = new Target[0];
         switch (group)
@@ -23,23 +38,23 @@ public static class BattleStateTargetingExtensions
                 break;
             }
             case Group.All:  {
-                targets = Targets(new Team(state.Members.Values.Where(m => m.IsConscious())));
+                targets = Targets(new Team(allMembers.Where(m => m.IsConscious())));
                 break;
             }
             case Group.Opponent:
             case Group.Ally:
             {
-                targets = NonSelfConsciousTargetsFor(state, self, self.TeamType, group, scope);
+                targets = NonSelfConsciousTargetsFor(allMembers, self, self.TeamType, group, scope);
                 break;
             }
         }
         return targets;
     }
 
-    private static Target[] NonSelfConsciousTargetsFor(this BattleState state, Member originator, TeamType myTeam, Group group, Scope scope)
+    private static Target[] NonSelfConsciousTargetsFor(this Member[] allMembers, Member originator, TeamType myTeam, Group group, Scope scope)
     {
         var opponentsAre = myTeam == TeamType.Party ? TeamType.Enemies : TeamType.Party;
-        var teamMembers = group == Group.Ally ? GetConscious(state, myTeam) : GetConscious(state, opponentsAre);
+        var teamMembers = group == Group.Ally ? GetConscious(allMembers, myTeam) : GetConscious(allMembers, opponentsAre);
 
         if (scope == Scope.One)
         {
@@ -56,7 +71,7 @@ public static class BattleStateTargetingExtensions
 
         if (scope == Scope.OneExceptSelf)
         {
-            return NonSelfConsciousTargetsFor(state, originator, myTeam, group, Scope.One)
+            return NonSelfConsciousTargetsFor(allMembers, originator, myTeam, group, Scope.One)
                 .Where(x => !x.Members.Contains(originator)).ToArray();
         }
 

@@ -15,7 +15,7 @@ public static class AITargetSelectionLogic
         var card = ctx.SelectedCard.Value;
         return card.ActionSequences.Select(action =>
         {
-            var possibleTargets = ctx.State.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
+            var possibleTargets = ctx.AllMembers.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
             if (possibleTargets.Where(isPreferredTarget).Any())
                 possibleTargets = possibleTargets.Where(isPreferredTarget).ToArray();
             
@@ -78,7 +78,7 @@ public static class AITargetSelectionLogic
         
         var targets = ctx.SelectedTargets(isPreferredTarget);
         
-        var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);
+        var card = ctx.SelectedCard.Value.CreateInstance(NextCardId.Get(), ctx.Member);
         RecordNonStackingTags(CardTag.Stun, ctx, targets);
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
         RecordNonStackingTags(CardTag.Taunt, ctx, targets);
