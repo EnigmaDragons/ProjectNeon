@@ -21,13 +21,16 @@ MonoBehaviour:
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-    isXCost: 0
+    plusXCost: 0
   onPlayGain:
     cost: 1
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-    isXCost: 0
+    plusXCost: 0
   rarity: 2
   actionSequences:
   - scope: 1
     group: 1
+    avoidance: 1
     cardActions: {fileID: 11400000, guid: 24d7415d3791bf34c84eead366143909, type: 2}
+  chainedCard: {fileID: 0}
+  functionalityIssues: Evasion doesn't work with Random later target selection
