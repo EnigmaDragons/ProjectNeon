@@ -7,9 +7,10 @@ public sealed class EnemyTests
     [Test]
     public void CorrectEnforcerTest()
     {
+        
         Enemy testEnforcer = TestableEnemy.Enforcer();
         Assert.AreEqual("Enforcer", testEnforcer.Name);
-        Assert.AreEqual(5, testEnforcer.PreferredTurnOrder);
+        Assert.AreEqual(2, testEnforcer.PreferredTurnOrder);
         Assert.AreEqual(1, testEnforcer.PowerLevel);
         Assert.AreEqual(50, testEnforcer.RewardCredits);
         Assert.AreEqual(BattleRole.Utility, testEnforcer.Role);

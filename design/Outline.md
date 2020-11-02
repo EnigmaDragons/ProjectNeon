@@ -28,8 +28,8 @@
 - [Electroblade](Classes/ElectroBlade.md)
   - [Electroblade Cards](Cards/ElectroBlade_Cards.md)
   - [Electroblade Equipment](Equipment/Electroblade_Equipment.md) 
-- Hacker
-  - Hacker Cards
+- [Hacker](Classes/Hacker.md)
+  - [Hacker Cards](Cards/Hacker_Cards.md)
   - Hacker Equipment
 - [Titan Operator](Classes/TitanOperator.md)
   - [Titan Operator Cards](Cards/TitanOperator_Cards.md)

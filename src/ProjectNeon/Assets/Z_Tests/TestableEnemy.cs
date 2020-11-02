@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 
 public static class TestableEnemy
 {
@@ -45,6 +46,8 @@ public static class TestableEnemy
     
     public static Enemy Enforcer()
     {
+        Enemy test2Enforcer = AssetDatabase.LoadAssetAtPath("Assets/Data/Enemies/Mechs/Controller-Enforcer/Enforcer.asset", typeof(Enemy)) as Enemy;
+        return test2Enforcer;
         Dictionary<string, int> intStats = new Dictionary<string, int>();
         
         string testName = "Enforcer";
