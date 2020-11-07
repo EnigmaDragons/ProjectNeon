@@ -12,7 +12,7 @@ public static class AllEffects
         { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatAdditivelyFormula, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(new FormulaContext(src), e.Formula)), e.ForSimpleDurationStatAdjustment())))},
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(new FormulaContext(src.State, m), e.Formula)), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.CleanseDebuffs())},

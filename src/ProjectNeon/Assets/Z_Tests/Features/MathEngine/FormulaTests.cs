@@ -37,12 +37,15 @@ public class FormulaTests
     
     [Test] public void Formula_PercentOfHp() 
         => AssertResultsIs(10, "0.5 * HP", TestMembers.Create(s => s.With(StatType.MaxHP, 20)));
+    
+    [Test] public void Formula_TargetStat() 
+        => AssertResultsIs(20, "Target[HP]", new FormulaContext(TestMembers.Any(), TestMembers.Create(s => s.With(StatType.MaxHP, 20))));
 
     private void AssertResultsIs(float val, string exp) 
-        => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any()));
+        => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().State, TestMembers.Any().State));
     
     private void AssertResultsIs(float val, string exp, Member m) 
-        => AssertResultsIs(val, exp, new FormulaContext(m));
+        => AssertResultsIs(val, exp, new FormulaContext(m.State, TestMembers.Any().State));
     
     private void AssertResultsIs(float val, string exp, FormulaContext ctx) 
         => Assert.AreEqual(val, Formula.Evaluate(ctx, exp));
