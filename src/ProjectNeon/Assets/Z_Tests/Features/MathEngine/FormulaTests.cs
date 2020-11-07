@@ -16,6 +16,9 @@ public class FormulaTests
     
     [Test] public void Formula_Divide_ConstantValues() 
         => AssertResultsIs(2, "4 / 2");
+    
+    [Test] public void Formula_Parentheses_ConstantValues() 
+        => AssertResultsIs(10, "(4 + 1) * 2");
 
     [Test] public void Formula_RawStatValue() 
         => AssertResultsIs(2, "Attack", TestMembers.Create(s => s.With(StatType.Attack, 2)));
@@ -31,6 +34,9 @@ public class FormulaTests
 
     [Test] public void Formula_Leadership() 
         => AssertResultsIs(1.8f, "0.18 * Leadership", TestMembers.Create(s => s.With(StatType.Leadership, 10)));
+    
+    [Test] public void Formula_PercentOfHp() 
+        => AssertResultsIs(10, "0.5 * HP", TestMembers.Create(s => s.With(StatType.MaxHP, 20)));
 
     private void AssertResultsIs(float val, string exp) 
         => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any()));
