@@ -5,18 +5,16 @@ using UnityEngine.UI;
 public sealed class MapLocationNode : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameLabel;
-    [SerializeField] private TextMeshProUGUI descriptionLabel;
     [SerializeField] private Button button;
 
     private CurrentGameMap _map;
-    private MapLocation _location;
+    private MapLocation2 _location;
     
-    public void Init(CurrentGameMap map, MapLocation l)
+    public void Init(CurrentGameMap map, MapLocation2 l)
     {
         _map = map;
         _location = l;
         nameLabel.text = l.DisplayName;
-        descriptionLabel.text = l.Description;
     }
     
     //private void Awake() => button.onClick.AddListener(TravelToLocation);
