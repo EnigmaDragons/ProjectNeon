@@ -29,7 +29,7 @@ Common:
 - Osmose - 0 Flames - Self - Gain 7 Flames at the end of turn if you have none
 
 Uncommon:
- - Gas On The Fire - 2 Flames - All Enemies - Apply another copy of each DoT
+ - Gas On The Fire - 2 Flames - All Enemies - Apply an extra fresh copy of every Damage Over Time effect to all enemies
  - Fire Stream - X Flames - 1 Enemy - Deal 0.7x MAG damage
  - Sear - 3 Flames - 1 Enemy - Deal 1x MAG damage. If enemy is taking ongoing damage, Stun 1
  - Fire Blast - 1 Flames - 1 Enemy - Instant: Deal 0.5x MAG damage
@@ -37,7 +37,7 @@ Uncommon:
 
 Rare:
  - Bouncing Inferno - 8 Flames - 1 Enemy - Deal 3x MAG, then bounce once to each enemy with diminishing power
- - Fiery Soul - 2 Flames - Self - Double your MAG for the turn
+ - Fiery Soul - 4 Flames - Self - Double your MAG for the turn
 
 Epic:
  - Ascension - 0 Flames - Self - +4 MAG for 3 Turns. Gain Max Shield. Gain 2 Flames at the start of next 3 turns
