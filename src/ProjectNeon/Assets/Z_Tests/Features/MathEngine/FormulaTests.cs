@@ -16,6 +16,9 @@ public class FormulaTests
     
     [Test] public void Formula_Divide_ConstantValues() 
         => AssertResultsIs(2, "4 / 2");
+    
+    [Test] public void Formula_Parentheses_ConstantValues() 
+        => AssertResultsIs(10, "(4 + 1) * 2");
 
     [Test] public void Formula_RawStatValue() 
         => AssertResultsIs(2, "Attack", TestMembers.Create(s => s.With(StatType.Attack, 2)));
@@ -29,12 +32,21 @@ public class FormulaTests
     [Test] public void Formula_MultiplyByStatAndAdd() 
         => AssertResultsIs(7, "4 + Attack * 1.5", TestMembers.Create(s => s.With(StatType.Attack, 2)));
 
-    private void AssertResultsIs(int val, string exp) 
-        => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any()));
+    [Test] public void Formula_Leadership() 
+        => AssertResultsIs(1.8f, "0.18 * Leadership", TestMembers.Create(s => s.With(StatType.Leadership, 10)));
     
-    private void AssertResultsIs(int val, string exp, Member m) 
-        => AssertResultsIs(val, exp, new FormulaContext(m));
+    [Test] public void Formula_PercentOfHp() 
+        => AssertResultsIs(10, "0.5 * HP", TestMembers.Create(s => s.With(StatType.MaxHP, 20)));
     
-    private void AssertResultsIs(int val, string exp, FormulaContext ctx) 
+    [Test] public void Formula_TargetStat() 
+        => AssertResultsIs(20, "Target[HP]", new FormulaContext(TestMembers.Any(), TestMembers.Create(s => s.With(StatType.MaxHP, 20))));
+
+    private void AssertResultsIs(float val, string exp) 
+        => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().State, TestMembers.Any().State));
+    
+    private void AssertResultsIs(float val, string exp, Member m) 
+        => AssertResultsIs(val, exp, new FormulaContext(m.State, TestMembers.Any().State));
+    
+    private void AssertResultsIs(float val, string exp, FormulaContext ctx) 
         => Assert.AreEqual(val, Formula.Evaluate(ctx, exp));
 }

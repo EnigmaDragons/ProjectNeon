@@ -15,7 +15,7 @@ public sealed class MapSpawner : MonoBehaviour
         SpawnToken();
     }
 
-    private void SpawnNode(MapLocation l)
+    private void SpawnNode(MapLocation2 l)
     {
         var o = Instantiate(nodePrototype, transform);
         var rectTransform = o.GetComponent<RectTransform>();

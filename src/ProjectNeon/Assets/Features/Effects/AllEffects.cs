@@ -11,6 +11,8 @@ public static class AllEffects
         { EffectType.PhysicalDamage, e => new DealDamage(new PhysicalDamage(e.FloatAmount)) },
         { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.ForSimpleDurationStatAdjustment())))},
+        { EffectType.AdjustStatAdditivelyFormula, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
+            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(new FormulaContext(src.State, m), e.Formula)), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.CleanseDebuffs())},
@@ -55,8 +57,6 @@ public static class AllEffects
         { EffectType.ApplyConfusion, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Confusion, e.NumberOfTurns + 1)) },
         { EffectType.AdjustStatAdditivelyWithMagic, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Magic())), e.ForSimpleDurationStatAdjustment())))},
-        { EffectType.AdjustStatAdditivelyWithLeadership, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Leadership())), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.AdjustCounter, e => new SimpleEffect(m => m.Adjust(e.EffectScope, e.IntAmount + e.BaseAmount))},

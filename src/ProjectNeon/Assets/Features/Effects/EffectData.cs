@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public sealed class EffectData
@@ -17,6 +18,7 @@ public sealed class EffectData
     public ReactionCardType ReactionSequence;
     public StatusTag StatusTag;
     public int TurnDelay;
+    public string Formula = "";
 }
 
 public static class EffectDataExtensions
@@ -32,6 +34,7 @@ public static class EffectDataExtensions
             ReferencedSequence = e.ReferencedSequence,
             ReactionSequence = e.ReactionSequence,
             StatusTag = e.StatusTag,
-            TurnDelay = 0
+            TurnDelay = 0,
+            Formula = e.Formula
         };
 }
