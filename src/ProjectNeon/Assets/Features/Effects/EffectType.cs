@@ -1,6 +1,6 @@
-// WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER. EVENTUALLY WE NEED A TOOL TO FIND USAGES
+// WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 24-25, 27-43, 47, 48, 53, 
-// LAST NUMBER USED: 67
+// LAST NUMBER USED: 68
 public enum EffectType
 {
     Nothing = 0,
@@ -11,8 +11,8 @@ public enum EffectType
     
     AdjustStatAdditively = 3,
     AdjustStatMultiplicatively = 5,
+    AdjustStatAdditivelyFormula = 68,
     AdjustStatAdditivelyWithMagic = 63,
-    AdjustStatAdditivelyWithLeadership = 1,
     AdjustCounter = 67,
     
     AtStartOfTurn = 54,

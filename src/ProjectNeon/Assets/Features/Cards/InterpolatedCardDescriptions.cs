@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -71,10 +72,10 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
                 : $"{data.FloatAmount}x ATK";
-        if (data.EffectType == EffectType.AdjustStatAdditivelyWithLeadership)
+        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             return owner.IsPresent
-                ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Leadership]).ToString()
-                : WithBaseAmount(data, "x LEAD");
+                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
+                : FormattedFormula(data.Formula);
         if (data.EffectType == EffectType.DamageSpell 
                 || data.EffectType == EffectType.MagicDamageOverTime 
                 || data.EffectType == EffectType.HealMagic
@@ -112,4 +113,26 @@ public static class InterpolatedCardDescriptions
                             : $"{Bold(value.ToString())} Turns.";
         return $"for {turnString}";
     }
+
+    private static string FormattedFormula(string s)
+    {
+        var newS = s;
+        newS = newS.Replace(" * ", "x ");
+        foreach (var stat in StatAbbreviations)
+        {
+            if (newS.Contains(stat.Key))
+                newS = newS.Replace(stat.Key, stat.Value);
+        }
+
+        return newS;
+    }
+    
+    private static Dictionary<string, string> StatAbbreviations = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+    {
+        { StatType.Leadership.ToString(), "LEAD" },
+        { StatType.Attack.ToString(), "ATK" },
+        { StatType.Magic.ToString(), "MAG" },
+        { StatType.Armor.ToString(), "ARM" },
+        { StatType.Toughness.ToString(), "TGH" },
+    }; 
 }

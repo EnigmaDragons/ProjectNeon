@@ -29,12 +29,15 @@ public class FormulaTests
     [Test] public void Formula_MultiplyByStatAndAdd() 
         => AssertResultsIs(7, "4 + Attack * 1.5", TestMembers.Create(s => s.With(StatType.Attack, 2)));
 
-    private void AssertResultsIs(int val, string exp) 
+    [Test] public void Formula_Leadership() 
+        => AssertResultsIs(1.8f, "0.18 * Leadership", TestMembers.Create(s => s.With(StatType.Leadership, 10)));
+
+    private void AssertResultsIs(float val, string exp) 
         => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any()));
     
-    private void AssertResultsIs(int val, string exp, Member m) 
+    private void AssertResultsIs(float val, string exp, Member m) 
         => AssertResultsIs(val, exp, new FormulaContext(m));
     
-    private void AssertResultsIs(int val, string exp, FormulaContext ctx) 
+    private void AssertResultsIs(float val, string exp, FormulaContext ctx) 
         => Assert.AreEqual(val, Formula.Evaluate(ctx, exp));
 }
