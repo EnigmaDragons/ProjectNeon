@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameContent/Enemy")]
@@ -28,15 +29,6 @@ public class Enemy : ScriptableObject
 
     public string Name => enemyName;
     public Deck Deck => deck;
-    public Member AsMember(int id)
-    {
-        var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats, battleRole);
-        m.State.InitResourceAmount(resourceType, startingResourceAmount);
-        m.State.ApplyPersistentState(
-            new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resourceType.Name, Amount = resourceGainPerTurn}, m));
-        return m;
-    }
-
     public TurnAI AI => ai;
     public int PowerLevel => powerLevel;
     public int PreferredTurnOrder => preferredTurnOrder;
@@ -45,6 +37,25 @@ public class Enemy : ScriptableObject
     public string DeathEffect => deathEffect;
     public BattleRole Role => battleRole;
     public bool IsUnique => unique;
+    
+    // int stats accessors
+    public int MaxHp => maxHp;
+    public int Toughness => toughness;
+    public int Attack => attack;
+    public int Magic => magic;
+    public int StartingResourceAmount => startingResourceAmount;
+    public int ResourceGainPerTurn => resourceGainPerTurn;
+    public int CardsPerTurn => cardsPerTurn;
+
+
+    public Member AsMember(int id)
+    {
+        var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats, battleRole);
+        m.State.InitResourceAmount(resourceType, startingResourceAmount);
+        m.State.ApplyPersistentState(
+            new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resourceType.Name, Amount = resourceGainPerTurn}, m));
+        return m;
+    }
 
     public IStats Stats => new StatAddends
         {
@@ -61,4 +72,32 @@ public class Enemy : ScriptableObject
         .With(StatType.ExtraCardPlays, cardsPerTurn);
 
     public bool IsReadyForPlay => Deck != null && Prefab != null;
+    
+    public Enemy Initialized(string testName, Deck testDeck, TurnAI testAI,  BattleRole testBattleRole, bool testUnique)
+    {
+        this.enemyName = testName;
+        this.deck = testDeck;
+        this.ai = testAI;
+        this.battleRole = testBattleRole;
+        this.unique = testUnique;
+        return this;
+    }
+
+    public Enemy InitializedStats(Dictionary<string, int> intStats, float testArmor, float testResistance, ResourceType testResourceType)
+    {
+        this.preferredTurnOrder = intStats["preferredTurnOrder"];
+        this.powerLevel = intStats["powerLevel"];
+        this.rewardCredits = intStats["rewardCredits"];
+        this.maxHp = intStats["maxHp"];
+        this.toughness = intStats["toughness"];
+        this.attack = intStats["attack"];
+        this.magic = intStats["magic"];
+        this.startingResourceAmount = intStats["startingResourceAmount"];
+        this.resourceGainPerTurn = intStats["resourceGainPerTurn"];
+        this.cardsPerTurn = intStats["cardsPerTurn"];
+        this.armor = testArmor;
+        this.resistance = testResistance;
+        this.resourceType = testResourceType;
+        return this;
+    }
 }

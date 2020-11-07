@@ -1,20 +1,10 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect")]
 public class CardActionsData : ScriptableObject
 {
     public CardActionV2[] Actions = new CardActionV2[0];
-    
-    public IPayloadProvider Play(CardActionContext ctx)
-        => new MultiplePayloads(Actions.Select(x => x.Play(ctx)));
-    
-    public IPayloadProvider Play(StatusEffectContext ctx)
-        => new MultiplePayloads(Actions.Select(x => x.Play(ctx)));
-    
-    public IPayloadProvider PlayAsReaction(Member source, Target target, int amountPaid)
-        => new MultiplePayloads(Actions.Select(x => x.PlayReaction(source, target, amountPaid)).ToArray());
-    
+        
     public CardActionsData Initialized(params CardActionV2[] actions)
     {
         Actions = actions;

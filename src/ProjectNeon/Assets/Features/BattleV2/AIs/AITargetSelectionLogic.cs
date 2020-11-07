@@ -15,7 +15,7 @@ public static class AITargetSelectionLogic
         var card = ctx.SelectedCard.Value;
         return card.ActionSequences.Select(action =>
         {
-            var possibleTargets = ctx.State.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
+            var possibleTargets = ctx.AllMembers.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
             if (possibleTargets.Where(isPreferredTarget).Any())
                 possibleTargets = possibleTargets.Where(isPreferredTarget).ToArray();
             
@@ -36,6 +36,8 @@ public static class AITargetSelectionLogic
                 return possibleTargets.MostResources();
             if ((card.Is(CardTag.RemoveShields) || card.Is(CardTag.Attack, CardTag.Shield)) && action.Group == Group.Opponent)
                 return possibleTargets.MostShielded();
+            if (card.Is(CardTag.Blind))
+                return possibleTargets.MostAttack();
             if (card.Is(CardTag.Vulnerable) && action.Group == Group.Opponent)
             {
                 var vulnerableTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsVulnerable()));
@@ -76,7 +78,7 @@ public static class AITargetSelectionLogic
         
         var targets = ctx.SelectedTargets(isPreferredTarget);
         
-        var card = ctx.SelectedCard.Value.CreateInstance(ctx.State.GetNextCardId(), ctx.Member);
+        var card = ctx.SelectedCard.Value.CreateInstance(NextCardId.Get(), ctx.Member);
         RecordNonStackingTags(CardTag.Stun, ctx, targets);
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
         RecordNonStackingTags(CardTag.Taunt, ctx, targets);
@@ -101,6 +103,12 @@ public static class AITargetSelectionLogic
         .ToArray()
         .Shuffled()
         .OrderByDescending(t => t.TotalOffense() * 50 + t.TotalHpAndShields() * 20)
+        .First();
+    
+    public static Target MostAttack(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(t => t.TotalAttack())
         .First();
 
     public static Target MostDamaged(this IEnumerable<Target> targets) => targets

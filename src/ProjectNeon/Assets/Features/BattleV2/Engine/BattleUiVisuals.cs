@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleUiVisuals : OnMessage<BattleFinished>
+public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, TargetSelectionFinished>
 {
     [SerializeField] private PartyUiSummaryV2 partyUi;
     [SerializeField] private GameObject commandPhaseUi;
@@ -52,5 +52,15 @@ public class BattleUiVisuals : OnMessage<BattleFinished>
             defeatUi.SetActive(true);
         else
             victoryUi.SetActive(true);
+    }
+
+    protected override void Execute(TargetSelectionBegun msg)
+    {
+        hand.SetActive(false);
+    }
+
+    protected override void Execute(TargetSelectionFinished msg)
+    {
+        hand.SetActive(true);
     }
 }

@@ -8,6 +8,8 @@ public sealed class ListDisplayWindow : EditorWindow
     public string[] Items;
     public string Title;
 
+    Vector2 scrollPosition = Vector2.zero;
+
     public ListDisplayWindow Initialized(string title, string[] items)
     {
         Title = title;
@@ -20,10 +22,12 @@ public sealed class ListDisplayWindow : EditorWindow
         EditorGUILayout.LabelField(Title);
         DrawUILine(Color.black);
         
-        Items.ForEach(i => EditorGUILayout.LabelField("Effect: ", i));
+        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Width(Screen.width), GUILayout.Height(Screen.height - 16));
+        Items.ForEach(i => EditorGUILayout.LabelField("Effect: ", i, GUILayout.Width(Screen.width - 8)));
         DrawUILine(Color.black);
         if (GUILayout.Button("Dismiss")) 
             Close();
+        EditorGUILayout.EndScrollView();
         
         GUIUtility.ExitGUI();
     }

@@ -103,7 +103,7 @@ public class CardsVisualizer : MonoBehaviour
             var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
-            c.Set(card, () => SelectCard(cardIndex), (_, __) => false);
+            c.Set(false, card, () => { }, (_, __) => false);
             c.SetDisabled(!_isFocused);
             if (!card.Owner.IsConscious() || card.Owner.IsStunnedForCurrentTurn())
                 c.SetDisabled(true);
@@ -146,8 +146,6 @@ public class CardsVisualizer : MonoBehaviour
 
         return (emptyCardIndex, emptyCard);
     }
-    
-    [Obsolete] public void SelectCard(int cardIndex) => Debug.LogError("Can no longer select cards from Card Sets except hand");
     
     public void RefreshPositions() => UpdateCurrentCards(_oldCards);
 }

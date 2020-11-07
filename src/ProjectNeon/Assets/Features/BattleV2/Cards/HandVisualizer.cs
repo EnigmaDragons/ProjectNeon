@@ -106,8 +106,6 @@ public sealed class HandVisualizer : MonoBehaviour
             var (presenterIndex, presenter) = _cardPool.GetCardPresenter(cardIndex, card);
             var c = presenter;
             var isHighlighted = c.IsHighlighted;
-            if (isHighlighted)
-                highlightedCardIndex = presenterIndex;
             
             if (!c.HasCard)
                 c.TeleportTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
@@ -115,7 +113,7 @@ public sealed class HandVisualizer : MonoBehaviour
             var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
-            c.Set(card, 
+            c.Set(true, card, 
                 () => SelectCard(cardIndex), 
                 (battleState, c2) => allowInteractions && (!onlyAllowInteractingWithPlayables || c2.IsPlayableByHero(state)));
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
@@ -127,8 +125,10 @@ public sealed class HandVisualizer : MonoBehaviour
             c.transform.SetAsLastSibling();
         }
         
-        if (highlightedCardIndex > -1)
-            _cardPool.ShownCards[highlightedCardIndex].transform.SetAsLastSibling();
+//            if (isHighlighted)
+//                highlightedCardIndex = presenterIndex;
+//        if (highlightedCardIndex > -1)
+//            _cardPool.ShownCards[highlightedCardIndex].transform.SetAsLastSibling();
 
         if (cards.Any() && state.NumberOfRecyclesRemainingThisTurn == 0 && cards.All(c => !c.IsAnyFormPlayableByHero() || !c.Owner.CanPlayCards()))
         {

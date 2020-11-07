@@ -25,6 +25,8 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
         _cardButtons = new List<CardInDeckButton>();
         pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.SelectedHeroesDeck.Deck
             .GroupBy(x => x.Name)
+            .OrderBy(x => x.First().Rarity)
+            .ThenBy(x => x.Key)
             .Select(x => InitCardInDeckButton(x.First()))
             .ToList(), x => {},
             false);

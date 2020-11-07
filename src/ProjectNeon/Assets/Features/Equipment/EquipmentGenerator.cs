@@ -34,10 +34,13 @@ public class EquipmentGenerator
     private static readonly StatType[] GeneratableStats = { StatType.MaxHP, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance };
     
     public Equipment GenerateRandomCommon()
-        => Generate(new [] { 2, 3 }.Random(), Rarity.Common);
+        => Generate(new [] { 1, 2 }.Random(), Rarity.Common);
     
     public Equipment GenerateRandomUncommon() 
-        => Generate(new [] { 4, 5 }.Random(), Rarity.Uncommon);
+        => Generate(new [] { 3, 4, 5 }.Random(), Rarity.Uncommon);
+    
+    public Equipment GenerateRandomRare() 
+        => Generate(new [] { 5, 6, 7 }.Random(), Rarity.Rare);
     
     private EquipmentSlot SlotFor(StatType primaryStatType)
         => new[] {StatType.Attack, StatType.Magic}.Contains(primaryStatType)
@@ -82,7 +85,7 @@ public class EquipmentGenerator
         {
             Name = name,
             Rarity = rarity,
-            Price = (totalPowerLevel * 30).WithShopPricingVariance(),
+            Price = (totalPowerLevel * 42).WithShopPricingVariance(),
             Classes = new [] { CharacterClass.All },
             Description = description,
             Modifiers = modifiers.ToArray(),
@@ -97,17 +100,18 @@ public class EquipmentGenerator
         {
             StatType = stat.ToString(),
             ModifierType = StatMathOperator.Additive,
-            Amount = Mathf.Max(rawAmount.FlooredInt(), 1)
+            Amount = Mathf.Max(rawAmount, 1)
         };
     }
 
-    private static readonly Dictionary<StatType, float> AdditiveStatsChartPerPoint = new Dictionary<StatType, float>
+    private static readonly Dictionary<StatType, int> AdditiveStatsChartPerPoint = new Dictionary<StatType, int>
     {
-        { StatType.MaxHP, 4 },
-        { StatType.Armor, 1 },
-        { StatType.Resistance, 1 },
-        { StatType.Attack, 0.5f },
-        { StatType.Magic, 0.5f },
-        { StatType.Toughness, 2 }
+        { StatType.MaxHP, 3 },
+        { StatType.Armor, 2 },
+        { StatType.Resistance, 2 },
+        { StatType.Attack, 1 },
+        { StatType.Magic, 1 },
+        { StatType.Toughness, 2 },
+        { StatType.Leadership, 1 }
     };
 }

@@ -13,7 +13,6 @@ public class BattleState : ScriptableObject
     [SerializeField] private EnemyArea enemies;
     [SerializeField] private AdventureProgress adventure;
     [SerializeField] private bool needsCleanup;
-    [SerializeField] private int nextCardId;
 
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
@@ -41,6 +40,7 @@ public class BattleState : ScriptableObject
     public EnemyArea EnemyArea => enemies;
     public GameObject Battlefield => nextBattlegroundPrototype;
     public IDictionary<int, Member> Members => _membersById;
+    public Member[] MembersWithoutIds => Members.Values.ToArray();
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] Enemies => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
     public PlayerState PlayerState => _playerState;
@@ -71,11 +71,11 @@ public class BattleState : ScriptableObject
 
     public void Init()
     {
-        nextCardId = 0;
+        NextCardId.Reset();
         SelectionStarted = false;
     }
 
-    public int GetNextCardId() => nextCardId++;
+    public int GetNextCardId() => NextCardId.Get();
     
     private int EnemyStartingIndex => 4;
     private int _nextEnemyId = 0;

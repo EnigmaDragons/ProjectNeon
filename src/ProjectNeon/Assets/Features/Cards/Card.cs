@@ -35,19 +35,7 @@ public sealed class Card
         this.id = id;
         this.type = type;
     }
-
-    public void Play(Target[] targets, ResourceQuantity xAmountPaid, BattleStateSnapshot battleStateSnapshot)
-    {
-        if (ActionSequences.Length > targets.Length)
-            Log.Error($"{Name}: For {ActionSequences.Length} there are only {targets.Length} targets");
-
-        for (var i = 0; i < ActionSequences.Length; i++)
-        {
-            var seq = ActionSequences[i];
-            SequenceMessage.Queue(seq.cardActions.Play(new CardActionContext(Owner, targets[i], seq.Group, seq.Scope, xAmountPaid, battleStateSnapshot)));
-        }
-    }
-
+    
     public Card RevertedToStandard()
     {
         UseAsBasic = false;
