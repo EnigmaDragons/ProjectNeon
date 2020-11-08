@@ -76,6 +76,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State.HasStatus(StatusTag.EndOfTurnTrigger))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.EndOfTurnTrigger.ToString(), Icon = icons[StatusTag.EndOfTurnTrigger].Icon, Tooltip = "End of Turn Effect Trigger" });
 
+        if (_member.State.HasStatus(StatusTag.OnDamaged))
+            statuses.Add(new CurrentStatusValue { Type = StatusTag.OnDamaged.ToString(), Icon = icons[StatusTag.OnDamaged].Icon, Tooltip = "OnDamaged"});
+        
         UpdateComparisonWithPrevious(statuses);
         UpdateStatuses(statuses);
     }

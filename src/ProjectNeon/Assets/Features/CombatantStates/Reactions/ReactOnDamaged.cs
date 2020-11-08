@@ -28,5 +28,5 @@ public class ReactOnDamaged : ReactiveEffectV2Base
         : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, reaction, effect => 
             effect.BattleBefore.Members[possessingMemberId].State.Counters["HP"] > effect.BattleAfter.Members[possessingMemberId].State.Counters["HP"])) { }
 
-    public override StatusTag Tag => StatusTag.None;
+    public override StatusTag Tag => StatusTag.OnDamaged;
 }

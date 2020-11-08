@@ -9,4 +9,5 @@ public enum StatusTag
     AntiHeal = 6,
     StartOfTurnTrigger = 7,
     EndOfTurnTrigger = 8,
+    OnDamaged = 9,
 }
