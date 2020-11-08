@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Card")]
 public class CardType : ScriptableObject, CardTypeData
 {
+    [SerializeField] private string customName;
     [PreviewSprite] [SerializeField] private Sprite art;
     [SerializeField] [TextArea(1, 12)] private string description;
     [SerializeField] private StringVariable typeDescription;
@@ -17,7 +18,10 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private CardType chainedCard;
     [SerializeField] private string functionalityIssues;
 
-    public string Name => name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
+    public string Name => !string.IsNullOrWhiteSpace(customName) 
+        ? customName 
+        : name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
+    
     public ResourceCost Cost => cost;
     public ResourceCost Gain => onPlayGain;
     public Sprite Art => art;
