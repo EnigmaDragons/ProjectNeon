@@ -39,6 +39,10 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (attackBuffAmount != 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Attack].Icon, Text = attackBuffAmount.ToString(), Tooltip = $"+{attackBuffAmount} Attack"});
         
+        var magicBuffAmount = CeilingInt(_member.State[StatType.Magic] - _member.State.BaseStats.Magic());
+        if (magicBuffAmount != 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Magic].Icon, Text = magicBuffAmount.ToString(), Tooltip = $"{magicBuffAmount} Magic"});
+        
         AddStatusIconIfApplicable(statuses, TemporalStatType.Blind, true, v => $"Blinded (guaranteed miss) for {v} Attacks");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => $"Taunt for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Stealth, true, v => $"Stealth for {v} Turns");
