@@ -26,7 +26,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private int startingResourceAmount = 0;
     [SerializeField] private int resourceGainPerTurn = 1;
     [SerializeField] private int cardsPerTurn = 1;
-    [SerializeField] private EffectData[] startOfBattleEffects;
+    [SerializeField] private EffectData[] startOfBattleEffects = new EffectData[0];
 
     public string Name => enemyName;
     public Deck Deck => deck;
@@ -54,7 +54,7 @@ public class Enemy : ScriptableObject
         m.State.InitResourceAmount(resourceType, startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resourceType.Name, Amount = resourceGainPerTurn}, m));
-        startOfBattleEffects.ForEach(effect => AllEffects.Apply(effect, new EffectContext(m, new Single(m))));
+        startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, new EffectContext(m, new Single(m))));
         return m;
     }
 
