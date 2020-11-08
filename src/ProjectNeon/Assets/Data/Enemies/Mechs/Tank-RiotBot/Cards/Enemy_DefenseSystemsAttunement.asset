@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Enemy_ScatteringField
+  m_Name: Enemy_DefenseSystemsAttunement
   m_EditorClassIdentifier: 
-  art: {fileID: 21300000, guid: e8e868bcda115374ca4a8abf1204e9f1, type: 3}
-  description: Gives -3 ATK to all enemies for 3 Turns
+  customName: 
+  art: {fileID: 21300000, guid: b18f32eca80725a4e85a9a23d0ec8b03, type: 3}
+  description: Grants <b>2</b> Resistance to all allies for 3 Turns
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
-  tags: 0700000017000000
-  onlyPlayableByClass: {fileID: 0}
+  tags: 070000001c000000
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
+    type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
@@ -28,8 +30,8 @@ MonoBehaviour:
   rarity: 0
   actionSequences:
   - scope: 1
-    group: 1
-    avoidance: 2
-    cardActions: {fileID: 11400000, guid: a1886f4f7945f5341a4eeb91c2faec8a, type: 2}
+    group: 2
+    avoidance: 999
+    cardActions: {fileID: 11400000, guid: f523324c7df8a5e4ba8683b4a8602156, type: 2}
   chainedCard: {fileID: 0}
   functionalityIssues: 

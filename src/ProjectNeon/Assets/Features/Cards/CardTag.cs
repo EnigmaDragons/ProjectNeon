@@ -30,5 +30,5 @@ public enum CardTag
     Evade = 25,
     DebuffMagical = 26,
     Spellshield = 27,
-    Resist = 28,
+    Resistance = 28,
 }
