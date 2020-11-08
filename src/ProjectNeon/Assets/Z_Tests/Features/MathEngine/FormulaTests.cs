@@ -40,6 +40,9 @@ public class FormulaTests
     
     [Test] public void Formula_TargetStat() 
         => AssertResultsIs(20, "Target[HP]", new FormulaContext(TestMembers.Any(), TestMembers.Create(s => s.With(StatType.MaxHP, 20))));
+    
+    [Test] public void Formula_ResourceAmount()
+        => AssertResultsIs(2, "Flames", TestMembers.Create(s => s.With(new InMemoryResourceType("Flames") { StartingAmount = 2, MaxAmount = 99})));
 
     private void AssertResultsIs(float val, string exp) 
         => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().State, TestMembers.Any().State));

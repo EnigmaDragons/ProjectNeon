@@ -10,6 +10,11 @@ public static class Formula
     public static float Evaluate(FormulaContext ctx, string expression)
     {
         var newExp = expression;
+
+        foreach (var resourceType in ctx.Source.ResourceTypes)
+        {
+            newExp = newExp.Replace(resourceType.Name, ctx.Source[resourceType].ToString());
+        }
         
         foreach (var stat in Enum.GetValues(typeof(StatType)).Cast<StatType>())
         {

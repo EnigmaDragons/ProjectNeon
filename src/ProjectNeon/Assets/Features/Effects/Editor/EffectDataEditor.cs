@@ -29,7 +29,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AtStartOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence", "StatusTag" }},
         {EffectType.AtEndOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence" }},
         {EffectType.DuplicateStatesOfType, new [] { "StatusTag" }},
-        {EffectType.DamageOverTime, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" } }
+        {EffectType.DamageOverTime, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" } },
+        {EffectType.DealRawDamageFormula, new [] { "Formula" }}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
