@@ -44,6 +44,7 @@ Uncommon:
 Rare:
 - Bouncing Inferno - 8 Flames - 1 Enemy - Deal 3 * MAG damage, then bounce once to each enemy with diminishing power
 - Fiery Soul - 4 Flames - Self - Double your MAG for the turn
+- Soul Burn - 2 Flames - 1 Enemy - Til the end of battle, at start of turn, deal raw damage equal your current Flames
 
 Epic:
 - Ascension - 0 Flames - Self - +4 MAG for 3 Turns. Gain Max Shield. Gain 2 Flames at the start of next 3 turns

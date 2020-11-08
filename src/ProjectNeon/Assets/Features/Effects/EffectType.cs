@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 24-25, 27-43, 47, 48, 53, 
-// LAST NUMBER USED: 69
+// LAST NUMBER USED: 70
 public enum EffectType
 {
     Nothing = 0,
@@ -8,6 +8,7 @@ public enum EffectType
     // Most Common Effects
     Attack = 17,
     DamageSpell = 50,
+    DealRawDamageFormula = 70,
     
     AdjustStatAdditively = 3,
     AdjustStatMultiplicatively = 5,
@@ -60,5 +61,5 @@ public enum EffectType
     ApplyConfusion = 62,
     SwapLifeForce = 64,
     DuplicateStatesOfType = 65,
-    ShieldToughnessBasedOnNumberOfOpponentDoTs = 69
+    ShieldToughnessBasedOnNumberOfOpponentDoTs = 69,
 }
