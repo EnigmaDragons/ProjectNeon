@@ -37,7 +37,7 @@ public static class AICardSelectionLogic
     public static CardSelectionContext DontPlayMagicalCountersIfOpponentsAreNotMagical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.DebuffMagical)
             .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Spellshield)
-            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Resist);
+            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Resistance);
             
     public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Strategy.SelectedNonStackingTargets.ContainsKey(CardTag.Taunt), CardTag.Taunt);
