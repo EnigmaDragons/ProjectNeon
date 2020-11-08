@@ -60,6 +60,7 @@ public static class AllEffects
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.AdjustCounter, e => new SimpleEffect(m => m.Adjust(e.EffectScope, e.IntAmount + e.BaseAmount))},
+        { EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs, e => new ShieldToughtnessBasedOnNumberOfOpponentDoTs(e.FloatAmount) }
     };
     
     public static void Apply(EffectData effectData, EffectContext ctx)

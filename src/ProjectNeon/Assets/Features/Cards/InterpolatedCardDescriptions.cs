@@ -92,6 +92,11 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustCounter)
             return $"{data.EffectScope} {data.IntAmount + data.BaseAmount}";
         
+        if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)
+            return owner.IsPresent
+                ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.Toughness]))).ToString()
+                : $"{data.FloatAmount}x TGH";
+        
         Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }
