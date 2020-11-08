@@ -25,4 +25,10 @@ public enum CardTag
     Taunt = 20,
     Magic = 21,
     Blind = 22,
+    DebuffPhysical = 23,
+    Armor = 24,
+    Evade = 25,
+    DebuffMagical = 26,
+    Spellshield = 27,
+    Resist = 28,
 }

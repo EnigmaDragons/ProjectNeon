@@ -25,8 +25,20 @@ public static class AICardSelectionLogic
             .DontPlayShieldsIfAlliesDontNeedShielding()
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
             .DontRemoveResourcesIfOpponentsDontHaveMany()
-            .DontPlayTauntIfAnyAllyIsPlayingOne();
+            .DontPlayTauntIfAnyAllyIsPlayingOne()
+            .DontPlayMagicalCountersIfOpponentsAreNotMagical()
+            .DontPlayPhysicalCountersIfOpponentsAreNotPhysical();
 
+    public static CardSelectionContext DontPlayPhysicalCountersIfOpponentsAreNotPhysical(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.DebuffPhysical)
+            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0),  CardTag.Evade)
+            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.Armor);
+
+    public static CardSelectionContext DontPlayMagicalCountersIfOpponentsAreNotMagical(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.DebuffMagical)
+            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Spellshield)
+            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Resist);
+            
     public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Strategy.SelectedNonStackingTargets.ContainsKey(CardTag.Taunt), CardTag.Taunt);
     
