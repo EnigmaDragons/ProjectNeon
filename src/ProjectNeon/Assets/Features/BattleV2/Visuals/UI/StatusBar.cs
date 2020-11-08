@@ -45,6 +45,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.TurnStun, true, v => $"Stunned for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.CardStun, true, v => $"Stunned for {v} Cards");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Confusion, true, v => $"Confused for {v} Turns");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Spellshield, true, v => $"Shields next {v} Magic Attacks");
 
         var extraCardBuffAmount = CeilingInt(_member.State[StatType.ExtraCardPlays] - _member.State.BaseStats.ExtraCardPlays());
         if (extraCardBuffAmount != 0)
@@ -78,6 +79,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
 
         if (_member.State.HasStatus(StatusTag.OnDamaged))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.OnDamaged.ToString(), Icon = icons[StatusTag.OnDamaged].Icon, Tooltip = "OnDamaged"});
+        
+       
         
         UpdateComparisonWithPrevious(statuses);
         UpdateStatuses(statuses);
