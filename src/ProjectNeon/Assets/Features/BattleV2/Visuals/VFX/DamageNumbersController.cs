@@ -33,7 +33,7 @@ public sealed class DamageNumbersController : OnMessage<MemberStateChanged>
     
     protected override void Execute(MemberStateChanged msg)
     {
-        if (msg.State.MemberId != _last.MemberId)
+        if (_last == null || msg.State.MemberId != _last.MemberId)
             return;
 
         _actionQueue.Enqueue(() =>

@@ -8,10 +8,10 @@ public sealed class EffectData
     public static readonly EffectData Nothing = new EffectData(); 
     
     public EffectType EffectType;
-    public IntReference BaseAmount = new IntReference();
-    public FloatReference FloatAmount = new FloatReference();
+    public IntReference BaseAmount = new IntReference(0);
+    public FloatReference FloatAmount = new FloatReference(0);
     public int IntAmount => Mathf.CeilToInt(FloatAmount.Value);
-    public IntReference NumberOfTurns = new IntReference();
+    public IntReference NumberOfTurns = new IntReference(0);
     public StringReference EffectScope = new StringReference { UseConstant = false };
     public bool HitsRandomTargetMember;
     public CardActionsData ReferencedSequence;

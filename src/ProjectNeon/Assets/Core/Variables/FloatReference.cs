@@ -7,7 +7,7 @@ public class FloatReference
     public float ConstantValue;
     public FloatVariable FloatVariable;
 
-    public float Value => UseConstant ? ConstantValue : FloatVariable.Value;
+    public float Value => UseConstant || FloatVariable == null ? ConstantValue : FloatVariable.Value;
 
     public FloatReference() { }
 
