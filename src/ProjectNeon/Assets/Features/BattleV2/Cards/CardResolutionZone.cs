@@ -25,6 +25,7 @@ public class CardResolutionZone : ScriptableObject
     }
 
     public bool HasMore => _moves.Any();
+    public int Count => _moves.Count();
     
     private bool CanChain => _moves.Select(m => m.Member.Id).Distinct().Count() == 1 && _moves.Last().Card.ChainedCard.IsPresent;
 
@@ -96,7 +97,6 @@ public class CardResolutionZone : ScriptableObject
         var played = _moves.Last();
         
         BattleLog.Write($"Canceled playing {played.Card.Name}");
-        Message.Publish(new PlayerCardCanceled());
         _moves.RemoveAt(_moves.Count - 1);
         var card = physicalZone.Take(physicalZone.Count - 1);
         playerPlayArea.Take(playerPlayArea.Count - 1);
@@ -104,6 +104,7 @@ public class CardResolutionZone : ScriptableObject
         
         played.Member.Apply(m => m.LoseResource(played.Gained.ResourceType, played.Gained.Amount));
         played.Member.Apply(m => m.GainResource(played.Spent.ResourceType, played.Spent.Amount));
+        Message.Publish(new PlayerCardCanceled());
     }
 
     public void BeginResolvingNext()
