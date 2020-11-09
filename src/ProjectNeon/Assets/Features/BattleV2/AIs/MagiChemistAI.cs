@@ -25,7 +25,7 @@ public class MagiChemistAI : TurnAI
         if (card.SelectedCard.Value.Is(CardTag.Ultimate))
             return new PlayedCardV2(
                 battleState.Members[memberId], 
-                new Target[] { new Single(battleState.Enemies.Shuffled().OrderByDescending(x => x.CurrentHp()).First()) }, 
+                new Target[] { new Single(battleState.Heroes.Shuffled().OrderByDescending(x => x.CurrentHp()).First()) }, 
                 card.SelectedCard.Value.CreateInstance(battleState.GetNextCardId(), battleState.Members[memberId]));
         return card.WithSelectedTargetsPlayedCard();
     }
