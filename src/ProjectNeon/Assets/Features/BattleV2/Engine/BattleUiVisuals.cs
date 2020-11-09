@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, TargetSelectionFinished>
+public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, TargetSelectionFinished, PlayerCardCanceled>
 {
     [SerializeField] private PartyUiSummaryV2 partyUi;
     [SerializeField] private GameObject commandPhaseUi;
@@ -9,6 +9,10 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     [SerializeField] private GameObject hand;
     [SerializeField] private GameObject defeatUi;
     [SerializeField] private GameObject victoryUi;
+    
+    [SerializeField] private BattleState battleState;
+    [SerializeField] private CardResolutionZone playArea;
+    private bool HasMoreCardPlays => playArea.Count < battleState.PlayerState.CurrentStats.CardPlays();
     
     public void Setup()
     {
@@ -54,13 +58,13 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
             victoryUi.SetActive(true);
     }
 
-    protected override void Execute(TargetSelectionBegun msg)
-    {
-        hand.SetActive(false);
-    }
+    protected override void Execute(TargetSelectionBegun msg) => hand.SetActive(false);
+    protected override void Execute(TargetSelectionFinished msg) => RefreshHandVisibility();
+    protected override void Execute(PlayerCardCanceled msg) => RefreshHandVisibility();
 
-    protected override void Execute(TargetSelectionFinished msg)
+    private void RefreshHandVisibility()
     {
-        hand.SetActive(true);
+        Debug.Log($"Refresh Hand Visibility. {playArea.Count} / {battleState.PlayerState.CurrentStats.CardPlays()}");
+        hand.SetActive(HasMoreCardPlays);
     }
 }
