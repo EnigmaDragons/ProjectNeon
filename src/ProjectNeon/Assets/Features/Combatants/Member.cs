@@ -66,6 +66,8 @@ public static class MemberExtensions
     public static bool IsConfused(this Member m) => m.State[TemporalStatType.Confusion] > 0;
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int PrimaryResourceAmount(this Member m) => m.State.PrimaryResourceAmount;
+    
+    public static int RemainingPrimaryResourceCapacity(this Member m) => m.ResourceMax(m.State.PrimaryResource) - m.State.PrimaryResourceAmount;
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
     public static int ResourceAmount(this Member m, IResourceType resourceType) => RoundUp(m.State[resourceType]);
 
