@@ -38,7 +38,7 @@ Uncommon:
 - Fire Blast - 1 Flames - 1 Enemy - Instant: Deal 0.5 * MAG damage
 - Ignition - 1 Flames - 1 Enemy - Deal 0.8 * MAG damage. If enemy is taking ongoing damage, deal 0.8 * MAG damage more
 - Chef's Kiss - 4 Flames - Self and All Enemies - 2 Turns - Increase MAG by 0.3 * MAG, Enemies are Vulnerable
-- Flame Everlasting - X Flames - 1 Enemy - Deal 1.5 * MAG damage, Gain X/2 Flames at the start of your next turn
+- Eternal Fire- 1 Flames - 1 Enemy - Deal .75 * MAG damage. Gain 3 Flames
 - Heat Shield - 0 Flames - Self - Gain 0.5 * TGH Shield for every Damage Over Time active on Enemies
 
 Rare:
