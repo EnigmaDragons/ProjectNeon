@@ -12,6 +12,5 @@ public class StoryEventChoice
     public void Select(StoryEventContext ctx)
     {
         var roll = Rng.Dbl();
-        
     }
 }

@@ -8,6 +8,8 @@ public sealed class TextCommandButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI label;
 
+    private readonly Color _disabledTextColor = Color.gray;
+    private Color _activeTextColor;
     private Button _button;
     private Action _cmd = () => { };
 
@@ -15,6 +17,14 @@ public sealed class TextCommandButton : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _button.onClick.AddListener(() => _cmd());
+        _activeTextColor = label.color;
+    }
+
+    public void Hide() => gameObject.SetActive(false);
+    public void SetButtonDisabled(bool isDisabled)
+    {
+        _button.enabled = !isDisabled;
+        label.color = _disabledTextColor;
     }
 
     public TextCommandButton Initialized(NamedCommand cmd)
@@ -26,15 +36,12 @@ public sealed class TextCommandButton : MonoBehaviour
     public void Init(string commandText, Action cmd)
     {
         label.text = commandText;
+        label.color = _activeTextColor;
         _cmd = cmd;
         gameObject.SetActive(true);
     }
     
-    public void Init(NamedCommand cmd)
-    {
-        label.text = cmd.Name;
-        _button.onClick.AddListener(() => cmd.Action.Invoke());
-    }
+    public void Init(NamedCommand cmd) => Init(cmd.Name, cmd.Action.Invoke);
 
     public void Select() => _button.Select();
     public void Execute() => _button.onClick.Invoke();
