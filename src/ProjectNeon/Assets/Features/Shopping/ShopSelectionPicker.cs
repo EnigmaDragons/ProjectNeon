@@ -23,6 +23,24 @@ public class ShopSelectionPicker
         
         return selectedCards.ToArray();
     }
+    
+    public CardType[] PickCardsOfRarity(PartyAdventureState party, ShopCardPool cards, Rarity rarity, int numCards)
+    {
+        var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All));
+
+        var weightedCards = cards
+            .All
+            .Where(x => x.LimitedToClass.IsMissingOr(c => partyClasses.Contains(c.Name)))
+            .Where(x => x.Rarity == rarity)
+            .ToArray()
+            .Shuffled();
+
+        var selectedCards = new HashSet<CardType>();
+        for (var i = 0; i < weightedCards.Length && selectedCards.Count < numCards; i++)
+            selectedCards.Add(weightedCards[i]);
+        
+        return selectedCards.ToArray();
+    }
 
     public ShopSelection GenerateCardSelection(ShopCardPool cards, PartyAdventureState party, int numCards)
     {

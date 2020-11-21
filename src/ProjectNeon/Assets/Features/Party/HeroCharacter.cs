@@ -11,6 +11,7 @@ public interface HeroCharacter
     IStats Stats { get; }
     int StartingCredits { get; }
     HeroFlavorDetails Flavor { get; }
+    HeroSkill[] Skills { get; }
 }
 
 public class InMemoryHeroCharacter : HeroCharacter
@@ -25,4 +26,5 @@ public class InMemoryHeroCharacter : HeroCharacter
     public int StartingCredits { get; set; } = 100;
     public HeroFlavorDetails Flavor { get; set; } 
         = new HeroFlavorDetails { HeroDescription = "Desc", RoleDescription = "Desc", BackStory = "BackStory" };
+    public HeroSkill[] Skills { get; } = new HeroSkill[0]; 
 }
