@@ -2,7 +2,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class StoryEventPresenter : MonoBehaviour
+public class StoryEventPresenter : OnMessage<ShowStoryEventResolution>
 {
     [SerializeField] private TextMeshProUGUI storyTextArea;
     [SerializeField] private GameObject optionsParent;
@@ -32,9 +32,20 @@ public class StoryEventPresenter : MonoBehaviour
 
             var choice = s.Choices[i];
             _buttons[i].Init(choice.Text, () => choice.Select(new StoryEventContext(party)));
-            
         }
     }
 
     private void ClearOptions() => optionsParent.DestroyAllChildren();
+    
+    protected override void Execute(ShowStoryEventResolution msg)
+    {        
+        storyTextArea.text = msg.Story;
+        for (var i = _buttons.Length - 1; i > -1; i--)
+        {
+            if (i == 1)
+                _buttons[i].Init("Done", () => Message.Publish(new MarkStoryEventCompleted()));
+            else
+                _buttons[i].Hide();
+        }
+    }
 }

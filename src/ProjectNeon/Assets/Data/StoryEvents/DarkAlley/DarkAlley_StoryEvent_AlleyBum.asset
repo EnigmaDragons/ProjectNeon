@@ -21,42 +21,27 @@ MonoBehaviour:
   - Text: 'Heal the injured man [Requires Skill: Treatment]'
     OptionalCondition: {fileID: 11400000, guid: d31a7e6947452d74ca2c33f53d250cd6,
       type: 2}
-    resolution:
+    Resolution:
     - Chance: 1
       Result: {fileID: 11400000, guid: 818aa2cfd0e6fef42b2bd3502fe18672, type: 2}
-      SuccessText: 'You treat the man on the spot. His wounds visibly heal before
-        your eyes.
-
-
-        "Thank you, thank you!" says the man. "It''s not much,
-        but I want you to have this. Buy yourself a beer. You deserve it."
-
-
-        [The
-        man gives you some credits]'
-      FailureText: ---
+      StoryText: "You treat the man on the spot. His wounds visibly heal before\r
+        your eyes.\r\n\r\n\"Thank you, thank you!\" says the man. \"It's not much,\r
+        but I want you to have this. Buy yourself a beer. You deserve it.\"\n\n[The\r 
+        man gives you some credits]"
   - Text: Take him to a clinic.
     OptionalCondition: {fileID: 11400000, guid: 424e4e8c74603144180db31da73c4846,
       type: 2}
-    resolution:
+    Resolution:
     - Chance: 1
       Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
-      SuccessText: 'You take the man to the nearest U24 clinic.
-
-
-        "It may
-        cost my an arm or leg, maybe literally, but I''ll probably live." says the
-        man. "It''s not much, but I want you to have this. Buy yourself a beer. You
-        deserve it."
-
-
-        [The man gives you some credits]'
-      FailureText: ---
+      StoryText: "You take the man to the nearest U24 clinic.\r\n\r\n\"It may cost
+        me an arm or leg, maybe literally, but I''ll probably live.\" says the\r
+        man. \"It''s not much, but I want you to have this. Buy yourself a beer.
+        You\r deserve it.\"\r\n\r\n[The man gives you some credits]"
   - Text: Ignore the man and move on.
     OptionalCondition: {fileID: 11400000, guid: 424e4e8c74603144180db31da73c4846,
       type: 2}
-    resolution:
+    Resolution:
     - Chance: 1
       Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
-      SuccessText: You quickly leave the area, avoiding the creepy man.
-      FailureText: ---
+      StoryText: You quickly leave the area, avoiding the creepy man.

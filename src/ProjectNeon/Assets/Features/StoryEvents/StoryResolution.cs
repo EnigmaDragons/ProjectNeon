@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class StoryResolution
 {
     public float Chance;
     public StoryResult Result;
-    [TextArea(2, 7)] public string SuccessText;
-    [TextArea(2, 7)] public string FailureText;
+    [FormerlySerializedAs("SuccessText")] [TextArea(2, 7)] public string StoryText;
 }
