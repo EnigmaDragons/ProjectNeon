@@ -32,6 +32,8 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution>
 
             var choice = s.Choices[i];
             _buttons[i].Init(choice.Text, () => choice.Select(new StoryEventContext(party)));
+            if (!choice.CanSelect(new StoryEventContext(party)))
+                _buttons[i].SetButtonDisabled(true);
         }
     }
 
