@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Adventure/RandomEncounter")]
 public class RandomEncounterSegment : StageSegment
 {
     public override string Name => "Battle";
