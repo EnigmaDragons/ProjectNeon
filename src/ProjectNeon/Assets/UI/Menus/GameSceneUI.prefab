@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5333668183611152108}
   - component: {fileID: 255528546493659859}
   - component: {fileID: 5940850011356915972}
+  - component: {fileID: 1363162109029507222}
   m_Layer: 5
   m_Name: GameSceneUI
   m_TagString: Untagged
@@ -208,6 +209,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   emphasis: {fileID: 11400000, guid: c1f322d0b7a97924c9dbedf2fdd557fb, type: 2}
+--- !u!114 &1363162109029507222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673095650091270458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbfd8f9f7e14e17beaa9f4732a76d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  universalShopButton: {fileID: 6422156573672845134}
+  adventure: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
 --- !u!114 &836416664295665233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1437,6 +1452,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!1 &6422156573672845134 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2038136876053344907, guid: 15f8bed6dcdfe3944824f5a4606e82a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 5001528655105301957}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4694565191882939858 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9,
@@ -1449,7 +1470,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 5001528655105301957}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6422156573672845134}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}

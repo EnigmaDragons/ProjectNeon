@@ -19,6 +19,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private float resistance = 0;
     [SerializeField] private int leadership = 0;
     [SerializeField] private ResourceType resource1;
+    [SerializeField] private HeroSkill[] skills;
 
     [SerializeField] private HeroFlavorDetails flavorDetails;
 
@@ -29,6 +30,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public Deck Deck => startingDeck;
     public CardType ClassCard => Class.BasicCard;
     public int StartingCredits => startingCredits;
+    public HeroSkill[] Skills => skills;
     public HeroFlavorDetails Flavor => flavorDetails;
 
     public IStats Stats => new StatAddends

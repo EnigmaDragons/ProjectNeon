@@ -29,6 +29,7 @@ public class Hero
     public RuntimeDeck Deck => deck;
     public int CurrentHp => Stats.MaxHp() - missingHp;
     public HeroEquipment Equipment => equipment;
+    public HeroSkill[] Skills => character.Skills;
     
     // TODO: Maybe don't calculate this every time
     public IStats Stats => Character.Stats

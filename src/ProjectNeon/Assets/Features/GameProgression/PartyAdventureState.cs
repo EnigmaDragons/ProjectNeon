@@ -76,6 +76,7 @@ public sealed class PartyAdventureState : ScriptableObject
                 heroes[2]?.SetDeck(CreateDeck(decks[2]));
         });
 
+    public void Add(params CardType[] c) => UpdateState(() => Cards.Add(c));
     public void Add(Equipment e) => UpdateState(() => equipment.Add(e));
     public void EquipTo(Equipment e, Hero h) => UpdateState(() =>
     {
