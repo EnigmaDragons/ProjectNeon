@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_GamblingGroup
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: "You hear some hoots and hollers from nearby.\n\nA rowdy group is gathered
+    a fancy AR gambling apparatus. \n\nAfter each round, a few people cheer, and
+    sometimes a few groans are emitted.\n\n\"Yo! Tartarus is running hot tonight!\",
+    one of the folks calls out to you. \"Want to place a quick bet?\""
+  choices:
+  - Text: '"I''m feeling lucky! Let''s go big!"'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 75
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: 58be128081d31f148b58d2d4de247c3e, type: 2}
+      StoryText: 'The massive AR wheel spins, and lands on your category, and the
+        reward dial comes up huge!
+
+
+        Elated, you collect your winnings.'
+    - Chance: 0.1
+      Result: {fileID: 11400000, guid: 818aa2cfd0e6fef42b2bd3502fe18672, type: 2}
+      StoryText: 'The massive AR wheel spins, and lands on your category, but the
+        reward dial doesn''t hit as hot as you hoped. '
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: The massive AR wheel spins, and the indicator finally comes to stop
+        on the wrong category.
+  - Text: '"Sure. I''ll place a bet."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 30
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: 818aa2cfd0e6fef42b2bd3502fe18672, type: 2}
+      StoryText: 'The massive AR wheel spins, and lands on your category, and the
+        reward dial comes up huge!
+
+
+        Elated, you collect your winnings.'
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
+      StoryText: 'The massive AR wheel spins, and lands on your category, but the
+        reward dial doesn''t hit as hot as you hoped. '
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: The massive AR wheel spins, and the indicator finally comes to stop
+        on the wrong category.
+  - Text: 'Move on. '
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: 'You keep focused on your mission and move on. '
