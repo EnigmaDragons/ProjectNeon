@@ -20,7 +20,7 @@ public class AdventureDisplayPresenter : MonoBehaviour
         image.sprite = adventure.AdventureImage;
         nameText.text = adventure.Title;
         storyText.text = adventure.Story;
-        lengthText.text = adventure.Stages.Length + " Chapters";
+        lengthText.text = adventure.IsV2 ? adventure.DynamicStages.Length + " Chapters" : adventure.Stages.Length + " Chapters";
         DisplayHeroPool(adventure);
         selectButton.onClick.AddListener(() => onSelect());
     }
