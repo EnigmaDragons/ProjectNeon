@@ -10,6 +10,8 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private AdventureProgress2 progress;
     [SerializeField] private TravelReactiveSystem travelReactiveSystem;
     [SerializeField] private GameObject playerToken;
+    [SerializeField] private MapLine line;
+    [SerializeField] private GameObject empty;
     
     //Map Inspecific Rules
     [SerializeField] private float bottomMargin;
@@ -24,18 +26,22 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private MapNodeGameObject combatNode;
     [SerializeField] private MapNodeGameObject bossNode;
 
-    private GameObject _playerNode;
+    private Dictionary<int, GameObject> _nodes;
     private GameObject _playerToken;
     
     private void Awake()
     {
+        _nodes = new Dictionary<int, GameObject>();
         var map = Instantiate(gameMap.Map.ArtPrototype, transform);
         if (!gameMap.IsMapGenerated)
             GenerateMap();
+        var lines = Instantiate(empty, map.transform);
+        var nodes = Instantiate(empty, map.transform);
         var mapRect = map.GetComponent<RectTransform>();
         var corners = new Vector3[4];
         mapRect.GetWorldCorners(corners);
-        SpawnNodes(mapRect, corners[1]);
+        SpawnNodes((RectTransform)nodes.transform, corners[1]);
+        SpawnLines((RectTransform)lines.transform);
         SpawnToken(map);
     }
     
@@ -82,15 +88,29 @@ public class MapSpawner2 : MonoBehaviour
                 nodePrefab = bossNode;
             var nodeObject = Instantiate(nodePrefab, new Vector3(topLeftCorner.x + nodeToSpawn.X, topLeftCorner.y - nodeToSpawn.Y, 0), Quaternion.identity, map);
             nodeObject.Init(nodeToSpawn.NodeId, travelIds.Any(x => x == nodeToSpawn.NodeId));
-            if (gameMap.CurrentPositionId == nodeToSpawn.NodeId)
-                _playerNode = nodeObject.gameObject;
+            _nodes[nodeToSpawn.NodeId] = nodeObject.gameObject;
+        }
+    }
+
+    private void SpawnLines(RectTransform map)
+    {
+        foreach (var node in gameMap.GeneratedMap)
+        {
+            foreach (var childId in node.ChildrenIds)
+            {
+                var lineObj = Instantiate(line, map);
+                lineObj.SetPoints((RectTransform)_nodes[node.NodeId].transform, (RectTransform)_nodes[childId].transform);
+            }
         }
     }
     
     private void SpawnToken(GameObject map)
     {
         progress.InitIfNeeded();
-        _playerToken = Instantiate(playerToken, _playerNode.transform.position, Quaternion.identity, map.transform);
+        _playerToken = Instantiate(playerToken, map.transform);
+        var rect = (RectTransform)_playerToken.transform;
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = ((RectTransform) _nodes[gameMap.CurrentPositionId].transform).anchoredPosition;
         travelReactiveSystem.PlayerToken = _playerToken;
         var floating = _playerToken.GetComponent<Floating>();
         if (floating != null)
