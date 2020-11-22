@@ -2,13 +2,15 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class StoryEventPresenter : OnMessage<ShowStoryEventResolution>
+public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCreditChange>
 {
     [SerializeField] private TextMeshProUGUI storyTextArea;
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private TextCommandButton optionButtonPrototype;
     [SerializeField] private PartyAdventureState party;
-
+    [SerializeField] private GameObject rewardParent;
+    [SerializeField] private StoryCreditsRewardPresenter creditsPrototype;
+    
     private TextCommandButton[] _buttons;
     
     private void Awake()
@@ -33,7 +35,10 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution>
             var choice = s.Choices[i];
             _buttons[i].Init(choice.Text, () => choice.Select(new StoryEventContext(party)));
             if (!choice.CanSelect(new StoryEventContext(party)))
+            {
+                Debug.Log($"Story Event: Cannot choose {choice.Text}. Condition not met.");
                 _buttons[i].SetButtonDisabled(true);
+            }
         }
     }
 
@@ -49,5 +54,11 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution>
             else
                 _buttons[i].Hide();
         }
+    }
+
+    protected override void Execute(ShowCreditChange msg)
+    {
+        rewardParent.DestroyAllChildren();
+        Instantiate(creditsPrototype, rewardParent.transform).Init(msg.Amount);
     }
 }

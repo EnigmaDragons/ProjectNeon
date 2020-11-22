@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 [Serializable]
 public class StoryEventChoice
@@ -11,10 +13,18 @@ public class StoryEventChoice
 
     public void Select(StoryEventContext ctx)
     {
-        if (Resolution.Length == 1 && Math.Abs(Resolution[0].Chance - 1f) < 0.01)
+        if (Resolution.Sum(r => r.Chance) > 1 || Resolution.Sum(r => r.Chance) > 1)
+            Log.Error($"Story Event: Invalid Total Resolution Chance for {Text}");
+        
+        var roll = Rng.Dbl();
+        var possibleOutcomes = new Dictionary<float, StoryResolution>();
+        var rangeStart = 0f;
+        foreach (var r in Resolution)
         {
-            ResolveSelectedResolution(Resolution[0], ctx);
+            possibleOutcomes[rangeStart + r.Chance] = r;
+            rangeStart += r.Chance;
         }
+        ResolveSelectedResolution(possibleOutcomes.First(x => roll < x.Key).Value, ctx);
     }
 
     private void ResolveSelectedResolution(StoryResolution r, StoryEventContext ctx)
