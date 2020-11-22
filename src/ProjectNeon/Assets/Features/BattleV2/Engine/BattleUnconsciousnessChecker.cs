@@ -20,7 +20,7 @@ public sealed class BattleUnconsciousnessChecker
     private void ResolveUnconsciousMember(Member member, BattleState state)
     {
         if (member.TeamType == TeamType.Enemies)
-            state.AddRewardCredits(state.GetEnemyById(member.Id).RewardCredits);
+            state.AddRewardCredits(state.GetEnemyById(member.Id).GetRewardCredits(state.PowerLevelRewardFactor));
         else
             BattleLog.Write($"{member.Name} - {member.Id} is unconscious");
         Message.Publish(new MemberUnconscious(member));
@@ -29,7 +29,7 @@ public sealed class BattleUnconsciousnessChecker
     private void ResolveRevivedMember(Member member, BattleState state)
     {
         if (member.TeamType == TeamType.Enemies)
-            state.AddRewardCredits(-state.GetEnemyById(member.Id).RewardCredits);
+            state.AddRewardCredits(-state.GetEnemyById(member.Id).GetRewardCredits(state.PowerLevelRewardFactor));
         else
             BattleLog.Write($"{member.Name} - {member.Id} is revived");
         Message.Publish(new MemberRevived(member));
