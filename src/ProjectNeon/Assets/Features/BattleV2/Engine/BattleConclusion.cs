@@ -9,7 +9,6 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private AdventureProgress2 adventure2;
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
-    [SerializeField] private CardPlayZones zones;
     [SerializeField] private CurrentAdventure currentAdventure;
     
     private void Advance()

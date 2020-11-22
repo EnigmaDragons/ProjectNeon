@@ -9,9 +9,12 @@ public class WinBattleWithRewardsHandler : OnMessage<WinBattleWithRewards>
     protected override void Execute(WinBattleWithRewards msg)
     {            
         var rewardPicker = new ShopSelectionPicker();
-        state.SetRewardCards(rewardPicker.PickCards(state.Party, cardPrizePool, 2));
         state.AddRewardCredits(state.EnemyArea.Enemies.Sum(e => e.GetRewardCredits(state.PowerLevelRewardFactor)));
-        state.Wrapup();
-        Message.Publish(new BattleFinished(TeamType.Party));
+        Message.Publish(new GetUserSelectedCard(rewardPicker.PickCards(state.Party, cardPrizePool, 3), card =>
+        {
+            card.IfPresent(c => state.SetRewardCards(c));
+            Message.Publish(new BattleFinished(TeamType.Party));
+            state.Wrapup();
+        }));
     }
 }

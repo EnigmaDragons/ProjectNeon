@@ -97,17 +97,23 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     private void FinishBattle()
     {
         if (state.PlayerLoses())
+        {
             Message.Publish(new BattleFinished(TeamType.Enemies));
+            state.Wrapup();
+            BeginPhase(BattleV2Phase.Finished);
+        }
         else if (state.PlayerWins())
         {
             state.Heroes.Where(x => x.IsConscious()).ForEach(x => x.State.SetHp(x.MaxHp()) );
             var rewardPicker = new ShopSelectionPicker();
-            state.SetRewardCards(rewardPicker.PickCards(state.Party, cardPrizePool, 2));
-            Message.Publish(new BattleFinished(TeamType.Party));
+            Message.Publish(new GetUserSelectedCard(rewardPicker.PickCards(state.Party, cardPrizePool, 3), card =>
+            {
+                card.IfPresent(c => state.SetRewardCards(c));
+                Message.Publish(new BattleFinished(TeamType.Party));
+                state.Wrapup();
+                BeginPhase(BattleV2Phase.Finished);
+            }));
         }
-
-        state.Wrapup();
-        BeginPhase(BattleV2Phase.Finished);
     }
 
     private void BeginPhase(BattleV2Phase newPhase)
