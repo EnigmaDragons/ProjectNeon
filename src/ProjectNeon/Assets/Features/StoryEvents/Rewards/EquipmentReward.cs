@@ -8,6 +8,8 @@ public class EquipmentReward : StoryResult
     
     public override void Apply(StoryEventContext ctx)
     {
-        ctx.Party.Add(new EquipmentGenerator().Generate(rarity, slot));
+        var equipment = new EquipmentGenerator().Generate(rarity, slot);
+        ctx.Party.Add(equipment);
+        Message.Publish(new ShowGainedEquipment(equipment));
     }
 }

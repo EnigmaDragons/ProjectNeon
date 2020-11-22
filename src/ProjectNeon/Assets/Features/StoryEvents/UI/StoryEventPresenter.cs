@@ -2,7 +2,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCreditChange>
+public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCreditChange, ShowGainedEquipment>
 {
     [SerializeField] private TextMeshProUGUI storyTextArea;
     [SerializeField] private GameObject optionsParent;
@@ -10,6 +10,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject rewardParent;
     [SerializeField] private StoryCreditsRewardPresenter creditsPrototype;
+    [SerializeField] private StoryEquipmentRewardPresenter equipmentPrototype;
     
     private TextCommandButton[] _buttons;
     
@@ -60,5 +61,11 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
     {
         rewardParent.DestroyAllChildren();
         Instantiate(creditsPrototype, rewardParent.transform).Init(msg.Amount);
+    }
+
+    protected override void Execute(ShowGainedEquipment msg)
+    {
+        rewardParent.DestroyAllChildren();
+        Instantiate(equipmentPrototype, rewardParent.transform).Init(msg.Equipment);
     }
 }
