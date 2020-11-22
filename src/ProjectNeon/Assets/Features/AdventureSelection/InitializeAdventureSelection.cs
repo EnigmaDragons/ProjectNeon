@@ -27,8 +27,10 @@ public class InitializeAdventureSelection : MonoBehaviour
         {
             var adventure = library.UnlockedAdventures[index];
             currentAdventure.Adventure = adventure;
-            adventureProgress.Init();
-            adventureProgress2.Init();
+            if (currentAdventure.Adventure.IsV2)
+                adventureProgress2.Init();
+            else
+                adventureProgress.Init();
             navigator.NavigateToSquadSelection();
             
         }

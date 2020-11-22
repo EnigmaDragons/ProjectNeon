@@ -9,14 +9,14 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private int currentStageSegmentIndex;
 
     public int CurrentStageSegmentIndex => currentStageSegmentIndex;
-    public bool IsFinalStage => currentStageIndex == currentAdventure.Adventure.Stages.Length - 1;
+    public bool IsFinalStage => currentStageIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentStageSegmentIndex == CurrentStage.SegmentCount - 1;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public int PartyCardCycles => currentAdventure.Adventure.BaseNumberOfCardCycles;
     public DynamicStage CurrentStage
     {
         get { 
-            if (currentStageIndex < 0 || currentStageIndex >= currentAdventure.Adventure.Stages.Length)
+            if (currentStageIndex < 0 || currentStageIndex >= currentAdventure.Adventure.DynamicStages.Length)
                 Log.Error($"Adventure Stage is illegal. {this}");
             return currentAdventure.Adventure.DynamicStages[currentStageIndex]; 
         }

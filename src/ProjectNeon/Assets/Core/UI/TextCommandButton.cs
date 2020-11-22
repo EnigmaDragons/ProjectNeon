@@ -35,6 +35,7 @@ public sealed class TextCommandButton : MonoBehaviour
 
     public void Init(string commandText, Action cmd)
     {
+        _button = GetComponent<Button>();
         label.text = commandText;
         label.color = _activeTextColor;
         _cmd = cmd;
