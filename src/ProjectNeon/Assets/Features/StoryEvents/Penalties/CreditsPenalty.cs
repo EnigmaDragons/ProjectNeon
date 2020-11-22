@@ -8,6 +8,8 @@ public class CreditsPenalty : StoryResult
     
     public override void Apply(StoryEventContext ctx)
     {
-        ctx.Party.UpdateCreditsBy(-Rng.Int(minCredits, maxCredits));
+        var amount = -Rng.Int(minCredits, maxCredits);
+        ctx.Party.UpdateCreditsBy(amount);
+        Message.Publish(new ShowCreditChange(amount));
     }
 }
