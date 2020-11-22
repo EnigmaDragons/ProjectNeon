@@ -16,10 +16,11 @@ public sealed class Navigator : ScriptableObject
     public void NavigateToShopScene() => NavigateTo("ShopScene");
     public void NavigateToRewardScene() => NavigateTo("RewardScene");
 
-    private void NavigateTo(string name)
+    private void NavigateTo(string sceneName)
     {
         if (loggingEnabled)
-            Log.Info($"Navigating to {name}");
-        SceneManager.LoadScene(name);
+            Log.Info($"Navigating to {sceneName}");
+        Message.Publish(new NavigateToSceneRequested(sceneName));
+        //SceneManager.LoadScene(name);
     }
 }
