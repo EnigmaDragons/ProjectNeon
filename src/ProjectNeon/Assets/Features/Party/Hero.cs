@@ -40,6 +40,7 @@ public class Hero
 
     public void HealToFull() => missingHp = 0;
     public void SetHp(int hp) => missingHp = Stats.MaxHp() - hp;
+    public void AdjustHp(int amount) => missingHp = Mathf.Clamp(missingHp - amount, 0, Stats.MaxHp()); 
     public void SetDeck(RuntimeDeck d) => deck = d;
     public void Equip(Equipment e) => equipment.Equip(e);
     public void Unequip(Equipment e) => equipment.Unequip(e);
