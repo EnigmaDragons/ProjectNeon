@@ -5,12 +5,12 @@ using UnityEngine;
 [CreateAssetMenu]
 public class CurrentGameMap2 : ScriptableObject
 {
+    private Dictionary<string, MapNode> _map;
     public GameMap2 Map { get; private set; }
     public bool IsMapGenerated { get; private set; }
     public List<MapNode> GeneratedMap { get; private set; }
     public string CurrentPositionId { get; set; }
-    
-    private Dictionary<string, MapNode> _map;
+    public Dictionary<string, MapNodeGameObject> GameObjects { get; set; }
 
     public void SetMap(GameMap2 map)
     {

@@ -11,4 +11,6 @@ public class MapNodeGameObject : MonoBehaviour
         button.interactable = canTravelToo;
         button.onClick.AddListener(() => Message.Publish(new TravelToNode { Node = gameObject, OnArrive = () => segment.Start(), NodeId = nodeId }));
     } 
+    
+    public void SetCanTravelTo(bool canTravelTo) => button.interactable = canTravelTo;
 }
