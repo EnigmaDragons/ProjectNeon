@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_GirlSellingExosuit
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: 'You walk past a keen-eyed young woman dressed in impeccable clothing.
+
+
+    She
+    calls out to you. "Hey. You guys looks geared for action. That''s a saavy idea
+    in this hood. A lot of citz aren''t prepped one bit."
+
+
+    She subconsciously
+    rubs an augmented skin-implant on her neck.
+
+
+    "Maybe you''ve got everything
+    you need... but if you''re interested I''ve got a killer deal on a Boga exosuit,
+    at an unbeatable price."
+
+
+    "You interested?" she tilts her head and flops
+    out one hand, palm up.'
+  choices:
+  - Text: 'Negotiate for a great deal. [Requires Skill: Negotiation]'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 35
+    OptionalCondition: {fileID: 11400000, guid: 8d91c82c1bc8e284eb2bbeffb532db63,
+      type: 2}
+    Resolution:
+    - Chance: 0.7
+      Result: {fileID: 11400000, guid: 2a69434d36fdb8f4993257d3d2989311, type: 2}
+      StoryText: '"You sure drive a hard bargain!" the woman says. "You clearly know
+        your cans."
+
+
+        "Here''s my digi-tag in case you are looking for more
+        merch."'
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: 4ecb4a21d68b15d4498573fab0c45b40, type: 2}
+      StoryText: '"Fine, fine. Sure, I can give it you for that price." the woman
+        says.
+
+
+        "Here''s my digi-tag in case you are looking for more merch."'
+  - Text: '"Sure. Hook me up."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 60
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.7
+      Result: {fileID: 11400000, guid: 4ecb4a21d68b15d4498573fab0c45b40, type: 2}
+      StoryText: 'The woman flips opens up a case, and you see a very stylish suit.
+
+
+        This
+        definitely isn''t merchandise you usually see in shops.
+
+
+        "Here''s
+        my digi-tag in case you are looking for more merch."'
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: 2a69434d36fdb8f4993257d3d2989311, type: 2}
+      StoryText: 'The woman hands you a suit case and says, with a big grin spreading
+        across her face, "You won''t be disappointed, I''m certain."
+
+
+        "Here''s
+        my digi-tag in case you are looking for more merch."'
+  - Text: '"Naw, I''m good"'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: 'You leave the slick looking girl with her too-good-to-be-true deals. '
