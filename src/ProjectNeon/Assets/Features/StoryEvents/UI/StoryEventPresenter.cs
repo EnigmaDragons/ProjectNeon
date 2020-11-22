@@ -25,6 +25,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
     
     public void Present(StoryEvent s)
     {
+        var ctx = new StoryEventContext(party);
         storyTextArea.text = s.StoryText;
         for (var i = _buttons.Length - 1; i > -1; i--)
         {
@@ -35,10 +36,11 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
             }
 
             var choice = s.Choices[i];
-            _buttons[i].Init(choice.Text, () => choice.Select(new StoryEventContext(party)));
-            if (!choice.CanSelect(new StoryEventContext(party)))
+            var choiceText = choice.ChoiceFullText(ctx);
+            _buttons[i].Init(choiceText, () => choice.Select(ctx));
+            if (!choice.CanSelect(ctx))
             {
-                Debug.Log($"Story Event: Cannot choose {choice.Text}. Condition not met.");
+                Debug.Log($"Story Event: Cannot choose {choiceText}. Condition not met.");
                 _buttons[i].SetButtonDisabled(true, Color.white);
             }
         }

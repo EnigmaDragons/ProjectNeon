@@ -6,13 +6,21 @@ using System.Linq;
 public class StoryEventChoice
 {
     public string Text;
+    public StoryEventCost OptionalCost;
     public StoryEventCondition OptionalCondition;
     public StoryResolution[] Resolution;
 
-    public bool CanSelect(StoryEventContext ctx) => OptionalCondition != null ? OptionalCondition.Evaluate(ctx) : true;
+    public string ChoiceFullText(StoryEventContext ctx) => $"{Text} {OptionalCost?.CostDescription()}".Trim();
+    
+    public bool CanSelect(StoryEventContext ctx) => ConditionMet(ctx) && CostIsAffordable(ctx);
+
+    private bool ConditionMet(StoryEventContext ctx) => OptionalCondition != null ? OptionalCondition.Evaluate(ctx) : true;
+    private bool CostIsAffordable(StoryEventContext ctx) => OptionalCost != null ? OptionalCost.CanAfford(ctx) : true;
 
     public void Select(StoryEventContext ctx)
     {
+        OptionalCost?.Apply(ctx);
+        
         if (Resolution.Sum(r => r.Chance) > 1 || Resolution.Sum(r => r.Chance) > 1)
             Log.Error($"Story Event: Invalid Total Resolution Chance for {Text}");
         
