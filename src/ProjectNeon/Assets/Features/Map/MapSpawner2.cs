@@ -12,7 +12,7 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private GameObject playerToken;
     [SerializeField] private MapLine line;
     [SerializeField] private GameObject empty;
-    
+
     //Map Inspecific Rules
     [SerializeField] private int nodeVerticalJitter;
     [SerializeField] private int nodeHorizontalJitter;
@@ -20,14 +20,17 @@ public class MapSpawner2 : MonoBehaviour
     //Nodes
     [SerializeField] private MapNodeGameObject startNode;
     [SerializeField] private MapNodeGameObject combatNode;
+    [SerializeField] private MapNodeGameObject eliteCombatNode;
+    [SerializeField] private MapNodeGameObject cardShopNode;
+    [SerializeField] private MapNodeGameObject gearShopNode;
+    [SerializeField] private MapNodeGameObject storyEventNode;
     [SerializeField] private MapNodeGameObject bossNode;
-
-    private Dictionary<string, GameObject> _nodes;
+    
     private GameObject _playerToken;
     
     private void Awake()
     {
-        _nodes = new Dictionary<string, GameObject>();
+        gameMap.GameObjects = new Dictionary<string, MapNodeGameObject>();
         var map = Instantiate(gameMap.Map.ArtPrototype, transform);
         if (!gameMap.IsMapGenerated)
             GenerateMap();
@@ -61,7 +64,7 @@ public class MapSpawner2 : MonoBehaviour
         {
             var nodesInColumn = Rng.Int(gameMap.Map.MinPaths, gameMap.Map.MaxPaths + 1);
             var rowSize = height / nodesInColumn;
-            columns.Insert(column, Enumerable.Range(0, nodesInColumn).Select(row => MapNode.GenerateNew(MapNodeType.Combat, 
+            columns.Insert(column, Enumerable.Range(0, nodesInColumn).Select(row => MapNode.GenerateNew(progress.CurrentStage.RandomNodeType, 
                 x: (int)Mathf.Round(columnSize / 2 + gameMap.Map.LeftMargin + columnSize * column) + Rng.Int(-nodeHorizontalJitter, nodeHorizontalJitter + 1), 
                 y: (int)Mathf.Round(rowSize / 2 + gameMap.Map.TopMargin + rowSize * row) + Rng.Int(-nodeVerticalJitter, nodeVerticalJitter + 1))).ToList());
         }
@@ -75,17 +78,31 @@ public class MapSpawner2 : MonoBehaviour
         var travelIds = playerNode.ChildrenIds;
         foreach (var nodeToSpawn in gameMap.GeneratedMap)
         {
-            MapNodeGameObject nodePrefab = null;
-            if (nodeToSpawn.Type == MapNodeType.Start)
-                nodePrefab = startNode;
-            else if (nodeToSpawn.Type == MapNodeType.Combat)
-                nodePrefab = combatNode;
-            else if (nodeToSpawn.Type == MapNodeType.Boss)
-                nodePrefab = bossNode;
+            MapNodeGameObject nodePrefab = GetNodePrefab(nodeToSpawn.Type);
             var nodeObject = Instantiate(nodePrefab, new Vector3(topLeftCorner.x + nodeToSpawn.X, topLeftCorner.y - nodeToSpawn.Y, 0), Quaternion.identity, map);
             nodeObject.Init(nodeToSpawn.NodeId, travelIds.Any(x => x == nodeToSpawn.NodeId));
-            _nodes[nodeToSpawn.NodeId] = nodeObject.gameObject;
+            gameMap.GameObjects[nodeToSpawn.NodeId] = nodeObject;
         }
+    }
+
+    private MapNodeGameObject GetNodePrefab(MapNodeType type)
+    {
+        MapNodeGameObject nodePrefab = null;
+        if (type == MapNodeType.Start)
+            nodePrefab = startNode;
+        else if (type == MapNodeType.Combat)
+            nodePrefab = combatNode;
+        else if (type == MapNodeType.Elite)
+            nodePrefab = eliteCombatNode;
+        else if (type == MapNodeType.CardShop)
+            nodePrefab = cardShopNode;
+        else if (type == MapNodeType.GearShop)
+            nodePrefab = gearShopNode;
+        else if (type == MapNodeType.StoryEvent)
+            nodePrefab = storyEventNode;
+        else if (type == MapNodeType.Boss)
+            nodePrefab = bossNode;
+        return nodePrefab;
     }
 
     private void SpawnLines(RectTransform map)
@@ -95,7 +112,7 @@ public class MapSpawner2 : MonoBehaviour
             foreach (var childId in node.ChildrenIds)
             {
                 var lineObj = Instantiate(line, map);
-                lineObj.SetPoints((RectTransform)_nodes[node.NodeId].transform, (RectTransform)_nodes[childId].transform);
+                lineObj.SetPoints((RectTransform)gameMap.GameObjects[node.NodeId].transform, (RectTransform)gameMap.GameObjects[childId].transform);
             }
         }
     }
@@ -106,7 +123,7 @@ public class MapSpawner2 : MonoBehaviour
         _playerToken = Instantiate(playerToken, map.transform);
         var rect = (RectTransform)_playerToken.transform;
         rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = ((RectTransform) _nodes[gameMap.CurrentPositionId].transform).anchoredPosition;
+        rect.anchoredPosition = ((RectTransform) gameMap.GameObjects[gameMap.CurrentPositionId].transform).anchoredPosition;
         travelReactiveSystem.PlayerToken = _playerToken;
         var floating = _playerToken.GetComponent<Floating>();
         if (floating != null)

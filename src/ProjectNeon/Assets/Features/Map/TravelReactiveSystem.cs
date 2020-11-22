@@ -10,14 +10,17 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
     private bool _isTraveling;
     private GameObject _travelTo;
     private Action _onArrive;
-    private bool _finishedTraveling;
-    
+
     protected override void Execute(TravelToNode msg)
     {
         if (_isTraveling)
             return;
         _isTraveling = true;
+        foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
+            gameMap.GameObjects[childId].SetCanTravelTo(false);
         gameMap.CurrentPositionId = msg.NodeId;
+        foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
+            gameMap.GameObjects[childId].SetCanTravelTo(true);
         _travelTo = msg.Node;
         _onArrive = msg.OnArrive;
         PlayerToken.GetComponent<Floating>().enabled = false;
@@ -25,13 +28,13 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
 
     private void Update()
     {
-        if (!_isTraveling || _finishedTraveling)
+        if (!_isTraveling)
             return;
 
         if (Vector3.Distance(PlayerToken.transform.position, _travelTo.transform.position) < 0.01f)
         {
             _onArrive();
-            _finishedTraveling = true;
+            _isTraveling = false;
         }
         PlayerToken.transform.position = Vector3.MoveTowards(PlayerToken.transform.position, _travelTo.transform.position, speed * Time.deltaTime);
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterBossBattle>
+public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEliteCombat, EnterBossBattle>
 {
     [SerializeField] private AdventureProgress2 progress;
     [SerializeField] private BattleState battleState;
@@ -12,6 +12,14 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterBossBatt
         Log.Info("Setting Up Random Encounter");
         battleState.SetNextBattleground(progress.CurrentStage.Battleground);
         battleState.SetNextEncounter(progress.CurrentStage.EncounterBuilder.Generate(progress.CurrentPowerLevel));
+        eventPublisher.TogglePartyDetails();
+    }
+
+    protected override void Execute(EnterRandomEliteCombat msg)
+    {
+        Log.Info("Setting Up Random Elite Encounter");
+        battleState.SetNextBattleground(progress.CurrentStage.Battleground);
+        battleState.SetNextEncounter(progress.CurrentStage.EliteEncounterBuilder.Generate(progress.CurrentElitePowerLevel));
         eventPublisher.TogglePartyDetails();
     }
 

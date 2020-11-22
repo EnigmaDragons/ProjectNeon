@@ -23,6 +23,7 @@ public class AdventureProgress2 : ScriptableObject
     }
     
     public int CurrentPowerLevel => CurrentStage.GetPowerLevel(((float)currentStageSegmentIndex + 1) / CurrentStage.SegmentCount);
+    public int CurrentElitePowerLevel => CurrentStage.GetElitePowerLevel(((float)currentStageSegmentIndex + 1) / CurrentStage.SegmentCount);
     private bool HasBegun => currentStageIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && currentStageSegmentIndex == CurrentStage.SegmentCount - 1;
 
