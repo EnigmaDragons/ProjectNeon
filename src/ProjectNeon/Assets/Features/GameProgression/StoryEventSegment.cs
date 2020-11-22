@@ -11,7 +11,7 @@ public class StoryEventSegment : StageSegment
     
     public override void Start()
     {
-        var storyEvent = events.AllEvents.Where(x => x.StorySetting == adventure.CurrentStage.Setting).Random();
+        var storyEvent = events.AllEvents.Where(x => x.StorySetting == adventure.CurrentStage.StorySetting).Random();
         Message.Publish(new BeginStoryEvent(storyEvent));
     }
 }

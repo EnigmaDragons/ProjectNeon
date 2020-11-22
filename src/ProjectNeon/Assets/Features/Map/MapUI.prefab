@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 5216674476589688635}
   - component: {fileID: 5216674476589688632}
   - component: {fileID: 5216674476589688633}
-  - component: {fileID: 4528895742305771507}
+  - component: {fileID: 4554197305220326187}
+  - component: {fileID: 5135534292929700144}
   m_Layer: 5
   m_Name: MapUI
   m_TagString: Untagged
@@ -99,7 +100,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 55
---- !u!114 &4528895742305771507
+--- !u!114 &4554197305220326187
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,12 +109,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 5216674476589688614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df2d3cd4927abf4da113d1c7d57414d, type: 3}
+  m_Script: {fileID: 11500000, guid: 196e11adc5d74b7190078c179e78793c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 11400000, guid: eb860c63799abc34dbce2248adcc28f6, type: 2}
-  nodePrototype: {fileID: 8735785579392061029, guid: 9a3bc08eda157174ab5d11107b3a3ff5,
-    type: 3}
-  tokenPrototype: {fileID: 62304065873535587, guid: a4775238501ca3445aad9d5cd06aaa55,
-    type: 3}
+  gameMap: {fileID: 11400000, guid: 4ac9d5ec60b081f429cd0937e004b0a5, type: 2}
   progress: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
+  travelReactiveSystem: {fileID: 5135534292929700144}
+  playerToken: {fileID: 62304065873535587, guid: a4775238501ca3445aad9d5cd06aaa55,
+    type: 3}
+  bottomMargin: 32
+  leftMargin: 32
+  rightMargin: 32
+  topMargin: 254
+  nodeVerticalJitter: 16
+  nodeHorizontalJitter: 16
+  startNode: {fileID: 3764843923234972660, guid: e6e516d27e55bb244982ac95a4ce03d0,
+    type: 3}
+  combatNode: {fileID: 4784769788324190547, guid: 780f6a1c5c8fdde418cc3c5a517de3dc,
+    type: 3}
+  bossNode: {fileID: 7779105934768444375, guid: fa71a04d961ef814fa953edc0cd37ef6,
+    type: 3}
+--- !u!114 &5135534292929700144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5216674476589688614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 353f4dd1fb2b4e70bc22871e0bd736bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMap: {fileID: 11400000, guid: 4ac9d5ec60b081f429cd0937e004b0a5, type: 2}
+  speed: 10

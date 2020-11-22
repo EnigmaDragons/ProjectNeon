@@ -7,7 +7,7 @@ public class CurrentGameMap2 : ScriptableObject
 {
     public GameMap2 Map { get; private set; }
     public bool IsMapGenerated { get; private set; }
-    public MapNode GeneratedMap { get; private set; }
+    public List<MapNode> GeneratedMap { get; private set; }
     public int CurrentPositionId { get; set; }
     
     private Dictionary<int, MapNode> _map;
@@ -19,10 +19,10 @@ public class CurrentGameMap2 : ScriptableObject
         IsMapGenerated = false;
     }
 
-    public void SetupMap(MapNode generatedMap)
+    public void SetupMap(List<MapNode> generatedMap)
     {
         GeneratedMap = generatedMap;
-        CurrentPositionId = generatedMap.NodeId;
+        CurrentPositionId = generatedMap.First().NodeId;
     }
 
     public MapNode GetMapNode(int id)
@@ -42,15 +42,6 @@ public class CurrentGameMap2 : ScriptableObject
         if (_map != null)
             return;
         _map = new Dictionary<int, MapNode>();
-        RecursivelyGenerateMap(GeneratedMap);
+        GeneratedMap.ForEach(x => _map[x.NodeId] = x);
     }
-    
-    private void RecursivelyGenerateMap(MapNode node)
-    {
-        _map[node.NodeId] = node;
-        if (node.Children.Any())
-            node.Children.ForEach(RecursivelyGenerateMap);
-        else
-            _bossNodeId = node.NodeId;
-    } 
 }

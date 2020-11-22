@@ -9,6 +9,6 @@ public class CurrentAdventureProgress : MonoBehaviour
     private void Awake()
     {
         adventure.InitIfNeeded();
-        nextText.text = adventure.CurrentStageSegment.Name;
+        nextText.text = "BROKEN"; //adventure.CurrentStageSegment.Name;
     }
 }

@@ -3,7 +3,7 @@
 [CreateAssetMenu(menuName = "GameState/AdventureProgress")]
 public class AdventureProgress : ScriptableObject
 {
-    [SerializeField] private CurrentGameMap currentMap;
+    [SerializeField] private CurrentGameMap2 currentMap;
     [SerializeField] private Adventure currentAdventure;
     [SerializeField] private int currentStageIndex;
     [SerializeField] private int currentStageSegmentIndex;
@@ -11,10 +11,10 @@ public class AdventureProgress : ScriptableObject
     public Adventure Adventure => currentAdventure;
     public int CurrentStageSegmentIndex => currentStageSegmentIndex;
     public bool IsFinalStage => currentStageIndex == currentAdventure.Stages.Length - 1;
-    public bool IsLastSegmentOfStage => currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
+    public bool IsLastSegmentOfStage => currentStageSegmentIndex == CurrentStage.SegmentCount - 1;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public int PartyCardCycles => currentAdventure.BaseNumberOfCardCycles;
-    public Stage CurrentStage
+    public StageBuilder CurrentStage
     {
         get { 
             if (currentStageIndex < 0 || currentStageIndex >= currentAdventure.Stages.Length)
@@ -22,12 +22,10 @@ public class AdventureProgress : ScriptableObject
             return currentAdventure.Stages[currentStageIndex]; 
         }
     }
-
-    public StageSegment CurrentStageSegment => CurrentStage.Segments[currentStageSegmentIndex];
-    public bool HasStageBegun => currentStageSegmentIndex > -1;
-
+    
+    public int CurrentPowerLevel => CurrentStage.GetPowerLevel(((float)currentStageSegmentIndex + 1) / CurrentStage.SegmentCount);
     private bool HasBegun => currentStageIndex > -1;
-    private bool CurrentStageIsFinished => HasBegun && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
+    private bool CurrentStageIsFinished => HasBegun && currentStageSegmentIndex == CurrentStage.SegmentCount - 1;
 
     public void Init(Adventure a)
     {
@@ -55,23 +53,14 @@ public class AdventureProgress : ScriptableObject
             Log.Error("The adventure must have a least one stage!");
     }
 
-    public StageSegment Advance()
+    public void Advance()
     {
         if (!HasBegun || CurrentStageIsFinished)
         {
             AdvanceStage();
         }
-
-        if (currentStageSegmentIndex >= CurrentStage.Segments.Length)
-        {
-            Log.Error("Why the f**k are we advancing out of bounds?");
-            Log.Info(this);
-            return CurrentStageSegment;
-        }
         currentStageSegmentIndex++;
         Log.Info(ToString());
-        currentMap.SetMap(CurrentStage.Map);
-        return CurrentStageSegment;
     }
 
     private void AdvanceStage()
@@ -80,6 +69,7 @@ public class AdventureProgress : ScriptableObject
         {
             currentStageIndex++;
             currentStageSegmentIndex = -1;
+            currentMap.SetMap(CurrentStage.Map);
         } else
         {
             Log.Info("Can't advance: is final stage");

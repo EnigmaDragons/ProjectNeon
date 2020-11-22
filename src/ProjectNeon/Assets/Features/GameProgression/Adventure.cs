@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 [CreateAssetMenu(menuName = "Adventure/Adventure")]
 public class Adventure : ScriptableObject
 {
-    [SerializeField] private Stage[] stages;
+    [SerializeField] private StageBuilder[] stages;
     [SerializeField] private string adventureTitle;
     [SerializeField] private Sprite adventureImage;
     [SerializeField] private int partySize;
@@ -18,7 +18,7 @@ public class Adventure : ScriptableObject
 
     public string Title => adventureTitle;
     public string Story => story;
-    public Stage[] Stages => stages.ToArray();
+    public StageBuilder[] Stages => stages.ToArray();
     public Sprite AdventureImage => adventureImage;
     public int PartySize => partySize;
     public BaseHero[] RequiredHeroes => requiredHeroes;

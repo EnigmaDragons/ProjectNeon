@@ -19,9 +19,4 @@ public class SelectNextStageSegment : MonoBehaviour
             adventure.Advance();
         }
     }
-
-    public void StartNextStageSegment()
-    {
-        adventure.CurrentStageSegment.Start();
-    }
 }
