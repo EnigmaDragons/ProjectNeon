@@ -7,12 +7,12 @@ using UnityEngine.UI;
 [Serializable]
 public class MapNode
 {
-    public int NodeId;
+    public string NodeId;
     public MapNodeType Type;
-    public List<int> ChildrenIds;
+    public List<string> ChildrenIds;
     public int X;
     public int Y;
 
     public static MapNode GenerateNew(MapNodeType type, int x, int y)
-        => new MapNode { NodeId = Guid.NewGuid().GetHashCode(), Type = type, X = x, Y = y, ChildrenIds = new List<int>() };
+        => new MapNode { NodeId = Guid.NewGuid().ToString(), Type = type, X = x, Y = y, ChildrenIds = new List<string>() };
 }

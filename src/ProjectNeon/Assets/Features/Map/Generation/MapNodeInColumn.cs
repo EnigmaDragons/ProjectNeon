@@ -1,5 +1,5 @@
 ﻿public class MapNodeInColumn
 {
-    public int NodeId;
+    public string NodeId;
     public int Y;
 }

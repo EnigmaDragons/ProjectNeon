@@ -14,10 +14,6 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private GameObject empty;
     
     //Map Inspecific Rules
-    [SerializeField] private float bottomMargin;
-    [SerializeField] private float leftMargin;
-    [SerializeField] private float rightMargin;
-    [SerializeField] private float topMargin;
     [SerializeField] private int nodeVerticalJitter;
     [SerializeField] private int nodeHorizontalJitter;
     
@@ -26,12 +22,12 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private MapNodeGameObject combatNode;
     [SerializeField] private MapNodeGameObject bossNode;
 
-    private Dictionary<int, GameObject> _nodes;
+    private Dictionary<string, GameObject> _nodes;
     private GameObject _playerToken;
     
     private void Awake()
     {
-        _nodes = new Dictionary<int, GameObject>();
+        _nodes = new Dictionary<string, GameObject>();
         var map = Instantiate(gameMap.Map.ArtPrototype, transform);
         if (!gameMap.IsMapGenerated)
             GenerateMap();
@@ -50,24 +46,24 @@ public class MapSpawner2 : MonoBehaviour
     private void GenerateMap()
     {
         var size = gameMap.Map.ArtPrototype.GetComponent<RectTransform>().sizeDelta;
-        var columnSize = (size.x - leftMargin - rightMargin) / (progress.CurrentStage.SegmentCount + 1);
-        var height = size.y - bottomMargin - topMargin;
+        var columnSize = (size.x - gameMap.Map.LeftMargin - gameMap.Map.RightMargin) / (progress.CurrentStage.SegmentCount + 1);
+        var height = size.y - gameMap.Map.BottomMargin - gameMap.Map.TopMargin;
         var columns = new List<List<MapNode>>
         {
             new List<MapNode> { MapNode.GenerateNew(MapNodeType.Start, 
-                x: (int)Mathf.Round(columnSize / 2 + leftMargin), 
-                y: (int)Mathf.Round(height / 2 + topMargin)) }, 
+                x: (int)Mathf.Round(columnSize / 2 + gameMap.Map.LeftMargin), 
+                y: (int)Mathf.Round(height / 2 + gameMap.Map.TopMargin)) }, 
             new List<MapNode> { MapNode.GenerateNew(MapNodeType.Boss, 
-                x: (int)Mathf.Round(columnSize / 2 + leftMargin + columnSize * progress.CurrentStage.SegmentCount), 
-                y: (int)Mathf.Round(height / 2 + topMargin)) }
+                x: (int)Mathf.Round(columnSize / 2 + gameMap.Map.LeftMargin + columnSize * progress.CurrentStage.SegmentCount), 
+                y: (int)Mathf.Round(height / 2 + gameMap.Map.TopMargin)) }
         };
         for (var column = 1; column < progress.CurrentStage.SegmentCount; column++)
         {
             var nodesInColumn = Rng.Int(gameMap.Map.MinPaths, gameMap.Map.MaxPaths + 1);
             var rowSize = height / nodesInColumn;
             columns.Insert(column, Enumerable.Range(0, nodesInColumn).Select(row => MapNode.GenerateNew(MapNodeType.Combat, 
-                x: (int)Mathf.Round(columnSize / 2 + leftMargin + columnSize * column) + Rng.Int(-nodeHorizontalJitter, nodeHorizontalJitter + 1), 
-                y: (int)Mathf.Round(rowSize / 2 + topMargin + rowSize * row) + Rng.Int(-nodeVerticalJitter, nodeVerticalJitter + 1))).ToList());
+                x: (int)Mathf.Round(columnSize / 2 + gameMap.Map.LeftMargin + columnSize * column) + Rng.Int(-nodeHorizontalJitter, nodeHorizontalJitter + 1), 
+                y: (int)Mathf.Round(rowSize / 2 + gameMap.Map.TopMargin + rowSize * row) + Rng.Int(-nodeVerticalJitter, nodeVerticalJitter + 1))).ToList());
         }
         new ConnectionGenerator().AddConnections(columns);
         gameMap.SetupMap(columns.SelectMany(x => x).OrderBy(x => x.X).ToList());

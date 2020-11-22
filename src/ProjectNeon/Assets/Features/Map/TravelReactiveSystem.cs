@@ -20,6 +20,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
         gameMap.CurrentPositionId = msg.NodeId;
         _travelTo = msg.Node;
         _onArrive = msg.OnArrive;
+        PlayerToken.GetComponent<Floating>().enabled = false;
     }
 
     private void Update()
