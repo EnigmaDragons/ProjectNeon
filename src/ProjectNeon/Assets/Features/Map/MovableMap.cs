@@ -41,9 +41,16 @@ public class MovableMap : OnMessage<FocusOnMapElement>
     protected override void Execute(FocusOnMapElement msg)
     {
         var rect = (RectTransform) transform;
-        var translatedPosition = new Vector2(msg.MapElement.anchoredPosition.x, msg.MapElement.anchoredPosition.y);
-        translatedPosition.x = Mathf.Clamp(translatedPosition.x, 0, rect.rect.width - 1920);
-        translatedPosition.y = Mathf.Clamp(translatedPosition.y, 0, rect.rect.height - 1080);
+        
+        var xPosition = msg.MapElement.anchoredPosition.x + rect.sizeDelta.x / 2;
+        var maxX = rect.rect.width - 1920;
+        var xOffset = 200;
+        var yPosition = - msg.MapElement.anchoredPosition.y + rect.sizeDelta.y / 2;
+        var maxY = rect.rect.height - 1080;
+        var translatedPosition = new Vector2(maxX - xPosition + xOffset, yPosition - 540);
+        
+        translatedPosition.x = Mathf.Clamp(translatedPosition.x, 0, maxX);
+        translatedPosition.y = Mathf.Clamp(translatedPosition.y, 0, maxY);
         rect.anchoredPosition = translatedPosition;
     }
 }
