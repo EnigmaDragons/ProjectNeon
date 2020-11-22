@@ -5,5 +5,5 @@ public class TravelToNode
 {
     public Action OnArrive;
     public GameObject Node;
-    public int NodeId;
+    public string NodeId;
 }

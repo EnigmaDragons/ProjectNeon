@@ -26,12 +26,12 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private MapNodeGameObject combatNode;
     [SerializeField] private MapNodeGameObject bossNode;
 
-    private Dictionary<int, GameObject> _nodes;
+    private Dictionary<string, GameObject> _nodes;
     private GameObject _playerToken;
     
     private void Awake()
     {
-        _nodes = new Dictionary<int, GameObject>();
+        _nodes = new Dictionary<string, GameObject>();
         var map = Instantiate(gameMap.Map.ArtPrototype, transform);
         if (!gameMap.IsMapGenerated)
             GenerateMap();

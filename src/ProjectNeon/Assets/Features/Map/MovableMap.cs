@@ -4,8 +4,8 @@ public class MovableMap : OnMessage<FocusOnMapElement>
 {
     [SerializeField] private float verticalScrollArea = 32f;
     [SerializeField] private float horizontalScrollArea = 32f;
-    [SerializeField] private float verticalScrollSpeed = 300f;
-    [SerializeField] private float horizontalScrollSpeed = 300f;
+    [SerializeField] private float verticalScrollSpeed = 400f;
+    [SerializeField] private float horizontalScrollSpeed = 400f;
 
     private void FixedUpdate()
     {
