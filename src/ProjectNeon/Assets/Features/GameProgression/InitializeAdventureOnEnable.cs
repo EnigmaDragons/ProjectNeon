@@ -12,13 +12,13 @@ class InitializeAdventureOnEnable : MonoBehaviour
     {
         if (currentAdventure.Adventure.IsV2)
         {
-            adventure.Reset();
-            adventure.InitIfNeeded();   
+            adventure2.Reset();
+            adventure2.InitIfNeeded();
         }
         else
         {
-            adventure2.Reset();
-            adventure2.InitIfNeeded();   
+            adventure.Reset();
+            adventure.InitIfNeeded();    
         }
     }
 }
