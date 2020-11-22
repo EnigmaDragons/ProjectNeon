@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "StoryEvent/Condition/RequiresTreatmentSkill")]
+[CreateAssetMenu(menuName = "StoryEvent/Condition/RequiresSkill")]
 public class RequiresSkill : StoryEventCondition
 {
     [SerializeField] private StringVariable skillName;

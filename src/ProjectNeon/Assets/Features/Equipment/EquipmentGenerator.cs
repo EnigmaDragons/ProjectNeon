@@ -41,6 +41,16 @@ public class EquipmentGenerator
     
     public Equipment GenerateRandomRare() 
         => Generate(new [] { 5, 6, 7 }.Random(), Rarity.Rare);
+
+    private static readonly Dictionary<Rarity, int[]> RarityPowers = new Dictionary<Rarity, int[]>
+    {
+        { Rarity.Common, new []{1,2}},
+        { Rarity.Uncommon, new []{3, 4, 5}},
+        { Rarity.Rare, new [] {5, 6, 7}}
+    };
+
+    private int PowerLevelFor(Rarity rarity)
+        => RarityPowers[rarity].Random();
     
     private EquipmentSlot SlotFor(StatType primaryStatType)
         => new[] {StatType.Attack, StatType.Magic}.Contains(primaryStatType)
@@ -48,10 +58,18 @@ public class EquipmentGenerator
             : new[] {StatType.Armor, StatType.Resistance}.Contains(primaryStatType)
                 ? EquipmentSlot.Armor
                 : EquipmentSlot.Augmentation;
+
+    private StatType RandomStatFor(EquipmentSlot slot)
+        => slot == EquipmentSlot.Weapon
+            ? new[] {StatType.Attack, StatType.Magic}.Random()
+            : slot == EquipmentSlot.Armor
+                ? new[] {StatType.Armor, StatType.Resistance}.Random()
+                : new[] {StatType.Toughness, StatType.MaxHP, StatType.Leadership}.Random();
     
     public static string NameFor(EquipmentSlot slot, Rarity rarity)
         => $"{string.Join("", Enumerable.Range(0, Rng.Int(3, 6)).Select(_ => Letters.Random()))} {_slotNames[slot].Random()}";
 
+    // TODO: Refactor out these two generate methods
     private Equipment Generate(int totalPowerLevel, Rarity rarity)
     {
         var description = "";
@@ -63,6 +81,48 @@ public class EquipmentGenerator
         var slot = SlotFor(primarySelectedStat);
         var name = NameFor(slot, rarity);
         
+        var remainingPointsToSpend = totalPowerLevel;
+        var selectedStat = primarySelectedStat;
+        while (remainingPointsToSpend > 0)
+        {
+            var attributePointsToSpend = Rng.Int(1, remainingPointsToSpend + 1);
+            remainingPointsToSpend -= attributePointsToSpend;
+
+            modifiers.Add(AdditiveModifier(attributePointsToSpend, selectedStat));
+            description += modifiers.Last().Describe();
+            
+            if (remainingPointsToSpend > 0)
+            {
+                description += " ";
+                selectedStat = GeneratableStats.Where(s => !selectedStats.Contains(s.ToString())).Random();
+                selectedStats.Add(selectedStat.ToString());
+            }
+        }
+        
+        return new InMemoryEquipment
+        {
+            Name = name,
+            Rarity = rarity,
+            Price = (totalPowerLevel * 42).WithShopPricingVariance(),
+            Classes = new [] { CharacterClass.All },
+            Description = description,
+            Modifiers = modifiers.ToArray(),
+            Slot = slot
+        };
+    }
+    
+    
+    public Equipment Generate(Rarity rarity, EquipmentSlot slot)
+    {
+        var description = "";
+        var modifiers = new List<EquipmentStatModifier>();
+        
+        var selectedStats = new HashSet<string>();
+        var primarySelectedStat = RandomStatFor(slot);
+        selectedStats.Add(primarySelectedStat.ToString());
+        var name = NameFor(slot, rarity);
+
+        var totalPowerLevel = PowerLevelFor(rarity);
         var remainingPointsToSpend = totalPowerLevel;
         var selectedStat = primarySelectedStat;
         while (remainingPointsToSpend > 0)
