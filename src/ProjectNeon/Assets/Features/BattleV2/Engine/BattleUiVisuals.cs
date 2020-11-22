@@ -54,7 +54,7 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     {
         if (msg.Winner == TeamType.Enemies)
             defeatUi.SetActive(true);
-        else
+        else if (victoryUi != null)
             victoryUi.SetActive(true);
     }
 

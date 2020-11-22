@@ -170,7 +170,7 @@ public class BattleState : ScriptableObject
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
-    public void SetRewardCards(CardType[] cards) => UpdateState(() => rewardCards = cards);
+    public void SetRewardCards(params CardType[] cards) => UpdateState(() => rewardCards = cards);
 
     public void AddEnemy(Enemy e, GameObject gameObject) 
         => UpdateState(() =>
@@ -202,7 +202,7 @@ public class BattleState : ScriptableObject
     
     private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => Math.Min(h.CurrentHp(), h.State.BaseStats.MaxHp())).ToArray());
     private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits + _playerState.BonusCredits);
-    private void GrantRewardCards() => Party.Cards.Add(rewardCards);
+    private void GrantRewardCards() => Party.Add(rewardCards);
     
     // Queries
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);
