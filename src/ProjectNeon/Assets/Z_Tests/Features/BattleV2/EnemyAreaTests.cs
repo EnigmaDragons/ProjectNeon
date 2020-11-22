@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 
+[Ignore("Not Implemented")]
 [TestFixture]
 public sealed class EnemyAreaTests
 {

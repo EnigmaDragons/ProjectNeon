@@ -35,6 +35,7 @@ public class BattleState : ScriptableObject
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
 
     public bool NeedsCleanup => needsCleanup;
+    public int PowerLevelRewardFactor => adventure.Adventure.RewardCreditsPerPowerLevel;
     public PartyAdventureState Party => party;
     public PartyArea PartyArea => partyArea;
     public EnemyArea EnemyArea => enemies;

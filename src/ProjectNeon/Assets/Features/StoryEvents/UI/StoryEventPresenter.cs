@@ -39,7 +39,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
             if (!choice.CanSelect(new StoryEventContext(party)))
             {
                 Debug.Log($"Story Event: Cannot choose {choice.Text}. Condition not met.");
-                _buttons[i].SetButtonDisabled(true);
+                _buttons[i].SetButtonDisabled(true, Color.white);
             }
         }
     }

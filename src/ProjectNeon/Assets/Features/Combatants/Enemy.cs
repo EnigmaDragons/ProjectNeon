@@ -10,7 +10,6 @@ public class Enemy : ScriptableObject
     [SerializeField] private TurnAI ai;
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private int powerLevel = 1;
-    [SerializeField] private int rewardCredits = 25;
     [SerializeField] private GameObject prefab;
     [SerializeField] private StringReference deathEffect;
     [SerializeField] private BattleRole battleRole;
@@ -33,7 +32,6 @@ public class Enemy : ScriptableObject
     public TurnAI AI => ai;
     public int PowerLevel => powerLevel;
     public int PreferredTurnOrder => preferredTurnOrder;
-    public int RewardCredits => rewardCredits;
     public GameObject Prefab => prefab;
     public string DeathEffect => deathEffect;
     public BattleRole Role => battleRole;
@@ -88,7 +86,6 @@ public class Enemy : ScriptableObject
     {
         this.preferredTurnOrder = intStats["preferredTurnOrder"];
         this.powerLevel = intStats["powerLevel"];
-        this.rewardCredits = intStats["rewardCredits"];
         this.maxHp = intStats["maxHp"];
         this.toughness = intStats["toughness"];
         this.attack = intStats["attack"];
@@ -100,5 +97,11 @@ public class Enemy : ScriptableObject
         this.resistance = testResistance;
         this.resourceType = testResourceType;
         return this;
+    }
+
+    public int GetRewardCredits(int powerLevelFactor)
+    {
+        var typeFactor = battleRole == BattleRole.Boss ? 4 : 1;
+        return powerLevel * powerLevelFactor * typeFactor;
     }
 }
