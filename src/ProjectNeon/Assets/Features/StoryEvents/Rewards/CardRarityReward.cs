@@ -6,6 +6,10 @@ public class CardRarityReward : StoryResult
     [SerializeField] private Rarity rarity;
     [SerializeField] private ShopCardPool cardPool;
     
-    public override void Apply(StoryEventContext ctx) 
-        => ctx.Party.Add(new ShopSelectionPicker().PickCardsOfRarity(ctx.Party, cardPool, rarity, 1));
+    public override void Apply(StoryEventContext ctx)
+    {
+        var card = new ShopSelectionPicker().PickCardsOfRarity(ctx.Party, cardPool, rarity, 1);
+        ctx.Party.Add(card);
+        Message.Publish(new ShowCardReward(card[0]));
+    }
 }
