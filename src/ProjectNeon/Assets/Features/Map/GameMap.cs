@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Obsolete("MapView1")]
 [CreateAssetMenu]
 public sealed class GameMap : ScriptableObject
 {

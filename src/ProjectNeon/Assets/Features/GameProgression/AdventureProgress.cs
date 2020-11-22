@@ -1,25 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[Obsolete("MapView1")]
 [CreateAssetMenu(menuName = "GameState/AdventureProgress")]
 public class AdventureProgress : ScriptableObject
 {
     [SerializeField] private CurrentGameMap currentMap;
-    [SerializeField] private Adventure currentAdventure;
+    [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private int currentStageIndex;
     [SerializeField] private int currentStageSegmentIndex;
-
-    public Adventure Adventure => currentAdventure;
+    
     public int CurrentStageSegmentIndex => currentStageSegmentIndex;
-    public bool IsFinalStage => currentStageIndex == currentAdventure.Stages.Length - 1;
+    public bool IsFinalStage => currentStageIndex == currentAdventure.Adventure.Stages.Length - 1;
     public bool IsLastSegmentOfStage => currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
-    public int PartyCardCycles => currentAdventure.BaseNumberOfCardCycles;
     public Stage CurrentStage
     {
         get { 
-            if (currentStageIndex < 0 || currentStageIndex >= currentAdventure.Stages.Length)
+            if (currentStageIndex < 0 || currentStageIndex >= currentAdventure.Adventure.Stages.Length)
                 Log.Error($"Adventure Stage is illegal. {this}");
-            return currentAdventure.Stages[currentStageIndex]; 
+            return currentAdventure.Adventure.Stages[currentStageIndex];
         }
     }
 
@@ -29,9 +29,8 @@ public class AdventureProgress : ScriptableObject
     private bool HasBegun => currentStageIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && currentStageSegmentIndex == CurrentStage.Segments.Length - 1;
 
-    public void Init(Adventure a)
+    public void Init()
     {
-        currentAdventure = a;
         Reset();
         Log.Info($"Init Adventure. {this}");
     }
@@ -51,7 +50,7 @@ public class AdventureProgress : ScriptableObject
     {
         currentStageIndex = -1;
         currentStageSegmentIndex = -1;
-        if (currentAdventure.Stages.Length < 1)
+        if (currentAdventure.Adventure.Stages.Length < 1)
             Log.Error("The adventure must have a least one stage!");
     }
 

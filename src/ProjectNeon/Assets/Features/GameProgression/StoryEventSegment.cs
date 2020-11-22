@@ -5,13 +5,13 @@ using UnityEngine;
 public class StoryEventSegment : StageSegment
 {
     [SerializeField] private StoryEventPool events;
-    [SerializeField] private AdventureProgress adventure;
+    [SerializeField] private AdventureProgress2 adventure;
     
     public override string Name => "Story Event";
     
     public override void Start()
     {
-        var storyEvent = events.AllEvents.Where(x => x.StorySetting == adventure.CurrentStage.Setting).Random();
+        var storyEvent = events.AllEvents.Where(x => x.StorySetting == adventure.CurrentStage.StorySetting).Random();
         Message.Publish(new BeginStoryEvent(storyEvent));
     }
 }

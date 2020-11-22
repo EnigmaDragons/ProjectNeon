@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class Adventure : ScriptableObject
 {
     [SerializeField] private Stage[] stages;
+    [SerializeField] private DynamicStage[] dynamicStages;
     [SerializeField] private string adventureTitle;
     [SerializeField] private Sprite adventureImage;
     [SerializeField] private int partySize;
@@ -19,9 +20,11 @@ public class Adventure : ScriptableObject
     public string Title => adventureTitle;
     public string Story => story;
     public Stage[] Stages => stages.ToArray();
+    public DynamicStage[] DynamicStages => dynamicStages.ToArray();
     public Sprite AdventureImage => adventureImage;
     public int PartySize => partySize;
     public BaseHero[] RequiredHeroes => requiredHeroes;
     public int BaseNumberOfCardCycles => baseNumberOfCardCycles;
     public bool CanUseUniversalShop => canUseUniversalShop;
+    public bool IsV2 => dynamicStages != null && dynamicStages.Any();
 }

@@ -4,9 +4,11 @@ using UnityEngine.UI;
 public class MapNodeGameObject : MonoBehaviour
 {
     [SerializeField] private Button button;
-
-    public void Init(bool canTravelToo)
+    [SerializeField] private StageSegment segment;
+    
+    public void Init(int nodeId, bool canTravelToo)
     {
-        button.enabled = canTravelToo;
+        button.interactable = canTravelToo;
+        button.onClick.AddListener(() => Message.Publish(new TravelToNode { Node = gameObject, OnArrive = () => segment.Start(), NodeId = nodeId }));
     } 
 }

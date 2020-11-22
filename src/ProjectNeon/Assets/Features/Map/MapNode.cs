@@ -9,10 +9,10 @@ public class MapNode
 {
     public int NodeId;
     public MapNodeType Type;
-    public List<MapNode> Children;
+    public List<int> ChildrenIds;
     public int X;
     public int Y;
 
     public static MapNode GenerateNew(MapNodeType type, int x, int y)
-        => new MapNode { NodeId = Guid.NewGuid().GetHashCode(), Type = type, X = x, Y = y, Children = new List<MapNode>() };
+        => new MapNode { NodeId = Guid.NewGuid().GetHashCode(), Type = type, X = x, Y = y, ChildrenIds = new List<int>() };
 }

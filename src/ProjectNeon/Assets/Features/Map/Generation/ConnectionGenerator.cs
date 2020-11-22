@@ -17,7 +17,7 @@ public class ConnectionGenerator
             //Add additional possibility selection here
             var possibility = Rng.Random(possibilities);
             foreach (var connection in possibility)
-                fromNodes.First(x => x.NodeId == connection.From.NodeId).Children.Add(toNodes.First(x => x.NodeId == connection.To.NodeId));
+                fromNodes.First(x => x.NodeId == connection.From.NodeId).ChildrenIds.Add(toNodes.First(x => x.NodeId == connection.To.NodeId).NodeId);
         }
     }
 }

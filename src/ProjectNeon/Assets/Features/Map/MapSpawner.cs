@@ -1,6 +1,8 @@
 
+using System;
 using UnityEngine;
 
+[Obsolete("MapView1")]
 public sealed class MapSpawner : MonoBehaviour
 {
     [SerializeField] private CurrentGameMap map;

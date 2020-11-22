@@ -7,8 +7,10 @@ using Random = System.Random;
 public class MapSpawner2 : MonoBehaviour
 {
     [SerializeField] private CurrentGameMap2 gameMap;
-    [SerializeField] private AdventureProgress progress;
-
+    [SerializeField] private AdventureProgress2 progress;
+    [SerializeField] private TravelReactiveSystem travelReactiveSystem;
+    [SerializeField] private GameObject playerToken;
+    
     //Map Inspecific Rules
     [SerializeField] private float bottomMargin;
     [SerializeField] private float leftMargin;
@@ -22,59 +24,76 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private MapNodeGameObject combatNode;
     [SerializeField] private MapNodeGameObject bossNode;
 
+    private GameObject _playerNode;
+    private GameObject _playerToken;
+    
     private void Awake()
     {
         var map = Instantiate(gameMap.Map.ArtPrototype, transform);
         if (!gameMap.IsMapGenerated)
             GenerateMap();
-        SpawnNode(map, gameMap.GeneratedMap, false);
+        var mapRect = map.GetComponent<RectTransform>();
+        var corners = new Vector3[4];
+        mapRect.GetWorldCorners(corners);
+        SpawnNodes(mapRect, corners[1]);
+        SpawnToken(map);
     }
+    
+    private void Start() => Message.Publish(new FocusOnMapElement { MapElement = (RectTransform)_playerToken.transform });
     
     private void GenerateMap()
     {
-        var bounds = gameMap.Map.ArtPrototype.GetComponentInChildren<Renderer>().bounds;
-        var columnSize = (bounds.size.x - leftMargin - rightMargin) / (gameMap.Map.PathLength + 1);
-        var height = bounds.size.y - bottomMargin - topMargin;
+        var size = gameMap.Map.ArtPrototype.GetComponent<RectTransform>().sizeDelta;
+        var columnSize = (size.x - leftMargin - rightMargin) / (progress.CurrentStage.SegmentCount + 1);
+        var height = size.y - bottomMargin - topMargin;
         var columns = new List<List<MapNode>>
         {
             new List<MapNode> { MapNode.GenerateNew(MapNodeType.Start, 
                 x: (int)Mathf.Round(columnSize / 2 + leftMargin), 
                 y: (int)Mathf.Round(height / 2 + topMargin)) }, 
             new List<MapNode> { MapNode.GenerateNew(MapNodeType.Boss, 
-                x: (int)Mathf.Round(columnSize / 2 + leftMargin + columnSize * gameMap.Map.PathLength), 
+                x: (int)Mathf.Round(columnSize / 2 + leftMargin + columnSize * progress.CurrentStage.SegmentCount), 
                 y: (int)Mathf.Round(height / 2 + topMargin)) }
         };
-        for (var column = 1; column < gameMap.Map.PathLength; column++)
+        for (var column = 1; column < progress.CurrentStage.SegmentCount; column++)
         {
             var nodesInColumn = Rng.Int(gameMap.Map.MinPaths, gameMap.Map.MaxPaths + 1);
             var rowSize = height / nodesInColumn;
-            columns.Insert(0, Enumerable.Range(0, nodesInColumn).Select(row => MapNode.GenerateNew(MapNodeType.Combat, 
+            columns.Insert(column, Enumerable.Range(0, nodesInColumn).Select(row => MapNode.GenerateNew(MapNodeType.Combat, 
                 x: (int)Mathf.Round(columnSize / 2 + leftMargin + columnSize * column) + Rng.Int(-nodeHorizontalJitter, nodeHorizontalJitter + 1), 
                 y: (int)Mathf.Round(rowSize / 2 + topMargin + rowSize * row) + Rng.Int(-nodeVerticalJitter, nodeVerticalJitter + 1))).ToList());
         }
         new ConnectionGenerator().AddConnections(columns);
-        gameMap.SetupMap(columns[0][0]);
+        gameMap.SetupMap(columns.SelectMany(x => x).OrderBy(x => x.X).ToList());
     }
 
-    private void SpawnNode(GameObject map, MapNode node, bool canTravelTo)
+    private void SpawnNodes(RectTransform map, Vector2 topLeftCorner)
     {
-        if (node.Type == MapNodeType.Start)
-            Instantiate(startNode, new Vector3(node.X, node.Y, 0), Quaternion.identity, map.transform).Init(canTravelTo);
-        else if (node.Type == MapNodeType.Combat)
-            Instantiate(combatNode, new Vector3(node.X, node.Y, 0), Quaternion.identity, map.transform).Init(canTravelTo);
-        else if (node.Type == MapNodeType.Boss)
-            Instantiate(bossNode, new Vector3(node.X, node.Y, 0), Quaternion.identity, map.transform).Init(canTravelTo);
-        node.Children.ForEach(x => SpawnNode(map, x, node.NodeId == gameMap.CurrentPositionId));
+        var playerNode = gameMap.GetMapNode(gameMap.CurrentPositionId);
+        var travelIds = playerNode.ChildrenIds;
+        foreach (var nodeToSpawn in gameMap.GeneratedMap)
+        {
+            MapNodeGameObject nodePrefab = null;
+            if (nodeToSpawn.Type == MapNodeType.Start)
+                nodePrefab = startNode;
+            else if (nodeToSpawn.Type == MapNodeType.Combat)
+                nodePrefab = combatNode;
+            else if (nodeToSpawn.Type == MapNodeType.Boss)
+                nodePrefab = bossNode;
+            var nodeObject = Instantiate(nodePrefab, new Vector3(topLeftCorner.x + nodeToSpawn.X, topLeftCorner.y - nodeToSpawn.Y, 0), Quaternion.identity, map);
+            nodeObject.Init(nodeToSpawn.NodeId, travelIds.Any(x => x == nodeToSpawn.NodeId));
+            if (gameMap.CurrentPositionId == nodeToSpawn.NodeId)
+                _playerNode = nodeObject.gameObject;
+        }
     }
     
-    /*private void SpawnToken()
+    private void SpawnToken(GameObject map)
     {
         progress.InitIfNeeded();
-        var o = Instantiate(tokenPrototype, transform);
-        var rectTransform = o.GetComponent<RectTransform>();
-        rectTransform.anchoredPosition += map.Locations[progress.CurrentStageSegmentIndex].GeoPosition;
-        var floating = o.GetComponent<Floating>();
+        _playerToken = Instantiate(playerToken, _playerNode.transform.position, Quaternion.identity, map.transform);
+        travelReactiveSystem.PlayerToken = _playerToken;
+        var floating = _playerToken.GetComponent<Floating>();
         if (floating != null)
             floating.enabled = true;
-    }*/
+    }
 }

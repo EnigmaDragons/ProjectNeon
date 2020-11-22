@@ -5,7 +5,9 @@ public class InitializeAdventureSelection : MonoBehaviour
     [SerializeField] private GameObject container;
     [SerializeField] private AdventureDisplayPresenter adventureDisplayPrefab;
     [SerializeField] private Library library;
+    [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private AdventureProgress adventureProgress;
+    [SerializeField] private AdventureProgress2 adventureProgress2;
     [SerializeField] private Navigator navigator;
 
     private void Start()
@@ -24,7 +26,9 @@ public class InitializeAdventureSelection : MonoBehaviour
         if (library.UnlockedAdventures.Length > index)
         {
             var adventure = library.UnlockedAdventures[index];
-            adventureProgress.Init(adventure);
+            currentAdventure.Adventure = adventure;
+            adventureProgress.Init();
+            adventureProgress2.Init();
             navigator.NavigateToSquadSelection();
             
         }

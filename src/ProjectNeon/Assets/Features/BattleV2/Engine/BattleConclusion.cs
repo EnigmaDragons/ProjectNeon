@@ -6,13 +6,15 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private IntReference levelUpPoints = new IntReference(8);
     [SerializeField] private AdventureProgress adventure;
+    [SerializeField] private AdventureProgress2 adventure2;
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
     [SerializeField] private CardPlayZones zones;
-
+    [SerializeField] private CurrentAdventure currentAdventure;
+    
     private void Advance()
     {
-        if (adventure.IsFinalStageSegment)
+        if (currentAdventure.Adventure.IsV2 ? adventure2.IsFinalStageSegment : adventure.IsFinalStageSegment)
         {
             Log.Info("Navigating to victory screen");
             Message.Publish(new AutoSaveRequested());
@@ -20,13 +22,16 @@ public class BattleConclusion : OnMessage<BattleFinished>
         }
         else
         {
-            if (adventure.IsLastSegmentOfStage)
+            if (currentAdventure.Adventure.IsV2 ? adventure2.IsLastSegmentOfStage : adventure.IsLastSegmentOfStage)
             {
                 Log.Info("Party is levelling up");
                 party.AwardLevelUpPoints(levelUpPoints);
             }
             Log.Info("Advancing to next Stage Segment.");
-            adventure.Advance();
+            if (currentAdventure.Adventure.IsV2)
+                adventure2.Advance();
+            else
+                adventure.Advance();
             Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }
