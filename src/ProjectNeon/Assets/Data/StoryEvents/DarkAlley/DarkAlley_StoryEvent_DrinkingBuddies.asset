@@ -28,6 +28,9 @@ MonoBehaviour:
     They seem to be sharing tales from their past.'
   choices:
   - Text: Ask them for information about the alley.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 1
@@ -43,10 +46,13 @@ MonoBehaviour:
         "You
         need to be ready for anything. Here''s a technique we use to deal with punks."'
   - Text: Give them some credits.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 25
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 0.7
-      Result: {fileID: 11400000, guid: 68249e398e60b7748924347e7dff4f97, type: 2}
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
       StoryText: 'One of the fellows takes your money with a slight nod.
 
 
@@ -64,6 +70,9 @@ MonoBehaviour:
         will perk you right up. Have a drink on me.\"\n\nYou drink and give to your
         companions. The drink packs a punch and restores your vigor."
   - Text: Leave them alone and walk on.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 1

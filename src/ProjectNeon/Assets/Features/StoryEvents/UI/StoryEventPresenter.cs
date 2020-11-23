@@ -16,16 +16,12 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
     
     private TextCommandButton[] _buttons;
     
-    private void Awake()
-    {
-        ClearOptions();
-        _buttons = Enumerable.Range(0, 4)
-            .Select(x => Instantiate(optionButtonPrototype, optionsParent.transform))
-            .ToArray();
-    }
-    
+    private void Awake() => InitFreshOptionsButtons();
+
     public void Present(StoryEvent s)
     {
+        rewardParent.DestroyAllChildren();
+        InitFreshOptionsButtons();
         var ctx = new StoryEventContext(party);
         storyTextArea.text = s.StoryText;
         for (var i = _buttons.Length - 1; i > -1; i--)
@@ -48,9 +44,18 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
     }
 
     private void ClearOptions() => optionsParent.DestroyAllChildren();
+    private void InitFreshOptionsButtons()
+    {
+        ClearOptions();
+        // Necessary due to TextMeshProUGIU Vertex Color
+        _buttons = Enumerable.Range(0, 4)
+            .Select(x => Instantiate(optionButtonPrototype, optionsParent.transform))
+            .ToArray();
+    }
     
     protected override void Execute(ShowStoryEventResolution msg)
     {        
+        InitFreshOptionsButtons();
         storyTextArea.text = msg.Story;
         for (var i = _buttons.Length - 1; i > -1; i--)
         {
