@@ -24,7 +24,11 @@ MonoBehaviour:
     sound seems to be coming from underneath a couple broken trash bags.'
   choices:
   - Text: 'Identify the type of sound. [Required Skill: Pyrotechnics]'
-    OptionalCondition: {fileID: 0}
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 11400000, guid: 81a23e9592d5f4f4c911423bb96ae67f,
+      type: 2}
     Resolution:
     - Chance: 0.5
       Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
@@ -43,6 +47,9 @@ MonoBehaviour:
         a mechanical weapon that's jammed. \n\nCarefully digging through the debirs,
         you unjam the weapon and add it to your stash."
   - Text: Investigate the object more closely.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 0.5
@@ -59,6 +66,9 @@ MonoBehaviour:
         sounds turns out to be a mechanical weapon that's jammed. \n\nYou unjam the
         weapon and add it to your stash."
   - Text: Move on.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 0.5
