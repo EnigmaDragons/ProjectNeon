@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 [Serializable]
 public class StoryEventChoice
@@ -10,8 +11,17 @@ public class StoryEventChoice
     public StoryEventCondition OptionalCondition;
     public StoryResolution[] Resolution;
 
-    public string ChoiceFullText(StoryEventContext ctx) => $"{Text} {OptionalCost?.CostDescription()}".Trim();
-    
+    public string ChoiceFullText(StoryEventContext ctx)
+    {
+        var sb = new StringBuilder();
+        sb.Append(Text.Trim());
+        if (OptionalCondition != null)
+            sb.Append($" {OptionalCondition.ConditionDescription}");
+        if (OptionalCost.CostAmount > 0)
+            sb.Append($" {OptionalCost.CostDescription()}");
+        return sb.ToString();
+    }
+
     public bool CanSelect(StoryEventContext ctx) => ConditionMet(ctx) && CostIsAffordable(ctx);
 
     private bool ConditionMet(StoryEventContext ctx) => OptionalCondition != null ? OptionalCondition.Evaluate(ctx) : true;

@@ -25,7 +25,10 @@ MonoBehaviour:
     of current crypto prices, and they seem very different than the current exchange
     values shown on the CTM.'
   choices:
-  - Text: 'Hack the machine and try to gain free crypto. [Required Skill: Hacking]'
+  - Text: Hack the machine and try to gain free crypto.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 11400000, guid: 75ab2d491b80cdd49b9531f057ba8ce6,
       type: 2}
     Resolution:
@@ -34,6 +37,9 @@ MonoBehaviour:
       StoryText: You successfully hack the machine and manage to transfer some credits
         before the machine gives out and powers off completely.
   - Text: Attempt to make a crypto trade
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 0.3
@@ -53,6 +59,9 @@ MonoBehaviour:
         By the time the machine finishes updating,
         the trade is no longer favorable. Your account balance is a little lighter.'
   - Text: Call Daimo and report the update error
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 1
@@ -63,6 +72,9 @@ MonoBehaviour:
         The customer service
         representative thanks you, and transfer a cursory payment to your account.'
   - Text: Click "Update Now"
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 1

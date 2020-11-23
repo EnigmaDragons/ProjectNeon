@@ -18,7 +18,10 @@ MonoBehaviour:
     the dumpster as leverage. \n\n\"I... have been attacked by a gang of children\",
     he says. \"Please take me to the clinic!.\""
   choices:
-  - Text: 'Heal the injured man [Requires Skill: Treatment]'
+  - Text: Heal the injured man.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 11400000, guid: d31a7e6947452d74ca2c33f53d250cd6,
       type: 2}
     Resolution:
@@ -29,6 +32,9 @@ MonoBehaviour:
         but I want you to have this. Buy yourself a beer. You deserve it.\"\n\n[The\r 
         man gives you some credits]"
   - Text: Take him to a clinic.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 11400000, guid: 424e4e8c74603144180db31da73c4846,
       type: 2}
     Resolution:
@@ -39,6 +45,9 @@ MonoBehaviour:
         \"It''s not much, but I want you to have this. Buy yourself a beer. You deserve
         it.\n\n[The man gives you some credits]"
   - Text: Ignore the man and move on.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 11400000, guid: 424e4e8c74603144180db31da73c4846,
       type: 2}
     Resolution:

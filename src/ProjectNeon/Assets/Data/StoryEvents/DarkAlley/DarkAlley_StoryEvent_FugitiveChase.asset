@@ -17,7 +17,10 @@ MonoBehaviour:
     you on a hoverboard. \n\n\"Hey!\" she barks. \"We're trying to catch a fugitive
     on the run. The fugitive just came through here. Do you know which way they went?\""
   choices:
-  - Text: '"They headed over that wall." [Requires Skill: Security]'
+  - Text: '"They headed over that wall."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 11400000, guid: cf13ba56b72911f4e9d840d2910ea50d,
       type: 2}
     Resolution:
@@ -26,6 +29,9 @@ MonoBehaviour:
       StoryText: After the officer hover-dashes over the wall, you notice a weapon
         on the ground, presumably dropped by the fugitive.
   - Text: '"I think they headed down the alley on the right."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 0.3
@@ -41,6 +47,9 @@ MonoBehaviour:
       StoryText: "The officer zips  off down the alley. \n\nYou hope your information
         was correct."
   - Text: '"I think they went straight ahead."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 0.3
@@ -56,6 +65,9 @@ MonoBehaviour:
       StoryText: "The officer zips down the street. \n\nYou hope your information
         was correct."
   - Text: '"I don''t know."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 1

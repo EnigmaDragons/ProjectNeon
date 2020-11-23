@@ -4,4 +4,5 @@ using UnityEngine;
 public sealed class NoStoryEventCondition : StoryEventCondition
 {
     public override bool Evaluate(StoryEventContext ctx) => true;
+    public override string ConditionDescription => "";
 }
