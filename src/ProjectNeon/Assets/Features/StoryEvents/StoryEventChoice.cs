@@ -20,10 +20,13 @@ public class StoryEventChoice
     public void Select(StoryEventContext ctx)
     {
         OptionalCost?.Apply(ctx);
-        
+
         if (Resolution.Sum(r => r.Chance) > 1 || Resolution.Sum(r => r.Chance) > 1)
+        {
             Log.Error($"Story Event: Invalid Total Resolution Chance for {Text}");
-        
+            Message.Publish(new ShowStoryEventResolution("Something peculiar occurred, which you can't explain, of which you can never speak (except to the developers)"));
+        }
+
         var roll = Rng.Dbl();
         var possibleOutcomes = new Dictionary<float, StoryResolution>();
         var rangeStart = 0f;
