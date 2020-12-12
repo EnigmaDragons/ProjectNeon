@@ -63,8 +63,8 @@ public static class AllEffects
         { EffectType.AdjustCounter, e => new SimpleEffect(m => m.Adjust(e.EffectScope, e.BaseAmount))},
         { EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs, e => new ShieldToughtnessBasedOnNumberOfOpponentDoTs(e.FloatAmount) },
         { EffectType.DealRawDamageFormula, e => new SimpleEffect((src, m) => m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(src, e.Formula))))},
-        { EffectType.ApplyAdditiveStatInjury, e => new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.BaseAmount + e.FloatAmount)},
-        { EffectType.ApplyMultiplicativeStatInjury, e => new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.BaseAmount + e.FloatAmount)},
+        { EffectType.ApplyAdditiveStatInjury, e => new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.BaseAmount + e.FloatAmount, e.FlavorText)},
+        { EffectType.ApplyMultiplicativeStatInjury, e => new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.BaseAmount + e.FloatAmount, e.FlavorText)},
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
     };
     
