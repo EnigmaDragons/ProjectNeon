@@ -18,7 +18,7 @@ public class PartyAdventureUiSummary : MonoBehaviour
         
         for (var i = 0; i < party.BaseHeroes.Length; i++)
         {
-            var h = Instantiate(heroPresenter, itemParent.transform); 
+            var h = Instantiate(heroPresenter, itemParent.transform);
             h.Init(party.Heroes[i], !current.Adventure.IsV2);
             active.Add(h);
         }

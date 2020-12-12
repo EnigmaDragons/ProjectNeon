@@ -22,4 +22,5 @@ public class EventPublisher : ScriptableObject
     public void ToggleBattleLogView() => Message.Publish(new ToggleBattleLogView());
     public void ConfirmSquadSelection() => Message.Publish(new ConfirmSquadSelection());
     public void ToggleClinic() => Message.Publish(new ToggleClinic());
+    public void ActivatePartyDetailsWizardFlow() => Message.Publish(new TogglePartyDetails { AllowDone = false });
 }

@@ -19,6 +19,7 @@ public sealed class EffectData
     public StatusTag StatusTag;
     public int TurnDelay;
     public string Formula = "";
+    public StringReference FlavorText = new StringReference();
 }
 
 public static class EffectDataExtensions
@@ -35,6 +36,7 @@ public static class EffectDataExtensions
             ReactionSequence = e.ReactionSequence,
             StatusTag = e.StatusTag,
             TurnDelay = 0,
-            Formula = e.Formula
+            Formula = e.Formula,
+            FlavorText = e.FlavorText
         };
 }
