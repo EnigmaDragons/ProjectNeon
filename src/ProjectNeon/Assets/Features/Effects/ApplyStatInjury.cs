@@ -15,10 +15,11 @@ public class ApplyStatInjury : Effect
     
     public void Apply(EffectContext ctx)
     {
-        var heroes = ctx.Target.Members.Where(x => x.TeamType == TeamType.Party);
+        var heroes = ctx.Target.Members.Where(x => x.TeamType == TeamType.Party).ToList();
         heroes
             .SelectMany(x => ctx.AdventureState.Heroes.Where(h => h.Name.Equals(x.Name)))
             .ForEach(ApplyInjury);
+        heroes.ForEach(h => h.State.Adjust(TemporalStatType.Injury, 1));
     }
 
     private void ApplyInjury(Hero h)

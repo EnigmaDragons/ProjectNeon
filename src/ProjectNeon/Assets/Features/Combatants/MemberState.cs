@@ -33,17 +33,14 @@ public sealed class MemberState : IStats
     {
         MemberId = id;
         _baseStats = baseStats;
+        
         _counters[TemporalStatType.HP.ToString()] = new BattleCounter(TemporalStatType.HP, initialHp, () => CurrentStats.MaxHp());
         _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.Toughness() * 2);
-        _counters[TemporalStatType.TurnStun.ToString()] = new BattleCounter(TemporalStatType.TurnStun, 0, () => int.MaxValue);
-        _counters[TemporalStatType.CardStun.ToString()] = new BattleCounter(TemporalStatType.CardStun, 0, () => int.MaxValue);
-        _counters[TemporalStatType.Evade.ToString()] = new BattleCounter(TemporalStatType.Evade, 0, () => int.MaxValue);
-        _counters[TemporalStatType.Spellshield.ToString()] = new BattleCounter(TemporalStatType.Evade, 0, () => int.MaxValue);
-        _counters[TemporalStatType.Taunt.ToString()] = new BattleCounter(TemporalStatType.Taunt, 0, () => int.MaxValue);
-        _counters[TemporalStatType.Stealth.ToString()] = new BattleCounter(TemporalStatType.Stealth, 0, () => int.MaxValue);
-        _counters[TemporalStatType.DoubleDamage.ToString()] = new BattleCounter(TemporalStatType.DoubleDamage, 0, () => int.MaxValue);
-        _counters[TemporalStatType.Confusion.ToString()] = new BattleCounter(TemporalStatType.Confusion, 0, () => int.MaxValue);
-        _counters[TemporalStatType.Blind.ToString()] = new BattleCounter(TemporalStatType.Confusion, 0, () => int.MaxValue);
+        Enum.GetValues(typeof(TemporalStatType))
+            .Cast<TemporalStatType>()
+            .Skip(2)
+            .ForEach(t => _counters[t.ToString()] = new BattleCounter(t, 0, () => int.MaxValue));
+        
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
         _counters[""] = new BattleCounter("", 0, () => 0);
