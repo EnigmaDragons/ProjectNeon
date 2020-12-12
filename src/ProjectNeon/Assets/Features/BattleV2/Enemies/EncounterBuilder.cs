@@ -9,7 +9,8 @@ public class EncounterBuilder : ScriptableObject
     [SerializeField] private Enemy[] possible;
     [SerializeField] private Enemy[] mustIncludePossibilities;
     [SerializeField] private int numMustIncludes;
-    [SerializeField] private bool preferHighestPowerLevel = false;
+    [SerializeField] private int maxEnemies = 7;
+    [SerializeField][Range(0, 1)] private float flexibility;
 
     public void Init(IEnumerable<Enemy> possibleEnemies)
     {
@@ -32,10 +33,13 @@ public class EncounterBuilder : ScriptableObject
             numRemainingMustIncludes--;
             currentDifficulty = currentDifficulty + Math.Max(nextEnemy.PowerLevel, 1);
         }
+
+        var min = difficulty * (1 - flexibility);
+        var max = difficulty * (1 + flexibility);
         
-        while (currentDifficulty < difficulty && enemies.Count < 7)
+        while (currentDifficulty < min && enemies.Count < maxEnemies)
         {
-            var maximum = difficulty - currentDifficulty;
+            var maximum = max - currentDifficulty;
             var enemyRolesOverrepresented = enemies
                 .GroupBy(e => e.Role)
                 .Where(g => g.Sum(e => e.PowerLevel) >= (difficulty / 2f))
@@ -45,14 +49,11 @@ public class EncounterBuilder : ScriptableObject
                 .Where(e => !enemyRolesOverrepresented.Contains(e.Role))
                 .Where(e => !uniqueEnemies.Contains(e))
                 .Where(e => e.PowerLevel <= maximum);
-            var options = preferHighestPowerLevel 
-                ? filteredOptions.GroupBy(e => e.PowerLevel).OrderByDescending(g => g.Key).First()
-                : filteredOptions;
-            
-            var nextEnemy = options.Random();
+
+            var nextEnemy = filteredOptions.Random();
             enemies.Add(nextEnemy);
             BattleLog.Write($"Added {nextEnemy.Name} to Encounter");
-            currentDifficulty = currentDifficulty + Math.Max(nextEnemy.PowerLevel, 1);
+            currentDifficulty += nextEnemy.PowerLevel;
         }
         
         BattleLog.Write("Finished generating encounter");
