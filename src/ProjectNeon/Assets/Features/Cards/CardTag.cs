@@ -1,5 +1,4 @@
 // Optimized for UI Order
-// Next tag number is 23
 public enum CardTag
 {
     None = 0,
@@ -31,4 +30,5 @@ public enum CardTag
     DebuffMagical = 26,
     Spellshield = 27,
     Resistance = 28,
+    Injure = 29,
 }

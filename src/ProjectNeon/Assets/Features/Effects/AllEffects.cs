@@ -62,7 +62,9 @@ public static class AllEffects
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.AdjustCounter, e => new SimpleEffect(m => m.Adjust(e.EffectScope, e.IntAmount + e.BaseAmount))},
         { EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs, e => new ShieldToughtnessBasedOnNumberOfOpponentDoTs(e.FloatAmount) },
-        { EffectType.DealRawDamageFormula, e => new SimpleEffect((src, m) => m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(src, e.Formula))))}
+        { EffectType.DealRawDamageFormula, e => new SimpleEffect((src, m) => m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(src, e.Formula))))},
+        { EffectType.ApplyAdditiveStatInjury, e => new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.BaseAmount + e.FloatAmount)},
+        { EffectType.ApplyMultiplicativeStatInjury, e => new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.BaseAmount + e.FloatAmount)},
     };
     
     public static void Apply(EffectData effectData, EffectContext ctx)

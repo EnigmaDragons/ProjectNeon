@@ -62,4 +62,6 @@ public enum EffectType
     SwapLifeForce = 64,
     DuplicateStatesOfType = 65,
     ShieldToughnessBasedOnNumberOfOpponentDoTs = 69,
+    ApplyAdditiveStatInjury = 71,
+    ApplyMultiplicativeStatInjury = 72
 }
