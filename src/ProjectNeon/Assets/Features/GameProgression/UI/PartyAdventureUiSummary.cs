@@ -3,12 +3,10 @@ using UnityEngine;
 
 public class PartyAdventureUiSummary : MonoBehaviour
 {
+    [SerializeField] private CurrentAdventure current;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private AdventureHeroUiSummary heroPresenter;
-    [SerializeField] private float ySpacing;
-    [SerializeField] private float xSpacing;
-    [SerializeField] private float xOffset;
-    [SerializeField] private float yOffset;
+    [SerializeField] private GameObject itemParent;
     
     [ReadOnly, SerializeField] private List<AdventureHeroUiSummary> active = new List<AdventureHeroUiSummary>();
     
@@ -16,13 +14,12 @@ public class PartyAdventureUiSummary : MonoBehaviour
     {
         active.ForEach(Destroy);
         active.Clear();
+        itemParent.DestroyAllChildren();
         
-        var position = transform.position;
         for (var i = 0; i < party.BaseHeroes.Length; i++)
         {
-            var h = Instantiate(heroPresenter,
-                new Vector3(position.x + xOffset + xSpacing * i, position.y + yOffset + ySpacing * i, position.z), Quaternion.identity, gameObject.transform); 
-            h.Init(party.Heroes[i]);
+            var h = Instantiate(heroPresenter, itemParent.transform); 
+            h.Init(party.Heroes[i], !current.Adventure.IsV2);
             active.Add(h);
         }
     }
