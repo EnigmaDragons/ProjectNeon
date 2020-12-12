@@ -6,7 +6,7 @@ using UnityEngine;
 public class Hero
 {
     [SerializeField] private HeroCharacter character;
-    [SerializeField] private int missingHp;
+    [SerializeField] private HeroHealth health;
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
 
@@ -18,16 +18,16 @@ public class Hero
     {
         this.character = character;
         this.deck = deck;
-        missingHp = 0;
         LevelUpPoints = 0;
         equipment = new HeroEquipment(character.Class);
+        health = new HeroHealth(() => Stats);
     }
 
     public string Name => character.Name;
     public CharacterClass Class => character.Class;
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
-    public int CurrentHp => Stats.MaxHp() - missingHp;
+    public int CurrentHp => Stats.MaxHp() - health.MissingHp;
     public HeroEquipment Equipment => equipment;
     public HeroSkill[] Skills => character.Skills;
     
@@ -36,11 +36,14 @@ public class Hero
         .Plus(_levelUpStats)
         .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers).ToArray()))
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
-        .Times(Equipment.All.Select(e => e.MultiplierStats()));
+        .Plus(health.AdditiveStats)
+        .Times(Equipment.All.Select(e => e.MultiplierStats()))
+        .Times(health.MultiplicativeStats);
 
-    public void HealToFull() => missingHp = 0;
-    public void SetHp(int hp) => missingHp = Stats.MaxHp() - hp;
-    public void AdjustHp(int amount) => missingHp = Mathf.Clamp(missingHp - amount, 0, Stats.MaxHp()); 
+    public void HealToFull() => health.HealToFull();
+    public void SetHp(int hp) => health.SetHp(hp);
+    public void AdjustHp(int amount) => health.AdjustHp(amount);
+    
     public void SetDeck(RuntimeDeck d) => deck = d;
     public void Equip(Equipment e) => equipment.Equip(e);
     public void Unequip(Equipment e) => equipment.Unequip(e);
@@ -64,4 +67,8 @@ public class Hero
         });
         return m;
     }
+
+    public void Apply(AdditiveStatInjury injury) => health.Apply(injury);
+    public void Apply(MultiplicativeStatInjury injury) => health.Apply(injury);
+    public void HealInjuryByName(string name) => health.HealInjuryByName(name);
 }
