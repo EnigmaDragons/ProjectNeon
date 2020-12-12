@@ -25,13 +25,18 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private MapNodeGameObject bossNode;
     [SerializeField] private MapNodeGameObject clinicNode;
     
+    // UI Configuration
+    [SerializeField] private Vector4 marginRightBottomLeftTop;
+    [SerializeField] private MovableMap.MovableMapSettings mapMovementSettings;
+
+    private Vector4 Margin => marginRightBottomLeftTop;
     private GameObject _playerToken;
     private readonly List<MapGenerationRule> _generationRules = new List<MapGenerationRule> { new NoClinicWithinEarlyColumns() };
     
     private void Awake()
     {
         gameMap.GameObjects = new Dictionary<string, MapNodeGameObject>();
-        var map = Instantiate(gameMap.Map.ArtPrototype, transform);
+        var map = Instantiate(gameMap.Map.ArtPrototype, transform).Initialized(mapMovementSettings);
         if (!gameMap.IsMapGenerated)
             GenerateMap();
         var lines = Instantiate(empty, map.transform);
@@ -41,7 +46,7 @@ public class MapSpawner2 : MonoBehaviour
         mapRect.GetWorldCorners(corners);
         SpawnNodes((RectTransform)nodes.transform, corners[1]);
         SpawnLines((RectTransform)lines.transform);
-        SpawnToken(map);
+        SpawnToken(map.gameObject);
     }
     
     private void Start() => Message.Publish(new FocusOnMapElement { MapElement = (RectTransform)_playerToken.transform });
@@ -49,16 +54,16 @@ public class MapSpawner2 : MonoBehaviour
     private void GenerateMap()
     {
         var size = gameMap.Map.ArtPrototype.GetComponent<RectTransform>().sizeDelta;
-        var columnSize = (size.x - gameMap.Map.LeftMargin - gameMap.Map.RightMargin) / (progress.CurrentStage.SegmentCount + 1);
-        var height = size.y - gameMap.Map.BottomMargin - gameMap.Map.TopMargin;
+        var columnSize = (size.x - Margin.z - Margin.x) / (progress.CurrentStage.SegmentCount + 1);
+        var height = size.y - Margin.y - Margin.w;
         var columns = new List<List<MapNode>>
         {
             new List<MapNode> { MapNode.GenerateNew(MapNodeType.Start, 
-                x: (int)Mathf.Round(columnSize / 2 + gameMap.Map.LeftMargin), 
-                y: (int)Mathf.Round(height / 2 + gameMap.Map.TopMargin)) }, 
+                x: (int)Mathf.Round(columnSize / 2 + Margin.z), 
+                y: (int)Mathf.Round(height / 2 + Margin.w)) }, 
             new List<MapNode> { MapNode.GenerateNew(MapNodeType.Boss, 
-                x: (int)Mathf.Round(columnSize / 2 + gameMap.Map.LeftMargin + columnSize * progress.CurrentStage.SegmentCount), 
-                y: (int)Mathf.Round(height / 2 + gameMap.Map.TopMargin)) }
+                x: (int)Mathf.Round(columnSize / 2 + Margin.z + columnSize * progress.CurrentStage.SegmentCount), 
+                y: (int)Mathf.Round(height / 2 + Margin.w)) }
         };
         for (var column = 1; column < progress.CurrentStage.SegmentCount; column++)
         {
@@ -85,10 +90,10 @@ public class MapSpawner2 : MonoBehaviour
     }
 
     private int ColumnX(float columnSize, int column) 
-        => (int)Mathf.Round(columnSize / 2 + gameMap.Map.LeftMargin + columnSize * column) + Rng.Int(-nodeHorizontalJitter, nodeHorizontalJitter + 1);
+        => (int)Mathf.Round(columnSize / 2 + Margin.z + columnSize * column) + Rng.Int(-nodeHorizontalJitter, nodeHorizontalJitter + 1);
 
     private int RowY(float rowSize, int row)
-        => (int)Mathf.Round(rowSize / 2 + gameMap.Map.TopMargin + rowSize * row) + Rng.Int(-nodeVerticalJitter, nodeVerticalJitter + 1);
+        => (int)Mathf.Round(rowSize / 2 + Margin.w + rowSize * row) + Rng.Int(-nodeVerticalJitter, nodeVerticalJitter + 1);
 
     private void SpawnNodes(RectTransform map, Vector2 topLeftCorner)
     {

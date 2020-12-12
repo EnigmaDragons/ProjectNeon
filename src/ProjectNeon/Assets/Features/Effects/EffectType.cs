@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 25, 27-43, 47, 48, 53, 
-// LAST NUMBER USED: 70
+// LAST NUMBER USED: 72
 public enum EffectType
 {
     Nothing = 0,
@@ -63,4 +63,7 @@ public enum EffectType
     DuplicateStatesOfType = 65,
     ShieldToughnessBasedOnNumberOfOpponentDoTs = 69,
     Kill = 24,
+
+    ApplyAdditiveStatInjury = 71,
+    ApplyMultiplicativeStatInjury = 72,
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class CardTargetPresenter : MonoBehaviour
 
     public void Set(CardTypeData c)
     {
+        if (c.ActionSequences.None())
+            Log.Error($"{c.Name} has no Action Sequences");
         var firstSeq = c.ActionSequences.First();
         targetIcon.sprite = firstSeq.Scope == Scope.One || firstSeq.Scope == Scope.OneExceptSelf
             ? singleTargetSprite

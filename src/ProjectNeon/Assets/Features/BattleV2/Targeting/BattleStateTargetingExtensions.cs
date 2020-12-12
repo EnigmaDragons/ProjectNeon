@@ -87,6 +87,17 @@ public static class BattleStateTargetingExtensions
                 .ToArray();
             return Targets(originator.IsConfused() ? new Target[] { targets.Shuffled().First() } : targets);   
         }
+
+        if (scope == Scope.AllExceptSelf)
+        {
+            var targets = teamMembers
+                .Select(exclusion => new Multiple(teamMembers.Where(x => x != originator).ToArray()))
+                .Cast<Target>()
+                .ToArray();
+            return targets;
+            //return Targets(new Team(teamMembers))
+            //    .Where(x => !x.Members.Contains(originator)).ToArray();
+        }
         return Targets(new Team(teamMembers));
     }
 
