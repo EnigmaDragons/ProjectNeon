@@ -25,6 +25,7 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private MapNodeGameObject gearShopNode;
     [SerializeField] private MapNodeGameObject storyEventNode;
     [SerializeField] private MapNodeGameObject bossNode;
+    [SerializeField] private MapNodeGameObject clinicNode;
     
     private GameObject _playerToken;
     
@@ -102,6 +103,8 @@ public class MapSpawner2 : MonoBehaviour
             nodePrefab = storyEventNode;
         else if (type == MapNodeType.Boss)
             nodePrefab = bossNode;
+        else if (type == MapNodeType.Clinic)
+            nodePrefab = clinicNode;
         return nodePrefab;
     }
 
