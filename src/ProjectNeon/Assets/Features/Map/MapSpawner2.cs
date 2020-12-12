@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = System.Random;
 
 public class MapSpawner2 : MonoBehaviour
 {
@@ -28,6 +26,7 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private MapNodeGameObject clinicNode;
     
     private GameObject _playerToken;
+    private readonly List<MapGenerationRule> _generationRules = new List<MapGenerationRule> { new NoClinicWithinEarlyColumns() };
     
     private void Awake()
     {
@@ -65,13 +64,31 @@ public class MapSpawner2 : MonoBehaviour
         {
             var nodesInColumn = Rng.Int(gameMap.Map.MinPaths, gameMap.Map.MaxPaths + 1);
             var rowSize = height / nodesInColumn;
-            columns.Insert(column, Enumerable.Range(0, nodesInColumn).Select(row => MapNode.GenerateNew(progress.CurrentStage.RandomNodeType, 
-                x: (int)Mathf.Round(columnSize / 2 + gameMap.Map.LeftMargin + columnSize * column) + Rng.Int(-nodeHorizontalJitter, nodeHorizontalJitter + 1), 
-                y: (int)Mathf.Round(rowSize / 2 + gameMap.Map.TopMargin + rowSize * row) + Rng.Int(-nodeVerticalJitter, nodeVerticalJitter + 1))).ToList());
+            columns.Insert(column, Enumerable.Range(0, nodesInColumn)
+                .Select(row => MapNode.GenerateNew(GetNextMapNodeType(column, columns), ColumnX(columnSize, column), RowY(rowSize, row)))
+                .ToList());
         }
         new ConnectionGenerator().AddConnections(columns);
         gameMap.SetupMap(columns.SelectMany(x => x).OrderBy(x => x.X).ToList());
     }
+
+    private MapNodeType GetNextMapNodeType(int column, List<List<MapNode>> currentMap)
+    {
+        var nodeType = progress.CurrentStage.RandomNodeType;
+        var numTries = 0;
+        while (numTries < 60 && _generationRules.Any(r => !r.IsValid(nodeType, column, currentMap)))
+        {
+            nodeType = progress.CurrentStage.RandomNodeType;
+            numTries++;
+        }
+        return nodeType;
+    }
+
+    private int ColumnX(float columnSize, int column) 
+        => (int)Mathf.Round(columnSize / 2 + gameMap.Map.LeftMargin + columnSize * column) + Rng.Int(-nodeHorizontalJitter, nodeHorizontalJitter + 1);
+
+    private int RowY(float rowSize, int row)
+        => (int)Mathf.Round(rowSize / 2 + gameMap.Map.TopMargin + rowSize * row) + Rng.Int(-nodeVerticalJitter, nodeVerticalJitter + 1);
 
     private void SpawnNodes(RectTransform map, Vector2 topLeftCorner)
     {
@@ -79,7 +96,7 @@ public class MapSpawner2 : MonoBehaviour
         var travelIds = playerNode.ChildrenIds;
         foreach (var nodeToSpawn in gameMap.GeneratedMap)
         {
-            MapNodeGameObject nodePrefab = GetNodePrefab(nodeToSpawn.Type);
+            var nodePrefab = GetNodePrefab(nodeToSpawn.Type);
             var nodeObject = Instantiate(nodePrefab, new Vector3(topLeftCorner.x + nodeToSpawn.X, topLeftCorner.y - nodeToSpawn.Y, 0), Quaternion.identity, map);
             nodeObject.Init(nodeToSpawn.NodeId, travelIds.Any(x => x == nodeToSpawn.NodeId));
             gameMap.GameObjects[nodeToSpawn.NodeId] = nodeObject;
