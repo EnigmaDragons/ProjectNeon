@@ -14,7 +14,7 @@ public sealed class DamageOverTime : Effect
         _amount = data.IntAmount;
         _turns = data.NumberOfTurns;
         _statMultiplier = data.FloatAmount;
-        _statSelected = Enum.TryParse("StatType", out _stat);
+        _statSelected = Enum.TryParse(data.EffectScope, out _stat);
     }
 
     public void Apply(EffectContext ctx)
