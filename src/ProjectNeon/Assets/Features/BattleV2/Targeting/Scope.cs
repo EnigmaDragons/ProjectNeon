@@ -5,4 +5,5 @@ public enum Scope
     All = 1,
     AllExcept = 2,
     OneExceptSelf = 3,
+    AllExceptSelf = 4,
 }
