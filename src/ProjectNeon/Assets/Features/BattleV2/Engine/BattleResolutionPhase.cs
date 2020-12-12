@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, CardResolutionFinished>
+public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, CardResolutionFinished, CardActionAvoided>
 {
     [SerializeField] private BattleUiVisuals ui;
     [SerializeField] private BattleState state;
@@ -70,6 +70,13 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(effectResolved));
         reactions.ForEach(r => _reactions.Enqueue(r));
         Message.Publish(new Finished<ApplyBattleEffect>());
+    }
+
+    protected override void Execute(CardActionAvoided msg)
+    {
+        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg));
+        reactions.ForEach(r => _reactions.Enqueue(r));
+        Message.Publish(new Finished<CardActionAvoided>());
     }
 
     private void ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)

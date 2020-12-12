@@ -104,6 +104,13 @@ public sealed class MemberState : IStats
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
+    
+    public ProposedReaction[] GetReactions(CardActionAvoided e) =>
+        _reactiveStates
+            .Select(x => x.OnCardActionAvoided(e))
+            .Where(x => x.IsPresent)
+            .Select(x => x.Value)
+            .ToArray();
 
     // Modifier Commands
     private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag> { StatusTag.Vulnerable, StatusTag.AntiHeal };

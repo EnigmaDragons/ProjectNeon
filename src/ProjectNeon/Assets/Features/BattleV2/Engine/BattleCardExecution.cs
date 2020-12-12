@@ -76,9 +76,13 @@ public static class BattleCardExecution
         var effectedTargets = new Multiple(ctx.Target.Members.Where(m => !ctx.AvoidingMembers.Any(am => am.Id == m.Id)).ToArray());
         var allAvoidedEffect = ctx.AvoidingMembers.Any() && effectedTargets.Members.Length == 0;
         if (type == CardBattleActionType.Battle && allAvoidedEffect)
-            return new NoPayload();
+            return new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.AvoidingMembers));
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Group, ctx.Scope, isReaction: false));
+            return ctx.AvoidingMembers.Any() 
+                ? new MultiplePayloads(
+                    new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Group, ctx.Scope, isReaction: false)), 
+                    new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.AvoidingMembers)))
+                : (IPayloadProvider)new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Group, ctx.Scope, isReaction: false));
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn));
         if (type == CardBattleActionType.AnimateCharacter)

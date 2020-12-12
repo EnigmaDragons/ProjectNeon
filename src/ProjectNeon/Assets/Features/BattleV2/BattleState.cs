@@ -114,7 +114,7 @@ public class BattleState : ScriptableObject
             .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
             .ToDictionary(x => x.Id, x => x);
         
-        _playerState = new PlayerState(adventure.Adventure.BaseNumberOfCardCycles);
+        _playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
         
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;
