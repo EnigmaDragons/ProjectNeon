@@ -20,20 +20,9 @@ public class NodeTypeOdds : ScriptableObject
             .Concat(NumberOf(MapNodeType.CardShop, cardShopChances))
             .Concat(NumberOf(MapNodeType.GearShop, gearShopChances))
             .Concat(NumberOf(MapNodeType.StoryEvent, storyEventChances))
-            .Concat(NumberOf(MapNodeType.Clinic, clinicChances)).ToArray();
+            .Concat(NumberOf(MapNodeType.Clinic, clinicChances))
+            .ToArray();
         return nodeTable[roll];
-
-//        if (roll < combatChances)
-//            return MapNodeType.Combat;
-//        if (roll < combatChances + eliteCombatChances)
-//            return MapNodeType.Elite;
-//        if (roll < combatChances + eliteCombatChances + cardShopChances)
-//            return MapNodeType.CardShop;
-//        if (roll < combatChances + eliteCombatChances + cardShopChances + gearShopChances)
-//            return MapNodeType.GearShop;
-//        if (roll < combatChances + eliteCombatChances + cardShopChances + gearShopChances + storyEventChances)
-//            return MapNodeType.StoryEvent;
-//        return MapNodeType.Clinic;
     }
 
     private IEnumerable<MapNodeType> NumberOf(MapNodeType type, int n) 
