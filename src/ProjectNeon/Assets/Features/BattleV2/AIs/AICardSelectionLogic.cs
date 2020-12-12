@@ -5,7 +5,7 @@ using System.Linq;
 public static class AICardSelectionLogic
 {
     public static CardSelectionContext WithSelectedCardByNameIfPresent(this CardSelectionContext ctx, string cardName)
-        => ctx.CardOptions.Any(c => c.Name.Equals(cardName))
+        => ctx.SelectedCard.IsMissing && ctx.CardOptions.Any(c => c.Name.Equals(cardName))
             ? ctx.WithSelectedCard(ctx.CardOptions.First(c => c.Name.Equals(cardName)))
             : ctx;
     

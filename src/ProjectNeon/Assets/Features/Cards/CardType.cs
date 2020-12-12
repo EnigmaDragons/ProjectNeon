@@ -17,6 +17,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] public CardActionSequence[] actionSequences = new CardActionSequence[0];
     [SerializeField] private CardType chainedCard;
     [SerializeField] private string functionalityIssues;
+    [SerializeField] private string presentationIssues;
 
     public string Name => !string.IsNullOrWhiteSpace(customName) 
         ? customName 
