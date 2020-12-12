@@ -97,6 +97,11 @@ public static class InterpolatedCardDescriptions
                 ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.Toughness]))).ToString()
                 : $"{data.FloatAmount}x TGH";
         
+        if (data.EffectType == EffectType.ApplyAdditiveStatInjury)
+            return $"{data.FloatAmount} {data.EffectScope}";
+        if (data.EffectType == EffectType.ApplyMultiplicativeStatInjury)
+            return $"{data.FloatAmount}x {data.EffectScope}";
+        
         Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }
