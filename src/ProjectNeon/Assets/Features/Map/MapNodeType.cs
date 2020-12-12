@@ -7,4 +7,5 @@
     CardShop = 4,
     GearShop = 5,
     StoryEvent = 6,
+    Clinic = 7,
 }

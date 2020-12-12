@@ -15,7 +15,7 @@ public class ConnectionGenerator
                 columns[i].Select(x => new MapNodeInColumn { NodeId = x.NodeId, Y = x.Y }), 
                 columns[i + 1].Select(x => new MapNodeInColumn { NodeId = x.NodeId, Y = x.Y }));
             //Add additional possibility selection here
-            var possibility = Rng.Random(possibilities);
+            var possibility = possibilities.Random();
             foreach (var connection in possibility)
                 fromNodes.First(x => x.NodeId == connection.From.NodeId).ChildrenIds.Add(toNodes.First(x => x.NodeId == connection.To.NodeId).NodeId);
         }
