@@ -22,6 +22,17 @@ public class StatInjuryTests
         
         Assert.AreEqual(2, hero.Stats.Attack());
     }
+    
+    [Test]
+    public void Hero_HealInjuryByName_IsCorrect()
+    {
+        var hero = HeroWithStats(s => s.With(StatType.Attack, 8)); 
+
+        hero.Apply(new MultiplicativeStatInjury { Name = new StringReference("Broken Arm"), Stat = new StringReference("Attack"), Amount = 0.25f });
+        hero.HealInjuryByName("Broken Arm");
+        
+        Assert.AreEqual(8, hero.Stats.Attack());
+    }
 
     private Hero HeroWithStats(Action<StatAddends> setStats)
     {

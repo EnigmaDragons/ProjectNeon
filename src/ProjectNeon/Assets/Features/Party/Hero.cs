@@ -70,4 +70,5 @@ public class Hero
 
     public void Apply(AdditiveStatInjury injury) => health.Apply(injury);
     public void Apply(MultiplicativeStatInjury injury) => health.Apply(injury);
+    public void HealInjuryByName(string name) => health.HealInjuryByName(name);
 }
