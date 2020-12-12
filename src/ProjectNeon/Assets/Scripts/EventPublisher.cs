@@ -21,4 +21,5 @@ public class EventPublisher : ScriptableObject
     public void LevelUpParty() => Message.Publish(new GrantPartyLevelUp());
     public void ToggleBattleLogView() => Message.Publish(new ToggleBattleLogView());
     public void ConfirmSquadSelection() => Message.Publish(new ConfirmSquadSelection());
+    public void ToggleClinic() => Message.Publish(new ToggleClinic());
 }
