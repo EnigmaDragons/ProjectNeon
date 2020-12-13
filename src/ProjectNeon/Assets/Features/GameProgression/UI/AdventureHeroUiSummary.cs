@@ -1,9 +1,13 @@
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public sealed class AdventureHeroUiSummary : OnMessage<PartyStateChanged>
 {
     [SerializeField] private HeroHpPresenter hpUi;
     [SerializeField] private HealHeroButton healButton;
+    [SerializeField] private GameObject injuryPanel;
+    [SerializeField] private TextMeshProUGUI injuryCounter;
 
     private Hero _hero;
     private bool _canHealAnywhere;
@@ -21,7 +25,11 @@ public sealed class AdventureHeroUiSummary : OnMessage<PartyStateChanged>
     {
         hpUi.Init(_hero);
         healButton.Init(_hero.Character);
-        if (!_canHealAnywhere)
-            healButton.gameObject.SetActive(false);
+        healButton.gameObject.SetActive(_canHealAnywhere);
+        
+        var injuries = _hero.Health.InjuryCounts;
+        var numInjuries = injuries.Sum(x => x.Value);
+        injuryPanel.SetActive(!_canHealAnywhere && injuries.Any());
+        injuryCounter.text = numInjuries > 1 ? numInjuries.ToString() : "";
     }
 }

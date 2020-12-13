@@ -81,6 +81,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var enemyMember = state.GetMemberByEnemyIndex(index);
         var pos = enemyObject.transform.position;
         var customUi = enemyObject.GetComponentInChildren<EnemyBattleUIPresenter>();
+        enemyObject.GetComponentInChildren<HoverCharacter>().Init(enemyMember);
         uis.Add(customUi != null
             ? customUi.Initialized(enemyMember)
             : Instantiate(ui, pos, Quaternion.identity, enemyObject).Initialized(enemyMember));

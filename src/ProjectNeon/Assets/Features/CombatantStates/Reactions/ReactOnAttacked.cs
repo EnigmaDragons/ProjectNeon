@@ -30,7 +30,7 @@ public sealed class ReactOnAttacked : ReactiveEffectV2Base
 {
     public ReactOnAttacked(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusTag tag, ReactiveTriggerScope triggerScope, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction)
-        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, reaction, true, 
+        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, reaction,  
             effect => effect.EffectData.EffectType == EffectType.Attack && triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source)))
     {
         Tag = tag;

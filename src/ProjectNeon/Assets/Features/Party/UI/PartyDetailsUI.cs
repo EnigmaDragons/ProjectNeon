@@ -18,6 +18,11 @@ public sealed class PartyDetailsUI : OnMessage<PartyAdventureStateChanged>
         doneButton.gameObject.SetActive(false);
         nextButton.gameObject.SetActive(true);
     }
+
+    private void Awake()
+    {
+        parent.DestroyAllChildren();
+    }
     
     protected override void AfterEnable()
     {

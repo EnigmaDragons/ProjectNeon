@@ -66,7 +66,11 @@ public static class AllEffects
         { EffectType.ApplyAdditiveStatInjury, e => new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.BaseAmount + e.FloatAmount, e.FlavorText)},
         { EffectType.ApplyMultiplicativeStatInjury, e => new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.BaseAmount + e.FloatAmount, e.FlavorText)},
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
-        { EffectType.OnDeath, e => new EffectOnDeath(false, e.NumberOfTurns, e.IntAmount, e.ReactionSequence) }
+        { EffectType.ShowCustomTooltip, e => new SimpleEffect(m => m.AddCustomStatus(
+            new CustomStatusIcon(e.FlavorText, e.EffectScope, e.IntAmount, e.ForSimpleDurationStatAdjustment()))) },
+        { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence) },
+        //can't solve how to call the correct override without having a useless statement that removes ambiguity of what "t" is
+        { EffectType.Suicide, e => new SimpleEffect((src, t) => { var _ = t.Members; src.State.SetHp(0); }) },
     };
     
     public static void Apply(EffectData effectData, EffectContext ctx)

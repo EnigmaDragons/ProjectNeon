@@ -12,7 +12,7 @@ public class Adventure : ScriptableObject
     [SerializeField] private int partySize;
     [SerializeField] private BaseHero[] requiredHeroes;
     [SerializeField] private int baseNumberOfCardCycles = 2;
-    [SerializeField] private int rewardCreditsPerPowerLevel = 25;
+    [SerializeField] private float rewardCreditsPerPowerLevel = 1f;
     [SerializeField, TextArea(4, 10)] private string story;
 
     // @todo #1:15min Design. What happens when the adventure is won?
@@ -25,6 +25,6 @@ public class Adventure : ScriptableObject
     public int PartySize => partySize;
     public BaseHero[] RequiredHeroes => requiredHeroes;
     public int BaseNumberOfCardCycles => baseNumberOfCardCycles;
-    public int RewardCreditsPerPowerLevel => rewardCreditsPerPowerLevel;
+    public float RewardCreditsPerPowerLevel => rewardCreditsPerPowerLevel;
     public bool IsV2 => dynamicStages != null && dynamicStages.Any();
 }

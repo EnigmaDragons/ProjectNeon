@@ -35,7 +35,7 @@ public class BattleState : ScriptableObject
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
 
     public bool NeedsCleanup => needsCleanup;
-    public int PowerLevelRewardFactor => adventure.Adventure.RewardCreditsPerPowerLevel;
+    public float PowerLevelRewardFactor => adventure.Adventure?.RewardCreditsPerPowerLevel ?? 0;
     public PartyAdventureState Party => party;
     public PartyArea PartyArea => partyArea;
     public EnemyArea EnemyArea => enemies;
@@ -83,7 +83,7 @@ public class BattleState : ScriptableObject
     public BattleState FinishSetup()
     {
         var id = 0;      
-        memberNames = new string[EnemyStartingIndex + enemies.Enemies.Count + 3];
+        memberNames = new string[EnemyStartingIndex + enemies.Enemies.Count + 99];
         _uiTransformsById = new Dictionary<int, Transform>();
         _centerPointsById = new Dictionary<int, Vector3>();
         
@@ -106,7 +106,7 @@ public class BattleState : ScriptableObject
             _enemiesById[id] = enemies.Enemies[i];
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
             _centerPointsById[id] = enemies.CenterPoints[i];
-            memberNames[id] = enemies.Enemies[i].name;
+            memberNames[id] = enemies.Enemies[i].Name;
         }
         _nextEnemyId = id + 1;
         
@@ -188,7 +188,7 @@ public class BattleState : ScriptableObject
             }
             else
                 _centerPointsById[id] = centerPoint.transform.position;
-            memberNames[id] = e.name;
+            memberNames[id] = e.Name;
         });
 
     // Battle Wrapup

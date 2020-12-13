@@ -9,6 +9,7 @@ public sealed class HeroDetailsPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI classLabel;
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private HeroEquipmentPanel equipment;
+    [SerializeField] private HeroInjuryPanel injuries;
     [SerializeField] private TextCommandButton levelUpButton;
 
     public HeroDetailsPanel Initialized(Hero h, Member m, bool canInteractWithEquipment)
@@ -17,6 +18,7 @@ public sealed class HeroDetailsPanel : MonoBehaviour
         classLabel.text = h.Class.Name;
         heroBust.sprite = h.Character.Bust;
         stats.Initialized(m);
+        injuries.Init(h);
         if (equipment != null)
             equipment.Initialized(h, !canInteractWithEquipment);
         

@@ -25,8 +25,22 @@ public sealed class EffectOnDeath : Effect
 public sealed class ReactOnDeath : ReactiveEffectV2Base
 {
     public ReactOnDeath(bool isDebuff, int numberOfUses, int maxDurationTurns, IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction)
-        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, reaction, false,
-            effect => !allMembers[possessingMemberId].IsConscious())) {}
+        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, reaction, 
+            effect =>
+            {
+                //this is super hacky but the amount of changes required to bypass the consciousness system turns out to be completely insane
+                //so when using death cards that you want to have still die, make sure to use the suicide effect which doesn't care about targets
+                var member = allMembers[possessingMemberId];
+                var result = !member.IsConscious();
+                if (result)
+                {
+                    member.State.SetHp(1);
+                    member.State.ApplyTemporaryMultiplier(new AdjustedStats(
+                        new StatMultipliers().With(StatType.Damagability, 0f),
+                        TemporalStateMetadata.BuffForDuration(1, StatusTag.Invulnerable)));
+                }
+                return result;
+            })) {}
 
     public override StatusTag Tag => StatusTag.OnDeath;
 }

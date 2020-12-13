@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/Spiderling")]
 public class SpiderlingAI : TurnAI
 {
-    private Dictionary<int, int> _targetMap;
+    private Dictionary<int, int> _targetMap = new Dictionary<int, int>();
     
     public override void InitForBattle() => _targetMap = new Dictionary<int, int>();
 

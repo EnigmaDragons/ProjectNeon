@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/SeekerDrone")]
 public class SeekerDroneAI : TurnAI
 {
-    private Dictionary<int, int> _targetMap;
+    private Dictionary<int, int> _targetMap = new Dictionary<int, int>();
     
     public override void InitForBattle() => _targetMap = new Dictionary<int, int>();
 

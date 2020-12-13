@@ -10,8 +10,8 @@ public class AdventureDisplayPresenter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI storyText;
     [SerializeField] private Button selectButton;
     
-    [SerializeField] private Image heroBust;
-    [SerializeField] private GameObject heroIcon1;
+    [SerializeField] private Image[] heroBusts;
+    [SerializeField] private GameObject[] heroIcons;
     [SerializeField] private GameObject allHeroesText;
     [SerializeField] private TextMeshProUGUI lengthText;
     
@@ -27,16 +27,15 @@ public class AdventureDisplayPresenter : MonoBehaviour
 
     private void DisplayHeroPool(Adventure adventure)
     {
-        allHeroesText.SetActive(false);
-        heroIcon1.SetActive(false);
+        allHeroesText.SetActive(adventure.RequiredHeroes.Length == 0);
+        heroIcons[0].SetActive(adventure.RequiredHeroes.Length > 0);
+        heroIcons[1].SetActive(adventure.RequiredHeroes.Length > 1);
+        heroIcons[2].SetActive(adventure.RequiredHeroes.Length > 2);
         if (adventure.RequiredHeroes.Length > 0)
-        {
-            heroBust.sprite = adventure.RequiredHeroes[0].Bust;
-            heroIcon1.SetActive(true);
-        }
-        else
-        {
-            allHeroesText.SetActive(true);
-        }
+            heroBusts[0].sprite = adventure.RequiredHeroes[0].Bust;
+        if (adventure.RequiredHeroes.Length > 1)
+            heroBusts[1].sprite = adventure.RequiredHeroes[1].Bust;
+        if (adventure.RequiredHeroes.Length > 2)
+            heroBusts[2].sprite = adventure.RequiredHeroes[2].Bust;
     }
 }

@@ -98,6 +98,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     protected override void Execute(SpawnEnemy msg)
     {
         enemies.Spawn(msg.Enemy);
+        
         Message.Publish(new CardResolutionFinished());
     }
 
