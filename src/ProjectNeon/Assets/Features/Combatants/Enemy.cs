@@ -27,6 +27,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private int resourceGainPerTurn = 1;
     [SerializeField] private int cardsPerTurn = 1;
     [SerializeField] private EffectData[] startOfBattleEffects = new EffectData[0];
+    [SerializeField] private string lastBalanceDate = "Never";
 
     public string Name => enemyName;
     public Deck Deck => deck;
