@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates, HeroStateChanged>
+public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates, HeroStateChanged, PartyAdventureStateChanged>
 {
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private HeroHpPresenter hpPresenter;
@@ -42,19 +42,28 @@ public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates, HeroStateChan
             UpdateButtons();
     }
 
-    private void HealHeroToFull()
-    {
-        party.UpdateCreditsBy(-_serviceCost);
-        party.HealHeroToFull(_hero.Character);
-        healToFullButton.gameObject.SetActive(false);
-    }
-    
+    protected override void Execute(PartyAdventureStateChanged msg) => UpdateButtons();
+
     private void UpdateButtons()
     {
         var canAfford = party.Credits >= _serviceCost;
         healToFullButton.gameObject.SetActive(canAfford && _hero.CurrentHp < _hero.Stats.MaxHp());
         injuriesParent.DestroyAllChildren();
         _hero.Health.InjuryNames.ForEach(x => Instantiate(injuryButtonPrototype, injuriesParent.transform)
-            .Init(x, canAfford ? (Action)(() => _hero.HealInjuryByName(x)) : () => { }));
+            .Init(x, canAfford ? (Action)(() => HealInjury(x)) : () => { }));
+    }
+    
+    private void HealHeroToFull()
+    {
+        party.HealHeroToFull(_hero.Character);
+        party.UpdateCreditsBy(-_serviceCost);
+        Message.Publish(new RequestClinicHealService());
+    }
+
+    private void HealInjury(string injuryName)
+    {
+        _hero.HealInjuryByName(injuryName);
+        party.UpdateCreditsBy(-_serviceCost);
+        Message.Publish(new RequestClinicHealService());
     }
 }

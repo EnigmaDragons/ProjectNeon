@@ -9,7 +9,7 @@ public class ClinicUI : OnMessage<RequestClinicHealService>
     [SerializeField] private TextMeshProUGUI serviceCostLabel;
     [SerializeField] private int subsequentServiceCost = 20;
     
-    private void OnEnable()
+    protected override void AfterEnable()
     {
         patientParent.DestroyAllChildren();
         party.Heroes.ForEach(h => Instantiate(patientPrototype, patientParent.transform).Initialized(h));
@@ -17,7 +17,7 @@ public class ClinicUI : OnMessage<RequestClinicHealService>
         UpdateRates(0);
     }
 
-    protected override void Execute(RequestClinicHealService msg) => UpdateRates(20);
+    protected override void Execute(RequestClinicHealService msg) => UpdateRates(subsequentServiceCost);
 
     private void UpdateRates(int amount)
     {
