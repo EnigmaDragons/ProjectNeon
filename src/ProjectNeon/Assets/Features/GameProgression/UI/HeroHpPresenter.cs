@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeroHpPresenter : OnMessage<PartyAdventureStateChanged>
+public class HeroHpPresenter : OnMessage<PartyAdventureStateChanged, HeroStateChanged>
 {
     [SerializeField] private Image bust;
     [SerializeField] private TextMeshProUGUI hpText;
@@ -16,8 +16,6 @@ public class HeroHpPresenter : OnMessage<PartyAdventureStateChanged>
         hpText.text = $"{hero.CurrentHp}/{hero.Stats.MaxHp()}";
     }
 
-    protected override void Execute(PartyAdventureStateChanged msg)
-    {
-        Init(_hero);
-    }
+    protected override void Execute(PartyAdventureStateChanged msg) => Init(_hero);
+    protected override void Execute(HeroStateChanged msg) => Init(_hero);
 }
