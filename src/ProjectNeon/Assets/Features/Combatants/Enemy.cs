@@ -103,9 +103,9 @@ public class Enemy : ScriptableObject
         return this;
     }
 
-    public int GetRewardCredits(int powerLevelFactor)
+    public int GetRewardCredits(float powerLevelFactor)
     {
         var typeFactor = battleRole == BattleRole.Boss ? 4 : 1;
-        return powerLevel * powerLevelFactor * typeFactor;
+        return Mathf.RoundToInt(powerLevel * powerLevelFactor * typeFactor);
     }
 }
