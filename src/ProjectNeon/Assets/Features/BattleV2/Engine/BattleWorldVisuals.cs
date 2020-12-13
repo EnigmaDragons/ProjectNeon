@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleWorldVisuals : MonoBehaviour
@@ -16,8 +17,13 @@ public class BattleWorldVisuals : MonoBehaviour
     public IEnumerator Setup()
     {
         SetupBattleField();
-        yield return enemies.Setup();
+        yield return enemies.Spawn();
         yield return party.Setup();
+    }
+
+    public void Setup2(List<Tuple<int, Member>> enemyPositions)
+    {
+        enemies.Place(enemyPositions);
     }
     
     public void AfterBattleStateInitialized()

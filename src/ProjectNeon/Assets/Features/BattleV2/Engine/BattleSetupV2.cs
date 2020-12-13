@@ -44,7 +44,10 @@ public class BattleSetupV2 : MonoBehaviour
         SetupEnemyEncounter();
         yield return visuals.Setup(); // Could Animate
         
-        state.FinishSetup();
+        var enemies = state.FinishSetup();
+        visuals.Setup2(enemies);
+        enemyArea.WithCenterPoints();
+        state.SetupCenterPoints();
         visuals.AfterBattleStateInitialized();
         
         ui.Setup();
