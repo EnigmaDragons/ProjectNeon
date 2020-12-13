@@ -1,7 +1,8 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class InjuryDetailView : MonoBehaviour
+public class InjuryDetailView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private TextMeshProUGUI injuryNameLabel;
     [SerializeField] private TextMeshProUGUI injuryCountLabel;
@@ -14,7 +15,7 @@ public class InjuryDetailView : MonoBehaviour
         injuryNameLabel.text = injuryName;
         _tooltip = tooltip;
     }
-
-    public void OnMouseEnter() => Message.Publish(new ShowTooltip(_tooltip));
-    public void OnMouseExit() => Message.Publish(new HideTooltip());
+    
+    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new ShowTooltip(_tooltip));
+    public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
 }
