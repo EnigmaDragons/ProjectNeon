@@ -31,8 +31,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.DuplicateStatesOfType, new [] { "StatusTag" }},
         {EffectType.DamageOverTime, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" } },
         {EffectType.DealRawDamageFormula, new [] { "Formula" }},
-        {EffectType.ApplyAdditiveStatInjury, new [] { "FloatAmount", "EffectScope" }},
-        {EffectType.ApplyMultiplicativeStatInjury, new [] { "FloatAmount", "EffectScope" }},
+        {EffectType.ApplyAdditiveStatInjury, new [] { "FlavorText", "FloatAmount", "EffectScope" }},
+        {EffectType.ApplyMultiplicativeStatInjury, new [] {  "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.Kill, new string[0]},
 };
 

@@ -5,12 +5,14 @@ public class ApplyStatInjury : Effect
     private readonly StatOperation _operation;
     private readonly StringReference _statName;
     private readonly float _amount;
+    private readonly StringReference _injuryName;
 
-    public ApplyStatInjury(StatOperation operation, StringReference statName, float amount)
+    public ApplyStatInjury(StatOperation operation, StringReference statName, float amount, StringReference injuryName)
     {
         _operation = operation;
         _statName = statName;
         _amount = amount;
+        _injuryName = injuryName;
     }
     
     public void Apply(EffectContext ctx)
@@ -25,8 +27,8 @@ public class ApplyStatInjury : Effect
     private void ApplyInjury(Hero h)
     {
         if (_operation == StatOperation.Add)
-            h.Apply(new AdditiveStatInjury {Stat = _statName, Amount = _amount});
+            h.Apply(new AdditiveStatInjury {Stat = _statName, Amount = _amount, Name = _injuryName});
         else
-            h.Apply(new MultiplicativeStatInjury {Stat = _statName, Amount = _amount});
+            h.Apply(new MultiplicativeStatInjury {Stat = _statName, Amount = _amount, Name = _injuryName});
     }
 }

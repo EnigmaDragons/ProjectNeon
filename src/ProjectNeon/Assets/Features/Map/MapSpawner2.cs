@@ -65,21 +65,24 @@ public class MapSpawner2 : MonoBehaviour
                 x: (int)Mathf.Round(columnSize / 2 + Margin.z + columnSize * progress.CurrentStage.SegmentCount), 
                 y: (int)Mathf.Round(height / 2 + Margin.w)) }
         };
+        var mapNodeTypes = progress.CurrentStage.NodeTypeOdds.GenerateFreshSet();
         for (var column = 1; column < progress.CurrentStage.SegmentCount; column++)
         {
             var nodesInColumn = Rng.Int(gameMap.Map.MinPaths, gameMap.Map.MaxPaths + 1);
             var rowSize = height / nodesInColumn;
             columns.Insert(column, Enumerable.Range(0, nodesInColumn)
-                .Select(row => MapNode.GenerateNew(GetNextMapNodeType(column, columns), ColumnX(columnSize, column), RowY(rowSize, row)))
+                .Select(row => MapNode.GenerateNew(GetNextMapNodeType(column, columns, mapNodeTypes), ColumnX(columnSize, column), RowY(rowSize, row)))
                 .ToList());
         }
         new ConnectionGenerator().AddConnections(columns);
         gameMap.SetupMap(columns.SelectMany(x => x).OrderBy(x => x.X).ToList());
     }
 
-    private MapNodeType GetNextMapNodeType(int column, List<List<MapNode>> currentMap)
+    private MapNodeType GetNextMapNodeType(int column, List<List<MapNode>> currentMap, List<MapNodeType> possibilities)
     {
-        var nodeType = progress.CurrentStage.RandomNodeType;
+        if (possibilities.None())
+            possibilities.AddRange(progress.CurrentStage.NodeTypeOdds.GenerateFreshSet());
+        var nodeType = possibilities.DrawRandom();
         var numTries = 0;
         while (numTries < 60 && _generationRules.Any(r => !r.IsValid(nodeType, column, currentMap)))
         {

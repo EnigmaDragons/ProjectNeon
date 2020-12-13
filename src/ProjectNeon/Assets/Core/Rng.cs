@@ -18,6 +18,14 @@ public static class Rng
     public static T Random<T>(this Array array) => (T) array.GetValue(Int(array.Length));
     public static T Random<T>(this IEnumerable<T> items) => items.ToArray().Random();
 
+    public static T DrawRandom<T>(this List<T> list)
+    {
+        var roll = Int(list.Count);
+        var item = list[roll];
+        list.RemoveAt(roll);
+        return item;
+    }
+
     public static T[] Shuffled<T>(this T[] arr)
     {
         var shuffled = arr.ToArray();

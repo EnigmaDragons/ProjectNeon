@@ -104,7 +104,6 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         }
         else if (state.PlayerWins())
         {
-            state.Heroes.Where(x => x.IsConscious()).ForEach(x => x.State.SetHp(x.MaxHp()) );
             var rewardPicker = new ShopSelectionPicker();
             Message.Publish(new GetUserSelectedCard(rewardPicker.PickCards(state.Party, cardPrizePool, 3), card =>
             {

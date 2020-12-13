@@ -50,15 +50,10 @@ public class EncounterBuilder : ScriptableObject
             if (filteredOptions.Any(e => e.PowerLevel <= maximum))
                 filteredOptions = filteredOptions.Where(e => e.PowerLevel <= maximum).ToArray();
             else if (difficulty - currentDifficulty > currentDifficulty + filteredOptions.OrderBy(x => x.PowerLevel).First().PowerLevel - difficulty)
-            {
-                enemies.Add(filteredOptions.OrderBy(x => x.PowerLevel).First());
-                break;
-            }
+                filteredOptions = new[] {filteredOptions.OrderBy(x => x.PowerLevel).First()};
             else
-            {
                 break;
-            }
-            
+
             if (filteredOptions.Any(e => !enemyRolesOverrepresented.Contains(e.Role)))
                 filteredOptions = filteredOptions.Where(e => !enemyRolesOverrepresented.Contains(e.Role)).ToArray();
             
