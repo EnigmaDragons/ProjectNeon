@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +14,16 @@ public class HeroHealth
     public IEnumerable<IStats> AdditiveStats => additiveStatInjuries.Select(i => new StatAddends().WithRaw(i.Stat, i.Amount));
     public IEnumerable<IStats> MultiplicativeStats => multiplicativeStatInjuries.Select(i => new StatMultipliers().WithRaw(i.Stat, i.Amount));
 
-    public IEnumerable<string> InjuryNames => additiveStatInjuries.Select(i => i.Name.Value)
-        .Concat(multiplicativeStatInjuries.Select(i => i.Name.Value))
+    public IEnumerable<string> InjuryNames => AllInjuries
+        .Select(x => x.InjuryName)
         .Distinct();
+
+    public Dictionary<HeroInjury, int> InjuryCounts => AllInjuries
+        .GroupBy(x => x.InjuryName)
+        .ToDictionary(g => g.First(), g => g.Count());
+
+    private IEnumerable<HeroInjury> AllInjuries => additiveStatInjuries.Cast<HeroInjury>()
+        .Concat(multiplicativeStatInjuries);
 
     private readonly Func<IStats> _getCurrentStats;
     
