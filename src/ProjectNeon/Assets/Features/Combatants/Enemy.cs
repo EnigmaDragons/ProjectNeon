@@ -19,6 +19,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private int toughness;
     [SerializeField] private int attack;
     [SerializeField] private int magic;
+    [SerializeField] private int leadership;
     [SerializeField] private float armor;
     [SerializeField] private float resistance;
     [SerializeField] private ResourceType resourceType;
@@ -42,6 +43,7 @@ public class Enemy : ScriptableObject
     public int Toughness => toughness;
     public int Attack => attack;
     public int Magic => magic;
+    public int Leadership => leadership;
     public int StartingResourceAmount => startingResourceAmount;
     public int ResourceGainPerTurn => resourceGainPerTurn;
     public int CardsPerTurn => cardsPerTurn;
@@ -64,6 +66,7 @@ public class Enemy : ScriptableObject
         .With(StatType.Toughness, toughness)
         .With(StatType.Attack, attack)
         .With(StatType.Magic, magic)
+        .With(StatType.Leadership, leadership)
         .With(StatType.Armor, armor)
         .With(StatType.Resistance, resistance)
         .With(StatType.Damagability, 1f)
@@ -90,6 +93,7 @@ public class Enemy : ScriptableObject
         this.toughness = intStats["toughness"];
         this.attack = intStats["attack"];
         this.magic = intStats["magic"];
+        this.leadership = intStats["leadership"];
         this.startingResourceAmount = intStats["startingResourceAmount"];
         this.resourceGainPerTurn = intStats["resourceGainPerTurn"];
         this.cardsPerTurn = intStats["cardsPerTurn"];
