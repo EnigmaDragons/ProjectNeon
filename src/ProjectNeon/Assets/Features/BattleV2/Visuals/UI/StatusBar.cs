@@ -84,8 +84,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
 
         if (_member.State.HasStatus(StatusTag.OnDamaged))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.OnDamaged.ToString(), Icon = icons[StatusTag.OnDamaged].Icon, Tooltip = "OnDamaged"});
-        
-       
+
+        foreach (var s in _member.State.CustomStatuses())
+            statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip});;
         
         UpdateComparisonWithPrevious(statuses);
         UpdateStatuses(statuses);

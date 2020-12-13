@@ -12,6 +12,7 @@ public sealed class MemberState : IStats
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
     private readonly List<ReactiveStateV2> _reactiveStates = new List<ReactiveStateV2>();
+    private readonly List<CustomStatusIcon> _customStatusIcons = new List<CustomStatusIcon>();
 
     public IStats BaseStats => _baseStats;
     
@@ -83,14 +84,10 @@ public sealed class MemberState : IStats
 
     public ITemporalState[] StatusesOfType(StatusTag tag)
         => OfType(_additiveMods, tag).Concat(OfType(_multiplierMods, tag)).Concat(OfType(_reactiveStates, tag)).ToArray();
-    
-    public void DuplicateStatesOfType(StatusTag tag)
-    {
-        _additiveMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryAdditive);
-        _multiplierMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryMultiplier);
-        _reactiveStates.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddReactiveState((ReactiveStateV2)s));
-    }
 
+    public CustomStatusIcon[] CustomStatuses()
+        => _customStatusIcons.ToArray();
+    
     private IEnumerable<ITemporalState> OfType(IEnumerable<ITemporalState> states, StatusTag tag)
         => states.Where(s => s.Tag == tag);
 
@@ -112,6 +109,13 @@ public sealed class MemberState : IStats
     // Modifier Commands
     private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag> { StatusTag.Vulnerable, StatusTag.AntiHeal };
 
+    public void DuplicateStatesOfType(StatusTag tag)
+    {
+        _additiveMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryAdditive);
+        _multiplierMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryMultiplier);
+        _reactiveStates.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddReactiveState((ReactiveStateV2)s));
+    }
+    
     public void ApplyPersistentState(IPersistentState state) => _persistentStates.Add(state);
     
     public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() =>
@@ -145,6 +149,7 @@ public sealed class MemberState : IStats
         _multiplierMods.RemoveAll(condition);
         _reactiveStates.RemoveAll(condition);
     });
+    
     public void AddReactiveState(ReactiveStateV2 state) 
         => PublishAfter(() =>
         {
@@ -153,6 +158,8 @@ public sealed class MemberState : IStats
         });
 
     public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
+
+    public void AddCustomStatus(CustomStatusIcon icon) => PublishAfter(() => _customStatusIcons.Add(icon));
 
     // HP Commands
     public void GainHp(float amount) => ChangeHp(amount * CurrentStats.Healability());
@@ -214,6 +221,8 @@ public sealed class MemberState : IStats
             _reactiveStates.Select(m => m.OnTurnEnd()));
         _persistentStates.ForEach(m => m.OnTurnEnd());
         _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
+        _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
+        _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
         return payload;
     }
 

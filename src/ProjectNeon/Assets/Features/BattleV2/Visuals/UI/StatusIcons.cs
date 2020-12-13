@@ -11,6 +11,5 @@ public class StatusIcons : ScriptableObject
     public StatusIconDefinition this[TemporalStatType stat] => Icons[stat.ToString()];
     public StatusIconDefinition this[StatType stat] => Icons[stat.ToString()];
     public StatusIconDefinition this[StatusTag status] => Icons[status.ToString()];
-
-
+    public StatusIconDefinition this[string status] => Icons[status];
 }
