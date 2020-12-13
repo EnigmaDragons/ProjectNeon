@@ -76,11 +76,11 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     }
 
     protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(
-        IDictionary<int, Member> members, int possessingMemberId, Member originator, 
+        IDictionary<int, Member> members, int possessingMemberId, Member originator, bool canReactToReactions,
         ReactionCardType reaction, Func<EffectResolved, bool> condition) => 
             effect =>
             {
-                if (effect.IsReaction)
+                if (effect.IsReaction && !canReactToReactions)
                     return Maybe<ProposedReaction>.Missing();
                 
                 var reactingMaybeMember = effect.Target.Members.Where(m => m.Id == possessingMemberId);

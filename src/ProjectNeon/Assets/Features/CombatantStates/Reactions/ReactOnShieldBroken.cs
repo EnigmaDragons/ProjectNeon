@@ -24,7 +24,7 @@ public sealed class EffectOnShieldBroken : Effect
 public class ReactOnShieldBroken : ReactiveEffectV2Base
 {
     public ReactOnShieldBroken(bool isDebuff, int numberOfUses, int maxDurationTurns, IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction)
-        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, reaction, effect => 
+        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, effect => 
             effect.EffectData.EffectType == EffectType.Attack 
             && effect.BattleBefore.Members[possessingMemberId].State.Counters["Shield"] > 0 
             && effect.BattleAfter.Members[possessingMemberId].State.Counters["Shield"] == 0)) { }

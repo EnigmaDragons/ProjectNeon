@@ -25,7 +25,7 @@ public sealed class EffectOnDeath : Effect
 public sealed class ReactOnDeath : ReactiveEffectV2Base
 {
     public ReactOnDeath(bool isDebuff, int numberOfUses, int maxDurationTurns, IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction)
-        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, reaction, 
+        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, true, reaction, 
             effect =>
             {
                 //this is super hacky but the amount of changes required to bypass the consciousness system turns out to be completely insane
