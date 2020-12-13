@@ -30,6 +30,7 @@ public class Hero
     public int CurrentHp => Stats.MaxHp() - health.MissingHp;
     public HeroEquipment Equipment => equipment;
     public HeroSkill[] Skills => character.Skills;
+    public HeroHealth Health => health;
     
     // TODO: Maybe don't calculate this every time
     public IStats Stats => Character.Stats
@@ -40,22 +41,23 @@ public class Hero
         .Times(Equipment.All.Select(e => e.MultiplierStats()))
         .Times(health.MultiplicativeStats);
 
-    public void HealToFull() => health.HealToFull();
-    public void SetHp(int hp) => health.SetHp(hp);
-    public void AdjustHp(int amount) => health.AdjustHp(amount);
+    public void HealToFull() => UpdateState(() => health.HealToFull());
+    public void SetHp(int hp) => UpdateState(() => health.SetHp(hp));
+    public void AdjustHp(int amount) => UpdateState(() => health.AdjustHp(amount));
     
     public void SetDeck(RuntimeDeck d) => deck = d;
-    public void Equip(Equipment e) => equipment.Equip(e);
-    public void Unequip(Equipment e) => equipment.Unequip(e);
+    public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
+    public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
-    public void AdjustLevelUpPoints(int numPoints) => LevelUpPoints += numPoints;
-    private void AddLevelUpStat(StatAddends stats) => _levelUpStats = _levelUpStats.Plus(stats);
+    public void AdjustLevelUpPoints(int numPoints) => UpdateState(() => LevelUpPoints += numPoints);
+    private void AddLevelUpStat(StatAddends stats) => UpdateState(() => _levelUpStats = _levelUpStats.Plus(stats));
 
-    public void ApplyLevelUpPoint(StatAddends stats)
-    {
-        AdjustLevelUpPoints(-1);
-        AddLevelUpStat(stats);
-    }
+    public void ApplyLevelUpPoint(StatAddends stats) =>
+        UpdateState(() =>
+        {
+            AdjustLevelUpPoints(-1);
+            AddLevelUpStat(stats);
+        });
 
     public Member AsMember(int id)
     {
@@ -68,7 +70,13 @@ public class Hero
         return m;
     }
 
-    public void Apply(AdditiveStatInjury injury) => health.Apply(injury);
-    public void Apply(MultiplicativeStatInjury injury) => health.Apply(injury);
-    public void HealInjuryByName(string name) => health.HealInjuryByName(name);
+    public void Apply(AdditiveStatInjury injury) => UpdateState(() => health.Apply(injury));
+    public void Apply(MultiplicativeStatInjury injury) => UpdateState(() => health.Apply(injury));
+    public void HealInjuryByName(string name) => UpdateState(() => health.HealInjuryByName(name));
+
+    private void UpdateState(Action a)
+    {
+        a();
+        Message.Publish(new HeroStateChanged(this));
+    }
 }

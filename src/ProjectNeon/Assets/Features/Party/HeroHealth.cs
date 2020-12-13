@@ -15,6 +15,10 @@ public class HeroHealth
     public IEnumerable<IStats> AdditiveStats => additiveStatInjuries.Select(i => new StatAddends().WithRaw(i.Stat, i.Amount));
     public IEnumerable<IStats> MultiplicativeStats => multiplicativeStatInjuries.Select(i => new StatMultipliers().WithRaw(i.Stat, i.Amount));
 
+    public IEnumerable<string> InjuryNames => additiveStatInjuries.Select(i => i.Name.Value)
+        .Concat(multiplicativeStatInjuries.Select(i => i.Name.Value))
+        .Distinct();
+
     private readonly Func<IStats> _getCurrentStats;
     
     public HeroHealth(Func<IStats> getCurrentStats)

@@ -1,15 +1,16 @@
-
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates>
+public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates, HeroStateChanged>
 {
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private HeroHpPresenter hpPresenter;
     [SerializeField] private Button healToFullButton;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject injuriesParent;
+    [SerializeField] private TextCommandButton injuryButtonPrototype;
 
     private int _serviceCost;
     private Hero _hero;
@@ -35,6 +36,12 @@ public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates>
         UpdateButtons();
     }
 
+    protected override void Execute(HeroStateChanged msg)
+    {
+        if (msg.Hero == _hero)
+            UpdateButtons();
+    }
+
     private void HealHeroToFull()
     {
         party.UpdateCreditsBy(-_serviceCost);
@@ -46,5 +53,8 @@ public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates>
     {
         var canAfford = party.Credits >= _serviceCost;
         healToFullButton.gameObject.SetActive(canAfford && _hero.CurrentHp < _hero.Stats.MaxHp());
+        injuriesParent.DestroyAllChildren();
+        _hero.Health.InjuryNames.ForEach(x => Instantiate(injuryButtonPrototype, injuriesParent.transform)
+            .Init(x, canAfford ? (Action)(() => _hero.HealInjuryByName(x)) : () => { }));
     }
 }

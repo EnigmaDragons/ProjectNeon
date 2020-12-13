@@ -48,9 +48,12 @@ public class EncounterBuilder : ScriptableObject
             var filteredOptions = possible
                 .Where(e => !enemyRolesOverrepresented.Contains(e.Role))
                 .Where(e => !uniqueEnemies.Contains(e))
-                .Where(e => e.PowerLevel <= maximum);
+                .Where(e => e.PowerLevel <= maximum)
+                .ToList();
 
-            var nextEnemy = filteredOptions.Random();
+            var nextEnemy = filteredOptions.Any() 
+                ? filteredOptions.Random() 
+                : possible.Random();
             enemies.Add(nextEnemy);
             BattleLog.Write($"Added {nextEnemy.Name} to Encounter");
             currentDifficulty += nextEnemy.PowerLevel;
