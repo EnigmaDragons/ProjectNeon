@@ -26,4 +26,5 @@ public class DynamicStage : ScriptableObject
     public GameObject BossBattlefield => bossBattlefield;
     public Enemy[] BossEnemies => bossEnemies;
     public MapNodeType RandomNodeType => nodeTypeOdds.GetRandomNodeType();
+    public NodeTypeOdds NodeTypeOdds => nodeTypeOdds;
 }
