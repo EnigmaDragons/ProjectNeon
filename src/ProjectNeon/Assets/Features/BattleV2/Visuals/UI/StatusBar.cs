@@ -31,6 +31,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     {
         var statuses = new List<CurrentStatusValue>();
         
+        if (_member.State.HasStatus(StatusTag.Invulnerable))
+            statuses.Add(new CurrentStatusValue { Type = StatusTag.Invulnerable.ToString(), Icon = icons[StatusTag.Invulnerable].Icon, Tooltip = "Invincible to all Damage" });
+        
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
         AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => $"Reduces magic damage taken by {v}");
         AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => $"Double Damage for next {v} effects");
@@ -76,17 +79,20 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State.HasStatus(StatusTag.OnHit))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.OnHit.ToString(), Icon = icons[StatusTag.OnHit].Icon, Tooltip = "Special On Hit Effect" });
         
+        if (_member.State.HasStatus(StatusTag.OnDamaged))
+            statuses.Add(new CurrentStatusValue { Type = StatusTag.OnDamaged.ToString(), Icon = icons[StatusTag.OnDamaged].Icon, Tooltip = "Special On Damaged Effect" });
+        
+        if (_member.State.HasStatus(StatusTag.OnDeath))
+            statuses.Add(new CurrentStatusValue { Type = StatusTag.OnDeath.ToString(), Icon = icons[StatusTag.OnDeath].Icon, Tooltip = "Special On Death Effect" });
+        
+        foreach (var s in _member.State.CustomStatuses())
+            statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip});;
+        
         if (_member.State.HasStatus(StatusTag.StartOfTurnTrigger))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.StartOfTurnTrigger.ToString(),  Icon = icons[StatusTag.StartOfTurnTrigger].Icon, Tooltip = "Start of Turn Effect Trigger" });
         
         if (_member.State.HasStatus(StatusTag.EndOfTurnTrigger))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.EndOfTurnTrigger.ToString(), Icon = icons[StatusTag.EndOfTurnTrigger].Icon, Tooltip = "End of Turn Effect Trigger" });
-
-        if (_member.State.HasStatus(StatusTag.OnDamaged))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.OnDamaged.ToString(), Icon = icons[StatusTag.OnDamaged].Icon, Tooltip = "OnDamaged"});
-
-        foreach (var s in _member.State.CustomStatuses())
-            statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip});;
         
         UpdateComparisonWithPrevious(statuses);
         UpdateStatuses(statuses);

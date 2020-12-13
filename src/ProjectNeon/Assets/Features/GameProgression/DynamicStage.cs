@@ -3,6 +3,7 @@
 [CreateAssetMenu(menuName = "Adventure/Stage Builder")]
 public class DynamicStage : ScriptableObject
 {
+    [SerializeField] private string displayName;
     [SerializeField] private GameMap2 gameMap;
     [SerializeField] private EncounterBuilder encounterBuilder;
     [SerializeField] private EncounterBuilder eliteEncounterBuilder;
@@ -15,6 +16,7 @@ public class DynamicStage : ScriptableObject
     [SerializeField] private Enemy[] bossEnemies;
     [SerializeField] private NodeTypeOdds nodeTypeOdds;
 
+    public string DisplayName => displayName;
     public GameMap2 Map => gameMap;
     public EncounterBuilder EncounterBuilder => encounterBuilder;
     public EncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;

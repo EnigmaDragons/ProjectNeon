@@ -108,6 +108,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             Message.Publish(new GetUserSelectedCard(rewardPicker.PickCards(state.Party, cardPrizePool, 3), card =>
             {
                 card.IfPresent(c => state.SetRewardCards(c));
+                state.Heroes.Where(h => h.CurrentHp() < 1).ForEach(h => h.State.SetHp(1));
                 Message.Publish(new BattleFinished(TeamType.Party));
                 state.Wrapup();
                 BeginPhase(BattleV2Phase.Finished);
