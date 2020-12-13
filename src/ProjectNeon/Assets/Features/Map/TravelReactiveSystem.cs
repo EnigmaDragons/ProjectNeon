@@ -34,8 +34,16 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
         if (Vector3.Distance(PlayerToken.transform.position, _travelTo.transform.position) < 0.01f)
         {
             _onArrive();
+            StartFloating();
             _isTraveling = false;
         }
         PlayerToken.transform.position = Vector3.MoveTowards(PlayerToken.transform.position, _travelTo.transform.position, speed * Time.deltaTime);
+    }
+    
+    private void StartFloating()
+    {
+        var floating = PlayerToken.GetComponent<Floating>();
+        if (floating != null)
+            floating.enabled = true;
     }
 }

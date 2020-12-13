@@ -153,6 +153,11 @@ public class MapSpawner2 : MonoBehaviour
         rect.pivot = new Vector2(0.5f, 0.5f);
         rect.anchoredPosition = ((RectTransform) gameMap.GameObjects[gameMap.CurrentPositionId].transform).anchoredPosition;
         travelReactiveSystem.PlayerToken = _playerToken;
+        StartFloating();
+    }
+
+    private void StartFloating()
+    {
         var floating = _playerToken.GetComponent<Floating>();
         if (floating != null)
             floating.enabled = true;

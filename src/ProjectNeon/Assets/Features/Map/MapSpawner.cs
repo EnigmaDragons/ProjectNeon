@@ -31,6 +31,11 @@ public sealed class MapSpawner : MonoBehaviour
         var o = Instantiate(tokenPrototype, transform);
         var rectTransform = o.GetComponent<RectTransform>();
         rectTransform.anchoredPosition += map.Locations[progress.CurrentStageSegmentIndex].GeoPosition;
+        StartFloating(o);
+    }
+
+    private void StartFloating(GameObject o)
+    {
         var floating = o.GetComponent<Floating>();
         if (floating != null)
             floating.enabled = true;
