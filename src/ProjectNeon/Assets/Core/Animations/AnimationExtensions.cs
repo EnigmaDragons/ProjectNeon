@@ -31,12 +31,12 @@ public static class AnimationExtensions
                     break;
             }
             if (!hasStartedAnimated)
-                Log.Error($"Animation: {animationName} never started");
+                Log.Warn($"Animation: {animationName} never started");
             onFinished(elapsed);
         }
         else
         {
-            Log.Error($"Animation: {animationName} not found");
+            Log.Warn($"Animation: {animationName} not found");
             onFinished(0);
         }
     }

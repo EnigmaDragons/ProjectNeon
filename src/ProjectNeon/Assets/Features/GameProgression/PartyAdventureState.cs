@@ -46,6 +46,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public void ApplyLevelUpPoint(Hero hero, StatAddends stats) => UpdateState(() => hero.ApplyLevelUpPoint(stats));
 
     public int CurrentHpOf(HeroCharacter hero) => Hp[IndexOf(hero)];
+    public void SetHeroHp(Hero h, int hp) => UpdateState(() => h.SetHp(hp));
     public void HealHeroToFull(HeroCharacter hero)
         => UpdateState(() =>
         {
