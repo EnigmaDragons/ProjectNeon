@@ -23,7 +23,7 @@ public class CardShopPresenter : MonoBehaviour
                 Destroy(c.gameObject);
     }
 
-    private void Start() => GetMoreInventory();
+    private void OnEnable() => GetMoreInventory();
 
     public void GetMoreInventory()
     {
