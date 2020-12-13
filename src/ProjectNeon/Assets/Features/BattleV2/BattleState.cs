@@ -54,13 +54,6 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
 
     // Setup
-    public BattleState Initialized(PartyArea partyArea, EnemyArea enemyArea)
-    {
-        _queuedEffects = new Queue<Effect>();
-        this.partyArea = partyArea;
-        enemies = enemyArea;
-        return FinishSetup();
-    }
 
     public void SetNextBattleground(GameObject prototype) => nextBattlegroundPrototype = prototype;
     public void SetNextEncounter(IEnumerable<Enemy> e) => nextEnemies = e.ToArray();
@@ -80,7 +73,8 @@ public class BattleState : ScriptableObject
     
     private int EnemyStartingIndex => 4;
     private int _nextEnemyId = 0;
-    public BattleState FinishSetup()
+    public int GetNextEnemyId() => _nextEnemyId++;
+    public List<Tuple<int, Member>> FinishSetup()
     {
         var id = 0;      
         memberNames = new List<string>();
@@ -100,18 +94,19 @@ public class BattleState : ScriptableObject
 
         id = EnemyStartingIndex - 1;
         _enemiesById = new Dictionary<int, Enemy>();
+        var result = new List<Tuple<int, Member>>();
         for (var i = 0; i < enemies.Enemies.Count; i++)
         {
             id++;
             _enemiesById[id] = enemies.Enemies[i];
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
-            _centerPointsById[id] = enemies.CenterPoints[i];
             SetMemberName(id, enemies.Enemies[i].name);
+            result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id)));
         }
         _nextEnemyId = id + 1;
         
         _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
-            .Concat(_enemiesById.Select(e => e.Value.AsMember(e.Key)))
+            .Concat(result.Select(e => e.Item2))
             .ToDictionary(x => x.Id, x => x);
         
         _playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
@@ -124,6 +119,15 @@ public class BattleState : ScriptableObject
         _unconsciousMembers = new Dictionary<int, Member>();
         
         BattleLog.Write("Finished Battle State Init");
+        return result;
+    }
+
+    public BattleState SetupCenterPoints()
+    {
+        for (var i = 0; i < _enemiesById.Count; i++)
+        {
+            _centerPointsById[i] = enemies.CenterPoints[i];
+        }
         return this;
     }
     
@@ -172,23 +176,22 @@ public class BattleState : ScriptableObject
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void SetRewardCards(params CardType[] cards) => UpdateState(() => rewardCards = cards);
 
-    public void AddEnemy(Enemy e, GameObject gameObject) 
+    public void AddEnemy(Enemy e, GameObject gameObject, Member member) 
         => UpdateState(() =>
         {
-            var id = _nextEnemyId++;
             EnemyArea.Add(e, gameObject.transform);
-            _enemiesById[id] = e;
-            _membersById[id] = e.AsMember(id);
-            _uiTransformsById[id] = gameObject.transform;
+            _enemiesById[member.Id] = e;
+            _membersById[member.Id] = member;
+            _uiTransformsById[member.Id] = gameObject.transform;
             var centerPoint = gameObject.GetComponentInChildren<CenterPoint>();
             if (centerPoint == null)
             {
                 Log.Error($"{e.Name} is missing a CenterPoint");
-                _centerPointsById[id] = Vector3.zero;
+                _centerPointsById[member.Id] = Vector3.zero;
             }
             else
-                _centerPointsById[id] = centerPoint.transform.position;
-            SetMemberName(id, e.name);
+                _centerPointsById[member.Id] = centerPoint.transform.position;
+            SetMemberName(member.Id, e.name);
         });
 
     private void SetMemberName(int id, string name)

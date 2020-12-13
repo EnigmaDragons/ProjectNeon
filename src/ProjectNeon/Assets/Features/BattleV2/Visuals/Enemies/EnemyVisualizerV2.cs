@@ -13,40 +13,57 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
     [SerializeField] private CurrentAnimationContext animationContext;
-    
+
     [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
     [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
+
+    private List<Tuple<int, Member>> _enemyPositions; 
     
-    public IEnumerator Setup()
+    public IEnumerator Spawn()
     {
         active.ForEach(Destroy);
         active = new List<GameObject>();
         uis = new List<EnemyBattleUIPresenter>();
         var enemies = enemyArea.Enemies;
         for (var i = 0; i < enemies.Count; i++) 
-            InstantiateEnemyVisuals(enemies[i], i);
+            InstantiateEnemyVisuals(enemies[i]);
 
         yield break;
     }
 
-    private GameObject InstantiateEnemyVisuals(Enemy enemy, int i)
+    public void Place(List<Tuple<int, Member>> enemyPositions)
+    {
+        _enemyPositions = enemyPositions;
+        foreach (var enemyPosition in enemyPositions)
+        {
+            var enemyObject = active[enemyPosition.Item1].transform;
+            var t = enemyObject.transform;
+            t.position = transform.position + new Vector3(enemyPosition.Item1 * widthBetweenEnemies, (enemyPosition.Item1 % 2) * rowHeight, (enemyPosition.Item1 % 2) == 0 ? 0 : 1);
+        }
+    }
+
+    private GameObject InstantiateEnemyVisuals(Enemy enemy)
+    {
+        var enemyObject = Instantiate(enemy.Prefab, transform);
+        active.Add(enemyObject);
+        enemyArea.WithUiTransforms(active.Select(a => a.transform));
+        return enemyObject;
+    }
+
+    private GameObject AddEnemy(Enemy enemy, Member member)
     {
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
         var t = enemyObject.transform;
+        var i = _enemyPositions.Max(x => x.Item1) + 1;
+        var replacement = _enemyPositions.OrderBy(x => x.Item1).FirstOrDefault(x => !x.Item2.IsConscious());
+        if (replacement != null)
+        {
+            i = replacement.Item1;
+            _enemyPositions.Remove(replacement);
+            _enemyPositions.Add(new Tuple<int, Member>(i, member));
+        }
         t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
-        enemyArea.WithUiTransforms(
-            active.Select(a => a.transform), 
-            active.Select(a =>
-            {
-                var centerPoint = a.GetComponentInChildren<CenterPoint>();
-                if (centerPoint == null)
-                {
-                    Log.Error($"{enemy.Name} is missing a CenterPoint");
-                    return Vector3.zero;
-                }
-                return centerPoint.transform.position;
-            }));
         return enemyObject;
     }
     
@@ -55,7 +72,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var enemies = enemyArea.Enemies;
         var positions = enemyArea.EnemyUiPositions;
         for (var i = 0; i < enemies.Count; i++)
-            SetupEnemyUi(i, positions[i].gameObject.transform);
+            SetupEnemyUi(state.GetMemberByEnemyIndex(i), positions[i].gameObject.transform);
 
         for (var i = 0; i < enemies.Count; i++)
         {
@@ -70,15 +87,14 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     public void Spawn(Enemy enemy)
     {
         BattleLog.Write($"Spawning {enemy.Name}");
-        var index = active.Count;
-        var enemyObject = InstantiateEnemyVisuals(enemy, index);
-        state.AddEnemy(enemy, enemyObject);
-        SetupEnemyUi(index, enemyObject.transform);
+        var member = enemy.AsMember(state.GetNextEnemyId());
+        var enemyObject = AddEnemy(enemy, member);
+        state.AddEnemy(enemy, enemyObject, member);
+        SetupEnemyUi(member, enemyObject.transform);
     }
 
-    private void SetupEnemyUi(int index, Transform enemyObject)
+    private void SetupEnemyUi(Member enemyMember, Transform enemyObject)
     {
-        var enemyMember = state.GetMemberByEnemyIndex(index);
         var pos = enemyObject.transform.position;
         var customUi = enemyObject.GetComponentInChildren<EnemyBattleUIPresenter>();
         enemyObject.GetComponentInChildren<HoverCharacter>().Init(enemyMember);
