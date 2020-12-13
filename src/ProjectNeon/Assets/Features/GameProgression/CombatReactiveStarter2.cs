@@ -28,6 +28,6 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
         Log.Info("Setting Up Boss Battle");
         battleState.SetNextBattleground(progress.CurrentStage.BossBattlefield);
         battleState.SetNextEncounter(progress.CurrentStage.BossEnemies);
-        eventPublisher.TogglePartyDetails();
+        eventPublisher.ActivatePartyDetailsWizardFlow();
     }
 }
