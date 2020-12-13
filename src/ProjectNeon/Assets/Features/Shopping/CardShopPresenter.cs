@@ -7,7 +7,6 @@ public class CardShopPresenter : MonoBehaviour
     [SerializeField] private ShopCardPurchaseSlot cardPurchasePrototype;
     [SerializeField] private GameObject cardParent;
  
-    private ShopSelection _selection;
     private int _numCards;
 
     private void Awake()
@@ -28,9 +27,8 @@ public class CardShopPresenter : MonoBehaviour
     public void GetMoreInventory()
     {
         Clear();
-        _selection = new ShopSelectionPicker()
-            .GenerateCardSelection(cards, party, _numCards);
-        _selection.Cards.ForEach(c => 
+        var selection = new ShopSelectionPicker().GenerateCardSelection(party, cards, _numCards);
+        selection.Cards.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)
                 .Initialized(c));
     }

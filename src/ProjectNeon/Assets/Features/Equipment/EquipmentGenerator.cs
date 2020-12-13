@@ -31,7 +31,7 @@ public class EquipmentGenerator
         }}
     };
    
-    private static readonly StatType[] GeneratableStats = { StatType.MaxHP, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance };
+    private static readonly StatType[] GeneratableStats = { StatType.MaxHP, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance, StatType.Leadership };
     
     public Equipment GenerateRandomCommon()
         => Generate(new [] { 1, 2 }.Random(), Rarity.Common);
@@ -166,7 +166,7 @@ public class EquipmentGenerator
 
     private static readonly Dictionary<StatType, int> AdditiveStatsChartPerPoint = new Dictionary<StatType, int>
     {
-        { StatType.MaxHP, 3 },
+        { StatType.MaxHP, 4 },
         { StatType.Armor, 2 },
         { StatType.Resistance, 2 },
         { StatType.Attack, 1 },
