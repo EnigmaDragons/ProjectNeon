@@ -63,6 +63,10 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
             _enemyPositions.Remove(replacement);
             _enemyPositions.Add(new Tuple<int, Member>(i, member));
         }
+        else
+        {
+            _enemyPositions.Add(new Tuple<int, Member>(i, member));
+        }
         t.position = transform.position + new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
         return enemyObject;
     }
