@@ -19,7 +19,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private Enemy[] nextEnemies;
     
     [Header("ReadOnly")]
-    [SerializeField, ReadOnly] private string[] memberNames;
+    [SerializeField, ReadOnly] private List<string> memberNames;
     [SerializeField, ReadOnly] private int rewardCredits;
     [SerializeField, ReadOnly] private CardType[] rewardCards;
     
@@ -83,7 +83,7 @@ public class BattleState : ScriptableObject
     public BattleState FinishSetup()
     {
         var id = 0;      
-        memberNames = new string[EnemyStartingIndex + enemies.Enemies.Count + 99];
+        memberNames = new List<string>();
         _uiTransformsById = new Dictionary<int, Transform>();
         _centerPointsById = new Dictionary<int, Vector3>();
         
@@ -95,7 +95,7 @@ public class BattleState : ScriptableObject
             _heroesById[id] = heroes[i];
             _uiTransformsById[id] = partyArea.UiPositions[i];
             _centerPointsById[id] = partyArea.CenterPositions[i];
-            memberNames[id] = heroes[i].Character.Name;
+            SetMemberName(id, heroes[i].Character.Name);
         }
 
         id = EnemyStartingIndex - 1;
@@ -106,7 +106,7 @@ public class BattleState : ScriptableObject
             _enemiesById[id] = enemies.Enemies[i];
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
             _centerPointsById[id] = enemies.CenterPoints[i];
-            memberNames[id] = enemies.Enemies[i].Name;
+            SetMemberName(id, enemies.Enemies[i].name);
         }
         _nextEnemyId = id + 1;
         
@@ -188,9 +188,16 @@ public class BattleState : ScriptableObject
             }
             else
                 _centerPointsById[id] = centerPoint.transform.position;
-            memberNames[id] = e.Name;
+            SetMemberName(id, e.name);
         });
 
+    private void SetMemberName(int id, string name)
+    {
+        while (memberNames.Count <= id)
+            memberNames.Add("");
+        memberNames[id] = name;
+    }
+    
     // Battle Wrapup
     public void Wrapup()
     {
