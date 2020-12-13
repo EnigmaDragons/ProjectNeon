@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 25, 27-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 27-43, 47, 48, 53, 
 // LAST NUMBER USED: 72
 public enum EffectType
 {
@@ -35,6 +35,7 @@ public enum EffectType
     // Reactions
     OnAttacked = 26,
     OnEvaded = 9,
+    OnDeath = 25,
     
     ShieldToughness = 11,
     StunForTurns = 13,

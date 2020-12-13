@@ -6,7 +6,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 {
     private readonly int _maxDurationTurns;
     private readonly int _maxUses;
-    
+
     private int _remainingDurationTurns;
     private int _remainingUses;
     private readonly Func<EffectResolved, Maybe<ProposedReaction>> _createMaybeEffect;
@@ -77,7 +77,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
     protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(
         IDictionary<int, Member> members, int possessingMemberId, Member originator, 
-        ReactionCardType reaction, Func<EffectResolved, bool> condition) => 
+        ReactionCardType reaction, bool requiresConsciousness, Func<EffectResolved, bool> condition) => 
             effect =>
             {
                 if (effect.IsReaction)
@@ -88,7 +88,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
                     return Maybe<ProposedReaction>.Missing();
 
                 var possessor = reactingMaybeMember.First();
-                if (!possessor.IsConscious())
+                if (!possessor.IsConscious() && requiresConsciousness)
                     return Maybe<ProposedReaction>.Missing();
                 
                 var action = reaction.ActionSequence;

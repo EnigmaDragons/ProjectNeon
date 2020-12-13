@@ -10,4 +10,5 @@ public enum StatusTag
     StartOfTurnTrigger = 7,
     EndOfTurnTrigger = 8,
     OnDamaged = 9,
+    OnDeath = 10,
 }

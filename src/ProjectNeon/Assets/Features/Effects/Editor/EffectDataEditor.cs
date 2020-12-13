@@ -34,6 +34,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ApplyAdditiveStatInjury, new [] { "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.ApplyMultiplicativeStatInjury, new [] {  "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.Kill, new string[0]},
+        {EffectType.OnDeath, new []{ "FloatAmount", "NumberOfTurns", "ReactionSequence" }},
 };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
