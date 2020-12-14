@@ -5,7 +5,7 @@ using System.Linq;
 public class NodeTypeAssigner
 {
     private readonly AdventureProgress2 _progress;
-    private readonly List<MapGenerationRule> _generationRules = new List<MapGenerationRule> { new NoClinicWithinEarlyColumns(), new GarunteedClinicBeforeBoss() };
+    private readonly List<MapGenerationRule> _generationRules = new List<MapGenerationRule> { new NoClinicWithinEarlyColumns(), new GarunteedClinicBeforeBoss(), new NoNonCombatDuplicates() };
 
     public NodeTypeAssigner(AdventureProgress2 progress)
     {
@@ -22,9 +22,10 @@ public class NodeTypeAssigner
         {
             foreach (var node in map[column])
             {
+                var toNodes = map[column + 1].Where(x => node.ChildrenIds.Contains(x.NodeId)).ToList();
                 var possibleNodeTypes = nodeTypes.ToList();
                 foreach (var rule in _generationRules)
-                    possibleNodeTypes = rule.FilterNodeTypes(possibleNodeTypes, map, node, column);
+                    possibleNodeTypes = rule.FilterNodeTypes(possibleNodeTypes, map, node, column, toNodes);
                 var nodePossibilities = possibilities.Where(possibility => possibleNodeTypes.Any(nodeType => nodeType == possibility)).ToArray();
                 if (nodePossibilities.Any())
                 {
