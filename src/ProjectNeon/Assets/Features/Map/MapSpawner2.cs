@@ -31,10 +31,11 @@ public class MapSpawner2 : MonoBehaviour
 
     private Vector4 Margin => marginRightBottomLeftTop;
     private GameObject _playerToken;
-    private readonly List<MapGenerationRule> _generationRules = new List<MapGenerationRule> { new NoClinicWithinEarlyColumns() };
+    private NodeTypeAssigner _assigner;
     
     private void Awake()
     {
+        _assigner = new NodeTypeAssigner(progress);
         gameMap.GameObjects = new Dictionary<string, MapNodeGameObject>();
         var map = Instantiate(gameMap.Map.ArtPrototype, transform).Initialized(mapMovementSettings);
         if (!gameMap.IsMapGenerated)
@@ -56,40 +57,26 @@ public class MapSpawner2 : MonoBehaviour
         var size = gameMap.Map.ArtPrototype.GetComponent<RectTransform>().sizeDelta;
         var columnSize = (size.x - Margin.z - Margin.x) / (progress.CurrentStage.SegmentCount + 1);
         var height = size.y - Margin.y - Margin.w;
-        var columns = new List<List<MapNode>>
-        {
-            new List<MapNode> { MapNode.GenerateNew(MapNodeType.Start, 
-                x: (int)Mathf.Round(columnSize / 2 + Margin.z), 
-                y: (int)Mathf.Round(height / 2 + Margin.w)) }, 
-            new List<MapNode> { MapNode.GenerateNew(MapNodeType.Boss, 
-                x: (int)Mathf.Round(columnSize / 2 + Margin.z + columnSize * progress.CurrentStage.SegmentCount), 
-                y: (int)Mathf.Round(height / 2 + Margin.w)) }
-        };
-        var mapNodeTypes = progress.CurrentStage.NodeTypeOdds.GenerateFreshSet();
+        var startNode = MapNode.GenerateNew(
+            x: (int) Mathf.Round(columnSize / 2 + Margin.z),
+            y: (int) Mathf.Round(height / 2 + Margin.w));
+        startNode.Type = MapNodeType.Start;
+        var bossNode = MapNode.GenerateNew(
+            x: (int) Mathf.Round(columnSize / 2 + Margin.z + columnSize * progress.CurrentStage.SegmentCount),
+            y: (int) Mathf.Round(height / 2 + Margin.w));
+        bossNode.Type = MapNodeType.Boss;
+        var columns = new List<List<MapNode>> { new List<MapNode> { startNode }, new List<MapNode> { bossNode } };
         for (var column = 1; column < progress.CurrentStage.SegmentCount; column++)
         {
             var nodesInColumn = Rng.Int(gameMap.Map.MinPaths, gameMap.Map.MaxPaths + 1);
             var rowSize = height / nodesInColumn;
             columns.Insert(column, Enumerable.Range(0, nodesInColumn)
-                .Select(row => MapNode.GenerateNew(GetNextMapNodeType(column, columns, mapNodeTypes), ColumnX(columnSize, column), RowY(rowSize, row)))
+                .Select(row => MapNode.GenerateNew(ColumnX(columnSize, column), RowY(rowSize, row)))
                 .ToList());
         }
         new ConnectionGenerator().AddConnections(columns);
+        _assigner.Assign(columns);
         gameMap.SetupMap(columns.SelectMany(x => x).OrderBy(x => x.X).ToList());
-    }
-
-    private MapNodeType GetNextMapNodeType(int column, List<List<MapNode>> currentMap, List<MapNodeType> possibilities)
-    {
-        if (possibilities.None())
-            possibilities.AddRange(progress.CurrentStage.NodeTypeOdds.GenerateFreshSet());
-        var nodeType = possibilities.DrawRandom();
-        var numTries = 0;
-        while (numTries < 60 && _generationRules.Any(r => !r.IsValid(nodeType, column, currentMap)))
-        {
-            nodeType = progress.CurrentStage.RandomNodeType;
-            numTries++;
-        }
-        return nodeType;
     }
 
     private int ColumnX(float columnSize, int column) 

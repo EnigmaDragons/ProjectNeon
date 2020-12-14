@@ -1,5 +1,6 @@
 ﻿public enum MapNodeType
 {
+    Unknown = -1,
     Start = 0,
     Combat = 1,
     Boss = 2,

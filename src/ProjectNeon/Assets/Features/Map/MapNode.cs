@@ -13,6 +13,6 @@ public class MapNode
     public int X;
     public int Y;
 
-    public static MapNode GenerateNew(MapNodeType type, int x, int y)
-        => new MapNode { NodeId = Guid.NewGuid().ToString(), Type = type, X = x, Y = y, ChildrenIds = new List<string>() };
+    public static MapNode GenerateNew(int x, int y)
+        => new MapNode { NodeId = Guid.NewGuid().ToString(), Type = MapNodeType.Unknown, X = x, Y = y, ChildrenIds = new List<string>() };
 }
