@@ -19,7 +19,7 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     {
         Log.Info("Setting Up Random Elite Encounter");
         battleState.SetNextBattleground(progress.CurrentStage.Battleground);
-        battleState.SetNextEncounter(progress.CurrentStage.EliteEncounterBuilder.Generate(progress.CurrentElitePowerLevel));
+        battleState.SetNextEncounter(progress.CurrentStage.EliteEncounterBuilder.Generate(progress.CurrentElitePowerLevel), isElite: true);
         eventPublisher.ActivatePartyDetailsWizardFlow();
     }
 

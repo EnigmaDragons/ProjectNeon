@@ -13,10 +13,12 @@ public class BattleState : ScriptableObject
     [SerializeField] private EnemyArea enemies;
     [SerializeField] private CurrentAdventure adventure;
     [SerializeField] private bool needsCleanup;
-
+    [SerializeField] private bool isEliteBattle;
+    
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
     [SerializeField] private Enemy[] nextEnemies;
+    [SerializeField] private bool nextIsEliteBattle;
     
     [Header("ReadOnly")]
     [SerializeField, ReadOnly] private List<string> memberNames;
@@ -35,6 +37,7 @@ public class BattleState : ScriptableObject
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
 
     public bool NeedsCleanup => needsCleanup;
+    public bool IsEliteBattle => isEliteBattle;
     public float PowerLevelRewardFactor => adventure.Adventure?.RewardCreditsPerPowerLevel ?? 0;
     public PartyAdventureState Party => party;
     public PartyArea PartyArea => partyArea;
@@ -56,11 +59,18 @@ public class BattleState : ScriptableObject
     // Setup
 
     public void SetNextBattleground(GameObject prototype) => nextBattlegroundPrototype = prototype;
-    public void SetNextEncounter(IEnumerable<Enemy> e) => nextEnemies = e.ToArray();
+    public void SetNextEncounter(IEnumerable<Enemy> e, bool isElite = false)
+    {
+        nextEnemies = e.ToArray();
+        nextIsEliteBattle = isElite;
+    }
+
     public void SetupEnemyEncounter()
     {
         EnemyArea.Initialized(nextEnemies);
+        isEliteBattle = nextIsEliteBattle;
         nextEnemies = new Enemy[0];
+        nextIsEliteBattle = false;
     }
 
     public void Init()
