@@ -27,14 +27,14 @@ public class NodeTypeAssigner
                 foreach (var rule in _generationRules)
                     possibleNodeTypes = rule.FilterNodeTypes(possibleNodeTypes, map, node, column, toNodes);
                 var nodePossibilities = possibilities.Where(possibility => possibleNodeTypes.Any(nodeType => nodeType == possibility)).ToArray();
-                if (nodePossibilities.Any())
+                if (!nodePossibilities.Any() || possibleNodeTypes.Count == 1)
+                    node.Type = possibleNodeTypes.Random();
+                else
                 {
                     var nodeType = nodePossibilities.Random();
                     node.Type = nodeType;
                     possibilities.Remove(nodeType);
                 }
-                else
-                    node.Type = possibleNodeTypes.Random();
             }
         }
     }
