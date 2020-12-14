@@ -27,5 +27,6 @@ public class CurrentGameMap2 : ScriptableObject
         GeneratedMap.ForEach(x => _map[x.NodeId] = x);
     }
 
+    public MapNode CurrentMapNode => GetMapNode(CurrentPositionId);
     public MapNode GetMapNode(string id) => _map[id];
 }
