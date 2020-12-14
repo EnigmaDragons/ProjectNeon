@@ -105,7 +105,11 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         else if (state.PlayerWins())
         {
             var rewardPicker = new ShopSelectionPicker();
-            Message.Publish(new GetUserSelectedCard(rewardPicker.PickCards(state.Party, cardPrizePool, 3), card =>
+            var rewardCards = state.IsEliteBattle
+                ? rewardPicker.PickCards(state.Party, cardPrizePool, 3, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
+                : rewardPicker.PickCards(state.Party, cardPrizePool, 3);
+            
+            Message.Publish(new GetUserSelectedCard(rewardCards, card =>
             {
                 card.IfPresent(c => state.SetRewardCards(c));
                 state.Heroes.Where(h => h.CurrentHp() < 1).ForEach(h => h.State.SetHp(1));
