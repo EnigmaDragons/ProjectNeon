@@ -98,7 +98,7 @@ public class BattleState : ScriptableObject
             id++;
             _heroesById[id] = heroes[i];
             _uiTransformsById[id] = partyArea.UiPositions[i];
-            _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, true);
+            _uiTransformsById[id].GetComponentInChildren<ActiveMemberIndicator>()?.Init(id, true);
             _centerPointsById[id] = partyArea.CenterPositions[i];
             SetMemberName(id, heroes[i].Character.Name);
         }

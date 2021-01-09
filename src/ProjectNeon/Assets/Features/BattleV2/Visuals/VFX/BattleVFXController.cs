@@ -19,8 +19,8 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             Log.Info($"No VFX of type {e.EffectName}");
         else if (e.Scope.Equals(Scope.One))
         {
-            var location = state.GetTransform(e.Target.Members[0].Id);
-            PlayEffect(f, location.position);
+            var location = state.GetCenterPoint(e.Target.Members[0].Id);
+            PlayEffect(f, location);
         }
         else if (e.Group == Group.All)
             Log.Info($"All Characters VFX not supported yet");
@@ -46,7 +46,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
 
     private void PlayEffect(BattleVFX f, Vector3 target)
     {
-        var o = Instantiate(f.gameObject, target, Quaternion.identity, gameObject.transform);
+        var o = Instantiate(f.gameObject, target, f.gameObject.transform.rotation, gameObject.transform);
         o.SetActive(true);
         if (f.WaitForCompletion)
             StartCoroutine(AwaitAnimationFinish(f));
