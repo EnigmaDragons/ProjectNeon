@@ -53,9 +53,12 @@ public static class InterpolatedCardDescriptions
         
         var xCostReplacementToken = "{X}";
         result = result.Replace(xCostReplacementToken, Bold(XCostDescription(owner)));
-
+        
         if (desc.Trim().Equals("{Auto}", StringComparison.InvariantCultureIgnoreCase))
             return string.Join(" ", effects.Select(e => AutoDescription(e, owner)));
+
+        foreach (var r in _resourceIcons)
+            result = result.Replace(r.Key, Sprite(r.Value));
         
         var tokens = Regex.Matches(result, "{(.*?)}");
         foreach (Match token in tokens)
@@ -100,6 +103,15 @@ public static class InterpolatedCardDescriptions
     
     private static string UppercaseFirst(string s) => char.ToUpper(s[0]) + s.Substring(1);
 
+    private static Dictionary<string, int> _resourceIcons = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase)
+    {
+        { "Ammo", 4},
+        { "Chems", 5},
+        { "Energy", 6},
+        { "Flames", 7},
+        { "Mana", 8},
+        { "Tech Points", 9},
+    };
     private static string PhysDamageIcon => Sprite(0);
     private static string RawDamageIcon => Sprite(1);
     private static string MagicDamageIcon => Sprite(2);

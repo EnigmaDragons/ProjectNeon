@@ -26,13 +26,13 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <false/>
+        <true/>
         <key>shapeDebug</key>
         <false/>
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>unity-texture2d</string>
+        <string>json-array</string>
         <key>textureFileName</key>
         <filename></filename>
         <key>flipPVR</key>
@@ -97,7 +97,7 @@
             <key>width</key>
             <int>512</int>
             <key>height</key>
-            <int>512</int>
+            <int>1024</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -106,9 +106,9 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
-            <true/>
+            <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>
@@ -129,10 +129,10 @@
         </struct>
         <key>dataFileNames</key>
         <map type="GFileNameMap">
-            <key>datafile</key>
+            <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>CardIcons.tpsheet</filename>
+                <filename>CardIcons.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -167,7 +167,7 @@
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
-            <uint>0</uint>
+            <uint>1</uint>
             <key>trimMode</key>
             <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
@@ -175,9 +175,9 @@
             <key>heuristicMask</key>
             <false/>
             <key>defaultPivotPoint</key>
-            <point_f>0.5,0.5</point_f>
+            <point_f>0,1</point_f>
             <key>writePivotPoints</key>
-            <false/>
+            <true/>
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
@@ -185,10 +185,13 @@
             <key type="filename">../Icons/1-raw-damage.png</key>
             <key type="filename">../Icons/2-magic-damage.png</key>
             <key type="filename">../Icons/3-attack.png</key>
-            <key type="filename">../Icons/4-magic.png</key>
+            <key type="filename">../../Resources/AmmoIcon.png</key>
+            <key type="filename">../../Resources/ChemIcon2.png</key>
+            <key type="filename">../../Resources/EnergyIcon.png</key>
+            <key type="filename">../../Resources/FireIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
+                <point_f>0,1</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
@@ -200,10 +203,27 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../../Resources/ManaIcon.png</key>
+            <key type="filename">../../Resources/TechPointsIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,1</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>64,64,128,128</rect>
+                <key>scale9Paddings</key>
+                <rect>64,64,128,128</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
             <filename>../Icons</filename>
+            <filename>../../Resources</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
