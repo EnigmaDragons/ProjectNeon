@@ -27,6 +27,12 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     public Maybe<CardTypeData> ChainedCard => Maybe<CardTypeData>.Missing();
     public Rarity Rarity => Rarity.Starter;
 
+    public ReactionCardType Initialized(CardReactionSequence action)
+    {
+        actionSequence = action;
+        return this;
+    }
+    
     public ReactionCardType Initialized(ResourceCost cost, ResourceCost gain, CardReactionSequence action)
     {
         this.cost = cost;

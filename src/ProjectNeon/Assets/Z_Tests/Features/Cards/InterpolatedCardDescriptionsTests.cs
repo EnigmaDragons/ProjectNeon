@@ -45,7 +45,19 @@ public sealed class InterpolatedCardDescriptionsTests
             FloatAmount = new FloatReference(-8)
         }, Owner));
 
-    private string Description(string s, EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.InterpolatedDescription(s, new[] {e}, owner);
+    [Test]
+    public void Interpolated_ReactionEffect_IsCorrect()
+        => AssertMatchesIgnoreStyling("On attacked, deal 8 damage",
+            ReactionDescription("On attacked, deal {RE[0]} damage", 
+                new EffectData
+                {
+                    EffectType = EffectType.Attack, 
+                    BaseAmount = new IntReference(8)
+                }
+            , Owner));
+
+    private string Description(string s, EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.InterpolatedDescription(s, new[] {e}, new EffectData[0], owner);
+    private string ReactionDescription(string s, EffectData re, Maybe<Member> owner) => InterpolatedCardDescriptions.InterpolatedDescription(s, new EffectData[0], new [] {re}, owner);
     private string ForEffect(EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.GenerateEffectDescription(e, owner);
 
     private void AssertMatchesIgnoreStyling(string expected, string actual)

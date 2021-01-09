@@ -29,8 +29,14 @@ public static class InterpolatedCardDescriptions
                 .Where(x => x != null)
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
                 .SelectMany(b => b.ConditionData.ReferencedEffect.Actions.Select(a => a.BattleEffect));
+
+            var reactionBattleEffects = card.Actions()
+                .Where(x => x != null)
+                .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Battle))
+                .Where(b => b.BattleEffect.IsReaction)
+                .SelectMany(c => c.BattleEffect.ReactionSequence.ActionSequence.CardActions.Actions.Select(d => d.BattleEffect));
             
-            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), owner);
+            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner);
 
         }
         catch (Exception e)
@@ -41,7 +47,7 @@ public static class InterpolatedCardDescriptions
         }
     }
 
-    public static string InterpolatedDescription(string desc, EffectData[] effects, Maybe<Member> owner)
+    public static string InterpolatedDescription(string desc, EffectData[] effects, EffectData[] reactionEffects, Maybe<Member> owner)
     {
         var result = desc;
         
@@ -51,18 +57,25 @@ public static class InterpolatedCardDescriptions
         var tokens = Regex.Matches(result, "{(.*?)}");
         foreach (Match token in tokens)
         {
-            if (!token.Value.StartsWith("{E") && !token.Value.StartsWith("{D"))
-                throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects and Durations");
+            var forReaction = token.Value.StartsWith("{RE[");
+            var prefixes = new[] {"{E", "{D", "{RE"};
+            if (prefixes.None(p => token.Value.StartsWith(p)))
+                throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects, Durations, and Reaction Effects");
 
             var effectIndex = int.Parse(Regex.Match(token.Result("$1"), "\\[(.*?)\\]").Result("$1"));
-            if (effectIndex >= effects.Length)
+            if (!forReaction && effectIndex >= effects.Length)
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {effects.Length} Battle Effects");
+            if (forReaction && effectIndex >= reactionEffects.Length)
+                throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {reactionEffects.Length} Reaction Battle Effects");
 
-            var effectReplacementToken = "{E[" + effectIndex + "]}";
-            result = result.Replace(effectReplacementToken, Bold(GenerateEffectDescription(effects[effectIndex], owner)));
+            if (token.Value.StartsWith("{E["))
+                result = result.Replace("{E[" + effectIndex + "]}", Bold(GenerateEffectDescription(effects[effectIndex], owner)));
 
-            var durationReplacementToken = "{D[" + effectIndex + "]}";
-            result = result.Replace(durationReplacementToken, GenerateDurationDescription(effects[effectIndex]));
+            if (token.Value.StartsWith("{D["))
+                result = result.Replace("{D[" + effectIndex + "]}", GenerateDurationDescription(effects[effectIndex]));
+
+            if (forReaction)
+                result = result.Replace("{RE[" + effectIndex + "]}", Bold(GenerateEffectDescription(reactionEffects[effectIndex], owner)));
         }
         
         return result;
@@ -76,8 +89,10 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.Attack
             || data.EffectType == EffectType.PhysicalDamageOverTime)
             return owner.IsPresent
-                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
-                : $"{data.FloatAmount}x ATK";
+                ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
+                : data.BaseAmount > 0 
+                    ? $"{data.BaseAmount} + {data.FloatAmount}x ATK" 
+                    : $"{data.FloatAmount}x ATK";
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             return owner.IsPresent
                 ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()

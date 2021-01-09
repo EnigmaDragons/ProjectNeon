@@ -13,9 +13,11 @@ public sealed class Attack  : Effect
     private float Multiplier { get; }
 
     public Attack(float multiplier, bool hitsRandomTarget = false)
+        : this(0, multiplier, hitsRandomTarget) {}
+    public Attack(int baseAmount, float multiplier, bool hitsRandomTarget = false)
     {
         Multiplier = multiplier;
-        Damage = new PhysicalDamage(Multiplier);
+        Damage = new PhysicalDamage(baseAmount, Multiplier);
         _hitsRandomTarget = hitsRandomTarget;
     }
 

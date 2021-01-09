@@ -28,7 +28,7 @@ public static class AllEffects
         { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount), true))) },
         { EffectType.StealLifeNextAttack, e => new NoEffect() }, // TODO: Implement Life Steal
         { EffectType.InterceptAttackForTurns, e => new InterceptAttack(e.NumberOfTurns)},
-        { EffectType.Attack, e => new Attack(e.FloatAmount, e.HitsRandomTargetMember)},
+        { EffectType.Attack, e => new Attack(e.BaseAmount, e.FloatAmount, e.HitsRandomTargetMember)},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.NumberOfTurns) },
         { EffectType.OnAttacked, e => new EffectOnAttacked(false, e.IntAmount, e.NumberOfTurns, e.StatusTag, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionSequence) },
         { EffectType.OnEvaded, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence) },
