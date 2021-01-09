@@ -27,7 +27,7 @@ public sealed class InterpolatedCardDescriptionsTests
     [Test]
     public void Interpolated_AttackWithOwner_IsCorrect() 
         => Assert.AreEqual("8", ForEffect(BasicAttack, Owner));
-
+    
     [Test]
     public void Interpolated_Duration_IsCorrect()
         => AssertMatchesIgnoreStyling("Deal 3 for 2 Turns.", 
@@ -62,10 +62,17 @@ public sealed class InterpolatedCardDescriptionsTests
         => AssertMatchesIgnoreStyling("Deal 8 raw damage",
             Description("Deal {E[0]} raw damage", new EffectData {EffectType = EffectType.DealRawDamageFormula, Formula = "Shield * 2"},
                 OwnerWith(m => m.State.AdjustShield(4))));
+    
+    [Test]
+    public void Interpolated_Auto_GivesVulnerableNextTurn_IsCorrect()
+        => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for 1 Turn.",
+            Description("{Auto}", 
+                new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, NumberOfTurns = new IntReference(1)},
+                Owner));
 
     private string Description(string s, EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.InterpolatedDescription(s, new[] {e}, new EffectData[0], owner);
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner) => InterpolatedCardDescriptions.InterpolatedDescription(s, new EffectData[0], new [] {re}, owner);
-    private string ForEffect(EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.GenerateEffectDescription(e, owner);
+    private string ForEffect(EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.EffectDescription(e, owner);
 
     private void AssertMatchesIgnoreStyling(string expected, string actual)
     {

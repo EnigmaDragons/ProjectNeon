@@ -52,7 +52,10 @@ public static class InterpolatedCardDescriptions
         var result = desc;
         
         var xCostReplacementToken = "{X}";
-        result = result.Replace(xCostReplacementToken, Bold(GenerateXCostDescription(owner)));
+        result = result.Replace(xCostReplacementToken, Bold(XCostDescription(owner)));
+
+        if (desc.Trim().Equals("{Auto}", StringComparison.InvariantCultureIgnoreCase))
+            return string.Join(" ", effects.Select(e => AutoDescription(e, owner)));
         
         var tokens = Regex.Matches(result, "{(.*?)}");
         foreach (Match token in tokens)
@@ -69,22 +72,37 @@ public static class InterpolatedCardDescriptions
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {reactionEffects.Length} Reaction Battle Effects");
 
             if (token.Value.StartsWith("{E["))
-                result = result.Replace("{E[" + effectIndex + "]}", Bold(GenerateEffectDescription(effects[effectIndex], owner)));
+                result = result.Replace("{E[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner)));
 
             if (token.Value.StartsWith("{D["))
-                result = result.Replace("{D[" + effectIndex + "]}", GenerateDurationDescription(effects[effectIndex]));
+                result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex]));
 
             if (forReaction)
-                result = result.Replace("{RE[" + effectIndex + "]}", Bold(GenerateEffectDescription(reactionEffects[effectIndex], owner)));
+                result = result.Replace("{RE[" + effectIndex + "]}", Bold(EffectDescription(reactionEffects[effectIndex], owner)));
         }
         
         return result;
     }
 
-    private static string GenerateXCostDescription(Maybe<Member> owner) 
+    private static string XCostDescription(Maybe<Member> owner) 
         => owner.Select(o => o.State.PrimaryResourceAmount.ToString(), () => "X");
 
-    public static string GenerateEffectDescription(EffectData data, Maybe<Member> owner)
+    private static string AutoDescription(EffectData data, Maybe<Member> owner)
+    {
+        var delay = DelayDescription(data);
+        var coreDesc = "";
+        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner))} {data.EffectScope} {DurationDescription(data)}";
+        if (data.EffectType == EffectType.ApplyVulnerable)
+            coreDesc = $"gives Vulnerable {DurationDescription(data)}";
+        if (coreDesc == "")
+            throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
+        return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
+    }
+    
+    private static string UppercaseFirst(string s) => char.ToUpper(s[0]) + s.Substring(1);
+
+    public static string EffectDescription(EffectData data, Maybe<Member> owner)
     {
         if (data.EffectType == EffectType.Attack
             || data.EffectType == EffectType.PhysicalDamageOverTime)
@@ -138,15 +156,27 @@ public static class InterpolatedCardDescriptions
         return baseAmount + floatAmount;
     }
 
-    private static string GenerateDurationDescription(EffectData data)
+    private static string DurationDescription(EffectData data)
     {
         var value = data.NumberOfTurns.Value;
         var turnString = value < 0
-                        ? "the Battle." 
+                        ? "the Battle" 
                         : value < 2
-                            ? "Current Turn." 
-                            : $"{Bold(value.ToString())} Turns.";
-        return $"for {turnString}";
+                            ? data.TurnDelay == 0 ? "Current Turn" : "1 Turn" 
+                            : $"{Bold(value.ToString())} Turns";
+
+        return $"for {turnString}.";
+    }
+
+    private static string DelayDescription(EffectData data)
+    {
+        var delayValue = data.TurnDelay;
+        var delayString = delayValue < 1
+            ? ""
+            : delayValue == 1
+                ? "Next turn, "
+                : $"In {delayValue} turns, ";
+        return delayString;
     }
 
     private static string FormattedFormula(string s)
