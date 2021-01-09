@@ -90,7 +90,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
 
     public void Spawn(Enemy enemy)
     {
-        BattleLog.Write($"Spawning {enemy.Name}");
+        DevLog.Write($"Spawning {enemy.Name}");
         var member = enemy.AsMember(state.GetNextEnemyId());
         var enemyObject = AddEnemy(enemy, member);
         state.AddEnemy(enemy, enemyObject, member);

@@ -56,7 +56,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         _confirmRequested = false;
         confirmUi.gameObject.SetActive(false);
         playArea.Clear();
-        BattleLog.Write("Player Confirmed Turn");
+        DevLog.Write("Player Confirmed Turn");
         Message.Publish(new PlayerTurnConfirmed());
     }
 

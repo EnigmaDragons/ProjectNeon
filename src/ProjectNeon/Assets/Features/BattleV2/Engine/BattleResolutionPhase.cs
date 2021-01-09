@@ -19,7 +19,8 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     
     public IEnumerator Begin()
     {
-        BattleLog.Write($"Card Resolution Began");
+        DevLog.Write($"Card Resolution Began");
+        resolutionZone.Moves.ForEach(c => BattleLog.Write($"{c.Member.Name} played {c.Card.Name}"));
         yield return ui.BeginResolutionPhase();
         yield return new WaitForSeconds(delay);
         ResolveNext();
@@ -85,7 +86,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     {
         if (msg.CanRetarget && msg.Target.Members.All(m => !m.IsConscious()))
         {
-            Log.Info("Retargeting Battle Effect");
+            DevLog.Write("Retargeting Battle Effect");
             var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
             if (newTargets.Any())
             {
@@ -108,7 +109,6 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     private IEnumerator FinishCard()
     {
         yield return new WaitForSeconds(delay);
-        Debug.Log($"Clearing {currentResolvingCardZone.Count} cards from Current Zone");
         currentResolvingCardZone.Clear();
         ResolveNext();
     }

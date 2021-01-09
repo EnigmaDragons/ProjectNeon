@@ -82,7 +82,7 @@ public static class AllEffects
             
             var effect = Create(effectData);
             var whenClause = effectData.TurnDelay > 0 ? " at the start of next turn" : "";
-            BattleLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
+            DevLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
             effect.Apply(ctx);
         }
         catch (Exception e)

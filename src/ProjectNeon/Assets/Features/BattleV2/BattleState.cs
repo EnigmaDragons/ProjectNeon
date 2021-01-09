@@ -128,7 +128,7 @@ public class BattleState : ScriptableObject
         _queuedEffects = new Queue<Effect>();
         _unconsciousMembers = new Dictionary<int, Member>();
         
-        BattleLog.Write("Finished Battle State Init");
+        DevLog.Write("Finished Battle State Init");
         return result;
     }
 
@@ -147,7 +147,7 @@ public class BattleState : ScriptableObject
         
         EnemyArea.Clear();
         needsCleanup = false;
-        BattleLog.Write("Finished Battle State Cleanup");
+        DevLog.Write("Finished Battle State Cleanup");
     }
 
     // During Battle State Tracking

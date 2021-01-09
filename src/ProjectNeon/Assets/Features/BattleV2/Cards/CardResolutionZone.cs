@@ -17,6 +17,8 @@ public class CardResolutionZone : ScriptableObject
     public IPlayedCard LastPlayed { get; set; }
     
     private List<IPlayedCard> _moves = new List<IPlayedCard>();
+
+    public IEnumerable<IPlayedCard> Moves => _moves;
     
     public void Init()
     {
@@ -70,7 +72,7 @@ public class CardResolutionZone : ScriptableObject
             m.Lose(played.Spent);
             m.Gain(played.Gained);
         });
-        BattleLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
+        DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
     }
 
     public void ExpirePlayedCards(Func<IPlayedCard, bool> condition)
@@ -81,7 +83,7 @@ public class CardResolutionZone : ScriptableObject
             var played = movesCopy[i];
             if (!condition(played)) continue;
             
-            BattleLog.Write($"Expired played card {played.Card.Name} by {played.Member.Name}");
+            DevLog.Write($"Expired played card {played.Card.Name} by {played.Member.Name}");
             if (_moves.Count > i)
                 _moves.RemoveAt(i);
             physicalZone.Remove(played.Card);
@@ -97,7 +99,7 @@ public class CardResolutionZone : ScriptableObject
         
         var played = _moves.Last();
         
-        BattleLog.Write($"Canceled playing {played.Card.Name}");
+        DevLog.Write($"Canceled playing {played.Card.Name}");
         _moves.RemoveAt(_moves.Count - 1);
         var card = physicalZone.Take(physicalZone.Count - 1);
         playerPlayArea.Take(playerPlayArea.Count - 1);
@@ -110,7 +112,7 @@ public class CardResolutionZone : ScriptableObject
 
     public void BeginResolvingNext()
     {
-        BattleLog.Write("Requested Resolve Next Card");
+        DevLog.Write("Requested Resolve Next Card");
         isResolving = true;
         var move = _moves[0];
         _moves = _moves.Skip(1).ToList();
@@ -119,9 +121,9 @@ public class CardResolutionZone : ScriptableObject
 
     private void StartResolvingOneCard(IPlayedCard played)
     {
-        BattleLog.Write($"Began resolving {played.Card.Name}");
+        BattleLog.Write($"Resolving {played.Card.Name}");
         if (physicalZone.Count == 0)
-            Log.Info($"Weird Physical Zone Draw bug.");
+            DevLog.Write($"Weird Physical Zone Draw bug.");
         else
             physicalZone.DrawOneCard();
         

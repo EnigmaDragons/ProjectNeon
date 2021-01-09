@@ -52,7 +52,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
                 ? member.State.GetTurnStartEffects()
                 : member.State.GetTurnEndEffects();
             if (effectPayloadProvider.Count > 0)
-                BattleLog.Write($"Resolving {effectPayloadProvider.Count} Status Effects for {member.Name}");
+                DevLog.Write($"Resolving {effectPayloadProvider.Count} Status Effects for {member.Name}");
             if (!effectPayloadProvider.IsFinished())
             {
                 Message.Subscribe<SequenceFinished>(_ =>

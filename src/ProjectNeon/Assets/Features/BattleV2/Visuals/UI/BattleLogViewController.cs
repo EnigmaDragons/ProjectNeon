@@ -10,6 +10,8 @@ public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageReq
     [SerializeField] private int maxLines = 40;
     
     private readonly List<string> _battleLogMessages = new List<string>();
+
+    private void Awake() => textArea.text = "";
     
     protected override void Execute(WriteBattleLogMessageRequested msg)
     {

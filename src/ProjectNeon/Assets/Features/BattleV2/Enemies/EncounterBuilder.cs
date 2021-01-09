@@ -19,7 +19,7 @@ public class EncounterBuilder : ScriptableObject
     
     public List<Enemy> Generate(int difficulty)
     {
-        BattleLog.Write($"Started generating encounter of difficulty {difficulty}");
+        DevLog.Write($"Started generating encounter of difficulty {difficulty}");
 
         var currentDifficulty = 0;
         var numRemainingMustIncludes = numMustIncludes;
@@ -29,7 +29,7 @@ public class EncounterBuilder : ScriptableObject
         {
             var nextEnemy = mustIncludePossibilities.Random();
             enemies.Add(nextEnemy);
-            BattleLog.Write($"Added \"Must Include\" {nextEnemy.Name} to Encounter");
+            DevLog.Write($"Added \"Must Include\" {nextEnemy.Name} to Encounter");
             numRemainingMustIncludes--;
             currentDifficulty = currentDifficulty + Math.Max(nextEnemy.PowerLevel, 1);
         }
@@ -59,11 +59,11 @@ public class EncounterBuilder : ScriptableObject
             
             var nextEnemy = filteredOptions.Random();
             enemies.Add(nextEnemy);
-            BattleLog.Write($"Added {nextEnemy.Name} to Encounter");
+            DevLog.Write($"Added {nextEnemy.Name} to Encounter");
             currentDifficulty += nextEnemy.PowerLevel;
         }
         
-        BattleLog.Write("Finished generating encounter");
+        DevLog.Write("Finished generating encounter");
         return enemies.ToList().Shuffled();
     }
 }
