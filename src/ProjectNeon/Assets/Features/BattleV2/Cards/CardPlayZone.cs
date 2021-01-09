@@ -50,12 +50,15 @@ public class CardPlayZone : ScriptableObject
     public void PutOnTop(Card card) => Mutate(c => card.Concat(c));
     public void PutOnBottom(Card card) => Mutate(c => c.Concat(card));
     public void Shuffle() => Mutate(c => c.Shuffled());
-
+    public void Set(params Card[] val) => Mutate(c => val);
+    
     public void Mutate(Func<Card[], IEnumerable<Card>> update)
     {
         if (cards == null)
             cards = new Card[0];
         var newVal = update(cards).ToArray();
+        if (name.StartsWith("Current") && newVal.Length > 0)
+            Log.Info($"{newVal[0].Name}");
         if (newVal.Length > maxCards.Value)
             throw new InvalidOperationException($"{name} can hold a Maximum of {maxCards.Value} Cards");
         cards = newVal;

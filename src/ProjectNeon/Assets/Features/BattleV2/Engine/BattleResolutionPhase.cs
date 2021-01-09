@@ -10,6 +10,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     [SerializeField] private PartyAdventureState partyAdventureState;
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private CardPlayZone reactionZone;
+    [SerializeField] private CardPlayZone currentResolvingCardZone;
     [SerializeField] private EnemyVisualizerV2 enemies;
     [SerializeField] private FloatReference delay = new FloatReference(1.5f);
 
@@ -20,6 +21,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     {
         BattleLog.Write($"Card Resolution Began");
         yield return ui.BeginResolutionPhase();
+        yield return new WaitForSeconds(delay);
         ResolveNext();
     }
 
@@ -44,9 +46,9 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     private void ProcessNextCardOrReaction()
     {
         if (_reactions.Any())
-            this.ExecuteAfterDelay(() => StartCoroutine(ResolveNextReaction()), delay);
+            StartCoroutine(ResolveNextReaction());
         else if (resolutionZone.HasMore)
-            this.ExecuteAfterDelay(() => resolutionZone.BeginResolvingNext(), delay);
+            resolutionZone.BeginResolvingNext();
     }
 
     private void FinishResolutionPhase()
@@ -101,12 +103,22 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         Message.Publish(new Finished<SpawnEnemy>());
     }
 
-    protected override void Execute(CardResolutionFinished msg) => ResolveNext();
+    protected override void Execute(CardResolutionFinished msg) => StartCoroutine(FinishCard());
+
+    private IEnumerator FinishCard()
+    {
+        yield return new WaitForSeconds(delay);
+        Debug.Log($"Clearing {currentResolvingCardZone.Count} cards from Current Zone");
+        currentResolvingCardZone.Clear();
+        ResolveNext();
+    }
 
     private IEnumerator ResolveNextReaction()
     {
         var r = _reactions.Dequeue();
-        reactionZone.PutOnBottom(new Card(state.GetNextCardId(), r.Source, r.Reaction));
+        var card = new Card(state.GetNextCardId(), r.Source, r.Reaction);
+        reactionZone.PutOnBottom(card);
+        currentResolvingCardZone.Set(card);
         yield return new WaitForSeconds(delay);
         var cost = r.Reaction.Cost;
         var gain = r.Reaction.Gain;
