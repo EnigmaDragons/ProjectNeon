@@ -15,8 +15,6 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
     [SerializeField] private StoryEventResultTextPresenter textPrototype;
     
     private TextCommandButton[] _buttons;
-    
-    private void Awake() => InitFreshOptionsButtons();
 
     public void Present(StoryEvent s)
     {
