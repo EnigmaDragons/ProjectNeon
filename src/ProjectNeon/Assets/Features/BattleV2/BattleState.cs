@@ -98,6 +98,7 @@ public class BattleState : ScriptableObject
             id++;
             _heroesById[id] = heroes[i];
             _uiTransformsById[id] = partyArea.UiPositions[i];
+            _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, true);
             _centerPointsById[id] = partyArea.CenterPositions[i];
             SetMemberName(id, heroes[i].Character.Name);
         }
@@ -110,6 +111,7 @@ public class BattleState : ScriptableObject
             id++;
             _enemiesById[id] = enemies.Enemies[i];
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
+            _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, false);
             SetMemberName(id, enemies.Enemies[i].name);
             result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id)));
         }

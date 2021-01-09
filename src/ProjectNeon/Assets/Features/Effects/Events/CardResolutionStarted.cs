@@ -1,1 +1,4 @@
-﻿public sealed class CardResolutionStarted {}
+﻿public sealed class CardResolutionStarted
+{
+    public int Originator { get; set; }
+}

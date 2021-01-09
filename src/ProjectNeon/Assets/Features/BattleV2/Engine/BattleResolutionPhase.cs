@@ -112,11 +112,14 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         var gain = r.Reaction.Gain;
         if (r.Reaction.IsPlayableBy(r.Source))
         {
+            Message.Publish(new CardResolutionStarted());
             var expense = cost.ResourcesSpent(r.Source);
             var gains = gain.ResourcesGained(r.Source);
             r.Source.Apply(s => s.Lose(expense));
             r.Source.Apply(s => s.Gain(gains));
             r.Reaction.ActionSequence.Perform(r.Source, r.Target, expense.Amount);
         }
+        else 
+            Message.Publish(new CardResolutionFinished());
     }
 }
