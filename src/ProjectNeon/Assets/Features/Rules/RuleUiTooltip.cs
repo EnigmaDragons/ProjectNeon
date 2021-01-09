@@ -6,7 +6,7 @@ public class RuleUiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private StringVariable key;
     [SerializeField] private StringKeyValueCollection rules;
 
-    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new ShowTooltip(rules[key]));
+    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new ShowTooltip(rules[key], showBackground: true));
     public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
 }
     
