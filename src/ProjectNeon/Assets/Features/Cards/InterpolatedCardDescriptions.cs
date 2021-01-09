@@ -73,10 +73,8 @@ public static class InterpolatedCardDescriptions
 
             if (token.Value.StartsWith("{E["))
                 result = result.Replace("{E[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner)));
-
             if (token.Value.StartsWith("{D["))
                 result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex]));
-
             if (forReaction)
                 result = result.Replace("{RE[" + effectIndex + "]}", Bold(EffectDescription(reactionEffects[effectIndex], owner)));
         }
@@ -102,19 +100,28 @@ public static class InterpolatedCardDescriptions
     
     private static string UppercaseFirst(string s) => char.ToUpper(s[0]) + s.Substring(1);
 
+    private static string PhysDamageIcon => Sprite(0);
+    private static string RawDamageIcon => Sprite(1);
+    private static string MagicDamageIcon => Sprite(2);
+    private static string Sprite(int index) => $"<sprite index={index}>";
+
+    private static string WithPhysicalDamageIcon(string s) => $"{s} {PhysDamageIcon}";
+    private static string WithMagicDamageIcon(string s) => $"{s} {MagicDamageIcon}";
+    private static string WithRawDamageIcon(string s) => $"{s} {RawDamageIcon}";
+    
     public static string EffectDescription(EffectData data, Maybe<Member> owner)
     {
         if (data.EffectType == EffectType.Attack
             || data.EffectType == EffectType.PhysicalDamageOverTime)
-            return owner.IsPresent
-                ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
-                : data.BaseAmount > 0 
-                    ? $"{data.BaseAmount} + {data.FloatAmount}x ATK" 
-                    : $"{data.FloatAmount}x ATK";
+            return WithPhysicalDamageIcon(owner.IsPresent
+                    ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
+                    : data.BaseAmount > 0 
+                        ? $"{data.BaseAmount} + {data.FloatAmount}x ATK" 
+                        : $"{data.FloatAmount}x ATK");
         if (data.EffectType == EffectType.DealRawDamageFormula)
-            return owner.IsPresent 
+            return WithRawDamageIcon(owner.IsPresent 
                 ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
-                : FormattedFormula(data.Formula);
+                : FormattedFormula(data.Formula));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             return owner.IsPresent
                 ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
@@ -124,9 +131,9 @@ public static class InterpolatedCardDescriptions
                 || data.EffectType == EffectType.HealMagic
                 || data.EffectType == EffectType.HealOverTime
                 || data.EffectType == EffectType.AdjustStatAdditivelyBaseOnMagicStat)
-            return owner.IsPresent
+            return WithMagicDamageIcon(owner.IsPresent
                 ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
-                : WithBaseAmount(data, "x MAG");
+                : WithBaseAmount(data, "x MAG"));
         if (data.EffectType == EffectType.ShieldToughness
             || data.EffectType == EffectType.HealToughness)
             return owner.IsPresent
