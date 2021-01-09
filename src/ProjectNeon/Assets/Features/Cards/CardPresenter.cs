@@ -48,6 +48,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         _card = null;
         _cardType = null;
     }
+
+    public void Set(Card card) => Set(false, card, () => { }, (_, __) => false);
     
     public void Set(bool isHand, Card card, Action onClick, Func<BattleState, Card, bool> getCanPlay)
     {

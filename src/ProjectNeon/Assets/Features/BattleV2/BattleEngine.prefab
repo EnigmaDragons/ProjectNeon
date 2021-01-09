@@ -106,10 +106,12 @@ MonoBehaviour:
     type: 2}
   resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
   reactionZone: {fileID: 11400000, guid: 69ea9d8ec0e73e64499d227be3823c82, type: 2}
+  currentResolvingCardZone: {fileID: 11400000, guid: db4634ba2958e5847b6081d6031d54cd,
+    type: 2}
   enemies: {fileID: 587736734442084277}
   delay:
     UseConstant: 1
-    ConstantValue: 1.5
+    ConstantValue: 2.1
     FloatVariable: {fileID: 0}
 --- !u!114 &5587667412285573489
 MonoBehaviour:
@@ -204,6 +206,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BattleUIV2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5416302700551897897, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5524449074993072346, guid: 67caa708d15b6ca4dad135bc602c32c7,
         type: 3}
