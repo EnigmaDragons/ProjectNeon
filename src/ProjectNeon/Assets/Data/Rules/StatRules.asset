@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931bdbd8391bd7d45b4027bfcba8ad1a, type: 3}
+  m_Name: StatRules
+  m_EditorClassIdentifier: 
+  items:
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: c1ee77b2fb754624594092a57fc2c569, type: 2}
+    Value: 'Current Health / Maximum Health
+
+
+      Health persists between battles.
+
+
+      If
+      a character reaches 0 HP, they become unconscious.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: e7f3f64674ce4c4429003ce12f699980, type: 2}
+    Value: 'Maximum Shield Amount
+
+
+      Incoming damage reduces your shields before
+      your HP
+
+
+      Raw Damage and Damage over Time effects ignore shields
+
+
+      Your
+      Maximum Shield Amount is equals to 2x your toughness.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: c0430938d364fe34f9f54f7ed73f3392, type: 2}
+    Value: 'Toughness | <b>TGH</b>
+
+
+      This represents a character''s ability
+      to handle and recover from damage. Many cards scale off this stat.
+
+
+      Your
+      Maximum Shield Amount is equals to 2x your toughness.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
+    Value: 'Attack | <b>ATK</b>
+
+
+      This stat is the primary offensive stat for
+      physical attack cards. It directly impacts your damage output.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: e04cb353987dbad4094394cb66ac1c6a, type: 2}
+    Value: 'Magic | <b>MAG</b>
+
+
+      This stat is the primary offensive stat for
+      magic attacks and spells. It directly impacts your damage output, healing output,
+      and other effects.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 17c8fbf9e2b5f79459e077374380ae85, type: 2}
+    Value: 'Armor | <b>ARM</b>
+
+
+      Reduces incoming physical damage by this amount.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 1085d0ae716f453429fd9122b0f8227c, type: 2}
+    Value: 'Resistance | <b>RES</b>
+
+
+      Reduces incoming magic damage by this
+      amount'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
+    Value: 'Leadership | <b>LEAD</b>
+
+
+      This stat impacts the effectiveness
+      of teamwork-oriented abilities. Many cards scale off this stat.'
