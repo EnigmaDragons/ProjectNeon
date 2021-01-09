@@ -93,6 +93,10 @@ public static class InterpolatedCardDescriptions
                 : data.BaseAmount > 0 
                     ? $"{data.BaseAmount} + {data.FloatAmount}x ATK" 
                     : $"{data.FloatAmount}x ATK";
+        if (data.EffectType == EffectType.DealRawDamageFormula)
+            return owner.IsPresent 
+                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
+                : FormattedFormula(data.Formula);
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             return owner.IsPresent
                 ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()

@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 public sealed class InterpolatedCardDescriptionsTests
@@ -8,7 +9,7 @@ public sealed class InterpolatedCardDescriptionsTests
             .With(StatType.Attack, 8)
             .With(new InMemoryResourceType("Ammo") { MaxAmount = 6, StartingAmount = 6}), 
         BattleRole.Unknown);
-
+    
     private readonly EffectData BasicAttack = new EffectData
     {
         EffectType = EffectType.Attack,
@@ -56,6 +57,12 @@ public sealed class InterpolatedCardDescriptionsTests
                 }
             , Owner));
 
+    [Test]
+    public void Interpolated_RawDamageFormula_IsCorrect()
+        => AssertMatchesIgnoreStyling("Deal 8 raw damage",
+            Description("Deal {E[0]} raw damage", new EffectData {EffectType = EffectType.DealRawDamageFormula, Formula = "Shield * 2"},
+                OwnerWith(m => m.State.AdjustShield(4))));
+
     private string Description(string s, EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.InterpolatedDescription(s, new[] {e}, new EffectData[0], owner);
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner) => InterpolatedCardDescriptions.InterpolatedDescription(s, new EffectData[0], new [] {re}, owner);
     private string ForEffect(EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.GenerateEffectDescription(e, owner);
@@ -65,4 +72,18 @@ public sealed class InterpolatedCardDescriptionsTests
         var unstyledActual = actual.Replace("<b>", "").Replace("</b>", "");
         Assert.AreEqual(expected, unstyledActual);
     }
+    
+    private Member OwnerWith(Action<Member> update)
+    {
+        var m = new Member(0, "", "", TeamType.Enemies,
+            new StatAddends()
+                .With(StatType.Damagability, 1)
+                .With(StatType.Attack, 8)
+                .With(StatType.Toughness, 8)
+                .With(new InMemoryResourceType("Ammo") {MaxAmount = 6, StartingAmount = 6}),
+            BattleRole.Unknown);
+        update(m);
+        return m;
+    }
+
 }
