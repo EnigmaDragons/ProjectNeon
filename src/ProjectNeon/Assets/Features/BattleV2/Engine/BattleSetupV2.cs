@@ -62,16 +62,16 @@ public class BattleSetupV2 : MonoBehaviour
     
     private void SetupEnemyEncounter()
     {
-        BattleLog.Write("Setting Up Enemies");
+        DevLog.Write("Setting Up Enemies");
         if (state.HasCustomEnemyEncounter)
         {
-            BattleLog.Write("Setting Up Custom Encounter");
+            DevLog.Write("Setting Up Custom Encounter");
             state.SetupEnemyEncounter();
         }
 
         if (enemyArea.Enemies.Count == 0)
         {
-            BattleLog.Write("Setting Up Fallback Random Encounter");
+            DevLog.Write("Setting Up Fallback Random Encounter");
             enemyArea = enemyArea.Initialized(encounterBuilder.Generate(3));
         }
 
@@ -101,7 +101,7 @@ public class BattleSetupV2 : MonoBehaviour
             cards.AddRange(party.Decks[i].Cards.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero))));
         }
 
-        BattleLog.Write("Setting Up Player Hand");
+        DevLog.Write("Setting Up Player Hand");
         Deck.InitShuffled(cards);
         
         for (var c = 0; c < startingCards.Value; c++)

@@ -1,3 +1,4 @@
+
 public class WriteBattleLogMessageRequested
 {
     public string Message { get; }

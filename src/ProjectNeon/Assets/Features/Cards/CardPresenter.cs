@@ -33,7 +33,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private Action _onClick;
     private Action _onMiddleMouse;
     private Vector3 _position;
-    private bool _isHand;
+    private string _zone;
+    
+    private bool IsHand => _zone.Contains("Hand");
 
     public string CardName => _cardType.Name;
     public bool Contains(Card c) => HasCard && c.Id == _card.Id;
@@ -49,16 +51,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         _cardType = null;
     }
 
-    public void Set(Card card) => Set(false, card, () => { }, (_, __) => false);
+    public void Set(Card card) => Set("Library", card, () => { }, (_, __) => false);
     
-    public void Set(bool isHand, Card card, Action onClick, Func<BattleState, Card, bool> getCanPlay)
+    public void Set(string zone, Card card, Action onClick, Func<BattleState, Card, bool> getCanPlay)
     {
         InitFreshCard(onClick);
 
         _card = card;
         _cardType = card.Type;
         _getCanPlay = getCanPlay;
-        _isHand = isHand;
+        _zone = zone;
         RenderCardType();
     }
     
@@ -69,7 +71,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         _card = null;
         _cardType = cardType;
         _getCanPlay = (_, __) => false;
-        _isHand = false;
+        _zone = "Library";
         RenderCardType();
     }
 
@@ -86,13 +88,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     private string CostLabel(ResourceCost cost)
     {
+        var owner = _card != null ? new Maybe<Member>(_card.Owner) : Maybe<Member>.Missing();
         var numericAmount = cost.BaseAmount.ToString();
         if (!cost.PlusXCost)
             return numericAmount;
         else if (cost.BaseAmount == 0)
-            return "X";
+            return owner.IsPresent && IsHand 
+                ? _card.Cost.XAmountSpent(owner.Value).Amount.ToString() 
+                : "X";
         else
-            return $"{numericAmount}+X";
+            return owner.IsPresent && IsHand 
+                ? _card.Cost.XAmountSpent(owner.Value).Amount.ToString() 
+                : $"{numericAmount}+X";
     }
 
     public void ToggleAsBasic()
@@ -226,13 +233,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             _onClick();
         if (eventData.button == PointerEventData.InputButton.Middle) 
             _onMiddleMouse();
-        if (_isHand && _card != null && eventData.button == PointerEventData.InputButton.Right)
+        if (IsHand && _card != null && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
     }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_isHand)
+        if (IsHand)
             Message.Publish(new CardHoverEnter(this));
     }
 

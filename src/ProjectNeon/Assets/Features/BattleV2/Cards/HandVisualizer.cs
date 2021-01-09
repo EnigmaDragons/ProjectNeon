@@ -113,7 +113,7 @@ public sealed class HandVisualizer : MonoBehaviour
             var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
-            c.Set(true, card, 
+            c.Set("Hand", card, 
                 () => SelectCard(cardIndex), 
                 (battleState, c2) => allowInteractions && (!onlyAllowInteractingWithPlayables || c2.IsPlayableByHero(state)));
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
@@ -124,15 +124,10 @@ public sealed class HandVisualizer : MonoBehaviour
             c.SetTargetPosition(targetPosition);
             c.transform.SetAsLastSibling();
         }
-        
-//            if (isHighlighted)
-//                highlightedCardIndex = presenterIndex;
-//        if (highlightedCardIndex > -1)
-//            _cardPool.ShownCards[highlightedCardIndex].transform.SetAsLastSibling();
 
         if (cards.Any() && state.NumberOfRecyclesRemainingThisTurn == 0 && cards.All(c => !c.IsAnyFormPlayableByHero() || !c.Owner.CanPlayCards()))
         {
-            BattleLog.Write("No playable cards. Requesting early turn Confirmation.");
+            DevLog.Write("No playable cards. Requesting early turn Confirmation.");
             Message.Publish(new BeginPlayerTurnConfirmation());
         }
     }

@@ -19,7 +19,8 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     
     public IEnumerator Begin()
     {
-        BattleLog.Write($"Card Resolution Began");
+        DevLog.Write($"Card Resolution Began");
+        resolutionZone.Moves.ForEach(c => BattleLog.Write($"{c.Member.Name} played {c.Card.Name}"));
         yield return ui.BeginResolutionPhase();
         yield return new WaitForSeconds(delay);
         ResolveNext();
@@ -85,7 +86,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     {
         if (msg.CanRetarget && msg.Target.Members.All(m => !m.IsConscious()))
         {
-            Log.Info("Retargeting Battle Effect");
+            DevLog.Write("Retargeting Battle Effect");
             var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
             if (newTargets.Any())
             {
@@ -108,7 +109,6 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     private IEnumerator FinishCard()
     {
         yield return new WaitForSeconds(delay);
-        Debug.Log($"Clearing {currentResolvingCardZone.Count} cards from Current Zone");
         currentResolvingCardZone.Clear();
         ResolveNext();
     }
@@ -120,13 +120,13 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         reactionZone.PutOnBottom(card);
         currentResolvingCardZone.Set(card);
         yield return new WaitForSeconds(delay);
-        var cost = r.Reaction.Cost;
-        var gain = r.Reaction.Gain;
         if (r.Reaction.IsPlayableBy(r.Source))
         {
-            Message.Publish(new CardResolutionStarted { Originator = r.Source.Id });
-            var expense = cost.ResourcesSpent(r.Source);
-            var gains = gain.ResourcesGained(r.Source);
+            var expense = r.Reaction.Cost.ResourcesSpent(r.Source);
+            var gains = r.Reaction.Gain.ResourcesGained(r.Source);
+            var xAmountSpent = r.Reaction.Cost.XAmountSpent(r.Source);
+            var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, expense, gains, xAmountSpent);
+            Message.Publish(new CardResolutionStarted(playedCard));
             r.Source.Apply(s => s.Lose(expense));
             r.Source.Apply(s => s.Gain(gains));
             r.Reaction.ActionSequence.Perform(r.Source, r.Target, expense.Amount);

@@ -29,8 +29,14 @@ public static class InterpolatedCardDescriptions
                 .Where(x => x != null)
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
                 .SelectMany(b => b.ConditionData.ReferencedEffect.Actions.Select(a => a.BattleEffect));
+
+            var reactionBattleEffects = card.Actions()
+                .Where(x => x != null)
+                .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Battle))
+                .Where(b => b.BattleEffect.IsReaction)
+                .SelectMany(c => c.BattleEffect.ReactionSequence.ActionSequence.CardActions.Actions.Select(d => d.BattleEffect));
             
-            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), owner);
+            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner);
 
         }
         catch (Exception e)
@@ -41,37 +47,74 @@ public static class InterpolatedCardDescriptions
         }
     }
 
-    public static string InterpolatedDescription(string desc, EffectData[] effects, Maybe<Member> owner)
+    public static string InterpolatedDescription(string desc, EffectData[] effects, EffectData[] reactionEffects, Maybe<Member> owner)
     {
         var result = desc;
         
-        var tokens = Regex.Matches(desc, "{(.*?)}");
+        var xCostReplacementToken = "{X}";
+        result = result.Replace(xCostReplacementToken, Bold(XCostDescription(owner)));
+
+        if (desc.Trim().Equals("{Auto}", StringComparison.InvariantCultureIgnoreCase))
+            return string.Join(" ", effects.Select(e => AutoDescription(e, owner)));
+        
+        var tokens = Regex.Matches(result, "{(.*?)}");
         foreach (Match token in tokens)
         {
-            if (!token.Value.StartsWith("{E") && !token.Value.StartsWith("{D"))
-                throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects and Durations");
+            var forReaction = token.Value.StartsWith("{RE[");
+            var prefixes = new[] {"{E", "{D", "{RE"};
+            if (prefixes.None(p => token.Value.StartsWith(p)))
+                throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects, Durations, and Reaction Effects");
 
             var effectIndex = int.Parse(Regex.Match(token.Result("$1"), "\\[(.*?)\\]").Result("$1"));
-            if (effectIndex >= effects.Length)
+            if (!forReaction && effectIndex >= effects.Length)
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {effects.Length} Battle Effects");
+            if (forReaction && effectIndex >= reactionEffects.Length)
+                throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {reactionEffects.Length} Reaction Battle Effects");
 
-            var effectReplacementToken = "{E[" + effectIndex + "]}";
-            if (result.Contains("{E["))
-                result = result.Replace(effectReplacementToken, Bold(GenerateEffectDescription(effects[effectIndex], owner)));
+            if (token.Value.StartsWith("{E["))
+                result = result.Replace("{E[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner)));
 
-            var durationReplacementToken = "{D[" + effectIndex + "]}";
-            result = result.Replace(durationReplacementToken, GenerateDurationDescription(effects[effectIndex]));
+            if (token.Value.StartsWith("{D["))
+                result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex]));
+
+            if (forReaction)
+                result = result.Replace("{RE[" + effectIndex + "]}", Bold(EffectDescription(reactionEffects[effectIndex], owner)));
         }
+        
         return result;
     }
+
+    private static string XCostDescription(Maybe<Member> owner) 
+        => owner.Select(o => o.State.PrimaryResourceAmount.ToString(), () => "X");
+
+    private static string AutoDescription(EffectData data, Maybe<Member> owner)
+    {
+        var delay = DelayDescription(data);
+        var coreDesc = "";
+        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner))} {data.EffectScope} {DurationDescription(data)}";
+        if (data.EffectType == EffectType.ApplyVulnerable)
+            coreDesc = $"gives Vulnerable {DurationDescription(data)}";
+        if (coreDesc == "")
+            throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
+        return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
+    }
     
-    public static string GenerateEffectDescription(EffectData data, Maybe<Member> owner)
+    private static string UppercaseFirst(string s) => char.ToUpper(s[0]) + s.Substring(1);
+
+    public static string EffectDescription(EffectData data, Maybe<Member> owner)
     {
         if (data.EffectType == EffectType.Attack
             || data.EffectType == EffectType.PhysicalDamageOverTime)
             return owner.IsPresent
-                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
-                : $"{data.FloatAmount}x ATK";
+                ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
+                : data.BaseAmount > 0 
+                    ? $"{data.BaseAmount} + {data.FloatAmount}x ATK" 
+                    : $"{data.FloatAmount}x ATK";
+        if (data.EffectType == EffectType.DealRawDamageFormula)
+            return owner.IsPresent 
+                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
+                : FormattedFormula(data.Formula);
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             return owner.IsPresent
                 ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
@@ -102,7 +145,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.ApplyMultiplicativeStatInjury)
             return $"{data.FloatAmount}x {data.EffectScope}";
         
-        Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
+        Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }
 
@@ -113,15 +156,27 @@ public static class InterpolatedCardDescriptions
         return baseAmount + floatAmount;
     }
 
-    private static string GenerateDurationDescription(EffectData data)
+    private static string DurationDescription(EffectData data)
     {
         var value = data.NumberOfTurns.Value;
         var turnString = value < 0
-                        ? "the Battle." 
+                        ? "the Battle" 
                         : value < 2
-                            ? "Current Turn." 
-                            : $"{Bold(value.ToString())} Turns.";
-        return $"for {turnString}";
+                            ? data.TurnDelay == 0 ? "Current Turn" : "1 Turn" 
+                            : $"{Bold(value.ToString())} Turns";
+
+        return $"for {turnString}.";
+    }
+
+    private static string DelayDescription(EffectData data)
+    {
+        var delayValue = data.TurnDelay;
+        var delayString = delayValue < 1
+            ? ""
+            : delayValue == 1
+                ? "Next turn, "
+                : $"In {delayValue} turns, ";
+        return delayString;
     }
 
     private static string FormattedFormula(string s)

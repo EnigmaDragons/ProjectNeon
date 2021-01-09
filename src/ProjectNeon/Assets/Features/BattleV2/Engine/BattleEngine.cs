@@ -16,6 +16,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private bool setupOnStart;
     [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
 
+    private int _turnNumber;
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
     
     private void Awake()
@@ -35,11 +36,13 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     {
         BeginPhase(BattleV2Phase.Setup);
         yield return setup.Execute();
+        BattleLog.Write("Battle Started");
         BeginStartOfTurn();
     }
 
     private void BeginStartOfTurn()
     {
+        BattleLog.Write($"Starting Turn {_turnNumber++}");
         BeginPhase(BattleV2Phase.StartOfTurnEffects);
         state.StartTurn();
         statusPhase.ProcessStartOfTurnEffects();
@@ -131,7 +134,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     private void LogProcessStep(string message)
     {
         if (logProcessSteps)
-            BattleLog.Write(message);
+            DevLog.Write(message);
     }
     
     public enum BattleV2Phase

@@ -57,7 +57,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     private IEnumerator AwaitAnimationFinish(BattleVFX f)
     {
         yield return new WaitForSeconds(f.DurationSeconds);
-        BattleLog.Write($"Finished {f.EffectName} in {f.DurationSeconds} seconds.");
+        DevLog.Write($"Finished {f.EffectName} in {f.DurationSeconds} seconds.");
         Message.Publish(new Finished<BattleEffectAnimationRequested>());
     }
 }

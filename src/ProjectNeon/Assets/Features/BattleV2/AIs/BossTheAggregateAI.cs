@@ -5,7 +5,7 @@ public class BossTheAggregateAI : TurnAI
 {
     public override void InitForBattle()
     {
-        BattleLog.Write("Initialized The Aggregate Core");
+        DevLog.Write("Initialized The Aggregate Core");
     }
     
     public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)

@@ -15,6 +15,7 @@ public sealed class EffectData
     public StringReference EffectScope = new StringReference { UseConstant = false };
     public bool HitsRandomTargetMember;
     public CardActionsData ReferencedSequence;
+    public bool IsReaction => ReactionSequence != null;
     public ReactionCardType ReactionSequence;
     public StatusTag StatusTag;
     public int TurnDelay;
