@@ -45,7 +45,10 @@ public static class InterpolatedCardDescriptions
     {
         var result = desc;
         
-        var tokens = Regex.Matches(desc, "{(.*?)}");
+        var xCostReplacementToken = "{X}";
+        result = result.Replace(xCostReplacementToken, Bold(GenerateXCostDescription(owner)));
+        
+        var tokens = Regex.Matches(result, "{(.*?)}");
         foreach (Match token in tokens)
         {
             if (!token.Value.StartsWith("{E") && !token.Value.StartsWith("{D"))
@@ -56,15 +59,18 @@ public static class InterpolatedCardDescriptions
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {effects.Length} Battle Effects");
 
             var effectReplacementToken = "{E[" + effectIndex + "]}";
-            if (result.Contains("{E["))
-                result = result.Replace(effectReplacementToken, Bold(GenerateEffectDescription(effects[effectIndex], owner)));
+            result = result.Replace(effectReplacementToken, Bold(GenerateEffectDescription(effects[effectIndex], owner)));
 
             var durationReplacementToken = "{D[" + effectIndex + "]}";
             result = result.Replace(durationReplacementToken, GenerateDurationDescription(effects[effectIndex]));
         }
+        
         return result;
     }
-    
+
+    private static string GenerateXCostDescription(Maybe<Member> owner) 
+        => owner.Select(o => o.State.PrimaryResourceAmount.ToString(), () => "X");
+
     public static string GenerateEffectDescription(EffectData data, Maybe<Member> owner)
     {
         if (data.EffectType == EffectType.Attack
@@ -102,7 +108,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.ApplyMultiplicativeStatInjury)
             return $"{data.FloatAmount}x {data.EffectScope}";
         
-        Debug.LogWarning($"Description for {data.EffectType} is not implemented.");
+        Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }
 

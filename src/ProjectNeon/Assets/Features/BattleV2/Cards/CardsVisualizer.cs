@@ -103,7 +103,7 @@ public class CardsVisualizer : MonoBehaviour
             var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
-            c.Set(false, card, () => { }, (_, __) => false);
+            c.Set(card);
             c.SetDisabled(!_isFocused);
             if (!card.Owner.IsConscious() || card.Owner.IsStunnedForCurrentTurn())
                 c.SetDisabled(true);
