@@ -119,7 +119,7 @@ public class CardResolutionZone : ScriptableObject
 
     private void StartResolvingOneCard(IPlayedCard played)
     {
-        Message.Publish(new CardResolutionStarted());
+        Message.Publish(new CardResolutionStarted { Originator = played.Member.Id });
         BattleLog.Write($"Began resolving {played.Card.Name}");
         if (physicalZone.Count == 0)
             Log.Info($"Weird Physical Zone Draw bug.");
