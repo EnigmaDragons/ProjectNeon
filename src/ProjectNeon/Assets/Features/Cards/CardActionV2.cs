@@ -8,7 +8,7 @@ public class CardActionV2
     [SerializeField] private EffectData battleEffect = new EffectData();
     [SerializeField] private ActionConditionData conditionData = new ActionConditionData();
     [SerializeField] private AnimationData characterAnimation;
-    [SerializeField] private StringReference atTargetAnimation;
+    [SerializeField] private AtTargetAnimationData atTargetAnimation;
     [SerializeField] private Enemy enemyToSpawn;
 
     public CardBattleActionType Type => type;
@@ -16,7 +16,7 @@ public class CardActionV2
     public Enemy EnemyToSpawn => enemyToSpawn;
     public ActionConditionData ConditionData => conditionData;
     public AnimationData CharacterAnimation => characterAnimation;
-    public StringReference AtTargetAnimation => atTargetAnimation;
+    public AtTargetAnimationData AtTargetAnimation => atTargetAnimation;
     
     public CardActionV2() {}
     public CardActionV2(EffectData e)
