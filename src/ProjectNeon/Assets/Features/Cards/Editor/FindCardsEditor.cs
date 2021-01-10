@@ -28,6 +28,14 @@ public class FindCardsEditor : EditorWindow
             .Select(e => e.name)
             .ToArray();
     
+    // By Description Search String
+    private string _searchString;
+    private string[] GetAllCardsWithDescription(string s) =>
+        GetAllInstances<CardType>()
+            .Where(c => c.Description.Contains(s))
+            .Select(e => e.name)
+            .ToArray();
+    
     void OnGUI()
     {
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
