@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 
 public sealed class InterpolatedCardDescriptionsTests
@@ -22,11 +23,15 @@ public sealed class InterpolatedCardDescriptionsTests
 
     [Test]
     public void Interpolated_AttackWithoutOwner_IsCorrect() 
-        => Assert.AreEqual("1x ATK", ForEffect(BasicAttack, Maybe<Member>.Missing()));
+        => AssertMatchesIgnoreStyling("1x ATK", ForEffect(BasicAttack, Maybe<Member>.Missing()));
 
     [Test]
     public void Interpolated_AttackWithOwner_IsCorrect() 
-        => Assert.AreEqual("8", ForEffect(BasicAttack, Owner));
+        => AssertMatchesIgnoreStyling("8", ForEffect(BasicAttack, Owner));
+
+    [Test]
+    public void Interpolated_ResourceIcon_IsCorrect()
+        => AssertContainsSprite(Description("Flames", BasicAttack, Owner));
     
     [Test]
     public void Interpolated_Duration_IsCorrect()
@@ -74,9 +79,16 @@ public sealed class InterpolatedCardDescriptionsTests
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner) => InterpolatedCardDescriptions.InterpolatedDescription(s, new EffectData[0], new [] {re}, owner);
     private string ForEffect(EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.EffectDescription(e, owner);
 
+    private void AssertContainsSprite(string actual) => Assert.IsTrue(actual.Contains("<sprite index="));
+    
     private void AssertMatchesIgnoreStyling(string expected, string actual)
     {
-        var unstyledActual = actual.Replace("<b>", "").Replace("</b>", "");
+        var unstyledActual = actual
+            .Replace("<b>", "")
+            .Replace("</b>", "")
+            .Replace(" <sprite index=", "");
+        Enumerable.Range(0, 32)
+            .ForEach(i => unstyledActual = unstyledActual.Replace($"{i}>", ""));
         Assert.AreEqual(expected, unstyledActual);
     }
     
