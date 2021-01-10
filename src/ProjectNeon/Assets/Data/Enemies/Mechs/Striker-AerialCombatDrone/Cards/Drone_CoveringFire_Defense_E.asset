@@ -13,6 +13,59 @@ MonoBehaviour:
   m_Name: Drone_CoveringFire_Defense_E
   m_EditorClassIdentifier: 
   Actions:
+  - type: 31
+    battleEffect:
+      EffectType: 0
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReferencedSequence: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      StatusTag: 0
+      TurnDelay: 0
+      Formula: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    atTargetAnimation:
+      animation:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 11400000, guid: b6e4cb31be52d4a46a4440ed9829df8c, type: 2}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+    enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
       EffectType: 11
@@ -36,7 +89,12 @@ MonoBehaviour:
       ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
       StatusTag: 0
-      AtStartOfNextTurn: 0
+      TurnDelay: 0
+      Formula: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -50,7 +108,14 @@ MonoBehaviour:
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     atTargetAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
