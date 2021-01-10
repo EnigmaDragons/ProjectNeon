@@ -19,7 +19,7 @@ public class CardActionsDataEditor : Editor
     {
         EditorGUI.indentLevel = 0;
         var actions = _target.Actions.ToArray();
-        PresentLabelsWithControls("Effect Sequence", menu => menu.AddItem(new GUIContent("Insert New"), false, () =>
+        PresentLabelsWithControls("Effect Sequence", menu => menu.AddItem(new GUIContent("Insert New First"), false, () =>
         {
             _target.Actions = new CardActionV2[] { new CardActionV2() }.Concat(actions).ToArray();
             EditorUtility.SetDirty(target);
@@ -36,6 +36,14 @@ public class CardActionsDataEditor : Editor
                     _target.Actions = actions.Take(Array.IndexOf(actions, action) + 1)
                         .Concat(new CardActionV2[] {new CardActionV2()})
                         .Concat(actions.Skip(Array.IndexOf(actions, action) + 1))
+                        .ToArray();
+                    EditorUtility.SetDirty(target);
+                });
+                menu.AddItem(new GUIContent("Insert New Before"), false, () =>
+                {
+                    _target.Actions = actions.Take(Array.IndexOf(actions, action))
+                        .Concat(new CardActionV2[] {new CardActionV2()})
+                        .Concat(actions.Skip(Array.IndexOf(actions, action)))
                         .ToArray();
                     EditorUtility.SetDirty(target);
                 });

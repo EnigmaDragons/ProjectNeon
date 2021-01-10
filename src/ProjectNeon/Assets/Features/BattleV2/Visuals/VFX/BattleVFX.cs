@@ -11,7 +11,7 @@ public class BattleVFX : MonoBehaviour
     private float _liveDurationSeconds;
     private float _liveMaxLifetime;
     
-    public string EffectName => effectName.Value;
+    public string EffectName => effectName == null ? "" : effectName.Value;
     public float DurationSeconds => _liveDurationSeconds;
     public bool WaitForCompletion => waitForCompletion;
 

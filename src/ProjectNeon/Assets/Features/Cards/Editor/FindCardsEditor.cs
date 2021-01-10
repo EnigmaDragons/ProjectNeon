@@ -96,13 +96,13 @@ public class FindCardsEditor : EditorWindow
         }
         DrawUILine();
         
-        if (GUILayout.Button("Find Cards Without Animations"))
+        if (GUILayout.Button("Find Cards Without At Target Animations"))
         {
             var cards = GetAllInstances<CardType>()
                 .Where(c => c.AllCardEffectSteps.None(t => t.Type == CardBattleActionType.AnimateAtTarget))
                 .Select(e => e.name)
                 .ToArray();
-            ShowCards("Cards Without Animations", cards);
+            ShowCards("Cards Without At Target Animations", cards);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
