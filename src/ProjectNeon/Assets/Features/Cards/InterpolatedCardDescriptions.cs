@@ -123,13 +123,10 @@ public static class InterpolatedCardDescriptions
     
     public static string EffectDescription(EffectData data, Maybe<Member> owner)
     {
-        if (data.EffectType == EffectType.Attack
-            || data.EffectType == EffectType.PhysicalDamageOverTime)
-            return WithPhysicalDamageIcon(owner.IsPresent
-                    ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
-                    : data.BaseAmount > 0 
-                        ? $"{data.BaseAmount} + {data.FloatAmount}x ATK" 
-                        : $"{data.FloatAmount}x ATK");
+        if (data.EffectType == EffectType.Attack)
+            return WithPhysicalDamageIcon(AttackAmount(data, owner));
+        if (data.EffectType == EffectType.PhysicalDamageOverTime)
+            return WithRawDamageIcon(AttackAmount(data, owner));
         if (data.EffectType == EffectType.DealRawDamageFormula)
             return WithRawDamageIcon(owner.IsPresent 
                 ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
@@ -146,6 +143,7 @@ public static class InterpolatedCardDescriptions
             return MagicAmount(data, owner);
         if (data.EffectType == EffectType.MagicDamageOverTime)
             return WithRawDamageIcon(MagicAmount(data, owner));
+        
         if (data.EffectType == EffectType.ShieldToughness
             || data.EffectType == EffectType.HealToughness)
             return owner.IsPresent
@@ -173,6 +171,13 @@ public static class InterpolatedCardDescriptions
             ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
             : WithBaseAmount(data, "x MAG");
 
+    private static string AttackAmount(EffectData data, Maybe<Member> owner)
+        => owner.IsPresent
+            ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
+            : data.BaseAmount > 0
+                ? $"{data.BaseAmount} + {data.FloatAmount}x ATK"
+                : $"{data.FloatAmount}x ATK";
+    
     private static string WithBaseAmount(EffectData data, string floatString)
     {
         var baseAmount = data.BaseAmount != 0 ? $"{data.BaseAmount.Value}" : "";

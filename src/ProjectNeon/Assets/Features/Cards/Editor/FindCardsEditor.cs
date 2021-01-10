@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
@@ -32,7 +33,7 @@ public class FindCardsEditor : EditorWindow
     private string _searchString;
     private string[] GetAllCardsWithDescription(string s) =>
         GetAllInstances<CardType>()
-            .Where(c => c.Description.Contains(s))
+            .Where(c => c.Description.ContainsAnyCase(s))
             .Select(e => e.name)
             .ToArray();
     
