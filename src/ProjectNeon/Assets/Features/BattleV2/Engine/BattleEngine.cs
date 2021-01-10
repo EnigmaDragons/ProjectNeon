@@ -129,23 +129,12 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         var message = $"{finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);
         phase = newPhase;
+        state.Phase = newPhase;
     }
     
     private void LogProcessStep(string message)
     {
         if (logProcessSteps)
             DevLog.Write(message);
-    }
-    
-    public enum BattleV2Phase
-    {
-        NotBegun = 0,
-        Setup = 20,
-        StartOfTurnEffects = 30,
-        Command = 40,
-        Resolution = 50,
-        EndOfTurnEffects = 60,
-        Wrapup = 70,
-        Finished = 80
     }
 }
