@@ -29,8 +29,10 @@ public static class InterpolatedCardDescriptions
             var conditionalBattleEffects = card.Actions()
                 .Where(x => x != null)
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
-                .SelectMany(b => b.ConditionData.ReferencedEffect.Actions.Select(a => a.BattleEffect));
-
+                .SelectMany(b => b.ConditionData.ReferencedEffect.Actions
+                    .Where(c => c.Type == CardBattleActionType.Battle)
+                    .Select(a => a.BattleEffect));
+            
             var reactionBattleEffects = card.Actions()
                 .Where(x => x != null)
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Battle))
@@ -38,7 +40,6 @@ public static class InterpolatedCardDescriptions
                 .SelectMany(c => c.BattleEffect.ReactionSequence.ActionSequence.CardActions.Actions.Select(d => d.BattleEffect));
             
             return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner, xCost);
-
         }
         catch (Exception e)
         {

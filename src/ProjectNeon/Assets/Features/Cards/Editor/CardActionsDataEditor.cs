@@ -31,19 +31,19 @@ public class CardActionsDataEditor : Editor
             var action = actions[refBrokeni];
             PresentLabelsWithControls($"Effect {refBrokeni}", menu =>
             {
-                menu.AddItem(new GUIContent("Insert New After"), false, () =>
-                {
-                    _target.Actions = actions.Take(Array.IndexOf(actions, action) + 1)
-                        .Concat(new CardActionV2[] {new CardActionV2()})
-                        .Concat(actions.Skip(Array.IndexOf(actions, action) + 1))
-                        .ToArray();
-                    EditorUtility.SetDirty(target);
-                });
                 menu.AddItem(new GUIContent("Insert New Before"), false, () =>
                 {
                     _target.Actions = actions.Take(Array.IndexOf(actions, action))
                         .Concat(new CardActionV2[] {new CardActionV2()})
                         .Concat(actions.Skip(Array.IndexOf(actions, action)))
+                        .ToArray();
+                    EditorUtility.SetDirty(target);
+                });
+                menu.AddItem(new GUIContent("Insert New After"), false, () =>
+                {
+                    _target.Actions = actions.Take(Array.IndexOf(actions, action) + 1)
+                        .Concat(new CardActionV2[] {new CardActionV2()})
+                        .Concat(actions.Skip(Array.IndexOf(actions, action) + 1))
                         .ToArray();
                     EditorUtility.SetDirty(target);
                 });

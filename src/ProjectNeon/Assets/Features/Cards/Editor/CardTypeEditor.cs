@@ -79,7 +79,7 @@ public class CardTypeEditor : Editor
             var sequence = sequences[refBrokenI];
             PresentLabelsWithControls($"Command {refBrokenI}", menu =>
             {
-                menu.AddItem(new GUIContent("Add"), false, () =>
+                menu.AddItem(new GUIContent("Insert New After"), false, () =>
                 {
                     targetCard.actionSequences = sequences.Take(Array.IndexOf(sequences, sequence) + 1)
                         .Concat(new CardActionSequence[] {new CardActionSequence()})
@@ -87,6 +87,10 @@ public class CardTypeEditor : Editor
                         .ToArray();
                     EditorUtility.SetDirty(target);
                 });
+                if (refBrokenI > 0)
+                    menu.AddItem(new GUIContent("Move Up"), false, () => targetCard.actionSequences.SwapItems(refBrokenI, refBrokenI - 1));
+                if (refBrokenI < sequences.Length - 1)
+                    menu.AddItem(new GUIContent("Move Down"), false, () => targetCard.actionSequences.SwapItems(refBrokenI, refBrokenI + 1));
                 menu.AddItem(new GUIContent("Delete"), false, () =>
                 {
                     targetCard.actionSequences = sequences.Where(x => x != sequence).ToArray();
