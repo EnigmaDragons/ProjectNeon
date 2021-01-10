@@ -86,6 +86,17 @@ public class FindCardsEditor : EditorWindow
                 .Show();
             GUIUtility.ExitGUI();
         }
+        DrawUILine();
+        
+        _searchString = GUILayout.TextField(_searchString);
+        if (GUILayout.Button("Find Term in Card Description"))
+        {
+            var cards = GetAllCardsWithDescription(_searchString);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Description Containing {_searchString}", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
     }
     
     private static T[] GetAllInstances<T>() where T : ScriptableObject
