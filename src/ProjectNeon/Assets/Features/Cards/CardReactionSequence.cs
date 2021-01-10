@@ -17,7 +17,7 @@ public sealed class CardReactionSequence
         Message.Subscribe<SequenceFinished>(_ =>
         {
             Message.Unsubscribe(this);
-            Message.Publish(new CardResolutionFinished());
+            Message.Publish(new CardResolutionFinished(source.Id));
         }, this);
         SequenceMessage.Queue(cardActions.PlayAsReaction(source, target, amountPaid));
     }

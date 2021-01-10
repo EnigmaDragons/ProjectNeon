@@ -132,6 +132,6 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
             r.Reaction.ActionSequence.Perform(r.Source, r.Target, expense.Amount);
         }
         else 
-            Message.Publish(new CardResolutionFinished());
+            Message.Publish(new CardResolutionFinished(r.Source.Id));
     }
 }

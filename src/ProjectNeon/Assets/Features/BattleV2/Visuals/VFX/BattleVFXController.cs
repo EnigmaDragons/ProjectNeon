@@ -9,8 +9,6 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     [SerializeField] private Transform enemyGroupLocation;
     [SerializeField] private Transform heroesGroupLocation;
 
-    private void Awake() => fx.ForEach(f => f.gameObject.SetActive(false));
-
     protected override void Execute(BattleEffectAnimationRequested e)
     {
         Log.Info($"VFX Requested {e.EffectName}");

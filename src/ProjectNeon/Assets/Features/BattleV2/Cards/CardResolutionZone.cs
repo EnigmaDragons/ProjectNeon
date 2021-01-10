@@ -14,6 +14,7 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private CardPlayZone currentResolvingCardZone;
     [SerializeField] private bool isResolving;
     [SerializeField] private BattleState battleState;
+    [SerializeField] private FloatReference delayBeforeResolving = new FloatReference(0.3f);
     public IPlayedCard LastPlayed { get; set; }
     
     private List<IPlayedCard> _moves = new List<IPlayedCard>();
@@ -127,21 +128,26 @@ public class CardResolutionZone : ScriptableObject
             DevLog.Write($"Weird Physical Zone Draw bug.");
         else
             physicalZone.DrawOneCard();
-        
-        var card = played.Card;
-        if (card.Owner.IsStunnedForCard())
+
+        Async.ExecuteAfterDelay(delayBeforeResolving, () =>
         {
-            BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
-            card.Owner.Apply(m => m.ApplyTemporaryAdditive(AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, -1), true)));
-            WrapupCard(played, card);
-            Message.Publish(new CardResolutionFinished());
-        }
-        else
-        {
-            currentResolvingCardZone.Set(card);
-            played.Perform(battleState.GetSnapshot());
-            WrapupCard(played, card);
-        }
+            var card = played.Card;
+            if (card.Owner.IsStunnedForCard())
+            {
+                BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
+                card.Owner.Apply(m =>
+                    m.ApplyTemporaryAdditive(
+                        AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, -1), true)));
+                WrapupCard(played, card);
+                Message.Publish(new CardResolutionFinished(played.Member.Id));
+            }
+            else
+            {
+                currentResolvingCardZone.Set(card);
+                played.Perform(battleState.GetSnapshot());
+                WrapupCard(played, card);
+            }
+        });
     }
     
     private void WrapupCard(IPlayedCard played, Card physicalCard)

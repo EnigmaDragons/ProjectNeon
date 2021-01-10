@@ -40,7 +40,7 @@ public class PlayedCardV2 : IPlayedCard
         Message.Subscribe<SequenceFinished>(_ =>
         {
             Message.Unsubscribe(this);
-            Message.Publish(new CardResolutionFinished());
+            Message.Publish(new CardResolutionFinished(Member.Id));
         }, this);
         Card.Play(_targets, _xAmountSpent, beforeCard);
     }
