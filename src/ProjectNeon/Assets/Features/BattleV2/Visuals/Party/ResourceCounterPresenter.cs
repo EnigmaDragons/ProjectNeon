@@ -1,14 +1,16 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ResourceCounterPresenter : OnMessage<MemberStateChanged>
+public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI counter;
 
     private Member _member;
     private IResourceType _resourceType;
+    private bool IsInitialized => _member != null;
     
     public void Hide()
     {
@@ -35,4 +37,11 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>
         counter.text = $"{state[_resourceType]}/{state.Max(_resourceType.Name)}";
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (IsInitialized)
+            Message.Publish(new ShowTooltip($"{_member.Name} has {_member.State[_resourceType]} {_resourceType.Name} for paying Card Costs"));
+    }
+
+    public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
 }
