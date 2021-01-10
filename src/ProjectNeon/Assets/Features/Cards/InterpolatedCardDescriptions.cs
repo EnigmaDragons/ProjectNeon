@@ -10,8 +10,9 @@ public static class InterpolatedCardDescriptions
     private static int RoundUp(float f) => Mathf.CeilToInt(f);
     private static string Bold(this string s) => $"<b>{s}</b>";
 
-    public static string InterpolatedDescription(this Card card) => card.Type.InterpolatedDescription(card.Owner);
-    public static string InterpolatedDescription(this CardTypeData card, Maybe<Member> owner)
+    public static string InterpolatedDescription(this Card card, Maybe<ResourceQuantity> xCost) 
+        => card.Type.InterpolatedDescription(card.Owner, xCost);
+    public static string InterpolatedDescription(this CardTypeData card, Maybe<Member> owner, Maybe<ResourceQuantity> xCost)
     {
         var desc = card.Description;
 
@@ -36,7 +37,7 @@ public static class InterpolatedCardDescriptions
                 .Where(b => b.BattleEffect.IsReaction)
                 .SelectMany(c => c.BattleEffect.ReactionSequence.ActionSequence.CardActions.Actions.Select(d => d.BattleEffect));
             
-            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner);
+            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner, xCost);
 
         }
         catch (Exception e)
@@ -47,12 +48,16 @@ public static class InterpolatedCardDescriptions
         }
     }
 
-    public static string InterpolatedDescription(string desc, EffectData[] effects, EffectData[] reactionEffects, Maybe<Member> owner)
+    public static string InterpolatedDescription(string desc, 
+        EffectData[] effects, 
+        EffectData[] reactionEffects, 
+        Maybe<Member> owner, 
+        Maybe<ResourceQuantity> xCost)
     {
         var result = desc;
         
         var xCostReplacementToken = "{X}";
-        result = result.Replace(xCostReplacementToken, Bold(XCostDescription(owner)));
+        result = result.Replace(xCostReplacementToken, Bold(XCostDescription(owner, xCost)));
         
         if (desc.Trim().Equals("{Auto}", StringComparison.InvariantCultureIgnoreCase))
             return string.Join(" ", effects.Select(e => AutoDescription(e, owner)));
@@ -85,8 +90,12 @@ public static class InterpolatedCardDescriptions
         return result;
     }
 
-    private static string XCostDescription(Maybe<Member> owner) 
-        => owner.Select(o => o.State.PrimaryResourceAmount.ToString(), () => "X");
+    private static string XCostDescription(Maybe<Member> owner, Maybe<ResourceQuantity> xCost) 
+        => xCost.Select(
+            x => xCost.Value.Amount.ToString(), 
+            () => owner.Select(
+                o => o.State.PrimaryResourceAmount.ToString(), 
+                () => "X"));
 
     private static string AutoDescription(EffectData data, Maybe<Member> owner)
     {

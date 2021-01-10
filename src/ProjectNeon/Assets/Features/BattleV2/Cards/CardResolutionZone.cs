@@ -58,7 +58,7 @@ public class CardResolutionZone : ScriptableObject
     
     public void Add(IPlayedCard played)
     {
-        if (played.Card.Instant)
+        if (played.Card.Hasty)
         {
             _moves.Insert(0, played); 
             physicalZone.PutOnTop(played.Card); 
@@ -82,6 +82,7 @@ public class CardResolutionZone : ScriptableObject
         for (var i = movesCopy.Length - 1; i > -1; i--)
         {
             var played = movesCopy[i];
+            played.Card.ClearXValue();
             if (!condition(played)) continue;
             
             DevLog.Write($"Expired played card {played.Card.Name} by {played.Member.Name}");
@@ -99,7 +100,8 @@ public class CardResolutionZone : ScriptableObject
         if (_moves.None() || isResolving) return;
         
         var played = _moves.Last();
-        
+        played.Card.ClearXValue();
+
         DevLog.Write($"Canceled playing {played.Card.Name}");
         _moves.RemoveAt(_moves.Count - 1);
         var card = physicalZone.Take(physicalZone.Count - 1);

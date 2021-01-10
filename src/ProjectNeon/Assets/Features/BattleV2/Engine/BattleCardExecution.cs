@@ -6,7 +6,7 @@ using UnityEngine;
 public static class BattleCardExecution
 {
     // Card
-    public static void Play(this Card card, Target[] targets, ResourceQuantity xAmountPaid, BattleStateSnapshot battleStateSnapshot)
+    public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot)
     {
         if (card.ActionSequences.Length > targets.Length)
             Log.Error($"{card.Name}: For {card.ActionSequences.Length} there are only {targets.Length} targets");
@@ -19,7 +19,7 @@ public static class BattleCardExecution
             var avoidanceWord = seq.AvoidanceType == AvoidanceType.Evade ? "Evaded" : "Spellshielded";
             if (avoidingMembers.Any())
                 BattleLog.Write($"{string.Join(", ", avoidingMembers.Select(a => a.Name))} {avoidanceWord} {card.Name}");
-            var ctx = new CardActionContext(card.Owner, selectedTarget, avoidingMembers, seq.Group, seq.Scope, xAmountPaid, battleStateSnapshot);
+            var ctx = new CardActionContext(card.Owner, selectedTarget, avoidingMembers, seq.Group, seq.Scope, card.LockedXValue.Value, battleStateSnapshot);
             ResolveSequenceAsync(seq, ctx);
         }
     }
