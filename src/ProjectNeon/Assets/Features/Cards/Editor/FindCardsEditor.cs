@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
@@ -32,7 +33,7 @@ public class FindCardsEditor : EditorWindow
     private string _searchString;
     private string[] GetAllCardsWithDescription(string s) =>
         GetAllInstances<CardType>()
-            .Where(c => c.Description.Contains(s))
+            .Where(c => c.Description.ContainsAnyCase(s))
             .Select(e => e.name)
             .ToArray();
     
@@ -83,6 +84,17 @@ public class FindCardsEditor : EditorWindow
                 .ToArray();
             GetWindow<ListDisplayWindow>()
                 .Initialized("X Cost Cards", xCostResults)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        _searchString = GUILayout.TextField(_searchString);
+        if (GUILayout.Button("Find Term in Card Description"))
+        {
+            var cards = GetAllCardsWithDescription(_searchString);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Description Containing {_searchString}", cards)
                 .Show();
             GUIUtility.ExitGUI();
         }
