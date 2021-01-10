@@ -155,12 +155,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         highlight.SetActive(IsPlayable && active);
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
-        var position = active ? _position + new Vector3(0, sign * 100f, sign * 2f) : _position;
+        var position = active ? _position + new Vector3(0, sign * 180f, sign * 2f) : _position;
         if (AreCloseEnough(scale.x, transform.localScale.x) && AreCloseEnough(position.y, transform.position.y))
             return;
-        
-        transform.DOScale(scale, 0.4f);
-        transform.DOMove(position, 0.4f);
+
+        var tweenDuration = 0.18f;
+        transform.DOScale(scale, tweenDuration);
+        transform.DOMove(position, tweenDuration);
         if (_card != null)
             if (active)
                 Message.Publish(new HighlightCardOwner(_card.Owner));
