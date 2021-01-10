@@ -97,7 +97,11 @@ public class CardResolutionZone : ScriptableObject
     public void RemoveLastPlayedCard()
     {
         Debug.Log("UI - Remove Last Played Card");
-        if (_moves.None() || isResolving) return;
+        if (_moves.None() || 
+            battleState.Phase != BattleV2Phase.Command || 
+            isResolving || 
+            battleState.SelectionStarted) 
+                return;
         
         var played = _moves.Last();
         played.Card.ClearXValue();
