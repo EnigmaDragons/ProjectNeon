@@ -47,8 +47,11 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
 
     private void Update()
     {
-        if (!_isTraveling && _isFinishedWithAction)
+        if (!_isTraveling && _isFinishedWithAction && _shouldStepForward)
+        {
             _shouldStepForward = false;
+            _isTraveling = true;
+        }
         else if (!_isTraveling)
             return;
         
