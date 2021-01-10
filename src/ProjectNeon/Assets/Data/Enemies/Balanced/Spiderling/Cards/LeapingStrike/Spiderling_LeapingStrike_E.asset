@@ -55,9 +55,13 @@ MonoBehaviour:
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     atTargetAnimation:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: bb526f4ffd0e9044b9af0ec49bc72b02, type: 2}
+      animation:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 11400000, guid: bb526f4ffd0e9044b9af0ec49bc72b02, type: 2}
+      size: 0.7
+      speed: 0.5
+      color: {r: 0.69803923, g: 1, b: 0.34901962, a: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
@@ -101,7 +105,11 @@ MonoBehaviour:
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     atTargetAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color: {r: 0, g: 0, b: 0, a: 0}
     enemyToSpawn: {fileID: 0}
