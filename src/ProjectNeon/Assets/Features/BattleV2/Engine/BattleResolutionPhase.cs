@@ -114,7 +114,8 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
 
     protected override void Execute(SpawnEnemy msg)
     {
-        enemies.Spawn(msg.Enemy);
+        var member = enemies.Spawn(msg.Enemy);
+        BattleLog.Write($"Spawned {member.Name}");
         Message.Publish(new Finished<SpawnEnemy>());
     }
 
