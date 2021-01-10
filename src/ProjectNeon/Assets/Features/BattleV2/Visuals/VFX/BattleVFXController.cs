@@ -46,16 +46,18 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     private void PlayEffect(BattleVFX f, Vector3 target, float size, float speed, Color color)
     {
         var o = Instantiate(f.gameObject, target, f.gameObject.transform.rotation, gameObject.transform);
-        SetupEffect(o, size, speed, color);
-        if (f.WaitForCompletion)
-            StartCoroutine(AwaitAnimationFinish(f));
+        var instVFX = o.GetComponent<BattleVFX>();
+        SetupEffect(o, instVFX, size, speed, color);
+        if (instVFX.WaitForCompletion)
+            StartCoroutine(AwaitAnimationFinish(instVFX));
         else
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
     }
 
-    private void SetupEffect(GameObject o, float size, float speed, Color color)
+    private void SetupEffect(GameObject o, BattleVFX f, float size, float speed, Color color)
     {
         var effectObject = o.transform.GetChild(0);
+        f.SetSpeed(speed);
         if (size != 1)
         {
             effectObject.localScale = new Vector3(size, size, size);
