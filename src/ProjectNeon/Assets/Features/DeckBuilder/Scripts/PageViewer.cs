@@ -89,6 +89,6 @@ public class PageViewer : MonoBehaviour
         previousPageButton.SetActive(_pageIndex != 0);
         nextPageButton.SetActive(_pageIndex != _pages.Count - 1);
         pageNumText.gameObject.SetActive(_pages.Count != 1);
-        pageNumText.text = (_pageIndex + 1).ToString();
+        pageNumText.text = $"{(_pageIndex + 1)} / {_pages.Count}";
     }
 }
