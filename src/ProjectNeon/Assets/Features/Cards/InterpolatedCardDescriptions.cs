@@ -138,14 +138,14 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
                 : FormattedFormula(data.Formula);
-        if (data.EffectType == EffectType.DamageSpell 
-                || data.EffectType == EffectType.MagicDamageOverTime 
-                || data.EffectType == EffectType.HealMagic
-                || data.EffectType == EffectType.HealOverTime
-                || data.EffectType == EffectType.AdjustStatAdditivelyBaseOnMagicStat)
-            return WithMagicDamageIcon(owner.IsPresent
-                ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
-                : WithBaseAmount(data, "x MAG"));
+        if (data.EffectType == EffectType.DamageSpell )
+            return WithMagicDamageIcon(MagicAmount(data, owner));
+        if (data.EffectType == EffectType.HealMagic
+            || data.EffectType == EffectType.HealOverTime
+            || data.EffectType == EffectType.AdjustStatAdditivelyBaseOnMagicStat)
+            return MagicAmount(data, owner);
+        if (data.EffectType == EffectType.MagicDamageOverTime)
+            return WithRawDamageIcon(MagicAmount(data, owner));
         if (data.EffectType == EffectType.ShieldToughness
             || data.EffectType == EffectType.HealToughness)
             return owner.IsPresent
@@ -167,6 +167,11 @@ public static class InterpolatedCardDescriptions
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }
+
+    private static string MagicAmount(EffectData data, Maybe<Member> owner) 
+        => owner.IsPresent
+            ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
+            : WithBaseAmount(data, "x MAG");
 
     private static string WithBaseAmount(EffectData data, string floatString)
     {
