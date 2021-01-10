@@ -21,8 +21,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved>
     public void ProcessEndOfTurnEffects()
     {
         _isProcessingStartOfTurn = false;
-        foreach (var member in state.Members.Values) 
-            _membersToProcess.Enqueue(member);
+        foreach (var m in state.Members.Where(x => x.Value.IsConscious())) 
+            _membersToProcess.Enqueue(m.Value);
         this.ExecuteAfterDelay(ResolveNext, delay);
     }
 
