@@ -7,7 +7,6 @@ public class PlayedCardV2 : IPlayedCard
     private readonly Target[] _targets;
     private readonly ResourceQuantity _spent;
     private readonly ResourceQuantity _gained;
-    private readonly ResourceQuantity _xAmountSpent;
     private readonly bool _isTransient;
 
     public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient = false)
@@ -24,8 +23,8 @@ public class PlayedCardV2 : IPlayedCard
         _card = card;
         _spent = spent;
         _gained = gained;
-        _xAmountSpent = xAmountSpent;
         _isTransient = isTransient;
+        _card.SetXValue(xAmountSpent);
     }
 
     public Member Member => _performer;
@@ -42,6 +41,6 @@ public class PlayedCardV2 : IPlayedCard
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished(Member.Id));
         }, this);
-        Card.Play(_targets, _xAmountSpent, beforeCard);
+        Card.Play(_targets, beforeCard);
     }
 }

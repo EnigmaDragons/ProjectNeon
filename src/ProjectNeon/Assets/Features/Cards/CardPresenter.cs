@@ -90,15 +90,20 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         var owner = _card != null ? new Maybe<Member>(_card.Owner) : Maybe<Member>.Missing();
         var numericAmount = cost.BaseAmount.ToString();
+        // Non-X Cost Cards
         if (!cost.PlusXCost)
             return numericAmount;
-        else if (cost.BaseAmount == 0)
-            return owner.IsPresent && IsHand 
-                ? _card.Cost.XAmountSpent(owner.Value).Amount.ToString() 
+        
+        // X Cost Cards
+        var xAmount = _card.LockedXValue.Select(
+            r => r.Amount, 
+            () => _card.Cost.XAmountSpent(owner.Value).Amount);
+        if (cost.BaseAmount == 0)
+            return owner.IsPresent 
+                ? xAmount.ToString() 
                 : "X";
-        else
-            return owner.IsPresent && IsHand 
-                ? _card.Cost.XAmountSpent(owner.Value).Amount.ToString() 
+        return owner.IsPresent
+                ? xAmount.ToString() 
                 : $"{numericAmount}+X";
     }
 
@@ -186,8 +191,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         IsPlayable = CheckIfCanPlay();
         nameLabel.text = _cardType.Name;
         description.text = _card != null 
-            ? _cardType.InterpolatedDescription(_card.Owner) 
-            : _cardType.InterpolatedDescription(Maybe<Member>.Missing());
+            ? _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue) 
+            : _cardType.InterpolatedDescription(Maybe<Member>.Missing(), Maybe<ResourceQuantity>.Missing());
         type.text = _cardType.TypeDescription;
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);
