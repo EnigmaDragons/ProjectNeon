@@ -15,7 +15,10 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         Log.Info($"VFX Requested {e.EffectName}");
         var f = fx.FirstOrDefault(x => x.EffectName.Equals(e.EffectName));
         if (f == null)
+        {
             Log.Info($"No VFX of type {e.EffectName}");
+            Message.Publish(new Finished<BattleEffectAnimationRequested>());
+        }
         else if (e.Scope.Equals(Scope.One))
         {
             var location = state.GetCenterPoint(e.Target.Members[0].Id);
