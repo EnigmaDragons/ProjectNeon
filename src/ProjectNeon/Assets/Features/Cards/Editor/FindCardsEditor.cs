@@ -82,9 +82,7 @@ public class FindCardsEditor : EditorWindow
                 .Where(c => c.Cost.PlusXCost)
                 .Select(e => e.name)
                 .ToArray();
-            GetWindow<ListDisplayWindow>()
-                .Initialized("X Cost Cards", xCostResults)
-                .Show();
+            ShowCards("X Cost Cards", xCostResults);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
@@ -93,12 +91,38 @@ public class FindCardsEditor : EditorWindow
         if (GUILayout.Button("Find Term in Card Description"))
         {
             var cards = GetAllCardsWithDescription(_searchString);
-            GetWindow<ListDisplayWindow>()
-                .Initialized($"Description Containing {_searchString}", cards)
-                .Show();
+            ShowCards($"Description Containing {_searchString}", cards);
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        if (GUILayout.Button("Find Cards Without Animations"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(c => c.AllCardEffectSteps.None(t => t.Type == CardBattleActionType.AnimateAtTarget))
+                .Select(e => e.name)
+                .ToArray();
+            ShowCards("Cards Without Animations", cards);
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        if (GUILayout.Button("Find Cards With Blank Animation Name"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(c => c.AllCardEffectSteps.Any(t => t.Type == CardBattleActionType.AnimateAtTarget 
+                                                          && string.IsNullOrWhiteSpace(t.AtTargetAnimation.Animation)))
+                .Select(e => e.name)
+                .ToArray();
+            ShowCards("Cards With Blank Animation Name", cards);
             GUIUtility.ExitGUI();
         }
     }
+    
+    private void ShowCards(string cardWithoutAnimation, string[] cards) 
+        => GetWindow<ListDisplayWindow>()
+            .Initialized("Cards Without Animations", cards)
+            .Show();
     
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {

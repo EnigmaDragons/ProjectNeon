@@ -33,6 +33,7 @@ public class CardType : ScriptableObject, CardTypeData
     public Maybe<CharacterClass> LimitedToClass => onlyPlayableByClass;
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
     public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();
+    public CardActionV2[] AllCardEffectSteps => Actions.SelectMany(a => a.Actions).ToArray(); 
     public Maybe<CardTypeData> ChainedCard => chainedCard;
 
     public override string ToString() => Name;
