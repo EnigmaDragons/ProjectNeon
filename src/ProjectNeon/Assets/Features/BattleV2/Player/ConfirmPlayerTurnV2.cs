@@ -32,6 +32,9 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private void OnConfirmationRequested()
     {
+        if (battleState.Phase != BattleV2Phase.Command)
+            return;
+        
         _confirmRequested = true;
         UpdateState();
     }
