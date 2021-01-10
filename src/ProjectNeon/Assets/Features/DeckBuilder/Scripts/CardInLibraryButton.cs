@@ -8,6 +8,12 @@ public class CardInLibraryButton : MonoBehaviour
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private TextMeshProUGUI numCopiesLabel;
 
+    public void InitInfoOnly(CardType card)
+    {
+        presenter.Set(card, () => { });
+        numCopiesLabel.text = "";
+    }
+    
     public void Init(CardType card, int numTotal, int numAvailable)
     {
         var action = numAvailable > 0 

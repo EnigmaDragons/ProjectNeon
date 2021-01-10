@@ -25,4 +25,5 @@ public class EventPublisher : ScriptableObject
     public void ToggleClinic() => Message.Publish(new ToggleClinic());
     public void ReducePartyHeroesHpBy10() => Message.Publish(new UpdatePartyAdventureState(p => p.Heroes.ForEach(h => h.AdjustHp(-10))));
     public void ActivatePartyDetailsWizardFlow() => Message.Publish(new TogglePartyDetails { AllowDone = false });
+    public void ToggleCardLibrary() => Message.Publish(new ToggleCardLibrary());
 }

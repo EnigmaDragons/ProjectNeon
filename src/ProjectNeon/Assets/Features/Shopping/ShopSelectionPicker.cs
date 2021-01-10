@@ -11,7 +11,7 @@ public class ShopSelectionPicker
         var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All));
 
         var weightedCards = cards
-            .All
+            .AllExceptStarters
             .Where(x => x.LimitedToClass.IsMissingOr(c => partyClasses.Contains(c.Name)))
             .Where(x => rarities.None() || rarities.Contains(x.Rarity))
             .FactoredByRarity(x => x.Rarity)

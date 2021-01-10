@@ -21,8 +21,11 @@ public class PageViewer : MonoBehaviour
     public void Init(GameObject elementTemplate, GameObject defaultElementTemplate, 
         List<Action<GameObject>> initElement, Action<GameObject> initDefaultElement, bool keepPageIndex, bool shouldHaveAtLeastOneDefault = false)
     {
+        InitIfNeeded();
+        
         _pages?.ForEach(Destroy);
         _pages = new List<GameObject>();
+        
         for (var i = 0; i < (initElement.Count + (shouldHaveAtLeastOneDefault || initElement.Count == 0 ? 1 : 0)); i += _elementPositions.Count)
             AddPage(elementTemplate, defaultElementTemplate, initElement.Skip(i).Take(_elementPositions.Count).ToList(), initDefaultElement);
         _pageIndex = keepPageIndex ? _pageIndex : 0;
@@ -46,9 +49,12 @@ public class PageViewer : MonoBehaviour
         UpdatePageControls();
     }
 
-    private void Awake()
+    private void Awake() => InitIfNeeded();
+
+    private void InitIfNeeded()
     {
-        CalculateElementPositions();
+        if (_elementPositions == null)
+            CalculateElementPositions();
     }
 
     private void CalculateElementPositions()
