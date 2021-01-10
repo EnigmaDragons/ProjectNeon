@@ -238,7 +238,14 @@ public class BattleState : ScriptableObject
     public HeroCharacter GetHeroById(int memberId) => _heroesById[memberId].Character;
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
-    public Vector3 GetCenterPoint(int memberId) => _centerPointsById[memberId];
+
+    public Vector3 GetCenterPoint(int memberId)
+    {
+        if (_centerPointsById.ContainsKey(memberId))
+            return _centerPointsById[memberId];
+        Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
+        return GetTransform(memberId).position;
+    }
 
     public Vector3 GetCenterPoint(Target target)
     {
