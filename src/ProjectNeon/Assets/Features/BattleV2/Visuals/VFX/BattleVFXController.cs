@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +9,13 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     [SerializeField] private Transform enemyGroupLocation;
     [SerializeField] private Transform heroesGroupLocation;
 
+    private void Awake()
+    {
+        foreach (var f in fx)
+            if (f.EffectName.Equals(""))
+                Log.Error($"{f.name} is missing it's EffectName");
+    }
+    
     protected override void Execute(BattleEffectAnimationRequested e)
     {
         Log.Info($"VFX Requested {e.EffectName}");
