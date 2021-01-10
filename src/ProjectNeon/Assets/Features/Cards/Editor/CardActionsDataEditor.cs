@@ -31,7 +31,7 @@ public class CardActionsDataEditor : Editor
             var action = actions[refBrokeni];
             PresentLabelsWithControls($"Effect {refBrokeni}", menu =>
             {
-                menu.AddItem(new GUIContent("Add"), false, () =>
+                menu.AddItem(new GUIContent("Insert New After"), false, () =>
                 {
                     _target.Actions = actions.Take(Array.IndexOf(actions, action) + 1)
                         .Concat(new CardActionV2[] {new CardActionV2()})
@@ -39,6 +39,10 @@ public class CardActionsDataEditor : Editor
                         .ToArray();
                     EditorUtility.SetDirty(target);
                 });
+                if (refBrokeni > 0)
+                    menu.AddItem(new GUIContent("Move Up"), false, () => _target.Actions.SwapItems(refBrokeni, refBrokeni - 1));
+                if (refBrokeni < actions.Length - 1)
+                    menu.AddItem(new GUIContent("Move Down"), false, () => _target.Actions.SwapItems(refBrokeni, refBrokeni + 1));
                 menu.AddItem(new GUIContent("Delete"), false, () =>
                 {
                     _target.Actions = actions.Where(x => x != action).ToArray();
