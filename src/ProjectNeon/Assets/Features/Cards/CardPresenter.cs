@@ -93,18 +93,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         // Non-X Cost Cards
         if (!cost.PlusXCost)
             return numericAmount;
-        
+
         // X Cost Cards
-        var xAmount = _card.LockedXValue.Select(
-            r => r.Amount, 
-            () => _card.Cost.XAmountSpent(owner.Value).Amount);
-        if (cost.BaseAmount == 0)
-            return owner.IsPresent 
-                ? xAmount.ToString() 
-                : "X";
-        return owner.IsPresent
-                ? xAmount.ToString() 
-                : $"{numericAmount}+X";
+        if (owner.IsMissing)
+            return $"{numericAmount}+X".Replace("0+", "");
+        else
+            return _card.LockedXValue.Select(
+                r => r.Amount.ToString(),
+                () => _card.Cost.XAmountSpent(owner.Value).Amount.ToString());
     }
 
     public void ToggleAsBasic()
