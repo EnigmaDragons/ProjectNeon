@@ -2,9 +2,9 @@
 
 public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolutionFinished>
 {
-    [SerializeField] private FloatReference travelSeconds = new FloatReference(0.2f);
-    
-    private const float _distance = 5f;
+    private static readonly float _travelDistance = 0.65f;
+    private static readonly float _heroTravelDistance = _travelDistance * 5f;
+    private readonly FloatReference _travelSeconds = new FloatReference(0.4f);
     
     private int _memberId;
     private bool _isHero;
@@ -20,13 +20,11 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
     {
         _memberId = memberId;
         _isHero = isHero;
-    } 
-
-    private void Start()
-    {
         _startX = transform.localPosition.x;
-        _endX = _isHero ? _startX - _distance : _startX + _distance;
-    }
+        _endX = _isHero 
+            ? _startX + _heroTravelDistance 
+            : _startX - _travelDistance;
+    } 
     
     protected override void Execute(CardResolutionStarted msg)
     {
@@ -40,7 +38,7 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
 
     protected override void Execute(CardResolutionFinished msg)
     {
-        if (_shouldStepForward && _memberId == msg.MemberId)
+        if (_memberId == msg.MemberId)
         {
             _isTraveling = true;
             _isFinishedWithAction = true;
@@ -49,23 +47,22 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
 
     private void Update()
     {
-        if (!_isTraveling)
-            return;
-
-        if (_isFinishedWithAction && _t >= 1)
+        if (!_isTraveling && _isFinishedWithAction)
             _shouldStepForward = false;
+        else if (!_isTraveling)
+            return;
         
         if (_shouldStepForward)
         {
-            _t = Mathf.Min(1, _t + Time.deltaTime / travelSeconds);
-            transform.localPosition = new Vector2(Mathf.Lerp(_startX, _endX, _t), transform.localPosition.y);
+            _t = Mathf.Min(1, _t + Time.deltaTime / _travelSeconds);
+            transform.localPosition = new Vector2(Mathf.SmoothStep(_startX, _endX, _t), transform.localPosition.y);
             if (Mathf.Abs(transform.localPosition.x - _endX) < 0.05)
                 _isTraveling = false;
         }
         else
         {
-            _t = Mathf.Max(0, _t - Time.deltaTime / travelSeconds);
-            transform.localPosition = new Vector2(Mathf.Lerp(_startX, _endX, _t), transform.localPosition.y);
+            _t = Mathf.Max(0, _t - Time.deltaTime / _travelSeconds);
+            transform.localPosition = new Vector2(Mathf.SmoothStep(_startX, _endX, _t), transform.localPosition.y);
             if (Mathf.Abs(transform.localPosition.x - _startX) < 0.05)
                 _isTraveling = false;
         }
