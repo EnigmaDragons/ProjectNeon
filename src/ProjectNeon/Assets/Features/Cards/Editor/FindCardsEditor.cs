@@ -111,7 +111,7 @@ public class FindCardsEditor : EditorWindow
         {
             var cards = GetAllInstances<CardType>()
                 .Where(c => c.AllCardEffectSteps.Any(t => t.Type == CardBattleActionType.AnimateAtTarget 
-                                                          && string.IsNullOrWhiteSpace(t.AtTargetAnimation)))
+                                                          && string.IsNullOrWhiteSpace(t.AtTargetAnimation.Animation)))
                 .Select(e => e.name)
                 .ToArray();
             ShowCards("Cards With Blank Animation Name", cards);
