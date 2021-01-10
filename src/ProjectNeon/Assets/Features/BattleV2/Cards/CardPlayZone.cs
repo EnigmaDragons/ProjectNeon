@@ -57,8 +57,6 @@ public class CardPlayZone : ScriptableObject
         if (cards == null)
             cards = new Card[0];
         var newVal = update(cards).ToArray();
-        if (name.StartsWith("Current") && newVal.Length > 0)
-            Log.Info($"{newVal[0].Name}");
         if (newVal.Length > maxCards.Value)
             throw new InvalidOperationException($"{name} can hold a Maximum of {maxCards.Value} Cards");
         cards = newVal;

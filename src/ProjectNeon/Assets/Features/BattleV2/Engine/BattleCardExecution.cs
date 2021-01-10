@@ -16,6 +16,9 @@ public static class BattleCardExecution
             var seq = card.ActionSequences[i];
             var selectedTarget = targets[i];
             var avoidingMembers = GetAvoidingMembers(seq, selectedTarget);
+            var avoidanceWord = seq.AvoidanceType == AvoidanceType.Evade ? "Evaded" : "Spellshielded";
+            if (avoidingMembers.Any())
+                BattleLog.Write($"{string.Join(", ", avoidingMembers.Select(a => a.Name))} {avoidanceWord} {card.Name}");
             var ctx = new CardActionContext(card.Owner, selectedTarget, avoidingMembers, seq.Group, seq.Scope, xAmountPaid, battleStateSnapshot);
             ResolveSequenceAsync(seq, ctx);
         }

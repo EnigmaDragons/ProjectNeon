@@ -24,7 +24,6 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
         _endX = _isHero 
             ? _startX + _heroTravelDistance 
             : _startX - _travelDistance;
-        Log.Info($"Active Member {_memberId}: {_startX} - {_endX}");
     } 
     
     protected override void Execute(CardResolutionStarted msg)
