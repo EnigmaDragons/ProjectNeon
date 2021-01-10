@@ -8,22 +8,19 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
     
     private int _memberId;
     private bool _isHero;
+    private bool _inited;
     private float _startX;
     private float _endX;
 
     private bool _shouldStepForward;
     private bool _isTraveling;
-    private bool _isFinishedWithAction;
+    private bool _isFinishedWithAction = true;
     private float _t;
 
     public void Init(int memberId, bool isHero)
     {
         _memberId = memberId;
         _isHero = isHero;
-        _startX = transform.localPosition.x;
-        _endX = _isHero 
-            ? _startX + _heroTravelDistance 
-            : _startX - _travelDistance;
     } 
     
     protected override void Execute(CardResolutionStarted msg)
@@ -55,6 +52,7 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
         else if (!_isTraveling)
             return;
         
+        InitIfNeeded();
         if (_shouldStepForward)
         {
             _t = Mathf.Min(1, _t + Time.deltaTime / _travelSeconds);
@@ -69,5 +67,16 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
             if (Mathf.Abs(transform.localPosition.x - _startX) < 0.05)
                 _isTraveling = false;
         }
+    }
+
+    private void InitIfNeeded()
+    {
+        if (_inited)
+            return;
+        _inited = true;
+        _startX = transform.localPosition.x;
+        _endX = _isHero 
+            ? _startX + _heroTravelDistance 
+            : _startX - _travelDistance;
     }
 }
