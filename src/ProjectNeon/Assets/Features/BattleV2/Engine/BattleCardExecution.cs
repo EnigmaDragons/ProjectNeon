@@ -91,7 +91,17 @@ public static class BattleCardExecution
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(new CharacterAnimationRequested(ctx.Source.Id, action.CharacterAnimation, ctx.Target));
         if (type == CardBattleActionType.AnimateAtTarget)
-            return new SinglePayload(new BattleEffectAnimationRequested { EffectName = action.AtTargetAnimation.Animation, PerformerId = ctx.Source.Id, Target = ctx.Target, Scope = ctx.Scope, Group = ctx.Group, Speed = action.AtTargetAnimation.Speed, Size = action.AtTargetAnimation.Size, Color = action.AtTargetAnimation.Color });
+            return new SinglePayload(new BattleEffectAnimationRequested
+            {
+                EffectName = action.AtTargetAnimation.Animation, 
+                PerformerId = ctx.Source.Id, 
+                Target = ctx.Target, 
+                Scope = ctx.Scope, 
+                Group = ctx.Group, 
+                Speed = action.AtTargetAnimation.Speed, 
+                Size = action.AtTargetAnimation.Size, 
+                Color = action.AtTargetAnimation.Color
+            });
         if (type == CardBattleActionType.Condition)
             return new DelayedPayload(() => AllConditions.Resolve(action.ConditionData, ctx));
         throw new Exception($"Unrecognized card battle action type: {type}");
@@ -104,8 +114,18 @@ public static class BattleCardExecution
             return new SinglePayload(new ApplyBattleEffect(action.BattleEffect, source, target));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(new CharacterAnimationRequested(source.Id, action.CharacterAnimation, target));
-        //if (type == CardBattleActionType.AnimateAtTarget)
-            // TODO: Implement Reactive Scope Animations
+        if (type == CardBattleActionType.AnimateAtTarget)
+            return new SinglePayload(new BattleEffectAnimationRequested
+            {
+                EffectName = action.AtTargetAnimation.Animation, 
+                PerformerId = source.Id, 
+                Target = target, 
+                Scope = target.Members.Length == 1 ? Scope.One : Scope.All, 
+                Group = target.Members.All(x => x.TeamType == source.TeamType) ? Group.Ally : target.Members.All(x => x.TeamType != source.TeamType) ? Group.Opponent : Group.All, 
+                Speed = action.AtTargetAnimation.Speed, 
+                Size = action.AtTargetAnimation.Size, 
+                Color = action.AtTargetAnimation.Color
+            });
         //if (type == CardBattleActionType.Condition)
             // TODO: Implement Conditional Reactive Effects if needed (probably not needed)
         throw new Exception($"Unhandled card battle action type: {type}");
