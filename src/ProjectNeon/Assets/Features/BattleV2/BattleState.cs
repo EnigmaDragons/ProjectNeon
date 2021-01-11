@@ -53,7 +53,6 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
-    private Dictionary<int, Vector3> _centerPointsById = new Dictionary<int, Vector3>();
     private PlayerState _playerState = new PlayerState(0);
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
 
@@ -91,8 +90,7 @@ public class BattleState : ScriptableObject
         var id = 0;      
         memberNames = new List<string>();
         _uiTransformsById = new Dictionary<int, Transform>();
-        _centerPointsById = new Dictionary<int, Vector3>();
-        
+
         var heroes = Party.Heroes;
         _heroesById = new Dictionary<int, Hero>();
         for (var i = 0; i < Party.BaseHeroes.Length; i++)
@@ -101,7 +99,6 @@ public class BattleState : ScriptableObject
             _heroesById[id] = heroes[i];
             _uiTransformsById[id] = partyArea.UiPositions[i];
             _uiTransformsById[id].GetComponentInChildren<ActiveMemberIndicator>()?.Init(id, true);
-            _centerPointsById[id] = partyArea.CenterPositions[i];
             SetMemberName(id, heroes[i].Character.Name);
         }
 
@@ -136,15 +133,6 @@ public class BattleState : ScriptableObject
         return result;
     }
 
-    public BattleState SetupCenterPoints()
-    {
-        for (var i = 0; i < _enemiesById.Count; i++)
-        {
-            _centerPointsById[i] = enemies.CenterPoints[i];
-        }
-        return this;
-    }
-    
     public void CleanupIfNeeded()
     {
         if (!NeedsCleanup) return;
@@ -197,14 +185,6 @@ public class BattleState : ScriptableObject
             _enemiesById[member.Id] = e;
             _membersById[member.Id] = member;
             _uiTransformsById[member.Id] = gameObject.transform;
-            var centerPoint = gameObject.GetComponentInChildren<CenterPoint>();
-            if (centerPoint == null)
-            {
-                Log.Error($"{e.Name} is missing a CenterPoint");
-                _centerPointsById[member.Id] = Vector3.zero;
-            }
-            else
-                _centerPointsById[member.Id] = centerPoint.transform.position;
             SetMemberName(member.Id, e.name);
         });
 
@@ -239,21 +219,23 @@ public class BattleState : ScriptableObject
     public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
 
-    public Vector3 GetCenterPoint(int memberId)
+    public Transform GetCenterPoint(int memberId)
     {
-        if (_centerPointsById.ContainsKey(memberId))
-            return _centerPointsById[memberId];
+        var memberTransform = GetTransform(memberId);
+        var centerPoint = memberTransform.GetComponentInChildren<CenterPoint>();
+        if (centerPoint != null)
+            return centerPoint.transform;
         Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
-        return GetTransform(memberId).position;
+        return memberTransform;
     }
 
     public Vector3 GetCenterPoint(Target target)
     {
         if (target.Members.Length == 0)
             return Vector3.zero;
-        var bounds = new Bounds(GetCenterPoint(target.Members[0].Id), Vector3.zero);
+        var bounds = new Bounds(GetCenterPoint(target.Members[0].Id).position, Vector3.zero);
         for (var i = 1; i < target.Members.Length; i++)
-            bounds.Encapsulate(GetCenterPoint(target.Members[i].Id)); 
+            bounds.Encapsulate(GetCenterPoint(target.Members[i].Id).position); 
         return bounds.center;
     }
     public Member GetMemberByHero(HeroCharacter hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];
