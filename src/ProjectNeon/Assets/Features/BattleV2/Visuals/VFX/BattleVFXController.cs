@@ -67,8 +67,13 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     {
         var effectObject = o.transform.GetChild(0);
         f.SetSpeed(speed);
-        effectObject.localScale = new Vector3(isEnemy ? -(size / parentScale.x) : size / parentScale.x, size / parentScale.y, size / parentScale.z);
-        effectObject.localPosition = new Vector3(isEnemy ? -(effectObject.localPosition.x * size) : effectObject.localPosition.x * size, effectObject.localPosition.y * size, effectObject.localPosition.z * size);
+        effectObject.localScale = new Vector3(size / parentScale.x, size / parentScale.y, size / parentScale.z);
+        effectObject.localPosition = new Vector3(effectObject.localPosition.x * size / parentScale.x, effectObject.localPosition.y * size / parentScale.y, effectObject.localPosition.z * size / parentScale.z);
+        if (isEnemy)
+        {
+            effectObject.localPosition = new Vector3(-effectObject.localPosition.x, effectObject.localPosition.y, effectObject.localPosition.z);
+            effectObject.transform.Rotate(Vector3.right, 180);
+        }
         if (speed != 1 || color.a > 0)
         {
             Color.RGBToHSV(color, out var hue, out var saturation, out var _);
