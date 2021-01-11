@@ -28,7 +28,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         else if (e.Scope.Equals(Scope.One))
         {
             var location = state.GetCenterPoint(e.Target.Members[0].Id);
-            PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color);
+            PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
         }
         else if (e.Group == Group.All)
             Log.Info($"All Characters VFX not supported yet");
@@ -38,7 +38,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             var opponentTeam = performerTeam == TeamType.Enemies ? TeamType.Party : TeamType.Enemies;
             var targetTeam = e.Group == Group.Opponent ? opponentTeam : performerTeam;
             var location = targetTeam == TeamType.Enemies ? enemyGroupLocation : heroesGroupLocation;
-            PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color);
+            PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members.All(x => x.TeamType == TeamType.Enemies));
         }
     }
 
@@ -49,26 +49,26 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         if (f == null)
             Log.Info($"No VFX of type {e.EffectName}");
         
-        PlayEffect(f, e.Target, gameObject.transform, 1, 1, new Color(0, 0, 0, 0));
+        PlayEffect(f, e.Target, gameObject.transform, 1, 1, new Color(0, 0, 0, 0), false);
     }
 
-    private void PlayEffect(BattleVFX f, Vector3 target, Transform parent, float size, float speed, Color color)
+    private void PlayEffect(BattleVFX f, Vector3 target, Transform parent, float size, float speed, Color color, bool isEnemy)
     {
         var o = Instantiate(f.gameObject, target, f.gameObject.transform.rotation, parent);
         var instVFX = o.GetComponent<BattleVFX>();
-        SetupEffect(o, instVFX, size, speed, color, parent.lossyScale);
+        SetupEffect(o, instVFX, size, speed, color, parent.lossyScale, isEnemy);
         if (instVFX.WaitForCompletion)
             StartCoroutine(AwaitAnimationFinish(instVFX));
         else
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
     }
 
-    private void SetupEffect(GameObject o, BattleVFX f, float size, float speed, Color color, Vector3 parentScale)
+    private void SetupEffect(GameObject o, BattleVFX f, float size, float speed, Color color, Vector3 parentScale, bool isEnemy)
     {
         var effectObject = o.transform.GetChild(0);
         f.SetSpeed(speed);
-        effectObject.localScale = new Vector3(size / parentScale.x, size / parentScale.y, size / parentScale.z);
-        effectObject.localPosition *= size;
+        effectObject.localScale = new Vector3(isEnemy ? -(size / parentScale.x) : size / parentScale.x, size / parentScale.y, size / parentScale.z);
+        effectObject.localPosition = new Vector3(isEnemy ? -(effectObject.localPosition.x * size) : effectObject.localPosition.x * size, effectObject.localPosition.y * size, effectObject.localPosition.z * size);
         if (speed != 1 || color.a > 0)
         {
             Color.RGBToHSV(color, out var hue, out var saturation, out var _);
