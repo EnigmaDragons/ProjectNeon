@@ -22,22 +22,16 @@ public static class InterpolatedCardDescriptions
                 return desc;
 
             var battleEffects = card.Actions()
-                .Where(x => x != null)
-                .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Battle))
-                .Select(b => b.BattleEffect);
+                .SelectMany(a => a.BattleEffects);
 
             var conditionalBattleEffects = card.Actions()
-                .Where(x => x != null)
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
-                .SelectMany(b => b.ConditionData.ReferencedEffect.Actions
-                    .Where(c => c.Type == CardBattleActionType.Battle)
-                    .Select(a => a.BattleEffect));
+                .SelectMany(b => b.ConditionData.ReferencedEffect.BattleEffects);
             
             var reactionBattleEffects = card.Actions()
-                .Where(x => x != null)
-                .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Battle))
-                .Where(b => b.BattleEffect.IsReaction)
-                .SelectMany(c => c.BattleEffect.ReactionSequence.ActionSequence.CardActions.Actions.Select(d => d.BattleEffect));
+                .SelectMany(a => a.BattleEffects)
+                .Where(b => b.IsReaction)
+                .SelectMany(c => c.ReactionSequence.ActionSequence.CardActions.BattleEffects);
             
             return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner, xCost);
         }
