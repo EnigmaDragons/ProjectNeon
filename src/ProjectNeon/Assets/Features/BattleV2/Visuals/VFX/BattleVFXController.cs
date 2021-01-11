@@ -56,19 +56,19 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     {
         var o = Instantiate(f.gameObject, target, f.gameObject.transform.rotation, parent);
         var instVFX = o.GetComponent<BattleVFX>();
-        SetupEffect(o, instVFX, size, speed, color, parent.lossyScale, isEnemy);
+        SetupEffect(o, instVFX, size, speed, color, isEnemy);
         if (instVFX.WaitForCompletion)
             StartCoroutine(AwaitAnimationFinish(instVFX));
         else
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
     }
 
-    private void SetupEffect(GameObject o, BattleVFX f, float size, float speed, Color color, Vector3 parentScale, bool isEnemy)
+    private void SetupEffect(GameObject o, BattleVFX f, float size, float speed, Color color, bool isEnemy)
     {
         var effectObject = o.transform.GetChild(0);
         f.SetSpeed(speed);
-        effectObject.localScale = new Vector3(size / parentScale.x, size / parentScale.y, size / parentScale.z);
-        effectObject.localPosition = new Vector3(effectObject.localPosition.x * size / parentScale.x, effectObject.localPosition.y * size / parentScale.y, effectObject.localPosition.z * size / parentScale.z);
+        effectObject.localScale = new Vector3(size, size, size);
+        effectObject.localPosition = new Vector3(effectObject.localPosition.x * size, effectObject.localPosition.y * size, effectObject.localPosition.z * size);
         if (isEnemy)
         {
             effectObject.localPosition = new Vector3(-effectObject.localPosition.x, effectObject.localPosition.y, effectObject.localPosition.z);
