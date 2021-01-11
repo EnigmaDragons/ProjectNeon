@@ -72,7 +72,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         if (isEnemy)
         {
             effectObject.localPosition = new Vector3(-effectObject.localPosition.x, effectObject.localPosition.y, effectObject.localPosition.z);
-            effectObject.transform.Rotate(Vector3.right, 180);
+            effectObject.transform.Rotate(0, 180f, 0, Space.World);
         }
         if (speed != 1 || color.a > 0)
         {
