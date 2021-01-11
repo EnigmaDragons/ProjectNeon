@@ -100,7 +100,7 @@ public class CardResolutionZone : ScriptableObject
         if (_moves.None() || 
             battleState.Phase != BattleV2Phase.Command || 
             isResolving || 
-            battleState.SelectionStarted) 
+            battleState.IsSelectingTargets) 
                 return;
         
         var played = _moves.Last();

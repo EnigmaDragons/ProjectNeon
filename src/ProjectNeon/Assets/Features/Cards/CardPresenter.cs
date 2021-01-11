@@ -229,7 +229,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public void OnPointerDown(PointerEventData eventData)
     { 
         DebugLog($"UI - Pointer Down - {CardName}");
-        if (battleState.SelectionStarted)
+        if (battleState.IsSelectingTargets)
             return;
         if (eventData.button == PointerEventData.InputButton.Left)
             _onClick();

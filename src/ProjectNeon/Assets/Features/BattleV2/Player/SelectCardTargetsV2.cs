@@ -27,7 +27,7 @@ public class SelectCardTargetsV2 : OnMessage<ConfirmTargetSelectionRequested, Ca
         if (selectedCardZone.Count < 1)
             return;
 
-        battleState.SelectionStarted = true;
+        battleState.IsSelectingTargets = true;
         _card = selectedCardZone.Cards[0];
         Message.Publish(new TargetSelectionBegun(_card.Type));
 
@@ -105,7 +105,7 @@ public class SelectCardTargetsV2 : OnMessage<ConfirmTargetSelectionRequested, Ca
         sendToZone.PutOnBottom(selectedCardZone.DrawOneCard());
         _card = null;
         uiView.SetActive(false);
-        battleState.SelectionStarted = false;
+        battleState.IsSelectingTargets = false;
         Message.Publish(new TargetSelectionFinished());
     }
 }

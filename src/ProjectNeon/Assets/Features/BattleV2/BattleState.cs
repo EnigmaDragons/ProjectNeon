@@ -30,7 +30,7 @@ public class BattleState : ScriptableObject
     
     private int _numberOfRecyclesRemainingThisTurn = 0;
     
-    public bool SelectionStarted = false;
+    public bool IsSelectingTargets = false;
     public BattleV2Phase Phase = BattleV2Phase.NotBegun;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
     public int RewardCredits => rewardCredits;
@@ -77,7 +77,7 @@ public class BattleState : ScriptableObject
     {
         Phase = BattleV2Phase.NotBegun;
         NextCardId.Reset();
-        SelectionStarted = false;
+        IsSelectingTargets = false;
     }
 
     public int GetNextCardId() => NextCardId.Get();
