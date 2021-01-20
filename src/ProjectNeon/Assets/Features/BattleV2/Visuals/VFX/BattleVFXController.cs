@@ -27,7 +27,11 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         }
         else if (e.Scope.Equals(Scope.One))
         {
-            var location = state.GetCenterPoint(e.Target.Members[0].Id);
+            var member = e.Target.Members[0];
+            if (!member.IsConscious()) 
+                return;
+            
+            var location = state.GetCenterPoint(member.Id);
             PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
         }
         else if (e.Group == Group.All)
@@ -52,24 +56,24 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         PlayEffect(f, e.Target, gameObject.transform, 1, 1, new Color(0, 0, 0, 0), false);
     }
 
-    private void PlayEffect(BattleVFX f, Vector3 target, Transform parent, float size, float speed, Color color, bool isEnemy)
+    private void PlayEffect(BattleVFX f, Vector3 target, Transform parent, float size, float speed, Color color, bool shouldFlipHorizontal)
     {
         var o = Instantiate(f.gameObject, target, f.gameObject.transform.rotation, parent);
         var instVFX = o.GetComponent<BattleVFX>();
-        SetupEffect(o, instVFX, size, speed, color, isEnemy);
+        SetupEffect(o, instVFX, size, speed, color, shouldFlipHorizontal);
         if (instVFX.WaitForCompletion)
             StartCoroutine(AwaitAnimationFinish(instVFX));
         else
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
     }
 
-    private void SetupEffect(GameObject o, BattleVFX f, float size, float speed, Color color, bool isEnemy)
+    private void SetupEffect(GameObject o, BattleVFX f, float size, float speed, Color color, bool shouldFlipHorizontal)
     {
         var effectObject = o.transform.GetChild(0);
         f.SetSpeed(speed);
         effectObject.localScale = new Vector3(size, size, size);
         effectObject.localPosition = new Vector3(effectObject.localPosition.x * size, effectObject.localPosition.y * size, effectObject.localPosition.z * size);
-        if (isEnemy)
+        if (shouldFlipHorizontal)
         {
             effectObject.localPosition = new Vector3(-effectObject.localPosition.x, effectObject.localPosition.y, effectObject.localPosition.z);
             effectObject.transform.Rotate(0, 180f, 0, Space.World);
