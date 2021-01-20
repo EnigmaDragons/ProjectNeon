@@ -28,7 +28,7 @@ public class Member
         Class = characterClass;
         TeamType = team;
         BattleRole = battleRole;
-        State = new MemberState(id, baseStats, initialHp);
+        State = new MemberState(id, name, baseStats, initialHp);
     }
 
     public Member Apply(Action<MemberState> effect)

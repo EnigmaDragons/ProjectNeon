@@ -27,13 +27,15 @@ public sealed class MemberState : IStats
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
 
     public int MemberId { get; }
+    public string Name { get; }
     
-    public MemberState(int id, IStats baseStats)
-        : this(id, baseStats, baseStats.MaxHp()) {}
+    public MemberState(int id, string name, IStats baseStats)
+        : this(id, name, baseStats, baseStats.MaxHp()) {}
     
-    public MemberState(int id, IStats baseStats, int initialHp)
+    public MemberState(int id, string name, IStats baseStats, int initialHp)
     {
         MemberId = id;
+        Name = name;
         _baseStats = baseStats;
         
         _counters[TemporalStatType.HP.ToString()] = new BattleCounter(TemporalStatType.HP, initialHp, () => CurrentStats.MaxHp());

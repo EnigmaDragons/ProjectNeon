@@ -15,16 +15,16 @@ public static class AllEffects
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(new FormulaContext(src.State, m), e.Formula)), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.ForSimpleDurationStatAdjustment())))},
-        { EffectType.RemoveDebuffs, e => new SimpleEffect(m => m.CleanseDebuffs())},
+        { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLogged($"{m.Name} has been cleansed of all debuffs", m.CleanseDebuffs))},
         { EffectType.ShieldFlat, e => new ShieldFlat(e.IntAmount) },
         { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.DamageOverTime, e => new DamageOverTime(e) },
-        { EffectType.ApplyVulnerable, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
-            new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f),  TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, StatusTag.Vulnerable)))) },
+        { EffectType.ApplyVulnerable, e => new SimpleEffect(m => BattleLogged($"{m.Name} has become vulnerable", 
+            () => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, StatusTag.Vulnerable))))) },
         { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.AdjustShield(e.FloatAmount * src.State.Toughness())) },
-        { EffectType.RemoveShields, e => new SimpleEffect((src, m) => m.AdjustShield(-999)) },
-        { EffectType.StunForTurns, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns)))},
+        { EffectType.RemoveShields, e => new SimpleEffect(m => BattleLogged("${m.Name} lost all their shields", () => m.AdjustShield(-999))) },
+        { EffectType.StunForTurns, e => new SimpleEffect(m => BattleLogged($"{m.Name} is stunned for {e.NumberOfTurns} turns.", () => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns))))},
         { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount), true))) },
         { EffectType.StealLifeNextAttack, e => new NoEffect() }, // TODO: Implement Life Steal
         { EffectType.InterceptAttackForTurns, e => new InterceptAttack(e.NumberOfTurns)},
@@ -72,6 +72,12 @@ public static class AllEffects
         //can't solve how to call the correct override without having a useless statement that removes ambiguity of what "t" is
         { EffectType.Suicide, e => new SimpleEffect((src, t) => { var _ = t.Members; src.State.SetHp(0); }) },
     };
+
+    private static void BattleLogged(string msg, Action action)
+    {
+        action();
+        BattleLog.Write(msg);
+    }
     
     public static void Apply(EffectData effectData, EffectContext ctx)
     {
@@ -81,8 +87,14 @@ public static class AllEffects
                 return;
             
             var effect = Create(effectData);
-            var whenClause = effectData.TurnDelay > 0 ? " at the start of next turn" : "";
+            var whenClause = effectData.TurnDelay == 0
+                             ? "" 
+                             : effectData.TurnDelay == 1
+                                ? " at the start of next turn" 
+                                : $" in {effectData.TurnDelay} turns";
             DevLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
+            if (effectData.TurnDelay > 0)
+                BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
             effect.Apply(ctx);
         }
         catch (Exception e)
