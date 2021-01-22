@@ -38,7 +38,6 @@ public enum EffectType
     ShieldToughness = 11,
     StunForTurns = 13,
     OnDamaged = 15,
-    StealLifeNextAttack = 16,
     InterceptAttackForTurns = 18,
     HealOverTime = 20,
     OnShieldBroken = 21,

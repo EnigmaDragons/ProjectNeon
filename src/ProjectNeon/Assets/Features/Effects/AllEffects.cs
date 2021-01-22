@@ -24,7 +24,6 @@ public static class AllEffects
         { EffectType.RemoveShields, e => new SimpleEffect(m => BattleLogged("${m.Name} lost all their shields", () => m.AdjustShield(-999))) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => BattleLogged($"{m.Name} is stunned for {e.NumberOfTurns} turns.", () => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns))))},
         { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount), true))) },
-        { EffectType.StealLifeNextAttack, e => new NoEffect() }, // TODO: Implement Life Steal
         { EffectType.InterceptAttackForTurns, e => new InterceptAttack(e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(e.BaseAmount, e.FloatAmount, e.HitsRandomTargetMember)},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.NumberOfTurns) },

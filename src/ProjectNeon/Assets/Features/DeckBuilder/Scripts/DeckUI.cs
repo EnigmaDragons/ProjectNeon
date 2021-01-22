@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckChanged>
 {
@@ -9,9 +10,11 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private CardInDeckButton cardInDeckButtonTemplate;
     [SerializeField] private GameObject emptyCard;
+    [SerializeField] private Button clearDeckButton;
 
     private List<CardInDeckButton> _cardButtons;
 
+    private void Awake() => clearDeckButton.onClick.AddListener(ClearDeck);
     protected override void Execute(DeckBuilderHeroSelected msg) => GenerateDeck();
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => OnDeckChanged();
 
@@ -41,5 +44,11 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
             _cardButtons.Add(cardInDeckButton);
         };
         return init;
+    }
+
+    private void ClearDeck()
+    {
+        state.SelectedHeroesDeck.Deck.Clear();
+        Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
     }
 }
