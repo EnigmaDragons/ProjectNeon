@@ -61,11 +61,14 @@ MonoBehaviour:
         Variable: {fileID: 11400000, guid: 5d4120173799bf74d9b3a9beb5d6be87, type: 2}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 3
+      EffectType: 68
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -79,15 +82,15 @@ MonoBehaviour:
         ConstantValue: 3
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: Armor
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 17c8fbf9e2b5f79459e077374380ae85, type: 2}
       HitsRandomTargetMember: 0
       ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
       StatusTag: 0
       TurnDelay: 0
-      Formula: 
+      Formula: 10
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -111,11 +114,14 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 3
+      EffectType: 68
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -129,15 +135,15 @@ MonoBehaviour:
         ConstantValue: 3
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: Resistance
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 1085d0ae716f453429fd9122b0f8227c, type: 2}
       HitsRandomTargetMember: 0
       ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
       StatusTag: 0
       TurnDelay: 0
-      Formula: 
+      Formula: 10
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -161,7 +167,10 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
@@ -211,5 +220,8 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}

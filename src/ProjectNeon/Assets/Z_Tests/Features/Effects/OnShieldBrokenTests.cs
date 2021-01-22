@@ -15,7 +15,7 @@ public class OnShieldBrokenTests
         var reactionCardType = TestCards.Reaction(
             ReactiveMember.Possessor,
             ReactiveTargetScope.Self,
-            new EffectData { EffectType = EffectType.AdjustStatAdditively, FloatAmount = new FloatReference(1), EffectScope = new StringReference("Armor"), NumberOfTurns = new IntReference(-1) });
+            new EffectData { EffectType = EffectType.AdjustStatAdditivelyFormula, Formula = "1", EffectScope = new StringReference("Armor"), NumberOfTurns = new IntReference(-1) });
 
         TestEffects.Apply(new EffectData
         {

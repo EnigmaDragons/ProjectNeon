@@ -52,7 +52,7 @@ public class EquipmentTests
     }
 
     [Test]
-    public void Equiped_StartOfTurnEffect_IsApplied()
+    public void Equipped_StartOfTurnEffect_IsApplied()
     {
         var turtleGloves = new InMemoryEquipment
         {
@@ -60,8 +60,8 @@ public class EquipmentTests
             { 
                 new EffectData
                 {
-                    EffectType = EffectType.AdjustStatAdditively,
-                    FloatAmount = new FloatReference(1),
+                    EffectType = EffectType.AdjustStatAdditivelyFormula,
+                    Formula = "1",
                     EffectScope = new StringReference(StatType.Armor.ToString()),
                     NumberOfTurns = new IntReference(-1)
                 }

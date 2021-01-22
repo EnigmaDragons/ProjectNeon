@@ -142,8 +142,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.DamageSpell )
             return WithMagicDamageIcon(MagicAmount(data, owner));
         if (data.EffectType == EffectType.HealMagic
-            || data.EffectType == EffectType.HealOverTime
-            || data.EffectType == EffectType.AdjustStatAdditivelyBaseOnMagicStat)
+            || data.EffectType == EffectType.HealOverTime)
             return MagicAmount(data, owner);
         if (data.EffectType == EffectType.MagicDamageOverTime)
             return WithRawDamageIcon(MagicAmount(data, owner));

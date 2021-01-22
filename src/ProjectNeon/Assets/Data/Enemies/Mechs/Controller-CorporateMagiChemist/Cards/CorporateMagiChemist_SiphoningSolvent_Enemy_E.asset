@@ -61,7 +61,10 @@ MonoBehaviour:
         Variable: {fileID: 11400000, guid: 7431f20ec8c08bf46a8683901f47a53e, type: 2}
       size: 1
       speed: 1
-      color: {r: 0.2509804, g: 0, b: 0.49803922, a: 1}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
@@ -111,11 +114,14 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 63
+      EffectType: 68
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -129,15 +135,15 @@ MonoBehaviour:
         ConstantValue: -1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: MaxHP
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 58aa99856fe4aa54fa158fa384196203, type: 2}
       HitsRandomTargetMember: 0
       ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
       StatusTag: 0
       TurnDelay: 0
-      Formula: 
+      Formula: -0.3 * MAG
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -161,11 +167,14 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 3
+      EffectType: 68
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -179,15 +188,15 @@ MonoBehaviour:
         ConstantValue: -1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: Attack
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
       HitsRandomTargetMember: 0
       ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
       StatusTag: 0
       TurnDelay: 0
-      Formula: 
+      Formula: -1
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -211,11 +220,14 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 3
+      EffectType: 68
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -229,15 +241,15 @@ MonoBehaviour:
         ConstantValue: -1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: Toughness
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: c0430938d364fe34f9f54f7ed73f3392, type: 2}
       HitsRandomTargetMember: 0
       ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
       StatusTag: 0
       TurnDelay: 0
-      Formula: 
+      Formula: -1
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -261,11 +273,14 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 3
+      EffectType: 68
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -279,15 +294,15 @@ MonoBehaviour:
         ConstantValue: -1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: Magic
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: e04cb353987dbad4094394cb66ac1c6a, type: 2}
       HitsRandomTargetMember: 0
       ReferencedSequence: {fileID: 0}
       ReactionSequence: {fileID: 0}
       StatusTag: 0
       TurnDelay: 0
-      Formula: 
+      Formula: -1
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -311,5 +326,8 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}

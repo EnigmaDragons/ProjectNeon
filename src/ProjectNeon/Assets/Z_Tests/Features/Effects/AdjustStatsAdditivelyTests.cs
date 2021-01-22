@@ -7,10 +7,10 @@ public class AdjustStatsAdditivelyTests
     {
         var adjustment = new EffectData
         {
-            EffectType = EffectType.AdjustStatAdditively, 
+            EffectType = EffectType.AdjustStatAdditivelyFormula, 
             EffectScope = new StringReference("Attack"), 
-            FloatAmount = new FloatReference(1), 
-            NumberOfTurns = new IntReference(-1)
+            NumberOfTurns = new IntReference(-1),
+            Formula = "1"
         };
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
 
@@ -24,10 +24,10 @@ public class AdjustStatsAdditivelyTests
     {
         var adjustment = new EffectData
         {
-            EffectType = EffectType.AdjustStatAdditively, 
+            EffectType = EffectType.AdjustStatAdditivelyFormula, 
             EffectScope = new StringReference("MaxHP"), 
-            FloatAmount = new FloatReference(1), 
-            NumberOfTurns = new IntReference(-1)
+            NumberOfTurns = new IntReference(-1),
+            Formula = "1"
         };
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
 

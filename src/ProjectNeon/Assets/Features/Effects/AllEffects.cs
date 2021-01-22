@@ -9,8 +9,6 @@ public static class AllEffects
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.PhysicalDamage, e => new DealDamage(new PhysicalDamage(e.FloatAmount)) },
-        { EffectType.AdjustStatAdditively, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, e.IntAmount), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatAdditivelyFormula, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
             new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(new FormulaContext(src.State, m), e.Formula)), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
@@ -39,8 +37,6 @@ public static class AllEffects
         { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => m.AdjustPrimaryResource(e.IntAmount)) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
-        { EffectType.AdjustStatAdditivelyBaseOnMagicStat, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.IntAmount * m[StatType.Magic])), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.DamageSpell, e => new MagicAttack(e.FloatAmount, e.HitsRandomTargetMember) },
         { EffectType.ApplyTaunt, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Taunt, e.NumberOfTurns)) },
         { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.IntAmount)) },
@@ -56,8 +52,6 @@ public static class AllEffects
             new AdjustedStats(new StatMultipliers().With(StatType.Healability, 0.5f),  TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, StatusTag.AntiHeal))))},
         { EffectType.FullyReviveAllAllies, e => new FullyReviveAllAllies() },
         { EffectType.ApplyConfusion, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Confusion, e.NumberOfTurns + 1)) },
-        { EffectType.AdjustStatAdditivelyWithMagic, e => new SimpleEffect((src, m) => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Mathf.CeilToInt(e.FloatAmount * src.Magic())), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.AdjustCounter, e => new SimpleEffect(m => m.Adjust(e.EffectScope, e.BaseAmount))},

@@ -10,10 +10,8 @@ public enum EffectType
     DamageSpell = 50,
     DealRawDamageFormula = 70,
     
-    AdjustStatAdditively = 3,
     AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyFormula = 68,
-    AdjustStatAdditivelyWithMagic = 63,
     AdjustCounter = 67,
     
     AtStartOfTurn = 54,
@@ -39,7 +37,6 @@ public enum EffectType
     
     ShieldToughness = 11,
     StunForTurns = 13,
-    AdjustStatAdditivelyBaseOnMagicStat = 14,
     OnDamaged = 15,
     StealLifeNextAttack = 16,
     InterceptAttackForTurns = 18,
