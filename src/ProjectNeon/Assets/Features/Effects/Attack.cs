@@ -32,8 +32,10 @@ public sealed class Attack  : Effect
 
         // Processing Double Damage
         var damage = Attacker.State[TemporalStatType.DoubleDamage] > 0 ? Damage.WithFactor(2) : Damage;
+        var effect = new DealDamage(damage);
         Attacker.State.AdjustDoubleDamage(-1);
 
+        var totalHpDamageDealt = 0;
         if (Attacker.State[TemporalStatType.Blind] > 0)
         {
             Attacker.State.Adjust(TemporalStatType.Blind, -1);
@@ -42,12 +44,21 @@ public sealed class Attack  : Effect
         }
         else
         {
-            var effect = new DealDamage(damage);
-
             foreach (var member in selectedTarget.Members)
             {
+                var beforeHp = member.CurrentHp();
                 effect.Apply(Attacker, member);
+                totalHpDamageDealt += beforeHp - member.CurrentHp();
             }
+        }
+        // Processing Lifesteal
+        var lifeStealCounters = Attacker.State[TemporalStatType.Lifesteal];
+        if (lifeStealCounters > 0)
+        {
+            var amount = lifeStealCounters * 0.25f * totalHpDamageDealt;
+            Attacker.State.GainHp(amount);
+            Attacker.State.Adjust(TemporalStatType.Lifesteal, -lifeStealCounters);
+            BattleLog.Write($"{Attacker.Name} gained {amount} HP from LifeSteal");
         }
 
         Message.Publish(new Finished<Attack> { Message = this });

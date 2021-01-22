@@ -12,4 +12,5 @@ public enum TemporalStatType
     Confusion = 9,
     Blind = 10,
     Injury = 11,
+    Lifesteal = 12,
 }
