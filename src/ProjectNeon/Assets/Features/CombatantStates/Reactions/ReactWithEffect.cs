@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Features.CombatantStates.Reactions;
 
-public class EffectReactOn : Effect
+public class EffectReactWithEffect : Effect
 {
     private static Dictionary<ReactionConditionType, Func<Member, Func<EffectResolved, bool>>> Conditions = new Dictionary<ReactionConditionType, Func<Member, Func<EffectResolved, bool>>>
     {
@@ -27,11 +27,12 @@ public class EffectReactOn : Effect
     private readonly int _maxDurationTurns;
     private readonly StatusTag _tag;
     private readonly ReactiveTriggerScope _triggerScope;
-    private readonly ReactionCardType _reaction;
+    private readonly CardReactionSequence _reaction;
+    private readonly ReactionConditionType _conditionType;
     private readonly Func<Member, Func<EffectResolved, bool>> _conditionBuilder;
 
-    public EffectReactOn(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusTag tag, 
-        ReactiveTriggerScope triggerScope, ReactionCardType reaction, ReactionConditionType conditionType)
+    public EffectReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusTag tag, 
+        ReactiveTriggerScope triggerScope, CardReactionSequence reaction, ReactionConditionType conditionType)
     {
         _isDebuff = isDebuff;
         _numberOfUses = numberOfUses;
@@ -39,22 +40,34 @@ public class EffectReactOn : Effect
         _tag = tag;
         _triggerScope = triggerScope;
         _reaction = reaction;
+        _conditionType = conditionType;
         _conditionBuilder = Conditions.VerboseGetValue(conditionType, conditionType.ToString());
     }
     
-    public void Apply(EffectContext ctx) =>
-        ctx.Target.ApplyToAllConscious(m => 
-            m.AddReactiveState(new ReactOn(_isDebuff, _numberOfUses, _maxDurationTurns, _tag, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reaction, 
-                _conditionBuilder(ctx.BattleMembers[m.MemberId]))));
+    public void Apply(EffectContext ctx)
+    {
+        ctx.Target.ApplyToAllConscious(m =>
+        {
+            m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, _maxDurationTurns, _tag, _triggerScope,
+                ctx.BattleMembers, m.MemberId, ctx.Source, _reaction,
+                _conditionBuilder(ctx.BattleMembers[m.MemberId])));
+            DevLog.Write($"Applied React {_conditionType} to {m.Name}");
+        });
+    }
 }
 
-public sealed class ReactOn : ReactiveEffectV2Base
+public sealed class ReactWithEffect : ReactiveEffectV2Base
 {
-    public ReactOn(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusTag tag, ReactiveTriggerScope triggerScope, 
-        IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction,  Func<EffectResolved, bool> condition)
+    public ReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusTag tag, ReactiveTriggerScope triggerScope, 
+        IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, CardReactionSequence reaction, Func<EffectResolved, bool> condition)
             : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
-                effect => triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source) 
-                          && condition(effect)))
+                effect =>
+                {
+                    var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
+                    var conditionMet = condition(effect);
+                    DevLog.Write($"Reaction - Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
+                    return isInTriggerScope && conditionMet;
+                }))
     {
         Tag = tag;
     }

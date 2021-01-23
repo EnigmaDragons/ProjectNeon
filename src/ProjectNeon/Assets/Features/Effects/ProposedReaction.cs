@@ -1,6 +1,7 @@
 public class ProposedReaction
 {
-    public ReactionCardType Reaction { get; }
+    public Maybe<ReactionCardType> ReactionCard { get; }
+    public CardReactionSequence ReactionSequence { get; }
     public Member Source { get; }
     public Target Target { get; }
 
@@ -9,8 +10,17 @@ public class ProposedReaction
     
     public ProposedReaction(ReactionCardType a, Member source, Target target)
     {
-        Reaction = a;
+        ReactionCard = a;
         Source = source;
         Target = target;
+        ReactionSequence = a.ActionSequence;
+    }
+    
+    public ProposedReaction(CardReactionSequence a, Member source, Target target)
+    {
+        ReactionCard = Maybe<ReactionCardType>.Missing();
+        Source = source;
+        Target = target;
+        ReactionSequence = a;
     }
 }

@@ -8,7 +8,7 @@ public sealed class OnAttackedTests
     {
         var target = TestMembers.Any();
         
-        var reactionCardType = TestCards.Reaction(
+        var reactionCardType = TestCards.ReactionCard(
             ReactiveMember.Originator, 
             ReactiveTargetScope.Source, 
             new EffectData { EffectType = EffectType.Attack, FloatAmount = new FloatReference(1) });

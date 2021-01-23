@@ -9,7 +9,7 @@ public sealed class ReactiveTriggerTests
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
 
-        var reactionCardType = TestCards.Reaction(
+        var reactionCardType = TestCards.ReactionCard(
             ReactiveMember.Possessor, 
             ReactiveTargetScope.Self, 
             new EffectData { EffectType = EffectType.AdjustStatAdditivelyFormula, Formula = "1", EffectScope = new StringReference("Armor"), NumberOfTurns = new IntReference(-1) });
@@ -37,7 +37,7 @@ public sealed class ReactiveTriggerTests
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Attack, 1));
         var attacker = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Attack, 1));
 
-        var reactionCardType = TestCards.Reaction(
+        var reactionCardType = TestCards.ReactionCard(
             ReactiveMember.Originator, 
             ReactiveTargetScope.Source, 
             new EffectData { EffectType = EffectType.Attack, FloatAmount = new FloatReference(1) });

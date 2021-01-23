@@ -12,7 +12,7 @@ public class OnShieldBrokenTests
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
         target.State.AdjustShield(startingShields);
 
-        var reactionCardType = TestCards.Reaction(
+        var reactionCardType = TestCards.ReactionCard(
             ReactiveMember.Possessor,
             ReactiveTargetScope.Self,
             new EffectData { EffectType = EffectType.AdjustStatAdditivelyFormula, Formula = "1", EffectScope = new StringReference("Armor"), NumberOfTurns = new IntReference(-1) });

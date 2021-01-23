@@ -20,9 +20,10 @@ public sealed class EffectData
     public string Formula = "";
     public StringReference FlavorText = new StringReference();
     public CardActionsData ReferencedSequence;
-    public bool IsReaction => ReactionSequence != null;
-    public ReactionCardType ReactionSequence;
+    public bool IsReactionCard => ReactionSequence != null;
     public ReactionConditionType ReactionConditionType;
+    public ReactionCardType ReactionSequence; // Name is wrong. Hard to change currently. Should be named ReactionCard
+    public CardReactionSequence ReactionEffect; // Cannot use yet. Editor is broken for this. I can't figure out why
 }
 
 public static class EffectDataExtensions

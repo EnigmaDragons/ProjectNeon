@@ -1,12 +1,12 @@
 public static class TestCards
 {
     public static ReactionCardType AnyReaction() =>
-        Reaction(ReactiveMember.Originator, ReactiveTargetScope.Source, EffectData.Nothing);
+        ReactionCard(ReactiveMember.Originator, ReactiveTargetScope.Source, EffectData.Nothing);
 
     public static ReactionCardType ReactionOnAttacked(EffectData e)
-        => Reaction(ReactiveMember.Originator, ReactiveTargetScope.Source, e);
+        => ReactionCard(ReactiveMember.Originator, ReactiveTargetScope.Source, e);
     
-    public static ReactionCardType Reaction(ReactiveMember src, ReactiveTargetScope target, EffectData e)
+    public static ReactionCardType ReactionCard(ReactiveMember src, ReactiveTargetScope target, EffectData e)
     {
         var resourceType = TestableObjectFactory.Create<TestResourceType>().Initialized("Ammo");
         var reactionCardType = TestableObjectFactory.Create<ReactionCardType>()
@@ -18,4 +18,9 @@ public static class TestCards
                         .Initialized(new CardActionV2(e))));
         return reactionCardType;
     }
+    
+    public static CardReactionSequence ReactionEffect(ReactiveMember src, ReactiveTargetScope target, EffectData e) =>
+        new CardReactionSequence(src, target,
+            TestableObjectFactory.Create<CardActionsData>()
+                .Initialized(new CardActionV2(e)));
 }

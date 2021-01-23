@@ -11,12 +11,12 @@ public class ReactOnTests
 
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.ReactOn,
+            EffectType = EffectType.ReactWithEffect,
             ReactionConditionType = ReactionConditionType.OnCausedStun,
             FloatAmount = new FloatReference(-1),
             NumberOfTurns = new IntReference(-1),
-            ReactionSequence = 
-                TestCards.Reaction(
+//            ReactionEffect = TestCards.ReactionEffect(
+            ReactionSequence = TestCards.ReactionCard(
                     ReactiveMember.Possessor, 
                     ReactiveTargetScope.Target, 
                     new EffectData

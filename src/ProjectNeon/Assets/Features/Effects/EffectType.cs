@@ -31,7 +31,7 @@ public enum EffectType
     EnterStealth = 58,
     
     // Reactions
-    ReactOn = 74,
+    ReactWithEffect = 74,
     OnAttacked = 26,
     OnEvaded = 9,
     OnDeath = 25,

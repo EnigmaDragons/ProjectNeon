@@ -61,7 +61,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     private void ProcessNextCardOrReaction()
     {
         if (_reactions.Any())
-            StartCoroutine(ResolveNextReaction());
+            StartCoroutine(ResolveNextReactionCard());
         else if (resolutionZone.HasMore)
             resolutionZone.BeginResolvingNext();
     }
@@ -128,23 +128,33 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         ResolveNext();
     }
 
-    private IEnumerator ResolveNextReaction()
+    private IEnumerator ResolveNextReactionCard()
     {
         var r = _reactions.Dequeue();
-        var card = new Card(state.GetNextCardId(), r.Source, r.Reaction);
+        var isReactionCard = r.ReactionCard.IsPresent;
+        
+        // For Reaction Sequences
+        if (!isReactionCard)
+        {
+            r.ReactionSequence.Perform(r.Source, r.Target, 0);
+            yield break;
+        }
+        
+        var reactionCard = r.ReactionCard.Value;
+        var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
         reactionZone.PutOnBottom(card);
         currentResolvingCardZone.Set(card);
         yield return new WaitForSeconds(delay);
-        if (r.Reaction.IsPlayableBy(r.Source))
+        if (reactionCard.IsPlayableBy(r.Source))
         {
-            var expense = r.Reaction.Cost.ResourcesSpent(r.Source);
-            var gains = r.Reaction.Gain.ResourcesGained(r.Source);
-            var xAmountSpent = r.Reaction.Cost.XAmountSpent(r.Source);
+            var expense = reactionCard.Cost.ResourcesSpent(r.Source);
+            var gains = reactionCard.Gain.ResourcesGained(r.Source);
+            var xAmountSpent = reactionCard.Cost.XAmountSpent(r.Source);
             var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, expense, gains, xAmountSpent);
             Message.Publish(new CardResolutionStarted(playedCard));
             r.Source.Apply(s => s.Lose(expense));
             r.Source.Apply(s => s.Gain(gains));
-            r.Reaction.ActionSequence.Perform(r.Source, r.Target, expense.Amount);
+            reactionCard.ActionSequence.Perform(r.Source, r.Target, expense.Amount);
         }
         else 
             Message.Publish(new CardResolutionFinished(r.Source.Id));

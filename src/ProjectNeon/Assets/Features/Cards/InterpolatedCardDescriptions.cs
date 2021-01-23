@@ -30,7 +30,7 @@ public static class InterpolatedCardDescriptions
             
             var reactionBattleEffects = card.Actions()
                 .SelectMany(a => a.BattleEffects)
-                .Where(b => b.IsReaction)
+                .Where(b => b.IsReactionCard)
                 .SelectMany(c => c.ReactionSequence.ActionSequence.CardActions.BattleEffects);
             
             return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner, xCost);
