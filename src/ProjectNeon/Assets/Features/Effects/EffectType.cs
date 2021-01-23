@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 28-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 29-43, 47, 48, 53, 
 // LAST NUMBER USED: 73
 public enum EffectType
 {
@@ -34,6 +34,9 @@ public enum EffectType
     OnAttacked = 26,
     OnEvaded = 9,
     OnDeath = 25,
+    
+    // Transformers
+    DoubleTheEffectAndMinusDuration = 28,
     
     ShieldToughness = 11,
     StunForTurns = 13,

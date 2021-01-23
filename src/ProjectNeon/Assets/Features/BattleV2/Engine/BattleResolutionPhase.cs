@@ -104,12 +104,12 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
             var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
             if (newTargets.Any())
             {
-                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), partyAdventureState, state.PlayerState, state.Members));
+                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), msg.Card, partyAdventureState, state.PlayerState, state.Members));
                 return;
             }
         }
         
-        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, partyAdventureState, state.PlayerState, state.Members));   
+        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, msg.Card, partyAdventureState, state.PlayerState, state.Members));   
     }
 
     protected override void Execute(SpawnEnemy msg)

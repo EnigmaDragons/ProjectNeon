@@ -12,8 +12,8 @@ public sealed class InterceptAttackTests
         Member ally = TestMembers.With(StatType.MaxHP, 10);
         Member attacker = TestMembers.With(StatType.Attack, 1);
 
-        new InterceptAttack(1).Apply(paladin, new Single(ally));
-        new Attack(5).Apply(attacker, new Single(ally));
+        new InterceptAttack(1).Apply(paladin, new Single(ally), Maybe<Card>.Missing());
+        new Attack(5).Apply(attacker, new Single(ally), Maybe<Card>.Missing());
 
         Assert.AreEqual(
             5,

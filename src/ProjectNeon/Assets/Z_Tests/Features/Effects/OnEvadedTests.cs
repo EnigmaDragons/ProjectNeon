@@ -19,7 +19,7 @@ public class OnEvadedTests
             EffectType = EffectType.OnEvaded,
             NumberOfTurns = new IntReference(3),
             ReactionSequence = reactionCardType
-        }, new EffectContext(target, new Single(target)));
+        }, new EffectContext(target, new Single(target), Maybe<Card>.Missing()));
 
         ReactiveTestUtilities.ApplyEffectAndReactions(new EffectData
         {

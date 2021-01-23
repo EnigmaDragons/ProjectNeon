@@ -12,6 +12,6 @@ public static class ReactiveTestUtilities
 
         var reactions = target.State.GetReactions(effectResolved);
         reactions.ForEach(r => r.Reaction.ActionSequence.CardActions.Actions.Where(a => a.Type == CardBattleActionType.Battle)
-            .ForEach(be => AllEffects.Apply(be.BattleEffect, new EffectContext(r.Source, r.Target))));
+            .ForEach(be => AllEffects.Apply(be.BattleEffect, new EffectContext(r.Source, r.Target, Maybe<Card>.Missing()))));
     }
 }

@@ -8,7 +8,7 @@ public sealed class SpellFlatDamageEffectTests
         var attacker = TestMembers.Any();
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
 
-        new SpellFlatDamageEffect(1).Apply(attacker, target);
+        new SpellFlatDamageEffect(1).Apply(attacker, target, Maybe<Card>.Missing());
 
         Assert.AreEqual(9, target.CurrentHp());
     }
@@ -18,7 +18,7 @@ public sealed class SpellFlatDamageEffectTests
     {
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Resistance, 1));
 
-        new SpellFlatDamageEffect(2).Apply(TestMembers.Any(), target);
+        new SpellFlatDamageEffect(2).Apply(TestMembers.Any(), target, Maybe<Card>.Missing());
 
         Assert.AreEqual(9, target.CurrentHp());
     }

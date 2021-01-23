@@ -12,7 +12,7 @@ public sealed class VulnerableTests
         
         TestEffects.Apply(Vulnerable(), attacker, target);
         
-        new Attack(1).Apply(attacker, target);
+        new Attack(1).Apply(attacker, target, Maybe<Card>.Missing());
         
         Assert.AreEqual(1.33f, target.State[StatType.Damagability]);
         Assert.AreEqual(16, target.CurrentHp());
@@ -27,7 +27,7 @@ public sealed class VulnerableTests
         TestEffects.Apply(Vulnerable(), attacker, target);
         TestEffects.Apply(Vulnerable(), attacker, target);
         
-        new Attack(1).Apply(attacker, target);
+        new Attack(1).Apply(attacker, target, Maybe<Card>.Missing());
         
         Assert.AreEqual(1.33f, target.State[StatType.Damagability]);
         Assert.AreEqual(16, target.CurrentHp());

@@ -51,8 +51,8 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     public ITemporalState CloneOriginal() =>
         new ClonedReactiveEffect(Tag, IsDebuff, _maxDurationTurns, _maxUses, _createMaybeEffect);
 
-    public abstract StatusTag Tag { get; }
 
+    public abstract StatusTag Tag { get; }
     public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
     {
         if (!IsActive)
