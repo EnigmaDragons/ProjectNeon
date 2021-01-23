@@ -24,7 +24,7 @@ public class OnShieldBrokenTests
             ReactionSequence = reactionCardType
         }, target, target);
 
-        ReactiveTestUtilities.ApplyEffectAndReactions(new EffectData
+        TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.Attack,
             FloatAmount = new FloatReference(1),

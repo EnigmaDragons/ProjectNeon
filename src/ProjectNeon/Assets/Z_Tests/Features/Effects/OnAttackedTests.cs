@@ -10,13 +10,14 @@ public sealed class OnAttackedTests
         
         var reactionCardType = TestCards.Reaction(
             ReactiveMember.Originator, 
-            ReactiveTargetScope.Attacker, 
+            ReactiveTargetScope.Source, 
             new EffectData { EffectType = EffectType.Attack, FloatAmount = new FloatReference(1) });
         
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
+            FloatAmount = new FloatReference(-1),
             ReactionSequence = reactionCardType
         }, target, target);
 
@@ -24,6 +25,7 @@ public sealed class OnAttackedTests
         {
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
+            FloatAmount = new FloatReference(-1),
             ReactionSequence = reactionCardType
         }, target, target);
         

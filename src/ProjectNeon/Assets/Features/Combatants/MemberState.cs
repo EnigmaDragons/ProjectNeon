@@ -43,7 +43,7 @@ public sealed class MemberState : IStats
         Enum.GetValues(typeof(TemporalStatType))
             .Cast<TemporalStatType>()
             .Skip(2)
-            .ForEach(t => _counters[t.ToString()] = new BattleCounter(t, 0, () => int.MaxValue));
+            .ForEach(t => _counters[t.ToString()] = new BattleCounter(t, 0, () => 999));
         
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
@@ -53,7 +53,8 @@ public sealed class MemberState : IStats
     public void InitResourceAmount(IResourceType resourceType, int amount) => _counters[resourceType.Name].Set(amount);
 
     // Queries
-    public MemberStateSnapshot ToSnapshot() => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats, _counters.ToDictionary(c => c.Key, c => c.Value.Amount));
+    public MemberStateSnapshot ToSnapshot() 
+        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats, _counters.ToDictionary(c => c.Key, c => c.Value.Amount));
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;

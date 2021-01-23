@@ -24,8 +24,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         : this(isDebuff, maxDurationTurns, maxUses, createMaybeEffect, e => Maybe<ProposedReaction>.Missing()) {}
     public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<CardActionAvoided, Maybe<ProposedReaction>> createMaybeAvoidedEffect)
         : this(isDebuff, maxDurationTurns, maxUses, e => Maybe<ProposedReaction>.Missing(), createMaybeAvoidedEffect) {}
-    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, 
-        Maybe<ProposedReaction>> createMaybeEffect, 
+    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect, 
         Func<CardActionAvoided, Maybe<ProposedReaction>> createMaybeAvoidedEffect)
     {
         _maxDurationTurns = maxDurationTurns;
@@ -36,7 +35,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         _createMaybeAvoidedEffect = createMaybeAvoidedEffect;
         IsDebuff = isDebuff;
         if (!IsActive)
-            Log.Error($"{GetType()} was created inactive with {maxUses} Uses and {maxDurationTurns} Turns");
+            throw new Exception($"{GetType()} was created inactive with {maxUses} Uses and {maxDurationTurns} Turns");
     }
     
     public IPayloadProvider OnTurnStart() => new NoPayload();
@@ -83,11 +82,11 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
                 if (effect.IsReaction && !canReactToReactions)
                     return Maybe<ProposedReaction>.Missing();
                 
-                var reactingMaybeMember = effect.Target.Members.Where(m => m.Id == possessingMemberId);
-                if (reactingMaybeMember.None() || !condition(effect))
+                if (!condition(effect))
                     return Maybe<ProposedReaction>.Missing();
-
-                var possessor = reactingMaybeMember.First();
+                
+                // Noah's super hack for OnDeath changes values during the Condition Resolution above ^
+                var possessor = members[possessingMemberId];
                 if (!possessor.IsConscious())
                     return Maybe<ProposedReaction>.Missing();
                 
@@ -95,11 +94,20 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
                 var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
 
                 Target target = new Single(possessor);
-                if (action.Scope == ReactiveTargetScope.Attacker)
+                if (action.Scope == ReactiveTargetScope.Possessor)
+                    target = target;
+                if (action.Scope == ReactiveTargetScope.Source)
                     target = new Single(effect.Source);
+                if (action.Scope == ReactiveTargetScope.Target)
+                    target = effect.Target;
                 if (action.Scope == ReactiveTargetScope.AllEnemies)
                     target = new Multiple(members.Values.Where(x => x.IsConscious() && x.TeamType == TeamType.Enemies).ToArray());
-                // TODO: Implement other scopes
+                // Could pick the wrong team half the time. I'm not sure.
+                if (action.Scope == ReactiveTargetScope.AllAllies)
+                    target = new Multiple(members.Values.Where(x => x.IsConscious() && x.TeamType == TeamType.Party).ToArray());
+                // Could pick the wrong team half the time. I'm not sure.
+                if (action.Scope == ReactiveTargetScope.Everyone)
+                    target = new Multiple(members.Values.ToArray());
 
                 return new ProposedReaction(reaction, reactor, target);
             };
@@ -121,7 +129,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
             var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
 
             Target target = new Single(possessor);
-            if (action.Scope == ReactiveTargetScope.Attacker)
+            if (action.Scope == ReactiveTargetScope.Source)
                 target = new Single(effect.Source);
             if (action.Scope == ReactiveTargetScope.AllEnemies)
                 target = new Multiple(members.Values.Where(x => x.IsConscious() && x.TeamType == TeamType.Enemies).ToArray());
