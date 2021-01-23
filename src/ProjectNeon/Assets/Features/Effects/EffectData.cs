@@ -24,10 +24,10 @@ public sealed class EffectData
     public string Formula = "";
     public StringReference FlavorText = new StringReference();
     public CardActionsData ReferencedSequence;
-    public bool IsReactionCard => ReactionCard != null;
+    public bool IsReactionCard => ReactionSequence != null;
 
     public ReactionConditionType ReactionConditionType;
-    [FormerlySerializedAs("ReactionSequence")] public ReactionCardType ReactionCard;
+    [FormerlySerializedAs("ReactionCard")] public ReactionCardType ReactionSequence;
     public CardReactionSequence ReactionEffect;
 }
 
@@ -42,7 +42,7 @@ public static class EffectDataExtensions
             EffectScope = e.EffectScope,
             HitsRandomTargetMember = e.HitsRandomTargetMember,
             ReferencedSequence = e.ReferencedSequence,
-            ReactionCard = e.ReactionCard,
+            ReactionSequence = e.ReactionSequence,
             StatusTag = e.StatusTag,
             TurnDelay = 0,
             Formula = e.Formula,

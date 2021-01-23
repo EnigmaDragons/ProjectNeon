@@ -32,6 +32,7 @@ public enum EffectType
     
     // Reactions
     ReactWithEffect = 74,
+    ReactWithCard = 75,
     OnAttacked = 26,
     OnEvaded = 9,
     OnDeath = 25,

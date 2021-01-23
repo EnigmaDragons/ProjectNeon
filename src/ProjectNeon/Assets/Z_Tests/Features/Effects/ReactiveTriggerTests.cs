@@ -19,7 +19,7 @@ public sealed class ReactiveTriggerTests
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
             FloatAmount = new FloatReference(-1),
-            ReactionCard = reactionCardType
+            ReactionSequence = reactionCardType
         }, target, target);
         
         TestEffects.Apply(new EffectData
@@ -47,7 +47,7 @@ public sealed class ReactiveTriggerTests
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
             FloatAmount = new FloatReference(-1),
-            ReactionCard = reactionCardType
+            ReactionSequence = reactionCardType
         }, target, target);
         
         TestEffects.Apply(new EffectData

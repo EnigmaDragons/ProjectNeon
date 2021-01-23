@@ -93,7 +93,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         CardReactionSequence reaction, Func<EffectResolved, bool> condition) => 
         effect =>
         {
-            var possessor = members[possessingMemberId];
+            var possessor = members.VerboseGetValue(possessingMemberId, "Reaction Possessing Member");
             if (!ReactionIsApplicable(possessor, canReactToReactions, effect, condition))
                 return Maybe<ProposedReaction>.Missing();
 

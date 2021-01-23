@@ -18,6 +18,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.OnShieldBroken, new []{ "NumberOfTurns", "EffectScope", "ReactionSequence" }},
         {EffectType.OnDamaged, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "ReactionSequence" }},
         {EffectType.ReactWithEffect, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffect"}},
+        {EffectType.ReactWithCard, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionSequence"}},
         {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.RemoveDebuffs, new [] { "NumberOfTurns" }},
         {EffectType.AdjustStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns", "EffectScope" }},
