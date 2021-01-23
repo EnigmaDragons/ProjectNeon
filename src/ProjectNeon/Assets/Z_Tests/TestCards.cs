@@ -1,10 +1,10 @@
 public static class TestCards
 {
     public static ReactionCardType AnyReaction() =>
-        Reaction(ReactiveMember.Originator, ReactiveTargetScope.Attacker, EffectData.Nothing);
+        Reaction(ReactiveMember.Originator, ReactiveTargetScope.Source, EffectData.Nothing);
 
     public static ReactionCardType ReactionOnAttacked(EffectData e)
-        => Reaction(ReactiveMember.Originator, ReactiveTargetScope.Attacker, e);
+        => Reaction(ReactiveMember.Originator, ReactiveTargetScope.Source, e);
     
     public static ReactionCardType Reaction(ReactiveMember src, ReactiveTargetScope target, EffectData e)
     {

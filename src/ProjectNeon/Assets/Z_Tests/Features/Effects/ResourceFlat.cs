@@ -13,7 +13,7 @@ public sealed class ResourceFlat
     [Test]
     public void ResourceFlat_ApplyEffect()
     {
-        var performer = TestMembers.Create(s => s, Ammo);
+        var performer = TestMembers.Create("Weldon", s => s, Ammo);
         
         TestEffects.Apply(data, performer, new Single(performer));
         
