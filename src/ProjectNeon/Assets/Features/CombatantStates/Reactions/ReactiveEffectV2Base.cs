@@ -35,7 +35,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         _createMaybeAvoidedEffect = createMaybeAvoidedEffect;
         IsDebuff = isDebuff;
         if (!IsActive)
-            throw new Exception($"{GetType()} was created inactive with {maxUses} Uses and {maxDurationTurns} Turns");
+            Log.Error($"{GetType()} was created inactive with {maxUses} Uses and {maxDurationTurns} Turns");
     }
     
     public IPayloadProvider OnTurnStart() => new NoPayload();
@@ -101,13 +101,11 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
                 if (action.Scope == ReactiveTargetScope.Target)
                     target = effect.Target;
                 if (action.Scope == ReactiveTargetScope.AllEnemies)
-                    target = new Multiple(members.Values.Where(x => x.IsConscious() && x.TeamType == TeamType.Enemies).ToArray());
-                // Could pick the wrong team half the time. I'm not sure.
+                    target = new Multiple(members.Values.ToArray().GetConsciousEnemies(reactor));
                 if (action.Scope == ReactiveTargetScope.AllAllies)
-                    target = new Multiple(members.Values.Where(x => x.IsConscious() && x.TeamType == TeamType.Party).ToArray());
-                // Could pick the wrong team half the time. I'm not sure.
+                    target = new Multiple(members.Values.ToArray().GetConsciousAllies(reactor));
                 if (action.Scope == ReactiveTargetScope.Everyone)
-                    target = new Multiple(members.Values.ToArray());
+                    target = new Multiple(members.Values.Where(x => x.IsConscious()).ToArray());
 
                 return new ProposedReaction(reaction, reactor, target);
             };
