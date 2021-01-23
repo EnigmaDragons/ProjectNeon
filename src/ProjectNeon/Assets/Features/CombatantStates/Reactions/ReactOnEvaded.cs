@@ -31,5 +31,5 @@ public sealed class ReactOnEvaded : ReactiveEffectV2Base
         : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeAvoidedEffect(allMembers, possessingMemberId, originator, reaction, avoidedAction => 
             avoidedAction.Effect.EffectType == EffectType.Attack)) {}
 
-    public override StatusTag Tag => StatusTag.CounterAttack;
+    public override StatusDetail Status { get; } = new StatusDetail(StatusTag.None);
 }

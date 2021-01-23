@@ -49,7 +49,7 @@ public class RemoveDebuffsTests
         target.State.AddReactiveState(new ReactOnAttacked(false, 2, 2, 
             StatusTag.CounterAttack, 
             ReactiveTriggerScope.All, 
-            new Dictionary<int, Member> { {target.Id, target}}, 1,  target, TestCards.AnyReaction()));
+            new Dictionary<int, Member> { {target.Id, target}}, target.Id,  target, TestCards.AnyReaction()));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 

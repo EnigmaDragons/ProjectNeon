@@ -25,19 +25,19 @@ public class EffectReactWithEffect : Effect
     private readonly bool _isDebuff;
     private readonly int _numberOfUses;
     private readonly int _maxDurationTurns;
-    private readonly StatusTag _tag;
+    private readonly StatusDetail _status;
     private readonly ReactiveTriggerScope _triggerScope;
     private readonly CardReactionSequence _reaction;
     private readonly ReactionConditionType _conditionType;
     private readonly Func<Member, Func<EffectResolved, bool>> _conditionBuilder;
 
-    public EffectReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusTag tag, 
+    public EffectReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, 
         ReactiveTriggerScope triggerScope, CardReactionSequence reaction, ReactionConditionType conditionType)
     {
         _isDebuff = isDebuff;
         _numberOfUses = numberOfUses;
         _maxDurationTurns = maxDurationTurns;
-        _tag = tag;
+        _status = status;
         _triggerScope = triggerScope;
         _reaction = reaction;
         _conditionType = conditionType;
@@ -48,7 +48,7 @@ public class EffectReactWithEffect : Effect
     {
         ctx.Target.ApplyToAllConscious(m =>
         {
-            m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, _maxDurationTurns, _tag, _triggerScope,
+            m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, _maxDurationTurns, _status, _triggerScope,
                 ctx.BattleMembers, m.MemberId, ctx.Source, _reaction,
                 _conditionBuilder(ctx.BattleMembers[m.MemberId])));
             DevLog.Write($"Applied React {_conditionType} to {m.Name}");
@@ -58,7 +58,7 @@ public class EffectReactWithEffect : Effect
 
 public sealed class ReactWithEffect : ReactiveEffectV2Base
 {
-    public ReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusTag tag, ReactiveTriggerScope triggerScope, 
+    public ReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, CardReactionSequence reaction, Func<EffectResolved, bool> condition)
             : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
                 effect =>
@@ -69,8 +69,8 @@ public sealed class ReactWithEffect : ReactiveEffectV2Base
                     return isInTriggerScope && conditionMet;
                 }))
     {
-        Tag = tag;
+        Status = status;
     }
 
-    public override StatusTag Tag { get; }
+    public override StatusDetail Status { get; }
 }

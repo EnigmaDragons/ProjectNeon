@@ -1,10 +1,10 @@
 using Features.CombatantStates.Reactions;
 using NUnit.Framework;
 
-public class ReactOnTests
+public class ReactWithEffectTests
 {
     [Test]
-    public void ReactOn_OnStunned_Works()
+    public void ReactWithEffect_OnStunned_Works()
     {
         var attacker = TestMembers.Named("Electroblade");
         var target = TestMembers.Named("Robot");
@@ -15,8 +15,7 @@ public class ReactOnTests
             ReactionConditionType = ReactionConditionType.OnCausedStun,
             FloatAmount = new FloatReference(-1),
             NumberOfTurns = new IntReference(-1),
-//            ReactionEffect = TestCards.ReactionEffect(
-            ReactionSequence = TestCards.ReactionCard(
+            ReactionEffect = TestCards.ReactionEffect(
                     ReactiveMember.Possessor, 
                     ReactiveTargetScope.Target, 
                     new EffectData

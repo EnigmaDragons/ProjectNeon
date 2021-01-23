@@ -1,6 +1,6 @@
 public interface ITemporalState
 {
-    StatusTag Tag { get; }
+    StatusDetail Status { get; }
     bool IsDebuff { get; }
     bool IsActive { get; }
     Maybe<int> RemainingTurns { get; }

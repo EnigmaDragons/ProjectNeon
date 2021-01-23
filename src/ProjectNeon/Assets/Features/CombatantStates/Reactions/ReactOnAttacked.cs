@@ -36,8 +36,8 @@ public sealed class ReactOnAttacked : ReactiveEffectV2Base
                       && triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source) 
                       && effect.Target.Members.Any(x => x.Id == possessingMemberId)))
     {
-        Tag = tag;
+        Status= new StatusDetail(tag, Maybe<string>.Missing());
     }
 
-    public override StatusTag Tag { get; }
+    public override StatusDetail Status { get; }
 }

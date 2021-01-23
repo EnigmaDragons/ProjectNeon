@@ -15,6 +15,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     private bool HasMoreTurns => _remainingDurationTurns != 0;
 
     public IStats Stats => new StatAddends();
+    public abstract StatusDetail Status { get; }
     public bool IsDebuff { get; }
     public bool IsActive => HasMoreUses && HasMoreTurns;
     public Maybe<int> Amount => _remainingUses;
@@ -48,10 +49,8 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     }
 
     public ITemporalState CloneOriginal() =>
-        new ClonedReactiveEffect(Tag, IsDebuff, _maxDurationTurns, _maxUses, _createMaybeEffect);
-
-    public abstract StatusTag Tag { get; }
-
+        new ClonedReactiveEffect(Status, IsDebuff, _maxDurationTurns, _maxUses, _createMaybeEffect);
+    
     public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
     {
         if (!IsActive)
@@ -156,11 +155,11 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
 public class ClonedReactiveEffect : ReactiveEffectV2Base
 {
-    public ClonedReactiveEffect(StatusTag tag, bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect) 
+    public ClonedReactiveEffect(StatusDetail status, bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect) 
         : base(isDebuff, maxDurationTurns, maxUses, createMaybeEffect)
     {
-        Tag = tag;
+        Status = status;
     }
 
-    public override StatusTag Tag { get; }
+    public override StatusDetail Status { get; }
 }

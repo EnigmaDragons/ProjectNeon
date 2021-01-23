@@ -29,5 +29,5 @@ public class ReactOnShieldBroken : ReactiveEffectV2Base
             && effect.BattleBefore.Members[possessingMemberId].State.Counters["Shield"] > 0 
             && effect.BattleAfter.Members[possessingMemberId].State.Counters["Shield"] == 0)) { }
 
-    public override StatusTag Tag => StatusTag.None;
+    public override StatusDetail Status { get; } = new StatusDetail(StatusTag.None);
 }

@@ -14,6 +14,7 @@
     }
 
     public override ITemporalState CloneOriginal() => new HealOverTimeState(_amount, _target, Tracker.Metadata);
+    public override Maybe<string> CustomStatusText { get; } = Maybe<string>.Missing();
     public override IStats Stats { get; } = new StatAddends();
     public override Maybe<int> Amount => _amount;
 
