@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Electroblade_WitheringShockStrike
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  rarity: 0
-  slot: 0
+  displayName: Wihtering Shock Strike
+  description: Apply Vulnerable when you stun an enemy
+  rarity: 3
+  slot: 2
   cost: 0
   canUseClasses:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe, type: 2}
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -26,4 +26,32 @@ MonoBehaviour:
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
-  battleStartEffects: []
+  battleStartEffects:
+  - EffectType: 74
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: -1
+      FloatVariable: {fileID: 0}
+    NumberOfTurns:
+      UseConstant: 1
+      ConstantValue: -1
+      Variable: {fileID: 0}
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
+    HitsRandomTargetMember: 0
+    StatusTag: 0
+    TurnDelay: 0
+    Formula: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionSequence: {fileID: 11400000, guid: 5ce080debaff02543b80def2d3dffae5, type: 2}
+    ReactionConditionType: 20

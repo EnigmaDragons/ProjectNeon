@@ -18,6 +18,9 @@ public class BattleTestSetup : MonoBehaviour
     [SerializeField] private Deck hero1Deck;
     [SerializeField] private Deck hero2Deck;
     [SerializeField] private Deck hero3Deck;
+    [SerializeField] private List<StaticEquipment> hero1Equipment = new List<StaticEquipment>();
+    [SerializeField] private List<StaticEquipment> hero2Equipment = new List<StaticEquipment>();
+    [SerializeField] private List<StaticEquipment> hero3Equipment = new List<StaticEquipment>();
 
     [Header("BattleField")] 
     [SerializeField] private GameObject battlefield;
@@ -47,6 +50,7 @@ public class BattleTestSetup : MonoBehaviour
         setup.InitParty(hero1, hero2, hero3);
         if (hero1Deck != null)
             setup.InitPartyDecks(hero1Deck.Cards, hero2Deck.Cards, hero3Deck.Cards);
+        setup.InitPartyEquipment(hero1Equipment, hero2Equipment, hero3Equipment);
     }
 
     public void UseCustomBattlefield() => setup.InitBattleField(battlefield);
