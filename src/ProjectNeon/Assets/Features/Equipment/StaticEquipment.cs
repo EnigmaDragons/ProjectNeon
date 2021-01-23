@@ -8,7 +8,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     [SerializeField] private string description;
     [SerializeField] private Rarity rarity;
     [SerializeField] private EquipmentSlot slot;
-    [SerializeField] private int cost;
+    [SerializeField] private float priceFactor = 1f;
     [SerializeField] private CharacterClass[] canUseClasses = new CharacterClass[1];
     [SerializeField] private EquipmentStatModifier[] modifiers = new EquipmentStatModifier[1];
     [SerializeField] private ResourceTypeModifications[] resourceModifiers = new ResourceTypeModifications[0];
@@ -18,7 +18,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     
     public string Name => displayName;
     public string Description => description;
-    public int Price => cost;
+    public int Price => CardShopPricing.EquipmentShopPrice(rarity, priceFactor);
     public Rarity Rarity => rarity;
     public string[] Classes => canUseClasses.Select(c => c.Name).ToArray();
     public EquipmentSlot Slot => slot;
