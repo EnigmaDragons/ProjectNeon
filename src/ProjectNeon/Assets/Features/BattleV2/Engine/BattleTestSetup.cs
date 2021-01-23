@@ -87,6 +87,11 @@ public class BattleTestSetup : MonoBehaviour
         var hero = allHeroes.First(h => h.Class.Equals(cards.First().LimitedToClass.Value));
         setup.InitParty(hero, noHero, noHero);
         setup.InitPartyDecks(Enumerable.Range(0, 12).Select(i => cards[i % cards.Length]).ToList(), new List<CardType>(), new List<CardType>());
+        var equipment = hero.Name.Equals(hero1.Name) 
+            ? hero1Equipment : hero.Name.Equals(hero2.Name) 
+            ? hero2Equipment : hero.Name.Equals(hero3.Name) 
+            ? hero3Equipment : new List<StaticEquipment>();
+        setup.InitPartyEquipment(equipment, new List<Equipment>(), new List<Equipment>());
         
         if (battlefield != null)
             UseCustomBattlefield();

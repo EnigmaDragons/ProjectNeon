@@ -17,7 +17,7 @@ public sealed class DealDamage : Effect
             if (m.State.Damagability() < 0.01)
                 BattleLog.Write($"{m.Name} is Invincible");
             else
-                BattleLog.Write($"Dealing {amount} to {m.Name}");
+                BattleLog.Write($"{amount} damage dealt to {m.Name}");
             m.State.TakeDamage(amount);
         });
     }

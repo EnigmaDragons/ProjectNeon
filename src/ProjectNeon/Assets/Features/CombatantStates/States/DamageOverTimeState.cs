@@ -24,7 +24,7 @@ public class DamageOverTimeState : TemporalStateBase
             return new NoPayload();
 
         Tracker.AdvanceTurn();
-        BattleLog.Write($"Dealing {_amount} DoT damage to {_target.Name}");
+        BattleLog.Write($"{_amount} DoT damage dealt to {_target.Name}");
         _target.State.TakeRawDamage(_amount);
         // TODO: Plug in animations
         return new NoPayload();
