@@ -30,9 +30,16 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     private void UpdateUi()
     {
         var statuses = new List<CurrentStatusValue>();
-        
+
         if (_member.State.HasStatus(StatusTag.Invulnerable))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.Invulnerable.ToString(), Icon = icons[StatusTag.Invulnerable].Icon, Tooltip = "Invincible to all Damage" });
+        
+        _member.State.StatusesOfType(StatusTag.Augment)
+            .ForEach(s => statuses.Add(new CurrentStatusValue { 
+                Type = StatusTag.Augment.ToString(), 
+                Icon = icons[StatusTag.Augment].Icon, 
+                Tooltip = s.Status.CustomText.OrDefault(() => "Unknown Augment Power") 
+            }));
         
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
         AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => $"Reduces magic damage taken by {v}");

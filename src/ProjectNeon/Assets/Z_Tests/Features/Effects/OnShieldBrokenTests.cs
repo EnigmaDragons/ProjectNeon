@@ -21,7 +21,7 @@ public class OnShieldBrokenTests
         {
             EffectType = EffectType.OnShieldBroken,
             NumberOfTurns = new IntReference(3),
-            ReactionSequence = reactionCardType
+            ReactionCard = reactionCardType
         }, target, target);
 
         TestEffects.Apply(new EffectData

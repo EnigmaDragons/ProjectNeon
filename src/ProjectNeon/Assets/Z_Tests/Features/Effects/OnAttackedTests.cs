@@ -18,7 +18,7 @@ public sealed class OnAttackedTests
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
             FloatAmount = new FloatReference(-1),
-            ReactionSequence = reactionCardType
+            ReactionCard = reactionCardType
         }, target, target);
 
         TestEffects.Apply(new EffectData
@@ -26,7 +26,7 @@ public sealed class OnAttackedTests
             EffectType = EffectType.OnAttacked,
             NumberOfTurns = new IntReference(3),
             FloatAmount = new FloatReference(-1),
-            ReactionSequence = reactionCardType
+            ReactionCard = reactionCardType
         }, target, target);
         
         Assert.AreEqual(1, target.State.ReactiveStates.Length);
