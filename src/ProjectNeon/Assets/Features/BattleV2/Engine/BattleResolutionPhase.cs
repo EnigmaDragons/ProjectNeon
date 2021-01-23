@@ -84,8 +84,12 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         var battleSnapshotAfter = state.GetSnapshot();
         var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction);
 
-        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(effectResolved));
-        reactions.ForEach(r => _reactions.Enqueue(r));
+        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(effectResolved)).ToList();
+        var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
+        immediateReactions.ForEach(r => r.ReactionSequence.Perform(r.Source, r.Target, 0));
+        var reactionCards = reactions.Where(r => r.ReactionCard.IsPresent);
+        reactionCards.ForEach(r => _reactions.Enqueue(r));
+        
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 
@@ -132,14 +136,13 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     {
         var r = _reactions.Dequeue();
         var isReactionCard = r.ReactionCard.IsPresent;
-        
-        // For Reaction Sequences
+
         if (!isReactionCard)
         {
-            r.ReactionSequence.Perform(r.Source, r.Target, 0);
+            Log.Error("Should not be Queueing instant Effect Reactions. They should already be processed.");
             yield break;
         }
-        
+
         var reactionCard = r.ReactionCard.Value;
         var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
         reactionZone.PutOnBottom(card);
