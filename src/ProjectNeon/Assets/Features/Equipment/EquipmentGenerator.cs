@@ -161,7 +161,7 @@ public class EquipmentGenerator
 
     private static readonly Dictionary<StatType, int> AdditiveStatsChartPerPoint = new Dictionary<StatType, int>
     {
-        { StatType.MaxHP, 3 },
+        { StatType.MaxHP, 4 },
         { StatType.Armor, 1 },
         { StatType.Resistance, 1 },
         { StatType.Attack, 1 },
