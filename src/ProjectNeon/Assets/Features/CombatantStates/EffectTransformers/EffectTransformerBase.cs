@@ -42,6 +42,7 @@ public abstract class EffectTransformerBase : EffectTransformer
     {
         if (_remainingDurationTurns > 0)
             _remainingDurationTurns--;
+        _cardIds.Clear();
         return new NoPayload();
     }
 

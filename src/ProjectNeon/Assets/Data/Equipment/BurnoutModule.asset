@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BurnoutModule
   m_EditorClassIdentifier: 
   displayName: Burnout Module
-  description: 
+  description: The first card you play each turn with a duration, loses 1 duration
+    but it's twice as effective
   rarity: 3
   slot: 2
   priceFactor: 1
@@ -39,10 +40,11 @@ MonoBehaviour:
       Variable: {fileID: 0}
     EffectScope:
       UseConstant: 1
-      ConstantValue: 
+      ConstantValue: The first card you play each turn with a duration, loses 1 duration
+        but it's twice as effective
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    StatusTag: 0
+    StatusTag: 12
     StatusDetailText: 
     TurnDelay: 0
     Formula: 
