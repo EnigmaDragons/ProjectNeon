@@ -9,7 +9,7 @@ public class RemoveDebuffsTests
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
         target.State.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(StatType.Attack, -5), 
-            TemporalStateMetadata.DebuffForDuration(5, StatusTag.None)));
+            TemporalStateMetadata.DebuffForDuration(5)));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
@@ -22,7 +22,7 @@ public class RemoveDebuffsTests
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
         target.State.ApplyTemporaryMultiplier(new AdjustedStats(new StatAddends().With(StatType.Attack, -5),
-            TemporalStateMetadata.DebuffForDuration(5, StatusTag.None)));
+            TemporalStateMetadata.DebuffForDuration(5)));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
@@ -34,7 +34,7 @@ public class RemoveDebuffsTests
     {
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s);
-        target.State.AddReactiveState(new ReactOnAttacked(true, 2, 2, StatusTag.CounterAttack, ReactiveTriggerScope.All, new Dictionary<int, Member>(), 1, target, TestCards.AnyReaction()));
+        target.State.AddReactiveState(new ReactOnAttacked(true, 2, 2, new StatusDetail(StatusTag.CounterAttack), ReactiveTriggerScope.All, new Dictionary<int, Member>(), 1, target, TestCards.AnyReaction()));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
@@ -47,7 +47,7 @@ public class RemoveDebuffsTests
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s);
         target.State.AddReactiveState(new ReactOnAttacked(false, 2, 2, 
-            StatusTag.CounterAttack, 
+            new StatusDetail(StatusTag.CounterAttack), 
             ReactiveTriggerScope.All, 
             new Dictionary<int, Member> { {target.Id, target}}, target.Id,  target, TestCards.AnyReaction()));
 

@@ -28,9 +28,9 @@ public class DoubleTheEffectAndMinusDurationTests
             Formula = "1"
         };
         
-        TestEffects.Apply(effect1, member, member, new Card(1, member, new CardType()));
-        TestEffects.Apply(effect2, member, member, new Card(1, member, new CardType()));
-        TestEffects.Apply(effect3, member, member, new Card(1, member, new CardType()));
+        TestEffects.Apply(effect1, member, member, new Card(1, member, TestableObjectFactory.Create<CardType>()));
+        TestEffects.Apply(effect2, member, member, new Card(1, member, TestableObjectFactory.Create<CardType>()));
+        TestEffects.Apply(effect3, member, member, new Card(1, member, TestableObjectFactory.Create<CardType>()));
 
         Assert.AreEqual(3, member.Attack());
         member.State.GetTurnStartEffects();

@@ -35,4 +35,35 @@ public class ReactWithEffectTests
         Assert.AreEqual(1, target.State[TemporalStatType.CardStun], "Card Stun wasn't applied");
         Assert.AreEqual(1, target.State[TemporalStatType.Evade], "Reaction didn't trigger");
     }
+
+    [Test]
+    public void ReactWithEffect_OnVulnerable_Works()
+    {
+        var attacker = TestMembers.Named("Robot");
+        var possessor = TestMembers.With(StatType.Toughness, 5);
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.ReactWithEffect,
+            ReactionConditionType = ReactionConditionType.OnVulnerable,
+            FloatAmount = new FloatReference(-1),
+            NumberOfTurns = new IntReference(-1),
+            ReactionEffect = TestCards.ReactionEffect(
+                ReactiveMember.Possessor, 
+                ReactiveTargetScope.Possessor, 
+                new EffectData
+                {
+                    EffectType = EffectType.ShieldToughness,
+                    FloatAmount = new FloatReference(1)
+                })
+        }, possessor, possessor);
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.ApplyVulnerable,
+            FloatAmount = new FloatReference(1)
+        }, attacker, possessor);
+        
+        Assert.AreEqual(5, possessor.CurrentShield());
+    }
 }

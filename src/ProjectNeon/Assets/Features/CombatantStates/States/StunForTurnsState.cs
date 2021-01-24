@@ -2,9 +2,8 @@
 public sealed class StunForTurns : TemporalStateBase
 {
     public StunForTurns(int duration)
-        : base(TemporalStateMetadata.DebuffForDuration(duration, StatusTag.None)) {}
+        : base(TemporalStateMetadata.DebuffForDuration(duration, new StatusDetail(StatusTag.None))) {}
     
-    public override Maybe<string> CustomStatusText { get; } = Maybe<string>.Missing();
     public override IStats Stats => new StatAddends().With(TemporalStatType.TurnStun, Tracker.RemainingTurns);
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
     public override ITemporalState CloneOriginal() => new StunForTurns(Tracker.Metadata.MaxDurationTurns);

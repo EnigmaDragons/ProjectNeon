@@ -38,7 +38,9 @@ public class EffectReactWith : Effect
                     .Sum(x => x.State.Hp);
                 return hpAfter > hpBefore;
             }
-        }
+        },
+        {ReactionConditionType.OnVulnerable, possessor => effect 
+            => (effect.EffectData.EffectType == EffectType.ApplyVulnerable || effect.EffectData.EffectScope.Value == "Vulnerable") && effect.Target.Members.Any(x => x.Id == possessor.Id) }
     };
     
     private readonly bool _isDebuff;
@@ -62,8 +64,6 @@ public class EffectReactWith : Effect
     public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
         ReactionConditionType conditionType, Maybe<CardReactionSequence> reactionEffect, Maybe<ReactionCardType> reactionCard)
     {
-        Log.Info($"Reaction Card {reactionCard.Select(x => x.Name, "Nothing")}");
-        Log.Info($"Reaction Effect {reactionEffect.Select(x => x.Reactor.ToString(), "Nothing")}");
         _isDebuff = isDebuff;
         _numberOfUses = numberOfUses;
         _maxDurationTurns = maxDurationTurns;
@@ -74,7 +74,7 @@ public class EffectReactWith : Effect
         _conditionType = conditionType;
         _conditionBuilder = Conditions.VerboseGetValue(conditionType, conditionType.ToString());
         if (reactionCard.IsMissing && reactionEffect.IsMissing)
-            Log.Error($"React With neither has an Effect nor a Card.");
+            Log.Info($"React With neither has an Effect nor a Card.");
     }
     
     public void Apply(EffectContext ctx)
@@ -87,7 +87,7 @@ public class EffectReactWith : Effect
                     _conditionBuilder(ctx.BattleMembers[m.MemberId])));
                 DevLog.Write($"Applied React With Card {_conditionType} to {m.Name}");
             });
-        else
+        else if (_reactionEffect.IsPresent)
             ctx.Target.ApplyToAllConscious(m =>
             {
                 m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, _maxDurationTurns, _status, _triggerScope,
@@ -102,37 +102,27 @@ public sealed class ReactWithEffect : ReactiveEffectV2Base
 {
     public ReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, CardReactionSequence reaction, Func<EffectResolved, bool> condition)
-            : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
+            : base(isDebuff, maxDurationTurns, numberOfUses, status, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
                 effect =>
                 {
                     var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                     var conditionMet = condition(effect);
                     DevLog.Write($"Reaction - Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
                     return isInTriggerScope && conditionMet;
-                }))
-    {
-        Status = status;
-    }
-
-    public override StatusDetail Status { get; }
+                })) {}
 }
 
 public sealed class ReactWithCard : ReactiveEffectV2Base
 {
     public ReactWithCard(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction, Func<EffectResolved, bool> condition)
-        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
+        : base(isDebuff, maxDurationTurns, numberOfUses, status, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
             effect =>
             {
                 var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                 var conditionMet = condition(effect);
                 DevLog.Write($"Reaction - Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
                 return isInTriggerScope && conditionMet;
-            }))
-    {
-        Status = status;
-    }
-
-    public override StatusDetail Status { get; }
+            })) {}
 }
 

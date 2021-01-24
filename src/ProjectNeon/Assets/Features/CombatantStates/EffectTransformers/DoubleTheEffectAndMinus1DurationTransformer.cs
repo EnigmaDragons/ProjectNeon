@@ -18,7 +18,7 @@ public sealed class EffectDoubleTheEffectAndMinus1Duration : Effect
 
 public class DoubleTheEffectAndMinus1DurationTransformer : EffectTransformerBase
 {
-    public DoubleTheEffectAndMinus1DurationTransformer(EffectData data) : base(false, data.NumberOfTurns, data.IntAmount,
+    public DoubleTheEffectAndMinus1DurationTransformer(EffectData data) : base(false, data.NumberOfTurns, data.IntAmount, data.StatusDetail, 
         (effect, context) => effect.NumberOfTurns > 0,
         (effect, context) =>
         {
@@ -37,10 +37,5 @@ public class DoubleTheEffectAndMinus1DurationTransformer : EffectTransformerBase
                 Formula = $"({effect.Formula}) * 2",
                 FlavorText = effect.FlavorText
             };
-        })
-    {
-        Status = data.StatusDetail;
-    }
-
-    public override StatusDetail Status { get; }
+        }) {}
 }

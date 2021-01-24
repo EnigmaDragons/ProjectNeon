@@ -25,7 +25,7 @@ public sealed class EffectOnDeath : Effect
 public sealed class ReactOnDeath : ReactiveEffectV2Base
 {
     public ReactOnDeath(bool isDebuff, int numberOfUses, int maxDurationTurns, IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction)
-        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, true, reaction, 
+        : base(isDebuff, maxDurationTurns, numberOfUses, new StatusDetail(StatusTag.OnDeath), CreateMaybeEffect(allMembers, possessingMemberId, originator, true, reaction, 
             effect =>
             {
                 //this is super hacky but the amount of changes required to bypass the consciousness system turns out to be completely insane
@@ -37,10 +37,8 @@ public sealed class ReactOnDeath : ReactiveEffectV2Base
                     member.State.SetHp(1);
                     member.State.ApplyTemporaryMultiplier(new AdjustedStats(
                         new StatMultipliers().With(StatType.Damagability, 0f),
-                        TemporalStateMetadata.BuffForDuration(1, StatusTag.Invulnerable)));
+                        TemporalStateMetadata.BuffForDuration(1, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing()))));
                 }
                 return result;
             })) {}
-
-    public override StatusDetail Status { get; } = new StatusDetail(StatusTag.OnDeath);
 }

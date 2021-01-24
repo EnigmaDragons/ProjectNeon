@@ -40,7 +40,7 @@ public class EffectTransformerTests
         var effect = new EffectData() { EffectType = EffectType.Nothing };
         
         foreach (var id in cardIds)
-            TestEffects.Apply(effect, member, member, new Card(id, member, new CardType()));
+            TestEffects.Apply(effect, member, member, new Card(id, member, TestableObjectFactory.Create<CardType>()));
 
         Assert.AreEqual(expectedEffectsModified, member.Attack());
     }
@@ -48,7 +48,7 @@ public class EffectTransformerTests
 
 public class TestEffectTransformer : EffectTransformerBase
 {
-    public TestEffectTransformer(int uses, Func<EffectData, EffectContext, bool> shouldTransform) : base(false, -1, uses, shouldTransform, (effect, context) =>
+    public TestEffectTransformer(int uses, Func<EffectData, EffectContext, bool> shouldTransform) : base(false, -1, uses, new StatusDetail(StatusTag.None),  shouldTransform, (effect, context) =>
     {
         return new EffectData
         {
@@ -58,6 +58,4 @@ public class TestEffectTransformer : EffectTransformerBase
             Formula = "1"
         };
     }) {}
-    
-    public override StatusDetail Status => new StatusDetail(StatusTag.None, "");
 }
