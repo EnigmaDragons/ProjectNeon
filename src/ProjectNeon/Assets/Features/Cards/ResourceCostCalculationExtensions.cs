@@ -26,7 +26,7 @@ public static class ResourceCostCalculationExtensions
         {
             ResourceType = cost.ResourceType.Name,
             Amount = cost.PlusXCost
-                ? m.State[cost.ResourceType]
+                ? cost.BaseAmount + Math.Max(0, m.State[cost.ResourceType] - cost.BaseAmount)
                 : cost.BaseAmount
         };
     }
