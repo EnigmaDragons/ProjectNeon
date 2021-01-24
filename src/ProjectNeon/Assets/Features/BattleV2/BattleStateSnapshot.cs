@@ -3,13 +3,18 @@ using System.Linq;
 
 public sealed class BattleStateSnapshot
 {
+    public List<CardTypeData[]> PlayedCardHistory { get; }
     public Dictionary<int, MemberSnapshot> Members { get; }
 
     public BattleStateSnapshot(params MemberSnapshot[] snapshots) 
-        : this(snapshots.ToDictionary(m => m.Id, m => m)) {}
+        : this(new List<CardTypeData[]>(), snapshots.ToDictionary(m => m.Id, m => m)) {}
     
-    public BattleStateSnapshot(Dictionary<int, MemberSnapshot> members)
+    public BattleStateSnapshot(List<CardTypeData[]> playedCardHistory, params MemberSnapshot[] snapshots) 
+        : this(playedCardHistory, snapshots.ToDictionary(m => m.Id, m => m)) {}
+    
+    public BattleStateSnapshot(List<CardTypeData[]> playedCardHistory, Dictionary<int, MemberSnapshot> members)
     {
+        PlayedCardHistory = playedCardHistory;
         Members = members;
     }
 }

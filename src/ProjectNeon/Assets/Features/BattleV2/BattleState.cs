@@ -27,6 +27,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private Equipment[] rewardEquipments;
     
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
+    private List<List<CardTypeData>> _playedCardHistory = new List<List<CardTypeData>>();
     public Effect[] QueuedEffects => _queuedEffects.ToArray();
     
     private int _numberOfRecyclesRemainingThisTurn = 0;
@@ -129,7 +130,8 @@ public class BattleState : ScriptableObject
         needsCleanup = true;
         _queuedEffects = new Queue<Effect>();
         _unconsciousMembers = new Dictionary<int, Member>();
-        
+        _playedCardHistory = new List<List<CardTypeData>> { new List<CardTypeData>() };
+
         DevLog.Write("Finished Battle State Init");
         return result;
     }
@@ -145,6 +147,7 @@ public class BattleState : ScriptableObject
 
     // During Battle State Tracking
     public void StartTurn() => UpdateState(() => PlayerState.OnTurnStart());
+    public void RecordPlayedCard(IPlayedCard card) => _playedCardHistory.Last().Add(card.Card.Type);
 
     public Member[] GetAllNewlyUnconsciousMembers()
     {
@@ -171,6 +174,7 @@ public class BattleState : ScriptableObject
     public void AdvanceTurn() =>
         UpdateState(() =>
         {
+            _playedCardHistory.Add(new List<CardTypeData>());
             _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
             PlayerState.OnTurnEnd();
         });
@@ -245,7 +249,9 @@ public class BattleState : ScriptableObject
     public Member GetMemberByHero(HeroCharacter hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
-    public BattleStateSnapshot GetSnapshot() => new BattleStateSnapshot(_membersById.ToDictionary(m => m.Key, m => m.Value.GetSnapshot()));
+    public BattleStateSnapshot GetSnapshot() => 
+        new BattleStateSnapshot(_playedCardHistory.Select(x => x.ToArray()).ToList(), 
+            _membersById.ToDictionary(m => m.Key, m => m.Value.GetSnapshot()));
 
     private void UpdateState(Action update)
     {
