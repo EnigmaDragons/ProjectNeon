@@ -28,8 +28,6 @@ public sealed class EffectOnEvaded : Effect
 public sealed class ReactOnEvaded : ReactiveEffectV2Base
 {
     public ReactOnEvaded(bool isDebuff, int numberOfUses, int maxDurationTurns, ReactiveTriggerScope triggerScope, IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction)
-        : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeAvoidedEffect(allMembers, possessingMemberId, originator, reaction, avoidedAction => 
+        : base(isDebuff, maxDurationTurns, numberOfUses, new StatusDetail(StatusTag.None), CreateMaybeAvoidedEffect(allMembers, possessingMemberId, originator, reaction, avoidedAction => 
             avoidedAction.Effect.EffectType == EffectType.Attack)) {}
-
-    public override StatusDetail Status { get; } = new StatusDetail(StatusTag.None);
 }

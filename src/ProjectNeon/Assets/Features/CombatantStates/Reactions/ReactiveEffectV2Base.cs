@@ -4,72 +4,60 @@ using System.Linq;
 
 public abstract class ReactiveEffectV2Base : ReactiveStateV2
 {
-    private readonly int _maxDurationTurns;
-    private readonly int _maxUses;
-
-    private int _remainingDurationTurns;
-    private int _remainingUses;
+    private readonly TemporalStateTracker _tracker;
     private readonly Func<EffectResolved, Maybe<ProposedReaction>> _createMaybeEffect;
     private readonly Func<CardActionAvoided, Maybe<ProposedReaction>> _createMaybeAvoidedEffect;
-    private bool HasMoreUses => _remainingUses != 0;
-    private bool HasMoreTurns => _remainingDurationTurns != 0;
 
+    public Maybe<int> Amount => _tracker.RemainingUses;
     public IStats Stats => new StatAddends();
-    public abstract StatusDetail Status { get; }
-    public bool IsDebuff { get; }
-    public bool IsActive => HasMoreUses && HasMoreTurns;
-    public Maybe<int> Amount => _remainingUses;
-    public Maybe<int> RemainingTurns => _remainingDurationTurns;
+    public StatusDetail Status => _tracker.Status;
+    public bool IsDebuff => _tracker.IsDebuff;
+    public bool IsActive => _tracker.IsActive;
+    public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
 
-    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
-        : this(isDebuff, maxDurationTurns, maxUses, createMaybeEffect, e => Maybe<ProposedReaction>.Missing()) {}
-    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<CardActionAvoided, Maybe<ProposedReaction>> createMaybeAvoidedEffect)
-        : this(isDebuff, maxDurationTurns, maxUses, e => Maybe<ProposedReaction>.Missing(), createMaybeAvoidedEffect) {}
-    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect, 
+    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+        : this(new TemporalStateMetadata(isDebuff, maxUses, maxDurationTurns, status), createMaybeEffect, e => Maybe<ProposedReaction>.Missing()) {}
+    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<CardActionAvoided, Maybe<ProposedReaction>> createMaybeAvoidedEffect)
+        : this(new TemporalStateMetadata(isDebuff, maxUses, maxDurationTurns, status), e => Maybe<ProposedReaction>.Missing(), createMaybeAvoidedEffect) {}
+    public ReactiveEffectV2Base(TemporalStateMetadata metadata,
+        Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect, 
         Func<CardActionAvoided, Maybe<ProposedReaction>> createMaybeAvoidedEffect)
     {
-        _maxDurationTurns = maxDurationTurns;
-        _maxUses = maxUses;
-        _remainingDurationTurns = maxDurationTurns;
-        _remainingUses = maxUses;
+        _tracker = new TemporalStateTracker(metadata);
         _createMaybeEffect = createMaybeEffect;
         _createMaybeAvoidedEffect = createMaybeAvoidedEffect;
-        IsDebuff = isDebuff;
-        if (!IsActive)
-            Log.Error($"{GetType()} was created inactive with {maxUses} Uses and {maxDurationTurns} Turns");
     }
     
     public IPayloadProvider OnTurnStart() => new NoPayload();
 
     public IPayloadProvider OnTurnEnd()
     {
-        if (_remainingDurationTurns > 0)
-            _remainingDurationTurns--;
+        _tracker.AdvanceTurn();
         return new NoPayload();
     }
 
     public ITemporalState CloneOriginal() =>
-        new ClonedReactiveEffect(Status, IsDebuff, _maxDurationTurns, _maxUses, _createMaybeEffect);
+        new ClonedReactiveEffect(_tracker.Metadata, _createMaybeEffect, _createMaybeAvoidedEffect);
     
     public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
     {
-        if (!IsActive)
+        if (!_tracker.IsActive)
             return Maybe<ProposedReaction>.Missing();
         
         var maybeEffect = _createMaybeEffect(e);
         if (maybeEffect.IsPresent)
-            _remainingUses--;
+            _tracker.RecordUse();
         return maybeEffect;
     }
     
     public Maybe<ProposedReaction> OnCardActionAvoided(CardActionAvoided e)
     {
-        if (!IsActive)
+        if (!_tracker.IsActive)
             return Maybe<ProposedReaction>.Missing();
         
         var maybeEffect = _createMaybeAvoidedEffect(e);
         if (maybeEffect.IsPresent)
-            _remainingUses--;
+            _tracker.RecordUse();
         return maybeEffect;
     }
 
@@ -155,11 +143,8 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
 public class ClonedReactiveEffect : ReactiveEffectV2Base
 {
-    public ClonedReactiveEffect(StatusDetail status, bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect) 
-        : base(isDebuff, maxDurationTurns, maxUses, createMaybeEffect)
-    {
-        Status = status;
-    }
-
-    public override StatusDetail Status { get; }
+    public ClonedReactiveEffect(TemporalStateMetadata metadata, 
+        Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect,
+        Func<CardActionAvoided, Maybe<ProposedReaction>> createMaybeAvoidedEffect) 
+        : base(metadata, createMaybeEffect, createMaybeAvoidedEffect) {}
 }

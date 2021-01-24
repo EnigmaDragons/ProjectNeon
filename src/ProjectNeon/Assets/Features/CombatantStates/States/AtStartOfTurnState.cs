@@ -7,18 +7,15 @@ public class AtStartOfTurnState : TemporalStateBase
     private readonly CardActionsData _data;
     private readonly StatusDetail _status;
 
-    public AtStartOfTurnState(EffectContext ctx, Member member, CardActionsData data, TemporalStateMetadata metaData, StatusDetail status)
+    public AtStartOfTurnState(EffectContext ctx, Member member, CardActionsData data, TemporalStateMetadata metaData)
         : base(metaData)
     {
         _ctx = ctx;
         _member = member;
         _data = data;
-        _status = status;
-        CustomStatusText = status.CustomText;
     }
     
-    public override ITemporalState CloneOriginal() => new AtStartOfTurnState(_ctx, _member, _data, Tracker.Metadata, _status);
-    public override Maybe<string> CustomStatusText { get; } = Maybe<string>.Missing();
+    public override ITemporalState CloneOriginal() => new AtStartOfTurnState(_ctx, _member, _data, Tracker.Metadata);
     public override IStats Stats { get; } = new StatAddends();
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
 

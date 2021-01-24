@@ -8,6 +8,6 @@
     {
         ctx.Target.ApplyToAllConsciousMembers(m => m.State.ApplyTemporaryAdditive(
             new DelayedStartOfTurnState(ctx, m, _source.ReferencedSequence, 
-                TemporalStateMetadata.ForDuration(_source.NumberOfTurns, _source.EffectScope.Value.Equals("Debuff"), _source.StatusTag))));
+                TemporalStateMetadata.ForDuration(_source.NumberOfTurns, _source.EffectScope.Value.Equals("Debuff"), new StatusDetail(_source.StatusTag)))));
     }
 }

@@ -4,7 +4,7 @@
     private readonly Member _target;
 
     public HealOverTimeState(int amount, Member target, int turns)
-        : this(amount, target, TemporalStateMetadata.BuffForDuration(turns, StatusTag.HealOverTime)) {}
+        : this(amount, target, TemporalStateMetadata.BuffForDuration(turns, new StatusDetail(StatusTag.HealOverTime))) {}
     
     public HealOverTimeState(int amount, Member target, TemporalStateMetadata metadata)
         : base(metadata) 
@@ -14,7 +14,6 @@
     }
 
     public override ITemporalState CloneOriginal() => new HealOverTimeState(_amount, _target, Tracker.Metadata);
-    public override Maybe<string> CustomStatusText { get; } = Maybe<string>.Missing();
     public override IStats Stats { get; } = new StatAddends();
     public override Maybe<int> Amount => _amount;
 
