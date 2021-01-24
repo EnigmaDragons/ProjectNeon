@@ -17,7 +17,7 @@ public class TemporalStateTracker
     public void AdvanceTurn() => _remainingTurns = Math.Max(0, _remainingTurns - 1);
     public void RecordUse() => _remainingUses = Math.Max(0, _remainingUses - 1);
     public bool IsDebuff => Metadata.IsDebuff;
-    public bool IsActive => (_remainingTurns > 0 || Metadata.IsIndefinite) && (_remainingUses > 0 || Metadata.HasUnlimitedUses);
+    public bool IsActive => (_remainingTurns > 0 || Metadata.HasUnlimitedDuration) && (_remainingUses > 0 || Metadata.HasUnlimitedUses);
     public int RemainingTurns => _remainingTurns;
     public int RemainingUses => _remainingUses;
     public StatusDetail Status => Metadata.Status;

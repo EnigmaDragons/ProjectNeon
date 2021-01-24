@@ -13,6 +13,7 @@ public sealed class MemberState : IStats
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
     private readonly List<ReactiveStateV2> _reactiveStates = new List<ReactiveStateV2>();
     private readonly List<EffectTransformer> _transformers = new List<EffectTransformer>();
+    private readonly List<IBonusCardPlayer> _bonusCardPlayers = new List<IBonusCardPlayer>();
     private readonly List<CustomStatusIcon> _customStatusIcons = new List<CustomStatusIcon>();
 
     public IStats BaseStats => _baseStats;
@@ -88,7 +89,11 @@ public sealed class MemberState : IStats
                                             || _multiplierMods.Any(r => r.Status.Tag == tag);
 
     public ITemporalState[] StatusesOfType(StatusTag tag)
-        => OfType(_additiveMods, tag).Concat(OfType(_multiplierMods, tag)).Concat(OfType(_reactiveStates, tag)).ToArray();
+        => OfType(_additiveMods, tag)
+            .Concat(OfType(_multiplierMods, tag))
+            .Concat(OfType(_reactiveStates, tag))
+            .Concat(OfType(_bonusCardPlayers, tag))
+            .ToArray();
 
     public CustomStatusIcon[] CustomStatuses()
         => _customStatusIcons.ToArray();
@@ -96,6 +101,14 @@ public sealed class MemberState : IStats
     private IEnumerable<ITemporalState> OfType(IEnumerable<ITemporalState> states, StatusTag tag)
         => states.Where(s => s.Status.Tag == tag);
 
+    // Bonus Cards 
+    public CardType[] GetBonusCards(BattleStateSnapshot snapshot)
+        => _bonusCardPlayers
+            .Select(x => x.GetBonusCardOnResolutionPhaseBegun(snapshot))
+            .Where(x => x.IsPresent)
+            .Select(x => x.Value)
+            .ToArray();
+    
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
         _reactiveStates
@@ -128,7 +141,8 @@ public sealed class MemberState : IStats
         _reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddReactiveState((ReactiveStateV2)s));
         _transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddEffectTransformer((EffectTransformer)s));
     }
-    
+
+    public void ApplyBonusCardPlayer(IBonusCardPlayer p) => _bonusCardPlayers.Add(p);
     public void ApplyPersistentState(IPersistentState state) => _persistentStates.Add(state);
     
     public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() =>

@@ -4,21 +4,21 @@ public class TemporalStateMetadata
     public bool IsDebuff { get; }
     public int MaxUses { get; }
     public int MaxDurationTurns { get; }
-    public bool IsIndefinite { get; }
+    public bool HasUnlimitedDuration { get; }
     public bool HasUnlimitedUses { get; }
     public StatusDetail Status { get; }
 
     public TemporalStateMetadata(bool isDebuff, int maxUses, int maxDurationTurns, StatusDetail status)
         : this(isDebuff, maxUses, maxDurationTurns, maxDurationTurns < 0, maxUses < 0, status) {}
-    public TemporalStateMetadata(bool isDebuff, int maxUses, int maxDurationTurns, bool isIndefinite, bool hasUnlimitedUses, StatusDetail status)
+    public TemporalStateMetadata(bool isDebuff, int maxUses, int maxDurationTurns, bool hasUnlimitedDuration, bool hasUnlimitedUses, StatusDetail status)
     {
-        if ((maxDurationTurns <= 0 && !isIndefinite) || (maxUses <= 0 && !hasUnlimitedUses))
+        if ((maxDurationTurns <= 0 && !hasUnlimitedDuration) || (maxUses <= 0 && !hasUnlimitedUses))
             Log.Warn($"Created Effect is permanently inactive. Max Uses {maxUses}. Max Duration Turn {maxDurationTurns}.");
         
         IsDebuff = isDebuff;
         MaxUses = maxUses;
         MaxDurationTurns = maxDurationTurns;
-        IsIndefinite = isIndefinite;
+        HasUnlimitedDuration = hasUnlimitedDuration;
         HasUnlimitedUses = hasUnlimitedUses;
         Status = status;
     }

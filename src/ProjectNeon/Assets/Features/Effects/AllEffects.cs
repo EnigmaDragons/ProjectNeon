@@ -70,7 +70,9 @@ public static class AllEffects
         { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence) },
         //can't solve how to call the correct override without having a useless statement that removes ambiguity of what "t" is
         { EffectType.Suicide, e => new SimpleEffect((src, t) => { var _ = t.Members; src.State.SetHp(0); }) },
-        { EffectType.DoubleTheEffectAndMinusDuration, e => new EffectDoubleTheEffectAndMinus1Duration(e) }
+        { EffectType.DoubleTheEffectAndMinusDuration, e => new EffectDoubleTheEffectAndMinus1Duration(e) },
+        { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
+            new PlayBonusCardAfterNoCardPlayedInXTurns(e.EffectScope, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))}
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

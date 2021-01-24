@@ -37,6 +37,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.Kill, new string[0]},
         {EffectType.ShowCustomTooltip, new [] { "FlavorText", "FloatAmount", "EffectScope", "NumberOfTurns" }},
         {EffectType.OnDeath, new []{ "FloatAmount", "NumberOfTurns", "ReactionSequence" }},
+        {EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, new[]{"BaseAmount", "EffectScope", "StatusTag", "StatusDetailText", "BonusCardType"}}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

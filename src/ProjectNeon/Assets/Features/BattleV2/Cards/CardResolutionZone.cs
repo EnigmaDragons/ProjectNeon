@@ -40,24 +40,32 @@ public class CardResolutionZone : ScriptableObject
         var chainingMove = _moves.Last();
         var owner = chainingMove.Member;
         var card = chainingMove.Card.ChainedCard.Value;
-        var targets = new Target[card.ActionSequences.Length];
-        for (var i = 0; i < targets.Length; i++)
-        {
-            var action = card.ActionSequences[i];
-            var possibleTargets = battleState.GetPossibleConsciousTargets(chainingMove.Member, action.Group, action.Scope);
-            targets[i] = possibleTargets.First();
-            foreach(var previousTarget in chainingMove.Targets)
-                if (possibleTargets.Contains(previousTarget))
-                    targets[i] = previousTarget;
-        }
+        var targets = GetTargets(owner, card, chainingMove.Targets);
 
         Add(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true));
         Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
         yield return new WaitForSeconds(1.6f);
     }
+
+    private Target[] GetTargets(Member m, CardTypeData card, Maybe<Target[]> previousTargets)
+    {
+        var targets = new Target[card.ActionSequences.Length];
+        for (var i = 0; i < targets.Length; i++)
+        {
+            var action = card.ActionSequences[i];
+            var possibleTargets = battleState.GetPossibleConsciousTargets(m, action.Group, action.Scope);
+            targets[i] = possibleTargets.First();
+            if (previousTargets.IsPresent)
+                foreach(var previousTarget in previousTargets.Value)
+                    if (possibleTargets.Contains(previousTarget))
+                        targets[i] = previousTarget;
+        }
+        return targets;
+    }
     
     public void Add(IPlayedCard played)
     {
+        battleState.RecordPlayedCard(played);
         if (played.Card.Hasty)
         {
             _moves.Insert(0, played); 
@@ -107,6 +115,7 @@ public class CardResolutionZone : ScriptableObject
         played.Card.ClearXValue();
 
         DevLog.Write($"Canceled playing {played.Card.Name}");
+        battleState.RemoveLastRecordedPlayedCard();
         _moves.RemoveAt(_moves.Count - 1);
         var card = physicalZone.Take(physicalZone.Count - 1);
         playerPlayArea.Take(playerPlayArea.Count - 1);
@@ -130,7 +139,6 @@ public class CardResolutionZone : ScriptableObject
     {
         Message.Publish(new CardResolutionStarted(played));
         BattleLog.Write($"Resolving {played.Member.Name}'s {played.Card.Name}");
-        battleState.RecordPlayedCard(played);
         if (physicalZone.Count == 0)
             DevLog.Write($"Weird Physical Zone Draw bug.");
         else
@@ -163,5 +171,25 @@ public class CardResolutionZone : ScriptableObject
         if (played.Member.TeamType.Equals(TeamType.Party) && !played.IsTransient)
             playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());
         isResolving = _moves.Any();
+    }
+
+    public IEnumerator AddBonusCardsIfApplicable()
+    {
+        var snapshot = battleState.GetSnapshot();
+        var members = battleState.Members.Values.Where(x => x.IsConscious());
+        foreach (var member in members)
+        {
+            var bonusCards = member.State.GetBonusCards(snapshot);
+            foreach (var card in bonusCards)
+            {
+                if (!card.IsPlayableBy(member)) 
+                    continue;
+                
+                var targets = GetTargets(member, card, Maybe<Target[]>.Missing());
+                Add(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
+                // Maybe Display cool Bonus Card text here
+                yield return new WaitForSeconds(1.6f);
+            }
+        }
     }
 }

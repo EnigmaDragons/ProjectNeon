@@ -72,4 +72,7 @@ public static class CollectionExtensions
         items.ForEach(i => dictionary[keySelector(i)] = valueSelector(i));
         return dictionary;
     }
+
+    public static void RemoveLast<T>(this List<T> list) => list.RemoveAt(list.Count - 1);
+    public static IEnumerable<T> TakeLast<T>(this List<T> list, int n) => list.Skip(Math.Max(0, list.Count - n));
 }
