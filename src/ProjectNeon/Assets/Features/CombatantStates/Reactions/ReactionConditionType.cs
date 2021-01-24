@@ -4,6 +4,7 @@ namespace Features.CombatantStates.Reactions
     {
         OnAttacked = 0,
         OnDamaged = 1,
+        OnBlinded = 2,
         OnVulnerable = 5,
         OnShieldBroken = 6,
         OnBloodied = 10,

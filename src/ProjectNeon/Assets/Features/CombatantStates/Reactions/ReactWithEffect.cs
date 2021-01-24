@@ -24,11 +24,9 @@ public class EffectReactWith : Effect
             effect.EffectData.EffectType == EffectType.Attack && effect.Target.Members.Any(x => x.Id == possessor.Id) },
         { ReactionConditionType.OnBloodied, possessor => effect => 
             !effect.BattleBefore.Members[possessor.Id].IsBloodied() && effect.BattleAfter.Members[possessor.Id].IsBloodied() },
-        { ReactionConditionType.OnShieldBroken, possessor => effect => 
-            effect.BattleBefore.Members[possessor.Id].State.Counters["Shield"] > 0 
-                && effect.BattleAfter.Members[possessor.Id].State.Counters["Shield"] == 0 },
-        { ReactionConditionType.OnDamaged, possessor => effect => 
-            effect.BattleBefore.Members[possessor.Id].State.Hp > effect.BattleAfter.Members[possessor.Id].State.Hp},
+        { ReactionConditionType.OnShieldBroken, possessor => effect => WentToZero(Select(effect, possessor, m => m.State.Counter(TemporalStatType.Shield))) },
+        { ReactionConditionType.OnDamaged, possessor => effect => Decreased(Select(effect, possessor, m => m.State.Hp))},
+        { ReactionConditionType.OnBlinded, possessor => effect => Increased(Select(effect, possessor, m => m.State.Counter(TemporalStatType.Blind))) },
         { ReactionConditionType.OnCausedHeal, possessor => effect =>
             {
                 if (!Equals(possessor, effect.Source))
@@ -45,6 +43,13 @@ public class EffectReactWith : Effect
         {ReactionConditionType.OnVulnerable, possessor => effect 
             => (effect.EffectData.EffectType == EffectType.ApplyVulnerable || effect.EffectData.EffectScope.Value == "Vulnerable") && effect.Target.Members.Any(x => x.Id == possessor.Id) }
     };
+
+    private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
+    private static bool Decreased(int[] values) => values.Last() < values.First();
+    private static bool Increased(int[] values) => values.Last() > values.First();
+    
+    private static int[] Select(EffectResolved e, Member possessor, Func<MemberSnapshot, int> selector)
+        => new[] {selector(e.BattleBefore.Members[possessor.Id]), selector(e.BattleAfter.Members[possessor.Id])};
     
     private readonly bool _isDebuff;
     private readonly int _numberOfUses;
