@@ -6,7 +6,16 @@ using Features.CombatantStates.Reactions;
 public class EffectReactWith : Effect
 {
     private static Dictionary<ReactionConditionType, Func<Member, Func<EffectResolved, bool>>> Conditions = new Dictionary<ReactionConditionType, Func<Member, Func<EffectResolved, bool>>>
-    {
+    {    
+        { ReactionConditionType.OnAttacked, possessor => effect => 
+            effect.EffectData.EffectType == EffectType.Attack && effect.Target.Members.Any(x => x.Id == possessor.Id) },
+        { ReactionConditionType.OnBloodied, possessor => effect => 
+            !effect.BattleBefore.Members[possessor.Id].IsBloodied() && effect.BattleAfter.Members[possessor.Id].IsBloodied() },
+        {ReactionConditionType.OnVulnerable, possessor => effect 
+            => (effect.EffectData.EffectType == EffectType.ApplyVulnerable || effect.EffectData.EffectScope.Value == "Vulnerable") && effect.Target.Members.Any(x => x.Id == possessor.Id) },
+        { ReactionConditionType.OnShieldBroken, possessor => effect => WentToZero(Select(effect, possessor, m => m.State.Counter(TemporalStatType.Shield))) },
+        { ReactionConditionType.OnDamaged, possessor => effect => Decreased(Select(effect, possessor, m => m.State.Hp))},
+        { ReactionConditionType.OnBlinded, possessor => effect => Increased(Select(effect, possessor, m => m.State.Counter(TemporalStatType.Blind))) },
         { ReactionConditionType.OnCausedStun, possessor => effect =>
             {
                 if (!Equals(possessor, effect.Source))
@@ -20,13 +29,18 @@ public class EffectReactWith : Effect
                 return stunsAfter > stunsBefore;
             }
         },
-        { ReactionConditionType.OnAttacked, possessor => effect => 
-            effect.EffectData.EffectType == EffectType.Attack && effect.Target.Members.Any(x => x.Id == possessor.Id) },
-        { ReactionConditionType.OnBloodied, possessor => effect => 
-            !effect.BattleBefore.Members[possessor.Id].IsBloodied() && effect.BattleAfter.Members[possessor.Id].IsBloodied() },
-        { ReactionConditionType.OnShieldBroken, possessor => effect => WentToZero(Select(effect, possessor, m => m.State.Counter(TemporalStatType.Shield))) },
-        { ReactionConditionType.OnDamaged, possessor => effect => Decreased(Select(effect, possessor, m => m.State.Hp))},
-        { ReactionConditionType.OnBlinded, possessor => effect => Increased(Select(effect, possessor, m => m.State.Counter(TemporalStatType.Blind))) },
+        { ReactionConditionType.OnSlay, possessor => effect =>
+            {
+                if (!Equals(possessor, effect.Source))
+                    return false;
+                
+                var targetMembers = effect.Target.Members;
+                var unconsciousBefore = targetMembers.Select(t => effect.BattleBefore.Members[t.Id])
+                    .Count(x => x.IsUnconscious());
+                var unconsciousAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
+                    .Count(x => x.IsUnconscious());
+                return unconsciousAfter > unconsciousBefore;
+            } },
         { ReactionConditionType.OnCausedHeal, possessor => effect =>
             {
                 if (!Equals(possessor, effect.Source))
@@ -39,9 +53,7 @@ public class EffectReactWith : Effect
                     .Sum(x => x.State.Hp);
                 return hpAfter > hpBefore;
             }
-        },
-        {ReactionConditionType.OnVulnerable, possessor => effect 
-            => (effect.EffectData.EffectType == EffectType.ApplyVulnerable || effect.EffectData.EffectScope.Value == "Vulnerable") && effect.Target.Members.Any(x => x.Id == possessor.Id) }
+        }
     };
 
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
