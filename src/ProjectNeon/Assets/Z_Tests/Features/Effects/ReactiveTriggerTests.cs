@@ -1,5 +1,5 @@
+using Features.CombatantStates.Reactions;
 using NUnit.Framework;
-using UnityEngine;
 
 public sealed class ReactiveTriggerTests
 {
@@ -9,17 +9,22 @@ public sealed class ReactiveTriggerTests
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
 
-        var reactionCardType = TestCards.ReactionCard(
-            ReactiveMember.Possessor, 
-            ReactiveTargetScope.Self, 
-            new EffectData { EffectType = EffectType.AdjustStatAdditivelyFormula, Formula = "1", EffectScope = new StringReference("Armor"), NumberOfTurns = new IntReference(-1) });
-
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.OnAttacked,
+            EffectType = EffectType.ReactWithCard,
+            ReactionConditionType = ReactionConditionType.OnAttacked,
             NumberOfTurns = new IntReference(3),
             FloatAmount = new FloatReference(-1),
-            ReactionSequence = reactionCardType
+            ReactionSequence = TestCards.ReactionCard(
+                ReactiveMember.Possessor, 
+                ReactiveTargetScope.Self, 
+                new EffectData
+                {
+                    EffectType = EffectType.AdjustStatAdditivelyFormula, 
+                    Formula = "1", 
+                    EffectScope = new StringReference("Armor"), 
+                    NumberOfTurns = new IntReference(-1)
+                })
         }, target, target);
         
         TestEffects.Apply(new EffectData
@@ -44,7 +49,8 @@ public sealed class ReactiveTriggerTests
 
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.OnAttacked,
+            EffectType = EffectType.ReactWithCard,
+            ReactionConditionType = ReactionConditionType.OnAttacked,
             NumberOfTurns = new IntReference(3),
             FloatAmount = new FloatReference(-1),
             ReactionSequence = reactionCardType

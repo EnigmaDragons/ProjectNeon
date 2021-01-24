@@ -55,11 +55,13 @@ public class EffectReactWith : Effect
 
     public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status,
         ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, ReactionCardType reactionCard)
-            : this(isDebuff, numberOfUses, maxDurationTurns, status, triggerScope, conditionType, Maybe<CardReactionSequence>.Missing(), reactionCard) {}
+            : this(isDebuff, numberOfUses, maxDurationTurns, status, triggerScope, conditionType, Maybe<CardReactionSequence>.Missing(), 
+                new Maybe<ReactionCardType>(reactionCard, true)) {}
     
     public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status,
         ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, CardReactionSequence reactionEffect)
-        : this(isDebuff, numberOfUses, maxDurationTurns, status, triggerScope, conditionType, reactionEffect, Maybe<ReactionCardType>.Missing()) {}
+        : this(isDebuff, numberOfUses, maxDurationTurns, status, triggerScope, conditionType, new Maybe<CardReactionSequence>(reactionEffect, true), 
+            Maybe<ReactionCardType>.Missing()) {}
         
     public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
         ReactionConditionType conditionType, Maybe<CardReactionSequence> reactionEffect, Maybe<ReactionCardType> reactionCard)
@@ -107,7 +109,7 @@ public sealed class ReactWithEffect : ReactiveEffectV2Base
                 {
                     var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                     var conditionMet = condition(effect);
-                    DevLog.Write($"Reaction - Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
+                    DevLog.Write($"{status.Tag} Reaction - Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
                     return isInTriggerScope && conditionMet;
                 })) {}
 }
@@ -121,7 +123,7 @@ public sealed class ReactWithCard : ReactiveEffectV2Base
             {
                 var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                 var conditionMet = condition(effect);
-                DevLog.Write($"Reaction - Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
+                DevLog.Write($"{status.Tag} Reaction - Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
                 return isInTriggerScope && conditionMet;
             })) {}
 }

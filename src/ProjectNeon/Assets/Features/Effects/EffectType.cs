@@ -33,7 +33,7 @@ public enum EffectType
     // Reactions
     ReactWithEffect = 74,
     ReactWithCard = 75,
-    OnAttacked = 26,
+    OnShieldBroken = 21,
     OnEvaded = 9,
     OnDeath = 25,
     
@@ -48,7 +48,6 @@ public enum EffectType
     OnDamaged = 15,
     InterceptAttackForTurns = 18,
     HealOverTime = 20,
-    OnShieldBroken = 21,
     RemoveShields = 22,
     HealMagic = 45,
     HealToughness = 12,

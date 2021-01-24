@@ -33,15 +33,22 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
       StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -86,15 +93,22 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
       StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -121,7 +135,7 @@ MonoBehaviour:
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 26
+      EffectType: 74
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -135,20 +149,26 @@ MonoBehaviour:
         ConstantValue: 1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: Originator
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 8f022cb97a77e784cbb4e7e63ab09acb, type: 2}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 11400000, guid: a1d4dbb42e88d274ba45f2b39a65f53c,
-        type: 2}
       StatusTag: 5
+      StatusDetailText: When hit by Dominik, Dominik gains 1 Energy
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 7079757832df5354b9fb82702547a28b, type: 2}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:

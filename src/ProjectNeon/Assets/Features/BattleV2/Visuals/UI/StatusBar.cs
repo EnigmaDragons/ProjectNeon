@@ -83,8 +83,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State.HasStatus(StatusTag.HealOverTime))
             statuses.Add(new CurrentStatusValue {  Type = StatusTag.HealOverTime.ToString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
         
-        if (_member.State.HasStatus(StatusTag.OnHit))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.OnHit.ToString(), Icon = icons[StatusTag.OnHit].Icon, Tooltip = "Special On Hit Effect" });
+        _member.State.StatusesOfType(StatusTag.OnHit)
+            .ForEach(s => statuses.Add(new CurrentStatusValue { Type = StatusTag.OnHit.ToString(), Icon = icons[StatusTag.OnHit].Icon, Tooltip = s.Status.CustomText.OrDefault("Special On Hit Effect") }));
         
         if (_member.State.HasStatus(StatusTag.OnDamaged))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.OnDamaged.ToString(), Icon = icons[StatusTag.OnDamaged].Icon, Tooltip = "Special On Damaged Effect" });

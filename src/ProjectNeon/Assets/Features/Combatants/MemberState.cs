@@ -179,11 +179,7 @@ public sealed class MemberState : IStats
     });
     
     public void AddReactiveState(ReactiveStateV2 state) 
-        => PublishAfter(() =>
-        {
-            _reactiveStates.RemoveAll(r => r.Status.Tag == state.Status.Tag);
-            _reactiveStates.Add(state);
-        });
+        => PublishAfter(() => _reactiveStates.Add(state));
     
     public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
     
