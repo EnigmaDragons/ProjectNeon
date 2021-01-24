@@ -111,12 +111,12 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
             var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
             if (newTargets.Any())
             {
-                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), msg.Card, partyAdventureState, state.PlayerState, state.Members));
+                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.Members));
                 return;
             }
         }
         
-        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, msg.Card, partyAdventureState, state.PlayerState, state.Members));   
+        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.Members));   
     }
 
     protected override void Execute(SpawnEnemy msg)
@@ -172,7 +172,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
             Message.Publish(new CardResolutionStarted(playedCard));
             r.Source.Apply(s => s.Lose(expense));
             r.Source.Apply(s => s.Gain(gains));
-            reactionCard.ActionSequence.Perform(r.Source, r.Target, expense.Amount);
+            reactionCard.ActionSequence.Perform(r.Source, r.Target, reactionCard.Cost.PlusXCost ? expense.Amount : 0);
         }
         else 
             Message.Publish(new CardResolutionFinished(r.Source.Id));

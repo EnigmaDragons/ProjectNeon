@@ -22,6 +22,6 @@ public class MagicAttack : Effect
         var effect = new DealDamage(damage);
         
         foreach (var member in selectedTarget.Members) 
-            effect.Apply(ctx.Source, member, ctx.Card);
+            effect.Apply(ctx.Source, member, ctx.Card, ctx.XPaidAmount);
     }
 }

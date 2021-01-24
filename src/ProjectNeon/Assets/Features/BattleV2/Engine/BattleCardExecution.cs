@@ -83,9 +83,9 @@ public static class BattleCardExecution
         if (type == CardBattleActionType.Battle)
             return ctx.AvoidingMembers.Any() 
                 ? new MultiplePayloads(
-                    new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.Group, ctx.Scope, isReaction: false)), 
+                    new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XPaidAmount.Amount, ctx.Group, ctx.Scope, isReaction: false)), 
                     new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.AvoidingMembers)))
-                : (IPayloadProvider)new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.Group, ctx.Scope, isReaction: false));
+                : (IPayloadProvider)new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XPaidAmount.Amount, ctx.Group, ctx.Scope, isReaction: false));
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn));
         if (type == CardBattleActionType.AnimateCharacter)
@@ -111,7 +111,7 @@ public static class BattleCardExecution
     {
         var type = action.Type;
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(action.BattleEffect, source, target, Maybe<Card>.Missing()));
+            return new SinglePayload(new ApplyBattleEffect(action.BattleEffect, source, target, Maybe<Card>.Missing(), amountPaid));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(new CharacterAnimationRequested(source.Id, action.CharacterAnimation, target));
         if (type == CardBattleActionType.AnimateAtTarget)

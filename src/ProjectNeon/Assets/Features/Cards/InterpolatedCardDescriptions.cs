@@ -133,11 +133,11 @@ public static class InterpolatedCardDescriptions
             return WithRawDamageIcon(AttackAmount(data, owner));
         if (data.EffectType == EffectType.DealRawDamageFormula)
             return WithRawDamageIcon(owner.IsPresent 
-                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
+                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, owner.Value.PrimaryResourceAmount())).ToString()
                 : FormattedFormula(data.Formula));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             return owner.IsPresent
-                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula)).ToString()
+                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, owner.Value.PrimaryResourceAmount())).ToString()
                 : FormattedFormula(data.Formula);
         if (data.EffectType == EffectType.DamageSpell )
             return WithMagicDamageIcon(MagicAmount(data, owner));

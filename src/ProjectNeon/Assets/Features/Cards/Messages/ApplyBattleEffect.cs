@@ -8,18 +8,20 @@
     public Scope Scope { get; }
     public bool IsReaction { get; }
     public Maybe<Card> Card { get; }
+    public int XPaidAmount { get; }
     
 
-    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card)
+    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, int xPaidAmount)
     {
         Effect = effect;
         Source = source;
         Target = target;
         IsReaction = true;
         Card = card;
+        XPaidAmount = xPaidAmount;
     }
         
-    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, Group targetGroup, Scope scope, bool isReaction)
+    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, int xPaidAmount, Group targetGroup, Scope scope, bool isReaction)
     {
         Effect = effect;
         Source = source;
@@ -29,5 +31,6 @@
         Scope = scope;
         IsReaction = isReaction;
         Card = card;
+        XPaidAmount = xPaidAmount;
     }
 }
