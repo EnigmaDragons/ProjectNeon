@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Any-ShieldGenerator
   m_EditorClassIdentifier: 
-  displayName: 
+  displayName: Shield Generator
   description: 
-  rarity: 0
-  slot: 0
+  rarity: 1
+  slot: 2
   priceFactor: 1
   canUseClasses:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -26,4 +26,38 @@ MonoBehaviour:
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
-  battleStartEffects: []
+  battleStartEffects:
+  - EffectType: 54
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    NumberOfTurns:
+      UseConstant: 1
+      ConstantValue: -1
+      Variable: {fileID: 0}
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    StatusTag: 12
+    StatusDetailText: At start of turn, gain 0.33 x Toughness shields
+    TurnDelay: 0
+    Formula: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 11400000, guid: c80cc43034180f1439fe1fcff46f2b1c,
+      type: 2}
+    ReactionConditionType: 0
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}

@@ -38,7 +38,9 @@ public class EffectReactWith : Effect
                     .Sum(x => x.State.Hp);
                 return hpAfter > hpBefore;
             }
-        }
+        },
+        {ReactionConditionType.OnVulnerable, possessor => effect 
+            => (effect.EffectData.EffectType == EffectType.ApplyVulnerable || effect.EffectData.EffectScope.Value == "Vulnerable") && effect.Target.Members.Any(x => x.Id == possessor.Id) }
     };
     
     private readonly bool _isDebuff;
