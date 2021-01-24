@@ -10,9 +10,9 @@ public sealed class HealFlatForTurnsOnTurnStartTests
         var caster = TestMembers.Any();
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        new Attack(5).Apply(attacker, new Single(target), Maybe<Card>.Missing());
+        new Attack(5).Apply(attacker, new Single(target));
 
-        new HealOverTime(1, 3).Apply(caster, new Single(target), Maybe<Card>.Missing());
+        new HealOverTime(1, 3).Apply(caster, new Single(target));
         
         target.State.GetTurnStartEffects();
         target.State.GetTurnEndEffects();

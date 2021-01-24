@@ -31,6 +31,12 @@ public class EffectContext
 
 public static class EffectExtensions
 {
+    public static void Apply(this Effect effect, Member source, Target target) 
+        => effect.Apply(source, target, Maybe<Card>.Missing());
+    
+    public static void Apply(this Effect effect, Member source, Member target) 
+        => effect.Apply(source, target, Maybe<Card>.Missing());
+
     public static void Apply(this Effect effect, Member source, Target target, Maybe<Card> card) 
         => effect.Apply(new EffectContext(source, target, card, PartyAdventureState.InMemory(), new PlayerState(0), 
             target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m)));

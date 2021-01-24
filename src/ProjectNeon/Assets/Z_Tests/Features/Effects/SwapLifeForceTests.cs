@@ -10,7 +10,7 @@ public class SwapLifeForceTests
         source.State.TakeRawDamage(6);
         target.State.TakeRawDamage(4);
 
-        new SwapLifeForce().Apply(source, target, Maybe<Card>.Missing());
+        new SwapLifeForce().Apply(source, target);
 
         Assert.AreEqual(6, source.State[TemporalStatType.HP]);
         Assert.AreEqual(4, target.State[TemporalStatType.HP]);
@@ -23,7 +23,7 @@ public class SwapLifeForceTests
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 20));
         source.State.TakeRawDamage(6);
 
-        new SwapLifeForce().Apply(source, target, Maybe<Card>.Missing());
+        new SwapLifeForce().Apply(source, target);
 
         Assert.AreEqual(10, source.State[TemporalStatType.HP]);
         Assert.AreEqual(4, target.State[TemporalStatType.HP]);

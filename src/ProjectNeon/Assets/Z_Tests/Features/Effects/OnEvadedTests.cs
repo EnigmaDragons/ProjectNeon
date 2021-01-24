@@ -24,7 +24,7 @@ public class OnEvadedTests
                     EffectScope = new StringReference("Armor"), 
                     NumberOfTurns = new IntReference(-1)
                 })
-        }, target, target, Maybe<Card>.Missing());
+        }, target, target);
 
         TestEffects.Apply(new EffectData
         {
