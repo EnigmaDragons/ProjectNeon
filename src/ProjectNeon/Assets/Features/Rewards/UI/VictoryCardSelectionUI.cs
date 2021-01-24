@@ -9,9 +9,14 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCard>
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private BattleState state;
     [SerializeField] private TextMeshProUGUI creditsLabel;
-    
+
+    private bool _hasSelected = false;
+    private Action<Maybe<CardType>> _onSelected = _ => { };
+    private void ClearView() => optionsParent.DestroyAllChildren();
+
     protected override void Execute(GetUserSelectedCard msg)
     {
+        _hasSelected = false;
         _onSelected = msg.OnSelected;
         ClearView();
         msg.Options.ForEach(o =>
@@ -21,16 +26,15 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCard>
         view.SetActive(true);
     }
     
-    private Action<Maybe<CardType>> _onSelected = _ => { };
-    
-    private void ClearView() => optionsParent.DestroyAllChildren();
     private void SelectCard(CardType c)
-    {
+    {        
+        if (_hasSelected)
+            return;
+
+        _hasSelected = true;
         Debug.Log($"Selected Card {c.Name}");
-        FinishSelection(() => _onSelected(new Maybe<CardType>(c)));
+        _onSelected(new Maybe<CardType>(c));
         ClearView();
         Instantiate(cardPresenter, optionsParent.transform).Set(c, () => {});
     }
-
-    private void FinishSelection(Action s) => s();
 }

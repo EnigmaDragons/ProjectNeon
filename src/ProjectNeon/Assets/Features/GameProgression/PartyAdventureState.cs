@@ -78,7 +78,7 @@ public sealed class PartyAdventureState : ScriptableObject
         });
 
     public void Add(params CardType[] c) => UpdateState(() => Cards.Add(c));
-    public void Add(Equipment e) => UpdateState(() => equipment.Add(e));
+    public void Add(params Equipment[] e) => UpdateState(() => equipment.Add(e));
     public void EquipTo(Equipment e, Hero h) => UpdateState(() =>
     {
         h.Equip(e);

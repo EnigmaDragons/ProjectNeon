@@ -1,4 +1,4 @@
-using System.Linq;
+using System;
 using Features.GameProgression.Messages;
 using UnityEngine;
 
@@ -11,6 +11,32 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
     [SerializeField] private CurrentAdventure currentAdventure;
+    [SerializeField] private BattleState state;
+    [SerializeField] private ShopCardPool cardPrizePool;
+    [SerializeField] private EquipmentPool equipmentPrizePool;
+
+    public void GrantVictoryRewardsAndThen(Action onFinished)
+    {
+        var rewardPicker = new ShopSelectionPicker();
+        if (state.IsEliteBattle)
+        {
+            var rewardEquipments = rewardPicker.PickEquipments(state.Party, equipmentPrizePool, 3);
+            Message.Publish(new GetUserSelectedEquipment(rewardEquipments, equipment =>
+            {
+                equipment.IfPresent(e => state.SetRewardEquipment(e));
+                onFinished();
+            }));
+        }
+        else
+        {
+            var rewardCards = rewardPicker.PickCards(state.Party, cardPrizePool, 3);
+            Message.Publish(new GetUserSelectedCard(rewardCards, card =>
+            {
+                card.IfPresent(c => state.SetRewardCards(c));
+                onFinished();
+            }));
+        }
+    }
     
     private void Advance()
     {

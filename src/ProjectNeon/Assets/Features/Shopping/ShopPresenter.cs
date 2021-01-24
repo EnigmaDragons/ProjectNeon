@@ -33,7 +33,7 @@ public sealed class ShopPresenter : MonoBehaviour
     {
         Clear();
         _selection = new ShopSelectionPicker()
-            .GenerateSelection(cards, equipment, party);
+            .GenerateV1MixedShopSelection(cards, equipment, party);
         _selection.Cards.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)
                 .Initialized(c));

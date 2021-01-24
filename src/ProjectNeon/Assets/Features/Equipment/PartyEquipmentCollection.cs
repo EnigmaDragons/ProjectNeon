@@ -15,10 +15,13 @@ public class PartyEquipmentCollection
     public IEnumerable<Equipment> AvailableFor(CharacterClass c) =>
         Available.Where(e => e.Classes.Contains(CharacterClass.All) || e.Classes.Contains(c.Name)).ToList();
     
-    public void Add(Equipment e)
+    public void Add(params Equipment[] e)
     {
-        _all.Add(e);
-        _available.Add(e);
+        if (e == null)
+            return;
+        
+        _all.AddRange(e);
+        _available.AddRange(e);
     }
 
     public void MarkEquipped(Equipment e)
