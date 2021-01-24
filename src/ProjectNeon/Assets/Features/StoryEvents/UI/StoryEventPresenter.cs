@@ -8,6 +8,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private TextCommandButton optionButtonPrototype;
     [SerializeField] private PartyAdventureState party;
+    [SerializeField] private EquipmentPool allEquipmentPool;
     [SerializeField] private GameObject rewardParent;
     [SerializeField] private StoryCreditsRewardPresenter creditsPrototype;
     [SerializeField] private StoryEquipmentRewardPresenter equipmentPrototype;
@@ -20,7 +21,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
     {
         rewardParent.DestroyAllChildren();
         InitFreshOptionsButtons();
-        var ctx = new StoryEventContext(party);
+        var ctx = new StoryEventContext(party, allEquipmentPool);
         storyTextArea.text = s.StoryText;
         for (var i = _buttons.Length - 1; i > -1; i--)
         {

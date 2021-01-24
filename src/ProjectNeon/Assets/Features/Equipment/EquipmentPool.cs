@@ -18,4 +18,8 @@ public class EquipmentPool : ScriptableObject
         .Concat(Enumerable.Range(0, numRandomCommons).Select(_ => _generator.GenerateRandomCommon()))
         .Concat(Enumerable.Range(0, numRandomUncommons).Select(_ => _generator.GenerateRandomUncommon()))
         .Concat(Enumerable.Range(0, numRandomRares).Select(_ => _generator.GenerateRandomRare()));
+    
+    public Equipment Random(EquipmentSlot slot, Rarity rarity) => All
+        .Where(x => x.Slot == slot && x.Rarity == rarity)
+        .Random();
 }
