@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: BurnoutModule
+  m_Name: Any-PortableSynthesizer
   m_EditorClassIdentifier: 
-  displayName: Burnout Module
-  description: The first card you play each turn with a duration, loses 1 duration
-    but it's twice as effective
-  rarity: 3
+  displayName: Portable Synthesizer
+  description: 'Each turn: Lose 1 cred. Gain 1 primary resource'
+  rarity: 2
   slot: 2
   priceFactor: 1
   canUseClasses:
   - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
-  modifiers: []
+  modifiers:
+  - ModifierType: 0
+    Amount: 0
+    StatType: 
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
@@ -40,20 +42,18 @@ MonoBehaviour:
       Variable: {fileID: 0}
     EffectScope:
       UseConstant: 1
-      ConstantValue: The first card you play each turn with a duration, loses 1 duration
-        but it's twice as effective
+      ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     StatusTag: 12
-    StatusDetailText: The first card you play each turn with a duration, loses 1
-      duration but it's twice as effective
+    StatusDetailText: 'Each turn: Lose 1 cred. Gain 1 primary resource'
     TurnDelay: 0
     Formula: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 11400000, guid: ba92ef037582eff45af430cf7059becb,
+    ReferencedSequence: {fileID: 11400000, guid: b50e3716af0e2a0428dba75d05704db7,
       type: 2}
     ReactionConditionType: 0
     ReactionSequence: {fileID: 0}

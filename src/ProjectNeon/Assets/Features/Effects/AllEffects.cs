@@ -44,7 +44,7 @@ public static class AllEffects
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
         { EffectType.DamageSpell, e => new MagicAttack(e.FloatAmount, e.HitsRandomTargetMember) },
         { EffectType.ApplyTaunt, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Taunt, e.NumberOfTurns)) },
-        { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.IntAmount)) },
+        { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.TotalIntAmount)) },
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
         { EffectType.AtEndOfTurn, e => new EndOfTurnEffect(e) },
         { EffectType.DelayedStartOfTurn, e => new DelayedStartOfTurnEffect(e) },
