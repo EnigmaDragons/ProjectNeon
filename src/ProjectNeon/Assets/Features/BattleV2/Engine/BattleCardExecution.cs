@@ -84,7 +84,11 @@ public static class BattleCardExecution
         => new MultiplePayloads(cardData.Actions.Select(x => x.Play(ctx)));
     
     public static IPayloadProvider PlayAsReaction(this CardActionsData cardData, Member source, Target target, ResourceQuantity xAmountPaid)
-        => new MultiplePayloads(cardData.Actions.Select(x => x.PlayReaction(source, target, xAmountPaid)).ToArray());
+    {
+        Log.Info($"Card Data null {cardData == null}, xAmountPaid null {xAmountPaid == null}");
+        return new MultiplePayloads(cardData.Actions.Select(x => x.PlayReaction(source, target, xAmountPaid))
+            .ToArray());
+    }
 
     // Individual Actions
     private static IPayloadProvider Play(this CardActionV2 action, StatusEffectContext ctx)
