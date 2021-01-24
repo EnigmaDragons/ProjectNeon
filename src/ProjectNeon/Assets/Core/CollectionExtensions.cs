@@ -75,4 +75,12 @@ public static class CollectionExtensions
 
     public static void RemoveLast<T>(this List<T> list) => list.RemoveAt(list.Count - 1);
     public static IEnumerable<T> TakeLast<T>(this List<T> list, int n) => list.Skip(Math.Max(0, list.Count - n));
+
+    public static int Product<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
+    {
+        int result = 1;
+        foreach (var item in source)
+            result *= selector(item);
+        return result;
+    }
 }

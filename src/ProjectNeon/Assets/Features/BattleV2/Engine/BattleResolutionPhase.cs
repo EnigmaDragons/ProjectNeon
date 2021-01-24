@@ -165,14 +165,12 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         yield return new WaitForSeconds(delay);
         if (reactionCard.IsPlayableBy(r.Source))
         {
-            var expense = reactionCard.Cost.ResourcesSpent(r.Source);
-            var gains = reactionCard.Gain.ResourcesGained(r.Source);
-            var xAmountSpent = reactionCard.Cost.XAmountSpent(r.Source);
-            var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, expense, gains, xAmountSpent);
+            var resourceCalculations = r.Source.CalculateResources(reactionCard);
+            var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, resourceCalculations);
             Message.Publish(new CardResolutionStarted(playedCard));
-            r.Source.Apply(s => s.Lose(expense));
-            r.Source.Apply(s => s.Gain(gains));
-            reactionCard.ActionSequence.Perform(r.Source, r.Target, xAmountSpent);
+            r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity));
+            r.Source.Apply(s => s.Gain(resourceCalculations.GainedQuantity));
+            reactionCard.ActionSequence.Perform(r.Source, r.Target, resourceCalculations.XAmountQuantity);
         }
         else 
             Message.Publish(new CardResolutionFinished(r.Source.Id));

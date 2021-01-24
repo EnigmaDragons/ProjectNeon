@@ -72,12 +72,19 @@ public static class MemberExtensions
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
     public static int ResourceAmount(this Member m, IResourceType resourceType) => RoundUp(m.State[resourceType]);
 
-    public static bool CanAfford(this Member m, ResourceCost c)
+    public static bool CanAfford(this Member m, CardTypeData c)
     {
-        if (!c.PlusXCost && c.BaseAmount == 0)
+        if (!c.Cost.PlusXCost && c.Cost.BaseAmount == 0)
             return true;
-        var costAmount = c.ResourcesSpent(m);
-        var remaining = m.State.ResourceAmount(costAmount.ResourceType) - costAmount.Amount;
+        var calc = m.CalculateResources(c);
+        var remaining = m.State.ResourceAmount(calc.ResourcePaidType.Name) - calc.ResourcesPaid;
         return remaining >= 0;
     }
+
+    public static ResourceCalculations CalculateResources(this Member m, CardTypeData card)
+        => m.State.CalculateResources(card).ClampResources(m);
+    
+    //Should reaction cards be modified by changers
+    public static ResourceCalculations CalculateResourcesForReaction(this Member m, ReactionCardType reaction)
+        => TimelessResourceCalculator.CalculateResources(reaction.Cost, reaction.Gain, m.State).ClampResources(m);
 }

@@ -7,7 +7,7 @@ public static class BattleStateExtensions
             return false;
         if (member.State[TemporalStatType.TurnStun] > 0)
             return false;
-        return member.CanAfford(c.Cost);
+        return member.CanAfford(c);
     }
     
     public static bool IsPlayableByHero(this Card c, BattleState b)

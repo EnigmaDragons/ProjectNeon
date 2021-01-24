@@ -14,6 +14,8 @@ public sealed class MemberState : IStats
     private readonly List<ReactiveStateV2> _reactiveStates = new List<ReactiveStateV2>();
     private readonly List<EffectTransformer> _transformers = new List<EffectTransformer>();
     private readonly List<IBonusCardPlayer> _bonusCardPlayers = new List<IBonusCardPlayer>();
+    private readonly List<ResourceCalculator> _additiveResourceCalculators = new List<ResourceCalculator>();
+    private readonly List<ResourceCalculator> _multiplicativeResourceCalculators = new List<ResourceCalculator>();
     private readonly List<CustomStatusIcon> _customStatusIcons = new List<CustomStatusIcon>();
 
     public IStats BaseStats => _baseStats;
@@ -132,6 +134,23 @@ public sealed class MemberState : IStats
         return effect;
     }
 
+    public ResourceCalculations CalculateResources(CardTypeData card)
+    {
+        var calc = card.CalculateResources(this);
+        var additives = _additiveResourceCalculators.Select(x => x.GetModifiers(card, this));
+        var multiplicatives = _multiplicativeResourceCalculators.Select(x => x.GetModifiers(card, this));
+        return new ResourceCalculations(
+            calc.ResourcePaidType, 
+            (calc.ResourcesPaid + additives.Sum(x => x.ResourcesPaid)) * multiplicatives.Product(x => x.ResourcesPaid), 
+            calc.ResourceGainedType, 
+            (calc.ResourcesGained + additives.Sum(x => x.ResourcesGained)) * multiplicatives.Product(x => x.ResourcesGained), 
+            (calc.XAmount + additives.Sum(x => x.XAmount)) * multiplicatives.Product(x => x.XAmount),
+            (calc.XAmountPriceTag + additives.Sum(x => x.XAmountPriceTag)) * multiplicatives.Product(x => x.XAmountPriceTag));
+    }
+
+    public void RecordUsage(Card card) => _additiveResourceCalculators.ForEach(x => x.RecordUsageIfApplicable(card));
+    public void UndoUsage(Card card) => _additiveResourceCalculators.ForEach(x => x.UndoUsageIfApplicable(card));
+
     // Modifier Commands
     private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag> { StatusTag.Vulnerable, StatusTag.AntiHeal };
 
@@ -141,6 +160,8 @@ public sealed class MemberState : IStats
         _multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryMultiplier);
         _reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddReactiveState((ReactiveStateV2)s));
         _transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddEffectTransformer((EffectTransformer)s));
+        _additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator)s));
+        _multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator)s));
     }
 
     public void ApplyBonusCardPlayer(IBonusCardPlayer p) => _bonusCardPlayers.Add(p);
@@ -177,6 +198,7 @@ public sealed class MemberState : IStats
         _multiplierMods.RemoveAll(condition);
         _reactiveStates.RemoveAll(condition);
         _transformers.RemoveAll(condition);
+        _multiplicativeResourceCalculators.RemoveAll(condition);
     });
     
     public void AddReactiveState(ReactiveStateV2 state) 
@@ -185,6 +207,9 @@ public sealed class MemberState : IStats
     public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
     
     public void AddEffectTransformer(EffectTransformer transformer) => PublishAfter(() => _transformers.Add(transformer));
+    
+    public void AddAdditiveResourceCalculator(ResourceCalculator calculator) => PublishAfter(() => _additiveResourceCalculators.Add(calculator));
+    public void AddMutliplicativeResourceCalculator(ResourceCalculator calculator) => PublishAfter(() => _multiplicativeResourceCalculators.Add(calculator));
 
     public void AddCustomStatus(CustomStatusIcon icon) => PublishAfter(() => _customStatusIcons.Add(icon));
 
@@ -226,7 +251,9 @@ public sealed class MemberState : IStats
             _additiveMods.Select(m => m.OnTurnStart()),
             _multiplierMods.Select(m => m.OnTurnStart()),
             _reactiveStates.Select(m => m.OnTurnStart()),
-            _transformers.Select(m => m.OnTurnStart()));
+            _transformers.Select(m => m.OnTurnStart()),
+            _additiveResourceCalculators.Select(m => m.OnTurnStart()),
+            _multiplicativeResourceCalculators.Select(m => m.OnTurnStart()));
         _persistentStates.ForEach(m => m.OnTurnStart());
         return payload;
     }
@@ -238,6 +265,8 @@ public sealed class MemberState : IStats
             _multiplierMods.RemoveAll(m => !m.IsActive);
             _reactiveStates.RemoveAll(m => !m.IsActive);
             _transformers.RemoveAll(m => !m.IsActive);
+            _additiveResourceCalculators.RemoveAll(m => !m.IsActive);
+            _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive);
         });
 
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType> { TemporalStatType.Taunt, TemporalStatType.Stealth, TemporalStatType.Confusion };
@@ -248,7 +277,9 @@ public sealed class MemberState : IStats
             _additiveMods.Select(m => m.OnTurnEnd()),
             _multiplierMods.Select(m => m.OnTurnEnd()),
             _reactiveStates.Select(m => m.OnTurnEnd()),
-            _transformers.Select(m => m.OnTurnEnd()));
+            _transformers.Select(m => m.OnTurnEnd()),
+            _additiveResourceCalculators.Select(m => m.OnTurnEnd()),
+            _multiplicativeResourceCalculators.Select(m => m.OnTurnEnd()));
         _persistentStates.ForEach(m => m.OnTurnEnd());
         _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
         _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
