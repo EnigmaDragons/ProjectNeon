@@ -10,6 +10,6 @@
     }
     public void Apply(EffectContext ctx)
     {
-        ctx.Target.Members.ForEach(m => _effect.Apply(ctx.Source, m));
+        ctx.Target.Members.ForEach(m => _effect.Apply(ctx.Source, m, ctx.Card));
     }
 }

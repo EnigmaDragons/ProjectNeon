@@ -7,16 +7,19 @@
     public Group Group { get; } 
     public Scope Scope { get; }
     public bool IsReaction { get; }
+    public Maybe<Card> Card { get; }
+    
 
-    public ApplyBattleEffect(EffectData effect, Member source, Target target)
+    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card)
     {
         Effect = effect;
         Source = source;
         Target = target;
         IsReaction = true;
+        Card = card;
     }
         
-    public ApplyBattleEffect(EffectData effect, Member source, Target target, Group targetGroup, Scope scope, bool isReaction)
+    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, Group targetGroup, Scope scope, bool isReaction)
     {
         Effect = effect;
         Source = source;
@@ -25,5 +28,6 @@
         Group = targetGroup;
         Scope = scope;
         IsReaction = isReaction;
+        Card = card;
     }
 }

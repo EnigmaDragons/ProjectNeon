@@ -8,8 +8,9 @@ public sealed class CardActionContext
     public Scope Scope { get; }
     public ResourceQuantity XPaidAmount { get; }
     public BattleStateSnapshot BeforeState { get; }
+    public Maybe<Card> Card { get; }
 
-    public CardActionContext(Member source, Target target, Member[] avoidingMembers, Group group, Scope scope, ResourceQuantity xPaidAmount, BattleStateSnapshot beforeState)
+    public CardActionContext(Member source, Target target, Member[] avoidingMembers, Group group, Scope scope, ResourceQuantity xPaidAmount, BattleStateSnapshot beforeState, Maybe<Card> card)
     {
         Source = source;
         Target = target;
@@ -18,8 +19,9 @@ public sealed class CardActionContext
         Scope = scope;
         XPaidAmount = xPaidAmount;
         BeforeState = beforeState;
+        Card = card;
     }
     
     public CardActionContext WithTarget(Target target)
-        => new CardActionContext(Source, target, AvoidingMembers, Group, Scope, XPaidAmount, BeforeState);
+        => new CardActionContext(Source, target, AvoidingMembers, Group, Scope, XPaidAmount, BeforeState, Card);
 }
