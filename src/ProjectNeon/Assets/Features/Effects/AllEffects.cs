@@ -67,12 +67,13 @@ public static class AllEffects
         { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence) },
         //can't solve how to call the correct override without having a useless statement that removes ambiguity of what "t" is
         { EffectType.Suicide, e => new SimpleEffect((src, t) => { var _ = t.Members; src.State.SetHp(0); }) },
-        { EffectType.DoubleTheEffectAndMinusDuration, e => new EffectDoubleTheEffectAndMinus1Duration(e) },
+        { EffectType.DoubleTheEffectAndMinusDurationTransformer, e => new EffectDoubleTheEffectAndMinus1Duration(e) },
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(e.EffectScope, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
         { EffectType.HealFormula, e => new FullContextEffect((ctx, m) => m.GainHp(Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount))) },
         { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

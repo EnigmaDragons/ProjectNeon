@@ -38,6 +38,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, new[]{"BaseAmount", "EffectScope", "StatusTag", "StatusDetailText", "BonusCardType"}},
         {EffectType.AttackFormula, new [] { "Formula" }},
         {EffectType.MagicAttackFormula, new [] { "Formula" }},
+        {EffectType.AddToXCostTransformer, new [] { "FloatAmount", "NumberOfTurns", "StatusTag", "StatusDetailText" }}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

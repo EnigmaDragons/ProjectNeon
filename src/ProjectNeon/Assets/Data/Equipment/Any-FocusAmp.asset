@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Any-ShieldGenerator
+  m_Name: Any-FocusAmp
   m_EditorClassIdentifier: 
-  displayName: Shield Generator
-  description: At start of turn, gain 0.33 x Toughness shields
-  rarity: 1
+  displayName: Focus Amp
+  description: Add 1 to X Cost Cards
+  rarity: 2
   slot: 2
   priceFactor: 1
   canUseClasses:
@@ -27,34 +27,33 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 54
+  - EffectType: 32
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
+      UseConstant: 1
+      ConstantValue: -1
       FloatVariable: {fileID: 0}
     NumberOfTurns:
       UseConstant: 1
       ConstantValue: -1
       Variable: {fileID: 0}
     EffectScope:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     StatusTag: 12
-    StatusDetailText: At start of turn, gain 0.33 x Toughness shields
+    StatusDetailText: Add 1 to X Cost Cards
     TurnDelay: 0
     Formula: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 11400000, guid: c80cc43034180f1439fe1fcff46f2b1c,
-      type: 2}
+    ReferencedSequence: {fileID: 0}
     ReactionConditionType: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:

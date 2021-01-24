@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Any-EmergencyTacticalShield
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  rarity: 0
-  slot: 0
+  displayName: Emergency Tactical Shield
+  description: On gaining vulnerable, Shield Toughness
+  rarity: 2
+  slot: 2
   priceFactor: 1
   canUseClasses:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -26,4 +26,38 @@ MonoBehaviour:
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
-  battleStartEffects: []
+  battleStartEffects:
+  - EffectType: 74
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: -1
+      FloatVariable: {fileID: 0}
+    NumberOfTurns:
+      UseConstant: 1
+      ConstantValue: -1
+      Variable: {fileID: 0}
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    StatusTag: 12
+    StatusDetailText: On gaining vulnerable, Shield Toughness
+    TurnDelay: 0
+    Formula: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 5
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 11400000, guid: 840ff2540f58e084b85881f7975f98d3, type: 2}
+    BonusCardType: {fileID: 0}
