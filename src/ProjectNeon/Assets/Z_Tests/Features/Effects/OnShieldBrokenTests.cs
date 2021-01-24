@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using UnityEngine;
+﻿using Features.CombatantStates.Reactions;
+using NUnit.Framework;
 
 public class OnShieldBrokenTests
 {
@@ -12,16 +12,21 @@ public class OnShieldBrokenTests
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1));
         target.State.AdjustShield(startingShields);
 
-        var reactionCardType = TestCards.ReactionCard(
-            ReactiveMember.Possessor,
-            ReactiveTargetScope.Self,
-            new EffectData { EffectType = EffectType.AdjustStatAdditivelyFormula, Formula = "1", EffectScope = new StringReference("Armor"), NumberOfTurns = new IntReference(-1) });
-
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.OnShieldBroken,
+            EffectType = EffectType.ReactWithCard,
             NumberOfTurns = new IntReference(3),
-            ReactionSequence = reactionCardType
+            FloatAmount = new FloatReference(-1),
+            ReactionConditionType = ReactionConditionType.OnShieldBroken,
+            ReactionSequence = TestCards.ReactionCard(
+                ReactiveMember.Possessor,
+                ReactiveTargetScope.Self,
+                new EffectData { 
+                    EffectType = EffectType.AdjustStatAdditivelyFormula, 
+                    Formula = "1", 
+                    EffectScope = new StringReference("Armor"), 
+                    NumberOfTurns = new IntReference(-1) 
+                })
         }, target, target);
 
         TestEffects.Apply(new EffectData

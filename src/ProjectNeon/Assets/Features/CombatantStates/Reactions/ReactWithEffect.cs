@@ -25,8 +25,10 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnBloodied, possessor => effect
             => !effect.BattleBefore.Members[possessor.Id].IsBloodied() 
                && effect.BattleAfter.Members[possessor.Id].IsBloodied() },
-        {
-            ReactionConditionType.OnCausedHeal, possessor => effect =>
+        { ReactionConditionType.OnShieldBroken, possessor => effect => 
+            effect.BattleBefore.Members[possessor.Id].State.Counters["Shield"] > 0 
+                && effect.BattleAfter.Members[possessor.Id].State.Counters["Shield"] == 0 },
+        { ReactionConditionType.OnCausedHeal, possessor => effect =>
             {
                 if (!Equals(possessor, effect.Source))
                     return false;
