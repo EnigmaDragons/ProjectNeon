@@ -93,9 +93,9 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
     private static Target GetReactionTarget(Member possessor, Member reactor, IDictionary<int, Member> members, CardReactionSequence action, Member effectSource, Target effectTarget)
     {
-        Target target = new Single(possessor);
+        Target target = new Single(reactor);
         if (action.Scope == ReactiveTargetScope.Possessor)
-            target = target;
+            target = new Single(possessor);
         if (action.Scope == ReactiveTargetScope.Source)
             target = new Single(effectSource);
         if (action.Scope == ReactiveTargetScope.Target)
@@ -116,6 +116,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         if (!condition(effect))
             return false;
         // Noah's super hack for OnDeath changes values during the Condition Resolution above ^
+        // Why can't reactions apply to (now) unconscious characters?
         if (!possessor.IsConscious())
             return false;
         return true;

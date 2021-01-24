@@ -48,6 +48,7 @@ MonoBehaviour:
         reactor: 0
         scope: 0
         cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -74,7 +75,7 @@ MonoBehaviour:
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 26
+      EffectType: 74
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -88,12 +89,12 @@ MonoBehaviour:
         ConstantValue: 1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
       HitsRandomTargetMember: 0
       StatusTag: 5
-      StatusDetailText: 
+      StatusDetailText: When attacked, Attacker is burned by the Wall of Flames
       TurnDelay: 0
       Formula: 
       FlavorText:
@@ -106,8 +107,9 @@ MonoBehaviour:
         type: 2}
       ReactionEffect:
         reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
+        scope: 2
+        cardActions: {fileID: 11400000, guid: ee35a2582ce72a5478cf99f002fe97f2, type: 2}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:

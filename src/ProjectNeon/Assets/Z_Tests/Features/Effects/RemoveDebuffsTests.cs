@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Features.CombatantStates.Reactions;
 using NUnit.Framework;
 
 public class RemoveDebuffsTests
@@ -17,7 +18,7 @@ public class RemoveDebuffsTests
     }
 
     [Test]
-    public void RemoveDebuffs_ApplyEffect_RemovesMultiplicitiveEffect()
+    public void RemoveDebuffs_ApplyEffect_RemovesMultiplicativeEffect()
     {
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
@@ -34,7 +35,7 @@ public class RemoveDebuffsTests
     {
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s);
-        target.State.AddReactiveState(new ReactOnAttacked(true, 2, 2, new StatusDetail(StatusTag.CounterAttack), ReactiveTriggerScope.All, new Dictionary<int, Member>(), 1, target, TestCards.AnyReaction()));
+        target.State.AddReactiveState(Create(isDebuff: true, target));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
@@ -46,13 +47,15 @@ public class RemoveDebuffsTests
     {
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s);
-        target.State.AddReactiveState(new ReactOnAttacked(false, 2, 2, 
-            new StatusDetail(StatusTag.CounterAttack), 
-            ReactiveTriggerScope.All, 
-            new Dictionary<int, Member> { {target.Id, target}}, target.Id,  target, TestCards.AnyReaction()));
+        target.State.AddReactiveState(Create(isDebuff: false, target));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
         Assert.True(target.State.HasStatus(StatusTag.CounterAttack));
     }
+
+    private ReactiveStateV2 Create(bool isDebuff, Member m) => new ReactWithCard(isDebuff, 2, 2,
+        new StatusDetail(StatusTag.CounterAttack),
+        ReactiveTriggerScope.All, new Dictionary<int, Member> {{m.Id, m}}, m.Id, m,
+        TestCards.AnyReaction(), _ => true);
 }
