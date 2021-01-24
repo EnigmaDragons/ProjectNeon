@@ -37,7 +37,7 @@ public static class AllEffects
         { EffectType.ReactOnEvadedWithCard, e => new EffectOnEvaded(false, e.IntAmount, e.NumberOfTurns, ReactiveTriggerScopeExtensions.Parse(e.EffectScope),e.ReactionSequence) },
         { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Magic) },
         { EffectType.HealToughness, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Toughness) },
-        { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => BattleLogged($"{m.Name} {GainedOrLostTerm(e.TotalIntAmount)} {e.TotalIntAmount} {m.PrimaryResource.Name}", 
+        { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => BattleLogged($"{m.Name} {GainedOrLostTerm(e.TotalIntAmount)} {Math.Abs(e.TotalIntAmount)} {m.PrimaryResource.Name}", 
             () => m.AdjustPrimaryResource(e.IntAmount + e.BaseAmount))) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
