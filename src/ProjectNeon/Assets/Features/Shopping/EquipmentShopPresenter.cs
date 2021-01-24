@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EquipmentShopPresenter : MonoBehaviour
+public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
 {
     [SerializeField] private EquipmentPool equipment;
     [SerializeField] private PartyAdventureState party;
@@ -23,7 +23,8 @@ public class EquipmentShopPresenter : MonoBehaviour
                 Destroy(c.gameObject);
     }
 
-    private void OnEnable() => GetMoreInventory();
+    protected override void AfterEnable() => GetMoreInventory();
+    protected override void Execute(GetFreshEquipmentSet msg) => GetMoreInventory();
 
     public void GetMoreInventory()
     {

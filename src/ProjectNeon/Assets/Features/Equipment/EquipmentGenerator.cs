@@ -24,11 +24,11 @@ public class EquipmentGenerator
             "Flak Gear",
             "Linear Frame"
         }},
-        { EquipmentSlot.Augmentation, new[] {
-            "Booster",
-            "Enhancer",
-            "Stimulator",
-        }}
+//        { EquipmentSlot.Augmentation, new[] {
+//            "Booster",
+//            "Enhancer",
+//            "Stimulator",
+//        }}
     };
    
     private static readonly StatType[] GeneratableStats = { StatType.MaxHP, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance, StatType.Leadership };
@@ -51,20 +51,16 @@ public class EquipmentGenerator
 
     private int PowerLevelFor(Rarity rarity)
         => RarityPowers[rarity].Random();
-    
+
     private EquipmentSlot SlotFor(StatType primaryStatType)
-        => new[] {StatType.Attack, StatType.Magic}.Contains(primaryStatType)
+        => new[] {StatType.Attack, StatType.Magic, StatType.Leadership, StatType.Toughness}.Contains(primaryStatType)
             ? EquipmentSlot.Weapon
-            : new[] {StatType.Armor, StatType.Resistance}.Contains(primaryStatType)
-                ? EquipmentSlot.Armor
-                : EquipmentSlot.Augmentation;
+            : EquipmentSlot.Armor;
 
     private StatType RandomStatFor(EquipmentSlot slot)
         => slot == EquipmentSlot.Weapon
-            ? new[] {StatType.Attack, StatType.Magic}.Random()
-            : slot == EquipmentSlot.Armor
-                ? new[] {StatType.Armor, StatType.Resistance}.Random()
-                : new[] {StatType.Toughness, StatType.MaxHP, StatType.Leadership}.Random();
+            ? new[] {StatType.Attack, StatType.Magic, StatType.Leadership, StatType.Toughness}.Random()
+            : new[] {StatType.Armor, StatType.Resistance, StatType.MaxHP}.Random();
     
     public static string NameFor(EquipmentSlot slot, Rarity rarity)
         => $"{string.Join("", Enumerable.Range(0, Rng.Int(3, 6)).Select(_ => Letters.Random()))} {_slotNames[slot].Random()}";
