@@ -20,13 +20,16 @@ public class EffectReactWith : Effect
                 return stunsAfter > stunsBefore;
             }
         },
-        { ReactionConditionType.OnAttacked, possessor => effect 
-            => effect.EffectData.EffectType == EffectType.Attack && effect.Target.Members.Any(x => x.Id == possessor.Id) },
-        { ReactionConditionType.OnBloodied, possessor => effect
-            => !effect.BattleBefore.Members[possessor.Id].IsBloodied() 
-               && effect.BattleAfter.Members[possessor.Id].IsBloodied() },
-        {
-            ReactionConditionType.OnCausedHeal, possessor => effect =>
+        { ReactionConditionType.OnAttacked, possessor => effect => 
+            effect.EffectData.EffectType == EffectType.Attack && effect.Target.Members.Any(x => x.Id == possessor.Id) },
+        { ReactionConditionType.OnBloodied, possessor => effect => 
+            !effect.BattleBefore.Members[possessor.Id].IsBloodied() && effect.BattleAfter.Members[possessor.Id].IsBloodied() },
+        { ReactionConditionType.OnShieldBroken, possessor => effect => 
+            effect.BattleBefore.Members[possessor.Id].State.Counters["Shield"] > 0 
+                && effect.BattleAfter.Members[possessor.Id].State.Counters["Shield"] == 0 },
+        { ReactionConditionType.OnDamaged, possessor => effect => 
+            effect.BattleBefore.Members[possessor.Id].State.Hp > effect.BattleAfter.Members[possessor.Id].State.Hp},
+        { ReactionConditionType.OnCausedHeal, possessor => effect =>
             {
                 if (!Equals(possessor, effect.Source))
                     return false;
