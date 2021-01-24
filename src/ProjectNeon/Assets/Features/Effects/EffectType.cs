@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 29-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 30-43, 47, 48, 53, 
 // LAST NUMBER USED: 76
 public enum EffectType
 {
@@ -9,7 +9,7 @@ public enum EffectType
     Attack = 17,
     DamageSpell = 50,
     DealRawDamageFormula = 70,
-    
+
     AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyFormula = 68,
     AdjustCounter = 67,
@@ -24,6 +24,7 @@ public enum EffectType
     ResourceFlat = 7,
     DamageOverTimeFlat = 8,
     DamageOverTime = 19,
+    HealFormula = 29,
 
     AntiHeal = 60,
     ApplyVulnerable = 10,

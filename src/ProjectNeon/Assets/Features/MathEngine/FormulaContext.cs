@@ -3,15 +3,15 @@ public class FormulaContext
 {
     public MemberState Source { get; }
     public Maybe<MemberState> Target { get; }
-    public int XPaidAmount { get; }
+    public ResourceQuantity XAmountPaid { get; }
 
-    public FormulaContext(Member src, Member target, int xPaidAmount)
-        : this(src.State, target.State, xPaidAmount) {}
+    public FormulaContext(Member src, Member target, ResourceQuantity xAmountPaid)
+        : this(src.State, target.State, xAmountPaid) {}
     
-    public FormulaContext(MemberState src, Maybe<MemberState> target, int xPaidAmount)
+    public FormulaContext(MemberState src, Maybe<MemberState> target, ResourceQuantity xAmountPaid)
     {
         Source = src;
         Target = target;
-        XPaidAmount = xPaidAmount;
+        XAmountPaid = xAmountPaid;
     }
 }

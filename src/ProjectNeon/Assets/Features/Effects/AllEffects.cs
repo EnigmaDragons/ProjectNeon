@@ -70,7 +70,8 @@ public static class AllEffects
         { EffectType.Suicide, e => new SimpleEffect((src, t) => { var _ = t.Members; src.State.SetHp(0); }) },
         { EffectType.DoubleTheEffectAndMinusDuration, e => new EffectDoubleTheEffectAndMinus1Duration(e) },
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
-            new PlayBonusCardAfterNoCardPlayedInXTurns(e.EffectScope, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))}
+            new PlayBonusCardAfterNoCardPlayedInXTurns(e.EffectScope, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
+        { EffectType.HealFormula, e => new FullContextEffect((ctx, m) => m.GainHp(Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount))) }
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

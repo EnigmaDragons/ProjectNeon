@@ -4,7 +4,7 @@ using System.Linq;
 
 public static class Formula
 {
-    public static float Evaluate(Member src, string expression, int xAmountPaid) 
+    public static float Evaluate(Member src, string expression, ResourceQuantity xAmountPaid) 
         => Evaluate(new FormulaContext(src.State, Maybe<MemberState>.Missing(), xAmountPaid), expression);
 
     public static float Evaluate(FormulaContext ctx, string expression)
@@ -30,7 +30,7 @@ public static class Formula
             newExp = newExp.Replace(stat.ToString(), ctx.Source[stat].ToString());
         }
 
-        newExp = newExp.Replace("X", ctx.XPaidAmount.ToString());
+        newExp = newExp.Replace("X", ctx.XAmountPaid.Amount.ToString());
 
         return Convert.ToSingle(new DataTable().Compute(newExp, null));
     }

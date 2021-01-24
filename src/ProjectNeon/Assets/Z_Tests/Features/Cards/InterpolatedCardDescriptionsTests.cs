@@ -23,11 +23,11 @@ public sealed class InterpolatedCardDescriptionsTests
 
     [Test]
     public void Interpolated_AttackWithoutOwner_IsCorrect() 
-        => AssertMatchesIgnoreStyling("1x ATK", ForEffect(BasicAttack, Maybe<Member>.Missing()));
+        => AssertMatchesIgnoreStyling("1x ATK", ForEffect(BasicAttack, Maybe<Member>.Missing(), ResourceQuantity.None));
 
     [Test]
     public void Interpolated_AttackWithOwner_IsCorrect() 
-        => AssertMatchesIgnoreStyling("8", ForEffect(BasicAttack, Owner));
+        => AssertMatchesIgnoreStyling("8", ForEffect(BasicAttack, Owner, ResourceQuantity.None));
 
     [Test]
     public void Interpolated_ResourceIcon_IsCorrect()
@@ -84,14 +84,14 @@ public sealed class InterpolatedCardDescriptionsTests
                 Owner));
 
     private string Description(string s, EffectData e, Maybe<Member> owner)
-        => Description(s, e, owner, Maybe<ResourceQuantity>.Missing());
-    private string Description(string s, EffectData e, Maybe<Member> owner, Maybe<ResourceQuantity> xCost) 
+        => Description(s, e, owner, ResourceQuantity.None);
+    private string Description(string s, EffectData e, Maybe<Member> owner, ResourceQuantity xCost) 
         => InterpolatedCardDescriptions.InterpolatedDescription(s, new[] {e}, new EffectData[0], owner, xCost);
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner)
-        => ReactionDescription(s, re, owner, Maybe<ResourceQuantity>.Missing());
-    private string ReactionDescription(string s, EffectData re, Maybe<Member> owner, Maybe<ResourceQuantity> xCost) 
+        => ReactionDescription(s, re, owner, ResourceQuantity.None);
+    private string ReactionDescription(string s, EffectData re, Maybe<Member> owner, ResourceQuantity xCost) 
         => InterpolatedCardDescriptions.InterpolatedDescription(s, new EffectData[0], new [] {re}, owner, xCost);
-    private string ForEffect(EffectData e, Maybe<Member> owner) => InterpolatedCardDescriptions.EffectDescription(e, owner);
+    private string ForEffect(EffectData e, Maybe<Member> owner, ResourceQuantity xCost) => InterpolatedCardDescriptions.EffectDescription(e, owner, xCost);
 
     private void AssertContainsSprite(string actual) => Assert.IsTrue(actual.Contains("<sprite index="));
     

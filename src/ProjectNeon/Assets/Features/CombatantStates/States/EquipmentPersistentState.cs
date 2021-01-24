@@ -13,12 +13,12 @@ public sealed class EquipmentPersistentState : IPersistentState
     public void OnTurnStart()
     {
         _equipment.TurnStartEffects
-            .ForEach(e => AllEffects.Apply(e, new EffectContext(_owner, new Single(_owner), Maybe<Card>.Missing(), 0)));
+            .ForEach(e => AllEffects.Apply(e, new EffectContext(_owner, new Single(_owner), Maybe<Card>.Missing(), ResourceQuantity.None)));
     }
 
     public void OnTurnEnd()
     {
         _equipment.TurnEndEffects
-            .ForEach(e => AllEffects.Apply(e, new EffectContext(_owner, new Single(_owner), Maybe<Card>.Missing(), 0)));
+            .ForEach(e => AllEffects.Apply(e, new EffectContext(_owner, new Single(_owner), Maybe<Card>.Missing(), ResourceQuantity.None)));
     }
 }

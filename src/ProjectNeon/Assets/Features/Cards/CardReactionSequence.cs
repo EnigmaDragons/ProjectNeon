@@ -12,14 +12,14 @@ public sealed class CardReactionSequence
     public ReactiveTargetScope Scope => scope;
     public CardActionsData CardActions => cardActions;
 
-    public void Perform(Member source, Target target, int amountPaid)
+    public void Perform(Member source, Target target, ResourceQuantity xAmountPaid)
     {
         Message.Subscribe<SequenceFinished>(_ =>
         {
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished(source.Id));
         }, this);
-        SequenceMessage.Queue(cardActions.PlayAsReaction(source, target, amountPaid));
+        SequenceMessage.Queue(cardActions.PlayAsReaction(source, target, xAmountPaid));
     }
 
     public CardReactionSequence() {}
