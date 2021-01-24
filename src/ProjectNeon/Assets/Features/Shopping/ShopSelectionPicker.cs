@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,6 +24,26 @@ public class ShopSelectionPicker
             selectedCards.Add(weightedCards[i]);
         
         return selectedCards.ToArray();
+    }
+
+    public Equipment[] PickEquipments(PartyAdventureState party, EquipmentPool equipmentPool, int numEquipment,
+        params Rarity[] rarities)
+    {
+        var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All));
+
+        var weightedEquipment = equipmentPool
+            .All
+            .Where(x => x.Classes.None() || x.Classes.Any(e => partyClasses.Contains(e)))
+            .Where(x => rarities.None() || rarities.Contains(x.Rarity))
+            .FactoredByRarity(x => x.Rarity)
+            .ToArray()
+            .Shuffled();
+
+        var selected = new HashSet<Equipment>();
+        for (var i = 0; i < weightedEquipment.Length && selected.Count < numEquipment; i++)
+            selected.Add(weightedEquipment[i]);
+        
+        return selected.ToArray();
     }
 
     public ShopSelection GenerateCardSelection(PartyAdventureState party, ShopCardPool cards, int numCards)
@@ -63,7 +84,8 @@ public class ShopSelectionPicker
         return selectedEquipment;
     }
 
-    public ShopSelection GenerateSelection(ShopCardPool cards, EquipmentPool equipment, PartyAdventureState party)
+    [Obsolete("V1 Shops")]
+    public ShopSelection GenerateV1MixedShopSelection(ShopCardPool cards, EquipmentPool equipment, PartyAdventureState party)
     {
         var selectedCards = PickCards(party, cards, NumCards);
         var selectedEquipment = PickEquipment(party, equipment, NumEquipment);

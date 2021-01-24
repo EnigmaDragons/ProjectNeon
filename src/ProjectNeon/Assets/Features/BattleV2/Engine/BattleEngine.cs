@@ -10,8 +10,8 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private BattleCommandPhase commandPhase;
     [SerializeField] private BattleResolutionPhase resolutionPhase;
     [SerializeField] private BattleTurnWrapUp turnWrapUp;
-    [SerializeField] private ShopCardPool cardPrizePool;
     [SerializeField] private BattleStatusEffects statusPhase;
+    [SerializeField] private BattleConclusion conclusion;
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
     [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
@@ -107,19 +107,13 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         }
         else if (state.PlayerWins())
         {
-            var rewardPicker = new ShopSelectionPicker();
-            var rewardCards = state.IsEliteBattle
-                ? rewardPicker.PickCards(state.Party, cardPrizePool, 3, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
-                : rewardPicker.PickCards(state.Party, cardPrizePool, 3);
-            
-            Message.Publish(new GetUserSelectedCard(rewardCards, card =>
+            conclusion.GrantVictoryRewardsAndThen(() =>
             {
-                card.IfPresent(c => state.SetRewardCards(c));
                 state.Heroes.Where(h => h.CurrentHp() < 1).ForEach(h => h.State.SetHp(1));
                 Message.Publish(new BattleFinished(TeamType.Party));
                 state.Wrapup();
                 BeginPhase(BattleV2Phase.Finished);
-            }));
+            });
         }
     }
 

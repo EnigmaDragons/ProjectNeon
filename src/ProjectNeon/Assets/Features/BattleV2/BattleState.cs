@@ -24,6 +24,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private List<string> memberNames;
     [SerializeField, ReadOnly] private int rewardCredits;
     [SerializeField, ReadOnly] private CardType[] rewardCards;
+    [SerializeField, ReadOnly] private Equipment[] rewardEquipments;
     
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
     public Effect[] QueuedEffects => _queuedEffects.ToArray();
@@ -177,6 +178,7 @@ public class BattleState : ScriptableObject
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void SetRewardCards(params CardType[] cards) => UpdateState(() => rewardCards = cards);
+    public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewardEquipments = equipments);
 
     public void AddEnemy(Enemy e, GameObject gameObject, Member member) 
         => UpdateState(() =>
@@ -201,12 +203,14 @@ public class BattleState : ScriptableObject
         RecordPartyAdventureHp();
         GrantRewardCredits();
         GrantRewardCards();
+        GrantRewardEquipment();
         EnemyArea.Clear();
     }
     
     private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => Math.Min(h.CurrentHp(), h.State.BaseStats.MaxHp())).ToArray());
     private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits + _playerState.BonusCredits);
     private void GrantRewardCards() => Party.Add(rewardCards);
+    private void GrantRewardEquipment() => Party.Add(rewardEquipments);
     
     // Queries
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);

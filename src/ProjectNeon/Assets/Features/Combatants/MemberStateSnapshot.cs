@@ -17,6 +17,7 @@ public sealed class MemberStateSnapshot
     }
 
     public int Hp => Counters[TemporalStatType.HP.ToString()];
+    public int MaxHp => Stats[StatType.MaxHP].CeilingInt();
     public int Shield => Counters[TemporalStatType.Shield.ToString()];
     public int Counter(TemporalStatType statType) => Counters.VerboseGetValue(statType.ToString(), n => $"Counter '{n}'") 
                                                      + Stats[statType].CeilingInt();

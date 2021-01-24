@@ -16,6 +16,8 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private EquipmentSlotIcons slotIcons;
 
     private Action _onClick = () => { };
+
+    public void Set(Equipment e, Action onClick) => Initialized(e, onClick);
     
     public EquipmentPresenter Initialized(Equipment e, Action onClick)
     {
