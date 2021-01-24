@@ -28,4 +28,5 @@ public sealed class MemberSnapshot
 public static class MemberSnapshotExtensions
 {
     public static bool IsUnconscious(this MemberSnapshot m) => m.State.Hp < 1;
+    public static bool IsBloodied(this MemberSnapshot m) => m.State.Hp <= m.State.MaxHp / 2;
 }

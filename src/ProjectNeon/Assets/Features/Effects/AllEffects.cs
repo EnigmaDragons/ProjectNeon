@@ -25,7 +25,7 @@ public static class AllEffects
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => BattleLogged($"{m.Name} has become vulnerable", 
             () => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, StatusTag.Vulnerable))))) },
         { EffectType.ShieldToughness, e => new SimpleEffect((src, m) => m.AdjustShield(e.FloatAmount * src.State.Toughness())) },
-        { EffectType.RemoveShields, e => new SimpleEffect(m => BattleLogged("${m.Name} lost all their shields", () => m.AdjustShield(-999))) },
+        { EffectType.RemoveShields, e => new SimpleEffect(m => BattleLogged($"{m.Name} lost all their shields", () => m.AdjustShield(-999))) },
         { EffectType.StunForTurns, e => new SimpleEffect(m => BattleLogged($"{m.Name} is stunned for {e.NumberOfTurns} turns.", () => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns))))},
         { EffectType.StunForNumberOfCards, e => new SimpleEffect(m => BattleLogged($"{m.Name} has been stunned for the next {e.IntAmount} cards.", 
             () => m.ApplyTemporaryAdditive(AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, e.IntAmount), true)))) },
@@ -38,7 +38,8 @@ public static class AllEffects
         { EffectType.OnDamaged, e => new EffectOnDamaged(false, e.NumberOfTurns, e.IntAmount, e.ReactionSequence) },
         { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Magic) },
         { EffectType.HealToughness, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Toughness) },
-        { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => m.AdjustPrimaryResource(e.IntAmount)) },
+        { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => BattleLogged($"{m.Name} {GainedOrLostTerm(e.TotalIntAmount)} {e.TotalIntAmount} {m.PrimaryResource.Name}", 
+            () => m.AdjustPrimaryResource(e.IntAmount + e.BaseAmount))) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
         { EffectType.DamageSpell, e => new MagicAttack(e.FloatAmount, e.HitsRandomTargetMember) },
@@ -70,6 +71,8 @@ public static class AllEffects
         //can't solve how to call the correct override without having a useless statement that removes ambiguity of what "t" is
         { EffectType.Suicide, e => new SimpleEffect((src, t) => { var _ = t.Members; src.State.SetHp(0); }) },
     };
+
+    private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
 
     private static void BattleLogged(string msg, Action action)
     {

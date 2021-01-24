@@ -11,7 +11,10 @@ public sealed class EffectData
     public EffectType EffectType;
     public IntReference BaseAmount = new IntReference(0);
     public FloatReference FloatAmount = new FloatReference(0);
-    public int IntAmount => Mathf.CeilToInt(FloatAmount.Value);
+    public int IntAmount => FloatAmount.Value.CeilingInt();
+    public float TotalAmount => FloatAmount.Value + BaseAmount;
+    public int TotalIntAmount => TotalAmount.CeilingInt();
+    
     public IntReference NumberOfTurns = new IntReference(0);
     public StringReference EffectScope = new StringReference { UseConstant = false };
     public bool HitsRandomTargetMember;
