@@ -9,8 +9,10 @@ public static class AllEffects
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.PhysicalDamage, e => new DealDamage(new PhysicalDamage(e.BaseAmount, e.FloatAmount)) },
-        { EffectType.AdjustStatAdditivelyFormula, e => new FullContextEffect((ctx, m) => m.ApplyTemporaryAdditive(
-            new AdjustedStats(new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(new FormulaContext(ctx.Source.State, m, ctx.XPaidAmount), e.Formula)), e.ForSimpleDurationStatAdjustment())))},
+        { EffectType.AdjustStatAdditivelyFormula, e => new FullContextEffect((ctx, m) => m.ApplyTemporaryAdditive(new AdjustedStats(
+            BattleLoggedItem(s => $"Stats of {m.Name} are adjusted by {s}",
+                new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(new FormulaContext(ctx.Source.State, m, ctx.XPaidAmount), e.Formula))), 
+                e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.ForSimpleDurationStatAdjustment())))},
         { EffectType.ReactWithEffect, e => new EffectReactWith(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, 
@@ -78,6 +80,12 @@ public static class AllEffects
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
 
+    private static T BattleLoggedItem<T>(Func<T, string> createMessage, T value)
+    {
+        BattleLog.Write(createMessage(value));
+        return value;
+    }
+    
     private static void BattleLogged(string msg, Action action)
     {
         action();

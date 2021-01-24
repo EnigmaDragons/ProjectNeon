@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 public sealed class StatAddends : IStats
 {
@@ -49,4 +50,7 @@ public sealed class StatAddends : IStats
     }
     
     public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
+    
+    public override string ToString() => string.Join(", ", _values.Select(kv => $"{Sign(kv.Value)}{kv.Value} {kv.Key}"));
+    private string Sign(float val) => val > 0 ? "+" : "";
 }
