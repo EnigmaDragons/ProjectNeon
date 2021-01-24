@@ -35,6 +35,8 @@ public sealed class Maybe<T>
     
     public static implicit operator Maybe<T>(T obj) => new Maybe<T>(obj);
 
+    public T2 Select<T2>(Func<T, T2> ifPresent, T2 def)
+        => Select(ifPresent, () => def);
     public T2 Select<T2>(Func<T, T2> ifPresent, Func<T2> createDefault)
         => IsPresent 
             ? ifPresent(value) 

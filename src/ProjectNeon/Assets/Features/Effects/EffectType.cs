@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 29-43, 47, 48, 53, 
-// LAST NUMBER USED: 73
+// LAST NUMBER USED: 74
 public enum EffectType
 {
     Nothing = 0,
@@ -31,6 +31,8 @@ public enum EffectType
     EnterStealth = 58,
     
     // Reactions
+    ReactWithEffect = 74,
+    ReactWithCard = 75,
     OnAttacked = 26,
     OnEvaded = 9,
     OnDeath = 25,

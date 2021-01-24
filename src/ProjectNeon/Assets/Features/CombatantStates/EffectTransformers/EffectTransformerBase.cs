@@ -34,7 +34,7 @@ public abstract class EffectTransformerBase : EffectTransformer
     }
 
     public ITemporalState CloneOriginal()
-        => new ClonedEffectTransformer(Tag, IsDebuff, _maxDurationTurns, _maxUses, _shouldModify, _modify);
+        => new ClonedEffectTransformer(Status, IsDebuff, _maxDurationTurns, _maxUses, _shouldModify, _modify);
 
     public IPayloadProvider OnTurnStart() => new NoPayload();
 
@@ -60,16 +60,16 @@ public abstract class EffectTransformerBase : EffectTransformer
         return _modify(effect, context);
     }
 
-    public abstract StatusTag Tag { get; }
+    public abstract StatusDetail Status { get; }
 }
 
 public class ClonedEffectTransformer : EffectTransformerBase
 {
-    public ClonedEffectTransformer(StatusTag tag, bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectData, EffectContext, bool> shouldModify, Func<EffectData, EffectContext, EffectData> modify) 
+    public ClonedEffectTransformer(StatusDetail status, bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectData, EffectContext, bool> shouldModify, Func<EffectData, EffectContext, EffectData> modify) 
         : base(isDebuff, maxDurationTurns, maxUses, shouldModify, modify)
     {
-        Tag = tag;
+        Status = status;
     }
 
-    public override StatusTag Tag { get; }
+    public override StatusDetail Status { get; }
 }

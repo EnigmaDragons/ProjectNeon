@@ -1,4 +1,5 @@
 using System;
+using Features.CombatantStates.Reactions;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,13 +15,20 @@ public sealed class EffectData
     public IntReference NumberOfTurns = new IntReference(0);
     public StringReference EffectScope = new StringReference { UseConstant = false };
     public bool HitsRandomTargetMember;
-    public CardActionsData ReferencedSequence;
-    public bool IsReaction => ReactionSequence != null;
-    public ReactionCardType ReactionSequence;
+    
+    public StatusDetail StatusDetail => new StatusDetail(StatusTag, string.IsNullOrWhiteSpace(StatusDetailText) ? Maybe<string>.Missing() : StatusDetailText);
     public StatusTag StatusTag;
+    public string StatusDetailText;
+    
     public int TurnDelay;
     public string Formula = "";
     public StringReference FlavorText = new StringReference();
+    public CardActionsData ReferencedSequence;
+    public bool IsReactionCard => ReactionSequence != null;
+
+    public ReactionConditionType ReactionConditionType;
+    [FormerlySerializedAs("ReactionCard")] public ReactionCardType ReactionSequence;
+    public CardReactionSequence ReactionEffect;
 }
 
 public static class EffectDataExtensions

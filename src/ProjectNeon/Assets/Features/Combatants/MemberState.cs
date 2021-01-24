@@ -44,7 +44,7 @@ public sealed class MemberState : IStats
         Enum.GetValues(typeof(TemporalStatType))
             .Cast<TemporalStatType>()
             .Skip(2)
-            .ForEach(t => _counters[t.ToString()] = new BattleCounter(t, 0, () => int.MaxValue));
+            .ForEach(t => _counters[t.ToString()] = new BattleCounter(t, 0, () => 999));
         
         baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
@@ -54,7 +54,8 @@ public sealed class MemberState : IStats
     public void InitResourceAmount(IResourceType resourceType, int amount) => _counters[resourceType.Name].Set(amount);
 
     // Queries
-    public MemberStateSnapshot ToSnapshot() => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats, _counters.ToDictionary(c => c.Key, c => c.Value.Amount));
+    public MemberStateSnapshot ToSnapshot() 
+        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats, _counters.ToDictionary(c => c.Key, c => c.Value.Amount));
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
@@ -82,9 +83,9 @@ public sealed class MemberState : IStats
     }
     public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
     public ReactiveStateV2[] ReactiveStates => _reactiveStates.ToArray();
-    public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Tag == tag) 
-                                            || _additiveMods.Any(r => r.Tag == tag) 
-                                            || _multiplierMods.Any(r => r.Tag == tag);
+    public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Status.Tag == tag) 
+                                            || _additiveMods.Any(r => r.Status.Tag == tag) 
+                                            || _multiplierMods.Any(r => r.Status.Tag == tag);
 
     public ITemporalState[] StatusesOfType(StatusTag tag)
         => OfType(_additiveMods, tag).Concat(OfType(_multiplierMods, tag)).Concat(OfType(_reactiveStates, tag)).ToArray();
@@ -93,7 +94,7 @@ public sealed class MemberState : IStats
         => _customStatusIcons.ToArray();
     
     private IEnumerable<ITemporalState> OfType(IEnumerable<ITemporalState> states, StatusTag tag)
-        => states.Where(s => s.Tag == tag);
+        => states.Where(s => s.Status.Tag == tag);
 
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
@@ -122,18 +123,18 @@ public sealed class MemberState : IStats
 
     public void DuplicateStatesOfType(StatusTag tag)
     {
-        _additiveMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryAdditive);
-        _multiplierMods.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryMultiplier);
-        _reactiveStates.Where(s => s.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddReactiveState((ReactiveStateV2)s));
-        _transformers.Where(x => x.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddEffectTransformer((EffectTransformer)s));
+        _additiveMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryAdditive);
+        _multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryMultiplier);
+        _reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddReactiveState((ReactiveStateV2)s));
+        _transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddEffectTransformer((EffectTransformer)s));
     }
     
     public void ApplyPersistentState(IPersistentState state) => _persistentStates.Add(state);
     
     public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() =>
     {
-        if (NonStackingStatuses.Contains(mods.Tag))
-            _additiveMods.RemoveAll(m => m.Tag == mods.Tag);
+        if (NonStackingStatuses.Contains(mods.Status.Tag))
+            _additiveMods.RemoveAll(m => m.Status.Tag == mods.Status.Tag);
         _additiveMods.Add(mods);
         if (CurrentStats.MaxHp() < CurrentStats.Hp())
             SetHp(CurrentStats.MaxHp());
@@ -141,8 +142,8 @@ public sealed class MemberState : IStats
     
     public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() => 
     {        
-        if (NonStackingStatuses.Contains(mods.Tag))
-            _multiplierMods.RemoveAll(m => m.Tag == mods.Tag);
+        if (NonStackingStatuses.Contains(mods.Status.Tag))
+            _multiplierMods.RemoveAll(m => m.Status.Tag == mods.Status.Tag);
         _multiplierMods.Add(mods);
     });
 
@@ -166,7 +167,7 @@ public sealed class MemberState : IStats
     public void AddReactiveState(ReactiveStateV2 state) 
         => PublishAfter(() =>
         {
-            _reactiveStates.RemoveAll(r => r.Tag == state.Tag);
+            _reactiveStates.RemoveAll(r => r.Status.Tag == state.Status.Tag);
             _reactiveStates.Add(state);
         });
     

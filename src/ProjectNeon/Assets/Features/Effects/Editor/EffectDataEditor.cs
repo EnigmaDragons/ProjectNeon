@@ -17,6 +17,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.OnEvaded, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "ReactionSequence" }},
         {EffectType.OnShieldBroken, new []{ "NumberOfTurns", "EffectScope", "ReactionSequence" }},
         {EffectType.OnDamaged, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "ReactionSequence" }},
+        {EffectType.ReactWithEffect, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffect"}},
+        {EffectType.ReactWithCard, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionSequence"}},
         {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.RemoveDebuffs, new [] { "NumberOfTurns" }},
         {EffectType.AdjustStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns", "EffectScope" }},
@@ -38,10 +40,10 @@ public class EffectDataEditor : PropertyDrawer
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         var height = EditorGUI.GetPropertyHeight(property.FindPropertyRelative("EffectType"));
-        foreach (var prop in _relevantProperties[GetEffectType(property)])
-            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative(prop)) + 2;
         foreach (var prop in _globalProperties)
-            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative(prop)) + 2;
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative(prop), true) + 2;
+        foreach (var prop in _relevantProperties[GetEffectType(property)])
+            height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative(prop), true) + 2;
         return height;
     }
 
@@ -52,17 +54,18 @@ public class EffectDataEditor : PropertyDrawer
         EditorGUI.PropertyField(position, effectType);
         position.y += EditorGUI.GetPropertyHeight(effectType) + 2;
         var properties = _relevantProperties[GetEffectType(property)];
-        for (var i = 0; i < properties.Length; i++)
-        {
-            var prop = property.FindPropertyRelative(properties[i]);
-            EditorGUI.PropertyField(position, prop);
-            position.y += EditorGUI.GetPropertyHeight(effectType) + 2;
-        }
-
+                
         for (var i = 0; i < _globalProperties.Count; i++)
         {
             var prop = property.FindPropertyRelative(_globalProperties[i]);
             EditorGUI.PropertyField(position, prop);
+            position.y += EditorGUI.GetPropertyHeight(effectType) + 2;
+        }
+        
+        for (var i = 0; i < properties.Length; i++)
+        {
+            var prop = property.FindPropertyRelative(properties[i]);
+            EditorGUI.PropertyField(position, prop, true);
             position.y += EditorGUI.GetPropertyHeight(effectType) + 2;
         }
     }

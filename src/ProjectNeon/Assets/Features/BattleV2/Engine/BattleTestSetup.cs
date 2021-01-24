@@ -18,6 +18,9 @@ public class BattleTestSetup : MonoBehaviour
     [SerializeField] private Deck hero1Deck;
     [SerializeField] private Deck hero2Deck;
     [SerializeField] private Deck hero3Deck;
+    [SerializeField] private List<StaticEquipment> hero1Equipment = new List<StaticEquipment>();
+    [SerializeField] private List<StaticEquipment> hero2Equipment = new List<StaticEquipment>();
+    [SerializeField] private List<StaticEquipment> hero3Equipment = new List<StaticEquipment>();
 
     [Header("BattleField")] 
     [SerializeField] private GameObject battlefield;
@@ -47,6 +50,7 @@ public class BattleTestSetup : MonoBehaviour
         setup.InitParty(hero1, hero2, hero3);
         if (hero1Deck != null)
             setup.InitPartyDecks(hero1Deck.Cards, hero2Deck.Cards, hero3Deck.Cards);
+        setup.InitPartyEquipment(hero1Equipment, hero2Equipment, hero3Equipment);
     }
 
     public void UseCustomBattlefield() => setup.InitBattleField(battlefield);
@@ -83,6 +87,11 @@ public class BattleTestSetup : MonoBehaviour
         var hero = allHeroes.First(h => h.Class.Equals(cards.First().LimitedToClass.Value));
         setup.InitParty(hero, noHero, noHero);
         setup.InitPartyDecks(Enumerable.Range(0, 12).Select(i => cards[i % cards.Length]).ToList(), new List<CardType>(), new List<CardType>());
+        var equipment = hero.Name.Equals(hero1.Name) 
+            ? hero1Equipment : hero.Name.Equals(hero2.Name) 
+            ? hero2Equipment : hero.Name.Equals(hero3.Name) 
+            ? hero3Equipment : new List<StaticEquipment>();
+        setup.InitPartyEquipment(equipment, new List<Equipment>(), new List<Equipment>());
         
         if (battlefield != null)
             UseCustomBattlefield();

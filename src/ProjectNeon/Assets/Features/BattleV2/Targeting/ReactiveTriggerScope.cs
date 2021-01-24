@@ -14,9 +14,9 @@ public static class ReactiveTriggerScopeExtensions
     public static bool IsInTriggerScope(this ReactiveTriggerScope triggerScope, Member originator, Member possessor, Member triggerer)
     {
         if (triggerScope == ReactiveTriggerScope.Self)
-            return possessor == triggerer;
+            return Equals(possessor, triggerer);
         if (triggerScope == ReactiveTriggerScope.Originator)
-            return originator == triggerer;
+            return Equals(originator, triggerer);
         if (triggerScope == ReactiveTriggerScope.Allies)
             return possessor.TeamType == triggerer.TeamType;
         if (triggerScope == ReactiveTriggerScope.Enemies)

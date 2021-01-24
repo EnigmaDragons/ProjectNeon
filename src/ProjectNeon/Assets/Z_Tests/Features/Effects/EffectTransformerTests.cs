@@ -59,5 +59,5 @@ public class TestEffectTransformer : EffectTransformerBase
         };
     }) {}
     
-    public override StatusTag Tag => StatusTag.None;
+    public override StatusDetail Status => new StatusDetail(StatusTag.None, "");
 }

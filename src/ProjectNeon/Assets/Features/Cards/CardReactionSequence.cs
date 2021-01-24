@@ -11,7 +11,7 @@ public sealed class CardReactionSequence
     public ReactiveMember Reactor => reactor;
     public ReactiveTargetScope Scope => scope;
     public CardActionsData CardActions => cardActions;
-    
+
     public void Perform(Member source, Target target, int amountPaid)
     {
         Message.Subscribe<SequenceFinished>(_ =>
@@ -21,7 +21,7 @@ public sealed class CardReactionSequence
         }, this);
         SequenceMessage.Queue(cardActions.PlayAsReaction(source, target, amountPaid));
     }
-    
+
     public CardReactionSequence() {}
     public CardReactionSequence(ReactiveMember source, ReactiveTargetScope s, CardActionsData actions)
     {

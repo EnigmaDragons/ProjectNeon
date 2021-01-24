@@ -42,5 +42,5 @@ public sealed class ReactOnDeath : ReactiveEffectV2Base
                 return result;
             })) {}
 
-    public override StatusTag Tag => StatusTag.OnDeath;
+    public override StatusDetail Status { get; } = new StatusDetail(StatusTag.OnDeath);
 }

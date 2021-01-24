@@ -34,19 +34,19 @@ public class EquipmentGenerator
     private static readonly StatType[] GeneratableStats = { StatType.MaxHP, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance, StatType.Leadership };
     
     public Equipment GenerateRandomCommon()
-        => Generate(new [] { 1, 2 }.Random(), Rarity.Common);
+        => Generate(RarityPowers[Rarity.Common].Random(), Rarity.Common);
     
     public Equipment GenerateRandomUncommon() 
-        => Generate(new [] { 3, 4, 5 }.Random(), Rarity.Uncommon);
+        => Generate(RarityPowers[Rarity.Uncommon].Random(), Rarity.Uncommon);
     
     public Equipment GenerateRandomRare() 
-        => Generate(new [] { 5, 6, 7 }.Random(), Rarity.Rare);
+        => Generate(RarityPowers[Rarity.Rare].Random(), Rarity.Rare);
 
     private static readonly Dictionary<Rarity, int[]> RarityPowers = new Dictionary<Rarity, int[]>
     {
-        { Rarity.Common, new []{1,2}},
-        { Rarity.Uncommon, new []{3, 4, 5}},
-        { Rarity.Rare, new [] {5, 6, 7}}
+        { Rarity.Common, new []{1}},
+        { Rarity.Uncommon, new []{2, 3}},
+        { Rarity.Rare, new [] {4, 5}}
     };
 
     private int PowerLevelFor(Rarity rarity)
@@ -103,14 +103,13 @@ public class EquipmentGenerator
         {
             Name = name,
             Rarity = rarity,
-            Price = (totalPowerLevel * 42).WithShopPricingVariance(),
+            Price = CardShopPricing.EquipmentShopPrice(rarity, 1f),
             Classes = new [] { CharacterClass.All },
             Description = description,
             Modifiers = modifiers.ToArray(),
             Slot = slot
         };
     }
-    
     
     public Equipment Generate(Rarity rarity, EquipmentSlot slot)
     {
@@ -145,7 +144,7 @@ public class EquipmentGenerator
         {
             Name = name,
             Rarity = rarity,
-            Price = (totalPowerLevel * 42).WithShopPricingVariance(),
+            Price = CardShopPricing.EquipmentShopPrice(rarity, 1f),
             Classes = new [] { CharacterClass.All },
             Description = description,
             Modifiers = modifiers.ToArray(),
@@ -166,12 +165,12 @@ public class EquipmentGenerator
 
     private static readonly Dictionary<StatType, int> AdditiveStatsChartPerPoint = new Dictionary<StatType, int>
     {
-        { StatType.MaxHP, 4 },
-        { StatType.Armor, 2 },
-        { StatType.Resistance, 2 },
+        { StatType.MaxHP, 3 },
+        { StatType.Armor, 1 },
+        { StatType.Resistance, 1 },
         { StatType.Attack, 1 },
         { StatType.Magic, 1 },
-        { StatType.Toughness, 2 },
+        { StatType.Toughness, 1 },
         { StatType.Leadership, 1 }
     };
 }

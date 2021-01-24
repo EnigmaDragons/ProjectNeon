@@ -15,6 +15,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     private bool HasMoreTurns => _remainingDurationTurns != 0;
 
     public IStats Stats => new StatAddends();
+    public abstract StatusDetail Status { get; }
     public bool IsDebuff { get; }
     public bool IsActive => HasMoreUses && HasMoreTurns;
     public Maybe<int> Amount => _remainingUses;
@@ -24,8 +25,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         : this(isDebuff, maxDurationTurns, maxUses, createMaybeEffect, e => Maybe<ProposedReaction>.Missing()) {}
     public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<CardActionAvoided, Maybe<ProposedReaction>> createMaybeAvoidedEffect)
         : this(isDebuff, maxDurationTurns, maxUses, e => Maybe<ProposedReaction>.Missing(), createMaybeAvoidedEffect) {}
-    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, 
-        Maybe<ProposedReaction>> createMaybeEffect, 
+    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect, 
         Func<CardActionAvoided, Maybe<ProposedReaction>> createMaybeAvoidedEffect)
     {
         _maxDurationTurns = maxDurationTurns;
@@ -49,10 +49,8 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     }
 
     public ITemporalState CloneOriginal() =>
-        new ClonedReactiveEffect(Tag, IsDebuff, _maxDurationTurns, _maxUses, _createMaybeEffect);
-
-
-    public abstract StatusTag Tag { get; }
+        new ClonedReactiveEffect(Status, IsDebuff, _maxDurationTurns, _maxUses, _createMaybeEffect);
+    
     public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
     {
         if (!IsActive)
@@ -80,29 +78,60 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         ReactionCardType reaction, Func<EffectResolved, bool> condition) => 
             effect =>
             {
-                if (effect.IsReaction && !canReactToReactions)
-                    return Maybe<ProposedReaction>.Missing();
-                
-                var reactingMaybeMember = effect.Target.Members.Where(m => m.Id == possessingMemberId);
-                if (reactingMaybeMember.None() || !condition(effect))
+                var possessor = members.VerboseGetValue(possessingMemberId, "Reaction Possessing Member");
+                if (!ReactionIsApplicable(possessor, canReactToReactions, effect, condition))
                     return Maybe<ProposedReaction>.Missing();
 
-                var possessor = reactingMaybeMember.First();
-                if (!possessor.IsConscious())
-                    return Maybe<ProposedReaction>.Missing();
-                
                 var action = reaction.ActionSequence;
                 var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
-
-                Target target = new Single(possessor);
-                if (action.Scope == ReactiveTargetScope.Attacker)
-                    target = new Single(effect.Source);
-                if (action.Scope == ReactiveTargetScope.AllEnemies)
-                    target = new Multiple(members.Values.Where(x => x.IsConscious() && x.TeamType == TeamType.Enemies).ToArray());
-                // TODO: Implement other scopes
-
+                var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
                 return new ProposedReaction(reaction, reactor, target);
             };
+    
+    protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(
+        IDictionary<int, Member> members, int possessingMemberId, Member originator, bool canReactToReactions,
+        CardReactionSequence reaction, Func<EffectResolved, bool> condition) => 
+        effect =>
+        {
+            var possessor = members.VerboseGetValue(possessingMemberId, "Reaction Possessing Member");
+            if (!ReactionIsApplicable(possessor, canReactToReactions, effect, condition))
+                return Maybe<ProposedReaction>.Missing();
+
+            var action = reaction;
+            var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
+            var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
+            return new ProposedReaction(reaction, reactor, target);
+        };
+
+    private static Target GetReactionTarget(Member possessor, Member reactor, IDictionary<int, Member> members, CardReactionSequence action, Member effectSource, Target effectTarget)
+    {
+        Target target = new Single(possessor);
+        if (action.Scope == ReactiveTargetScope.Possessor)
+            target = target;
+        if (action.Scope == ReactiveTargetScope.Source)
+            target = new Single(effectSource);
+        if (action.Scope == ReactiveTargetScope.Target)
+            target = effectTarget;
+        if (action.Scope == ReactiveTargetScope.AllEnemies)
+            target = new Multiple(members.Values.ToArray().GetConsciousEnemies(reactor));
+        if (action.Scope == ReactiveTargetScope.AllAllies)
+            target = new Multiple(members.Values.ToArray().GetConsciousAllies(reactor));
+        if (action.Scope == ReactiveTargetScope.Everyone)
+            target = new Multiple(members.Values.Where(x => x.IsConscious()).ToArray());
+        return target;
+    }
+
+    private static bool ReactionIsApplicable(Member possessor, bool canReactToReactions, EffectResolved effect, Func<EffectResolved, bool> condition)
+    {
+        if (effect.IsReaction && !canReactToReactions)
+            return false;
+        if (!condition(effect))
+            return false;
+        // Noah's super hack for OnDeath changes values during the Condition Resolution above ^
+        if (!possessor.IsConscious())
+            return false;
+        return true;
+    }
     
     protected static Func<CardActionAvoided, Maybe<ProposedReaction>> CreateMaybeAvoidedEffect(
         IDictionary<int, Member> members, int possessingMemberId, Member originator, 
@@ -119,25 +148,18 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
                 
             var action = reaction.ActionSequence;
             var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
-
-            Target target = new Single(possessor);
-            if (action.Scope == ReactiveTargetScope.Attacker)
-                target = new Single(effect.Source);
-            if (action.Scope == ReactiveTargetScope.AllEnemies)
-                target = new Multiple(members.Values.Where(x => x.IsConscious() && x.TeamType == TeamType.Enemies).ToArray());
-            // TODO: Implement other scopes
-
+            var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
             return new ProposedReaction(reaction, reactor, target);
         };
 }
 
 public class ClonedReactiveEffect : ReactiveEffectV2Base
 {
-    public ClonedReactiveEffect(StatusTag tag, bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect) 
+    public ClonedReactiveEffect(StatusDetail status, bool isDebuff, int maxDurationTurns, int maxUses, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect) 
         : base(isDebuff, maxDurationTurns, maxUses, createMaybeEffect)
     {
-        Tag = tag;
+        Status = status;
     }
 
-    public override StatusTag Tag { get; }
+    public override StatusDetail Status { get; }
 }

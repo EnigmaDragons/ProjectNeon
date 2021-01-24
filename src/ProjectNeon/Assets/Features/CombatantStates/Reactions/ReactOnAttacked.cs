@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public sealed class EffectOnAttacked : Effect
 {
@@ -31,10 +32,12 @@ public sealed class ReactOnAttacked : ReactiveEffectV2Base
     public ReactOnAttacked(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusTag tag, ReactiveTriggerScope triggerScope, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction)
         : base(isDebuff, maxDurationTurns, numberOfUses, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
-            effect => effect.EffectData.EffectType == EffectType.Attack && triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source)))
+            effect => effect.EffectData.EffectType == EffectType.Attack 
+                      && triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source) 
+                      && effect.Target.Members.Any(x => x.Id == possessingMemberId)))
     {
-        Tag = tag;
+        Status= new StatusDetail(tag, Maybe<string>.Missing());
     }
 
-    public override StatusTag Tag { get; }
+    public override StatusDetail Status { get; }
 }

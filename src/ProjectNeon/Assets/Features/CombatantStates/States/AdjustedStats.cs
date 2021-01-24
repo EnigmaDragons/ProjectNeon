@@ -10,6 +10,7 @@ public class AdjustedStats : TemporalStateBase
         Stats = stats;
     }
     
+    public override Maybe<string> CustomStatusText { get; } = Maybe<string>.Missing();
     public override IStats Stats { get; }
     public override Maybe<int> Amount => Maybe<int>.Missing();
     public override IPayloadProvider OnTurnStart() => new NoPayload();

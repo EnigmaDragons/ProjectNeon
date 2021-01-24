@@ -15,7 +15,8 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     [SerializeField] private FloatReference delay = new FloatReference(1.5f);
 
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
-    private readonly Queue<ProposedReaction> _reactions = new Queue<ProposedReaction>();
+    private readonly Queue<ProposedReaction> _instantReactions = new Queue<ProposedReaction>();
+    private readonly Queue<ProposedReaction> _reactionCards = new Queue<ProposedReaction>();
     
     public IEnumerator Begin()
     {
@@ -60,8 +61,8 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
 
     private void ProcessNextCardOrReaction()
     {
-        if (_reactions.Any())
-            StartCoroutine(ResolveNextReaction());
+        if (_reactionCards.Any())
+            StartCoroutine(ResolveNextReactionCard());
         else if (resolutionZone.HasMore)
             resolutionZone.BeginResolvingNext();
     }
@@ -75,24 +76,30 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         }, delay);
     }
 
-    private bool IsDoneResolving => state.BattleIsOver() || _reactions.None() && !resolutionZone.HasMore;
+    private bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && !resolutionZone.HasMore;
     
     protected override void Execute(ApplyBattleEffect msg)
     {
         var battleSnapshotBefore = state.GetSnapshot();
         ApplyEffectsWithRetargetingIfAllTargetsUnconscious(msg);
         var battleSnapshotAfter = state.GetSnapshot();
+        
         var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction);
+        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(effectResolved)).ToList();
 
-        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(effectResolved));
-        reactions.ForEach(r => _reactions.Enqueue(r));
+        var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
+        immediateReactions.ForEach(r => _instantReactions.Enqueue(r));
+        
+        var reactionCards = reactions.Where(r => r.ReactionCard.IsPresent);
+        reactionCards.ForEach(r => _reactionCards.Enqueue(r));
+        
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 
     protected override void Execute(CardActionAvoided msg)
     {
         var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg));
-        reactions.ForEach(r => _reactions.Enqueue(r));
+        reactions.ForEach(r => _reactionCards.Enqueue(r));
         Message.Publish(new Finished<CardActionAvoided>());
     }
 
@@ -123,28 +130,49 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
 
     private IEnumerator FinishCard()
     {
-        yield return new WaitForSeconds(delay);
-        currentResolvingCardZone.Clear();
-        ResolveNext();
+        if (_instantReactions.Any())
+            BeginResolvingNextInstantReaction();
+        else
+        {
+            yield return new WaitForSeconds(delay);
+            currentResolvingCardZone.Clear();
+            ResolveNext();
+        }
     }
 
-    private IEnumerator ResolveNextReaction()
+    private void BeginResolvingNextInstantReaction()
     {
-        var r = _reactions.Dequeue();
-        var card = new Card(state.GetNextCardId(), r.Source, r.Reaction);
+        var r = _instantReactions.Dequeue();
+        r.ReactionSequence.Perform(r.Source, r.Target, 0);
+    }
+    
+    private IEnumerator ResolveNextReactionCard()
+    {
+        var r = _reactionCards.Dequeue();
+        var isReactionCard = r.ReactionCard.IsPresent;
+
+        if (!isReactionCard)
+        {
+            Log.Error("Should not be Queueing instant Effect Reactions. They should already be processed.");
+            yield break;
+        }
+
+        var reactionCard = r.ReactionCard.Value;
+        var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
         reactionZone.PutOnBottom(card);
         currentResolvingCardZone.Set(card);
+        BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
         yield return new WaitForSeconds(delay);
-        if (r.Reaction.IsPlayableBy(r.Source))
+        if (reactionCard.IsPlayableBy(r.Source))
         {
-            var expense = r.Reaction.Cost.ResourcesSpent(r.Source);
-            var gains = r.Reaction.Gain.ResourcesGained(r.Source);
-            var xAmountSpent = r.Reaction.Cost.XAmountSpent(r.Source);
+            var expense = reactionCard.Cost.ResourcesSpent(r.Source);
+            var gains = reactionCard.Gain.ResourcesGained(r.Source);
+            var xAmountSpent = reactionCard.Cost.XAmountSpent(r.Source);
             var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, expense, gains, xAmountSpent);
             Message.Publish(new CardResolutionStarted(playedCard));
             r.Source.Apply(s => s.Lose(expense));
             r.Source.Apply(s => s.Gain(gains));
-            r.Reaction.ActionSequence.Perform(r.Source, r.Target, expense.Amount);
+            reactionCard.ActionSequence.Perform(r.Source, r.Target, expense.Amount);
         }
         else 
             Message.Publish(new CardResolutionFinished(r.Source.Id));

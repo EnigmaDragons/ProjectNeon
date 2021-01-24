@@ -14,16 +14,12 @@
 - Rare - Energize generates +1 energy. Start of combat: Cast Energize.
 - Uncommon - Deal +50% damage to stunned enemies
 
-
-
 ## Armor:
 - Legendary - When you KO start all future battles with +1 energy(Who says Inting shouldn’t be a strat?)
 - Rare - +1 armor for every 5 energy
 - Rare - +1 resistance for every 5 energy
-- Rare - When attacked, if you have 4+ energy expend 4 energy to stun the attacker
 - Rare - Energy is automatically used a shield when you would otherwise KO
 - Uncommon - Gain 1 energy the first time you are attacked each turn
-
 
 ## Augmentations:
 - Common - +1 ATK for every 5 energy
@@ -31,6 +27,9 @@
 - Uncommon - Deal 25% bonus damage to enemies that have been dealt damage by your allies
 - Rare - Stunning an enemy also burns 2 Combo Points(What are we calling these anyways?)
 - Uncommon - +1 armor when you stun an enemy
-- Legendary - 1% on-hit stun chance/energy
+
 - Rare - Apply Vulnerable when you stun an enemy
+- Rare - When attacked, if you have 3+ energy expend 3 energy to stun the attacker
+
 - Legendary - Once per battle: When you would KO if you have 10 energy; expend it, apply stunned 2 to yourself and the attacker.
+- Rare - 1% on-hit stun chance/energy
