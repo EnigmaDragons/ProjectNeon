@@ -10,7 +10,7 @@ public sealed class EvadeTests
 
         new Evade(1).Apply(evader, new MemberAsTarget(evader));
 
-        new Attack(5).Apply(attacker, evader);
+        new Attack(new PhysicalDamage(0, 5)).Apply(attacker, evader);
 
         Assert.AreEqual(10, evader.State[TemporalStatType.HP]);
     }

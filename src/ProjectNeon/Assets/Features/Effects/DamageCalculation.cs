@@ -1,5 +1,5 @@
 ﻿public interface DamageCalculation 
 {
-    int Calculate(Member attacker, Member target);
+    int Calculate(EffectContext ctx, Member member);
 }
 

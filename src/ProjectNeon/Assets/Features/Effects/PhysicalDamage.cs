@@ -1,24 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public sealed class PhysicalDamage : DamageCalculation
 {
-    private int _baseAmount;
-    public float Multiplier { get; }
+    private readonly Func<EffectContext, Member, float> _damageCalc;
 
-    public PhysicalDamage(float multiplier)
-        : this(0, multiplier) {}
-    
-    public PhysicalDamage(int baseAmount, float multiplier)
+    public PhysicalDamage(int baseAmount, float multiplier) : this((ctx, m) => baseAmount + ctx.Source.State.Attack() * multiplier) {}
+    public PhysicalDamage(Func<EffectContext, Member, float> damageCalc)
     {
-        _baseAmount = baseAmount;
-        Multiplier = multiplier;
+        _damageCalc = damageCalc;
     }
     
-    public PhysicalDamage WithFactor(float factor) => new PhysicalDamage(Multiplier * factor);
+    public PhysicalDamage WithFactor(float factor) => new PhysicalDamage((ctx, m) => _damageCalc(ctx, m) * factor);
 
-    public int Calculate(Member source, Member target)
+    public int Calculate(EffectContext ctx, Member target)
     {
-        var amount = Mathf.CeilToInt(source.State.Attack() * Multiplier + _baseAmount - target.State.Armor());
+        var amount = Mathf.CeilToInt(_damageCalc(ctx, target) - target.State.Armor());
         if (amount < 1)
             Log.Warn($"{target.Name} is taking 0 physical damage");
         return amount;

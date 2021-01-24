@@ -5,9 +5,9 @@ public class MagicAttack : Effect
     private readonly SpellDamage _damageCalc;
     private readonly bool _hitsRandomTarget;
 
-    public MagicAttack(float damageFactor, bool hitsRandomTarget)
+    public MagicAttack(SpellDamage damageCalc, bool hitsRandomTarget)
     {
-        _damageCalc = new SpellDamage(damageFactor);
+        _damageCalc = damageCalc;
         _hitsRandomTarget = hitsRandomTarget;
     }
     

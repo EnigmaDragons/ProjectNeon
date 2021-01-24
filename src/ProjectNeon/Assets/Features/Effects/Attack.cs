@@ -10,14 +10,10 @@ public sealed class Attack  : Effect
     public Target Target { get; set; }
     private Member Attacker { get; set; }
     private PhysicalDamage Damage { get; }
-    private float Multiplier { get; }
-
-    public Attack(float multiplier, bool hitsRandomTarget = false)
-        : this(0, multiplier, hitsRandomTarget) {}
-    public Attack(int baseAmount, float multiplier, bool hitsRandomTarget = false)
+    
+    public Attack(PhysicalDamage damage, bool hitsRandomTarget = false)
     {
-        Multiplier = multiplier;
-        Damage = new PhysicalDamage(baseAmount, Multiplier);
+        Damage = damage;
         _hitsRandomTarget = hitsRandomTarget;
     }
 

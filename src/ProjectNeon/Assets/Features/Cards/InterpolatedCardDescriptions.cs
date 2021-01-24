@@ -131,18 +131,14 @@ public static class InterpolatedCardDescriptions
             return WithPhysicalDamageIcon(AttackAmount(data, owner));
         if (data.EffectType == EffectType.PhysicalDamageOverTime)
             return WithRawDamageIcon(AttackAmount(data, owner));
-        if (data.EffectType == EffectType.DealRawDamageFormula)
+        if (data.EffectType == EffectType.DealRawDamageFormula 
+            || data.EffectType == EffectType.AdjustStatAdditivelyFormula 
+            || data.EffectType == EffectType.HealFormula 
+            || data.EffectType == EffectType.AttackFormula
+            || data.EffectType == EffectType.MagicAttackFormula)
             return WithRawDamageIcon(owner.IsPresent 
                 ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString()
                 : FormattedFormula(data.Formula));
-        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
-            return owner.IsPresent
-                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString()
-                : FormattedFormula(data.Formula);
-        if (data.EffectType == EffectType.HealFormula)
-            return owner.IsPresent
-                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString()
-                : FormattedFormula(data.Formula);
         if (data.EffectType == EffectType.DamageSpell )
             return WithMagicDamageIcon(MagicAmount(data, owner));
         if (data.EffectType == EffectType.HealMagic

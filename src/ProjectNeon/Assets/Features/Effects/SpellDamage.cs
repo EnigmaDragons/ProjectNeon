@@ -1,19 +1,21 @@
+using System;
 using UnityEngine;
 
 public class SpellDamage : DamageCalculation
 {
-    private readonly float _multiplier;
+    private readonly Func<EffectContext, Member, float> _damageCalc;
 
-    public SpellDamage(float multiplier)
+    public SpellDamage(int baseAmount, float multiplier) : this((ctx, m) => baseAmount + ctx.Source.State.Magic() * multiplier) {}
+    public SpellDamage(Func<EffectContext, Member, float> damageCalc)
     {
-        _multiplier = multiplier;
+        _damageCalc = damageCalc;
     }
     
-    public SpellDamage WithFactor(float factor) => new SpellDamage(_multiplier * factor);
+    public SpellDamage WithFactor(float factor) => new SpellDamage((ctx, m) => _damageCalc(ctx, m) * factor);
 
-    public int Calculate(Member attacker, Member target)
+    public int Calculate(EffectContext ctx, Member target)
     {        
-        var amount = Mathf.CeilToInt(attacker.State.Magic() * _multiplier - target.State.Resistance());
+        var amount = Mathf.CeilToInt(_damageCalc(ctx, target) - target.State.Resistance());
         if (amount < 1)
             Log.Warn($"{target.Name} is taking 0 magic damage");
         return amount;
