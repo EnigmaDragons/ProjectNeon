@@ -33,15 +33,22 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
       StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -86,15 +93,22 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
       StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -121,34 +135,41 @@ MonoBehaviour:
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 21
+      EffectType: 75
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: -1
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 999
+        ConstantValue: -1
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 11400000, guid: ca0bb7115b950e54f9d76d611b78c582,
-        type: 2}
       StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 6
+      ReactionSequence: {fileID: 11400000, guid: ca0bb7115b950e54f9d76d611b78c582,
+        type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:

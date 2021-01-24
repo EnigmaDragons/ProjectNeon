@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [Obsolete("Needs to be replaced with the final Attack Performed data. Should be separated from Attack Proposals.")]
-public sealed class Attack  : Effect
+public sealed class Attack : Effect
 {
     private readonly bool _hitsRandomTarget;
 

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Electroblade_StaticBarrier
   m_EditorClassIdentifier: 
+  customName: 
   art: {fileID: 21300000, guid: 9fcbbb32296daee438a4e3a145597a2f, type: 3}
-  description: Gain {E[0]} Shield. When Shield is broken, deal 0.5x ATK to all enemies.
+  description: Gain {E[0]} Shield. When Shield is broken, deal {RE[0]} to all enemies.
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
   tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe,
@@ -32,5 +33,7 @@ MonoBehaviour:
     group: 0
     avoidance: 999
     cardActions: {fileID: 11400000, guid: 43b3ab74f71f3b54984866526bc09377, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
+  presentationIssues: 
