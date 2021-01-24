@@ -148,6 +148,7 @@ public class BattleState : ScriptableObject
     // During Battle State Tracking
     public void StartTurn() => UpdateState(() => PlayerState.OnTurnStart());
     public void RecordPlayedCard(IPlayedCard card) => _playedCardHistory.Last().Add(card.Card.Type);
+    public void RemoveLastRecordedPlayedCard() => _playedCardHistory.Last().RemoveLast();
 
     public Member[] GetAllNewlyUnconsciousMembers()
     {

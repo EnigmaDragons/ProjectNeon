@@ -32,6 +32,8 @@ public sealed class EffectData
     public ReactionConditionType ReactionConditionType;
     [FormerlySerializedAs("ReactionCard")] public ReactionCardType ReactionSequence;
     public CardReactionSequence ReactionEffect;
+
+    public CardType BonusCardType;
 }
 
 public static class EffectDataExtensions

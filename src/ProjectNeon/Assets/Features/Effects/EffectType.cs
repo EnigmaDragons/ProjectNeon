@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 29-43, 47, 48, 53, 
-// LAST NUMBER USED: 74
+// LAST NUMBER USED: 76
 public enum EffectType
 {
     Nothing = 0,
@@ -39,6 +39,9 @@ public enum EffectType
     
     // Transformers
     DoubleTheEffectAndMinusDuration = 28,
+    
+    // Bonus Cards
+    PlayBonusCardAfterNoCardPlayedInXTurns = 76,
     
     ShieldToughness = 11,
     StunForTurns = 13,
