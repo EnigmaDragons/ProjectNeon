@@ -6,8 +6,6 @@ public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusC
     private readonly CardType _bonusCard;
     private readonly int _numTurns;
 
-    public StatusDetail Status { get; }
-    public override Maybe<string> CustomStatusText => Status.CustomText;
     public override IStats Stats { get; } = new StatAddends();
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
     public override ITemporalState CloneOriginal() => new PlayBonusCardAfterNoCardPlayedInXTurns(_className, _bonusCard, _numTurns, Status);
@@ -15,9 +13,8 @@ public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusC
     public override IPayloadProvider OnTurnEnd() => new NoPayload();
 
     public PlayBonusCardAfterNoCardPlayedInXTurns(StringReference className, CardType bonusCard, int numTurns, StatusDetail status)
-        : base(TemporalStateMetadata.Indefinite(false, status.Tag))
+        : base(TemporalStateMetadata.Unlimited(false, status))
     {
-        Status = status;
         _className = className;
         _bonusCard = bonusCard;
         _numTurns = numTurns;
