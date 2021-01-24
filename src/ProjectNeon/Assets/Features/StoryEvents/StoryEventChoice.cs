@@ -44,7 +44,7 @@ public class StoryEventChoice
             Message.Publish(new ShowNoDieRollNeeded());
         var possibleOutcomes = new Dictionary<float, StoryResolution>();
         var rangeStart = 0f;
-        foreach (var r in Resolution)
+        foreach (var r in Resolution.OrderByDescending(x => x.Result.EstimatedCreditsValue))
         {
             possibleOutcomes[rangeStart + r.Chance] = r;
             rangeStart += r.Chance;

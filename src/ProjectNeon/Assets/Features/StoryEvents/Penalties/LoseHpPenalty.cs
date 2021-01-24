@@ -7,7 +7,9 @@ public class LoseHpPenalty : StoryResult
     [SerializeField] private int minLoss;
     [SerializeField] private int maxLoss;
     [SerializeField] private bool appliesToAll;
-    
+
+    public override int EstimatedCreditsValue => -(maxLoss + minLoss / 2) * (appliesToAll ? 3 : 1);
+
     public override void Apply(StoryEventContext ctx)
     {
         var members = appliesToAll ? ctx.Party.Heroes : ctx.Party.Heroes.Random().AsArray();
