@@ -99,8 +99,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             return $"{numericAmount}+X".Replace("0+", "");
         else
             return _card.LockedXValue.Select(
-                r => r.Amount.ToString(),
-                () => _card.Cost.XAmountSpent(owner.Value).Amount.ToString());
+                r => $"{_card.Cost.BaseAmount}+{r.Amount}".Replace("0+", ""),
+                () => $"{_card.Cost.BaseAmount}+{_card.Cost.XAmountSpent(owner.Value).Amount.ToString()}".Replace("0+", ""));
     }
 
     public void ToggleAsBasic()
@@ -188,8 +188,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         IsPlayable = CheckIfCanPlay();
         nameLabel.text = _cardType.Name;
         description.text = _card != null 
-            ? _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue) 
-            : _cardType.InterpolatedDescription(Maybe<Member>.Missing(), Maybe<ResourceQuantity>.Missing());
+            ? _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Cost.XAmountSpent(_card.Owner))) 
+            : _cardType.InterpolatedDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
         type.text = _cardType.TypeDescription;
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);

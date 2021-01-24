@@ -39,19 +39,19 @@ public class FormulaTests
         => AssertResultsIs(10, "0.5 * HP", TestMembers.Create(s => s.With(StatType.MaxHP, 20)));
     
     [Test] public void Formula_TargetStat() 
-        => AssertResultsIs(20, "Target[HP]", new FormulaContext(TestMembers.Any(), TestMembers.Create(s => s.With(StatType.MaxHP, 20)), 0));
+        => AssertResultsIs(20, "Target[HP]", new FormulaContext(TestMembers.Any(), TestMembers.Create(s => s.With(StatType.MaxHP, 20)), ResourceQuantity.None));
     
     [Test] public void Formula_ResourceAmount()
         => AssertResultsIs(2, "Flames", TestMembers.Create(s => s.With(new InMemoryResourceType("Flames") { StartingAmount = 2, MaxAmount = 99})));
 
     [Test] public void Formula_XAmountPaid()
-        => AssertResultsIs(1, "X", new FormulaContext(TestMembers.Any(), TestMembers.Any(), 1));
+        => AssertResultsIs(1, "X", new FormulaContext(TestMembers.Any(), TestMembers.Any(), new ResourceQuantity { Amount = 1 }));
     
     private void AssertResultsIs(float val, string exp) 
-        => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().State, TestMembers.Any().State, 0));
+        => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().State, TestMembers.Any().State, ResourceQuantity.None));
     
     private void AssertResultsIs(float val, string exp, Member m) 
-        => AssertResultsIs(val, exp, new FormulaContext(m.State, TestMembers.Any().State, 0));
+        => AssertResultsIs(val, exp, new FormulaContext(m.State, TestMembers.Any().State, ResourceQuantity.None));
     
     private void AssertResultsIs(float val, string exp, FormulaContext ctx) 
         => Assert.AreEqual(val, Formula.Evaluate(ctx, exp));

@@ -101,6 +101,7 @@ public class CardTypeEditor : Editor
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].group"));
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].scope"));
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].avoidance"));
+            PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].repeatX"));
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions"), "Effect Sequence");
             EditorGUI.indentLevel--;
         }

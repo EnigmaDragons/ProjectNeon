@@ -8,10 +8,10 @@
     public Scope Scope { get; }
     public bool IsReaction { get; }
     public Maybe<Card> Card { get; }
-    public int XPaidAmount { get; }
+    public ResourceQuantity XPaidAmount { get; }
     
 
-    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, int xPaidAmount)
+    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount)
     {
         Effect = effect;
         Source = source;
@@ -21,7 +21,7 @@
         XPaidAmount = xPaidAmount;
     }
         
-    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, int xPaidAmount, Group targetGroup, Scope scope, bool isReaction)
+    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, Group targetGroup, Scope scope, bool isReaction)
     {
         Effect = effect;
         Source = source;

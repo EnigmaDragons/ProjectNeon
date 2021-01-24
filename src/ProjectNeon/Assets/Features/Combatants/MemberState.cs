@@ -67,6 +67,7 @@ public sealed class MemberState : IStats
     public float Max(string name) => _counters[name].Max;
     public IResourceType PrimaryResource => ResourceTypes[0];
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
+    public ResourceQuantity CurrentPrimaryResources => new ResourceQuantity { Amount = PrimaryResourceAmount, ResourceType = PrimaryResource.Name };
     public float PrimaryResourceValue 
     {
         get

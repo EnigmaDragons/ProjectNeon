@@ -65,7 +65,7 @@ public class Hero
         Equipment.All.ForEach(e =>
         {
             m.Apply(s => s.ApplyPersistentState(new EquipmentPersistentState(e, m)));
-            e.BattleStartEffects.ForEach(effect => AllEffects.Apply(effect, new EffectContext(m, new Single(m), Maybe<Card>.Missing(), 0)));
+            e.BattleStartEffects.ForEach(effect => AllEffects.Apply(effect, new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None)));
         });
         return m;
     }

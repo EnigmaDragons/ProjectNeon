@@ -55,7 +55,7 @@ public class Enemy : ScriptableObject
         m.State.InitResourceAmount(resourceType, startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resourceType.Name, Amount = resourceGainPerTurn}, m));
-        startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, new EffectContext(m, new Single(m), Maybe<Card>.Missing(), 0)));
+        startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None)));
         return m;
     }
 
