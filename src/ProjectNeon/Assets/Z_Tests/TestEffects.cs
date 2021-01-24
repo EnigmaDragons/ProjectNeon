@@ -27,7 +27,7 @@ public static class TestEffects
         tempMembers[source.Id] = source;
         var members = tempMembers.Values;
         var battleSnapshotBefore = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
-        AllEffects.Apply(e, new EffectContext(source, target, card));
+        AllEffects.Apply(e, new EffectContext(source, target, card, 0));
         var battleSnapshotAfter = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
 
         var effectResolved = new EffectResolved(e, source, target, battleSnapshotBefore, battleSnapshotAfter, isReaction: false);
@@ -35,6 +35,6 @@ public static class TestEffects
         var reactions = members.SelectMany(x => x.State.GetReactions(effectResolved));
 
         reactions.ForEach(r => r.ReactionSequence.CardActions.Actions.Where(a => a.Type == CardBattleActionType.Battle)
-            .ForEach(be => AllEffects.Apply(be.BattleEffect, new EffectContext(r.Source, r.Target, Maybe<Card>.Missing()))));
+            .ForEach(be => AllEffects.Apply(be.BattleEffect, new EffectContext(r.Source, r.Target, Maybe<Card>.Missing(), 0))));
     }
 }

@@ -7,7 +7,7 @@ public sealed class GainCreditsTests
     public void GainCredits_CreditsUpdated()
     {
         var adventureState = PartyAdventureState.InMemory();
-        var effectContext = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(), adventureState, new PlayerState(0), new Dictionary<int, Member>());
+        var effectContext = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(), 0, adventureState, new PlayerState(0), new Dictionary<int, Member>());
         
         AllEffects.Apply(new EffectData
         {

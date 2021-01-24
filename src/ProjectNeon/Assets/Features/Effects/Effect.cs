@@ -14,11 +14,12 @@ public class EffectContext
     public PartyAdventureState AdventureState { get; }
     public IDictionary<int, Member> BattleMembers { get; }
     public Maybe<Card> Card { get; }
+    public int XPaidAmount { get; set; }
 
-    public EffectContext(Member source, Target target, Maybe<Card> card)
-        : this(source, target, card, PartyAdventureState.InMemory(), new PlayerState(), target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m)) {}
+    public EffectContext(Member source, Target target, Maybe<Card> card, int xPaidAmount)
+        : this(source, target, card, xPaidAmount, PartyAdventureState.InMemory(), new PlayerState(), target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m)) {}
         
-    public EffectContext(Member source, Target target, Maybe<Card> card, PartyAdventureState adventureState, PlayerState playerState, IDictionary<int, Member> battleMembers)
+    public EffectContext(Member source, Target target, Maybe<Card> card, int xPaidAmount, PartyAdventureState adventureState, PlayerState playerState, IDictionary<int, Member> battleMembers)
     {
         Source = source;
         Target = target;
@@ -26,23 +27,24 @@ public class EffectContext
         PlayerState = playerState;
         BattleMembers = battleMembers;
         Card = card;
+        XPaidAmount = xPaidAmount;
     }
 }
 
 public static class EffectExtensions
 {
     public static void Apply(this Effect effect, Member source, Target target) 
-        => effect.Apply(source, target, Maybe<Card>.Missing());
+        => effect.Apply(source, target, Maybe<Card>.Missing(), 0);
     
     public static void Apply(this Effect effect, Member source, Member target) 
-        => effect.Apply(source, target, Maybe<Card>.Missing());
+        => effect.Apply(source, target, Maybe<Card>.Missing(), 0);
 
-    public static void Apply(this Effect effect, Member source, Target target, Maybe<Card> card) 
-        => effect.Apply(new EffectContext(source, target, card, PartyAdventureState.InMemory(), new PlayerState(0), 
+    public static void Apply(this Effect effect, Member source, Target target, Maybe<Card> card, int xAmountPaid) 
+        => effect.Apply(new EffectContext(source, target, card, xAmountPaid, PartyAdventureState.InMemory(), new PlayerState(0), 
             target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m)));
     
-    public static void Apply(this Effect effect, Member source, Member target, Maybe<Card> card) 
-        => effect.Apply(new EffectContext(source, new Single(target), card, PartyAdventureState.InMemory(), new PlayerState(0), 
+    public static void Apply(this Effect effect, Member source, Member target, Maybe<Card> card, int xAmountPaid) 
+        => effect.Apply(new EffectContext(source, new Single(target), card, xAmountPaid, PartyAdventureState.InMemory(), new PlayerState(0), 
             new [] { source, target }.SafeToDictionary(m => m.Id, m => m)));
 }
 
