@@ -22,7 +22,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
     {
         soldVisual.SetActive(false);
         _card = c;
-        _price = c.ShopPrice();
+        _price = c.CardShopPrice();
         costLabel.text = _price.ToString();
         UpdateAffordability();
         return this;

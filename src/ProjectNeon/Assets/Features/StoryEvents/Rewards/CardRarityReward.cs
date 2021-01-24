@@ -5,7 +5,9 @@ public class CardRarityReward : StoryResult
 {
     [SerializeField] private Rarity rarity;
     [SerializeField] private ShopCardPool cardPool;
-    
+
+    public override int EstimatedCreditsValue => rarity.CardShopPrice();
+
     public override void Apply(StoryEventContext ctx)
     {
         var card = new ShopSelectionPicker().PickCards(ctx.Party, cardPool, 1, rarity);

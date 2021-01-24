@@ -11,7 +11,7 @@ public class OnEvadedTests
 
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.OnEvaded,
+            EffectType = EffectType.ReactOnEvadedWithCard,
             NumberOfTurns = new IntReference(3),
             FloatAmount = new FloatReference(-1),
             ReactionSequence = TestCards.ReactionCard(

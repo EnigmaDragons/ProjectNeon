@@ -2,20 +2,22 @@ using System;
 
 public static class CardShopPricing
 {
-    public static int ShopPrice(this CardType c)
+    public static int CardShopPrice(this CardType c)
+        => CardShopPrice(c.Rarity);
+    public static int CardShopPrice(this Rarity rarity)
     {
-        if (c.Rarity == Rarity.Common)
+        if (rarity == Rarity.Common)
             return WithShopPricingVariance(40);
-        if (c.Rarity == Rarity.Uncommon)
+        if (rarity == Rarity.Uncommon)
             return WithShopPricingVariance(80);
-        if (c.Rarity == Rarity.Rare)
+        if (rarity == Rarity.Rare)
             return WithShopPricingVariance(160);
-        if (c.Rarity == Rarity.Epic)
+        if (rarity == Rarity.Epic)
             return WithShopPricingVariance(320);
         return WithShopPricingVariance(25);
     }
 
-    public static int EquipmentShopPrice(Rarity rarity, float priceFactor)
+    public static int EquipmentShopPrice(this Rarity rarity, float priceFactor)
     {
         if (rarity == Rarity.Common)
             return WithShopPricingVariance(100 * priceFactor);
