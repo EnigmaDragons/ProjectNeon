@@ -24,7 +24,21 @@ public class EffectReactWith : Effect
             => effect.EffectData.EffectType == EffectType.Attack && effect.Target.Members.Any(x => x.Id == possessor.Id) },
         { ReactionConditionType.OnBloodied, possessor => effect
             => !effect.BattleBefore.Members[possessor.Id].IsBloodied() 
-               && effect.BattleAfter.Members[possessor.Id].IsBloodied() }
+               && effect.BattleAfter.Members[possessor.Id].IsBloodied() },
+        {
+            ReactionConditionType.OnCausedHeal, possessor => effect =>
+            {
+                if (!Equals(possessor, effect.Source))
+                    return false;
+                
+                var targetMembers = effect.Target.Members;
+                var hpBefore = targetMembers.Select(t => effect.BattleBefore.Members[t.Id])
+                    .Sum(x => x.State.Hp);
+                var hpAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
+                    .Sum(x => x.State.Hp);
+                return hpAfter > hpBefore;
+            }
+        }
     };
     
     private readonly bool _isDebuff;
