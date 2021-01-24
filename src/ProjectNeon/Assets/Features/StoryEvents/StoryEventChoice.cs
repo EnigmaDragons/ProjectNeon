@@ -38,6 +38,10 @@ public class StoryEventChoice
         }
 
         var roll = Rng.Dbl();
+        if (Resolution.Length > 1)
+            Message.Publish(new ShowDieRoll((int)Math.Ceiling(Math.Abs(1 - roll) * 20)));
+        else
+            Message.Publish(new ShowNoDieRollNeeded());
         var possibleOutcomes = new Dictionary<float, StoryResolution>();
         var rangeStart = 0f;
         foreach (var r in Resolution)

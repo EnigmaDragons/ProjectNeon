@@ -2,7 +2,8 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCreditChange, ShowGainedEquipment, ShowCardReward, ShowStoryEventResultMessage>
+public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCreditChange, 
+    ShowGainedEquipment, ShowCardReward, ShowStoryEventResultMessage>
 {
     [SerializeField] private TextMeshProUGUI storyTextArea;
     [SerializeField] private GameObject optionsParent;
@@ -19,6 +20,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
 
     public void Present(StoryEvent s)
     {
+        Message.Publish(new HideDieRoll());
         rewardParent.DestroyAllChildren();
         InitFreshOptionsButtons();
         var ctx = new StoryEventContext(party, allEquipmentPool);
