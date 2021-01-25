@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Features.GameProgression.Messages;
 using UnityEngine;
 
@@ -20,8 +22,20 @@ public class BattleConclusion : OnMessage<BattleFinished>
         var rewardPicker = new ShopSelectionPicker();
         if (state.IsEliteBattle)
         {
-            var rewardEquipments = rewardPicker.PickEquipments(state.Party, equipmentPrizePool, 3);
-            Message.Publish(new GetUserSelectedEquipment(rewardEquipments, equipment =>
+            // Tuned Reward Set
+            var rewardEquips = rewardPicker
+                .PickEquipments(state.Party, equipmentPrizePool, 1, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
+                .ToList();
+            
+            var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(state.Party, equipmentPrizePool, 20));
+            while (rewardEquips.Count < 3)
+            {
+                var nextEquipment = possibleEquips.Dequeue();
+                if (!rewardEquips.Any(x => x.Description.Equals(nextEquipment.Description)))
+                    rewardEquips.Add(nextEquipment);
+            }
+            
+            Message.Publish(new GetUserSelectedEquipment(rewardEquips.ToArray().Shuffled(), equipment =>
             {
                 equipment.IfPresent(e => state.SetRewardEquipment(e));
                 onFinished();

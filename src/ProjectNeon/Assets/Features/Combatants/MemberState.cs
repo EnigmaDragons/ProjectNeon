@@ -156,12 +156,12 @@ public sealed class MemberState : IStats
 
     public void DuplicateStatesOfType(StatusTag tag)
     {
-        _additiveMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryAdditive);
-        _multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(ApplyTemporaryMultiplier);
-        _reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddReactiveState((ReactiveStateV2)s));
-        _transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddEffectTransformer((EffectTransformer)s));
-        _additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator)s));
-        _multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator)s));
+        _additiveMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(ApplyTemporaryAdditive);
+        _multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(ApplyTemporaryMultiplier);
+        _reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(s => AddReactiveState((ReactiveStateV2)s));
+        _transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(s => AddEffectTransformer((EffectTransformer)s));
+        _additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator)s));
+        _multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator)s));
     }
 
     public void ApplyBonusCardPlayer(IBonusCardPlayer p) => _bonusCardPlayers.Add(p);
