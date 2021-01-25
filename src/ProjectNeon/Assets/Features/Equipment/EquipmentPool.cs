@@ -11,6 +11,7 @@ public class EquipmentPool : ScriptableObject
     [SerializeField] private int numRandomCommons = 32;
     [SerializeField] private int numRandomUncommons = 16;
     [SerializeField] private int numRandomRares = 6;
+    [SerializeField] private int numRandomEpics = 3;
     [SerializeField] private int weaponOdds = 1;
     [SerializeField] private int armorOdds = 1;
     [SerializeField] private int augmentOdds = 3;
@@ -28,7 +29,8 @@ public class EquipmentPool : ScriptableObject
         .Concat(subPools.SelectMany(s => s.All))
         .Concat(Enumerable.Range(0, numRandomCommons).Select(_ => _generator.GenerateRandomCommon()))
         .Concat(Enumerable.Range(0, numRandomUncommons).Select(_ => _generator.GenerateRandomUncommon()))
-        .Concat(Enumerable.Range(0, numRandomRares).Select(_ => _generator.GenerateRandomRare()));
+        .Concat(Enumerable.Range(0, numRandomRares).Select(_ => _generator.GenerateRandomRare()))
+        .Concat(Enumerable.Range(0, numRandomEpics).Select(_ => _generator.GenerateRandomEpic()));
 
     public IEnumerable<EquipmentSlot> Random(int n)
     {

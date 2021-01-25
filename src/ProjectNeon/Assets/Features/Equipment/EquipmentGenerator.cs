@@ -13,7 +13,8 @@ public class EquipmentGenerator
             "Zapper",
             "HandLaz",
             "Rifle",
-            "Shooter"
+            "Shooter",
+            "Banner"
         }},
         { EquipmentSlot.Armor, new []{
             "Power Suit",
@@ -41,19 +42,23 @@ public class EquipmentGenerator
     
     public Equipment GenerateRandomRare() 
         => Generate(RarityPowers[Rarity.Rare].Random(), Rarity.Rare);
+    
+    public Equipment GenerateRandomEpic()
+        => Generate(RarityPowers[Rarity.Epic].Random(), Rarity.Epic);
 
     private static readonly Dictionary<Rarity, int[]> RarityPowers = new Dictionary<Rarity, int[]>
     {
         { Rarity.Common, new []{1}},
         { Rarity.Uncommon, new []{2, 3}},
-        { Rarity.Rare, new [] {4, 5}}
+        { Rarity.Rare, new [] {4, 5}},
+        { Rarity.Epic, new [] {6, 7}}
     };
 
     private int PowerLevelFor(Rarity rarity)
         => RarityPowers[rarity].Random();
 
     private EquipmentSlot SlotFor(StatType primaryStatType)
-        => new[] {StatType.Attack, StatType.Magic, StatType.Leadership, StatType.Toughness}.Contains(primaryStatType)
+        => new[] {StatType.Attack, StatType.Magic, StatType.Leadership}.Contains(primaryStatType)
             ? EquipmentSlot.Weapon
             : EquipmentSlot.Armor;
 
