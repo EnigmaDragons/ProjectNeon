@@ -33,7 +33,18 @@ public class ShopSelectionPicker
         var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All));
         var randomRarities = rarities.Random(numEquipment).ToArray();
         var randomSlots = equipmentPool.Random(numEquipment).ToArray();
-        return Enumerable.Range(0, numEquipment).Select(i => equipmentPool.Random(randomSlots[i], randomRarities[i], partyClasses)).ToArray();
+        var groups = new Dictionary<Rarity, Dictionary<EquipmentSlot, int>>();
+        Enumerable.Range(0, numEquipment).ForEach(i =>
+        {
+            var rarity = randomRarities[i];
+            var slot = randomSlots[i];
+            if (!groups.ContainsKey(rarity))
+                groups[rarity] = new Dictionary<EquipmentSlot, int>();
+            if (!groups[rarity].ContainsKey(slot))
+                groups[rarity][slot] = 0;
+            groups[rarity][slot]++;
+        });
+        return groups.SelectMany(r => r.Value.SelectMany(s => equipmentPool.Random(s.Key, r.Key, partyClasses, s.Value))).ToArray();
     }
 
     public ShopSelection GenerateCardSelection(PartyAdventureState party, ShopCardPool cards, int numCards)

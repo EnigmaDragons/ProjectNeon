@@ -83,4 +83,12 @@ public static class CollectionExtensions
             result *= selector(item);
         return result;
     }
+    
+    public static IEnumerable<TSource> DistinctBy<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+    {
+        var set = new HashSet<TResult>();
+        foreach(var item in source)
+            if (set.Add(selector(item)))
+                yield return item;
+    }
 }

@@ -35,6 +35,13 @@ public class EquipmentPool : ScriptableObject
         var factoredList = odds.SelectMany(odd => Enumerable.Range(0, odd.Value).Select(_ => odd.Key));
         return Enumerable.Range(0, n).Select(_ => factoredList.Random());
     }
+    
+    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HashSet<string> partyClasses, int n) => All
+        .Where(x => x.Slot == slot && x.Rarity == rarity && (x.Classes.None() || x.Classes.Any(partyClasses.Contains)))
+        .DistinctBy(x => x.Description)
+        .ToArray()
+        .Shuffled()
+        .Take(n);
 
     public Equipment Random(EquipmentSlot slot, Rarity rarity, HashSet<string> partyClasses) => All
         .Where(x => x.Slot == slot && x.Rarity == rarity && (x.Classes.None() || x.Classes.Any(partyClasses.Contains)))
