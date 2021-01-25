@@ -13,7 +13,7 @@ public class EffectDataEditor : PropertyDrawer
     private DictionaryWithDefault<EffectType, string[]> _relevantProperties = new DictionaryWithDefault<EffectType, string[]>(new string[] { "BaseAmount", "FloatAmount", "NumberOfTurns", "HitsRandomTargetMember" })
     {
         {EffectType.Nothing, new string[0]},
-        {EffectType.ReactOnEvadedWithCard, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "ReactionSequence" }},
+        {EffectType.ReactOnEvadedWithCard, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionSequence" }},
         {EffectType.ReactWithEffect, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffect"}},
         {EffectType.ReactWithCard, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionSequence"}},
         {EffectType.ResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
