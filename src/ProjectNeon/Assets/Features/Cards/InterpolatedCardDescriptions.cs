@@ -85,12 +85,12 @@ public static class InterpolatedCardDescriptions
         return result;
     }
 
-    private static string XCostDescription(Maybe<Member> owner, Maybe<ResourceQuantity> xCost) 
-        => xCost.Select(
-            x => xCost.Value.Amount.ToString(), 
-            () => owner.Select(
-                o => o.State.PrimaryResourceAmount.ToString(), 
-                () => "X"));
+    private static string XCostDescription(Maybe<Member> owner, ResourceQuantity xCost)
+        => ResourceQuantity.None == xCost
+            ? owner.Select(
+                o => o.State.PrimaryResourceAmount.ToString(),
+                () => "X")
+            : xCost.Amount.ToString();
 
     private static string AutoDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
