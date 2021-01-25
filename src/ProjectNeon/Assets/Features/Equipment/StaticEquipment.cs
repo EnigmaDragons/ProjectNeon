@@ -16,7 +16,10 @@ public class StaticEquipment : ScriptableObject, Equipment
     [SerializeField] private EffectData[] turnEndEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
     
-    public string Name => displayName;
+    public string Name => !string.IsNullOrWhiteSpace(displayName) 
+        ? displayName 
+        : name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
+    
     public string Description => description;
     public int Price => CardShopPricing.EquipmentShopPrice(rarity, priceFactor);
     public Rarity Rarity => rarity;
