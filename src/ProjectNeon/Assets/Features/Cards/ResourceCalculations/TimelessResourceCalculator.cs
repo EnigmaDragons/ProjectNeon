@@ -13,7 +13,7 @@ public static class TimelessResourceCalculator
             calculations.ResourcePaidType, 
             Mathf.Max(0, calculations.ResourcesPaid), 
             calculations.ResourceGainedType, 
-            Mathf.Clamp(0, member.ResourceMax(calculations.ResourceGainedType) - member.ResourceAmount(calculations.ResourceGainedType), calculations.ResourcesGained),
+            Mathf.Clamp(calculations.ResourcesGained, 0, member.ResourceMax(calculations.ResourceGainedType) - member.ResourceAmount(calculations.ResourceGainedType)),
             Math.Max(0, calculations.XAmount),
             Math.Max(0, calculations.XAmountPriceTag));
 
