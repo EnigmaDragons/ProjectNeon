@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Any-PortableSynthesizer
+  m_Name: Any-PainTransferImplant
   m_EditorClassIdentifier: 
-  displayName: Portable Synthesizer
-  description: 'Each turn: Lose 1 cred. Gain 1 primary resource'
+  displayName: Pain Transfer Implant
+  description: 'On Magic Attack: Gain 1 Magic next turn'
   rarity: 1
   slot: 2
   priceFactor: 1
@@ -27,14 +27,14 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 54
+  - EffectType: 74
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
+      UseConstant: 1
+      ConstantValue: -1
       FloatVariable: {fileID: 0}
     NumberOfTurns:
       UseConstant: 1
@@ -46,19 +46,18 @@ MonoBehaviour:
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     StatusTag: 12
-    StatusDetailText: 'Each turn: Lose 1 cred. Gain 1 primary resource'
+    StatusDetailText: 'On Magic Attack: Gain 1 Magic next turn'
     TurnDelay: 0
     Formula: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 11400000, guid: b50e3716af0e2a0428dba75d05704db7,
-      type: 2}
-    ReactionConditionType: 0
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 3
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
-      cardActions: {fileID: 0}
+      cardActions: {fileID: 11400000, guid: f4fcda4b439dc1b46a52f0865e9022f0, type: 2}
     BonusCardType: {fileID: 0}

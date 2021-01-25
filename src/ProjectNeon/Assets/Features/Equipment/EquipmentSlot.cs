@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 public enum EquipmentSlot
 {
     Weapon,

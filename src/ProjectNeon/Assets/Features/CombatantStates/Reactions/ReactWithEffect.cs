@@ -8,7 +8,9 @@ public class EffectReactWith : Effect
     private static Dictionary<ReactionConditionType, Func<Member, Func<EffectResolved, bool>>> Conditions = new Dictionary<ReactionConditionType, Func<Member, Func<EffectResolved, bool>>>
     {    
         { ReactionConditionType.OnAttacked, possessor => effect => 
-            effect.EffectData.EffectType == EffectType.Attack && effect.Target.Members.Any(x => x.Id == possessor.Id) },
+            (effect.EffectData.EffectType == EffectType.Attack || effect.EffectData.EffectType == EffectType.AttackFormula) && effect.Target.Members.Any(x => x.Id == possessor.Id) },
+        { ReactionConditionType.OnMagicAttacked, possessor => effect => 
+            (effect.EffectData.EffectType == EffectType.DamageSpell || effect.EffectData.EffectType == EffectType.MagicAttackFormula) && effect.Target.Members.Any(x => x.Id == possessor.Id) },
         { ReactionConditionType.OnBloodied, possessor => effect => 
             !effect.BattleBefore.Members[possessor.Id].IsBloodied() && effect.BattleAfter.Members[possessor.Id].IsBloodied() },
         {ReactionConditionType.OnVulnerable, possessor => effect 

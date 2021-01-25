@@ -117,13 +117,12 @@ public class BattleState : ScriptableObject
             result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id)));
         }
         _nextEnemyId = id + 1;
-        
+
+        _playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
         _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
             .Concat(result.Select(e => e.Item2))
             .ToDictionary(x => x.Id, x => x);
-        
-        _playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
-        
+
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;
         rewardCards = new CardType[0];

@@ -10,16 +10,33 @@ public class EquipmentPool : ScriptableObject
     [SerializeField] private int numRandomCommons = 32;
     [SerializeField] private int numRandomUncommons = 16;
     [SerializeField] private int numRandomRares = 6;
+    [SerializeField] private int weaponOdds = 1;
+    [SerializeField] private int armorOdds = 1;
+    [SerializeField] private int augmentOdds = 3;
 
     private readonly EquipmentGenerator _generator = new EquipmentGenerator();
-    
+
+    private Dictionary<EquipmentSlot, int> Odds => new Dictionary<EquipmentSlot, int>
+    {
+        { EquipmentSlot.Weapon, weaponOdds },
+        { EquipmentSlot.Armor, armorOdds },
+        { EquipmentSlot.Augmentation, augmentOdds }
+    };
+
     public IEnumerable<Equipment> All => all
         .Concat(subPools.SelectMany(s => s.All))
         .Concat(Enumerable.Range(0, numRandomCommons).Select(_ => _generator.GenerateRandomCommon()))
         .Concat(Enumerable.Range(0, numRandomUncommons).Select(_ => _generator.GenerateRandomUncommon()))
         .Concat(Enumerable.Range(0, numRandomRares).Select(_ => _generator.GenerateRandomRare()));
-    
-    public Equipment Random(EquipmentSlot slot, Rarity rarity) => All
-        .Where(x => x.Slot == slot && x.Rarity == rarity)
+
+    public IEnumerable<EquipmentSlot> Random(int n)
+    {
+        var odds = Odds;
+        var factoredList = odds.SelectMany(odd => Enumerable.Range(0, odd.Value).Select(_ => odd.Key));
+        return Enumerable.Range(0, n).Select(_ => factoredList.Random());
+    }
+
+    public Equipment Random(EquipmentSlot slot, Rarity rarity, HashSet<string> partyClasses) => All
+        .Where(x => x.Slot == slot && x.Rarity == rarity && (x.Classes.None() || x.Classes.Any(partyClasses.Contains)))
         .Random();
 }

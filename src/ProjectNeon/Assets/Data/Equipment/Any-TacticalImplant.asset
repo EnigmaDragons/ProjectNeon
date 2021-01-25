@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Any-PortableSynthesizer
+  m_Name: Any-TacticalImplant
   m_EditorClassIdentifier: 
-  displayName: Portable Synthesizer
-  description: 'Each turn: Lose 1 cred. Gain 1 primary resource'
+  displayName: Tactical Implant
+  description: +1 Cycle per turn
   rarity: 1
   slot: 2
   priceFactor: 1
@@ -27,34 +27,33 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 54
+  - EffectType: 49
     BaseAmount:
-      UseConstant: 0
-      ConstantValue: 0
+      UseConstant: 1
+      ConstantValue: 1
       Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
+      UseConstant: 1
+      ConstantValue: 1
       FloatVariable: {fileID: 0}
     NumberOfTurns:
       UseConstant: 1
       ConstantValue: -1
       Variable: {fileID: 0}
     EffectScope:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 0}
+      Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
     HitsRandomTargetMember: 0
-    StatusTag: 12
-    StatusDetailText: 'Each turn: Lose 1 cred. Gain 1 primary resource'
+    StatusTag: 0
+    StatusDetailText: 
     TurnDelay: 0
     Formula: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 11400000, guid: b50e3716af0e2a0428dba75d05704db7,
-      type: 2}
+    ReferencedSequence: {fileID: 0}
     ReactionConditionType: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:

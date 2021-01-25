@@ -27,6 +27,8 @@ public static class RarityExtensions
     public static IEnumerable<T> FactoredByRarity<T>(this IEnumerable<T> items, Func<T, Rarity> getRarity)
         => items.SelectMany(item => Enumerable.Range(0, RarityFactors[getRarity(item)]).Select(_ => item));
 
+    public static IEnumerable<Rarity> Random(this Rarity[] rarities, int n)
+        => Enumerable.Range(0, n).Select(_ => rarities.Random());
     public static Rarity Random(this Rarity[] rarities)
         => rarities.SelectMany(Factored).Random();
 
