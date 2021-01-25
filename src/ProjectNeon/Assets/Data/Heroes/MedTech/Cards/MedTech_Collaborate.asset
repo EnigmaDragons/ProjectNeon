@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: MedTech_Collaborate
   m_EditorClassIdentifier: 
+  customName: 
   art: {fileID: 21300000, guid: 0437cda0ab936e04aa1d283b584cbf57, type: 3}
-  description: Gain 1 Chem. Draw +2 cards for 3 turns
+  description: Gain 1 Chems. Draw +2 cards {D[0]}
   typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
   tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: a6db77c3bda412d42b6a422b91d39c05,
@@ -32,5 +33,7 @@ MonoBehaviour:
     group: 0
     avoidance: 999
     cardActions: {fileID: 11400000, guid: 5e0a0e0c10fdad84fa6030d083a6a5ef, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: Card drawing should scale off of Leadership
+  presentationIssues: 

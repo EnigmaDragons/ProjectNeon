@@ -129,18 +129,19 @@ public static class InterpolatedCardDescriptions
     {
         if (data.EffectType == EffectType.Attack)
             return WithPhysicalDamageIcon(AttackAmount(data, owner));
+        if (data.EffectType == EffectType.AttackFormula)
+            return WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.PhysicalDamageOverTime)
             return WithRawDamageIcon(AttackAmount(data, owner));
-        if (data.EffectType == EffectType.DealRawDamageFormula 
-            || data.EffectType == EffectType.AdjustStatAdditivelyFormula 
-            || data.EffectType == EffectType.HealFormula 
-            || data.EffectType == EffectType.AttackFormula
-            || data.EffectType == EffectType.MagicAttackFormula)
-            return WithRawDamageIcon(owner.IsPresent 
-                ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString()
-                : FormattedFormula(data.Formula));
+        if (data.EffectType == EffectType.DealRawDamageFormula)
+            return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
+        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula
+                || data.EffectType == EffectType.HealFormula )
+            return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.DamageSpell )
             return WithMagicDamageIcon(MagicAmount(data, owner));
+        if (data.EffectType == EffectType.MagicAttackFormula)
+            return WithMagicDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.HealMagic
             || data.EffectType == EffectType.HealOverTime)
             return MagicAmount(data, owner);
@@ -169,6 +170,11 @@ public static class InterpolatedCardDescriptions
         return "%%";
     }
 
+    private static string FormulaAmount(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
+        => owner.IsPresent
+            ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString()
+            : FormattedFormula(data.Formula);
+    
     private static string MagicAmount(EffectData data, Maybe<Member> owner) 
         => owner.IsPresent
             ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
