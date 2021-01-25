@@ -40,7 +40,7 @@ public sealed class InterpolatedCardDescriptionsTests
 
     [Test]
     public void Interpolated_XCost_WithOwner_IsCorrect()
-        => AssertMatchesIgnoreStyling("6", Description("{X}", new EffectData(), Owner));
+        => AssertMatchesIgnoreStyling("6", Description("{X}", new EffectData(), Owner, new ResourceQuantity { Amount = 6 }));
     
     [Test]
     public void Interpolated_XCost_WithoutOwner_IsCorrect()
