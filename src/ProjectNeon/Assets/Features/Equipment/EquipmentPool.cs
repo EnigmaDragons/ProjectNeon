@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -43,7 +44,18 @@ public class EquipmentPool : ScriptableObject
         .Shuffled()
         .Take(n);
 
-    public Equipment Random(EquipmentSlot slot, Rarity rarity, HashSet<string> partyClasses) => All
-        .Where(x => x.Slot == slot && x.Rarity == rarity && (x.Classes.None() || x.Classes.Any(partyClasses.Contains)))
-        .Random();
+    public Equipment Random(EquipmentSlot slot, Rarity rarity, HashSet<string> partyClasses)
+    {
+        try
+        {
+            return All.Where(x => x.Slot == slot && x.Rarity == rarity &&
+                            (x.Classes.None() || x.Classes.Any(partyClasses.Contains)))
+                .Random();
+        }
+        catch (Exception e)
+        {
+            Log.Error($"Tried to get Random Equipment: {slot} {rarity} for {string.Join(", ", partyClasses)} and got {e.Message}");
+            return All.Random();
+        }
+    }
 }
