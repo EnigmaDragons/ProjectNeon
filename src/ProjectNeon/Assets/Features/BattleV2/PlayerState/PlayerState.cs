@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class PlayerState
 {
@@ -10,6 +9,8 @@ public class PlayerState
     
     public IPlayerStats CurrentStats => _playerBaseStats
         .Plus(_mods.Where(x => x.IsActive).Select(x => x.PlayerStats));
+
+    public int CardDraws => CurrentStats.CardDraw();
 
     public PlayerState(int numCardCycles = 0)
     {

@@ -153,12 +153,9 @@ public sealed class HandVisualizer : MonoBehaviour
         if (state.NumberOfRecyclesRemainingThisTurn < 1)
             return;
         
-        if (zones.DrawZone.Count < 1)
-            zones.Reshuffle();
-
         state.UseRecycle();
         zones.DiscardZone.PutOnBottom(Hand.Take(cardIndex).RevertedToStandard());
-        Hand.PutOnBottom(zones.DrawZone.DrawOneCard());
+        zones.DrawOneCard();
     }
 
     public void SetFocus(bool isFocused)

@@ -15,6 +15,8 @@ public class CardPlayZone : ScriptableObject
     public Card[] Cards => cards.ToArray();
     public GameEvent OnZoneCardsChanged => onZoneCardsChanged;
     public bool IsFull => Count >= Max;
+    public bool IsEmpty => cards.Length == 0;
+    public bool HasCards => cards.Length > 0;
 
     public void Init(IEnumerable<Card> newCards) => cards = newCards.ToArray();
 

@@ -70,6 +70,7 @@ public class FullContextEffect : Effect
 {
     private readonly Action<EffectContext, Target> _apply;
 
+    public FullContextEffect(Action<EffectContext> apply) => _apply = (ctx, __) => apply(ctx);
     public FullContextEffect(Action<EffectContext, MemberState> applyToOne) : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, member))) { }
     public FullContextEffect(Action<EffectContext, Target> apply) => _apply = apply;
 

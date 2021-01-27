@@ -33,15 +33,28 @@ public class CardPlayZones : ScriptableObject
 
     public void Reshuffle()
     {
-        while (DiscardZone.Count > 0) 
+        while (DiscardZone.HasCards) 
             DrawZone.PutOnBottom(DiscardZone.DrawOneCard());
         DrawZone.Shuffle();
     }
-
+    
+    public void DiscardHand()
+    {
+        while(HandZone.HasCards)
+            DiscardZone.PutOnBottom(HandZone.DrawOneCard());
+    }
+    
     public void DrawHand(int handSize)
     {
-        for (var c = 0; c < handSize; c++)
-            HandZone.PutOnBottom(DrawZone.DrawOneCard());
+        while(!HandZone.IsFull && HandZone.Count < handSize)
+            DrawOneCard();
+    }
+
+    public void DrawOneCard()
+    {
+        if (DrawZone.IsEmpty)
+            Reshuffle();
+        HandZone.PutOnBottom(DrawZone.DrawOneCard());
     }
 
     public static CardPlayZones InMemory => (CardPlayZones)FormatterServices.GetUninitializedObject(typeof(CardPlayZones));
