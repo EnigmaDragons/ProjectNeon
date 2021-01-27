@@ -6,7 +6,11 @@ public class DamageOverTimeTests
     public void DamageOverTime_Apply_DamageIsDealtCorrectlyOverTime()
     {
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
-        new DamageOverTime(new EffectData { FloatAmount = new FloatReference(2), NumberOfTurns = new IntReference(2) }).Apply(target, new Single(target));
+        TestEffects.Apply(new EffectData { 
+            EffectType = EffectType.DamageOverTime, 
+            FloatAmount = new FloatReference(2), 
+            NumberOfTurns = new IntReference(2) 
+        }, target, target);
 
         Assert.AreEqual(10, target.State[TemporalStatType.HP]);
         target.State.GetTurnEndEffects();

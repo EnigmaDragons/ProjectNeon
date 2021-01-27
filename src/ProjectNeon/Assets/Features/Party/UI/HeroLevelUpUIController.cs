@@ -25,7 +25,7 @@ public class HeroLevelUpUIController : OnMessage<PartyAdventureStateChanged, Lev
 
     private void UpdateUi()
     {
-        details.Initialized(_hero, _hero.AsMember(0), canInteractWithEquipment: false);
+        details.Initialized(_hero, canInteractWithEquipment: false);
         levelUpPresenter.Initialize(_hero);
         remainingPointsLabel.text = $"{_hero.LevelUpPoints} Stat Point(s)";
     }

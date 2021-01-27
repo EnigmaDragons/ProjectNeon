@@ -42,6 +42,7 @@ public class BattleState : ScriptableObject
     public bool NeedsCleanup => needsCleanup;
     public bool IsEliteBattle => isEliteBattle;
     public float PowerLevelRewardFactor => adventure.Adventure?.RewardCreditsPerPowerLevel ?? 0;
+    public CardPlayZones PlayerCardZones => cardPlayZones;
     public PartyAdventureState Party => party;
     public PartyArea PartyArea => partyArea;
     public EnemyArea EnemyArea => enemies;
@@ -114,12 +115,12 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
             _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, false);
             SetMemberName(id, enemies.Enemies[i].name);
-            result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id)));
+            result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id, this)));
         }
         _nextEnemyId = id + 1;
 
         _playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
-        _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
+        _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key, this))
             .Concat(result.Select(e => e.Item2))
             .ToDictionary(x => x.Id, x => x);
 

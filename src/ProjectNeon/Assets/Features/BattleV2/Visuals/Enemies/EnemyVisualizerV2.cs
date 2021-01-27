@@ -88,10 +88,10 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         }
     }
 
-    public Member Spawn(Enemy enemy)
+    public Member Spawn(Enemy enemy, BattleState battleState)
     {
         DevLog.Write($"Spawning {enemy.Name}");
-        var member = enemy.AsMember(state.GetNextEnemyId());
+        var member = enemy.AsMember(state.GetNextEnemyId(), battleState);
         var enemyObject = AddEnemy(enemy, member);
         state.AddEnemy(enemy, enemyObject, member);
         SetupEnemyUi(member, enemyObject.transform);

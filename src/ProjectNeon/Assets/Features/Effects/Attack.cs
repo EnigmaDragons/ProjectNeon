@@ -43,7 +43,7 @@ public sealed class Attack : Effect
             foreach (var member in selectedTarget.Members)
             {
                 var beforeHp = member.CurrentHp();
-                effect.Apply(Attacker, member, ctx.Card, ctx.XPaidAmount);
+                effect.Apply(ctx.Retargeted(Attacker, new Single(member)));
                 totalHpDamageDealt += beforeHp - member.CurrentHp();
             }
         }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.Serialization;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Battle/CardPlayZones")]
 public class CardPlayZones : ScriptableObject
@@ -36,4 +37,12 @@ public class CardPlayZones : ScriptableObject
             DrawZone.PutOnBottom(DiscardZone.DrawOneCard());
         DrawZone.Shuffle();
     }
+
+    public void DrawHand(int handSize)
+    {
+        for (var c = 0; c < handSize; c++)
+            HandZone.PutOnBottom(DrawZone.DrawOneCard());
+    }
+
+    public static CardPlayZones InMemory => (CardPlayZones)FormatterServices.GetUninitializedObject(typeof(CardPlayZones));
 }

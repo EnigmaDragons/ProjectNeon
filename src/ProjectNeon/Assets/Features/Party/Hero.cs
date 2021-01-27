@@ -59,15 +59,27 @@ public class Hero
             AddLevelUpStat(stats);
         });
 
-    public Member AsMember(int id)
+    // Cleanup Duplication
+    public Member AsMemberForTests(int id)
     {
         var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, Stats, Character.Class.BattleRole, CurrentHp);
+        return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None));
+    }
+
+    public Member AsMember(int id, BattleState state)
+    {
+        var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, Stats, Character.Class.BattleRole, CurrentHp);
+        return WithEquipmentState(m,new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.Members, state.PlayerCardZones));
+    }
+
+    private Member WithEquipmentState(Member m, EffectContext ctx)
+    {
         Equipment.All.ForEach(e =>
         {
-            m.Apply(s => s.ApplyPersistentState(new EquipmentPersistentState(e, m)));
-            e.BattleStartEffects.ForEach(effect => AllEffects.Apply(effect, new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None)));
+            m.Apply(s => s.ApplyPersistentState(new EquipmentPersistentState(e, ctx)));
+            e.BattleStartEffects.ForEach(effect => AllEffects.Apply(effect, ctx));
         });
-        return m;
+        return m;     
     }
 
     public void Apply(AdditiveStatInjury injury) => UpdateState(() => health.Apply(injury));

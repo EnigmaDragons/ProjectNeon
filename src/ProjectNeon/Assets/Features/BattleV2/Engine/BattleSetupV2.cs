@@ -108,8 +108,6 @@ public class BattleSetupV2 : MonoBehaviour
 
         DevLog.Write("Setting Up Player Hand");
         Deck.InitShuffled(cards);
-        
-        for (var c = 0; c < startingCards.Value; c++)
-            Hand.PutOnBottom(Deck.DrawOneCard());
+        playerCardPlayZones.DrawHand(startingCards.Value);
     }
 }

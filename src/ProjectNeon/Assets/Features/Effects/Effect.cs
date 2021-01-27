@@ -10,42 +10,41 @@ public class EffectContext
 {
     public Member Source { get; }
     public Target Target { get; }
-    public PlayerState PlayerState { get; }
-    public PartyAdventureState AdventureState { get; }
-    public IDictionary<int, Member> BattleMembers { get; }
     public Maybe<Card> Card { get; }
     public ResourceQuantity XPaidAmount { get; }
+    public PlayerState PlayerState { get; }
+    public PartyAdventureState AdventureState { get; }
+    public IDictionary<int, Member> BattleMembers { get; } // This should probably be converted to be lazy so that it's accurate no matter when the Context is created
+    public CardPlayZones PlayerCardZones { get; }
 
-    public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount)
-        : this(source, target, card, xPaidAmount, PartyAdventureState.InMemory(), new PlayerState(), target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m)) {}
-        
-    public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, PlayerState playerState, IDictionary<int, Member> battleMembers)
+    public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, 
+        PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones)
     {
         Source = source;
         Target = target;
         AdventureState = adventureState;
         PlayerState = playerState;
         BattleMembers = battleMembers;
+        PlayerCardZones = playerCardZones;
         Card = card;
         XPaidAmount = xPaidAmount;
     }
+    
+    public EffectContext Retargeted(Member source, Target target) 
+        => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, PlayerCardZones);
+
+    public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount) => new EffectContext(source, target, card, xPaidAmount,
+        PartyAdventureState.InMemory(), new PlayerState(), target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory);
 }
 
 public static class EffectExtensions
 {
-    public static void Apply(this Effect effect, Member source, Target target) 
-        => effect.Apply(source, target, Maybe<Card>.Missing(), ResourceQuantity.None);
-    
-    public static void Apply(this Effect effect, Member source, Member target) 
-        => effect.Apply(source, target, Maybe<Card>.Missing(), ResourceQuantity.None);
+    public static void ApplyForTests(this Effect effect, Member source, Member target) 
+        => effect.ApplyForTests(source, new Single(target), Maybe<Card>.Missing(), ResourceQuantity.None);
 
-    public static void Apply(this Effect effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid) 
+    private static void ApplyForTests(this Effect effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid) 
         => effect.Apply(new EffectContext(source, target, card, xAmountPaid, PartyAdventureState.InMemory(), new PlayerState(0), 
-            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m)));
-    
-    public static void Apply(this Effect effect, Member source, Member target, Maybe<Card> card, ResourceQuantity xAmountPaid) 
-        => effect.Apply(new EffectContext(source, new Single(target), card, xAmountPaid, PartyAdventureState.InMemory(), new PlayerState(0), 
-            new [] { source, target }.SafeToDictionary(m => m.Id, m => m)));
+            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory));
 }
 
 public sealed class NoEffect : Effect

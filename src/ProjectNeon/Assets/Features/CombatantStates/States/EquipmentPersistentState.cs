@@ -2,23 +2,23 @@
 public sealed class EquipmentPersistentState : IPersistentState
 {
     private readonly Equipment _equipment;
-    private readonly Member _owner;
-   
-    public EquipmentPersistentState(Equipment equipment, Member owner)
+    private readonly EffectContext _ctx;
+
+    public EquipmentPersistentState(Equipment equipment, EffectContext ctx)
     {
         _equipment = equipment;
-        _owner = owner;
+        _ctx = ctx;
     }
 
     public void OnTurnStart()
     {
         _equipment.TurnStartEffects
-            .ForEach(e => AllEffects.Apply(e, new EffectContext(_owner, new Single(_owner), Maybe<Card>.Missing(), ResourceQuantity.None)));
+            .ForEach(e => AllEffects.Apply(e, _ctx));
     }
 
     public void OnTurnEnd()
     {
         _equipment.TurnEndEffects
-            .ForEach(e => AllEffects.Apply(e, new EffectContext(_owner, new Single(_owner), Maybe<Card>.Missing(), ResourceQuantity.None)));
+            .ForEach(e => AllEffects.Apply(e, _ctx));
     }
 }

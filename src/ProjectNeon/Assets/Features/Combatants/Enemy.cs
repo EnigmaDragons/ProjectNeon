@@ -49,16 +49,17 @@ public class Enemy : ScriptableObject
     public int ResourceGainPerTurn => resourceGainPerTurn;
     public int CardsPerTurn => cardsPerTurn;
 
-    public Member AsMember(int id)
+    public Member AsMember(int id, BattleState state)
     {
         var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats, battleRole);
+        var ctx = new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.Members, state.PlayerCardZones);
         m.State.InitResourceAmount(resourceType, startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resourceType.Name, Amount = resourceGainPerTurn}, m));
-        startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None)));
+        startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx));
         return m;
     }
-
+    
     public IStats Stats => new StatAddends
         {
             ResourceTypes = resourceType != null ? new IResourceType[] {resourceType} : Array.Empty<IResourceType>()

@@ -12,9 +12,10 @@ public sealed class MemberStatPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI toughLabel;
     [SerializeField] private TextMeshProUGUI leaderLabel;
 
-    public MemberStatPanel Initialized(Member m)
+    public MemberStatPanel Initialized(Hero h)
     {
-        hpLabel.text = $"{m.CurrentHp()}/{m.MaxHp()}";
+        var m = h.Stats;
+        hpLabel.text = $"{h.CurrentHp}/{m.MaxHp()}";
         maxShieldLabel.text = $"{m.MaxShield()}";
         attackLabel.text = $"{m.Attack()}";
         magicLabel.text = $"{m.Magic()}";

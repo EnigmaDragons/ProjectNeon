@@ -21,7 +21,7 @@ public class EquipmentTests
             }
         });
 
-        var member = hero.AsMember(0);
+        var member = hero.AsMemberForTests(0);
         
         Assert.AreEqual(10, member.Attack());
     }
@@ -78,7 +78,7 @@ public class EquipmentTests
         
         hero.Equip(turtleGloves);
 
-        var member = hero.AsMember(1);
+        var member = hero.AsMemberForTests(1);
         member.ExecuteStartOfTurnEffects();
         
         Assert.AreEqual(1, member.Armor());
@@ -109,7 +109,7 @@ public class EquipmentTests
         }, new RuntimeDeck());
         hero.Equip(extendedClip);
         
-        var member = hero.AsMember(1);
+        var member = hero.AsMemberForTests(1);
         
         Assert.AreEqual(8, member.ResourceMax(new InMemoryResourceType("Ammo")));
         Assert.AreEqual(8, member.ResourceAmount(new InMemoryResourceType("Ammo")));

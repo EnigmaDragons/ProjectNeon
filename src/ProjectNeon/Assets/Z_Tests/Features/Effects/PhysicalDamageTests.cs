@@ -7,10 +7,9 @@ public sealed class PhysicalDamageTests
     [Test]
     public void PhysicalDamage_DamageUnarmoredTarget_ApplyEffect()
     {
-        var attacker = TestMembers.With(StatType.Attack, 2);
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Damagability, 1f));
 
-        new DealDamage(new PhysicalDamage(0, 1)).Apply(attacker, new MemberAsTarget(target));
+        TestEffects.ApplyBasicAttack(_attacker, target);
 
         Assert.AreEqual(8, target.State[TemporalStatType.HP]);
     }
@@ -20,7 +19,7 @@ public sealed class PhysicalDamageTests
     {
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10).With(StatType.Armor, 1));
 
-        new DealDamage(new PhysicalDamage(0, 1)).Apply(_attacker, new Single(target));
+        TestEffects.ApplyBasicAttack(_attacker, target);
 
         Assert.AreEqual(9, target.State[TemporalStatType.HP]);
     }
@@ -28,15 +27,15 @@ public sealed class PhysicalDamageTests
     [Test]
     public void PhysicalDamage_DamageMultipleEnemies_ApplyEffect()
     {
-        var target = new[]
+        var targets = new[]
         {
             TestMembers.Create(s => s.With(StatType.MaxHP, 10)),
             TestMembers.Create(s => s.With(StatType.MaxHP, 10))
         };
+        
+        TestEffects.Apply(TestEffects.BasicAttack, _attacker, new Multiple(targets));
 
-        new DealDamage(new PhysicalDamage(0, 1)).Apply(_attacker, new Multiple(target));
-
-        Assert.AreEqual(8, target[0].State[TemporalStatType.HP]);
-        Assert.AreEqual(8, target[1].State[TemporalStatType.HP]);
+        Assert.AreEqual(8, targets[0].CurrentHp());
+        Assert.AreEqual(8, targets[1].CurrentHp());
     }
 }
