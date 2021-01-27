@@ -23,12 +23,7 @@ public class FindCardsEditor : EditorWindow
     
     // By Avoidance Type
     private AvoidanceType _avoidanceType;
-    private string[] GetAllEffectsWithType(AvoidanceType avoidanceType) =>
-        GetAllInstances<CardType>()
-            .Where(e => e.ActionSequences.Any(x => x.AvoidanceType == avoidanceType))
-            .Select(e => e.name)
-            .ToArray();
-    
+
     // By Description Search String
     private string _searchString;
     private string[] GetAllCardsWithDescription(string s) =>
@@ -37,12 +32,18 @@ public class FindCardsEditor : EditorWindow
             .Select(e => e.name)
             .ToArray();
     
+    // By Card Tags
+    private CardTag _cardTag;
+
     void OnGUI()
     {
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
         if (GUILayout.Button("Search By Effect Type")) 
         {
-            var effects = GetAllEffectsWithType(_effectType);
+            var effects = GetAllInstances<CardActionsData>()
+                .Where(e => e.Actions.Any(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.EffectType == _effectType))
+                .Select(e => e.name)
+                .ToArray();
             GetWindow<ListDisplayWindow>()
                 .Initialized($"{_effectType} - {effects.Length} uses", effects)
                 .Show();
@@ -68,7 +69,10 @@ public class FindCardsEditor : EditorWindow
         _avoidanceType = (AvoidanceType)EditorGUILayout.EnumPopup("AvoidanceType", _avoidanceType);
         if (GUILayout.Button("Search By Avoidance Type")) 
         {
-            var cards = GetAllEffectsWithType(_avoidanceType);
+            var cards = GetAllInstances<CardType>()
+                .Where(e => e.ActionSequences.Any(x => x.AvoidanceType == _avoidanceType))
+                .Select(e => e.name)
+                .ToArray();
             GetWindow<ListDisplayWindow>()
                 .Initialized($"{_avoidanceType} - {cards.Length} uses", cards)
                 .Show();
@@ -117,11 +121,23 @@ public class FindCardsEditor : EditorWindow
             ShowCards("Cards With Blank Animation Name", cards);
             GUIUtility.ExitGUI();
         }
+        
+        
+        _cardTag = (CardTag)EditorGUILayout.EnumPopup("CardTag", _cardTag);
+        if (GUILayout.Button("Find Cards With Card Tag"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(c => c.Tags.Any(t => t == _cardTag))
+                .Select(e => e.name)
+                .ToArray();
+            ShowCards("Cards With Card Tag", cards);
+            GUIUtility.ExitGUI();
+        }
     }
     
-    private void ShowCards(string cardWithoutAnimation, string[] cards) 
+    private void ShowCards(string description, string[] cards) 
         => GetWindow<ListDisplayWindow>()
-            .Initialized("Cards Without Animations", cards)
+            .Initialized(description, cards)
             .Show();
     
     private static T[] GetAllInstances<T>() where T : ScriptableObject

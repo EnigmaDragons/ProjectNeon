@@ -66,7 +66,7 @@ public class CardResolutionZone : ScriptableObject
     public void Add(IPlayedCard played)
     {
         battleState.RecordPlayedCard(played);
-        if (played.Card.Hasty)
+        if (played.Card.TimingType == CardTimingType.Hasty)
         {
             _moves.Insert(0, played); 
             physicalZone.PutOnTop(played.Card); 

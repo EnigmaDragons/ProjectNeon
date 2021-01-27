@@ -27,8 +27,8 @@ public sealed class Card
     public string TypeDescription => Type.TypeDescription;
     public CardActionSequence[] ActionSequences => Type.ActionSequences;
     public Maybe<CardTypeData> ChainedCard => Type.ChainedCard;
-    public bool Hasty => type.Is(CardTag.Haste);
     public Maybe<ResourceQuantity> LockedXValue { get; private set; } = Maybe<ResourceQuantity>.Missing();
+    public CardTimingType TimingType => Type.TimingType;
 
     public Card(int id, Member owner, CardTypeData type)
     {

@@ -20,7 +20,6 @@ public enum CardTag
     Leadership = 16,
     RemoveResources = 17,
     Confusion = 18,
-    Haste = 19,
     Taunt = 20,
     Magic = 21,
     Blind = 22,

@@ -26,6 +26,7 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     public CardActionSequence[] ActionSequences => new[] { CardActionSequence.ForReaction(ActionSequence.CardActions) };
     public Maybe<CardTypeData> ChainedCard => Maybe<CardTypeData>.Missing();
     public Rarity Rarity => Rarity.Starter;
+    public CardTimingType TimingType => CardTimingType.Standard;
 
     public ReactionCardType Initialized(CardReactionSequence action)
     {
