@@ -121,7 +121,7 @@ public class FindCardsEditor : EditorWindow
             ShowCards("Cards With Blank Animation Name", cards);
             GUIUtility.ExitGUI();
         }
-        
+        DrawUILine();
         
         _cardTag = (CardTag)EditorGUILayout.EnumPopup("CardTag", _cardTag);
         if (GUILayout.Button("Find Cards With Card Tag"))
@@ -133,6 +133,7 @@ public class FindCardsEditor : EditorWindow
             ShowCards("Cards With Card Tag", cards);
             GUIUtility.ExitGUI();
         }
+        DrawUILine();
     }
     
     private void ShowCards(string description, string[] cards) 

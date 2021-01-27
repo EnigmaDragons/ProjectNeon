@@ -9,3 +9,9 @@
 
     void Perform(BattleStateSnapshot beforeCard);
 }
+
+public static class IPlayedCardExtensions
+{
+    public static bool IsInstant(this IPlayedCard c) => c.Card.TimingType == CardTimingType.Instant;
+    public static bool IsHasty(this IPlayedCard c) => c.Card.TimingType == CardTimingType.Hasty;
+}

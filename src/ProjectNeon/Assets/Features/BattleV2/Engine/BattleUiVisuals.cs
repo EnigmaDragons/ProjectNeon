@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, TargetSelectionFinished, PlayerCardCanceled>
+public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, TargetSelectionFinished, PlayerCardCanceled, CardResolutionStarted, CardResolutionFinished>
 {
     [SerializeField] private PartyUiSummaryV2 partyUi;
     [SerializeField] private GameObject commandPhaseUi;
@@ -12,6 +12,8 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardResolutionZone playArea;
+    
+    private bool _isResolvingInstantCard;
     private bool HasMoreCardPlays => playArea.Count < battleState.PlayerState.CurrentStats.CardPlays();
     
     public void Setup()
@@ -61,10 +63,27 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     protected override void Execute(TargetSelectionBegun msg) => hand.SetActive(false);
     protected override void Execute(TargetSelectionFinished msg) => RefreshHandVisibility();
     protected override void Execute(PlayerCardCanceled msg) => RefreshHandVisibility();
+    protected override void Execute(CardResolutionStarted msg)
+    {
+        if (!msg.Card.IsInstant()) 
+            return;
+        
+        _isResolvingInstantCard = true;
+        RefreshHandVisibility();
+    }
+
+    protected override void Execute(CardResolutionFinished msg)
+    {
+        if (!msg.CardWasInstant) 
+            return;
+        
+        _isResolvingInstantCard = false;
+        RefreshHandVisibility();
+    }
 
     private void RefreshHandVisibility()
     {
-        Debug.Log($"Refresh Hand Visibility. {playArea.Count} / {battleState.PlayerState.CurrentStats.CardPlays()}");
-        hand.SetActive(HasMoreCardPlays);
+        Debug.Log($"Refresh Hand Visibility. {playArea.Count} / {battleState.PlayerState.CurrentStats.CardPlays()} Instant: {_isResolvingInstantCard}");
+        hand.SetActive(!_isResolvingInstantCard && HasMoreCardPlays);
     }
 }

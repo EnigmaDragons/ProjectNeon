@@ -46,10 +46,16 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         PerformConsciousnessUpdate();
         if (reactionZone.Count > 0)
             reactionZone.Clear();
+        if (_reactionCards.Any())
+            StartCoroutine(ResolveNextReactionCard());
+        
+        // Reactions should be processed for Instant cards, but no other cards
+        if (state.Phase != BattleV2Phase.Resolution)
+            return;
         if (IsDoneResolving)
             FinishResolutionPhase();
-        else
-            ProcessNextCardOrReaction();
+        else if (resolutionZone.HasMore)
+            resolutionZone.BeginResolvingNext();
     }
 
     private void PerformConsciousnessUpdate()
@@ -57,14 +63,6 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         _unconsciousness.ProcessUnconsciousMembers(state)
             .ForEach(m => resolutionZone.ExpirePlayedCards(c => c.Member.Id == m.Id));
         _unconsciousness.ProcessRevivedMembers(state);
-    }
-
-    private void ProcessNextCardOrReaction()
-    {
-        if (_reactionCards.Any())
-            StartCoroutine(ResolveNextReactionCard());
-        else if (resolutionZone.HasMore)
-            resolutionZone.BeginResolvingNext();
     }
 
     private void FinishResolutionPhase()
@@ -172,7 +170,5 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
             r.Source.Apply(s => s.Gain(resourceCalculations.GainedQuantity));
             reactionCard.ActionSequence.Perform(r.Source, r.Target, resourceCalculations.XAmountQuantity);
         }
-        else 
-            Message.Publish(new CardResolutionFinished(r.Source.Id));
     }
 }

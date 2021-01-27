@@ -66,7 +66,18 @@ public class CardResolutionZone : ScriptableObject
     public void Add(IPlayedCard played)
     {
         battleState.RecordPlayedCard(played);
-        if (played.Card.TimingType == CardTimingType.Hasty)
+        played.Member.Apply(m =>
+        {
+            m.Lose(played.Spent);
+            m.Gain(played.Gained);
+        });
+        DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
+        
+        if (played.Card.TimingType == CardTimingType.Instant)
+        {
+            StartResolvingOneCard(played);
+        }
+        else if (played.Card.TimingType == CardTimingType.Hasty)
         {
             _moves.Insert(0, played); 
             physicalZone.PutOnTop(played.Card); 
@@ -76,12 +87,6 @@ public class CardResolutionZone : ScriptableObject
             _moves.Add(played);
             physicalZone.PutOnBottom(played.Card); 
         }
-        played.Member.Apply(m =>
-        {
-            m.Lose(played.Spent);
-            m.Gain(played.Gained);
-        });
-        DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
     }
 
     public void ExpirePlayedCards(Func<IPlayedCard, bool> condition)
@@ -137,9 +142,12 @@ public class CardResolutionZone : ScriptableObject
 
     private void StartResolvingOneCard(IPlayedCard played)
     {
+        var timingWord = played.IsInstant() ? "Instantly " : "";
         Message.Publish(new CardResolutionStarted(played));
-        BattleLog.Write($"Resolving {played.Member.Name}'s {played.Card.Name}");
-        if (physicalZone.Count == 0)
+        BattleLog.Write($"{timingWord}Resolving {played.Member.Name}'s {played.Card.Name}");
+
+        if (played.IsInstant()) { }
+        else if (physicalZone.Count == 0)
             DevLog.Write($"Weird Physical Zone Draw bug.");
         else
             physicalZone.DrawOneCard();
@@ -154,7 +162,7 @@ public class CardResolutionZone : ScriptableObject
                     m.ApplyTemporaryAdditive(
                         AdjustedStats.CreateIndefinite(new StatAddends().With(TemporalStatType.CardStun, -1), true)));
                 WrapupCard(played, card);
-                Message.Publish(new CardResolutionFinished(played.Member.Id));
+                Message.Publish(new CardResolutionFinished(played.Member.Id, played.IsInstant()));
             }
             else
             {
@@ -164,7 +172,7 @@ public class CardResolutionZone : ScriptableObject
             }
         });
     }
-    
+
     private void WrapupCard(IPlayedCard played, Card physicalCard)
     {
         LastPlayed = played;
