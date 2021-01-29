@@ -16,6 +16,7 @@ public static class AITargetSelectionLogic
         return card.ActionSequences.Select(action =>
         {
             var possibleTargets = ctx.AllMembers.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
+            DevLog.Write($"Possible Targets for {card.Name} are [{string.Join(", ", possibleTargets.Select(p => p.ToString()))}]");
             if (possibleTargets.Where(isPreferredTarget).Any())
                 possibleTargets = possibleTargets.Where(isPreferredTarget).ToArray();
             
@@ -65,7 +66,7 @@ public static class AITargetSelectionLogic
         }).ToArray();
 
     }
-
+    
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx)
         => WithSelectedTargetsPlayedCard(ctx, _ => true);
     
@@ -74,10 +75,10 @@ public static class AITargetSelectionLogic
         if (ctx.SelectedCard.IsMissing)
             ctx = ctx.WithFinalizedCardSelection();
         
-        DevLog.Write($"{ctx.Member.Name} choose {ctx.SelectedCard.Value.Name} out of [{string.Join(", ", ctx.CardOptions.Select(x => x.Name))}]");
+        DevLog.Write($"{ctx.Member.Name} chose {ctx.SelectedCard.Value.Name} out of [{string.Join(", ", ctx.CardOptions.Select(x => x.Name))}]");
         
         var targets = ctx.SelectedTargets(isPreferredTarget);
-        
+
         var card = ctx.SelectedCard.Value.CreateInstance(NextCardId.Get(), ctx.Member);
         RecordNonStackingTags(CardTag.Stun, ctx, targets);
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);

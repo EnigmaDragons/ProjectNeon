@@ -56,8 +56,11 @@ public static class BattleStateTargetingExtensions
     private static Target[] NonSelfConsciousTargetsFor(this Member[] allMembers, Member originator, TeamType myTeam, Group group, Scope scope)
     {
         var opponentsAre = myTeam == TeamType.Party ? TeamType.Enemies : TeamType.Party;
-        var teamMembers = group == Group.Ally ? GetConscious(allMembers, myTeam) : group == Group.Opponent ? GetConscious(allMembers, opponentsAre) : GetConscious(allMembers) ;
-        
+        var teamMembers = group == Group.Ally 
+            ? GetConscious(allMembers, myTeam) 
+            : group == Group.Opponent 
+                ? GetConscious(allMembers, opponentsAre) 
+                : GetConscious(allMembers);
 
         if (scope == Scope.One)
         {

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -89,3 +90,4 @@ namespace Features.Cards.Editor
         }
     }
 }
+#endif
