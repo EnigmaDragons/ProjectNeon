@@ -1,19 +1,38 @@
 #if UNITY_EDITOR
-
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 public sealed class ListDisplayWindow : EditorWindow
 {
     public string[] Items;
+    public string[] Labels;
     public string Title;
 
     Vector2 scrollPosition = Vector2.zero;
 
+    
     public ListDisplayWindow Initialized(string title, string[] items)
     {
         Title = title;
         Items = items;
+        Labels = items.Select(_ => "Effect: ").ToArray();
+        return this;
+    }
+    
+    public ListDisplayWindow Initialized(string title, string itemLabel, string[] items)
+    {
+        Title = title;
+        Items = items;
+        Labels = items.Select(_ => itemLabel).ToArray();
+        return this;
+    }
+    
+    public ListDisplayWindow Initialized(string title, string[] labels, string[] items)
+    {
+        Title = title;
+        Items = items;
+        Labels = labels;
         return this;
     }
     
@@ -23,7 +42,7 @@ public sealed class ListDisplayWindow : EditorWindow
         DrawUILine(Color.black);
         
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Width(Screen.width), GUILayout.Height(Screen.height - 16));
-        Items.ForEach(i => EditorGUILayout.LabelField("Effect: ", i, GUILayout.Width(Screen.width - 8)));
+        Items.ForEachIndex((item, idx) => EditorGUILayout.LabelField(Labels[idx], item, GUILayout.Width(Screen.width - 8)));
         DrawUILine(Color.black);
         if (GUILayout.Button("Dismiss")) 
             Close();

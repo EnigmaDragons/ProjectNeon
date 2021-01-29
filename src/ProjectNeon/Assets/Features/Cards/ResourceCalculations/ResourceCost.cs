@@ -20,4 +20,13 @@ public sealed class ResourceCost
         this.cost = cost;
         this.resourceType = resourceType;
     }
+
+    public override string ToString()
+    {
+        var xString = !plusXCost 
+            ? "" 
+            : "+X";
+        
+        return $"{cost}{xString}".Replace("0+", "");
+    }
 }
