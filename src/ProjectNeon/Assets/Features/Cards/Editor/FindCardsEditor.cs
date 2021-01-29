@@ -34,6 +34,9 @@ public class FindCardsEditor : EditorWindow
     
     // By Card Tags
     private CardTag _cardTag;
+    
+    // By Card Type Description
+    private string _cardTypeDescription;
 
     void OnGUI()
     {
@@ -131,6 +134,18 @@ public class FindCardsEditor : EditorWindow
                 .Select(e => e.name)
                 .ToArray();
             ShowCards("Cards With Card Tag", cards);
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        _cardTypeDescription = GUILayout.TextField(_cardTypeDescription);
+        if (GUILayout.Button("Find By Card Type Description"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(c => c.TypeDescription.Equals(_cardTypeDescription, StringComparison.InvariantCultureIgnoreCase))
+                .Select(e => e.name)
+                .ToArray();
+            ShowCards($"Card Type Description Is {_searchString}", cards);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
