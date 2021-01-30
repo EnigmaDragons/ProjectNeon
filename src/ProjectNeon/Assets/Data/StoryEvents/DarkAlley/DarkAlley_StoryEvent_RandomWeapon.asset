@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_RandomWeapon
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: You spy a really nice weapon on the ground, half-covered in torn paper.
+  choices:
+  - Text: Pick it up.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: f72b4f48b064c5c47a57f820abb2e6ad, type: 2}
+      StoryText: You reach for the gun, but before you even get your fingers on it,
+        it overloads, singing your hand.
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: 17b268ac8fef025499331b1379a60b9b, type: 2}
+      StoryText: You pick the gun up. It wasn't as nice as it originally looked.
+    - Chance: 0.2
+      Result: {fileID: 11400000, guid: c7a3cc403def45148ba4710380a1959b, type: 2}
+      StoryText: You pick the gun up. It really was a nice weapon. Who would just
+        leave this lying around?
+  - Text: Report it to the authorities.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
+      StoryText: The cops show up and collect the weapon. Apparently it was recently
+        used in a murder they are investigating. You are compensated for the tip.
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: 141ebb2558b102d4db7d9d2a8b69fd89, type: 2}
+      StoryText: "The cops seem uninterested. Oh well\u2014no sense passing up free
+        gear."
+  - Text: Leave it where it is.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You have no clue what thet gun's been involved in. Best to leave
+        it alone.

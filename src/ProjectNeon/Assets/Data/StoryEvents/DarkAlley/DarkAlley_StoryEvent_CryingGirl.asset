@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_CryingGirl
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: You hear the sound of quiet, muffled sobbing from behind some nearby
+    trash cans. Looking closer, you discover a young woman curled up, crying into
+    her hands.
+  choices:
+  - Text: Approach her to ask what's wrong.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.2
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: As you move closer, she hears your footsteps approaching and she
+        looks up at you with a device in her hand. You know the telltale signs of
+        being hacked, and before you can even reply she is gone, vanished into the
+        dark twists of the alley.
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: "As you move closer, she hears your footsteps approaching and looks
+        up. \"You alright?\" you ask.\n\nShe nods. \"I\u2014yes. Yes. I'm fine. Thanks.\"\n\nThe
+        silence is deafening as she slowly rises to her feet and walks the other
+        way."
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: 68249e398e60b7748924347e7dff4f97, type: 2}
+      StoryText: You move closer, and as you approach, the woman stops crying, looking
+        up at you with an activated device in her hand. You feel the telltale signs
+        of being hacked as she leaps up and runs off into the dark.
+  - Text: Back away. This could be a trap.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You know this setup far too well; you turn and take another route
+        to avoid her.

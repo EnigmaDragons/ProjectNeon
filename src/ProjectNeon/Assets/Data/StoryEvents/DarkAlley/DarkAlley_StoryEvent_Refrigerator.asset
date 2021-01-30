@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_Refrigerator
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: As you walk through the alley, you hear a low thumping sound nearby.
+    The source of the sound appears to be a busted refrigerator, bound closed with
+    duct tape. Something is hammering deperately on the inside.
+  choices:
+  - Text: 'Walk away. '
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You avoid the rattling fridge, pushing a little guilt to the back
+        of your mind. and reminding yourself that this isn't your problem.
+  - Text: Cut the tape and open the refrigerator.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.2
+      Result: {fileID: 11400000, guid: f72b4f48b064c5c47a57f820abb2e6ad, type: 2}
+      StoryText: You tear off the duct tape and pull the refrigerator open. Out bursts
+        a corporate security drone, which slams into your chest before flying upward
+        and out of the alley.
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: 818aa2cfd0e6fef42b2bd3502fe18672, type: 2}
+      StoryText: 'You tear off the duct tape and pull the refrigerator open. A young
+        man in a suit is inside, gasping for air as he pulls himself from the plastic
+        prison. "You saved me," he gasps, and he spends a few minutes getting his
+        breath back before explaining he had been mugged and stuffed in the fridge.
+
+
+        He
+        compensates you for your assistance.'
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You tear off the duct tape and pull the refrigerator open. Inside
+        is a large dog, which growls at you for a moment before realizing that you
+        are the one that freed it. The dog looks around, saunters up to you, and
+        licks your face before running off down the alley.
+  - Text: Kick the refrigerator.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 11400000, guid: 424e4e8c74603144180db31da73c4846,
+      type: 2}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You slam your boot against the side of the fridge. Whatever is inside,
+        it quickly quiets.

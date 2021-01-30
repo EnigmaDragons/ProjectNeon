@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_Grate
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: Walking down the alley, you see an open grate on a wall, propped open
+    by a makeshift crowbar.
+  choices:
+  - Text: Investigate the vent.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: At the other end of the vent is a corpse of the would-be robber,
+        who apparently became tangled in wires and met an unfortunate end.
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: Inside, a rodent snarls at you and then disappears into the dark.
+    - Chance: 0.2
+      Result: {fileID: 11400000, guid: 141ebb2558b102d4db7d9d2a8b69fd89, type: 2}
+      StoryText: Someone used this vent as an escape route, and appear to have dropped
+        a weapon on thier way out.
+  - Text: Knock on the nearest back door and tell the owners.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.6
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: The owner appears at the backdoor. They don't seem very concerned
+        with the open vent, and slam the door in your face.
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
+      StoryText: The owner seems a little concerned about the vent. They walk over
+        and slam it closed, trapping whever might be inside, and thank you for the
+        tip-off.
+  - Text: Leave it alone.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You walk away, trying to remain undisturbed as a rattling, scratching
+        sound emanates from the vent as you walk away.
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You leave the vent alone. Something inside the vent explodes as
+        you walk away.
