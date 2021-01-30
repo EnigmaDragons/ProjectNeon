@@ -3,6 +3,7 @@ public sealed class CardActionContext
 {
     public Member Source { get; } 
     public Target Target { get; }
+    public AvoidanceType AvoidanceType { get; }
     public Member[] AvoidingMembers { get; } 
     public Group Group { get; } 
     public Scope Scope { get; }
@@ -10,10 +11,11 @@ public sealed class CardActionContext
     public BattleStateSnapshot BeforeState { get; }
     public Maybe<Card> Card { get; }
 
-    public CardActionContext(Member source, Target target, Member[] avoidingMembers, Group group, Scope scope, ResourceQuantity xAmountPaid, BattleStateSnapshot beforeState, Maybe<Card> card)
+    public CardActionContext(Member source, Target target, AvoidanceType avoidanceType, Member[] avoidingMembers, Group group, Scope scope, ResourceQuantity xAmountPaid, BattleStateSnapshot beforeState, Maybe<Card> card)
     {
         Source = source;
         Target = target;
+        AvoidanceType = avoidanceType;
         AvoidingMembers = avoidingMembers;
         Group = @group;
         Scope = scope;
@@ -23,5 +25,5 @@ public sealed class CardActionContext
     }
     
     public CardActionContext WithTarget(Target target)
-        => new CardActionContext(Source, target, AvoidingMembers, Group, Scope, XAmountPaid, BeforeState, Card);
+        => new CardActionContext(Source, target, AvoidanceType, AvoidingMembers, Group, Scope, XAmountPaid, BeforeState, Card);
 }

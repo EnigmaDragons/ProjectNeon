@@ -30,7 +30,7 @@ public class DoubleDamageTests
         
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.DamageSpell, 
+            EffectType = EffectType.MagicAttack, 
             FloatAmount = new FloatReference(1)
         }, attacker, target);
         

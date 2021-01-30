@@ -36,7 +36,7 @@ public static class BattleCardExecution
             var avoidanceWord = seq.AvoidanceType == AvoidanceType.Evade ? "Evaded" : "Spellshielded";
             if (avoidingMembers.Any())
                 BattleLog.Write($"{string.Join(", ", avoidingMembers.Select(a => a.Name))} {avoidanceWord} {card.Name}");
-            var ctx = new CardActionContext(card.Owner, selectedTarget, avoidingMembers, seq.Group, seq.Scope, card.LockedXValue.Value, battleStateSnapshot, card);
+            var ctx = new CardActionContext(card.Owner, selectedTarget, seq.AvoidanceType, avoidingMembers, seq.Group, seq.Scope, card.LockedXValue.Value, battleStateSnapshot, card);
             ResolveSequenceAsync(seq, ctx);
         }
         SequenceMessage.Queue(new NoPayload());
@@ -92,7 +92,7 @@ public static class BattleCardExecution
 
     // Individual Actions
     private static IPayloadProvider Play(this CardActionV2 action, StatusEffectContext ctx)
-        => Play(action, new CardActionContext(ctx.Source, new Single(ctx.Member), 
+        => Play(action, new CardActionContext(ctx.Source, new Single(ctx.Member), AvoidanceType.UnavoidableStatusEffect,
             Array.Empty<Member>(), Group.Self, Scope.One, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing()));
     
     private static IPayloadProvider Play(this CardActionV2 action, CardActionContext ctx)
@@ -101,12 +101,12 @@ public static class BattleCardExecution
         var effectedTargets = new Multiple(ctx.Target.Members.Where(m => !ctx.AvoidingMembers.Any(am => am.Id == m.Id)).ToArray());
         var allAvoidedEffect = ctx.AvoidingMembers.Any() && effectedTargets.Members.Length == 0;
         if (type == CardBattleActionType.Battle && allAvoidedEffect)
-            return new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.AvoidingMembers));
+            return new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.AvoidanceType, ctx.AvoidingMembers));
         if (type == CardBattleActionType.Battle)
             return ctx.AvoidingMembers.Any() 
                 ? new MultiplePayloads(
                     new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XAmountPaid, ctx.Group, ctx.Scope, isReaction: false)), 
-                    new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.AvoidingMembers)))
+                    new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.AvoidanceType, ctx.AvoidingMembers)))
                 : (IPayloadProvider)new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XAmountPaid, ctx.Group, ctx.Scope, isReaction: false));
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn));

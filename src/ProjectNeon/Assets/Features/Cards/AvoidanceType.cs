@@ -5,4 +5,5 @@ public enum AvoidanceType
     Evade = 1,
     Spellshield = 2,
     UnavoidableNotHostile = 999,
+    UnavoidableStatusEffect = 1000,
 }

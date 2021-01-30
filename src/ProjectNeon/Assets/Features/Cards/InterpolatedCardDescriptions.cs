@@ -138,7 +138,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula
                 || data.EffectType == EffectType.HealFormula )
             return FormulaAmount(data, owner, xCost);
-        if (data.EffectType == EffectType.DamageSpell )
+        if (data.EffectType == EffectType.MagicAttack )
             return WithMagicDamageIcon(MagicAmount(data, owner));
         if (data.EffectType == EffectType.MagicAttackFormula)
             return WithMagicDamageIcon(FormulaAmount(data, owner, xCost));

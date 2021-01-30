@@ -1,13 +1,15 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 33-43, 47, 48, 53, 
-// LAST NUMBER USED: 77
+// LAST NUMBER USED: 78
 public enum EffectType
 {
     Nothing = 0,
     
     // Most Common Effects
     Attack = 17,
-    DamageSpell = 50,
+    AttackFormula = 30,
+    MagicAttack = 50,
+    MagicAttackFormula = 31,
     DealRawDamageFormula = 70,
 
     AdjustStatMultiplicatively = 5,
@@ -25,8 +27,6 @@ public enum EffectType
     DamageOverTimeFlat = 8,
     DamageOverTime = 19,
     HealFormula = 29,
-    AttackFormula = 30,
-    MagicAttackFormula = 31,
 
     AntiHeal = 60,
     ApplyVulnerable = 10,
@@ -37,6 +37,7 @@ public enum EffectType
     ReactWithEffect = 74,
     ReactWithCard = 75,
     ReactOnEvadedWithCard = 9,
+    ReactOnSpellshieldedWithCard = 78,
     OnDeath = 25,
     
     // Transformers
