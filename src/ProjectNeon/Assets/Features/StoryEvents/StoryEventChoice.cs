@@ -40,11 +40,11 @@ public class StoryEventChoice
         var roll = Rng.Dbl();
         if (Resolution.Length > 1)
             Message.Publish(new ShowDieRoll((int)Math.Ceiling(Math.Abs(1 - roll) * 20)));
-        else
+        else if (Resolution.Length == 1 && !Resolution.Single().HasContinuation)
             Message.Publish(new ShowNoDieRollNeeded());
         var possibleOutcomes = new Dictionary<float, StoryResolution>();
         var rangeStart = 0f;
-        foreach (var r in Resolution.OrderByDescending(x => x.Result.EstimatedCreditsValue))
+        foreach (var r in Resolution.OrderByDescending(x => x.EstimatedCreditsValue))
         {
             possibleOutcomes[rangeStart + r.Chance] = r;
             rangeStart += r.Chance;
@@ -54,7 +54,14 @@ public class StoryEventChoice
 
     private void ResolveSelectedResolution(StoryResolution r, StoryEventContext ctx)
     {
-        r.Result.Apply(ctx);
-        Message.Publish(new ShowStoryEventResolution(r.StoryText));
+        if (r.HasContinuation)
+        {
+            Message.Publish(new BeginStoryEvent(r.ContinueWith));
+        }
+        else
+        {
+            r.Result.Apply(ctx);
+            Message.Publish(new ShowStoryEventResolution(r.StoryText));   
+        }
     }
 }
