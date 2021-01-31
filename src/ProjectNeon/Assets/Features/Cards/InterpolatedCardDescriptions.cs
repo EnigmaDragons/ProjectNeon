@@ -96,8 +96,10 @@ public static class InterpolatedCardDescriptions
     {
         var delay = DelayDescription(data);
         var coreDesc = "";
+        if (data.EffectType == EffectType.AdjustCounter)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope} {DurationDescription(data)}";
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data)}";
         if (data.EffectType == EffectType.ApplyVulnerable)
             coreDesc = $"gives Vulnerable {DurationDescription(data)}";
         if (coreDesc == "")
@@ -154,7 +156,7 @@ public static class InterpolatedCardDescriptions
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";
         if (data.EffectType == EffectType.AdjustCounter)
-            return $"{data.EffectScope} {data.IntAmount + data.BaseAmount}";
+            return $"{data.EffectScope.Value.WithSpaceBetweenWords()} {data.IntAmount + data.BaseAmount}";
         
         if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)
             return owner.IsPresent
