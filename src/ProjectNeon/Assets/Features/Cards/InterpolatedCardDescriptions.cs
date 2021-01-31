@@ -229,6 +229,8 @@ public static class InterpolatedCardDescriptions
 
         return newS;
     }
+
+    private static string Standardized(string effectScope) => StatAbbreviations.ValueOrDefault(effectScope, () => effectScope);
     
     private static Dictionary<string, string> StatAbbreviations = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
     {
