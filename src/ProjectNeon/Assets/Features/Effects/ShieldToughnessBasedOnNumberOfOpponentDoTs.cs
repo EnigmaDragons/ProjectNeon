@@ -1,10 +1,10 @@
 using System.Linq;
 
-public class ShieldToughtnessBasedOnNumberOfOpponentDoTs : Effect
+public class ShieldToughnessBasedOnNumberOfOpponentDoTs : Effect
 {
     private readonly float _factor;
 
-    public ShieldToughtnessBasedOnNumberOfOpponentDoTs(float factor)
+    public ShieldToughnessBasedOnNumberOfOpponentDoTs(float factor)
     {
         _factor = factor;
     }

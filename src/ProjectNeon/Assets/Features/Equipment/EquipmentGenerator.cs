@@ -32,7 +32,7 @@ public class EquipmentGenerator
 //        }}
     };
    
-    private static readonly StatType[] GeneratableStats = { StatType.MaxHP, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance, StatType.Leadership };
+    private static readonly StatType[] GeneratableStats = { StatType.MaxHP, StatType.MaxShield, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance, StatType.Leadership };
     
     public Equipment GenerateRandomCommon()
         => Generate(RarityPowers[Rarity.Common].Random(), Rarity.Common);
@@ -65,7 +65,7 @@ public class EquipmentGenerator
     private StatType RandomStatFor(EquipmentSlot slot)
         => slot == EquipmentSlot.Weapon
             ? new[] {StatType.Attack, StatType.Magic, StatType.Leadership, StatType.Toughness}.Random()
-            : new[] {StatType.Armor, StatType.Resistance, StatType.MaxHP}.Random();
+            : new[] {StatType.Armor, StatType.Resistance, StatType.MaxHP, StatType.MaxShield}.Random();
     
     public static string NameFor(EquipmentSlot slot, Rarity rarity)
         => $"{string.Join("", Enumerable.Range(0, Rng.Int(3, 6)).Select(_ => Letters.Random()))} {_slotNames[slot].Random()}";
@@ -167,6 +167,7 @@ public class EquipmentGenerator
     private static readonly Dictionary<StatType, int> AdditiveStatsChartPerPoint = new Dictionary<StatType, int>
     {
         { StatType.MaxHP, 4 },
+        { StatType.MaxShield, 4 },
         { StatType.Armor, 1 },
         { StatType.Resistance, 1 },
         { StatType.Attack, 1 },

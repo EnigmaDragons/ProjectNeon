@@ -43,7 +43,7 @@ public sealed class MemberState : IStats
         _baseStats = baseStats;
         
         _counters[TemporalStatType.HP.ToString()] = new BattleCounter(TemporalStatType.HP, initialHp, () => CurrentStats.MaxHp());
-        _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.Toughness() * 2);
+        _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.MaxShield());
         Enum.GetValues(typeof(TemporalStatType))
             .Cast<TemporalStatType>()
             .Skip(2)

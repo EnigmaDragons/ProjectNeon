@@ -17,7 +17,8 @@ public class WithWholeNumbersWhereExpected : IStats
         StatType.Resistance,
         StatType.Toughness,
         StatType.ExtraCardPlays,
-        StatType.MaxHP
+        StatType.MaxHP,
+        StatType.MaxShield
     };
     
     public float this[StatType statType] => WholeNumberStatTypes.Contains(statType) 

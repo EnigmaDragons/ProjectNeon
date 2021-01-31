@@ -16,6 +16,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private bool unique;
     
     [SerializeField] private int maxHp;
+    [SerializeField] private int maxShield;
     [SerializeField] private int toughness;
     [SerializeField] private int attack;
     [SerializeField] private int magic;
@@ -41,6 +42,7 @@ public class Enemy : ScriptableObject
     
     // int stats accessors
     public int MaxHp => maxHp;
+    public int MaxShield => maxShield > 0 ? maxShield : toughness * 2;
     public int Toughness => toughness;
     public int Attack => attack;
     public int Magic => magic;
@@ -65,6 +67,7 @@ public class Enemy : ScriptableObject
             ResourceTypes = resourceType != null ? new IResourceType[] {resourceType} : Array.Empty<IResourceType>()
         }
         .With(StatType.MaxHP, maxHp)
+        .With(StatType.MaxShield, maxShield)
         .With(StatType.Toughness, toughness)
         .With(StatType.Attack, attack)
         .With(StatType.Magic, magic)
@@ -92,6 +95,7 @@ public class Enemy : ScriptableObject
         this.preferredTurnOrder = intStats["preferredTurnOrder"];
         this.powerLevel = intStats["powerLevel"];
         this.maxHp = intStats["maxHp"];
+        this.maxShield = intStats["maxShield"];
         this.toughness = intStats["toughness"];
         this.attack = intStats["attack"];
         this.magic = intStats["magic"];

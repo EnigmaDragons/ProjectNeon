@@ -12,6 +12,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     
     // Stats
     [SerializeField] private int maxHp = 40;
+    [SerializeField] private int maxShield = 12;
     [SerializeField] private int toughness = 6;
     [SerializeField] private int attack = 8;
     [SerializeField] private int magic = 0;
@@ -38,6 +39,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
             ResourceTypes = resource1 != null ? new IResourceType[] {resource1} : Array.Empty<IResourceType>()
         }
         .With(StatType.MaxHP, maxHp)
+        .With(StatType.MaxShield, maxShield)
         .With(StatType.Toughness, toughness)
         .With(StatType.Attack, attack)
         .With(StatType.Magic, magic)

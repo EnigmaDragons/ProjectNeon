@@ -10,5 +10,6 @@ public enum StatType
     Damagability = 6,
     Healability = 7,
     Leadership = 8,
+    MaxShield = 9,
     ExtraCardPlays = 30,
 }
