@@ -96,6 +96,8 @@ public static class InterpolatedCardDescriptions
     {
         var delay = DelayDescription(data);
         var coreDesc = "";
+        if (data.EffectType == EffectType.AttackFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustCounter)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)

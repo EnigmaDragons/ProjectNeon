@@ -25,13 +25,13 @@ Uncommon:
 - Shock And Awe - 1 Enemy - Gain 1 Energy. Attack 2 random enemies for 0.4x ATK
 - Disorienting Strike - 1 Enemy - Deal 0.7x ATK damage. Remove 1 Enemy Resource.
 - Impale - 1 Enemy - 1 Energy - Deal 0.8x ATK damage. Chain: Thrust
+- OmniSlash - X Energy - 1 Enemy - Deal (1 + 0.33 * X) Attack damage
 
 Rare:
 - Surge Break - 6 Energy - All Enemies - Remove shields and Stun.
 - Hypervibration - 1 Energy - 1 Enemy - Deal 0.8x ATK damage. Chain: Stun
 
 ## To Be Implemented:
-- OmniSlash - X Energy - 1 Enemy - 1x attack + 2 per Energy Spent.
 - Power Siphon - 1 Enemy - Deal 0.5x ATK, if the enemy took HP damage, gain 1 Energy and the enemy loses 1 Tech Point 
 - CounterShock - 1 Energy. Gain Spellshield 1 this turn. If he mitigates a spell this way he deals 8 to the caster. If nothing is mitigated this way, his next spell gets +50% Spell Power.
 
