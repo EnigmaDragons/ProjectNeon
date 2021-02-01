@@ -120,9 +120,11 @@ public class BattleState : ScriptableObject
         _nextEnemyId = id + 1;
 
         _playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
-        _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key, this))
+        _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
             .Concat(result.Select(e => e.Item2))
             .ToDictionary(x => x.Id, x => x);
+        
+        _heroesById.ForEach(h => h.Value.InitEquipmentState(_membersById[h.Key], this));
 
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;

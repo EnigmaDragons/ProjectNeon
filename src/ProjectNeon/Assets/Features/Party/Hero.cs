@@ -66,9 +66,14 @@ public class Hero
         return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None));
     }
 
-    public Member AsMember(int id, BattleState state)
+    public Member AsMember(int id)
     {
         var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, Stats, Character.Class.BattleRole, CurrentHp);
+        return m;
+    }
+
+    public Member InitEquipmentState(Member m, BattleState state)
+    {
         return WithEquipmentState(m,new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.Members, state.PlayerCardZones));
     }
 

@@ -108,7 +108,7 @@ public class EffectReactWith : Effect
             {
                 m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, _maxDurationTurns, _status, _triggerScope,
                     ctx.BattleMembers, m.MemberId, ctx.Source, _reactionCard.Value,
-                    _conditionBuilder(ctx.BattleMembers[m.MemberId])));
+                    _conditionBuilder(ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers)))));
                 DevLog.Write($"Applied React With Card {_conditionType} to {m.Name}");
             });
         else if (_reactionEffect.IsPresent)
@@ -116,7 +116,7 @@ public class EffectReactWith : Effect
             {
                 m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, _maxDurationTurns, _status, _triggerScope,
                     ctx.BattleMembers, m.MemberId, ctx.Source, _reactionEffect.Value,
-                    _conditionBuilder(ctx.BattleMembers[m.MemberId])));
+                    _conditionBuilder(ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers)))));
                 DevLog.Write($"Applied React With Effect {_conditionType} to {m.Name}");
             });
     }

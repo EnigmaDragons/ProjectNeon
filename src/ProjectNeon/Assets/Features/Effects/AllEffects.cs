@@ -116,6 +116,9 @@ public static class AllEffects
         catch (Exception e)
         {
             Log.Error($"EffectType {effectData.EffectType} is broken {e}");
+            #if UNITY_EDITOR
+            throw;
+            #endif
         }
     }
 
