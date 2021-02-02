@@ -5,7 +5,7 @@ using System.Linq;
 public static class Formula
 {
     public static float Evaluate(Member src, string expression, ResourceQuantity xAmountPaid) 
-        => Evaluate(new FormulaContext(src.State, Maybe<MemberState>.Missing(), xAmountPaid), expression);
+        => Evaluate(new FormulaContext(src.State.ToSnapshot(), Maybe<MemberState>.Missing(), xAmountPaid), expression);
 
     public static float Evaluate(FormulaContext ctx, string expression)
     {

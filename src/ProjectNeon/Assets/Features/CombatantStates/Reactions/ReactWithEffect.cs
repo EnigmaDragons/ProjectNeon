@@ -15,9 +15,9 @@ public class EffectReactWith : Effect
             !effect.BattleBefore.Members[possessor.Id].IsBloodied() && effect.BattleAfter.Members[possessor.Id].IsBloodied() },
         {ReactionConditionType.OnVulnerable, possessor => effect 
             => (effect.EffectData.EffectType == EffectType.ApplyVulnerable || effect.EffectData.EffectScope.Value == "Vulnerable") && effect.Target.Members.Any(x => x.Id == possessor.Id) },
-        { ReactionConditionType.OnShieldBroken, possessor => effect => WentToZero(Select(effect, possessor, m => m.State.Counter(TemporalStatType.Shield))) },
+        { ReactionConditionType.OnShieldBroken, possessor => effect => WentToZero(Select(effect, possessor, m => m.State[TemporalStatType.Shield])) },
         { ReactionConditionType.OnDamaged, possessor => effect => Decreased(Select(effect, possessor, m => m.State.Hp))},
-        { ReactionConditionType.OnBlinded, possessor => effect => Increased(Select(effect, possessor, m => m.State.Counter(TemporalStatType.Blind))) },
+        { ReactionConditionType.OnBlinded, possessor => effect => Increased(Select(effect, possessor, m => m.State[TemporalStatType.Blind])) },
         { ReactionConditionType.OnCausedStun, possessor => effect =>
             {
                 if (!Equals(possessor, effect.Source))
@@ -25,9 +25,9 @@ public class EffectReactWith : Effect
                 
                 var targetMembers = effect.Target.Members;
                 var stunsBefore = targetMembers.Select(t => effect.BattleBefore.Members[t.Id])
-                    .Sum(x => x.State.Counter(TemporalStatType.CardStun) + x.State.Counter(TemporalStatType.TurnStun));
+                    .Sum(x => x.State[TemporalStatType.CardStun] + x.State[TemporalStatType.TurnStun]);
                 var stunsAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
-                    .Sum(x => x.State.Counter(TemporalStatType.CardStun) + x.State.Counter(TemporalStatType.TurnStun));
+                    .Sum(x => x.State[TemporalStatType.CardStun] + x.State[TemporalStatType.TurnStun]);
                 return stunsAfter > stunsBefore;
             }
         },

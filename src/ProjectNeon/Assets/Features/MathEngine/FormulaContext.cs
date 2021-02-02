@@ -1,14 +1,14 @@
 
 public class FormulaContext
 {
-    public MemberState Source { get; }
+    public MemberStateSnapshot Source { get; }
     public Maybe<MemberState> Target { get; }
     public ResourceQuantity XAmountPaid { get; }
 
-    public FormulaContext(Member src, Member target, ResourceQuantity xAmountPaid)
-        : this(src.State, target.State, xAmountPaid) {}
+    public FormulaContext(MemberStateSnapshot src, Member target, ResourceQuantity xAmountPaid)
+        : this(src, target.State, xAmountPaid) {}
     
-    public FormulaContext(MemberState src, Maybe<MemberState> target, ResourceQuantity xAmountPaid)
+    public FormulaContext(MemberStateSnapshot src, Maybe<MemberState> target, ResourceQuantity xAmountPaid)
     {
         Source = src;
         Target = target;

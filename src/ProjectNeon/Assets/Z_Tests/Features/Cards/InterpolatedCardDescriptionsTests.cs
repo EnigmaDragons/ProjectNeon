@@ -35,7 +35,7 @@ public sealed class InterpolatedCardDescriptionsTests
     
     [Test]
     public void Interpolated_Duration_IsCorrect()
-        => AssertMatchesIgnoreStyling("Deal 3 for 2 Turns.", 
+        => AssertMatchesIgnoreStyling("Deal 3 for 2 turns.", 
             Description("Deal 3 {D[0]}", new EffectData {NumberOfTurns = new IntReference(2)}, Owner));
 
     [Test]
@@ -78,7 +78,7 @@ public sealed class InterpolatedCardDescriptionsTests
     
     [Test]
     public void Interpolated_Auto_GivesVulnerableNextTurn_IsCorrect()
-        => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for 1 Turn.",
+        => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for 1 turn.",
             Description("{Auto}", 
                 new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, NumberOfTurns = new IntReference(1)},
                 Owner));
@@ -113,6 +113,7 @@ public sealed class InterpolatedCardDescriptionsTests
                 .With(StatType.Damagability, 1)
                 .With(StatType.Attack, 8)
                 .With(StatType.Toughness, 8)
+                .With(StatType.MaxShield, 16)
                 .With(new InMemoryResourceType("Ammo") {MaxAmount = 6, StartingAmount = 6}),
             BattleRole.Unknown);
         update(m);

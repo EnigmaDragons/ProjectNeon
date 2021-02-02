@@ -40,7 +40,7 @@ public class ReactWithEffectTests
     public void ReactWithEffect_OnVulnerable_Works()
     {
         var attacker = TestMembers.Named("Robot");
-        var possessor = TestMembers.With(StatType.Toughness, 5);
+        var possessor = TestMembers.Create(s => s.With(StatType.Toughness, 5).With(StatType.MaxShield, 10));
         
         TestEffects.Apply(new EffectData
         {

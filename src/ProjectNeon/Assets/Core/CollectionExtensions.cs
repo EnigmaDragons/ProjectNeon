@@ -23,6 +23,7 @@ public static class CollectionExtensions
     }
     
     public static T[] AsArray<T>(this T item) => new [] {item};
+    public static TValue ValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey key, TValue defaultValue) => d.TryGetValue(key, out var value) ? value : defaultValue;
     public static TValue ValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey key, Func<TValue> getDefault) => d.TryGetValue(key, out var value) ? value : getDefault();
 
     public static TValue VerboseGetValue<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey key, string collectionName)

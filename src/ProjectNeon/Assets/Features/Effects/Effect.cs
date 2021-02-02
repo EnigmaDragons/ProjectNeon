@@ -9,6 +9,7 @@ public interface Effect
 public class EffectContext
 {
     public Member Source { get; }
+    public MemberSnapshot SourceSnapshot { get; }
     public Target Target { get; }
     public Maybe<Card> Card { get; }
     public ResourceQuantity XPaidAmount { get; }
@@ -21,6 +22,7 @@ public class EffectContext
         PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones)
     {
         Source = source;
+        SourceSnapshot = source.GetSnapshot();
         Target = target;
         AdventureState = adventureState;
         PlayerState = playerState;
