@@ -144,7 +144,8 @@ public static class InterpolatedCardDescriptions
             return WithPhysicalDamageIcon(AttackAmount(data, owner));
         if (data.EffectType == EffectType.AttackFormula)
             return WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost));
-        if (data.EffectType == EffectType.PhysicalDamageOverTime)
+        if (data.EffectType == EffectType.PhysicalDamageOverTime 
+            || data.EffectType == EffectType.DamageOverTime)
             return WithRawDamageIcon(AttackAmount(data, owner));
         if (data.EffectType == EffectType.DealRawDamageFormula)
             return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
