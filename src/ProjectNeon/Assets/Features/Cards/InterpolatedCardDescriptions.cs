@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -32,8 +33,8 @@ public static class InterpolatedCardDescriptions
                 .SelectMany(a => a.BattleEffects)
                 .Where(b => b.IsReactionCard)
                 .SelectMany(c => c.ReactionSequence.ActionSequence.CardActions.BattleEffects);
-            
-            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner, xCost);
+                        
+            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner, xCost, card.ChainedCard);
         }
         catch (Exception e)
         {
@@ -47,12 +48,18 @@ public static class InterpolatedCardDescriptions
         EffectData[] effects, 
         EffectData[] reactionEffects, 
         Maybe<Member> owner, 
-        ResourceQuantity xCost)
+        ResourceQuantity xCost,
+        Maybe<CardTypeData> chainedCard)
     {
         var result = desc;
 
         if (desc.Trim().Equals("{Auto}", StringComparison.InvariantCultureIgnoreCase))
-            return string.Join(" ", effects.Select(e => AutoDescription(e, owner, xCost)));
+        {
+            var sb = new StringBuilder();
+            sb.Append(string.Join(" ", effects.Select(e => AutoDescription(e, owner, xCost))));
+            sb.Append(chainedCard.Select(c => $". {Bold("Chain:")} {c.Name}", ""));
+            return sb.ToString();
+        }
 
         var xCostReplacementToken = "{X}";
         result = result.Replace(xCostReplacementToken, Bold(XCostDescription(owner, xCost)));
