@@ -107,10 +107,12 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustCounter)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.AdjustCounterFormula)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data)}";
         if (data.EffectType == EffectType.ApplyVulnerable)
-            coreDesc = $"gives Vulnerable {DurationDescription(data)}";
+            coreDesc = $"gives {Bold("Vulnerable")} {DurationDescription(data)}";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
@@ -166,6 +168,8 @@ public static class InterpolatedCardDescriptions
                 : $"{data.FloatAmount}x TGH";
         if (data.EffectType == EffectType.AdjustCounter)
             return $"{data.EffectScope.Value.WithSpaceBetweenWords()} {data.IntAmount + data.BaseAmount}";
+        if (data.EffectType == EffectType.AdjustCounterFormula)
+            return $"{Bold(data.EffectScope.Value.WithSpaceBetweenWords())} {FormulaAmount(data, owner, xCost)}";
         
         if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)
             return owner.IsPresent
@@ -211,10 +215,10 @@ public static class InterpolatedCardDescriptions
         var turnString = value < 0
                         ? "the Battle" 
                         : value < 2
-                            ? data.TurnDelay == 0 ? "Current Turn" : "1 Turn" 
-                            : $"{Bold(value.ToString())} Turns";
+                            ? data.TurnDelay == 0 ? "this turn" : $"for {Bold(1.ToString())} turn" 
+                            : $"for {Bold(value.ToString())} turns";
 
-        return $"for {turnString}.";
+        return $"{turnString}.";
     }
 
     private static string DelayDescription(EffectData data)
