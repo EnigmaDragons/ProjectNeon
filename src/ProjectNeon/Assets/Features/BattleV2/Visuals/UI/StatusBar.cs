@@ -44,15 +44,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
         AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => $"Reduces magic damage taken by {v}");
         AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => $"Double Damage for next {v} effects");
-
-        var attackBuffAmount = CeilingInt(_member.State[StatType.Attack] - _member.State.BaseStats.Attack());
-        if (attackBuffAmount != 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Attack].Icon, Text = attackBuffAmount.ToString(), Tooltip = $"+{attackBuffAmount} Attack"});
-        
-        var magicBuffAmount = CeilingInt(_member.State[StatType.Magic] - _member.State.BaseStats.Magic());
-        if (magicBuffAmount != 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[StatType.Magic].Icon, Text = magicBuffAmount.ToString(), Tooltip = $"{magicBuffAmount} Magic"});
-        
+        AddBuffAmountIconIfApplicable(statuses, StatType.Attack);
+        AddBuffAmountIconIfApplicable(statuses, StatType.Magic);        
+        AddBuffAmountIconIfApplicable(statuses, StatType.Leadership);
         AddStatusIconIfApplicable(statuses, TemporalStatType.Blind, true, v => $"Blinded (guaranteed miss) for {v} Attacks");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => $"Taunt for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Stealth, true, v => $"Stealth for {v} Turns");
@@ -103,6 +97,13 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         UpdateComparisonWithPrevious(statuses);
         UpdateStatuses(statuses);
+    }
+
+    private void AddBuffAmountIconIfApplicable(List<CurrentStatusValue> statuses, StatType statType)
+    {
+        var buffAmount = CeilingInt(_member.State[statType] - _member.State.BaseStats[statType]);
+        if (buffAmount != 0)
+            statuses.Add(new CurrentStatusValue { Icon = icons[statType].Icon, Text = buffAmount.ToString(), Tooltip = $"+{buffAmount} {statType}"});
     }
 
     private void UpdateComparisonWithPrevious(List<CurrentStatusValue> statuses)
