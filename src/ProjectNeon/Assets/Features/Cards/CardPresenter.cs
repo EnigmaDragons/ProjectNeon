@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardRarityPresenter rarity;
@@ -22,6 +22,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     [SerializeField] private GameObject highlight;
     [SerializeField] private GameObject darken;
     [SerializeField] private CardControlsPresenter controls;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private float dragScaleFactor = 1 / 0.7f;
     [SerializeField] private float highlightedScale = 1.7f;
 
     private Card _card;
@@ -139,7 +141,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
-        
+
         DebugLog($"Setting Highlight {active}");
         controls.SetActive(active);
         if (active)
@@ -232,8 +234,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         DebugLog($"UI - Pointer Down - {CardName}");
         if (battleState.IsSelectingTargets)
             return;
-        if (eventData.button == PointerEventData.InputButton.Left)
-            _onClick();
         if (eventData.button == PointerEventData.InputButton.Middle) 
             _onMiddleMouse();
         if (IsHand && _card != null && eventData.button == PointerEventData.InputButton.Right)
@@ -246,7 +246,39 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             Message.Publish(new CardHoverEnter(this));
     }
 
-    public void OnPointerExit(PointerEventData eventData) => SetHandHighlight(false);
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!_isDragging)
+            SetHandHighlight(false);
+    }
+
+    private bool _isDragging = false;
+    
+    public void OnDrag(PointerEventData eventData)
+    {
+        var t = transform;
+        transform.localPosition = t.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
+    }
+    
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        _isDragging = true;
+        canvasGroup.blocksRaycasts = false;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        _isDragging = false;
+        canvasGroup.blocksRaycasts = true;
+    }
+
+    public void Click()
+    {
+        _isDragging = false;
+        canvasGroup.blocksRaycasts = true;
+        _onClick();
+    }
 
     #endregion
+
 }

@@ -214,7 +214,7 @@ public static class InterpolatedCardDescriptions
     {
         var value = data.NumberOfTurns.Value;
         var turnString = value < 0
-                        ? "the Battle" 
+                        ? "for the battle" 
                         : value < 2
                             ? data.TurnDelay == 0 ? "this turn" : $"for {Bold(1.ToString())} turn" 
                             : $"for {Bold(value.ToString())} turns";
