@@ -48,7 +48,6 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     private void Activate()
     {
         _isDirty = true;
-        _shouldHighlight = true;
     }
 
     private void Deactivate()

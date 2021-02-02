@@ -57,7 +57,8 @@ public class BattleSetupV2 : MonoBehaviour
         
         ui.Setup();
         SetupPlayerCards();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.05f);
+        DevLog.Write("Finished Battle Setup");
     }
 
     private void ClearResolutionZone()

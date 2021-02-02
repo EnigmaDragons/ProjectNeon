@@ -115,7 +115,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (_card == null)
             throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
         
-        DebugLog($"UI - Toggle as Basic {CardName}");
+        DebugLog($"UI - Toggle as Basic");
         
         _card.UseAsBasic = asBasic;
         _cardType = _card.Type;
@@ -128,7 +128,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         if (isDisabled)
         {
-            DebugLog($"{CardName} is disabled.");
+            DebugLog($"is disabled.");
             canPlayHighlight.SetActive(false);
             controls.SetActive(false);
         }
@@ -160,6 +160,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             return;
 
         var tweenDuration = 0.18f;
+        DebugLog($"Tweening Highlight {active}");
         transform.DOScale(scale, tweenDuration);
         transform.DOMove(position, tweenDuration);
         if (_card != null)
@@ -215,14 +216,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private bool CheckIfCanPlay()
     {
         var result = _card != null && _getCanPlay(battleState, _card);
-        DebugLog($"Can Play {CardName}: {result}");
+        DebugLog($"Can Play: {result}");
         return result;
     }
 
     private void DebugLog(string msg)
     {
         if (_debug)
-            Log.Info(msg);
+            Log.Info($"Card {CardName}: {msg}");
     }
     
     #region Mouse Controls
@@ -241,7 +242,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsHand)
+        if (IsHand && battleState.Phase == BattleV2Phase.Command)
             Message.Publish(new CardHoverEnter(this));
     }
 
