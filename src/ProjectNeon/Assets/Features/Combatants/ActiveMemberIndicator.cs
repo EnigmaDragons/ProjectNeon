@@ -25,7 +25,8 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
     
     protected override void Execute(CardResolutionStarted msg)
     {
-        if (_memberId == msg.Originator)
+        // TODO: Show cool jolt VFX for when member is Stunned for Card
+        if (_memberId == msg.Originator && !msg.Card.Member.IsStunnedForCard())
         {
             _shouldStepForward = true;
             _isTraveling = true;
