@@ -15,58 +15,66 @@ public static class AITargetSelectionLogic
         var card = ctx.SelectedCard.Value;
         return card.ActionSequences.Select(action =>
         {
-            var possibleTargets = ctx.AllMembers.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
-            DevLog.Write($"Possible Targets for {card.Name} are [{string.Join(", ", possibleTargets.Select(p => p.ToString()))}]");
-            if (possibleTargets.Where(isPreferredTarget).Any())
-                possibleTargets = possibleTargets.Where(isPreferredTarget).ToArray();
-            
-            if (card.Is(CardTag.Stun))
-            {
-                var stunnedTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsStunnedForCurrentTurn()));
-                var stunSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Stun, out var targets) ? targets : new HashSet<Target>();
-                var saneTargets = possibleTargets.Except(stunSelectedTargets).Except(stunnedTargets);
-                var actualTargets = saneTargets.Any() ? saneTargets : possibleTargets;
-                return actualTargets.MostPowerful();
-            }
-
-            if (card.Is(CardTag.BuffResource) && action.Group == Group.Ally)
-                return possibleTargets.MostPowerful();
-            if (card.Is(CardTag.BuffAttack) && action.Group == Group.Ally)
-                return possibleTargets.BestAttackerToBuff(ctx.Strategy);
-            if (card.Is(CardTag.RemoveResources) && action.Group == Group.Opponent)
-                return possibleTargets.MostResources();
-            if ((card.Is(CardTag.RemoveShields) || card.Is(CardTag.Attack, CardTag.Shield)) && action.Group == Group.Opponent)
-                return possibleTargets.MostShielded();
-            if (card.Is(CardTag.Blind))
-                return possibleTargets.MostAttack();
-            if (card.Is(CardTag.Vulnerable) && action.Group == Group.Opponent)
-            {
-                var vulnerableTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsVulnerable()));
-                var vulnerableSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Vulnerable, out var targets) ? targets : new HashSet<Target>();
-                var saneTargets = possibleTargets.Except(vulnerableSelectedTargets).Except(vulnerableTargets).ToArray();
-                return saneTargets.Any(x => x == ctx.Strategy.AttackTargetFor(action)) 
-                    ? ctx.Strategy.AttackTargetFor(action) 
-                    : saneTargets.Any() 
-                        ? saneTargets.Random() 
-                        : possibleTargets.Random();
-            }
-            if (card.Is(CardTag.Attack) && action.Group == Group.Opponent)
-                return Rng.Chance(0.80) ? ctx.Strategy.AttackTargetFor(action) : possibleTargets.Random();
-            if (card.Is(CardTag.Healing) && action.Group == Group.Ally)
-                return possibleTargets.MostDamaged();
-            if (card.Is(CardTag.Defense, CardTag.Shield) && action.Group == Group.Ally)
-            {
-                if (possibleTargets.Any(x => !x.HasShield()))
-                    return possibleTargets.Where(x => !x.HasShield())
-                        .MostVulnerable();
-                // Or, use shield to whomever could use the most
-                return possibleTargets.OrderByDescending(x => x.TotalRemainingShieldCapacity()).First();
-            }
-            return possibleTargets.Random();
+            var target = GetActionTarget(ctx, isPreferredTarget, action, card);
+            DevLog.Write($"Selected Target is {target}");
+            return target;
         }).ToArray();
-
     }
-    
+
+    private static Target GetActionTarget(CardSelectionContext ctx, Func<Target, bool> isPreferredTarget, CardActionSequence action, CardTypeData card)
+    {
+        var possibleTargets = ctx.AllMembers.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
+        DevLog.Write($"Possible Targets for {card.Name} are [{string.Join(", ", possibleTargets.Select(p => p.ToString()))}]");
+        if (possibleTargets.Where(isPreferredTarget).Any())
+            possibleTargets = possibleTargets.Where(isPreferredTarget).ToArray();
+
+        if (card.Is(CardTag.Stun))
+        {
+            var stunnedTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsStunnedForCurrentTurn()));
+            var stunSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Stun, out var targets) ? targets : new HashSet<Target>();
+            var saneTargets = possibleTargets.Except(stunSelectedTargets).Except(stunnedTargets);
+            var actualTargets = saneTargets.Any() ? saneTargets : possibleTargets;
+            return actualTargets.MostPowerful();
+        }
+
+        if (card.Is(CardTag.BuffResource) && action.Group == Group.Ally)
+            return possibleTargets.MostPowerful();
+        if (card.Is(CardTag.BuffAttack) && action.Group == Group.Ally)
+            return possibleTargets.BestAttackerToBuff(ctx.Strategy);
+        if (card.Is(CardTag.RemoveResources) && action.Group == Group.Opponent)
+            return possibleTargets.MostResources();
+        if ((card.Is(CardTag.RemoveShields) || card.Is(CardTag.Attack, CardTag.Shield)) && action.Group == Group.Opponent)
+            return possibleTargets.MostShielded();
+        if (card.Is(CardTag.Blind))
+            return possibleTargets.MostAttack();
+        if (card.Is(CardTag.Vulnerable) && action.Group == Group.Opponent)
+        {
+            var vulnerableTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsVulnerable()));
+            var vulnerableSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Vulnerable, out var targets) ? targets : new HashSet<Target>();
+            var saneTargets = possibleTargets.Except(vulnerableSelectedTargets).Except(vulnerableTargets).ToArray();
+            return saneTargets.Any(x => x == ctx.Strategy.AttackTargetFor(action))
+                ? ctx.Strategy.AttackTargetFor(action)
+                : saneTargets.Any()
+                    ? saneTargets.Random()
+                    : possibleTargets.Random();
+        }
+
+        if (card.Is(CardTag.Attack) && action.Group == Group.Opponent)
+            return Rng.Chance(0.80) ? ctx.Strategy.AttackTargetFor(action) : possibleTargets.Random();
+        if (card.Is(CardTag.Healing) && action.Group == Group.Ally)
+            return possibleTargets.MostDamaged();
+        if (card.Is(CardTag.Defense, CardTag.Shield) && action.Group == Group.Ally)
+        {
+            if (possibleTargets.Any(x => !x.HasShield()))
+                return possibleTargets.Where(x => !x.HasShield())
+                    .MostVulnerable();
+            // Or, use shield to whomever could use the most
+            return possibleTargets.OrderByDescending(x => x.TotalRemainingShieldCapacity()).First();
+        }
+
+        return possibleTargets.Random();
+    }
+
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx)
         => WithSelectedTargetsPlayedCard(ctx, _ => true);
     
