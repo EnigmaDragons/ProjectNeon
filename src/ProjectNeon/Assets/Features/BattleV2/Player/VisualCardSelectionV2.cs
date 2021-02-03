@@ -121,7 +121,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     }
     
     public void Cancel() {}
-    public void Confirm() => Select();
+    public void Confirm() {}
     public void Select()
     {
         DisableHighlight();
