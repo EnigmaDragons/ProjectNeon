@@ -44,7 +44,6 @@ public static class AllEffects
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
         { EffectType.MagicAttack, e => new MagicAttack(new SpellDamage(e.BaseAmount, e.FloatAmount), e.HitsRandomTargetMember) },
-        { EffectType.ApplyTaunt, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Taunt, e.NumberOfTurns)) },
         { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.TotalIntAmount)) },
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
         { EffectType.AtEndOfTurn, e => new EndOfTurnEffect(e) },

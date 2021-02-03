@@ -218,7 +218,7 @@ public static class InterpolatedCardDescriptions
         var turnString = value < 0
                         ? "for the battle" 
                         : value < 2
-                            ? data.TurnDelay == 0 ? "this turn" : $"for {Bold(1.ToString())} turn" 
+                            ? data.TurnDelay == 0 ? "this turn" : "for the turn" 
                             : $"for {Bold(value.ToString())} turns";
 
         return $"{turnString}.";

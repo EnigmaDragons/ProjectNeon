@@ -78,7 +78,7 @@ public sealed class InterpolatedCardDescriptionsTests
     
     [Test]
     public void Interpolated_Auto_GivesVulnerableNextTurn_IsCorrect()
-        => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for 1 turn.",
+        => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for the turn.",
             Description("{Auto}", 
                 new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, NumberOfTurns = new IntReference(1)},
                 Owner));

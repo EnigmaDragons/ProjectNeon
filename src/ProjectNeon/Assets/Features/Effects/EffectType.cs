@@ -61,7 +61,6 @@ public enum EffectType
     AdjustPlayerStats = 49,
     GainCredits = 52,
     
-    ApplyTaunt = 51,
     MagicDamageOverTime = 55,
     HealPercentMissingHealth = 56,
     GainDoubleDamage = 57,

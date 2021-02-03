@@ -9,8 +9,9 @@ public class ApplyTauntTests
         
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.ApplyTaunt, 
-            NumberOfTurns = new IntReference(2)
+            EffectType = EffectType.AdjustCounterFormula,
+            Formula = "2",
+            EffectScope = new StringReference("Taunt")
         }, member, member);
         
         Assert.AreEqual(2, member.State[TemporalStatType.Taunt]);
