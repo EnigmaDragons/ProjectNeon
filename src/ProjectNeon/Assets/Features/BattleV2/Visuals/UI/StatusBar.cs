@@ -34,6 +34,16 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State.HasStatus(StatusTag.Invulnerable))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.Invulnerable.ToString(), Icon = icons[StatusTag.Invulnerable].Icon, Tooltip = "Invincible to all Damage" });
         
+        if (_member.State.HasStatus(StatusTag.CounterAttack))
+            statuses.Add(new CurrentStatusValue { Type = StatusTag.CounterAttack.ToString(), Icon = icons[StatusTag.CounterAttack].Icon, Tooltip = "Counterattack"});
+        
+        _member.State.StatusesOfType(StatusTag.Trap)
+            .ForEach(s => statuses.Add(new CurrentStatusValue { 
+                Type = StatusTag.Trap.ToString(), 
+                Icon = icons[StatusTag.Trap].Icon, 
+                Tooltip = s.Status.CustomText.OrDefault(() => "Unknown Trap Power") 
+            }));
+        
         _member.State.StatusesOfType(StatusTag.Augment)
             .ForEach(s => statuses.Add(new CurrentStatusValue { 
                 Type = StatusTag.Augment.ToString(), 
@@ -66,9 +76,6 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         if (_member.State.Healability() < 1)
             statuses.Add(new CurrentStatusValue { Type = StatusTag.AntiHeal.ToString(), Icon = icons[StatusTag.AntiHeal].Icon, Tooltip = "Anti Heal (Only get 50% healing)"});
-        
-        if (_member.State.HasStatus(StatusTag.CounterAttack))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.CounterAttack.ToString(), Icon = icons[StatusTag.CounterAttack].Icon, Tooltip = "Counterattack"});
         
         statuses.AddRange(_member.State.StatusesOfType(StatusTag.DamageOverTime)
             .Select(s => new CurrentStatusValue { Type = StatusTag.DamageOverTime.ToString(), Icon = icons[StatusTag.DamageOverTime].Icon, Text = s.RemainingTurns.Select(r => r.ToString(), () => ""), 

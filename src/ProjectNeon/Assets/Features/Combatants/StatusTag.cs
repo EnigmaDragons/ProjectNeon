@@ -13,4 +13,5 @@ public enum StatusTag
     OnDeath = 10,
     Invulnerable = 11,
     Augment = 12,
+    Trap = 13,
 }
