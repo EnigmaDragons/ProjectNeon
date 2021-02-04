@@ -17,7 +17,7 @@ public class EffectReactWith : Effect
             => (effect.EffectData.EffectType == EffectType.ApplyVulnerable || effect.EffectData.EffectScope.Value == "Vulnerable") && effect.Target.Members.Any(x => x.Id == possessor.Id) },
         { ReactionConditionType.OnShieldBroken, possessor => effect => WentToZero(Select(effect, possessor, m => m.State[TemporalStatType.Shield])) },
         { ReactionConditionType.OnDamagedHp, possessor => effect => Decreased(Select(effect, possessor, m => m.State.Hp))},
-        { ReactionConditionType.OnDamaged, possessor => effect => Decreased(Select(effect, possessor, m => m.State.Hp * m.State.Shield))},
+        { ReactionConditionType.OnDamaged, possessor => effect => Decreased(Select(effect, possessor, m => m.State.Hp + m.State.Shield))},
         { ReactionConditionType.OnBlinded, possessor => effect => Increased(Select(effect, possessor, m => m.State[TemporalStatType.Blind])) },
         { ReactionConditionType.OnCausedStun, possessor => effect =>
             {
