@@ -22,7 +22,7 @@ public static class AllEffects
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLogged($"{m.Name} has been cleansed of all debuffs", m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new FullContextEffect((ctx, m) => m.Adjust(e.EffectScope, Formula.Evaluate(new FormulaContext(ctx.SourceSnapshot.State, m, ctx.XPaidAmount), e.Formula)))},
         { EffectType.ShieldFlat, e => new ShieldFlat(e.IntAmount) },
-        { EffectType.ResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
+        { EffectType.AdjustResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.DamageOverTime, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => BattleLogged($"{m.Name} has become vulnerable",
@@ -40,7 +40,7 @@ public static class AllEffects
         { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Magic) },
         { EffectType.HealToughness, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Toughness) },
         { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => BattleLogged($"{m.Name} {GainedOrLostTerm(e.TotalIntAmount)} {Math.Abs(e.TotalIntAmount)} {m.PrimaryResource.Name}", 
-            () => m.AdjustPrimaryResource(e.IntAmount + e.BaseAmount))) },
+            () => m.AdjustPrimaryResource(e.TotalIntAmount))) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
         { EffectType.MagicAttack, e => new MagicAttack(new SpellDamage(e.BaseAmount, e.FloatAmount), e.HitsRandomTargetMember) },

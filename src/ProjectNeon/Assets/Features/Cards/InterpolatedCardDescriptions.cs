@@ -28,17 +28,26 @@ public static class InterpolatedCardDescriptions
             var conditionalBattleEffects = card.Actions()
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
                 .SelectMany(b => b.ConditionData.ReferencedEffect.BattleEffects);
-            
-            var reactionBattleEffects = card.Actions()
+
+            var reactionBattleCards = card.Actions()
                 .SelectMany(a => a.BattleEffects)
                 .Where(b => b.IsReactionCard)
                 .SelectMany(c => c.ReactionSequence.ActionSequence.CardActions.BattleEffects);
+
+            var reactionBattleEffects = card.Actions()
+                .SelectMany(a => a.BattleEffects)
+                .Where(b => b.IsReactionEffect)
+                .Where(c => c.ReactionEffect.CardActions != null)
+                .SelectMany(c => c.ReactionEffect.CardActions.BattleEffects);
+
+            var allReactionsEffects = reactionBattleCards.Concat(reactionBattleEffects);
                         
-            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), reactionBattleEffects.ToArray(), owner, xCost, card.ChainedCard);
+            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), allReactionsEffects.ToArray(), owner, xCost, card.ChainedCard);
         }
         catch (Exception e)
         {
             Log.Error($"Unable to Generate Interpolated Description for {card.Name}");
+            throw;
             Debug.LogException(e);
             return desc;
         }
@@ -56,7 +65,7 @@ public static class InterpolatedCardDescriptions
         if (desc.Trim().Equals("{Auto}", StringComparison.InvariantCultureIgnoreCase))
         {
             var sb = new StringBuilder();
-            sb.Append(string.Join(" ", effects.Select(e => AutoDescription(e, owner, xCost))));
+            sb.Append(AutoDescription(effects, owner, xCost));
             sb.Append(chainedCard.Select(c => $". {Bold("Chain:")} {c.Name}", ""));
             return sb.ToString();
         }
@@ -99,6 +108,9 @@ public static class InterpolatedCardDescriptions
                 () => "X")
             : xCost.Amount.ToString();
 
+    private static string AutoDescription(IEnumerable<EffectData> effects, Maybe<Member> owner, ResourceQuantity xCost)
+        => string.Join(" ", effects.Select(e => AutoDescription(e, owner, xCost)));
+    
     private static string AutoDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
         var delay = DelayDescription(data);
@@ -117,6 +129,11 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data)}";
         if (data.EffectType == EffectType.ApplyVulnerable)
             coreDesc = $"gives {Bold("Vulnerable")} {DurationDescription(data)}";
+        if (data.EffectType == EffectType.AdjustResourceFlat)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope}";
+        if (data.EffectType == EffectType.ReactWithEffect)
+            coreDesc = $"{DurationDescription(data).Replace(".", ", ")}{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
+                       $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)}";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
@@ -185,6 +202,10 @@ public static class InterpolatedCardDescriptions
             return $"{data.FloatAmount} {data.EffectScope}";
         if (data.EffectType == EffectType.ApplyMultiplicativeStatInjury)
             return $"{data.FloatAmount}x {data.EffectScope}";
+        if (data.EffectType == EffectType.AdjustPrimaryResource)
+            return $"{data.TotalIntAmount}";
+        if (data.EffectType == EffectType.AdjustResourceFlat)
+            return $"{data.TotalIntAmount}";
         
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";

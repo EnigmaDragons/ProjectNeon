@@ -3,7 +3,7 @@
 public sealed class ResourceFlat
 {
     private EffectData data = new EffectData { 
-        EffectType = EffectType.ResourceFlat, 
+        EffectType = EffectType.AdjustResourceFlat, 
         FloatAmount = new FloatReference(5), 
         EffectScope = new StringReference(Ammo.Name) 
     } ;

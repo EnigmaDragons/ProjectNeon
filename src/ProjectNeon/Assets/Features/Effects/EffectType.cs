@@ -24,7 +24,7 @@ public enum EffectType
     PhysicalDamage = 2,
     RemoveDebuffs = 4,
     ShieldFlat = 6,
-    ResourceFlat = 7,
+    AdjustResourceFlat = 7,
     DamageOverTimeFlat = 8,
     DamageOverTime = 19,
     HealFormula = 29,

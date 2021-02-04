@@ -27,8 +27,9 @@ public sealed class EffectData
     public string Formula = "";
     public StringReference FlavorText = new StringReference();
     public CardActionsData ReferencedSequence;
+    
     public bool IsReactionCard => ReactionSequence != null;
-
+    public bool IsReactionEffect => ReactionEffect != null;
     public ReactionConditionType ReactionConditionType;
     [FormerlySerializedAs("ReactionCard")] public ReactionCardType ReactionSequence;
     public CardReactionSequence ReactionEffect;

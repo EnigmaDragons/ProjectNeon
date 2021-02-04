@@ -3,7 +3,8 @@ namespace Features.CombatantStates.Reactions
     public enum ReactionConditionType
     {
         OnAttacked = 0,
-        OnDamaged = 1,
+        OnDamaged = 4,
+        OnDamagedHp = 1,
         OnBlinded = 2,
         OnMagicAttacked = 3,
         OnVulnerable = 5,
