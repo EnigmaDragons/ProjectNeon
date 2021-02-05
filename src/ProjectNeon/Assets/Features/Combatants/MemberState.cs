@@ -229,12 +229,14 @@ public sealed class MemberState : IStats
 
     // Status Counters Commands
     public void Adjust(string counterName, float amount) => PublishAfter(() => Counter(counterName).ChangeBy(amount));
-    public void Adjust(TemporalStatType t, float amount) => PublishAfter(() => Counter(t.ToString()).ChangeBy(amount));
-    public void AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
+    public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter<int>(() => Counter(t.ToString()).ChangeBy(amount), () => this[t].CeilingInt()));
+    public int AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
     private void AdjustShieldNoPublish(float amount) => Counter(TemporalStatType.Shield.ToString()).ChangeBy(amount);
     public void AdjustEvade(float amount) => Adjust(TemporalStatType.Evade, amount);
     public void AdjustSpellshield(float amount) => Adjust(TemporalStatType.Spellshield, amount);
     public void AdjustDoubleDamage(float amount) => Adjust(TemporalStatType.DoubleDamage, amount);
+
+    private int Diff(int[] beforeAndAfter) => beforeAndAfter.Last() - beforeAndAfter.First();
 
     // Resource Commands
     public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
@@ -287,6 +289,18 @@ public sealed class MemberState : IStats
         return payload;
     }
 
+    private T[] PublishAfter<T>(Action action, Func<T> getVal)
+    {
+        
+        var before = ToSnapshot();
+        var beforeVal = getVal();
+        _versionNumber++;
+        action();
+        var afterVal = getVal();
+        Message.Publish(new MemberStateChanged(before, this));
+        return new T[] {beforeVal, afterVal};
+    }
+    
     private void PublishAfter(Action action)
     {
         var before = ToSnapshot();

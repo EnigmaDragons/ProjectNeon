@@ -52,7 +52,7 @@ public enum EffectType
     StunForTurns = 13,
     InterceptAttackForTurns = 18,
     HealOverTime = 20,
-    RemoveShields = 22,
+    ShieldRemoveAll = 22,
     HealMagic = 45,
     HealToughness = 12,
     AdjustPrimaryResource = 46,
