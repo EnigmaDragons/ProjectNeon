@@ -60,7 +60,12 @@ public class EffectReactWith : Effect
     };
 
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
-    private static bool Decreased(int[] values) => values.Last() < values.First();
+    private static bool Decreased(int[] values)
+    {
+        DevLog.Write($"Before: {values.First()}. After: {values.Last()}");
+        return values.Last() < values.First();
+    }
+
     private static bool Increased(int[] values) => values.Last() > values.First();
     
     private static int[] Select(EffectResolved e, Member possessor, Func<MemberSnapshot, int> selector)
