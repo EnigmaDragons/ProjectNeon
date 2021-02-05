@@ -31,9 +31,9 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         
         var heroes = state.Party.BaseHeroes;
         if (heroes.Length > 0)
-            SetupHero(hero1, heroes[0], 5);
+            SetupHero(hero1, heroes[0], 9);
         if (heroes.Length > 1)
-            SetupHero(hero2, heroes[1], 9);
+            SetupHero(hero2, heroes[1], 5);
         if (heroes.Length > 2)
             SetupHero(hero3, heroes[2], 1);
         var centerPoints = Enumerable.Range(0, 3).Select(x => _heroes.Count > x && _centers.ContainsKey(heroes[x]) ? _centers[heroes[x]].transform.position : Vector3.zero);
