@@ -247,17 +247,16 @@ public sealed class MemberState : IStats
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
     public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any(); 
-    public IPayloadProvider GetTurnStartEffects()
+    public IPayloadProvider[] GetTurnStartEffects()
     {
-        var payload = new MultiplePayloads(
-            _additiveMods.Select(m => m.OnTurnStart()),
-            _multiplierMods.Select(m => m.OnTurnStart()),
-            _reactiveStates.Select(m => m.OnTurnStart()),
-            _transformers.Select(m => m.OnTurnStart()),
-            _additiveResourceCalculators.Select(m => m.OnTurnStart()),
-            _multiplicativeResourceCalculators.Select(m => m.OnTurnStart()));
         _persistentStates.ForEach(m => m.OnTurnStart());
-        return payload;
+        return _additiveMods.Select(m => m.OnTurnStart())
+            .Concat(_multiplierMods.Select(m => m.OnTurnStart()))
+            .Concat(_reactiveStates.Select(m => m.OnTurnStart()))
+            .Concat(_transformers.Select(m => m.OnTurnStart()))
+            .Concat(_additiveResourceCalculators.Select(m => m.OnTurnStart()))
+            .Concat(_multiplicativeResourceCalculators.Select(m => m.OnTurnStart()))
+            .ToArray();
     }
 
     public void CleanExpiredStates() => 
@@ -273,20 +272,20 @@ public sealed class MemberState : IStats
 
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType> { TemporalStatType.Taunt, TemporalStatType.Stealth, TemporalStatType.Confusion };
     
-    public IPayloadProvider GetTurnEndEffects()
+    public IPayloadProvider[] GetTurnEndEffects()
     {
-        var payload = new MultiplePayloads(
-            _additiveMods.Select(m => m.OnTurnEnd()),
-            _multiplierMods.Select(m => m.OnTurnEnd()),
-            _reactiveStates.Select(m => m.OnTurnEnd()),
-            _transformers.Select(m => m.OnTurnEnd()),
-            _additiveResourceCalculators.Select(m => m.OnTurnEnd()),
-            _multiplicativeResourceCalculators.Select(m => m.OnTurnEnd()));
         _persistentStates.ForEach(m => m.OnTurnEnd());
         _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
         _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
         _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
-        return payload;
+        
+        return _additiveMods.Select(m => m.OnTurnEnd())
+            .Concat(_multiplierMods.Select(m => m.OnTurnEnd()))
+            .Concat(_reactiveStates.Select(m => m.OnTurnEnd()))
+            .Concat(_transformers.Select(m => m.OnTurnEnd()))
+            .Concat(_additiveResourceCalculators.Select(m => m.OnTurnEnd()))
+            .Concat(_multiplicativeResourceCalculators.Select(m => m.OnTurnEnd()))
+            .ToArray();;
     }
 
     private T[] PublishAfter<T>(Action action, Func<T> getVal)
