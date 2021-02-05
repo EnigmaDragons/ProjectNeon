@@ -23,8 +23,6 @@ public enum EffectType
     
     PhysicalDamage = 2,
     RemoveDebuffs = 4,
-    ShieldFlat = 6,
-    ShieldToughness = 11,
     ShieldFormula = 80,
     AdjustResourceFlat = 7,
     DamageOverTimeFlat = 8,

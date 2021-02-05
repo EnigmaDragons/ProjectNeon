@@ -119,8 +119,6 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.ShieldToughness)
-            coreDesc = $"shield {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustCounter)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustCounterFormula)
@@ -135,7 +133,7 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"{DurationDescription(data).Replace(".", ", ")}{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
                        $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)}";
         if (data.EffectType == EffectType.ShieldFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} shield";
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} Shield";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
@@ -185,8 +183,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.MagicDamageOverTime)
             return WithRawDamageIcon(MagicAmount(data, owner));
         
-        if (data.EffectType == EffectType.ShieldToughness
-            || data.EffectType == EffectType.HealToughness)
+        if (data.EffectType == EffectType.HealToughness)
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";
@@ -218,7 +215,7 @@ public static class InterpolatedCardDescriptions
 
     private static string FormulaAmount(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
         => owner.IsPresent
-            ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString()
+            ? WithImplications(RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString())
             : FormattedFormula(data.Formula);
     
     private static string MagicAmount(EffectData data, Maybe<Member> owner) 
@@ -238,6 +235,13 @@ public static class InterpolatedCardDescriptions
         var baseAmount = data.BaseAmount != 0 ? $"{data.BaseAmount.Value}" : "";
         var floatAmount = data.FloatAmount > 0 ? $"{data.FloatAmount.Value}{floatString}" : "";
         return baseAmount + floatAmount;
+    }
+
+    public static string WithImplications(string value)
+    {
+        if (value.Equals("999"))
+            return "Max";
+        return value;
     }
 
     private static string DurationDescription(EffectData data)

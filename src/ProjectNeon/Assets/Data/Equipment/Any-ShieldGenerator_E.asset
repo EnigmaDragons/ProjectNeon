@@ -15,7 +15,7 @@ MonoBehaviour:
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 11
+      EffectType: 80
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 0.33 * Toughness
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -48,6 +48,7 @@ MonoBehaviour:
         reactor: 0
         scope: 0
         cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:

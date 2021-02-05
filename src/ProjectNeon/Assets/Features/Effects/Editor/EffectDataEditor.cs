@@ -21,7 +21,6 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ApplyVulnerable, new[] {"NumberOfTurns"}},
         {EffectType.RemoveDebuffs, new string[0]},
         {EffectType.RemoveShields, new string[0]},
-        {EffectType.ShieldFlat, new [] {"BaseAmount"}},
         {EffectType.ShieldFormula, new [] {"Formula"}},
         {EffectType.AdjustStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},

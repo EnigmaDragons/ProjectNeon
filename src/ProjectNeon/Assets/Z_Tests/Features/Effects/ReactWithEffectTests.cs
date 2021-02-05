@@ -53,8 +53,8 @@ public class ReactWithEffectTests
                 ReactiveTargetScope.Possessor, 
                 new EffectData
                 {
-                    EffectType = EffectType.ShieldToughness,
-                    FloatAmount = new FloatReference(1)
+                    EffectType = EffectType.ShieldFormula,
+                    Formula = "1 * Toughness"
                 })
         }, possessor, possessor);
         
