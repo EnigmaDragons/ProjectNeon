@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 33-43, 47, 48, 53, 
-// LAST NUMBER USED: 79
+// LAST NUMBER USED: 80
 public enum EffectType
 {
     Nothing = 0,
@@ -24,6 +24,8 @@ public enum EffectType
     PhysicalDamage = 2,
     RemoveDebuffs = 4,
     ShieldFlat = 6,
+    ShieldToughness = 11,
+    ShieldFormula = 80,
     AdjustResourceFlat = 7,
     DamageOverTimeFlat = 8,
     DamageOverTime = 19,
@@ -49,7 +51,6 @@ public enum EffectType
     PlayBonusCardAfterNoCardPlayedInXTurns = 76,
     RedrawHandOfCards = 77,
     
-    ShieldToughness = 11,
     StunForTurns = 13,
     InterceptAttackForTurns = 18,
     HealOverTime = 20,

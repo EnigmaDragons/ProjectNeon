@@ -6,6 +6,10 @@ public static class Formula
 {
     public static float Evaluate(Member src, string expression, ResourceQuantity xAmountPaid) 
         => Evaluate(new FormulaContext(src.State.ToSnapshot(), Maybe<MemberState>.Missing(), xAmountPaid), expression);
+    
+    
+    public static float Evaluate(MemberStateSnapshot snapshot, MemberState target, ResourceQuantity xAmountPaid, string expression) 
+        => Evaluate(new FormulaContext(snapshot, target, xAmountPaid), expression);
 
     public static float Evaluate(FormulaContext ctx, string expression)
     {

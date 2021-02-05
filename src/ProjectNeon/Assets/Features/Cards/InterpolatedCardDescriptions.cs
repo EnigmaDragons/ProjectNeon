@@ -134,6 +134,8 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.ReactWithEffect)
             coreDesc = $"{DurationDescription(data).Replace(".", ", ")}{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
                        $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)}";
+        if (data.EffectType == EffectType.ShieldFormula)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} shield";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
@@ -188,6 +190,9 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";
+        if (data.EffectType == EffectType.ShieldFormula)
+            return FormulaAmount(data, owner, xCost);
+        
         if (data.EffectType == EffectType.AdjustCounter)
             return $"{data.EffectScope.Value.WithSpaceBetweenWords()} {data.IntAmount + data.BaseAmount}";
         if (data.EffectType == EffectType.AdjustCounterFormula)

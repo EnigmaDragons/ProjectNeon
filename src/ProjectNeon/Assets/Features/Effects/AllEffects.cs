@@ -22,6 +22,7 @@ public static class AllEffects
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLogged($"{m.Name} has been cleansed of all debuffs", m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new FullContextEffect((ctx, m) => m.Adjust(e.EffectScope, Formula.Evaluate(new FormulaContext(ctx.SourceSnapshot.State, m, ctx.XPaidAmount), e.Formula)))},
         { EffectType.ShieldFlat, e => new ShieldFlat(e.TotalIntAmount) },
+        { EffectType.ShieldFormula, e => new FullContextEffect((ctx, m) => m.AdjustShield(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula)))},
         { EffectType.AdjustResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.DamageOverTime, e => new DamageOverTime(e) },
