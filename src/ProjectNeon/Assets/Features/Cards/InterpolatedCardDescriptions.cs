@@ -131,13 +131,30 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope}";
         if (data.EffectType == EffectType.ReactWithEffect)
             coreDesc = $"{DurationDescription(data).Replace(".", ", ")}{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
-                       $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)}";
+                       $"{ReactionSourceDescription(owner, data.ReactionSequence.ActionSequence.Reactor)}" +
+                       $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
+                       $"to {ReactiveTargetFriendlyName(data.ReactionEffect.Scope)}";
+        if (data.EffectType == EffectType.ReactWithCard)
+            coreDesc = $"{DurationDescription(data).Replace(".", ", ")}{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
+                       $"{ReactionSourceDescription(owner, data.ReactionSequence.ActionSequence.Reactor)}" +
+                       $"{AutoDescription(data.ReactionSequence.ActionSequence.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
+                       $"to {ReactiveTargetFriendlyName(data.ReactionSequence.ActionSequence.Scope)}";
         if (data.EffectType == EffectType.ShieldFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} Shield";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
     }
+
+    private static string ReactionSourceDescription(Maybe<Member> owner, ReactiveMember member) 
+        => member == ReactiveMember.Originator 
+            ? owner.Select(o => o.Name + " will ", "Originator will ") 
+            : "";
+    
+    private static string ReactiveTargetFriendlyName(ReactiveTargetScope s) 
+        => s == ReactiveTargetScope.Source 
+            ? "Attacker" 
+            : s.ToString();
     
     private static string UppercaseFirst(string s) => char.ToUpper(s[0]) + s.Substring(1);
 
