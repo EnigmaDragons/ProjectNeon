@@ -47,8 +47,10 @@ public static class InterpolatedCardDescriptions
         catch (Exception e)
         {
             Log.Error($"Unable to Generate Interpolated Description for {card.Name}");
-            throw;
             Debug.LogException(e);
+            #if UNITY_EDITOR
+            throw;
+            #endif
             return desc;
         }
     }
@@ -130,12 +132,14 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustResourceFlat)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope}";
         if (data.EffectType == EffectType.ReactWithEffect)
-            coreDesc = $"{DurationDescription(data).Replace(".", ", ")}{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
-                       $"{ReactionSourceDescription(owner, data.ReactionSequence.ActionSequence.Reactor)}" +
+            coreDesc = $"{DurationDescription(data).Replace(".", ", ")}" +
+                       $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
+                       $"{ReactionSourceDescription(owner, data.ReactionEffect.Reactor)}" +
                        $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
                        $"to {ReactiveTargetFriendlyName(data.ReactionEffect.Scope)}";
         if (data.EffectType == EffectType.ReactWithCard)
-            coreDesc = $"{DurationDescription(data).Replace(".", ", ")}{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
+            coreDesc = $"{DurationDescription(data).Replace(".", ", ")}" +
+                       $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
                        $"{ReactionSourceDescription(owner, data.ReactionSequence.ActionSequence.Reactor)}" +
                        $"{AutoDescription(data.ReactionSequence.ActionSequence.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
                        $"to {ReactiveTargetFriendlyName(data.ReactionSequence.ActionSequence.Scope)}";
@@ -231,9 +235,9 @@ public static class InterpolatedCardDescriptions
     }
 
     private static string FormulaAmount(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
-        => owner.IsPresent
-            ? WithImplications(RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString())
-            : FormattedFormula(data.Formula);
+        => WithImplications(owner.IsPresent
+            ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString()
+            : FormattedFormula(data.Formula));
     
     private static string MagicAmount(EffectData data, Maybe<Member> owner) 
         => owner.IsPresent
@@ -256,13 +260,12 @@ public static class InterpolatedCardDescriptions
 
     public static string WithImplications(string value)
     {
-        if (value.Equals("999"))
-            return "Max";
-        return value;
+        return value.Replace("999", "Max");
     }
 
     private static string DurationDescription(EffectData data)
     {
+        Debug.Log($"Number Of Turns: {data.NumberOfTurns}");
         var value = data.NumberOfTurns.Value;
         var turnString = value < 0
                         ? "for the battle" 
