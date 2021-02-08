@@ -4578,6 +4578,7 @@ GameObject:
   - component: {fileID: 6198208270002237018}
   - component: {fileID: 5521025218921969984}
   - component: {fileID: 8323933683490209951}
+  - component: {fileID: 6851384778284471076}
   m_Layer: 5
   m_Name: RecycleIcon
   m_TagString: Untagged
@@ -4600,11 +4601,11 @@ RectTransform:
   - {fileID: 5041736350340805304}
   - {fileID: 3650821511124933231}
   m_Father: {fileID: 4681165961166834452}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -50, y: 145}
+  m_AnchoredPosition: {x: 50, y: 100}
   m_SizeDelta: {x: 600, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &5521025218921969984
@@ -4633,7 +4634,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Number of Card Cycles Remaining
+  tooltipText: Number of Card Cycles left this Turn
+--- !u!114 &6851384778284471076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190085308954272685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e8656d2d5f4dd5933da0a3ce3e4b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  rotateTarget: {fileID: 6205932669829138194}
+  rotateSpeed: 15
 --- !u!1 &5223746016782438790
 GameObject:
   m_ObjectHideFlags: 0
@@ -5571,7 +5587,6 @@ GameObject:
   - component: {fileID: 5041736350340805304}
   - component: {fileID: 4376696265234376258}
   - component: {fileID: 8709366289661327086}
-  - component: {fileID: 5318824531442198703}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -5596,7 +5611,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -12}
-  m_SizeDelta: {x: 64, y: 64}
+  m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4376696265234376258
 CanvasRenderer:
@@ -5619,7 +5634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.36078432}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5635,19 +5650,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5318824531442198703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6205932669829138194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: Number of Card Cycles Remaining this Turn
 --- !u!1 &6212770271219347048
 GameObject:
   m_ObjectHideFlags: 0
@@ -5681,7 +5683,7 @@ RectTransform:
   m_Father: {fileID: 8085331364392476821}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.2}
+  m_AnchorMin: {x: 0, y: 0.23}
   m_AnchorMax: {x: 1, y: 0.8}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
@@ -6572,7 +6574,7 @@ RectTransform:
   - {fileID: 6103840780595315290}
   - {fileID: 7954565180772305912}
   m_Father: {fileID: 4681165961166834452}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7181,7 +7183,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 39
   m_TargetDisplay: 0
@@ -7895,8 +7897,8 @@ RectTransform:
   m_Children:
   - {fileID: 190408200589969969}
   - {fileID: 3764322934972611018}
-  - {fileID: 6198208270002237018}
   - {fileID: 7983839722842430783}
+  - {fileID: 6198208270002237018}
   m_Father: {fileID: 5524449074993072346}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7999,8 +8001,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -6.35}
-  m_SizeDelta: {x: 64.00003, y: 75.29979}
+  m_AnchoredPosition: {x: 0, y: -12}
+  m_SizeDelta: {x: 100, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4672375295449155057
 CanvasRenderer:

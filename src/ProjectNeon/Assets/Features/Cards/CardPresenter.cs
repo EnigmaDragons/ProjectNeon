@@ -161,7 +161,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (AreCloseEnough(scale.x, transform.localScale.x) && AreCloseEnough(position.y, transform.position.y))
             return;
 
-        var tweenDuration = 0.18f;
+        var tweenDuration = 0.08f;
         DebugLog($"Tweening Highlight {active}");
         transform.DOScale(scale, tweenDuration);
         transform.DOMove(position, tweenDuration);
@@ -229,6 +229,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     }
     
     #region Mouse Controls
+    public void MiddleClick() => _onMiddleMouse();
+    
     public void OnPointerDown(PointerEventData eventData)
     { 
         DebugLog($"UI - Pointer Down - {CardName}");
