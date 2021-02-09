@@ -65,7 +65,7 @@ public class BalanceEngine
         return 1f;
     }
 
-    private static DictionaryWithDefault<string, float> ResourceTypeFactor = new DictionaryWithDefault<string, float>(0.5f)
+    private static readonly DictionaryWithDefault<string, float> ResourceTypeFactor = new DictionaryWithDefault<string, float>(0.5f)
     {
         {"None", 0f},
         {"Ammo", 0.2f},
@@ -81,7 +81,42 @@ public class BalanceEngine
     {
         var targetPower = RarityWorthFactor.VerboseGetValue(c.Rarity, "Rarity") + ResourceValue(c.Cost);
         var resourceGainValue = ResourceValue(c.Gain);
-        var actualPower = resourceGainValue;
+        var effectPowerLevel = c.ActionSequences.Sum(a => PowerLevel(c.LimitedToClass, a));
+        var actualPower = resourceGainValue + effectPowerLevel;
         return new BalanceAssessment(c.Name, targetPower, actualPower);
     }
+
+    private static float PowerLevel(Maybe<CharacterClass> c, CardActionSequence seq)
+    {
+        var scopeFactor = ScopeFactor(seq.Scope, seq.Group, ImpliedBalanceTags(seq));
+        var battleEffects = seq.CardActions.BattleEffects;
+        var effectPowerLevel = battleEffects.Sum(b => PowerLevel(c, b));
+        return scopeFactor * effectPowerLevel;
+    }
+    
+    private static readonly HashSet<EffectType> DamageEffects = new HashSet<EffectType>
+    {
+        EffectType.Attack,
+        EffectType.AttackFormula,
+        EffectType.DamageOverTime,
+        EffectType.DamageOverTimeFlat,
+        EffectType.DealRawDamageFormula,
+        EffectType.MagicAttack,
+        EffectType.MagicAttackFormula,
+        EffectType.MagicDamageOverTime
+    };
+    
+    private static BalanceTag[] ImpliedBalanceTags(CardActionSequence seq)
+    {
+        var isDamage = seq.CardActions.BattleEffects.Any(b => DamageEffects.Contains(b.EffectType));
+        return isDamage ? new[] {BalanceTag.Damage} : new BalanceTag[0];
+    }
+
+    private static float PowerLevel(Maybe<CharacterClass> c, EffectData e)
+    {
+        return 1f;
+    }
+
+    private static bool IsPrimaryStat(Maybe<CharacterClass> c, StatType s)
+        => c.IsPresent ? c.Value.PrimaryStat == s : true;
 }

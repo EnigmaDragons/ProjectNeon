@@ -15,6 +15,18 @@ public class CardActionSequence
     public AvoidanceType AvoidanceType => avoidance;
     public CardActionsData CardActions => cardActions;
     public bool RepeatX => repeatX;
+
+    public static CardActionSequence Create(Scope s, Group g, AvoidanceType a, CardActionsData data, bool x)
+    {
+        return new CardActionSequence
+        {
+            scope = s,
+            @group = g,
+            avoidance = a,
+            cardActions = data,
+            repeatX = x
+        };
+    }
     
     public static CardActionSequence ForReaction(CardActionsData d)
     {

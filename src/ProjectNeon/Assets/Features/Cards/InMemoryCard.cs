@@ -9,7 +9,7 @@ public class InMemoryCard : CardTypeData
     public IResourceAmount Cost { get; set; } = new InMemoryResourceAmount(0, "None", false);
     public IResourceAmount Gain { get; set; } = new InMemoryResourceAmount(0, "None", false);
     public Maybe<CharacterClass> LimitedToClass { get; } = Maybe<CharacterClass>.Missing();
-    public CardActionSequence[] ActionSequences { get; } = new CardActionSequence[0];
+    public CardActionSequence[] ActionSequences { get; set; } = new CardActionSequence[0];
     public Maybe<CardTypeData> ChainedCard { get; } = Maybe<CardTypeData>.Missing();
     
     public Sprite Art { get; }
