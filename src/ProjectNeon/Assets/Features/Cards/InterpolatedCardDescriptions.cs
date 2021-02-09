@@ -121,6 +121,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.MagicAttackFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustCounter)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustCounterFormula)
