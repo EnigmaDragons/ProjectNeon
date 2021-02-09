@@ -5,7 +5,7 @@ public static class TimelessResourceCalculator
 {
     public static ResourceCalculations CalculateResources(this CardTypeData card, MemberState member) 
         => CalculateResources(card.Cost, card.Gain, member);
-    public static ResourceCalculations CalculateResources(ResourceCost cost, ResourceCost gain, MemberState member)
+    public static ResourceCalculations CalculateResources(IResourceAmount cost, IResourceAmount gain, MemberState member)
         => new ResourceCalculations(cost.ResourceType, ResourcesPaid(cost, member), gain.ResourceType, ResourcesGained(gain, member), XAmountPaid(cost, member), XAmountPaid(cost, member));
 
     public static ResourceCalculations ClampResources(this ResourceCalculations calculations, Member member)
@@ -17,7 +17,7 @@ public static class TimelessResourceCalculator
             Math.Max(0, calculations.XAmount),
             Math.Max(0, calculations.XAmountPriceTag));
 
-    private static int ResourcesPaid(ResourceCost cost, MemberState member)
+    private static int ResourcesPaid(IResourceAmount cost, MemberState member)
     {
         if (cost == null || cost.ResourceType == null)
             return 0;
@@ -27,7 +27,7 @@ public static class TimelessResourceCalculator
             : cost.BaseAmount;
     }
 
-    private static int ResourcesGained(ResourceCost gain, MemberState member)
+    private static int ResourcesGained(IResourceAmount gain, MemberState member)
     {
         if (gain == null || gain.ResourceType == null)
             return 0;
@@ -37,7 +37,7 @@ public static class TimelessResourceCalculator
             : gain.BaseAmount;
     }
     
-    private static int XAmountPaid(ResourceCost cost, MemberState member)
+    private static int XAmountPaid(IResourceAmount cost, MemberState member)
     {
         if (cost == null || cost.ResourceType == null)
             return 0;

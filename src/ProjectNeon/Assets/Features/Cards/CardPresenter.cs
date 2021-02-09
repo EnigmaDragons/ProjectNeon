@@ -88,7 +88,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
 
-    private string CostLabel(ResourceCost cost)
+    private string CostLabel(IResourceAmount cost)
     {
         var owner = _card != null ? new Maybe<Member>(_card.Owner) : Maybe<Member>.Missing();
         var numericAmount = cost.BaseAmount.ToString();

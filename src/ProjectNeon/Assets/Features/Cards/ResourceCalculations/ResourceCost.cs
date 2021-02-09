@@ -3,14 +3,14 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [Serializable]
-public sealed class ResourceCost
+public sealed class ResourceCost : IResourceAmount
 {
     [SerializeField] private int cost = 0;
     [SerializeField] private ResourceType resourceType;
     [FormerlySerializedAs("isXCost")] [SerializeField] private bool plusXCost;
     
     public int BaseAmount => cost;
-    public ResourceType ResourceType => resourceType;
+    public IResourceType ResourceType => resourceType;
     public bool PlusXCost => plusXCost;
     
     public ResourceCost() {}

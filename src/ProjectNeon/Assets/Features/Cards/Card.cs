@@ -20,8 +20,8 @@ public sealed class Card
     
     public int Id => id;
     public string Name => Type.Name;
-    public ResourceCost Cost => Type.Cost;
-    public ResourceCost Gain => Type.Gain;
+    public IResourceAmount Cost => Type.Cost;
+    public IResourceAmount Gain => Type.Gain;
     public Sprite Art => Type.Art;
     public string Description => Type.Description;
     public string TypeDescription => Type.TypeDescription;

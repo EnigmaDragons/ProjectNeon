@@ -1,13 +1,13 @@
 ﻿public class ResourceCalculations
 {
-    public ResourceType ResourcePaidType { get; }
+    public IResourceType ResourcePaidType { get; }
     public int ResourcesPaid { get; }
-    public ResourceType ResourceGainedType { get; }
+    public IResourceType ResourceGainedType { get; }
     public int ResourcesGained { get; }
     public int XAmount { get; }
     public int XAmountPriceTag { get; }
 
-    public ResourceCalculations(ResourceType resourcePaidType, int resourcesPaid, ResourceType resourceGainedType, int resourcesGained, int xAmount, int xAmountPriceTag)
+    public ResourceCalculations(IResourceType resourcePaidType, int resourcesPaid, IResourceType resourceGainedType, int resourcesGained, int xAmount, int xAmountPriceTag)
     {
         ResourcePaidType = resourcePaidType;
         ResourcesPaid = resourcesPaid;

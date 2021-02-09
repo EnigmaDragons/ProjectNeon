@@ -18,8 +18,8 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     public Sprite Art => art;
     public string Description => description;
     public string TypeDescription => "Reaction";
-    public ResourceCost Cost => cost;
-    public ResourceCost Gain => onPlayGain;
+    public IResourceAmount Cost => cost;
+    public IResourceAmount Gain => onPlayGain;
     public CardReactionSequence ActionSequence => actionSequence;
     public HashSet<CardTag> Tags => new HashSet<CardTag>();
     public Maybe<CharacterClass> LimitedToClass => new Maybe<CharacterClass>(characterClass);

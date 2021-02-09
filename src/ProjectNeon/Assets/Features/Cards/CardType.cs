@@ -24,8 +24,8 @@ public class CardType : ScriptableObject, CardTypeData
         ? customName 
         : name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
     
-    public ResourceCost Cost => cost;
-    public ResourceCost Gain => onPlayGain;
+    public IResourceAmount Cost => cost;
+    public IResourceAmount Gain => onPlayGain;
     public Sprite Art => art;
     public string Description => description;
     public HashSet<CardTag> Tags => new HashSet<CardTag>(tags);

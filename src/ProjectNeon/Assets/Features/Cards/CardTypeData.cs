@@ -5,8 +5,8 @@ using UnityEngine;
 public interface CardTypeData 
 {
     string Name { get; }
-    ResourceCost Cost { get; }
-    ResourceCost Gain  { get; }
+    IResourceAmount Cost { get; }
+    IResourceAmount Gain  { get; }
     Sprite Art  { get; }
     string Description  { get; }
     HashSet<CardTag> Tags  { get; }
