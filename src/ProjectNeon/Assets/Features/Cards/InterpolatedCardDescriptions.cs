@@ -42,7 +42,7 @@ public static class InterpolatedCardDescriptions
 
             var allReactionsEffects = reactionBattleCards.Concat(reactionBattleEffects);
                         
-            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), allReactionsEffects.ToArray(), owner, xCost, card.ChainedCard);
+            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), allReactionsEffects.ToArray(), owner, xCost, card.ChainedCard, card.TimingType);
         }
         catch (Exception e)
         {
@@ -60,13 +60,16 @@ public static class InterpolatedCardDescriptions
         EffectData[] reactionEffects, 
         Maybe<Member> owner, 
         ResourceQuantity xCost,
-        Maybe<CardTypeData> chainedCard)
+        Maybe<CardTypeData> chainedCard,
+        CardTimingType timingType)
     {
         var result = desc;
 
         if (desc.Trim().Equals("{Auto}", StringComparison.InvariantCultureIgnoreCase))
         {
             var sb = new StringBuilder();
+            if (timingType != CardTimingType.Standard)
+                sb.Append(Bold(timingType.ToString())).Append(": ");
             sb.Append(AutoDescription(effects, owner, xCost));
             sb.Append(chainedCard.Select(c => $". {Bold("Chain:")} {c.Name}", ""));
             return sb.ToString();
@@ -124,9 +127,9 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.MagicAttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustCounter)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
+            coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
         if (data.EffectType == EffectType.AdjustCounterFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
+            coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data)}";
         if (data.EffectType == EffectType.ApplyVulnerable)
@@ -152,6 +155,11 @@ public static class InterpolatedCardDescriptions
         return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
     }
 
+    private static string GivesOrRemoves(string remainingEffectDesc) 
+        => remainingEffectDesc.Contains("-") || remainingEffectDesc.Contains("All") 
+            ? $"removes {remainingEffectDesc}" 
+            : $"gives {remainingEffectDesc}";
+    
     private static string ReactionSourceDescription(Maybe<Member> owner, ReactiveMember member) 
         => member == ReactiveMember.Originator 
             ? owner.Select(o => o.Name + " will ", "Originator will ") 
@@ -214,9 +222,9 @@ public static class InterpolatedCardDescriptions
             return FormulaAmount(data, owner, xCost);
         
         if (data.EffectType == EffectType.AdjustCounter)
-            return $"{data.EffectScope.Value.WithSpaceBetweenWords()} {data.IntAmount + data.BaseAmount}";
+            return $"{data.IntAmount + data.BaseAmount} {data.EffectScope.Value.WithSpaceBetweenWords()}";
         if (data.EffectType == EffectType.AdjustCounterFormula)
-            return $"{Bold(data.EffectScope.Value.WithSpaceBetweenWords())} {FormulaAmount(data, owner, xCost)}";
+            return $"{FormulaAmount(data, owner, xCost)} {Bold(data.EffectScope.Value.WithSpaceBetweenWords())}";
         
         if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)
             return owner.IsPresent
@@ -262,7 +270,8 @@ public static class InterpolatedCardDescriptions
 
     public static string WithImplications(string value)
     {
-        return value.Replace("999", "Max");
+        return value.Replace("-999", "All")
+            .Replace("999", "Max");
     }
 
     private static string DurationDescription(EffectData data)
