@@ -111,7 +111,7 @@ public static class InterpolatedCardDescriptions
             : xCost.Amount.ToString();
 
     private static string AutoDescription(IEnumerable<EffectData> effects, Maybe<Member> owner, ResourceQuantity xCost)
-        => string.Join(" ", effects.Select(e => AutoDescription(e, owner, xCost)));
+        => string.Join(". ", effects.Select(e => AutoDescription(e, owner, xCost)));
     
     private static string AutoDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
@@ -159,8 +159,8 @@ public static class InterpolatedCardDescriptions
     
     private static string ReactiveTargetFriendlyName(ReactiveTargetScope s) 
         => s == ReactiveTargetScope.Source 
-            ? "Attacker" 
-            : s.ToString();
+            ? "attacker" 
+            : s.ToString().WithSpaceBetweenWords().ToLower();
     
     private static string UppercaseFirst(string s) => char.ToUpper(s[0]) + s.Substring(1);
 
