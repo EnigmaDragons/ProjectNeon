@@ -3,6 +3,7 @@ using System.Linq;
 
 public class BalanceEngine
 {
+    // For Most Cards
     private static readonly Dictionary<Rarity, float> RarityWorthFactor = new Dictionary<Rarity, float>
     {
         { Rarity.Starter, 0.8f },
@@ -21,6 +22,7 @@ public class BalanceEngine
         { Rarity.Epic, 14f}
     };
     
+    // For Multiplicative and Stuns/Blinds/Inhibits
     private static readonly Dictionary<Rarity, float> RarityPrimaryStat = new Dictionary<Rarity, float>
     {
         { Rarity.Starter, 10f },
@@ -81,17 +83,16 @@ public class BalanceEngine
     {
         var targetPower = RarityWorthFactor.VerboseGetValue(c.Rarity, "Rarity") + ResourceValue(c.Cost);
         var resourceGainValue = ResourceValue(c.Gain);
-        var effectPowerLevel = c.ActionSequences.Sum(a => PowerLevel(c.LimitedToClass, a));
+        var effectPowerLevel = c.ActionSequences.Sum(a => PowerLevel(c.Rarity, c.LimitedToClass, a));
         var actualPower = resourceGainValue + effectPowerLevel;
         return new BalanceAssessment(c.Name, targetPower, actualPower);
     }
 
-    private static float PowerLevel(Maybe<CharacterClass> c, CardActionSequence seq)
+    private static float PowerLevel(Rarity r, Maybe<CharacterClass> c, CardActionSequence seq)
     {
-        var scopeFactor = ScopeFactor(seq.Scope, seq.Group, ImpliedBalanceTags(seq));
         var battleEffects = seq.CardActions.BattleEffects;
-        var effectPowerLevel = battleEffects.Sum(b => PowerLevel(c, b));
-        return scopeFactor * effectPowerLevel;
+        var effectPowerLevel = battleEffects.Sum(b => PowerLevel(seq.Scope, seq.Group, r, c, b));
+        return effectPowerLevel;
     }
     
     private static readonly HashSet<EffectType> DamageEffects = new HashSet<EffectType>
@@ -106,15 +107,21 @@ public class BalanceEngine
         EffectType.MagicDamageOverTime
     };
     
-    private static BalanceTag[] ImpliedBalanceTags(CardActionSequence seq)
+    private static BalanceTag[] ImpliedBalanceTags(EffectData e)
     {
-        var isDamage = seq.CardActions.BattleEffects.Any(b => DamageEffects.Contains(b.EffectType));
+        var isDamage = DamageEffects.Contains(e.EffectType);
         return isDamage ? new[] {BalanceTag.Damage} : new BalanceTag[0];
     }
 
-    private static float PowerLevel(Maybe<CharacterClass> c, EffectData e)
+    private static float PowerLevel(Scope s, Group g, Rarity r, Maybe<CharacterClass> c, EffectData e)
     {
-        return 1f;
+        var scopeFactor = ScopeFactor(s, g, ImpliedBalanceTags(e));
+        var effectValue = 1f;
+        if (e.EffectType == EffectType.Attack)
+            return e.FloatAmount;
+        if (e.EffectType == EffectType.AdjustStatMultiplicatively && e.FloatAmount.Value < 1)
+            return (1 - e.FloatAmount) * 1.5f;
+        return effectValue * scopeFactor;
     }
 
     private static bool IsPrimaryStat(Maybe<CharacterClass> c, StatType s)

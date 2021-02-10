@@ -5,4 +5,5 @@ public enum BalanceTag
     Harmful = 1,
     Resource = 2,
     StatBuff = 3,
+    StatDebuff = 4,
 }

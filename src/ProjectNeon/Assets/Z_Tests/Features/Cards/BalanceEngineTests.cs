@@ -22,6 +22,43 @@ public class BalanceEngineTests
                 TestableObjectFactory.Create<CardActionsData>()
                     .Initialized(new CardActionV2(TestEffects.BasicAttack)), false), }
         });
+    
+    [Test]
+    public void BalanceEngine_UncommonScalingAttack_IsBalanced() 
+        => AssertIsBalanced(new InMemoryCard
+        {
+            Name = "Slash",
+            Rarity = Rarity.Uncommon,
+            ActionSequences = new[] { CardActionSequence.Create(
+                Scope.One, Group.Opponent, AvoidanceType.Evade, 
+                TestableObjectFactory.Create<CardActionsData>()
+                    .Initialized(new CardActionV2(new EffectData
+                    {
+                        EffectType = EffectType.Attack,
+                        FloatAmount = new FloatReference(1.2f)
+                    })), false), }
+        });
+
+    [Test]
+    public void BalanceEngine_WithMultiplicativeStatDebuff_IsBalanced()
+        => AssertIsBalanced(new InMemoryCard
+        {
+            Name = "Covering Fire",
+            Rarity = Rarity.Uncommon,
+            Cost = new InMemoryResourceAmount(2, "Ammo"),
+            ActionSequences = new[] { CardActionSequence.Create(
+                Scope.One, Group.Opponent, AvoidanceType.Evade, 
+                TestableObjectFactory.Create<CardActionsData>()
+                    .Initialized(new CardActionV2(new EffectData
+                    {
+                        EffectType = EffectType.Attack,
+                        FloatAmount = new FloatReference(1.2f)
+                    }), new CardActionV2(new EffectData
+                    {
+                        EffectType = EffectType.AdjustStatMultiplicatively,
+                        FloatAmount = new FloatReference(0.7f)
+                    })), false), }
+        });
 
     private void AssertIsBalanced(CardTypeData c)
         => AssertIsBalanced(BalanceEngine.Assess(c));
