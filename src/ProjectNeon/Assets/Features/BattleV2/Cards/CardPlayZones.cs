@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Linq;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Battle/CardPlayZones")]
@@ -49,6 +50,9 @@ public class CardPlayZones : ScriptableObject
         while(!HandZone.IsFull && HandZone.Count < handSize)
             DrawOneCard();
     }
+
+    public void DrawCards(int number) 
+        => Enumerable.Range(0, number).ForEach(_ => DrawOneCard());
 
     public void DrawOneCard()
     {

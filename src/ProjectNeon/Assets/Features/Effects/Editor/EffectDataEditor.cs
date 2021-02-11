@@ -43,7 +43,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AttackFormula, new [] { "Formula" }},
         {EffectType.MagicAttackFormula, new [] { "Formula" }},
         {EffectType.AddToXCostTransformer, new [] { "FloatAmount", "NumberOfTurns", "StatusTag", "StatusDetailText" }},
-        {EffectType.RedrawHandOfCards, new string[0] }
+        {EffectType.RedrawHandOfCards, new string[0] },
+        {EffectType.DrawCards, new [] { "Formula" } }
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

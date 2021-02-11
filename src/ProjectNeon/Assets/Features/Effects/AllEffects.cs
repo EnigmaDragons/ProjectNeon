@@ -75,7 +75,9 @@ public static class AllEffects
         { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.RedrawHandOfCards, e => new FullContextEffect(ctx => { BattleLog.Write("Discard and drew a new hand of cards."); 
-            ctx.PlayerCardZones.DiscardHand(); ctx.PlayerCardZones.DrawHand(ctx.PlayerState.CardDraws - ctx.PlayerCardZones.PlayZone.Count); })}
+            ctx.PlayerCardZones.DiscardHand(); ctx.PlayerCardZones.DrawHand(ctx.PlayerState.CardDraws - ctx.PlayerCardZones.PlayZone.Count); })},
+        { EffectType.DrawCards, e => new FullContextEffect(ctx => ctx.PlayerCardZones.DrawCards(
+            BattleLoggedItem(v => $"Drew {v} cards", Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount).CeilingInt())))}
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

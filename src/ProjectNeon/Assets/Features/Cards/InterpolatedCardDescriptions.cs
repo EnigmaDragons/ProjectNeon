@@ -148,6 +148,8 @@ public static class InterpolatedCardDescriptions
                        $"to {ReactiveTargetFriendlyName(data.ReactionSequence.ActionSequence.Scope)}";
         if (data.EffectType == EffectType.ShieldFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} Shield";
+        if (data.EffectType == EffectType.DrawCards)
+            coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} Cards";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
@@ -216,6 +218,9 @@ public static class InterpolatedCardDescriptions
             return owner.IsPresent
                 ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
                 : $"{data.FloatAmount}x TGH";
+        
+        if (data.EffectType == EffectType.DrawCards)
+            return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.ShieldFormula)
             return FormulaAmount(data, owner, xCost);
         

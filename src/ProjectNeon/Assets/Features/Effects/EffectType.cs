@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 33-43, 47, 48, 53, 
-// LAST NUMBER USED: 80
+// LAST NUMBER USED: 81
 public enum EffectType
 {
     Nothing = 0,
@@ -47,6 +47,7 @@ public enum EffectType
     // Bonus Cards
     PlayBonusCardAfterNoCardPlayedInXTurns = 76,
     RedrawHandOfCards = 77,
+    DrawCards = 81,
     
     StunForTurns = 13,
     InterceptAttackForTurns = 18,
