@@ -1,6 +1,9 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 33-43, 47, 48, 53, 
 // LAST NUMBER USED: 81
+
+using System;
+
 public enum EffectType
 {
     Nothing = 0,
@@ -20,12 +23,15 @@ public enum EffectType
     AtEndOfTurn = 66,
     DelayedStartOfTurn = 23,
     
-    PhysicalDamage = 2,
     RemoveDebuffs = 4,
     ShieldFormula = 80,
+    ShieldRemoveAll = 22,
+    ShieldToughnessBasedOnNumberOfOpponentDoTs = 69,
     AdjustResourceFlat = 7,
+    AdjustPrimaryResource = 46,
     DamageOverTimeFlat = 8,
     DamageOverTime = 19,
+    PhysicalDamageOverTime = 59,
     HealFormula = 29,
 
     AntiHeal = 60,
@@ -38,7 +44,7 @@ public enum EffectType
     ReactWithCard = 75,
     ReactOnEvadedWithCard = 9,
     ReactOnSpellshieldedWithCard = 78,
-    OnDeath = 25,
+    [Obsolete("Not Actually an OnDeath Effect. This has a hack that PREVENTS death.")] OnDeath = 25,
     
     // Transformers
     DoubleTheEffectAndMinusDurationTransformer = 28,
@@ -52,25 +58,20 @@ public enum EffectType
     StunForTurns = 13,
     InterceptAttackForTurns = 18,
     HealOverTime = 20,
-    ShieldRemoveAll = 22,
     HealMagic = 45,
     HealToughness = 12,
-    AdjustPrimaryResource = 46,
+    HealPercentMissingHealth = 56,
     
     AdjustPlayerStats = 49,
     GainCredits = 52,
     
     MagicDamageOverTime = 55,
-    HealPercentMissingHealth = 56,
     GainDoubleDamage = 57,
-    PhysicalDamageOverTime = 59,
     FullyReviveAllAllies = 61,
     ApplyConfusion = 62,
     SwapLifeForce = 64,
     DuplicateStatesOfType = 65,
-    ShieldToughnessBasedOnNumberOfOpponentDoTs = 69,
     Kill = 24,
-    Suicide = 27,
 
     ApplyAdditiveStatInjury = 71,
     ApplyMultiplicativeStatInjury = 72,

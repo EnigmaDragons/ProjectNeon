@@ -8,7 +8,6 @@ public static class AllEffects
     private static readonly Dictionary<EffectType, Func<EffectData, Effect>> CreateEffectOfType = new Dictionary<EffectType, Func<EffectData, Effect>>
     {
         { EffectType.Nothing, e => new NoEffect() },
-        { EffectType.PhysicalDamage, e => new DealDamage(new PhysicalDamage(e.BaseAmount, e.FloatAmount)) },
         { EffectType.AdjustStatAdditivelyFormula, e => new FullContextEffect((ctx, m) => m.ApplyTemporaryAdditive(new AdjustedStats(
             BattleLoggedItem(s => $"Stats of {m.Name} are adjusted by {s}",
                 new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(new FormulaContext(ctx.SourceSnapshot.State, m, ctx.XPaidAmount), e.Formula))), 
@@ -66,7 +65,6 @@ public static class AllEffects
         { EffectType.ShowCustomTooltip, e => new SimpleEffect(m => m.AddCustomStatus(
             new CustomStatusIcon(e.FlavorText, e.EffectScope, e.IntAmount, e.ForSimpleDurationStatAdjustment()))) },
         { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.NumberOfTurns, e.ReactionSequence) },
-        { EffectType.Suicide, e => new SimpleEffect(m => m.SetHp(0)) },
         { EffectType.DoubleTheEffectAndMinusDurationTransformer, e => new EffectDoubleTheEffectAndMinus1Duration(e) },
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(e.EffectScope, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
