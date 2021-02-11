@@ -20,9 +20,9 @@ public class ReactWithEffectTests
                     ReactiveTargetScope.Target, 
                     new EffectData
                     {
-                        EffectType = EffectType.AdjustCounter, 
+                        EffectType = EffectType.AdjustCounterFormula, 
                         EffectScope = new StringReference("Evade"), 
-                        BaseAmount = new IntReference(1)
+                        Formula = "1"
                     })
         }, attacker, attacker);
         

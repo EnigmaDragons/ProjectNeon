@@ -47,7 +47,7 @@ public static class InterpolatedCardDescriptions
         catch (Exception e)
         {
             Log.Error($"Unable to Generate Interpolated Description for {card.Name}");
-            Debug.LogException(e);
+            Log.Error(e);
             #if UNITY_EDITOR
             throw;
             #endif
@@ -126,8 +126,6 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.MagicAttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.AdjustCounter)
-            coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
         if (data.EffectType == EffectType.AdjustCounterFormula)
             coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
@@ -221,8 +219,6 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.ShieldFormula)
             return FormulaAmount(data, owner, xCost);
         
-        if (data.EffectType == EffectType.AdjustCounter)
-            return $"{data.IntAmount + data.BaseAmount} {data.EffectScope.Value.WithSpaceBetweenWords()}";
         if (data.EffectType == EffectType.AdjustCounterFormula)
             return $"{FormulaAmount(data, owner, xCost)} {Bold(data.EffectScope.Value.WithSpaceBetweenWords())}";
         
@@ -276,7 +272,6 @@ public static class InterpolatedCardDescriptions
 
     private static string DurationDescription(EffectData data)
     {
-        Debug.Log($"Number Of Turns: {data.NumberOfTurns}");
         var value = data.NumberOfTurns.Value;
         var turnString = value < 0
                         ? "for the battle" 

@@ -24,7 +24,6 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ShieldFormula, new [] {"Formula"}},
         {EffectType.AdjustStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
-        {EffectType.AdjustCounter, new [] {"BaseAmount", "EffectScope" }},
         {EffectType.AdjustCounterFormula, new [] {"Formula", "EffectScope" }},
         {EffectType.GainCredits, new [] {"BaseAmount" }},
         {EffectType.AdjustPrimaryResource, new [] {"BaseAmount" }},

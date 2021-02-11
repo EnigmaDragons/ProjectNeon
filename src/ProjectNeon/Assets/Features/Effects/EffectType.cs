@@ -14,7 +14,6 @@ public enum EffectType
 
     AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyFormula = 68,
-    AdjustCounter = 67,
     AdjustCounterFormula = 79,
     
     AtStartOfTurn = 54,
