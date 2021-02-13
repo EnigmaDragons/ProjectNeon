@@ -20,6 +20,9 @@ public class CardRulesPresenter : MonoBehaviour
         var battleEffects = d.BattleEffects();
         battleEffects.ForEach(b =>
         {
+            if (b.EffectType == EffectType.ApplyVulnerable)
+                rulesToShow.Add("Vulnerable");
+            
             if (b.EffectScope == null) 
                 return;
             if (b.EffectScope.Value.Equals("Evade"))
