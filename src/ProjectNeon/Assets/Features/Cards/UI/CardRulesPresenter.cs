@@ -18,9 +18,12 @@ public class CardRulesPresenter : MonoBehaviour
         var battleEffects = d.BattleEffects();
         battleEffects.ForEach(b =>
         {
-            if (b.EffectScope != null)
-                if (b.EffectScope.Value.Equals("Evade"))
-                    rulesToShow.Add("Evade");
+            if (b.EffectScope == null) 
+                return;
+            if (b.EffectScope.Value.Equals("Evade"))
+                rulesToShow.Add("Evade");
+            if (b.EffectScope.Value.Equals("Taunt"))
+                rulesToShow.Add("Taunt");
         });
         
         rulesToShow
