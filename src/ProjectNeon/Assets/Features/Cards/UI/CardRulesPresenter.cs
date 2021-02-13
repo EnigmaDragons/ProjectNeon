@@ -33,6 +33,8 @@ public class CardRulesPresenter : MonoBehaviour
                 rulesToShow.Add("Blind");
             if (b.EffectScope.Value.Equals("Spellshield"))
                 rulesToShow.Add("Spellshield");
+            if (b.EffectScope.Value.Equals("CardStun"))
+                rulesToShow.Add("CardStun");
         });
         
         rulesToShow

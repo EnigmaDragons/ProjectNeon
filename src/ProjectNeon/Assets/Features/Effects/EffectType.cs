@@ -36,7 +36,6 @@ public enum EffectType
 
     AntiHeal = 60,
     ApplyVulnerable = 10,
-    StunForNumberOfCards = 44,
     EnterStealth = 58,
     
     // Reactions
