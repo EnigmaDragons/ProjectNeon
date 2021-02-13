@@ -19,7 +19,7 @@ public class MouseTargetHoverCharacter : OnMessage<TargetSelectionBegun, Selecti
         if (_char.IsPresent && hovered.IsMissing || _char.Value != hovered.Value)
             ResetLast();
 
-        if (!hovered.IsPresent) 
+        if (!hovered.IsPresent)
             return;
 
         var id = hovered.Value.Member.Id;

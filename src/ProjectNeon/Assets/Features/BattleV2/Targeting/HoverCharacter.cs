@@ -19,7 +19,7 @@ public class HoverCharacter : MonoBehaviour
         if (!_hovered)
             return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
             _confirmAction();
         else if (Input.GetMouseButtonDown(1)) 
             _cancelAction();

@@ -19,6 +19,7 @@ public class SelectCardTargetsV2 : OnMessage<ConfirmTargetSelectionRequested, Ca
     
     protected override void AfterEnable() => selectedCardZone.OnZoneCardsChanged.Subscribe(BeginSelection, this);
     protected override void AfterDisable() => selectedCardZone.OnZoneCardsChanged.Unsubscribe(this);
+    
     protected override void Execute(ConfirmTargetSelectionRequested msg) => Confirm();
     protected override void Execute(CancelTargetSelectionRequested msg) => Cancel();
 
@@ -63,6 +64,9 @@ public class SelectCardTargetsV2 : OnMessage<ConfirmTargetSelectionRequested, Ca
     public void Cancel() => OnCancelled();
     public void OnCancelled()
     {
+        if (!selectedCardZone.HasCards)
+            return;
+        
         Message.Publish(new PlayerCardCanceled());
         OnSelectionComplete(sourceCardZone);
     }

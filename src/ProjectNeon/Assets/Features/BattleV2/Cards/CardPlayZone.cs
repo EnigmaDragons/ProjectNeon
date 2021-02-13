@@ -45,7 +45,7 @@ public class CardPlayZone : ScriptableObject
         Mutate(c => c.Where((v, i) => i != index));
         return card;
     }
-
+    
     public void Remove(Card card) => Mutate(c => c.Where(x => x.Id != card.Id));
 
     public void Clear() => Mutate(c => Array.Empty<Card>());

@@ -19,7 +19,6 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         Message.Subscribe<TurnStarted>(_ => Activate(), this);
         Message.Subscribe<TargetSelectionFinished>(_ => Activate(), this);
         Message.Subscribe<PlayerTurnConfirmationAborted>(_ => SetIsConfirming(false), this);
-        Message.Subscribe<TargetSelectionBegun>(_ => Deactivate(), this);
         Message.Subscribe<PlayerTurnConfirmationStarted>(_ => SetIsConfirming(true), this);
         Message.Subscribe<ToggleUseCardAsBasic>(_ => ToggleAsBasic(), this);
         Message.Subscribe<RecycleCard>(_ => Recycle(), this);
@@ -48,12 +47,6 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     private void Activate()
     {
         _isDirty = true;
-    }
-
-    private void Deactivate()
-    {
-        _isDirty = true;
-        _shouldHighlight = false;
     }
     
     private void Update()

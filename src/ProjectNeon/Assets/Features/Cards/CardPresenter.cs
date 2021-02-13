@@ -302,25 +302,30 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _isDragging = true;
         canvasGroup.blocksRaycasts = false;
         if (_requiresPlayerTargeting)
+        {
             Message.Publish(new ShowMouseTargetArrow(new Vector3(0, 2f, 0)));
+            Message.Publish(new BeginTargetSelectionRequested(_card));
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!IsHand)
-            return;
-        
-        _isDragging = false;
-        canvasGroup.blocksRaycasts = true;
-        Message.Publish(new HideMouseTargetArrow());
+        if (IsHand)
+            ReturnHandToNormal();
     }
 
-    public void Activate()
+    private void ReturnHandToNormal()
     {
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
         Message.Publish(new HideMouseTargetArrow());
-        
+        if (_requiresPlayerTargeting)
+            Message.Publish(new CancelTargetSelectionRequested());
+    }
+
+    public void Activate()
+    {
+        ReturnHandToNormal();
         _onClick();
     }
 
