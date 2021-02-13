@@ -13,7 +13,7 @@ public class HoverCharacter : MonoBehaviour
     private bool _hovered;
     private Action _confirmAction;
     private Action _cancelAction;
-
+    
     private void Update()
     {
         if (!_hovered)
@@ -27,6 +27,11 @@ public class HoverCharacter : MonoBehaviour
     
     private void Awake()
     {
+        const int characterObjectLayer = 10;
+        if (gameObject.layer != characterObjectLayer)
+            Log.Error($"{Member.Name} does not have the correct Game Object Layer. Must be Character.");
+        if (!GetComponent<BoxCollider2D>().isTrigger)
+            Log.Error($"{Member.Name}'s Box Collider must be a trigger.");
         _renderer = GetComponent<SpriteRenderer>();
         _originalMaterial = _renderer.material;
     }
