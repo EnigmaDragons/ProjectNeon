@@ -5,8 +5,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    private const float _clickMoveDistance = 30f;
+    private const float _clickTweenSpeed = 0.03f;
+    
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardRarityPresenter rarity;
     [SerializeField] private CardTargetPresenter target;
@@ -242,8 +245,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             return;
         if (eventData.button == PointerEventData.InputButton.Middle) 
             _onMiddleMouse();
-        if (IsHand && _card != null && eventData.button == PointerEventData.InputButton.Right)
+        if (IsHand && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
+        if (IsHand && eventData.button == PointerEventData.InputButton.Left)
+        {
+            Cursor.visible = false;
+            transform.DOMove(transform.position + new Vector3(0, _clickMoveDistance, 0), _clickTweenSpeed);
+        }
     }
     
     public void OnPointerEnter(PointerEventData eventData)
@@ -274,7 +282,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (!IsHand)
             return;
         
-        Cursor.visible = false;
         _isDragging = true;
         canvasGroup.blocksRaycasts = false;
     }
@@ -284,14 +291,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (!IsHand)
             return;
         
-        Cursor.visible = true;
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
     }
 
-    public void Click()
+    public void Activate()
     {
-        Cursor.visible = true;
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
         _onClick();
@@ -299,4 +304,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     #endregion
 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Cursor.visible = true;
+        if (IsHand && eventData.button == PointerEventData.InputButton.Left)
+        {
+            transform.DOMove(transform.position + new Vector3(0, -_clickMoveDistance, 0), _clickTweenSpeed);
+        }
+    }
 }

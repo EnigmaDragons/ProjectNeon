@@ -7,7 +7,7 @@ public sealed class CardPlayDropTarget : MonoBehaviour, IDropHandler
     {
         var cardComponent = eventData.pointerDrag.GetComponent<CardPresenter>();
         if (cardComponent != null)
-            cardComponent.Click();
+            cardComponent.Activate();
     }
 }
 
