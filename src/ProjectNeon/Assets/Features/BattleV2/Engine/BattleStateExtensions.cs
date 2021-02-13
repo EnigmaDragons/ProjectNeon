@@ -5,7 +5,7 @@ public static class BattleStateExtensions
     {
         if (!member.IsConscious())
             return false;
-        if (member.State[TemporalStatType.TurnStun] > 0)
+        if (member.State[TemporalStatType.Disabled] > 0)
             return false;
         return member.CanAfford(c);
     }

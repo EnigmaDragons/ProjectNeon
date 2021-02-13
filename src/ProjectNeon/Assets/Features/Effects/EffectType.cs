@@ -54,7 +54,7 @@ public enum EffectType
     RedrawHandOfCards = 77,
     DrawCards = 81,
     
-    StunForTurns = 13,
+    DisableForTurns = 13,
     InterceptAttackForTurns = 18,
     HealOverTime = 20,
     HealMagic = 45,

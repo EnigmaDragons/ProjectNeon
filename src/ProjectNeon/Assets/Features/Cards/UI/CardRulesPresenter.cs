@@ -21,6 +21,7 @@ public class CardRulesPresenter : MonoBehaviour
         battleEffects.ForEach(b =>
         {
             rulesToShow.AddIf("Vulnerable", b.EffectType == EffectType.ApplyVulnerable);
+            rulesToShow.AddIf(TemporalStatType.Disabled.ToString(), b.EffectType == EffectType.DisableForTurns);
             
             AddAllMatchingEffectScopeRules(rulesToShow, b, 
                 TemporalStatType.Evade.ToString(), 
@@ -29,7 +30,8 @@ public class CardRulesPresenter : MonoBehaviour
                 TemporalStatType.Spellshield.ToString(),
                 TemporalStatType.CardStun.ToString(),
                 TemporalStatType.DoubleDamage.ToString(),
-                PlayerStatType.CardCycles.ToString());
+                PlayerStatType.CardCycles.ToString(),
+                TemporalStatType.Disabled.ToString());
         });
         
         rulesToShow

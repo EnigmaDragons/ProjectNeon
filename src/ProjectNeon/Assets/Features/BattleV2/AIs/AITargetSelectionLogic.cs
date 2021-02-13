@@ -28,11 +28,11 @@ public static class AITargetSelectionLogic
         if (possibleTargets.Where(isPreferredTarget).Any())
             possibleTargets = possibleTargets.Where(isPreferredTarget).ToArray();
 
-        if (card.Is(CardTag.Stun))
+        if (card.Is(CardTag.Disable))
         {
-            var stunnedTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsStunnedForCurrentTurn()));
-            var stunSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Stun, out var targets) ? targets : new HashSet<Target>();
-            var saneTargets = possibleTargets.Except(stunSelectedTargets).Except(stunnedTargets);
+            var disabledTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsDisabled()));
+            var disableSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Disable, out var targets) ? targets : new HashSet<Target>();
+            var saneTargets = possibleTargets.Except(disableSelectedTargets).Except(disabledTargets);
             var actualTargets = saneTargets.Any() ? saneTargets : possibleTargets;
             return actualTargets.MostPowerful();
         }
@@ -88,7 +88,7 @@ public static class AITargetSelectionLogic
         var targets = ctx.SelectedTargets(isPreferredTarget);
 
         var card = ctx.SelectedCard.Value.CreateInstance(NextCardId.Get(), ctx.Member);
-        RecordNonStackingTags(CardTag.Stun, ctx, targets);
+        RecordNonStackingTags(CardTag.Disable, ctx, targets);
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
         RecordNonStackingTags(CardTag.Taunt, ctx, targets);
         

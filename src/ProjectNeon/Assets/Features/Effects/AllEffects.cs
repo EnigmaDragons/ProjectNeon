@@ -28,7 +28,7 @@ public static class AllEffects
         { EffectType.DamageOverTime, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => BattleLogged($"{m.Name} has become vulnerable",
             () => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, new StatusDetail(StatusTag.Vulnerable)))))) },
-        { EffectType.StunForTurns, e => new SimpleEffect(m => BattleLogged($"{m.Name} is stunned for {e.NumberOfTurns} turns.", () => m.ApplyTemporaryAdditive(new StunForTurns(e.NumberOfTurns))))},
+        { EffectType.DisableForTurns, e => new SimpleEffect(m => BattleLogged($"{m.Name} is disabled for {e.NumberOfTurns} turns.", () => m.ApplyTemporaryAdditive(new DisableForTurns(e.NumberOfTurns))))},
         { EffectType.InterceptAttackForTurns, e => new InterceptAttack(e.NumberOfTurns)},
         { EffectType.Attack, e => new Attack(new PhysicalDamage(e.BaseAmount, e.FloatAmount), e.HitsRandomTargetMember)},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.NumberOfTurns) },

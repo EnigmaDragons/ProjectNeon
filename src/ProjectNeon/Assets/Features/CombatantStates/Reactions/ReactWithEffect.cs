@@ -26,9 +26,9 @@ public class EffectReactWith : Effect
                 
                 var targetMembers = effect.Target.Members;
                 var stunsBefore = targetMembers.Select(t => effect.BattleBefore.Members[t.Id])
-                    .Sum(x => x.State[TemporalStatType.CardStun] + x.State[TemporalStatType.TurnStun]);
+                    .Sum(x => x.State[TemporalStatType.CardStun] + x.State[TemporalStatType.Disabled]);
                 var stunsAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
-                    .Sum(x => x.State[TemporalStatType.CardStun] + x.State[TemporalStatType.TurnStun]);
+                    .Sum(x => x.State[TemporalStatType.CardStun] + x.State[TemporalStatType.Disabled]);
                 return stunsAfter > stunsBefore;
             }
         },
