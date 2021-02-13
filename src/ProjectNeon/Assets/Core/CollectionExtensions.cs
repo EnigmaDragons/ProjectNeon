@@ -92,4 +92,10 @@ public static class CollectionExtensions
             if (set.Add(selector(item)))
                 yield return item;
     }
+
+    public static void AddIf<T>(this List<T> items, T item, bool condition)
+    {
+        if (condition)
+            items.Add(item);
+    }
 }

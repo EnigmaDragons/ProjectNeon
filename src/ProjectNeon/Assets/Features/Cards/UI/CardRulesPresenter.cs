@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CardRulesPresenter : MonoBehaviour
@@ -12,10 +13,9 @@ public class CardRulesPresenter : MonoBehaviour
     {
         Hide();
         var rulesToShow = new List<string>();
-        if (d.TimingType == CardTimingType.Instant)
-            rulesToShow.Add("Instant");
-        if (d.Cost.PlusXCost)
-            rulesToShow.Add("X-Cost");
+        rulesToShow.AddIf("Instant", d.TimingType == CardTimingType.Instant);
+        rulesToShow.AddIf("X-Cost", d.Cost.PlusXCost);
+        rulesToShow.AddIf("Chain", d.ChainedCard.IsPresent);
         
         var battleEffects = d.BattleEffects();
         battleEffects.ForEach(b =>
@@ -23,23 +23,15 @@ public class CardRulesPresenter : MonoBehaviour
             if (b.EffectType == EffectType.ApplyVulnerable)
                 rulesToShow.Add("Vulnerable");
             
-            if (b.EffectScope == null) 
-                return;
-            if (b.EffectScope.Value.Equals("Evade"))
-                rulesToShow.Add("Evade");
-            if (b.EffectScope.Value.Equals("Taunt"))
-                rulesToShow.Add("Taunt");
-            if (b.EffectScope.Value.Equals("Blind"))
-                rulesToShow.Add("Blind");
-            if (b.EffectScope.Value.Equals("Spellshield"))
-                rulesToShow.Add("Spellshield");
-            if (b.EffectScope.Value.Equals("CardStun"))
-                rulesToShow.Add("CardStun");
+            AddAllMatchingEffectScopeRules(rulesToShow, b, "Evade", "Taunt", "Blind", "Spellshield", "CardStun");
         });
         
         rulesToShow
             .ForEach(r => Instantiate(rulePresenterPrototype, rulesParent.transform).Initialized(r));
     }
+
+    private void AddAllMatchingEffectScopeRules(List<string> rulesToShow, EffectData e, params string[] scopes) 
+        => scopes.ForEach(s => rulesToShow.AddIf(s, e.EffectScope != null && s.Equals(e.EffectScope.Value)));
 
     public void Hide()
     {
