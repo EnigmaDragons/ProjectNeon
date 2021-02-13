@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -39,8 +40,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Action _onMiddleMouse;
     private Vector3 _position;
     private string _zone;
-    
-    private bool IsHand => _zone.Contains("Hand");
+
+    private bool IsHand => _isHand;
+    private bool _isHand;
+    private bool _requiresPlayerTargeting;
 
     public string CardName => _cardType.Name;
     public bool Contains(Card c) => HasCard && c.Id == _card.Id;
@@ -66,6 +69,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType = card.Type;
         _getCanPlay = getCanPlay;
         _zone = zone;
+        _isHand = _zone.Contains("Hand");
+        _requiresPlayerTargeting = IsHand && _card.ActionSequences
+            .Any(seq => battleState.GetPossibleConsciousTargets(_card.Owner, seq.Group, seq.Scope).Length > 1);
         RenderCardType();
     }
     
@@ -77,6 +83,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType = cardType;
         _getCanPlay = (_, __) => false;
         _zone = "Library";
+        _isHand = false;
+        _requiresPlayerTargeting = false;
         RenderCardType();
     }
 
@@ -254,6 +262,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
     
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Cursor.visible = true;
+        if (IsHand && eventData.button == PointerEventData.InputButton.Left)
+        {
+            transform.DOMove(transform.position + new Vector3(0, -_clickMoveDistance, 0), _clickTweenSpeed);
+        }
+    }
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!eventData.dragging && IsHand && battleState.Phase == BattleV2Phase.Command)
@@ -273,8 +290,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (!IsHand)
             return;
         
-        var t = transform;
-        transform.localPosition = t.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
+        if (!_requiresPlayerTargeting)
+            transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
     }
     
     public void OnBeginDrag(PointerEventData eventData)
@@ -284,6 +301,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         
         _isDragging = true;
         canvasGroup.blocksRaycasts = false;
+        if (_requiresPlayerTargeting)
+            Message.Publish(new ShowMouseTargetArrow(new Vector3(0, 2f, 0)));
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -293,23 +312,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
+        Message.Publish(new HideMouseTargetArrow());
     }
 
     public void Activate()
     {
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
+        Message.Publish(new HideMouseTargetArrow());
+        
         _onClick();
     }
 
     #endregion
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        Cursor.visible = true;
-        if (IsHand && eventData.button == PointerEventData.InputButton.Left)
-        {
-            transform.DOMove(transform.position + new Vector3(0, -_clickMoveDistance, 0), _clickTweenSpeed);
-        }
-    }
 }
