@@ -29,6 +29,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float dragScaleFactor = 1 / 0.7f;
     [SerializeField] private float highlightedScale = 1.7f;
+    [SerializeField] private CardRulesPresenter rules;
 
     private Card _card;
     private CardTypeData _cardType;
@@ -71,7 +72,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _zone = zone;
         _isHand = _zone.Contains("Hand");
         _requiresPlayerTargeting = true;
-        //IsHand && _card.ActionSequences.Any(seq => battleState.GetPossibleConsciousTargets(_card.Owner, seq.Group, seq.Scope).Length > 1);
         RenderCardType();
     }
     
@@ -166,6 +166,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
 
         highlight.SetActive(IsPlayable && active);
+        if (active)
+            rules.Show(_cardType);
+        else
+            rules.Hide();
+        
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
         var position = active ? _position + new Vector3(0, sign * 180f, sign * 2f) : _position;

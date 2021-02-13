@@ -29,7 +29,8 @@ MonoBehaviour:
     Value: '<b>Evade</b>
 
 
-      Completely avoids the next X physical attacks.'
+      Each evade token allows a character to completely
+      avoid the next attack.'
   - Key:
       UseConstant: 0
       ConstantValue: 
@@ -57,3 +58,12 @@ MonoBehaviour:
 
       Expends all of the associated resource. Grants
       effects that scale off the amount of resources spent.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 5ce2e581031f090468e64b6e75e49c9c, type: 2}
+    Value: '<b>Instant</b>
+
+
+      Resolves this card immediately. Does not count
+      toward card play limit.'
