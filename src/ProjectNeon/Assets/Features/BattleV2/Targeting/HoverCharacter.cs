@@ -20,7 +20,10 @@ public class HoverCharacter : MonoBehaviour
             return;
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
+        {
+            Log.Info($"UI - Confirmed {Member.Name}");
             _confirmAction();
+        }
         else if (Input.GetMouseButtonDown(1)) 
             _cancelAction();
     }

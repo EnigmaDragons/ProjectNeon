@@ -70,8 +70,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _getCanPlay = getCanPlay;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _requiresPlayerTargeting = IsHand && _card.ActionSequences
-            .Any(seq => battleState.GetPossibleConsciousTargets(_card.Owner, seq.Group, seq.Scope).Length > 1);
+        _requiresPlayerTargeting = true;
+        //IsHand && _card.ActionSequences.Any(seq => battleState.GetPossibleConsciousTargets(_card.Owner, seq.Group, seq.Scope).Length > 1);
         RenderCardType();
     }
     
@@ -287,7 +287,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void OnDrag(PointerEventData eventData)
     {
-        if (!IsHand)
+        if (!IsHand || !IsPlayable)
             return;
         
         if (!_requiresPlayerTargeting)
@@ -296,7 +296,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!IsHand)
+        if (!IsHand || !IsPlayable)
             return;
         
         _isDragging = true;
@@ -310,8 +310,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (IsHand)
-            ReturnHandToNormal();
+        if (!IsHand || !IsPlayable)
+            return;
+        
+        ReturnHandToNormal();
     }
 
     private void ReturnHandToNormal()
@@ -319,14 +321,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
         Message.Publish(new HideMouseTargetArrow());
-        if (_requiresPlayerTargeting)
-            Message.Publish(new CancelTargetSelectionRequested());
     }
 
     public void Activate()
     {
         ReturnHandToNormal();
-        _onClick();
+        if (_requiresPlayerTargeting)
+            Message.Publish(new ConfirmTargetSelectionRequested());
+        else
+            _onClick();
     }
 
     #endregion

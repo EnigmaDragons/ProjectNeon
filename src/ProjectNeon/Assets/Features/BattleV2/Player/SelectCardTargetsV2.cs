@@ -16,6 +16,8 @@ public class SelectCardTargetsV2 : OnMessage<ConfirmTargetSelectionRequested, Ca
     private int _actionIndex;
     private int _numActions;
     private Target[] _actionTargets;
+
+    private void Awake() => Log.Info(nameof(SelectCardTargetsV2));
     
     protected override void AfterEnable() => selectedCardZone.OnZoneCardsChanged.Subscribe(BeginSelection, this);
     protected override void AfterDisable() => selectedCardZone.OnZoneCardsChanged.Unsubscribe(this);

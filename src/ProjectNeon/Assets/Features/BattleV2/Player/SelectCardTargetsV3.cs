@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, CancelTargetSelectionRequested>
+public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, ConfirmTargetSelectionRequested, CancelTargetSelectionRequested>
 {
     [SerializeField] private CardResolutionZone cardResolutionZone;
     [SerializeField] private CardPlayZone destinationCardZone;
@@ -20,7 +20,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, Canc
         card = msg.Card;
         battleState.IsSelectingTargets = true;
         Message.Publish(new TargetSelectionBegun(card.Type));
-        Log.Info($"Began Target Selection for {card.Name}");
+        Log.Info($"UI - Began Target Selection for {card.Name}");
 
         _actionIndex = 0;
         _numActions = card.ActionSequences.Length;
@@ -35,6 +35,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, Canc
         PresentPossibleTargets();
     }
 
+    protected override void Execute(ConfirmTargetSelectionRequested msg) => Confirm();
     protected override void Execute(CancelTargetSelectionRequested msg) => Cancel();
     
     private void PresentPossibleTargets()
@@ -42,23 +43,32 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, Canc
         var action = card.ActionSequences[_actionIndex];
         var possibleTargets = battleState.GetPossibleConsciousTargets(card.Owner, action.Group, action.Scope == Scope.AllExcept ? Scope.One : action.Scope);
         targetingState.WithPossibleTargets(possibleTargets);
-        if (possibleTargets.Length == 1)
-            OnTargetConfirmed(action.Group, action.Scope);
-        else
-            Message.Publish(new SelectionPossibleTargetsAvailable(possibleTargets));
+        Message.Publish(new SelectionPossibleTargetsAvailable(possibleTargets));
     }
 
     public void Cancel() => OnCancelled();
     public void OnCancelled()
     {
+        Log.Info($"UI - Canceled Card {card.Name}");
         Message.Publish(new PlayerCardCanceled());
         OnSelectionComplete();
     }
 
-    public void Confirm() => OnTargetConfirmed(card.ActionSequences[_actionIndex].Group, card.ActionSequences[_actionIndex].Scope);
+    public void Confirm()
+    {
+        if (card == null)
+            Log.Error("Tried to Confirm Card but none was selected");
+        OnTargetConfirmed(card.ActionSequences[_actionIndex].Group, card.ActionSequences[_actionIndex].Scope);
+    }
+
     public void OnTargetConfirmed(Group group, Scope scope)
     {
-        Debug.Log("Confirmed Target");
+        if (card == null)
+        {
+            Log.Info("UI - Attempted to confirm target, but Card was missing.");
+            return;
+        }
+
         if (_actionTargets.Length == 0)
             PlayCard(new PlayedCardV2(card.Owner, new Target[] {new Single(card.Owner),}, card));
 
@@ -80,6 +90,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, Canc
 
     private void PlayCard(PlayedCardV2 playedCard)
     {
+        Debug.Log($"UI - Playing {card.Name} on {string.Join(" | ", _actionTargets.Select(x => x.ToString()))}");
         cardResolutionZone.Add(playedCard);
         Message.Publish(new PlayerCardSelected());
         sourceCardZone.Remove(card);
@@ -91,6 +102,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, Canc
     {
         card = null;
         battleState.IsSelectingTargets = false;
+        Log.Info("UI - Target Selection Finished");
         Message.Publish(new TargetSelectionFinished());
     }
 }

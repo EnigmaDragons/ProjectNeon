@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, TargetSelectionFinished, CardResolutionStarted, CardResolutionFinished>
+public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, TargetSelectionFinished, PlayerCardCanceled, CardResolutionStarted, CardResolutionFinished>
 {
     [SerializeField] private PartyUiSummaryV2 partyUi;
     [SerializeField] private ResolutionZoneOffset resolutionPhaseUi;
@@ -60,6 +60,7 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
 
     protected override void Execute(TargetSelectionBegun msg) {}
     protected override void Execute(TargetSelectionFinished msg) => RefreshHandVisibility();
+    protected override void Execute(PlayerCardCanceled msg) => RefreshHandVisibility();
     protected override void Execute(CardResolutionStarted msg)
     {
         if (!msg.Card.IsInstant()) 
