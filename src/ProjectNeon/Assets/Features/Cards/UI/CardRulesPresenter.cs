@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CardRulesPresenter : MonoBehaviour
@@ -10,8 +11,20 @@ public class CardRulesPresenter : MonoBehaviour
     public void Show(CardTypeData d)
     {
         Hide();
+        var rulesToShow = new List<string>();
         if (d.TimingType == CardTimingType.Instant)
-            Instantiate(rulePresenterPrototype, rulesParent.transform).Initialized("Instant");
+            rulesToShow.Add("Instant");
+        
+        var battleEffects = d.BattleEffects();
+        battleEffects.ForEach(b =>
+        {
+            if (b.EffectScope != null)
+                if (b.EffectScope.Value.Equals("Evade"))
+                    rulesToShow.Add("Evade");
+        });
+        
+        rulesToShow
+            .ForEach(r => Instantiate(rulePresenterPrototype, rulesParent.transform).Initialized(r));
     }
 
     public void Hide()
