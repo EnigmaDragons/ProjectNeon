@@ -27,7 +27,8 @@ public class CardRulesPresenter : MonoBehaviour
                 TemporalStatType.Taunt.ToString(), 
                 TemporalStatType.Blind.ToString(),
                 TemporalStatType.Spellshield.ToString(),
-                TemporalStatType.CardStun.ToString(), 
+                TemporalStatType.CardStun.ToString(),
+                TemporalStatType.DoubleDamage.ToString(),
                 PlayerStatType.CardCycles.ToString());
         });
         
