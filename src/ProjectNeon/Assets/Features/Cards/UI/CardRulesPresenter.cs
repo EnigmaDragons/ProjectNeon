@@ -14,6 +14,8 @@ public class CardRulesPresenter : MonoBehaviour
         var rulesToShow = new List<string>();
         if (d.TimingType == CardTimingType.Instant)
             rulesToShow.Add("Instant");
+        if (d.Cost.PlusXCost)
+            rulesToShow.Add("X-Cost");
         
         var battleEffects = d.BattleEffects();
         battleEffects.ForEach(b =>
