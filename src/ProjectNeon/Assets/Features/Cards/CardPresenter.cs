@@ -274,6 +274,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (!IsHand)
             return;
         
+        Cursor.visible = false;
         _isDragging = true;
         canvasGroup.blocksRaycasts = false;
     }
@@ -283,12 +284,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (!IsHand)
             return;
         
+        Cursor.visible = true;
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
     }
 
     public void Click()
     {
+        Cursor.visible = true;
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
         _onClick();
