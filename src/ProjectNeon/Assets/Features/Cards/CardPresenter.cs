@@ -255,7 +255,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             _onMiddleMouse();
         if (IsHand && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
-        if (IsHand && eventData.button == PointerEventData.InputButton.Left)
+        if (IsHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
             Cursor.visible = false;
             transform.DOMove(transform.position + new Vector3(0, _clickMoveDistance, 0), _clickTweenSpeed);
@@ -265,7 +265,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnPointerUp(PointerEventData eventData)
     {
         Cursor.visible = true;
-        if (IsHand && eventData.button == PointerEventData.InputButton.Left)
+        if (IsHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
             transform.DOMove(transform.position + new Vector3(0, -_clickMoveDistance, 0), _clickTweenSpeed);
         }
