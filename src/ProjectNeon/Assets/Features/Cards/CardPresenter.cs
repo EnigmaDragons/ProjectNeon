@@ -232,7 +232,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public void MiddleClick() => _onMiddleMouse();
     
     public void OnPointerDown(PointerEventData eventData)
-    { 
+    {
+        if (eventData.dragging)
+            return;
         DebugLog($"UI - Pointer Down - {CardName}");
         if (!IsHand && eventData.button == PointerEventData.InputButton.Left)
             _onClick();
@@ -246,7 +248,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsHand && battleState.Phase == BattleV2Phase.Command)
+        if (!eventData.dragging && IsHand && battleState.Phase == BattleV2Phase.Command)
             Message.Publish(new CardHoverEnter(this));
     }
 
