@@ -20,10 +20,15 @@ public class CardRulesPresenter : MonoBehaviour
         var battleEffects = d.BattleEffects();
         battleEffects.ForEach(b =>
         {
-            if (b.EffectType == EffectType.ApplyVulnerable)
-                rulesToShow.Add("Vulnerable");
+            rulesToShow.AddIf("Vulnerable", b.EffectType == EffectType.ApplyVulnerable);
             
-            AddAllMatchingEffectScopeRules(rulesToShow, b, "Evade", "Taunt", "Blind", "Spellshield", "CardStun");
+            AddAllMatchingEffectScopeRules(rulesToShow, b, 
+                TemporalStatType.Evade.ToString(), 
+                TemporalStatType.Taunt.ToString(), 
+                TemporalStatType.Blind.ToString(),
+                TemporalStatType.Spellshield.ToString(),
+                TemporalStatType.CardStun.ToString(), 
+                PlayerStatType.CardCycles.ToString());
         });
         
         rulesToShow
