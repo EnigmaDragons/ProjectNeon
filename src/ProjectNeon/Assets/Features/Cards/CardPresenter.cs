@@ -234,6 +234,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public void OnPointerDown(PointerEventData eventData)
     { 
         DebugLog($"UI - Pointer Down - {CardName}");
+        if (!IsHand && eventData.button == PointerEventData.InputButton.Left)
+            _onClick();
         if (battleState.IsSelectingTargets)
             return;
         if (eventData.button == PointerEventData.InputButton.Middle) 
@@ -258,18 +260,27 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     
     public void OnDrag(PointerEventData eventData)
     {
+        if (!IsHand)
+            return;
+        
         var t = transform;
         transform.localPosition = t.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
     }
     
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!IsHand)
+            return;
+        
         _isDragging = true;
         canvasGroup.blocksRaycasts = false;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!IsHand)
+            return;
+        
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
     }
