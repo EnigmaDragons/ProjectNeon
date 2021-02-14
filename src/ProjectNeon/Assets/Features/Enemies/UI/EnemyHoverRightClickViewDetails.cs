@@ -14,7 +14,7 @@ public class EnemyHoverRightClickViewDetails : OnMessage<CharacterHoverChanged>
         _char = msg.HoverCharacter;
         msg.HoverCharacter.IfPresent(h =>
         {
-            if (h.Member.TeamType == TeamType.Enemies)
+            if (h.IsInitialized && h.Member.TeamType == TeamType.Enemies)
             {
                 h.SetAction(() => { }, () =>
                 {

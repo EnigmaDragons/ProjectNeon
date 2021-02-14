@@ -8,14 +8,17 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private MemberStatPanel statPanel;
     [SerializeField] private ReadOnlyEnemyDeckUI enemyDeckUi;
 
+    private bool _isInitialized;
+    
     private void Awake()
     {
-        if (staringEnemy != null)
+        if (!_isInitialized && staringEnemy != null)
             Show(staringEnemy);
     }
 
     public void Show(Enemy e)
     {
+        _isInitialized = true;
         nameLabel.text = e.Name;
         statPanel.Initialized(e.Stats);
         enemyDeckUi.Show(e.Deck);   
