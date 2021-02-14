@@ -50,13 +50,15 @@ public class BattleSetupV2 : MonoBehaviour
         ClearResolutionZone();
         SetupEnemyEncounter();
         yield return visuals.Setup(); // Could Animate
+        Message.Publish(new PlayerDeckShuffled()); // Play sound early for flow
         
         var enemies = state.FinishSetup();
         visuals.Setup2(enemies);
         visuals.AfterBattleStateInitialized();
         
         ui.Setup();
-        SetupPlayerCards();
+        yield return new WaitForSeconds(0.1f);
+        yield return SetupPlayerCards();
         yield return new WaitForSeconds(1.05f);
         DevLog.Write("Finished Battle Setup");
     }
@@ -91,7 +93,7 @@ public class BattleSetupV2 : MonoBehaviour
         }
     }
     
-    private void SetupPlayerCards()
+    private IEnumerator SetupPlayerCards()
     {
         if (!party.IsInitialized)
             throw new Exception("Cannot Setup Player Cards, Party Is Not Initialized");
@@ -109,6 +111,10 @@ public class BattleSetupV2 : MonoBehaviour
 
         DevLog.Write("Setting Up Player Hand");
         Deck.InitShuffled(cards);
-        playerCardPlayZones.DrawHand(startingCards.Value);
+        while (playerCardPlayZones.HandZone.Count < startingCards.Value)
+        {
+            playerCardPlayZones.DrawOneCard();
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 }
