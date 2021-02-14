@@ -312,7 +312,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!eventData.dragging && IsHand && battleState.Phase == BattleV2Phase.Command)
+        if (!eventData.dragging && IsHand && battleState.Phase == BattleV2Phase.PlayCards)
             Message.Publish(new CardHoverEnter(this));
     }
 

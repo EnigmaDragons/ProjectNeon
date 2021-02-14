@@ -14,6 +14,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private CurrentAdventure adventure;
     [SerializeField] private bool needsCleanup;
     [SerializeField] private bool isEliteBattle;
+    [SerializeField] private BattleV2Phase phase;
     
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
@@ -33,7 +34,7 @@ public class BattleState : ScriptableObject
     private int _numberOfRecyclesRemainingThisTurn = 0;
     
     public bool IsSelectingTargets = false;
-    public BattleV2Phase Phase = BattleV2Phase.NotBegun;
+    public BattleV2Phase Phase => phase;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
     public int RewardCredits => rewardCredits;
     public CardType[] RewardCards => rewardCards; 
@@ -78,9 +79,14 @@ public class BattleState : ScriptableObject
 
     public void Init()
     {
-        Phase = BattleV2Phase.NotBegun;
+        SetPhase(BattleV2Phase.NotBegun);
         NextCardId.Reset();
         IsSelectingTargets = false;
+    }
+
+    public void SetPhase(BattleV2Phase p)
+    {
+        UpdateState(() => phase = p);
     }
 
     public int GetNextCardId() => NextCardId.Get();

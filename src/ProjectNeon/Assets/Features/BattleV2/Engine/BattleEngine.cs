@@ -50,7 +50,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     
     private void BeginCommandPhase()
     {
-        BeginPhase(BattleV2Phase.Command);
+        BeginPhase(BattleV2Phase.PlayCards);
         _unconsciousness.ProcessUnconsciousMembers(state);
         _unconsciousness.ProcessRevivedMembers(state);
         if (state.BattleIsOver())
@@ -93,6 +93,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         else
         {
             turnWrapUp.Execute();
+            BeginPhase(BattleV2Phase.EndOfTurnEffects);
             statusPhase.ProcessEndOfTurnEffects();
         }
     }
@@ -123,7 +124,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         var message = $"{finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);
         phase = newPhase;
-        state.Phase = newPhase;
+        state.SetPhase(newPhase);
     }
     
     private void LogProcessStep(string message)

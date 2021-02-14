@@ -111,7 +111,7 @@ public class CardResolutionZone : ScriptableObject
     {
         Debug.Log("UI - Remove Last Played Card");
         if (_moves.None() || 
-            battleState.Phase != BattleV2Phase.Command || 
+            battleState.Phase != BattleV2Phase.PlayCards || 
             isResolving || 
             battleState.IsSelectingTargets) 
                 return;

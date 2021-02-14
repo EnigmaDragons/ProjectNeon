@@ -138,7 +138,7 @@ public sealed class HandVisualizer : MonoBehaviour
     public void SelectCard(int cardIndex)
     {
         Log.Info($"UI: Selected Card");
-        if (state.Phase != BattleV2Phase.Command)
+        if (state.Phase != BattleV2Phase.PlayCards)
             return;
         
         if (allowInteractions && Hand.Count > cardIndex)
