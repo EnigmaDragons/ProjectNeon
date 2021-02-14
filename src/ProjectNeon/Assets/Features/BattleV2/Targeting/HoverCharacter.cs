@@ -8,6 +8,7 @@ public class HoverCharacter : MonoBehaviour
     private Material _originalMaterial;
     private Member _member;
 
+    public bool IsInitialized => _member != null;
     public Member Member => _member;
 
     private bool _hovered;
