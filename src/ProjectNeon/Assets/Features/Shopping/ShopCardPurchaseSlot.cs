@@ -35,6 +35,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
         
         var canAfford = party.Credits >= _price;
         cardPresenter.Set(_card, canAfford ? PurchaseCard : (Action)(() => { }));
+        cardPresenter.SetRightClickAction(_card.ShowDetailedCardView);
         if (!canAfford)
             cardPresenter.SetDisabled(true);
     }
