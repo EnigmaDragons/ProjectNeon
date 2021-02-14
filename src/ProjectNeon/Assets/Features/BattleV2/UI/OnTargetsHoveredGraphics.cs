@@ -14,7 +14,7 @@ public class OnTargetsHoveredGraphics : OnMessage<TargetChanged, TargetSelection
             Destroy(instance);
         _targetingInstances = msg.Target.IsMissing
             ? new GameObject[0]
-            : msg.Target.Value.Members.Select(x => Instantiate(targetingPrefab, battleState.GetTransform(x.Id))).ToArray();
+            : msg.Target.Value.Members.Select(x => InitTargetingPrefab(x.Id)).ToArray();
     }
 
     protected override void Execute(TargetSelectionFinished msg)
@@ -22,5 +22,16 @@ public class OnTargetsHoveredGraphics : OnMessage<TargetChanged, TargetSelection
         foreach (var instance in _targetingInstances)
             Destroy(instance);
         _targetingInstances = new GameObject[0];
+    }
+
+    private GameObject InitTargetingPrefab(int memberId)
+    {
+        var memberTransform = battleState.GetTransform(memberId);
+        var centerPoint = memberTransform.GetComponentInChildren<CenterPoint>();
+        var parent = centerPoint?.transform ?? memberTransform;
+        var obj = Instantiate(targetingPrefab);
+        obj.transform.parent = parent;
+        obj.transform.localPosition = Vector3.zero;
+        return obj;
     }
 }

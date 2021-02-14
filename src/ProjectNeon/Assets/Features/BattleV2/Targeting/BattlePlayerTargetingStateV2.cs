@@ -24,12 +24,16 @@ public class BattlePlayerTargetingStateV2 : ScriptableObject
             TargetMember = memberId;
             Message.Publish(new TargetChanged(MemberToTargetMap[0][memberId]));
         }
-        else if (!TargetMember.IsMissing)
+        else
+            StopIndicating();
+    }
+
+    public void StopIndicating()
+    {
+        if (!TargetMember.IsMissing)
         {
             TargetMember = Maybe<int>.Missing();
             Message.Publish(new TargetChanged());
         }
-    }
-
-    public void StopIndicating() => TargetMember = Maybe<int>.Missing();
+    } 
 }
