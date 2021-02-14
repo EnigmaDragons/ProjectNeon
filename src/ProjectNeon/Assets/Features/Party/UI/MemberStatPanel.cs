@@ -26,4 +26,17 @@ public sealed class MemberStatPanel : MonoBehaviour
         
         return this;
     }
+
+    public MemberStatPanel Initialized(IStats s)
+    {
+        hpLabel.text = $"{s.MaxHp()}";
+        maxShieldLabel.text = $"{s.MaxShield()}";
+        attackLabel.text = $"{s.Attack()}";
+        magicLabel.text = $"{s.Magic()}";
+        armorLabel.text = $"{s.Armor()}";
+        resistLabel.text = $"{s.Resistance()}";
+        toughLabel.text = $"{s.Toughness()}";
+        leaderLabel.text = $"{s.Leadership()}";
+        return this;
+    }
 }
