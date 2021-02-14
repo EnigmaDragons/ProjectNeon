@@ -43,7 +43,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     // Hand 
     private string _zone;
     private bool _isHand;
-    
+    private bool _active;
     private bool _requiresPlayerTargeting;
 
     public string CardName => _cardType.Name;
@@ -135,14 +135,34 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
         darken.SetActive(isDisabled);
     }
-    
+
+    #region Hand Highlights
+
     public void SetHandHighlight(bool active)
     {
         if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
-
+        if (active == _active)
+            return;
         DebugLog($"Setting Highlight {active}");
+        _active = active;
         controls.SetActive(active);
+        SetSiblingIndex(active);
+        highlight.SetActive(IsPlayable && active);
+        UpdateComprehensiveCardInfo(active);
+
+        var sign = active ? 1 : -1;
+        var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
+        var tweenDuration = 0.08f;
+        if (!AreCloseEnough(scale.x, transform.localScale.x))
+            transform.DOScale(scale, tweenDuration);;
+        Log.Info($"Moving {_cardType.Name} {(sign == 1 ? "up" : "down")}");
+        Message.Publish(new TweenMovementRequested(transform, new Vector3(0, sign * 180f, sign * 2f), tweenDuration));
+        PublishCardHighlights(active);
+    }
+
+    private void SetSiblingIndex(bool active)
+    {
         if (active)
         {
             _preHighlightSiblingIndex = transform.GetSiblingIndex();
@@ -152,28 +172,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         {
             transform.SetSiblingIndex(_preHighlightSiblingIndex);
         }
-
-        highlight.SetActive(IsPlayable && active);
+    }
+    
+    private void UpdateComprehensiveCardInfo(bool active)
+    {
         if (active)
             ShowComprehensiveCardInfo();
         else
             HideComprehensiveCardInfo();
-
-        var sign = active ? 1 : -1;
-        var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
-        var position = active ? _position + new Vector3(0, sign * 180f, sign * 2f) : _position;
-        if (AreCloseEnough(scale.x, transform.localScale.x) && AreCloseEnough(position.y, transform.position.y))
-            return;
-
-        var tweenDuration = 0.08f;
-        DebugLog($"Tweening Highlight {active}");
-        transform.DOScale(scale, tweenDuration);
-        transform.DOMove(position, tweenDuration);
-        if (_card != null)
-            if (active)
-                Message.Publish(new HighlightCardOwner(_card.Owner));
-            else
-                Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
 
     public void ShowComprehensiveCardInfo()
@@ -195,10 +201,22 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Message.Publish(new HideChainedCard());
     }
     
+    private void PublishCardHighlights(bool active)
+    {
+        if (_card != null)
+            if (active)
+                Message.Publish(new HighlightCardOwner(_card.Owner));
+            else
+                Message.Publish(new UnhighlightCardOwner(_card.Owner));
+    }
+
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
+    
+    #endregion
 
     public void TeleportTo(Vector3 targetPosition)
     {
+        Message.Publish(new StopMovementTweeningRequested(transform));
         transform.position = targetPosition;
         _position = targetPosition;
     }
@@ -206,7 +224,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void SetTargetPosition(Vector3 targetPosition)
     {
         _position = targetPosition;
-        transform.DOMove(targetPosition, 1);
+        Message.Publish(new TweenMovementRequested(transform, targetPosition - transform.position, 1));
     }
 
     private void RenderCardType()
@@ -253,7 +271,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
             Cursor.visible = false;
-            transform.DOMove(transform.position + new Vector3(0, _clickMoveDistance, 0), _clickTweenSpeed);
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, _clickMoveDistance, 0), _clickTweenSpeed));
         }
         if (!_isHand && eventData.button == PointerEventData.InputButton.Left)
             _onClick();
@@ -267,9 +285,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         Cursor.visible = true;
         if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
-        {
-            transform.DOMove(transform.position + new Vector3(0, -_clickMoveDistance, 0), _clickTweenSpeed);
-        }
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, -_clickMoveDistance, 0), _clickTweenSpeed));
     }
     
     public void OnPointerEnter(PointerEventData eventData)
