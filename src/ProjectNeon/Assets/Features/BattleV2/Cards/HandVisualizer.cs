@@ -13,6 +13,7 @@ public sealed class HandVisualizer : MonoBehaviour
     [SerializeField] private bool onlyAllowInteractingWithPlayables = false;
     [SerializeField] private Vector3 unfocusedOffset = new Vector3(0, 400, 0);
     [SerializeField] private Vector3 cardRotation;
+    [SerializeField] private BattlePlayerTargetingStateV2 targetingState;
 
     private CardPlayZone Hand => zones.HandZone;
     private CardPool _cardPool;
@@ -144,10 +145,7 @@ public sealed class HandVisualizer : MonoBehaviour
         if (allowInteractions && Hand.Count > cardIndex)
             if (_cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
             {
-                if (zones.SelectionZone.IsFull)
-                    Log.Error($"Selection card zone has the card {zones.SelectionZone.Cards[0].Name}");
-                else
-                    zones.SelectionZone.PutOnBottom(Hand.Take(cardIndex));
+                Message.Publish(new EndTargetSelectionRequested());
                 UpdateVisibleCards();
             }
     }

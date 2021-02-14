@@ -71,7 +71,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _getCanPlay = getCanPlay;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _requiresPlayerTargeting = true;
+        _requiresPlayerTargeting = card.ActionSequences.Any(x 
+            => x.Group != Group.Self
+            && x.Scope != Scope.All
+            && x.Scope != Scope.AllExceptSelf
+            && x.Scope != Scope.OneExceptSelf);
         RenderCardType();
     }
     
@@ -307,10 +311,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _isDragging = true;
         canvasGroup.blocksRaycasts = false;
         if (_requiresPlayerTargeting)
-        {
             Message.Publish(new ShowMouseTargetArrow(new Vector3(0, 2f, 0)));
-            Message.Publish(new BeginTargetSelectionRequested(_card));
-        }
+        Message.Publish(new BeginTargetSelectionRequested(_card));
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -331,10 +333,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void Activate()
     {
         ReturnHandToNormal();
-        if (_requiresPlayerTargeting)
-            Message.Publish(new ConfirmTargetSelectionRequested());
-        else
-            _onClick();
+        _onClick();
     }
 
     #endregion

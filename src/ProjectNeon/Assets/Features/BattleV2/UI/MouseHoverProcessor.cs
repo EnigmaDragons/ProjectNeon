@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class MouseHoverProcessor : MonoBehaviour
 {
-    [SerializeField] private MouseTargetHoverCharacter character;
-    
     private Camera _cam;
     private readonly RaycastHit2D[] _hits = new RaycastHit2D[100];
     private MouseHoverStatusIcon _statusIcon;
+    private Maybe<HoverCharacter> _lastHover;
 
     private void Awake()
     {
@@ -49,7 +48,10 @@ public class MouseHoverProcessor : MonoBehaviour
                         hoverStatusIcon = c;
                 }
         }
-        character.UpdateHover(hoverCharacter);
+        if ((_lastHover.IsMissing && hoverCharacter.IsPresent) 
+            || (_lastHover.IsPresent && hoverCharacter.IsMissing)
+            || (_lastHover.IsPresent && hoverCharacter.IsPresent && _lastHover.Value.Member.Id != hoverCharacter.Value.Member.Id))
+            Message.Publish(new CharacterHoverChanged { HoverCharacter = hoverCharacter });
         _statusIcon.Update(hoverStatusIcon);
     }
 }
