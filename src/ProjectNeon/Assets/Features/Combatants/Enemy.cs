@@ -39,6 +39,7 @@ public class Enemy : ScriptableObject
     public string DeathEffect => deathEffect;
     public BattleRole Role => battleRole;
     public bool IsUnique => unique;
+    public EffectData[] Effects => startOfBattleEffects;
     
     // int stats accessors
     public int MaxHp => maxHp;

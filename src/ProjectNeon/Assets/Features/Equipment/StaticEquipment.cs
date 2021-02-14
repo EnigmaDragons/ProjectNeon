@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     public EffectData[] TurnStartEffects => turnStartEffects;
     public EffectData[] TurnEndEffects => turnEndEffects;
     public EffectData[] BattleStartEffects => battleStartEffects;
+    public IEnumerable<EffectData> AllEffects => TurnStartEffects.Concat(TurnEndEffects).Concat(BattleStartEffects);
 
     public IStats AdditiveStats()
     {
