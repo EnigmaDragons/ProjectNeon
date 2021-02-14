@@ -4,9 +4,10 @@ public class MouseTargetArrow : OnMessage<ShowMouseTargetArrow, HideMouseTargetA
 {
     [SerializeField] private ArrowRenderer arrow;
     [SerializeField] private float mouseDistanceFromScreen = 5f;
+    [SerializeField] private Vector3 offset;
 
     private Camera _camera;
-    private Vector3 _origin;
+    private Transform _origin;
 
     private void Awake()
     {
@@ -16,7 +17,7 @@ public class MouseTargetArrow : OnMessage<ShowMouseTargetArrow, HideMouseTargetA
 
     protected override void Execute(ShowMouseTargetArrow msg)
     {
-        _origin = GetMouseWorldPosition() + msg.Offset;
+        _origin = msg.Card;
         arrow.gameObject.SetActive(true);
         UpdateArrow();
     }
@@ -36,9 +37,17 @@ public class MouseTargetArrow : OnMessage<ShowMouseTargetArrow, HideMouseTargetA
 
     private void UpdateArrow()
     {
-        arrow.SetPositions(_origin, GetMouseWorldPosition());
+        arrow.SetPositions(GetCardWorldPosition(), GetMouseWorldPosition());
     }
 
+    private Vector3 GetCardWorldPosition()
+    {
+        var cardPosition = _origin.position + offset;
+        cardPosition.z = mouseDistanceFromScreen;
+        var worldCardPosition = _camera.ScreenToWorldPoint(cardPosition);
+        return worldCardPosition;
+    }
+    
     private Vector3 GetMouseWorldPosition()
     {
         var mousePosition = Input.mousePosition;
