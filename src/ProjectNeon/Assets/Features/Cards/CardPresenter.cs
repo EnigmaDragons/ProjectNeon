@@ -35,6 +35,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Action _onClick;
     private Action _onMiddleMouse;
     private Action _onRightClick;
+    private Action _onBeginDrag;
     private Vector3 _position;
     
     // Hand 
@@ -57,13 +58,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType = null;
     }
 
-    public void Set(Card card) => Set("Library", card, () => { }, (_, __) => false);
+    public void Set(Card card) => Set("Library", card, () => { }, () => {}, (_, __) => false);
     public void Set(CardTypeData card) => Set(card, () => { });
     
-    public void Set(string zone, Card card, Action onClick, Func<BattleState, Card, bool> getCanPlay)
+    public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Func<BattleState, Card, bool> getCanPlay)
     {
         InitFreshCard(onClick);
-
+        
+        _onBeginDrag = onBeginDrag;
         _card = card;
         _cardType = card.Type;
         _getCanPlay = getCanPlay;
@@ -78,6 +80,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         InitFreshCard(onClick);
 
+        _onBeginDrag = () => {};
         _card = null;
         _cardType = cardType;
         _getCanPlay = (_, __) => false;
@@ -302,7 +305,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         
             // Targeting Card Selection Process can run the arrow
             if (_requiresPlayerTargeting)
+            {
                 Message.Publish(new ShowMouseTargetArrow(new Vector3(0, 2f, 0)));
+            }
+            _onBeginDrag();
             Message.Publish(new BeginTargetSelectionRequested(_card));
         });
 

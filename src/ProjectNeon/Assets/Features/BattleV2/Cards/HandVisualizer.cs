@@ -118,6 +118,7 @@ public sealed class HandVisualizer : MonoBehaviour
 
             c.Set("Hand", card, 
                 () => SelectCard(cardIndex), 
+                () => BeginDragCard(card, cardIndex),
                 (battleState, c2) => allowInteractions && (!onlyAllowInteractingWithPlayables || c2.IsPlayableByHero(state)));
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.SetDisabled(!card.Owner.CanPlayCards() || !_isFocused);
@@ -145,6 +146,15 @@ public sealed class HandVisualizer : MonoBehaviour
             Message.Publish(new EndTargetSelectionRequested());
         else
             Message.Publish(new CancelTargetSelectionRequested());
+    }
+
+    public void BeginDragCard(Card card, int cardIndex)
+    {
+        if (card.Type.RequiresPlayerTargeting())
+        {
+            var targetPosition = new Vector3(Screen.width / 2f, _defaultPosition.y, _defaultPosition.z);
+            _cardPool[cardIndex].SetTargetPosition(targetPosition);
+        }
     }
 
     public void RecycleCard(int cardIndex)
