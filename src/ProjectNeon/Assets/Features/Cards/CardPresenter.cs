@@ -143,15 +143,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         DebugLog($"Setting Highlight {active}");
         controls.SetActive(active);
-        if (active)
-        {
-            _preHighlightSiblingIndex = transform.GetSiblingIndex();
-            transform.SetAsLastSibling();
-        }
-        else
-        {
-            transform.SetSiblingIndex(_preHighlightSiblingIndex);
-        }
+        SetSiblingIndex(active);
 
         highlight.SetActive(IsPlayable && active);
         if (active)
@@ -177,6 +169,20 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 Message.Publish(new HighlightCardOwner(_card.Owner));
             else
                 Message.Publish(new UnhighlightCardOwner(_card.Owner));
+    }
+
+    private void SetSiblingIndex(bool active)
+    {
+        if (active && _preHighlightSiblingIndex == -1)
+        {
+            _preHighlightSiblingIndex = transform.GetSiblingIndex();
+            transform.SetAsLastSibling();
+        }
+        else if (_preHighlightSiblingIndex != -1)
+        {
+            transform.SetSiblingIndex(_preHighlightSiblingIndex);
+            _preHighlightSiblingIndex = -1;
+        }
     }
 
     public void ShowComprehensiveCardInfo()
