@@ -32,7 +32,6 @@ public class PlayerUiSoundGuy : MonoBehaviour
         if (requiresCooldown && _lastPlayed.TryGetValue(a.clip.name, out var lastPlayed) && now - lastPlayed < repeatCooldown)
             return;
         
-        Log.Info($"Playing Sound {a.clip.name}");
         _lastPlayed[a.clip.name] = now;
         sfx.Play(a);
     }

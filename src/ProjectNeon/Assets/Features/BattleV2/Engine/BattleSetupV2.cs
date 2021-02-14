@@ -111,10 +111,6 @@ public class BattleSetupV2 : MonoBehaviour
 
         DevLog.Write("Setting Up Player Hand");
         Deck.InitShuffled(cards);
-        while (playerCardPlayZones.HandZone.Count < startingCards.Value)
-        {
-            playerCardPlayZones.DrawOneCard();
-            yield return new WaitForSeconds(0.2f);
-        }
+        yield return playerCardPlayZones.DrawHandAsync(startingCards.Value);
     }
 }

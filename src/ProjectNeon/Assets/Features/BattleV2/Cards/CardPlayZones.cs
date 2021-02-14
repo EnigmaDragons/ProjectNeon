@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
 
@@ -45,10 +46,13 @@ public class CardPlayZones : ScriptableObject
             DiscardZone.PutOnBottom(HandZone.DrawOneCard());
     }
     
-    public void DrawHand(int handSize)
+    public IEnumerator DrawHandAsync(int handSize)
     {
-        while(!HandZone.IsFull && HandZone.Count < handSize)
+        while (!HandZone.IsFull && HandZone.Count < handSize)
+        {
             DrawOneCard();
+            yield return new WaitForSeconds(0.3f);
+        }
     }
     
     public void DrawCards(int number) 

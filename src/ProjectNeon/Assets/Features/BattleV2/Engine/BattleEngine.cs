@@ -91,11 +91,14 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         if (state.BattleIsOver())
             FinishBattle();
         else
-        {
-            turnWrapUp.Execute();
-            BeginPhase(BattleV2Phase.EndOfTurnEffects);
-            statusPhase.ProcessEndOfTurnEffects();
-        }
+            StartCoroutine(WrapUpTurn());
+    }
+    
+    private IEnumerator WrapUpTurn()
+    {
+        yield return turnWrapUp.Execute();
+        BeginPhase(BattleV2Phase.EndOfTurnEffects);
+        statusPhase.ProcessEndOfTurnEffects();
     }
 
     private void FinishBattle()

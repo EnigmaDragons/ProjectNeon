@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BattleTurnWrapUp : MonoBehaviour
@@ -5,9 +6,9 @@ public class BattleTurnWrapUp : MonoBehaviour
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones zones;
     
-    public void Execute()
+    public IEnumerator Execute()
     {
-        zones.DrawHand(state.PlayerState.CurrentStats.CardDraw());
+        yield return zones.DrawHandAsync(state.PlayerState.CurrentStats.CardDraw());
         state.AdvanceTurn();
     }
 }
