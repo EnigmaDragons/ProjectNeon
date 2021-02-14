@@ -6,7 +6,13 @@ public class CardRulesPresenter : MonoBehaviour
     [SerializeField] private GameObject rulesParent;
     [SerializeField] private CardKeywordRulePresenter rulePresenterPrototype;
 
-    private void Awake() => Hide();
+    private bool _isInitialized;
+    
+    private void Awake()
+    {
+        if (!_isInitialized)
+            Hide();
+    }
 
     public void Show(CardTypeData d)
     {
@@ -42,6 +48,7 @@ public class CardRulesPresenter : MonoBehaviour
 
     public void Hide()
     {
+        _isInitialized = true;
         rulesParent.DestroyAllChildren();
     }
 }
