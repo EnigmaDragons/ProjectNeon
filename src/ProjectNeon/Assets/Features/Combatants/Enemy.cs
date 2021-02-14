@@ -11,6 +11,9 @@ public class Enemy : ScriptableObject
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private int powerLevel = 1;
     [SerializeField] private GameObject prefab;
+    [SerializeField] private int width;
+    [SerializeField] private int height;
+    [SerializeField] private bool isBig;
     [SerializeField] private StringReference deathEffect;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private bool unique;
@@ -36,6 +39,9 @@ public class Enemy : ScriptableObject
     public int PowerLevel => powerLevel;
     public int PreferredTurnOrder => preferredTurnOrder;
     public GameObject Prefab => prefab;
+    public int Width => width;
+    public int Height => height;
+    public bool IsBig => isBig;
     public string DeathEffect => deathEffect;
     public BattleRole Role => battleRole;
     public bool IsUnique => unique;

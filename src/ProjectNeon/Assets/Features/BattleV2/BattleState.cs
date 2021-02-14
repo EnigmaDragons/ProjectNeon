@@ -88,7 +88,7 @@ public class BattleState : ScriptableObject
     private int EnemyStartingIndex => 4;
     private int _nextEnemyId = 0;
     public int GetNextEnemyId() => _nextEnemyId++;
-    public List<Tuple<int, Member>> FinishSetup()
+    public List<EnemyInitInformation> FinishSetup()
     {
         var id = 0;      
         memberNames = new List<string>();
@@ -107,7 +107,7 @@ public class BattleState : ScriptableObject
 
         id = EnemyStartingIndex - 1;
         _enemiesById = new Dictionary<int, Enemy>();
-        var result = new List<Tuple<int, Member>>();
+        var result = new List<EnemyInitInformation>();
         for (var i = 0; i < enemies.Enemies.Count; i++)
         {
             id++;
@@ -115,13 +115,13 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
             _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, false);
             SetMemberName(id, enemies.Enemies[i].name);
-            result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id, this)));
+            result.Add(new EnemyInitInformation(i, enemies.Enemies[i], _enemiesById[id].AsMember(id, this)));
         }
         _nextEnemyId = id + 1;
 
         _playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
         _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
-            .Concat(result.Select(e => e.Item2))
+            .Concat(result.Select(e => e.Member))
             .ToDictionary(x => x.Id, x => x);
         
         _heroesById.ForEach(h => h.Value.InitEquipmentState(_membersById[h.Key], this));

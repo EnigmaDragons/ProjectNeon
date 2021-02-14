@@ -21,7 +21,7 @@ public class BattleWorldVisuals : MonoBehaviour
         yield return party.Setup();
     }
 
-    public void Setup2(List<Tuple<int, Member>> enemyPositions)
+    public void Setup2(List<EnemyInitInformation> enemyPositions)
     {
         enemies.Place(enemyPositions);
     }
