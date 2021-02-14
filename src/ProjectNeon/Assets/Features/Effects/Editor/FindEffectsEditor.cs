@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
@@ -29,33 +30,54 @@ public class FindEffectsEditor : EditorWindow
             .Select(e => $"Equipment {e.name}")
             .ToArray();
     
+    private string[] GetAllContentWithEffectType(EffectType e)
+        =>  GetAllCardEffectsWith(e)
+                .Concat(GetAllEnemiesWith(e))
+                .Concat(GetAllEquipmentWith(e)).ToArray();
+    
+    private string[] GetAllContentWithLostEffectType() =>  
+                GetAllInstances<CardActionsData>()
+                .Where(e => e.BattleEffects.Any(x => (int)x.EffectType == -1))
+                .Select(e => $"Card {e.name}")
+            .Concat(
+                GetAllInstances<Enemy>()
+                .Where(e => e.Effects.Any(x => (int)x.EffectType == -1))
+                .Select(e => $"Enemy {e.name}")
+            .Concat(
+                GetAllInstances<StaticEquipment>()            
+                .Where(e => e.AllEffects.Any(x => (int)x.EffectType == -1))
+                .Select(e => $"Equipment {e.name}")))
+            .ToArray();
+    
     void OnGUI()
     {
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
         if (GUILayout.Button("Search By Effect Type"))
         {
-            var effects = GetAllCardEffectsWith(_effectType)
-                .Concat(GetAllEnemiesWith(_effectType))
-                .Concat(GetAllEquipmentWith(_effectType));
-            ShowItems($"Content Using Effect Type - {_effectType}", effects.ToArray());
+            ShowItems($"Content Using Effect Type - {_effectType}", GetAllContentWithEffectType(_effectType));
             GUIUtility.ExitGUI();
         }
         DrawUILine();
 
-//        if (GUILayout.Button("Show All Unused Effects"))
-//        {
-//            var zeroUsageResults = Enum.GetValues(typeof(EffectType)).Cast<EffectType>()
-//                .Select(effectType => (effectType, GetAllCardEffectsWith(effectType)))
-//                .Where(e => e.Item2.Length == 0)
-//                .Where(e => e.effectType != EffectType.Nothing)
-//                .Select(e => e.effectType.ToString())
-//                .ToArray();
-//            GetWindow<ListDisplayWindow>()
-//                .Initialized("Unused Effect Types", zeroUsageResults)
-//                .Show();
-//            GUIUtility.ExitGUI();
-//        }
-//        DrawUILine();
+        if (GUILayout.Button("Show All Unused Effects"))
+        {
+            var zeroUsageResults = Enum.GetValues(typeof(EffectType)).Cast<EffectType>()
+                .Where(e => e != EffectType.Nothing)
+                .Select(effectType => (effectType, GetAllContentWithEffectType(effectType)))
+                .Where(e => e.Item2.Length == 0)
+                .Select(e => e.effectType.ToString())
+                .ToArray();
+            ShowItems("Unused Effect Types", zeroUsageResults);
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        if (GUILayout.Button("Show Broken Content (Experimental)"))
+        {
+            ShowItems("Broken Effect Content", GetAllContentWithLostEffectType());
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
     }
     
     private void ShowItems(string description, string[] items) 
