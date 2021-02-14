@@ -50,7 +50,7 @@ public class CardPlayZones : ScriptableObject
         while(!HandZone.IsFull && HandZone.Count < handSize)
             DrawOneCard();
     }
-
+    
     public void DrawCards(int number) 
         => Enumerable.Range(0, number).ForEach(_ => DrawOneCard());
 

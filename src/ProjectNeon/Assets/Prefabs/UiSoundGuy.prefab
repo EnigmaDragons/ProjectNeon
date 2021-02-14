@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &398594847969632990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2709349493751280727}
+  - component: {fileID: 3046743002411285935}
+  m_Layer: 0
+  m_Name: UiSoundGuy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2709349493751280727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398594847969632990}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3046743002411285935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398594847969632990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04d6ab5108f4cc49a8e0d0d817f566b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: a3e8aeef9bbd0bd4ba7514ec36cb1758, type: 2}
+  onSelect:
+    clip: {fileID: 8300000, guid: 6cf969e1fbee2aa4fb09a579d3bf28f9, type: 3}
+    volume: 0.34
+  onCancel:
+    clip: {fileID: 8300000, guid: c07405abc07077e4cbed9f74f9d361a3, type: 3}
+    volume: 0.5
+  onCardDrawn:
+    clip: {fileID: 8300000, guid: 73df8636ad90bb04bb89ffacb92e3605, type: 3}
+    volume: 0.5
+  onShuffled:
+    clip: {fileID: 8300000, guid: 100642cb4519c19429ff5eb50ef33c86, type: 3}
+    volume: 0.5
+  repeatCooldown: 0.4
