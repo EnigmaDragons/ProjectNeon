@@ -83,7 +83,10 @@ public class EffectDataEditor : PropertyDrawer
     private EffectType GetEffectType(SerializedProperty property)
     {
         var effectType = property.FindPropertyRelative("EffectType");
-        return (EffectType)Enum.GetValues(typeof(EffectType)).GetValue(effectType.enumValueIndex);
+        if(Enum.IsDefined(typeof(EffectType), effectType.enumValueIndex))
+            return (EffectType)Enum.GetValues(typeof(EffectType)).GetValue(effectType.enumValueIndex);
+        else
+            return EffectType.Nothing;
     }
 }
 

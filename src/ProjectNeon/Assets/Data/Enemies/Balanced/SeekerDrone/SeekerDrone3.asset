@@ -25,6 +25,7 @@ MonoBehaviour:
   battleRole: 1
   unique: 0
   maxHp: 11
+  maxShield: 0
   toughness: 2
   attack: 0
   magic: 6
@@ -36,7 +37,7 @@ MonoBehaviour:
   resourceGainPerTurn: 0
   cardsPerTurn: 1
   startOfBattleEffects:
-  - EffectType: 67
+  - EffectType: 79
     BaseAmount:
       UseConstant: 1
       ConstantValue: 1
@@ -54,16 +55,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: bd06351127f63d4499e84d7f994d1c91, type: 2}
     HitsRandomTargetMember: 0
-    ReferencedSequence: {fileID: 0}
-    ReactionSequence: {fileID: 0}
     StatusTag: 0
+    StatusDetailText: 
     TurnDelay: 0
-    Formula: 
+    Formula: 1
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - EffectType: 67
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  - EffectType: 79
     BaseAmount:
       UseConstant: 1
       ConstantValue: 1
@@ -81,12 +89,20 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: f383fdcaf12e8e244980a43b4f449902, type: 2}
     HitsRandomTargetMember: 0
-    ReferencedSequence: {fileID: 0}
-    ReactionSequence: {fileID: 0}
     StatusTag: 0
+    StatusDetailText: 
     TurnDelay: 0
-    Formula: 
+    Formula: 1
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  lastBalanceDate: Never
