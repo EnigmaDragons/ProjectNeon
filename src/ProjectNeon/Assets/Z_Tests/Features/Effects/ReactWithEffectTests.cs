@@ -28,8 +28,9 @@ public class ReactWithEffectTests
         
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.StunForNumberOfCards,
-            FloatAmount = new FloatReference(1)
+            EffectType = EffectType.AdjustCounterFormula,
+            EffectScope = new StringReference(TemporalStatType.CardStun.ToString()),
+            Formula = "1"
         }, attacker, target);
         
         Assert.AreEqual(1, target.State[TemporalStatType.CardStun], "Card Stun wasn't applied");

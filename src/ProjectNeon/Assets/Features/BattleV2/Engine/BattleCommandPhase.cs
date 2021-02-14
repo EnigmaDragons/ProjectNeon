@@ -10,10 +10,8 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
 
     [SerializeField] private DirectionInputBinding directionBinding;
     [SerializeField] private VisualCardSelectionV2 cardSelection;
-    [SerializeField] private BattlePlayerTargetingState targeting;
     
     [SerializeField] private ConfirmCancelBinding confirmCancelBinding;
-    [SerializeField] private SelectCardTargetsV2 cardTargets;
     [SerializeField] private ConfirmPlayerTurnV2 turnConfirmation;
     
     private readonly AIStrategyGenerator _enemyStrategy = new AIStrategyGenerator(TeamType.Enemies);
@@ -44,12 +42,7 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
                 .ForEach(c => resolutionZone.Add(state.GetEnemyById(e.Id).AI.Play(e.Id, state, strategy))));
     }
     
-    protected override void Execute(TargetSelectionBegun msg)
-    {
-        directionBinding.Bind(targeting);
-        confirmCancelBinding.Bind(cardTargets);
-    }
-
+    protected override void Execute(TargetSelectionBegun msg) {}
     protected override void Execute(TargetSelectionFinished msg) => UpdateConfirmationState();
     protected override void Execute(PlayerTurnConfirmationStarted msg) => UpdateConfirmationState();
     protected override void Execute(PlayerTurnConfirmationAborted msg) => UpdateConfirmationState();

@@ -185,7 +185,7 @@ public sealed class MemberState : IStats
 
     public void CleanseDebuffs()
     {
-        _counters[TemporalStatType.TurnStun.ToString()].Set(0);
+        _counters[TemporalStatType.Disabled.ToString()].Set(0);
         _counters[TemporalStatType.CardStun.ToString()].Set(0);
         _counters[TemporalStatType.Confusion.ToString()].Set(0);
         _counters[TemporalStatType.Blind.ToString()].Set(0);

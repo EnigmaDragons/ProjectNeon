@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: MedTech_LimitlessDose
   m_EditorClassIdentifier: 
+  customName: 
   art: {fileID: 21300000, guid: 35b5856c2851fc348a44c5af575a3c04, type: 3}
-  description: Next turn, stun all other allies, play +1 card and gain +5 cycles
+  description: Next turn, <b>Disable</b> all other allies, play +1 card and gain
+    +5 cycles
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: a6db77c3bda412d42b6a422b91d39c05,
@@ -32,9 +34,13 @@ MonoBehaviour:
     group: 2
     avoidance: 2
     cardActions: {fileID: 11400000, guid: 6a9515d80c3ac814c9986391d1125a43, type: 2}
+    repeatX: 0
   - scope: 0
     group: 0
     avoidance: 999
     cardActions: {fileID: 11400000, guid: 1d74447dbf81c444089b9d14d7fa3259, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
+  presentationIssues: 
+  timingType: 0

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class MouseTargetHoverCharacter : OnMessage<TargetSelectionBegun, SelectionPossibleTargetsAvailable, TargetSelectionFinished>
+public class MouseTargetHoverCharacter : OnMessage<CharacterHoverChanged, TargetSelectionBegun, SelectionPossibleTargetsAvailable, TargetSelectionFinished>
 {
     [SerializeField] private BattlePlayerTargetingState targeting;
     [SerializeField] private Material hoverMaterial;
@@ -11,7 +11,7 @@ public class MouseTargetHoverCharacter : OnMessage<TargetSelectionBegun, Selecti
     private bool _isSelectingTargets;
     private Maybe<HoverCharacter> _char = Maybe<HoverCharacter>.Missing();
     
-    public void UpdateHover(Maybe<HoverCharacter> hovered)
+    private void UpdateHover(Maybe<HoverCharacter> hovered)
     {
         if (!_isSelectingTargets)
             return;
@@ -19,7 +19,7 @@ public class MouseTargetHoverCharacter : OnMessage<TargetSelectionBegun, Selecti
         if (_char.IsPresent && hovered.IsMissing || _char.Value != hovered.Value)
             ResetLast();
 
-        if (!hovered.IsPresent) 
+        if (!hovered.IsPresent)
             return;
 
         var id = hovered.Value.Member.Id;
@@ -41,6 +41,11 @@ public class MouseTargetHoverCharacter : OnMessage<TargetSelectionBegun, Selecti
             _char.Value.Revert();
             _char = Maybe<HoverCharacter>.Missing();
         }
+    }
+
+    protected override void Execute(CharacterHoverChanged msg)
+    {
+        UpdateHover(msg.HoverCharacter);
     }
 
     protected override void Execute(TargetSelectionBegun msg)

@@ -4,7 +4,6 @@ using UnityEngine;
 public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, TargetSelectionFinished, PlayerCardCanceled, CardResolutionStarted, CardResolutionFinished>
 {
     [SerializeField] private PartyUiSummaryV2 partyUi;
-    [SerializeField] private GameObject commandPhaseUi;
     [SerializeField] private ResolutionZoneOffset resolutionPhaseUi;
     [SerializeField] private GameObject hand;
     [SerializeField] private GameObject defeatUi;
@@ -23,11 +22,10 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
         partyUi.Setup();
     }
 
-    private void HideCommandPhaseUI() => commandPhaseUi.SetActive(false);
+    private void HideCommandPhaseUI() {}
     public void BeginCommandPhase()
     {
         hand.SetActive(true);
-        commandPhaseUi.SetActive(true);
         resolutionPhaseUi.gameObject.SetActive(true);
     }
 
@@ -60,7 +58,7 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
             victoryUi.SetActive(true);
     }
 
-    protected override void Execute(TargetSelectionBegun msg) => hand.SetActive(false);
+    protected override void Execute(TargetSelectionBegun msg) {}
     protected override void Execute(TargetSelectionFinished msg) => RefreshHandVisibility();
     protected override void Execute(PlayerCardCanceled msg) => RefreshHandVisibility();
     protected override void Execute(CardResolutionStarted msg)
@@ -83,7 +81,7 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
 
     private void RefreshHandVisibility()
     {
-        Debug.Log($"Refresh Hand Visibility. {playArea.Count} / {battleState.PlayerState.CurrentStats.CardPlays()} Instant: {_isResolvingInstantCard}");
+        Debug.Log($"Refresh Hand Visibility. {playArea.Count} / {battleState.PlayerState.CurrentStats.CardPlays()} Card Is Instant: {_isResolvingInstantCard}");
         hand.SetActive(!_isResolvingInstantCard && HasMoreCardPlays);
     }
 }

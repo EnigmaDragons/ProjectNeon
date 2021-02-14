@@ -39,13 +39,16 @@ public sealed class HandVisualizer : MonoBehaviour
     
     void OnEnable()
     {
+        _isFocused = true;
         _isDirty = true;
+        Log.Info($"UI - Hand Enabled - Focused {_isFocused}");
         Hand.OnZoneCardsChanged.Subscribe(new GameEventSubscription(Hand.OnZoneCardsChanged.name, x => _isDirty = true, this));
         Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
     }
 
     void OnDisable()
     {
+        Log.Info($"UI - Hand Disabled - Focused {_isFocused}");
         Hand.OnZoneCardsChanged.Unsubscribe(this);
         Message.Unsubscribe(this);
     }
@@ -134,16 +137,14 @@ public sealed class HandVisualizer : MonoBehaviour
     
     public void SelectCard(int cardIndex)
     {
+        Log.Info($"UI: Selected Card");
         if (state.Phase != BattleV2Phase.Command)
             return;
         
         if (allowInteractions && Hand.Count > cardIndex)
             if (_cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
             {
-                if (zones.SelectionZone.IsFull)
-                    Log.Error($"Selection card zone has the card {zones.SelectionZone.Cards[0].Name}");
-                else
-                    zones.SelectionZone.PutOnBottom(Hand.Take(cardIndex));
+                Message.Publish(new EndTargetSelectionRequested());
                 UpdateVisibleCards();
             }
     }
@@ -162,6 +163,8 @@ public sealed class HandVisualizer : MonoBehaviour
     {
         if (_isFocused == isFocused)
             return;
+
+        Log.Info($"UI - Setting hand focus {isFocused}");
         
         _isFocused = isFocused;
         _isDirty = true;

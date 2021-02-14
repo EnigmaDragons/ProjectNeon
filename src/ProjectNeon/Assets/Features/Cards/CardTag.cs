@@ -7,7 +7,7 @@ public enum CardTag
     BuffResource = 10,
     Ultimate = 3,
     Attack = 4,
-    Stun = 5,
+    Disable = 5,
     Healing = 6,
     Defense = 7,
     Vulnerable = 8,

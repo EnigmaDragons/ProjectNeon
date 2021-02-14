@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    private const float _clickMoveDistance = 30f;
+    private const float _clickTweenSpeed = 0.03f;
+    
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardRarityPresenter rarity;
     [SerializeField] private CardTargetPresenter target;
@@ -25,6 +29,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float dragScaleFactor = 1 / 0.7f;
     [SerializeField] private float highlightedScale = 1.7f;
+    [SerializeField] private CardRulesPresenter rules;
+    [SerializeField] private GameObject chainedCardParent;
 
     private Card _card;
     private CardTypeData _cardType;
@@ -34,10 +40,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private Func<BattleState, Card, bool> _getCanPlay;
     private Action _onClick;
     private Action _onMiddleMouse;
+    private Action _onRightClick;
     private Vector3 _position;
     private string _zone;
-    
-    private bool IsHand => _zone.Contains("Hand");
+
+    private bool IsHand => _isHand;
+    private bool _isHand;
+    private bool _requiresPlayerTargeting;
 
     public string CardName => _cardType.Name;
     public bool Contains(Card c) => HasCard && c.Id == _card.Id;
@@ -54,6 +63,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     }
 
     public void Set(Card card) => Set("Library", card, () => { }, (_, __) => false);
+    public void Set(CardTypeData card) => Set(card, () => { });
     
     public void Set(string zone, Card card, Action onClick, Func<BattleState, Card, bool> getCanPlay)
     {
@@ -62,7 +72,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         _card = card;
         _cardType = card.Type;
         _getCanPlay = getCanPlay;
+        _onRightClick = ToggleAsBasic;
         _zone = zone;
+        _isHand = _zone.Contains("Hand");
+        _requiresPlayerTargeting = card.ActionSequences.Any(x 
+            => x.Group != Group.Self
+            && x.Scope != Scope.All
+            && x.Scope != Scope.AllExceptSelf
+            && x.Scope != Scope.OneExceptSelf);
         RenderCardType();
     }
     
@@ -73,7 +90,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         _card = null;
         _cardType = cardType;
         _getCanPlay = (_, __) => false;
+        _onRightClick = _cardType.ShowDetailedCardView;
         _zone = "Library";
+        _isHand = false;
+        _requiresPlayerTargeting = false;
         RenderCardType();
     }
 
@@ -84,6 +104,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         highlight.SetActive(false);
         _onClick = onClick;
         _onMiddleMouse = () => { };
+        _onRightClick = () => { };
     }
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
@@ -155,6 +176,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         }
 
         highlight.SetActive(IsPlayable && active);
+        if (active)
+            ShowComprehensiveCardInfo();
+        else
+            HideComprehensiveCardInfo();
+
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
         var position = active ? _position + new Vector3(0, sign * 180f, sign * 2f) : _position;
@@ -172,6 +198,25 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                 Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
 
+    public void ShowComprehensiveCardInfo()
+    {
+        rules.Show(_cardType);
+
+        _cardType.ChainedCard.IfPresent(chain =>
+        {
+            if (IsHand)
+                Message.Publish(new ShowChainedCard(chainedCardParent, new Card(-1, _card.Owner, chain)));
+            else
+                Message.Publish(new ShowChainedCard(chainedCardParent, chain));
+        });
+    }
+    
+    private void HideComprehensiveCardInfo()
+    {
+        rules.Hide();
+        Message.Publish(new HideChainedCard());
+    }
+    
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
 
     public void TeleportTo(Vector3 targetPosition)
@@ -232,25 +277,48 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public void MiddleClick() => _onMiddleMouse();
     
     public void OnPointerDown(PointerEventData eventData)
-    { 
+    {
+        if (eventData.dragging)
+            return;
         DebugLog($"UI - Pointer Down - {CardName}");
+        if (!IsHand && eventData.button == PointerEventData.InputButton.Left)
+            _onClick();
         if (battleState.IsSelectingTargets)
             return;
         if (eventData.button == PointerEventData.InputButton.Middle) 
             _onMiddleMouse();
-        if (IsHand && _card != null && eventData.button == PointerEventData.InputButton.Right)
+        if (IsHand && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
+        if (!IsHand && eventData.button == PointerEventData.InputButton.Right)
+        {
+            DebugLog("UI - Non Hand Right Click");
+            _onRightClick();
+        }
+        if (IsHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
+        {
+            Cursor.visible = false;
+            transform.DOMove(transform.position + new Vector3(0, _clickMoveDistance, 0), _clickTweenSpeed);
+        }
+    }
+    
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Cursor.visible = true;
+        if (IsHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
+        {
+            transform.DOMove(transform.position + new Vector3(0, -_clickMoveDistance, 0), _clickTweenSpeed);
+        }
     }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsHand && battleState.Phase == BattleV2Phase.Command)
+        if (!eventData.dragging && IsHand && battleState.Phase == BattleV2Phase.Command)
             Message.Publish(new CardHoverEnter(this));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!_isDragging)
+        if (!_isDragging && IsHand)
             SetHandHighlight(false);
     }
 
@@ -258,29 +326,45 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     
     public void OnDrag(PointerEventData eventData)
     {
-        var t = transform;
-        transform.localPosition = t.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
+        if (!IsHand || !IsPlayable)
+            return;
+        
+        if (!_requiresPlayerTargeting)
+            transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
     }
     
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!IsHand || !IsPlayable)
+            return;
+        
         _isDragging = true;
         canvasGroup.blocksRaycasts = false;
+        if (_requiresPlayerTargeting)
+            Message.Publish(new ShowMouseTargetArrow(new Vector3(0, 2f, 0)));
+        Message.Publish(new BeginTargetSelectionRequested(_card));
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _isDragging = false;
-        canvasGroup.blocksRaycasts = true;
+        if (!IsHand || !IsPlayable)
+            return;
+        
+        ReturnHandToNormal();
     }
 
-    public void Click()
+    private void ReturnHandToNormal()
     {
         _isDragging = false;
         canvasGroup.blocksRaycasts = true;
+        Message.Publish(new HideMouseTargetArrow());
+    }
+
+    public void Activate()
+    {
+        ReturnHandToNormal();
         _onClick();
     }
 
     #endregion
-
 }

@@ -20,8 +20,8 @@ MonoBehaviour:
     Value: '<b>Blind</b>
 
 
-      Guarantees that the next X physical attacks will
-      miss.'
+      Guarantees that the next attack made by that character
+      will miss.'
   - Key:
       UseConstant: 0
       ConstantValue: 
@@ -29,7 +29,8 @@ MonoBehaviour:
     Value: '<b>Evade</b>
 
 
-      Completely avoids the next X physical attacks.'
+      Allows a character to completely avoid the next
+      attack.'
   - Key:
       UseConstant: 0
       ConstantValue: 
@@ -57,3 +58,82 @@ MonoBehaviour:
 
       Expends all of the associated resource. Grants
       effects that scale off the amount of resources spent.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 5ce2e581031f090468e64b6e75e49c9c, type: 2}
+    Value: '<b>Instant</b>
+
+
+      Resolves this card immediately. Does not count
+      toward card play limit.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 5e53e1eb700232049a0c1d2017a544d1, type: 2}
+    Value: '<b>Taunt</b>
+
+
+      While an opponent has taunt, all single target cards
+      must target that character.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: f383fdcaf12e8e244980a43b4f449902, type: 2}
+    Value: '<b>Spellshield</b>
+
+
+      Allows a character to completely avoid the
+      next spell or negative effect.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: a44ad20938ad98d4ba2a05ebec66e947, type: 2}
+    Value: '<b>Vulnerable</b>
+
+
+      A vulnerable character receives 33% more damage.
+      Applies after all defenses.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: c05ba6d66feae7c47a741c621c3f426a, type: 2}
+    Value: '<b>Stun</b>
+
+
+      Negates the next card played by that character.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: fd1bc03b29650184780e2f8f323906c6, type: 2}
+    Value: '<b>Chain</b>
+
+
+      Play a free copy of the Chained card if all the
+      non-Instant cards you play this turn belong to a single character and this
+      card is the last card played.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
+    Value: "<b>Card Cycles</b>\n\nAdjusts the number of Card Cycles you can perform
+      during a turn. \n\nCycling a card discards the selected card and immediately
+      draws a new one."
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 567892c0029f4214c9f52b55b76d4c4f, type: 2}
+    Value: '<b>Double Damage</b>
+
+
+      Doubles the amount of damage done by the
+      next damaging effect. If there are more than 1 damaging effects being applied,
+      only the first is modified.'
+  - Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 23eac25f0ddcf694a87342b19212581c, type: 2}
+    Value: '<b>Disable</b>
+
+
+      A disabled character may not play any cards.'

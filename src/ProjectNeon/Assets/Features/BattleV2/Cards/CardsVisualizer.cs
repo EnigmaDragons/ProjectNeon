@@ -105,7 +105,7 @@ public class CardsVisualizer : MonoBehaviour
 
             c.Set(card);
             c.SetDisabled(!_isFocused);
-            if (!card.Owner.IsConscious() || card.Owner.IsStunnedForCurrentTurn())
+            if (!card.Owner.IsConscious() || card.Owner.IsDisabled())
                 c.SetDisabled(true);
             SwapCardPoolSpots(cardIndex, presenterIndex);
             c.SetHandHighlight(isHighlighted);

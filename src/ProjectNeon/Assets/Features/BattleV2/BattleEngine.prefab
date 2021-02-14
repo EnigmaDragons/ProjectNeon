@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 6327249483487059207}
   - component: {fileID: 8334402703165493310}
   - component: {fileID: 4827819642098112035}
+  - component: {fileID: 6078468237105921284}
+  - component: {fileID: 6806458807943526864}
   m_Layer: 0
   m_Name: BattleEngine
   m_TagString: Untagged
@@ -215,6 +217,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentFactor: 1
+--- !u!114 &6078468237105921284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115684586857430259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07cafa9818b14fa0bffb416b6cfcd65d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardResolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
+  destinationCardZone: {fileID: 11400000, guid: 1911fbbf2065d4e44be1966051f09a92,
+    type: 2}
+  sourceCardZone: {fileID: 11400000, guid: d384cb3c3fffa7241a3f7e1555a17223, type: 2}
+  battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  targetingState: {fileID: 11400000, guid: e8575dfb64936fa419bdae05533b9129, type: 2}
+  card:
+    id: 0
+    UseAsBasic: 0
+--- !u!114 &6806458807943526864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115684586857430259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3aefb97c0f448378244c48134ebb623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conclusion: {fileID: 8334402703165493310}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1001 &635715717500593209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -222,6 +259,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2115684586857430256}
     m_Modifications:
+    - target: {fileID: 70975843051870588, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 995776598560765089, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 995776598560765089, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 995776598560765089, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 995776598560765089, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1062663383584248952, guid: 67caa708d15b6ca4dad135bc602c32c7,
         type: 3}
       propertyPath: m_Name
@@ -290,6 +352,31 @@ PrefabInstance:
     - target: {fileID: 5524449074993072346, guid: 67caa708d15b6ca4dad135bc602c32c7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077532440327166811, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077532440327166811, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077532440327166811, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077532440327166811, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004567712974042758, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
