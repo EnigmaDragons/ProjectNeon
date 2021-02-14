@@ -62,7 +62,7 @@ public sealed class HandVisualizer : MonoBehaviour
         UpdateVisibleCards();
     }
     
-    void UpdateVisibleCards()
+    public void UpdateVisibleCards()
     {
         var newCards = Hand.Cards.ToArray();
         CleanRemovedCards(newCards);
@@ -142,14 +142,9 @@ public sealed class HandVisualizer : MonoBehaviour
             return;
 
         if (allowInteractions && Hand.Count > cardIndex && _cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
-        {
             Message.Publish(new EndTargetSelectionRequested());
-            UpdateVisibleCards();
-        }
         else
-        {
             Message.Publish(new CancelTargetSelectionRequested());
-        }
     }
 
     public void RecycleCard(int cardIndex)

@@ -36,8 +36,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     public void Cancel() => OnCancelled();
     public void OnCancelled()
     {
-        if (card != null)
-            Log.Info($"UI - Canceled Card {card.Name}");
+        Log.Info($"UI - Canceled Card {card?.Name}");
         Message.Publish(new PlayerCardCanceled());
         OnSelectionComplete();
     }
