@@ -7,9 +7,6 @@ using UnityEngine.UI;
 
 public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    private const float _clickMoveDistance = 30f;
-    private const float _clickTweenSpeed = 0.03f;
-    
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardRarityPresenter rarity;
     [SerializeField] private CardTargetPresenter target;
@@ -168,7 +165,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         var tweenDuration = 0.08f;
         DebugLog($"Tweening Highlight {active}");
         transform.DOScale(scale, tweenDuration);
-        transform.DOMove(position, tweenDuration);
+        if (active)
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, sign * 180f, sign * 2f), tweenDuration, TweenMovementType.RubberBand, "Highlight"));
+        else
+            Message.Publish(new SnapBackTweenRequested(transform, "Highlight"));
         if (_card != null)
             if (active)
                 Message.Publish(new HighlightCardOwner(_card.Owner));
@@ -199,6 +199,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void TeleportTo(Vector3 targetPosition)
     {
+        Message.Publish(new StopMovementTweeningRequested(transform));
         transform.position = targetPosition;
         _position = targetPosition;
     }
@@ -206,7 +207,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void SetTargetPosition(Vector3 targetPosition)
     {
         _position = targetPosition;
-        transform.DOMove(targetPosition, 1);
+        Message.Publish(new GoToTweenRequested(transform, targetPosition, 1));
     }
 
     private void RenderCardType()
@@ -253,7 +254,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
             Cursor.visible = false;
-            transform.DOMove(transform.position + new Vector3(0, _clickMoveDistance, 0), _clickTweenSpeed);
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, 30f, 0), 0.03f, TweenMovementType.RubberBand, "Click"));
         }
         if (!_isHand && eventData.button == PointerEventData.InputButton.Left)
             _onClick();
@@ -268,7 +269,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Cursor.visible = true;
         if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
-            transform.DOMove(transform.position + new Vector3(0, -_clickMoveDistance, 0), _clickTweenSpeed);
+            Message.Publish(new SnapBackTweenRequested(transform, "Click"));
         }
     }
     
