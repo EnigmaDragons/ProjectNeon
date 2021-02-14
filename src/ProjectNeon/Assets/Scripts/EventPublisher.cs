@@ -28,4 +28,5 @@ public class EventPublisher : ScriptableObject
     public void ToggleCardLibrary() => Message.Publish(new ToggleCardLibrary());
     public void GenerateFreshEquipmentSet() => Message.Publish(new GetFreshEquipmentSet());
     public void HideDetailedCardView() => Message.Publish(new HideDetailedCardView());
+    public void HideDetailedEnemyView() => Message.Publish(new HideEnemyDetails());
 }

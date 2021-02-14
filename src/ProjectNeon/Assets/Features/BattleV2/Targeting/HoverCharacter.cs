@@ -25,7 +25,10 @@ public class HoverCharacter : MonoBehaviour
             _confirmAction();
         }
         else if (Input.GetMouseButtonDown(1)) 
+        {
+            Log.Info($"UI - Cancelled {Member.Name}");
             _cancelAction();
+        }
     }
     
     private void Awake()
@@ -50,14 +53,18 @@ public class HoverCharacter : MonoBehaviour
         _hovered = true;
     }
 
+    public void SetIsHovered() => _hovered = true;
+
     public void SetAction(Action confirmAction, Action cancelAction)
     {
+        Log.Info($"UI - Set Hover Character Action for {Member.Name}");
         _confirmAction = confirmAction;
         _cancelAction = cancelAction;
     }
     
     public void Revert()
     {
+        Log.Info($"UI - Cleared Hover Character {Member.Name}");
         _renderer.material = _originalMaterial;
         _hovered = false;
         _confirmAction = () => { };
