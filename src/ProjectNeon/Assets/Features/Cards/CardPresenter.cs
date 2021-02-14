@@ -119,6 +119,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         
         _card.UseAsBasic = asBasic;
         _cardType = _card.Type;
+        _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
         if (IsPlayable)
             SetHandHighlight(true);
