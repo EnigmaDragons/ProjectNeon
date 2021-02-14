@@ -26,6 +26,7 @@ public class EventPublisher : ScriptableObject
     public void ReducePartyHeroesHpBy10() => Message.Publish(new UpdatePartyAdventureState(p => p.Heroes.ForEach(h => h.AdjustHp(-10))));
     public void ActivatePartyDetailsWizardFlow() => Message.Publish(new TogglePartyDetails { AllowDone = false });
     public void ToggleCardLibrary() => Message.Publish(new ToggleCardLibrary());
+    public void ToggleEnemyCardLibrary() => Message.Publish(new ToggleEnemyCardLibrary());
     public void GenerateFreshEquipmentSet() => Message.Publish(new GetFreshEquipmentSet());
     public void HideDetailedCardView() => Message.Publish(new HideDetailedCardView());
     public void HideDetailedEnemyView() => Message.Publish(new HideEnemyDetails());
