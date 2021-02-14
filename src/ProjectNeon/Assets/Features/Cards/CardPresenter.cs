@@ -30,6 +30,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private float dragScaleFactor = 1 / 0.7f;
     [SerializeField] private float highlightedScale = 1.7f;
     [SerializeField] private CardRulesPresenter rules;
+    [SerializeField] private GameObject chainedCardParent;
 
     private Card _card;
     private CardTypeData _cardType;
@@ -61,6 +62,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
 
     public void Set(Card card) => Set("Library", card, () => { }, (_, __) => false);
+    public void Set(CardTypeData card) => Set(card, () => { });
     
     public void Set(string zone, Card card, Action onClick, Func<BattleState, Card, bool> getCanPlay)
     {
@@ -167,10 +169,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         highlight.SetActive(IsPlayable && active);
         if (active)
-            rules.Show(_cardType);
+            ShowComprehensiveCardInfo();
         else
-            rules.Hide();
-        
+            HideComprehensiveCardInfo();
+
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
         var position = active ? _position + new Vector3(0, sign * 180f, sign * 2f) : _position;
@@ -188,6 +190,25 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
 
+    private void ShowComprehensiveCardInfo()
+    {
+        rules.Show(_cardType);
+
+        _cardType.ChainedCard.IfPresent(chain =>
+        {
+            if (IsHand)
+                Message.Publish(new ShowChainedCard(chainedCardParent, new Card(-1, _card.Owner, chain)));
+            else
+                Message.Publish(new ShowChainedCard(chainedCardParent, chain));
+        });
+    }
+    
+    private void HideComprehensiveCardInfo()
+    {
+        rules.Hide();
+        Message.Publish(new HideChainedCard());
+    }
+    
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
 
     public void TeleportTo(Vector3 targetPosition)

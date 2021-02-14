@@ -26,6 +26,14 @@ public sealed class Maybe<T>
             action(value);
     }
 
+    public void ExecuteIfPresentOrElse(Action<T> ifPresent, Action elseAction)
+    {
+        if (isPresent)
+            ifPresent(Value);
+        else
+            elseAction();
+    }
+
     public bool IsPresentAnd(Func<T, bool> condition) => IsPresent && condition(value);
     public bool IsMissingOr(Func<T, bool> condition) => IsMissing || condition(value);
 
