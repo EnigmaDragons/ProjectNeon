@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndTargetSelectionRequested>
+public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndTargetSelectionRequested, CancelTargetSelectionRequested>
 {
     [SerializeField] private CardResolutionZone cardResolutionZone;
     [SerializeField] private CardPlayZone destinationCardZone;
@@ -23,6 +23,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     }
 
     protected override void Execute(EndTargetSelectionRequested msg) => EndSelection();
+    protected override void Execute(CancelTargetSelectionRequested msg) => Cancel();
 
     public void EndSelection()
     {
@@ -73,7 +74,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         var targetMaps = 0;
         foreach (var sequence in card.ActionSequences)
         {
-            if (sequence.Group == Group.All || sequence.Scope == Scope.All || sequence.Scope == Scope.AllExceptSelf)
+            if (sequence.Group == Group.Self || sequence.Scope == Scope.All || sequence.Scope == Scope.AllExceptSelf)
             {
                 var target = battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, sequence.Scope).First();
                 targetingState.GetTargets.Add(() => target);

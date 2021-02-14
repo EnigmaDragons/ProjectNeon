@@ -305,7 +305,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             Message.Publish(new BeginTargetSelectionRequested(_card));
         });
 
-    public void OnEndDrag(PointerEventData eventData) => WhenPlayableHand(ReturnHandToNormal);
+    public void OnEndDrag(PointerEventData eventData) 
+        => WhenPlayableHand(() =>
+        {
+            Message.Publish(new CancelTargetSelectionRequested());
+            ReturnHandToNormal();
+        });
 
     private void WhenPlayableHand(Action action)
     {
