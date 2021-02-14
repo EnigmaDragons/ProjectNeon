@@ -42,7 +42,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     // Hand 
     private string _zone;
-    private bool IsHand => _isHand;
     private bool _isHand;
     
     private bool _requiresPlayerTargeting;
@@ -74,7 +73,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onRightClick = ToggleAsBasic;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _requiresPlayerTargeting = card.RequiresPlayerTargeting();
+        _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
     }
     
@@ -120,6 +119,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         
         _card.UseAsBasic = asBasic;
         _cardType = _card.Type;
+        _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
         if (IsPlayable)
             SetHandHighlight(true);
@@ -182,7 +182,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         _cardType.ChainedCard.IfPresent(chain =>
         {
-            if (IsHand)
+            if (_isHand)
                 Message.Publish(new ShowChainedCard(chainedCardParent, new Card(-1, _card.Owner, chain)));
             else
                 Message.Publish(new ShowChainedCard(chainedCardParent, chain));
@@ -250,30 +250,23 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (eventData.dragging)
             return;
         DebugLog($"UI - Pointer Down - {CardName}");
-        if (!IsHand && eventData.button == PointerEventData.InputButton.Left)
-            _onClick();
-        if (battleState.IsSelectingTargets)
-            return;
-        if (eventData.button == PointerEventData.InputButton.Middle) 
-            _onMiddleMouse();
-        if (IsHand && eventData.button == PointerEventData.InputButton.Right)
-            ToggleAsBasic();
-        if (!IsHand && eventData.button == PointerEventData.InputButton.Right)
-        {
-            DebugLog("UI - Non Hand Right Click");
-            _onRightClick();
-        }
-        if (IsHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
+        if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
             Cursor.visible = false;
             transform.DOMove(transform.position + new Vector3(0, _clickMoveDistance, 0), _clickTweenSpeed);
         }
+        if (!_isHand && eventData.button == PointerEventData.InputButton.Left)
+            _onClick();
+        if (eventData.button == PointerEventData.InputButton.Middle)
+            _onMiddleMouse();
+        if (eventData.button == PointerEventData.InputButton.Right)
+            _onRightClick();
     }
-    
+
     public void OnPointerUp(PointerEventData eventData)
     {
         Cursor.visible = true;
-        if (IsHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
+        if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
             transform.DOMove(transform.position + new Vector3(0, -_clickMoveDistance, 0), _clickTweenSpeed);
         }
@@ -281,47 +274,43 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!eventData.dragging && IsHand && battleState.Phase == BattleV2Phase.PlayCards)
+        if (!eventData.dragging && _isHand && battleState.Phase == BattleV2Phase.PlayCards)
             Message.Publish(new CardHoverEnter(this));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!_isDragging && IsHand)
+        if (!_isDragging && _isHand)
             SetHandHighlight(false);
     }
 
     private bool _isDragging = false;
     
     public void OnDrag(PointerEventData eventData)
-    {
-        if (!IsHand || !IsPlayable)
-            return;
-        
-        if (!_requiresPlayerTargeting)
-            transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
-    }
+        => WhenPlayableHand(() =>
+        {
+            if (!_requiresPlayerTargeting)
+                transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
+        });
     
     public void OnBeginDrag(PointerEventData eventData)
-    {
-        if (!IsHand || !IsPlayable)
-            return;
+        => WhenPlayableHand(() =>
+        {
+            _isDragging = true;
+            canvasGroup.blocksRaycasts = false;
         
-        _isDragging = true;
-        canvasGroup.blocksRaycasts = false;
-        
-        // Targeting Card Selection Process can run the arrow
-        if (_requiresPlayerTargeting)
-            Message.Publish(new ShowMouseTargetArrow(new Vector3(0, 2f, 0)));
-        Message.Publish(new BeginTargetSelectionRequested(_card));
-    }
+            // Targeting Card Selection Process can run the arrow
+            if (_requiresPlayerTargeting)
+                Message.Publish(new ShowMouseTargetArrow(new Vector3(0, 2f, 0)));
+            Message.Publish(new BeginTargetSelectionRequested(_card));
+        });
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData) => WhenPlayableHand(ReturnHandToNormal);
+
+    private void WhenPlayableHand(Action action)
     {
-        if (!IsHand || !IsPlayable)
-            return;
-        
-        ReturnHandToNormal();
+        if (_isHand && IsPlayable)
+            action();
     }
 
     private void ReturnHandToNormal()
