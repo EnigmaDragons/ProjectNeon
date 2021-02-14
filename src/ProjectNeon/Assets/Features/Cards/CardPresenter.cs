@@ -72,6 +72,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _card = card;
         _cardType = card.Type;
         _getCanPlay = getCanPlay;
+        _onRightClick = ToggleAsBasic;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
         _requiresPlayerTargeting = true;
@@ -85,6 +86,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _card = null;
         _cardType = cardType;
         _getCanPlay = (_, __) => false;
+        _onRightClick = _cardType.ShowDetailedCardView;
         _zone = "Library";
         _isHand = false;
         _requiresPlayerTargeting = false;
@@ -102,7 +104,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
-    public void SetRightClickAction(Action action) => _onRightClick = action;
 
     private string CostLabel(IResourceAmount cost)
     {
