@@ -6,6 +6,7 @@ public class PlayerUiSoundGuy : MonoBehaviour
     [SerializeField] private UiSfxPlayer sfx;
     [SerializeField] private AudioClipVolume onSelect;
     [SerializeField] private AudioClipVolume onCancel;
+    [SerializeField] private AudioClipVolume[] onCardDrawn;
     [SerializeField] private float repeatCooldown = 0.4f;
 
     private Dictionary<string, float> _lastPlayed = new Dictionary<string, float>();
@@ -15,6 +16,7 @@ public class PlayerUiSoundGuy : MonoBehaviour
         _lastPlayed.Clear();
         Message.Subscribe<PlayerCardSelected>(_ => Play(onSelect), this);
         Message.Subscribe<PlayerCardCanceled>(_ => Play(onCancel), this);
+        //Message.Subscribe<PlayerCardDrawn>(_ => Play(onCardDrawn.Random()), this);
     }
 
     private void OnDisable()

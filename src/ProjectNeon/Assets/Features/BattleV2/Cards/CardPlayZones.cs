@@ -59,6 +59,7 @@ public class CardPlayZones : ScriptableObject
         if (DrawZone.IsEmpty)
             Reshuffle();
         HandZone.PutOnBottom(DrawZone.DrawOneCard());
+        Message.Publish(new PlayerCardDrawn());
     }
 
     public static CardPlayZones InMemory => (CardPlayZones)FormatterServices.GetUninitializedObject(typeof(CardPlayZones));

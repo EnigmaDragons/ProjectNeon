@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -17,9 +16,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI type;
-    [SerializeField] private GameObject costPanel;
-    [SerializeField] private TextMeshProUGUI costLabel;
-    [SerializeField] private Image costResourceTypeIcon;
     [SerializeField] private Image art;
     [SerializeField] private Image tint;
     [SerializeField] private GameObject canPlayHighlight;
@@ -31,6 +27,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private float highlightedScale = 1.7f;
     [SerializeField] private CardRulesPresenter rules;
     [SerializeField] private GameObject chainedCardParent;
+    [SerializeField] private CardCostPresenter cardCostPresenter;
 
     private Card _card;
     private CardTypeData _cardType;
@@ -42,10 +39,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Action _onMiddleMouse;
     private Action _onRightClick;
     private Vector3 _position;
+    
+    // Hand 
     private string _zone;
-
     private bool IsHand => _isHand;
     private bool _isHand;
+    
     private bool _requiresPlayerTargeting;
 
     public string CardName => _cardType.Name;
@@ -75,11 +74,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onRightClick = ToggleAsBasic;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _requiresPlayerTargeting = card.ActionSequences.Any(x 
-            => x.Group != Group.Self
-            && x.Scope != Scope.All
-            && x.Scope != Scope.AllExceptSelf
-            && x.Scope != Scope.OneExceptSelf);
+        _requiresPlayerTargeting = card.RequiresPlayerTargeting();
         RenderCardType();
     }
     
@@ -108,23 +103,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
-
-    private string CostLabel(IResourceAmount cost)
-    {
-        var owner = _card != null ? new Maybe<Member>(_card.Owner) : Maybe<Member>.Missing();
-        var numericAmount = cost.BaseAmount.ToString();
-        // Non-X Cost Cards
-        if (!cost.PlusXCost)
-            return numericAmount;
-
-        // X Cost Cards
-        if (owner.IsMissing)
-            return $"{numericAmount}+X".Replace("0+", "");
-        else
-            return _card.LockedXValue.Select(
-                r => $"{_card.Cost.BaseAmount}+{r.Amount}".Replace("0+", ""),
-                () => $"{_card.Cost.BaseAmount}+{_card.Owner.CalculateResources(_card.Type).XAmountPriceTag}".Replace("0+", ""));
-    }
 
     public void ToggleAsBasic()
     {
@@ -242,16 +220,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);
-
-        var cost = _cardType.Cost;
-        var hasCost = !cost.ResourceType.Name.Equals("None") && cost.BaseAmount > 0 || cost.PlusXCost;
-        costPanel.SetActive(hasCost);
-        if (hasCost)
-        {
-            costLabel.text = CostLabel(cost);
-            costResourceTypeIcon.sprite = cost.ResourceType.Icon;
-        }
-
+        cardCostPresenter.Render(_card, _cardType);
         tint.color = _cardType.LimitedToClass.Select(c => c.Tint, () => Color.white);
         canPlayHighlight.SetActive(IsPlayable);
         highlight.SetActive(IsPlayable);
@@ -340,6 +309,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         
         _isDragging = true;
         canvasGroup.blocksRaycasts = false;
+        
+        // Targeting Card Selection Process can run the arrow
         if (_requiresPlayerTargeting)
             Message.Publish(new ShowMouseTargetArrow(new Vector3(0, 2f, 0)));
         Message.Publish(new BeginTargetSelectionRequested(_card));
