@@ -11,6 +11,7 @@ public class CardInLibraryButton : MonoBehaviour
     public void InitInfoOnly(CardType card)
     {
         presenter.Set(card, () => { });
+        presenter.SetRightClickAction(card.ShowDetailedCardView);
         numCopiesLabel.text = "";
     }
     
@@ -20,6 +21,7 @@ public class CardInLibraryButton : MonoBehaviour
             ? (Action)(() => AddCard(card))
             : () => { };
         presenter.Set(card, action);
+        presenter.SetRightClickAction(card.ShowDetailedCardView);
         numCopiesLabel.text = $"{numAvailable}/{numTotal}";
     }
 

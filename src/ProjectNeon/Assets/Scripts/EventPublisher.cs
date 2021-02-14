@@ -27,4 +27,5 @@ public class EventPublisher : ScriptableObject
     public void ActivatePartyDetailsWizardFlow() => Message.Publish(new TogglePartyDetails { AllowDone = false });
     public void ToggleCardLibrary() => Message.Publish(new ToggleCardLibrary());
     public void GenerateFreshEquipmentSet() => Message.Publish(new GetFreshEquipmentSet());
+    public void HideDetailedCardView() => Message.Publish(new HideDetailedCardView());
 }

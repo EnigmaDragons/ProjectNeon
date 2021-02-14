@@ -40,6 +40,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Func<BattleState, Card, bool> _getCanPlay;
     private Action _onClick;
     private Action _onMiddleMouse;
+    private Action _onRightClick;
     private Vector3 _position;
     private string _zone;
 
@@ -97,9 +98,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         highlight.SetActive(false);
         _onClick = onClick;
         _onMiddleMouse = () => { };
+        _onRightClick = () => { };
     }
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
+    public void SetRightClickAction(Action action) => _onRightClick = action;
 
     private string CostLabel(IResourceAmount cost)
     {
@@ -190,7 +193,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
 
-    private void ShowComprehensiveCardInfo()
+    public void ShowComprehensiveCardInfo()
     {
         rules.Show(_cardType);
 
@@ -281,6 +284,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             _onMiddleMouse();
         if (IsHand && eventData.button == PointerEventData.InputButton.Right)
             ToggleAsBasic();
+        if (!IsHand && eventData.button == PointerEventData.InputButton.Right)
+        {
+            DebugLog("UI - Non Hand Right Click");
+            _onRightClick();
+        }
         if (IsHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
             Cursor.visible = false;
@@ -305,7 +313,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!_isDragging)
+        if (!_isDragging && IsHand)
             SetHandHighlight(false);
     }
 
