@@ -13,7 +13,6 @@ public sealed class HandVisualizer : MonoBehaviour
     [SerializeField] private bool onlyAllowInteractingWithPlayables = false;
     [SerializeField] private Vector3 unfocusedOffset = new Vector3(0, 400, 0);
     [SerializeField] private Vector3 cardRotation;
-    [SerializeField] private BattlePlayerTargetingStateV2 targetingState;
 
     private CardPlayZone Hand => zones.HandZone;
     private CardPool _cardPool;

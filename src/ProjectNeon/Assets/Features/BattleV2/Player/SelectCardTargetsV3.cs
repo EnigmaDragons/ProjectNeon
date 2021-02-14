@@ -13,10 +13,6 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
 
     [ReadOnly, SerializeField] private Card card;
     
-    private int _actionIndex;
-    private int _numActions;
-    private Target[] _actionTargets;
-
     protected override void Execute(BeginTargetSelectionRequested msg)
     {
         card = msg.Card;
@@ -53,7 +49,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
 
     private void PlayCard(PlayedCardV2 playedCard)
     {
-        Debug.Log($"UI - Playing {card.Name} on {string.Join(" | ", _actionTargets.Select(x => x.ToString()))}");
+        Debug.Log($"UI - Playing {card.Name} on {string.Join(" | ", targetingState.Targets.Select(x => x.ToString()))}");
         cardResolutionZone.Add(playedCard);
         Message.Publish(new PlayerCardSelected());
         sourceCardZone.Remove(card);

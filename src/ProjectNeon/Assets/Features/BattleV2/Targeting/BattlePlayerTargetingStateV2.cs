@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Battle/BattlePlayerTargettingStateV2")]
 public class BattlePlayerTargetingStateV2 : ScriptableObject
 {
     [SerializeField] private BattleState battleState;
