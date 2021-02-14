@@ -20,7 +20,8 @@ public class ChainedCardPresenter : OnMessage<ShowChainedCard, HideChainedCard>
 
     public void Hide()
     {
-        _parent.DestroyAllChildren();
+        if (_parent != null)
+            _parent.DestroyAllChildren();
     }
 
     protected override void Execute(ShowChainedCard msg)
