@@ -140,13 +140,16 @@ public sealed class HandVisualizer : MonoBehaviour
         Log.Info($"UI: Selected Card");
         if (state.Phase != BattleV2Phase.PlayCards)
             return;
-        
-        if (allowInteractions && Hand.Count > cardIndex)
-            if (_cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
-            {
-                Message.Publish(new EndTargetSelectionRequested());
-                UpdateVisibleCards();
-            }
+
+        if (allowInteractions && Hand.Count > cardIndex && _cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
+        {
+            Message.Publish(new EndTargetSelectionRequested());
+            UpdateVisibleCards();
+        }
+        else
+        {
+            Message.Publish(new CancelTargetSelectionRequested());
+        }
     }
 
     public void RecycleCard(int cardIndex)
