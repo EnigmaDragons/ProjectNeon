@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShowMouseTargetArrow
 {
-    public Vector3 Offset { get; }
+    public Transform Card { get; }
 
-    public ShowMouseTargetArrow(Vector3 offset) => Offset = offset;
+    public ShowMouseTargetArrow(Transform card) => Card = card;
 }

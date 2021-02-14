@@ -306,7 +306,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             // Targeting Card Selection Process can run the arrow
             if (_requiresPlayerTargeting)
             {
-                Message.Publish(new ShowMouseTargetArrow(new Vector3(0, 2f, 0)));
+                Message.Publish(new ShowMouseTargetArrow(transform));
             }
             _onBeginDrag();
             Message.Publish(new BeginTargetSelectionRequested(_card));
