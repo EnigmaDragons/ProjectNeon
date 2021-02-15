@@ -22,6 +22,12 @@ public class CardInLibraryButton : MonoBehaviour
         presenter.Set(card, action);
         numCopiesLabel.text = $"{numAvailable}/{numTotal}";
     }
+    
+    public void InitBasic(CardType card)
+    {
+        presenter.Set(card, () => { });
+        numCopiesLabel.text = "Basic";
+    }
 
     public void AddCard(CardType card)
     {
