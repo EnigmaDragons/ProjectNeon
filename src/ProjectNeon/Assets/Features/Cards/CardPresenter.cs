@@ -216,7 +216,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void SetTargetPosition(Vector3 targetPosition)
     {
         _position = targetPosition;
-        Message.Publish(new GoToTweenRequested(transform, targetPosition, 1));
+        Message.Publish(new GoToTweenRequested(transform, targetPosition, Vector3.Distance(transform.position, targetPosition) / 1600f));
     }
 
     private void RenderCardType()
