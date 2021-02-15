@@ -11,6 +11,7 @@ public class PartyEquipmentCollection
     
     public List<Equipment> All => _all.ToList();
     public List<Equipment> Available => _available.ToList();
+    public List<Equipment> Equipped => _equipped.ToList();
 
     public IEnumerable<Equipment> AvailableFor(CharacterClass c) =>
         Available.Where(e => e.Classes.Contains(CharacterClass.All) || e.Classes.Contains(c.Name)).ToList();

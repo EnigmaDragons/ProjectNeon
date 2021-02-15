@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using UnityEditor.Graphs;
 
 public class HeroEquipmentTests
 {
@@ -38,6 +39,19 @@ public class HeroEquipmentTests
         
         heroEquipment.Equip(gun);
 
+        Assert.AreEqual(1, heroEquipment.All.Length);
+    }
+
+    [Test]
+    public void HeroEquipment_UnequipAugmentWhenHasTwoCopies_StillHasOneEquipped()
+    {
+        var heroEquipment = new HeroEquipment(TestClasses.Soldier);
+        var augment = new InMemoryEquipment { Slot = EquipmentSlot.Augmentation };
+        
+        heroEquipment.Equip(augment);
+        heroEquipment.Equip(augment);
+        heroEquipment.Unequip(augment);
+        
         Assert.AreEqual(1, heroEquipment.All.Length);
     }
 }

@@ -83,12 +83,14 @@ public sealed class PartyAdventureState : ScriptableObject
     {
         h.Equip(e);
         equipment.MarkEquipped(e);
+        DevLog.Info($"Equipment - Equipped {e.Name} to {h.Name}. Available: {equipment.Available.Count}. Equipped: {equipment.Equipped.Count}");
     });
 
     public void UnequipFrom(Equipment e, Hero h) => UpdateState(() =>
     {
         h.Unequip(e);
-        Equipment.MarkUnequipped(e);
+        equipment.MarkUnequipped(e);
+        DevLog.Info($"Equipment - Unequipped {e.Name} from {h.Name}. Available: {equipment.Available.Count}. Equipped: {equipment.Equipped.Count}");
     });
 
     private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.Cards);

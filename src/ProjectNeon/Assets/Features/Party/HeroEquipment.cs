@@ -39,7 +39,11 @@ public class HeroEquipment
             _armor = null;
         for (var i = 0; i < _augments.Length; i++)
             if (_augments[i] == e)
+            {
+                Log.Info($"Unequipped {e.Name} from Augment Slot {i + 1}");
                 _augments[i] = null;
+                return;
+            }
     }
 
     public void Equip(Equipment e)
@@ -63,7 +67,7 @@ public class HeroEquipment
             for (var i = 0; i < _augments.Length; i++)
                 if (_augments[i] == null)
                 {
-                    Debug.Log($"Equipped {e.Name} to Augment Slot {i + 1}");
+                    Log.Info($"Equipped {e.Name} to Augment Slot {i + 1}");
                     _augments[i] = e;
                     augments[i] = e.Name;
                     return;

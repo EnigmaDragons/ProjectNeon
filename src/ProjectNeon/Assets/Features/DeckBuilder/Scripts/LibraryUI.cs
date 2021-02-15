@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -19,8 +20,8 @@ public class LibraryUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDe
     {
         var heroChanged = state.SelectedHeroesDeck.Hero != _selectedHero;
         _selectedHero = state.SelectedHeroesDeck.Hero;
-        var cardsForHero = partyCards.AllCards
-            .Where(x => !x.Key.LimitedToClass.IsPresent || x.Key.LimitedToClass.Value.Name == state.SelectedHeroesDeck.Hero.Class.Name);
+        var cardsForHero = new KeyValuePair<CardType, int>(_selectedHero.ClassCard, 0).Concat(partyCards.AllCards
+                .Where(x => !x.Key.LimitedToClass.IsPresent || x.Key.LimitedToClass.Value.Name == state.SelectedHeroesDeck.Hero.Class.Name));
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
             c => new Tuple<int, int>(c.Value, c.Value - state.SelectedHeroesDeck.Deck.Count(card => card == c.Key)));
         pageViewer.Init(
@@ -35,7 +36,15 @@ public class LibraryUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDe
 
     private Action<GameObject> InitCardInLibraryButton(CardType card, int numTotal, int numAvailable)
     {
-        void Init(GameObject gameObj) => gameObj.GetComponent<CardInLibraryButton>().Init(card, numTotal, numAvailable);
+        void Init(GameObject gameObj)
+        {
+            var button = gameObj.GetComponent<CardInLibraryButton>();
+                if (card == _selectedHero.ClassCard)
+                    button.InitBasic(card);
+                else
+                    button.Init(card, numTotal, numAvailable);
+        }
+
         return Init;
     }
 }
