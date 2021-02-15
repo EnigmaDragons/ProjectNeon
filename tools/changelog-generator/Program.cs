@@ -80,6 +80,8 @@ namespace ChangeLogGenerator
             { "New Feature:", "New Features" },
             { "New Card:", "New Content" },
             { "Art:", "Art Improvements" },
+            { "Sounds:", "Art Improvements" },
+            { "Sound:", "Art Improvements" },
             { "New Enemy:", "New Content" },
             { "New Boss:", "New Content" },
             { "New Augment:", "New Content" },
