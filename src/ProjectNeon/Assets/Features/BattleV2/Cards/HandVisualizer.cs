@@ -142,7 +142,7 @@ public sealed class HandVisualizer : MonoBehaviour
         if (state.Phase != BattleV2Phase.PlayCards)
             return;
 
-        if (allowInteractions && Hand.Count > cardIndex && _cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables)
+        if (allowInteractions && Hand.Count > cardIndex && (_cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables))
             Message.Publish(new EndTargetSelectionRequested());
         else
             Message.Publish(new CancelTargetSelectionRequested());
@@ -150,7 +150,7 @@ public sealed class HandVisualizer : MonoBehaviour
 
     public void BeginDragCard(Card card, int cardIndex)
     {
-        if (card.Type.RequiresPlayerTargeting())
+        if (card.Type.RequiresPlayerTargeting() && _cardPool[cardIndex].IsPlayable)
         {
             var targetPosition = new Vector3(Screen.width / 2f, _defaultPosition.y, _defaultPosition.z);
             _cardPool[cardIndex].SetTargetPosition(targetPosition);

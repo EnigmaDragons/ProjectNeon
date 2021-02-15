@@ -304,7 +304,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnDrag(PointerEventData eventData)
         => WhenPlayableHand(() =>
         {
-            if (!_requiresPlayerTargeting)
+            if (!_requiresPlayerTargeting || !IsPlayable)
                 transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
         });
     
@@ -315,7 +315,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             canvasGroup.blocksRaycasts = false;
         
             // Targeting Card Selection Process can run the arrow
-            if (_requiresPlayerTargeting)
+            if (_requiresPlayerTargeting && IsPlayable)
             {
                 Message.Publish(new ShowMouseTargetArrow(transform));
             }
@@ -332,7 +332,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void WhenPlayableHand(Action action)
     {
-        if (_isHand && IsPlayable)
+        if (_isHand)
             action();
     }
 
