@@ -38,7 +38,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         {
             var enemyObject = active[enemyPosition.Item1].transform;
             var t = enemyObject.transform;
-            t.position = transform.position + new Vector3(enemyPosition.Item1 * widthBetweenEnemies, (enemyPosition.Item1 % 2) * rowHeight, (enemyPosition.Item1 % 2) == 0 ? 0 : 1);
+            t.position = transform.position - new Vector3(enemyPosition.Item1 * widthBetweenEnemies, (enemyPosition.Item1 % 2) * rowHeight, (enemyPosition.Item1 % 2) == 0 ? 0 : 1);
         }
     }
 
