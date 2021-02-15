@@ -159,11 +159,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         var tweenDuration = 0.08f;
         DebugLog($"Tweening Highlight {active}");
-        transform.DOScale(scale, tweenDuration);
         if (active)
-            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, sign * 180f, sign * 2f), tweenDuration, TweenMovementType.RubberBand, "Highlight"));
+        {
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, sign * 180f, sign * 2f), tweenDuration, MovementDimension.Spatial, TweenMovementType.RubberBand, "Highlight"));
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(highlightedScale - 1f, highlightedScale - 1f, highlightedScale - 1f), tweenDuration, MovementDimension.Scale, TweenMovementType.RubberBand, "HighlightScale"));
+        }
         else
-            Message.Publish(new SnapBackTweenRequested(transform, "Highlight"));
+        {
+            Message.Publish(new SnapBackTweenRequested(transform, "Highlight"));  
+            Message.Publish(new SnapBackTweenRequested(transform, "HighlightScale"));  
+        }
         if (_card != null)
             if (active)
                 Message.Publish(new HighlightCardOwner(_card.Owner));
@@ -208,7 +213,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void TeleportTo(Vector3 targetPosition)
     {
-        Message.Publish(new StopMovementTweeningRequested(transform));
+        Message.Publish(new StopMovementTweeningRequested(transform, MovementDimension.Spatial));
         transform.position = targetPosition;
         _position = targetPosition;
     }
@@ -216,7 +221,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void SetTargetPosition(Vector3 targetPosition)
     {
         _position = targetPosition;
-        Message.Publish(new GoToTweenRequested(transform, targetPosition, Vector3.Distance(transform.position, targetPosition) / 1600f));
+        Message.Publish(new GoToTweenRequested(transform, targetPosition, Vector3.Distance(transform.position, targetPosition) / 1600f, MovementDimension.Spatial));
     }
 
     private void RenderCardType()
@@ -263,7 +268,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
             Cursor.visible = false;
-            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, 30f, 0), 0.03f, TweenMovementType.RubberBand, "Click"));
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, 30f, 0), 0.03f, MovementDimension.Spatial, TweenMovementType.RubberBand, "Click"));
         }
         if (!_isHand && eventData.button == PointerEventData.InputButton.Left)
             _onClick();
