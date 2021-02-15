@@ -25,9 +25,11 @@ MonoBehaviour:
   battleRole: 1
   unique: 0
   maxHp: 14
+  maxShield: 6
   toughness: 3
   attack: 5
   magic: 0
+  leadership: 0
   armor: 0
   resistance: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -53,8 +55,20 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    ReferencedSequence: {fileID: 0}
-    ReactionSequence: {fileID: 0}
     StatusTag: 0
+    StatusDetailText: 
     TurnDelay: 0
     Formula: 
+    FlavorText:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  lastBalanceDate: Never

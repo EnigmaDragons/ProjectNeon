@@ -15,15 +15,16 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     private void Awake()
     {
         confirmUi.gameObject.SetActive(false);
-        confirmUi.onClick.AddListener(Confirm);
+        confirmUi.onClick.AddListener(ConfirmEarly);
     }
     
     private void OnEnable()
     {
+        Message.Subscribe<BattleStateChanged>(_ => UpdateState(), this);
         Message.Subscribe<BeginPlayerTurnConfirmation>(_ => OnConfirmationRequested(), this);
         playArea.OnZoneCardsChanged.Subscribe(UpdateState, this);
     }
-
+    
     private void OnDisable()
     {
         Message.Unsubscribe(this);
@@ -41,23 +42,29 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     
     private void UpdateState()
     {
+        confirmUi.gameObject.SetActive(battleState.Phase == BattleV2Phase.PlayCards);
         if (_isConfirming == CanConfirm)
             return;
         
         _isConfirming = CanConfirm;
-        confirmUi.gameObject.SetActive(_isConfirming);
         if (_isConfirming)
             Message.Publish(new PlayerTurnConfirmationStarted());
         else
             Message.Publish(new PlayerTurnConfirmationAborted());
     }
 
+    private void ConfirmEarly()
+    {
+        _confirmRequested = true;
+        confirmUi.gameObject.SetActive(false);
+        Confirm();
+    }
+    
     public void Confirm()
     {
         if (!CanConfirm) return;
 
         _confirmRequested = false;
-        confirmUi.gameObject.SetActive(false);
         playArea.Clear();
         DevLog.Write("Player Confirmed Turn");
         Message.Publish(new PlayerTurnConfirmed());
