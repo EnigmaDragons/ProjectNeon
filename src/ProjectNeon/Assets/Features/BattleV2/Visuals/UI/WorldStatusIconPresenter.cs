@@ -23,8 +23,8 @@ public sealed class WorldStatusIconPresenter : StatusIcon
         _tooltip = s.Tooltip;
         if (s.IsChanged)
         {
-            transform.localScale = _originalScale;
-            transform.DOPunchScale(new Vector3(1.28f, 1.28f, 1.28f), 1f, 1);
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0.56f, 0.56f, 0.56f), 1, MovementDimension.Scale));
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(-0.56f, -0.56f, -0.56f), 2, MovementDimension.Scale));
         }
     }
     

@@ -64,7 +64,8 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
                 RelativeDistance = request.RelativeDistance, 
                 Seconds = request.Seconds, 
                 MovementType = request.MovementType, 
-                MovementName = request.MovementName
+                MovementName = request.MovementName,
+                Dimension = request.Dimension
             });
     }
 
@@ -77,10 +78,14 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
 
     private void ProcessGoToRequest(GoToTweenRequested request)
     {
-        var currentDestination = request.Transform.position;
+        var currentDestination = Vector3.zero;
+        if (request.Dimension == MovementDimension.Spatial)
+            currentDestination = request.Transform.position;
+        else if (request.Dimension == MovementDimension.Scale)
+            currentDestination = request.Transform.localScale;
         foreach (var movement in _movements)
         {
-            if (movement.Transform == request.Transform)
+            if (movement.Transform == request.Transform && movement.Dimension == request.Dimension)
             {
                 if (movement.MovementType != TweenMovementType.RubberBand)
                 {
@@ -101,14 +106,15 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
             Transform = request.Transform,
             RelativeDistance = request.Destination - currentDestination,
             Seconds = request.Seconds,
-            MovementType = TweenMovementType.GoTo
+            MovementType = TweenMovementType.GoTo,
+            Dimension = request.Dimension
         });
     }
 
     private void ProcessStopRequest(StopMovementTweeningRequested request)
     {
         foreach (var movement in _movements.ToArray())
-            if (movement.Transform == request.Transform)
+            if (movement.Transform == request.Transform && movement.Dimension == request.Dimension)
                 _movements.Remove(movement);
     }
 
@@ -125,7 +131,10 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
             var beforeDistance = movement.RelativeDistance * EaseInOutCubic(beforeT);
             var afterDistance = movement.RelativeDistance * EaseInOutCubic(afterT);
             var currentDistance = afterDistance - beforeDistance;
-            movement.Transform.position += currentDistance;
+            if (movement.Dimension == MovementDimension.Spatial)
+                movement.Transform.position += currentDistance;
+            else if (movement.Dimension == MovementDimension.Scale)
+                movement.Transform.localScale += currentDistance;
         }
     }
 
@@ -138,6 +147,7 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
         public float Seconds;
         public TweenMovementType MovementType;
         public string MovementName;
+        public MovementDimension Dimension;
         
         public float T;
         public bool Reverse;

@@ -3,6 +3,11 @@
 public class StopMovementTweeningRequested
 {
     public Transform Transform { get; }
+    public MovementDimension Dimension { get; }
 
-    public StopMovementTweeningRequested(Transform transform) => Transform = transform;
+    public StopMovementTweeningRequested(Transform transform, MovementDimension dimension)
+    {
+        Transform = transform;
+        Dimension = dimension;
+    }
 }
