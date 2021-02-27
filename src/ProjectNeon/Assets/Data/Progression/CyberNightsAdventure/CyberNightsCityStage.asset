@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce358c587d594460908d55aa6ff7b9ca, type: 3}
+  m_Name: CyberNightsCityStage
+  m_EditorClassIdentifier: 
+  displayName: Neon City Streets
+  gameMap: {fileID: 11400000, guid: e622bf788a37fcb42ae5f8b566c23d2d, type: 2}
+  encounterBuilder: {fileID: 11400000, guid: 558b363615dd70f49bdd21a46c540b13, type: 2}
+  eliteEncounterBuilder: {fileID: 11400000, guid: 458d8dc40bd0ce64387ee44e64f8a237,
+    type: 2}
+  storySetting: 0
+  powerCurve:
+    m_Mode: 1
+    m_CurveMultiplier: 1
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 100
+        inSlope: 200
+        outSlope: 200
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 300
+        inSlope: 200
+        outSlope: 200
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
+  elitePowerCurve:
+    m_Mode: 1
+    m_CurveMultiplier: 1
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 200
+        inSlope: 200
+        outSlope: 200
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 400
+        inSlope: 200
+        outSlope: 200
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
+  possibleBattlegrounds:
+  - {fileID: 1468162810460551795, guid: 89fc8dab2733c13498c9cd5aca33fe8b, type: 3}
+  - {fileID: 551767141211219218, guid: b1029b40fdde8174abbebc443f2c770e, type: 3}
+  - {fileID: 2413209672090836174, guid: 8a3d0e2b42f87e44485e1f79633b6028, type: 3}
+  segmentCount: 20
+  bossBattlefield: {fileID: 129582511843091003, guid: aff2fb4af82d88a459592dc8be7ba3ff,
+    type: 3}
+  bossEnemies:
+  - {fileID: 11400000, guid: 201a9a4cc6d5f974faa85131fb79e54d, type: 2}
+  nodeTypeOdds: {fileID: 11400000, guid: e9c4fb2c3acf8a440b0000786a798699, type: 2}

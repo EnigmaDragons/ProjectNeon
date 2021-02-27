@@ -23,6 +23,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private int leadership;
     [SerializeField] private float armor;
     [SerializeField] private float resistance;
+    [SerializeField] private float nonStatCardValueFactor;
     [SerializeField] private ResourceType resourceType;
     [SerializeField] private int startingResourceAmount = 0;
     [SerializeField] private int resourceGainPerTurn = 1;
@@ -51,7 +52,7 @@ public class Enemy : ScriptableObject
     public int StartingResourceAmount => startingResourceAmount;
     public int ResourceGainPerTurn => resourceGainPerTurn;
     public int CardsPerTurn => cardsPerTurn;
-
+    
     public Member AsMember(int id, BattleState state)
     {
         var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats, battleRole);
@@ -115,4 +116,6 @@ public class Enemy : ScriptableObject
         var typeFactor = battleRole == BattleRole.Boss ? 4 : 1;
         return Mathf.RoundToInt(powerLevel * powerLevelFactor * typeFactor);
     }
+    
+    public int PowerLevel => 
 }
