@@ -8,11 +8,11 @@ public sealed class Card
     [SerializeField] private CardTypeData type;
     [SerializeField] private Member owner;
 
-    public bool UseAsBasic;
+    public CardMode Mode;
 
     public CardTypeData BasicType => LimitedToClass.Value.BasicCard;
     public Maybe<CharacterClass> LimitedToClass => type.LimitedToClass;
-    public CardTypeData Type => UseAsBasic && LimitedToClass.IsPresent 
+    public CardTypeData Type => Mode == CardMode.Basic && LimitedToClass.IsPresent 
         ? LimitedToClass.Value.BasicCard 
         : type;
 
@@ -39,7 +39,7 @@ public sealed class Card
     
     public Card RevertedToStandard()
     {
-        UseAsBasic = false;
+        Mode = CardMode.Normal;
         ClearXValue();
         return this;
     }

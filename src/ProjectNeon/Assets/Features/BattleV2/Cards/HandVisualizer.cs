@@ -142,7 +142,7 @@ public sealed class HandVisualizer : MonoBehaviour
         if (state.Phase != BattleV2Phase.PlayCards)
             return;
 
-        if (allowInteractions && Hand.Count > cardIndex && (_cardPool[cardIndex].IsPlayable || !onlyAllowInteractingWithPlayables))
+        if (allowInteractions && Hand.Count > cardIndex)
             Message.Publish(new EndTargetSelectionRequested());
         else
             Message.Publish(new CancelTargetSelectionRequested());
