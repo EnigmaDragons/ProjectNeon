@@ -27,10 +27,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
 
     public void EndSelection()
     {
-        if (targetingState.HasValidTargets)
-            Confirm();
-        else 
-            Cancel();
+        Confirm();
     }
     
     public void Cancel() => OnCancelled();
