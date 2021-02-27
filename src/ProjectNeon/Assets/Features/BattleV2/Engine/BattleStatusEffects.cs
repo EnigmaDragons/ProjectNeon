@@ -14,7 +14,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
 
     private bool _isProcessing;
     private bool _isProcessingStartOfTurn;
-    
+
     public void ProcessStartOfTurnEffects()
     {
         _isProcessing = true;
@@ -67,7 +67,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             var member = _currentMember.Value;
             var battleSnapshotBefore = state.GetSnapshot();
 
-            Message.Subscribe<SequenceFinished>(_ =>
+            Message.OnNext<MessageGroupFinished>(_ =>
             {
                 var battleSnapshotAfter = state.GetSnapshot();
                 var effectResolved = new EffectResolved(EffectData.Nothing, 
@@ -76,12 +76,10 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                     battleSnapshotBefore,
                     battleSnapshotAfter, 
                     false);
-                Message.Unsubscribe(this);
-                Message.Subscribe<StatusEffectResolved>(Execute, this);
                 Message.Publish(new StatusEffectResolved(member, effectResolved));
-            }, this);
+            });
 
-            SequenceMessage.Queue(e);
+            MessageGroup.Queue(e);
         }
         else
         {

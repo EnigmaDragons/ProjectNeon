@@ -34,7 +34,7 @@ public class PlayedCardV2 : IPlayedCard
     public void Perform(BattleStateSnapshot beforeCard)
     {
         var wasInstant = this.IsInstant();
-        Message.Subscribe<SequenceFinished>(_ =>
+        Message.Subscribe<MessageGroupFinished>(_ =>
         {
             Message.Unsubscribe(this);
             Message.Publish(new CardResolutionFinished(Member.Id, wasInstant));
