@@ -14,12 +14,8 @@ public sealed class CardReactionSequence
 
     public void Perform(Member source, Target target, ResourceQuantity xAmountPaid)
     {
-        Message.Subscribe<MessageGroupFinished>(_ =>
-        {
-            Message.Unsubscribe(this);
-            Message.Publish(new CardResolutionFinished(source.Id, false));
-        }, this);
-        MessageGroup.Queue(cardActions.PlayAsReaction(source, target, xAmountPaid));
+        MessageGroup.Start(cardActions.PlayAsReaction(source, target, xAmountPaid), 
+            () => Message.Publish(new CardResolutionFinished(source.Id, false)));
     }
 
     public CardReactionSequence() {}

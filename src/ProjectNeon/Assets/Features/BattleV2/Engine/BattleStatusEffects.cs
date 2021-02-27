@@ -67,7 +67,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             var member = _currentMember.Value;
             var battleSnapshotBefore = state.GetSnapshot();
 
-            Message.OnNext<MessageGroupFinished>(_ =>
+            MessageGroup.Start(e, () => 
             {
                 var battleSnapshotAfter = state.GetSnapshot();
                 var effectResolved = new EffectResolved(EffectData.Nothing, 
@@ -78,8 +78,6 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                     false);
                 Message.Publish(new StatusEffectResolved(member, effectResolved));
             });
-
-            MessageGroup.Queue(e);
         }
         else
         {

@@ -6,7 +6,7 @@ using UnityEngine;
 public static class BattleCardExecution
 {
     // Card
-    public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot)
+    public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, Action onFinished)
     {
         if (card.ActionSequences.Length > targets.Length)
             Log.Error($"{card.Name}: For {card.ActionSequences.Length} there are only {targets.Length} targets");
@@ -40,7 +40,7 @@ public static class BattleCardExecution
             var ctx = new CardActionContext(card.Owner, selectedTarget, seq.AvoidanceType, avoidingMembers, seq.Group, seq.Scope, card.LockedXValue.Value, battleStateSnapshot, card);
             payloads.Add(seq.cardActions.Play(ctx));
         }
-        QueuePayloads(payloads);
+        QueuePayloads(payloads, onFinished);
     }
 
     private static Member[] GetAvoidingMembers(CardActionSequence seq, Target selectedTarget)
@@ -72,14 +72,14 @@ public static class BattleCardExecution
         return avoidingMembers.ToArray();
     }
     
-    private static void QueuePayloads(List<IPayloadProvider> payloads)
+    private static void QueuePayloads(List<IPayloadProvider> payloads, Action onFinished)
     {
         if (payloads.Count > 1)
-            MessageGroup.Queue(new MultiplePayloads(payloads));
+            MessageGroup.Start(new MultiplePayloads(payloads), onFinished);
         else if (payloads.Count == 1)
-            MessageGroup.Queue(payloads[0]);
+            MessageGroup.Start(payloads[0], onFinished);
         else
-            MessageGroup.Queue(new NoPayload());
+            MessageGroup.Start(new NoPayload(), onFinished);
     }
 
     // Sequence Actions
