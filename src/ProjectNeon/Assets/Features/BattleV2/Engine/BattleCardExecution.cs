@@ -27,7 +27,8 @@ public static class BattleCardExecution
                 sequenceTargets.Add(targets[i]);
             }
         }
-        
+
+        var payloads = new List<IPayloadProvider>();
         for (var i = 0; i < sequences.Count; i++)
         {
             var seq = sequences[i];
@@ -37,9 +38,9 @@ public static class BattleCardExecution
             if (avoidingMembers.Any())
                 BattleLog.Write($"{string.Join(", ", avoidingMembers.Select(a => a.Name))} {avoidanceWord} {card.Name}");
             var ctx = new CardActionContext(card.Owner, selectedTarget, seq.AvoidanceType, avoidingMembers, seq.Group, seq.Scope, card.LockedXValue.Value, battleStateSnapshot, card);
-            ResolveSequenceAsync(seq, ctx);
+            payloads.Add(seq.cardActions.Play(ctx));
         }
-        SequenceMessage.Queue(new NoPayload());
+        QueuePayloads(payloads);
     }
 
     private static Member[] GetAvoidingMembers(CardActionSequence seq, Target selectedTarget)
@@ -70,12 +71,17 @@ public static class BattleCardExecution
 
         return avoidingMembers.ToArray();
     }
-
-    private static void ResolveSequenceAsync(CardActionSequence seq, CardActionContext ctx)
-    {
-        SequenceMessage.Queue(seq.cardActions.Play(ctx));
-    }
     
+    private static void QueuePayloads(List<IPayloadProvider> payloads)
+    {
+        if (payloads.Count > 1)
+            MessageGroup.Queue(new MultiplePayloads(payloads));
+        else if (payloads.Count == 1)
+            MessageGroup.Queue(payloads[0]);
+        else
+            MessageGroup.Queue(new NoPayload());
+    }
+
     // Sequence Actions
     public static IPayloadProvider Play(this CardActionsData card, CardActionContext ctx)
         => new MultiplePayloads(card.Actions.Select(x => x.Play(ctx)));

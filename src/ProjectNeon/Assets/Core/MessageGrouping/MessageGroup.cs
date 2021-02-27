@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 
-public static class SequenceMessage
+public static class MessageGroup
 {
-    private static SequencedMessageQueue Msgs = new SequencedMessageQueue();
-    //public static void Queue(object payload) => Msgs.Queue(new SinglePayload(payload));
+    private static MessageGroupQueue Msgs = new MessageGroupQueue();
     public static void Queue(IPayloadProvider payloadProvider) => Msgs.Queue(payloadProvider);
     
-    private sealed class SequencedMessageQueue
+    private sealed class MessageGroupQueue
     {
         private readonly Queue<IPayloadProvider> _enqueuedPayloadQueues = new Queue<IPayloadProvider>();
         private IPayloadProvider _currentPayloadQueue = new NoPayload();
@@ -24,7 +23,7 @@ public static class SequenceMessage
             while (_currentPayloadQueue.IsFinished() && _enqueuedPayloadQueues.Count > 0)
                 _currentPayloadQueue = _enqueuedPayloadQueues.Dequeue();
             if (_currentPayloadQueue.IsFinished())
-                Message.Publish(new SequenceFinished());
+                Message.Publish(new MessageGroupFinished());
             else
             {
                 var payloadData = _currentPayloadQueue.GetNext();

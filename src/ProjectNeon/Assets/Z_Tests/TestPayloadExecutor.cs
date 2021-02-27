@@ -3,7 +3,7 @@ public static class TestPayloadExecutor
 {
     public static void ExecuteStartOfTurnEffects(this Member m)
         => m.State.GetTurnStartEffects()
-                .ExecuteAll(EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None));
+            .ForEach(e => e.ExecuteAll(EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None)));
     
     public static void ExecuteAll(this IPayloadProvider p, EffectContext ctx)
     {
