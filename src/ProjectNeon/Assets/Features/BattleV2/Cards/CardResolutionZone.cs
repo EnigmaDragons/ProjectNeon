@@ -111,7 +111,7 @@ public class CardResolutionZone : ScriptableObject
             if (_moves.Count > i)
                 _moves.RemoveAt(i);
             physicalZone.Remove(played.Card);
-            if (played.Member.TeamType == TeamType.Party)
+            if (played.Member.TeamType == TeamType.Party && playerPlayArea.HasCards)
                 playerHand.PutOnBottom(playerPlayArea.Take(i));
         }
     }
