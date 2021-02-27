@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Enemy_StunBolt_E
+  m_Name: Enemy_DisablingBolt_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -33,15 +33,22 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
       StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -61,7 +68,10 @@ MonoBehaviour:
         Variable: {fileID: 11400000, guid: 9411955267a38724dae528913d9c5bce, type: 2}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
@@ -83,15 +93,22 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
       StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 1
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -111,5 +128,8 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
