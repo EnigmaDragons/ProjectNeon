@@ -119,5 +119,4 @@ public sealed class InterpolatedCardDescriptionsTests
         update(m);
         return m;
     }
-
 }

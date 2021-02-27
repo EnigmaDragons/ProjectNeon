@@ -17,7 +17,7 @@ public class SpiderlingAI : TurnAI
             var card = battleState.GetPlayableCards(memberId).First(x => x.Name == "Leaping Strike");
             var target = strategy.AttackTargetFor(card.ActionSequences[0]);
             _targetMap[memberId] = target.Members[0].Id;
-            return new PlayedCardV2(battleState.Members[memberId], new [] { target }, card.CreateInstance(battleState.GetNextCardId(), battleState.Members[memberId]));
+            return new PlayedCardV2(battleState.Members[memberId], target.AsArray(), card.CreateInstance(battleState.GetNextCardId(), battleState.Members[memberId]));
         }
         return new CardSelectionContext(memberId, battleState, strategy)
             .WithSelectedUltimateIfAvailable()
