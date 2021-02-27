@@ -36,7 +36,7 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
         for (var i = 0; i < Math.Max(resourceAmount, _icons.Count); i++)
         {
             if (i >= _icons.Count)
-                _icons.Add(Instantiate(spritePrototype, pos + new Vector3((i * iconWidth) + Math.Max(0, i - 1) * xSpacingWidth, 0, 0), Quaternion.identity, transform));
+                _icons.Add(Instantiate(spritePrototype, pos + new Vector3((i * iconWidth) + i * xSpacingWidth, 0, 0), Quaternion.identity, transform));
             else
                 _icons[i].gameObject.SetActive(i < resourceAmount);
             
