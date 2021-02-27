@@ -17,9 +17,9 @@ public class HoverCharacter : MonoBehaviour
     
     private void Update()
     {
-        if (!_hovered)
+        if (!IsInitialized || !_hovered)
             return;
-
+        
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
         {
             Log.Info($"UI - Confirmed {Member.Name}");
@@ -32,8 +32,10 @@ public class HoverCharacter : MonoBehaviour
         }
     }
     
-    private void Awake()
+    public void Init(Member m)
     {
+        _member = m;
+        
         const int characterObjectLayer = 10;
         if (gameObject.layer != characterObjectLayer)
             Log.Error($"{Member.Name} does not have the correct Game Object Layer. Must be Character.");
@@ -42,14 +44,12 @@ public class HoverCharacter : MonoBehaviour
         _renderer = GetComponent<SpriteRenderer>();
         _originalMaterial = _renderer.material;
     }
-    
-    public void Init(Member m)
-    {
-        _member = m;
-    }
 
     public void Set(Material material)
-    {
+    {        
+        if (!IsInitialized)
+            return;
+        
         _renderer.material = material;
         _hovered = true;
     }
@@ -65,6 +65,9 @@ public class HoverCharacter : MonoBehaviour
     
     public void Revert()
     {
+        if (!IsInitialized)
+            return;
+    
         Log.Info($"UI - Cleared Hover Character {Member.Name}");
         _renderer.material = _originalMaterial;
         _hovered = false;
