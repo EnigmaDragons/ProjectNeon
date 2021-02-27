@@ -47,8 +47,11 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         if (reactionZone.Count > 0)
             reactionZone.Clear();
         if (_reactionCards.Any())
+        {
             StartCoroutine(ResolveNextReactionCard());
-        
+            return;
+        }
+
         // Reactions should be processed for Instant cards, but no other cards
         if (state.Phase != BattleV2Phase.Resolution)
             return;
@@ -148,7 +151,6 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     {
         var r = _reactionCards.Dequeue();
         var isReactionCard = r.ReactionCard.IsPresent;
-
         if (!isReactionCard)
         {
             Log.Error("Should not be Queueing instant Effect Reactions. They should already be processed.");
@@ -156,19 +158,25 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         }
 
         var reactionCard = r.ReactionCard.Value;
-        var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
-        reactionZone.PutOnBottom(card);
-        currentResolvingCardZone.Set(card);
-        BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
-        yield return new WaitForSeconds(delay);
         if (reactionCard.IsPlayableBy(r.Source))
         {
+            BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
+            var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
+            reactionZone.PutOnBottom(card);
+            currentResolvingCardZone.Set(card);
+            yield return new WaitForSeconds(delay);
+            
             var resourceCalculations = r.Source.CalculateResources(reactionCard);
             var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, resourceCalculations);
             Message.Publish(new CardResolutionStarted(playedCard));
             r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity));
             r.Source.Apply(s => s.Gain(resourceCalculations.GainedQuantity));
             reactionCard.ActionSequence.Perform(r.Source, r.Target, resourceCalculations.XAmountQuantity);
+        }
+        else
+        {
+            BattleLog.Write($"{r.Source.Name} could not afford reaction card {reactionCard.Name}");
+            this.ExecuteAfterDelay(() => StartCoroutine(FinishCard()), delay);
         }
     }
 }

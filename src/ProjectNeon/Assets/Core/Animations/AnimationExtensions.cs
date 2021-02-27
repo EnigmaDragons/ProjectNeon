@@ -17,6 +17,7 @@ public static class AnimationExtensions
     {
         if (animator.parameters.Any(x => x.name == animationName))
         {
+            Log.Info($"Animation: {animationName} found");
             var elapsed = 0f; 
             animator.SetTrigger(animationName);
             bool hasStartedAnimated = false;

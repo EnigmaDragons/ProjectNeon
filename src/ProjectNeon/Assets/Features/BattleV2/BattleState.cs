@@ -131,6 +131,7 @@ public class BattleState : ScriptableObject
             .ToDictionary(x => x.Id, x => x);
         
         _heroesById.ForEach(h => h.Value.InitEquipmentState(_membersById[h.Key], this));
+        _enemiesById.ForEach(e => e.Value.SetupMemberState(_membersById[e.Key], this));
 
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;
