@@ -27,8 +27,10 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
 
     public void EndSelection()
     {
-        if (targetingState.HasValidTargets)
-            Confirm();
+        if (targetingState.HasValidTargets && card.Type.IsPlayableBy(card.Owner))
+            PlayCard(new PlayedCardV2(card.Owner, targetingState.Targets, card));
+        else if (!card.Type.IsPlayableBy(card.Owner))
+            PlayCard(new PlayedCardV2(card.Owner, new Target[0], card));
         else 
             Cancel();
     }
@@ -39,13 +41,6 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         Log.Info($"UI - Canceled Card {card?.Name}");
         Message.Publish(new PlayerCardCanceled());
         OnSelectionComplete();
-    }
-
-    public void Confirm()
-    {
-        if (card == null)
-            Log.Error("Tried to Confirm Card but none was selected");
-        PlayCard(new PlayedCardV2(card.Owner, targetingState.Targets, card));
     }
 
     private void PlayCard(PlayedCardV2 playedCard)
@@ -68,23 +63,28 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
 
     private void InitCardForSelection(Card card)
     {
-        targetingState.GetTargets = new List<Func<Target>>();
-        targetingState.MemberToTargetMap = new List<Dictionary<int, Target>>();
-        targetingState.TargetMember = Maybe<int>.Missing();
+        var getTargets = new List<Func<Target>>();
+        var memberToTargetMap  = new List<Dictionary<int, Target>>();
         var targetMaps = 0;
         foreach (var sequence in card.ActionSequences)
         {
             if (sequence.Group == Group.Self || sequence.Scope == Scope.All || sequence.Scope == Scope.AllExceptSelf)
             {
                 var target = battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, sequence.Scope).First();
-                targetingState.GetTargets.Add(() => target);
+                getTargets.Add(() => target);
             }
             else
             {
                 var tmp = targetMaps;
-                targetingState.GetTargets.Add(() => targetingState.MemberToTargetMap[tmp][targetingState.TargetMember.Value]);
+                getTargets.Add(() =>
+                {
+                    if (memberToTargetMap[tmp].ContainsKey(targetingState.TargetMember.Value))
+                        return memberToTargetMap[tmp][targetingState.TargetMember.Value];
+                    Log.Error("Get Targets was asked for when the targets were invalid");
+                    return memberToTargetMap[tmp].First().Value;
+                });
                 var scopeOne = battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, Scope.One);
-                targetingState.MemberToTargetMap.Add(battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, sequence.Scope)
+                memberToTargetMap.Add(battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, sequence.Scope)
                     .ToDictionary(x =>
                     {
                         if (sequence.Scope == Scope.One || sequence.Scope == Scope.OneExceptSelf)
@@ -96,5 +96,6 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
                 targetMaps++;
             }
         }
+        targetingState.Init(memberToTargetMap, getTargets);
     }
 }

@@ -107,17 +107,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (_card == null)
             throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
-        SetAsBasic(!_card.UseAsBasic);
+        _card.Mode = _card.Mode != CardMode.Basic ? CardMode.Basic : CardMode.Normal;
+        SetAsBasic();
     }
     
-    private void SetAsBasic(bool asBasic)
+    private void SetAsBasic()
     {
         if (_card == null)
             throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
         
         DebugLog($"UI - Toggle as Basic");
         
-        _card.UseAsBasic = asBasic;
         _cardType = _card.Type;
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();

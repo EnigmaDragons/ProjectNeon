@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Battle/CardResolutionZone")]
 public class CardResolutionZone : ScriptableObject
@@ -66,14 +67,22 @@ public class CardResolutionZone : ScriptableObject
     public void Add(IPlayedCard played)
     {
         battleState.RecordPlayedCard(played);
-        played.Member.Apply(m =>
+        if (played.Card.Mode != CardMode.Dead)
         {
-            m.Lose(played.Spent);
-            m.Gain(played.Gained);
-        });
-        DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
-        
-        if (played.Card.TimingType == CardTimingType.Instant)
+            played.Member.Apply(m =>
+            {
+                m.Lose(played.Spent);
+                m.Gain(played.Gained);
+            });
+            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}"); 
+        }
+
+        if (played.Card.Mode == CardMode.Dead)
+        {
+            _moves.Add(played);
+            physicalZone.PutOnBottom(played.Card); 
+        }
+        else if (played.Card.TimingType == CardTimingType.Instant)
         {
             StartResolvingOneCard(played);
         }
@@ -125,9 +134,12 @@ public class CardResolutionZone : ScriptableObject
         var card = physicalZone.Take(physicalZone.Count - 1);
         playerPlayArea.Take(playerPlayArea.Count - 1);
         playerHand.PutOnBottom(card);
-        
-        played.Member.Apply(m => m.LoseResource(played.Gained.ResourceType, played.Gained.Amount));
-        played.Member.Apply(m => m.GainResource(played.Spent.ResourceType, played.Spent.Amount));
+
+        if (played.Card.Mode != CardMode.Dead)
+        {
+            played.Member.Apply(m => m.LoseResource(played.Gained.ResourceType, played.Gained.Amount));
+            played.Member.Apply(m => m.GainResource(played.Spent.ResourceType, played.Spent.Amount));   
+        }
         Message.Publish(new PlayerCardCanceled());
     }
 
@@ -155,7 +167,13 @@ public class CardResolutionZone : ScriptableObject
         Async.ExecuteAfterDelay(delayBeforeResolving, () =>
         {
             var card = played.Card;
-            if (card.Owner.IsStunnedForCard())
+            if (card.Mode == CardMode.Dead)
+            {
+                BattleLog.Write($"{card.Name} does not resolve.");
+                WrapupCard(played, card);
+                Message.Publish(new CardResolutionFinished(played.Member.Id, false));
+            }
+            else if (card.Owner.IsStunnedForCard())
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.CardStun, -1);
