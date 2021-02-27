@@ -33,11 +33,9 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private void OnConfirmationRequested()
     {
-        if (battleState.Phase != BattleV2Phase.PlayCards || battleState.IsSelectingTargets)
+        if (battleState.Phase != BattleV2Phase.PlayCards || battleState.IsSelectingTargets || playArea.Cards.Length != battleState.PlayerState.CurrentStats.CardPlays())
             return;
-        
-        _confirmRequested = true;
-        UpdateState();
+        ConfirmEarly();
     }
     
     private void UpdateState()

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class MovableMap : OnMessage<FocusOnMapElement>
+public class MovableMap : OnMessage<FocusOnMapElement, FreezeMap, Finished<FreezeMap>>
 {
     private MovableMapSettings _settings = new MovableMapSettings();
     
@@ -9,7 +9,8 @@ public class MovableMap : OnMessage<FocusOnMapElement>
     private Vector2 _startMousePosition;
     private Vector2 _anchoredPosition;
     private bool _isDragging;
-
+    private bool _frozen;
+    
     public MovableMap Initialized(MovableMapSettings settings)
     {
         _settings = settings;
@@ -18,6 +19,13 @@ public class MovableMap : OnMessage<FocusOnMapElement>
     
     private void FixedUpdate()
     {
+        if (_frozen)
+        {
+            _wasMouseDown = false;
+            _isDragging = false;
+            return;
+        }
+        
         Vector2 mousePosition = Input.mousePosition;
         if (Input.GetMouseButton(0))
         {
@@ -73,6 +81,10 @@ public class MovableMap : OnMessage<FocusOnMapElement>
         var translatedPosition = new Vector2(maxX - xPosition + xOffset, yPosition - 540);
         SetAnchoredPosition(translatedPosition);
     }
+
+    protected override void Execute(FreezeMap msg) => _frozen = true;
+
+    protected override void Execute(Finished<FreezeMap> msg) => _frozen = false;
 
     private void SetAnchoredPosition(Vector2 position)
     {

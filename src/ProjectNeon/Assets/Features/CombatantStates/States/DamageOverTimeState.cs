@@ -24,10 +24,11 @@ public class DamageOverTimeState : TemporalStateBase
             return new NoPayload();
 
         Tracker.AdvanceTurn();
-        BattleLog.Write($"{_amount} DoT damage dealt to {_target.Name}");
-        _target.State.TakeRawDamage(_amount);
-        // TODO: Plug in animations
-        return new NoPayload();
+        return new SinglePayload(new PerformAction(() =>
+        {
+            BattleLog.Write($"{_amount} DoT damage dealt to {_target.Name}");
+            _target.State.TakeRawDamage(_amount);
+        }));
     }
 
     public override IPayloadProvider OnTurnEnd() => new NoPayload();

@@ -38,7 +38,7 @@ public static class AITargetSelectionLogic
         }
 
         if (card.Is(CardTag.BuffResource) && action.Group == Group.Ally)
-            return possibleTargets.MostPowerful();
+            return possibleTargets.LeastResources();
         if (card.Is(CardTag.BuffAttack) && action.Group == Group.Ally)
             return possibleTargets.BestAttackerToBuff(ctx.Strategy);
         if (card.Is(CardTag.RemoveResources) && action.Group == Group.Opponent)
@@ -146,5 +146,11 @@ public static class AITargetSelectionLogic
         .ToArray()
         .Shuffled()
         .OrderByDescending(x => x.TotalResourceValue())
+        .First();
+    
+    public static Target LeastResources(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderBy(x => x.TotalResourceValue())
         .First();
 }

@@ -11,6 +11,16 @@ public static class Message
     public static void Publish(object payload) => Msgs.Enqueue(payload);
     public static void Subscribe<T>(Action<T> onEvent, object owner) => Subscribe(MessageSubscription.Create(onEvent, owner));
 
+    public static void OnNext<T>(Action<T> onEvent)
+    {
+        var tempOwner = new { };
+        Subscribe(MessageSubscription.Create<T>(x => 
+        { 
+            Message.Unsubscribe(tempOwner);
+            onEvent(x);
+        }, tempOwner));
+    } 
+    
     public static MessageQueue SwapMessageQueues(MessageQueue newQueue)
     {
         var msgs = Msgs;
