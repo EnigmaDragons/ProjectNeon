@@ -21,6 +21,6 @@ public class EnemyDetailsView : MonoBehaviour
         _isInitialized = true;
         nameLabel.text = e.Name;
         statPanel.Initialized(e.Stats);
-        enemyDeckUi.Show(e.Deck);   
+        enemyDeckUi.Show(e.Deck, e.AsMember(-1));   
     }
 }

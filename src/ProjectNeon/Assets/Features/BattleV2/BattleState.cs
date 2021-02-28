@@ -121,7 +121,7 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
             _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, false);
             SetMemberName(id, enemies.Enemies[i].name);
-            result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id, this)));
+            result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id)));
         }
         _nextEnemyId = id + 1;
 
@@ -202,6 +202,7 @@ public class BattleState : ScriptableObject
             _membersById[member.Id] = member;
             _uiTransformsById[member.Id] = gameObject.transform;
             SetMemberName(member.Id, e.name);
+            e.SetupMemberState(member, this);
         });
 
     private void SetMemberName(int id, string name)
