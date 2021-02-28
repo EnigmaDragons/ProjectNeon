@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionAvoided>
+public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionAvoided, CardActionPrevented>
 {
     [SerializeField] private BattleUiVisuals ui;
     [SerializeField] private BattleState state;
@@ -124,6 +124,15 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
         Message.Publish(new Finished<CardActionAvoided>());
     }
 
+    protected override void Execute(CardActionPrevented msg)
+    {
+        if (msg.Avoid.Type == AvoidanceType.Evade)
+            BattleLog.Write($"{msg.Source.Name} was blinded, so their attack missed.");
+        Message.Publish(new PlayRawBattleEffect("MissedText", Vector3.zero));
+        msg.Source.State.Adjust(msg.ToDecrement, -1);
+        Message.Publish(new Finished<CardActionPrevented>());
+    }
+    
     private void ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
     {
         if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))

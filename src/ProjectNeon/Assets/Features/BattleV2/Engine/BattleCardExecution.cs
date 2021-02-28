@@ -110,6 +110,8 @@ public static class BattleCardExecution
         var type = action.Type;
         var effectedTargets = new Multiple(ctx.Target.Members.Where(m => !ctx.Avoid.Members.Any(am => am.Id == m.Id)).ToArray());
         var allAvoidedEffect = ctx.Avoid.Members.Any() && effectedTargets.Members.Length == 0;
+        if (type == CardBattleActionType.Battle && ctx.Avoid.Type == AvoidanceType.Evade && ctx.Source.State[TemporalStatType.Blind] > 0)
+            return new SinglePayload(new CardActionPrevented(ctx.Source, ctx.Avoid, TemporalStatType.Blind));
         if (type == CardBattleActionType.Battle && allAvoidedEffect)
             return new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.Avoid));
         if (type == CardBattleActionType.Battle)
@@ -118,6 +120,7 @@ public static class BattleCardExecution
                     new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XAmountPaid, ctx.Group, ctx.Scope, isReaction: false)), 
                     new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.Avoid)))
                 : (IPayloadProvider)new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XAmountPaid, ctx.Group, ctx.Scope, isReaction: false));
+        
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn));
         if (type == CardBattleActionType.AnimateCharacter)
@@ -144,6 +147,8 @@ public static class BattleCardExecution
         var type = action.Type;
         var effectedTargets = new Multiple(target.Members.Where(m => !avoid.Members.Any(am => am.Id == m.Id)).ToArray());
         var allAvoidedEffect = avoid.Members.Any() && effectedTargets.Members.Length == 0;
+        if (type == CardBattleActionType.Battle && avoid.Type == AvoidanceType.Evade && source.State[TemporalStatType.Blind] > 0)
+            return new SinglePayload(new CardActionPrevented(source, avoid, TemporalStatType.Blind));
         if (type == CardBattleActionType.Battle && allAvoidedEffect)
             return new SinglePayload(new CardActionAvoided(action.BattleEffect, source, effectedTargets, avoid));
         if (type == CardBattleActionType.Battle)
