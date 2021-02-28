@@ -161,6 +161,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         if (reactionCard.IsPlayableBy(r.Source))
         {
             BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
+            Message.Publish(new PlayRawBattleEffect("ReactionText"));
             var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
             reactionZone.PutOnBottom(card);
             currentResolvingCardZone.Set(card);
