@@ -47,6 +47,17 @@ public class MovableMap : OnMessage<FocusOnMapElement, FreezeMap, Finished<Freez
             float xMove = 0;
             float yMove = 0;
             var screenRect = new Rect(0,0, Screen.width, Screen.height);
+            
+            // Keyboard
+            var xAxisValue = Input.GetAxis("Horizontal");
+            var yAxisValue = Input.GetAxis("Vertical");
+            var epsilon = 0.01f;
+            if (Math.Abs(xAxisValue) > epsilon)
+                xMove -= xAxisValue;
+            if (Math.Abs(yAxisValue) > epsilon)
+                yMove -= yAxisValue;
+            
+            // Mouse Hover
             if (screenRect.Contains(mousePosition))
             {
                 if (mousePosition.x < _settings.HorizontalScrollArea)
@@ -58,12 +69,6 @@ public class MovableMap : OnMessage<FocusOnMapElement, FreezeMap, Finished<Freez
                 else if (mousePosition.y >= Screen.height - _settings.VerticalScrollArea)
                     yMove = -1;
             }
-            var xAxisValue = Input.GetAxis("Horizontal");
-            var yAxisValue = Input.GetAxis("Vertical");
-            if (xAxisValue != 0)
-                xMove -= xAxisValue;
-            if (yAxisValue != 0)
-                yMove -= yAxisValue;
             var movement = new Vector2(xMove * _settings.HorizontalScrollSpeed, yMove * _settings.VerticalScrollSpeed) * Time.deltaTime;
             var rect = (RectTransform) transform;
             var translatedPosition = rect.anchoredPosition + movement;
