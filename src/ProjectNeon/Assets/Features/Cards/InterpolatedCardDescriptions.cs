@@ -284,7 +284,7 @@ public static class InterpolatedCardDescriptions
                             ? data.TurnDelay == 0 ? "this turn" : "for the turn" 
                             : $"for {Bold(value.ToString())} turns";
 
-        return $"{turnString}.";
+        return $"{turnString}";
     }
 
     private static string DelayDescription(EffectData data)

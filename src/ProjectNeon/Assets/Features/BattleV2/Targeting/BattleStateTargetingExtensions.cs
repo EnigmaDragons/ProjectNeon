@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using UnityEngine;
 
 public static class BattleStateTargetingExtensions
 {
@@ -67,13 +66,11 @@ public static class BattleStateTargetingExtensions
             var doesEnemyHaveTaunt = teamMembers.Any(m => m.HasTaunt() && m.TeamType != myTeam);
             var membersWithTaunt = teamMembers.Where(m => m.HasTaunt() || m.TeamType == myTeam).ToArray();
             var membersWithoutStealth = teamMembers.Where(m => !m.IsStealth() || m.TeamType == myTeam).ToArray();
-            var members = doesEnemyHaveTaunt 
-                ? membersWithTaunt 
-                : membersWithoutStealth.Any() 
-                    ? membersWithoutStealth 
-                    : teamMembers;
+            var members = doesEnemyHaveTaunt
+                ? membersWithTaunt
+                : membersWithoutStealth;
             var targets = members.Select(m => new Single(m)).Cast<Target>().ToArray();
-            return Targets(originator.IsConfused() ? new Target[] { targets.Shuffled().First() } : targets);
+            return Targets(originator.IsConfused() ? new[] { targets.Shuffled().First() } : targets);
         }
 
         if (scope == Scope.OneExceptSelf)
@@ -85,21 +82,19 @@ public static class BattleStateTargetingExtensions
         if (scope == Scope.AllExcept)
         {
             var targets = teamMembers
-                .Select(exclusion => new Multiple(teamMembers.Where(x => x != exclusion).ToArray()))
+                .Select(exclusion => new Multiple(teamMembers.Where(x => x.Id != exclusion.Id).ToArray()))
                 .Cast<Target>()
                 .ToArray();
-            return Targets(originator.IsConfused() ? new Target[] { targets.Shuffled().First() } : targets);   
+            return Targets(originator.IsConfused() ? new[] { targets.Shuffled().First() } : targets);   
         }
 
         if (scope == Scope.AllExceptSelf)
         {
             var targets = teamMembers
-                .Select(exclusion => new Multiple(teamMembers.Where(x => x != originator).ToArray()))
+                .Select(exclusion => new Multiple(teamMembers.Where(x => x.Id != originator.Id).ToArray()))
                 .Cast<Target>()
                 .ToArray();
             return targets;
-            //return Targets(new Team(teamMembers))
-            //    .Where(x => !x.Members.Contains(originator)).ToArray();
         }
         return Targets(new Team(teamMembers));
     }

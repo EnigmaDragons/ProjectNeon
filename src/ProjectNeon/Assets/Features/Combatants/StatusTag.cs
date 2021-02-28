@@ -15,5 +15,6 @@ public enum StatusTag
     Augment = 12,
     Trap = 13,
     OnBloodied = 14,
-    OnHpDamageDealt = 15,
+    Stealth = 15,
+    OnHpDamageDealt = 16,
 }

@@ -5,8 +5,10 @@ using System.Linq;
 public sealed class MemberState : IStats
 {
     private int _versionNumber;
-    private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
-    
+
+    private readonly Dictionary<string, BattleCounter> _counters =
+        new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
+
     private readonly IStats _baseStats;
     private readonly List<IPersistentState> _persistentStates = new List<IPersistentState>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
@@ -19,7 +21,7 @@ public sealed class MemberState : IStats
     private readonly List<CustomStatusIcon> _customStatusIcons = new List<CustomStatusIcon>();
 
     public IStats BaseStats => _baseStats;
-    
+
     private IStats CurrentStats => _baseStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats))
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats))
@@ -32,24 +34,29 @@ public sealed class MemberState : IStats
 
     public int MemberId { get; }
     public string Name { get; }
-    
+
     public MemberState(int id, string name, IStats baseStats)
-        : this(id, name, baseStats, baseStats.MaxHp()) {}
-    
+        : this(id, name, baseStats, baseStats.MaxHp())
+    {
+    }
+
     public MemberState(int id, string name, IStats baseStats, int initialHp)
     {
         MemberId = id;
         Name = name;
         _baseStats = baseStats;
-        
-        _counters[TemporalStatType.HP.ToString()] = new BattleCounter(TemporalStatType.HP, initialHp, () => CurrentStats.MaxHp());
-        _counters[TemporalStatType.Shield.ToString()] = new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.MaxShield());
+
+        _counters[TemporalStatType.HP.ToString()] =
+            new BattleCounter(TemporalStatType.HP, initialHp, () => CurrentStats.MaxHp());
+        _counters[TemporalStatType.Shield.ToString()] =
+            new BattleCounter(TemporalStatType.Shield, 0, () => CurrentStats.MaxShield());
         Enum.GetValues(typeof(TemporalStatType))
             .Cast<TemporalStatType>()
             .Skip(2)
             .ForEach(t => _counters[t.ToString()] = new BattleCounter(t, 0, () => 999));
-        
-        baseStats.ResourceTypes?.ForEach(r => _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
+
+        baseStats.ResourceTypes?.ForEach(r =>
+            _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
         _counters["None"] = new BattleCounter("None", 0, () => 0);
         _counters[""] = new BattleCounter("", 0, () => 0);
     }
@@ -57,8 +64,10 @@ public sealed class MemberState : IStats
     public void InitResourceAmount(IResourceType resourceType, int amount) => _counters[resourceType.Name].Set(amount);
 
     // Queries
-    public MemberStateSnapshot ToSnapshot() 
-        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats, _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes);
+    public MemberStateSnapshot ToSnapshot()
+        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats,
+            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes);
+
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
@@ -69,8 +78,11 @@ public sealed class MemberState : IStats
     public float Max(string name) => _counters[name].Max;
     public IResourceType PrimaryResource => ResourceTypes[0];
     public int PrimaryResourceAmount => _counters[PrimaryResource.Name].Amount;
-    public ResourceQuantity CurrentPrimaryResources => new ResourceQuantity { Amount = PrimaryResourceAmount, ResourceType = PrimaryResource.Name };
-    public float PrimaryResourceValue 
+
+    public ResourceQuantity CurrentPrimaryResources => new ResourceQuantity
+        {Amount = PrimaryResourceAmount, ResourceType = PrimaryResource.Name};
+
+    public float PrimaryResourceValue
     {
         get
         {
@@ -83,12 +95,14 @@ public sealed class MemberState : IStats
             if (PrimaryResource.Name == "Flames")
                 return PrimaryResourceAmount * (1f / 3f);
             return 0f;
-        } 
+        }
     }
+
     public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
     public ReactiveStateV2[] ReactiveStates => _reactiveStates.ToArray();
-    public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Status.Tag == tag) 
-                                            || _additiveMods.Any(r => r.Status.Tag == tag) 
+
+    public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Status.Tag == tag)
+                                            || _additiveMods.Any(r => r.Status.Tag == tag)
                                             || _multiplierMods.Any(r => r.Status.Tag == tag);
 
     public ITemporalState[] StatusesOfType(StatusTag tag)
@@ -100,7 +114,7 @@ public sealed class MemberState : IStats
 
     public CustomStatusIcon[] CustomStatuses()
         => _customStatusIcons.ToArray();
-    
+
     private IEnumerable<ITemporalState> OfType(IEnumerable<ITemporalState> states, StatusTag tag)
         => states.Where(s => s.Status.Tag == tag);
 
@@ -111,7 +125,7 @@ public sealed class MemberState : IStats
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
-    
+
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
         _reactiveStates
@@ -119,14 +133,14 @@ public sealed class MemberState : IStats
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
-    
+
     public ProposedReaction[] GetReactions(CardActionAvoided e) =>
         _reactiveStates
             .Select(x => x.OnCardActionAvoided(e))
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
-    
+
     public EffectData Transform(EffectData effect, EffectContext context)
     {
         foreach (var transformer in _transformers)
@@ -140,33 +154,42 @@ public sealed class MemberState : IStats
         var additives = _additiveResourceCalculators.Select(x => x.GetModifiers(card, this));
         var multiplicatives = _multiplicativeResourceCalculators.Select(x => x.GetModifiers(card, this));
         return new ResourceCalculations(
-            calc.ResourcePaidType, 
-            (calc.ResourcesPaid + additives.Sum(x => x.ResourcesPaid)) * multiplicatives.Product(x => x.ResourcesPaid), 
-            calc.ResourceGainedType, 
-            (calc.ResourcesGained + additives.Sum(x => x.ResourcesGained)) * multiplicatives.Product(x => x.ResourcesGained), 
+            calc.ResourcePaidType,
+            (calc.ResourcesPaid + additives.Sum(x => x.ResourcesPaid)) * multiplicatives.Product(x => x.ResourcesPaid),
+            calc.ResourceGainedType,
+            (calc.ResourcesGained + additives.Sum(x => x.ResourcesGained)) *
+            multiplicatives.Product(x => x.ResourcesGained),
             (calc.XAmount + additives.Sum(x => x.XAmount)) * multiplicatives.Product(x => x.XAmount),
-            (calc.XAmountPriceTag + additives.Sum(x => x.XAmountPriceTag)) * multiplicatives.Product(x => x.XAmountPriceTag));
+            (calc.XAmountPriceTag + additives.Sum(x => x.XAmountPriceTag)) *
+            multiplicatives.Product(x => x.XAmountPriceTag));
     }
 
     public void RecordUsage(Card card) => _additiveResourceCalculators.ForEach(x => x.RecordUsageIfApplicable(card));
     public void UndoUsage(Card card) => _additiveResourceCalculators.ForEach(x => x.UndoUsageIfApplicable(card));
 
     // Modifier Commands
-    private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag> { StatusTag.Vulnerable, StatusTag.AntiHeal };
+    private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag>
+        {StatusTag.Vulnerable, StatusTag.AntiHeal};
 
     public void DuplicateStatesOfType(StatusTag tag)
     {
-        _additiveMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(ApplyTemporaryAdditive);
-        _multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(ApplyTemporaryMultiplier);
-        _reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(s => AddReactiveState((ReactiveStateV2)s));
-        _transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(s => AddEffectTransformer((EffectTransformer)s));
-        _additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator)s));
-        _multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList().ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator)s));
+        _additiveMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(ApplyTemporaryAdditive);
+        _multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(ApplyTemporaryMultiplier);
+        _reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(s => AddReactiveState((ReactiveStateV2) s));
+        _transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(s => AddEffectTransformer((EffectTransformer) s));
+        _additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator) s));
+        _multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator) s));
     }
 
     public void ApplyBonusCardPlayer(IBonusCardPlayer p) => _bonusCardPlayers.Add(p);
     public void ApplyPersistentState(IPersistentState state) => _persistentStates.Add(state);
-    
+
     public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() =>
     {
         if (NonStackingStatuses.Contains(mods.Status.Tag))
@@ -175,9 +198,9 @@ public sealed class MemberState : IStats
         if (CurrentStats.MaxHp() < CurrentStats.Hp())
             SetHp(CurrentStats.MaxHp());
     });
-    
-    public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() => 
-    {        
+
+    public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() =>
+    {
         if (NonStackingStatuses.Contains(mods.Status.Tag))
             _multiplierMods.RemoveAll(m => m.Status.Tag == mods.Status.Tag);
         _multiplierMods.Add(mods);
@@ -191,6 +214,12 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Blind.ToString()].Set(0);
         RemoveTemporaryEffects(s => s.IsDebuff);
     }
+
+    public void ExitStealth() => PublishAfter(() =>
+    {
+        RemoveTemporaryEffects(t => t.Status.Tag == StatusTag.Stealth);
+        _counters[TemporalStatType.Stealth.ToString()].Set(0);
+    });
 
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() =>
     {
@@ -262,22 +291,27 @@ public sealed class MemberState : IStats
     public void CleanExpiredStates() => 
         PublishAfter(() =>
         {
-            _additiveMods.RemoveAll(m => !m.IsActive);
-            _multiplierMods.RemoveAll(m => !m.IsActive);
-            _reactiveStates.RemoveAll(m => !m.IsActive);
-            _transformers.RemoveAll(m => !m.IsActive);
-            _additiveResourceCalculators.RemoveAll(m => !m.IsActive);
-            _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive);
+            var count = _additiveMods.RemoveAll(m => !m.IsActive)
+                + _multiplierMods.RemoveAll(m => !m.IsActive)
+                + _reactiveStates.RemoveAll(m => !m.IsActive)
+                + _transformers.RemoveAll(m => !m.IsActive)
+                + _additiveResourceCalculators.RemoveAll(m => !m.IsActive)
+                + _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive);
+            if (count > 0)
+                DevLog.Write($"Cleaned {count} expired states from {Name}");
         });
 
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType> { TemporalStatType.Taunt, TemporalStatType.Stealth, TemporalStatType.Confusion };
     
     public IPayloadProvider[] GetTurnEndEffects()
     {
-        _persistentStates.ForEach(m => m.OnTurnEnd());
-        _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
-        _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
-        _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
+        PublishAfter(() =>
+        {
+            _persistentStates.ForEach(m => m.OnTurnEnd());
+            _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
+            _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
+            _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
+        });
         
         return _additiveMods.Select(m => m.OnTurnEnd())
             .Concat(_multiplierMods.Select(m => m.OnTurnEnd()))
