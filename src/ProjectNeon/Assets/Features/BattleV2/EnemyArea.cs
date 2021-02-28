@@ -29,5 +29,12 @@ public class EnemyArea : ScriptableObject
         uiPositions.Add(uiPosition);
     }
     
+    public void Remove(Enemy enemy)
+    {
+        var index = enemies.IndexOf(enemy);
+        enemies.RemoveAt(index);
+        uiPositions.RemoveAt(index);
+    }
+    
     public void Clear() => enemies = new List<Enemy>();
 }

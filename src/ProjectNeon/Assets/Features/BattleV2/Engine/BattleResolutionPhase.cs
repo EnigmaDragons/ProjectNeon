@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, CardResolutionFinished, CardActionAvoided>
+public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionAvoided>
 {
     [SerializeField] private BattleUiVisuals ui;
     [SerializeField] private BattleState state;
@@ -129,6 +129,13 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
         var member = enemies.Spawn(msg.Enemy);
         BattleLog.Write($"Spawned {member.Name}");
         Message.Publish(new Finished<SpawnEnemy>());
+    }
+    
+    protected override void Execute(DespawnEnemy msg)
+    {
+        enemies.Despawn(msg.Member, state);
+        BattleLog.Write($"Despawned {msg.Member.Name}");
+        Message.Publish(new Finished<DespawnEnemy>());
     }
 
     protected override void Execute(CardResolutionFinished msg) => StartCoroutine(FinishCard());

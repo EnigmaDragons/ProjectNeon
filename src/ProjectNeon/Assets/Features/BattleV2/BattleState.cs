@@ -205,6 +205,17 @@ public class BattleState : ScriptableObject
             e.SetupMemberState(member, this);
         });
 
+    public void RemoveEnemy(MemberState member)
+        => UpdateState(() =>
+        {
+            var enemy = _enemiesById[member.MemberId];
+            EnemyArea.Remove(enemy);
+            _enemiesById.Remove(member.MemberId);
+            _membersById.Remove(member.MemberId);
+            _uiTransformsById.Remove(member.MemberId);
+            
+        });
+
     private void SetMemberName(int id, string name)
     {
         while (memberNames.Count <= id)

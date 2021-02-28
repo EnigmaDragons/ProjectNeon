@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/Hacker")]
 public class HackerAI : TurnAI
@@ -7,10 +8,10 @@ public class HackerAI : TurnAI
     {
         return new CardSelectionContext(memberId, battleState, strategy)
             .WithSelectedUltimateIfAvailable()
+            .IfTruePlayType(x => x.Member.MaxHp() > x.Member.CurrentHp() && x.CardOptions.Any(o => o.Is(CardTag.Escape)), CardTag.Escape)
             .WithSelectedDesignatedAttackerCardIfApplicable()
             .WithCommonSenseSelections()
-            .IfTrueDontPlayType(_ => true, CardTag.Attack)
-            .WithFinalizedCardSelection()
+            .WithFinalizedCardSelection(CardTag.StealCredits, CardTag.Attack)
             .WithSelectedTargetsPlayedCard();
     }
 }
