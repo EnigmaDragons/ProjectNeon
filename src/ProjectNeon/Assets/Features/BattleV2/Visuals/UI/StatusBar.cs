@@ -56,7 +56,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddBuffAmountIconIfApplicable(statuses, StatType.Leadership);
         AddStatusIconIfApplicable(statuses, TemporalStatType.Blind, true, v => $"Blinded (guaranteed miss) for {v} Attacks");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => $"Taunt for {v} Turns");
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Stealth, true, v => $"Stealth for {v} Turns");
+        if (_member.State[TemporalStatType.Stealth] > 0)
+            statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Stealth.ToString(), Icon = icons[TemporalStatType.Stealth].Icon, Tooltip = "Stealth"});
         AddStatusIconIfApplicable(statuses, TemporalStatType.Disabled, true, v => $"Disabled for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.CardStun, true, v => $"Stunned for {v} Cards");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Confusion, true, v => $"Confused for {v} Turns");
@@ -146,7 +147,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (value > 0)
             statuses.Add(new CurrentStatusValue { Type = stat.ToString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
     }
-
+    
     private void AddStatusIconIfApplicable(List<CurrentStatusValue> statuses, StatType stat, bool showNumber, Func<float, string> makeTooltip)
     {
         var value = _member.State[stat];

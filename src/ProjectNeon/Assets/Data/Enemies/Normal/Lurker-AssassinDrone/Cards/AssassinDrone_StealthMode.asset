@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: AssassinDrone_StealthMode
   m_EditorClassIdentifier: 
+  customName: 
   art: {fileID: 21300000, guid: cbd8cfe4d7e9c6547843d8b31bb54f8d, type: 3}
-  description: 'Enter Stealth. Gain 3 Attack for the battle. Apply Vulnerable 1. '
+  description: Gain 3 Attack for the battle. Apply Vulnerable 1. Enter Stealth.
   typeDescription: {fileID: 11400000, guid: 54b26ffa8165e3942bf340ce48cb1299, type: 2}
   tags: 0c00000008000000
   onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
@@ -29,12 +30,16 @@ MonoBehaviour:
   rarity: 0
   actionSequences:
   - scope: 0
-    group: 0
-    avoidance: 999
-    cardActions: {fileID: 11400000, guid: 176f698f6299f224eb85d8397382ee0b, type: 2}
-  - scope: 0
     group: 1
     avoidance: 2
     cardActions: {fileID: 11400000, guid: 0781a052d354d5e4d8e44d08ce6d00c3, type: 2}
+    repeatX: 0
+  - scope: 0
+    group: 0
+    avoidance: 999
+    cardActions: {fileID: 11400000, guid: 176f698f6299f224eb85d8397382ee0b, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
+  presentationIssues: 
+  timingType: 0

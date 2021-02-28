@@ -50,7 +50,8 @@ public static class AllEffects
         { EffectType.MagicDamageOverTime, e => new MagicDamageOverTime(e)},
         { EffectType.PhysicalDamageOverTime, e => new PhysicalDamageOverTime(e)},
         { EffectType.HealPercentMissingHealth, e => new SimpleEffect(m => m.GainHp(Mathf.CeilToInt(m.MissingHp() * e.FloatAmount))) },
-        { EffectType.EnterStealth, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Stealth, e.NumberOfTurns + 1)) },
+        { EffectType.EnterStealth, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(TemporalStatType.Stealth, 1), 
+            TemporalStateMetadata.BuffForDuration(e.NumberOfTurns)))) },
         { EffectType.GainDoubleDamage, e => new SimpleEffect(m => m.Adjust(TemporalStatType.DoubleDamage, e.IntAmount))},
         { EffectType.AntiHeal, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().With(StatType.Healability, 0.5f),  TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, new StatusDetail(StatusTag.AntiHeal)))))},
