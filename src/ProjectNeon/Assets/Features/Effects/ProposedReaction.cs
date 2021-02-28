@@ -1,5 +1,6 @@
 public class ProposedReaction
 {
+    public string Name => ReactionCard.Select(x => x.Name, "Reaction Effect");
     public Maybe<ReactionCardType> ReactionCard { get; }
     public CardReactionSequence ReactionSequence { get; }
     public Member Source { get; }

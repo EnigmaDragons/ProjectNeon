@@ -33,5 +33,5 @@ public sealed class ReactOnAvoided : ReactiveEffectV2Base
     public ReactOnAvoided(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, AvoidanceType avoidanceType, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction)
         : base(isDebuff, maxDurationTurns, numberOfUses, status, CreateMaybeAvoidedEffect(allMembers, possessingMemberId, originator, reaction, 
-            avoidedAction => avoidedAction.AvoidanceType == avoidanceType && triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], avoidedAction.Source))) {}
+            avoidedAction => avoidedAction.Avoid.Type == avoidanceType && triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], avoidedAction.Source))) {}
 }

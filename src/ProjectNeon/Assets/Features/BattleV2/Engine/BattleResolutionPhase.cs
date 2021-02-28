@@ -144,7 +144,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     private void BeginResolvingNextInstantReaction()
     {
         var r = _instantReactions.Dequeue();
-        r.ReactionSequence.Perform(r.Source, r.Target, ResourceQuantity.None);
+        r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
     }
     
     private IEnumerator ResolveNextReactionCard()
@@ -172,7 +172,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
             Message.Publish(new CardResolutionStarted(playedCard));
             r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity));
             r.Source.Apply(s => s.Gain(resourceCalculations.GainedQuantity));
-            reactionCard.ActionSequence.Perform(r.Source, r.Target, resourceCalculations.XAmountQuantity);
+            reactionCard.ActionSequence.Perform(r.Name, r.Source, r.Target, resourceCalculations.XAmountQuantity);
         }
         else
         {
