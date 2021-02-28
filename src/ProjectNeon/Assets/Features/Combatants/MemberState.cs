@@ -207,14 +207,14 @@ public sealed class MemberState : IStats
         _multiplierMods.Add(mods);
     });
 
-    public void CleanseDebuffs()
+    public void CleanseDebuffs() => PublishAfter(() =>
     {
         _counters[TemporalStatType.Disabled.ToString()].Set(0);
         _counters[TemporalStatType.CardStun.ToString()].Set(0);
         _counters[TemporalStatType.Confusion.ToString()].Set(0);
         _counters[TemporalStatType.Blind.ToString()].Set(0);
         RemoveTemporaryEffects(s => s.IsDebuff);
-    }
+    });
 
     public void ExitStealth() => PublishAfter(() =>
     {
@@ -231,16 +231,11 @@ public sealed class MemberState : IStats
         _multiplicativeResourceCalculators.RemoveAll(condition);
     });
     
-    public void AddReactiveState(ReactiveStateV2 state) 
-        => PublishAfter(() => _reactiveStates.Add(state));
-    
+    public void AddReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Add(state));
     public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
-    
     public void AddEffectTransformer(EffectTransformer transformer) => PublishAfter(() => _transformers.Add(transformer));
-    
     public void AddAdditiveResourceCalculator(ResourceCalculator calculator) => PublishAfter(() => _additiveResourceCalculators.Add(calculator));
     public void AddMutliplicativeResourceCalculator(ResourceCalculator calculator) => PublishAfter(() => _multiplicativeResourceCalculators.Add(calculator));
-
     public void AddCustomStatus(CustomStatusIcon icon) => PublishAfter(() => _customStatusIcons.Add(icon));
 
     // HP Commands
@@ -259,7 +254,7 @@ public sealed class MemberState : IStats
 
     // Status Counters Commands
     public void Adjust(string counterName, float amount) => PublishAfter(() => Counter(counterName).ChangeBy(amount));
-    public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter<int>(() => Counter(t.ToString()).ChangeBy(amount), () => this[t].CeilingInt()));
+    public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter(() => Counter(t.ToString()).ChangeBy(amount), () => this[t].CeilingInt()));
     public int AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
     private void AdjustShieldNoPublish(float amount) => Counter(TemporalStatType.Shield.ToString()).ChangeBy(amount);
     public void AdjustEvade(float amount) => Adjust(TemporalStatType.Evade, amount);
@@ -325,7 +320,6 @@ public sealed class MemberState : IStats
 
     private T[] PublishAfter<T>(Action action, Func<T> getVal)
     {
-        
         var before = ToSnapshot();
         var beforeVal = getVal();
         _versionNumber++;
