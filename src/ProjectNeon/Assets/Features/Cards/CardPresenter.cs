@@ -24,6 +24,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private CardRulesPresenter rules;
     [SerializeField] private GameObject chainedCardParent;
     [SerializeField] private CardCostPresenter cardCostPresenter;
+    [SerializeField] private Image[] glitchableComponents; 
+    [SerializeField] private Material glitchMaterial;
 
     private Card _card;
     private CardTypeData _cardType;
@@ -230,6 +232,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         tint.color = _cardType.LimitedToClass.Select(c => c.Tint, () => Color.white);
         canPlayHighlight.SetActive(IsPlayable);
         highlight.SetActive(IsPlayable);
+        if (_card == null || _card.Mode != CardMode.Glitched)
+            glitchableComponents.ForEach(x => x.material = null);
+        else 
+            glitchableComponents.ForEach(x => x.material = glitchMaterial);
     }
     
     private bool AreCloseEnough(float first, float second) => WithinEpsilon(first - second);
