@@ -93,8 +93,8 @@ public static class AICardSelectionLogic
             : ctx.CardOptions
                 .ToArray()
                 .Shuffled()
-                .OrderByDescending(c => c.Cost.BaseAmount)
-                .ThenBy(typePriority)
+                .OrderByDescending(typePriority)
+                .ThenBy(c => c.Cost.BaseAmount)
                 .First();
         return card;
     }

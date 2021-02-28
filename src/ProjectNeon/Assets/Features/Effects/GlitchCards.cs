@@ -26,7 +26,7 @@ public class GlitchCards : Effect
         else if (_location.HasFlag(CardLocation.Discard))
             possibleCards.AddRange(ctx.PlayerCardZones.DiscardZone.Cards);
         var filteredCards = possibleCards
-            .Where(card => ctx.Target.Members.Any(m => card.Owner.Id == m.Id))
+            .Where(card => ctx.Target.Members.Any(m => card.Owner.Id == m.Id) && card.Mode != CardMode.Glitched)
             .ToArray()
             .Shuffled();
         var orderedCards = _orderBy(filteredCards).ToArray();
