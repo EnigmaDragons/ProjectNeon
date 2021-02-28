@@ -8,4 +8,5 @@
     Boss = 5,
     Bruiser = 6,
     Controller = 7,
+    Leader = 8,
 }
