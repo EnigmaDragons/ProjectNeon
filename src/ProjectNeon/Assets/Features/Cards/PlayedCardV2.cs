@@ -7,6 +7,7 @@ public class PlayedCardV2 : IPlayedCard
     private readonly Target[] _targets;
     private readonly ResourceCalculations _calculations;
     private readonly bool _isTransient;
+    private readonly ResourceQuantity _lockedXValue;
 
     public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient = false)
         : this(performer, targets, card, isTransient, performer.CalculateResources(card.Type)) {}
@@ -23,6 +24,7 @@ public class PlayedCardV2 : IPlayedCard
         _calculations = calculations;
         _isTransient = isTransient;
         _card.SetXValue(new ResourceQuantity { Amount = calculations.XAmount, ResourceType = calculations.ResourcePaidType.Name });
+        _lockedXValue = _card.LockedXValue.Value;
     }
 
     public Member Member => _performer;
@@ -35,6 +37,6 @@ public class PlayedCardV2 : IPlayedCard
     public void Perform(BattleStateSnapshot beforeCard)
     {
         var wasInstant = this.IsInstant();
-        Card.Play(_targets, beforeCard, () => Message.Publish(new CardResolutionFinished(Member.Id, wasInstant)));
+        Card.Play(_targets, beforeCard, _lockedXValue, () => Message.Publish(new CardResolutionFinished(Member.Id, wasInstant)));
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public static class BattleCardExecution
 {
     // Card
-    public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, Action onFinished)
+    public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount, Action onFinished)
     {
         if (card.ActionSequences.Length > targets.Length)
             Log.Error($"{card.Name}: For {card.ActionSequences.Length} there are only {targets.Length} targets");
@@ -18,8 +18,8 @@ public static class BattleCardExecution
             var seq = card.ActionSequences[i];
             if (seq.RepeatX)
             {
-                sequences.AddRange(Enumerable.Range(0, card.LockedXValue.Value.Amount).Select(_ => seq));
-                sequenceTargets.AddRange(Enumerable.Range(0, card.LockedXValue.Value.Amount).Select(_ => targets[i]));
+                sequences.AddRange(Enumerable.Range(0, xPaidAmount.Amount).Select(_ => seq));
+                sequenceTargets.AddRange(Enumerable.Range(0, xPaidAmount.Amount).Select(_ => targets[i]));
             }
             else
             {
@@ -38,7 +38,7 @@ public static class BattleCardExecution
             if (avoidingMembers.Any())
                 BattleLog.Write($"{string.Join(", ", avoidingMembers.Select(a => a.Name))} {avoidanceWord} {card.Name}");
             var avoidanceContext = new AvoidanceContext(seq.AvoidanceType, avoidingMembers);
-            var ctx = new CardActionContext(card.Owner, selectedTarget, avoidanceContext, seq.Group, seq.Scope, card.LockedXValue.Value, battleStateSnapshot, card);
+            var ctx = new CardActionContext(card.Owner, selectedTarget, avoidanceContext, seq.Group, seq.Scope, xPaidAmount, battleStateSnapshot, card);
             payloads.Add(seq.cardActions.Play(ctx));
         }
         QueuePayloads(payloads, onFinished);
