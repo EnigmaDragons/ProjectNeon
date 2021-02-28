@@ -123,7 +123,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         ReactionCardType reaction, Func<CardActionAvoided, bool> condition) => 
         effect =>
         {
-            var avoidedMaybeMember = effect.AvoidingMembers.Where(m => m.Id == possessingMemberId);
+            var avoidedMaybeMember = effect.Avoid.Members.Where(m => m.Id == possessingMemberId);
             if (avoidedMaybeMember.None() || !condition(effect))
                 return Maybe<ProposedReaction>.Missing();
 

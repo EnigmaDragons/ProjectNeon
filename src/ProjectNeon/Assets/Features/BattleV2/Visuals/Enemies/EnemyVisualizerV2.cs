@@ -107,13 +107,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
             ? customUi.Initialized(enemyMember)
             : Instantiate(ui, pos, Quaternion.identity, enemyObject).Initialized(enemyMember));
     }
-
-    private IEnumerator ExecuteAfterDelay(Action a, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        a();
-    }
-
+    
     protected override void Execute(MemberUnconscious m)
     {
         if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
@@ -134,7 +128,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var t = state.GetTransform(m.Member.Id);
         t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
         t.DOSpiral(2);
-        StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2.2f));
+        this.ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2.2f);
     }
 
     protected override void Execute(MemberRevived m)
@@ -148,18 +142,22 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     protected override void Execute(CharacterAnimationRequested e)
     {
         if (!state.IsEnemy(e.MemberId)) return;
+        DevLog.Write($"Playing Enemy Animation {e.Animation.AnimationName}");
+        
         animationContext.SetAnimation(e);
             
         var enemyIndex = state.GetEnemyIndexByMemberId(e.MemberId);
         var enemy = active[enemyIndex];
-        Log.Info($"Began Animation for {enemy.name}");
         var animator = enemy.GetComponentInChildren<Animator>();
         if (animator == null)
-            Debug.LogWarning($"No Animator found for {enemy.name}");
+        {
+            DevLog.Write($"No Animator found for {enemy.name}");
+            Message.Publish(new Finished<CharacterAnimationRequested>());
+        }
         else
             StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
             {
-                Log.Info($"Finished {e.Animation} in {elapsed} seconds.");
+                DevLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
     }

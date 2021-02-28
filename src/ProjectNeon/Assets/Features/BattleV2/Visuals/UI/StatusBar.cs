@@ -27,6 +27,14 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             UpdateUi();
     }
 
+    private void AddCustomTextStatusIcons(List<CurrentStatusValue> statuses, StatusTag statusTag, string defaultText = "Unknown") 
+        => _member.State.StatusesOfType(statusTag)
+            .ForEach(s => statuses.Add(new CurrentStatusValue { 
+                Type = statusTag.ToString(), 
+                Icon = icons[statusTag].Icon, 
+                Tooltip = s.Status.CustomText.OrDefault(() => "Unknown Trap Power") 
+            }));
+
     private void UpdateUi()
     {
         var statuses = new List<CurrentStatusValue>();
@@ -37,19 +45,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State.HasStatus(StatusTag.CounterAttack))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.CounterAttack.ToString(), Icon = icons[StatusTag.CounterAttack].Icon, Tooltip = "Counterattack"});
         
-        _member.State.StatusesOfType(StatusTag.Trap)
-            .ForEach(s => statuses.Add(new CurrentStatusValue { 
-                Type = StatusTag.Trap.ToString(), 
-                Icon = icons[StatusTag.Trap].Icon, 
-                Tooltip = s.Status.CustomText.OrDefault(() => "Unknown Trap Power") 
-            }));
-        
-        _member.State.StatusesOfType(StatusTag.Augment)
-            .ForEach(s => statuses.Add(new CurrentStatusValue { 
-                Type = StatusTag.Augment.ToString(), 
-                Icon = icons[StatusTag.Augment].Icon, 
-                Tooltip = s.Status.CustomText.OrDefault(() => "Unknown Augment Power") 
-            }));
+        AddCustomTextStatusIcons(statuses, StatusTag.Trap, "Unknown Trap Power");
+        AddCustomTextStatusIcons(statuses, StatusTag.Augment, "Unknown Augment Power");
         
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
         AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => $"Reduces magic damage taken by {v}");
@@ -64,6 +61,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.CardStun, true, v => $"Stunned for {v} Cards");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Confusion, true, v => $"Confused for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Spellshield, true, v => $"Shields next {v} Magic Attacks");
+        AddCustomTextStatusIcons(statuses, StatusTag.OnBloodied, "Unknown On Bloodied Effect");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => $"Received {v} Injuries, applied at end of battle");
 
         var extraCardBuffAmount = CeilingInt(_member.State[StatType.ExtraCardPlays] - _member.State.BaseStats.ExtraCardPlays());
@@ -110,8 +108,10 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     {
         var buffAmount = CeilingInt(_member.State[statType] - _member.State.BaseStats[statType]);
         if (buffAmount != 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[statType].Icon, Text = buffAmount.ToString(), Tooltip = $"+{buffAmount} {statType}"});
+            statuses.Add(new CurrentStatusValue { Icon = icons[statType].Icon, Text = buffAmount.ToString(), Tooltip = $"{Sign(buffAmount)}{buffAmount} {statType}"});
     }
+
+    private string Sign(float amount) => amount > 0 ? "+" : "";
 
     private void UpdateComparisonWithPrevious(List<CurrentStatusValue> statuses)
     {

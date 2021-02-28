@@ -55,7 +55,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
     private void ResolveNextInstantReaction()
     { 
         var r = _instantReactions.Dequeue();
-        r.ReactionSequence.Perform(r.Source, r.Target, ResourceQuantity.None);
+        r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
     }
 
     private void ResolveNextStatusEffect()

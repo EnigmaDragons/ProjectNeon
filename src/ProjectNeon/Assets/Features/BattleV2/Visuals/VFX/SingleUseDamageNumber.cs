@@ -24,7 +24,6 @@ public class SingleUseDamageNumber : MonoBehaviour
         if (damage == 0)
             return;
         
-        Debug.Log($"Displaying Number {damage}");
         text.gameObject.SetActive(true);
         text.color = damage > 0 ? positiveChangeColor : negativeChangeColor;
         text.text = Mathf.Abs(damage).ToString();

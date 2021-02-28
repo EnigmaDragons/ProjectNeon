@@ -56,6 +56,11 @@ public class Enemy : ScriptableObject
     public Member AsMember(int id, BattleState state)
     {
         var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats, battleRole);
+        return m;
+    }
+
+    public Member SetupMemberState(Member m, BattleState state)
+    {
         var ctx = new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.Members, state.PlayerCardZones);
         m.State.InitResourceAmount(resourceType, startingResourceAmount);
         m.State.ApplyPersistentState(
