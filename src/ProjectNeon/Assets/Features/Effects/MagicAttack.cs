@@ -19,9 +19,26 @@ public class MagicAttack : Effect
         // Processing Double Damage
         var damage = ctx.Source.State[TemporalStatType.DoubleDamage] > 0 ? _damageCalc.WithFactor(2) : _damageCalc;
         ctx.Source.State.AdjustDoubleDamage(-1);
+
         var effect = new DealDamage(damage);
         
-        foreach (var member in selectedTarget.Members) 
-            effect.Apply(ctx.Retargeted(ctx.Source, new Single(member)));
+
+        var totalHpDamageDealt = 0;
+        foreach (var member in selectedTarget.Members)
+        {
+            var beforeHp = member.CurrentHp();
+            effect.Apply(ctx.Retargeted(ctx.Source, new Single(member)));   
+            totalHpDamageDealt += beforeHp - member.CurrentHp();
+        }
+
+        // Processing Lifesteal
+        var lifeStealCounters = ctx.Source.State[TemporalStatType.Lifesteal];
+        if (lifeStealCounters > 0)
+        {
+            var amount = lifeStealCounters * 0.25f * totalHpDamageDealt;
+            ctx.Source.State.GainHp(amount);
+            ctx.Source.State.Adjust(TemporalStatType.Lifesteal, -lifeStealCounters);
+            BattleLog.Write($"{ctx.Source.Name} gained {amount} HP from LifeSteal");
+        }
     }
 }

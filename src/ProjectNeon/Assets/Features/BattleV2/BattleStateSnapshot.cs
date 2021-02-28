@@ -17,4 +17,6 @@ public sealed class BattleStateSnapshot
         PlayedCardHistory = playedCardHistory;
         Members = members;
     }
+
+    public MemberSnapshot[] TargetMembers(Target target) => target.Members.Select(x => Members[x.Id]).ToArray();
 }
