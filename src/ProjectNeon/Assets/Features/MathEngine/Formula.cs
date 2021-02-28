@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -15,6 +16,11 @@ public static class Formula
     {
         var newExp = expression;
 
+        foreach (var stat in FullStatNames)
+        {
+            newExp = newExp.Replace(stat.Key, stat.Value);
+        }
+        
         foreach (var resourceType in ctx.Source.ResourceTypes)
         {
             newExp = newExp.Replace(resourceType.Name, ctx.Source[resourceType].ToString());
@@ -38,4 +44,13 @@ public static class Formula
 
         return Convert.ToSingle(new DataTable().Compute(newExp, null));
     }
+    
+    private static Dictionary<string, string> FullStatNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+    {
+        { "LEAD", StatType.Leadership.ToString() },
+        { "ATK", StatType.Attack.ToString() },
+        { "MAG", StatType.Magic.ToString() },
+        { "ARM", StatType.Armor.ToString() },
+        { "TGH", StatType.Toughness.ToString() },
+    }; 
 }
