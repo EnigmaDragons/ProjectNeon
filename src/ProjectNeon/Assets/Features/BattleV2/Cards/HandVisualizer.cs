@@ -119,7 +119,7 @@ public sealed class HandVisualizer : MonoBehaviour
             c.Set("Hand", card, 
                 () => SelectCard(cardIndex), 
                 () => BeginDragCard(card, cardIndex),
-                (battleState, c2) => allowInteractions && (!onlyAllowInteractingWithPlayables || c2.IsPlayableByHero(state)));
+                (battleState, c2) => allowInteractions && (!onlyAllowInteractingWithPlayables || c2.IsPlayable()));
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.SetDisabled(!card.Owner.CanPlayCards() || !_isFocused);
             c.SetHandHighlight(isHighlighted);

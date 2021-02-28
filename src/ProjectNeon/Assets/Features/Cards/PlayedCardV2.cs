@@ -13,7 +13,7 @@ public class PlayedCardV2 : IPlayedCard
     
     public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient, ResourceCalculations calculations)
     {
-        card.TransitionTo(card.Type.IsPlayableBy(performer) ? card.Mode : CardMode.Dead);
+        card.TransitionTo(card.IsPlayable() ? card.Mode : CardMode.Dead);
         if (card.IsActive && targets.Length < card.ActionSequences.Length)
             throw new InvalidDataException($"Cannot play {card.Name} with only {targets.Length}");
         

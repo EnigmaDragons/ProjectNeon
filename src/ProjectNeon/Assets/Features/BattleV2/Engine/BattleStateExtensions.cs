@@ -10,11 +10,16 @@ public static class BattleStateExtensions
         return member.CanAfford(c);
     }
     
-    public static bool IsPlayableByHero(this Card c, BattleState b)
+    public static bool IsPlayable(this Card c)
     {
-        return c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner);
+        return c.IsActive && IsPlayableBy(c.Type, c.Owner);
+    }
+
+    public static bool IsPlayableByHero(this Card c)
+    {
+        return c.IsActive && c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner);
     }
 
     public static bool IsAnyFormPlayableByHero(this Card c)
-        => c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner) || IsPlayableBy(c.BasicType, c.Owner);
+        => c.IsActive && c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner) || IsPlayableBy(c.BasicType, c.Owner);
 }
