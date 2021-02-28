@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Enemy_TotalSystemFailure
+  m_EditorClassIdentifier: 
+  customName: Total System Failure
+  art: {fileID: 21300000, guid: 117f5586db388ac43a376c6d684161df, type: 3}
+  description: Glitch all cards in hand
+  typeDescription: {fileID: 11400000, guid: 9899a7b68bc22484e927e10f3ea183b5, type: 2}
+  tags: 030000001e000000
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
+    type: 2}
+  cost:
+    cost: 5
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+    plusXCost: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+    plusXCost: 0
+  rarity: 4
+  actionSequences:
+  - scope: 1
+    group: 1
+    avoidance: 2
+    cardActions: {fileID: 11400000, guid: 2a208060b0c36e843bd4c815f752c733, type: 2}
+    repeatX: 0
+  chainedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  timingType: 1

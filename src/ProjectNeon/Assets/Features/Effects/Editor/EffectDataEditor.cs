@@ -38,13 +38,14 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ApplyMultiplicativeStatInjury, new [] {  "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.Kill, new string[0]},
         {EffectType.ShowCustomTooltip, new [] { "FlavorText", "FloatAmount", "EffectScope", "NumberOfTurns" }},
-        {EffectType.OnDeath, new []{ "FloatAmount", "NumberOfTurns", "ReactionSequence" }},
+        {EffectType.OnDeath, new []{ "FloatAmount", "NumberOfTurns", "ReactionSequence",  }},
         {EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, new[]{"BaseAmount", "EffectScope", "StatusTag", "StatusDetailText", "BonusCardType"}},
         {EffectType.AttackFormula, new [] { "Formula" }},
         {EffectType.MagicAttackFormula, new [] { "Formula" }},
         {EffectType.AddToXCostTransformer, new [] { "FloatAmount", "NumberOfTurns", "StatusTag", "StatusDetailText" }},
         {EffectType.RedrawHandOfCards, new string[0] },
-        {EffectType.DrawCards, new [] { "Formula" } }
+        {EffectType.DrawCards, new [] { "Formula" } },
+        {EffectType.GlitchRandomCards, new []{ "BaseAmount", "EffectScope" }}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

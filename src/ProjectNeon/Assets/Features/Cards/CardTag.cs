@@ -30,4 +30,6 @@ public enum CardTag
     Spellshield = 27,
     Resistance = 28,
     Injure = 29,
+    GlitchHand = 30,
+    StealCredits = 31,
 }

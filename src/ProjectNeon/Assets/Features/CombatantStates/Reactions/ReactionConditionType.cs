@@ -13,5 +13,6 @@ namespace Features.CombatantStates.Reactions
         OnCausedHeal = 15,
         OnCausedStun = 20,
         OnSlay = 21,
+        OnDeath = 99,
     }
 }

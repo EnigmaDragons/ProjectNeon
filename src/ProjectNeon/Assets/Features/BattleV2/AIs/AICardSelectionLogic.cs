@@ -59,6 +59,9 @@ public static class AICardSelectionLogic
     private static CardSelectionContext DontRemoveResourcesIfOpponentsDontHaveMany(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State.PrimaryResourceValue < 1f), CardTag.RemoveResources);
 
+    private static CardSelectionContext DontStealCreditsIfOpponentDoesntHaveAny(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.PartyAdventureState.Credits <= 0, CardTag.StealCredits);
+
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
         => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).MostExpensive();
 
