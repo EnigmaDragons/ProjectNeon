@@ -45,7 +45,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AddToXCostTransformer, new [] { "FloatAmount", "NumberOfTurns", "StatusTag", "StatusDetailText" }},
         {EffectType.RedrawHandOfCards, new string[0] },
         {EffectType.DrawCards, new [] { "Formula" } },
-        {EffectType.GlitchRandomCards, new []{ "BaseAmount", "EffectScope" }}
+        {EffectType.GlitchRandomCards, new []{ "BaseAmount", "EffectScope" }},
+        {EffectType.LeaveBattle, new string[0]}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

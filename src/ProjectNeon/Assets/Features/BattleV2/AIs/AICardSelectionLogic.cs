@@ -67,6 +67,14 @@ public static class AICardSelectionLogic
 
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx)
         => ctx.WithFinalizedCardSelection(_ => 0);
+
+    public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, params CardTag[] tagPriority)
+    {
+        var dictionary = new DictionaryWithDefault<CardTag, int>(99);
+        for (int i = 1; i < tagPriority.Length + 1; i++)
+            dictionary[tagPriority[i - 1]] = i;
+        return ctx.WithFinalizedCardSelection(c => dictionary[c.Tags.First()]);
+    }
     
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority)
         => ctx.SelectedCard.IsMissing

@@ -131,7 +131,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
     
     protected override void Execute(DespawnEnemy msg)
     {
-        var member = enemies.Despawn(msg.Member, state);
+        enemies.Despawn(msg.Member, state);
         BattleLog.Write($"Despawned {msg.Member.Name}");
         Message.Publish(new Finished<DespawnEnemy>());
     }

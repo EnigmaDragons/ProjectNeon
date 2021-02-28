@@ -32,4 +32,5 @@ public enum CardTag
     Injure = 29,
     GlitchHand = 30,
     StealCredits = 31,
+    Escape = 32,
 }

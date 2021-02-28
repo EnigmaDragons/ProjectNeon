@@ -98,16 +98,13 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         return member;
     }
     
-    public Member Despawn(MemberState enemy, BattleState battleState)
+    public void Despawn(MemberState enemy, BattleState battleState)
     {
         DevLog.Write($"Despawning {enemy.Name}");
+        var index = state.GetEnemyIndexByMemberId(enemy.MemberId);
         state.RemoveEnemy(enemy);
-        
-        var member = enemy.AsMember(state.GetNextEnemyId(), battleState);
-        var enemyObject = AddEnemy(enemy, member);
-        state.AddEnemy(enemy, enemyObject, member);
-        SetupEnemyUi(member, enemyObject.transform);
-        return member;
+        Destroy(active[index]);
+        Destroy(uis[index]);
     }
 
     private void SetupEnemyUi(Member enemyMember, Transform enemyObject)
