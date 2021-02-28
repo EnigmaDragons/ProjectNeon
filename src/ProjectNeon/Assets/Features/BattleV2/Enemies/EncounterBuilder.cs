@@ -11,7 +11,18 @@ public class EncounterBuilder : ScriptableObject
     [SerializeField] private int numMustIncludes;
     [SerializeField] private int maxEnemies = 7;
     [SerializeField][Range(0, 1)] private float flexibility;
+    [SerializeField][Range(0, 1)] private float minionTeamChance;
 
+    private EncounterEnemySelector _selector => new EncounterEnemySelector(
+        new StopWhenCurrentDifficultyIsEnoughRule(flexibility),
+        new StopWhenMaxedOutEnemiesRule(maxEnemies),
+        new OneEliteRule(),
+        new MinionTeamRule(minionTeamChance, maxEnemies),
+        new UniqueRolesRule(),
+        new UniqueRule(),
+        new LimitDifficultyRule(flexibility),
+        new AddStrikerOrBruiserIfThereIsNoneRule());
+    
     public void Init(IEnumerable<Enemy> possibleEnemies)
     {
         possible = possibleEnemies.ToArray();
@@ -34,35 +45,14 @@ public class EncounterBuilder : ScriptableObject
             currentDifficulty = currentDifficulty + Math.Max(nextEnemy.PowerLevel, 1);
         }
 
-        var min = difficulty * (1 - flexibility);
-        var max = difficulty * (1 + flexibility);
-        
-        while (currentDifficulty < min && enemies.Count < maxEnemies)
+        while (_selector.TryGetEnemy(
+            new EncounterBuildingContext(enemies.ToArray(), possible, currentDifficulty, difficulty), out Enemy enemy))
         {
-            var maximum = max - currentDifficulty;
-            var enemyRolesOverrepresented = enemies
-                .GroupBy(e => e.Role)
-                .Where(g => g.Sum(e => e.PowerLevel) >= (difficulty / 2f))
-                .Select(e => e.Key);
-            var uniqueEnemies = enemies.Where(e => e.IsUnique);
-            var filteredOptions = possible.Where(e => !uniqueEnemies.Contains(e)).ToArray();
-
-            if (filteredOptions.Any(e => e.PowerLevel <= maximum))
-                filteredOptions = filteredOptions.Where(e => e.PowerLevel <= maximum).ToArray();
-            else if (difficulty - currentDifficulty > currentDifficulty + filteredOptions.OrderBy(x => x.PowerLevel).First().PowerLevel - difficulty)
-                filteredOptions = new[] {filteredOptions.OrderBy(x => x.PowerLevel).First()};
-            else
-                break;
-
-            if (filteredOptions.Any(e => !enemyRolesOverrepresented.Contains(e.Role)))
-                filteredOptions = filteredOptions.Where(e => !enemyRolesOverrepresented.Contains(e.Role)).ToArray();
-            
-            var nextEnemy = filteredOptions.Random();
-            enemies.Add(nextEnemy);
-            DevLog.Write($"Added {nextEnemy.Name} to Encounter");
-            currentDifficulty += nextEnemy.PowerLevel;
+            enemies.Add(enemy);
+            DevLog.Write($"Added {enemy.Name} to Encounter");
+            currentDifficulty += enemy.PowerLevel;
         }
-        
+
         DevLog.Write("Finished generating encounter");
         return enemies.ToList().Shuffled();
     }

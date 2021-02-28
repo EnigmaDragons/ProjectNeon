@@ -13,6 +13,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private GameObject prefab;
     [SerializeField] private StringReference deathEffect;
     [SerializeField] private BattleRole battleRole;
+    [SerializeField] private EnemyTier tier; 
     [SerializeField] private bool unique;
     
     [SerializeField] private int maxHp;
@@ -39,6 +40,7 @@ public class Enemy : ScriptableObject
     public GameObject Prefab => prefab;
     public string DeathEffect => deathEffect;
     public BattleRole Role => battleRole;
+    public EnemyTier Tier => tier;
     public bool IsUnique => unique;
     public EffectData[] Effects => startOfBattleEffects;
     
