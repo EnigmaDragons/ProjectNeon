@@ -8,7 +8,6 @@ public sealed class Attack : Effect
     private readonly bool _hitsRandomTarget;
 
     public Target Target { get; set; }
-    private Member Attacker { get; set; }
     private PhysicalDamage Damage { get; }
     
     public Attack(PhysicalDamage damage, bool hitsRandomTarget = false)
@@ -19,7 +18,7 @@ public sealed class Attack : Effect
 
     public void Apply(EffectContext ctx)
     {
-        Attacker = ctx.Source;
+        var attacker = ctx.Source;
         Target = ctx.Target;
         //PROPOSALS SHOULD NOT GO THROUGH THE EVENT SYSTEM
         Message.Publish(new Proposed<Attack> { Message = this });
@@ -27,15 +26,15 @@ public sealed class Attack : Effect
         var selectedTarget = _hitsRandomTarget && applicableTargets.Any() ? (Target)new Single(applicableTargets.Random()) : (Target)new Multiple(applicableTargets);
 
         // Processing Double Damage
-        var damage = Attacker.State[TemporalStatType.DoubleDamage] > 0 ? Damage.WithFactor(2) : Damage;
+        var damage = attacker.State[TemporalStatType.DoubleDamage] > 0 ? Damage.WithFactor(2) : Damage;
         var effect = new DealDamage(damage);
-        Attacker.State.AdjustDoubleDamage(-1);
-
+        attacker.State.AdjustDoubleDamage(-1);
+        
         var totalHpDamageDealt = 0;
-        if (Attacker.State[TemporalStatType.Blind] > 0)
+        if (attacker.State[TemporalStatType.Blind] > 0)
         {
-            Attacker.State.Adjust(TemporalStatType.Blind, -1);
-            BattleLog.Write($"{Attacker.Name} was blinded, so their attack missed.");
+            attacker.State.Adjust(TemporalStatType.Blind, -1);
+            BattleLog.Write($"{attacker.Name} was blinded, so their attack missed.");
             Message.Publish(new PlayRawBattleEffect("MissedText", Vector3.zero));
         }
         else
@@ -43,18 +42,18 @@ public sealed class Attack : Effect
             foreach (var member in selectedTarget.Members)
             {
                 var beforeHp = member.CurrentHp();
-                effect.Apply(ctx.Retargeted(Attacker, new Single(member)));
+                effect.Apply(ctx.Retargeted(attacker, new Single(member)));
                 totalHpDamageDealt += beforeHp - member.CurrentHp();
             }
         }
         // Processing Lifesteal
-        var lifeStealCounters = Attacker.State[TemporalStatType.Lifesteal];
+        var lifeStealCounters = attacker.State[TemporalStatType.Lifesteal];
         if (lifeStealCounters > 0)
         {
             var amount = lifeStealCounters * 0.25f * totalHpDamageDealt;
-            Attacker.State.GainHp(amount);
-            Attacker.State.Adjust(TemporalStatType.Lifesteal, -lifeStealCounters);
-            BattleLog.Write($"{Attacker.Name} gained {amount} HP from LifeSteal");
+            attacker.State.GainHp(amount);
+            attacker.State.Adjust(TemporalStatType.Lifesteal, -lifeStealCounters);
+            BattleLog.Write($"{attacker.Name} gained {amount} HP from LifeSteal");
         }
 
         Message.Publish(new Finished<Attack> { Message = this });

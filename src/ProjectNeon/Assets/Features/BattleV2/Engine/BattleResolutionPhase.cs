@@ -101,8 +101,24 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 
+    private static readonly HashSet<EffectType> StealthBreakingEffectTypes = new HashSet<EffectType>(new []
+    {
+        EffectType.Attack, 
+        EffectType.AttackFormula, 
+        EffectType.PhysicalDamageOverTime,
+        EffectType.Kill, 
+        EffectType.MagicDamageOverTime, 
+        EffectType.MagicAttack, 
+        EffectType.MagicAttackFormula, 
+        EffectType.MagicDamageOverTime,
+        EffectType.DamageOverTime
+    });
+    
     protected override void Execute(CardActionAvoided msg)
     {
+        if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
+            msg.Source.State.ExitStealth();
+        
         var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg));
         reactions.ForEach(r => _reactionCards.Enqueue(r));
         Message.Publish(new Finished<CardActionAvoided>());
@@ -110,6 +126,9 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
 
     private void ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
     {
+        if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
+            msg.Source.State.ExitStealth();
+        
         if (msg.CanRetarget && msg.Target.Members.All(m => !m.IsConscious()))
         {
             DevLog.Write("Retargeting Battle Effect");
