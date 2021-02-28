@@ -14,6 +14,7 @@ public sealed class CardSelectionContext
     public CardPlayZones Zones { get; }
     
     public Maybe<CardTypeData> SelectedCard { get; private set; } = Maybe<CardTypeData>.Missing();
+    public string CardOptionsString => $"[{string.Join(", ", CardOptions.Select(x => x.Name))}]";
     
     public CardSelectionContext(int memberId, BattleState state, AIStrategy strategy)
         : this(state.Members[memberId], state, strategy, state.GetPlayableCards(memberId)) {}
@@ -46,6 +47,11 @@ public sealed class CardSelectionContext
             : this;
     }
     
+    public CardSelectionContext IfTrueDontPlay(Func<CardSelectionContext, bool> shouldRefine, Func<CardTypeData, bool> isExcludedCard) =>
+        LogAfter(() => shouldRefine(this)
+            ? new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions.Where(isExcludedCard)) { SelectedCard = SelectedCard }
+            : this);
+
     public CardSelectionContext IfTruePlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] includeTagsCombination)
         => shouldRefine(this)
             ? new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions.Where(o => o.Is(includeTagsCombination))) { SelectedCard = SelectedCard }
@@ -53,4 +59,11 @@ public sealed class CardSelectionContext
 
     public CardSelectionContext WithSelectedCard(CardTypeData card)
         => new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions) { SelectedCard = new Maybe<CardTypeData>(card)};
+
+    private CardSelectionContext LogAfter(Func<CardSelectionContext> getNext)
+    {
+        var ctx = getNext();
+        Log.Info($"{ctx.Member.Name} - Selected {ctx.SelectedCard.Select(x => x.Name, () => "None")} - Options {ctx.CardOptionsString}");
+        return ctx;
+    }
 }

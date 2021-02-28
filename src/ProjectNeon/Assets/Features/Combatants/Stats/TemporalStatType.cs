@@ -13,4 +13,5 @@ public enum TemporalStatType
     Blind = 10,
     Injury = 11,
     Lifesteal = 12,
+    Phase = 13,
 }

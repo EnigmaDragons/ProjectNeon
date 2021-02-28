@@ -27,6 +27,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustCounterFormula, new [] {"Formula", "EffectScope" }},
         {EffectType.GainCredits, new [] {"BaseAmount" }},
         {EffectType.AdjustPrimaryResource, new [] {"BaseAmount" }},
+        {EffectType.AdjustPrimaryResourceFormula, new [] {"Formula"}},
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.AtStartOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
         {EffectType.AtEndOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},

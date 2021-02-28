@@ -28,8 +28,12 @@ public static class AICardSelectionLogic
             .DontPlayTauntIfAnyAllyIsPlayingOne()
             .DontPlayMagicalCountersIfOpponentsAreNotMagical()
             .DontPlayPhysicalCountersIfOpponentsAreNotPhysical()
-            .DontGiveExtraResourcesIfAlliesHaveEnough();
+            .DontGiveExtraResourcesIfAlliesHaveEnough()
+            .DontPlayXCostWithZeroResources();
 
+    public static CardSelectionContext DontPlayXCostWithZeroResources(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlay(x => x.Member.PrimaryResourceAmount() == 0, c => !c.Cost.PlusXCost);
+    
     public static CardSelectionContext DontGiveExtraResourcesIfAlliesHaveEnough(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Allies.Except(ctx.Member).All(e => e.RemainingPrimaryResourceCapacity() < 2), CardTag.BuffResource);
     

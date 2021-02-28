@@ -57,6 +57,7 @@ public sealed class MemberState : IStats
 
         baseStats.ResourceTypes?.ForEach(r =>
             _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
+        _counters[TemporalStatType.Phase.ToString()].Set(1);
         _counters["None"] = new BattleCounter("None", 0, () => 0);
         _counters[""] = new BattleCounter("", 0, () => 0);
     }

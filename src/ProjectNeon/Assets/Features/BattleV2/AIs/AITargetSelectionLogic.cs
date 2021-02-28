@@ -95,7 +95,7 @@ public static class AITargetSelectionLogic
         if (ctx.SelectedCard.IsMissing)
             ctx = ctx.WithFinalizedCardSelection();
         
-        DevLog.Write($"{ctx.Member.Name} chose {ctx.SelectedCard.Value.Name} out of [{string.Join(", ", ctx.CardOptions.Select(x => x.Name))}]");
+        DevLog.Write($"{ctx.Member.Name} chose {ctx.SelectedCard.Value.Name} out of {ctx.CardOptionsString}");
         
         var targets = ctx.SelectedTargets(isPreferredTarget);
 
@@ -104,7 +104,7 @@ public static class AITargetSelectionLogic
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
         RecordNonStackingTags(CardTag.Taunt, ctx, targets);
         
-        return new PlayedCardV2(ctx.Member, targets, card);
+        return new PlayedCardV2(ctx.Member, targets, card, isTransient: false, card.Type.CalculateResources(ctx.Member.State));
     }
 
     private static void RecordNonStackingTags(CardTag tag, CardSelectionContext ctx, Target[] targets)

@@ -37,7 +37,7 @@ public static class BattleStateTargetingExtensions
         switch (group)
         {
             case Group.Self:  {
-                targets = new Target[] { new MemberAsTarget(self) };
+                targets = new Target[] { new Single(self) };
                 break;
             }
             case Group.All:  
