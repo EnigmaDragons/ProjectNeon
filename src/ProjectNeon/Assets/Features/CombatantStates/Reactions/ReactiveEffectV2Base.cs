@@ -115,10 +115,6 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
             return false;
         if (!condition(effect))
             return false;
-        // Noah's super hack for OnDeath changes values during the Condition Resolution above ^
-        // Why can't reactions apply to (now) unconscious characters?
-        if (!possessor.IsConscious())
-            return false;
         return true;
     }
     

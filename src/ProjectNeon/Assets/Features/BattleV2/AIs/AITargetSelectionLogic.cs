@@ -59,6 +59,18 @@ public static class AITargetSelectionLogic
                     : possibleTargets.Random();
         }
 
+        if (card.Is(CardTag.GlitchHand))
+        {
+            var possibleTarget = possibleTargets
+                .Where(target =>
+                    ctx.Zones.HandZone.Cards.Any(cardInHand =>
+                        target.Members.Any(member => member.Id == cardInHand.Owner.Id)))
+                .ToArray()
+                .Shuffled()
+                .FirstOrDefault();
+            if (possibleTarget != null)
+                return possibleTarget;
+        }
         if (card.Is(CardTag.Attack) && action.Group == Group.Opponent)
             return Rng.Chance(0.80) ? ctx.Strategy.AttackTargetFor(action) : possibleTargets.Random();
         if (card.Is(CardTag.Healing) && action.Group == Group.Ally)

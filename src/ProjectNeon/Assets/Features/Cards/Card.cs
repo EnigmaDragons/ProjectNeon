@@ -8,7 +8,8 @@ public sealed class Card
     [SerializeField] private CardTypeData type;
     [SerializeField] private Member owner;
 
-    public CardMode Mode;
+    public CardMode Mode { get; private set; }
+    public bool IsActive => Mode != CardMode.Dead && Mode != CardMode.Glitched;
 
     public CardTypeData BasicType => LimitedToClass.Value.BasicCard;
     public Maybe<CharacterClass> LimitedToClass => type.LimitedToClass;
@@ -39,11 +40,19 @@ public sealed class Card
     
     public Card RevertedToStandard()
     {
-        Mode = CardMode.Normal;
+        TransitionTo(CardMode.Normal);
         ClearXValue();
         return this;
     }
 
     public void SetXValue(ResourceQuantity r) => LockedXValue = new Maybe<ResourceQuantity>(r);
     public void ClearXValue() => LockedXValue = Maybe<ResourceQuantity>.Missing();
+    
+    public void TransitionTo(CardMode mode)
+    {
+        if (Mode == CardMode.Normal || Mode == CardMode.Basic)
+            Mode = mode;
+        else if (Mode == CardMode.Dead && (mode == CardMode.Normal || mode == CardMode.Glitched))
+            Mode = mode;
+    }
 }

@@ -21,7 +21,9 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, Ca
     public IEnumerator Begin()
     {
         DevLog.Write($"Card Resolution Began");
-        resolutionZone.Moves.ForEach(c => BattleLog.Write($"{c.Member.Name} played {c.Card.Name}{TargetDescription(c)}"));
+        resolutionZone.Moves.ForEach(c => BattleLog.Write(c.Card.IsActive 
+            ? $"{c.Member.Name} played {c.Card.Name}{TargetDescription(c)}"
+            : $"{c.Member.Name} discarded {c.Card.Name}"));
         yield return ui.BeginResolutionPhase();
         yield return new WaitForSeconds(delay);
         ResolveNext();

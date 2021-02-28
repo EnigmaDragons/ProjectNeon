@@ -67,7 +67,7 @@ public class CardResolutionZone : ScriptableObject
     public void Add(IPlayedCard played)
     {
         battleState.RecordPlayedCard(played);
-        if (played.Card.Mode != CardMode.Dead)
+        if (played.Card.IsActive)
         {
             played.Member.Apply(m =>
             {
@@ -77,7 +77,7 @@ public class CardResolutionZone : ScriptableObject
             DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}"); 
         }
 
-        if (played.Card.Mode == CardMode.Dead)
+        if (!played.Card.IsActive)
         {
             _moves.Add(played);
             physicalZone.PutOnBottom(played.Card); 
@@ -135,10 +135,14 @@ public class CardResolutionZone : ScriptableObject
         playerPlayArea.Take(playerPlayArea.Count - 1);
         playerHand.PutOnBottom(card);
 
-        if (played.Card.Mode != CardMode.Dead)
+        if (played.Card.IsActive)
         {
             played.Member.Apply(m => m.LoseResource(played.Gained.ResourceType, played.Gained.Amount));
             played.Member.Apply(m => m.GainResource(played.Spent.ResourceType, played.Spent.Amount));   
+        }
+        else
+        {
+            played.Card.TransitionTo(CardMode.Normal);
         }
         Message.Publish(new PlayerCardCanceled());
     }
@@ -167,7 +171,7 @@ public class CardResolutionZone : ScriptableObject
         Async.ExecuteAfterDelay(delayBeforeResolving, () =>
         {
             var card = played.Card;
-            if (card.Mode == CardMode.Dead)
+            if (!card.IsActive)
             {
                 BattleLog.Write($"{card.Name} does not resolve.");
                 WrapupCard(played, card);

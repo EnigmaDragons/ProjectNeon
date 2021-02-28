@@ -66,5 +66,11 @@ public class CardPlayZones : ScriptableObject
         Message.Publish(new PlayerCardDrawn());
     }
 
+    public void TestInit(params Card[] hand)
+    {
+        handZone = CardPlayZone.InMemory;
+        handZone.Init(hand);
+    }
+
     public static CardPlayZones InMemory => (CardPlayZones)FormatterServices.GetUninitializedObject(typeof(CardPlayZones));
 }

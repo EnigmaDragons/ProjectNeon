@@ -10,6 +10,8 @@ public sealed class CardSelectionContext
     public Member[] AllMembers { get; }
     public AIStrategy Strategy { get; }
     public IEnumerable<CardTypeData> CardOptions { get; }
+    public PartyAdventureState PartyAdventureState { get; }
+    public CardPlayZones Zones { get; }
     
     public Maybe<CardTypeData> SelectedCard { get; private set; } = Maybe<CardTypeData>.Missing();
     
@@ -20,13 +22,15 @@ public sealed class CardSelectionContext
         : this(member, state, strategy, state.GetPlayableCards(member.Id)) {}
     
     public CardSelectionContext(Member member, BattleState state, AIStrategy strategy, IEnumerable<CardTypeData> options)
-        : this(member, state.MembersWithoutIds, strategy, options) {}
+        : this(member, state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, options) {}
     
-    public CardSelectionContext(Member member, Member[] allMembers, AIStrategy strategy, IEnumerable<CardTypeData> options)
+    public CardSelectionContext(Member member, Member[] allMembers, AIStrategy strategy, PartyAdventureState partyAdventureState, CardPlayZones zones, IEnumerable<CardTypeData> options)
     {
         Member = member;
         AllMembers = allMembers;
         Strategy = strategy;
+        PartyAdventureState = partyAdventureState;
+        Zones = zones;
         CardOptions = options;
     }
     
@@ -38,15 +42,15 @@ public sealed class CardSelectionContext
             return this;
         }
         return shouldRefine(this)
-            ? new CardSelectionContext(Member, AllMembers, Strategy, CardOptions.Where(o => !o.Is(excludedTagsCombination))) { SelectedCard = SelectedCard }
+            ? new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions.Where(o => !o.Is(excludedTagsCombination))) { SelectedCard = SelectedCard }
             : this;
     }
     
     public CardSelectionContext IfTruePlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] includeTagsCombination)
         => shouldRefine(this)
-            ? new CardSelectionContext(Member, AllMembers, Strategy, CardOptions.Where(o => o.Is(includeTagsCombination))) { SelectedCard = SelectedCard }
+            ? new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions.Where(o => o.Is(includeTagsCombination))) { SelectedCard = SelectedCard }
             : this;
 
     public CardSelectionContext WithSelectedCard(CardTypeData card)
-        => new CardSelectionContext(Member, AllMembers, Strategy, CardOptions) { SelectedCard = new Maybe<CardTypeData>(card)};
+        => new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions) { SelectedCard = new Maybe<CardTypeData>(card)};
 }
