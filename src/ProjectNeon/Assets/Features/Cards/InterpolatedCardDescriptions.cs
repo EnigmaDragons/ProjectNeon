@@ -150,6 +150,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} Shield";
         if (data.EffectType == EffectType.DrawCards)
             coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} Cards";
+        if (data.EffectType == EffectType.EnterStealth)
+            coreDesc = $"enter {Bold(TemporalStatType.Stealth.ToString())}";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
@@ -240,7 +242,7 @@ public static class InterpolatedCardDescriptions
             return $"{data.TotalIntAmount}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
             return $"{data.TotalIntAmount}";
-        
+
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }

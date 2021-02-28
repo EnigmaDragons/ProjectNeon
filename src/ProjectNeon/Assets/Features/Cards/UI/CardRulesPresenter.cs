@@ -27,6 +27,7 @@ public class CardRulesPresenter : MonoBehaviour
         {
             rulesToShow.AddIf("Vulnerable", b.EffectType == EffectType.ApplyVulnerable);
             rulesToShow.AddIf(TemporalStatType.Disabled.ToString(), b.EffectType == EffectType.DisableForTurns);
+            rulesToShow.AddIf("Stealth", b.EffectType == EffectType.EnterStealth);
             
             AddAllMatchingEffectScopeRules(rulesToShow, b, 
                 TemporalStatType.Evade.ToString(), 
