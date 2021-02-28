@@ -108,8 +108,10 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     {
         var buffAmount = CeilingInt(_member.State[statType] - _member.State.BaseStats[statType]);
         if (buffAmount != 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[statType].Icon, Text = buffAmount.ToString(), Tooltip = $"+{buffAmount} {statType}"});
+            statuses.Add(new CurrentStatusValue { Icon = icons[statType].Icon, Text = buffAmount.ToString(), Tooltip = $"{Sign(buffAmount)}{buffAmount} {statType}"});
     }
+
+    private string Sign(float amount) => amount > 0 ? "+" : "";
 
     private void UpdateComparisonWithPrevious(List<CurrentStatusValue> statuses)
     {
