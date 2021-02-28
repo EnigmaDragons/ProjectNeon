@@ -50,6 +50,7 @@ public sealed class Card
     
     public void TransitionTo(CardMode mode)
     {
+        // Very, very hard to understand
         if (Mode == CardMode.Normal || Mode == CardMode.Basic)
             Mode = mode;
         else if (Mode == CardMode.Dead && (mode == CardMode.Normal || mode == CardMode.Glitched))

@@ -1,5 +1,4 @@
 ﻿using System;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -69,9 +68,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _card = card;
         _cardType = card.Type;
         _getCanPlay = getCanPlay;
-        _onRightClick = ToggleAsBasic;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
+        _onRightClick = _isHand ? ToggleAsBasic : (Action)(() => { });
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
     }
@@ -107,17 +106,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (_card == null)
             throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
-        _card.TransitionTo(_card.Mode != CardMode.Basic ? CardMode.Basic : CardMode.Normal);
-        SetAsBasic();
-    }
-    
-    private void SetAsBasic()
-    {
-        if (_card == null)
-            throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
         
         DebugLog($"UI - Toggle as Basic");
-        
+        _card.TransitionTo(_card.Mode != CardMode.Basic ? CardMode.Basic : CardMode.Normal);
         _cardType = _card.Type;
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
