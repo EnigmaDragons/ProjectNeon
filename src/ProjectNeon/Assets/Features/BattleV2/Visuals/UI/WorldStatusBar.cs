@@ -15,7 +15,7 @@ public sealed class WorldStatusBar : StatusBar
     {
         var pos = transform.position;
         Enumerable.Range(0, 8)
-            .ForEach(i => _icons.Add(Instantiate(iconPrototype, pos + new Vector3((i * iconWidth) + Math.Max(0, i - 1) * xSpacing, 0, 0), Quaternion.identity, transform)));
+            .ForEach(i => _icons.Add(Instantiate(iconPrototype, pos + new Vector3((i * iconWidth) + i * xSpacing, 0, 0), Quaternion.identity, transform)));
         UpdateStatuses(new List<CurrentStatusValue>());
     }
 
