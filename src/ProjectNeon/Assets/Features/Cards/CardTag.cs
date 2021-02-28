@@ -33,4 +33,8 @@ public enum CardTag
     GlitchHand = 30,
     StealCredits = 31,
     Escape = 32,
+    Phase1 = 33,
+    Phase2 = 34,
+    Phase3 = 35,
+    Exclusive = 36,
 }

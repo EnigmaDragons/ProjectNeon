@@ -26,6 +26,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private int rewardCredits;
     [SerializeField, ReadOnly] private CardType[] rewardCards;
     [SerializeField, ReadOnly] private Equipment[] rewardEquipments;
+    [SerializeField, ReadOnly] private int turnNumber;
     
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
     private List<List<CardTypeData>> _playedCardHistory = new List<List<CardTypeData>>();
@@ -35,6 +36,7 @@ public class BattleState : ScriptableObject
     
     public bool IsSelectingTargets = false;
     public BattleV2Phase Phase => phase;
+    public int TurnNumber => turnNumber;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
     public int RewardCredits => rewardCredits;
     public CardType[] RewardCards => rewardCards; 
@@ -82,6 +84,7 @@ public class BattleState : ScriptableObject
         SetPhase(BattleV2Phase.NotBegun);
         NextCardId.Reset();
         IsSelectingTargets = false;
+        turnNumber = 0;
     }
 
     public void SetPhase(BattleV2Phase p)
@@ -140,7 +143,8 @@ public class BattleState : ScriptableObject
         _queuedEffects = new Queue<Effect>();
         _unconsciousMembers = new Dictionary<int, Member>();
         _playedCardHistory = new List<List<CardTypeData>> { new List<CardTypeData>() };
-
+        turnNumber = 1;
+        
         DevLog.Write("Finished Battle State Init");
         return result;
     }
@@ -188,6 +192,7 @@ public class BattleState : ScriptableObject
             _playedCardHistory.Add(new List<CardTypeData>());
             _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
             PlayerState.OnTurnEnd();
+            turnNumber++;
         });
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);

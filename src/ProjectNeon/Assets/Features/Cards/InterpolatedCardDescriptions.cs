@@ -134,6 +134,10 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"gives {Bold("Vulnerable")} {DurationDescription(data)}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope}";
+        if (data.EffectType == EffectType.AdjustPrimaryResource)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.ReactWithEffect)
             coreDesc = $"{WithCommaIfPresent(DurationDescription(data))}" +
                        $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
@@ -230,6 +234,9 @@ public static class InterpolatedCardDescriptions
         
         if (data.EffectType == EffectType.AdjustCounterFormula)
             return $"{FormulaAmount(data, owner, xCost)} {Bold(data.EffectScope.Value.WithSpaceBetweenWords())}";
+        
+        if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
+            return $"{FormulaAmount(data, owner, xCost)} {owner.Select(o => o.PrimaryResource().ResourceType, () => "Primary Resource")}";
         
         if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)
             return owner.IsPresent

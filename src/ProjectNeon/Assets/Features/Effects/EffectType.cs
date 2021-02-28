@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 35-43, 47, 48, 53, 
-// LAST NUMBER USED: 81
+// LAST NUMBER USED: 82
 
 using System;
 
@@ -29,6 +29,7 @@ public enum EffectType
     ShieldToughnessBasedOnNumberOfOpponentDoTs = 69,
     AdjustResourceFlat = 7,
     AdjustPrimaryResource = 46,
+    AdjustPrimaryResourceFormula = 82,
     DamageOverTimeFlat = 8,
     DamageOverTime = 19,
     PhysicalDamageOverTime = 59,
