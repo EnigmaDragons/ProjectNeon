@@ -27,9 +27,9 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
 
     public void EndSelection()
     {
-        if (targetingState.HasValidTargets && card.Type.IsPlayableBy(card.Owner))
+        if (targetingState.HasValidTargets && card.IsPlayable())
             PlayCard(new PlayedCardV2(card.Owner, targetingState.Targets, card));
-        else if (!card.Type.IsPlayableBy(card.Owner))
+        else if (!card.IsPlayable())
             PlayCard(new PlayedCardV2(card.Owner, new Target[0], card));
         else 
             Cancel();
