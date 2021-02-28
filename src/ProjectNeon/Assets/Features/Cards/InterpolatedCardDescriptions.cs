@@ -135,13 +135,13 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustResourceFlat)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope}";
         if (data.EffectType == EffectType.ReactWithEffect)
-            coreDesc = $"{DurationDescription(data).Replace(".", ", ")}" +
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data))}" +
                        $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
                        $"{ReactionSourceDescription(owner, data.ReactionEffect.Reactor)}" +
                        $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
                        $"to {ReactiveTargetFriendlyName(data.ReactionEffect.Scope)}";
         if (data.EffectType == EffectType.ReactWithCard)
-            coreDesc = $"{DurationDescription(data).Replace(".", ", ")}" +
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data))}" +
                        $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
                        $"{ReactionSourceDescription(owner, data.ReactionSequence.ActionSequence.Reactor)}" +
                        $"{AutoDescription(data.ReactionSequence.ActionSequence.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
@@ -157,6 +157,8 @@ public static class InterpolatedCardDescriptions
         return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
     }
 
+    private static string WithCommaIfPresent(string value) => string.IsNullOrWhiteSpace(value) ? "" : $"{value}, ";
+    
     private static string GivesOrRemoves(string remainingEffectDesc) 
         => remainingEffectDesc.Contains("-") || remainingEffectDesc.Contains("All") 
             ? $"removes {remainingEffectDesc}" 
