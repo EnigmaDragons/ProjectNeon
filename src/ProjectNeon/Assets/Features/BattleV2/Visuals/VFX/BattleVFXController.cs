@@ -28,9 +28,12 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         else if (e.Scope.Equals(Scope.One))
         {
             var member = e.Target.Members[0];
-            if (!member.IsConscious()) 
+            if (!member.IsConscious())
+            {
+                Message.Publish(new Finished<BattleEffectAnimationRequested>());
                 return;
-            
+            }
+
             var location = state.GetCenterPoint(member.Id);
             PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
         }
