@@ -2,7 +2,7 @@ using System;
 
 public class TemporalStateTracker
 {
-    private const bool _performDebugLogging = true;
+    private readonly bool ShouldPerformDebugLogging = true;
     
     public TemporalStateMetadata Metadata { get; }
 
@@ -28,7 +28,10 @@ public class TemporalStateTracker
     
     private void DebugLog(Action a)
     {
+        if (ShouldPerformDebugLogging)
+            DevLog.Write($"Before Status {Metadata.Status.Tag} - Remaining Uses {_remainingUses} Turns {_remainingTurns}. IsActive {IsActive}");
         a();
-        DevLog.Write($"Remaining Uses {_remainingUses} Turns {_remainingTurns}");
+        if (ShouldPerformDebugLogging)
+            DevLog.Write($"After Status {Metadata.Status.Tag} - Remaining Uses {_remainingUses} Turns {_remainingTurns}. IsActive {IsActive}");
     }
 }

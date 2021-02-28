@@ -10,7 +10,7 @@ public static class AllEffects
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.AdjustStatAdditivelyFormula, e => new FullContextEffect((ctx, m) => m.ApplyTemporaryAdditive(new AdjustedStats(
             BattleLoggedItem(s => $"Stats of {m.Name} are adjusted by {s}",
-                new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(new FormulaContext(ctx.SourceSnapshot.State, m, ctx.XPaidAmount), e.Formula))), 
+                new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula))), 
                 e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.ForSimpleDurationStatAdjustment())))},
@@ -19,8 +19,10 @@ public static class AllEffects
         { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, 
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionSequence)},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLogged($"{m.Name} has been cleansed of all debuffs", m.CleanseDebuffs))},
-        { EffectType.AdjustCounterFormula, e => new FullContextEffect((ctx, m) => m.Adjust(e.EffectScope, Formula.Evaluate(new FormulaContext(ctx.SourceSnapshot.State, m, ctx.XPaidAmount), e.Formula)))},
-        { EffectType.ShieldFormula, e => new FullContextEffect((ctx, m) => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula))))},
+        { EffectType.AdjustCounterFormula, e => new FullContextEffect((ctx, m) => m.Adjust(e.EffectScope, Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula)))},
+        { EffectType.ShieldFormula, e => new FullContextEffect((ctx, m) 
+            => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", 
+                m.AdjustShield(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula))))},
         { EffectType.ShieldRemoveAll, e => new SimpleEffect(m => BattleLogged($"{m.Name} lost all their shields", () => m.AdjustShield(-999))) },
         { EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs, e => new ShieldToughnessBasedOnNumberOfOpponentDoTs(e.FloatAmount) },
         { EffectType.AdjustResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
@@ -48,7 +50,8 @@ public static class AllEffects
         { EffectType.MagicDamageOverTime, e => new MagicDamageOverTime(e)},
         { EffectType.PhysicalDamageOverTime, e => new PhysicalDamageOverTime(e)},
         { EffectType.HealPercentMissingHealth, e => new SimpleEffect(m => m.GainHp(Mathf.CeilToInt(m.MissingHp() * e.FloatAmount))) },
-        { EffectType.EnterStealth, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Stealth, e.NumberOfTurns + 1)) },
+        { EffectType.EnterStealth, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(TemporalStatType.Stealth, 1), 
+            TemporalStateMetadata.BuffForDuration(e.NumberOfTurns)))) },
         { EffectType.GainDoubleDamage, e => new SimpleEffect(m => m.Adjust(TemporalStatType.DoubleDamage, e.IntAmount))},
         { EffectType.AntiHeal, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().With(StatType.Healability, 0.5f),  TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, new StatusDetail(StatusTag.AntiHeal)))))},

@@ -30,6 +30,13 @@ public class EffectContext
         PlayerCardZones = playerCardZones;
         Card = card;
         XPaidAmount = xPaidAmount;
+        if (XPaidAmount == null)
+        {
+            Log.Error("XPaidAmount is null");
+            #if UNITY_EDITOR
+            throw new ArgumentNullException();
+            #endif
+        }
     }
     
     public EffectContext Retargeted(Member source, Target target) 
