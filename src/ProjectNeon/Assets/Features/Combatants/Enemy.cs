@@ -53,7 +53,7 @@ public class Enemy : ScriptableObject
     public int ResourceGainPerTurn => resourceGainPerTurn;
     public int CardsPerTurn => cardsPerTurn;
     
-    public Member AsMember(int id, BattleState state)
+    public Member AsMember(int id)
     {
         var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats, battleRole);
         return m;

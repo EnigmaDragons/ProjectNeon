@@ -11,6 +11,7 @@ public sealed class CardReactionSequence
 
     public ReactiveMember Reactor => reactor;
     public ReactiveTargetScope Scope => scope;
+    public AvoidanceType AvoidanceType => avoidance;
     public CardActionsData CardActions => cardActions;
 
     public void Perform(string reactionName, Member source, Target target, ResourceQuantity xAmountPaid)
