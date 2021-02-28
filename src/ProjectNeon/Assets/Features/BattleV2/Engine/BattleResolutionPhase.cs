@@ -96,7 +96,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
         var reactionCards = reactions.Where(r => r.ReactionCard.IsPresent);
         reactionCards.ForEach(r => _reactionCards.Enqueue(r));
         
-        state.Members.ForEach(m => m.Value.State.CleanExpiredStates());
+        state.CleanupExpiredMemberStates();
         
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
@@ -138,10 +138,11 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
         Message.Publish(new Finished<DespawnEnemy>());
     }
 
-    protected override void Execute(CardResolutionFinished msg) => StartCoroutine(FinishCard());
+    protected override void Execute(CardResolutionFinished msg) => StartCoroutine(FinishEffect());
 
-    private IEnumerator FinishCard()
+    private IEnumerator FinishEffect()
     {
+        state.CleanupExpiredMemberStates();
         if (_instantReactions.Any())
             BeginResolvingNextInstantReaction();
         else
@@ -188,7 +189,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
         else
         {
             BattleLog.Write($"{r.Source.Name} could not afford reaction card {reactionCard.Name}");
-            this.ExecuteAfterDelay(() => StartCoroutine(FinishCard()), 0.1f);
+            this.ExecuteAfterDelay(() => StartCoroutine(FinishEffect()), 0.1f);
         }
     }
 }

@@ -262,22 +262,27 @@ public sealed class MemberState : IStats
     public void CleanExpiredStates() => 
         PublishAfter(() =>
         {
-            _additiveMods.RemoveAll(m => !m.IsActive);
-            _multiplierMods.RemoveAll(m => !m.IsActive);
-            _reactiveStates.RemoveAll(m => !m.IsActive);
-            _transformers.RemoveAll(m => !m.IsActive);
-            _additiveResourceCalculators.RemoveAll(m => !m.IsActive);
-            _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive);
+            var count = _additiveMods.RemoveAll(m => !m.IsActive)
+                + _multiplierMods.RemoveAll(m => !m.IsActive)
+                + _reactiveStates.RemoveAll(m => !m.IsActive)
+                + _transformers.RemoveAll(m => !m.IsActive)
+                + _additiveResourceCalculators.RemoveAll(m => !m.IsActive)
+                + _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive);
+            if (count > 0)
+                DevLog.Write($"Cleaned {count} expired states from {Name}");
         });
 
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType> { TemporalStatType.Taunt, TemporalStatType.Stealth, TemporalStatType.Confusion };
     
     public IPayloadProvider[] GetTurnEndEffects()
     {
-        _persistentStates.ForEach(m => m.OnTurnEnd());
-        _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
-        _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
-        _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
+        PublishAfter(() =>
+        {
+            _persistentStates.ForEach(m => m.OnTurnEnd());
+            _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
+            _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
+            _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
+        });
         
         return _additiveMods.Select(m => m.OnTurnEnd())
             .Concat(_multiplierMods.Select(m => m.OnTurnEnd()))
