@@ -11,6 +11,7 @@ public class PlayerState
         .Plus(_mods.Where(x => x.IsActive).Select(x => x.PlayerStats));
 
     public int CardDraws => CurrentStats.CardDraw();
+    public int CardCycles => CurrentStats.CardCycles();
 
     public PlayerState(int numCardCycles = 0)
     {

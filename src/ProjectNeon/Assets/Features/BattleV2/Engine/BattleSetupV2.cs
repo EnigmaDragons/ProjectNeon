@@ -85,11 +85,13 @@ public class BattleSetupV2 : MonoBehaviour
 
         foreach (var enemy in enemyArea.Enemies)
         {
-            enemy.AI.InitForBattle();
+            if (enemy.AI == null)
+                throw new Exception($"{enemy.Name} does not have an AI");
             if (!enemy.IsReadyForPlay)
                 throw new Exception($"{enemy.Name} is not ready for play.");
             if (enemy.Deck.Cards.All(c => c.Cost.BaseAmount > 0))
                 throw new Exception($"{enemy.Name}'s Deck does not contain a 0-Cost Card.");
+            enemy.AI.InitForBattle();
         }
     }
     
