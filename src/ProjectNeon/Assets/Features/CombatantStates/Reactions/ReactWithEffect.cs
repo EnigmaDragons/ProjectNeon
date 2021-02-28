@@ -57,7 +57,28 @@ public class EffectReactWith : Effect
                 return hpAfter > hpBefore;
             }
         },
-        { ReactionConditionType.OnDeath, ctx => effect => ctx.Possessor.IsUnconscious() && (ctx.Possessor.Id == ctx.Actor.Id || ctx.Actor.IsConscious()) }
+        { ReactionConditionType.OnDeath, ctx => effect => ctx.Possessor.IsUnconscious() && (ctx.Possessor.Id == ctx.Actor.Id || ctx.Actor.IsConscious()) },
+        { ReactionConditionType.OnDamageDealt, ctx => effect
+                =>
+                {
+                    if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
+                        return false;
+                    
+                    return effect.BattleBefore.TargetMembers(effect.Target).Sum(x => x.State.Hp + x.State.Shield) >
+                           effect.BattleAfter.TargetMembers(effect.Target).Sum(x => x.State.Hp + x.State.Shield);
+                }
+        },
+        { ReactionConditionType.OnHpDamageDealt, ctx => effect 
+            => 
+            {
+                if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
+                    return false;
+
+                var beforeHp = effect.BattleBefore.TargetMembers(effect.Target).Sum(x => x.State.Hp);
+                var afterHp = effect.BattleAfter.TargetMembers(effect.Target).Sum(x => x.State.Hp);
+                return beforeHp > afterHp;
+            }
+        }
     };
 
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
