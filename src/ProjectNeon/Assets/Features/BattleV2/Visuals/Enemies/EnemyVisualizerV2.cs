@@ -73,18 +73,23 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     
     public void AfterBattleStateInitialized()
     {
-        var enemies = enemyArea.Enemies;
-        var positions = enemyArea.EnemyUiPositions;
-        for (var i = 0; i < enemies.Count; i++)
-            SetupEnemyUi(state.GetMemberByEnemyIndex(i), positions[i].gameObject.transform);
-
-        for (var i = 0; i < enemies.Count; i++)
+        for (var i = 0; i < enemyArea.Enemies.Count; i++)
         {
+            var member = state.GetMemberByEnemyIndex(i);
+            
+            SetupEnemyUi(member, enemyArea.EnemyUiPositions[i].gameObject.transform);
+            
             var hoverCharacter = active[i].GetComponentInChildren<HoverCharacter>();
             if (hoverCharacter == null)
-                Log.Error($"{enemies[i].Name} is missing a {nameof(HoverCharacter)}");
+                Log.Error($"{member.Name} is missing a {nameof(HoverCharacter)}");
             else
-                hoverCharacter.Init(state.GetMemberByEnemyIndex(i));
+                hoverCharacter.Init(member);
+            
+            var stealth = active[i].GetComponentInChildren<StealthTransparency>();
+            if (stealth == null)
+                Log.Info($"{member.Name} is missing a {nameof(StealthTransparency)}");
+            else
+                stealth.Init(member);
         }
     }
 
