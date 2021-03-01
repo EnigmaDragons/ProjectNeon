@@ -19,7 +19,7 @@ public static class ErrorHandler
      
     private static void HandleException(string condition, string stackTrace, LogType type)
     {
-        if (type == LogType.Exception) 
-            _onUnhandledError(condition + "\n" + stackTrace);
+        if (type == LogType.Exception || type == LogType.Error) 
+            _onUnhandledError(type + "\n" + condition + "\n" + stackTrace);
     }
 }

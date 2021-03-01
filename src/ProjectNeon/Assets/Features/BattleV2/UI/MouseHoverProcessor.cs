@@ -1,12 +1,11 @@
 using UnityEngine;
 
-public class MouseHoverProcessor : OnMessage<FreezeHover, Finished<FreezeHover>>
+public class MouseHoverProcessor : MonoBehaviour
 {
     private Camera _cam;
     private readonly RaycastHit2D[] _hits = new RaycastHit2D[100];
     private MouseHoverStatusIcon _statusIcon;
     private Maybe<HoverCharacter> _lastHover = Maybe<HoverCharacter>.Missing();
-    private int _frozen;
     
     private void Awake()
     {
@@ -25,7 +24,7 @@ public class MouseHoverProcessor : OnMessage<FreezeHover, Finished<FreezeHover>>
 
         var hoverCharacter = Maybe<HoverCharacter>.Missing();
         var hoverStatusIcon = Maybe<WorldStatusIconPresenter>.Missing();
-        if (numHits > 0 && _frozen == 0)
+        if (numHits > 0)
         {
             for (var i = 0; i < numHits; i++)
                 if (hoverCharacter.IsMissing && _hits[i].collider.gameObject.layer == characterLayer)
@@ -60,8 +59,4 @@ public class MouseHoverProcessor : OnMessage<FreezeHover, Finished<FreezeHover>>
         }
         _statusIcon.Update(hoverStatusIcon);
     }
-
-    protected override void Execute(FreezeHover msg) => _frozen++;
-
-    protected override void Execute(Finished<FreezeHover> msg) => _frozen--;
 }
