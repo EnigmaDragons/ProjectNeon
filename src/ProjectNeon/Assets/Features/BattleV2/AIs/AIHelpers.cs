@@ -13,7 +13,13 @@ public static class AIHelpers
         
         var playableCards = enemy.Deck.Cards.Where(c => c.IsPlayableBy(me)).Cast<CardTypeData>().ToArray();
         if (!playableCards.Any())
+        {
+            Log.Error($"{me} has no playable cards in hand");
+            #if UNITY_EDITOR
             throw new InvalidDataException($"{me} has no playable cards in hand");
+            #endif
+            return s.GetEnemyById(memberId).Deck.Cards.Cast<CardTypeData>().OrderBy(c => c.Cost.BaseAmount).First().AsArray();
+        }
         return playableCards;
     }
 }
