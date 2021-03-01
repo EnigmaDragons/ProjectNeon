@@ -31,7 +31,9 @@ public sealed class PartyAdventureState : ScriptableObject
         credits = heroes.Sum(h => h.Character.StartingCredits);
         numShopRestocks = 2;
         
-        var allStartingCards = Decks.SelectMany(d => d.Cards).ToList();
+        var allStartingCards = Decks.SelectMany(d => d.Cards)
+            .Concat(party.Heroes.SelectMany(h => h.AdditionalStartingCards))
+            .ToList();
         cards.Initialized(allStartingCards);
         allStartingCards.Distinct().ForEach(c => cards.EnsureHasAtLeast(c, 4));
         
