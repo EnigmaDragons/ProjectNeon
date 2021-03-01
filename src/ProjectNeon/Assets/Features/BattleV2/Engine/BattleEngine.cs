@@ -126,6 +126,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         var message = $"{finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);
         phase = newPhase;
+        state.CleanupExpiredMemberStates();
         state.SetPhase(newPhase);
     }
     

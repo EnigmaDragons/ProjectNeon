@@ -31,21 +31,13 @@ public sealed class Attack : Effect
         attacker.State.AdjustDoubleDamage(-1);
         
         var totalHpDamageDealt = 0;
-        if (attacker.State[TemporalStatType.Blind] > 0)
+        foreach (var member in selectedTarget.Members)
         {
-            attacker.State.Adjust(TemporalStatType.Blind, -1);
-            BattleLog.Write($"{attacker.Name} was blinded, so their attack missed.");
-            Message.Publish(new PlayRawBattleEffect("MissedText", Vector3.zero));
+            var beforeHp = member.CurrentHp();
+            effect.Apply(ctx.Retargeted(attacker, new Single(member)));
+            totalHpDamageDealt += beforeHp - member.CurrentHp();
         }
-        else
-        {
-            foreach (var member in selectedTarget.Members)
-            {
-                var beforeHp = member.CurrentHp();
-                effect.Apply(ctx.Retargeted(attacker, new Single(member)));
-                totalHpDamageDealt += beforeHp - member.CurrentHp();
-            }
-        }
+        
         // Processing Lifesteal
         var lifeStealCounters = attacker.State[TemporalStatType.Lifesteal];
         if (lifeStealCounters > 0)
