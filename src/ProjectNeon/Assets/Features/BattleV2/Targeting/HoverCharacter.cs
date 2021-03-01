@@ -50,7 +50,8 @@ public class HoverCharacter : MonoBehaviour
         if (!IsInitialized)
             return;
         
-        _renderer.material = material;
+        if (_renderer != null)
+            _renderer.material = material;
         _hovered = true;
     }
 
@@ -69,7 +70,8 @@ public class HoverCharacter : MonoBehaviour
             return;
     
         Log.Info($"UI - Cleared Hover Character {Member.Name}");
-        _renderer.material = _originalMaterial;
+        if (_renderer != null)
+            _renderer.material = _originalMaterial;
         _hovered = false;
         _confirmAction = () => { };
         _cancelAction = () => { };
