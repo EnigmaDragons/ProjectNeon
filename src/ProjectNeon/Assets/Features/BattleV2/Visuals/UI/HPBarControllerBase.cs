@@ -17,7 +17,7 @@ public abstract class HPBarControllerBase : OnMessage<MemberStateChanged>
         
         var shieldAmount = CurrentShield > 0 ? ((CurrentHp + CurrentShield) / totalEffectiveHp) : 0;
         SetShieldFillAmount(shieldAmount);
-        SetShieldText(CurrentShield > 0 ? $"{CurrentShield}" : "");
+        RenderShieldText();
     }
 
     private void InitUi()
@@ -27,8 +27,16 @@ public abstract class HPBarControllerBase : OnMessage<MemberStateChanged>
         var shieldAmount = CurrentShield > 0 ? ((CurrentHp + CurrentShield) / totalEffectiveHp) : 0;
         
         SetHpText($"{CurrentHp}/{MaxHp}");
-        SetShieldText(CurrentShield > 0 ? $"{CurrentShield}" : "");
+        RenderShieldText();
         Init(amount, shieldAmount);
+    }
+
+    private void RenderShieldText()
+    {
+        if (_member.TeamType == TeamType.Party)
+            SetShieldText($"{CurrentShield}/{MaxShield}");
+        else
+            SetShieldText(CurrentShield > 0 ? $"{CurrentShield}" : "");
     }
 
     public void Init(Member m)
