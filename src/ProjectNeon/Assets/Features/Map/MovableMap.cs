@@ -48,15 +48,16 @@ public class MovableMap : OnMessage<FocusOnMapElement, FreezeMap, Finished<Freez
             float yMove = 0;
             var screenRect = new Rect(0,0, Screen.width, Screen.height);
             
-            // Keyboard
-            var xAxisValue = Input.GetAxis("Horizontal");
-            var yAxisValue = Input.GetAxis("Vertical");
-            var epsilon = 0.01f;
-            if (Math.Abs(xAxisValue) > epsilon)
-                xMove -= xAxisValue;
-            if (Math.Abs(yAxisValue) > epsilon)
-                yMove -= yAxisValue;
-            
+//            Keyboard - Currently Broken
+//            var xAxisValue = Input.GetAxis("Horizontal");
+//            var yAxisValue = Input.GetAxis("Vertical");
+//            var epsilon = 0.01f;
+//            if (Math.Abs(xAxisValue) > epsilon)
+//                xMove -= xAxisValue;
+//            if (Math.Abs(yAxisValue) > epsilon)
+//                yMove -= yAxisValue;
+//            
+
             // Mouse Hover
             if (screenRect.Contains(mousePosition))
             {
