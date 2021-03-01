@@ -15,7 +15,7 @@ MonoBehaviour:
   settingType: 0
   storyText: As you walk through the alley, you hear a low thumping sound nearby.
     The source of the sound appears to be a busted refrigerator, bound closed with
-    duct tape. Something is hammering deperately on the inside.
+    duct tape. Something is hammering desperately on the inside.
   choices:
   - Text: 'Walk away. '
     OptionalCost:
@@ -24,6 +24,7 @@ MonoBehaviour:
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 1
+      ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
       StoryText: You avoid the rattling fridge, pushing a little guilt to the back
         of your mind. and reminding yourself that this isn't your problem.
@@ -34,11 +35,13 @@ MonoBehaviour:
     OptionalCondition: {fileID: 0}
     Resolution:
     - Chance: 0.2
+      ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: f72b4f48b064c5c47a57f820abb2e6ad, type: 2}
       StoryText: You tear off the duct tape and pull the refrigerator open. Out bursts
         a corporate security drone, which slams into your chest before flying upward
         and out of the alley.
     - Chance: 0.4
+      ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 818aa2cfd0e6fef42b2bd3502fe18672, type: 2}
       StoryText: 'You tear off the duct tape and pull the refrigerator open. A young
         man in a suit is inside, gasping for air as he pulls himself from the plastic
@@ -49,6 +52,7 @@ MonoBehaviour:
         He
         compensates you for your assistance.'
     - Chance: 0.4
+      ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
       StoryText: You tear off the duct tape and pull the refrigerator open. Inside
         is a large dog, which growls at you for a moment before realizing that you
@@ -62,6 +66,7 @@ MonoBehaviour:
       type: 2}
     Resolution:
     - Chance: 1
+      ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
       StoryText: You slam your boot against the side of the fridge. Whatever is inside,
         it quickly quiets.
