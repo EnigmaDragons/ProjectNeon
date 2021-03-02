@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 35-43, 47, 48, 53, 
-// LAST NUMBER USED: 82
+// LAST NUMBER USED: 83
 
 using System;
 
@@ -14,25 +14,32 @@ public enum EffectType
     MagicAttack = 50,
     MagicAttackFormula = 31,
     DealRawDamageFormula = 70,
+    DamageOverTimeFlat = 8,
+    DamageOverTime = 19,
+    PhysicalDamageOverTime = 59,
 
     AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyFormula = 68,
     AdjustCounterFormula = 79,
     
+    // Timing
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
     DelayedStartOfTurn = 23,
     
+    // Cleanses
     RemoveDebuffs = 4,
+    ResetStatToBase = 83,
+    
+    // Shields
     ShieldFormula = 80,
     ShieldRemoveAll = 22,
     ShieldToughnessBasedOnNumberOfOpponentDoTs = 69,
+    
+    // Resources
     AdjustResourceFlat = 7,
     AdjustPrimaryResource = 46,
     AdjustPrimaryResourceFormula = 82,
-    DamageOverTimeFlat = 8,
-    DamageOverTime = 19,
-    PhysicalDamageOverTime = 59,
     HealFormula = 29,
 
     AntiHeal = 60,
@@ -54,6 +61,7 @@ public enum EffectType
     PlayBonusCardAfterNoCardPlayedInXTurns = 76,
     RedrawHandOfCards = 77,
     DrawCards = 81,
+    
     
     DisableForTurns = 13,
     InterceptAttackForTurns = 18,

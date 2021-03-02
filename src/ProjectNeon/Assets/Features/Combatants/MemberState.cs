@@ -188,6 +188,21 @@ public sealed class MemberState : IStats
             .ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator) s));
     }
 
+    public void ResetStatToBase(string statType) => PublishAfter(() =>
+    {
+        _counters[statType].Set(0);
+        if (Enum.TryParse(statType, out TemporalStatType tst))
+        {
+            _additiveMods.RemoveAll(m => m.Stats[tst] > 0);
+            _multiplierMods.RemoveAll(m => m.Stats[tst] > 1);
+        }
+        if (Enum.TryParse(statType, out StatType t))
+        {
+            _additiveMods.RemoveAll(m => m.Stats[t] > 0);
+            _multiplierMods.RemoveAll(m => m.Stats[t] > 1);
+        }
+    });
+    
     public void ApplyBonusCardPlayer(IBonusCardPlayer p) => _bonusCardPlayers.Add(p);
     public void ApplyPersistentState(IPersistentState state) => _persistentStates.Add(state);
 

@@ -44,7 +44,7 @@ public static class AllEffects
         { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Magic) },
         { EffectType.HealToughness, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Toughness) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
-            new AdjustedPlayerStats(new PlayerStatAddends().With((PlayerStatType)Enum.Parse(typeof(PlayerStatType), e.EffectScope), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
+            new AdjustedPlayerStats(new PlayerStatAddends().With(e.EffectScope.Value.EnumVal<PlayerStatType>(), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
         { EffectType.MagicAttack, e => new MagicAttack(new SpellDamage(e.BaseAmount, e.FloatAmount), e.HitsRandomTargetMember) },
         { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.TotalIntAmount)) },
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
@@ -81,7 +81,8 @@ public static class AllEffects
         { EffectType.DrawCards, e => new FullContextEffect(ctx => ctx.PlayerCardZones.DrawCards(
             BattleLoggedItem(v => $"Drew {v} cards", Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount).CeilingInt())))},
         { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope, cards => cards) },
-        { EffectType.LeaveBattle, e => new SimpleEffect(m => Message.Publish(new DespawnEnemy(m))) }
+        { EffectType.LeaveBattle, e => new SimpleEffect(m => Message.Publish(new DespawnEnemy(m))) },
+        { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))}
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

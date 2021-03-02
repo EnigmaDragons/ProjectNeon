@@ -7,4 +7,5 @@ public static class StringExtensions
     public static string SkipThroughFirstDash(this string s) => s.Substring(s.IndexOf('-') + 1);
     public static string SkipThroughFirstUnderscore(this string s) => s.Substring(s.IndexOf('_') + 1);
     public static bool ContainsAnyCase(this string s, string term) => s.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
+    public static T EnumVal<T>(this string s) => (T)Enum.Parse(typeof(T), s);
 }

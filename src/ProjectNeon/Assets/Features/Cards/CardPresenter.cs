@@ -237,9 +237,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         else 
             glitchableComponents.ForEach(x => x.material = glitchMaterial);
     }
-    
-    private bool AreCloseEnough(float first, float second) => WithinEpsilon(first - second);
-    private bool WithinEpsilon(float f) => Math.Abs(f) < 0.05;
+
+    private bool AreCloseEnough(float first, float second) => (first - second).IsFloatZero();
 
     private bool CheckIfCanPlay()
     {
