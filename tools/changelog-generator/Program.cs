@@ -29,14 +29,24 @@ namespace ChangeLogGenerator
             return $"{majorMinor}{patchVersion + 1}";
         }
 
+        private static string Capitalized(string s) => char.ToUpper(s[0]) + s.Substring(1);
+
         private static List<string> GeneratePatchNotes(string version, IEnumerable<string> commitLog)
         {
-            var filteredLines = commitLog.Where(c => c.Contains("Close") || c.Contains("(#"));
-            var cleansedLines = commitLog.Select(c => {
-                var delimiterIndex = Math.Max(c.IndexOf("Close"), c.IndexOf("(#"));
-                var cleaned = c.Substring(0, Math.Max(0, delimiterIndex)).Trim();
-                return cleaned.Length > 0 ? "- " + cleaned : "";
-            }).Where(c => c.Length > 0);
+            var cleansedLines = commitLog
+                .Where(c => !c.StartsWith("Merge"))
+                .Where(c => !c.StartsWith("Co-authored"))
+                .Select(c => {
+                    var delimiterIndex = Math.Max(c.IndexOf("close"), Math.Max(c.IndexOf("Close"), c.IndexOf("(#")));
+                    var cleaned = delimiterIndex > -1 
+                        ? c.Substring(0, Math.Max(0, delimiterIndex)).Trim() 
+                        : c;
+                    return cleaned.Length 
+                        > 0 
+                            ? "- " + Capitalized(cleaned)
+                            : "";
+                })
+                .Where(c => c.Length > 4);
 
             var categorized = cleansedLines.Select(l => GetCategorizedLine(l))
                 .GroupBy(x => x.Item1)
@@ -71,14 +81,18 @@ namespace ChangeLogGenerator
             { "Miscellaneous", 99 },
         };
 
-        private static Dictionary<string, string> _containsTextThenCategory = new Dictionary<string,string>
+        private static Dictionary<string, string> _containsTextThenCategory = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase)
         {
+            { "Fixed", "Bug Fixes" },
             { "UI:", "UI Improvements" },
             { "Battle Log:", "UI Improvements"},
             { "Editor:", "Miscellaneous"},
             { "Coding:", "Miscellaneous"},
+            { "Project:", "Miscellaneous" },
             { "New Feature:", "New Features" },
+            { "Feature:", "New Features" },
             { "New Card:", "New Content" },
+            { "New Adventure:", "New Content" },
             { "Art:", "Art Improvements" },
             { "Sounds:", "Art Improvements" },
             { "Sound:", "Art Improvements" },
@@ -88,16 +102,16 @@ namespace ChangeLogGenerator
             { "Map:", "New Content" },
             { "New Hero:", "New Content" },
             { "New Content:", "New Content" },
+            { "New Story Event:", "New Content" },
             { "Bug:", "Bug Fixes" },
             { "Bug Fix:", "Bug Fixes" },
             { "Effect:", "New Features" },
             { "Rebalance:", "Balance Changes" },
             { "Rebalanced:", "Balance Changes" },
+            { "Nerfed", "Balance Changes" },
 
             { "Cards", "New Content" },
-            { "cards", "New Content" },
             { "Zone", "New Content" },
-            { "Fixed", "Bug Fixes" },
             { "UI", "UI Improvements" },
             { "Tooltip", "UI Improvements" },
             { "View", "UI Improvements" },
