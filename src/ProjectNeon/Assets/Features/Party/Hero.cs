@@ -9,16 +9,13 @@ public class Hero
     [SerializeField] private HeroHealth health;
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
+    [SerializeField] private HeroLevels levels;
 
-    public int LevelUpPoints { get; private set; }
-
-    private IStats _levelUpStats = new StatAddends();
-    
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
         this.character = character;
         this.deck = deck;
-        LevelUpPoints = 0;
+        levels = new HeroLevels();
         equipment = new HeroEquipment(character.Class);
         health = new HeroHealth(() => Stats);
     }
@@ -31,10 +28,12 @@ public class Hero
     public HeroEquipment Equipment => equipment;
     public HeroSkill[] Skills => character.Skills;
     public HeroHealth Health => health;
+    public HeroLevels Levels => levels;
+    public int Level => levels.CurrentLevel;
     
     // TODO: Maybe don't calculate this every time
     public IStats Stats => Character.Stats
-        .Plus(_levelUpStats)
+        .Plus(levels.LevelUpStats)
         .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers).ToArray()))
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
         .Plus(health.AdditiveStats)
@@ -49,15 +48,11 @@ public class Hero
     public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
     public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
-    public void AdjustLevelUpPoints(int numPoints) => UpdateState(() => LevelUpPoints += numPoints);
-    private void AddLevelUpStat(StatAddends stats) => UpdateState(() => _levelUpStats = _levelUpStats.Plus(stats));
-
-    public void ApplyLevelUpPoint(StatAddends stats) =>
-        UpdateState(() =>
-        {
-            AdjustLevelUpPoints(-1);
-            AddLevelUpStat(stats);
-        });
+    
+    // Progression
+    [Obsolete("Just use XP instead")] public void LevelUp(int numLevels) => UpdateState(() => levels.LevelUp(numLevels));
+    public void AddXp(int xp) => UpdateState(() => levels.AddXp(xp));
+    public void ApplyLevelUpPoint(StatAddends stats) => UpdateState(() => levels.ApplyLevelUpStats(stats));
 
     // Cleanup Duplication
     public Member AsMemberForTests(int id)

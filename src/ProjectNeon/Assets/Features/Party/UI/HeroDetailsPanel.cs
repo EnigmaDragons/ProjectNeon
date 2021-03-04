@@ -23,7 +23,7 @@ public sealed class HeroDetailsPanel : MonoBehaviour
             equipment.Initialized(h, !canInteractWithEquipment);
         
         levelUpButton?.gameObject.SetActive(false);
-        if (levelUpButton != null && h.LevelUpPoints > 0)
+        if (levelUpButton != null && h.Levels.LevelUpPoints > 0)
             levelUpButton.Init("Level Up", () => Message.Publish(new LevelUpHero(h)));
         
         return this;

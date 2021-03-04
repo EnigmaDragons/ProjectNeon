@@ -25,10 +25,10 @@ public class HeroLevelUp
     
     private void SpendOnePoint(PartyAdventureState p, Hero h, StatAddends stats)
     {
-        if (h.LevelUpPoints < 1)
+        if (h.Levels.LevelUpPoints < 1)
             return;
         
         p.ApplyLevelUpPoint(h, stats);
-        Log.Info($"Leveled Up {h.Character.Name} - Remaining Points {h.LevelUpPoints}");
+        Log.Info($"Leveled Up {h.Character.Name} - Remaining Points {h.Levels.LevelUpPoints}");
     }
 }

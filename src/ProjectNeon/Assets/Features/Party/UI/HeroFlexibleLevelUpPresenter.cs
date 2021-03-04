@@ -30,7 +30,7 @@ public class HeroFlexibleLevelUpPresenter : MonoBehaviour
 
     private void FinishLevelUpIfDone()
     {
-        if (_hero.LevelUpPoints < 1)
+        if (_hero.Levels.LevelUpPoints < 1)
             Message.Publish(new Finished<LevelUpHero>());
     }
 }

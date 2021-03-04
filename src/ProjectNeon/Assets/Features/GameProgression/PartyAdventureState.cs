@@ -41,7 +41,7 @@ public sealed class PartyAdventureState : ScriptableObject
         return this;
     }
 
-    public void AwardLevelUpPoints(int numPoints) => UpdateState(() => heroes.ForEach(h => h.AdjustLevelUpPoints(numPoints)));
+    public void AwardLevelUpPoints(int numPoints) => UpdateState(() => heroes.ForEach(h => h.LevelUp(numPoints)));
     public void UpdateAdventureHp(int[] hps) => UpdateState(() => hps.ForEachIndex((hp, i) => heroes[i].SetHp(hp)));
     public void UpdateCreditsBy(int amount) => UpdateState(() => credits += amount);
     public void UpdateNumShopRestocksBy(int amount) => UpdateState(() => numShopRestocks += amount);
