@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CardRulesPresenter : MonoBehaviour
@@ -37,10 +38,12 @@ public class CardRulesPresenter : MonoBehaviour
                 TemporalStatType.CardStun.ToString(),
                 TemporalStatType.DoubleDamage.ToString(),
                 PlayerStatType.CardCycles.ToString(),
-                TemporalStatType.Disabled.ToString());
+                TemporalStatType.Disabled.ToString(),
+                TemporalStatType.Stealth.ToString());
         });
         
         rulesToShow
+            .Distinct()
             .ForEach(r => Instantiate(rulePresenterPrototype, rulesParent.transform).Initialized(r));
     }
 
