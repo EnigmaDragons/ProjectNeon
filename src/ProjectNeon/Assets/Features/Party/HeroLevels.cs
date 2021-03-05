@@ -61,4 +61,17 @@ public class HeroLevels
         }
         return res;
     }
+    
+    public HeroLevels PreviewChange(int xp)
+    {
+        var h = new HeroLevels
+        {
+            currentLevel = currentLevel, 
+            levelUpPoints = levelUpPoints, 
+            currentXp = currentXp, 
+            nextXpThreshold = nextXpThreshold
+        };
+        h.AddXp(xp);
+        return h;
+    }
 }

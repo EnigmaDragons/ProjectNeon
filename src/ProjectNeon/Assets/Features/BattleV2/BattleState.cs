@@ -40,6 +40,7 @@ public class BattleState : ScriptableObject
     public int TurnNumber => turnNumber;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
     public int RewardCredits => rewardCredits;
+    public int RewardXp => rewardXp;
     public CardType[] RewardCards => rewardCards; 
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
 
