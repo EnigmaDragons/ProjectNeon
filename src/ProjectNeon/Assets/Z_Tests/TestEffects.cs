@@ -4,8 +4,8 @@ public static class TestEffects
 {
     public static EffectData BasicAttack => new EffectData
     {
-        EffectType = EffectType.Attack,
-        FloatAmount = new FloatReference(1)
+        EffectType = EffectType.AttackFormula,
+        Formula = "1 * Attack"
     };
     
     public static CardActionsData EmptyCardActionsData() =>

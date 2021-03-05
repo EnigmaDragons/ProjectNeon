@@ -103,7 +103,6 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
 
     private static readonly HashSet<EffectType> StealthBreakingEffectTypes = new HashSet<EffectType>(new []
     {
-        EffectType.Attack, 
         EffectType.AttackFormula, 
         EffectType.PhysicalDamageOverTime,
         EffectType.Kill, 

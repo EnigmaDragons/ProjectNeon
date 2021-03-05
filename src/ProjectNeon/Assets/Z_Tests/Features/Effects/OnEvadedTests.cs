@@ -26,12 +26,8 @@ public class OnEvadedTests
                 })
         }, target, target);
 
-        TestEffects.Apply(new EffectData
-        {
-            EffectType = EffectType.Attack,
-            FloatAmount = new FloatReference(1)
-        }, attacker, target);
-
+        TestEffects.Apply(TestEffects.BasicAttack, attacker, target);
+        
         Assert.AreEqual(10, target.State[TemporalStatType.HP]);
         Assert.AreEqual(1, target.State.Armor());
     }

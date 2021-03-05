@@ -43,7 +43,6 @@ public class BalanceEngine
     
     private static readonly Dictionary<EffectType, float> EffectTypeFlatFactor = new DictionaryWithDefault<EffectType, float>(1)
     {
-        { EffectType.Attack, 1 }
     };
 
     private static float ScopeFactor(Scope s, Group g, params BalanceTag[] tags)
@@ -97,7 +96,6 @@ public class BalanceEngine
     
     private static readonly HashSet<EffectType> DamageEffects = new HashSet<EffectType>
     {
-        EffectType.Attack,
         EffectType.AttackFormula,
         EffectType.DamageOverTime,
         EffectType.DamageOverTimeFlat,
@@ -117,8 +115,6 @@ public class BalanceEngine
     {
         var scopeFactor = ScopeFactor(s, g, ImpliedBalanceTags(e));
         var effectValue = 1f;
-        if (e.EffectType == EffectType.Attack)
-            return e.FloatAmount;
         if (e.EffectType == EffectType.AdjustStatMultiplicatively && e.FloatAmount.Value < 1)
             return (1 - e.FloatAmount) * 1.5f;
         return effectValue * scopeFactor;

@@ -28,9 +28,9 @@ public sealed class ReactiveTriggerTests
         }, target, target);
         
         TestEffects.Apply(new EffectData
-        {
-            EffectType = EffectType.Attack,
-            FloatAmount = new FloatReference(1)
+        {            
+            EffectType = EffectType.AttackFormula,
+            Formula = "1 * Attack"
         }, attacker, target);
         
         Assert.AreEqual(1, target.State.Armor());
@@ -45,7 +45,10 @@ public sealed class ReactiveTriggerTests
         var reactionCardType = TestCards.ReactionCard(
             ReactiveMember.Originator, 
             ReactiveTargetScope.Source, 
-            new EffectData { EffectType = EffectType.Attack, FloatAmount = new FloatReference(1) });
+            new EffectData {
+                EffectType = EffectType.AttackFormula,
+                Formula = "1 * Attack"
+            });
 
         TestEffects.Apply(new EffectData
         {
@@ -58,8 +61,8 @@ public sealed class ReactiveTriggerTests
         
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.Attack,
-            FloatAmount = new FloatReference(1),
+            EffectType = EffectType.AttackFormula,
+            Formula = "1 * Attack",
             EffectScope = new StringReference(ReactiveTargetScope.Self.ToString())
         }, attacker, target);
         

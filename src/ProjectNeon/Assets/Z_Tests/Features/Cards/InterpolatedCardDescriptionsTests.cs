@@ -13,8 +13,8 @@ public sealed class InterpolatedCardDescriptionsTests
     
     private readonly EffectData BasicAttack = new EffectData
     {
-        EffectType = EffectType.Attack,
-        FloatAmount = new FloatReference(1)
+        EffectType = EffectType.AttackFormula,
+        Formula = "1 * Attack"
     };
     
     [Test]
@@ -35,7 +35,7 @@ public sealed class InterpolatedCardDescriptionsTests
     
     [Test]
     public void Interpolated_Duration_IsCorrect()
-        => AssertMatchesIgnoreStyling("Deal 3 for 2 turns.", 
+        => AssertMatchesIgnoreStyling("Deal 3 for 2 turns", 
             Description("Deal 3 {D[0]}", new EffectData {NumberOfTurns = new IntReference(2)}, Owner));
 
     [Test]
@@ -65,8 +65,8 @@ public sealed class InterpolatedCardDescriptionsTests
             ReactionDescription("On attacked, deal {RE[0]} damage", 
                 new EffectData
                 {
-                    EffectType = EffectType.Attack, 
-                    BaseAmount = new IntReference(8)
+                    EffectType = EffectType.AttackFormula, 
+                    Formula = "1 * Attack"
                 }
             , Owner));
 
@@ -78,7 +78,7 @@ public sealed class InterpolatedCardDescriptionsTests
     
     [Test]
     public void Interpolated_Auto_GivesVulnerableNextTurn_IsCorrect()
-        => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for the turn.",
+        => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for the turn",
             Description("{Auto}", 
                 new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, NumberOfTurns = new IntReference(1)},
                 Owner));

@@ -7,13 +7,8 @@ public sealed class AttackTests
     {
         var attacker = TestMembers.Create(s => s.With(StatType.Attack, 1f));
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
-
         
-        TestEffects.Apply(new EffectData
-        {
-            EffectType = EffectType.Attack,
-            FloatAmount = new FloatReference(1)
-        }, attacker, target);
+        TestEffects.Apply(TestEffects.BasicAttack, attacker, target);
 
         Assert.AreEqual(9, target.State[TemporalStatType.HP]);
     }
@@ -25,11 +20,7 @@ public sealed class AttackTests
         var target = TestMembers.Create(s => s.With(StatType.Damagability, 1).With(StatType.MaxHP, 10).With(StatType.Armor, 2));
         target.State.SetHp(8);
 
-        TestEffects.Apply(new EffectData
-        {
-            EffectType = EffectType.Attack,
-            FloatAmount = new FloatReference(1)
-        }, attacker, target);
+        TestEffects.Apply(TestEffects.BasicAttack, attacker, target);
         
         Assert.AreEqual(8, target.State[TemporalStatType.HP]);
     }

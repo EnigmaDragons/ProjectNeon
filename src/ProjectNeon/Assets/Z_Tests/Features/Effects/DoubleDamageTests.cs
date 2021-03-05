@@ -9,12 +9,8 @@ public class DoubleDamageTests
         var target = TestMembers.With(StatType.MaxHP, 10);
         
         attacker.State.Adjust(TemporalStatType.DoubleDamage, 1);
-        
-        TestEffects.Apply(new EffectData
-        {
-            EffectType = EffectType.Attack, 
-            FloatAmount = new FloatReference(1)
-        }, attacker, target);
+
+        TestEffects.Apply(TestEffects.BasicAttack, attacker, target);
         
         Assert.AreEqual(0, attacker.State[TemporalStatType.DoubleDamage]);
         Assert.AreEqual(6, target.CurrentHp());

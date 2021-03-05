@@ -120,8 +120,6 @@ public static class InterpolatedCardDescriptions
     {
         var delay = DelayDescription(data);
         var coreDesc = "";
-        if (data.EffectType == EffectType.Attack)
-            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.MagicAttackFormula)
@@ -200,8 +198,6 @@ public static class InterpolatedCardDescriptions
     
     public static string EffectDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
-        if (data.EffectType == EffectType.Attack)
-            return WithPhysicalDamageIcon(AttackAmount(data, owner));
         if (data.EffectType == EffectType.AttackFormula)
             return WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.PhysicalDamageOverTime 

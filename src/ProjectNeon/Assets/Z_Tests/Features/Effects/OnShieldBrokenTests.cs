@@ -31,8 +31,8 @@ public class OnShieldBrokenTests
 
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.Attack,
-            FloatAmount = new FloatReference(1),
+            EffectType = EffectType.AttackFormula,
+            Formula = "1 * Attack",
             EffectScope = new StringReference(ReactiveTargetScope.Self.ToString())
         }, attacker, target);
 

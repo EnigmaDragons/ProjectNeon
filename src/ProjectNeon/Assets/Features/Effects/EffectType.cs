@@ -9,7 +9,6 @@ public enum EffectType
     Nothing = 0,
     
     // Most Common Effects
-    Attack = 17,
     AttackFormula = 30,
     MagicAttack = 50,
     MagicAttackFormula = 31,
