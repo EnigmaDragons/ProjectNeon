@@ -47,6 +47,7 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
+        avoidance: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
     conditionData:
@@ -75,7 +76,7 @@ MonoBehaviour:
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 17
+      EffectType: 30
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -96,7 +97,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 0.47 * Attack
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -107,6 +108,7 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
+        avoidance: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
     conditionData:
@@ -167,6 +169,7 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
+        avoidance: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
     conditionData:
