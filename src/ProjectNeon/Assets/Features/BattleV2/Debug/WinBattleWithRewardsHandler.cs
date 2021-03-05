@@ -8,7 +8,8 @@ public class WinBattleWithRewardsHandler : OnMessage<WinBattleWithRewards>
     
     protected override void Execute(WinBattleWithRewards msg)
     {            
-        state.AddRewardCredits(state.EnemyArea.Enemies.Sum(e => e.GetRewardCredits(state.PowerLevelRewardFactor)));
+        state.AddRewardCredits(state.EnemyArea.Enemies.Sum(e => e.GetRewardCredits(state.CreditPerPowerLevelRewardFactor)));
+        state.AddRewardXp(state.EnemyArea.Enemies.Sum(e => e.GetRewardXp(state.XpPerPowerLevelRewardFactor)));
         conclusion.GrantVictoryRewardsAndThen(() =>
         {
             Message.Publish(new BattleFinished(TeamType.Party));

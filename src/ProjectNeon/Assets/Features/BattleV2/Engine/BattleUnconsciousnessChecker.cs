@@ -20,7 +20,12 @@ public sealed class BattleUnconsciousnessChecker
     private void ResolveUnconsciousMember(Member member, BattleState state)
     {
         if (member.TeamType == TeamType.Enemies)
-            state.AddRewardCredits(state.GetEnemyById(member.Id).GetRewardCredits(state.PowerLevelRewardFactor));
+        {
+            var enemy = state.GetEnemyById(member.Id);
+            state.AddRewardCredits(enemy.GetRewardCredits(state.CreditPerPowerLevelRewardFactor));
+            state.AddRewardXp(enemy.GetRewardXp(state.XpPerPowerLevelRewardFactor));
+        }
+
         var idString = member.TeamType == TeamType.Enemies ? $" {member.Id} " : " ";
         BattleLog.Write($"{member.Name}{idString}is unconscious");
         Message.Publish(new MemberUnconscious(member));
@@ -29,7 +34,12 @@ public sealed class BattleUnconsciousnessChecker
     private void ResolveRevivedMember(Member member, BattleState state)
     {
         if (member.TeamType == TeamType.Enemies)
-            state.AddRewardCredits(-state.GetEnemyById(member.Id).GetRewardCredits(state.PowerLevelRewardFactor));
+        {
+            var enemy = state.GetEnemyById(member.Id);
+            state.AddRewardCredits(-enemy.GetRewardCredits(state.CreditPerPowerLevelRewardFactor));
+            state.AddRewardXp(-enemy.GetRewardXp(state.XpPerPowerLevelRewardFactor));
+        }
+
         var idString = member.TeamType == TeamType.Enemies ? $" {member.Id} " : " ";
         BattleLog.Write($"{member.Name}{idString}is revived");
         Message.Publish(new MemberRevived(member));

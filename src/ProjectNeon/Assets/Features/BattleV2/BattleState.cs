@@ -26,6 +26,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private int rewardCredits;
     [SerializeField, ReadOnly] private CardType[] rewardCards;
     [SerializeField, ReadOnly] private Equipment[] rewardEquipments;
+    [SerializeField, ReadOnly] private int rewardXp = 0;
     [SerializeField, ReadOnly] private int turnNumber;
     
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
@@ -44,7 +45,8 @@ public class BattleState : ScriptableObject
 
     public bool NeedsCleanup => needsCleanup;
     public bool IsEliteBattle => isEliteBattle;
-    public float PowerLevelRewardFactor => adventure.Adventure?.RewardCreditsPerPowerLevel ?? 0;
+    public float CreditPerPowerLevelRewardFactor => adventure.Adventure?.RewardCreditsPerPowerLevel ?? 0;
+    public float XpPerPowerLevelRewardFactor => adventure.Adventure?.XpPerPowerLevel ?? 0;
     public CardPlayZones PlayerCardZones => cardPlayZones;
     public PartyAdventureState Party => party;
     public PartyArea PartyArea => partyArea;
@@ -139,6 +141,8 @@ public class BattleState : ScriptableObject
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
         rewardCredits = 0;
         rewardCards = new CardType[0];
+        rewardEquipments = new Equipment[0];
+        rewardXp = 0;
         needsCleanup = true;
         _queuedEffects = new Queue<Effect>();
         _unconsciousMembers = new Dictionary<int, Member>();
@@ -197,6 +201,7 @@ public class BattleState : ScriptableObject
 
     public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
+    public void AddRewardXp(int xp) => UpdateState(() => rewardXp += xp); 
     public void SetRewardCards(params CardType[] cards) => UpdateState(() => rewardCards = cards);
     public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewardEquipments = equipments);
 
@@ -236,6 +241,7 @@ public class BattleState : ScriptableObject
         GrantRewardCredits();
         GrantRewardCards();
         GrantRewardEquipment();
+        GrantRewardXp();
         EnemyArea.Clear();
     }
     
@@ -243,6 +249,7 @@ public class BattleState : ScriptableObject
     private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits + _playerState.BonusCredits);
     private void GrantRewardCards() => Party.Add(rewardCards);
     private void GrantRewardEquipment() => Party.Add(rewardEquipments);
+    private void GrantRewardXp() => Party.AwardXp(rewardXp);
     
     // Queries
     public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);

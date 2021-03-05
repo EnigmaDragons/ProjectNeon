@@ -62,11 +62,6 @@ public class BattleConclusion : OnMessage<BattleFinished>
         }
         else
         {
-            if (currentAdventure.Adventure.IsV2 ? adventure2.IsLastSegmentOfStage : adventure.IsLastSegmentOfStage)
-            {
-                Log.Info("Party is levelling up");
-                party.AwardLevelUpPoints(levelUpPoints);
-            }
             Log.Info("Advancing to next Stage Segment.");
             if (currentAdventure.Adventure.IsV2)
                 adventure2.Advance();
