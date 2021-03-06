@@ -18,6 +18,7 @@ public class Enemy : ScriptableObject
     
     [SerializeField] private int maxHp;
     [SerializeField] private int maxShield;
+    [SerializeField] private int startingShield;
     [SerializeField] private int toughness;
     [SerializeField] private int attack;
     [SerializeField] private int magic;
@@ -77,6 +78,7 @@ public class Enemy : ScriptableObject
         }
         .With(StatType.MaxHP, maxHp)
         .With(StatType.MaxShield, maxShield)
+        .With(StatType.StartingShield, startingShield)
         .With(StatType.Toughness, toughness)
         .With(StatType.Attack, attack)
         .With(StatType.Magic, magic)

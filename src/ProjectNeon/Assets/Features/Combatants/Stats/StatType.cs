@@ -11,5 +11,6 @@ public enum StatType
     Healability = 7,
     Leadership = 8,
     MaxShield = 9,
+    StartingShield = 10,
     ExtraCardPlays = 30,
 }
