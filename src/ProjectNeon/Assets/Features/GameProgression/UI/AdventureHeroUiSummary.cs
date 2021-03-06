@@ -2,7 +2,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public sealed class AdventureHeroUiSummary : OnMessage<PartyStateChanged>
+public sealed class AdventureHeroUiSummary : OnMessage<PartyStateChanged, HeroStateChanged>
 {
     [SerializeField] private HeroHpPresenter hpUi;
     [SerializeField] private HealHeroButton healButton;
@@ -21,6 +21,7 @@ public sealed class AdventureHeroUiSummary : OnMessage<PartyStateChanged>
     }
 
     protected override void Execute(PartyStateChanged msg) => UpdateUi();
+    protected override void Execute(HeroStateChanged msg) => UpdateUi();
 
     private void UpdateUi()
     {
