@@ -25,6 +25,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private CardType[] additionalStartingCards;
 
     [SerializeField] private HeroFlavorDetails flavorDetails;
+    [SerializeField] private HeroLevelUpOptions levelUpTree;
 
     public string Name => name;
     public Sprite Bust => bust;
@@ -36,6 +37,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public int StartingCredits => startingCredits;
     public HeroSkill[] Skills => skills;
     public HeroFlavorDetails Flavor => flavorDetails;
+    public HeroLevelUpOptions LevelUpTree => levelUpTree;
 
     public IStats Stats => new StatAddends
         {
