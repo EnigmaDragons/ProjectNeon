@@ -1,6 +1,6 @@
 public sealed class ShowHeroLevelUpPathway
 {
-    public BaseHero Hero { get; }
+    public HeroCharacter Hero { get; }
 
-    public ShowHeroLevelUpPathway(BaseHero h) => Hero = h;
+    public ShowHeroLevelUpPathway(HeroCharacter h) => Hero = h;
 }

@@ -36,8 +36,8 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public CardType ClassCard => Class.BasicCard;
     public int StartingCredits => startingCredits;
     public HeroSkill[] Skills => skills;
-    public HeroFlavorDetails Flavor => flavorDetails;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;
+    public HeroFlavorDetails Flavor => flavorDetails;
 
     public IStats Stats => new StatAddends
         {
