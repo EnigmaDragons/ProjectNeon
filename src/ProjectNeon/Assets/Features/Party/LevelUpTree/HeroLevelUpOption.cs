@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class HeroLevelUpOption : ScriptableObject
 {
-    protected abstract string Description { get; }
-    protected abstract void Apply(Hero h);
+    public abstract string IconName { get; }
+    public abstract string Description { get; }
+    public abstract void Apply(Hero h);
 }
