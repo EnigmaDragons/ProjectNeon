@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class HeroDetailsPanel : MonoBehaviour
+public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
 {
     [SerializeField] private Image heroBust;
     [SerializeField] private TextMeshProUGUI nameLabel;
@@ -12,8 +12,13 @@ public sealed class HeroDetailsPanel : MonoBehaviour
     [SerializeField] private HeroInjuryPanel injuries;
     [SerializeField] private TextCommandButton levelUpButton;
 
+    private Hero _hero;
+    private bool _canInteractWithEquipment;
+    
     public HeroDetailsPanel Initialized(Hero h, bool canInteractWithEquipment)
     {
+        _hero = h;
+        _canInteractWithEquipment = canInteractWithEquipment;
         nameLabel.text = h.Name;
         classLabel.text = h.Class.Name;
         heroBust.sprite = h.Character.Bust;
@@ -28,4 +33,6 @@ public sealed class HeroDetailsPanel : MonoBehaviour
         
         return this;
     }
+
+    protected override void Execute(HeroStateChanged msg) => Initialized(_hero, _canInteractWithEquipment);
 }

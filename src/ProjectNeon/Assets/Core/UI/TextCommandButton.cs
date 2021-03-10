@@ -11,11 +11,18 @@ public sealed class TextCommandButton : MonoBehaviour
     private readonly Color _disabledTextColor = new Color(0.7f, 0.7f, 0.7f);
     private Button _button;
     private Action _cmd = () => { };
+    private bool _isInitialized;
 
-    private void Awake()
+    private void Awake() => InitButton();
+
+    private void InitButton()
     {
+        if (_isInitialized)
+            return;
+        
         _button = GetComponent<Button>();
         _button.onClick.AddListener(() => _cmd());
+        _isInitialized = true;
     }
 
     public void Hide() => gameObject.SetActive(false);
@@ -33,7 +40,7 @@ public sealed class TextCommandButton : MonoBehaviour
 
     public void Init(string commandText, Action cmd)
     {
-        _button = GetComponent<Button>();
+        InitButton();
         label.text = commandText;
         _cmd = cmd;
         _button.interactable = true;
