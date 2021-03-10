@@ -7,7 +7,11 @@ public class HeroLevelUpPathway : ScriptableObject
     [SerializeField] private HeroLevelUpOptions defaultLevelUp;
     [SerializeField] private HeroLevelUpOptions[] options;
 
-    public HeroLevelUpOption[] ForLevel(int level) => options.Length >= level && options[level - 1].options.Any() 
-        ? options[level - 1].options.ToArray()
-        : defaultLevelUp.options.ToArray();
+    public HeroLevelUpOption[] ForLevel(int level)
+    {
+        var index = level - 2; // First Level Up happens when you hit level 2. So, the 0 index corresponds to Level 2.
+        return options.Length > index && options[index].options.Any()
+            ? options[index].options.ToArray()
+            : defaultLevelUp.options.ToArray();
+    }
 }
