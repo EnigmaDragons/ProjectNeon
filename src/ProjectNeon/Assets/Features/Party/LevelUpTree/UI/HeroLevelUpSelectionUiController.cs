@@ -9,7 +9,6 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
 
     protected override void Execute(LevelUpHero msg)
     {
-        Debug.Log($"Level Up {msg.Hero.Name}");
         presenter.Initialized(msg.Hero);
         target.SetActive(true);
     }

@@ -20,7 +20,6 @@ public sealed class XpAndLevelUpPresenter : MonoBehaviour
 
     private void Render()
     {
-        Debug.Log($"Render Xp And Level Up Button {_hero.Name} - Level Up Points {_hero.Levels.LevelUpPoints}");
         xp.Init(_hero);
         levelLabel.text = _hero.Level.ToString();
         levelUpButton.gameObject.SetActive(false);
