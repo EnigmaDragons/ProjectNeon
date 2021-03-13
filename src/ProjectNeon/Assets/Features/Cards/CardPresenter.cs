@@ -264,7 +264,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (eventData.dragging)
             return;
         DebugLog($"UI - Pointer Down - {CardName}");
-        if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
+        if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
         {
             Cursor.visible = false;
             Message.Publish(new TweenMovementRequested(transform, new Vector3(0, 30f, 0), 0.03f, MovementDimension.Spatial, TweenMovementType.RubberBand, "Click"));
@@ -280,7 +280,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnPointerUp(PointerEventData eventData)
     {
         Cursor.visible = true;
-        if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
+        if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
         {
             Message.Publish(new SnapBackTweenRequested(transform, "Click"));
         }
@@ -331,7 +331,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void WhenPlayableHand(Action action)
     {
-        if (_isHand)
+        if (_isHand && CheckIfCanPlay())
             action();
     }
 

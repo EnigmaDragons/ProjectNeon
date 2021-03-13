@@ -23,6 +23,7 @@ public sealed class HandVisualizer : MonoBehaviour
     private Vector3 _unfocusedPosition;
     private bool _isFocused = true;
     private bool _useRecycle = false;
+    private bool _cardPlayingAllowed = true;
 
     public CardPresenter[] ShownCards => _cardPool.ShownCards;
 
@@ -61,7 +62,13 @@ public sealed class HandVisualizer : MonoBehaviour
         _isDirty = false;
         UpdateVisibleCards();
     }
-    
+
+    public void SetCardPlayingAllowed(bool isAllowed)
+    {
+        allowInteractions = isAllowed;
+        Debug.Log($"Can Play Cards: {isAllowed}");
+    }
+
     public void UpdateVisibleCards()
     {
         var newCards = Hand.Cards.ToArray();
@@ -138,10 +145,9 @@ public sealed class HandVisualizer : MonoBehaviour
     
     public void SelectCard(int cardIndex)
     {
-        Log.Info($"UI: Selected Card");
         if (state.Phase != BattleV2Phase.PlayCards)
             return;
-
+        
         if (allowInteractions && Hand.Count > cardIndex)
             Message.Publish(new EndTargetSelectionRequested());
         else
