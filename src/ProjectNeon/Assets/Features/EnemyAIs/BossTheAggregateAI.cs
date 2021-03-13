@@ -1,14 +1,9 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/BossTheAggregateAI")]
-public class BossTheAggregateAI : TurnAI
+public class BossTheAggregateAI : StatelessTurnAI
 {
-    public override void InitForBattle()
-    {
-        DevLog.Write("Initialized The Aggregate Core");
-    }
-    
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
+    protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
     {
         var me = battleState.Members[memberId];
         var componentsDestroyed = battleState.GetConsciousAllies(me).Length < 3;

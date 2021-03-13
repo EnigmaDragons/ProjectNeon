@@ -3,9 +3,9 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/Experimentalist")]
-public class ExperimentalistAI : TurnAI
+public class ExperimentalistAI : StatelessTurnAI
 {
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
+    protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
     {
         var card = new CardSelectionContext(memberId, battleState, strategy)
             .WithSelectedDesignatedAttackerCardIfApplicable()

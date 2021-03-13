@@ -1,9 +1,9 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/Striker")]
-public sealed class StrikerAI : TurnAI
+public sealed class StrikerAI : StatelessTurnAI
 {
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
+    protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
     {
         return new CardSelectionContext(memberId, battleState, strategy)
             .WithCommonSenseSelections()

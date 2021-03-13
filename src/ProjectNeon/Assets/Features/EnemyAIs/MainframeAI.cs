@@ -9,7 +9,6 @@ public class MainframeAI : TurnAI
     private MainframePlan _currentPlan;
     private bool _isfirstCard;
     private int _stage;
-    private int _target;
     
     public override void InitForBattle()
     {
@@ -101,6 +100,11 @@ public class MainframeAI : TurnAI
         }
         throw new Exception("Some pathway is not covered in this AI");
     }
+
+    // This is a bogus anticipation. This AI needs to be rewritten.
+    public override IPlayedCard Anticipate(int memberId, BattleState battleState, AIStrategy strategy) 
+        => new CardSelectionContext(memberId, battleState, strategy)
+            .WithSelectedTargetsPlayedCard();
 
     private enum MainframePlan
     {

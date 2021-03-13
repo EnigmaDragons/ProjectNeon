@@ -46,7 +46,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     private void PlayCard(PlayedCardV2 playedCard)
     {
         Debug.Log($"UI - Playing {card.Name} on {string.Join(" | ", targetingState.Targets.Select(x => x.ToString()))}");
-        cardResolutionZone.Add(playedCard);
+        cardResolutionZone.PlayImmediately(playedCard);
         Message.Publish(new PlayerCardSelected());
         sourceCardZone.Remove(card);
         destinationCardZone.PutOnBottom(card);

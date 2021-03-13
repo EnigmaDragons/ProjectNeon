@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public sealed class AIStrategy
 {
@@ -26,4 +24,6 @@ public sealed class AIStrategy
 
     public Target AttackTargetFor(CardActionSequence a) 
         => a.Scope == Scope.All ? GroupAttackTarget : new Single(SingleMemberAttackTarget);
+    
+    public AIStrategy AnticipationCopy => new AIStrategy(SingleMemberAttackTarget, GroupAttackTarget, DesignatedAttacker);
 }

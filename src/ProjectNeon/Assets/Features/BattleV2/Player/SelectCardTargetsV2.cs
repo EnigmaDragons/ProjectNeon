@@ -80,7 +80,7 @@ public class SelectCardTargetsV2 : OnMessage<ConfirmTargetSelectionRequested, Ca
         if (_actionTargets.Length == 0)
         {
             var playedCard = new PlayedCardV2(_card.Owner, new Target[] { new Single(_card.Owner), }, _card);
-            cardResolutionZone.Add(playedCard);
+            cardResolutionZone.PlayImmediately(playedCard);
             Message.Publish(new PlayerCardSelected());;
             OnSelectionComplete(destinationCardZone);
         }
@@ -95,7 +95,7 @@ public class SelectCardTargetsV2 : OnMessage<ConfirmTargetSelectionRequested, Ca
         if (_actionIndex + 1 == _numActions)
         {
             var playedCard = new PlayedCardV2(_card.Owner, _actionTargets, _card);
-            cardResolutionZone.Add(playedCard);
+            cardResolutionZone.PlayImmediately(playedCard);
             Message.Publish(new PlayerCardSelected());;
             OnSelectionComplete(destinationCardZone);
         }

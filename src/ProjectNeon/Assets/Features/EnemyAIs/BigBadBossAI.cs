@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/BigBad")]
-public class BigBadBossAI : TurnAI
+public class BigBadBossAI : StatefulTurnAI
 {
     private static string Hide => "Hide Behind Big Hands";
     private static string BreakerPunch => "Breaker Punch";
@@ -18,23 +18,28 @@ public class BigBadBossAI : TurnAI
         new [] { BreakerPunch, Retaliation, ShieldBot, Hide },
         new [] { Retaliation, BreakerPunch, DoubleFist, BreakerPunch }
     };
-    
-    private readonly Queue<string> _currentRoutine = new Queue<string>();
+
+    private Queue<string> _currentRoutine;
 
     public override void InitForBattle()
     {
-        _currentRoutine.Clear();
+        _currentRoutine = new Queue<string>();
     }
-    
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
-    {
+
+    protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
+    {        
         SelectAttackRoutineIfNeeded();
 
         return new CardSelectionContext(memberId, battleState, strategy)
-            .WithSelectedCardByNameIfPresent(_currentRoutine.Dequeue())
+            .WithSelectedCardByNameIfPresent(_currentRoutine.Peek())
             .WithSelectedTargetsPlayedCard();
     }
 
+    protected override void TrackState(IPlayedCard card, BattleState state, AIStrategy strategy)
+    {
+        _currentRoutine.Dequeue();
+    }
+    
     private void SelectAttackRoutineIfNeeded()
     {
         if (_currentRoutine.Count > 0) return;

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/RewardBotAI")]
-public class RewardBotAI : TurnAI
+public class RewardBotAI : StatelessTurnAI
 {
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
+    protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
     {
         return new CardSelectionContext(memberId, battleState, strategy)
             .WithSelectedDesignatedAttackerCardIfApplicable()
