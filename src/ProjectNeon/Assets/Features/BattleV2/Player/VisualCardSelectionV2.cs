@@ -42,7 +42,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _isDirty = true;
         var interactionsAllowed = !isResolving;
         cards.SetCardPlayingAllowed(interactionsAllowed);
-        _shouldHighlight = interactionsAllowed;
+        _shouldHighlight = false;
     }
     
     private void SetIsConfirming(bool isConfirming)

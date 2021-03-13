@@ -25,11 +25,6 @@ public static class MessageGroup
             else
             {
                 Log.Error("Attempted to start a Queue in MessageGroup while a Queue is currently processing");
-                _onFinished = () =>
-                {
-                    _onFinished();
-                    Start(queueData, onFinished);
-                };
             }
         }
         

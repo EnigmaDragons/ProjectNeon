@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,7 +13,6 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     [SerializeField] private CardResolutionZone playArea;
     
     private bool _isResolvingInstantCard;
-    [Obsolete] private bool HasMoreCardPlays => playArea.NumPlayedThisTurn < battleState.PlayerState.CurrentStats.CardPlays();
     
     public void Setup()
     {
@@ -83,6 +81,6 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     private void RefreshHandVisibility()
     {
         Debug.Log($"Refresh Hand Visibility. {playArea.NumPlayedThisTurn} / {battleState.PlayerState.CurrentStats.CardPlays()} Card Is Instant: {_isResolvingInstantCard}");
-        hand.SetActive(!_isResolvingInstantCard && HasMoreCardPlays);
+        hand.SetActive(!_isResolvingInstantCard && battleState.NumberOfCardPlaysRemainingThisTurn > 0);
     }
 }

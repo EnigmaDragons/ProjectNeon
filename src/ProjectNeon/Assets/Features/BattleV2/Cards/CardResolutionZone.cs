@@ -122,6 +122,7 @@ public class CardResolutionZone : ScriptableObject
     private void StartResolvingOneCard(IPlayedCard played)
     {
         isResolving = true;
+        _movesThisTurn.Add(played);
         var timingWord = played.IsInstant() ? "Instantly " : "";
         Message.Publish(new CardResolutionStarted(played));
         BattleLog.Write($"{timingWord}Resolving {played.Member.Name}'s {played.Card.Name}");
