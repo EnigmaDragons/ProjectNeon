@@ -7,7 +7,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones cards;
     [SerializeField] private BattleSetupV2 setup;
-    [SerializeField] private BattleCommandPhase commandPhase;
+    [SerializeField] private BattlePlayerCardsPhase commandPhase;
     [SerializeField] private BattleResolutionPhase resolutionPhase;
     [SerializeField] private BattleTurnWrapUp turnWrapUp;
     [SerializeField] private BattleStatusEffects statusPhase;
@@ -46,8 +46,13 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         state.StartTurn();
         statusPhase.ProcessStartOfTurnEffects();
     }
+
+    private void BeginHastyEnemiesPhase()
+    {
+        BeginPhase(BattleV2Phase.HastyEnemyCards);
+    }
     
-    private void BeginCommandPhase()
+    private void BeginPlayerCardsPhase()
     {
         BeginPhase(BattleV2Phase.PlayCards);
         _unconsciousness.ProcessUnconsciousMembers(state);
@@ -61,27 +66,16 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         }
     }
 
-    private IEnumerator TransitionToResolutionPhase()
+    private IEnumerator TransitionToEnemyCardsPhase()
     {
         yield return commandPhase.Wrapup();
-        BeginPhase(BattleV2Phase.Resolution);
+        BeginPhase(BattleV2Phase.EnemyCards);
         yield return resolutionPhase.Begin();
     }
     
-    protected override void Execute(PlayerTurnConfirmed msg)
-    {
-        StartCoroutine(TransitionToResolutionPhase());
-    }
-
-    protected override void Execute(StartOfTurnEffectsStatusResolved msg)
-    {
-        BeginCommandPhase();
-    }
-
-    protected override void Execute(EndOfTurnStatusEffectsResolved msg)
-    {
-        BeginStartOfTurn();
-    }
+    protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(TransitionToEnemyCardsPhase());
+    protected override void Execute(StartOfTurnEffectsStatusResolved msg) => BeginPlayerCardsPhase();
+    protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
 
     protected override void Execute(ResolutionsFinished msg)
     {

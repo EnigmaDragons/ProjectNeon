@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameContent/Enemy")]
@@ -44,6 +45,7 @@ public class Enemy : ScriptableObject
     public EnemyTier Tier => tier;
     public bool IsUnique => unique;
     public EffectData[] Effects => startOfBattleEffects;
+    public bool CanPlayHastyCards => deck.Cards.Any(x => x.TimingType == CardTimingType.Hasty); 
     
     // int stats accessors
     public int MaxHp => maxHp;

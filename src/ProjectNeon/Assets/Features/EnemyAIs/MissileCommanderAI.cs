@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/MissileCommander")]
-public class MissileCommanderAI : TurnAI
+public class MissileCommanderAI : StatefulTurnAI
 {
     private List<IPlayedCard> _currentTurnPlayed = new List<IPlayedCard>();
 
@@ -14,21 +14,23 @@ public class MissileCommanderAI : TurnAI
         _currentTurnPlayed = new List<IPlayedCard>();
     }
     
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
+    protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
     {
-        var me = battleState.Members[memberId];
         UpdateTurnTracking(battleState.TurnNumber);
         
-        var card = new CardSelectionContext(me, battleState, strategy)
+        return new CardSelectionContext(memberId, battleState, strategy)
             .WithCommonSenseSelections()
             .IfTrueDontPlayType(_ => _currentTurnPlayed.Any(x => x.Card.Type.Is(CardTag.Exclusive)), CardTag.Exclusive)
             .WithSelectedUltimateIfAvailable()
             .WithFinalizedCardSelection(CardTag.BuffResource)
             .WithSelectedTargetsPlayedCard();
-        _currentTurnPlayed.Add(card);
-        return card;
     }
 
+    protected override void TrackState(IPlayedCard card, BattleState state, AIStrategy strategy)
+    {
+        _currentTurnPlayed.Add(card);
+    }
+    
     private void UpdateTurnTracking(int currentTurnNumber)
     {
         if (currentTurnNumber == _currentTurnNumber)

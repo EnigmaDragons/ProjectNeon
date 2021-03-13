@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/Hypervisor")]
-public class HypervisorAI : TurnAI
+public class HypervisorAI : StatelessTurnAI
 {
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
+    protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
     {
         return new CardSelectionContext(memberId, battleState, strategy)
             .WithSelectedDesignatedAttackerCardIfApplicable()

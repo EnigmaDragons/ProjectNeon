@@ -54,8 +54,25 @@ public class CardResolutionZone : ScriptableObject
     {
         _movesThisTurn.Clear();
     }
+
+    public void Queue(IPlayedCard played)
+    {
+        RecordCardAndPayCosts(played);
+
+        _pendingMoves.Add(played);
+    }
     
-    public void Add(IPlayedCard played)
+    public void PlayImmediately(IPlayedCard played)
+    {
+        RecordCardAndPayCosts(played);
+
+        if (isResolving)
+            _pendingMoves.Add(played);
+        else
+            StartResolvingOneCard(played);
+    }
+
+    private void RecordCardAndPayCosts(IPlayedCard played)
     {
         battleState.RecordPlayedCard(played);
         BattleLog.Write(played.Card.IsActive 
@@ -70,11 +87,6 @@ public class CardResolutionZone : ScriptableObject
             });
             DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}"); 
         }
-
-        if (isResolving)
-            _pendingMoves.Add(played);
-        else
-            StartResolvingOneCard(played);
     }
     
     private string TargetDescription(IPlayedCard c)
@@ -173,7 +185,7 @@ public class CardResolutionZone : ScriptableObject
                     continue;
                 
                 var targets = GetTargets(member, card, Maybe<Target[]>.Missing());
-                Add(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
+                PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
                 // Maybe Display cool Bonus Card text here
                 yield return new WaitForSeconds(1.6f);
             }
@@ -189,7 +201,7 @@ public class CardResolutionZone : ScriptableObject
         var card = chainingMove.Card.ChainedCard.Value;
         var targets = GetTargets(owner, card, chainingMove.Targets);
 
-        Add(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true));
+        PlayImmediately(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true));
         Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
         yield return new WaitForSeconds(1.6f);
     }

@@ -38,7 +38,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
         }
 
         // Reactions should be processed for Instant cards, but no other cards
-        if (state.Phase != BattleV2Phase.Resolution)
+        if (state.Phase != BattleV2Phase.EnemyCards)
             return;
         if (IsDoneResolving)
             FinishResolutionPhase();

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectionFinished, PlayerTurnConfirmationStarted, PlayerTurnConfirmationAborted>
+public class BattlePlayerCardsPhase : OnMessage<TargetSelectionBegun, TargetSelectionFinished, PlayerTurnConfirmationStarted, PlayerTurnConfirmationAborted>
 {
     [SerializeField] private BattleUiVisuals ui;
     [SerializeField] private BattleState state;
@@ -39,7 +39,7 @@ public class BattleCommandPhase : OnMessage<TargetSelectionBegun, TargetSelectio
             .Where(e => e.IsConscious())
             .OrderBy(e => state.GetEnemyById(e.Id).PreferredTurnOrder)
             .ForEach(e => Enumerable.Range(0, e.State.ExtraCardPlays())
-                .ForEach(c => resolutionZone.Add(state.GetEnemyById(e.Id).AI.Play(e.Id, state, strategy))));
+                .ForEach(c => resolutionZone.Queue(state.GetEnemyById(e.Id).AI.Play(e.Id, state, strategy))));
     }
     
     protected override void Execute(TargetSelectionBegun msg) {}
