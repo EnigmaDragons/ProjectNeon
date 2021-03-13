@@ -108,38 +108,7 @@ public class CardResolutionZone : ScriptableObject
         }
     }
     
-    [Obsolete]
-    public void RemoveLastPlayedCard()
-    {
-        return;
-        Debug.Log("UI - Remove Last Played Card");
-        if (_pendingMoves.None() || 
-            battleState.Phase != BattleV2Phase.PlayCards || 
-            isResolving || 
-            battleState.IsSelectingTargets) 
-                return;
-        
-        var played = _pendingMoves.Last();
-        played.Card.ClearXValue();
-
-        DevLog.Write($"Canceled playing {played.Card.Name}");
-        battleState.RemoveLastRecordedPlayedCard();
-        _pendingMoves.RemoveAt(_pendingMoves.Count - 1);
-        var card = physicalZone.Take(physicalZone.Count - 1);
-        playerPlayArea.Take(playerPlayArea.Count - 1);
-        playerHand.PutOnBottom(card);
-
-        if (played.Card.IsActive)
-        {
-            played.Member.Apply(m => m.LoseResource(played.Gained.ResourceType, played.Gained.Amount));
-            played.Member.Apply(m => m.GainResource(played.Spent.ResourceType, played.Spent.Amount));   
-        }
-        else
-        {
-            played.Card.TransitionTo(CardMode.Normal);
-        }
-        Message.Publish(new PlayerCardCanceled());
-    }
+    [Obsolete] public void RemoveLastPlayedCard() {}
 
     public void BeginResolvingNext()
     {
