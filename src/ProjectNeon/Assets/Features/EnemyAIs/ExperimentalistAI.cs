@@ -22,7 +22,7 @@ public class ExperimentalistAI : StatelessTurnAI
         if (card.SelectedCard.Value.Is(CardTag.Defense))
             return new PlayedCardV2(
                 battleState.Members[memberId], 
-                new Target[] { battleState.Enemies.Where(x => x.Armor() < 10 && x.CurrentHp() > 3).Select(x => new Single(x)).MostVulnerable() }, 
+                new Target[] { battleState.EnemyMembers.Where(x => x.Armor() < 10 && x.CurrentHp() > 3).Select(x => new Single(x)).MostVulnerable() }, 
                 card.SelectedCard.Value.CreateInstance(battleState.GetNextCardId(), battleState.Members[memberId]));
         return card.WithSelectedTargetsPlayedCard();
     }

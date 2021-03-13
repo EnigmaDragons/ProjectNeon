@@ -66,7 +66,6 @@ public sealed class HandVisualizer : MonoBehaviour
     public void SetCardPlayingAllowed(bool isAllowed)
     {
         allowInteractions = isAllowed;
-        Debug.Log($"Can Play Cards: {isAllowed}");
     }
 
     public void UpdateVisibleCards()

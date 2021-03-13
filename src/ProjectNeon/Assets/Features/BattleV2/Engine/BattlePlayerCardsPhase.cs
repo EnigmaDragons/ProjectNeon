@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class BattlePlayerCardsPhase : OnMessage<TargetSelectionBegun, TargetSelectionFinished, PlayerTurnConfirmationStarted, PlayerTurnConfirmationAborted>
 {
     [SerializeField] private BattleUiVisuals ui;
-    [SerializeField] private BattleState state;
     [SerializeField] private CardResolutionZone resolutionZone;
 
     [SerializeField] private DirectionInputBinding directionBinding;
@@ -13,8 +11,6 @@ public class BattlePlayerCardsPhase : OnMessage<TargetSelectionBegun, TargetSele
     
     [SerializeField] private ConfirmCancelBinding confirmCancelBinding;
     [SerializeField] private ConfirmPlayerTurnV2 turnConfirmation;
-    
-    private readonly AIStrategyGenerator _enemyStrategy = new AIStrategyGenerator(TeamType.Enemies);
     
     public void Begin()
     {
@@ -28,18 +24,7 @@ public class BattlePlayerCardsPhase : OnMessage<TargetSelectionBegun, TargetSele
         ui.EndCommandPhase();
         yield return resolutionZone.AddChainedCardIfApplicable();
         yield return resolutionZone.AddBonusCardsIfApplicable();
-        ChooseEnemyCards();
         yield return new WaitForSeconds(1);
-    }
-
-    private void ChooseEnemyCards()
-    {
-        var strategy = _enemyStrategy.Generate(state);
-        state.Enemies
-            .Where(e => e.IsConscious())
-            .OrderBy(e => state.GetEnemyById(e.Id).PreferredTurnOrder)
-            .ForEach(e => Enumerable.Range(0, e.State.ExtraCardPlays())
-                .ForEach(c => resolutionZone.Queue(state.GetEnemyById(e.Id).AI.Play(e.Id, state, strategy))));
     }
     
     protected override void Execute(TargetSelectionBegun msg) {}

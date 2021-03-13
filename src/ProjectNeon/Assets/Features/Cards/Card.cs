@@ -33,7 +33,7 @@ public sealed class Card
 
     public Card(int id, Member owner, CardTypeData type)
     {
-        this.owner = owner;
+        this.owner = owner ?? throw new ArgumentNullException(nameof(owner));
         this.id = id;
         this.type = type;
     }

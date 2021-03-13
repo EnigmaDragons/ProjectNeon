@@ -30,7 +30,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private int turnNumber;
     
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
-    private List<List<CardTypeData>> _playedCardHistory = new List<List<CardTypeData>>();
+    private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
     public Effect[] QueuedEffects => _queuedEffects.ToArray();
     
     private int _numberOfRecyclesRemainingThisTurn = 0;
@@ -39,7 +39,8 @@ public class BattleState : ScriptableObject
     public BattleV2Phase Phase => phase;
     public int TurnNumber => turnNumber;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
-    public int NumberOfCardPlaysRemainingThisTurn => _playerState.CurrentStats.CardPlays() - (_playedCardHistory.Any() ? _playedCardHistory.Last().Count : 0);
+    private int CurrentTurnPartyCardPlays => _playedCardHistory.Any() ? _playedCardHistory.Last().Count(x => x.Member.TeamType == TeamType.Party) : 0;
+    public int NumberOfCardPlaysRemainingThisTurn => _playerState.CurrentStats.CardPlays() - CurrentTurnPartyCardPlays;
     
     public int RewardCredits => rewardCredits;
     public int RewardXp => rewardXp;
@@ -58,7 +59,8 @@ public class BattleState : ScriptableObject
     public IDictionary<int, Member> Members => _membersById;
     public Member[] MembersWithoutIds => Members.Values.ToArray();
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
-    public Member[] Enemies => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
+    public Member[] EnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
+    public (Member Member, Enemy Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
     public PlayerState PlayerState => _playerState;
     private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
@@ -149,7 +151,7 @@ public class BattleState : ScriptableObject
         needsCleanup = true;
         _queuedEffects = new Queue<Effect>();
         _unconsciousMembers = new Dictionary<int, Member>();
-        _playedCardHistory = new List<List<CardTypeData>> { new List<CardTypeData>() };
+        _playedCardHistory = new List<List<PlayedCardSnapshot>> { new List<PlayedCardSnapshot>() };
         turnNumber = 1;
         
         DevLog.Write("Finished Battle State Init");
@@ -167,7 +169,7 @@ public class BattleState : ScriptableObject
 
     // During Battle State Tracking
     public void StartTurn() => UpdateState(() => PlayerState.OnTurnStart());
-    public void RecordPlayedCard(IPlayedCard card) => UpdateState(() => _playedCardHistory.Last().Add(card.Card.Type));
+    public void RecordPlayedCard(IPlayedCard card) => UpdateState(() => _playedCardHistory.Last().Add(new PlayedCardSnapshot(card)));
     public void RemoveLastRecordedPlayedCard() => _playedCardHistory.Last().RemoveLast();
     public void CleanupExpiredMemberStates() => UpdateState(() => _membersById.ForEach(x => x.Value.State.CleanExpiredStates()));
 
@@ -196,7 +198,7 @@ public class BattleState : ScriptableObject
     public void AdvanceTurn() =>
         UpdateState(() =>
         {
-            _playedCardHistory.Add(new List<CardTypeData>());
+            _playedCardHistory.Add(new List<PlayedCardSnapshot>());
             _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
             PlayerState.OnTurnEnd();
             turnNumber++;
@@ -255,7 +257,7 @@ public class BattleState : ScriptableObject
     private void GrantRewardXp() => Party.AwardXp(rewardXp);
     
     // Queries
-    public bool PlayerWins() =>  Enemies.All(m => m.State.IsUnconscious);
+    public bool PlayerWins() =>  EnemyMembers.All(m => m.State.IsUnconscious);
     public bool PlayerLoses() => Heroes.All(m => m.State.IsUnconscious);
     public bool BattleIsOver() => PlayerWins() || PlayerLoses();
 
@@ -288,7 +290,7 @@ public class BattleState : ScriptableObject
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
     public BattleStateSnapshot GetSnapshot() => 
-        new BattleStateSnapshot(_playedCardHistory.Select(x => x.ToArray()).ToList(), 
+        new BattleStateSnapshot(_playedCardHistory.Select(x => x.Select(c => c.Card).ToArray()).ToList(), 
             _membersById.ToDictionary(m => m.Key, m => m.Value.GetSnapshot()));
 
     private void UpdateState(Action update)

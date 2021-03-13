@@ -16,6 +16,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private EnemyTier tier; 
     [SerializeField] private bool unique;
+    [SerializeField] private bool isHasty;
     
     [SerializeField] private int maxHp;
     [SerializeField] private int maxShield;
@@ -44,8 +45,8 @@ public class Enemy : ScriptableObject
     public BattleRole Role => battleRole;
     public EnemyTier Tier => tier;
     public bool IsUnique => unique;
+    public bool IsHasty => isHasty;
     public EffectData[] Effects => startOfBattleEffects;
-    public bool CanPlayHastyCards => deck.Cards.Any(x => x.TimingType == CardTimingType.Hasty); 
     
     // int stats accessors
     public int MaxHp => maxHp;

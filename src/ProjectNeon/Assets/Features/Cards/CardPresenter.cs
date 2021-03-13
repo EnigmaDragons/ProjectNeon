@@ -331,7 +331,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void WhenPlayableHand(Action action)
     {
-        if (_isHand && CheckIfCanPlay())
+        if (_isHand)
             action();
     }
 
