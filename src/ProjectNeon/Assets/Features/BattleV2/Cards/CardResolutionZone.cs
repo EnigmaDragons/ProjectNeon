@@ -18,36 +18,22 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private FloatReference delayBeforeResolving = new FloatReference(0.3f);
     public IPlayedCard LastPlayed { get; set; }
     
-    private List<IPlayedCard> _moves = new List<IPlayedCard>();
-
-    public IEnumerable<IPlayedCard> Moves => _moves;
-    
+    private List<IPlayedCard> _movesThisTurn = new List<IPlayedCard>();
+    private List<IPlayedCard> _pendingMoves = new List<IPlayedCard>();
+   
     public void Init()
     {
         physicalZone.Clear();
-        _moves.Clear();
+        _movesThisTurn.Clear();
+        _pendingMoves.Clear();
         isResolving = false;
     }
 
-    public bool HasMore => _moves.Any();
-    public int Count => _moves.Count();
+    public bool HasMore => _pendingMoves.Any();
+    public int NumPlayedThisTurn => _movesThisTurn.Count;
     
-    private bool CanChain => _moves.Select(m => m.Member.Id).Distinct().Count() == 1 && _moves.Last().Card.ChainedCard.IsPresent;
-
-    public IEnumerator AddChainedCardIfApplicable()
-    {
-        if (!CanChain) yield break;
-        
-        var chainingMove = _moves.Last();
-        var owner = chainingMove.Member;
-        var card = chainingMove.Card.ChainedCard.Value;
-        var targets = GetTargets(owner, card, chainingMove.Targets);
-
-        Add(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true));
-        Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
-        yield return new WaitForSeconds(1.6f);
-    }
-
+    private bool CanChain => _movesThisTurn.Select(m => m.Member.Id).Distinct().Count() == 1 && _movesThisTurn.Last().Card.ChainedCard.IsPresent;
+    
     private Target[] GetTargets(Member m, CardTypeData card, Maybe<Target[]> previousTargets)
     {
         var targets = new Target[card.ActionSequences.Length];
@@ -63,10 +49,18 @@ public class CardResolutionZone : ScriptableObject
         }
         return targets;
     }
+
+    public void NotifyTurnFinished()
+    {
+        _movesThisTurn.Clear();
+    }
     
     public void Add(IPlayedCard played)
     {
         battleState.RecordPlayedCard(played);
+        BattleLog.Write(played.Card.IsActive 
+            ? $"{played.Member.Name} played {played.Card.Name}{TargetDescription(played)}"
+            : $"{played.Member.Name} discarded {played.Card.Name}");
         if (played.Card.IsActive)
         {
             played.Member.Apply(m =>
@@ -77,30 +71,29 @@ public class CardResolutionZone : ScriptableObject
             DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}"); 
         }
 
-        if (!played.Card.IsActive)
-        {
-            _moves.Add(played);
-            physicalZone.PutOnBottom(played.Card); 
-        }
-        else if (played.Card.TimingType == CardTimingType.Instant)
-        {
-            StartResolvingOneCard(played);
-        }
-        else if (played.Card.TimingType == CardTimingType.Hasty)
-        {
-            _moves.Insert(0, played); 
-            physicalZone.PutOnTop(played.Card); 
-        }
+        if (isResolving)
+            _pendingMoves.Add(played);
         else
-        {
-            _moves.Add(played);
-            physicalZone.PutOnBottom(played.Card); 
-        }
+            StartResolvingOneCard(played);
+    }
+    
+    private string TargetDescription(IPlayedCard c)
+    {
+        var seq = c.Card.ActionSequences[0];
+        if (seq.Scope == Scope.One)
+            return $" on {c.Targets[0].Members[0].Name}";
+        if (seq.Group == Group.Self)
+            return "";
+        if (seq.Group == Group.Ally && seq.Scope == Scope.All)
+            return " on all Allies";
+        if (seq.Group == Group.Opponent && seq.Scope == Scope.All)
+            return " on all Enemies";
+        return "";
     }
 
     public void ExpirePlayedCards(Func<IPlayedCard, bool> condition)
     {
-        var movesCopy = _moves.ToArray();
+        var movesCopy = _pendingMoves.ToArray();
         for (var i = movesCopy.Length - 1; i > -1; i--)
         {
             var played = movesCopy[i];
@@ -108,66 +101,31 @@ public class CardResolutionZone : ScriptableObject
             if (!condition(played)) continue;
             
             DevLog.Write($"Expired played card {played.Card.Name} by {played.Member.Name}");
-            if (_moves.Count > i)
-                _moves.RemoveAt(i);
-            physicalZone.Remove(played.Card);
+            if (_pendingMoves.Count > i)
+                _pendingMoves.RemoveAt(i);
             if (played.Member.TeamType == TeamType.Party && playerPlayArea.HasCards)
                 playerHand.PutOnBottom(playerPlayArea.Take(i));
         }
     }
     
-    public void RemoveLastPlayedCard()
-    {
-        Debug.Log("UI - Remove Last Played Card");
-        if (_moves.None() || 
-            battleState.Phase != BattleV2Phase.PlayCards || 
-            isResolving || 
-            battleState.IsSelectingTargets) 
-                return;
-        
-        var played = _moves.Last();
-        played.Card.ClearXValue();
-
-        DevLog.Write($"Canceled playing {played.Card.Name}");
-        battleState.RemoveLastRecordedPlayedCard();
-        _moves.RemoveAt(_moves.Count - 1);
-        var card = physicalZone.Take(physicalZone.Count - 1);
-        playerPlayArea.Take(playerPlayArea.Count - 1);
-        playerHand.PutOnBottom(card);
-
-        if (played.Card.IsActive)
-        {
-            played.Member.Apply(m => m.LoseResource(played.Gained.ResourceType, played.Gained.Amount));
-            played.Member.Apply(m => m.GainResource(played.Spent.ResourceType, played.Spent.Amount));   
-        }
-        else
-        {
-            played.Card.TransitionTo(CardMode.Normal);
-        }
-        Message.Publish(new PlayerCardCanceled());
-    }
+    [Obsolete] public void RemoveLastPlayedCard() {}
 
     public void BeginResolvingNext()
     {
         DevLog.Write("Requested Resolve Next Card");
         isResolving = true;
-        var move = _moves[0];
-        _moves = _moves.Skip(1).ToList();
+        var move = _pendingMoves[0];
+        _pendingMoves = _pendingMoves.Skip(1).ToList();
         StartResolvingOneCard(move);
     }
 
     private void StartResolvingOneCard(IPlayedCard played)
     {
+        isResolving = true;
         var timingWord = played.IsInstant() ? "Instantly " : "";
         Message.Publish(new CardResolutionStarted(played));
         BattleLog.Write($"{timingWord}Resolving {played.Member.Name}'s {played.Card.Name}");
-
-        if (played.IsInstant()) { }
-        else if (physicalZone.Count == 0)
-            DevLog.Write($"Weird Physical Zone Draw bug.");
-        else
-            physicalZone.DrawOneCard();
-
+        
         Async.ExecuteAfterDelay(delayBeforeResolving, () =>
         {
             var card = played.Card;
@@ -198,7 +156,7 @@ public class CardResolutionZone : ScriptableObject
         LastPlayed = played;
         if (played.Member.TeamType.Equals(TeamType.Party) && !played.IsTransient)
             playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());
-        isResolving = _moves.Any();
+        isResolving = _pendingMoves.Any();
     }
 
     public IEnumerator AddBonusCardsIfApplicable()
@@ -219,5 +177,19 @@ public class CardResolutionZone : ScriptableObject
                 yield return new WaitForSeconds(1.6f);
             }
         }
+    }
+    
+    public IEnumerator AddChainedCardIfApplicable()
+    {
+        if (!CanChain) yield break;
+        
+        var chainingMove = _movesThisTurn.Last();
+        var owner = chainingMove.Member;
+        var card = chainingMove.Card.ChainedCard.Value;
+        var targets = GetTargets(owner, card, chainingMove.Targets);
+
+        Add(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true));
+        Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
+        yield return new WaitForSeconds(1.6f);
     }
 }

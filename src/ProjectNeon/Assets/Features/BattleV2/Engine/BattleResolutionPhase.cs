@@ -21,26 +21,9 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
     public IEnumerator Begin()
     {
         DevLog.Write($"Card Resolution Began");
-        resolutionZone.Moves.ForEach(c => BattleLog.Write(c.Card.IsActive 
-            ? $"{c.Member.Name} played {c.Card.Name}{TargetDescription(c)}"
-            : $"{c.Member.Name} discarded {c.Card.Name}"));
         yield return ui.BeginResolutionPhase();
         yield return new WaitForSeconds(delay);
         ResolveNext();
-    }
-
-    private string TargetDescription(IPlayedCard c)
-    {
-        var seq = c.Card.ActionSequences[0];
-        if (seq.Scope == Scope.One)
-            return $" on {c.Targets[0].Members[0].Name}";
-        if (seq.Group == Group.Self)
-            return "";
-        if (seq.Group == Group.Ally && seq.Scope == Scope.All)
-            return " on all Allies";
-        if (seq.Group == Group.Opponent && seq.Scope == Scope.All)
-            return " on all Enemies";
-        return "";
     }
 
     private void ResolveNext()
@@ -74,6 +57,7 @@ public class BattleResolutionPhase : OnMessage<ApplyBattleEffect, SpawnEnemy, De
     {
         this.ExecuteAfterDelay(() =>
         {
+            resolutionZone.NotifyTurnFinished();
             ui.EndResolutionPhase();
             Message.Publish(new ResolutionsFinished());
         }, delay);

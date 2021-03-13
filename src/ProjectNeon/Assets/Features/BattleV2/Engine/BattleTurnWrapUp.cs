@@ -9,6 +9,7 @@ public class BattleTurnWrapUp : MonoBehaviour
     public IEnumerator Execute()
     {
         yield return zones.DrawHandAsync(state.PlayerState.CurrentStats.CardDraw());
+        Debug.Log("Advancing Turn");
         state.AdvanceTurn();
     }
 }

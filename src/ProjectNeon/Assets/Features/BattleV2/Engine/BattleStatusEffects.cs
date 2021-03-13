@@ -43,7 +43,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             ResolveNextMemberStatusEffects();
         else
         {
-            _currentMember.Value.State.CleanExpiredStates();
+            if (_currentMember.IsPresent)
+                _currentMember.Value.State.CleanExpiredStates();
             _currentMember = Maybe<Member>.Missing();
             _isProcessing = false;
             if (_isProcessingStartOfTurn)

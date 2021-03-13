@@ -39,6 +39,8 @@ public class BattleState : ScriptableObject
     public BattleV2Phase Phase => phase;
     public int TurnNumber => turnNumber;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
+    public int NumberOfCardPlaysRemainingThisTurn => _playerState.CurrentStats.CardPlays() - (_playedCardHistory.Any() ? _playedCardHistory.Last().Count : 0);
+    
     public int RewardCredits => rewardCredits;
     public int RewardXp => rewardXp;
     public CardType[] RewardCards => rewardCards; 
@@ -165,7 +167,7 @@ public class BattleState : ScriptableObject
 
     // During Battle State Tracking
     public void StartTurn() => UpdateState(() => PlayerState.OnTurnStart());
-    public void RecordPlayedCard(IPlayedCard card) => _playedCardHistory.Last().Add(card.Card.Type);
+    public void RecordPlayedCard(IPlayedCard card) => UpdateState(() => _playedCardHistory.Last().Add(card.Card.Type));
     public void RemoveLastRecordedPlayedCard() => _playedCardHistory.Last().RemoveLast();
     public void CleanupExpiredMemberStates() => UpdateState(() => _membersById.ForEach(x => x.Value.State.CleanExpiredStates()));
 
