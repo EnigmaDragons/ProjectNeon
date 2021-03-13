@@ -14,7 +14,7 @@ public sealed class AIStrategyGenerator
     {
         var relevantEnemies = _forTeam == TeamType.Enemies 
             ? s.Heroes.Where(h => h.IsConscious()) 
-            : s.Enemies.Where(e => e.IsConscious());
+            : s.EnemyMembers.Where(e => e.IsConscious());
 
         var vulnerableEnemies = relevantEnemies.Where(e => e.IsVulnerable()).ToArray();
         var tauntEnemies = relevantEnemies.Where(e => e.HasTaunt());
@@ -26,7 +26,7 @@ public sealed class AIStrategyGenerator
                     : relevantEnemies.Random();
         
         var team = _forTeam == TeamType.Enemies
-                   ? s.Enemies.Where(h => h.IsConscious()) 
+                   ? s.EnemyMembers.Where(h => h.IsConscious()) 
                    : s.Heroes.Where(e => e.IsConscious());
         var designatedAttacker = team
             .OrderByDescending(e => 

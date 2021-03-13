@@ -45,7 +45,11 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
 
     private void PlayCard(PlayedCardV2 playedCard)
     {
-        Debug.Log($"UI - Playing {card.Name} on {string.Join(" | ", targetingState.Targets.Select(x => x.ToString()))}");
+        if (playedCard.IsDiscarded)
+            Debug.Log($"UI - Discarded {playedCard.Card.Name}");
+        else
+            Debug.Log($"UI - Played {playedCard.Card.Name} on {string.Join(" | ", playedCard.Targets.Select(x => x.ToString()))}");
+            
         cardResolutionZone.PlayImmediately(playedCard);
         Message.Publish(new PlayerCardSelected());
         sourceCardZone.Remove(card);
@@ -64,7 +68,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     private void InitCardForSelection(Card card)
     {
         var getTargets = new List<Func<Target>>();
-        var memberToTargetMap  = new List<Dictionary<int, Target>>();
+        var memberToTargetMap = new List<Dictionary<int, Target>>();
         var targetMaps = 0;
         foreach (var sequence in card.ActionSequences)
         {

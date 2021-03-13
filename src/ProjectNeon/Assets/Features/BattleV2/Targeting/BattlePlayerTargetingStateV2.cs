@@ -8,7 +8,7 @@ public class BattlePlayerTargetingStateV2 : ScriptableObject
 {
     [SerializeField] private BattleState battleState;
 
-    private List<Dictionary<int, Target>> _memberToTargetMap;
+    private List<Dictionary<int, Target>> _memberToTargetMap = new List<Dictionary<int, Target>>();
     public Maybe<int> TargetMember { get; private set; }
     private List<Func<Target>> _getTargets;
 

@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: 4827819642098112035}
   - component: {fileID: 6078468237105921284}
   - component: {fileID: 6806458807943526864}
+  - component: {fileID: 2285146240355017327}
+  - component: {fileID: 4263563294095853006}
   m_Layer: 0
   m_Name: BattleEngine
   m_TagString: Untagged
@@ -60,6 +62,7 @@ MonoBehaviour:
   setup: {fileID: 2115684586857430258}
   commandPhase: {fileID: 625059707057930438}
   resolutionPhase: {fileID: 5842876336075822466}
+  enemyCardsPhases: {fileID: 4263563294095853006}
   turnWrapUp: {fileID: 5587667412285573489}
   statusPhase: {fileID: 2536713459739284403}
   conclusion: {fileID: 8334402703165493310}
@@ -104,14 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 8198483888410599785}
-  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
-  partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f,
-    type: 2}
-  resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
-  reactionZone: {fileID: 11400000, guid: 69ea9d8ec0e73e64499d227be3823c82, type: 2}
-  currentResolvingCardZone: {fileID: 11400000, guid: db4634ba2958e5847b6081d6031d54cd,
-    type: 2}
-  enemies: {fileID: 587736734442084277}
+  resolutions: {fileID: 2285146240355017327}
   delay:
     UseConstant: 1
     ConstantValue: 1.6
@@ -130,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   zones: {fileID: 11400000, guid: 0a8497e1383588d4ab9b06ee1c09e8e1, type: 2}
+  resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
 --- !u!114 &2536713459739284403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,11 +188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d431667454d543c3b213b86915915e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
-  levelUpPoints:
-    UseConstant: 1
-    ConstantValue: 8
-    Variable: {fileID: 0}
   adventure: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
   adventure2: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
@@ -237,7 +229,6 @@ MonoBehaviour:
   targetingState: {fileID: 11400000, guid: e8575dfb64936fa419bdae05533b9129, type: 2}
   card:
     id: 0
-    Mode: 0
 --- !u!114 &6806458807943526864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +243,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   conclusion: {fileID: 8334402703165493310}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &2285146240355017327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115684586857430259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df612cf19f924d1085883e3301cfdb17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f,
+    type: 2}
+  resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
+  reactionZone: {fileID: 11400000, guid: 69ea9d8ec0e73e64499d227be3823c82, type: 2}
+  currentResolvingCardZone: {fileID: 11400000, guid: db4634ba2958e5847b6081d6031d54cd,
+    type: 2}
+  enemies: {fileID: 587736734442084277}
+  delay:
+    UseConstant: 1
+    ConstantValue: 1.5
+    FloatVariable: {fileID: 0}
+--- !u!114 &4263563294095853006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115684586857430259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debb73f15c204c6fbf4fd02f2a6efdd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  resolutions: {fileID: 2285146240355017327}
+  resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
 --- !u!1001 &635715717500593209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,6 +292,26 @@ PrefabInstance:
     - target: {fileID: 70975843051870588, guid: 67caa708d15b6ca4dad135bc602c32c7,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 818691571153798638, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 818691571153798638, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 818691571153798638, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 818691571153798638, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 995776598560765089, guid: 67caa708d15b6ca4dad135bc602c32c7,
@@ -377,6 +427,26 @@ PrefabInstance:
     - target: {fileID: 8004567712974042758, guid: 67caa708d15b6ca4dad135bc602c32c7,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153384445084543826, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153384445084543826, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153384445084543826, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153384445084543826, guid: 67caa708d15b6ca4dad135bc602c32c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

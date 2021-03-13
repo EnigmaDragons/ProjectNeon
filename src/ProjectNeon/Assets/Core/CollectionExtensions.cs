@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -97,5 +98,11 @@ public static class CollectionExtensions
     {
         if (condition)
             items.Add(item);
+    }
+
+    public static Maybe<T> FirstAsMaybe<T>(this IEnumerable<T> items)
+    {
+        var maybeNext = items.Take(1).ToArray();
+        return maybeNext.Any() ? new Maybe<T>(maybeNext[0]) : Maybe<T>.Missing();
     }
 }

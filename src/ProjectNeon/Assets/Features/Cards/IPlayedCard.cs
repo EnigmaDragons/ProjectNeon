@@ -17,3 +17,24 @@ public static class IPlayedCardExtensions
     public static bool IsInstant(this IPlayedCard c) => c.Card.TimingType == CardTimingType.Instant;
     public static bool IsHasty(this IPlayedCard c) => c.Card.TimingType == CardTimingType.Hasty;
 }
+
+public sealed class PlayedCardSnapshot
+{
+    public Member Member { get; }
+    public bool WasDiscarded { get; }
+    public CardTypeData Card { get; }
+    public Target[] Targets { get; }
+    public ResourceQuantity Spent { get; }
+    public ResourceQuantity Gained { get; }
+
+    public PlayedCardSnapshot(IPlayedCard p)
+    {
+        Member = p.Member;
+        WasDiscarded = !p.Card.IsActive;
+        Card = p.Card.Type;
+        Targets = p.Targets;
+        Spent = p.Spent;
+        Gained = p.Gained;
+    }
+
+}

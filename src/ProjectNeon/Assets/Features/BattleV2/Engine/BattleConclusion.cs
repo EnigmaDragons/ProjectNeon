@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>
 {
-    [SerializeField] private PartyAdventureState party;
-    [SerializeField] private IntReference levelUpPoints = new IntReference(8);
     [SerializeField] private AdventureProgress adventure;
     [SerializeField] private AdventureProgress2 adventure2;
     [SerializeField] private Navigator navigator;

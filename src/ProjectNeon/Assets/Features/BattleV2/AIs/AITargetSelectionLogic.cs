@@ -4,6 +4,8 @@ using System.Linq;
 
 public static class AITargetSelectionLogic
 {
+    private static bool ShouldLogAiDetails = false;
+    
     public static Target[] SelectedTargets(this CardSelectionContext ctx)
         => SelectedTargets(ctx, _ => true);
     
@@ -16,7 +18,7 @@ public static class AITargetSelectionLogic
         return card.ActionSequences.Select(action =>
         {
             var target = GetActionTarget(ctx, isPreferredTarget, action, card);
-            DevLog.Write($"Selected Target is {target}");
+            Log($"Selected Target is {target}");
             return target;
         }).ToArray();
     }
@@ -24,7 +26,7 @@ public static class AITargetSelectionLogic
     private static Target GetActionTarget(CardSelectionContext ctx, Func<Target, bool> isPreferredTarget, CardActionSequence action, CardTypeData card)
     {
         var possibleTargets = ctx.AllMembers.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
-        DevLog.Write($"Possible Targets for {card.Name} are [{string.Join(", ", possibleTargets.Select(p => p.ToString()))}]");
+        Log($"Possible Targets for {card.Name} are [{string.Join(", ", possibleTargets.Select(p => p.ToString()))}]");
         if (possibleTargets.Where(isPreferredTarget).Any())
             possibleTargets = possibleTargets.Where(isPreferredTarget).ToArray();
 
@@ -95,7 +97,7 @@ public static class AITargetSelectionLogic
         if (ctx.SelectedCard.IsMissing)
             ctx = ctx.WithFinalizedCardSelection();
         
-        DevLog.Write($"{ctx.Member.Name} chose {ctx.SelectedCard.Value.Name} out of {ctx.CardOptionsString}");
+        Log($"{ctx.Member.Name} chose {ctx.SelectedCard.Value.Name} out of {ctx.CardOptionsString}");
         
         var targets = ctx.SelectedTargets(isPreferredTarget);
 
@@ -165,4 +167,10 @@ public static class AITargetSelectionLogic
         .Shuffled()
         .OrderBy(x => x.TotalResourceValue())
         .First();
+
+    private static void Log(string msg)
+    {
+        if (ShouldLogAiDetails)
+            DevLog.Write(msg);
+    }
 }
