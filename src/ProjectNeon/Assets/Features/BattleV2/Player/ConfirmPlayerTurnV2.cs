@@ -5,6 +5,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardPlayZone playArea;
+    [SerializeField] private CardPlayZone playerHand;
     [SerializeField] private Button confirmUi;
 
     private bool _isConfirming = false;
@@ -49,6 +50,11 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
             Message.Publish(new PlayerTurnConfirmationStarted());
         else
             Message.Publish(new PlayerTurnConfirmationAborted());
+        
+        if (battleState.NumberOfCardPlaysRemainingThisTurn == 0 
+                && battleState.NumberOfRecyclesRemainingThisTurn == 0 
+                && playerHand.Cards.None(x => x.TimingType == CardTimingType.Instant))
+            Confirm();
     }
 
     private void ConfirmEarly()
