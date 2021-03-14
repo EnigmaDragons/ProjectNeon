@@ -30,6 +30,20 @@ public sealed class Attack : Effect
         var effect = new DealDamage(damage);
         attacker.State.AdjustDoubleDamage(-1);
         
+        //Process Team Shields
+        var enemyEffect = new DealDamage(damage);
+        var heroEffect = new DealDamage(damage);
+        foreach (var teamState in ctx.TeamStates)
+        {
+            var damageToShield = damage.Calculate(ctx);
+            var modifiedDamage = damage.WithAdjustment(damageToShield - Mathf.Min(teamState.Shields, damageToShield));
+            if (teamState.Team == TeamType.Party)
+                heroEffect = new DealDamage(modifiedDamage);
+            else 
+                enemyEffect = new DealDamage(modifiedDamage);
+            ctx.TeamStates[0].Adjust(TeamStatType.Shield, damageToShield);
+        }
+        
         var totalHpDamageDealt = 0;
         foreach (var member in selectedTarget.Members)
         {

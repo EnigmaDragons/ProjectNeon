@@ -4,7 +4,8 @@ using UnityEngine;
 public sealed class PhysicalDamage : DamageCalculation
 {
     private readonly Func<EffectContext, Member, float> _damageCalc;
-
+    private readonly Func<EffectContext, float> _nonMemberDamageCalc;
+    
     public PhysicalDamage(int baseAmount, float multiplier) : this((ctx, m) => baseAmount + ctx.Source.State.Attack() * multiplier) {}
     public PhysicalDamage(Func<EffectContext, Member, float> damageCalc)
     {
@@ -19,5 +20,10 @@ public sealed class PhysicalDamage : DamageCalculation
         if (amount < 1)
             Log.Warn($"{target.Name} is taking 0 physical damage");
         return amount;
+    }
+    
+    public int Calculate(EffectContext ctx)
+    {
+        return Mathf.CeilToInt(_nonMemberDamageCalc(ctx));
     }
 }

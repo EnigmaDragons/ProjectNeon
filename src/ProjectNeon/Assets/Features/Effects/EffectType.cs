@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 37-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 38-43, 47, 48, 53, 
 // LAST NUMBER USED: 83
 
 using System;
@@ -21,6 +21,7 @@ public enum EffectType
     AdjustStatAdditivelyFormula = 68,
     AdjustCounterFormula = 79,
     AdjustPrimaryStatAdditivelyFormula = 36,
+    AdjustTeamStatAdditivelyFormula = 37,
 
     // Timing
     AtStartOfTurn = 54,
@@ -58,7 +59,7 @@ public enum EffectType
     // Transformers
     DoubleTheEffectAndMinusDurationTransformer = 28,
     AddToXCostTransformer = 32,
-    
+
     // Bonus Cards
     PlayBonusCardAfterNoCardPlayedInXTurns = 76,
     RedrawHandOfCards = 77,

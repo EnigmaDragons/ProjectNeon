@@ -71,7 +71,8 @@ public class Hero
 
     public Member InitEquipmentState(Member m, BattleState state)
     {
-        return WithEquipmentState(m,new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.Members, state.PlayerCardZones));
+        var target = new Single(m);
+        return WithEquipmentState(m,new EffectContext(m, target, Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.GetTeams(target), state.Members, state.PlayerCardZones));
     }
 
     private Member WithEquipmentState(Member m, EffectContext ctx)

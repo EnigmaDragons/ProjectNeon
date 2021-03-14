@@ -14,6 +14,9 @@ public sealed class BattleCounter
     public BattleCounter(StatType type, float initialAmount, Func<float> getCurrentMaxAmount) 
         : this(type.ToString(), initialAmount, getCurrentMaxAmount) {}
     
+    public BattleCounter(TeamStatType type, float initialAmount, Func<float> getCurrentMaxAmount)
+        : this(type.ToString(), initialAmount, getCurrentMaxAmount) {}
+    
     public BattleCounter(string name, float initialAmount, Func<float> getCurrentMaxAmount)
     {
         _getCurrentMaxAmount = getCurrentMaxAmount;

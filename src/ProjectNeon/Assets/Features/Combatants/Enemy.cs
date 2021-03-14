@@ -69,7 +69,8 @@ public class Enemy : ScriptableObject
 
     public Member SetupMemberState(Member m, BattleState state)
     {
-        var ctx = new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.Members, state.PlayerCardZones);
+        var target = new Single(m);
+        var ctx = new EffectContext(m, target, Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.GetTeams(target), state.Members, state.PlayerCardZones);
         m.State.InitResourceAmount(resourceType, startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resourceType.Name, Amount = resourceGainPerTurn}, m));

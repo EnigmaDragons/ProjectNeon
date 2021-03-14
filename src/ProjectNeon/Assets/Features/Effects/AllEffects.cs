@@ -73,7 +73,7 @@ public static class AllEffects
             new PlayBonusCardAfterNoCardPlayedInXTurns(e.EffectScope, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
         { EffectType.HealFormula, e => new FullContextEffect((ctx, m) => m.GainHp(Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount))) },
         { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
-        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount), (ctx) => Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.RedrawHandOfCards, e => new FullContextEffect(ctx => { BattleLog.Write("Discard and drew a new hand of cards."); 
             ctx.PlayerCardZones.DiscardHand(); ctx.PlayerCardZones.DrawCards(ctx.PlayerState.CardDraws - ctx.PlayerCardZones.PlayZone.Count); })},
@@ -89,6 +89,8 @@ public static class AllEffects
             BattleLoggedItem(s => $"Stats of {m.Name} are adjusted by {s}",
                 new StatAddends().With(m.PrimaryStat, RoundUp(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula)))), 
             e.ForSimpleDurationStatAdjustment())))},
+        { EffectType.AdjustTeamStatAdditivelyFormula, e => new TeamEffect((ctx, t) => 
+            t.Adjust(e.EffectScope.Value.EnumVal<TeamStatType>(), RoundUp(Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount)))) },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

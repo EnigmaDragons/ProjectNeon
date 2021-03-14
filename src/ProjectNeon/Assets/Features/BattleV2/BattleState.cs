@@ -63,11 +63,15 @@ public class BattleState : ScriptableObject
     public Member[] EnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
     public (Member Member, Enemy Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
     public PlayerState PlayerState => _playerState;
+    public TeamState HeroTeamState => _heroTeamState;
+    public TeamState EnemyTeamState => _enemyTeamState;
     private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
     private PlayerState _playerState = new PlayerState(0);
+    private TeamState _heroTeamState = new TeamState(TeamType.Party);
+    private TeamState _enemyTeamState = new TeamState(TeamType.Enemies);
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
 
     // Setup
@@ -137,6 +141,8 @@ public class BattleState : ScriptableObject
         _nextEnemyId = id + 1;
 
         _playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
+        _heroTeamState = new TeamState(TeamType.Party);
+        _enemyTeamState = new TeamState(TeamType.Enemies);
         _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
             .Concat(result.Select(e => e.Item2))
             .ToDictionary(x => x.Id, x => x);
@@ -302,5 +308,15 @@ public class BattleState : ScriptableObject
         var before = GetSnapshot();
         update();
         Message.Publish(new BattleStateChanged(before, this));
+    }
+    
+    public TeamState[] GetTeams(Target target)
+    {
+        var teamStates = new List<TeamState>();
+        if (target.Members.Any(x => x.TeamType == TeamType.Party))
+            teamStates.Add(HeroTeamState);
+        if (target.Members.Any(x => x.TeamType == TeamType.Enemies))
+            teamStates.Add(EnemyTeamState);
+        return teamStates.ToArray();
     }
 }

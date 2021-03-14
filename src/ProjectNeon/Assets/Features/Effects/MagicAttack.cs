@@ -1,4 +1,5 @@
 using System.Linq;
+using UnityEngine;
 
 public class MagicAttack : Effect
 {
@@ -20,14 +21,26 @@ public class MagicAttack : Effect
         var damage = ctx.Source.State[TemporalStatType.DoubleDamage] > 0 ? _damageCalc.WithFactor(2) : _damageCalc;
         ctx.Source.State.AdjustDoubleDamage(-1);
 
-        var effect = new DealDamage(damage);
-        
+        //Process Team Shields
+        var enemyEffect = new DealDamage(damage);
+        var heroEffect = new DealDamage(damage);
+        foreach (var teamState in ctx.TeamStates)
+        {
+            var damageToShield = damage.Calculate(ctx);
+            var modifiedDamage = damage.WithAdjustment(damageToShield - Mathf.Min(teamState.Shields, damageToShield));
+            if (teamState.Team == TeamType.Party)
+                heroEffect = new DealDamage(modifiedDamage);
+            else 
+                enemyEffect = new DealDamage(modifiedDamage);
+            ctx.TeamStates[0].Adjust(TeamStatType.Shield, damageToShield);
+        }
 
         var totalHpDamageDealt = 0;
         foreach (var member in selectedTarget.Members)
         {
             var beforeHp = member.CurrentHp();
-            effect.Apply(ctx.Retargeted(ctx.Source, new Single(member)));   
+            var effect = member.TeamType == TeamType.Party ? heroEffect : enemyEffect;
+            effect.Apply(ctx.Retargeted(ctx.Source, new Single(member)));
             totalHpDamageDealt += beforeHp - member.CurrentHp();
         }
 

@@ -15,6 +15,12 @@ public class Member
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{Name} {Id}";
     
+    public static Member WithShields(int shields) 
+        => new Member(0, "Team", "Any Class", TeamType.Party,
+            initStats(DefaultStats().With(resources)),
+            BattleRole.Unknown,
+            StatType.Attack);
+    
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
         : this(id, name, characterClass, team, baseStats, battleRole, primaryStat, baseStats.MaxHp()) {}
     
