@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, ResolutionsFinished>
+public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, ResolutionsFinished, CardResolutionFinished>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones cards;
@@ -86,19 +86,22 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     protected override void Execute(ResolutionsFinished msg)
     {
         DevLog.Write($"Resolutions Finished {msg.Phase}");
-        if (msg.Phase == BattleV2Phase.HastyEnemyCards)
+        if (state.BattleIsOver())
+            FinishBattle();
+        else if (msg.Phase == BattleV2Phase.HastyEnemyCards)
             BeginPlayerCardsPhase();
         else if (msg.Phase == BattleV2Phase.PlayCards)
             StartCoroutine(TransitionToEnemyCardsPhase());
         else
-        {
-            if (state.BattleIsOver())
-                FinishBattle();
-            else
-                StartCoroutine(WrapUpTurn());
-        }
+            StartCoroutine(WrapUpTurn());
     }
-    
+
+    protected override void Execute(CardResolutionFinished msg)
+    {
+        if (state.BattleIsOver())
+            FinishBattle();
+    }
+
     private IEnumerator WrapUpTurn()
     {
         BeginPhase(BattleV2Phase.Wrapup);

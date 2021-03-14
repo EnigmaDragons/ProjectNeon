@@ -57,8 +57,7 @@ public class CardResolutionZone : ScriptableObject
     public void Queue(IPlayedCard played)
     {
         RecordCardAndPayCosts(played);
-
-        _pendingMoves.Add(played);
+        Enqueue(played);
     }
     
     public void PlayImmediately(IPlayedCard played)
@@ -73,9 +72,15 @@ public class CardResolutionZone : ScriptableObject
         }
         
         if (shouldQueue)
-            _pendingMoves.Add(played);
+            Enqueue(played);
         else
             StartResolvingOneCard(played);
+    }
+
+    private void Enqueue(IPlayedCard card)
+    {
+        Log.Info($"Enqueued card {card.Card.Name}");
+        _pendingMoves.Add(card);
     }
 
     private void RecordCardAndPayCosts(IPlayedCard played)

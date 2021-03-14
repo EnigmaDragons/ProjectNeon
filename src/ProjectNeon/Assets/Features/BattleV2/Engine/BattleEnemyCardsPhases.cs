@@ -18,7 +18,8 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
     public void BeginPlayingAllHastyEnemyCards() => PlayNextHastyCard();
     private void PlayNextHastyCard()
     {
-        Log.Info("Began Playing Next Hasty Card.");
+        DevLog.Info("Began Playing Next Hasty Card.");
+        RemoveUnconsciousEnemiesFromActPool();
         _enemiesToActThisTurn
             .Where(x => x.Enemy.IsHasty)
             .FirstAsMaybe()
@@ -28,9 +29,11 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
     }
     
     public void BeginPlayingAllStandardEnemyCards() => PlayNextStandardCard();
+
     private void PlayNextStandardCard()
     {
-        Log.Info("Began Playing Next Standard Card.");
+        DevLog.Info("Began Playing Next Standard Card.");
+        RemoveUnconsciousEnemiesFromActPool();
         _enemiesToActThisTurn
             .Where(x => !x.Enemy.IsHasty)
             .FirstAsMaybe()
@@ -38,7 +41,9 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
                 Play, 
                 () => Message.Publish(new ResolutionsFinished(BattleV2Phase.EnemyCards)));
     }
-    
+
+    private void RemoveUnconsciousEnemiesFromActPool() => _enemiesToActThisTurn.RemoveAll(e => e.Member.IsUnconscious());
+
     private void Play((Member Member, Enemy Enemy) e)
     {
         var card = e.Enemy.AI.Play(e.Member.Id, state, _currentTurnStrategy);
@@ -50,6 +55,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
 
     private void PlayNextCardInPhase()
     {
+        DevLog.Write($"Enemy Cards - Current Phase{_phase}");
         if (_phase == BattleV2Phase.HastyEnemyCards)
             PlayNextHastyCard();
         if (_phase == BattleV2Phase.EnemyCards)
