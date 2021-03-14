@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 35-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 36-43, 47, 48, 53, 
 // LAST NUMBER USED: 83
 
 using System;
@@ -39,6 +39,8 @@ public enum EffectType
     AdjustResourceFlat = 7,
     AdjustPrimaryResource = 46,
     AdjustPrimaryResourceFormula = 82,
+    DrainPrimaryResourceFormula = 35,
+    
     HealFormula = 29,
 
     AntiHeal = 60,

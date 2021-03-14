@@ -24,4 +24,6 @@ public sealed class MemberStateSnapshot
     public int Hp => Counters[TemporalStatType.HP.ToString()];
     public int MaxHp => Stats[StatType.MaxHP].CeilingInt();
     public int Shield => Counters[TemporalStatType.Shield.ToString()];
+    public IResourceType PrimaryResource => ResourceTypes[0];
+    public int PrimaryResourceAmount => Counters[PrimaryResource.Name];
 }
