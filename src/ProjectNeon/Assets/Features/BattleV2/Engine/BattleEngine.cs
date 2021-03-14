@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -49,28 +50,38 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         statusPhase.ProcessStartOfTurnEffects();
     }
 
-    private void BeginHastyEnemiesPhase()
-    {
-        BeginPhase(BattleV2Phase.HastyEnemyCards);
-        enemyCardsPhases.BeginPlayingAllHastyEnemyCards();
-    }
+    private void BeginHastyEnemiesPhase() =>
+        ResolveBattleFinishedOrExecute(() =>
+        {
+            BeginPhase(BattleV2Phase.HastyEnemyCards);
+            enemyCardsPhases.BeginPlayingAllHastyEnemyCards();
+        });
     
-    private void BeginPlayerCardsPhase()
+    private void BeginPlayerCardsPhase() =>
+        ResolveBattleFinishedOrExecute(() =>
+        {
+            BeginPhase(BattleV2Phase.PlayCards);
+            playerCardsPhase.Begin();
+        });
+
+    private void ResolveBattleFinishedOrExecute(Action action)
     {
-        BeginPhase(BattleV2Phase.PlayCards);
         _unconsciousness.ProcessUnconsciousMembers(state);
         _unconsciousness.ProcessRevivedMembers(state);
         if (state.BattleIsOver())
             FinishBattle();
         else
-            playerCardsPhase.Begin();
+            action();
     }
 
     private IEnumerator TransitionToEnemyCardsPhase()
     {
         yield return playerCardsPhase.Wrapup();
-        BeginPhase(BattleV2Phase.EnemyCards);
-        enemyCardsPhases.BeginPlayingAllStandardEnemyCards();
+        ResolveBattleFinishedOrExecute(() =>
+        {
+            BeginPhase(BattleV2Phase.EnemyCards);
+            enemyCardsPhases.BeginPlayingAllStandardEnemyCards();
+        });
     }
 
     private IEnumerator WaitForAllPlayerCardsToFinishResolving()
@@ -84,6 +95,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayerCardsToFinishResolving());
     protected override void Execute(StartOfTurnEffectsStatusResolved msg) => BeginHastyEnemiesPhase();
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
+    protected override void Execute(CardResolutionFinished msg) => ResolveBattleFinishedOrExecute(() => { });
 
     protected override void Execute(ResolutionsFinished msg)
     {
@@ -98,11 +110,6 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             StartCoroutine(WrapUpTurn());
     }
 
-    protected override void Execute(CardResolutionFinished msg)
-    {
-        if (state.BattleIsOver())
-            FinishBattle();
-    }
 
     private IEnumerator WrapUpTurn()
     {
