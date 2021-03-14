@@ -48,6 +48,7 @@ public class MapSpawner2 : MonoBehaviour
         SpawnNodes((RectTransform)nodes.transform, corners[1]);
         SpawnLines((RectTransform)lines.transform);
         SpawnToken(map.gameObject);
+        ConvertAdjacentNodesToDeterministic();
     }
     
     private void Start() => Message.Publish(new FocusOnMapElement { MapElement = (RectTransform)_playerToken.transform });
@@ -79,6 +80,12 @@ public class MapSpawner2 : MonoBehaviour
         gameMap.SetupMap(columns.SelectMany(x => x).OrderBy(x => x.X).ToList());
     }
 
+    private void ConvertAdjacentNodesToDeterministic()
+    {
+        foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
+            gameMap.GameObjects[childId].ConvertToDeterministic(new AdventureGenerationContext(progress));
+    }
+
     private int ColumnX(float columnSize, int column) 
         => (int)Mathf.Round(columnSize / 2 + Margin.z + columnSize * column) + Rng.Int(-nodeHorizontalJitter, nodeHorizontalJitter + 1);
 
@@ -93,7 +100,8 @@ public class MapSpawner2 : MonoBehaviour
         {
             var nodePrefab = GetNodePrefab(nodeToSpawn.Type);
             var nodeObject = Instantiate(nodePrefab, new Vector3(topLeftCorner.x + nodeToSpawn.X, topLeftCorner.y - nodeToSpawn.Y, 0), Quaternion.identity, map);
-            nodeObject.Init(nodeToSpawn.NodeId, travelIds.Any(x => x == nodeToSpawn.NodeId));
+            var canTravelTo = travelIds.Any(x => x == nodeToSpawn.NodeId);
+            nodeObject.Init(nodeToSpawn.NodeId, canTravelTo);
             gameMap.GameObjects[nodeToSpawn.NodeId] = nodeObject;
         }
     }

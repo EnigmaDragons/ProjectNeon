@@ -9,7 +9,7 @@ public class CurrentGameMap2 : ScriptableObject
     public GameMap2 Map { get; private set; }
     public bool IsMapGenerated { get; private set; }
     public List<MapNode> GeneratedMap { get; private set; }
-    public string CurrentPositionId { get; set; }
+    public string CurrentPositionId { get; private set; }
     public Dictionary<string, MapNodeGameObject> GameObjects { get; set; }
 
     public void SetMap(GameMap2 map)
@@ -29,4 +29,5 @@ public class CurrentGameMap2 : ScriptableObject
 
     public MapNode CurrentMapNode => GetMapNode(CurrentPositionId);
     public MapNode GetMapNode(string id) => _map[id];
+    public void MoveTo(string id) => CurrentPositionId = id;
 }
