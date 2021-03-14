@@ -10,6 +10,7 @@ class SpecificEncounterSegment : StageSegment
     [SerializeField] private string displayName = "Boss Battle";
 
     public override string Name => displayName;
+    public override Maybe<string> Detail => Maybe<string>.Missing();
     
     public override void Start()
     {
@@ -18,4 +19,6 @@ class SpecificEncounterSegment : StageSegment
         battle.SetNextEncounter(enemies);
         SceneManager.LoadScene("BattleSceneV2");
     }
+
+    public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx) => this;
 }

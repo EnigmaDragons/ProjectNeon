@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 public class RandomEncounterSegment : StageSegment
 {
     public override string Name => "Battle";
-    
+    public override Maybe<string> Detail => Maybe<string>.Missing();
+
     [SerializeField] private GameObject[] possibleBattlegrounds;
     [SerializeField] private BattleState battleState;
     [SerializeField] private EncounterBuilder encounterBuilder;
@@ -18,4 +19,7 @@ public class RandomEncounterSegment : StageSegment
         battleState.SetNextEncounter(encounterBuilder.Generate(encounterDifficulty));
         SceneManager.LoadScene("BattleSceneV2");
     }
+    
+    public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx)
+        => new GeneratedBattleStageSegment(Name, possibleBattlegrounds.Random(), false, encounterBuilder.Generate(encounterDifficulty).ToArray());
 }

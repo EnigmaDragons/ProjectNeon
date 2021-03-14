@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TravelReactiveSystem : OnMessage<TravelToNode>
 {
+    [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private CurrentGameMap2 gameMap;
     [SerializeField] private float speed;
     [HideInInspector] public GameObject PlayerToken { private get; set; }
@@ -18,9 +19,13 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
         _isTraveling = true;
         foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
             gameMap.GameObjects[childId].SetCanTravelTo(false);
-        gameMap.CurrentPositionId = msg.NodeId;
+        gameMap.MoveTo(msg.NodeId);
         foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
+        {
             gameMap.GameObjects[childId].SetCanTravelTo(true);
+            gameMap.GameObjects[childId].ConvertToDeterministic(new AdventureGenerationContext(adventure));
+        }
+
         _travelTo = msg.Node;
         _onArrive = msg.OnArrive;
         PlayerToken.GetComponent<Floating>().enabled = false;
