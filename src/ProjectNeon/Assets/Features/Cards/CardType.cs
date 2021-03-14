@@ -18,7 +18,6 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private CardType chainedCard;
     [SerializeField] private string functionalityIssues;
     [SerializeField] private string presentationIssues;
-    [SerializeField] private CardTimingType timingType;
 
     public string Name => !string.IsNullOrWhiteSpace(customName) 
         ? customName 
@@ -31,7 +30,6 @@ public class CardType : ScriptableObject, CardTypeData
     public HashSet<CardTag> Tags => new HashSet<CardTag>(tags);
     public string TypeDescription => typeDescription?.Value ?? "";
     public Rarity Rarity => rarity;
-    public CardTimingType TimingType => timingType;
     public Maybe<CharacterClass> LimitedToClass => onlyPlayableByClass;
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
     public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();

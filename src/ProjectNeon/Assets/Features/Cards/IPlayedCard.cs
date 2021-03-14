@@ -14,8 +14,6 @@ public static class IPlayedCardExtensions
 {
     public static int MemberId(this IPlayedCard c) => c.Member.Id;
     public static int PrimaryTargetId(this IPlayedCard c) => c.Targets[0].Members[0].Id;
-    public static bool IsInstant(this IPlayedCard c) => c.Card.TimingType == CardTimingType.Instant;
-    public static bool IsHasty(this IPlayedCard c) => c.Card.TimingType == CardTimingType.Hasty;
 }
 
 public sealed class PlayedCardSnapshot

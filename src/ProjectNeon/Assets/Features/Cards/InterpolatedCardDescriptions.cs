@@ -42,7 +42,7 @@ public static class InterpolatedCardDescriptions
 
             var allReactionsEffects = reactionBattleCards.Concat(reactionBattleEffects);
                         
-            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), allReactionsEffects.ToArray(), owner, xCost, card.ChainedCard, card.TimingType);
+            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), allReactionsEffects.ToArray(), owner, xCost, card.ChainedCard);
         }
         catch (Exception e)
         {
@@ -60,16 +60,13 @@ public static class InterpolatedCardDescriptions
         EffectData[] reactionEffects, 
         Maybe<Member> owner, 
         ResourceQuantity xCost,
-        Maybe<CardTypeData> chainedCard,
-        CardTimingType timingType)
+        Maybe<CardTypeData> chainedCard)
     {
         var result = desc;
 
         if (desc.Trim().Equals("{Auto}", StringComparison.InvariantCultureIgnoreCase))
         {
             var sb = new StringBuilder();
-            if (timingType != CardTimingType.Standard)
-                sb.Append(Bold(timingType.ToString())).Append(": ");
             sb.Append(AutoDescription(effects, owner, xCost));
             sb.Append(chainedCard.Select(c => $". {Bold("Chain:")} {c.Name}", ""));
             return sb.ToString();

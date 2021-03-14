@@ -38,7 +38,6 @@ public class PlayedCardV2 : IPlayedCard
 
     public void Perform(BattleStateSnapshot beforeCard)
     {
-        var wasInstant = this.IsInstant();
-        Card.Play(_targets, beforeCard, _lockedXValue, () => Message.Publish(new CardResolutionFinished(Member.Id, wasInstant)));
+        Card.Play(_targets, beforeCard, _lockedXValue, () => Message.Publish(new CardResolutionFinished(Member.Id)));
     }
 }

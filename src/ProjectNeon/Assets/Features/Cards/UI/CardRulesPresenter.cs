@@ -19,7 +19,6 @@ public class CardRulesPresenter : MonoBehaviour
     {
         Hide();
         var rulesToShow = new List<string>();
-        rulesToShow.AddIf("Instant", d.TimingType == CardTimingType.Instant);
         rulesToShow.AddIf("X-Cost", d.Cost.PlusXCost);
         rulesToShow.AddIf("Chain", d.ChainedCard.IsPresent);
         

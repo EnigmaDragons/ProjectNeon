@@ -5,7 +5,6 @@ public class InMemoryCard : CardTypeData
 {
     public string Name { get; set; } = "Unnamed";
     public Rarity Rarity { get; set; } = Rarity.Common;
-    public CardTimingType TimingType { get; set; } = CardTimingType.Standard;
     public IResourceAmount Cost { get; set; } = new InMemoryResourceAmount(0, "None", false);
     public IResourceAmount Gain { get; set; } = new InMemoryResourceAmount(0, "None", false);
     public Maybe<CharacterClass> LimitedToClass { get; } = Maybe<CharacterClass>.Missing();

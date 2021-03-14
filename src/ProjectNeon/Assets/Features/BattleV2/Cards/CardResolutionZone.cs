@@ -16,7 +16,6 @@ public class CardResolutionZone : ScriptableObject
     [SerializeField] private bool isResolving;
     [SerializeField] private BattleState battleState;
     [SerializeField] private FloatReference delayBeforeResolving = new FloatReference(0.3f);
-    public IPlayedCard LastPlayed { get; set; }
     
     private List<IPlayedCard> _movesThisTurn = new List<IPlayedCard>();
     private List<IPlayedCard> _pendingMoves = new List<IPlayedCard>();
@@ -146,9 +145,8 @@ public class CardResolutionZone : ScriptableObject
     {
         isResolving = true;
         _movesThisTurn.Add(played);
-        var timingWord = played.IsInstant() ? "Instantly " : "";
         Message.Publish(new CardResolutionStarted(played));
-        BattleLog.Write($"{timingWord}Resolving {played.Member.Name}'s {played.Card.Name}");
+        BattleLog.Write($"Resolving {played.Member.Name}'s {played.Card.Name}");
         
         var card = played.Card;
         if (card.IsActive && !card.Owner.IsStunnedForCard())
@@ -160,14 +158,14 @@ public class CardResolutionZone : ScriptableObject
             {
                 BattleLog.Write($"{card.Name} does not resolve.");
                 WrapupCard(played, card);
-                Message.Publish(new CardResolutionFinished(played.Member.Id, false));
+                Message.Publish(new CardResolutionFinished(played.Member.Id));
             }
             else if (card.Owner.IsStunnedForCard())
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.CardStun, -1);
                 WrapupCard(played, card);
-                Message.Publish(new CardResolutionFinished(played.Member.Id, played.IsInstant()));
+                Message.Publish(new CardResolutionFinished(played.Member.Id));
             }
             else
             {
@@ -180,7 +178,6 @@ public class CardResolutionZone : ScriptableObject
     private void WrapupCard(IPlayedCard played, Card physicalCard)
     {
         Log.Info($"Wrapped Up {played.Card.Name}. Pending Cards {_pendingMoves.Count}");
-        LastPlayed = played;
         if (played.Member.TeamType.Equals(TeamType.Party) && !played.IsTransient)
             playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());
         isResolving = _pendingMoves.Any();

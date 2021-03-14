@@ -1,11 +1,9 @@
 ﻿public class CardResolutionFinished
 {
-    public bool CardWasInstant { get; }
     public int MemberId { get; }
 
-    public CardResolutionFinished(int memberId, bool cardWasInstant)
+    public CardResolutionFinished(int memberId)
     {
         MemberId = memberId;
-        CardWasInstant = cardWasInstant;
     }
 }
