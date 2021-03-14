@@ -13,7 +13,7 @@ public sealed class PartyCardCollection : ScriptableObject
     
     public PartyCardCollection Initialized(IEnumerable<CardType> cards)
     {
-        allCards.Clear();
+        allCards = new List<CardType>();
         allCards.AddRange(cards);
         cardsWithCounts = allCards
             .GroupBy(c => c.Name)

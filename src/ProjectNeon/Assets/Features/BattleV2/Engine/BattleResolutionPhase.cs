@@ -11,9 +11,9 @@ public class BattleResolutionPhase : MonoBehaviour
     
     public IEnumerator Begin()
     {
-        DevLog.Write($"Card Resolution Began");
-        yield return ui.BeginResolutionPhase();
-        yield return new WaitForSeconds(delay);
-        resolutions.FinishResolvingAll(() => Message.Publish(new ResolutionsFinished(BattleV2Phase.PlayCards)));
+        yield break;
+//        DevLog.Write($"Card Resolution Began");
+//        yield return ui.BeginResolutionPhase();
+//        yield return new WaitForSeconds(delay);
     }
 }
