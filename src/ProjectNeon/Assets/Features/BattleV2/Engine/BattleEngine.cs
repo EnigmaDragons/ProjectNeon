@@ -8,7 +8,6 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private CardPlayZones cards;
     [SerializeField] private BattleSetupV2 setup;
     [SerializeField] private BattlePlayerCardsPhase commandPhase;
-    [SerializeField] private BattleResolutionPhase resolutionPhase;
     [SerializeField] private BattleEnemyCardsPhases enemyCardsPhases;
     [SerializeField] private BattleTurnWrapUp turnWrapUp;
     [SerializeField] private BattleStatusEffects statusPhase;
@@ -69,7 +68,6 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     {
         yield return commandPhase.Wrapup();
         BeginPhase(BattleV2Phase.EnemyCards);
-        yield return resolutionPhase.Begin();
         enemyCardsPhases.BeginPlayingAllStandardEnemyCards();
     }
     

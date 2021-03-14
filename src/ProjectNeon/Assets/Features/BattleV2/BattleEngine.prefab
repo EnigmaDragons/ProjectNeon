@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2115684586857430256}
   - component: {fileID: 2115684586857430257}
   - component: {fileID: 2115684586857430258}
-  - component: {fileID: 5842876336075822466}
   - component: {fileID: 5587667412285573489}
   - component: {fileID: 2536713459739284403}
   - component: {fileID: 2115684586857430255}
@@ -61,14 +60,12 @@ MonoBehaviour:
   cards: {fileID: 11400000, guid: 0a8497e1383588d4ab9b06ee1c09e8e1, type: 2}
   setup: {fileID: 2115684586857430258}
   commandPhase: {fileID: 625059707057930438}
-  resolutionPhase: {fileID: 5842876336075822466}
   enemyCardsPhases: {fileID: 4263563294095853006}
   turnWrapUp: {fileID: 5587667412285573489}
   statusPhase: {fileID: 2536713459739284403}
   conclusion: {fileID: 8334402703165493310}
   logProcessSteps: 1
   setupOnStart: 1
-  phase: 0
 --- !u!114 &2115684586857430258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,24 +91,6 @@ MonoBehaviour:
   enemyArea: {fileID: 11400000, guid: 3bafc84cd52b6d14591a4fe87a988953, type: 2}
   encounterBuilder: {fileID: 11400000, guid: fcae05b33faab7645886641a2c3d9cc2, type: 2}
   resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
---- !u!114 &5842876336075822466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2115684586857430259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a1e1a926a21457c872ba5ffc93875d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ui: {fileID: 8198483888410599785}
-  resolutions: {fileID: 2285146240355017327}
-  delay:
-    UseConstant: 1
-    ConstantValue: 1.6
-    FloatVariable: {fileID: 0}
 --- !u!114 &5587667412285573489
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     [SerializeField] private BattleVFX[] fx;
     [SerializeField] private Transform enemyGroupLocation;
     [SerializeField] private Transform heroesGroupLocation;
+    [SerializeField] private bool loggingEnabled = false;
 
     private void Awake()
     {
@@ -18,11 +19,11 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     
     protected override void Execute(BattleEffectAnimationRequested e)
     {
-        Log.Info($"VFX Requested {e.EffectName}");
+        LogInfo($"Requested VFX {e.EffectName}");
         var f = fx.FirstOrDefault(x => x.EffectName.Equals(e.EffectName));
         if (f == null)
         {
-            Log.Info($"No VFX of type {e.EffectName}");
+            LogInfo($"No VFX of type {e.EffectName}");
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
         }
         else if (e.Scope.Equals(Scope.One))
@@ -38,7 +39,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
         }
         else if (e.Group == Group.All)
-            Log.Info($"All Characters VFX not supported yet");
+            LogInfo($"All Characters VFX not supported yet");
         else
         {
             var performerTeam = state.Members[e.PerformerId].TeamType;
@@ -51,10 +52,10 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
 
     protected override void Execute(PlayRawBattleEffect e)
     {        
-        Log.Info($"VFX Requested {e.EffectName}");
+        LogInfo($"Requested VFX {e.EffectName}");
         var f = fx.FirstOrDefault(x => x.EffectName.Equals(e.EffectName));
         if (f == null)
-            Log.Info($"No VFX of type {e.EffectName}");
+            LogInfo($"No VFX of type {e.EffectName}");
         
         PlayEffect(f, e.Target, gameObject.transform, 1, 1, new Color(0, 0, 0, 0), false);
     }
@@ -105,7 +106,13 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     private IEnumerator AwaitAnimationFinish(BattleVFX f)
     {
         yield return new WaitForSeconds(f.DurationSeconds);
-        DevLog.Write($"Finished {f.EffectName} in {f.DurationSeconds} seconds.");
+        LogInfo($"Finished {f.EffectName} in {f.DurationSeconds} seconds.");
         Message.Publish(new Finished<BattleEffectAnimationRequested>());
+    }
+
+    private void LogInfo(string msg)
+    {
+        if (loggingEnabled)
+            Log.Info("VFX - " + msg);
     }
 }
