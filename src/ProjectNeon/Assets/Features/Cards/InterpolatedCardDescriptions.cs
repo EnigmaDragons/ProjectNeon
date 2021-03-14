@@ -123,7 +123,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustPrimaryResource)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}"; ;
         if (data.EffectType == EffectType.ReactWithEffect)
             coreDesc = $"{WithCommaIfPresent(DurationDescription(data))}" +
                        $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
