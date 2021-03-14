@@ -26,7 +26,6 @@ public class ShieldVisual : OnMessage<MemberStateChanged>
 
     private void Render(Member m)
     {
-        Log.Info("Render");
         _renderer.color = new Color(255f, 255f, 255f, m.CurrentShield() / ((float)m.MaxShield() * 3f));
     }
 
