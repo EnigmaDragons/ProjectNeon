@@ -21,6 +21,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private float resistance = 0;
     [SerializeField] private int leadership = 0;
     [SerializeField] private ResourceType resource1;
+    [SerializeField] private ResourceType resource2;
     [SerializeField] private HeroSkill[] skills;
     [SerializeField] private CardType[] additionalStartingCards;
 
@@ -41,7 +42,11 @@ public class BaseHero : ScriptableObject, HeroCharacter
 
     public IStats Stats => new StatAddends
         {
-            ResourceTypes = resource1 != null ? new IResourceType[] {resource1} : Array.Empty<IResourceType>()
+            ResourceTypes = resource1 != null 
+                ? resource2 != null 
+                    ? new IResourceType[] {resource1, resource2} 
+                    : new IResourceType[] {resource1} 
+                : Array.Empty<IResourceType>()
         }
         .With(StatType.MaxHP, maxHp)
         .With(StatType.MaxShield, maxShield)
