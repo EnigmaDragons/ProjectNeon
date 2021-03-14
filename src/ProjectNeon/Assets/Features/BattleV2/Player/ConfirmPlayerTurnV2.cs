@@ -11,7 +11,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     private bool _isConfirming = false;
     private bool _confirmRequested;
     
-    public bool CanConfirm => playArea.Cards.Length == battleState.PlayerState.CurrentStats.CardPlays() || _confirmRequested;
+    public bool CanConfirm => _confirmRequested || battleState.NumberOfCardPlaysRemainingThisTurn == 0;
 
     private void Awake()
     {
@@ -66,7 +66,6 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     private void ConfirmEarly()
     {
         _confirmRequested = true;
-        confirmUi.gameObject.SetActive(false);
         Confirm();
     }
     
@@ -75,6 +74,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         if (!CanConfirm) return;
 
         _confirmRequested = false;
+        confirmUi.gameObject.SetActive(false);
         playArea.Clear();
         DevLog.Write("Player Ended Turn");
         Message.Publish(new PlayerTurnConfirmed());

@@ -64,6 +64,6 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     private void RefreshHandVisibility()
     {
         Debug.Log($"Refresh Hand Visibility. {playArea.NumPlayedThisTurn} / {battleState.PlayerState.CurrentStats.CardPlays()}");
-        hand.SetActive(battleState.NumberOfCardPlaysRemainingThisTurn > 0);
+        hand.SetActive(battleState.Phase == BattleV2Phase.PlayCards && battleState.NumberOfCardPlaysRemainingThisTurn > 0);
     }
 }
