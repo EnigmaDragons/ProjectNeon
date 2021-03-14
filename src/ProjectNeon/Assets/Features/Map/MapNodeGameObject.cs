@@ -30,6 +30,7 @@ public class MapNodeGameObject : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         _arrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(detail, true)));
         _rulesPanel.IfPresent(r => r.SetActive(true));
+        transform.SetAsLastSibling();
     }
 
     public void OnPointerExit(PointerEventData eventData)
