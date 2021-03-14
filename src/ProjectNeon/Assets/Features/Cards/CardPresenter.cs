@@ -53,7 +53,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
     public bool IsHighlighted => highlight.activeSelf;
-    public bool IsPlayable { get; private set; } // Name is Wrong. Cached value might result in wrong value.
+    public bool IsPlayable { get; private set; }
 
     public void Clear()
     {

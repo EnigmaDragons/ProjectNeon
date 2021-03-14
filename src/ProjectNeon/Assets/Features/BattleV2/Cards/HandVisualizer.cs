@@ -10,7 +10,6 @@ public sealed class HandVisualizer : MonoBehaviour
     [SerializeField] private float cardSpacingScreenPercent = 0.15f;
     [SerializeField] private CardPresenter cardPrototype;
     [SerializeField] private int maxCards = 12;
-    [SerializeField] private bool onlyAllowInteractingWithPlayables = false;
     [SerializeField] private Vector3 unfocusedOffset = new Vector3(0, 400, 0);
     [SerializeField] private Vector3 cardRotation;
 
