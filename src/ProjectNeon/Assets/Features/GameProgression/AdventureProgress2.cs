@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameState/AdventureProgress2")]
 public class AdventureProgress2 : ScriptableObject
@@ -7,12 +8,15 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private int currentStageIndex;
     [SerializeField] private int currentStageSegmentIndex;
+    [SerializeField] private List<string> finishedStoryEvents = new List<string>();
 
     public int CurrentStageSegmentIndex => currentStageSegmentIndex;
     public bool IsFinalStage => currentStageIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap.CurrentMapNode.Type == MapNodeType.Boss;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public int PartyCardCycles => currentAdventure.Adventure.BaseNumberOfCardCycles;
+    public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
+
     public DynamicStage CurrentStage
     {
         get { 
@@ -48,6 +52,7 @@ public class AdventureProgress2 : ScriptableObject
     {
         currentStageIndex = -1;
         currentStageSegmentIndex = -1;
+        finishedStoryEvents.Clear();
     }
 
     public void Advance()
@@ -72,4 +77,6 @@ public class AdventureProgress2 : ScriptableObject
             Log.Info("Can't advance: is final stage");
         } 
     }
+
+    public void RecordEncounteredStoryEvent(StoryEvent e) => finishedStoryEvents.Add(e.name);
 }
