@@ -29,7 +29,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             resolutionZone.BeginResolvingNext();
     }
 
-    private void PerformConsciousnessUpdate()
+    public void PerformConsciousnessUpdate()
     {
         _unconsciousness.ProcessUnconsciousMembers(state)
             .ForEach(m => resolutionZone.ExpirePlayedCards(c => c.Member.Id == m.Id)); // Still needed?
