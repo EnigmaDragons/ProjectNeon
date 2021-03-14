@@ -24,7 +24,7 @@ public sealed class EffectData
     public string StatusDetailText;
     
     public int TurnDelay;
-    public string Formula = "";
+    [TextArea(minLines:1, maxLines:9)] public string Formula = "";
     public StringReference FlavorText = new StringReference();
     public CardActionsData ReferencedSequence;
     
