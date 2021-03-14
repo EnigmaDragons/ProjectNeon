@@ -1,7 +1,7 @@
 
 public abstract class HPBarControllerBase : OnMessage<MemberStateChanged>
 {
-    private Member _member = new Member(-1, "None", "", TeamType.Party, new StatAddends(), BattleRole.Unknown);
+    private Member _member = new Member(-1, "None", "", TeamType.Party, new StatAddends(), BattleRole.Unknown, StatType.Attack);
     private int MemberId => _member.Id;
     private int MaxHp => _member.MaxHp();
     private int MaxShield => _member.MaxShield();

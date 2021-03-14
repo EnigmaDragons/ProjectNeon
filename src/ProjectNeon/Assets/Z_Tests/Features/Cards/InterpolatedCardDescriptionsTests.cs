@@ -9,7 +9,8 @@ public sealed class InterpolatedCardDescriptionsTests
             .With(StatType.Damagability, 1)
             .With(StatType.Attack, 8)
             .With(new InMemoryResourceType("Ammo") { MaxAmount = 6, StartingAmount = 6}), 
-        BattleRole.Unknown);
+        BattleRole.Unknown,
+        StatType.Attack);
     
     private readonly EffectData BasicAttack = new EffectData
     {
@@ -115,7 +116,8 @@ public sealed class InterpolatedCardDescriptionsTests
                 .With(StatType.Toughness, 8)
                 .With(StatType.MaxShield, 16)
                 .With(new InMemoryResourceType("Ammo") {MaxAmount = 6, StartingAmount = 6}),
-            BattleRole.Unknown);
+            BattleRole.Unknown,
+            StatType.Attack);
         update(m);
         return m;
     }

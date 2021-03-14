@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 36-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 37-43, 47, 48, 53, 
 // LAST NUMBER USED: 83
 
 using System;
@@ -20,7 +20,8 @@ public enum EffectType
     AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyFormula = 68,
     AdjustCounterFormula = 79,
-    
+    AdjustPrimaryStatAdditivelyFormula = 36,
+
     // Timing
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,

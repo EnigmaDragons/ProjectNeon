@@ -1,4 +1,5 @@
 ﻿
+using System.Linq;
 using UnityEngine;
 
 public interface IStats
@@ -25,4 +26,8 @@ public static class StatsExtensions
     public static int ExtraCardPlays(this IStats stats) => stats[StatType.ExtraCardPlays].RoundUp();
     public static float Damagability(this IStats stats) => stats[StatType.Damagability];
     public static float Healability(this IStats stats) => stats[StatType.Healability];
+    public static StatType PrimaryStat(this IStats stats, IStats baseStats) => new StatType[] { StatType.Attack, StatType.Magic, StatType.Toughness, StatType.Leadership }
+        .OrderByDescending(x => stats[x])
+        .ThenByDescending(x => baseStats[x])
+        .First();
 }

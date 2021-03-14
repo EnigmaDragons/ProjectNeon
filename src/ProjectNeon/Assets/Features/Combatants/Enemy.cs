@@ -61,7 +61,8 @@ public class Enemy : ScriptableObject
     
     public Member AsMember(int id)
     {
-        var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, Stats, battleRole);
+        var stats = Stats;
+        var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, stats, battleRole, stats.PrimaryStat(stats));
         return m;
     }
 

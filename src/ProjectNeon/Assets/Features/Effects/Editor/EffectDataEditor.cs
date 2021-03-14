@@ -50,6 +50,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.LeaveBattle, new string[0]},
         {EffectType.ResetStatToBase, new [] { "EffectScope" }},
         {EffectType.DrainPrimaryResourceFormula, new [] { "Formula" } },
+        {EffectType.AdjustPrimaryStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns" } },
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

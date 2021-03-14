@@ -23,6 +23,7 @@ public static class TestMembers
             "Any Class",
             TeamType.Party,
             initStats(DefaultStats().With(resources)),
-            BattleRole.Unknown
+            BattleRole.Unknown,
+            StatType.Attack
         );
 }
