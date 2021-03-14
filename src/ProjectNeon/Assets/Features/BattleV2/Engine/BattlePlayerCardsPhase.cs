@@ -4,7 +4,6 @@ using UnityEngine;
 public class BattlePlayerCardsPhase : OnMessage<TargetSelectionBegun, TargetSelectionFinished, PlayerTurnConfirmationStarted, PlayerTurnConfirmationAborted>
 {
     [SerializeField] private BattleUiVisuals ui;
-    [SerializeField] private CardResolutionZone resolutionZone;
 
     [SerializeField] private DirectionInputBinding directionBinding;
     [SerializeField] private VisualCardSelectionV2 cardSelection;
@@ -22,8 +21,6 @@ public class BattlePlayerCardsPhase : OnMessage<TargetSelectionBegun, TargetSele
     public IEnumerator Wrapup()
     {
         ui.EndCommandPhase();
-        yield return resolutionZone.AddChainedCardIfApplicable();
-        yield return resolutionZone.AddBonusCardsIfApplicable();
         yield return new WaitForSeconds(1);
     }
     

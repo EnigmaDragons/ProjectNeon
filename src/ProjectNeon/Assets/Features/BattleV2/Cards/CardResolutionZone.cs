@@ -31,9 +31,7 @@ public class CardResolutionZone : ScriptableObject
 
     public bool HasMore => _pendingMoves.Any();
     public int NumPlayedThisTurn => _movesThisTurn.Count;
-    
-    private bool CanChain => _movesThisTurn.Select(m => m.Member.Id).Distinct().Count() == 1 && _movesThisTurn.Last().Card.ChainedCard.IsPresent;
-    
+
     private Target[] GetTargets(Member m, CardTypeData card, Maybe<Target[]> previousTargets)
     {
         var targets = new Target[card.ActionSequences.Length];
@@ -65,7 +63,13 @@ public class CardResolutionZone : ScriptableObject
     public void PlayImmediately(IPlayedCard played)
     {
         RecordCardAndPayCosts(played);
-
+        
+        if (played.Member.TeamType == TeamType.Party && battleState.NumberOfCardPlaysRemainingThisTurn == 0)
+        {
+            AddChainedCardIfApplicable(played);
+            AddBonusCardsIfApplicable();
+        }
+        
         if (isResolving)
             _pendingMoves.Add(played);
         else
@@ -174,7 +178,7 @@ public class CardResolutionZone : ScriptableObject
         isResolving = _pendingMoves.Any();
     }
 
-    public IEnumerator AddBonusCardsIfApplicable()
+    public void AddBonusCardsIfApplicable()
     {
         var snapshot = battleState.GetSnapshot();
         var members = battleState.Members.Values.Where(x => x.IsConscious());
@@ -187,24 +191,28 @@ public class CardResolutionZone : ScriptableObject
                     continue;
                 
                 var targets = GetTargets(member, card, Maybe<Target[]>.Missing());
-                PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
+                Queue(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
                 // Maybe Display cool Bonus Card text here
-                yield return new WaitForSeconds(1.6f);
             }
         }
     }
     
-    public IEnumerator AddChainedCardIfApplicable()
+    public void AddChainedCardIfApplicable(IPlayedCard trigger)
     {
-        if (!CanChain) yield break;
+        if (trigger.Card.ChainedCard.IsMissing || 
+            _movesThisTurn
+                .Where(x => x.Member.TeamType == TeamType.Party)
+                .Select(m => m.Member.Id)
+                .Distinct()
+                .Count() > 1)
+            return;
         
-        var chainingMove = _movesThisTurn.Last();
+        var chainingMove = trigger;
         var owner = chainingMove.Member;
         var card = chainingMove.Card.ChainedCard.Value;
         var targets = GetTargets(owner, card, chainingMove.Targets);
 
-        PlayImmediately(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true));
+        Queue(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true));
         Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
-        yield return new WaitForSeconds(1.6f);
     }
 }

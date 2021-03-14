@@ -18,11 +18,6 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     private readonly Queue<ProposedReaction> _instantReactions = new Queue<ProposedReaction>();
     private readonly Queue<ProposedReaction> _reactionCards = new Queue<ProposedReaction>();
     
-    public void FinishResolvingAll()
-    {
-        ResolveNext();
-    }
-
     private void ResolveNext()
     {
         PerformConsciousnessUpdate();
@@ -42,7 +37,6 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         _unconsciousness.ProcessRevivedMembers(state);
     }
 
-    //private void FinishedResolvingAll() => this.ExecuteAfterDelay(() => _onFinished(), delay);
     private bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && !resolutionZone.HasMore;
     
     protected override void Execute(ApplyBattleEffect msg)
