@@ -2,12 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public static class Formula
 {
     public static float Evaluate(Member src, string expression, ResourceQuantity xAmountPaid) 
         => Evaluate(new FormulaContext(src.State.ToSnapshot(), Maybe<MemberState>.Missing(), xAmountPaid), expression);
 
+    public static float Evaluate(Member src, Member target, string expression, ResourceQuantity xAmountPaid) 
+        => Evaluate(new FormulaContext(src.State.ToSnapshot(), target.State, xAmountPaid), expression);
+    
+    public static float Evaluate(Member src, MemberState target, string expression, ResourceQuantity xAmountPaid) 
+        => Evaluate(new FormulaContext(src.State.ToSnapshot(), target, xAmountPaid), expression);
+    
     public static float Evaluate(MemberStateSnapshot snapshot, MemberState target, ResourceQuantity xAmountPaid, string expression) 
         => Evaluate(new FormulaContext(snapshot, target, xAmountPaid), expression);
 
@@ -41,7 +48,11 @@ public static class Formula
 
         newExp = newExp.Replace("X", ctx.XAmountPaid.Amount.ToString());
 
-        return Convert.ToSingle(new DataTable().Compute(newExp, null));
+        var dataTable = new DataTable();
+
+        newExp = Regex.Replace(newExp, "{(.*):(.*)}", x => ResolveCondition(dataTable, x));
+        
+        return Convert.ToSingle(dataTable.Compute(newExp, null));
     }
     
     private static Dictionary<string, string> FullStatNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
@@ -51,5 +62,10 @@ public static class Formula
         { "MAG", StatType.Magic.ToString() },
         { "ARM", StatType.Armor.ToString() },
         { "TGH", StatType.Toughness.ToString() },
-    }; 
+    };
+
+    private static string ResolveCondition(DataTable dataTable, Match match)
+        => (bool)dataTable.Compute(match.Groups[1].Value, null)
+            ? match.Groups[2].Value
+            : "";
 }
