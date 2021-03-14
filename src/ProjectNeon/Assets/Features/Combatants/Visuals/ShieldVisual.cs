@@ -7,7 +7,11 @@ public class ShieldVisual : OnMessage<MemberStateChanged>
     private SpriteRenderer _renderer;
     private Maybe<Member> _member = Maybe<Member>.Missing();
     
-    private void Awake() => _renderer = GetComponent<SpriteRenderer>();
+    private void Awake()
+    {
+        _renderer = GetComponent<SpriteRenderer>();
+        _renderer.color = new Color(255f, 255f, 255f, 0);
+    }
 
     public void Init(Member m)
     {
