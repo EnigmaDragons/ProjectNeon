@@ -72,15 +72,19 @@ public class EffectDataEditor : PropertyDrawer
         for (var i = 0; i < _globalProperties.Count; i++)
         {
             var prop = property.FindPropertyRelative(_globalProperties[i]);
+            var height = EditorGUI.GetPropertyHeight(prop);
+            position.height = height;
             EditorGUI.PropertyField(position, prop);
-            position.y += EditorGUI.GetPropertyHeight(effectType) + 2;
+            position.y += height + 2;
         }
         
         for (var i = 0; i < properties.Length; i++)
         {
             var prop = property.FindPropertyRelative(properties[i]);
+            var height = EditorGUI.GetPropertyHeight(prop);
+            position.height = height;
             EditorGUI.PropertyField(position, prop, true);
-            position.y += EditorGUI.GetPropertyHeight(effectType) + 2;
+            position.y += height + 2;
         }
     }
 
