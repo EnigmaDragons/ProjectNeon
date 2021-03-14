@@ -84,7 +84,7 @@ public class CardResolutionZone : ScriptableObject
 
     public void OnCardResolutionFinished()
     {
-        WrapupCard(_current.Value, _current.Value.Card);
+        _current.IfPresent(c => WrapupCard(c, c.Card));
         _current = Maybe<IPlayedCard>.Missing();
         currentResolvingCardZone.Clear();
     }
