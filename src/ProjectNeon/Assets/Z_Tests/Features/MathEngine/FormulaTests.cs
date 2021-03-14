@@ -47,6 +47,10 @@ public class FormulaTests
     [Test] public void Formula_XAmountPaid()
         => AssertResultsIs(1, "X", new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any(), new ResourceQuantity { Amount = 1 }));
     
+    [Test] public void Formula_DoubleDamageIfStunned()
+        => AssertResultsIs(2, "1 {Target[CardStun] > 0:* 2}", 
+            new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.CardStun, 1)), ResourceQuantity.None));
+    
     private void AssertResultsIs(float val, string exp) 
         => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None));
     
