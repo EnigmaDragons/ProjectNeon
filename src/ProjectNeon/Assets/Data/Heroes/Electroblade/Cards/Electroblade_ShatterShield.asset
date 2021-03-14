@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_CurrentSlash
+  m_Name: Electroblade_ShatterShield
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: c5a0ce97cf214164aa62eb4dce7227d1, type: 3}
-  description: Gain <b>2</b> Energy. Deal {E[0]}
+  art: {fileID: 21300000, guid: c4397b562f6f4eb49a29a4969707adc9, type: 3}
+  description: Deal 1 * ATK to shields. then Deal {E[1]}
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 04000000
+  tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe,
     type: 2}
   cost:
-    cost: 0
+    cost: 1
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
   onPlayGain:
-    cost: 2
+    cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 2
   actionSequences:
   - scope: 0
     group: 1
     avoidance: 1
-    cardActions: {fileID: 11400000, guid: 73c2c7837c0759541976e12278397369, type: 2}
+    cardActions: {fileID: 11400000, guid: 01df439508c9eef44a43de043580413e, type: 2}
     repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
