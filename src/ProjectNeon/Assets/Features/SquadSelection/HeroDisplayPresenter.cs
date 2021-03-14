@@ -12,13 +12,11 @@ public class HeroDisplayPresenter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roleDescription;
     [SerializeField] private TextMeshProUGUI backstory;
     [SerializeField] private TextMeshProUGUI heroSkill;
-    [SerializeField] private Button showGrowthInfoButton;
     
     private void Start()
     {
         if (currentHero != null)
             Select(currentHero);
-        showGrowthInfoButton.onClick.AddListener(ShowHeroPathway);
     }
 
     public void Select(HeroCharacter c)
