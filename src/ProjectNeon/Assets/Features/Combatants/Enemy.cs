@@ -36,6 +36,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private string lastBalanceDate = "Never";
 
     public string Name => enemyName;
+    public bool DeckIsValid => deck.Cards.None(x => x == null);
     public Deck Deck => deck;
     public TurnAI AI => ai;
     public int PowerLevel => powerLevel;
