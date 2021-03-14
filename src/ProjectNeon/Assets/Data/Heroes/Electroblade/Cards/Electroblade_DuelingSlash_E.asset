@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Electroblade_Thrust2_E
+  m_Name: Electroblade_DuelingSlash_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -67,7 +67,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 11400000, guid: bb526f4ffd0e9044b9af0ec49bc72b02, type: 2}
-      size: 1
+      size: 0.6
       speed: 1
       color:
         UseConstant: 1
@@ -83,21 +83,21 @@ MonoBehaviour:
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1.8
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1.4 * Attack
+      Formula: 1.1 * Attack {PrimaryResource > Target[PrimaryResource]:* 2}
       FlavorText:
         UseConstant: 1
         ConstantValue: 
