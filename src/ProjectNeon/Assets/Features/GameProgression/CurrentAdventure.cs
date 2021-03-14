@@ -4,5 +4,4 @@
 public class CurrentAdventure : ScriptableObject
 {
     public Adventure Adventure;
-    
 }

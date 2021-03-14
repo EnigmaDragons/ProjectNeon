@@ -6,7 +6,6 @@ public class InitializeAdventureSelection : MonoBehaviour
     [SerializeField] private AdventureDisplayPresenter adventureDisplayPrefab;
     [SerializeField] private Library library;
     [SerializeField] private CurrentAdventure currentAdventure;
-    [SerializeField] private AdventureProgress adventureProgress;
     [SerializeField] private AdventureProgress2 adventureProgress2;
     [SerializeField] private Navigator navigator;
 
@@ -29,10 +28,7 @@ public class InitializeAdventureSelection : MonoBehaviour
             currentAdventure.Adventure = adventure;
             if (currentAdventure.Adventure.IsV2)
                 adventureProgress2.Init();
-            else
-                adventureProgress.Init();
             navigator.NavigateToSquadSelection();
-            
         }
     }
 }

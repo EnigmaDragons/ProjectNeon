@@ -6,11 +6,9 @@ using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>
 {
-    [SerializeField] private AdventureProgress adventure;
     [SerializeField] private AdventureProgress2 adventure2;
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
-    [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private BattleState state;
     [SerializeField] private ShopCardPool cardPrizePool;
     [SerializeField] private EquipmentPool equipmentPrizePool;
@@ -52,7 +50,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
     
     private void Advance()
     {
-        if (currentAdventure.Adventure.IsV2 ? adventure2.IsFinalStageSegment : adventure.IsFinalStageSegment)
+        if (adventure2.IsFinalStageSegment)
         {
             Log.Info("Navigating to victory screen");
             Message.Publish(new AutoSaveRequested());
@@ -61,10 +59,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else
         {
             Log.Info("Advancing to next Stage Segment.");
-            if (currentAdventure.Adventure.IsV2)
-                adventure2.Advance();
-            else
-                adventure.Advance();
+            adventure2.Advance();
             Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }
