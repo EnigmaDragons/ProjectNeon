@@ -23,7 +23,7 @@ public sealed class BattleCounter
 
     private static int RoundUp(float amount) => Mathf.CeilToInt(amount);
     public void ChangeBy(float delta) => Amount = RoundUp(Mathf.Clamp(Amount + delta, 0, _getCurrentMaxAmount()));
-    public void Set(float value) => Amount = RoundUp(value);
+    public void Set(float value) => Amount = RoundUp(Mathf.Clamp(value, 0, _getCurrentMaxAmount()));
 
     public override string ToString() => $"{Name} - {Amount}/{Max}";
 }

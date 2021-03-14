@@ -30,6 +30,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private float nonStatCardValueFactor;
     [SerializeField] private ResourceType resourceType;
     [SerializeField] private int startingResourceAmount = 0;
+    [SerializeField] private int maxResourceAmount = 0;
     [SerializeField] private int resourceGainPerTurn = 1;
     [SerializeField] private int cardsPerTurn = 1;
     [SerializeField] private EffectData[] startOfBattleEffects = new EffectData[0];
@@ -79,7 +80,9 @@ public class Enemy : ScriptableObject
     
     public IStats Stats => new StatAddends
         {
-            ResourceTypes = resourceType != null ? new IResourceType[] {resourceType} : Array.Empty<IResourceType>()
+            ResourceTypes = resourceType != null 
+                ? new[] {resourceType.WithMax(Math.Max(resourceType.MaxAmount, maxResourceAmount))} 
+                : Array.Empty<IResourceType>()
         }
         .With(StatType.MaxHP, maxHp)
         .With(StatType.MaxShield, maxShield)

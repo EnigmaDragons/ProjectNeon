@@ -18,6 +18,8 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
 
+    private bool _triggeredBattleFinish;
+
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
     
     private void Awake()
@@ -36,6 +38,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     private IEnumerator ExecuteSetupAsync()
     {
         BeginPhase(BattleV2Phase.Setup);
+        _triggeredBattleFinish = false;
         yield return setup.Execute();
         BattleLog.Write("Battle Started");
         BeginStartOfTurn();
@@ -121,6 +124,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
 
     private void FinishBattle()
     {
+        if (_triggeredBattleFinish)
+            return;
+        
+        _triggeredBattleFinish = true;
         if (state.PlayerLoses())
         {
             Message.Publish(new BattleFinished(TeamType.Enemies));

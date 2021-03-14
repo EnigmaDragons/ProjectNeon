@@ -17,8 +17,6 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
         Message.Subscribe<TurnStarted>(_ => Activate(), this);
-        Message.Subscribe<PlayerTurnConfirmationAborted>(_ => SetIsConfirming(false), this);
-        Message.Subscribe<PlayerTurnConfirmationStarted>(_ => SetIsConfirming(true), this);
         Message.Subscribe<ToggleUseCardAsBasic>(_ => ToggleAsBasic(), this);
         Message.Subscribe<RecycleCard>(_ => Recycle(), this);
         Message.Subscribe<CardHoverEnter>(c => MoveTo(c.Card), this);
@@ -33,16 +31,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _indexSelector.Current.ToggleAsBasic();
         cards.ReProcess();
     }
-    
-    private void SetIsConfirming(bool isConfirming)
-    {
-        _isConfirmingTurn = isConfirming;
-        _isDirty = true;
-        cards.SetFocus(!_isConfirmingTurn);
-        if (!isConfirming)
-            _shouldHighlight = true;
-    }
-    
+
     private void Activate()
     {
         _isDirty = true;
