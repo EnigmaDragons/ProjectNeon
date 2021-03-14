@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public sealed class MemberStateSnapshot
 {
@@ -25,5 +26,5 @@ public sealed class MemberStateSnapshot
     public int MaxHp => Stats[StatType.MaxHP].CeilingInt();
     public int Shield => Counters[TemporalStatType.Shield.ToString()];
     public IResourceType PrimaryResource => ResourceTypes[0];
-    public int PrimaryResourceAmount => Counters[PrimaryResource.Name];
+    public int PrimaryResourceAmount => ResourceTypes.Any() ? Counters[PrimaryResource.Name] : 0;
 }
