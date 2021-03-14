@@ -8,6 +8,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     [SerializeField] private CardResolutionZone cardResolutionZone;
     [SerializeField] private CardPlayZone destinationCardZone;
     [SerializeField] private CardPlayZone sourceCardZone;
+    [SerializeField] private CardPlayZone discardZone;
     [SerializeField] private BattleState battleState;
     [SerializeField] private BattlePlayerTargetingStateV2 targetingState;
 
@@ -19,18 +20,19 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         battleState.IsSelectingTargets = true;
         Message.Publish(new TargetSelectionBegun(card.Type));
         Log.Info($"UI - Began Target Selection for {card.Name}");
-        InitCardForSelection(msg.Card);
+        InitCardForSelection();
     }
 
-    protected override void Execute(EndTargetSelectionRequested msg) => EndSelection();
+    protected override void Execute(EndTargetSelectionRequested msg) => EndSelection(msg.ShouldDiscard);
     protected override void Execute(CancelTargetSelectionRequested msg) => Cancel();
 
-    public void EndSelection()
+    private void EndSelection(bool shouldDiscard)
     {
-        if (targetingState.HasValidTargets && card.IsPlayable())
+        Log.Info($"UI - Finished Target Selection. Discard {shouldDiscard}");
+        if (shouldDiscard)
+            DiscardCard();
+        else if (targetingState.HasValidTargets && card.IsPlayable())
             PlayCard(new PlayedCardV2(card.Owner, targetingState.Targets, card));
-        else if (!card.IsPlayable())
-            PlayCard(new PlayedCardV2(card.Owner, new Target[0], card));
         else 
             Cancel();
     }
@@ -43,12 +45,19 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         OnSelectionComplete();
     }
 
+    private void DiscardCard()
+    {
+        Debug.Log($"UI - Discarded {card.Name}");
+        
+        sourceCardZone.Remove(card);
+        discardZone.PutOnBottom(card.RevertedToStandard());
+        battleState.RecordCardDiscarded();
+        OnSelectionComplete();
+    }
+
     private void PlayCard(PlayedCardV2 playedCard)
     {
-        if (playedCard.IsDiscarded)
-            Debug.Log($"UI - Discarded {playedCard.Card.Name}");
-        else
-            Debug.Log($"UI - Played {playedCard.Card.Name} on {string.Join(" | ", playedCard.Targets.Select(x => x.ToString()))}");
+        Debug.Log($"UI - Played {playedCard.Card.Name} on {string.Join(" | ", playedCard.Targets.Select(x => x.ToString()))}");
             
         cardResolutionZone.PlayImmediately(playedCard);
         Message.Publish(new PlayerCardSelected());
@@ -65,7 +74,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         Message.Publish(new TargetSelectionFinished());
     }
 
-    private void InitCardForSelection(Card card)
+    private void InitCardForSelection()
     {
         var getTargets = new List<Func<Target>>();
         var memberToTargetMap = new List<Dictionary<int, Target>>();
