@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +25,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         
         if (_reactionCards.Any())
             StartCoroutine(ResolveNextReactionCard());
-        else if (!resolutionZone.IsDone)
+        else if (resolutionZone.HasMore)
             resolutionZone.BeginResolvingNext();
     }
 
@@ -133,7 +132,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         else
         {
             yield return new WaitForSeconds(delay);
-            currentResolvingCardZone.Clear();
+            resolutionZone.OnCardResolutionFinished();
             ResolveNext();
         }
     }

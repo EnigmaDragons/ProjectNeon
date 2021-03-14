@@ -12,8 +12,6 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     [SerializeField] private BattleState battleState;
     [SerializeField] private CardResolutionZone playArea;
     
-    private bool _isResolvingInstantCard;
-    
     public void Setup()
     {
         HideCommandPhaseUI();
@@ -60,27 +58,12 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     protected override void Execute(TargetSelectionBegun msg) {}
     protected override void Execute(TargetSelectionFinished msg) => RefreshHandVisibility();
     protected override void Execute(PlayerCardCanceled msg) => RefreshHandVisibility();
-    protected override void Execute(CardResolutionStarted msg)
-    {
-        if (!msg.Card.IsInstant()) 
-            return;
-        
-        _isResolvingInstantCard = true;
-        RefreshHandVisibility();
-    }
-
-    protected override void Execute(CardResolutionFinished msg)
-    {
-        if (!msg.CardWasInstant) 
-            return;
-        
-        _isResolvingInstantCard = false;
-        RefreshHandVisibility();
-    }
+    protected override void Execute(CardResolutionStarted msg) => RefreshHandVisibility();
+    protected override void Execute(CardResolutionFinished msg) => RefreshHandVisibility();
 
     private void RefreshHandVisibility()
     {
-        Debug.Log($"Refresh Hand Visibility. {playArea.NumPlayedThisTurn} / {battleState.PlayerState.CurrentStats.CardPlays()} Card Is Instant: {_isResolvingInstantCard}");
-        hand.SetActive(!_isResolvingInstantCard && battleState.NumberOfCardPlaysRemainingThisTurn > 0);
+        Debug.Log($"Refresh Hand Visibility. {playArea.NumPlayedThisTurn} / {battleState.PlayerState.CurrentStats.CardPlays()}");
+        hand.SetActive(battleState.NumberOfCardPlaysRemainingThisTurn > 0);
     }
 }

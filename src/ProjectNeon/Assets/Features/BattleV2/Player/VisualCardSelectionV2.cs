@@ -17,11 +17,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     {
         Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
         Message.Subscribe<TurnStarted>(_ => Activate(), this);
-        Message.Subscribe<TargetSelectionFinished>(_ => Activate(), this);
         Message.Subscribe<PlayerTurnConfirmationAborted>(_ => SetIsConfirming(false), this);
         Message.Subscribe<PlayerTurnConfirmationStarted>(_ => SetIsConfirming(true), this);
-        Message.Subscribe<CardResolutionStarted>(_ => SetIsResolvingCard(true), this);
-        Message.Subscribe<CardResolutionFinished>(_ => SetIsResolvingCard(false), this);
         Message.Subscribe<ToggleUseCardAsBasic>(_ => ToggleAsBasic(), this);
         Message.Subscribe<RecycleCard>(_ => Recycle(), this);
         Message.Subscribe<CardHoverEnter>(c => MoveTo(c.Card), this);
@@ -36,14 +33,6 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _indexSelector.Current.ToggleAsBasic();
         cards.ReProcess();
     }
-
-    private void SetIsResolvingCard(bool isResolving)
-    {
-        _isDirty = true;
-        var interactionsAllowed = !isResolving;
-        cards.SetCardPlayingAllowed(interactionsAllowed);
-        _shouldHighlight = false;
-    }
     
     private void SetIsConfirming(bool isConfirming)
     {
@@ -57,6 +46,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     private void Activate()
     {
         _isDirty = true;
+        _shouldHighlight = true;
         cards.SetCardPlayingAllowed(true);
         cards.UpdateVisibleCards();
     }
@@ -121,6 +111,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
 
     public void LostFocus()
     {
+        Debug.Log("Hand Lost Focus");
         _shouldHighlight = false;
         DisableHighlight();
     }
