@@ -54,13 +54,13 @@ public class CardResolutionZone : ScriptableObject
         var shouldQueue = isResolving;
         RecordCardAndPayCosts(played);
         
-        if (played.Member.TeamType == TeamType.Party && battleState.NumberOfCardPlaysRemainingThisTurn == 0)
-            AddChainedCardIfApplicable(played);
-
         if (shouldQueue)
             Enqueue(played);
         else
             StartResolvingOneCard(played);
+        
+        if (played.Member.TeamType == TeamType.Party && battleState.NumberOfCardPlaysRemainingThisTurn == 0)
+            AddChainedCardIfApplicable(played);
     }
     
     public void ExpirePlayedCards(Func<IPlayedCard, bool> condition)
