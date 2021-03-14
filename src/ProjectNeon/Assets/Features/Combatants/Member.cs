@@ -15,10 +15,10 @@ public class Member
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{Name} {Id}";
     
-    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole)
-        : this(id, name, characterClass, team, baseStats, battleRole, baseStats.MaxHp()) {}
+    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
+        : this(id, name, characterClass, team, baseStats, battleRole, primaryStat, baseStats.MaxHp()) {}
     
-    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, int initialHp)
+    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {name} is 0");
@@ -28,7 +28,7 @@ public class Member
         Class = characterClass;
         TeamType = team;
         BattleRole = battleRole;
-        State = new MemberState(id, name, baseStats, initialHp);
+        State = new MemberState(id, name, baseStats, primaryStat, initialHp);
     }
 
     public Member Apply(Action<MemberState> effect)

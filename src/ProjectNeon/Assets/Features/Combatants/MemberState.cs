@@ -9,6 +9,7 @@ public sealed class MemberState : IStats
     private readonly Dictionary<string, BattleCounter> _counters =
         new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
 
+    private readonly StatType _primaryStat;
     private readonly IStats _baseStats;
     private readonly List<IPersistentState> _persistentStates = new List<IPersistentState>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
@@ -35,15 +36,16 @@ public sealed class MemberState : IStats
     public int MemberId { get; }
     public string Name { get; }
 
-    public MemberState(int id, string name, IStats baseStats)
-        : this(id, name, baseStats, baseStats.MaxHp())
+    public MemberState(int id, string name, IStats baseStats, StatType primaryStat)
+        : this(id, name, baseStats, primaryStat, baseStats.MaxHp())
     {
     }
 
-    public MemberState(int id, string name, IStats baseStats, int initialHp)
+    public MemberState(int id, string name, IStats baseStats, StatType primaryStat, int initialHp)
     {
         MemberId = id;
         Name = name;
+        _primaryStat = primaryStat;
         _baseStats = baseStats;
 
         _counters[TemporalStatType.HP.ToString()] =
@@ -285,6 +287,8 @@ public sealed class MemberState : IStats
     public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType, qty.Amount);
     public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
+
+    public StatType PrimaryStat => _primaryStat; 
 
     public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any(); 
     public IPayloadProvider[] GetTurnStartEffects()

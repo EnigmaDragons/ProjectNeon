@@ -10,7 +10,7 @@ public static class AllEffects
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.AdjustStatAdditivelyFormula, e => new FullContextEffect((ctx, m) => m.ApplyTemporaryAdditive(new AdjustedStats(
             BattleLoggedItem(s => $"Stats of {m.Name} are adjusted by {s}",
-                new StatAddends().WithRaw(e.EffectScope, Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula))), 
+                new StatAddends().WithRaw(e.EffectScope, RoundUp(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula)))), 
                 e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.ForSimpleDurationStatAdjustment())))},
@@ -85,6 +85,10 @@ public static class AllEffects
         { EffectType.DrainPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 
             BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
                 Formula.Evaluate(ctx.SourceSnapshot.State, m.State, ctx.XPaidAmount, e.Formula).CeilingInt())) },
+        { EffectType.AdjustPrimaryStatAdditivelyFormula, e => new FullContextEffect((ctx, m) => m.ApplyTemporaryAdditive(new AdjustedStats(
+            BattleLoggedItem(s => $"Stats of {m.Name} are adjusted by {s}",
+                new StatAddends().With(m.PrimaryStat, RoundUp(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula)))), 
+            e.ForSimpleDurationStatAdjustment())))},
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
@@ -161,4 +165,6 @@ public static class AllEffects
     private static CardActionsData AsCardActionsData(EffectData effectData)
         => ((CardActionsData)FormatterServices.GetUninitializedObject(typeof(CardActionsData)))
             .Initialized(new CardActionV2(effectData));
+    
+    private static int RoundUp(float v) => Mathf.CeilToInt(v);
 }
