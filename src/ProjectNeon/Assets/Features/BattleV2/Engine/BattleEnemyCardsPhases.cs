@@ -18,6 +18,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
     public void BeginPlayingAllHastyEnemyCards() => PlayNextHastyCard();
     private void PlayNextHastyCard()
     {
+        Log.Info("Began Playing Next Hasty Card.");
         _enemiesToActThisTurn
             .Where(x => x.Enemy.IsHasty)
             .FirstAsMaybe()
@@ -29,6 +30,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
     public void BeginPlayingAllStandardEnemyCards() => PlayNextStandardCard();
     private void PlayNextStandardCard()
     {
+        Log.Info("Began Playing Next Standard Card.");
         _enemiesToActThisTurn
             .Where(x => !x.Enemy.IsHasty)
             .FirstAsMaybe()

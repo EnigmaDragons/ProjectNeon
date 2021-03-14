@@ -1,15 +1,19 @@
 using UnityEngine;
 
-public class DevLog : OnMessage<WriteDevLogMessageRequested>
+public class DevLog : MonoBehaviour
 {
-    [SerializeField] private BoolReference loggingEnabled;
+    private static bool loggingEnabled = true;
     
-    protected override void Execute(WriteDevLogMessageRequested e)
+    public static void Info(string message)
     {
-        if (loggingEnabled)
-            Log.Info($"Battle (Dev) - {e.Message}");
+        Write(message);
     }
 
-    public static void Info(string message) => Write(message);
-    public static void Write(string message) => Message.Publish(new WriteDevLogMessageRequested(message)); 
+    public static void Write(string message)
+    {
+        if (!loggingEnabled) return;
+        
+        Log.Info($"Battle (Dev) - {message}");
+        Message.Publish(new WriteDevLogMessageRequested(message));
+    }
 }
