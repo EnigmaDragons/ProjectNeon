@@ -26,6 +26,7 @@ public sealed class PlayedCardSnapshot
     public Target[] Targets { get; }
     public ResourceQuantity Spent { get; }
     public ResourceQuantity Gained { get; }
+    public bool WasTransient { get; }
 
     public PlayedCardSnapshot(IPlayedCard p)
     {
@@ -35,6 +36,7 @@ public sealed class PlayedCardSnapshot
         Targets = p.Targets;
         Spent = p.Spent;
         Gained = p.Gained;
+        WasTransient = p.IsTransient;
     }
 
 }

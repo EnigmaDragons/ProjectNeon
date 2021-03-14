@@ -66,6 +66,7 @@ public sealed class HandVisualizer : MonoBehaviour
     public void SetCardPlayingAllowed(bool isAllowed)
     {
         allowInteractions = isAllowed;
+        UpdateVisibleCards();
     }
 
     public void UpdateVisibleCards()
@@ -125,7 +126,8 @@ public sealed class HandVisualizer : MonoBehaviour
             c.Set("Hand", card, 
                 () => SelectCard(cardIndex), 
                 () => BeginDragCard(card, cardIndex),
-                (battleState, c2) => allowInteractions && (!onlyAllowInteractingWithPlayables || c2.IsPlayable()));
+                (battleState, c2) => allowInteractions && (!onlyAllowInteractingWithPlayables || c2.IsPlayable()),
+                () => allowInteractions);
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.SetDisabled(!card.Owner.CanPlayCards() || !_isFocused);
             c.SetHandHighlight(isHighlighted);

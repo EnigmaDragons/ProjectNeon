@@ -8,6 +8,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private CardPlayZones cards;
     [SerializeField] private BattleSetupV2 setup;
     [SerializeField] private BattlePlayerCardsPhase commandPhase;
+    [SerializeField] private BattleResolutions resolutions;
     [SerializeField] private BattleEnemyCardsPhases enemyCardsPhases;
     [SerializeField] private BattleTurnWrapUp turnWrapUp;
     [SerializeField] private BattleStatusEffects statusPhase;
@@ -70,8 +71,15 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         BeginPhase(BattleV2Phase.EnemyCards);
         enemyCardsPhases.BeginPlayingAllStandardEnemyCards();
     }
+
+    private IEnumerator WaitForAllPlayedCardsToFinishResolving()
+    {
+        while (!resolutions.IsDoneResolving)
+            yield return new WaitForSeconds(0.1f);
+        Message.Publish(new ResolutionsFinished(BattleV2Phase.PlayCards));
+    }
     
-    protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(TransitionToEnemyCardsPhase());
+    protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayedCardsToFinishResolving());
     protected override void Execute(StartOfTurnEffectsStatusResolved msg) => BeginHastyEnemiesPhase();
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
 
@@ -122,10 +130,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     private void BeginPhase(BattleV2Phase newPhase)
     {
         if (newPhase == state.Phase)
-            Log.Error($"Should not attempt to transition to {newPhase} when that's already the active phase.");
+            Log.Error($"Phase - Should not attempt to transition to {newPhase} when that's already the active phase.");
         
         var finishedMessage = state.Phase != BattleV2Phase.NotBegun ? $"Finished {state.Phase} Phase -> " : "";
-        var message = $"{finishedMessage}Beginning {newPhase} Phase";
+        var message = $"Phase - {finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);
         state.CleanupExpiredMemberStates();
         state.SetPhase(newPhase);

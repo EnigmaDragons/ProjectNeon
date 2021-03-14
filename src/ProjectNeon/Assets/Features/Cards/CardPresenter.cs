@@ -34,6 +34,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private int _preHighlightSiblingIndex;
 
     private Func<BattleState, Card, bool> _getCanPlay;
+    private Func<bool> _getCanActivate;
     private Action _onClick;
     private Action _onMiddleMouse;
     private Action _onRightClick;
@@ -51,7 +52,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
     public bool IsHighlighted => highlight.activeSelf;
-    public bool IsPlayable { get; private set; }
+    public bool IsPlayable { get; private set; } // Name is Wrong. Cached value might result in wrong value.
 
     public void Clear()
     {
@@ -60,10 +61,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType = null;
     }
 
-    public void Set(Card card) => Set("Library", card, () => { }, () => {}, (_, __) => false);
+    public void Set(Card card) => Set("Library", card, () => { }, () => {}, (_, __) => false, () => false);
     public void Set(CardTypeData card) => Set(card, () => { });
     
-    public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Func<BattleState, Card, bool> getCanPlay)
+    public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Func<BattleState, Card, bool> getCanPlay, Func<bool> getCanActivate)
     {
         InitFreshCard(onClick);
         
@@ -71,6 +72,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _card = card;
         _cardType = card.Type;
         _getCanPlay = getCanPlay;
+        _getCanActivate = getCanActivate;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
         _onRightClick = _isHand ? ToggleAsBasic : (Action)(() => { });
@@ -301,14 +303,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private bool _isDragging = false;
     
     public void OnDrag(PointerEventData eventData)
-        => WhenPlayableHand(() =>
+        => WhenActivatableHand(() =>
         {
             if (!_requiresPlayerTargeting || !IsPlayable)
                 transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
         });
     
     public void OnBeginDrag(PointerEventData eventData)
-        => WhenPlayableHand(() =>
+        => WhenActivatableHand(() =>
         {
             _isDragging = true;
             canvasGroup.blocksRaycasts = false;
@@ -323,15 +325,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         });
 
     public void OnEndDrag(PointerEventData eventData) 
-        => WhenPlayableHand(() =>
+        => WhenActivatableHand(() =>
         {
             Message.Publish(new CancelTargetSelectionRequested());
             ReturnHandToNormal();
         });
 
-    private void WhenPlayableHand(Action action)
+    private void WhenActivatableHand(Action action)
     {
-        if (_isHand)
+        if (_isHand && _getCanActivate())
             action();
     }
 

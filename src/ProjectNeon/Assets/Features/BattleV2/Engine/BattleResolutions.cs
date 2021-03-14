@@ -26,7 +26,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         
         if (_reactionCards.Any())
             StartCoroutine(ResolveNextReactionCard());
-        else if (resolutionZone.HasMore)
+        else if (!resolutionZone.IsDone)
             resolutionZone.BeginResolvingNext();
     }
 
@@ -37,7 +37,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         _unconsciousness.ProcessRevivedMembers(state);
     }
 
-    private bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && !resolutionZone.HasMore;
+    public bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && resolutionZone.IsDone;
     
     protected override void Execute(ApplyBattleEffect msg)
     {

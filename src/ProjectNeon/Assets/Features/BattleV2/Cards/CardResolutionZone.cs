@@ -29,7 +29,8 @@ public class CardResolutionZone : ScriptableObject
         isResolving = false;
     }
 
-    public bool HasMore => _pendingMoves.Any();
+    public bool IsDone => !isResolving && !HasMore;
+    private bool HasMore => _pendingMoves.Any();
     public int NumPlayedThisTurn => _movesThisTurn.Count;
 
     private Target[] GetTargets(Member m, CardTypeData card, Maybe<Target[]> previousTargets)
@@ -62,6 +63,7 @@ public class CardResolutionZone : ScriptableObject
     
     public void PlayImmediately(IPlayedCard played)
     {
+        var shouldQueue = isResolving;
         RecordCardAndPayCosts(played);
         
         if (played.Member.TeamType == TeamType.Party && battleState.NumberOfCardPlaysRemainingThisTurn == 0)
@@ -70,7 +72,7 @@ public class CardResolutionZone : ScriptableObject
             AddBonusCardsIfApplicable();
         }
         
-        if (isResolving)
+        if (shouldQueue)
             _pendingMoves.Add(played);
         else
             StartResolvingOneCard(played);
@@ -172,6 +174,7 @@ public class CardResolutionZone : ScriptableObject
 
     private void WrapupCard(IPlayedCard played, Card physicalCard)
     {
+        Log.Info($"Wrapped Up {played.Card.Name}. Pending Cards {_pendingMoves.Count}");
         LastPlayed = played;
         if (played.Member.TeamType.Equals(TeamType.Party) && !played.IsTransient)
             playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());
