@@ -58,7 +58,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     private void PlayCard(PlayedCardV2 playedCard)
     {
         Debug.Log($"UI - Played {playedCard.Card.Name} on {string.Join(" | ", playedCard.Targets.Select(x => x.ToString()))}");
-            
+        
         cardResolutionZone.PlayImmediately(playedCard);
         Message.Publish(new PlayerCardSelected());
         sourceCardZone.Remove(card);

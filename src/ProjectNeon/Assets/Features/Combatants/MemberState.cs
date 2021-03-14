@@ -9,6 +9,9 @@ public sealed class MemberState : IStats
     private readonly Dictionary<string, BattleCounter> _counters =
         new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
 
+    private readonly DictionaryWithDefault<CardTag, int> _tagsPlayedCount 
+        = new DictionaryWithDefault<CardTag, int>(0);
+
     private readonly StatType _primaryStat;
     private readonly IStats _baseStats;
     private readonly List<IPersistentState> _persistentStates = new List<IPersistentState>();
@@ -69,7 +72,7 @@ public sealed class MemberState : IStats
     // Queries
     public MemberStateSnapshot ToSnapshot()
         => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats,
-            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes);
+            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount);
 
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
@@ -167,8 +170,13 @@ public sealed class MemberState : IStats
             multiplicatives.Product(x => x.XAmountPriceTag));
     }
 
-    public void RecordUsage(Card card) => _additiveResourceCalculators.ForEach(x => x.RecordUsageIfApplicable(card));
-    public void UndoUsage(Card card) => _additiveResourceCalculators.ForEach(x => x.UndoUsageIfApplicable(card));
+    public void RecordUsage(Card card)
+    {
+        _additiveResourceCalculators.ForEach(x => x.RecordUsageIfApplicable(card));
+        _multiplicativeResourceCalculators.ForEach(x => x.RecordUsageIfApplicable(card));
+        foreach (var tag in card.Type.Tags)
+            _tagsPlayedCount[tag]++;
+    }
 
     // Modifier Commands
     private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag>
