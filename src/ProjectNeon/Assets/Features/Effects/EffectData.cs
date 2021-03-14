@@ -44,6 +44,7 @@ public static class EffectDataExtensions
         {
             EffectType = e.EffectType,
             FloatAmount = e.FloatAmount,
+            BaseAmount = e.BaseAmount,
             NumberOfTurns = e.NumberOfTurns,
             EffectScope = e.EffectScope,
             HitsRandomTargetMember = e.HitsRandomTargetMember,

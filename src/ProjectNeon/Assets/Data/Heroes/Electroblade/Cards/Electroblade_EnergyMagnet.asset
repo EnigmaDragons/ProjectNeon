@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Electroblade_EnergyMagnet
+  m_EditorClassIdentifier: 
+  customName: 
+  art: {fileID: 21300000, guid: a49ecd4b5fd1e1644b5b7b51ebafc45b, type: 3}
+  description: Drain all enemy Resources and stun 1 Enemy
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  tags: 
+  onlyPlayableByClass: {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe,
+    type: 2}
+  cost:
+    cost: 6
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+    plusXCost: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+    plusXCost: 0
+  rarity: 4
+  actionSequences:
+  - scope: 1
+    group: 1
+    avoidance: 2
+    cardActions: {fileID: 11400000, guid: eeb5c969e6cac6a4f9117c77a6c0fb51, type: 2}
+    repeatX: 0
+  - scope: 0
+    group: 1
+    avoidance: 2
+    cardActions: {fileID: 11400000, guid: e079e260539254642b23d1e083c7f011, type: 2}
+    repeatX: 0
+  chainedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 

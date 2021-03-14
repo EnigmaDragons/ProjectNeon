@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Electroblade_Overcharge_E
+  m_Name: Electroblade_SwiftStrike_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -66,9 +66,9 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 5d4120173799bf74d9b3a9beb5d6be87, type: 2}
-      size: 1
-      speed: 1
+        Variable: {fileID: 11400000, guid: bb526f4ffd0e9044b9af0ec49bc72b02, type: 2}
+      size: 1.5
+      speed: 0.3
       color:
         UseConstant: 1
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
@@ -76,7 +76,7 @@ MonoBehaviour:
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 10
+      EffectType: 79
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -87,17 +87,17 @@ MonoBehaviour:
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: bd06351127f63d4499e84d7f994d1c91, type: 2}
       HitsRandomTargetMember: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: -Target[Evade]
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -137,10 +137,10 @@ MonoBehaviour:
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 46
+      EffectType: 30
       BaseAmount:
         UseConstant: 1
-        ConstantValue: 9
+        ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
@@ -151,14 +151,14 @@ MonoBehaviour:
         ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       StatusTag: 0
       StatusDetailText: 
-      TurnDelay: 1
-      Formula: 
+      TurnDelay: 0
+      Formula: 0.5 * Attack
       FlavorText:
         UseConstant: 1
         ConstantValue: 

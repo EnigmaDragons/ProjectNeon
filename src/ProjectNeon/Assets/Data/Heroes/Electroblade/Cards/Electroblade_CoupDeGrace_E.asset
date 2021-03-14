@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Electroblade_Overcharge_E
+  m_Name: Electroblade_CoupDeGrace_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -66,17 +66,17 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 5d4120173799bf74d9b3a9beb5d6be87, type: 2}
-      size: 1
-      speed: 1
+        Variable: {fileID: 11400000, guid: bb526f4ffd0e9044b9af0ec49bc72b02, type: 2}
+      size: 0.5
+      speed: 0.3
       color:
         UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        ConstantValue: {r: 0.5882353, g: 0.19607843, b: 1, a: 1}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
-  - type: 1
+  - type: 31
     battleEffect:
-      EffectType: 10
+      EffectType: 0
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -87,10 +87,10 @@ MonoBehaviour:
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
@@ -128,19 +128,19 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      size: 1
-      speed: 1
+      size: 0.5
+      speed: 0.3
       color:
         UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        ConstantValue: {r: 0.5882353, g: 0.19607843, b: 1, a: 1}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
-  - type: 1
+  - type: 31
     battleEffect:
-      EffectType: 46
+      EffectType: 0
       BaseAmount:
         UseConstant: 1
-        ConstantValue: 9
+        ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
@@ -151,14 +151,75 @@ MonoBehaviour:
         ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       StatusTag: 0
       StatusDetailText: 
-      TurnDelay: 1
+      TurnDelay: 0
       Formula: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        avoidance: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    atTargetAnimation:
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 0.5
+      speed: 0.3
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0.5882353, g: 0.19607843, b: 1, a: 1}
+        Variable: {fileID: 0}
+    enemyToSpawn: {fileID: 0}
+  - type: 1
+    battleEffect:
+      EffectType: 70
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 2.8 * Attack
       FlavorText:
         UseConstant: 1
         ConstantValue: 

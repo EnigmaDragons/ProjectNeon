@@ -27,11 +27,16 @@ public static class Formula
             newExp = newExp.Replace(stat.Key, stat.Value);
         }
         
+        if (ctx.Target.IsPresent)
+        {
+            newExp = newExp.Replace("Target[PrimaryResource]", ctx.Target.Value.PrimaryResourceAmount.ToString());
+        }
+        newExp = newExp.Replace("PrimaryResource", ctx.Source.PrimaryResourceAmount.ToString());
         foreach (var resourceType in ctx.Source.ResourceTypes)
         {
             newExp = newExp.Replace(resourceType.Name, ctx.Source[resourceType].ToString());
         }
-        
+
         foreach (var stat in Enum.GetValues(typeof(StatType)).Cast<StatType>())
         {
             if (ctx.Target.IsPresent)

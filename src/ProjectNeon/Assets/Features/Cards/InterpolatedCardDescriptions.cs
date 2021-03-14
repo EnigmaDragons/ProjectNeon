@@ -119,6 +119,8 @@ public static class InterpolatedCardDescriptions
         var coreDesc = "";
         if (data.EffectType == EffectType.AttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.DealRawDamageFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.MagicAttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustCounterFormula)
