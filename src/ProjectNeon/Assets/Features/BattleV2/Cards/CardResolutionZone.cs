@@ -199,6 +199,7 @@ public class CardResolutionZone : ScriptableObject
     {
         if (trigger.Card.ChainedCard.IsMissing || 
             _movesThisTurn
+                .Concat(_pendingMoves)
                 .Where(x => x.Member.TeamType == TeamType.Party)
                 .Select(m => m.Member.Id)
                 .Distinct()
