@@ -13,21 +13,27 @@ MonoBehaviour:
   m_Name: Electroblade_CoupDeGrace
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 0}
-  description: 
-  typeDescription: {fileID: 0}
+  art: {fileID: 21300000, guid: c333d6c8bd39e444ab89a622caf2e2e8, type: 3}
+  description: Ignoring Shields, Evade, and Armor deal {E[0]}
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
-  onlyPlayableByClass: {fileID: 0}
+  onlyPlayableByClass: {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe,
+    type: 2}
   cost:
-    cost: 0
-    resourceType: {fileID: 0}
+    cost: 3
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
   onPlayGain:
     cost: 0
-    resourceType: {fileID: 0}
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 0
-  actionSequences: []
+  rarity: 4
+  actionSequences:
+  - scope: 0
+    group: 1
+    avoidance: 1000
+    cardActions: {fileID: 11400000, guid: 27edf38b4e712504380264592b4d26db, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
