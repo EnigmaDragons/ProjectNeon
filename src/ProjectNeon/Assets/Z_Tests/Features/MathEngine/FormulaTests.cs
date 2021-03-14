@@ -51,6 +51,14 @@ public class FormulaTests
         => AssertResultsIs(2, "1 {Target[CardStun] > 0:* 2}", 
             new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.CardStun, 1)), ResourceQuantity.None));
     
+    [Test] public void Formula_PrimaryResource()
+        => AssertResultsIs(1, "PrimaryResource", 
+            new FormulaContext(TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }).GetSnapshot().State, Maybe<MemberState>.Missing(), ResourceQuantity.None));
+    
+    [Test] public void Formula_TargetPrimaryResource()
+        => AssertResultsIs(1, "Target[PrimaryResource]", 
+            new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }), ResourceQuantity.None));
+    
     private void AssertResultsIs(float val, string exp) 
         => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None));
     
