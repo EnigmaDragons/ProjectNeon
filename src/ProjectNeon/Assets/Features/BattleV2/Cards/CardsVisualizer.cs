@@ -16,9 +16,11 @@ public class CardsVisualizer : MonoBehaviour
     private bool _isDirty = false;
     private Action _onShownCardsChanged = () => { };
     private bool _isFocused = true;
+    private float _xOffset;
 
     private void Awake()
     {
+        _xOffset = transform.localPosition.x;
         cardPool = new CardPresenter[maxCards];
         for (var i = 0; i < maxCards; i++)
         {
@@ -100,7 +102,7 @@ public class CardsVisualizer : MonoBehaviour
             if (!c.HasCard)
                 c.TeleportTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
             
-            var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
+            var targetX = _xOffset + startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
             c.Set(card);
