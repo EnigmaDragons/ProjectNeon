@@ -22,7 +22,7 @@ public class CardRulesPresenter : MonoBehaviour
         rulesToShow.AddIf("X-Cost", d.Cost.PlusXCost);
         rulesToShow.AddIf("Chain", d.ChainedCard.IsPresent);
         
-        var battleEffects = d.BattleEffects();
+        var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());
         battleEffects.ForEach(b =>
         {
             rulesToShow.AddIf("Vulnerable", b.EffectType == EffectType.ApplyVulnerable);
@@ -48,7 +48,7 @@ public class CardRulesPresenter : MonoBehaviour
 
     private void AddAllMatchingEffectScopeRules(List<string> rulesToShow, EffectData e, params string[] scopes) 
         => scopes.ForEach(s => rulesToShow.AddIf(s, e.EffectScope != null && s.Equals(e.EffectScope.Value)));
-
+    
     public void Hide()
     {
         _isInitialized = true;
