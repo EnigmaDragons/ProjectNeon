@@ -14,8 +14,6 @@ public class PlayedCardV2 : IPlayedCard
     
     public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient, ResourceCalculations calculations)
     {
-        // DON'T TOUCH THE ARGSSSSS
-        card.TransitionTo(card.IsPlayable() ? card.Mode : CardMode.Dead);
         if (card.IsActive && targets.Length < card.ActionSequences.Length)
             throw new InvalidDataException($"Cannot play {card.Name} with only {targets.Length}");
         
@@ -34,7 +32,6 @@ public class PlayedCardV2 : IPlayedCard
     public ResourceQuantity Spent => _calculations.PaidQuantity;
     public ResourceQuantity Gained => _calculations.GainedQuantity;
     public bool IsTransient => _isTransient;
-    public bool IsDiscarded => !_card.IsActive;
 
     public void Perform(BattleStateSnapshot beforeCard)
     {

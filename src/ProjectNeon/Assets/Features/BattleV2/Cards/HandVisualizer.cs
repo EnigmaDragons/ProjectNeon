@@ -45,6 +45,7 @@ public sealed class HandVisualizer : MonoBehaviour
         Log.Info($"UI - Hand Enabled - Focused {_isFocused}");
         Hand.OnZoneCardsChanged.Subscribe(new GameEventSubscription(Hand.OnZoneCardsChanged.name, x => _isDirty = true, this));
         Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
+        Message.Subscribe<PlayerCardCanceled>(_ => _isDirty = true, this);
     }
 
     void OnDisable()
@@ -126,7 +127,8 @@ public sealed class HandVisualizer : MonoBehaviour
             c.Set("Hand", card, 
                 () => SelectCard(cardIndex), 
                 () => BeginDragCard(card, cardIndex),
-                (battleState, c2) => allowInteractions && (!onlyAllowInteractingWithPlayables || c2.IsPlayable()),
+                () => DiscardCard(cardIndex),
+                (battleState, c2) => allowInteractions && c2.IsPlayable(),
                 () => allowInteractions);
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.SetDisabled(!card.Owner.CanPlayCards() || !_isFocused);
@@ -143,6 +145,17 @@ public sealed class HandVisualizer : MonoBehaviour
             Message.Publish(new BeginPlayerTurnConfirmation());
         }
     }
+
+    private void DiscardCard(int cardIndex)
+    {
+        if (state.Phase != BattleV2Phase.PlayCards)
+            return;
+        
+        if (allowInteractions && Hand.Count > cardIndex)
+            Message.Publish(new EndTargetSelectionRequested(true));
+        else
+            Message.Publish(new CancelTargetSelectionRequested());
+    }
     
     public void SelectCard(int cardIndex)
     {
@@ -150,7 +163,7 @@ public sealed class HandVisualizer : MonoBehaviour
             return;
         
         if (allowInteractions && Hand.Count > cardIndex)
-            Message.Publish(new EndTargetSelectionRequested());
+            Message.Publish(new EndTargetSelectionRequested(false));
         else
             Message.Publish(new CancelTargetSelectionRequested());
     }

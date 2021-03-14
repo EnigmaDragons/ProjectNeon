@@ -33,6 +33,7 @@ public class BattleState : ScriptableObject
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
     public Effect[] QueuedEffects => _queuedEffects.ToArray();
     
+    private int _numPlayerDiscardsUsedThisTurn = 0;
     private int _numberOfRecyclesRemainingThisTurn = 0;
     
     public bool IsSelectingTargets = false;
@@ -40,7 +41,7 @@ public class BattleState : ScriptableObject
     public int TurnNumber => turnNumber;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
     private int CurrentTurnPartyNonBonusCardPlays => _playedCardHistory.Any() ? _playedCardHistory.Last().Count(x => x.Member.TeamType == TeamType.Party && !x.WasTransient) : 0;
-    public int NumberOfCardPlaysRemainingThisTurn => _playerState.CurrentStats.CardPlays() - CurrentTurnPartyNonBonusCardPlays;
+    public int NumberOfCardPlaysRemainingThisTurn => _playerState.CurrentStats.CardPlays() - CurrentTurnPartyNonBonusCardPlays - _numPlayerDiscardsUsedThisTurn;
     
     public int RewardCredits => rewardCredits;
     public int RewardXp => rewardXp;
@@ -144,6 +145,7 @@ public class BattleState : ScriptableObject
         _enemiesById.ForEach(e => e.Value.SetupMemberState(_membersById[e.Key], this));
 
         _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
+        _numPlayerDiscardsUsedThisTurn = 0;
         rewardCredits = 0;
         rewardCards = new CardType[0];
         rewardEquipments = new Equipment[0];
@@ -170,6 +172,7 @@ public class BattleState : ScriptableObject
     // During Battle State Tracking
     public void StartTurn() => UpdateState(() => PlayerState.OnTurnStart());
     public void RecordPlayedCard(IPlayedCard card) => UpdateState(() => _playedCardHistory.Last().Add(new PlayedCardSnapshot(card)));
+    public void RecordCardDiscarded() => UpdateState(() => _numPlayerDiscardsUsedThisTurn++);
     public void RemoveLastRecordedPlayedCard() => _playedCardHistory.Last().RemoveLast();
     public void CleanupExpiredMemberStates() => UpdateState(() => _membersById.ForEach(x => x.Value.State.CleanExpiredStates()));
 
@@ -200,6 +203,7 @@ public class BattleState : ScriptableObject
         {
             _playedCardHistory.Add(new List<PlayedCardSnapshot>());
             _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
+            _numPlayerDiscardsUsedThisTurn = 0;
             PlayerState.OnTurnEnd();
             turnNumber++;
         });

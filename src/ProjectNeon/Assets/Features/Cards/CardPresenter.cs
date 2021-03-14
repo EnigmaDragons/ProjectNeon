@@ -36,6 +36,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Func<BattleState, Card, bool> _getCanPlay;
     private Func<bool> _getCanActivate;
     private Action _onClick;
+    private Action _onDiscard;
     private Action _onMiddleMouse;
     private Action _onRightClick;
     private Action _onBeginDrag;
@@ -61,13 +62,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType = null;
     }
 
-    public void Set(Card card) => Set("Library", card, () => { }, () => {}, (_, __) => false, () => false);
+    public void Set(Card card) => Set("Library", card, () => { }, () => {}, () => { }, (_, __) => false, () => false);
     public void Set(CardTypeData card) => Set(card, () => { });
     
-    public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Func<BattleState, Card, bool> getCanPlay, Func<bool> getCanActivate)
+    public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Action onDiscard, Func<BattleState, Card, bool> getCanPlay, Func<bool> getCanActivate)
     {
         InitFreshCard(onClick);
-        
+
+        _onDiscard = onDiscard;
         _onBeginDrag = onBeginDrag;
         _card = card;
         _cardType = card.Type;
@@ -216,6 +218,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void SetTargetPosition(Vector3 targetPosition)
     {
+        DebugLog($"Set Target Position {targetPosition.ToString()}");
         _position = targetPosition;
         Message.Publish(new GoToTweenRequested(transform, targetPosition, Vector3.Distance(transform.position, targetPosition) / 1600f, MovementDimension.Spatial));
     }
@@ -282,7 +285,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnPointerUp(PointerEventData eventData)
     {
         Cursor.visible = true;
-        if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
+        DebugLog("UI - Pointer Up");
+        if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {
             Message.Publish(new SnapBackTweenRequested(transform, "Click"));
         }
@@ -307,36 +311,42 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         {
             if (!_requiresPlayerTargeting || !IsPlayable)
                 transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
-        });
+        }, () => { });
     
     public void OnBeginDrag(PointerEventData eventData)
         => WhenActivatableHand(() =>
         {
             _isDragging = true;
             canvasGroup.blocksRaycasts = false;
-        
+
             // Targeting Card Selection Process can run the arrow
-            if (_requiresPlayerTargeting && IsPlayable)
-            {
+            if (_requiresPlayerTargeting && IsPlayable) 
                 Message.Publish(new ShowMouseTargetArrow(transform));
-            }
+            
             _onBeginDrag();
             Message.Publish(new BeginTargetSelectionRequested(_card));
-        });
+        }, () => { });
 
     public void OnEndDrag(PointerEventData eventData) 
         => WhenActivatableHand(() =>
         {
             Message.Publish(new CancelTargetSelectionRequested());
             ReturnHandToNormal();
-        });
-
-    private void WhenActivatableHand(Action action)
+        }, UndoDragMovement);
+    
+    private void WhenActivatableHand(Action action, Action elseAction)
     {
         if (_isHand && _getCanActivate())
             action();
+        else
+            elseAction();
     }
 
+    private void UndoDragMovement()
+    {
+        Cursor.visible = true;
+    }
+    
     private void ReturnHandToNormal()
     {
         _isDragging = false;
@@ -344,8 +354,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Message.Publish(new HideMouseTargetArrow());
     }
 
+    public void Discard()
+    {
+        Debug.Log("Discard");
+        ReturnHandToNormal();
+        _onDiscard();
+    }
+    
     public void Activate()
     {
+        Debug.Log("Activate");
         ReturnHandToNormal();
         _onClick();
     }
