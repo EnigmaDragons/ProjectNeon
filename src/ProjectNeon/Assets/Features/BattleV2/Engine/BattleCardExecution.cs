@@ -112,6 +112,8 @@ public static class BattleCardExecution
         var allAvoidedEffect = ctx.Avoid.Members.Any() && effectedTargets.Members.Length == 0;
         if (type == CardBattleActionType.Battle && ctx.Avoid.Type == AvoidanceType.Evade && ctx.Source.State[TemporalStatType.Blind] > 0)
             return new SinglePayload(new CardActionPrevented(ctx.Source, ctx.Avoid, TemporalStatType.Blind));
+        if (type == CardBattleActionType.Battle && ctx.Avoid.Type == AvoidanceType.Spellshield && ctx.Source.State[TemporalStatType.Inhibit] > 0)
+            return new SinglePayload(new CardActionPrevented(ctx.Source, ctx.Avoid, TemporalStatType.Inhibit));
         if (type == CardBattleActionType.Battle && allAvoidedEffect)
             return new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.Avoid));
         if (type == CardBattleActionType.Battle)
@@ -149,6 +151,8 @@ public static class BattleCardExecution
         var allAvoidedEffect = avoid.Members.Any() && effectedTargets.Members.Length == 0;
         if (type == CardBattleActionType.Battle && avoid.Type == AvoidanceType.Evade && source.State[TemporalStatType.Blind] > 0)
             return new SinglePayload(new CardActionPrevented(source, avoid, TemporalStatType.Blind));
+        if (type == CardBattleActionType.Battle && avoid.Type == AvoidanceType.Spellshield && source.State[TemporalStatType.Inhibit] > 0)
+            return new SinglePayload(new CardActionPrevented(source, avoid, TemporalStatType.Inhibit));
         if (type == CardBattleActionType.Battle && allAvoidedEffect)
             return new SinglePayload(new CardActionAvoided(action.BattleEffect, source, effectedTargets, avoid));
         if (type == CardBattleActionType.Battle)

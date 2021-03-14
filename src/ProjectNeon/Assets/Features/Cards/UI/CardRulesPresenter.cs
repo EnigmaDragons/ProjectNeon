@@ -33,6 +33,7 @@ public class CardRulesPresenter : MonoBehaviour
                 TemporalStatType.Evade.ToString(), 
                 TemporalStatType.Taunt.ToString(), 
                 TemporalStatType.Blind.ToString(),
+                TemporalStatType.Inhibit.ToString(),
                 TemporalStatType.Spellshield.ToString(),
                 TemporalStatType.CardStun.ToString(),
                 TemporalStatType.DoubleDamage.ToString(),
