@@ -11,7 +11,7 @@ public class BattleTurnWrapUp : MonoBehaviour
     {
         resolutionZone.NotifyTurnFinished();
         yield return zones.DrawHandAsync(state.PlayerState.CurrentStats.CardDraw());
-        Debug.Log("Advancing Turn");
+        Debug.Log("Began Advancing Turn");
         state.AdvanceTurn();
     }
 }

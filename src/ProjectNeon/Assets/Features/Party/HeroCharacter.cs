@@ -30,3 +30,8 @@ public class InMemoryHeroCharacter : HeroCharacter
     public HeroSkill[] Skills { get; } = new HeroSkill[0];
     public HeroLevelUpPathway LevelUpTree { get; set; }
 }
+
+public static class HeroCharacterExtensions
+{
+    public static bool DeckIsValid(this HeroCharacter h) => h.Deck.Cards.None(x => x == null);
+}

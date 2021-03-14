@@ -15,7 +15,6 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private BattleConclusion conclusion;
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
-    [SerializeField, ReadOnly] private BattleV2Phase phase = BattleV2Phase.NotBegun;
 
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
     
@@ -124,10 +123,12 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
 
     private void BeginPhase(BattleV2Phase newPhase)
     {
-        var finishedMessage = phase != BattleV2Phase.NotBegun ? $"Finished {phase} Phase -> " : "";
+        if (newPhase == state.Phase)
+            Log.Error($"Should not attempt to transition to {newPhase} when that's already the active phase.");
+        
+        var finishedMessage = state.Phase != BattleV2Phase.NotBegun ? $"Finished {state.Phase} Phase -> " : "";
         var message = $"{finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);
-        phase = newPhase;
         state.CleanupExpiredMemberStates();
         state.SetPhase(newPhase);
     }

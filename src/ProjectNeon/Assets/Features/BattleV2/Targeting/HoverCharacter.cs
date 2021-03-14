@@ -10,10 +10,12 @@ public class HoverCharacter : MonoBehaviour
 
     public bool IsInitialized => _member != null;
     public Member Member => _member;
-
+    
     private bool _hovered;
     private Action _confirmAction;
     private Action _cancelAction;
+
+    private bool _loggingEnabled = false;
     
     private void Update()
     {
@@ -22,12 +24,12 @@ public class HoverCharacter : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
         {
-            Log.Info($"UI - Confirmed {Member.Name}");
+            LogInfo($"UI - Confirmed {Member.Name}");
             _confirmAction();
         }
         else if (Input.GetMouseButtonDown(1)) 
         {
-            Log.Info($"UI - Cancelled {Member.Name}");
+            LogInfo($"UI - Cancelled {Member.Name}");
             _cancelAction();
         }
     }
@@ -59,7 +61,7 @@ public class HoverCharacter : MonoBehaviour
 
     public void SetAction(Action confirmAction, Action cancelAction)
     {
-        Log.Info($"UI - Set Hover Character Action for {Member.Name}");
+        LogInfo($"UI - Set Hover Character Action for {Member.Name}");
         _confirmAction = confirmAction;
         _cancelAction = cancelAction;
     }
@@ -69,11 +71,17 @@ public class HoverCharacter : MonoBehaviour
         if (!IsInitialized)
             return;
     
-        Log.Info($"UI - Cleared Hover Character {Member.Name}");
+        LogInfo($"UI - Cleared Hover Character {Member.Name}");
         if (_renderer != null)
             _renderer.material = _originalMaterial;
         _hovered = false;
         _confirmAction = () => { };
         _cancelAction = () => { };
+    }
+
+    private void LogInfo(string msg)
+    {
+        if (_loggingEnabled)
+            Log.Info(msg);
     }
 }

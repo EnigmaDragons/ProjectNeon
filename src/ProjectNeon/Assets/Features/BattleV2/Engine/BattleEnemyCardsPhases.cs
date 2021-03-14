@@ -23,7 +23,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
             .FirstAsMaybe()
             .ExecuteIfPresentOrElse(
                 Play, 
-                () => resolutions.FinishResolvingAll(() => Message.Publish(new ResolutionsFinished(BattleV2Phase.HastyEnemyCards))));
+                () => Message.Publish(new ResolutionsFinished(BattleV2Phase.HastyEnemyCards)));
     }
     
     public void BeginPlayingAllStandardEnemyCards() => PlayNextStandardCard();
@@ -34,7 +34,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
             .FirstAsMaybe()
             .ExecuteIfPresentOrElse(
                 Play, 
-                () => resolutions.FinishResolvingAll(() => Message.Publish(new ResolutionsFinished(BattleV2Phase.EnemyCards))));
+                () => Message.Publish(new ResolutionsFinished(BattleV2Phase.EnemyCards)));
     }
     
     private void Play((Member Member, Enemy Enemy) e)

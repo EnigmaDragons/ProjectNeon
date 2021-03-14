@@ -31,6 +31,12 @@ public sealed class PartyAdventureState : ScriptableObject
         credits = heroes.Sum(h => h.Character.StartingCredits);
         numShopRestocks = 2;
         
+        heroes.ForEach(h =>
+        {
+            if(!h.Character.DeckIsValid())
+                Log.Error($"{h.Name} doesn't have a legal deck");
+        });
+        
         var allStartingCards = Decks.SelectMany(d => d.Cards)
             .Concat(party.Heroes.SelectMany(h => h.AdditionalStartingCards))
             .ToList();

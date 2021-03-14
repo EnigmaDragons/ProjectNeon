@@ -139,9 +139,12 @@ public class CardResolutionZone : ScriptableObject
         Message.Publish(new CardResolutionStarted(played));
         BattleLog.Write($"{timingWord}Resolving {played.Member.Name}'s {played.Card.Name}");
         
+        var card = played.Card;
+        if (card.IsActive && !card.Owner.IsStunnedForCard())
+            currentResolvingCardZone.Set(card);
+        
         Async.ExecuteAfterDelay(delayBeforeResolving, () =>
         {
-            var card = played.Card;
             if (!card.IsActive)
             {
                 BattleLog.Write($"{card.Name} does not resolve.");
@@ -157,7 +160,6 @@ public class CardResolutionZone : ScriptableObject
             }
             else
             {
-                currentResolvingCardZone.Set(card);
                 played.Perform(battleState.GetSnapshot());
                 WrapupCard(played, card);
             }

@@ -80,6 +80,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         playArea.Clear();
         DevLog.Write("Player Confirmed Turn");
         Message.Publish(new PlayerTurnConfirmed());
+        Message.Publish(new ResolutionsFinished(BattleV2Phase.PlayCards));
     }
 
     public void Cancel()
