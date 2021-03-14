@@ -61,7 +61,7 @@ public static class AllEffects
         { EffectType.ApplyConfusion, e => new SimpleEffect(m => m.Adjust(TemporalStatType.Confusion, e.NumberOfTurns + 1)) },
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
-        { EffectType.DealRawDamageFormula, e => new FullContextEffect((ctx, m) => m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount))))},
+        { EffectType.DealRawDamageFormula, e => new FullContextEffect((ctx, m) => m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount))))},
         { EffectType.ApplyAdditiveStatInjury, e => new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.BaseAmount + e.FloatAmount, e.FlavorText)},
         { EffectType.ApplyMultiplicativeStatInjury, e => new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.BaseAmount + e.FloatAmount, e.FlavorText)},
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
@@ -71,9 +71,9 @@ public static class AllEffects
         { EffectType.DoubleTheEffectAndMinusDurationTransformer, e => new EffectDoubleTheEffectAndMinus1Duration(e) },
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(e.EffectScope, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
-        { EffectType.HealFormula, e => new FullContextEffect((ctx, m) => m.GainHp(Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount))) },
-        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
-        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.HealFormula, e => new FullContextEffect((ctx, m) => m.GainHp(Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount))) },
+        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.RedrawHandOfCards, e => new FullContextEffect(ctx => { BattleLog.Write("Discard and drew a new hand of cards."); 
             ctx.PlayerCardZones.DiscardHand(); ctx.PlayerCardZones.DrawCards(ctx.PlayerState.CardDraws - ctx.PlayerCardZones.PlayZone.Count); })},
