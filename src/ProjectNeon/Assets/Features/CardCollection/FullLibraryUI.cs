@@ -21,8 +21,8 @@ public class FullLibraryUI : MonoBehaviour
             emptyCard, 
             allCards.All
                 .OrderBy(c => c.LimitedToClass.Select(l => l.Name, ""))
-                .ThenBy(c => c.Cost.BaseAmount)
                 .ThenBy(c => c.Rarity)
+                .ThenBy(c => c.Cost.BaseAmount)
                 .ThenBy(c => c.Name)
                 .Select(InitCardInLibraryButton)
                 .ToList(), 
