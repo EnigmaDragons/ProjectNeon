@@ -90,6 +90,12 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
                 Log.Info($"{member.Name} is missing a {nameof(StealthTransparency)}");
             else
                 stealth.Init(member);
+
+            var shield = active[i].GetComponentInChildren<ShieldVisual>();
+            if (shield == null)
+                Log.Info($"{member.Name} is missing a {nameof(ShieldVisual)}");
+            else
+                shield.Init(member);
         }
     }
 

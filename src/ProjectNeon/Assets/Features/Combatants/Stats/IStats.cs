@@ -15,6 +15,7 @@ public static class StatsExtensions
     public static int MissingHp(this IStats stats) => stats.MaxHp() - stats.Hp();
     public static int MaxHp(this IStats stats) => stats[StatType.MaxHP].RoundUp();
     public static int Hp(this IStats stats) => stats[TemporalStatType.HP].RoundUp();
+    public static int Shield(this IStats stats) => stats[TemporalStatType.Shield].RoundUp();
     public static int Toughness(this IStats stats) => stats[StatType.Toughness].RoundUp();
     public static int StartingShield(this IStats stats) => stats[StatType.StartingShield].RoundUp();
     public static int MaxShield(this IStats stats) => stats[StatType.MaxShield].RoundUp();

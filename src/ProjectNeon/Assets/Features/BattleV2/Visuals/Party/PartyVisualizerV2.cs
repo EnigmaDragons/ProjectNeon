@@ -21,6 +21,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     private readonly Dictionary<HeroCharacter, Animator> _animators = new Dictionary<HeroCharacter, Animator>();
     private readonly Dictionary<HeroCharacter, SpriteRenderer> _renderers = new Dictionary<HeroCharacter, SpriteRenderer>();
     private readonly Dictionary<HeroCharacter, HoverCharacter> _hovers  = new Dictionary<HeroCharacter, HoverCharacter>();
+    private readonly Dictionary<HeroCharacter, ShieldVisual> _shields  = new Dictionary<HeroCharacter, ShieldVisual>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
     
@@ -45,6 +46,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     {
         _damagesNew.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _hovers.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _shields.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
     private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
@@ -76,6 +78,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
              else
                  _centers[hero] = centerPoint;
 
+             var shield = character.GetComponentInChildren<ShieldVisual>();
+             if (shield == null)
+                 Debug.LogWarning($"{hero.Name} is missing a {nameof(ShieldVisual)}");
+             else
+                 _shields[hero] = shield;
+             
              character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
         }
         else
