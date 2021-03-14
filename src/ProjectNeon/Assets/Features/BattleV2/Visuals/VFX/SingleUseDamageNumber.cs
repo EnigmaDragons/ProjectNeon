@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 
@@ -29,6 +30,7 @@ public class SingleUseDamageNumber : MonoBehaviour
         text.text = Mathf.Abs(damage).ToString();
         _remaining = duration;
         StartCoroutine(DamageAnim());
+        text.transform.DOPunchScale(new Vector3(2.2f, 2.2f, 2.2f), 0.5f, 1);
     }
 
     private IEnumerator DamageAnim()
