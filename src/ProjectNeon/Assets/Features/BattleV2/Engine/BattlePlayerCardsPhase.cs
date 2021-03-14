@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
+[Obsolete]
 public class BattlePlayerCardsPhase : OnMessage<TargetSelectionBegun, TargetSelectionFinished, PlayerTurnConfirmationStarted, PlayerTurnConfirmationAborted>
 {
     [SerializeField] private BattleUiVisuals ui;

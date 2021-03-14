@@ -7,12 +7,13 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones cards;
     [SerializeField] private BattleSetupV2 setup;
-    [SerializeField] private BattlePlayerCardsPhase commandPhase;
+    [SerializeField] private BattlePlayerCardsPhase playerCardsPhase;
     [SerializeField] private BattleResolutions resolutions;
     [SerializeField] private BattleEnemyCardsPhases enemyCardsPhases;
     [SerializeField] private BattleTurnWrapUp turnWrapUp;
     [SerializeField] private BattleStatusEffects statusPhase;
     [SerializeField] private BattleConclusion conclusion;
+    [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
 
@@ -62,24 +63,25 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         if (state.BattleIsOver())
             FinishBattle();
         else
-            commandPhase.Begin();
+            playerCardsPhase.Begin();
     }
 
     private IEnumerator TransitionToEnemyCardsPhase()
     {
-        yield return commandPhase.Wrapup();
+        yield return playerCardsPhase.Wrapup();
         BeginPhase(BattleV2Phase.EnemyCards);
         enemyCardsPhases.BeginPlayingAllStandardEnemyCards();
     }
 
-    private IEnumerator WaitForAllPlayedCardsToFinishResolving()
+    private IEnumerator WaitForAllPlayerCardsToFinishResolving()
     {
+        resolutionZone.NotifyPlayerTurnEnded();
         while (!resolutions.IsDoneResolving)
             yield return new WaitForSeconds(0.1f);
         Message.Publish(new ResolutionsFinished(BattleV2Phase.PlayCards));
     }
     
-    protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayedCardsToFinishResolving());
+    protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayerCardsToFinishResolving());
     protected override void Execute(StartOfTurnEffectsStatusResolved msg) => BeginHastyEnemiesPhase();
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
 

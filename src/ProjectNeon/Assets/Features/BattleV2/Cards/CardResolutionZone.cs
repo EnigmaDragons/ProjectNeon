@@ -37,6 +37,11 @@ public class CardResolutionZone : ScriptableObject
     {
         _movesThisTurn.Clear();
     }
+
+    public void NotifyPlayerTurnEnded()
+    {
+        AddBonusCardsIfApplicable();
+    }
     
     public void Queue(IPlayedCard played)
     {
@@ -50,11 +55,8 @@ public class CardResolutionZone : ScriptableObject
         RecordCardAndPayCosts(played);
         
         if (played.Member.TeamType == TeamType.Party && battleState.NumberOfCardPlaysRemainingThisTurn == 0)
-        {
             AddChainedCardIfApplicable(played);
-            AddBonusCardsIfApplicable();
-        }
-        
+
         if (shouldQueue)
             Enqueue(played);
         else
@@ -178,18 +180,20 @@ public class CardResolutionZone : ScriptableObject
 
     private void AddBonusCardsIfApplicable()
     {
+        Log.Info("Checking Bonus Cards");
         var snapshot = battleState.GetSnapshot();
         var members = battleState.Members.Values.Where(x => x.IsConscious());
         foreach (var member in members)
         {
             var bonusCards = member.State.GetBonusCards(snapshot);
+            Log.Info($"Num Bonus Cards {member.Name}: {bonusCards.Length}");
             foreach (var card in bonusCards)
             {
                 if (!card.IsPlayableBy(member)) 
                     continue;
                 
                 var targets = GetTargets(member, card, Maybe<Target[]>.Missing());
-                Queue(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
+                PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
                 // Maybe Display cool Bonus Card text here
             }
         }
