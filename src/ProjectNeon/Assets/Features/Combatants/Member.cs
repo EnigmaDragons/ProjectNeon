@@ -60,6 +60,7 @@ public static class MemberExtensions
     public static bool IsVulnerable(this Member m) => m.State.Damagability() > 1;
     public static bool IsDisabled(this Member m) => m.State[TemporalStatType.Disabled] > 0;
     public static bool IsStunnedForCard(this Member m) => m.State[TemporalStatType.CardStun] > 0;
+    public static bool CanReact(this Member m) => !m.IsDisabled() && !m.IsStunnedForCard();
     public static bool HasAttackBuff(this Member m) => m.State.DifferenceFromBase(StatType.Attack) > 0;
     public static bool HasDoubleDamage(this Member m) => m.State[TemporalStatType.DoubleDamage] > 0;
     public static bool HasTaunt(this Member m) => m.State[TemporalStatType.Taunt] > 0;
