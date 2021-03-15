@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -43,9 +44,18 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
             _icons[i].sprite = primaryResourceIcon;
             _icons[i].transform.localScale = spritePrototype.transform.localScale;
             if (i + 1 > _lastAmount)
-                _icons[i].transform.DOPunchScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f, 1);
+            {
+                Message.Publish(new TweenMovementRequested(_icons[i].transform, new Vector3(0.6f, 0.6f, 0.6f), 1, MovementDimension.Scale, TweenMovementType.RubberBand, "ResourceGain"));
+                StartCoroutine(SnapBack(_icons[i].transform));
+            }
         }
 
         _lastAmount = resourceAmount;
+    }
+
+    private IEnumerator SnapBack(Transform iconTransform)
+    {
+        yield return new WaitForSeconds(1);
+        Message.Publish(new SnapBackTweenRequested(iconTransform, "ResourceGain"));
     }
 }
