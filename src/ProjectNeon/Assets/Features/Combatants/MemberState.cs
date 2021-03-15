@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public sealed class MemberState : IStats
 {
@@ -270,11 +271,12 @@ public sealed class MemberState : IStats
     public void SetHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).Set(amount));
     public void TakeDamage(int amount)
     {
-        var shieldModificationAmount = Math.Min(amount, Counter(TemporalStatType.Shield).Amount);
-        amount -= shieldModificationAmount;
+        var clampedAmount = Math.Max(amount, 0);
+        var shieldModificationAmount = Math.Min(clampedAmount, Counter(TemporalStatType.Shield).Amount);
+        clampedAmount -= shieldModificationAmount;
         AdjustShieldNoPublish(-shieldModificationAmount);
-        if (amount > 0)
-            ChangeHp(-amount);
+        if (clampedAmount > 0)
+            ChangeHp(-clampedAmount);
     }
     private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
 
