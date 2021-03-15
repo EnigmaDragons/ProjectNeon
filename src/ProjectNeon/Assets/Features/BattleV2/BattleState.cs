@@ -47,6 +47,7 @@ public class BattleState : ScriptableObject
     public int RewardXp => rewardXp;
     public CardType[] RewardCards => rewardCards; 
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
+    public Enemy[] NextEncounterEnemies => nextEnemies.ToArray();
 
     public bool NeedsCleanup => needsCleanup;
     public bool IsEliteBattle => isEliteBattle;
