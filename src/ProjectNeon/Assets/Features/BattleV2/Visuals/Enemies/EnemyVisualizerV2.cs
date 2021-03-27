@@ -87,8 +87,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
 
     private void SetupVisualComponents(GameObject obj, Member member)
     {
-        var hoverCharacter = obj.GetComponentInChildren<HoverCharacter2D>();
-        var hoverCharacter3d = obj.GetComponentInChildren<HoverCharacter3D>();
+        var hoverCharacter = obj.GetComponentInChildren<HoverSpriteCharacter2D>();
+        var hoverCharacter3d = obj.GetComponentInChildren<HoverSpriteCharacter3D>();
         if (hoverCharacter == null && hoverCharacter3d == null)
             Log.Error($"{member.Name} is missing a HoverCharacter");
         else if (hoverCharacter3d != null)

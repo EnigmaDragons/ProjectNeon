@@ -5,7 +5,7 @@ public class MouseHoverProcessor3D : MonoBehaviour
     private Camera _cam;
     private readonly RaycastHit[] _hits = new RaycastHit[100];
     private MouseHoverStatusIcon _statusIcon;
-    private Maybe<HoverCharacter3D> _lastHover = Maybe<HoverCharacter3D>.Missing();
+    private Maybe<HoverCharacter> _lastHover = Maybe<HoverCharacter>.Missing();
     
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class MouseHoverProcessor3D : MonoBehaviour
         var v3 = _cam.ScreenPointToRay(Input.mousePosition);
         var numHits = Physics.RaycastNonAlloc(v3, _hits, 100f);
 
-        var hoverCharacter = Maybe<HoverCharacter3D>.Missing();
+        var hoverCharacter = Maybe<HoverCharacter>.Missing();
         var hoverStatusIcon = Maybe<WorldStatusIconPresenter>.Missing();
         if (numHits > 0)
         {
@@ -29,11 +29,14 @@ public class MouseHoverProcessor3D : MonoBehaviour
                 if (hoverCharacter.IsMissing && _hits[i].collider.gameObject.layer == characterLayer)
                 {
                     var obj = _hits[i].transform.gameObject;
-                    var c = obj.GetComponentInChildren<HoverCharacter3D>();
-                    if (c == null)
-                        Log.Error($"{obj.name} is missing a {nameof(HoverCharacter3D)} script");
+                    var spriteHover = obj.GetComponentInChildren<HoverSpriteCharacter3D>();
+                    var basicHover = obj.GetComponentInChildren<HoverBasicCharacter3D>();
+                    if (spriteHover == null && basicHover == null)
+                        Log.Error($"{obj.name} is missing a {nameof(HoverCharacter)} script");
                     else
-                        hoverCharacter = c;
+                        hoverCharacter = new Maybe<HoverCharacter>(spriteHover != null 
+                            ? (HoverCharacter)spriteHover 
+                            : basicHover);
                 }
             
             for (var i = 0; i < numHits; i++)

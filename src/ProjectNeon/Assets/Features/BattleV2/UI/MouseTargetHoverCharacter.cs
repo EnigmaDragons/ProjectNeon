@@ -5,13 +5,12 @@ using UnityEngine;
 public class MouseTargetHoverCharacter : OnMessage<CharacterHoverChanged, TargetSelectionBegun, SelectionPossibleTargetsAvailable, TargetSelectionFinished>
 {
     [SerializeField] private BattlePlayerTargetingState targeting;
-    [SerializeField] private Material hoverMaterial;
 
     private int[] _possibleMembersIds = Array.Empty<int>();
     private bool _isSelectingTargets;
-    private Maybe<HoverCharacter> _char = Maybe<HoverCharacter>.Missing();
+    private Maybe<HoverSpriteCharacter> _char = Maybe<HoverSpriteCharacter>.Missing();
     
-    private void UpdateHover(Maybe<HoverCharacter> hovered)
+    private void UpdateHover(Maybe<HoverSpriteCharacter> hovered)
     {
         if (!_isSelectingTargets)
             return;
@@ -26,7 +25,6 @@ public class MouseTargetHoverCharacter : OnMessage<CharacterHoverChanged, Target
         if (_possibleMembersIds.Contains(id))
         {
             _char = hovered;
-            _char.Value.Set(hoverMaterial);
             _char.Value.SetAction(
                 () => Message.Publish(new ConfirmTargetSelectionRequested()), 
                 () => Message.Publish(new CancelTargetSelectionRequested()));
@@ -39,13 +37,13 @@ public class MouseTargetHoverCharacter : OnMessage<CharacterHoverChanged, Target
         if (_char.IsPresent)
         {
             _char.Value.Revert();
-            _char = Maybe<HoverCharacter>.Missing();
+            _char = Maybe<HoverSpriteCharacter>.Missing();
         }
     }
 
     protected override void Execute(CharacterHoverChanged msg)
     {
-        UpdateHover(msg.HoverCharacter);
+        msg.HoverCharacter.IfPresent(h => h.SetIsHovered());
     }
 
     protected override void Execute(TargetSelectionBegun msg)

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
-public class HoverCharacter2D : MonoBehaviour, HoverCharacter
+public class HoverSpriteCharacter2D : MonoBehaviour, HoverSpriteCharacter
 {
     private SpriteRenderer _renderer;
     private Material _originalMaterial;
