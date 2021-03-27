@@ -40,7 +40,7 @@ namespace CharacterEditor2D
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
         }
 
-        static string startScene = "Assets/CharacterCreator2D/Creator UI/Creator UI.unity";
+        static string startScene = "Assets/Plugins/CharacterCreator2D/Creator UI/Creator UI.unity";
         static string prevScene = EditorPrefs.GetString("PlayFromStartPrevScene");
         static bool active = EditorPrefs.GetBool("PlayFromStartActive", false);
 

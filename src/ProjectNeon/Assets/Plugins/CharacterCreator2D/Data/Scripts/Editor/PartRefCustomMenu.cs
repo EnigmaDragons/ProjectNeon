@@ -36,7 +36,7 @@ namespace CharacterEditor2D
         private const string SEARCH_PART_FILTER = "t:" + nameof(Part);
         private const string SEARCH_PARTREFERER_FILTER = "t:" + nameof(PartReferer);
         private const string CC2D_RES_FOLDER = "PartReferers";
-        private const string CC2D_RES_PATH = "Assets/CharacterCreator2D/Data/Resources/" + CC2D_RES_FOLDER;
+        private const string CC2D_RES_PATH = "Assets/Plugins/CharacterCreator2D/Data/Resources/" + CC2D_RES_FOLDER;
         private const string CC2D_RES_SYMBOL = "CC2D_RES";
         private const string CC2D_RES_KEY = "IsUsePartRes";
 

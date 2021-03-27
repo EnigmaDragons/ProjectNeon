@@ -8,11 +8,11 @@ namespace CharacterEditor2D
 {
     public static class WizardUtils
     {
-        public const string PartTemplateFolder = "Assets/CharacterCreator2D/Data/Part Templates";
-        public const string PaletteFolder = "Assets/CharacterCreator2D/Color Palettes";
-        public const string PartFolder = "Assets/CharacterCreator2D/Parts";
-        public const string SetupDataPath = "Assets/CharacterCreator2D/Data/Resources/CC2D_SetupData.asset";
-        public const string PartListPath = "Assets/CharacterCreator2D/Data/Resources/CC2D_PartList.asset";
+        public const string PartTemplateFolder = "Assets/Plugins/CharacterCreator2D/Data/Part Templates";
+        public const string PaletteFolder = "Assets/Plugins/CharacterCreator2D/Color Palettes";
+        public const string PartFolder = "Assets/Plugins/CharacterCreator2D/Parts";
+        public const string SetupDataPath = "Assets/Plugins/CharacterCreator2D/Data/Resources/CC2D_SetupData.asset";
+        public const string PartListPath = "Assets/Plugins/CharacterCreator2D/Data/Resources/CC2D_PartList.asset";
 
         private static GUIStyle _bgstyle = createBGStyle();
         public static GUIStyle BGStyle
