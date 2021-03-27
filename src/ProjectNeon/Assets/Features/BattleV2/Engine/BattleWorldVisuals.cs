@@ -11,6 +11,7 @@ public class BattleWorldVisuals : MonoBehaviour
     [SerializeField] private PartyVisualizerV2 party;
     [SerializeField] private EnemyVisualizerV2 enemies;
     [SerializeField] private float battleFieldScale = 0.929f;
+    [SerializeField] private float battleFieldZPos = 10f;
 
     private GameObject _battlefield;
     
@@ -43,7 +44,7 @@ public class BattleWorldVisuals : MonoBehaviour
         if (_battlefield != null)
             Destroy(_battlefield);
         
-        _battlefield = Instantiate(state.Battlefield, new Vector3(0, 0, 10), Quaternion.identity, battlefieldParent.transform);
+        _battlefield = Instantiate(state.Battlefield, new Vector3(0, 0, battleFieldZPos), Quaternion.identity, battlefieldParent.transform);
         _battlefield.transform.localScale = new Vector3(battleFieldScale, battleFieldScale, battleFieldScale);
     }
 }
