@@ -7,6 +7,8 @@ using UnityEngine;
 public class Enemy : ScriptableObject
 {
     [SerializeField] private string enemyName;
+    [SerializeField] private string lastBalanceDate = "Never";
+    [SerializeField] private bool isCurrentlyWorking = true;
     [SerializeField] private Deck deck;
     [SerializeField] private TurnAI ai;
     [SerializeField] private int preferredTurnOrder = 99;
@@ -34,7 +36,6 @@ public class Enemy : ScriptableObject
     [SerializeField] private int resourceGainPerTurn = 1;
     [SerializeField] private int cardsPerTurn = 1;
     [SerializeField] private EffectData[] startOfBattleEffects = new EffectData[0];
-    [SerializeField] private string lastBalanceDate = "Never";
 
     public string Name => enemyName;
     public bool DeckIsValid => deck.Cards.None(x => x == null);
