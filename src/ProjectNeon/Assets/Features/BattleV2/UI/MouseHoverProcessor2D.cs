@@ -5,7 +5,7 @@ public class MouseHoverProcessor2D : MonoBehaviour
     private Camera _cam;
     private readonly RaycastHit2D[] _hits = new RaycastHit2D[100];
     private MouseHoverStatusIcon _statusIcon;
-    private Maybe<HoverCharacter2D> _lastHover = Maybe<HoverCharacter2D>.Missing();
+    private Maybe<HoverSpriteCharacter2D> _lastHover = Maybe<HoverSpriteCharacter2D>.Missing();
     
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class MouseHoverProcessor2D : MonoBehaviour
         var v2 = new Vector2(wp.x, wp.y);
         var numHits = Physics2D.RaycastNonAlloc(v2, Vector2.zero, _hits, 100f);
 
-        var hoverCharacter = Maybe<HoverCharacter2D>.Missing();
+        var hoverCharacter = Maybe<HoverSpriteCharacter2D>.Missing();
         var hoverStatusIcon = Maybe<WorldStatusIconPresenter>.Missing();
         if (numHits > 0)
         {
@@ -30,9 +30,9 @@ public class MouseHoverProcessor2D : MonoBehaviour
                 if (hoverCharacter.IsMissing && _hits[i].collider.gameObject.layer == characterLayer)
                 {
                     var obj = _hits[i].transform.gameObject;
-                    var c = obj.GetComponentInChildren<HoverCharacter2D>();
+                    var c = obj.GetComponentInChildren<HoverSpriteCharacter2D>();
                     if (c == null)
-                        Log.Error($"{obj.name} is missing a {nameof(HoverCharacter2D)} script");
+                        Log.Error($"{obj.name} is missing a {nameof(HoverSpriteCharacter2D)} script");
                     else
                         hoverCharacter = c;
                 }

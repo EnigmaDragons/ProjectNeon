@@ -1,11 +1,9 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer)), RequireComponent(typeof(BoxCollider))]
-public class HoverCharacter3D : MonoBehaviour, HoverCharacter
+[RequireComponent(typeof(BoxCollider))]
+public class HoverBasicCharacter3D : MonoBehaviour, HoverCharacter
 {
-    private SpriteRenderer _renderer;
-    private Material _originalMaterial;
     private Member _member;
 
     public bool IsInitialized => _member != null;
@@ -43,20 +41,8 @@ public class HoverCharacter3D : MonoBehaviour, HoverCharacter
             Log.Error($"{Member.Name} does not have the correct Game Object Layer. Must be Character.");
         if (!GetComponent<BoxCollider>().isTrigger)
             Log.Error($"{Member.Name}'s Box Collider must be a trigger.");
-        _renderer = GetComponent<SpriteRenderer>();
-        _originalMaterial = _renderer.material;
     }
-
-    public void Set(Material material)
-    {        
-        if (!IsInitialized)
-            return;
-        
-        if (_renderer != null)
-            _renderer.material = material;
-        _hovered = true;
-    }
-
+    
     public void SetIsHovered() => _hovered = true;
 
     public void SetAction(Action confirmAction, Action cancelAction)
@@ -72,8 +58,6 @@ public class HoverCharacter3D : MonoBehaviour, HoverCharacter
             return;
     
         LogInfo($"UI - Cleared Hover Character {Member.Name}");
-        if (_renderer != null)
-            _renderer.material = _originalMaterial;
         _hovered = false;
         _confirmAction = () => { };
         _cancelAction = () => { };
@@ -85,4 +69,3 @@ public class HoverCharacter3D : MonoBehaviour, HoverCharacter
             Log.Info(msg);
     }
 }
-

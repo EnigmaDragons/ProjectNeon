@@ -1,10 +1,8 @@
 using System;
-using UnityEngine;
 
 public interface HoverCharacter
 {
-    void Init(Member m);
-    void Set(Material material);
+    void Init(Member member);
     void SetIsHovered();
     void SetAction(Action confirmAction, Action cancelAction);
     void Revert();
