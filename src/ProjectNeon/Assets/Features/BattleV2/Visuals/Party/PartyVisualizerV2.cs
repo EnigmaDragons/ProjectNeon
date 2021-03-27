@@ -20,7 +20,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
 
     private readonly Dictionary<HeroCharacter, Animator> _animators = new Dictionary<HeroCharacter, Animator>();
     private readonly Dictionary<HeroCharacter, SpriteRenderer> _renderers = new Dictionary<HeroCharacter, SpriteRenderer>();
-    private readonly Dictionary<HeroCharacter, HoverCharacter> _hovers  = new Dictionary<HeroCharacter, HoverCharacter>();
+    private readonly Dictionary<HeroCharacter, HoverCharacter2D> _hovers  = new Dictionary<HeroCharacter, HoverCharacter2D>();
     private readonly Dictionary<HeroCharacter, ShieldVisual> _shields  = new Dictionary<HeroCharacter, ShieldVisual>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
@@ -64,7 +64,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         else
             _damagesNew[hero] = damageEffectController;
 
-        var hoverEffectController = character.GetComponentInChildren<HoverCharacter>();
+        var hoverEffectController = character.GetComponentInChildren<HoverCharacter2D>();
         if (hoverEffectController == null)
             Debug.LogWarning($"{hero.Name} is missing a HoverCharacter");
         else

@@ -80,27 +80,36 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         for (var i = 0; i < enemyArea.Enemies.Count; i++)
         {
             var member = state.GetMemberByEnemyIndex(i);
-            
             SetupEnemyUi(member, enemyArea.EnemyUiPositions[i].gameObject.transform);
-            
-            var hoverCharacter = active[i].GetComponentInChildren<HoverCharacter>();
-            if (hoverCharacter == null)
-                Log.Error($"{member.Name} is missing a {nameof(HoverCharacter)}");
-            else
-                hoverCharacter.Init(member);
-            
-            var stealth = active[i].GetComponentInChildren<StealthTransparency>();
-            if (stealth == null)
-                Log.Info($"{member.Name} is missing a {nameof(StealthTransparency)}");
-            else
-                stealth.Init(member);
-
-            var shield = active[i].GetComponentInChildren<ShieldVisual>();
-            if (shield == null)
-                Log.Info($"{member.Name} is missing a {nameof(ShieldVisual)}");
-            else
-                shield.Init(member);
+            SetupVisualComponents(active[i], member);
         }
+    }
+
+    private void SetupVisualComponents(GameObject obj, Member member)
+    {
+        var hoverCharacter = obj.GetComponentInChildren<HoverCharacter2D>();
+        if (hoverCharacter == null)
+            Log.Error($"{member.Name} is missing a {nameof(HoverCharacter2D)}");
+        else
+            hoverCharacter.Init(member);
+
+        var hoverCharacter3d = obj.GetComponentInChildren<HoverCharacter3D>();
+        if (hoverCharacter3d == null)
+            Log.Error($"{member.Name} is missing a {nameof(HoverCharacter3D)}");
+        else
+            hoverCharacter3d.Init(member);
+
+        var stealth = obj.GetComponentInChildren<StealthTransparency>();
+        if (stealth == null)
+            Log.Info($"{member.Name} is missing a {nameof(StealthTransparency)}");
+        else
+            stealth.Init(member);
+
+        var shield = obj.GetComponentInChildren<ShieldVisual>();
+        if (shield == null)
+            Log.Info($"{member.Name} is missing a {nameof(ShieldVisual)}");
+        else
+            shield.Init(member);
     }
 
     public Member Spawn(Enemy enemy)
@@ -122,14 +131,14 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         Destroy(uis[index]);
     }
 
-    private void SetupEnemyUi(Member enemyMember, Transform enemyObject)
+    private void SetupEnemyUi(Member member, Transform obj)
     {
-        var pos = enemyObject.transform.position;
-        var customUi = enemyObject.GetComponentInChildren<EnemyBattleUIPresenter>();
-        enemyObject.GetComponentInChildren<HoverCharacter>().Init(enemyMember);
+        var pos = obj.transform.position;
+        var customUi = obj.GetComponentInChildren<EnemyBattleUIPresenter>();
+        SetupVisualComponents(obj.gameObject, member);
         uis.Add(customUi != null
-            ? customUi.Initialized(enemyMember)
-            : Instantiate(ui, pos, Quaternion.identity, enemyObject).Initialized(enemyMember));
+            ? customUi.Initialized(member)
+            : Instantiate(ui, pos, Quaternion.identity, obj).Initialized(member));
     }
     
     protected override void Execute(MemberUnconscious m)
