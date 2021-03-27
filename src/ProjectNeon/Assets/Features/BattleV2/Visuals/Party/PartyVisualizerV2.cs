@@ -51,45 +51,38 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
 
     private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
     {
-        var hasBody = !hero.Body.name.Equals("BodyPlaceholder");
-        if (hasBody)
-        {
-             var character = Instantiate(hero.Body, heroOrigin.transform.position, Quaternion.identity, heroOrigin.transform);
-             _heroes.Add(character);
-             _animators[hero] = character.GetComponentInChildren<Animator>();
-             _renderers[hero] = character.GetComponentInChildren<SpriteRenderer>();
-             _renderers[hero].material = defaultSpriteMaterial;
-             
-             var damageEffectController = character.GetComponentInChildren<DamageNumbersController>();
-             if (damageEffectController == null)
-                 Debug.LogWarning($"{hero.Name} is missing a DamageNumbersController");
-             else
-                 _damagesNew[hero] = damageEffectController;
-
-             var hoverEffectController = character.GetComponentInChildren<HoverCharacter>();
-             if (hoverEffectController == null)
-                 Debug.LogWarning($"{hero.Name} is missing a HoverCharacter");
-             else
-                 _hovers[hero] = hoverEffectController;
-             
-             var centerPoint = character.GetComponentInChildren<CenterPoint>();
-             if (centerPoint == null)
-                 Debug.LogWarning($"{hero.Name} is missing a CenterPoint");
-             else
-                 _centers[hero] = centerPoint;
-
-             var shield = character.GetComponentInChildren<ShieldVisual>();
-             if (shield == null)
-                 Debug.LogWarning($"{hero.Name} is missing a {nameof(ShieldVisual)}");
-             else
-                 _shields[hero] = shield;
-             
-             character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
-        }
+        Debug.Log(heroOrigin);
+        var character = Instantiate(hero.Body, heroOrigin.transform);
+        _heroes.Add(character);
+        _animators[hero] = character.GetComponentInChildren<Animator>();
+        _renderers[hero] = character.GetComponentInChildren<SpriteRenderer>();
+        _renderers[hero].material = defaultSpriteMaterial;
+         
+        var damageEffectController = character.GetComponentInChildren<DamageNumbersController>();
+        if (damageEffectController == null)
+            Debug.LogWarning($"{hero.Name} is missing a DamageNumbersController");
         else
-        {
-            heroOrigin.GetComponent<SpriteRenderer>().sprite = hero.Bust;
-        }
+            _damagesNew[hero] = damageEffectController;
+
+        var hoverEffectController = character.GetComponentInChildren<HoverCharacter>();
+        if (hoverEffectController == null)
+            Debug.LogWarning($"{hero.Name} is missing a HoverCharacter");
+        else
+            _hovers[hero] = hoverEffectController;
+         
+        var centerPoint = character.GetComponentInChildren<CenterPoint>();
+        if (centerPoint == null)
+            Debug.LogWarning($"{hero.Name} is missing a CenterPoint");
+        else
+            _centers[hero] = centerPoint;
+
+        var shield = character.GetComponentInChildren<ShieldVisual>();
+        if (shield == null)
+            Debug.LogWarning($"{hero.Name} is missing a {nameof(ShieldVisual)}");
+        else
+            _shields[hero] = shield;
+         
+        character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
     }
 
     protected override void Execute(CharacterAnimationRequested e)

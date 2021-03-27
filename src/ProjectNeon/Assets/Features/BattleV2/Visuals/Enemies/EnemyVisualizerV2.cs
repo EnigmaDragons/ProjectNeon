@@ -12,6 +12,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     [SerializeField] private EnemyBattleUIPresenter ui;
     [SerializeField] private float rowHeight = 1.5f;
     [SerializeField] private float widthBetweenEnemies = 1.5f;
+    [SerializeField] private bool rowUsesYAxis = true;
     [SerializeField] private CurrentAnimationContext animationContext;
 
     [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
@@ -38,7 +39,10 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         {
             var enemyObject = active[enemyPosition.Item1].transform;
             var t = enemyObject.transform;
-            t.position = transform.position - new Vector3(enemyPosition.Item1 * widthBetweenEnemies, (enemyPosition.Item1 % 2) * rowHeight, (enemyPosition.Item1 % 2) == 0 ? 0 : 1);
+            var x = enemyPosition.Item1 * widthBetweenEnemies;
+            var y = rowUsesYAxis ? (enemyPosition.Item1 % 2) * rowHeight : 0;
+            var z = !rowUsesYAxis ? (enemyPosition.Item1 % 2) * rowHeight : 0;
+            t.position = transform.position - new Vector3(x, y, z);
         }
     }
 
