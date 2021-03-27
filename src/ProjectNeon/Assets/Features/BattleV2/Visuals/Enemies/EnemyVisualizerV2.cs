@@ -88,16 +88,13 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     private void SetupVisualComponents(GameObject obj, Member member)
     {
         var hoverCharacter = obj.GetComponentInChildren<HoverCharacter2D>();
-        if (hoverCharacter == null)
-            Log.Error($"{member.Name} is missing a {nameof(HoverCharacter2D)}");
-        else
-            hoverCharacter.Init(member);
-
         var hoverCharacter3d = obj.GetComponentInChildren<HoverCharacter3D>();
-        if (hoverCharacter3d == null)
-            Log.Error($"{member.Name} is missing a {nameof(HoverCharacter3D)}");
-        else
+        if (hoverCharacter == null && hoverCharacter3d == null)
+            Log.Error($"{member.Name} is missing a HoverCharacter");
+        else if (hoverCharacter3d != null)
             hoverCharacter3d.Init(member);
+        else if (hoverCharacter != null)
+            hoverCharacter.Init(member);
 
         var stealth = obj.GetComponentInChildren<StealthTransparency>();
         if (stealth == null)
