@@ -57,14 +57,14 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
         if (_shouldStepForward)
         {
             _t = Mathf.Min(1, _t + Time.deltaTime / _travelSeconds);
-            transform.localPosition = new Vector2(Mathf.SmoothStep(_startX, _endX, _t), transform.localPosition.y);
+            transform.localPosition = new Vector3(Mathf.SmoothStep(_startX, _endX, _t), transform.localPosition.y, transform.localPosition.z);
             if (Mathf.Abs(transform.localPosition.x - _endX) < 0.05)
                 _isTraveling = false;
         }
         else
         {
             _t = Mathf.Max(0, _t - Time.deltaTime / _travelSeconds);
-            transform.localPosition = new Vector2(Mathf.SmoothStep(_startX, _endX, _t), transform.localPosition.y);
+            transform.localPosition = new Vector3(Mathf.SmoothStep(_startX, _endX, _t), transform.localPosition.y, transform.localPosition.z);
             if (Mathf.Abs(transform.localPosition.x - _startX) < 0.05)
                 _isTraveling = false;
         }
