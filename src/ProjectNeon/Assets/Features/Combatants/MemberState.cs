@@ -291,6 +291,17 @@ public sealed class MemberState : IStats
 
     private int Diff(int[] beforeAndAfter) => beforeAndAfter.Last() - beforeAndAfter.First();
 
+    //Prevented Tag Commands
+    private Dictionary<CardTag, int> _preventedTags = new Dictionary<CardTag, int>();
+    public void PreventCardTag(CardTag tag, int amount)
+    {
+        if (!_preventedTags.ContainsKey(tag))
+            _preventedTags[tag] = 0;
+        _preventedTags[tag] += amount;
+    } 
+    public bool IsPrevented(HashSet<CardTag> tags) => tags.Any(x => _preventedTags.ContainsKey(x) && _preventedTags[x] > 0);
+    public void ReducePreventedTagCounters() => _preventedTags.ForEach(x => _preventedTags[x.Key] = x.Value > 0 ? x.Value - 1 : 0);
+    
     // Resource Commands
     public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
     public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
@@ -337,6 +348,7 @@ public sealed class MemberState : IStats
             _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
             _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
             _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
+            ReducePreventedTagCounters();
         });
         
         return _additiveMods.Select(m => m.OnTurnEnd())
