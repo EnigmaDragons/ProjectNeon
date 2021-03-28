@@ -78,6 +78,7 @@ public class BattleState : ScriptableObject
     {
         nextEnemies = e.ToArray();
         nextIsEliteBattle = isElite;
+        DevLog.Write($"Next Encounter has {string.Join(", ", e.Select(x => x.Name))}");
     }
 
     public void SetupEnemyEncounter()

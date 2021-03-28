@@ -51,7 +51,6 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
 
     private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
     {
-        Debug.Log(heroOrigin);
         var character = Instantiate(hero.Body, heroOrigin.transform);
         _heroes.Add(character);
         _animators[hero] = character.GetComponentInChildren<Animator>();
