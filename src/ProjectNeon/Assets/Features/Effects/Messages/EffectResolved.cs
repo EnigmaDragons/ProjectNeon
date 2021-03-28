@@ -6,8 +6,9 @@ public sealed class EffectResolved
     public BattleStateSnapshot BattleBefore { get; }
     public BattleStateSnapshot BattleAfter { get; }
     public bool IsReaction { get; }
+    public Maybe<Card> Card { get; }
 
-    public EffectResolved(EffectData e, Member src, Target target, BattleStateSnapshot before, BattleStateSnapshot after, bool isReaction)
+    public EffectResolved(EffectData e, Member src, Target target, BattleStateSnapshot before, BattleStateSnapshot after, bool isReaction, Maybe<Card> card)
     {
         EffectData = e;
         Source = src;
@@ -15,5 +16,6 @@ public sealed class EffectResolved
         BattleBefore = before;
         BattleAfter = after;
         IsReaction = isReaction;
+        Card = card;
     }
 }

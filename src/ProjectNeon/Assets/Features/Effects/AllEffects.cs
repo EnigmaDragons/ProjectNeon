@@ -14,9 +14,9 @@ public static class AllEffects
                 e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
             new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.ForSimpleDurationStatAdjustment())))},
-        { EffectType.ReactWithEffect, e => new EffectReactWith(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, 
+        { EffectType.ReactWithEffect, e => new EffectReactWith(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, e.ReactionEffectScope,
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionEffect)},
-        { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, 
+        { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, e.ReactionEffectScope, 
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionSequence)},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLogged($"{m.Name} has been cleansed of all debuffs", m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new FullContextEffect((ctx, m) => m.Adjust(e.EffectScope, Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula)))},
