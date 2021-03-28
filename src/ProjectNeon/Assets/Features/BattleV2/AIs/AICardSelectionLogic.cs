@@ -90,12 +90,14 @@ public static class AICardSelectionLogic
     {
         var card = ctx.SelectedCard.IsPresent 
             ? ctx.SelectedCard.Value
-            : ctx.CardOptions
-                .ToArray()
-                .Shuffled()
-                .OrderByDescending(c => c.Cost.BaseAmount)
-                .ThenBy(typePriority)
-                .First();
+            : ctx.CardOptions.Any()
+                ? ctx.CardOptions
+                    .ToArray()
+                    .Shuffled()
+                    .OrderByDescending(c => c.Cost.BaseAmount)
+                    .ThenBy(typePriority)
+                    .First()
+                : ctx.DisabledCard;
         return card;
     }
 

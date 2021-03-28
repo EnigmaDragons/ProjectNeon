@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 37-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 38-43, 47, 48, 53, 
 // LAST NUMBER USED: 83
 
 using System;
@@ -88,4 +88,6 @@ public enum EffectType
     ShowCustomTooltip = 73,
     GlitchRandomCards = 33,
     LeaveBattle = 34,
+    
+    AdjustCardTagPrevention = 37
 }

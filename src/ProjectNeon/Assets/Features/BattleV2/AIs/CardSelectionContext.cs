@@ -12,6 +12,7 @@ public sealed class CardSelectionContext
     public IEnumerable<CardTypeData> CardOptions { get; }
     public PartyAdventureState PartyAdventureState { get; }
     public CardPlayZones Zones { get; }
+    public CardTypeData DisabledCard { get; }
     
     public Maybe<CardTypeData> SelectedCard { get; private set; } = Maybe<CardTypeData>.Missing();
     public string CardOptionsString => $"[{string.Join(", ", CardOptions.Select(x => x.Name))}]";
@@ -33,6 +34,7 @@ public sealed class CardSelectionContext
         PartyAdventureState = partyAdventureState;
         Zones = zones;
         CardOptions = options;
+        DisabledCard = strategy.DisabledCard;
     }
     
     public CardSelectionContext IfTrueDontPlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] excludedTagsCombination)

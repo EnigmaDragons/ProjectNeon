@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Soldier_TacticalReload_E
+  m_Name: Soldier_DisablingShots_E
   m_EditorClassIdentifier: 
   Actions:
-  - type: 31
+  - type: 1
     battleEffect:
-      EffectType: 67
+      EffectType: 30
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 0.5 * Attack
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -64,9 +64,9 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     atTargetAnimation:
       animation:
-        UseConstant: 0
+        UseConstant: 1
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 68a0e142a2ed44b49bc22b0aaab590d0, type: 2}
+        Variable: {fileID: 0}
       size: 1
       speed: 1
       color:
@@ -76,7 +76,7 @@ MonoBehaviour:
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 79
+      EffectType: 37
       BaseAmount:
         UseConstant: 1
         ConstantValue: 1
@@ -92,72 +92,11 @@ MonoBehaviour:
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: bd06351127f63d4499e84d7f994d1c91, type: 2}
+        Variable: {fileID: 11400000, guid: 4b5b106a6f3816340b4710b4aff07754, type: 2}
       HitsRandomTargetMember: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1
-      FlavorText:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        avoidance: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
-    conditionData:
-      ConditionType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedEffect: {fileID: 0}
-    characterAnimation: {fileID: 0}
-    atTargetAnimation:
-      animation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      size: 1
-      speed: 1
-      color:
-        UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
-        Variable: {fileID: 0}
-    enemyToSpawn: {fileID: 0}
-  - type: 1
-    battleEffect:
-      EffectType: 46
-      BaseAmount:
-        UseConstant: 1
-        ConstantValue: 99
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 1
       Formula: 
       FlavorText:
         UseConstant: 1
