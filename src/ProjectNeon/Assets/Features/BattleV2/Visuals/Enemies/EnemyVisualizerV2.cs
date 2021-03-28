@@ -10,8 +10,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
     [SerializeField] private EnemyBattleUIPresenter ui;
-    [SerializeField] private float rowHeight = 1.5f;
-    [SerializeField] private float widthBetweenEnemies = 1.5f;
+    [SerializeField] private float rowHeight = 16f;
+    [SerializeField] private float widthBetweenEnemies = 8f;
     [SerializeField] private bool rowUsesYAxis = true;
     [SerializeField] private CurrentAnimationContext animationContext;
 
@@ -42,7 +42,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
             var x = enemyPosition.Item1 * widthBetweenEnemies;
             var y = rowUsesYAxis ? (enemyPosition.Item1 % 2) * rowHeight : 0;
             var z = !rowUsesYAxis ? (enemyPosition.Item1 % 2) * rowHeight : 0;
-            t.position = transform.position - new Vector3(x, y, z);
+            t.localPosition = transform.localPosition - new Vector3(x, y, z);
         }
     }
 
@@ -71,7 +71,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         {
             _enemyPositions.Add(new Tuple<int, Member>(i, member));
         }
-        t.position = transform.position - new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
+        t.localPosition = transform.localPosition - new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
         return enemyObject;
     }
     
