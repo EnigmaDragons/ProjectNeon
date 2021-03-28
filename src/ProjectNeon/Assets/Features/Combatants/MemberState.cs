@@ -240,6 +240,7 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Confusion.ToString()].Set(0);
         _counters[TemporalStatType.Blind.ToString()].Set(0);
         _counters[TemporalStatType.Inhibit.ToString()].Set(0);
+        _preventedTags = new Dictionary<CardTag, int>();
         RemoveTemporaryEffects(s => s.IsDebuff);
     });
 

@@ -52,6 +52,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.DrainPrimaryResourceFormula, new [] { "Formula" } },
         {EffectType.AdjustPrimaryStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns" } },
         {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
+        {EffectType.Reload, new string[0]},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

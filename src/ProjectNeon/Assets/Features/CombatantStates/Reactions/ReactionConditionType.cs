@@ -15,6 +15,7 @@ namespace Features.CombatantStates.Reactions
         OnSlay = 21,
         OnDamageDealt = 22,
         OnHpDamageDealt = 23,
+        OnClipUsed = 27,
         OnDeath = 99,
     }
 }

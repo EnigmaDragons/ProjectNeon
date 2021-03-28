@@ -78,7 +78,19 @@ public class EffectReactWith : Effect
                 var afterHp = effect.BattleAfter.TargetMembers(effect.Target).Sum(x => x.State.Hp);
                 return beforeHp > afterHp;
             }
-        }
+        },
+        { ReactionConditionType.OnClipUsed, ctx => effect =>
+            {
+                if (ctx.Actor.IsUnconscious())
+                    return false;
+                if (effect.EffectData.EffectType == EffectType.Reload && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id))
+                    return true;
+                if (!effect.Source.Equals(ctx.Possessor))
+                    return false;
+                //TODO: Couldn't find a way to check that ammo was spent on this effect
+                return ctx.Possessor.State.PrimaryResourceAmount == 0;
+            }
+        },
     };
 
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;

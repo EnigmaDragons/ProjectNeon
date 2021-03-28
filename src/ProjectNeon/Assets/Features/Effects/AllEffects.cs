@@ -89,7 +89,9 @@ public static class AllEffects
             BattleLoggedItem(s => $"Stats of {m.Name} are adjusted by {s}",
                 new StatAddends().With(m.PrimaryStat, RoundUp(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula)))), 
             e.ForSimpleDurationStatAdjustment())))},
-        { EffectType.AdjustCardTagPrevention, e => new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)) }
+        { EffectType.AdjustCardTagPrevention, e => new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)) },
+        { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", 
+            () => m.AdjustPrimaryResource(99))) }
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

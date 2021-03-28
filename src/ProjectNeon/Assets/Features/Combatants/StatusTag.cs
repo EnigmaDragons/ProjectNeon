@@ -17,5 +17,6 @@ public enum StatusTag
     OnBloodied = 14,
     Stealth = 15,
     OnHpDamageDealt = 16,
-    OnShieldBroken = 17
+    OnShieldBroken = 17,
+    OnClipUsed = 18,
 }
