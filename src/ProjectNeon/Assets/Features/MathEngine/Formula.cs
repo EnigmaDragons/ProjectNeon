@@ -63,8 +63,10 @@ public static class Formula
     {
         if (ctx.Target.IsPresent)
         {
+            expression = expression.Replace("Target[MaxPrimaryResource]", ctx.Target.Value.PrimaryResource.MaxAmount.ToString());
             expression = expression.Replace("Target[PrimaryResource]", ctx.Target.Value.PrimaryResourceAmount.ToString());
         }
+        expression = expression.Replace("MaxPrimaryResource", ctx.Source.PrimaryResource.MaxAmount.ToString());
         expression = expression.Replace("PrimaryResource", ctx.Source.PrimaryResourceAmount.ToString());
         foreach (var resourceType in ctx.Source.ResourceTypes)
         {
