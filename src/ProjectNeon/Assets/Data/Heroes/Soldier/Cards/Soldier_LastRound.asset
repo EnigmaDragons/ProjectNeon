@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Soldier_CoveringFire
+  m_Name: Soldier_LastRound
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: c41e287a45242224dafc559c264a5d13, type: 3}
-  description: Deal {E[0]}. Reduce the enemy's <b>ATK</b> by 30% this turn.
+  art: {fileID: 21300000, guid: 20496b3a9861d8f489edd7c5e5594934, type: 3}
+  description: Deal <b>0.9 ATK</b>. Doubled if it empties your Ammo.
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   onlyPlayableByClass: {fileID: 11400000, guid: 1a326935dbf5d6941acd1038e9c4d77f, type: 2}
   cost:
-    cost: 2
+    cost: 1
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
     plusXCost: 0
   onPlayGain:
@@ -31,7 +31,7 @@ MonoBehaviour:
   - scope: 0
     group: 1
     avoidance: 1
-    cardActions: {fileID: 11400000, guid: d759617ca45a6c244b3f24db0d271671, type: 2}
+    cardActions: {fileID: 11400000, guid: 898096d974df3eb4eb522afe0ce27c3c, type: 2}
     repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
