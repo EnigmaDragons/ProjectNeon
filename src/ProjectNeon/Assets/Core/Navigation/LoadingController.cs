@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiRequested>
@@ -7,6 +8,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     [SerializeField] private CanvasGroup loadUi;
     [SerializeField] private float loadFadeDuration = 0.5f;
     [SerializeField] private bool debugLoggingEnabled;
+    [SerializeField] private UnityEvent onStartedLoading;
 
     private bool _isLoading;
     private float _startedTransitionAt;
@@ -15,6 +17,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     protected override void Execute(NavigateToSceneRequested msg)
     {
         _isLoading = true;
+        onStartedLoading.Invoke();
         _startedTransitionAt = Time.timeSinceLevelLoad;
         this.ExecuteAfterDelay(() =>
         {
