@@ -10,7 +10,7 @@ public sealed class AIStrategyGenerator
         _forTeam = forTeam;
     }
 
-    public AIStrategy Generate(BattleState s)
+    public AIStrategy Generate(BattleState s, CardTypeData disabledCard)
     {
         var relevantEnemies = _forTeam == TeamType.Enemies 
             ? s.Heroes.Where(h => h.IsConscious()) 
@@ -36,6 +36,6 @@ public sealed class AIStrategyGenerator
             .ThenByDescending(e => Math.Max(e.State.Attack(), e.State.Magic()))
             .First();
         
-        return new AIStrategy(preferredSingleTarget, new Multiple(relevantEnemies.ToArray()), designatedAttacker);
+        return new AIStrategy(preferredSingleTarget, new Multiple(relevantEnemies.ToArray()), designatedAttacker, disabledCard);
     }
 }

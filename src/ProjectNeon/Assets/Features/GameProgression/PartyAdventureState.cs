@@ -27,7 +27,9 @@ public sealed class PartyAdventureState : ScriptableObject
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
-        heroes = party.Initialized(one, two, three).Heroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
+        party.Initialized(one, two, three);
+        var baseHeroes = party.Heroes;
+        heroes = baseHeroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
         credits = heroes.Sum(h => h.Character.StartingCredits);
         numShopRestocks = 2;
         

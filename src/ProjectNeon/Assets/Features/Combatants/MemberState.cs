@@ -83,7 +83,7 @@ public sealed class MemberState : IStats
     public float this[TemporalStatType statType] => _counters[statType.ToString()].Amount + CurrentStats[statType];
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
     public float Max(string name) => _counters[name].Max;
-    public IResourceType PrimaryResource => ResourceTypes[0];
+    public IResourceType PrimaryResource => ResourceTypes.Any() ? ResourceTypes[0] : new InMemoryResourceType();
     public int PrimaryResourceAmount => ResourceTypes.Any() ? _counters[PrimaryResource.Name].Amount : 0;
 
     public ResourceQuantity CurrentPrimaryResources => new ResourceQuantity
@@ -240,6 +240,7 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Confusion.ToString()].Set(0);
         _counters[TemporalStatType.Blind.ToString()].Set(0);
         _counters[TemporalStatType.Inhibit.ToString()].Set(0);
+        _preventedTags = new Dictionary<CardTag, int>();
         RemoveTemporaryEffects(s => s.IsDebuff);
     });
 
@@ -291,6 +292,17 @@ public sealed class MemberState : IStats
 
     private int Diff(int[] beforeAndAfter) => beforeAndAfter.Last() - beforeAndAfter.First();
 
+    //Prevented Tag Commands
+    private Dictionary<CardTag, int> _preventedTags = new Dictionary<CardTag, int>();
+    public void PreventCardTag(CardTag tag, int amount)
+    {
+        if (!_preventedTags.ContainsKey(tag))
+            _preventedTags[tag] = 0;
+        _preventedTags[tag] += amount;
+    } 
+    public bool IsPrevented(HashSet<CardTag> tags) => tags.Any(x => _preventedTags.ContainsKey(x) && _preventedTags[x] > 0);
+    public void ReducePreventedTagCounters() => _preventedTags.ForEach(x => _preventedTags[x.Key] = x.Value > 0 ? x.Value - 1 : 0);
+    
     // Resource Commands
     public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
     public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
@@ -337,6 +349,7 @@ public sealed class MemberState : IStats
             _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
             _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
             _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
+            ReducePreventedTagCounters();
         });
         
         return _additiveMods.Select(m => m.OnTurnEnd())

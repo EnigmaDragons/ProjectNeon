@@ -18,6 +18,8 @@ public static class BattleStateExtensions
             return false;
         if (member.State[TemporalStatType.Disabled] > 0)
             return false;
+        if (member.State.IsPrevented(c.Tags))
+            return false;
         return member.CanAfford(c);
     }
     

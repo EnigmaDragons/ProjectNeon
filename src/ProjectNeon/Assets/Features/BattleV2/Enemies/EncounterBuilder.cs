@@ -13,6 +13,8 @@ public class EncounterBuilder : ScriptableObject
     [SerializeField][Range(0, 1)] private float flexibility;
     [SerializeField][Range(0, 1)] private float minionTeamChance;
 
+    private bool _debugLog = false;
+
     private EncounterEnemySelector _selector => new EncounterEnemySelector(
         new StopWhenCurrentDifficultyIsEnoughRule(flexibility),
         new StopWhenMaxedOutEnemiesRule(maxEnemies),
@@ -30,7 +32,7 @@ public class EncounterBuilder : ScriptableObject
     
     public List<Enemy> Generate(int difficulty)
     {
-        DevLog.Write($"Started generating encounter of difficulty {difficulty}");
+        Log($"Started generating encounter of difficulty {difficulty}");
 
         var currentDifficulty = 0;
         var numRemainingMustIncludes = numMustIncludes;
@@ -40,7 +42,7 @@ public class EncounterBuilder : ScriptableObject
         {
             var nextEnemy = mustIncludePossibilities.Random();
             enemies.Add(nextEnemy);
-            DevLog.Write($"Added \"Must Include\" {nextEnemy.Name} to Encounter");
+            Log($"Added \"Must Include\" {nextEnemy.Name} to Encounter");
             numRemainingMustIncludes--;
             currentDifficulty = currentDifficulty + Math.Max(nextEnemy.PowerLevel, 1);
         }
@@ -49,11 +51,17 @@ public class EncounterBuilder : ScriptableObject
             new EncounterBuildingContext(enemies.ToArray(), possible, currentDifficulty, difficulty), out Enemy enemy))
         {
             enemies.Add(enemy);
-            DevLog.Write($"Added {enemy.Name} to Encounter");
+            Log($"Added {enemy.Name} to Encounter");
             currentDifficulty += enemy.PowerLevel;
         }
 
-        DevLog.Write("Finished generating encounter");
+        Log("Finished generating encounter");
         return enemies.ToList().Shuffled();
+    }
+
+    private void Log(string msg)
+    {
+        if (_debugLog)
+            DevLog.Write(msg);
     }
 }

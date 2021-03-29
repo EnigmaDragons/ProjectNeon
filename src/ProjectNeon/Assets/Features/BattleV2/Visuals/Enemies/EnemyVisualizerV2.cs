@@ -10,8 +10,9 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
     [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
     [SerializeField] private EnemyBattleUIPresenter ui;
-    [SerializeField] private float rowHeight = 1.5f;
-    [SerializeField] private float widthBetweenEnemies = 1.5f;
+    [SerializeField] private float rowHeight = 16f;
+    [SerializeField] private float widthBetweenEnemies = 8f;
+    [SerializeField] private bool rowUsesYAxis = true;
     [SerializeField] private CurrentAnimationContext animationContext;
 
     [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
@@ -38,7 +39,10 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         {
             var enemyObject = active[enemyPosition.Item1].transform;
             var t = enemyObject.transform;
-            t.position = transform.position - new Vector3(enemyPosition.Item1 * widthBetweenEnemies, (enemyPosition.Item1 % 2) * rowHeight, (enemyPosition.Item1 % 2) == 0 ? 0 : 1);
+            var x = enemyPosition.Item1 * widthBetweenEnemies;
+            var y = rowUsesYAxis ? (enemyPosition.Item1 % 2) * rowHeight : 0;
+            var z = !rowUsesYAxis ? (enemyPosition.Item1 % 2) * rowHeight : 0;
+            t.localPosition = transform.localPosition - new Vector3(x, y, z);
         }
     }
 
@@ -67,7 +71,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         {
             _enemyPositions.Add(new Tuple<int, Member>(i, member));
         }
-        t.position = transform.position - new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
+        t.localPosition = transform.localPosition - new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
         return enemyObject;
     }
     
@@ -76,27 +80,33 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         for (var i = 0; i < enemyArea.Enemies.Count; i++)
         {
             var member = state.GetMemberByEnemyIndex(i);
-            
             SetupEnemyUi(member, enemyArea.EnemyUiPositions[i].gameObject.transform);
-            
-            var hoverCharacter = active[i].GetComponentInChildren<HoverCharacter>();
-            if (hoverCharacter == null)
-                Log.Error($"{member.Name} is missing a {nameof(HoverCharacter)}");
-            else
-                hoverCharacter.Init(member);
-            
-            var stealth = active[i].GetComponentInChildren<StealthTransparency>();
-            if (stealth == null)
-                Log.Info($"{member.Name} is missing a {nameof(StealthTransparency)}");
-            else
-                stealth.Init(member);
-
-            var shield = active[i].GetComponentInChildren<ShieldVisual>();
-            if (shield == null)
-                Log.Info($"{member.Name} is missing a {nameof(ShieldVisual)}");
-            else
-                shield.Init(member);
+            SetupVisualComponents(active[i], member);
         }
+    }
+
+    private void SetupVisualComponents(GameObject obj, Member member)
+    {
+        var hoverCharacter = obj.GetComponentInChildren<HoverSpriteCharacter2D>();
+        var hoverCharacter3d = obj.GetComponentInChildren<HoverSpriteCharacter3D>();
+        if (hoverCharacter == null && hoverCharacter3d == null)
+            Log.Error($"{member.Name} is missing a HoverCharacter");
+        else if (hoverCharacter3d != null)
+            hoverCharacter3d.Init(member);
+        else if (hoverCharacter != null)
+            hoverCharacter.Init(member);
+
+        var stealth = obj.GetComponentInChildren<StealthTransparency>();
+        if (stealth == null)
+            Log.Info($"{member.Name} is missing a {nameof(StealthTransparency)}");
+        else
+            stealth.Init(member);
+
+        var shield = obj.GetComponentInChildren<ShieldVisual>();
+        if (shield == null)
+            Log.Info($"{member.Name} is missing a {nameof(ShieldVisual)}");
+        else
+            shield.Init(member);
     }
 
     public Member Spawn(Enemy enemy)
@@ -118,14 +128,14 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         Destroy(uis[index]);
     }
 
-    private void SetupEnemyUi(Member enemyMember, Transform enemyObject)
+    private void SetupEnemyUi(Member member, Transform obj)
     {
-        var pos = enemyObject.transform.position;
-        var customUi = enemyObject.GetComponentInChildren<EnemyBattleUIPresenter>();
-        enemyObject.GetComponentInChildren<HoverCharacter>().Init(enemyMember);
+        var pos = obj.transform.position;
+        var customUi = obj.GetComponentInChildren<EnemyBattleUIPresenter>();
+        SetupVisualComponents(obj.gameObject, member);
         uis.Add(customUi != null
-            ? customUi.Initialized(enemyMember)
-            : Instantiate(ui, pos, Quaternion.identity, enemyObject).Initialized(enemyMember));
+            ? customUi.Initialized(member)
+            : Instantiate(ui, pos, Quaternion.identity, obj).Initialized(member));
     }
     
     protected override void Execute(MemberUnconscious m)

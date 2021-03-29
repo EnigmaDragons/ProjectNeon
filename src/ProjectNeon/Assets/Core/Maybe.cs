@@ -50,4 +50,14 @@ public sealed class Maybe<T>
         => IsPresent 
             ? ifPresent(value) 
             : createDefault();
+    
+    public Maybe<T2> As<T2>() 
+        => IsPresent && Value is T2 val
+            ? new Maybe<T2>(val) 
+            : Maybe<T2>.Missing();
+    
+    public Maybe<T2> Map<T2>(Func<T, T2> convert) 
+        => IsPresent 
+            ? new Maybe<T2>(convert(Value)) 
+            : Maybe<T2>.Missing();
 }

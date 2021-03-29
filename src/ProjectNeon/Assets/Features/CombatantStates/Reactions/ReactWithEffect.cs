@@ -63,7 +63,7 @@ public class EffectReactWith : Effect
                 {
                     if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
                         return false;
-                    
+
                     return effect.BattleBefore.TargetMembers(effect.Target).Sum(x => x.State.Hp + x.State.Shield) >
                            effect.BattleAfter.TargetMembers(effect.Target).Sum(x => x.State.Hp + x.State.Shield);
                 }
@@ -78,7 +78,25 @@ public class EffectReactWith : Effect
                 var afterHp = effect.BattleAfter.TargetMembers(effect.Target).Sum(x => x.State.Hp);
                 return beforeHp > afterHp;
             }
-        }
+        },
+        { ReactionConditionType.OnClipUsed, ctx => effect =>
+            {
+                if (ctx.Actor.IsUnconscious())
+                    return false;
+                if (effect.EffectData.EffectType == EffectType.Reload && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id))
+                    return true;
+                if (!effect.Source.Equals(ctx.Possessor))
+                    return false;
+                //TODO: Couldn't find a way to check that ammo was spent on this effect
+                return ctx.Possessor.State.PrimaryResourceAmount == 0;
+            }
+        },
+        { ReactionConditionType.OnTagPlayed, ctx => effect =>
+            {
+                var tag = ctx.ReactionEffectScope.EnumVal<CardTag>();
+                return ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(tag));
+            }
+        },
     };
 
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
@@ -96,6 +114,7 @@ public class EffectReactWith : Effect
     private readonly bool _isDebuff;
     private readonly int _numberOfUses;
     private readonly int _maxDurationTurns;
+    private readonly string _reactionEffectContext;
     private readonly StatusDetail _status;
     private readonly ReactiveTriggerScope _triggerScope;
     private readonly Maybe<CardReactionSequence> _reactionEffect;
@@ -103,18 +122,18 @@ public class EffectReactWith : Effect
     private readonly ReactionConditionType _conditionType;
     private readonly Func<ReactionConditionContext, Func<EffectResolved, bool>> _conditionBuilder;
 
-    public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status,
+    public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, string reactionBonusEffectContext,
         ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, ReactionCardType reactionCard)
-            : this(isDebuff, numberOfUses, maxDurationTurns, status, triggerScope, conditionType, Maybe<CardReactionSequence>.Missing(), 
+            : this(isDebuff, numberOfUses, maxDurationTurns, status, reactionBonusEffectContext, triggerScope, conditionType, Maybe<CardReactionSequence>.Missing(), 
                 new Maybe<ReactionCardType>(reactionCard, true)) {}
     
-    public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status,
+    public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, string reactionBonusEffectContext,
         ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, CardReactionSequence reactionEffect)
-        : this(isDebuff, numberOfUses, maxDurationTurns, status, triggerScope, conditionType, new Maybe<CardReactionSequence>(reactionEffect, true), 
+        : this(isDebuff, numberOfUses, maxDurationTurns, status, reactionBonusEffectContext, triggerScope, conditionType, new Maybe<CardReactionSequence>(reactionEffect, true), 
             Maybe<ReactionCardType>.Missing()) {}
         
-    public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
-        ReactionConditionType conditionType, Maybe<CardReactionSequence> reactionEffect, Maybe<ReactionCardType> reactionCard)
+    public EffectReactWith(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, string reactionBonusEffectContext,
+        ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, Maybe<CardReactionSequence> reactionEffect, Maybe<ReactionCardType> reactionCard)
     {
         _isDebuff = isDebuff;
         _numberOfUses = numberOfUses;
@@ -134,7 +153,7 @@ public class EffectReactWith : Effect
         if (_reactionCard.IsPresent)
             ctx.Target.ApplyToAllConscious(m =>
             {
-                var reactionConditionContext = new ReactionConditionContext();
+                var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionCard.Value.ActionSequence.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
                 m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, _maxDurationTurns, _status, _triggerScope,
@@ -145,7 +164,7 @@ public class EffectReactWith : Effect
         else if (_reactionEffect.IsPresent)
             ctx.Target.ApplyToAllConscious(m =>
             {
-                var reactionConditionContext = new ReactionConditionContext();
+                var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionEffect.Value.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
                 m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, _maxDurationTurns, _status, _triggerScope,

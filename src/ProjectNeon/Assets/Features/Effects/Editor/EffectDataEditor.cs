@@ -15,8 +15,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.Nothing, new string[0]},
         {EffectType.ReactOnEvadedWithCard, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionSequence" }},
         {EffectType.ReactOnSpellshieldedWithCard, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionSequence" }},
-        {EffectType.ReactWithEffect, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffect"}},
-        {EffectType.ReactWithCard, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionSequence"}},
+        {EffectType.ReactWithEffect, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionEffect"}},
+        {EffectType.ReactWithCard, new []{ "FloatAmount", "NumberOfTurns", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionSequence"}},
         {EffectType.AdjustResourceFlat, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
         {EffectType.ApplyVulnerable, new[] {"NumberOfTurns"}},
         {EffectType.RemoveDebuffs, new string[0]},
@@ -51,6 +51,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ResetStatToBase, new [] { "EffectScope" }},
         {EffectType.DrainPrimaryResourceFormula, new [] { "Formula" } },
         {EffectType.AdjustPrimaryStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns" } },
+        {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
+        {EffectType.Reload, new string[0]},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

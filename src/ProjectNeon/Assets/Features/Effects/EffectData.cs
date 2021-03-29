@@ -31,6 +31,7 @@ public sealed class EffectData
     public bool IsReactionCard => ReactionSequence != null;
     public bool IsReactionEffect => ReactionEffect != null;
     public ReactionConditionType ReactionConditionType;
+    public StringReference ReactionEffectScope = new StringReference();
     [FormerlySerializedAs("ReactionCard")] public ReactionCardType ReactionSequence;
     public CardReactionSequence ReactionEffect;
 

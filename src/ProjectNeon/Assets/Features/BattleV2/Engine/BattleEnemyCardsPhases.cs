@@ -7,6 +7,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
     [SerializeField] private BattleState state;
     [SerializeField] private BattleResolutions resolutions;
     [SerializeField] private CardResolutionZone resolutionZone;
+    [SerializeField] private CardType disabledCard;
     
     private readonly AIStrategyGenerator _enemyStrategy = new AIStrategyGenerator(TeamType.Enemies);
     private AIStrategy _currentTurnStrategy;
@@ -66,7 +67,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
     protected override void Execute(CardResolutionFinished msg) => PlayNextCardInPhase();
     protected override void Execute(TurnStarted msg)
     {
-        _currentTurnStrategy = _enemyStrategy.Generate(state);
+        _currentTurnStrategy = _enemyStrategy.Generate(state, disabledCard);
         _enemiesToActThisTurn = state.Enemies
             .Where(e => e.Member.IsConscious())
             .OrderBy(e => e.Enemy.PreferredTurnOrder)
