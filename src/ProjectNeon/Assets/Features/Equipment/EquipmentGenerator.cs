@@ -25,14 +25,20 @@ public class EquipmentGenerator
             "Flak Gear",
             "Linear Frame"
         }},
-//        { EquipmentSlot.Augmentation, new[] {
-//            "Booster",
-//            "Enhancer",
-//            "Stimulator",
-//        }}
     };
    
-    private static readonly StatType[] GeneratableStats = { StatType.MaxHP, StatType.MaxShield, StatType.StartingShield, StatType.Attack, StatType.Magic, StatType.Armor, StatType.Toughness, StatType.Resistance, StatType.Leadership };
+    private static readonly StatType[] GeneratableStats =
+    {
+        StatType.MaxHP, 
+        StatType.MaxShield, 
+        StatType.StartingShield, 
+        StatType.Attack, 
+        StatType.Magic, 
+        StatType.Armor, 
+        StatType.Toughness, 
+        StatType.Resistance, 
+        StatType.Leadership
+    };
     
     public Equipment GenerateRandomCommon()
         => Generate(RarityPowers[Rarity.Common].Random(), Rarity.Common);
@@ -64,65 +70,35 @@ public class EquipmentGenerator
 
     private StatType RandomStatFor(EquipmentSlot slot)
         => slot == EquipmentSlot.Weapon
-            ? new[] {StatType.Attack, StatType.Magic, StatType.Leadership, StatType.Toughness}.Random()
-            : new[] {StatType.Armor, StatType.Resistance, StatType.MaxHP, StatType.MaxShield, StatType.StartingShield}.Random();
+            ? new[] { 
+                StatType.Attack, StatType.Attack, 
+                StatType.Magic, StatType.Magic, 
+                StatType.Leadership, StatType.Leadership, 
+                StatType.Toughness 
+            }.Random()
+            : new[]
+            {
+                StatType.StartingShield, StatType.StartingShield,
+                StatType.Armor, StatType.Armor, 
+                StatType.Resistance, StatType.Resistance, 
+                StatType.MaxHP, StatType.MaxHP, 
+                StatType.MaxShield
+            }.Random();
     
     public static string NameFor(EquipmentSlot slot, Rarity rarity)
         => $"{string.Join("", Enumerable.Range(0, Rng.Int(3, 6)).Select(_ => Letters.Random()))} {_slotNames[slot].Random()}";
 
-    // TODO: Refactor out these two generate methods
     private Equipment Generate(int totalPowerLevel, Rarity rarity)
     {
         var description = "";
         var modifiers = new List<EquipmentStatModifier>();
         
         var selectedStats = new HashSet<string>();
-        var primarySelectedStat = GeneratableStats.Random();
-        selectedStats.Add(primarySelectedStat.ToString());
-        var slot = SlotFor(primarySelectedStat);
-        var name = NameFor(slot, rarity);
-        
-        var remainingPointsToSpend = totalPowerLevel;
-        var selectedStat = primarySelectedStat;
-        while (remainingPointsToSpend > 0)
-        {
-            var attributePointsToSpend = Rng.Int(1, remainingPointsToSpend + 1);
-            remainingPointsToSpend -= attributePointsToSpend;
-
-            modifiers.Add(AdditiveModifier(attributePointsToSpend, selectedStat));
-            description += modifiers.Last().Describe();
-            
-            if (remainingPointsToSpend > 0)
-            {
-                description += " ";
-                selectedStat = GeneratableStats.Where(s => !selectedStats.Contains(s.ToString())).Random();
-                selectedStats.Add(selectedStat.ToString());
-            }
-        }
-        
-        return new InMemoryEquipment
-        {
-            Name = name,
-            Rarity = rarity,
-            Price = CardShopPricing.EquipmentShopPrice(rarity, 1f),
-            Classes = new [] { CharacterClass.All },
-            Description = description,
-            Modifiers = modifiers.ToArray(),
-            Slot = slot
-        };
-    }
-    
-    public Equipment Generate(Rarity rarity, EquipmentSlot slot)
-    {
-        var description = "";
-        var modifiers = new List<EquipmentStatModifier>();
-        
-        var selectedStats = new HashSet<string>();
+        var slot = new[] {EquipmentSlot.Weapon, EquipmentSlot.Armor}.Random();
         var primarySelectedStat = RandomStatFor(slot);
         selectedStats.Add(primarySelectedStat.ToString());
         var name = NameFor(slot, rarity);
-
-        var totalPowerLevel = PowerLevelFor(rarity);
+        
         var remainingPointsToSpend = totalPowerLevel;
         var selectedStat = primarySelectedStat;
         while (remainingPointsToSpend > 0)
@@ -167,8 +143,8 @@ public class EquipmentGenerator
     private static readonly Dictionary<StatType, int> AdditiveStatsChartPerPoint = new Dictionary<StatType, int>
     {
         { StatType.MaxHP, 4 },
-        { StatType.MaxShield, 4 },
-        { StatType.StartingShield, 4 },
+        { StatType.MaxShield, 5 },
+        { StatType.StartingShield, 3 },
         { StatType.Armor, 1 },
         { StatType.Resistance, 1 },
         { StatType.Attack, 1 },
