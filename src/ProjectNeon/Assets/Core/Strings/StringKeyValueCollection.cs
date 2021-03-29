@@ -15,4 +15,6 @@ public class StringKeyValueCollection : ScriptableObject
     public string ValueOrDefault(string key, string defaultValue) =>
         items.FirstOrMaybe(x => x.Key.Value.Equals(key))
             .Select(x => x.Value, defaultValue);
+
+    public IEnumerable<StringKeyValuePair> All => items;
 }
