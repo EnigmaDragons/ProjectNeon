@@ -77,7 +77,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                     new Single(member), 
                     battleSnapshotBefore,
                     battleSnapshotAfter, 
-                    false);
+                    false,
+                    Maybe<Card>.Missing());
                 Message.Publish(new StatusEffectResolved(member, effectResolved));
             });
         }

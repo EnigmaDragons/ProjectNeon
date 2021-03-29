@@ -44,7 +44,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         ApplyEffectsWithRetargetingIfAllTargetsUnconscious(msg);
         var battleSnapshotAfter = state.GetSnapshot();
         
-        var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction);
+        var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction, msg.Card);
         var reactions = state.Members
             .Where(x => x.Value.CanReact())
             .Select(x => x.Value)
