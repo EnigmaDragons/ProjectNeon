@@ -63,17 +63,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         else
             _damagesNew[hero] = damageEffectController;
 
-        var hover2d = character.GetComponentInChildren<HoverSpriteCharacter2D>();
-        var hover3d = character.GetComponentInChildren<HoverSpriteCharacter3D>();
-        var hoverBasic3d = character.GetComponentInChildren<HoverBasicCharacter3D>();
-        if (hover2d == null && hover3d == null && hoverBasic3d == null)
-            Debug.LogWarning($"{hero.Name} is missing a HoverCharacter");
-        else if (hover2d != null)
-            _hovers[hero] = hover2d;
-        else if (hover3d != null)
-            _hovers[hero] = hover3d;
-        else if (hoverBasic3d != null)
-            _hovers[hero] = hoverBasic3d;
+        _hovers[hero] = character.GetCharacterMouseHover(hero.Name);
          
         var centerPoint = character.GetComponentInChildren<CenterPoint>();
         if (centerPoint == null)

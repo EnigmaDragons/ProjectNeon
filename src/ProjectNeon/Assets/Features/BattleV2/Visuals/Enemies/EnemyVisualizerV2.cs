@@ -87,14 +87,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
 
     private void SetupVisualComponents(GameObject obj, Member member)
     {
-        var hoverCharacter = obj.GetComponentInChildren<HoverSpriteCharacter2D>();
-        var hoverCharacter3d = obj.GetComponentInChildren<HoverSpriteCharacter3D>();
-        if (hoverCharacter == null && hoverCharacter3d == null)
-            Log.Error($"{member.Name} is missing a HoverCharacter");
-        else if (hoverCharacter3d != null)
-            hoverCharacter3d.Init(member);
-        else if (hoverCharacter != null)
-            hoverCharacter.Init(member);
+        obj.GetCharacterMouseHover(member.Name).Init(member);
 
         var stealth = obj.GetComponentInChildren<StealthTransparency>();
         if (stealth == null)
@@ -108,7 +101,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         else
             shield.Init(member);
     }
-
+    
     public Member Spawn(Enemy enemy)
     {
         DevLog.Write($"Spawning {enemy.Name}");
