@@ -27,6 +27,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Image[] glitchableComponents; 
     [SerializeField] private Material glitchMaterial;
     [SerializeField] private DragRotator dragRotator;
+    [SerializeField] private GameObject[] onlyEnabledInHand;
 
     private Card _card;
     private CardTypeData _cardType;
@@ -244,6 +245,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             glitchableComponents.ForEach(x => x.material = glitchMaterial);
         dragRotator.Reset();
         dragRotator.enabled = _isHand;
+        onlyEnabledInHand.ForEach(o => o.SetActive(_isHand));
     }
 
     private bool AreCloseEnough(float first, float second) => (first - second).IsFloatZero();
