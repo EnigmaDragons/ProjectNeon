@@ -30,6 +30,9 @@ public class Hero
     public HeroHealth Health => health;
     public HeroLevels Levels => levels;
     public int Level => levels.CurrentLevel;
+
+    public IStats BaseStats => 
+        Character.Stats.Plus(levels.LevelUpStats);
     
     // TODO: Maybe don't calculate this every time
     public IStats Stats => Character.Stats

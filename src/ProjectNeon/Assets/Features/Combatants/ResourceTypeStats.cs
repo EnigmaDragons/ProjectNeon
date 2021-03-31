@@ -8,6 +8,7 @@ public class ResourceTypeStats
     private readonly Dictionary<string, IResourceType> _resources = new Dictionary<string, IResourceType>();
 
     public ResourceTypeStats WithAdded(params IResourceType[] resourceTypes) => With((first, second) => first + second, resourceTypes);
+    public ResourceTypeStats WithSubtracted(params IResourceType[] resourceTypes) => With((first, second) => first - second, resourceTypes);
     public ResourceTypeStats WithMultiplied(params IResourceType[] resourceTypes) => With((first, second) => first * second, resourceTypes);
     
     private ResourceTypeStats With(Func<int, int, int> combineOperation, params IResourceType[] resourceTypes)
