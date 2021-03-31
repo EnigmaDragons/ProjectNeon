@@ -182,7 +182,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             _preHighlightSiblingIndex = transform.GetSiblingIndex();
             transform.SetAsLastSibling();
         }
-        else if (_preHighlightSiblingIndex != -1)
+        else if (!active && _preHighlightSiblingIndex != -1)
         {
             transform.SetSiblingIndex(_preHighlightSiblingIndex);
             _preHighlightSiblingIndex = -1;
