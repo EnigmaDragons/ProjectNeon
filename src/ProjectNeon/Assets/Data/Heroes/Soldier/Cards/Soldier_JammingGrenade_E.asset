@@ -43,6 +43,10 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
@@ -61,8 +65,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
-    characterAnimation: {fileID: 11400000, guid: 75d9b33d6bab3204d8ec042e3dc9949f,
-      type: 2}
+    characterAnimation: {fileID: 11400000, guid: 75d9b33d6bab3204d8ec042e3dc9949f, type: 2}
     atTargetAnimation:
       animation:
         UseConstant: 1
@@ -105,6 +108,10 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
@@ -166,6 +173,10 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
@@ -199,7 +210,7 @@ MonoBehaviour:
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 62
+      EffectType: 79
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -215,18 +226,22 @@ MonoBehaviour:
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 2787b5e273649eb4aabd48d80ce6fa22, type: 2}
       HitsRandomTargetMember: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 1
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0

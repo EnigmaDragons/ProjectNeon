@@ -78,7 +78,6 @@ public enum EffectType
     MagicDamageOverTime = 55,
     GainDoubleDamage = 57,
     FullyReviveAllAllies = 61,
-    ApplyConfusion = 62,
     SwapLifeForce = 64,
     DuplicateStatesOfType = 65,
     Kill = 24,

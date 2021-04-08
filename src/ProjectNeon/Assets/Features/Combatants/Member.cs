@@ -65,7 +65,7 @@ public static class MemberExtensions
     public static bool HasDoubleDamage(this Member m) => m.State[TemporalStatType.DoubleDamage] > 0;
     public static bool HasTaunt(this Member m) => m.State[TemporalStatType.Taunt] > 0;
     public static bool IsStealth(this Member m) => m.State[TemporalStatType.Stealth] > 0;
-    public static bool IsConfused(this Member m) => m.State[TemporalStatType.Confusion] > 0;
+    public static bool IsConfused(this Member m) => m.State[TemporalStatType.Confused] > 0;
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int PrimaryResourceAmount(this Member m) => m.State.PrimaryResourceAmount;
     public static ResourceQuantity PrimaryResource(this Member m) => m.State.CurrentPrimaryResources;

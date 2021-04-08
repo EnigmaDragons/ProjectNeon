@@ -237,7 +237,7 @@ public sealed class MemberState : IStats
     {
         _counters[TemporalStatType.Disabled.ToString()].Set(0);
         _counters[TemporalStatType.CardStun.ToString()].Set(0);
-        _counters[TemporalStatType.Confusion.ToString()].Set(0);
+        _counters[TemporalStatType.Confused.ToString()].Set(0);
         _counters[TemporalStatType.Blind.ToString()].Set(0);
         _counters[TemporalStatType.Inhibit.ToString()].Set(0);
         _preventedTags = new Dictionary<CardTag, int>();
@@ -339,7 +339,12 @@ public sealed class MemberState : IStats
                 DevLog.Write($"Cleaned {count} expired states from {Name}");
         });
 
-    private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType> { TemporalStatType.Taunt, TemporalStatType.Stealth, TemporalStatType.Confusion };
+    private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType>
+    {
+        TemporalStatType.Taunt, 
+        TemporalStatType.Stealth, 
+        TemporalStatType.Confused
+    };
     
     public IPayloadProvider[] GetTurnEndEffects()
     {

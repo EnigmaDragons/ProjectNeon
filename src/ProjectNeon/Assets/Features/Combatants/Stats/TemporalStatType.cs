@@ -9,7 +9,7 @@ public enum TemporalStatType
     Taunt = 6,
     DoubleDamage = 7,
     Stealth = 8,
-    Confusion = 9,
+    Confused = 9,
     Blind = 10,
     Injury = 11,
     Lifesteal = 12,

@@ -50,7 +50,8 @@ public class CardRulesPresenter : MonoBehaviour
                     TemporalStatType.DoubleDamage.ToString(),
                     PlayerStatType.CardCycles.ToString(),
                     TemporalStatType.Disabled.ToString(),
-                    TemporalStatType.Stealth.ToString());
+                    TemporalStatType.Stealth.ToString(),
+                    TemporalStatType.Confused.ToString());
             });
 
             rulesToShow
