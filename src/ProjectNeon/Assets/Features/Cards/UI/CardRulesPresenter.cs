@@ -30,6 +30,7 @@ public class CardRulesPresenter : MonoBehaviour
             var rulesToShow = new List<string>();
             rulesToShow.AddIf("X-Cost", d.Cost.PlusXCost);
             rulesToShow.AddIf("Chain", d.ChainedCard.IsPresent);
+            rulesToShow.AddIf("Quick", d.Speed == CardSpeed.Quick);
 
             var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());
             battleEffects.ForEach(b =>

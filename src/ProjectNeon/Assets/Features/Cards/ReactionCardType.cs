@@ -20,6 +20,7 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     public string TypeDescription => "Reaction";
     public IResourceAmount Cost => cost;
     public IResourceAmount Gain => onPlayGain;
+    public CardSpeed Speed => CardSpeed.Standard;
     public CardReactionSequence ActionSequence => actionSequence;
     public HashSet<CardTag> Tags => new HashSet<CardTag>();
     public Maybe<CharacterClass> LimitedToClass => new Maybe<CharacterClass>(characterClass);

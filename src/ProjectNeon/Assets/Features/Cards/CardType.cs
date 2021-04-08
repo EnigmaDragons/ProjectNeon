@@ -10,6 +10,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] [TextArea(1, 12)] private string description;
     [SerializeField] private StringVariable typeDescription;
     [SerializeField] private CardTag[] tags;
+    [SerializeField] private CardSpeed speed;
     [SerializeField] private CharacterClass onlyPlayableByClass;
     [SerializeField] private ResourceCost cost;
     [SerializeField] private ResourceCost onPlayGain;
@@ -25,6 +26,7 @@ public class CardType : ScriptableObject, CardTypeData
     
     public IResourceAmount Cost => cost;
     public IResourceAmount Gain => onPlayGain;
+    public CardSpeed Speed => speed;
     public Sprite Art => art;
     public string Description => description;
     public HashSet<CardTag> Tags => new HashSet<CardTag>(tags);

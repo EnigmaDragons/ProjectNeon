@@ -40,8 +40,10 @@ public class BattleState : ScriptableObject
     public BattleV2Phase Phase => phase;
     public int TurnNumber => turnNumber;
     public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
-    private int CurrentTurnPartyNonBonusCardPlays => _playedCardHistory.Any() ? _playedCardHistory.Last().Count(x => x.Member.TeamType == TeamType.Party && !x.WasTransient) : 0;
-    public int NumberOfCardPlaysRemainingThisTurn => _playerState.CurrentStats.CardPlays() - CurrentTurnPartyNonBonusCardPlays - _numPlayerDiscardsUsedThisTurn;
+    private int CurrentTurnPartyNonBonusStandardCardPlays => _playedCardHistory.Any() 
+        ? _playedCardHistory.Last().Count(x => x.Member.TeamType == TeamType.Party && !x.WasTransient && x.Card.Speed == CardSpeed.Standard) 
+        : 0;
+    public int NumberOfCardPlaysRemainingThisTurn => _playerState.CurrentStats.CardPlays() - CurrentTurnPartyNonBonusStandardCardPlays - _numPlayerDiscardsUsedThisTurn;
     
     public int RewardCredits => rewardCredits;
     public int RewardXp => rewardXp;

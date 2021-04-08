@@ -7,6 +7,7 @@ public class InMemoryCard : CardTypeData
     public Rarity Rarity { get; set; } = Rarity.Common;
     public IResourceAmount Cost { get; set; } = new InMemoryResourceAmount(0, "None", false);
     public IResourceAmount Gain { get; set; } = new InMemoryResourceAmount(0, "None", false);
+    public CardSpeed Speed { get; set; } = CardSpeed.Standard;
     public Maybe<CharacterClass> LimitedToClass { get; } = Maybe<CharacterClass>.Missing();
     public CardActionSequence[] ActionSequences { get; set; } = new CardActionSequence[0];
     public Maybe<CardTypeData> ChainedCard { get; } = Maybe<CardTypeData>.Missing();
