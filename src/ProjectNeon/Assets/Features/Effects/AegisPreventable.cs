@@ -10,7 +10,7 @@ public class AegisPreventable : Effect
         _inner = inner;
         _effectDescription = effectDescription;
     }
-
+    
     public void Apply(EffectContext ctx)
     {
         var consciousTargets = ctx.Target.Members.GetConscious();
@@ -24,4 +24,12 @@ public class AegisPreventable : Effect
                 _inner.Apply(ctx.Retargeted(ctx.Source, new Single(m)));
         });
     }
+}
+
+public static class AegisPreventableExtensions
+{
+    public static Effect AegisPreventableIf(this Effect e, bool condition, string effectDescription) 
+        => condition 
+            ? new AegisPreventable(e, effectDescription) 
+            : e;
 }

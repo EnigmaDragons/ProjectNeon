@@ -69,6 +69,7 @@ public static class MemberExtensions
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int PrimaryResourceAmount(this Member m) => m.State.PrimaryResourceAmount;
     public static ResourceQuantity PrimaryResource(this Member m) => m.State.CurrentPrimaryResources;
+    public static StatType PrimaryStat(this Member m) => m.State.PrimaryStat;
     
     public static int RemainingPrimaryResourceCapacity(this Member m) => m.ResourceMax(m.State.PrimaryResource) - m.State.PrimaryResourceAmount;
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));

@@ -12,21 +12,18 @@ public enum EffectType
     AttackFormula = 30,
     MagicAttackFormula = 31,
     DealRawDamageFormula = 70,
-    
-    // Damage Over Time
     DamageOverTimeFormula = 84,
 
     AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyFormula = 68,
     AdjustCounterFormula = 79,
-    AdjustPrimaryStatAdditivelyFormula = 36,
 
     // Timing
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
     DelayedStartOfTurn = 23,
     
-    // Cleanses
+    // Resets
     RemoveDebuffs = 4,
     ResetStatToBase = 83,
     
@@ -40,12 +37,7 @@ public enum EffectType
     AdjustPrimaryResource = 46,
     AdjustPrimaryResourceFormula = 82,
     DrainPrimaryResourceFormula = 35,
-    
-    HealFormula = 29,
-
-    AntiHeal = 60,
-    ApplyVulnerable = 10,
-    EnterStealth = 58,
+    Reload = 38,
     
     // Reactions
     ReactWithEffect = 74,
@@ -57,32 +49,38 @@ public enum EffectType
     DoubleTheEffectAndMinusDurationTransformer = 28,
     AddToXCostTransformer = 32,
     
-    // Bonus Cards
+    // Cards Effects
     PlayBonusCardAfterNoCardPlayedInXTurns = 76,
     RedrawHandOfCards = 77,
     DrawCards = 81,
+    GlitchRandomCards = 33,
     
+    // Statuses
     DisableForTurns = 13,
+    ApplyVulnerable = 10,
+    EnterStealth = 58,
+    GainDoubleDamage = 57,
+    DuplicateStatesOfType = 65,
+    
+    // Healing
+    HealFormula = 29,
+    AntiHeal = 60,
     HealOverTime = 20,
     HealMagic = 45,
     HealToughness = 12,
     HealPercentMissingHealth = 56,
+    FullyReviveAllAllies = 61,
     
+    // Party Effects
     AdjustPlayerStats = 49,
     GainCredits = 52,
-    
-    GainDoubleDamage = 57,
-    FullyReviveAllAllies = 61,
-    SwapLifeForce = 64,
-    DuplicateStatesOfType = 65,
-    Kill = 24,
-
     ApplyAdditiveStatInjury = 71,
     ApplyMultiplicativeStatInjury = 72,
-    ShowCustomTooltip = 73,
-    GlitchRandomCards = 33,
-    LeaveBattle = 34,
     
+    // Miscellaneous
+    SwapLifeForce = 64,
+    Kill = 24,
+    ShowCustomTooltip = 73,
+    LeaveBattle = 34,
     AdjustCardTagPrevention = 37,
-    Reload = 38,
 }
