@@ -1,7 +1,7 @@
 using NUnit.Framework;
 
 [TestFixture]
-public class BarrierTests
+public class DodgeTests
 {
     private static readonly InMemoryCard BasicAttackCard = new InMemoryCard
     {
@@ -12,7 +12,7 @@ public class BarrierTests
     };
     
     [Test]
-    public void AttackerIsBlindAndDefenderHasBarrier_BarrierStillPresent()
+    public void AttackerIsBlindAndDefenderHasDodge_DodgeStillPresent()
     {
         var defender = TestMembers.Any();
         defender.Apply(m => m.Adjust(TemporalStatType.Dodge, 1));
@@ -27,7 +27,7 @@ public class BarrierTests
     }
     
     [Test]
-    public void AttackerPlaysAttack_BarrierGoneAndHpUnchanged()
+    public void AttackerPlaysAttack_DodgeGoneAndHpUnchanged()
     {
         var defender = TestMembers.Any();
         defender.Apply(m => m.Adjust(TemporalStatType.Dodge, 1));
@@ -37,12 +37,12 @@ public class BarrierTests
         var basicAttackCard = new Card(0, attacker, BasicAttackCard);
         basicAttackCard.Execute(new Target[] { new Single(defender),}, ResourceQuantity.None, attacker, defender);
         
-        Assert.AreEqual(0, defender.State[TemporalStatType.Dodge], "Barrier Not Consumed");
+        Assert.AreEqual(0, defender.State[TemporalStatType.Dodge], "Dodge Not Consumed");
         Assert.AreEqual(0, defender.State.MissingHp());
     }
     
     [Test]
-    public void AttackerPlaysDoubleAttack_TwoBarriersGoneAndHpUnchanged()
+    public void AttackerPlaysDoubleAttack_TwoDodgesGoneAndHpUnchanged()
     {
         var defender = TestMembers.Any();
         defender.Apply(m => m.Adjust(TemporalStatType.Dodge, 2));
@@ -60,13 +60,13 @@ public class BarrierTests
         });
         basicAttackCard.Execute(new Target[] { new Single(defender), new Single(defender)}, ResourceQuantity.None, attacker, defender);
         
-        Assert.AreEqual(0, defender.State[TemporalStatType.Dodge], "Barrier Not Consumed");
+        Assert.AreEqual(0, defender.State[TemporalStatType.Dodge], "Dodge Not Consumed");
         Assert.AreEqual(0, defender.State.MissingHp());
     }
     
     [Ignore("Test Engine Doesn't Resolve Preventions Yes")]
     [Test]
-    public void AttackerIsBlindAndDefenderHasBarrier_BlindGone()
+    public void AttackerIsBlindAndDefenderHasDodge_BlindGone()
     {
         var defender = TestMembers.Any();
         defender.Apply(m => m.Adjust(TemporalStatType.Dodge, 1));
