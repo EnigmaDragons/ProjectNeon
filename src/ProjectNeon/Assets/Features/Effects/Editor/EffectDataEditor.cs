@@ -48,7 +48,6 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.LeaveBattle, new string[0]},
         {EffectType.ResetStatToBase, new [] { "EffectScope" }},
         {EffectType.DrainPrimaryResourceFormula, new [] { "Formula" } },
-        {EffectType.AdjustPrimaryStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns" } },
         {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.Reload, new string[0]},
         {EffectType.DamageOverTimeFormula, new [] { "Formula", "NumberOfTurns" }}

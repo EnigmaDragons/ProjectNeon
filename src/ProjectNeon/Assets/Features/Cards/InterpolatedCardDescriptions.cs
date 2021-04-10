@@ -116,8 +116,6 @@ public static class InterpolatedCardDescriptions
             coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data)}";
-        if (data.EffectType == EffectType.AdjustPrimaryStatAdditivelyFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} of their Primary Stat {DurationDescription(data)}";
         if (data.EffectType == EffectType.ApplyVulnerable)
             coreDesc = $"gives {Bold("Vulnerable")} {DurationDescription(data)}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
@@ -203,8 +201,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.DealRawDamageFormula)
             return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula
-                || data.EffectType == EffectType.HealFormula
-                || data.EffectType == EffectType.AdjustPrimaryStatAdditivelyFormula)
+                || data.EffectType == EffectType.HealFormula)
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.HealMagic
             || data.EffectType == EffectType.HealOverTime)
