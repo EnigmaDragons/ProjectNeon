@@ -24,11 +24,8 @@ public class AegisPreventable : Effect
                 _inner.Apply(ctx.Retargeted(ctx.Source, new Single(m)));
         });
     }
-}
-
-public static class AegisPreventableExtensions
-{
-    public static Effect AegisPreventableIf(this Effect e, bool condition, string effectDescription) 
+    
+    public static Effect If(Effect e, bool condition, string effectDescription) 
         => condition 
             ? new AegisPreventable(e, effectDescription) 
             : e;

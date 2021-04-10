@@ -93,13 +93,15 @@ public class AegisIfFormulaResult : Effect
 {
     private readonly Action<EffectContext, float, MemberState> _applyToOne;
     private readonly string _formula;
+    private readonly bool _shouldRoundUp;
     private readonly Func<float, bool> _canAegisPreventForFormulaResult;
 
-    public AegisIfFormulaResult(Action<EffectContext, float, MemberState> applyToOne, string formula, 
+    public AegisIfFormulaResult(Action<EffectContext, float, MemberState> applyToOne, string formula, bool shouldRoundUp,
         Func<float, bool> canAegisPreventForFormulaResult)
     {
         _applyToOne = applyToOne;
         _formula = formula;
+        _shouldRoundUp = shouldRoundUp;
         _canAegisPreventForFormulaResult = canAegisPreventForFormulaResult;
     }
 
@@ -108,6 +110,8 @@ public class AegisIfFormulaResult : Effect
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
             var formulaAmount = Formula.Evaluate(ctx.Source, m, _formula, ctx.XPaidAmount);
+            if (_shouldRoundUp)
+                formulaAmount = formulaAmount.CeilingInt();
 
             var isDebuff = _canAegisPreventForFormulaResult(formulaAmount);
             if (isDebuff) 

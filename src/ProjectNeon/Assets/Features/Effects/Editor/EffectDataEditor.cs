@@ -47,7 +47,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.GlitchRandomCards, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.LeaveBattle, new string[0]},
         {EffectType.ResetStatToBase, new [] { "EffectScope" }},
-        {EffectType.DrainPrimaryResourceFormula, new [] { "Formula" } },
+        {EffectType.TransferPrimaryResourceFormula, new [] { "Formula" } },
         {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.Reload, new string[0]},
         {EffectType.DamageOverTimeFormula, new [] { "Formula", "NumberOfTurns" }}

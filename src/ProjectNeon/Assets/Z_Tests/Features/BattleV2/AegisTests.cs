@@ -8,7 +8,7 @@ public class AegisTests
     [TestCase(TemporalStatType.CardStun)]
     [TestCase(TemporalStatType.Inhibit)]
     [TestCase(TemporalStatType.Confused)]
-    public void Aegis_GiveNegativeCounters_PreventsAndConsumesAegisCounter(TemporalStatType statType)
+    public void Aegis_GiveNegativeCounters_Applied(TemporalStatType statType)
     {
         var defender = DefenderWithAegis();
         var attacker = TestMembers.Any();
@@ -24,7 +24,7 @@ public class AegisTests
     [TestCase(TemporalStatType.CardStun)]
     [TestCase(TemporalStatType.Inhibit)]
     [TestCase(TemporalStatType.Confused)]
-    public void Aegis_RemoveNegativeCounters_NoAegisUsage(TemporalStatType statType)
+    public void Aegis_RemoveNegativeCounters_NotApplied(TemporalStatType statType)
     {
         var defender = DefenderWithAegis();
         defender.Apply(m => m.Adjust(statType, 1));
@@ -42,7 +42,7 @@ public class AegisTests
     [TestCase(TemporalStatType.Lifesteal)]
     [TestCase(TemporalStatType.Evade)]
     [TestCase(TemporalStatType.Spellshield)]
-    public void Aegis_TakePositiveCounters_PreventsAndConsumesAegisCounter(TemporalStatType statType)
+    public void Aegis_TakePositiveCounters_Applied(TemporalStatType statType)
     {
         var defender = DefenderWithAegis();
         var attacker = TestMembers.Any();
@@ -60,7 +60,7 @@ public class AegisTests
     [TestCase(TemporalStatType.Lifesteal)]
     [TestCase(TemporalStatType.Evade)]
     [TestCase(TemporalStatType.Spellshield)]
-    public void Aegis_GivePositiveCounters_NoAegisUsage(TemporalStatType statType)
+    public void Aegis_GivePositiveCounters_NotApplied(TemporalStatType statType)
     {
         var defender = DefenderWithAegis();
         var attacker = TestMembers.Any();
@@ -72,7 +72,7 @@ public class AegisTests
     }
 
     [Test]
-    public void Aegis_DamageOverTime_PreventsAndConsumesAegisCounter()
+    public void Aegis_DamageOverTime_Applied()
     {
         var defender = DefenderWithAegis();
         var attacker = TestMembers.Any();
@@ -108,7 +108,7 @@ public class AegisTests
     }
     
     [Test]
-    public void Aegis_AdditiveStatDebuff_PreventsAndConsumesAegisCounter()
+    public void Aegis_AdditiveStatDebuff_Applied()
     {
         var member = TestMembers.Create(s => s.With(StatType.Attack, 2));
         member.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
@@ -126,7 +126,7 @@ public class AegisTests
     }
     
     [Test]
-    public void Aegis_MultiplicativeStatDebuff_PreventsAndConsumesAegisCounter()
+    public void Aegis_MultiplicativeStatDebuff_Applied()
     {
         var member = TestMembers.Create(s => s.With(StatType.Attack, 2));
         member.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
@@ -144,7 +144,7 @@ public class AegisTests
     }
 
     [Test]
-    public void Aegis_RemoveAllShields_PreventsAndConsumesAegisCounter()
+    public void Aegis_RemoveAllShields_Applied()
     {
         var defender = DefenderWithAegis();
         defender.Apply(m => m.AdjustShield(10));
@@ -157,7 +157,7 @@ public class AegisTests
     }
     
     [Test]
-    public void Aegis_ReduceShields_PreventsAndConsumesAegisCounter()
+    public void Aegis_ReduceShields_Applied()
     {
         var defender = DefenderWithAegis();
         defender.Apply(m => m.AdjustShield(10));
@@ -173,6 +173,75 @@ public class AegisTests
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
 
+    [Test]
+    public void Aegis_TransferNegativePrimaryResource_Applied()
+    {
+        var defender = DefenderWithAegis();
+        defender.Apply(d => d.AdjustPrimaryResource(2));
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.TransferPrimaryResourceFormula,
+            Formula = "-1"
+        }, attacker, defender);
+        
+        Assert.AreEqual(2, defender.PrimaryResource().Amount);
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+
+    [Test]
+    public void Aegis_ResourceLossFlat_Applied()
+    {
+        var defender = DefenderWithAegis();
+        defender.Apply(d => d.AdjustPrimaryResource(2));
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.AdjustResourceFlat,
+            BaseAmount = new IntReference(-1),
+            EffectScope = new StringReference(defender.PrimaryResource().ResourceType)
+        }, attacker, defender);
+        
+        Assert.AreEqual(2, defender.PrimaryResource().Amount);
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+    
+    [Test]
+    public void Aegis_PrimaryResourceLoss_Applied()
+    {
+        var defender = DefenderWithAegis();
+        defender.Apply(d => d.AdjustPrimaryResource(2));
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.AdjustPrimaryResource,
+            BaseAmount = new IntReference(-1)
+        }, attacker, defender);
+        
+        Assert.AreEqual(2, defender.PrimaryResource().Amount);
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+    
+    [Test]
+    public void Aegis_PrimaryResourceFormulaLoss_Applied()
+    {
+        var defender = DefenderWithAegis();
+        defender.Apply(d => d.AdjustPrimaryResource(2));
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.AdjustPrimaryResourceFormula,
+            Formula = "-1"
+        }, attacker, defender);
+        
+        Assert.AreEqual(2, defender.PrimaryResource().Amount);
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+    
     private EffectData AdjustCounterEffect(TemporalStatType statType, string formulaAmount)
         => new EffectData
             {
@@ -183,7 +252,9 @@ public class AegisTests
 
     private Member DefenderWithAegis(int numOfAegis = 1)
     {
-        var defender = TestMembers.Create(s => s.With(StatType.MaxShield, 20));
+        var defender = TestMembers.Create(s => s
+            .With(StatType.MaxShield, 20)
+            .With(new InMemoryResourceType("Ammo") { MaxAmount = 6 }));
         defender.Apply(m => m.Adjust(TemporalStatType.Aegis, numOfAegis));
         return defender;
     }

@@ -36,7 +36,7 @@ public enum EffectType
     AdjustResourceFlat = 7,
     AdjustPrimaryResource = 46,
     AdjustPrimaryResourceFormula = 82,
-    DrainPrimaryResourceFormula = 35,
+    TransferPrimaryResourceFormula = 35,
     Reload = 38,
     
     // Reactions

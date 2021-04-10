@@ -17,15 +17,15 @@ public static class AllEffects
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLogged($"{m.Name} has been cleansed of all debuffs", m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
         { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 
-            => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, amount => amount < 0)},
+            => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, true, amount => amount < 0)},
         { EffectType.ShieldRemoveAll, e => new AegisPreventable(new SimpleEffect(m => BattleLogged($"{m.Name} lost all their shields", () => m.AdjustShield(-999))), "Losing All Shields") },
         { EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs, e => new ShieldToughnessBasedOnNumberOfOpponentDoTs(e.FloatAmount) },
-        { EffectType.AdjustResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
-        { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => BattleLogged($"{m.Name} {GainedOrLostTerm(e.TotalIntAmount)} {Math.Abs(e.TotalIntAmount)} {m.PrimaryResource.Name}", 
-            () => m.AdjustPrimaryResource(e.TotalIntAmount))) },
-        { EffectType.AdjustPrimaryResourceFormula, e => new FullContextEffect((ctx, m) => 
-            m.AdjustPrimaryResource(BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.PrimaryResource.Name}", 
-                Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula).CeilingInt()))) },
+        { EffectType.AdjustResourceFlat, e =>  AegisPreventable.If(new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.TotalIntAmount)), e.TotalIntAmount < 0, "Resource Loss") },
+        { EffectType.AdjustPrimaryResource, e => AegisPreventable.If(new SimpleEffect(
+            m => BattleLogged($"{m.Name} {GainedOrLostTerm(e.TotalIntAmount)} {Math.Abs(e.TotalIntAmount)} {m.PrimaryResource.Name}", 
+                () => m.AdjustPrimaryResource(e.TotalIntAmount))), e.TotalIntAmount < 0, "Resource Loss") },
+        { EffectType.AdjustPrimaryResourceFormula, e => new AegisIfFormulaResult((ctx, amount, m) => 
+            m.AdjustPrimaryResource(BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.PrimaryResource.Name}", amount.CeilingInt())), e.Formula, true, amount => amount < 0) },
         { EffectType.DamageOverTimeFormula, e => new AegisPreventable(new DamageOverTimeFormula(e), "Damage Over Time") },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => BattleLogged($"{m.Name} has become vulnerable",
             () => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, new StatusDetail(StatusTag.Vulnerable)))))) },
@@ -70,7 +70,7 @@ public static class AllEffects
         { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope, cards => cards) },
         { EffectType.LeaveBattle, e => new SimpleEffect(m => Message.Publish(new DespawnEnemy(m))) },
         { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))},
-        { EffectType.DrainPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 
+        { EffectType.TransferPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 
             BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
                 Formula.Evaluate(ctx.SourceSnapshot.State, m.State, ctx.XPaidAmount, e.Formula).CeilingInt())) },
         { EffectType.AdjustCardTagPrevention, e => new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)) },
