@@ -17,7 +17,7 @@ public sealed class GlitchCardsTests
         AllEffects.Apply(new EffectData
         {
             EffectType = EffectType.GlitchRandomCards,
-            FloatAmount = new FloatReference(1),
+            BaseAmount = new IntReference(1),
             EffectScope = new StringReference("1")
         }, effectContext);
         
