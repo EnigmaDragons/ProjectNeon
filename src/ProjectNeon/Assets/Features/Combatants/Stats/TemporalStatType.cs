@@ -15,4 +15,6 @@ public enum TemporalStatType
     Lifesteal = 12,
     Phase = 13,
     Inhibit = 14,
+    Barrier = 15,
+    Aegis = 16,
 }
