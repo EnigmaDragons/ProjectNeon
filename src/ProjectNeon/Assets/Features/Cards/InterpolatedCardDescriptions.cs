@@ -142,9 +142,15 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} Cards";
         if (data.EffectType == EffectType.EnterStealth)
             coreDesc = $"enter {Bold(TemporalStatType.Stealth.ToString())}";
+        if (data.EffectType == EffectType.AdjustPlayerStats)
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data))}" 
+                       + $"gives {Bold(EffectDescription(data, owner, xCost))} " 
+                       + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
-        return delay.Length > 0 ? $"{delay}{coreDesc}" : UppercaseFirst(coreDesc);
+        return delay.Length > 0 
+            ? $"{delay}{coreDesc}".Replace("Next turn, for the turn,", "Next turn,")
+            : UppercaseFirst(coreDesc);
     }
 
     private static string WithCommaIfPresent(string value) => string.IsNullOrWhiteSpace(value) ? "" : $"{value}, ";
@@ -235,6 +241,8 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustPrimaryResource)
             return $"{data.TotalIntAmount}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
+            return $"{data.TotalIntAmount}";
+        if (data.EffectType == EffectType.AdjustPlayerStats)
             return $"{data.TotalIntAmount}";
 
         Log.Warn($"Description for {data.EffectType} is not implemented.");

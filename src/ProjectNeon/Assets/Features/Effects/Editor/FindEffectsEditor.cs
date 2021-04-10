@@ -14,6 +14,7 @@ public class FindEffectsEditor : EditorWindow
 
     // By Effect Type
     private EffectType _effectType;
+    private string _effectScope;
     private string[] GetAllCardEffectsWith(EffectType effectType) =>
         GetAllInstances<CardActionsData>()
             .Where(e => e.BattleEffects.Any(x => x.EffectType == effectType))
@@ -34,6 +35,18 @@ public class FindEffectsEditor : EditorWindow
         =>  GetAllCardEffectsWith(e)
                 .Concat(GetAllEnemiesWith(e))
                 .Concat(GetAllEquipmentWith(e)).ToArray();
+    
+    private string[] GetAllContentWithEffectScope(string effectScope)
+        => GetAllInstances<CardActionsData>()
+            .Where(e => e.BattleEffects.Any(x => x.EffectScope != null && x.EffectScope.Value.Equals(effectScope)))
+            .Select(e => $"Card {e.name}")
+        .Concat(GetAllInstances<Enemy>()
+            .Where(e => e.Effects.Any(x => x.EffectScope != null && x.EffectScope.Value.Equals(effectScope)))
+            .Select(e => $"Enemy {e.name}"))
+        .Concat(GetAllInstances<StaticEquipment>()            
+            .Where(e => e.AllEffects.Any(x => x.EffectScope != null && x.EffectScope.Value.Equals(effectScope)))
+            .Select(e => $"Equipment {e.name}"))
+        .ToArray();
     
     private string[] GetAllContentWithLostEffectType() =>  
                 GetAllInstances<CardActionsData>()
@@ -59,6 +72,14 @@ public class FindEffectsEditor : EditorWindow
         }
         DrawUILine();
 
+        _effectScope = GUILayout.TextField(_effectScope);
+        if (GUILayout.Button("Search By Effect Scope"))
+        {
+            ShowItems($"Content Using Effect Scope - {_effectScope}", GetAllContentWithEffectScope(_effectScope));
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
         if (GUILayout.Button("Show All Unused Effects"))
         {
             var zeroUsageResults = Enum.GetValues(typeof(EffectType)).Cast<EffectType>()
