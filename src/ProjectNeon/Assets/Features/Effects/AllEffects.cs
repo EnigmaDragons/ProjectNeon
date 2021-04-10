@@ -16,10 +16,9 @@ public static class AllEffects
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionSequence)},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLogged($"{m.Name} has been cleansed of all debuffs", m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
-        { EffectType.ShieldFormula, e => new FullContextEffect((ctx, m) 
-            => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", 
-                m.AdjustShield(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula))))},
-        { EffectType.ShieldRemoveAll, e => new SimpleEffect(m => BattleLogged($"{m.Name} lost all their shields", () => m.AdjustShield(-999))) },
+        { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 
+            => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, amount => amount < 0)},
+        { EffectType.ShieldRemoveAll, e => new AegisPreventable(new SimpleEffect(m => BattleLogged($"{m.Name} lost all their shields", () => m.AdjustShield(-999))), "Losing All Shields") },
         { EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs, e => new ShieldToughnessBasedOnNumberOfOpponentDoTs(e.FloatAmount) },
         { EffectType.AdjustResourceFlat, e => new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.IntAmount))},
         { EffectType.AdjustPrimaryResource, e => new SimpleEffect(m => BattleLogged($"{m.Name} {GainedOrLostTerm(e.TotalIntAmount)} {Math.Abs(e.TotalIntAmount)} {m.PrimaryResource.Name}", 

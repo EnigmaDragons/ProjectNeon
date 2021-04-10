@@ -143,6 +143,36 @@ public class AegisTests
         Assert.AreEqual(0, member.State[TemporalStatType.Aegis]);
     }
 
+    [Test]
+    public void Aegis_RemoveAllShields_PreventsAndConsumesAegisCounter()
+    {
+        var defender = DefenderWithAegis();
+        defender.Apply(m => m.AdjustShield(10));
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData { EffectType = EffectType.ShieldRemoveAll }, attacker, defender);
+        
+        Assert.AreEqual(10, defender.CurrentShield());
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+    
+    [Test]
+    public void Aegis_ReduceShields_PreventsAndConsumesAegisCounter()
+    {
+        var defender = DefenderWithAegis();
+        defender.Apply(m => m.AdjustShield(10));
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.ShieldFormula,
+            Formula = "-1"
+        }, attacker, defender);
+        
+        Assert.AreEqual(10, defender.CurrentShield());
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+
     private EffectData AdjustCounterEffect(TemporalStatType statType, string formulaAmount)
         => new EffectData
             {
@@ -153,7 +183,7 @@ public class AegisTests
 
     private Member DefenderWithAegis(int numOfAegis = 1)
     {
-        var defender = TestMembers.Any();
+        var defender = TestMembers.Create(s => s.With(StatType.MaxShield, 20));
         defender.Apply(m => m.Adjust(TemporalStatType.Aegis, numOfAegis));
         return defender;
     }

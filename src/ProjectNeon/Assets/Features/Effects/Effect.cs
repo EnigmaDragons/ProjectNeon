@@ -88,3 +88,35 @@ public class FullContextEffect : Effect
 
     public void Apply(EffectContext ctx) => _apply(ctx, ctx.Target);
 }
+
+public class AegisIfFormulaResult : Effect
+{
+    private readonly Action<EffectContext, float, MemberState> _applyToOne;
+    private readonly string _formula;
+    private readonly Func<float, bool> _canAegisPreventForFormulaResult;
+
+    public AegisIfFormulaResult(Action<EffectContext, float, MemberState> applyToOne, string formula, 
+        Func<float, bool> canAegisPreventForFormulaResult)
+    {
+        _applyToOne = applyToOne;
+        _formula = formula;
+        _canAegisPreventForFormulaResult = canAegisPreventForFormulaResult;
+    }
+
+    public void Apply(EffectContext ctx)
+    {
+        ctx.Target.Members.GetConscious().ForEach(m =>
+        {
+            var formulaAmount = Formula.Evaluate(ctx.Source, m, _formula, ctx.XPaidAmount);
+
+            var isDebuff = _canAegisPreventForFormulaResult(formulaAmount);
+            if (isDebuff) 
+                ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
+
+            if (ctx.Preventions.IsAegising(m))
+                BattleLog.Write($"{m.Name} prevented effect with an Aegis");
+            else
+                _applyToOne(ctx, formulaAmount, m.State);
+        });
+    }
+}
