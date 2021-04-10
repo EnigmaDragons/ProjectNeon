@@ -43,6 +43,10 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
@@ -104,6 +108,10 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
@@ -137,7 +145,7 @@ MonoBehaviour:
     enemyToSpawn: {fileID: 0}
   - type: 1
     battleEffect:
-      EffectType: 19
+      EffectType: 84
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -158,13 +166,17 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 0.34 * Attack
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
