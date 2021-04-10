@@ -27,8 +27,9 @@ public static class AllEffects
         { EffectType.AdjustPrimaryResourceFormula, e => new AegisIfFormulaResult((ctx, amount, m) => 
             m.AdjustPrimaryResource(BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.PrimaryResource.Name}", amount.CeilingInt())), e.Formula, true, amount => amount < 0) },
         { EffectType.DamageOverTimeFormula, e => new AegisPreventable(new DamageOverTimeFormula(e), "Damage Over Time") },
-        { EffectType.ApplyVulnerable, e => new SimpleEffect(m => BattleLogged($"{m.Name} has become vulnerable",
-            () => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, new StatusDetail(StatusTag.Vulnerable)))))) },
+        { EffectType.ApplyVulnerable, e => new AegisPreventable(new SimpleEffect(m => BattleLogged($"{m.Name} has become vulnerable",
+            () => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), 
+                TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, new StatusDetail(StatusTag.Vulnerable)))))), "Vulernable") },
         { EffectType.DisableForTurns, e => new SimpleEffect(m => BattleLogged($"{m.Name} is disabled for {e.NumberOfTurns} turns.", () => m.ApplyTemporaryAdditive(new DisableForTurns(e.NumberOfTurns))))},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.NumberOfTurns) },
         { EffectType.ReactOnSpellshieldedWithCard, e => new EffectOnAvoided(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), AvoidanceType.Spellshield, e.ReactionSequence) },

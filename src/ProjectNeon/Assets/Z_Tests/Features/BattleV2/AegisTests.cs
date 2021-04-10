@@ -8,7 +8,7 @@ public class AegisTests
     [TestCase(TemporalStatType.CardStun)]
     [TestCase(TemporalStatType.Inhibit)]
     [TestCase(TemporalStatType.Confused)]
-    public void Aegis_GiveNegativeCounters_Applied(TemporalStatType statType)
+    public void Aegis_GiveNegativeCounters_Prevented(TemporalStatType statType)
     {
         var defender = DefenderWithAegis();
         var attacker = TestMembers.Any();
@@ -42,7 +42,7 @@ public class AegisTests
     [TestCase(TemporalStatType.Lifesteal)]
     [TestCase(TemporalStatType.Evade)]
     [TestCase(TemporalStatType.Spellshield)]
-    public void Aegis_TakePositiveCounters_Applied(TemporalStatType statType)
+    public void Aegis_TakePositiveCounters_Prevented(TemporalStatType statType)
     {
         var defender = DefenderWithAegis();
         var attacker = TestMembers.Any();
@@ -72,7 +72,7 @@ public class AegisTests
     }
 
     [Test]
-    public void Aegis_DamageOverTime_Applied()
+    public void Aegis_DamageOverTime_Prevented()
     {
         var defender = DefenderWithAegis();
         var attacker = TestMembers.Any();
@@ -108,7 +108,7 @@ public class AegisTests
     }
     
     [Test]
-    public void Aegis_AdditiveStatDebuff_Applied()
+    public void Aegis_AdditiveStatDebuff_Prevented()
     {
         var member = TestMembers.Create(s => s.With(StatType.Attack, 2));
         member.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
@@ -126,7 +126,7 @@ public class AegisTests
     }
     
     [Test]
-    public void Aegis_MultiplicativeStatDebuff_Applied()
+    public void Aegis_MultiplicativeStatDebuff_Prevented()
     {
         var member = TestMembers.Create(s => s.With(StatType.Attack, 2));
         member.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
@@ -144,7 +144,7 @@ public class AegisTests
     }
 
     [Test]
-    public void Aegis_RemoveAllShields_Applied()
+    public void Aegis_RemoveAllShields_Prevented()
     {
         var defender = DefenderWithAegis();
         defender.Apply(m => m.AdjustShield(10));
@@ -157,7 +157,7 @@ public class AegisTests
     }
     
     [Test]
-    public void Aegis_ReduceShields_Applied()
+    public void Aegis_ReduceShields_Prevented()
     {
         var defender = DefenderWithAegis();
         defender.Apply(m => m.AdjustShield(10));
@@ -174,7 +174,7 @@ public class AegisTests
     }
 
     [Test]
-    public void Aegis_TransferNegativePrimaryResource_Applied()
+    public void Aegis_TransferNegativePrimaryResource_Prevented()
     {
         var defender = DefenderWithAegis();
         defender.Apply(d => d.AdjustPrimaryResource(2));
@@ -191,7 +191,7 @@ public class AegisTests
     }
 
     [Test]
-    public void Aegis_ResourceLossFlat_Applied()
+    public void Aegis_ResourceLossFlat_Prevented()
     {
         var defender = DefenderWithAegis();
         defender.Apply(d => d.AdjustPrimaryResource(2));
@@ -209,7 +209,7 @@ public class AegisTests
     }
     
     [Test]
-    public void Aegis_PrimaryResourceLoss_Applied()
+    public void Aegis_PrimaryResourceLoss_Prevented()
     {
         var defender = DefenderWithAegis();
         defender.Apply(d => d.AdjustPrimaryResource(2));
@@ -226,7 +226,7 @@ public class AegisTests
     }
     
     [Test]
-    public void Aegis_PrimaryResourceFormulaLoss_Applied()
+    public void Aegis_PrimaryResourceFormulaLoss_Prevented()
     {
         var defender = DefenderWithAegis();
         defender.Apply(d => d.AdjustPrimaryResource(2));
@@ -239,6 +239,22 @@ public class AegisTests
         }, attacker, defender);
         
         Assert.AreEqual(2, defender.PrimaryResource().Amount);
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+
+    [Test]
+    public void Aegis_ApplyVulnerable_Prevented()
+    {
+        var defender = DefenderWithAegis();
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.ApplyVulnerable,
+            NumberOfTurns = new IntReference(1)
+        }, attacker, defender);
+        
+        Assert.AreEqual(1, defender.State.Damagability());
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
     
