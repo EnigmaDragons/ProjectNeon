@@ -10,7 +10,7 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnAttacked, ctx => effect => 
             ctx.Actor.IsConscious() && (effect.EffectData.EffectType == EffectType.AttackFormula) && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
         { ReactionConditionType.OnMagicAttacked, ctx => effect => 
-            ctx.Actor.IsConscious() && (effect.EffectData.EffectType == EffectType.MagicAttack || effect.EffectData.EffectType == EffectType.MagicAttackFormula) && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
+            ctx.Actor.IsConscious() && effect.EffectData.EffectType == EffectType.MagicAttackFormula && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
         { ReactionConditionType.OnBloodied, ctx => effect => 
             ctx.Actor.IsConscious() && !effect.BattleBefore.Members[ctx.Possessor.Id].IsBloodied() && effect.BattleAfter.Members[ctx.Possessor.Id].IsBloodied() },
         {ReactionConditionType.OnVulnerable, ctx => effect 

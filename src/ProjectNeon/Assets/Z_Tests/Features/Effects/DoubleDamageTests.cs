@@ -26,8 +26,8 @@ public class DoubleDamageTests
         
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.MagicAttack, 
-            FloatAmount = new FloatReference(1)
+            EffectType = EffectType.MagicAttackFormula, 
+            Formula = "1 * Magic"
         }, attacker, target);
         
         Assert.AreEqual(0, attacker.State[TemporalStatType.DoubleDamage]);

@@ -10,7 +10,6 @@ public enum EffectType
     
     // Most Common Effects
     AttackFormula = 30,
-    MagicAttack = 50,
     MagicAttackFormula = 31,
     DealRawDamageFormula = 70,
     DamageOverTimeFlat = 8,

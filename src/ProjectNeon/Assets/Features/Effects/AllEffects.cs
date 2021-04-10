@@ -43,7 +43,6 @@ public static class AllEffects
         { EffectType.HealToughness, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Toughness) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With(e.EffectScope.Value.EnumVal<PlayerStatType>(), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
-        { EffectType.MagicAttack, e => new MagicAttack(new SpellDamage(e.BaseAmount, e.FloatAmount), e.HitsRandomTargetMember) },
         { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.TotalIntAmount)) },
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
         { EffectType.AtEndOfTurn, e => new EndOfTurnEffect(e) },

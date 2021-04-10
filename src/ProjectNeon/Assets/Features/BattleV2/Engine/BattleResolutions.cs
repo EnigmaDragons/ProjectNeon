@@ -66,8 +66,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         EffectType.AttackFormula, 
         EffectType.PhysicalDamageOverTime,
         EffectType.Kill, 
-        EffectType.MagicDamageOverTime, 
-        EffectType.MagicAttack, 
+        EffectType.MagicDamageOverTime,
         EffectType.MagicAttackFormula, 
         EffectType.MagicDamageOverTime,
         EffectType.DamageOverTime

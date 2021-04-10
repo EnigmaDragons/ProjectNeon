@@ -15,7 +15,7 @@ MonoBehaviour:
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 50
+      EffectType: 31
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -36,13 +36,17 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 1 * Magic
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0

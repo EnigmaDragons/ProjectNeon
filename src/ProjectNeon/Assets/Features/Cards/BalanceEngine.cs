@@ -100,7 +100,6 @@ public class BalanceEngine
         EffectType.DamageOverTime,
         EffectType.DamageOverTimeFlat,
         EffectType.DealRawDamageFormula,
-        EffectType.MagicAttack,
         EffectType.MagicAttackFormula,
         EffectType.MagicDamageOverTime
     };
