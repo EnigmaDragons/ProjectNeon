@@ -103,12 +103,14 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
             if (newTargets.Any())
             {
-                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones));
+                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), msg.Card, msg.XPaidAmount, 
+                    partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions));
                 return;
             }
         }
         
-        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones));   
+        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, 
+            partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions));   
     }
 
     protected override void Execute(SpawnEnemy msg)

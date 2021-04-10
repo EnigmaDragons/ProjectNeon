@@ -8,6 +8,11 @@ public static class BattleCardExecution
     // Card
     public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount, Action onFinished)
     {
+        QueuePayloads(GetPayloads(card, targets, battleStateSnapshot, xPaidAmount), onFinished);
+    }
+
+    public static List<IPayloadProvider> GetPayloads(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount)
+    {
         if (card.ActionSequences.Length > targets.Length)
             Log.Error($"{card.Name}: For {card.ActionSequences.Length} there are only {targets.Length} targets");
 
@@ -16,16 +21,9 @@ public static class BattleCardExecution
         for (var i = 0; i < card.ActionSequences.Length; i++)
         {
             var seq = card.ActionSequences[i];
-            if (seq.RepeatX)
-            {
-                sequences.AddRange(Enumerable.Range(0, xPaidAmount.Amount).Select(_ => seq));
-                sequenceTargets.AddRange(Enumerable.Range(0, xPaidAmount.Amount).Select(_ => targets[i]));
-            }
-            else
-            {
-                sequences.Add(seq);
-                sequenceTargets.Add(targets[i]);
-            }
+            var numRepetitions = seq.RepeatX ? xPaidAmount.Amount : 1;
+            sequences.AddRange(Enumerable.Range(0, numRepetitions).Select(_ => seq));
+            sequenceTargets.AddRange(Enumerable.Range(0, numRepetitions).Select(_ => targets[i]));
         }
 
         var payloads = new List<IPayloadProvider>();
@@ -41,9 +39,10 @@ public static class BattleCardExecution
             var ctx = new CardActionContext(card.Owner, selectedTarget, avoidanceContext, seq.Group, seq.Scope, xPaidAmount, battleStateSnapshot, card);
             payloads.Add(seq.cardActions.Play(ctx));
         }
-        QueuePayloads(payloads, onFinished);
-    }
 
+        return payloads;
+    }
+    
     private static Member[] GetAvoidingMembers(AvoidanceType avoidance, Target selectedTarget)
     {
         var avoidingMembers = new List<Member>();
@@ -69,7 +68,7 @@ public static class BattleCardExecution
                 avoidingMembers.Add(member);
             }
         }
-
+        
         return avoidingMembers.ToArray();
     }
     
@@ -119,9 +118,9 @@ public static class BattleCardExecution
         if (type == CardBattleActionType.Battle)
             return ctx.Avoid.Members.Any() 
                 ? new MultiplePayloads(
-                    new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XAmountPaid, ctx.Group, ctx.Scope, isReaction: false)), 
+                    new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XAmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false)), 
                     new SinglePayload(new CardActionAvoided(action.BattleEffect, ctx.Source, effectedTargets, ctx.Avoid)))
-                : (IPayloadProvider)new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XAmountPaid, ctx.Group, ctx.Scope, isReaction: false));
+                : (IPayloadProvider)new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, effectedTargets, ctx.Card, ctx.XAmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false));
         
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn));
@@ -156,7 +155,7 @@ public static class BattleCardExecution
         if (type == CardBattleActionType.Battle && allAvoidedEffect)
             return new SinglePayload(new CardActionAvoided(action.BattleEffect, source, effectedTargets, avoid));
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(action.BattleEffect, source, target, Maybe<Card>.Missing(), xAmountPaid));
+            return new SinglePayload(new ApplyBattleEffect(action.BattleEffect, source, target, Maybe<Card>.Missing(), xAmountPaid, new PreventionContextMut(target)));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(new CharacterAnimationRequested(source.Id, action.CharacterAnimation, target));
         if (type == CardBattleActionType.AnimateAtTarget)
