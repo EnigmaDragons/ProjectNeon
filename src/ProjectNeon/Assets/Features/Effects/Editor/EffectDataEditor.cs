@@ -22,7 +22,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ShieldRemoveAll, new string[0]},
         {EffectType.ShieldFormula, new [] {"Formula"}},
         {EffectType.AdjustStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns", "EffectScope" }},
-        {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
+        {EffectType.AdjustStatMultiplicativelyFormula, new [] { "Formula", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustCounterFormula, new [] {"Formula", "EffectScope" }},
         {EffectType.GainCredits, new [] {"BaseAmount" }},
         {EffectType.AdjustPrimaryResource, new [] {"BaseAmount" }},

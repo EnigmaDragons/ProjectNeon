@@ -36,26 +36,27 @@ public class AegisTests
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
 
-    [Test]
-    public void Aegis_StatBuff_AegisNotApplicable()
+    [TestCase(EffectType.AdjustStatAdditivelyFormula, 3)]
+    [TestCase(EffectType.AdjustStatMultiplicativelyFormula, 2)]
+    public void Aegis_StatBuff_AegisNotApplicable(EffectType effectType, int expectedAttack)
     {
-        var member = TestMembers.Create(s => s.With(StatType.Attack, 2));
+        var member = TestMembers.Create(s => s.With(StatType.Attack, 1));
         member.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
         
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.AdjustStatAdditivelyFormula,
-            Formula = "1",
+            EffectType = effectType,
+            Formula = "2",
             EffectScope = new StringReference(StatType.Attack.ToString()),
             NumberOfTurns = new IntReference(1)
         }, member, member);
         
-        Assert.AreEqual(3, member.Attack());
+        Assert.AreEqual(expectedAttack, member.Attack());
         Assert.AreEqual(1, member.State[TemporalStatType.Aegis]);
     }
     
     [Test]
-    public void Aegis_StatDebuff_PreventsAndConsumesAegisCounter()
+    public void Aegis_AdditiveStatDebuff_PreventsAndConsumesAegisCounter()
     {
         var member = TestMembers.Create(s => s.With(StatType.Attack, 2));
         member.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
@@ -64,6 +65,24 @@ public class AegisTests
         {
             EffectType = EffectType.AdjustStatAdditivelyFormula,
             Formula = "-1",
+            EffectScope = new StringReference(StatType.Attack.ToString()),
+            NumberOfTurns = new IntReference(1)
+        }, member, member);
+        
+        Assert.AreEqual(2, member.Attack());
+        Assert.AreEqual(0, member.State[TemporalStatType.Aegis]);
+    }
+    
+    [Test]
+    public void Aegis_MultiplicativeStatDebuff_PreventsAndConsumesAegisCounter()
+    {
+        var member = TestMembers.Create(s => s.With(StatType.Attack, 2));
+        member.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.AdjustStatMultiplicativelyFormula,
+            Formula = "0.5",
             EffectScope = new StringReference(StatType.Attack.ToString()),
             NumberOfTurns = new IntReference(1)
         }, member, member);

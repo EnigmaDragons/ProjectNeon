@@ -112,8 +112,6 @@ public class BalanceEngine
     {
         var scopeFactor = ScopeFactor(s, g, ImpliedBalanceTags(e));
         var effectValue = 1f;
-        if (e.EffectType == EffectType.AdjustStatMultiplicatively && e.FloatAmount.Value < 1)
-            return (1 - e.FloatAmount) * 1.5f;
         return effectValue * scopeFactor;
     }
 

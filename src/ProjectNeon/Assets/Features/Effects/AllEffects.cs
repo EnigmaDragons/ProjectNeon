@@ -8,9 +8,8 @@ public static class AllEffects
     private static readonly Dictionary<EffectType, Func<EffectData, Effect>> CreateEffectOfType = new Dictionary<EffectType, Func<EffectData, Effect>>
     {
         { EffectType.Nothing, e => new NoEffect() },
-        { EffectType.AdjustStatAdditivelyFormula, e => new AdjustStatsAdditivelyFormula(e)},
-        { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
-            new AdjustedStats(new StatMultipliers().WithRaw(e.EffectScope, e.FloatAmount), e.ForSimpleDurationStatAdjustment())))},
+        { EffectType.AdjustStatAdditivelyFormula, e => new AdjustStatsFormula(e, multiplicative: false)},
+        { EffectType.AdjustStatMultiplicativelyFormula, e => new AdjustStatsFormula(e, multiplicative: true)},
         { EffectType.ReactWithEffect, e => new EffectReactWith(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, e.ReactionEffectScope,
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionEffect)},
         { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, e.ReactionEffectScope, 
