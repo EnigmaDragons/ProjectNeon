@@ -15,6 +15,7 @@ public enum EffectType
     DamageOverTimeFlat = 8,
     DamageOverTime = 19,
     PhysicalDamageOverTime = 59,
+    MagicDamageOverTime = 55,
 
     AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyFormula = 68,
@@ -62,9 +63,7 @@ public enum EffectType
     RedrawHandOfCards = 77,
     DrawCards = 81,
     
-    
     DisableForTurns = 13,
-    InterceptAttackForTurns = 18,
     HealOverTime = 20,
     HealMagic = 45,
     HealToughness = 12,
@@ -73,7 +72,6 @@ public enum EffectType
     AdjustPlayerStats = 49,
     GainCredits = 52,
     
-    MagicDamageOverTime = 55,
     GainDoubleDamage = 57,
     FullyReviveAllAllies = 61,
     SwapLifeForce = 64,
