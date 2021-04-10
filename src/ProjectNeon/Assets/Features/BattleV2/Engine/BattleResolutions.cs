@@ -16,6 +16,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
     private readonly Queue<ProposedReaction> _instantReactions = new Queue<ProposedReaction>();
     private readonly Queue<ProposedReaction> _reactionCards = new Queue<ProposedReaction>();
+    private bool _resolvingEffect;
     
     private void ResolveNext()
     {
@@ -36,7 +37,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         _unconsciousness.ProcessRevivedMembers(state);
     }
 
-    public bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && resolutionZone.IsDone;
+    public bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && resolutionZone.IsDone && _instantReactions.None() && !_resolvingEffect;
     
     protected override void Execute(ApplyBattleEffect msg)
     {
@@ -135,13 +136,18 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     {
         state.CleanupExpiredMemberStates();
         if (_instantReactions.Any())
+        {
+            _resolvingEffect = false;
             BeginResolvingNextInstantReaction();
+        }
         else
         {
             yield return new WaitForSeconds(delay);
+            _resolvingEffect = false;
             resolutionZone.OnCardResolutionFinished();
             ResolveNext();
         }
+        
     }
 
     private void BeginResolvingNextInstantReaction()
@@ -152,10 +158,12 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     
     private IEnumerator ResolveNextReactionCard()
     {
+        _resolvingEffect = true;
         var r = _reactionCards.Dequeue();
         var isReactionCard = r.ReactionCard.IsPresent;
         if (!isReactionCard)
         {
+            _resolvingEffect = false;
             Log.Error("Should not be Queueing instant Effect Reactions. They should already be processed.");
             yield break;
         }
