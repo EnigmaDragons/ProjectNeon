@@ -62,6 +62,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Disabled, true, v => $"Disabled for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.CardStun, true, v => $"Stunned for {v} Cards. Reactions disabled.");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => $"Confused for {v} Turns");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Evade, true, v => $"Evades the next {v} attacks");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => $"Dodges the next {v} attacks");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Spellshield, true, v => $"Shields next {v} Magic Attacks");
         AddCustomTextStatusIcons(statuses, StatusTag.OnClipUsed, "Unknown On Clip Used Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnBloodied, "Unknown On Bloodied Effect");
@@ -73,7 +75,6 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (extraCardBuffAmount != 0)
             statuses.Add(new CurrentStatusValue { Type = StatType.ExtraCardPlays.ToString(), Icon = icons[StatType.ExtraCardPlays].Icon, Text = extraCardBuffAmount.ToString(), Tooltip = $"Play {extraCardBuffAmount} Extra Cards"});
         
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Evade, true, v => $"Evades the next {v} attacks");
         if (_member.State.Damagability() > 1)
             statuses.Add(new CurrentStatusValue { Type = StatType.Damagability.ToString(), Icon = icons[StatType.Damagability].Icon, Tooltip = "Vulnerable (Takes 33% more damage)"});
         

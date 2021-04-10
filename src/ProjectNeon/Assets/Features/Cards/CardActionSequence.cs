@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -15,8 +17,8 @@ public class CardActionSequence
     public AvoidanceType AvoidanceType => avoidance;
     public CardActionsData CardActions => cardActions;
     public bool RepeatX => repeatX;
-
-    public static CardActionSequence Create(Scope s, Group g, AvoidanceType a, CardActionsData data, bool x)
+    
+    public static CardActionSequence Create(Scope s, Group g, AvoidanceType a, CardActionsData data, bool repeatX)
     {
         return new CardActionSequence
         {
@@ -24,7 +26,7 @@ public class CardActionSequence
             @group = g,
             avoidance = a,
             cardActions = data,
-            repeatX = x
+            repeatX = repeatX
         };
     }
     

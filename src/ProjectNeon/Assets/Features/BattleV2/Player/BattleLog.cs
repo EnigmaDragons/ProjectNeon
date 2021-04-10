@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BattleLog : OnMessage<WriteBattleLogMessageRequested>
@@ -11,4 +12,10 @@ public class BattleLog : OnMessage<WriteBattleLogMessageRequested>
     }
 
     public static void Write(string message) => Message.Publish(new WriteBattleLogMessageRequested(message)); 
+    
+    public static void WriteIf<T>(T val, Func<T, string> getMessage, Func<T, bool> condition)
+    {
+        if (condition(val))
+            Message.Publish(new WriteBattleLogMessageRequested(getMessage(val)));
+    }
 }

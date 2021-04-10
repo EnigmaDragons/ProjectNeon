@@ -282,7 +282,9 @@ public sealed class MemberState : IStats
     private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
 
     // Status Counters Commands
-    public void Adjust(string counterName, float amount) => PublishAfter(() => Counter(counterName).ChangeBy(amount));
+    public void Adjust(string counterName, float amount) => BattleLog.WriteIf(
+        Diff(PublishAfter(() => Counter(counterName).ChangeBy(amount), () => Counter(counterName).Amount)), 
+        v => $"{Name}'s {counterName} adjusted by {v}", v => v != 0);
     public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter(() => Counter(t.ToString()).ChangeBy(amount), () => this[t].CeilingInt()));
     public int AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
     private void AdjustShieldNoPublish(float amount) => Counter(TemporalStatType.Shield.ToString()).ChangeBy(amount);

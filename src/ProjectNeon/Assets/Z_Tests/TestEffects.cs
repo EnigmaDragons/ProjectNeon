@@ -42,14 +42,21 @@ public static class TestEffects
         tempMembers[source.Id] = source;
         var members = tempMembers.Values;
         var battleSnapshotBefore = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
-        AllEffects.Apply(e, EffectContext.ForTests(source, target, card, xAmountPaid));
+        var preventions = new PreventionContextMut(target);
+        AllEffects.Apply(e, EffectContext.ForTests(source, target, card, xAmountPaid, preventions));
+        preventions.UpdatePreventionCounters();
         var battleSnapshotAfter = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
 
-        var effectResolved = new EffectResolved(e, source, target, battleSnapshotBefore, battleSnapshotAfter, isReaction: false, Maybe<Card>.Missing());
+        var effectResolved = new EffectResolved(e, source, target, battleSnapshotBefore, battleSnapshotAfter, isReaction: false, Maybe<Card>.Missing(), preventions);
 
         var reactions = members.SelectMany(x => x.State.GetReactions(effectResolved));
 
-        reactions.ForEach(r => r.ReactionSequence.CardActions.Actions.Where(a => a.Type == CardBattleActionType.Battle)
-            .ForEach(be => AllEffects.Apply(be.BattleEffect, EffectContext.ForTests(r.Source, r.Target, Maybe<Card>.Missing(), ResourceQuantity.None))));
+        reactions.ForEach(r =>
+        {
+            var reactionPreventions = new PreventionContextMut(r.Target);
+            r.ReactionSequence.CardActions.Actions.Where(a => a.Type == CardBattleActionType.Battle)
+                .ForEach(be => AllEffects.Apply(be.BattleEffect,
+                    EffectContext.ForTests(r.Source, r.Target, Maybe<Card>.Missing(), ResourceQuantity.None, reactionPreventions)));
+        });
     }
 }

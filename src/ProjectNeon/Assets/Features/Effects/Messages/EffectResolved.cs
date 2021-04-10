@@ -7,8 +7,9 @@ public sealed class EffectResolved
     public BattleStateSnapshot BattleAfter { get; }
     public bool IsReaction { get; }
     public Maybe<Card> Card { get; }
+    public PreventionContext Preventions { get; }
 
-    public EffectResolved(EffectData e, Member src, Target target, BattleStateSnapshot before, BattleStateSnapshot after, bool isReaction, Maybe<Card> card)
+    public EffectResolved(EffectData e, Member src, Target target, BattleStateSnapshot before, BattleStateSnapshot after, bool isReaction, Maybe<Card> card, PreventionContext preventions)
     {
         EffectData = e;
         Source = src;
@@ -17,5 +18,6 @@ public sealed class EffectResolved
         BattleAfter = after;
         IsReaction = isReaction;
         Card = card;
+        Preventions = preventions;
     }
 }

@@ -34,12 +34,12 @@ public class BattleState : ScriptableObject
     public Effect[] QueuedEffects => _queuedEffects.ToArray();
     
     private int _numPlayerDiscardsUsedThisTurn = 0;
-    private int _numberOfRecyclesRemainingThisTurn = 0;
+    private int _numberOfRecyclesUsedThisTurn = 0;
     
     public bool IsSelectingTargets = false;
     public BattleV2Phase Phase => phase;
     public int TurnNumber => turnNumber;
-    public int NumberOfRecyclesRemainingThisTurn => _numberOfRecyclesRemainingThisTurn;
+    public int NumberOfRecyclesRemainingThisTurn => PlayerState.CardCycles - _numberOfRecyclesUsedThisTurn;
     private int CurrentTurnPartyNonBonusStandardCardPlays => _playedCardHistory.Any() 
         ? _playedCardHistory.Last().Count(x => x.Member.TeamType == TeamType.Party && !x.WasTransient && x.Card.Speed == CardSpeed.Standard) 
         : 0;
@@ -148,7 +148,7 @@ public class BattleState : ScriptableObject
         _heroesById.ForEach(h => h.Value.InitEquipmentState(_membersById[h.Key], this));
         _enemiesById.ForEach(e => e.Value.SetupMemberState(_membersById[e.Key], this));
 
-        _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
+        _numberOfRecyclesUsedThisTurn = 0;
         _numPlayerDiscardsUsedThisTurn = 0;
         rewardCredits = 0;
         rewardCards = new CardType[0];
@@ -206,13 +206,13 @@ public class BattleState : ScriptableObject
         UpdateState(() =>
         {
             _playedCardHistory.Add(new List<PlayedCardSnapshot>());
-            _numberOfRecyclesRemainingThisTurn = _playerState.CurrentStats.CardCycles();
+            _numberOfRecyclesUsedThisTurn = 0;
             _numPlayerDiscardsUsedThisTurn = 0;
             PlayerState.OnTurnEnd();
             turnNumber++;
         });
 
-    public void UseRecycle() => UpdateState(() => _numberOfRecyclesRemainingThisTurn--);
+    public void UseRecycle() => UpdateState(() => _numberOfRecyclesUsedThisTurn++);
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void AddRewardXp(int xp) => UpdateState(() => rewardXp += xp); 
     public void SetRewardCards(params CardType[] cards) => UpdateState(() => rewardCards = cards);

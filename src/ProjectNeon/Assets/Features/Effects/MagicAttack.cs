@@ -21,8 +21,6 @@ public class MagicAttack : Effect
         ctx.Source.State.AdjustDoubleDamage(-1);
 
         var effect = new DealDamage(damage);
-        
-
         var totalHpDamageDealt = 0;
         foreach (var member in selectedTarget.Members)
         {
