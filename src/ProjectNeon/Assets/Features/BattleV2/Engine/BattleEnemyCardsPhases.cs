@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -26,7 +27,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
             .FirstAsMaybe()
             .ExecuteIfPresentOrElse(
                 Play, 
-                () => Message.Publish(new ResolutionsFinished(BattleV2Phase.HastyEnemyCards)));
+                () => StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.HastyEnemyCards)));
     }
     
     public void BeginPlayingAllStandardEnemyCards() => PlayNextStandardCard();
@@ -40,7 +41,14 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
             .FirstAsMaybe()
             .ExecuteIfPresentOrElse(
                 Play, 
-                () => Message.Publish(new ResolutionsFinished(BattleV2Phase.EnemyCards)));
+                () => StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.EnemyCards)));
+    }
+
+    private IEnumerator WaitForResolutionsFinished(BattleV2Phase phase)
+    {
+        while (!resolutions.IsDoneResolving)
+            yield return new WaitForSeconds(0.1f);
+        Message.Publish(new ResolutionsFinished(phase));
     }
 
     private void RemoveUnconsciousEnemiesFromActPool() => _enemiesToActThisTurn.RemoveAll(e => e.Member.IsUnconscious());
