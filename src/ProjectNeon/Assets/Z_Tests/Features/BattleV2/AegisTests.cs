@@ -8,15 +8,67 @@ public class AegisTests
     [TestCase(TemporalStatType.CardStun)]
     [TestCase(TemporalStatType.Inhibit)]
     [TestCase(TemporalStatType.Confused)]
-    public void Aegis_NegativeCounters_PreventsAndConsumesAegisCounter(TemporalStatType statType)
+    public void Aegis_GiveNegativeCounters_PreventsAndConsumesAegisCounter(TemporalStatType statType)
     {
         var defender = DefenderWithAegis();
         var attacker = TestMembers.Any();
         
-        TestEffects.Apply(AdjustCounterEffect(statType), attacker, defender);
+        TestEffects.Apply(AdjustCounterEffect(statType, "1"), attacker, defender);
         
         Assert.AreEqual(0, defender.State[statType]);
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+    
+    [TestCase(TemporalStatType.Disabled)]
+    [TestCase(TemporalStatType.Blind)]
+    [TestCase(TemporalStatType.CardStun)]
+    [TestCase(TemporalStatType.Inhibit)]
+    [TestCase(TemporalStatType.Confused)]
+    public void Aegis_RemoveNegativeCounters_NoAegisUsage(TemporalStatType statType)
+    {
+        var defender = DefenderWithAegis();
+        defender.Apply(m => m.Adjust(statType, 1));
+        
+        TestEffects.Apply(AdjustCounterEffect(statType, "-1"), defender, defender);
+        
+        Assert.AreEqual(0, defender.State[statType]);
+        Assert.AreEqual(1, defender.State[TemporalStatType.Aegis]);
+    }
+    
+    [TestCase(TemporalStatType.Stealth)]
+    [TestCase(TemporalStatType.DoubleDamage)]
+    [TestCase(TemporalStatType.Dodge)]
+    [TestCase(TemporalStatType.Taunt)]
+    [TestCase(TemporalStatType.Lifesteal)]
+    [TestCase(TemporalStatType.Evade)]
+    [TestCase(TemporalStatType.Spellshield)]
+    public void Aegis_TakePositiveCounters_PreventsAndConsumesAegisCounter(TemporalStatType statType)
+    {
+        var defender = DefenderWithAegis();
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(AdjustCounterEffect(statType, "-1"), attacker, defender);
+        
+        Assert.AreEqual(0, defender.State[statType]);
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+    
+    [TestCase(TemporalStatType.Stealth)]
+    [TestCase(TemporalStatType.DoubleDamage)]
+    [TestCase(TemporalStatType.Dodge)]
+    [TestCase(TemporalStatType.Taunt)]
+    [TestCase(TemporalStatType.Lifesteal)]
+    [TestCase(TemporalStatType.Evade)]
+    [TestCase(TemporalStatType.Spellshield)]
+    public void Aegis_GivePositiveCounters_NoAegisUsage(TemporalStatType statType)
+    {
+        var defender = DefenderWithAegis();
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(AdjustCounterEffect(statType, "1"), attacker, defender);
+        
+        Assert.AreEqual(1, defender.State[statType]);
+        Assert.AreEqual(1, defender.State[TemporalStatType.Aegis]);
     }
 
     [Test]
@@ -91,12 +143,12 @@ public class AegisTests
         Assert.AreEqual(0, member.State[TemporalStatType.Aegis]);
     }
 
-    private EffectData AdjustCounterEffect(TemporalStatType statType)
+    private EffectData AdjustCounterEffect(TemporalStatType statType, string formulaAmount)
         => new EffectData
             {
                 EffectType = EffectType.AdjustCounterFormula,
                 EffectScope = new StringReference(statType.ToString()),
-                Formula = "1"
+                Formula = formulaAmount
             };
 
     private Member DefenderWithAegis(int numOfAegis = 1)

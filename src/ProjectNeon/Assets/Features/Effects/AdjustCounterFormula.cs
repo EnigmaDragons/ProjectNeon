@@ -8,7 +8,7 @@ public class AdjustCounterFormula : Effect
 
     public AdjustCounterFormula(EffectData e) => _e = e;
 
-    private readonly HashSet<string> _aegisEffectScopes = new HashSet<string>
+    private readonly HashSet<string> _negativeEffectScopes = new HashSet<string>
     {
         TemporalStatType.Disabled.ToString(),
         TemporalStatType.Blind.ToString(),
@@ -16,18 +16,22 @@ public class AdjustCounterFormula : Effect
         TemporalStatType.Inhibit.ToString(),
         TemporalStatType.CardStun.ToString()
     };
-    
+
     public void Apply(EffectContext ctx)
     {
-        if (_aegisEffectScopes.Contains(_e.EffectScope.Value))
-            ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, ctx.Target.Members.GetConscious());
-        var aegisMembers = ctx.Preventions.GetPreventingMembers(PreventionType.Aegis).Select(m => m.Id);
-        ctx.Target.ApplyToAllConscious(m => 
+        ctx.Target.Members.GetConscious().ForEach(m =>
         {
-            if (aegisMembers.Contains(m.MemberId))
+            var impactSign = _negativeEffectScopes.Contains(_e.EffectScope) ? -1 : 1;
+            var formulaAmount = Formula.Evaluate(ctx.SourceSnapshot.State, m.State, ctx.XPaidAmount, _e.Formula);
+
+            var isDebuff = impactSign * formulaAmount < 0; 
+            if (isDebuff)
+                ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, new [] { m });
+            
+            if (isDebuff && ctx.Preventions.IsAegising(m))
                 BattleLog.Write($"{m.Name} prevented {_e.EffectType} with an Aegis");
             else
-                m.Adjust(_e.EffectScope, Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, _e.Formula));
+                m.State.Adjust(_e.EffectScope, formulaAmount);
         });
     }
 }
