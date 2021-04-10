@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public sealed class PreventionContextMut : PreventionContext
 {
@@ -14,13 +15,15 @@ public sealed class PreventionContextMut : PreventionContext
     
     public void RecordPreventionTypeEffect(PreventionType type, params Member[] members)
     {
-        if (type == PreventionType.Barrier)
+        Log.Info($"Prevention {type}: {string.Join(", ", members.Select(m => m.Name))}");
+        if (type == PreventionType.Dodge)
         {
-            if (!PreventingMembers.ContainsKey(PreventionType.Barrier))
-                PreventingMembers[PreventionType.Barrier] = new HashSet<Member>();
-            TargetMembers.Where(m => m.State[TemporalStatType.Barrier] > 0)
+            if (!PreventingMembers.ContainsKey(PreventionType.Dodge))
+                PreventingMembers[PreventionType.Dodge] = new HashSet<Member>();
+            TargetMembers.Where(m => m.State[TemporalStatType.Dodge] > 0)
                 .Intersect(members)
-                .ForEach(m => PreventingMembers[PreventionType.Barrier].Add(m));
+                .ForEach(m => PreventingMembers[PreventionType.Dodge].Add(m));
+            PreventingMembers[PreventionType.Dodge].ForEach(m => Log.Info($"Preventing - Dodge {m.Name}"));
         }
     }
 

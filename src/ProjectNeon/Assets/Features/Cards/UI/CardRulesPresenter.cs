@@ -41,7 +41,7 @@ public class CardRulesPresenter : MonoBehaviour
                 rulesToShow.AddIf("Drain", b.EffectType == EffectType.DrainPrimaryResourceFormula);
 
                 AddAllMatchingEffectScopeRules(rulesToShow, b,
-                    TemporalStatType.Barrier.ToString(),
+                    TemporalStatType.Dodge.ToString(),
                     TemporalStatType.Evade.ToString(),
                     TemporalStatType.Taunt.ToString(),
                     TemporalStatType.Blind.ToString(),

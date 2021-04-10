@@ -15,7 +15,7 @@ public class BarrierTests
     public void AttackerIsBlindAndDefenderHasBarrier_BarrierStillPresent()
     {
         var defender = TestMembers.Any();
-        defender.Apply(m => m.Adjust(TemporalStatType.Barrier, 1));
+        defender.Apply(m => m.Adjust(TemporalStatType.Dodge, 1));
 
         var attacker = TestMembers.Any();
         attacker.Apply(m => m.Adjust(TemporalStatType.Blind, 1));
@@ -23,21 +23,21 @@ public class BarrierTests
         var basicAttackCard = new Card(0, attacker, BasicAttackCard);
         basicAttackCard.Execute(new Target[] { new Single(defender),}, ResourceQuantity.None, attacker, defender);
         
-        Assert.AreEqual(1, defender.State[TemporalStatType.Barrier]);
+        Assert.AreEqual(1, defender.State[TemporalStatType.Dodge]);
     }
     
     [Test]
     public void AttackerPlaysAttack_BarrierGoneAndHpUnchanged()
     {
         var defender = TestMembers.Any();
-        defender.Apply(m => m.Adjust(TemporalStatType.Barrier, 1));
+        defender.Apply(m => m.Adjust(TemporalStatType.Dodge, 1));
 
         var attacker = TestMembers.Any();
 
         var basicAttackCard = new Card(0, attacker, BasicAttackCard);
         basicAttackCard.Execute(new Target[] { new Single(defender),}, ResourceQuantity.None, attacker, defender);
         
-        Assert.AreEqual(0, defender.State[TemporalStatType.Barrier], "Barrier Not Consumed");
+        Assert.AreEqual(0, defender.State[TemporalStatType.Dodge], "Barrier Not Consumed");
         Assert.AreEqual(0, defender.State.MissingHp());
     }
     
@@ -45,7 +45,7 @@ public class BarrierTests
     public void AttackerPlaysDoubleAttack_TwoBarriersGoneAndHpUnchanged()
     {
         var defender = TestMembers.Any();
-        defender.Apply(m => m.Adjust(TemporalStatType.Barrier, 2));
+        defender.Apply(m => m.Adjust(TemporalStatType.Dodge, 2));
 
         var attacker = TestMembers.Any();
 
@@ -60,7 +60,7 @@ public class BarrierTests
         });
         basicAttackCard.Execute(new Target[] { new Single(defender), new Single(defender)}, ResourceQuantity.None, attacker, defender);
         
-        Assert.AreEqual(0, defender.State[TemporalStatType.Barrier], "Barrier Not Consumed");
+        Assert.AreEqual(0, defender.State[TemporalStatType.Dodge], "Barrier Not Consumed");
         Assert.AreEqual(0, defender.State.MissingHp());
     }
     
@@ -69,7 +69,7 @@ public class BarrierTests
     public void AttackerIsBlindAndDefenderHasBarrier_BlindGone()
     {
         var defender = TestMembers.Any();
-        defender.Apply(m => m.Adjust(TemporalStatType.Barrier, 1));
+        defender.Apply(m => m.Adjust(TemporalStatType.Dodge, 1));
 
         var attacker = TestMembers.Any();
         attacker.Apply(m => m.Adjust(TemporalStatType.Blind, 1));
