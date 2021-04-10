@@ -97,11 +97,9 @@ public class BalanceEngine
     private static readonly HashSet<EffectType> DamageEffects = new HashSet<EffectType>
     {
         EffectType.AttackFormula,
-        EffectType.DamageOverTime,
-        EffectType.DamageOverTimeFlat,
         EffectType.DealRawDamageFormula,
         EffectType.MagicAttackFormula,
-        EffectType.MagicDamageOverTime
+        EffectType.DamageOverTimeFormula,
     };
     
     private static BalanceTag[] ImpliedBalanceTags(EffectData e)

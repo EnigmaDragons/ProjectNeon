@@ -17,8 +17,8 @@ public class DoubleTheEffectAndMinusDurationTests
         };
         var effect2 = new EffectData
         {
-            EffectType = EffectType.MagicDamageOverTime,
-            FloatAmount = new FloatReference(1),
+            EffectType = EffectType.DamageOverTimeFormula,
+            Formula = "1",
             NumberOfTurns = new IntReference(2),
         };
         var effect3 = new EffectData

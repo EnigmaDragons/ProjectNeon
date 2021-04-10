@@ -31,7 +31,6 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AtStartOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
         {EffectType.AtEndOfTurn, new [] { "NumberOfTurns", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
         {EffectType.DuplicateStatesOfType, new [] { "StatusTag" }},
-        {EffectType.DamageOverTime, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" } },
         {EffectType.DealRawDamageFormula, new [] { "Formula" }},
         {EffectType.HealFormula, new [] { "Formula" }},
         {EffectType.ApplyAdditiveStatInjury, new [] { "FlavorText", "FloatAmount", "EffectScope" }},
@@ -52,6 +51,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustPrimaryStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns" } },
         {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.Reload, new string[0]},
+        {EffectType.DamageOverTimeFormula, new [] { "Formula", "NumberOfTurns" }}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

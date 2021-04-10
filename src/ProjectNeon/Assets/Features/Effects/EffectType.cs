@@ -15,10 +15,6 @@ public enum EffectType
     
     // Damage Over Time
     DamageOverTimeFormula = 84,
-    DamageOverTimeFlat = 8,
-    DamageOverTime = 19,
-    PhysicalDamageOverTime = 59,
-    MagicDamageOverTime = 55,
 
     AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyFormula = 68,

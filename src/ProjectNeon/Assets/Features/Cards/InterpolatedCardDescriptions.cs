@@ -110,6 +110,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.MagicAttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.DamageOverTimeFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))} {DurationDescription(data)}";
         if (data.EffectType == EffectType.AdjustCounterFormula)
             coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
@@ -194,22 +196,19 @@ public static class InterpolatedCardDescriptions
     {
         if (data.EffectType == EffectType.AttackFormula)
             return WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost));
-        if (data.EffectType == EffectType.PhysicalDamageOverTime 
-            || data.EffectType == EffectType.DamageOverTime)
-            return WithRawDamageIcon(AttackAmount(data, owner));
+        if (data.EffectType == EffectType.MagicAttackFormula)
+            return WithMagicDamageIcon(FormulaAmount(data, owner, xCost));
+        if (data.EffectType == EffectType.DamageOverTimeFormula)
+            return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.DealRawDamageFormula)
             return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula
                 || data.EffectType == EffectType.HealFormula
                 || data.EffectType == EffectType.AdjustPrimaryStatAdditivelyFormula)
             return FormulaAmount(data, owner, xCost);
-        if (data.EffectType == EffectType.MagicAttackFormula)
-            return WithMagicDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.HealMagic
             || data.EffectType == EffectType.HealOverTime)
             return MagicAmount(data, owner);
-        if (data.EffectType == EffectType.MagicDamageOverTime)
-            return WithRawDamageIcon(MagicAmount(data, owner));
         
         if (data.EffectType == EffectType.HealToughness)
             return owner.IsPresent

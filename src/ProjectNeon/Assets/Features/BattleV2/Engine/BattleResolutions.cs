@@ -64,12 +64,9 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     private static readonly HashSet<EffectType> StealthBreakingEffectTypes = new HashSet<EffectType>(new []
     {
         EffectType.AttackFormula, 
-        EffectType.PhysicalDamageOverTime,
         EffectType.Kill, 
-        EffectType.MagicDamageOverTime,
+        EffectType.DamageOverTimeFormula,
         EffectType.MagicAttackFormula, 
-        EffectType.MagicDamageOverTime,
-        EffectType.DamageOverTime
     });
     
     protected override void Execute(CardActionAvoided msg)

@@ -8,8 +8,8 @@ public class DamageOverTimeTests
     {
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         TestEffects.Apply(new EffectData { 
-            EffectType = EffectType.DamageOverTime, 
-            FloatAmount = new FloatReference(2), 
+            EffectType = EffectType.DamageOverTimeFormula, 
+            Formula = "2",
             NumberOfTurns = new IntReference(2) 
         }, target, target);
 
