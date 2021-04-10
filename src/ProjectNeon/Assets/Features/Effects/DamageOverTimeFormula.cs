@@ -8,7 +8,7 @@ public class DamageOverTimeFormula : Effect
     public void Apply(EffectContext ctx)
     {
         var sourceSnapshot = ctx.Source.State.ToSnapshot();
-        ctx.Target.Members.ForEach(m =>
+        ctx.Target.Members.GetConscious().ForEach(m =>
         {
             var calculatedAmount = Formula.Evaluate(new FormulaContext(sourceSnapshot, m, ctx.XPaidAmount), _e.Formula).CeilingInt();
             m.State.ApplyTemporaryAdditive(new DamageOverTimeState(calculatedAmount, m, _e.NumberOfTurns.Value));

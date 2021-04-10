@@ -19,6 +19,23 @@ public class AegisTests
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
 
+    [Test]
+    public void Aegis_DamageOverTime_PreventsAndConsumesAegisCounter()
+    {
+        var defender = DefenderWithAegis();
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.DamageOverTimeFormula, 
+            Formula = "2", 
+            NumberOfTurns = new IntReference(3)
+        }, attacker, defender);
+        
+        Assert.AreEqual(0, defender.State.StatusesOfType(StatusTag.DamageOverTime).Length);
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+
     private EffectData AdjustCounterEffect(TemporalStatType statType)
         => new EffectData
             {
