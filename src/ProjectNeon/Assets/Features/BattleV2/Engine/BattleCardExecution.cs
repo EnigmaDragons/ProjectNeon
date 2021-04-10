@@ -84,7 +84,8 @@ public static class BattleCardExecution
 
     // Sequence Actions
     public static IPayloadProvider Play(this CardActionsData card, CardActionContext ctx)
-        => new MultiplePayloads(card.Actions.Select(x => x.Play(ctx)));
+        => new MultiplePayloads(card.Actions.Select(x => x.Play(ctx)), 
+            new SinglePayload(new Finished<CardActionContext> { Message = ctx }).AsArray());
     
     public static IPayloadProvider Play(this CardActionsData cardData, StatusEffectContext ctx)
         => new MultiplePayloads(cardData.Actions.Select(x => x.Play(ctx)));

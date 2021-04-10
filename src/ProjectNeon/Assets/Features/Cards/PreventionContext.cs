@@ -1,6 +1,7 @@
 
 public interface PreventionContext
 {
-    Member[] GetPreventingMembersRelevantForDamageEffect();
+    void RecordPreventionTypeEffect(PreventionType type, params Member[] members);
+    Member[] GetPreventingMembers(PreventionType type);
     void UpdatePreventionCounters();
 }

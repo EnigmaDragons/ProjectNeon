@@ -12,7 +12,8 @@ public sealed class DealDamage : Effect
 
     public void Apply(EffectContext ctx)
     {
-        var preventingMembers = ctx.Preventions.GetPreventingMembersRelevantForDamageEffect().Select(m => m.Id);
+        ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Barrier);
+        var preventingMembers = ctx.Preventions.GetPreventingMembers(PreventionType.Barrier).Select(m => m.Id);
         ctx.Target.Members.ForEach(m =>
         {
             var amount = Mathf.CeilToInt(_damage.Calculate(ctx, m) * m.State.Damagability());
@@ -22,8 +23,10 @@ public sealed class DealDamage : Effect
             else if (m.State.Damagability() < 0.01)
                 BattleLog.Write($"0 damage was dealt to Invincible {m.Name}");
             else
+            {
                 BattleLog.Write($"{amount} damage dealt to{wasVulnerableString}{m.Name}");
-            m.State.TakeDamage(amount);
+                m.State.TakeDamage(amount);
+            }
         });
     }
 }

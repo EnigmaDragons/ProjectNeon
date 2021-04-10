@@ -18,15 +18,6 @@ public class CardActionSequence
     public CardActionsData CardActions => cardActions;
     public bool RepeatX => repeatX;
     
-    private static HashSet<EffectType> DamageEffectTypes = new HashSet<EffectType>
-    {
-        EffectType.MagicAttack,
-        EffectType.MagicAttackFormula,
-        EffectType.AttackFormula,
-        EffectType.DealRawDamageFormula,
-    };
-    public bool HasDamageEffects => CardActions.BattleEffects.Any(e => DamageEffectTypes.Contains(e.EffectType));
-
     public static CardActionSequence Create(Scope s, Group g, AvoidanceType a, CardActionsData data, bool repeatX)
     {
         return new CardActionSequence
