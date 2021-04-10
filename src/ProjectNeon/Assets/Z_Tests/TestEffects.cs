@@ -47,7 +47,7 @@ public static class TestEffects
         preventions.UpdatePreventionCounters();
         var battleSnapshotAfter = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
 
-        var effectResolved = new EffectResolved(e, source, target, battleSnapshotBefore, battleSnapshotAfter, isReaction: false, Maybe<Card>.Missing());
+        var effectResolved = new EffectResolved(e, source, target, battleSnapshotBefore, battleSnapshotAfter, isReaction: false, Maybe<Card>.Missing(), preventions);
 
         var reactions = members.SelectMany(x => x.State.GetReactions(effectResolved));
 

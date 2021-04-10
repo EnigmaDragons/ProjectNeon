@@ -17,6 +17,7 @@ namespace Features.CombatantStates.Reactions
         OnHpDamageDealt = 23,
         OnClipUsed = 27,
         OnTagPlayed = 29,
+        OnDodged = 30,
         OnDeath = 99,
     }
 }

@@ -97,6 +97,7 @@ public class EffectReactWith : Effect
                 return ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(tag));
             }
         },
+        { ReactionConditionType.OnDodged, ctx => effect => ctx.Possessor.IsConscious() && effect.Preventions.IsDodging(ctx.Possessor)}
     };
 
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
