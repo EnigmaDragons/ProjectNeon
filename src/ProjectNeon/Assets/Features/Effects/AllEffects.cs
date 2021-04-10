@@ -9,7 +9,7 @@ public static class AllEffects
     {
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.AdjustStatAdditivelyFormula, e => new FullContextEffect((ctx, m) => m.ApplyTemporaryAdditive(new AdjustedStats(
-            BattleLoggedItem(s => $"Stats of {m.Name} are adjusted by {s}",
+            BattleLoggedItem(s => $"{m.Name}'s stats are adjusted by {s}",
                 new StatAddends().WithRaw(e.EffectScope, RoundUp(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula)))), 
                 e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustStatMultiplicatively, e => new SimpleEffect(m => m.ApplyTemporaryMultiplier(
@@ -85,7 +85,7 @@ public static class AllEffects
             BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
                 Formula.Evaluate(ctx.SourceSnapshot.State, m.State, ctx.XPaidAmount, e.Formula).CeilingInt())) },
         { EffectType.AdjustPrimaryStatAdditivelyFormula, e => new FullContextEffect((ctx, m) => m.ApplyTemporaryAdditive(new AdjustedStats(
-            BattleLoggedItem(s => $"Stats of {m.Name} are adjusted by {s}",
+            BattleLoggedItem(s => $"{m.Name}'s stats are adjusted by {s}",
                 new StatAddends().With(m.PrimaryStat, RoundUp(Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula)))), 
             e.ForSimpleDurationStatAdjustment())))},
         { EffectType.AdjustCardTagPrevention, e => new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)) },
