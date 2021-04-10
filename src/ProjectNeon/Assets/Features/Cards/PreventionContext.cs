@@ -12,4 +12,6 @@ public static class PreventionContextExtensions
 {
     public static bool IsDodging(this PreventionContext ctx, Member m) =>
         ctx.GetPreventingMembers(PreventionType.Dodge).Any(p => p.Id == m.Id);
+    public static bool IsAegising(this PreventionContext ctx, Member m) =>
+        ctx.GetPreventingMembers(PreventionType.Aegis).Any(p => p.Id == m.Id);
 }

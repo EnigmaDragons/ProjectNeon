@@ -19,6 +19,59 @@ public class AegisTests
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
 
+    [Test]
+    public void Aegis_DamageOverTime_PreventsAndConsumesAegisCounter()
+    {
+        var defender = DefenderWithAegis();
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.DamageOverTimeFormula, 
+            Formula = "2", 
+            NumberOfTurns = new IntReference(3)
+        }, attacker, defender);
+        
+        Assert.AreEqual(0, defender.State.StatusesOfType(StatusTag.DamageOverTime).Length);
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+
+    [Test]
+    public void Aegis_StatBuff_AegisNotApplicable()
+    {
+        var member = TestMembers.Create(s => s.With(StatType.Attack, 2));
+        member.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.AdjustStatAdditivelyFormula,
+            Formula = "1",
+            EffectScope = new StringReference(StatType.Attack.ToString()),
+            NumberOfTurns = new IntReference(1)
+        }, member, member);
+        
+        Assert.AreEqual(3, member.Attack());
+        Assert.AreEqual(1, member.State[TemporalStatType.Aegis]);
+    }
+    
+    [Test]
+    public void Aegis_StatDebuff_PreventsAndConsumesAegisCounter()
+    {
+        var member = TestMembers.Create(s => s.With(StatType.Attack, 2));
+        member.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.AdjustStatAdditivelyFormula,
+            Formula = "-1",
+            EffectScope = new StringReference(StatType.Attack.ToString()),
+            NumberOfTurns = new IntReference(1)
+        }, member, member);
+        
+        Assert.AreEqual(2, member.Attack());
+        Assert.AreEqual(0, member.State[TemporalStatType.Aegis]);
+    }
+
     private EffectData AdjustCounterEffect(TemporalStatType statType)
         => new EffectData
             {
