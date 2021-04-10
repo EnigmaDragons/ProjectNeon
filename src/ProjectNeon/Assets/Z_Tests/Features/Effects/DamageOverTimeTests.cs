@@ -2,6 +2,7 @@
 
 public class DamageOverTimeTests
 {
+    [Ignore("Needs to use Async Status Effect System")]
     [Test]
     public void DamageOverTime_Apply_DamageIsDealtCorrectlyOverTime()
     {

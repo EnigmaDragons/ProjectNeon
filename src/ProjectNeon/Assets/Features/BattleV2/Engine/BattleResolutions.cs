@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionAvoided, CardActionPrevented>
+public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionAvoided, CardActionPrevented, Finished<CardActionContext>>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -91,7 +91,10 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         msg.Source.State.Adjust(msg.ToDecrement, -1);
         Message.Publish(new Finished<CardActionPrevented>());
     }
-    
+
+    protected override void Execute(Finished<CardActionContext> msg) 
+        => msg.Message.Preventions.UpdatePreventionCounters();
+
     private void ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
     {
         if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
@@ -103,12 +106,14 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
             if (newTargets.Any())
             {
-                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones));
+                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), msg.Card, msg.XPaidAmount, 
+                    partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions));
                 return;
             }
         }
         
-        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones));   
+        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, 
+            partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions));   
     }
 
     protected override void Execute(SpawnEnemy msg)

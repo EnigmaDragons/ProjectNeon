@@ -6,6 +6,7 @@ public sealed class CardActionContext
     public Member Source { get; } 
     public Target Target { get; }
     public AvoidanceContext Avoid => _avoidance;
+    public PreventionContext Preventions { get; }
     //public AvoidanceType AvoidanceType => _avoidance.Type;
     //public Member[] AvoidingMembers => _avoidance.AvoidingMembers;
     public Group Group { get; } 
@@ -24,6 +25,7 @@ public sealed class CardActionContext
         XAmountPaid = xAmountPaid;
         BeforeState = beforeState;
         Card = card;
+        Preventions = new PreventionContextMut(target);
     }
     
     public CardActionContext WithTarget(Target target)

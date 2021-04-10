@@ -62,7 +62,7 @@ public class Hero
     {
         var stats = Stats;
         var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, stats, Character.Class.BattleRole, stats.PrimaryStat(Character.Stats), CurrentHp);
-        return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None));
+        return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext()));
     }
 
     public Member AsMember(int id)
@@ -74,7 +74,7 @@ public class Hero
 
     public Member InitEquipmentState(Member m, BattleState state)
     {
-        return WithEquipmentState(m,new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.Members, state.PlayerCardZones));
+        return WithEquipmentState(m,new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.Members, state.PlayerCardZones, new UnpreventableContext()));
     }
 
     private Member WithEquipmentState(Member m, EffectContext ctx)
