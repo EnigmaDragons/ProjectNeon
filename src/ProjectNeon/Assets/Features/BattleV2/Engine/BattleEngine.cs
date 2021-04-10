@@ -90,27 +90,32 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     private IEnumerator WaitForAllPlayerCardsToFinishResolving()
     {
         resolutionZone.NotifyPlayerTurnEnded();
-        while (!resolutions.IsDoneResolving)
-            yield return new WaitForSeconds(0.1f);
-        Message.Publish(new ResolutionsFinished(BattleV2Phase.PlayCards));
+        yield return AfterResolutionsFinished(() => Message.Publish(new ResolutionsFinished(BattleV2Phase.PlayCards)));
     }
     
     protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayerCardsToFinishResolving());
-    protected override void Execute(StartOfTurnEffectsStatusResolved msg) => BeginHastyEnemiesPhase();
-    protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
+    protected override void Execute(StartOfTurnEffectsStatusResolved msg) => StartCoroutine(AfterResolutionsFinished(BeginHastyEnemiesPhase));
+    protected override void Execute(EndOfTurnStatusEffectsResolved msg) => StartCoroutine(AfterResolutionsFinished(BeginStartOfTurn));
     protected override void Execute(CardResolutionFinished msg) => ResolveBattleFinishedOrExecute(() => { });
 
+    private IEnumerator AfterResolutionsFinished(Action onFinished)
+    {
+        while (!resolutions.IsDoneResolving)
+            yield return new WaitForSeconds(0.1f);
+        onFinished();
+    }
+    
     protected override void Execute(ResolutionsFinished msg)
     {
         DevLog.Write($"Resolutions Finished {msg.Phase}");
         if (state.BattleIsOver())
             FinishBattle();
         else if (msg.Phase == BattleV2Phase.HastyEnemyCards)
-            BeginPlayerCardsPhase();
+            StartCoroutine(AfterResolutionsFinished(BeginPlayerCardsPhase));
         else if (msg.Phase == BattleV2Phase.PlayCards)
-            StartCoroutine(TransitionToEnemyCardsPhase());
+            StartCoroutine(AfterResolutionsFinished(() => StartCoroutine(TransitionToEnemyCardsPhase())));
         else
-            StartCoroutine(WrapUpTurn());
+            StartCoroutine(AfterResolutionsFinished(() => StartCoroutine(WrapUpTurn())));
     }
 
 
