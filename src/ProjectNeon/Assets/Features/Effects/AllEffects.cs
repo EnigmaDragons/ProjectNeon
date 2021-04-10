@@ -31,6 +31,7 @@ public static class AllEffects
         { EffectType.AdjustPrimaryResourceFormula, e => new FullContextEffect((ctx, m) => 
             m.AdjustPrimaryResource(BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.PrimaryResource.Name}", 
                 Formula.Evaluate(ctx.SourceSnapshot.State, m, ctx.XPaidAmount, e.Formula).CeilingInt()))) },
+        { EffectType.DamageOverTimeFormula, e => new DamageOverTimeFormula(e)},
         { EffectType.DamageOverTimeFlat, e => new DamageOverTime(e) },
         { EffectType.DamageOverTime, e => new DamageOverTime(e) },
         { EffectType.ApplyVulnerable, e => new SimpleEffect(m => BattleLogged($"{m.Name} has become vulnerable",

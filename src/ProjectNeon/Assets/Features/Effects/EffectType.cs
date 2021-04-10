@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 39-43, 47, 48, 53, 
-// LAST NUMBER USED: 83
+// LAST NUMBER USED: 84
 
 using System;
 
@@ -12,6 +12,9 @@ public enum EffectType
     AttackFormula = 30,
     MagicAttackFormula = 31,
     DealRawDamageFormula = 70,
+    
+    // Damage Over Time
+    DamageOverTimeFormula = 84,
     DamageOverTimeFlat = 8,
     DamageOverTime = 19,
     PhysicalDamageOverTime = 59,
