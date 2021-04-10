@@ -17,9 +17,8 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
         if (_isTraveling)
             return;
         _isTraveling = true;
-        foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
-            gameMap.GameObjects[childId].SetCanTravelTo(false);
         gameMap.MoveTo(msg.NodeId);
+        gameMap.AllGameObjects.ForEach(x => x.SetCanTravelTo(false));
         foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
         {
             gameMap.GameObjects[childId].SetCanTravelTo(true);

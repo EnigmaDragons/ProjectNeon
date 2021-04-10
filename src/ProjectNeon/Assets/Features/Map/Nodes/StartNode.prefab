@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -89,7 +90,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 939338435615524659}
+  image: {fileID: 1991812729107920588}
   segment: {fileID: 11400000, guid: 3ff6329504405af4398b6a75e24e272f, type: 2}
+  hoverRulesPanel: {fileID: 0}
+  hiddenNodeGraphic: {fileID: 21300000, guid: 5d6fc707f9433654fb0c35efa8ec8a07, type: 3}
+  gameMap: {fileID: 11400000, guid: 4ac9d5ec60b081f429cd0937e004b0a5, type: 2}
 --- !u!114 &939338435615524659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -118,8 +124,7 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 5d6fc707f9433654fb0c35efa8ec8a07,
-      type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 5d6fc707f9433654fb0c35efa8ec8a07, type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 5d6fc707f9433654fb0c35efa8ec8a07, type: 3}
     m_SelectedSprite: {fileID: 21300000, guid: 5d6fc707f9433654fb0c35efa8ec8a07, type: 3}
     m_DisabledSprite: {fileID: 21300000, guid: 1ff5e6a3a3876fa4da589a58645fd5d1, type: 3}

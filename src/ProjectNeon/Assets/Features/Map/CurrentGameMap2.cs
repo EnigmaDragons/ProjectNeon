@@ -30,4 +30,5 @@ public class CurrentGameMap2 : ScriptableObject
     public MapNode CurrentMapNode => GetMapNode(CurrentPositionId);
     public MapNode GetMapNode(string id) => _map[id];
     public void MoveTo(string id) => CurrentPositionId = id;
+    public MapNodeGameObject[] AllGameObjects => GameObjects.Values.ToArray();
 }
