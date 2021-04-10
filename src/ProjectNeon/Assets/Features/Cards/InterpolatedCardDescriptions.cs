@@ -241,7 +241,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustPrimaryResource)
             return $"{data.TotalIntAmount}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
-            return $"{data.TotalIntAmount}";
+            return $"{WithImplications(data.TotalIntAmount.ToString())}";
         if (data.EffectType == EffectType.AdjustPlayerStats)
             return $"{data.TotalIntAmount}";
 
@@ -255,16 +255,16 @@ public static class InterpolatedCardDescriptions
             : FormattedFormula(data.Formula));
     
     private static string MagicAmount(EffectData data, Maybe<Member> owner) 
-        => owner.IsPresent
+        => WithImplications(owner.IsPresent
             ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
-            : WithBaseAmount(data, "x MAG");
+            : WithBaseAmount(data, "x MAG"));
 
     private static string AttackAmount(EffectData data, Maybe<Member> owner)
-        => owner.IsPresent
+        => WithImplications(owner.IsPresent
             ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
             : data.BaseAmount > 0
                 ? $"{data.BaseAmount} + {data.FloatAmount}x ATK"
-                : $"{data.FloatAmount}x ATK";
+                : $"{data.FloatAmount}x ATK");
     
     private static string WithBaseAmount(EffectData data, string floatString)
     {
