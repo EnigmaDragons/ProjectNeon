@@ -26,9 +26,12 @@ public class ApplyStatInjury : Effect
 
     private void ApplyInjury(Hero h)
     {
+        var stat = _statName.Value.Equals(nameof(MemberState.PrimaryStat))
+            ? new StringReference(h.Stats.PrimaryStat(h.BaseStats).ToString()) 
+            : _statName;
         if (_operation == StatOperation.Add)
-            h.Apply(new AdditiveStatInjury {Stat = _statName, Amount = _amount, Name = _injuryName});
+            h.Apply(new AdditiveStatInjury {Stat = stat, Amount = _amount, Name = _injuryName});
         else
-            h.Apply(new MultiplicativeStatInjury {Stat = _statName, Amount = _amount, Name = _injuryName});
+            h.Apply(new MultiplicativeStatInjury {Stat = stat, Amount = _amount, Name = _injuryName});
     }
 }
