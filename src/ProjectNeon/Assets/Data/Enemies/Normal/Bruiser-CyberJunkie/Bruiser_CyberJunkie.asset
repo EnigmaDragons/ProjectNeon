@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: Bruiser_CyberJunkie
+  m_EditorClassIdentifier: 
+  enemyName: Cyber Junkie
+  lastBalanceDate: 4/10/21
+  isCurrentlyWorking: 1
+  deck: {fileID: 0}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  preferredTurnOrder: 99
+  powerLevel: 1
+  prefab: {fileID: 283894774249420286, guid: d90e67ed73f5ab741ba7d2127043ff1f, type: 3}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 6
+  tier: 0
+  unique: 1
+  isHasty: 1
+  maxHp: 0
+  maxShield: 0
+  startingShield: 0
+  toughness: 0
+  attack: 0
+  magic: 0
+  leadership: 0
+  armor: 0
+  resistance: 0
+  nonStatCardValueFactor: 0
+  resourceType: {fileID: 0}
+  startingResourceAmount: 0
+  maxResourceAmount: 0
+  resourceGainPerTurn: 1
+  cardsPerTurn: 1
+  startOfBattleEffects: []
+  stageDetails:
+  - stage: 2
+    powerLevel: 210
+    maxHp: 76
+    maxShield: 26
+    startingShield: 0
+    toughness: 12
+    attack: 12
+    magic: 12
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 6
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects:
+    - EffectType: 74
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 11400000, guid: abac7cad4010ceb45b92ade783e2defa, type: 2}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      StatusTag: 9
+      StatusDetailText: 'On Damaged: Gains Shields'
+      TurnDelay: 0
+      Formula: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 4
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: bf674097bc9a92b4586206e7adad0830, type: 2}
+      BonusCardType: {fileID: 0}
+    - EffectType: 79
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 11400000, guid: abac7cad4010ceb45b92ade783e2defa, type: 2}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
+      HitsRandomTargetMember: 0
+      StatusTag: 9
+      StatusDetailText: 'On Damaged: Gains Shields'
+      TurnDelay: 0
+      Formula: 1
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 4
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: bf674097bc9a92b4586206e7adad0830, type: 2}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: b133b0844aac3a141aed20b804335eb4, type: 2}
+    - {fileID: 11400000, guid: c888bd26b7c873d45a046d5efba4b675, type: 2}
+    - {fileID: 11400000, guid: af35d56220925b1489452c05bf31c741, type: 2}
+    - {fileID: 11400000, guid: 6d806d0c3bc23ff46820f6a20fb18e20, type: 2}
+    - {fileID: 11400000, guid: 54a732491097bd54ea36b312f785718d, type: 2}
