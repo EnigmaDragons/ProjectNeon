@@ -84,10 +84,18 @@ public sealed class InterpolatedCardDescriptionsTests
                 new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, NumberOfTurns = new IntReference(1)},
                 Owner));
 
+    [Test]
+    public void Interpolated_Auto_RepeatedText_Iscorrect()
+        => AssertMatchesIgnoreStyling("2 Times: Deal 8", Description("{Auto}", new[] {BasicAttack, BasicAttack}, Owner));
+
     private string Description(string s, EffectData e, Maybe<Member> owner)
         => Description(s, e, owner, ResourceQuantity.None);
-    private string Description(string s, EffectData e, Maybe<Member> owner, ResourceQuantity xCost) 
-        => InterpolatedCardDescriptions.InterpolatedDescription(s, new[] {e}, new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing());
+    private string Description(string s, EffectData[] e, Maybe<Member> owner)
+        => Description(s, e, owner, ResourceQuantity.None);
+    private string Description(string s, EffectData e, Maybe<Member> owner, ResourceQuantity xCost)
+        => Description(s, new [] {e}, owner, xCost);
+    private string Description(string s, EffectData[] e, Maybe<Member> owner, ResourceQuantity xCost) 
+        => InterpolatedCardDescriptions.InterpolatedDescription(s, e, new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing());
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner)
         => ReactionDescription(s, re, owner, ResourceQuantity.None);
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner, ResourceQuantity xCost) 
