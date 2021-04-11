@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -21,4 +22,5 @@ public class EnemyStageDetails
     [SerializeField] private int resourceGainPerTurn = 1;
     [SerializeField] private int cardsPerTurn = 1;
     [SerializeField] private EffectData[] startOfBattleEffects = new EffectData[0];
+    [SerializeField] private List<CardType> Cards = new List<CardType>();
 }

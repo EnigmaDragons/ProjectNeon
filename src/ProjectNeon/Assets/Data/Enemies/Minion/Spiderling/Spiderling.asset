@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Spiderling
   m_EditorClassIdentifier: 
   enemyName: Spiderling
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: c6475c08ce0ea0048b2f2e6be2ff3377, type: 2}
   ai: {fileID: 11400000, guid: 10ad247b46363074580a0671105028d4, type: 2}
   preferredTurnOrder: 99
@@ -25,6 +27,7 @@ MonoBehaviour:
   battleRole: 1
   tier: 1
   unique: 0
+  isHasty: 0
   maxHp: 14
   maxShield: 6
   startingShield: 0
@@ -37,6 +40,7 @@ MonoBehaviour:
   nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 0
   cardsPerTurn: 1
   startOfBattleEffects:
@@ -68,11 +72,182 @@ MonoBehaviour:
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
-      avoidance: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
-  lastBalanceDate: Never
+  stageDetails:
+  - stage: 1
+    powerLevel: 0
+    maxHp: 14
+    maxShield: 6
+    startingShield: 0
+    toughness: 3
+    attack: 5
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    startOfBattleEffects:
+    - EffectType: 58
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 1
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards: []
+  - stage: 2
+    powerLevel: 0
+    maxHp: 17
+    maxShield: 10
+    startingShield: 0
+    toughness: 5
+    attack: 8
+    magic: 0
+    leadership: 0
+    armor: 2
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    startOfBattleEffects:
+    - EffectType: 58
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 1
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards: []
+  - stage: 3
+    powerLevel: 0
+    maxHp: 22
+    maxShield: 14
+    startingShield: 0
+    toughness: 7
+    attack: 10
+    magic: 0
+    leadership: 0
+    armor: 3
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    startOfBattleEffects:
+    - EffectType: 58
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: 1
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards: []
