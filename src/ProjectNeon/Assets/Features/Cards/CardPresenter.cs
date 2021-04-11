@@ -319,6 +319,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         => WhenActivatableHand(() =>
         {
             _isDragging = true;
+            controls.SetActive(false);
             canvasGroup.blocksRaycasts = false;
 
             // Targeting Card Selection Process can run the arrow
