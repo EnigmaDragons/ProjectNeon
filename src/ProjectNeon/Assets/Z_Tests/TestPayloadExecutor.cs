@@ -17,7 +17,6 @@ public static class TestPayloadExecutor
             if (next.Payload is SinglePayload current)
                 ExecuteAll(current, ctx);
         }
-        ctx.Preventions.UpdatePreventionCounters();
     }
 
     public static void Execute(this Card card, Target[] targets, ResourceQuantity xPaidAmount, params Member[] allBattleMembers)

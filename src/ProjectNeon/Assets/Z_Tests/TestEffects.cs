@@ -44,7 +44,6 @@ public static class TestEffects
         var battleSnapshotBefore = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
         var preventions = new PreventionContextMut(target);
         AllEffects.Apply(e, EffectContext.ForTests(source, target, card, xAmountPaid, preventions));
-        preventions.UpdatePreventionCounters();
         var battleSnapshotAfter = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
 
         var effectResolved = new EffectResolved(e, source, target, battleSnapshotBefore, battleSnapshotAfter, isReaction: false, Maybe<Card>.Missing(), preventions);
