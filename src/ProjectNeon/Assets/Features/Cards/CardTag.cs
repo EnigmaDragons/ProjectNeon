@@ -37,5 +37,6 @@ public enum CardTag
     Phase2 = 34,
     Phase3 = 35,
     Exclusive = 36,
-    Grenade = 37
+    Grenade = 37,
+    SelfOnly = 38,
 }
