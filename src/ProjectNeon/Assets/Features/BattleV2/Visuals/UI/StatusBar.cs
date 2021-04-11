@@ -45,9 +45,10 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State.HasStatus(StatusTag.CounterAttack))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.CounterAttack.ToString(), Icon = icons[StatusTag.CounterAttack].Icon, Tooltip = "Counterattack"});
         
-        AddCustomTextStatusIcons(statuses, StatusTag.Trap, "Unknown Trap Power");
+        AddCustomTextStatusIcons(statuses, StatusTag.Trap, "Secret Trap Power");
         AddCustomTextStatusIcons(statuses, StatusTag.Augment, "Unknown Augment Power");
         
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => $"Dodges the next {v} attacks");
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
         AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => $"Reduces magic damage taken by {v}");
         AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => $"Double Damage for next {v} effects");
@@ -62,7 +63,6 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Disabled, true, v => $"Disabled for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.CardStun, true, v => $"Stunned for {v} Cards. Reactions disabled.");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => $"Confused for {v} Turns");
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => $"Dodges the next {v} attacks");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Aegis, true, v => $"Prevents next {v} harmful effects");
         AddCustomTextStatusIcons(statuses, StatusTag.OnClipUsed, "Unknown On Clip Used Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnBloodied, "Unknown On Bloodied Effect");
@@ -88,14 +88,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State.HasStatus(StatusTag.HealOverTime))
             statuses.Add(new CurrentStatusValue {  Type = StatusTag.HealOverTime.ToString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
         
-        _member.State.StatusesOfType(StatusTag.OnHit)
-            .ForEach(s => statuses.Add(new CurrentStatusValue { Type = StatusTag.OnHit.ToString(), Icon = icons[StatusTag.OnHit].Icon, Tooltip = s.Status.CustomText.OrDefault("Special On Hit Effect") }));
-        
-        if (_member.State.HasStatus(StatusTag.OnDamaged))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.OnDamaged.ToString(), Icon = icons[StatusTag.OnDamaged].Icon, Tooltip = "Special On Damaged Effect" });
-        
-        if (_member.State.HasStatus(StatusTag.OnDeath))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.OnDeath.ToString(), Icon = icons[StatusTag.OnDeath].Icon, Tooltip = "Special On Death Effect" });
+        AddCustomTextStatusIcons(statuses, StatusTag.OnHit, "Secret On Hit Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.OnDeath, "Secret On Death Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.OnDamaged, "Secret On Damaged Effect");
         
         foreach (var s in _member.State.CustomStatuses())
             statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip});;
