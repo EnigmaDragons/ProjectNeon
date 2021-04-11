@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: Minion_HiredCleaner
+  m_EditorClassIdentifier: 
+  enemyName: Hired Cleaner
+  lastBalanceDate: 4/11/21
+  isCurrentlyWorking: 1
+  ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
+  preferredTurnOrder: 99
+  prefab: {fileID: 6705478397166493558, guid: 6144630566c40e844aa69a96b8c951c0, type: 3}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 1
+  unique: 0
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  stageDetails:
+  - stage: 2
+    powerLevel: 64
+    maxHp: 20
+    maxShield: 0
+    startingShield: 0
+    toughness: 0
+    attack: 15
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 2
+    nonStatCardValueFactor: 15
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    startOfBattleEffects:
+    - EffectType: 79
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
+      HitsRandomTargetMember: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 2
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    - EffectType: 75
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 11400000, guid: 5921ac0d85df4a2409b82c7f5aee6def, type: 2}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 11400000, guid: abac7cad4010ceb45b92ade783e2defa, type: 2}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      StatusTag: 9
+      StatusDetailText: 'Flighty: Leaves battle when damaged'
+      TurnDelay: 0
+      Formula: 2
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 1
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 4cf2623eb1ef12b43b4e2a131877e4a7, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 272cfefb9c7514343b8aa655fe95a16d, type: 2}
+    - {fileID: 11400000, guid: cf4f76b754ead8848bcb1c277948cba8, type: 2}
+    - {fileID: 11400000, guid: 3afd438744cfbb54eabde17083927587, type: 2}
