@@ -101,7 +101,11 @@ public class EffectReactWith : Effect
            && Decreased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Dodge]))},
         { ReactionConditionType.OnAegised, ctx => effect => ctx.Possessor.IsConscious() 
            && effect.Preventions.IsAegising(ctx.Possessor) 
-           && Decreased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Aegis]))}
+           && Decreased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Aegis]))},
+        { ReactionConditionType.OnNearDeath, ctx => effect => ctx.Actor.IsConscious() && ctx.Possessor.CurrentHp() == 1 },
+        { ReactionConditionType.OnAllyDeath, ctx => effect => ctx.Actor.IsConscious() 
+            && effect.BattleBefore.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) 
+              > effect.BattleAfter.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) }
     };
 
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;

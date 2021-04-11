@@ -19,4 +19,5 @@ public enum StatusTag
     OnHpDamageDealt = 16,
     OnShieldBroken = 17,
     OnClipUsed = 18,
+    OnAllyDeath = 19,
 }

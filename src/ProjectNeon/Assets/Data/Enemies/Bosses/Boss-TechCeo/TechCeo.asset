@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TechCeo
   m_EditorClassIdentifier: 
   enemyName: Metroplex CEO
-  lastBalanceDate: Never
+  lastBalanceDate: 4/11/2021
   isCurrentlyWorking: 1
   ai: {fileID: 0}
   preferredTurnOrder: 100
@@ -37,9 +37,9 @@ MonoBehaviour:
     attack: 18
     magic: 18
     leadership: 20
-    armor: 3
+    armor: 1
     resistance: 5
-    nonStatCardValueFactor: 0
+    nonStatCardValueFactor: 18
     startingResourceAmount: 1
     maxResourceAmount: 1
     resourceGainPerTurn: 1
@@ -83,4 +83,125 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
-    Cards: []
+    - EffectType: 79
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 11400000, guid: c776ae0c47cabd94e8fc5f9e6804abb2, type: 2}
+      HitsRandomTargetMember: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 1
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    - EffectType: 75
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: -1
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
+      HitsRandomTargetMember: 0
+      StatusTag: 10
+      StatusDetailText: 'On Reaching 1 HP: Heat Up'
+      TurnDelay: 0
+      Formula: 1
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 32
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 5ca859f809d5ced4d9c0cc1fac4ac0fd, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    - EffectType: 75
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: -1
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
+      HitsRandomTargetMember: 0
+      StatusTag: 19
+      StatusDetailText: 'On Ally Death: Heat Up'
+      TurnDelay: 0
+      Formula: 1
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 33
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 46b4ce16b50698149a55a048c88630be, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 49236647418f23144a3fe886b5164030, type: 2}
+    - {fileID: 11400000, guid: 3a3650873a360aa43b9bcd7227d4e426, type: 2}
+    - {fileID: 11400000, guid: 58f26ddc7bbfc1741b82964be712add1, type: 2}
+    - {fileID: 11400000, guid: 6bc9bc9cebca8354c8770bf790110e82, type: 2}
+    - {fileID: 11400000, guid: 8588d8fe33c14644fb8de2e36036504f, type: 2}
+    - {fileID: 11400000, guid: d85e50ced4ff0844dbada8360accd4a4, type: 2}
+    - {fileID: 11400000, guid: c5267d8271721e549a749d274806aa16, type: 2}
