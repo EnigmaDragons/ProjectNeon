@@ -21,6 +21,7 @@ public static class AICardSelectionLogic
 
     public static CardSelectionContext WithCommonSenseSelections(this CardSelectionContext ctx)
         => ctx
+            .DontPlaySelfAttackBuffIfAlreadyBuffed()
             .DontPlayHealsIfAlliesDontNeedHealing()
             .DontPlayShieldsIfAlliesDontNeedShielding()
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
@@ -31,6 +32,9 @@ public static class AICardSelectionLogic
             .DontGiveExtraResourcesIfAlliesHaveEnough()
             .DontPlayXCostWithZeroResources();
 
+    public static CardSelectionContext DontPlaySelfAttackBuffIfAlreadyBuffed(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlay(x => x.Member.Attack() > x.Member.State.BaseStats.Attack(), c => c.Is(CardTag.BuffAttack, CardTag.SelfOnly));
+    
     public static CardSelectionContext DontPlayXCostWithZeroResources(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlay(x => x.Member.PrimaryResourceAmount() == 0, c => !c.Cost.PlusXCost);
     
