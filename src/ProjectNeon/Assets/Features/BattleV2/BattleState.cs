@@ -15,6 +15,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private bool needsCleanup;
     [SerializeField] private bool isEliteBattle;
     [SerializeField] private BattleV2Phase phase;
+    [SerializeField] private AdventureProgress2 adventureProgress;
     
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
@@ -50,7 +51,7 @@ public class BattleState : ScriptableObject
     public CardType[] RewardCards => rewardCards; 
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
     public EnemyInstance[] NextEncounterEnemies => nextEnemies.ToArray();
-
+    public int Stage => adventureProgress.Stage;
     public bool NeedsCleanup => needsCleanup;
     public bool IsEliteBattle => isEliteBattle;
     public float CreditPerPowerLevelRewardFactor => adventure.Adventure?.RewardCreditsPerPowerLevel ?? 0;

@@ -74,7 +74,7 @@ public static class BattleCardExecution
             return new SinglePayload(new ApplyBattleEffect(action.BattleEffect, ctx.Source, ctx.Target, ctx.Card, ctx.XAmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false));
         
         if (type == CardBattleActionType.SpawnEnemy)
-            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn.GetEnemy(1)));
+            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(new CharacterAnimationRequested(ctx.Source.Id, action.CharacterAnimation, ctx.Target));
         if (type == CardBattleActionType.AnimateAtTarget)

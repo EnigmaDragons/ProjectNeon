@@ -41,7 +41,9 @@ public class Enemy : ScriptableObject
 
     public EnemyInstance GetEnemy(int stage)
     {
-        var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).First();
+        var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();
+        if (detail == null)
+            Log.Error($"Enemy {enemyName} has no stage details and can not be used");
         return new EnemyInstance(resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield, detail.toughness, detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, prefab, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, isHasty, unique);
     } 
     public EffectData[] Effects => startOfBattleEffects;
