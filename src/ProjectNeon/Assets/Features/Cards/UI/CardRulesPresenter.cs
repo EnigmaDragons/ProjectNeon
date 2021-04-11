@@ -47,6 +47,7 @@ public class CardRulesPresenter : MonoBehaviour
                     TemporalStatType.Blind.ToString(),
                     TemporalStatType.Inhibit.ToString(),
                     TemporalStatType.Spellshield.ToString(),
+                    TemporalStatType.Aegis.ToString(),
                     TemporalStatType.CardStun.ToString(),
                     TemporalStatType.DoubleDamage.ToString(),
                     PlayerStatType.CardCycles.ToString(),
