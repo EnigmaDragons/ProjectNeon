@@ -68,6 +68,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddCustomTextStatusIcons(statuses, StatusTag.OnBloodied, "Unknown On Bloodied Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnShieldBroken, "Unknown On Shield Broken Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnHpDamageDealt, "Unknown On Hp Damage Dealt Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.OnAllyDeath, "Unknown On Ally Death Effect");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => $"Received {v} Injuries, applied at end of battle");
 
         var extraCardBuffAmount = CeilingInt(_member.State[StatType.ExtraCardPlays] - _member.State.BaseStats.ExtraCardPlays());

@@ -8,6 +8,9 @@ public static class AICardSelectionLogic
         => ctx.SelectedCard.IsMissing && ctx.CardOptions.Any(c => c.Name.Equals(cardName))
             ? ctx.WithSelectedCard(ctx.CardOptions.First(c => c.Name.Equals(cardName)))
             : ctx;
+
+    public static CardSelectionContext WithRemovedCardByNameIfPresent(this CardSelectionContext ctx, string cardName)
+        => ctx.WithCardOptions(ctx.CardOptions.Where(x => !x.Name.Equals(cardName)));
     
     public static CardSelectionContext WithSelectedDesignatedAttackerCardIfApplicable(this CardSelectionContext ctx) 
         => ctx.SelectedCard.IsMissing && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
@@ -95,6 +98,19 @@ public static class AICardSelectionLogic
         => ctx.SelectedCard.IsMissing
             ? ctx.WithSelectedCard(FinalizeCardSelection(ctx, typePriority))
             : ctx;
+    
+    public static CardSelectionContext WithPhases(this CardSelectionContext ctx)
+    {
+        var phase = ctx.Member.State[TemporalStatType.Phase];
+        var phaselessCards = ctx.CardOptions.Where(x => !x.Tags.Contains(CardTag.Phase1) && !x.Tags.Contains(CardTag.Phase2) && !x.Tags.Contains(CardTag.Phase3));
+        if (phase == 1)
+            return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase1))));
+        if (phase == 2)
+            return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase2))));
+        if (phase == 3)
+            return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase3))));
+        return ctx;
+    }
 
     private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx,
         Func<CardTypeData, int> typePriority)

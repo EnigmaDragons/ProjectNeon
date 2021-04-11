@@ -62,6 +62,9 @@ public sealed class CardSelectionContext
     public CardSelectionContext WithSelectedCard(CardTypeData card)
         => new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions) { SelectedCard = new Maybe<CardTypeData>(card)};
 
+    public CardSelectionContext WithCardOptions(IEnumerable<CardTypeData> options)
+        => new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, options) { SelectedCard = SelectedCard };
+
     private CardSelectionContext LogAfter(Func<CardSelectionContext> getNext)
     {
         var ctx = getNext();

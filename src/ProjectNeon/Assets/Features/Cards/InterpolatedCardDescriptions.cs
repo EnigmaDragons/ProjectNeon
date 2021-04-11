@@ -147,6 +147,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"{WithCommaIfPresent(DurationDescription(data))}" 
                        + $"gives {Bold(EffectDescription(data, owner, xCost))} " 
                        + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
+        if (data.EffectType == EffectType.AntiHeal)
+            coreDesc = $"halves healing {DurationDescription(data)}";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 
