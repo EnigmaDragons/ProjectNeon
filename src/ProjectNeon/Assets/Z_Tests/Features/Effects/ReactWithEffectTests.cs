@@ -1,4 +1,3 @@
-using Features.CombatantStates.Reactions;
 using NUnit.Framework;
 
 public class ReactWithEffectTests
@@ -63,6 +62,23 @@ public class ReactWithEffectTests
         TestEffects.Apply(Gain5ShieldOnReactionCondition(ReactionConditionType.OnDodged), possessor, possessor);
 
         TestEffects.Apply(TestEffects.BasicAttack, attacker, possessor);
+        
+        Assert.AreEqual(5, possessor.CurrentShield());
+    }
+    
+    [Test]
+    public void ReactWithEffect_OnAegised_Works()
+    {
+        var attacker = TestMembers.Any();
+        var possessor = TestMembers.Create(s => s.With(StatType.Toughness, 5).With(StatType.MaxShield, 10));
+        possessor.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
+        TestEffects.Apply(Gain5ShieldOnReactionCondition(ReactionConditionType.OnAegised), possessor, possessor);
+
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.ApplyVulnerable,
+            NumberOfTurns = new IntReference(1)
+        }, attacker, possessor);
         
         Assert.AreEqual(5, possessor.CurrentShield());
     }

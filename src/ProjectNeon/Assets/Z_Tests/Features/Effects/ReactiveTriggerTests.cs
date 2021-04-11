@@ -1,4 +1,3 @@
-using Features.CombatantStates.Reactions;
 using NUnit.Framework;
 
 public sealed class ReactiveTriggerTests

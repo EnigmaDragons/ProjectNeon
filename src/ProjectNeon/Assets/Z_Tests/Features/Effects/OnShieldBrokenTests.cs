@@ -1,5 +1,4 @@
-﻿using Features.CombatantStates.Reactions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 public class OnShieldBrokenTests
 {
