@@ -42,7 +42,6 @@ public enum EffectType
     // Reactions
     ReactWithEffect = 74,
     ReactWithCard = 75,
-    ReactOnSpellshieldedWithCard = 78,
     [Obsolete("Not Actually an OnDeath Effect. This has a hack that PREVENTS death.")] OnDeath = 25,
     
     // Transformers

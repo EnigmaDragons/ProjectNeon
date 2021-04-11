@@ -32,7 +32,6 @@ public static class AllEffects
                 TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, new StatusDetail(StatusTag.Vulnerable)))))), "Vulernable") },
         { EffectType.DisableForTurns, e => new SimpleEffect(m => BattleLogged($"{m.Name} is disabled for {e.NumberOfTurns} turns.", () => m.ApplyTemporaryAdditive(new DisableForTurns(e.NumberOfTurns))))},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.NumberOfTurns) },
-        { EffectType.ReactOnSpellshieldedWithCard, e => new EffectOnAvoided(false, e.IntAmount, e.NumberOfTurns, e.StatusDetail, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), AvoidanceType.Spellshield, e.ReactionSequence) },
         { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Magic) },
         { EffectType.HealToughness, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Toughness) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
