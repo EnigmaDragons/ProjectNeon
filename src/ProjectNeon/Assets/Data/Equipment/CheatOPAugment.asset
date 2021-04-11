@@ -12,17 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: CheatOPAugment
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  rarity: 0
-  slot: 0
+  displayName: OP CHEAT
+  description: tons of stats
+  rarity: 4
+  slot: 2
   priceFactor: 1
   canUseClasses:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
   modifiers:
   - ModifierType: 0
-    Amount: 0
-    StatType: 
+    Amount: 10
+    StatType: Attack
+  - ModifierType: 0
+    Amount: 10
+    StatType: Magic
+  - ModifierType: 0
+    Amount: 10
+    StatType: Leadership
+  - ModifierType: 0
+    Amount: 10
+    StatType: Toughness
+  - ModifierType: 0
+    Amount: 30
+    StatType: MaxHP
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
