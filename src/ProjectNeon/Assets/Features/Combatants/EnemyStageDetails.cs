@@ -5,22 +5,23 @@ using UnityEngine;
 [Serializable]
 public class EnemyStageDetails
 {
-    [SerializeField] private int stage;
-    [SerializeField] private int powerLevel;
-    [SerializeField] private int maxHp;
-    [SerializeField] private int maxShield;
-    [SerializeField] private int startingShield;
-    [SerializeField] private int toughness;
-    [SerializeField] private int attack;
-    [SerializeField] private int magic;
-    [SerializeField] private int leadership;
-    [SerializeField] private float armor;
-    [SerializeField] private float resistance;
-    [SerializeField] private float nonStatCardValueFactor;
-    [SerializeField] private int startingResourceAmount = 0;
-    [SerializeField] private int maxResourceAmount = 0;
-    [SerializeField] private int resourceGainPerTurn = 1;
-    [SerializeField] private int cardsPerTurn = 1;
-    [SerializeField] private EffectData[] startOfBattleEffects = new EffectData[0];
-    [SerializeField] private List<CardType> Cards = new List<CardType>();
+    //change these back to private at some point
+    [SerializeField] public int stage;
+    [SerializeField] public int powerLevel;
+    [SerializeField] public int maxHp;
+    [SerializeField] public int maxShield;
+    [SerializeField] public int startingShield;
+    [SerializeField] public int toughness;
+    [SerializeField] public int attack;
+    [SerializeField] public int magic;
+    [SerializeField] public int leadership;
+    [SerializeField] public float armor;
+    [SerializeField] public float resistance;
+    [SerializeField] public float nonStatCardValueFactor;
+    [SerializeField] public int startingResourceAmount = 0;
+    [SerializeField] public int maxResourceAmount = 0;
+    [SerializeField] public int resourceGainPerTurn = 1;
+    [SerializeField] public int cardsPerTurn = 1;
+    [SerializeField] public EffectData[] startOfBattleEffects = new EffectData[0];
+    [SerializeField] public List<CardType> Cards = new List<CardType>();
 }

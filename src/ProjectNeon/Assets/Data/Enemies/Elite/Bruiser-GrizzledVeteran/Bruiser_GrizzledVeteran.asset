@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Bruiser_GrizzledVeteran
   m_EditorClassIdentifier: 
   enemyName: Grizzled Veteran
+  lastBalanceDate: 2/27/2021
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: 9c67e7bf98596e549b30c1555b7a7238, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
   preferredTurnOrder: 99
@@ -70,11 +72,14 @@ MonoBehaviour:
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 11400000, guid: cf3ab3b79d8f0d84c881bbcbe2ac08b7, type: 2}
     ReactionEffect:
       reactor: 0
       scope: 0
-      avoidance: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
   - EffectType: 75
@@ -105,11 +110,110 @@ MonoBehaviour:
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReactionConditionType: 10
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 11400000, guid: b18f993f6d8ecb04493afffa74e9fad4, type: 2}
     ReactionEffect:
       reactor: 0
       scope: 0
-      avoidance: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
-  lastBalanceDate: 2/27/2021
+  stageDetails:
+  - stage: 1
+    powerLevel: 153
+    maxHp: 60
+    maxShield: 20
+    startingShield: 0
+    toughness: 10
+    attack: 15
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 15
+    startingResourceAmount: 6
+    maxResourceAmount: 6
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    startOfBattleEffects:
+    - EffectType: 75
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: -1
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      StatusTag: 1
+      StatusDetailText: 'On Attacked: Return Fire'
+      TurnDelay: 0
+      Formula: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: cf3ab3b79d8f0d84c881bbcbe2ac08b7, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    - EffectType: 75
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      NumberOfTurns:
+        UseConstant: 1
+        ConstantValue: -1
+        Variable: {fileID: 0}
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      StatusTag: 14
+      StatusDetailText: 'On Bloodied: Buffs Own Attack'
+      TurnDelay: 0
+      Formula: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 10
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: b18f993f6d8ecb04493afffa74e9fad4, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: f3b0b55f3762a5543a7580b2183e4d7a, type: 2}
+    - {fileID: 11400000, guid: 7bd5c3fd3b2d4544683282e80dc3b132, type: 2}

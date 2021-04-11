@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: AggregateLauncher
   m_EditorClassIdentifier: 
   enemyName: Launcher
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: 082c7b63136a01b43bf5f078a4b3e01c, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
   preferredTurnOrder: 99
@@ -25,8 +27,10 @@ MonoBehaviour:
   battleRole: 1
   tier: 3
   unique: 1
+  isHasty: 0
   maxHp: 40
   maxShield: 14
+  startingShield: 0
   toughness: 7
   attack: 16
   magic: 0
@@ -36,7 +40,27 @@ MonoBehaviour:
   nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 1
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: Never
+  stageDetails:
+  - stage: 1
+    powerLevel: 2
+    maxHp: 40
+    maxShield: 14
+    startingShield: 0
+    toughness: 7
+    attack: 16
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: fb50b30f60dc2744a95ce0217f9264cc, type: 2}

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: CorporateMagiChemist
   m_EditorClassIdentifier: 
   enemyName: Magi-Chemist
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: 776a7fca3fb15d2459b3e8c9fe117393, type: 2}
   ai: {fileID: 11400000, guid: 25b06eb47e512d84395a7f03e4dd92d8, type: 2}
   preferredTurnOrder: 50
@@ -23,18 +25,45 @@ MonoBehaviour:
     ConstantValue: 
     Variable: {fileID: 0}
   battleRole: 7
+  tier: 0
   unique: 0
+  isHasty: 0
   maxHp: 66
   maxShield: 20
+  startingShield: 0
   toughness: 10
   attack: 0
   magic: 10
   leadership: 0
   armor: 0
   resistance: 2
+  nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 1
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: Never
+  stageDetails:
+  - stage: 1
+    powerLevel: 139
+    maxHp: 66
+    maxShield: 20
+    startingShield: 0
+    toughness: 10
+    attack: 0
+    magic: 10
+    leadership: 0
+    armor: 0
+    resistance: 2
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: aa6abe70df013ec4b8f61bc969e5be54, type: 2}
+    - {fileID: 11400000, guid: 41db1a8956e811c4e97f350bda377de1, type: 2}
+    - {fileID: 11400000, guid: 9177e6b3620d35048b608bf976755751, type: 2}
+    - {fileID: 11400000, guid: 790fd36eccf388643894be65e8dcda4b, type: 2}

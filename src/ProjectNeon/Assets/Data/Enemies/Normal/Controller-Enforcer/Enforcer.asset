@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Enforcer
   m_EditorClassIdentifier: 
   enemyName: Enforcer
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: a61b72f7fa02a5d4ba18fb4be1e86639, type: 2}
   ai: {fileID: 11400000, guid: 691e2c196a6982147a0bbab73b5cfc60, type: 2}
   preferredTurnOrder: 5
@@ -23,18 +25,46 @@ MonoBehaviour:
     ConstantValue: 
     Variable: {fileID: 0}
   battleRole: 4
+  tier: 0
   unique: 0
+  isHasty: 0
   maxHp: 35
   maxShield: 20
+  startingShield: 0
   toughness: 10
   attack: 8
   magic: 0
   leadership: 0
   armor: 0
   resistance: 0
+  nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 1
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: Never
+  stageDetails:
+  - stage: 1
+    powerLevel: 105
+    maxHp: 35
+    maxShield: 20
+    startingShield: 0
+    toughness: 10
+    attack: 8
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+    - {fileID: 11400000, guid: a281f094c5a40f74b83e5050f24974ab, type: 2}
+    - {fileID: 11400000, guid: 27a30fcd48934044eae557c820ec58e1, type: 2}
+    - {fileID: 11400000, guid: a6c88668ab3057a469b34c4ef2808fb8, type: 2}
+    - {fileID: 11400000, guid: c4974e9b44339234bb068b09782531a1, type: 2}

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Hypervisor
   m_EditorClassIdentifier: 
   enemyName: Hypervisor
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: 403e60ad5bd8c3f4087260f6c7344313, type: 2}
   ai: {fileID: 11400000, guid: 05bb97b53ed899d4b82629820e9b948b, type: 2}
   preferredTurnOrder: 1
@@ -23,18 +25,46 @@ MonoBehaviour:
     ConstantValue: 
     Variable: {fileID: 0}
   battleRole: 4
+  tier: 0
   unique: 0
+  isHasty: 0
   maxHp: 38
   maxShield: 12
+  startingShield: 0
   toughness: 6
   attack: 6
   magic: 0
   leadership: 10
   armor: 0
   resistance: 0
+  nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 1
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: Never
+  stageDetails:
+  - stage: 1
+    powerLevel: 108
+    maxHp: 38
+    maxShield: 12
+    startingShield: 0
+    toughness: 6
+    attack: 6
+    magic: 0
+    leadership: 10
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: b9e0eb5244bf2884190a107363dae9dc, type: 2}
+    - {fileID: 11400000, guid: c50cea6bb7744ea4ea05f4a4594d7a4b, type: 2}
+    - {fileID: 11400000, guid: a1176cd86ff09a0458d7d6094f9f04d1, type: 2}
+    - {fileID: 11400000, guid: ba49915f64d3a804cbf3232380a70e68, type: 2}
+    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}

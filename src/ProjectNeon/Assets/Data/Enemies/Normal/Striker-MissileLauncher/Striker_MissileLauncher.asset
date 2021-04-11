@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Striker_MissileLauncher
   m_EditorClassIdentifier: 
   enemyName: Missile Launcher
+  lastBalanceDate: 02/27/21
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: 2c573d5ccaef92d4a9ceae26e39eb1d1, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
   preferredTurnOrder: 99
@@ -42,4 +44,24 @@ MonoBehaviour:
   resourceGainPerTurn: 1
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: 02/27/21
+  stageDetails:
+  - stage: 1
+    powerLevel: 138
+    maxHp: 60
+    maxShield: 20
+    startingShield: 0
+    toughness: 0
+    attack: 0
+    magic: 0
+    leadership: 0
+    armor: 3
+    resistance: 0
+    nonStatCardValueFactor: 10
+    startingResourceAmount: 1
+    maxResourceAmount: 6
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: f33118b6dbae0a347b6bfcbc41f052ac, type: 2}
+    - {fileID: 11400000, guid: 0d499b6281d366d42afdf2c0726419cd, type: 2}

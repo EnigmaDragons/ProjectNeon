@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: AggregateSysMon
   m_EditorClassIdentifier: 
   enemyName: SysMon
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: fd2f2505741891047bcc2fcc8c99f386, type: 2}
   ai: {fileID: 11400000, guid: 63893107e543b0d458c4f7f772acf7e4, type: 2}
   preferredTurnOrder: 99
@@ -25,8 +27,10 @@ MonoBehaviour:
   battleRole: 2
   tier: 3
   unique: 1
+  isHasty: 0
   maxHp: 40
   maxShield: 40
+  startingShield: 0
   toughness: 20
   attack: 14
   magic: 24
@@ -36,7 +40,29 @@ MonoBehaviour:
   nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 0
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: Never
+  stageDetails:
+  - stage: 1
+    powerLevel: 1
+    maxHp: 40
+    maxShield: 40
+    startingShield: 0
+    toughness: 20
+    attack: 14
+    magic: 24
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: dacc9abfb4ac64b46bca874a33ab17cc, type: 2}
+    - {fileID: 11400000, guid: dac690d0a62dd9941a0aa234b3be2575, type: 2}
+    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}

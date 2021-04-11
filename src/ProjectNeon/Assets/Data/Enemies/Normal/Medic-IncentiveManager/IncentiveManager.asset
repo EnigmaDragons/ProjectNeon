@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: IncentiveManager
   m_EditorClassIdentifier: 
   enemyName: Incentive Manager
+  lastBalanceDate: 02/27/21
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: dfa360f7b5c32b845855b30f14be971b, type: 2}
   ai: {fileID: 11400000, guid: 34d9d7dadc289874a9afcd008c18cbe5, type: 2}
   preferredTurnOrder: 999
@@ -25,8 +27,10 @@ MonoBehaviour:
   battleRole: 2
   tier: 0
   unique: 0
+  isHasty: 0
   maxHp: 54
   maxShield: 20
+  startingShield: 0
   toughness: 10
   attack: 0
   magic: 6
@@ -36,7 +40,29 @@ MonoBehaviour:
   nonStatCardValueFactor: 10
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 0
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: 02/27/21
+  stageDetails:
+  - stage: 1
+    powerLevel: 109
+    maxHp: 54
+    maxShield: 20
+    startingShield: 0
+    toughness: 10
+    attack: 0
+    magic: 6
+    leadership: 10
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 10
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: 02fa54b205415094082e9a05428e0e2b, type: 2}
+    - {fileID: 11400000, guid: f3421f85b0123f140b201ace7a0b0801, type: 2}
+    - {fileID: 11400000, guid: d0d30f7da04ce3c4da436bb15fb47516, type: 2}

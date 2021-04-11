@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: TestEnemy
   m_EditorClassIdentifier: 
   enemyName: Test Enemy
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: 4a12750137ce2804abed7fa047deacd8, type: 2}
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
   preferredTurnOrder: 99
@@ -23,15 +25,42 @@ MonoBehaviour:
     ConstantValue: 
     Variable: {fileID: 0}
   battleRole: 0
+  tier: 0
   unique: 0
+  isHasty: 0
   maxHp: 40
+  maxShield: 0
+  startingShield: 0
   toughness: 5
   attack: 5
   magic: 5
+  leadership: 0
   armor: 0
   resistance: 0
+  nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 0
   cardsPerTurn: 1
   startOfBattleEffects: []
+  stageDetails:
+  - stage: 1
+    powerLevel: 1
+    maxHp: 40
+    maxShield: 0
+    startingShield: 0
+    toughness: 5
+    attack: 5
+    magic: 5
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: 0070119cc4495db4b857f36f208a25d4, type: 2}

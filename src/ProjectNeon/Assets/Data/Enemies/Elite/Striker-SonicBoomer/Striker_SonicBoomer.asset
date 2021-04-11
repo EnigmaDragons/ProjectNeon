@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Striker_SonicBoomer
   m_EditorClassIdentifier: 
   enemyName: Sonic Boomer
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: a2dd8affbd92fcb4ea2e497938509bc2, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
   preferredTurnOrder: 99
@@ -25,8 +27,10 @@ MonoBehaviour:
   battleRole: 1
   tier: 2
   unique: 1
+  isHasty: 0
   maxHp: 76
   maxShield: 30
+  startingShield: 0
   toughness: 15
   attack: 16
   magic: 16
@@ -36,7 +40,30 @@ MonoBehaviour:
   nonStatCardValueFactor: 16
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   startingResourceAmount: 1
+  maxResourceAmount: 0
   resourceGainPerTurn: 1
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: Never
+  stageDetails:
+  - stage: 1
+    powerLevel: 194
+    maxHp: 76
+    maxShield: 30
+    startingShield: 0
+    toughness: 15
+    attack: 16
+    magic: 16
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 16
+    startingResourceAmount: 1
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: c5a43e0afc3ccea4aae5e085872d7f51, type: 2}
+    - {fileID: 11400000, guid: 431ebd02ef4f0ee4dac0e78e3d7d63cb, type: 2}
+    - {fileID: 11400000, guid: e947c0afed2080e43bc9e942db02fcc6, type: 2}
+    - {fileID: 11400000, guid: 7648d730cf77f18459c711e04a73f41a, type: 2}

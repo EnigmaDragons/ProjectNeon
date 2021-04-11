@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Experimentalist
   m_EditorClassIdentifier: 
   enemyName: Experimentalist
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: bc4a191284b85f14a93c804bde4977bd, type: 2}
   ai: {fileID: 11400000, guid: 011ee59d282234c4e9bd6abf723be5cf, type: 2}
   preferredTurnOrder: 250
@@ -23,18 +25,45 @@ MonoBehaviour:
     ConstantValue: 
     Variable: {fileID: 0}
   battleRole: 4
+  tier: 0
   unique: 0
+  isHasty: 0
   maxHp: 80
   maxShield: 24
+  startingShield: 0
   toughness: 12
   attack: 8
   magic: 10
   leadership: 12
   armor: 0
   resistance: 0
+  nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 1
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: Never
+  stageDetails:
+  - stage: 1
+    powerLevel: 168
+    maxHp: 80
+    maxShield: 24
+    startingShield: 0
+    toughness: 12
+    attack: 8
+    magic: 10
+    leadership: 12
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: aeb1e9c0784f4024887991513ef40bec, type: 2}
+    - {fileID: 11400000, guid: 3f8f79cfb3080554bbbb43afdbc8fddb, type: 2}
+    - {fileID: 11400000, guid: f89792a6dd5f2e04191d6d383d1f9169, type: 2}
+    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}

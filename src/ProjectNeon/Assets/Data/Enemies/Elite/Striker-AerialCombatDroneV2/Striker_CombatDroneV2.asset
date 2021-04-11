@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Striker_CombatDroneV2
   m_EditorClassIdentifier: 
   enemyName: Combat Drone V2
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: 42fc216b418c08e479d5d33cf513e868, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
   preferredTurnOrder: 99
@@ -38,7 +40,30 @@ MonoBehaviour:
   nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 1
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: Never
+  stageDetails:
+  - stage: 1
+    powerLevel: 161
+    maxHp: 36
+    maxShield: 16
+    startingShield: 16
+    toughness: 8
+    attack: 16
+    magic: 16
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: 82d5e32d49d31a54391548f3f8d96d08, type: 2}
+    - {fileID: 11400000, guid: 22b9ba80f09a8934b9ca518f6fe3a421, type: 2}
+    - {fileID: 11400000, guid: b9a0676d939ea78499d8f360190992d0, type: 2}
+    - {fileID: 11400000, guid: 5bc4a790472907e448e72d21c8a3c33c, type: 2}

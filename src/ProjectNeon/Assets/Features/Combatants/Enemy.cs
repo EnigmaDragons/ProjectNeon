@@ -145,4 +145,34 @@ public class Enemy : ScriptableObject
     }
 
     public int CalculatedPowerLevel => 0;
+
+    public void CopyDataToNewForm()
+    {
+        if (stageDetails.Any())
+            return;
+        stageDetails = new[]
+        {
+            new EnemyStageDetails
+            {
+                stage = 1,
+                powerLevel = powerLevel,
+                maxHp = maxHp,
+                maxShield = maxShield,
+                startingShield = startingShield,
+                toughness = toughness,
+                attack = attack,
+                magic = magic,
+                leadership = leadership,
+                armor = armor,
+                resistance = resistance,
+                nonStatCardValueFactor = nonStatCardValueFactor,
+                startingResourceAmount = startingResourceAmount,
+                maxResourceAmount = maxResourceAmount,
+                resourceGainPerTurn = resourceGainPerTurn,
+                cardsPerTurn = cardsPerTurn,
+                startOfBattleEffects = startOfBattleEffects,
+                Cards = Deck.Cards
+            }
+        };
+    }
 }

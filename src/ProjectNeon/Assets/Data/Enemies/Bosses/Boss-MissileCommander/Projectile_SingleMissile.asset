@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Projectile_SingleMissile
   m_EditorClassIdentifier: 
   enemyName: Missile
+  lastBalanceDate: 02/28/2021
+  isCurrentlyWorking: 1
   deck: {fileID: 11400000, guid: c5597cf63cfd6184abc9fe36f5f9b9ce, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
   preferredTurnOrder: 99
@@ -23,9 +25,12 @@ MonoBehaviour:
     ConstantValue: 
     Variable: {fileID: 0}
   battleRole: 1
+  tier: 0
   unique: 0
+  isHasty: 0
   maxHp: 20
   maxShield: 0
+  startingShield: 0
   toughness: 0
   attack: 0
   magic: 14
@@ -35,7 +40,28 @@ MonoBehaviour:
   nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
   startingResourceAmount: 0
+  maxResourceAmount: 0
   resourceGainPerTurn: 1
   cardsPerTurn: 1
   startOfBattleEffects: []
-  lastBalanceDate: 02/28/2021
+  stageDetails:
+  - stage: 1
+    powerLevel: 1
+    maxHp: 20
+    maxShield: 0
+    startingShield: 0
+    toughness: 0
+    attack: 0
+    magic: 14
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: f6ae2c3dee4864d4ead5bfa2b4839a65, type: 2}
+    - {fileID: 11400000, guid: 917d0574b4bed094fa42879fd5986566, type: 2}
