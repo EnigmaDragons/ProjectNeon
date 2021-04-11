@@ -15,7 +15,7 @@ MonoBehaviour:
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 56
+      EffectType: 29
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -36,18 +36,23 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 0.02 * (MaxHP - HP)
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
         cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:

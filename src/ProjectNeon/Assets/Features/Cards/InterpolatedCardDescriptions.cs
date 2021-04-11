@@ -217,31 +217,20 @@ public static class InterpolatedCardDescriptions
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
             return $"x{FormulaAmount(data, owner, xCost)}";
-        if (data.EffectType == EffectType.HealMagic
-            || data.EffectType == EffectType.HealOverTime)
+        if (data.EffectType == EffectType.HealOverTime)
             return MagicAmount(data, owner);
-        
-        if (data.EffectType == EffectType.HealToughness)
-            return owner.IsPresent
-                ? RoundUp(data.FloatAmount * owner.Value.State[StatType.Toughness]).ToString()
-                : $"{data.FloatAmount}x TGH";
-        
         if (data.EffectType == EffectType.DrawCards)
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.ShieldFormula)
             return FormulaAmount(data, owner, xCost);
-        
         if (data.EffectType == EffectType.AdjustCounterFormula)
             return $"{FormulaAmount(data, owner, xCost)} {Bold(data.EffectScope.Value.WithSpaceBetweenWords())}";
-        
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
             return $"{FormulaAmount(data, owner, xCost)} {owner.Select(o => o.PrimaryResource().ResourceType, () => "Primary Resource")}";
-        
         if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)
             return owner.IsPresent
                 ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.Toughness]))).ToString()
                 : $"{data.FloatAmount}x TGH";
-        
         if (data.EffectType == EffectType.ApplyAdditiveStatInjury)
             return $"{data.FloatAmount} {data.EffectScope}";
         if (data.EffectType == EffectType.ApplyMultiplicativeStatInjury)

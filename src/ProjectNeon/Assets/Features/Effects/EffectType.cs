@@ -62,12 +62,9 @@ public enum EffectType
     
     // Healing
     HealFormula = 29,
-    AntiHeal = 60,
     HealOverTime = 20,
-    HealMagic = 45,
-    HealToughness = 12,
-    HealPercentMissingHealth = 56,
     FullyReviveAllAllies = 61,
+    AntiHeal = 60,
     
     // Party Effects
     AdjustPlayerStats = 49,
