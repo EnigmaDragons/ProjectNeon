@@ -44,20 +44,20 @@ public sealed class CardSelectionContext
             Log.Error($"{Member.Name} attempted to exclude all card types");
             return this;
         }
-        return shouldRefine(this)
+        return LogAfter(() =>shouldRefine(this)
             ? new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions.Where(o => !o.Is(excludedTagsCombination))) { SelectedCard = SelectedCard }
-            : this;
+            : this);
     }
     
     public CardSelectionContext IfTrueDontPlay(Func<CardSelectionContext, bool> shouldRefine, Func<CardTypeData, bool> isExcludedCard) =>
         LogAfter(() => shouldRefine(this)
-            ? new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions.Where(isExcludedCard)) { SelectedCard = SelectedCard }
+            ? new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions.Where(c => !isExcludedCard(c))) { SelectedCard = SelectedCard }
             : this);
 
-    public CardSelectionContext IfTruePlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] includeTagsCombination)
-        => shouldRefine(this)
+    public CardSelectionContext IfTruePlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] includeTagsCombination) => 
+        LogAfter(() => shouldRefine(this)
             ? new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions.Where(o => o.Is(includeTagsCombination))) { SelectedCard = SelectedCard }
-            : this;
+            : this);
 
     public CardSelectionContext WithSelectedCard(CardTypeData card)
         => new CardSelectionContext(Member, AllMembers, Strategy, PartyAdventureState, Zones, CardOptions) { SelectedCard = new Maybe<CardTypeData>(card)};
@@ -65,7 +65,7 @@ public sealed class CardSelectionContext
     private CardSelectionContext LogAfter(Func<CardSelectionContext> getNext)
     {
         var ctx = getNext();
-        Log.Info($"{ctx.Member.Name} - Selected {ctx.SelectedCard.Select(x => x.Name, () => "None")} - Options {ctx.CardOptionsString}");
+        Log.Info($"AI - {ctx.Member.Name} - {ctx.SelectedCard.Select(x => $"Selected {x.Name}", () => "Not Selected Yet")} - Options {ctx.CardOptionsString}");
         return ctx;
     }
 }

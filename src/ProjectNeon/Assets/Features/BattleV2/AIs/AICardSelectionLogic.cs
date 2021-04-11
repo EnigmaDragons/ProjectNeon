@@ -22,33 +22,40 @@ public static class AICardSelectionLogic
     public static CardSelectionContext WithCommonSenseSelections(this CardSelectionContext ctx)
         => ctx
             .DontPlaySelfAttackBuffIfAlreadyBuffed()
-            .DontPlayHealsIfAlliesDontNeedHealing()
-            .DontPlayShieldsIfAlliesDontNeedShielding()
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
             .DontRemoveResourcesIfOpponentsDontHaveMany()
             .DontPlayTauntIfAnyAllyIsPlayingOne()
             .DontPlayMagicalCountersIfOpponentsAreNotMagical()
             .DontPlayPhysicalCountersIfOpponentsAreNotPhysical()
             .DontGiveExtraResourcesIfAlliesHaveEnough()
-            .DontPlayXCostWithZeroResources();
+            .DontPlayXCostWithZeroResources()
+            .DontPlayHealsIfAlliesDontNeedHealing()
+            .DontPlayShieldsIfAlliesDontNeedShielding()
+            .DontGiveAlliesDodgeIfTheyAlreadyHaveEnough()
+            .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
+            .DontStealCreditsIfOpponentDoesntHaveAny();
 
+    public static CardSelectionContext DontGiveAlliesDodgeIfTheyAlreadyHaveEnough(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlay(x => x.Allies.Sum(a => a.State[TemporalStatType.Dodge]) >= x.Allies.Length, c => c.Is(CardTag.Defense, CardTag.Dodge));
+    
+    public static CardSelectionContext DontGiveAlliesAegisIfTheyAlreadyHaveEnough(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlay(x => x.Allies.Sum(a => a.State[TemporalStatType.Aegis]) >= x.Allies.Length, c => c.Is(CardTag.Defense, CardTag.Aegis));
+    
     public static CardSelectionContext DontPlaySelfAttackBuffIfAlreadyBuffed(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlay(x => x.Member.Attack() > x.Member.State.BaseStats.Attack(), c => c.Is(CardTag.BuffAttack, CardTag.SelfOnly));
     
     public static CardSelectionContext DontPlayXCostWithZeroResources(this CardSelectionContext ctx)
-        => ctx.IfTrueDontPlay(x => x.Member.PrimaryResourceAmount() == 0, c => !c.Cost.PlusXCost);
+        => ctx.IfTrueDontPlay(x => x.Member.PrimaryResourceAmount() == 0, c => c.Cost.PlusXCost);
     
     public static CardSelectionContext DontGiveExtraResourcesIfAlliesHaveEnough(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Allies.Except(ctx.Member).All(e => e.RemainingPrimaryResourceCapacity() < 2), CardTag.BuffResource);
     
     public static CardSelectionContext DontPlayPhysicalCountersIfOpponentsAreNotPhysical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.DebuffPhysical)
-            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0),  CardTag.Dodge)
             .IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.Armor);
 
     public static CardSelectionContext DontPlayMagicalCountersIfOpponentsAreNotMagical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.DebuffMagical)
-            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Aegis)
             .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Resistance);
             
     public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
@@ -110,5 +117,4 @@ public static class AICardSelectionLogic
         .Shuffled()
         .OrderByDescending(x => x.Cost.BaseAmount)
         .First();
-
 }
