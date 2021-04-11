@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Portable Synthesizer
   description: 'Each turn: Lose 1 cred. Gain 1 primary resource'
-  rarity: 1
+  rarity: 2
   slot: 2
   priceFactor: 1
   canUseClasses:
@@ -53,9 +53,12 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 11400000, guid: b50e3716af0e2a0428dba75d05704db7,
-      type: 2}
+    ReferencedSequence: {fileID: 11400000, guid: b50e3716af0e2a0428dba75d05704db7, type: 2}
     ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0

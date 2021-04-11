@@ -21,9 +21,6 @@ public static class AllEffects
         { EffectType.ShieldRemoveAll, e => new AegisPreventable(new SimpleEffect(m => BattleLogged($"{m.Name} lost all their shields", () => m.AdjustShield(-999))), "Losing All Shields") },
         { EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs, e => new ShieldToughnessBasedOnNumberOfOpponentDoTs(e.FloatAmount) },
         { EffectType.AdjustResourceFlat, e =>  AegisPreventable.If(new SimpleEffect(m => m.GainResource(e.EffectScope.Value, e.TotalIntAmount)), e.TotalIntAmount < 0, "Resource Loss") },
-        { EffectType.AdjustPrimaryResource, e => AegisPreventable.If(new SimpleEffect(
-            m => BattleLogged($"{m.Name} {GainedOrLostTerm(e.TotalIntAmount)} {Math.Abs(e.TotalIntAmount)} {m.PrimaryResource.Name}", 
-                () => m.AdjustPrimaryResource(e.TotalIntAmount))), e.TotalIntAmount < 0, "Resource Loss") },
         { EffectType.AdjustPrimaryResourceFormula, e => new AegisIfFormulaResult((ctx, amount, m) => 
             m.AdjustPrimaryResource(BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.PrimaryResource.Name}", amount.CeilingInt())), e.Formula, true, amount => amount < 0) },
         { EffectType.DamageOverTimeFormula, e => new AegisPreventable(new DamageOverTimeFormula(e), "Damage Over Time") },
@@ -32,15 +29,12 @@ public static class AllEffects
                 TemporalStateMetadata.DebuffForDuration(e.NumberOfTurns, new StatusDetail(StatusTag.Vulnerable)))))), "Vulernable") },
         { EffectType.DisableForTurns, e => new SimpleEffect(m => BattleLogged($"{m.Name} is disabled for {e.NumberOfTurns} turns.", () => m.ApplyTemporaryAdditive(new DisableForTurns(e.NumberOfTurns))))},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.NumberOfTurns) },
-        { EffectType.HealMagic, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Magic) },
-        { EffectType.HealToughness, e => new Heal(e.BaseAmount, e.FloatAmount, StatType.Toughness) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect(p => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With(e.EffectScope.Value.EnumVal<PlayerStatType>(), e.IntAmount), e.NumberOfTurns, e.IntAmount < 0))) },
         { EffectType.GainCredits, e => new PartyEffect(p => p.UpdateCreditsBy(e.TotalIntAmount)) },
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
         { EffectType.AtEndOfTurn, e => new EndOfTurnEffect(e) },
         { EffectType.DelayedStartOfTurn, e => new DelayedStartOfTurnEffect(e) },
-        { EffectType.HealPercentMissingHealth, e => new SimpleEffect(m => m.GainHp(Mathf.CeilToInt(m.MissingHp() * e.FloatAmount))) },
         { EffectType.EnterStealth, e => new SimpleEffect(m => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(TemporalStatType.Stealth, 1), 
             TemporalStateMetadata.BuffForDuration(e.NumberOfTurns, new StatusDetail(StatusTag.Stealth))))) },
         { EffectType.GainDoubleDamage, e => new SimpleEffect(m => m.Adjust(TemporalStatType.DoubleDamage, e.IntAmount))},

@@ -15,6 +15,7 @@ public class FindEffectsEditor : EditorWindow
     // By Effect Type
     private EffectType _effectType;
     private string _effectScope;
+    private string _formulaSearchString;
     private string[] GetAllCardEffectsWith(EffectType effectType) =>
         GetAllInstances<CardActionsData>()
             .Where(e => e.BattleEffects.Any(x => x.EffectType == effectType))
@@ -48,6 +49,19 @@ public class FindEffectsEditor : EditorWindow
             .Select(e => $"Equipment {e.name}"))
         .ToArray();
     
+    private string[] GetAllEffectsWithFormula(string searchString)
+        => GetAllInstances<CardActionsData>()
+            .Where(e => e.BattleEffects.Any(x => x.Formula != null && x.Formula.ContainsAnyCase(searchString)))
+            .Select(e => $"Card {e.name}")
+            .Concat(GetAllInstances<Enemy>()
+                .Where(e => e.Effects.Any(x => x.Formula != null && x.Formula.ContainsAnyCase(searchString)))
+                .Select(e => $"Enemy {e.name}"))
+            .Concat(GetAllInstances<StaticEquipment>()            
+                .Where(e => e.AllEffects.Any(x => x.Formula != null && x.Formula.ContainsAnyCase(searchString)))
+                .Select(e => $"Equipment {e.name}"))
+            .ToArray();
+    
+    
     private string[] GetAllContentWithLostEffectType() =>  
                 GetAllInstances<CardActionsData>()
                 .Where(e => e.BattleEffects.Any(x => (int)x.EffectType == -1))
@@ -76,6 +90,14 @@ public class FindEffectsEditor : EditorWindow
         if (GUILayout.Button("Search By Effect Scope"))
         {
             ShowItems($"Content Using Effect Scope - {_effectScope}", GetAllContentWithEffectScope(_effectScope));
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        _formulaSearchString = GUILayout.TextField(_formulaSearchString);
+        if (GUILayout.Button("Find Formulas With Text"))
+        {
+            ShowItems($"Content With Formula Text - '{_formulaSearchString}'", GetAllEffectsWithFormula(_formulaSearchString));
             GUIUtility.ExitGUI();
         }
         DrawUILine();
