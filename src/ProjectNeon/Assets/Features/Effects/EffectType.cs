@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 39-43, 47, 48, 53, 
-// LAST NUMBER USED: 84
+// LAST NUMBER USED: 85
 
 using System;
 
@@ -14,8 +14,8 @@ public enum EffectType
     DealRawDamageFormula = 70,
     DamageOverTimeFormula = 84,
 
-    AdjustStatMultiplicatively = 5,
     AdjustStatAdditivelyFormula = 68,
+    AdjustStatMultiplicativelyFormula = 85,
     AdjustCounterFormula = 79,
 
     // Timing
@@ -36,7 +36,7 @@ public enum EffectType
     AdjustResourceFlat = 7,
     AdjustPrimaryResource = 46,
     AdjustPrimaryResourceFormula = 82,
-    DrainPrimaryResourceFormula = 35,
+    TransferPrimaryResourceFormula = 35,
     Reload = 38,
     
     // Reactions

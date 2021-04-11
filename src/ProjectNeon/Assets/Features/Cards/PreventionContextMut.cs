@@ -27,17 +27,18 @@ public sealed class PreventionContextMut : PreventionContext
             PreventingMembers[type] = new HashSet<Member>();
         TargetMembers.Where(m => m.State[temporalStatType] > 0)
             .Intersect(members)
-            .ForEach(m => PreventingMembers[type].Add(m));
+            .ForEach(m =>
+            {
+                if (PreventingMembers[type].Contains(m)) 
+                    return;
+                
+                m.Apply(s => s.Adjust(temporalStatType, -1));
+                PreventingMembers[type].Add(m);
+            });
     }
 
     public Member[] GetPreventingMembers(PreventionType type) 
         => PreventingMembers.TryGetValue(type, out var result) 
             ? result.ToArray() 
             : Array.Empty<Member>();
-
-    // This will be unecessary if we update the counter when the first usage is recorded
-    public void UpdatePreventionCounters()
-    {
-        PreventingMembers.ForEach(kv => kv.Value.ForEach(m => m.Apply(ms => ms.Adjust(kv.Key.ToString(), -1f))));
-    }
 }

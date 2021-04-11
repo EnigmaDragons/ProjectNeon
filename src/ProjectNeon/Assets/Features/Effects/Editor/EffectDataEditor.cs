@@ -22,7 +22,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ShieldRemoveAll, new string[0]},
         {EffectType.ShieldFormula, new [] {"Formula"}},
         {EffectType.AdjustStatAdditivelyFormula, new [] { "Formula", "NumberOfTurns", "EffectScope" }},
-        {EffectType.AdjustStatMultiplicatively, new [] { "FloatAmount", "NumberOfTurns", "EffectScope" }},
+        {EffectType.AdjustStatMultiplicativelyFormula, new [] { "Formula", "NumberOfTurns", "EffectScope" }},
         {EffectType.AdjustCounterFormula, new [] {"Formula", "EffectScope" }},
         {EffectType.GainCredits, new [] {"BaseAmount" }},
         {EffectType.AdjustPrimaryResource, new [] {"BaseAmount" }},
@@ -47,7 +47,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.GlitchRandomCards, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.LeaveBattle, new string[0]},
         {EffectType.ResetStatToBase, new [] { "EffectScope" }},
-        {EffectType.DrainPrimaryResourceFormula, new [] { "Formula" } },
+        {EffectType.TransferPrimaryResourceFormula, new [] { "Formula" } },
         {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.Reload, new string[0]},
         {EffectType.DamageOverTimeFormula, new [] { "Formula", "NumberOfTurns" }}

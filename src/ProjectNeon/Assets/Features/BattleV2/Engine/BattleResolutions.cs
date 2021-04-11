@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionAvoided, CardActionPrevented, Finished<CardActionContext>>
+public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionAvoided, CardActionPrevented>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -88,10 +88,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         msg.Source.State.Adjust(msg.ToDecrement, -1);
         Message.Publish(new Finished<CardActionPrevented>());
     }
-
-    protected override void Execute(Finished<CardActionContext> msg) 
-        => msg.Message.Preventions.UpdatePreventionCounters();
-
+    
     private void ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
     {
         if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
