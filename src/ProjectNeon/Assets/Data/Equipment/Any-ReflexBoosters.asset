@@ -10,54 +10,55 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Any-ThemoVisionImplants
+  m_Name: Any-ReflexBoosters
   m_EditorClassIdentifier: 
-  displayName: ThermoVision Implants
-  description: Instantly remove Blind from yourself
-  rarity: 2
+  displayName: Reflex Boosters
+  description: 'Start of Turn: Have At 1 Dodge'
+  rarity: 4
   slot: 2
   priceFactor: 1
   canUseClasses:
   - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
-  modifiers:
-  - ModifierType: 0
-    Amount: 0
-    StatType: 
+  modifiers: []
   resourceModifiers: []
-  turnStartEffects: []
-  turnEndEffects: []
-  battleStartEffects:
-  - EffectType: 74
+  turnStartEffects:
+  - EffectType: 79
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 1
-      ConstantValue: -1
+      UseConstant: 0
+      ConstantValue: 0
       FloatVariable: {fileID: 0}
     NumberOfTurns:
-      UseConstant: 1
-      ConstantValue: -1
+      UseConstant: 0
+      ConstantValue: 0
       Variable: {fileID: 0}
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
+      Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
     HitsRandomTargetMember: 0
-    StatusTag: 12
-    StatusDetailText: Instantly remove Blind from yourself
+    StatusTag: 0
+    StatusDetailText: 
     TurnDelay: 0
-    Formula: 
+    Formula: '1 {Dodge > 0: * 0}'
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 2
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
-      reactor: 1
+      reactor: 0
       scope: 0
-      cardActions: {fileID: 11400000, guid: 6cbfe5eac480e5e4c9522e84dc6f7589, type: 2}
+      cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  turnEndEffects: []
+  battleStartEffects: []
