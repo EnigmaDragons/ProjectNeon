@@ -18,7 +18,7 @@ public class BalanceEngineTests
             Name = "Slash",
             Rarity = Rarity.Common,
             ActionSequences = new[] { CardActionSequence.Create(
-                Scope.One, Group.Opponent, AvoidanceType.Evade, 
+                Scope.One, Group.Opponent,
                 TestableObjectFactory.Create<CardActionsData>()
                     .Initialized(new CardActionV2(TestEffects.BasicAttack)), false), }
         });

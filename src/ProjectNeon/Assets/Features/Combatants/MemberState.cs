@@ -140,14 +140,7 @@ public sealed class MemberState : IStats
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
-
-    public ProposedReaction[] GetReactions(CardActionAvoided e) =>
-        _reactiveStates
-            .Select(x => x.OnCardActionAvoided(e))
-            .Where(x => x.IsPresent)
-            .Select(x => x.Value)
-            .ToArray();
-
+    
     public EffectData Transform(EffectData effect, EffectContext context)
     {
         foreach (var transformer in _transformers)
@@ -288,8 +281,6 @@ public sealed class MemberState : IStats
     public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter(() => Counter(t.ToString()).ChangeBy(amount), () => this[t].CeilingInt()));
     public int AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
     private void AdjustShieldNoPublish(float amount) => Counter(TemporalStatType.Shield.ToString()).ChangeBy(amount);
-    public void AdjustEvade(float amount) => Adjust(TemporalStatType.Evade, amount);
-    public void AdjustSpellshield(float amount) => Adjust(TemporalStatType.Spellshield, amount);
     public void AdjustDoubleDamage(float amount) => Adjust(TemporalStatType.DoubleDamage, amount);
 
     private int Diff(int[] beforeAndAfter) => beforeAndAfter.Last() - beforeAndAfter.First();

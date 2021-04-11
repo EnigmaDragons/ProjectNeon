@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Features.CombatantStates.Reactions;
 
 public class EffectReactWith : Effect
 {
@@ -97,7 +96,12 @@ public class EffectReactWith : Effect
                 return ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(tag));
             }
         },
-        { ReactionConditionType.OnDodged, ctx => effect => ctx.Possessor.IsConscious() && effect.Preventions.IsDodging(ctx.Possessor)}
+        { ReactionConditionType.OnDodged, ctx => effect => ctx.Possessor.IsConscious() 
+           && effect.Preventions.IsDodging(ctx.Possessor) 
+           && Decreased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Dodge]))},
+        { ReactionConditionType.OnAegised, ctx => effect => ctx.Possessor.IsConscious() 
+           && effect.Preventions.IsAegising(ctx.Possessor) 
+           && Decreased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Aegis]))}
     };
 
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;

@@ -21,9 +21,6 @@ public class FindCardsEditor : EditorWindow
             .Select(e => e.name)
             .ToArray();
     
-    // By Avoidance Type
-    private AvoidanceType _avoidanceType;
-
     // By Description Search String
     private string _searchString;
     private string[] GetAllCardsWithDescription(string s) =>
@@ -64,25 +61,6 @@ public class FindCardsEditor : EditorWindow
                 .ToArray();
             GetWindow<ListDisplayWindow>()
                 .Initialized("Unused Effect Types", zeroUsageResults)
-                .Show();
-            GUIUtility.ExitGUI();
-        }
-        DrawUILine();
-        
-        _avoidanceType = (AvoidanceType)EditorGUILayout.EnumPopup("AvoidanceType", _avoidanceType);
-        if (GUILayout.Button("Search By Avoidance Type")) 
-        {
-            var cards = 
-                    GetAllInstances<CardType>()
-                        .Where(e => e.ActionSequences.Any(x => x.AvoidanceType == _avoidanceType))
-                        .Select(e => e.name)
-                .Concat(
-                    GetAllInstances<ReactionCardType>()
-                        .Where(e => e.ActionSequence.AvoidanceType == _avoidanceType)
-                        .Select(e => e.name))
-                .ToArray();
-            GetWindow<ListDisplayWindow>()
-                .Initialized($"{_avoidanceType} - {cards.Length} uses", cards)
                 .Show();
             GUIUtility.ExitGUI();
         }

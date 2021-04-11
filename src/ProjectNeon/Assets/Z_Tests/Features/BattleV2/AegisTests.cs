@@ -40,8 +40,6 @@ public class AegisTests
     [TestCase(TemporalStatType.Dodge)]
     [TestCase(TemporalStatType.Taunt)]
     [TestCase(TemporalStatType.Lifesteal)]
-    [TestCase(TemporalStatType.Evade)]
-    [TestCase(TemporalStatType.Spellshield)]
     public void Aegis_TakePositiveCounters_Prevented(TemporalStatType statType)
     {
         var defender = DefenderWithAegis();
@@ -58,8 +56,6 @@ public class AegisTests
     [TestCase(TemporalStatType.Dodge)]
     [TestCase(TemporalStatType.Taunt)]
     [TestCase(TemporalStatType.Lifesteal)]
-    [TestCase(TemporalStatType.Evade)]
-    [TestCase(TemporalStatType.Spellshield)]
     public void Aegis_GivePositiveCounters_NotApplied(TemporalStatType statType)
     {
         var defender = DefenderWithAegis();

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Features.CombatantStates.Reactions;
 using NUnit.Framework;
 
 public class RemoveDebuffsTests

@@ -8,23 +8,20 @@ public class CardActionSequence
 {
     [SerializeField] private Scope scope;
     [SerializeField] private Group group;
-    [SerializeField] private AvoidanceType avoidance;
     [SerializeField] public CardActionsData cardActions;
     [SerializeField] private bool repeatX;
 
     public Scope Scope => scope;
     public Group Group => group;
-    public AvoidanceType AvoidanceType => avoidance;
     public CardActionsData CardActions => cardActions;
     public bool RepeatX => repeatX;
     
-    public static CardActionSequence Create(Scope s, Group g, AvoidanceType a, CardActionsData data, bool repeatX)
+    public static CardActionSequence Create(Scope s, Group g, CardActionsData data, bool repeatX)
     {
         return new CardActionSequence
         {
             scope = s,
             @group = g,
-            avoidance = a,
             cardActions = data,
             repeatX = repeatX
         };

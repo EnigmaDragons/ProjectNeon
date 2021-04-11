@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: 
   art: {fileID: 21300000, guid: afab6e275ba296d4385bc6d2d052b9a2, type: 3}
-  description: Remove all Evade and Deal {E[1]}
+  description: Remove all Dodge and Deal {E[1]}
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
-  onlyPlayableByClass: {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe, type: 2}
   cost:
     cost: 4
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
@@ -31,10 +31,8 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 1000
     cardActions: {fileID: 11400000, guid: 9dbb974fd132811409329633a62e99d6, type: 2}
     repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  timingType: 0

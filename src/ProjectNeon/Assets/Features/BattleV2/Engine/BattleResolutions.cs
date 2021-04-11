@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionAvoided, CardActionPrevented>
+public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionPrevented>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -70,19 +70,9 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         EffectType.MagicAttackFormula, 
     });
     
-    protected override void Execute(CardActionAvoided msg)
-    {
-        if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
-            msg.Source.State.ExitStealth();
-        
-        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg));
-        reactions.ForEach(r => _reactionCards.Enqueue(r));
-        Message.Publish(new Finished<CardActionAvoided>());
-    }
-
     protected override void Execute(CardActionPrevented msg)
     {
-        if (msg.Avoid.Type == AvoidanceType.Evade)
+        if (msg.ToDecrement == TemporalStatType.Blind)
             BattleLog.Write($"{msg.Source.Name} was blinded, so their attack missed.");
         Message.Publish(new PlayRawBattleEffect("MissedText", Vector3.zero));
         msg.Source.State.Adjust(msg.ToDecrement, -1);
