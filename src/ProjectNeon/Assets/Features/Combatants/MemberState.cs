@@ -272,7 +272,12 @@ public sealed class MemberState : IStats
         if (clampedAmount > 0)
             ChangeHp(-clampedAmount);
     }
-    private void ChangeHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).ChangeBy(amount));
+    private void ChangeHp(float amount) => PublishAfter(() =>
+    {
+        if (Counter(TemporalStatType.PreventDeath).Amount > 0)
+            amount = Math.Min(amount, this[TemporalStatType.HP] - 1);
+        Counter(TemporalStatType.HP).ChangeBy(amount);
+    });
 
     // Status Counters Commands
     public void Adjust(string counterName, float amount) => BattleLog.WriteIf(

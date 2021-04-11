@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 39-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 40-43, 47, 48, 53, 
 // LAST NUMBER USED: 85
 
 using System;
@@ -42,7 +42,7 @@ public enum EffectType
     ReactWithEffect = 74,
     ReactWithCard = 75,
     [Obsolete("Not Actually an OnDeath Effect. This has a hack that PREVENTS death.")] OnDeath = 25,
-    
+
     // Transformers
     DoubleTheEffectAndMinusDurationTransformer = 28,
     AddToXCostTransformer = 32,
@@ -78,4 +78,5 @@ public enum EffectType
     ShowCustomTooltip = 73,
     LeaveBattle = 34,
     AdjustCardTagPrevention = 37,
+    PreventDeath = 39,
 }

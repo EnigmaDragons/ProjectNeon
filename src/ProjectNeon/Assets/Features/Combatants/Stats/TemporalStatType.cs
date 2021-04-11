@@ -15,4 +15,5 @@ public enum TemporalStatType
     Inhibit = 14,
     Dodge = 15,
     Aegis = 16,
+    PreventDeath = 17,
 }
