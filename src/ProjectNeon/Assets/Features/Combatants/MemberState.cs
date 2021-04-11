@@ -274,8 +274,8 @@ public sealed class MemberState : IStats
     }
     private void ChangeHp(float amount) => PublishAfter(() =>
     {
-        if (Counter(TemporalStatType.PreventDeath).Amount > 0)
-            amount = Math.Min(amount, this[TemporalStatType.HP] - 1);
+        if (this[TemporalStatType.PreventDeath] > 0)
+            amount = Math.Max(amount, 1 - this[TemporalStatType.HP]);
         Counter(TemporalStatType.HP).ChangeBy(amount);
     });
 
