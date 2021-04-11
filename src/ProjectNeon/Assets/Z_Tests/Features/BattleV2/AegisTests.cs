@@ -257,6 +257,44 @@ public class AegisTests
         Assert.AreEqual(1, defender.State.Damagability());
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
+
+    [Test]
+    public void Aegis_ApplyAdditiveInjury_Prevented()
+    {        
+        var defender = TestMembers.Create(s => s.With(StatType.Attack, 2));
+        defender.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
+
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.ApplyAdditiveStatInjury,
+            BaseAmount = new IntReference(-1),
+            EffectScope = new StringReference(StatType.Attack.ToString()) 
+        }, attacker, defender);
+        
+        Assert.AreEqual(2, defender.Attack());
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
+    
+    [Test]
+    public void Aegis_ApplyMultiplicativeInjury_Prevented()
+    {        
+        var defender = TestMembers.Create(s => s.With(StatType.Attack, 2));
+        defender.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
+
+        var attacker = TestMembers.Any();
+        
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.ApplyMultiplicativeStatInjury,
+            FloatAmount = new FloatReference(0.5f),
+            EffectScope = new StringReference(StatType.Attack.ToString()) 
+        }, attacker, defender);
+        
+        Assert.AreEqual(2, defender.Attack());
+        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
+    }
     
     private EffectData AdjustCounterEffect(TemporalStatType statType, string formulaAmount)
         => new EffectData
