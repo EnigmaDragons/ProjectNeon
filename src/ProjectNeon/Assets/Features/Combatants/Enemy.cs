@@ -37,6 +37,8 @@ public class Enemy : ScriptableObject
     [SerializeField] private int cardsPerTurn = 1;
     [SerializeField] private EffectData[] startOfBattleEffects = new EffectData[0];
 
+    [SerializeField] private EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
+
     public string Name => enemyName;
     public bool DeckIsValid => deck.Cards.None(x => x == null);
     public Deck Deck => deck;
