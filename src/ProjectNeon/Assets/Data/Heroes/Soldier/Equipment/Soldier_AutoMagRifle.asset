@@ -16,22 +16,24 @@ MonoBehaviour:
   description: Reloads 1 ammo at the end of turn
   rarity: 2
   slot: 0
-  cost: 75
+  priceFactor: 1
   canUseClasses:
   - {fileID: 11400000, guid: 1a326935dbf5d6941acd1038e9c4d77f, type: 2}
-  modifiers:
-  - ModifierType: 0
-    Amount: 0
-    StatType: 
+  modifiers: []
   resourceModifiers: []
-  turnStartEffects:
-  - EffectType: 46
+  turnStartEffects: []
+  turnEndEffects:
+  - EffectType: 82
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 1
-      ConstantValue: 1
+      UseConstant: 0
+      ConstantValue: 0
       FloatVariable: {fileID: 0}
     NumberOfTurns:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 0
       Variable: {fileID: 0}
     EffectScope:
@@ -39,6 +41,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    ReferencedEffectSequence: {fileID: 0}
+    StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 1
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
-  turnEndEffects: []
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  battleStartEffects: []

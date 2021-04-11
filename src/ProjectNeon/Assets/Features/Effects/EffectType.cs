@@ -34,7 +34,6 @@ public enum EffectType
     
     // Resources
     AdjustResourceFlat = 7,
-    AdjustPrimaryResource = 46,
     AdjustPrimaryResourceFormula = 82,
     TransferPrimaryResourceFormula = 35,
     Reload = 38,

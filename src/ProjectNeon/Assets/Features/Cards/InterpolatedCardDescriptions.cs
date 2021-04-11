@@ -123,8 +123,6 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"gives {Bold("Vulnerable")} {DurationDescription(data)}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope}";
-        if (data.EffectType == EffectType.AdjustPrimaryResource)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}"; ;
         if (data.EffectType == EffectType.ReactWithEffect)
@@ -248,8 +246,6 @@ public static class InterpolatedCardDescriptions
             return $"{data.FloatAmount} {data.EffectScope}";
         if (data.EffectType == EffectType.ApplyMultiplicativeStatInjury)
             return $"{data.FloatAmount}x {data.EffectScope}";
-        if (data.EffectType == EffectType.AdjustPrimaryResource)
-            return $"{data.TotalIntAmount}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
             return $"{WithImplications(data.TotalIntAmount.ToString())}";
         if (data.EffectType == EffectType.AdjustPlayerStats)

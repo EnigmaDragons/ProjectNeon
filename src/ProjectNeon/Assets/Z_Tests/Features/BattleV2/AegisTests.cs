@@ -205,23 +205,6 @@ public class AegisTests
     }
     
     [Test]
-    public void Aegis_PrimaryResourceLoss_Prevented()
-    {
-        var defender = DefenderWithAegis();
-        defender.Apply(d => d.AdjustPrimaryResource(2));
-        var attacker = TestMembers.Any();
-        
-        TestEffects.Apply(new EffectData
-        {
-            EffectType = EffectType.AdjustPrimaryResource,
-            BaseAmount = new IntReference(-1)
-        }, attacker, defender);
-        
-        Assert.AreEqual(2, defender.PrimaryResource().Amount);
-        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
-    }
-    
-    [Test]
     public void Aegis_PrimaryResourceFormulaLoss_Prevented()
     {
         var defender = DefenderWithAegis();
