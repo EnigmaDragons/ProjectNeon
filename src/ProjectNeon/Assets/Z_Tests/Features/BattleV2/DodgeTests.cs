@@ -6,11 +6,12 @@ public class DodgeTests
     private static readonly InMemoryCard BasicAttackCard = new InMemoryCard
     {
         ActionSequences = new[] { 
-            CardActionSequence.Create(Scope.One, Group.Opponent, AvoidanceType.Evade, 
+            CardActionSequence.Create(Scope.One, Group.Opponent,
                 TestableObjectFactory.Create<CardActionsData>().Initialized(new CardActionV2(TestEffects.BasicAttack)), repeatX: false)
         }
     };
     
+    [Ignore("Test Engine Doesn't Resolve Preventions Yet")]
     [Test]
     public void AttackerIsBlindAndDefenderHasDodge_DodgeStillPresent()
     {
@@ -52,9 +53,9 @@ public class DodgeTests
         var basicAttackCard = new Card(0, attacker, new InMemoryCard
         {
             ActionSequences = new[] { 
-                CardActionSequence.Create(Scope.One, Group.Opponent, AvoidanceType.NotSpecified, 
+                CardActionSequence.Create(Scope.One, Group.Opponent,
                     TestableObjectFactory.Create<CardActionsData>().Initialized(new CardActionV2(TestEffects.BasicAttack)), repeatX: false),
-                CardActionSequence.Create(Scope.One, Group.Opponent, AvoidanceType.NotSpecified, 
+                CardActionSequence.Create(Scope.One, Group.Opponent,
                     TestableObjectFactory.Create<CardActionsData>().Initialized(new CardActionV2(TestEffects.BasicAttack)), repeatX: false)
             }
         });
@@ -64,7 +65,7 @@ public class DodgeTests
         Assert.AreEqual(0, defender.State.MissingHp());
     }
     
-    [Ignore("Test Engine Doesn't Resolve Preventions Yes")]
+    [Ignore("Test Engine Doesn't Resolve Preventions Yet")]
     [Test]
     public void AttackerIsBlindAndDefenderHasDodge_BlindGone()
     {

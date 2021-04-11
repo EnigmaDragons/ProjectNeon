@@ -140,14 +140,7 @@ public sealed class MemberState : IStats
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
-
-    public ProposedReaction[] GetReactions(CardActionAvoided e) =>
-        _reactiveStates
-            .Select(x => x.OnCardActionAvoided(e))
-            .Where(x => x.IsPresent)
-            .Select(x => x.Value)
-            .ToArray();
-
+    
     public EffectData Transform(EffectData effect, EffectContext context)
     {
         foreach (var transformer in _transformers)
