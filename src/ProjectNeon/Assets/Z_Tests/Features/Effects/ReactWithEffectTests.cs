@@ -20,7 +20,7 @@ public class ReactWithEffectTests
                     new EffectData
                     {
                         EffectType = EffectType.AdjustCounterFormula, 
-                        EffectScope = new StringReference("Evade"), 
+                        EffectScope = new StringReference(TemporalStatType.Aegis.ToString()), 
                         Formula = "1"
                     })
         }, attacker, attacker);
@@ -33,7 +33,7 @@ public class ReactWithEffectTests
         }, attacker, target);
         
         Assert.AreEqual(1, target.State[TemporalStatType.CardStun], "Card Stun wasn't applied");
-        Assert.AreEqual(1, target.State[TemporalStatType.Evade], "Reaction didn't trigger");
+        Assert.AreEqual(1, target.State[TemporalStatType.Aegis], "Reaction didn't trigger");
     }
 
     [Test]

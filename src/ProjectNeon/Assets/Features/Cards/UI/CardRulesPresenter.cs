@@ -42,11 +42,9 @@ public class CardRulesPresenter : MonoBehaviour
 
                 AddAllMatchingEffectScopeRules(rulesToShow, b,
                     TemporalStatType.Dodge.ToString(),
-                    TemporalStatType.Evade.ToString(),
                     TemporalStatType.Taunt.ToString(),
                     TemporalStatType.Blind.ToString(),
                     TemporalStatType.Inhibit.ToString(),
-                    TemporalStatType.Spellshield.ToString(),
                     TemporalStatType.Aegis.ToString(),
                     TemporalStatType.CardStun.ToString(),
                     TemporalStatType.DoubleDamage.ToString(),
