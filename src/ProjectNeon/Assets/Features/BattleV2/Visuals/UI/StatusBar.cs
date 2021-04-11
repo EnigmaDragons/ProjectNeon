@@ -65,6 +65,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Evade, true, v => $"Evades the next {v} attacks");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => $"Dodges the next {v} attacks");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Spellshield, true, v => $"Shields next {v} Magic Attacks");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Aegis, true, v => $"Prevents next {v} harmful effects");
         AddCustomTextStatusIcons(statuses, StatusTag.OnClipUsed, "Unknown On Clip Used Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnBloodied, "Unknown On Bloodied Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnShieldBroken, "Unknown On Shield Broken Effect");
