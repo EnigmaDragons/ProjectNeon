@@ -7,6 +7,6 @@
 
     public EncounterBuildingContext Filter(EncounterBuildingContext ctx)
         => ctx.SelectedEnemies.Length == _maxEnemies
-            ? ctx.WithPossibilities(new Enemy[0])
+            ? ctx.WithPossibilities(new EnemyInstance[0])
             : ctx;
 }

@@ -16,6 +16,7 @@ public class AdventureProgress2 : ScriptableObject
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public int PartyCardCycles => currentAdventure.Adventure.BaseNumberOfCardCycles;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
+    public int Stage => currentStageIndex + 1;
 
     public DynamicStage CurrentStage
     {

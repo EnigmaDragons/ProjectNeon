@@ -46,7 +46,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         }
     }
 
-    private GameObject InstantiateEnemyVisuals(Enemy enemy)
+    private GameObject InstantiateEnemyVisuals(EnemyInstance enemy)
     {
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
@@ -54,7 +54,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         return enemyObject;
     }
 
-    private GameObject AddEnemy(Enemy enemy, Member member)
+    private GameObject AddEnemy(EnemyInstance enemy, Member member)
     {
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
@@ -102,7 +102,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
             shield.Init(member);
     }
     
-    public Member Spawn(Enemy enemy)
+    public Member Spawn(EnemyInstance enemy)
     {
         DevLog.Write($"Spawning {enemy.Name}");
         var member = enemy.AsMember(state.GetNextEnemyId());

@@ -37,7 +37,7 @@ public class BattleSetupV2 : MonoBehaviour
     }
     public void InitPartyDecks(List<CardType> d1, List<CardType> d2, List<CardType> d3) => party.UpdateDecks(d1, d2, d3);
     public void InitEncounterBuilder(EncounterBuilder e) => encounterBuilder = e;
-    public void InitEncounter(IEnumerable<Enemy> enemies)
+    public void InitEncounter(IEnumerable<EnemyInstance> enemies)
     {
         _useCustomEncounter = true;
         enemyArea.Initialized(enemies);
@@ -80,7 +80,7 @@ public class BattleSetupV2 : MonoBehaviour
         if (enemyArea.Enemies.Count == 0)
         {
             DevLog.Write("Setting Up Fallback Random Encounter");
-            enemyArea = enemyArea.Initialized(encounterBuilder.Generate(3));
+            enemyArea = enemyArea.Initialized(encounterBuilder.Generate(100));
         }
 
         foreach (var enemy in enemyArea.Enemies)
@@ -89,7 +89,7 @@ public class BattleSetupV2 : MonoBehaviour
                 throw new Exception($"{enemy.Name} does not have an AI");
             if (!enemy.IsReadyForPlay)
                 throw new Exception($"{enemy.Name} is not ready for play.");
-            if (enemy.Deck.Cards.All(c => c.Cost.BaseAmount > 0))
+            if (enemy.Cards.All(c => c.Cost.BaseAmount > 0))
                 throw new Exception($"{enemy.Name}'s Deck does not contain a 0-Cost Card.");
             enemy.AI.InitForBattle();
         }

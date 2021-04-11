@@ -1,7 +1,7 @@
 
 public class ShowEnemyDetails
 {
-    public Enemy Enemy { get; }
+    public EnemyInstance Enemy { get; }
 
-    public ShowEnemyDetails(Enemy e) => Enemy = e;
+    public ShowEnemyDetails(EnemyInstance e) => Enemy = e;
 }

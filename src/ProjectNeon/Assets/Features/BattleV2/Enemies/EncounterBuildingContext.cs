@@ -3,12 +3,12 @@ using System.Linq;
 
 public class EncounterBuildingContext
 {
-    public Enemy[] SelectedEnemies { get; } 
-    public Enemy[] PossibleEnemies { get; } 
+    public EnemyInstance[] SelectedEnemies { get; } 
+    public EnemyInstance[] PossibleEnemies { get; } 
     public int CurrentDifficulty { get; } 
     public int TargetDifficulty { get; }
 
-    public EncounterBuildingContext(Enemy[] selectedEnemies, Enemy[] possibleEnemies, int currentDifficulty, int targetDifficulty)
+    public EncounterBuildingContext(EnemyInstance[] selectedEnemies, EnemyInstance[] possibleEnemies, int currentDifficulty, int targetDifficulty)
     {
         SelectedEnemies = selectedEnemies;
         PossibleEnemies = possibleEnemies;
@@ -16,9 +16,9 @@ public class EncounterBuildingContext
         TargetDifficulty = targetDifficulty;
     }
 
-    public EncounterBuildingContext WithPossibilities(Func<Enemy, bool> condition)
+    public EncounterBuildingContext WithPossibilities(Func<EnemyInstance, bool> condition)
         => WithPossibilities(PossibleEnemies.Where(condition).ToArray());
 
-    public EncounterBuildingContext WithPossibilities(Enemy[] possibleEnemies)
+    public EncounterBuildingContext WithPossibilities(EnemyInstance[] possibleEnemies)
         => new EncounterBuildingContext(SelectedEnemies, possibleEnemies, CurrentDifficulty, TargetDifficulty);
 }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(menuName = "Adventure/FixedEncounter")]
@@ -8,7 +10,8 @@ class SpecificEncounterSegment : StageSegment
     [SerializeField] private Enemy[] enemies;
     [SerializeField] private BattleState battle;
     [SerializeField] private string displayName = "Boss Battle";
-
+    [SerializeField] private AdventureProgress2 currentAdventureProgress; 
+    
     public override string Name => displayName;
     public override Maybe<string> Detail => Maybe<string>.Missing();
     
@@ -16,7 +19,7 @@ class SpecificEncounterSegment : StageSegment
     {
         Log.Info("Setting Up Specific Encounter");
         battle.SetNextBattleground(battlefield);
-        battle.SetNextEncounter(enemies);
+        battle.SetNextEncounter(enemies.Select(x => x.GetEnemy(currentAdventureProgress.Stage)));
         SceneManager.LoadScene("BattleSceneV2");
     }
 

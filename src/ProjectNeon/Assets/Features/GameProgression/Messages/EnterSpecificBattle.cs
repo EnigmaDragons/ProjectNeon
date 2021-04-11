@@ -4,9 +4,9 @@ public sealed class EnterSpecificBattle
 {
     public GameObject BattleField { get; }
     public bool IsElite { get; }
-    public Enemy[] Enemies { get; }
+    public EnemyInstance[] Enemies { get; }
 
-    public EnterSpecificBattle(GameObject battleField, bool isElite, Enemy[] enemies)
+    public EnterSpecificBattle(GameObject battleField, bool isElite, EnemyInstance[] enemies)
     {
         BattleField = battleField;
         IsElite = isElite;

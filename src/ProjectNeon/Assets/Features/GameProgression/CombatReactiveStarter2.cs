@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEliteCombat, EnterBossBattle, EnterSpecificBattle>
@@ -27,7 +28,7 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     {
         Log.Info("Setting Up Boss Battle");
         battleState.SetNextBattleground(progress.CurrentStage.BossBattlefield);
-        battleState.SetNextEncounter(progress.CurrentStage.BossEnemies);
+        battleState.SetNextEncounter(progress.CurrentStage.BossEnemies.Select(x => x.GetEnemy(progress.Stage)));
         eventPublisher.ActivatePartyDetailsWizardFlow();
     }
 

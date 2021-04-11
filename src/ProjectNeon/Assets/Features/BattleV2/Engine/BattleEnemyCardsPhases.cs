@@ -15,7 +15,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
     private BattleV2Phase _phase;
     
     private DictionaryWithDefault<int, int> _numberOfCardsPlayedThisTurn = new DictionaryWithDefault<int, int>(0);
-    private List<(Member Member, Enemy Enemy)> _enemiesToActThisTurn = new List<(Member Member, Enemy Enemy)>();
+    private List<(Member Member, EnemyInstance Enemy)> _enemiesToActThisTurn = new List<(Member Member, EnemyInstance Enemy)>();
     
     public void BeginPlayingAllHastyEnemyCards() => PlayNextHastyCard();
     private void PlayNextHastyCard()
@@ -53,7 +53,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
 
     private void RemoveUnconsciousEnemiesFromActPool() => _enemiesToActThisTurn.RemoveAll(e => e.Member.IsUnconscious());
 
-    private void Play((Member Member, Enemy Enemy) e)
+    private void Play((Member Member, EnemyInstance Enemy) e)
     {
         var card = e.Enemy.AI.Play(e.Member.Id, state, _currentTurnStrategy);
         _numberOfCardsPlayedThisTurn[card.MemberId()] = _numberOfCardsPlayedThisTurn[card.MemberId()] + 1;

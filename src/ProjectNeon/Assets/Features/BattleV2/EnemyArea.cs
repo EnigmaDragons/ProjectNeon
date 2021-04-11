@@ -5,13 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Battle/EnemyArea")]
 public class EnemyArea : ScriptableObject
 {
-    [SerializeField] private List<Enemy> enemies;
+    [SerializeField] private List<EnemyInstance> enemies;
     [SerializeField] private List<Transform> uiPositions;
 
-    public List<Enemy> Enemies => enemies;
+    public List<EnemyInstance> Enemies => enemies;
     public List<Transform> EnemyUiPositions => uiPositions;
 
-    public EnemyArea Initialized(IEnumerable<Enemy> newEnemies)
+    public EnemyArea Initialized(IEnumerable<EnemyInstance> newEnemies)
     {
         enemies = newEnemies.ToList();
         return this;
@@ -23,18 +23,18 @@ public class EnemyArea : ScriptableObject
         return this;
     }
 
-    public void Add(Enemy e, Transform uiPosition)
+    public void Add(EnemyInstance e, Transform uiPosition)
     {
         enemies.Add(e);
         uiPositions.Add(uiPosition);
     }
     
-    public void Remove(Enemy enemy)
+    public void Remove(EnemyInstance enemy)
     {
         var index = enemies.IndexOf(enemy);
         enemies.RemoveAt(index);
         uiPositions.RemoveAt(index);
     }
     
-    public void Clear() => enemies = new List<Enemy>();
+    public void Clear() => enemies = new List<EnemyInstance>();
 }

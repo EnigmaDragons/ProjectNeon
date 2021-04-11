@@ -12,6 +12,7 @@ public class EncounterBuilder : ScriptableObject
     [SerializeField] private int maxEnemies = 7;
     [SerializeField][Range(0, 1)] private float flexibility;
     [SerializeField][Range(0, 1)] private float minionTeamChance;
+    [SerializeField] private AdventureProgress2 currentAdventureProgress;
 
     private bool _debugLog = false;
 
@@ -30,25 +31,26 @@ public class EncounterBuilder : ScriptableObject
         possible = possibleEnemies.ToArray();
     }
     
-    public List<Enemy> Generate(int difficulty)
+    public List<EnemyInstance> Generate(int difficulty)
     {
         Log($"Started generating encounter of difficulty {difficulty}");
 
         var currentDifficulty = 0;
         var numRemainingMustIncludes = numMustIncludes;
-        var enemies = new List<Enemy>();
+        var enemies = new List<EnemyInstance>();
 
         while (numRemainingMustIncludes > 0)
         {
             var nextEnemy = mustIncludePossibilities.Random();
-            enemies.Add(nextEnemy);
-            Log($"Added \"Must Include\" {nextEnemy.Name} to Encounter");
+            var nextEnemyInstance = nextEnemy.GetEnemy(currentAdventureProgress.Stage);
+            enemies.Add(nextEnemyInstance);
+            Log($"Added \"Must Include\" {nextEnemyInstance.Name} to Encounter");
             numRemainingMustIncludes--;
-            currentDifficulty = currentDifficulty + Math.Max(nextEnemy.PowerLevel, 1);
+            currentDifficulty = currentDifficulty + Math.Max(nextEnemyInstance.PowerLevel, 1);
         }
 
         while (_selector.TryGetEnemy(
-            new EncounterBuildingContext(enemies.ToArray(), possible, currentDifficulty, difficulty), out Enemy enemy))
+            new EncounterBuildingContext(enemies.ToArray(), possible.Select(x => x.GetEnemy(currentAdventureProgress.Stage)).ToArray(), currentDifficulty, difficulty), out EnemyInstance enemy))
         {
             enemies.Add(enemy);
             Log($"Added {enemy.Name} to Encounter");
@@ -56,7 +58,7 @@ public class EncounterBuilder : ScriptableObject
         }
 
         Log("Finished generating encounter");
-        return enemies.ToList().Shuffled();
+        return enemies.Select(x => x).ToList().Shuffled();
     }
 
     private void Log(string msg)

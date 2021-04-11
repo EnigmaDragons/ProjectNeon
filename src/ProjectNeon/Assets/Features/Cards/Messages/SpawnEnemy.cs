@@ -1,7 +1,7 @@
 
 public class SpawnEnemy
 {
-    public Enemy Enemy { get; }
+    public EnemyInstance Enemy { get; }
 
-    public SpawnEnemy(Enemy e) => Enemy = e;
+    public SpawnEnemy(EnemyInstance e) => Enemy = e;
 }

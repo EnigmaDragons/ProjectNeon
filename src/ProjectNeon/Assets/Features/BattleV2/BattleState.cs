@@ -18,7 +18,7 @@ public class BattleState : ScriptableObject
     
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
-    [SerializeField] private Enemy[] nextEnemies;
+    [SerializeField] private EnemyInstance[] nextEnemies;
     [SerializeField] private bool nextIsEliteBattle;
     
     [Header("ReadOnly")]
@@ -49,7 +49,7 @@ public class BattleState : ScriptableObject
     public int RewardXp => rewardXp;
     public CardType[] RewardCards => rewardCards; 
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
-    public Enemy[] NextEncounterEnemies => nextEnemies.ToArray();
+    public EnemyInstance[] NextEncounterEnemies => nextEnemies.ToArray();
 
     public bool NeedsCleanup => needsCleanup;
     public bool IsEliteBattle => isEliteBattle;
@@ -64,9 +64,9 @@ public class BattleState : ScriptableObject
     public Member[] MembersWithoutIds => Members.Values.ToArray();
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] EnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
-    public (Member Member, Enemy Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
+    public (Member Member, EnemyInstance Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
     public PlayerState PlayerState => _playerState;
-    private Dictionary<int, Enemy> _enemiesById = new Dictionary<int, Enemy>();
+    private Dictionary<int, EnemyInstance> _enemiesById = new Dictionary<int, EnemyInstance>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
@@ -76,7 +76,7 @@ public class BattleState : ScriptableObject
     // Setup
 
     public void SetNextBattleground(GameObject prototype) => nextBattlegroundPrototype = prototype;
-    public void SetNextEncounter(IEnumerable<Enemy> e, bool isElite = false)
+    public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false)
     {
         nextEnemies = e.ToArray();
         nextIsEliteBattle = isElite;
@@ -87,7 +87,7 @@ public class BattleState : ScriptableObject
     {
         EnemyArea.Initialized(nextEnemies);
         isEliteBattle = nextIsEliteBattle;
-        nextEnemies = new Enemy[0];
+        nextEnemies = new EnemyInstance[0];
         nextIsEliteBattle = false;
     }
 
@@ -127,7 +127,7 @@ public class BattleState : ScriptableObject
         }
 
         id = EnemyStartingIndex - 1;
-        _enemiesById = new Dictionary<int, Enemy>();
+        _enemiesById = new Dictionary<int, EnemyInstance>();
         var result = new List<Tuple<int, Member>>();
         for (var i = 0; i < enemies.Enemies.Count; i++)
         {
@@ -135,7 +135,7 @@ public class BattleState : ScriptableObject
             _enemiesById[id] = enemies.Enemies[i];
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
             _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, false);
-            SetMemberName(id, enemies.Enemies[i].name);
+            SetMemberName(id, enemies.Enemies[i].Name);
             result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id)));
         }
         _nextEnemyId = id + 1;
@@ -218,14 +218,14 @@ public class BattleState : ScriptableObject
     public void SetRewardCards(params CardType[] cards) => UpdateState(() => rewardCards = cards);
     public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewardEquipments = equipments);
 
-    public void AddEnemy(Enemy e, GameObject gameObject, Member member) 
+    public void AddEnemy(EnemyInstance e, GameObject gameObject, Member member) 
         => UpdateState(() =>
         {
             EnemyArea.Add(e, gameObject.transform);
             _enemiesById[member.Id] = e;
             _membersById[member.Id] = member;
             _uiTransformsById[member.Id] = gameObject.transform;
-            SetMemberName(member.Id, e.name);
+            SetMemberName(member.Id, e.Name);
             e.SetupMemberState(member, this);
         });
 
@@ -272,7 +272,7 @@ public class BattleState : ScriptableObject
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
     public bool IsEnemy(int memberId) => _enemiesById.ContainsKey(memberId);
     public HeroCharacter GetHeroById(int memberId) => _heroesById[memberId].Character;
-    public Enemy GetEnemyById(int memberId) => _enemiesById[memberId];
+    public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
 
     public Transform GetCenterPoint(int memberId)

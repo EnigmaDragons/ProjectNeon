@@ -37,7 +37,7 @@ public sealed class GeneratedBattleStageSegment : IStageSegment
     public Maybe<string> Detail { get; }
     public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx) => this;
 
-    public GeneratedBattleStageSegment(string name, GameObject battleField, bool isElite, Enemy[] enemies)
+    public GeneratedBattleStageSegment(string name, GameObject battleField, bool isElite, EnemyInstance[] enemies)
     {
         Name = name;
         _start = () => Message.Publish(new EnterSpecificBattle(battleField, isElite, enemies));

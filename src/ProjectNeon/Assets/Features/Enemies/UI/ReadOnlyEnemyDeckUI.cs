@@ -11,10 +11,10 @@ public class ReadOnlyEnemyDeckUI : MonoBehaviour
 
     private List<CardNamePresenter> _items;
 
-    public void Show(Deck deck, Maybe<Member> owner)
+    public void Show(IEnumerable<CardType> deck, Maybe<Member> owner)
     {
         _items = new List<CardNamePresenter>();
-        pageViewer.Init(cardTemplate.gameObject, emptyCard, deck.Cards
+        pageViewer.Init(cardTemplate.gameObject, emptyCard, deck
                 .OrderBy(x => x.Cost.BaseAmount)
                 .ThenBy(x => x.Name)
                 .Select(x => InitCardInDeckButton(x, owner))

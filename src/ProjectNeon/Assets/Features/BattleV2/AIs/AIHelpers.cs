@@ -11,7 +11,7 @@ public static class AIHelpers
         if (!me.IsConscious())
             throw new InvalidOperationException($"{me} is unconscious, but has been asked to play a card");
         
-        var cards = enemy.Deck.Cards.Where(x => x != null);
+        var cards = enemy.Cards.Where(x => x != null);
         if (!enemy.DeckIsValid) 
             Log.Error($"{enemy.Name} has a deck with null cards");
 

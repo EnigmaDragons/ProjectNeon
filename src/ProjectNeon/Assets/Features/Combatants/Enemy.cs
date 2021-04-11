@@ -39,112 +39,12 @@ public class Enemy : ScriptableObject
 
     [SerializeField] private EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
-    public string Name => enemyName;
-    public bool DeckIsValid => deck.Cards.None(x => x == null);
-    public Deck Deck => deck;
-    public TurnAI AI => ai;
-    public int PowerLevel => powerLevel;
-    public int PreferredTurnOrder => preferredTurnOrder;
-    public GameObject Prefab => prefab;
-    public string DeathEffect => deathEffect;
-    public BattleRole Role => battleRole;
-    public EnemyTier Tier => tier;
-    public bool IsUnique => unique;
-    public bool IsHasty => isHasty;
+    public EnemyInstance GetEnemy(int stage)
+    {
+        var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).First();
+        return new EnemyInstance(resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield, detail.toughness, detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, prefab, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, isHasty, unique);
+    } 
     public EffectData[] Effects => startOfBattleEffects;
-    
-    // int stats accessors
-    public int MaxHp => maxHp;
-    public int MaxShield => maxShield > 0 ? maxShield : toughness * 2;
-    public int Toughness => toughness;
-    public int Attack => attack;
-    public int Magic => magic;
-    public int Leadership => leadership;
-    public int StartingResourceAmount => startingResourceAmount;
-    public int ResourceGainPerTurn => resourceGainPerTurn;
-    public int CardsPerTurn => cardsPerTurn;
-    
-    public Member AsMember(int id)
-    {
-        var stats = Stats;
-        var m = new Member(id, enemyName, "Enemy", TeamType.Enemies, stats, battleRole, stats.PrimaryStat(stats));
-        return m;
-    }
-
-    public Member SetupMemberState(Member m, BattleState state)
-    {
-        var ctx = new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, 
-            state.Members, state.PlayerCardZones, new UnpreventableContext());
-        m.State.InitResourceAmount(resourceType, startingResourceAmount);
-        m.State.ApplyPersistentState(
-            new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resourceType.Name, Amount = resourceGainPerTurn}, m));
-        startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx));
-        return m;
-    }
-    
-    public IStats Stats => new StatAddends
-        {
-            ResourceTypes = resourceType != null 
-                ? new[] {resourceType.WithMax(Math.Max(resourceType.MaxAmount, maxResourceAmount))} 
-                : Array.Empty<IResourceType>()
-        }
-        .With(StatType.MaxHP, maxHp)
-        .With(StatType.MaxShield, maxShield)
-        .With(StatType.StartingShield, startingShield)
-        .With(StatType.Toughness, toughness)
-        .With(StatType.Attack, attack)
-        .With(StatType.Magic, magic)
-        .With(StatType.Leadership, leadership)
-        .With(StatType.Armor, armor)
-        .With(StatType.Resistance, resistance)
-        .With(StatType.Damagability, 1f)
-        .With(StatType.Healability, 1f)
-        .With(StatType.ExtraCardPlays, cardsPerTurn);
-
-    public bool IsReadyForPlay => Deck != null && Prefab != null && AI != null;
-    
-    public Enemy Initialized(string testName, Deck testDeck, TurnAI testAI,  BattleRole testBattleRole, bool testUnique)
-    {
-        this.enemyName = testName;
-        this.deck = testDeck;
-        this.ai = testAI;
-        this.battleRole = testBattleRole;
-        this.unique = testUnique;
-        return this;
-    }
-
-    public Enemy InitializedStats(Dictionary<string, int> intStats, float testArmor, float testResistance, ResourceType testResourceType)
-    {
-        this.preferredTurnOrder = intStats["preferredTurnOrder"];
-        this.powerLevel = intStats["powerLevel"];
-        this.maxHp = intStats["maxHp"];
-        this.maxShield = intStats["maxShield"];
-        this.toughness = intStats["toughness"];
-        this.attack = intStats["attack"];
-        this.magic = intStats["magic"];
-        this.leadership = intStats["leadership"];
-        this.startingResourceAmount = intStats["startingResourceAmount"];
-        this.resourceGainPerTurn = intStats["resourceGainPerTurn"];
-        this.cardsPerTurn = intStats["cardsPerTurn"];
-        this.armor = testArmor;
-        this.resistance = testResistance;
-        this.resourceType = testResourceType;
-        return this;
-    }
-
-    public int GetRewardCredits(float powerLevelFactor)
-    {
-        var typeFactor = battleRole == BattleRole.Boss ? 4 : 1;
-        return Mathf.RoundToInt(powerLevel * powerLevelFactor * typeFactor);
-    }
-
-    public int GetRewardXp(float powerLevelFactor)
-    {
-        var typeFactor = battleRole == BattleRole.Boss ? 4 : 1;
-        return Mathf.RoundToInt(powerLevel * powerLevelFactor * typeFactor);
-    }
-
-    public int CalculatedPowerLevel => 0;
 
     public void CopyDataToNewForm()
     {
@@ -171,7 +71,7 @@ public class Enemy : ScriptableObject
                 resourceGainPerTurn = resourceGainPerTurn,
                 cardsPerTurn = cardsPerTurn,
                 startOfBattleEffects = startOfBattleEffects,
-                Cards = Deck.Cards
+                Cards = deck.Cards
             }
         };
     }
