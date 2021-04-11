@@ -55,6 +55,7 @@ public static class InterpolatedCardDescriptions
         {
             var sb = new StringBuilder();
             sb.Append(AutoDescription(effects, owner, xCost));
+            sb = new StringBuilder(ShortenRepeatedEffects(sb.ToString()));
             sb.Append(chainedCard.Select(c => $". {Bold("Chain:")} {c.Name}", ""));
             return sb.ToString();
         }
@@ -151,6 +152,17 @@ public static class InterpolatedCardDescriptions
         return delay.Length > 0 
             ? $"{delay}{coreDesc}".Replace("Next turn, for the turn,", "Next turn,")
             : UppercaseFirst(coreDesc);
+    }
+
+    private static string ShortenRepeatedEffects(string value)
+    {
+        var modifiedValue = value + ". ";
+        var repeatIndex = (modifiedValue + modifiedValue).IndexOf(value, 1);
+        var repeatedValue = modifiedValue.Substring(0, repeatIndex);
+        var repetitions = modifiedValue.Length / repeatedValue.Length;
+        return repetitions > 1
+            ? $"<b>{repetitions} Times:</b> {repeatedValue.Substring(0, repeatedValue.Length - 2)}"
+            : value;
     }
 
     private static string WithCommaIfPresent(string value) => string.IsNullOrWhiteSpace(value) ? "" : $"{value}, ";
