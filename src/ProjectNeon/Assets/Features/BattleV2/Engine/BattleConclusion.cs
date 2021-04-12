@@ -12,7 +12,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private BattleState state;
     [SerializeField] private ShopCardPool cardPrizePool;
     [SerializeField] private EquipmentPool equipmentPrizePool;
-
+    [SerializeField] private CurrentGameMap2 gameMap;
+    
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
         var rewardPicker = new ShopSelectionPicker();
@@ -59,7 +60,6 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else
         {
             Log.Info("Advancing to next Stage Segment.");
-            adventure2.Advance();
             Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }

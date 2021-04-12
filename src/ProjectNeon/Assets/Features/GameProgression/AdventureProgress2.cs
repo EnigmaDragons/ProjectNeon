@@ -12,7 +12,7 @@ public class AdventureProgress2 : ScriptableObject
 
     public int CurrentStageSegmentIndex => currentStageSegmentIndex;
     public bool IsFinalStage => currentStageIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
-    public bool IsLastSegmentOfStage => currentMap.CurrentMapNode.Type == MapNodeType.Boss;
+    public bool IsLastSegmentOfStage => currentMap.CurrentMapNode.Type == MapNodeType.Boss && currentStageSegmentIndex > 0;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public int PartyCardCycles => currentAdventure.Adventure.BaseNumberOfCardCycles;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
