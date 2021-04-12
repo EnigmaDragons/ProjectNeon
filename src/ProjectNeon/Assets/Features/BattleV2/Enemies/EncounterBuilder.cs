@@ -17,6 +17,7 @@ public class EncounterBuilder : ScriptableObject
     private bool _debugLog = false;
 
     private EncounterEnemySelector _selector => new EncounterEnemySelector(
+        new NoPowerLevelZeroEnemiesRule(),
         new StopWhenCurrentDifficultyIsEnoughRule(flexibility),
         new StopWhenMaxedOutEnemiesRule(maxEnemies),
         new OneEliteRule(),
