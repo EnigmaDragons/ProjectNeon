@@ -299,7 +299,7 @@ public sealed class MemberState : IStats
         _preventedTags[tag] += amount;
     } 
     public bool IsPrevented(HashSet<CardTag> tags) => tags.Any(x => _preventedTags.ContainsKey(x) && _preventedTags[x] > 0);
-    public void ReducePreventedTagCounters() => _preventedTags.ForEach(x => _preventedTags[x.Key] = x.Value > 0 ? x.Value - 1 : 0);
+    public void ReducePreventedTagCounters() => _preventedTags.ToList().ForEach(x => _preventedTags[x.Key] = x.Value > 0 ? x.Value - 1 : 0);
     
     // Resource Commands
     public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
