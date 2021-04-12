@@ -127,7 +127,7 @@ public sealed class HandVisualizer : MonoBehaviour
                 () => SelectCard(cardIndex), 
                 () => BeginDragCard(card, cardIndex),
                 () => DiscardCard(cardIndex),
-                (battleState, c2) => allowInteractions && c2.IsPlayable(),
+                (battleState, c2) => allowInteractions && c2.IsPlayable() && battleState.NumberOfCardPlaysRemainingThisTurn > 0,
                 () => allowInteractions);
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.SetDisabled(!card.Owner.CanPlayCards() || !_isFocused);
