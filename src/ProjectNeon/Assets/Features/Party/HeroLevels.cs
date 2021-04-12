@@ -9,6 +9,8 @@ public class HeroLevels
     [SerializeField] private int levelUpPoints = 0;
     [SerializeField] private int nextXpThreshold = LevelThreshold(2);
 
+    private static int curveOffset = 50;
+    private static int curveFactor = 50;
     private IStats _levelUpStats = new StatAddends();
     
     public int CurrentLevel => currentLevel;
@@ -46,9 +48,9 @@ public class HeroLevels
         levelUpPoints--;
     }
 
-    private static int LevelThreshold(int level) => SumOfPreviousNumbers(level - 1) * 100;
+    private static int LevelThreshold(int level) => NextLevelUpNumber(level - 1) * curveFactor + curveOffset;
 
-    private static int SumOfPreviousNumbers(int value)
+    private static int NextLevelUpNumber(int value)
     {
         if (value == 0)
             return 0;
