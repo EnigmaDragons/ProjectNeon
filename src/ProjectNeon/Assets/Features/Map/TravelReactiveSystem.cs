@@ -16,6 +16,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
     {
         if (_isTraveling)
             return;
+        adventure.Advance();
         _isTraveling = true;
         gameMap.MoveTo(msg.NodeId);
         gameMap.AllGameObjects.ForEach(x => x.SetCanTravelTo(false));
