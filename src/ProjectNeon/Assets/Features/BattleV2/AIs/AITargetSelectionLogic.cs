@@ -74,7 +74,7 @@ public static class AITargetSelectionLogic
                 return possibleTarget;
         }
         if (card.Is(CardTag.Attack) && action.Group == Group.Opponent)
-            return Rng.Chance(0.80) ? ctx.Strategy.AttackTargetFor(action) : possibleTargets.Random();
+            return Rng.Chance(0.80) ? ctx.Strategy.AttackTargetFor(action, possibleTargets) : possibleTargets.Random();
         if (card.Is(CardTag.Healing) && action.Group == Group.Ally)
             return possibleTargets.MostDamaged();
         if (card.Is(CardTag.Defense, CardTag.Shield) && action.Group == Group.Ally)
