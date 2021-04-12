@@ -9,6 +9,7 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
     [SerializeField] private WorldStatusBar statusBar;
     [SerializeField] private TextMeshPro nameLabel;
     [SerializeField] private DamageNumbersController numbers;
+    [SerializeField] private CharacterWordsController words;
 
     private Member _member;
 
@@ -22,6 +23,7 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
         _member = m;
         hpBar.Init(m);
         numbers.Init(m);
+        words.Init(m);
         resourceCounter.Initialized(m);
         statusBar.Initialized(m);
         nameLabel.text = m.Name;

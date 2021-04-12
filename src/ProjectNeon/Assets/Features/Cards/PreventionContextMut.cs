@@ -19,6 +19,12 @@ public sealed class PreventionContextMut : PreventionContext
         { PreventionType.Aegis, TemporalStatType.Aegis }
     };
     
+    private readonly Dictionary<PreventionType, string> _preventionTypeWords = new Dictionary<PreventionType, string>
+    {
+        { PreventionType.Dodge, "Dodged!" },
+        { PreventionType.Aegis, "Prevented!" }
+    };
+    
     public void RecordPreventionTypeEffect(PreventionType type, params Member[] members)
     {
         if (!_temporalStatForPrevention.TryGetValue(type, out var temporalStatType))
@@ -34,6 +40,7 @@ public sealed class PreventionContextMut : PreventionContext
                 
                 m.Apply(s => s.Adjust(temporalStatType, -1));
                 PreventingMembers[type].Add(m);
+                Message.Publish(new DisplayCharacterWordRequested(m, _preventionTypeWords[type]));
             });
     }
 
