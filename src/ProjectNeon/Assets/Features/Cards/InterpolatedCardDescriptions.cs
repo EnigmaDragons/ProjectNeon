@@ -248,7 +248,7 @@ public static class InterpolatedCardDescriptions
 
     private static string FormulaAmount(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
         => WithImplications(owner.IsPresent
-            ? RoundUp(Formula.Evaluate(owner.Value, data.Formula, xCost)).ToString()
+            ? RoundUp(Formula.Evaluate(owner.Value.State.ToSnapshot(), data.Formula, xCost)).ToString()
             : FormattedFormula(data.Formula));
     
     private static string MagicAmount(EffectData data, Maybe<Member> owner) 

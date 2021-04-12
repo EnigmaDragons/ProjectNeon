@@ -20,13 +20,14 @@ public class AdjustStatsFormula : Effect
 
     private void ApplyMultiplicative(EffectContext ctx)
     {
+        var sourceSnapshot = ctx.Source.GetSnapshot().State;
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
             var stat = _e.EffectScope.Value.Equals("PrimaryStat")
                 ? m.PrimaryStat().ToString()
                 : _e.EffectScope;
-            
-            var formulaAmount = Formula.Evaluate(ctx.Source, m, _e.Formula, ctx.XPaidAmount);
+
+            var formulaAmount = Formula.Evaluate(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount);
 
             var isDebuff = formulaAmount < 1;
             if (isDebuff) 
@@ -45,13 +46,14 @@ public class AdjustStatsFormula : Effect
     
     private void ApplyAdditive(EffectContext ctx)
     {
+        var sourceSnapshot = ctx.Source.GetSnapshot().State;
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
             var stat = _e.EffectScope.Value.Equals("PrimaryStat")
                 ? m.PrimaryStat().ToString()
                 : _e.EffectScope;
 
-            var formulaAmount = Formula.Evaluate(ctx.Source, m, _e.Formula, ctx.XPaidAmount).CeilingInt();
+            var formulaAmount = Formula.Evaluate(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount).CeilingInt();
             var isDebuff = formulaAmount < 0;
             if (isDebuff)
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
