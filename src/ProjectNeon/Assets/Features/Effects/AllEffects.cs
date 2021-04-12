@@ -43,7 +43,7 @@ public static class AllEffects
         { EffectType.FullyReviveAllAllies, e => new FullyReviveAllAllies() },
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
-        { EffectType.DealRawDamageFormula, e => new FullContextEffect((ctx, m) => m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount))))},
+        { EffectType.DealRawDamageFormula, e => new FullContextEffect((ctx, m) => m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount))))},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
@@ -53,20 +53,20 @@ public static class AllEffects
         { EffectType.DoubleTheEffectAndMinusDurationTransformer, e => new EffectDoubleTheEffectAndMinus1Duration(e) },
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(e.EffectScope, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
-        { EffectType.HealFormula, e => new FullContextEffect((ctx, m) => m.GainHp(Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount))) },
-        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
-        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.Source, m, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.HealFormula, e => new FullContextEffect((ctx, m) => m.GainHp(Formula.Evaluate(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount))) },
+        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.Evaluate(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.RedrawHandOfCards, e => new FullContextEffect(ctx => { BattleLog.Write("Discard and drew a new hand of cards."); 
             ctx.PlayerCardZones.DiscardHand(); ctx.PlayerCardZones.DrawCards(ctx.PlayerState.CardDraws - ctx.PlayerCardZones.PlayZone.Count); })},
         { EffectType.DrawCards, e => new FullContextEffect(ctx => ctx.PlayerCardZones.DrawCards(
-            BattleLoggedItem(v => $"Drew {v} cards", Formula.Evaluate(ctx.Source, e.Formula, ctx.XPaidAmount).CeilingInt())))},
+            BattleLoggedItem(v => $"Drew {v} cards", Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt())))},
         { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope, cards => cards) },
         { EffectType.LeaveBattle, e => new SimpleEffect(m => Message.Publish(new DespawnEnemy(m))) },
         { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))},
         { EffectType.TransferPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 
             BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
-                Formula.Evaluate(ctx.SourceSnapshot.State, m.State, ctx.XPaidAmount, e.Formula).CeilingInt())) },
+                Formula.Evaluate(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount).CeilingInt())) },
         { EffectType.AdjustCardTagPrevention, e => new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)) },
         { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", 
             () => m.AdjustPrimaryResource(99))) }

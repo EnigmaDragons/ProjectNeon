@@ -10,6 +10,7 @@ public class EffectContext
 {
     public Member Source { get; }
     public MemberSnapshot SourceSnapshot { get; }
+    public MemberStateSnapshot SourceStateSnapshot { get; }
     public Target Target { get; }
     public Maybe<Card> Card { get; }
     public ResourceQuantity XPaidAmount { get; }
@@ -24,6 +25,7 @@ public class EffectContext
     {
         Source = source;
         SourceSnapshot = source.GetSnapshot();
+        SourceStateSnapshot = SourceSnapshot.State;
         Target = target;
         AdventureState = adventureState;
         PlayerState = playerState;
@@ -109,7 +111,7 @@ public class AegisIfFormulaResult : Effect
     {
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
-            var formulaAmount = Formula.Evaluate(ctx.Source, m, _formula, ctx.XPaidAmount);
+            var formulaAmount = Formula.Evaluate(ctx.SourceStateSnapshot, m.State, _formula, ctx.XPaidAmount);
             if (_shouldRoundUp)
                 formulaAmount = formulaAmount.CeilingInt();
 
