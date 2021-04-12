@@ -99,6 +99,8 @@ namespace ChangeLogGenerator
             { "New Enemy:", "New Content" },
             { "New Boss:", "New Content" },
             { "New Augment:", "New Content" },
+            { "New Battlefield:", "New Content" },
+            { "New Stage:", "New Content" },
             { "Map:", "New Content" },
             { "New Hero:", "New Content" },
             { "New Content:", "New Content" },
