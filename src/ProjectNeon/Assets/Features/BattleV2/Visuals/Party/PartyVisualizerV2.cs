@@ -23,6 +23,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     private readonly Dictionary<HeroCharacter, HoverCharacter> _hovers  = new Dictionary<HeroCharacter, HoverCharacter>();
     private readonly Dictionary<HeroCharacter, ShieldVisual> _shields  = new Dictionary<HeroCharacter, ShieldVisual>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
+    private readonly Dictionary<HeroCharacter, CharacterWordsController> _words  = new Dictionary<HeroCharacter, CharacterWordsController>();
     private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
     
     public IEnumerator Setup()
@@ -45,6 +46,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     public void AfterBattleStateInitialized()
     {
         _damagesNew.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _words.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _hovers.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _shields.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
@@ -62,6 +64,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
             Debug.LogError($"{hero.Name} is missing a DamageNumbersController");
         else
             _damagesNew[hero] = damageEffectController;
+        
+        var wordsController = character.GetComponentInChildren<CharacterWordsController>();
+        if (wordsController == null)
+            Debug.LogError($"{hero.Name} is missing a {nameof(CharacterWordsController)}");
+        else
+            _words[hero] = wordsController;
 
         _hovers[hero] = character.GetCharacterMouseHover(hero.Name);
          
