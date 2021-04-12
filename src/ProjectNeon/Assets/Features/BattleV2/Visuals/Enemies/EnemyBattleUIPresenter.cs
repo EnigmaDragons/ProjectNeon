@@ -26,7 +26,7 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
         words.Init(m);
         resourceCounter.Initialized(m);
         statusBar.Initialized(m);
-        nameLabel.text = m.Name;
+        nameLabel.text = m.Name.WithSpaceBetweenWords();
         return this;
     }
     
