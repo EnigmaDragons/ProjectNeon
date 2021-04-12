@@ -119,6 +119,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     private IEnumerator FinishEffect()
     {
         state.CleanupExpiredMemberStates();
+        resolutionZone.ExpirePlayedCards(c => !state.Members.ContainsKey(c.MemberId()));
         if (_instantReactions.Any())
         {
             _resolvingEffect = false;
@@ -131,7 +132,6 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             resolutionZone.OnCardResolutionFinished();
             ResolveNext();
         }
-        
     }
 
     private void BeginResolvingNextInstantReaction()
@@ -149,6 +149,12 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         {
             _resolvingEffect = false;
             Log.Error("Should not be Queueing instant Effect Reactions. They should already be processed.");
+            yield break;
+        }
+
+        if (!state.Members.ContainsKey(r.Source.Id))
+        {
+            StartCoroutine(FinishEffect());
             yield break;
         }
 
