@@ -64,6 +64,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.CardStun, true, v => $"Stunned for {v} Cards. Reactions disabled.");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => $"Confused for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Aegis, true, v => $"Prevents next {v} harmful effects");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Lifesteal, true, v => "Gain HP from your next attack");
         AddCustomTextStatusIcons(statuses, StatusTag.OnClipUsed, "Unknown On Clip Used Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnBloodied, "Unknown On Bloodied Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnShieldBroken, "Unknown On Shield Broken Effect");

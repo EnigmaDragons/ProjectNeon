@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: 
   art: {fileID: 21300000, guid: 4a3e71b53de781a47b0634ce14635505, type: 3}
-  description: Deal {E[0]} Damage. Bleed {E[1]} for 2 turns. Half Healing for 1 turn.
+  description: Deal {E[0]} Damage. Bleed {E[1]} for 2 turns. Half Healing through
+    next turn.
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 040000000d000000
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
   cost:
     cost: 2
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -31,8 +32,8 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 1
     cardActions: {fileID: 11400000, guid: 4f80af57f1c8b304e83f12e6816f7dfd, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 

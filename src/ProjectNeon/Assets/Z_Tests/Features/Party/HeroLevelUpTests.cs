@@ -33,19 +33,19 @@ public class HeroLevelUpTests
 
         AssertLevelAfterXpGain(hero, 1, 0);
         AssertLevelAfterXpGain(hero, 2, 100);
-        AssertLevelAfterXpGain(hero, 3, 200);
-        AssertLevelAfterXpGain(hero, 4, 300);
-        AssertLevelAfterXpGain(hero, 5, 400);
-        AssertLevelAfterXpGain(hero, 6, 500);
-        AssertLevelAfterXpGain(hero, 7, 600);
-        AssertLevelAfterXpGain(hero, 8, 700);
-        AssertLevelAfterXpGain(hero, 9, 800);
-        AssertLevelAfterXpGain(hero, 10, 900);
-        AssertLevelAfterXpGain(hero, 11, 1000);
-        AssertLevelAfterXpGain(hero, 12, 1100);
-        AssertLevelAfterXpGain(hero, 13, 1200);
-        AssertLevelAfterXpGain(hero, 14, 1300);
-        AssertLevelAfterXpGain(hero, 15, 1400);
+        AssertLevelAfterXpGain(hero, 3, 150);
+        AssertLevelAfterXpGain(hero, 4, 200);
+        AssertLevelAfterXpGain(hero, 5, 250);
+        AssertLevelAfterXpGain(hero, 6, 300);
+        AssertLevelAfterXpGain(hero, 7, 350);
+        AssertLevelAfterXpGain(hero, 8, 400);
+        AssertLevelAfterXpGain(hero, 9, 450);
+        AssertLevelAfterXpGain(hero, 10, 500);
+        AssertLevelAfterXpGain(hero, 11, 550);
+        AssertLevelAfterXpGain(hero, 12, 600);
+        AssertLevelAfterXpGain(hero, 13, 650);
+        AssertLevelAfterXpGain(hero, 14, 700);
+        AssertLevelAfterXpGain(hero, 15, 750);
     }
 
     private void AssertLevelAfterXpGain(Hero h, int level, int xp)

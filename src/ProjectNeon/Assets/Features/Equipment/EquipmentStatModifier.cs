@@ -7,5 +7,5 @@ public class EquipmentStatModifier
     public float Amount;
     public string StatType;
 
-    public string Describe() => $"{ModifierType.Describe()}{Amount} {StatType}";
+    public string Describe() => $"{ModifierType.Describe()}{Amount} {StatType.WithSpaceBetweenWords()}";
 }

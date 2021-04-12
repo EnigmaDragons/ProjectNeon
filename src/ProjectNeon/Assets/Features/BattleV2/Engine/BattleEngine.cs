@@ -46,6 +46,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
 
     private void BeginStartOfTurn()
     {
+        BattleLog.Write($"---------------------------------------------");
         BattleLog.Write($"Starting Turn {state.TurnNumber}");
         BeginPhase(BattleV2Phase.StartOfTurnEffects);
         state.StartTurn();

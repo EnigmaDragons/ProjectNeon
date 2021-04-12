@@ -23,7 +23,7 @@ public sealed class DamageNumbersController : OnMessage<MemberStateChanged>
     private void Update()
     {
         if (_cooldown > 0)
-            _cooldown -= Time.deltaTime;
+            _cooldown -= Time.unscaledDeltaTime;
         if (_cooldown <= 0 && _actionQueue.Any())
         {
             _actionQueue.Dequeue().Invoke();
