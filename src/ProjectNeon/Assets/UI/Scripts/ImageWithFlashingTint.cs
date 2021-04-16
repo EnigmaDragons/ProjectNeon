@@ -19,6 +19,6 @@ public class ImageWithFlashingTint : MonoBehaviour
 
     void Update()
     {
-        _image.color = Color.Lerp(_original, _darker, Mathf.PingPong(Time.time, duration));
+        _image.color = Color.Lerp(_original, _darker, Mathf.PingPong(Time.unscaledTime, duration));
     }
 }
