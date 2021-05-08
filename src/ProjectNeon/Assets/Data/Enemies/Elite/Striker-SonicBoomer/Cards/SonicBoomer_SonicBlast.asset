@@ -17,8 +17,8 @@ MonoBehaviour:
   description: Deal {E[0]}. <b>Disable</b> for the next <b>1 Turn</b>
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 0400000005000000
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
@@ -31,10 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 1
     cardActions: {fileID: 11400000, guid: a2db1d103bb4279469b1215c06a609ff, type: 2}
     repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  timingType: 0
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}

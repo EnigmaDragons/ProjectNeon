@@ -17,6 +17,7 @@ MonoBehaviour:
   description: Next turn, Retaliates against all Attacks for {RE[0]} damage.
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
   tags: 0300000007000000
+  speed: 0
   onlyPlayableByClass: {fileID: 0}
   cost:
     cost: 4
@@ -30,8 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 0
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: f40380d50b8296049a7475c655f8e7a5, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}

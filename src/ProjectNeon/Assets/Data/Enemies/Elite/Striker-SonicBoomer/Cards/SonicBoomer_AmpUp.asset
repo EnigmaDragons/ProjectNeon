@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: SonicBoomer_AmpUp
   m_EditorClassIdentifier: 
+  customName: 
   art: {fileID: 21300000, guid: 3485d039a52f7524b92cff7f34e2dcd8, type: 3}
   description: Gain {E[0]} Shield. Gain +2 ATK for 5 turns.
   typeDescription: {fileID: 11400000, guid: 54b26ffa8165e3942bf340ce48cb1299, type: 2}
   tags: 0100000002000000
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
@@ -30,7 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 0
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: 7a020921a60070f4ba6fcd9e523d5276, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}

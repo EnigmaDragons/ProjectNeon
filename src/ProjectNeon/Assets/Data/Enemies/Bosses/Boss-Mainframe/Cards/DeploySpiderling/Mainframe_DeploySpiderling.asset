@@ -17,8 +17,8 @@ MonoBehaviour:
   description: Deploy a spiderling.
   typeDescription: {fileID: 11400000, guid: f974aacc43585e14ebf56799cef40073, type: 2}
   tags: 
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
   cost:
     cost: 2
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -31,8 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 0
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: 6c09a06c1c9ae554c8494bf2aa3a5bb5, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}

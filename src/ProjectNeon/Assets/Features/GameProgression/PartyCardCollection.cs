@@ -17,7 +17,7 @@ public sealed class PartyCardCollection : ScriptableObject
         allCards.AddRange(cards);
         cardsWithCounts = allCards
             .GroupBy(c => c.Name)
-            .ToDictionary(c => c.First(), c => c.Count());
+            .ToDictionary(c => c.First(), c => 0);
         return this;
     }
 
@@ -30,6 +30,14 @@ public sealed class PartyCardCollection : ScriptableObject
                 cardsWithCounts[c] = 0;
             cardsWithCounts[c] = cardsWithCounts[c] + 1;
         });
+    }
+
+    public void Add(CardType card, int count)
+    {
+        allCards.Add(card);
+        if (!cardsWithCounts.ContainsKey(card))
+            cardsWithCounts[card] = 0;
+        cardsWithCounts[card] = cardsWithCounts[card] + count;
     }
 
     public void EnsureHasAtLeast(CardType c, int numCopies)

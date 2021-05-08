@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Enemy_Supercharge
   m_EditorClassIdentifier: 
+  customName: 
   art: {fileID: 21300000, guid: e9f7136c8ea7fa04ca429e2691d635b9, type: 3}
   description: Gives <b>3</b> Primary Resource
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 0a000000
-  onlyPlayableByClass: {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
   cost:
     cost: 1
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -30,7 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 3
     group: 2
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: f306d08d6be83984cae6911d5928a689, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
