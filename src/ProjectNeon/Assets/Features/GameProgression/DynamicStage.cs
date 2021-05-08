@@ -16,6 +16,7 @@ public class DynamicStage : ScriptableObject
     [SerializeField] private Enemy[] bossEnemies;
     [SerializeField] private NodeTypeOdds nodeTypeOdds;
     [SerializeField] private AudioClipVolume stageBattleTheme;
+    [SerializeField] private StageRarityFactors rewardRarityFactors;
 
     public string DisplayName => displayName;
     public GameMap2 Map => gameMap;
@@ -31,4 +32,7 @@ public class DynamicStage : ScriptableObject
     public MapNodeType RandomNodeType => nodeTypeOdds.GetRandomNodeType();
     public NodeTypeOdds NodeTypeOdds => nodeTypeOdds;
     public AudioClipVolume StageBattleTheme => stageBattleTheme;
+    public RarityFactors RewardRarityFactors => rewardRarityFactors != null 
+        ? rewardRarityFactors 
+        : (RarityFactors)new DefaultRarityFactors();
 }

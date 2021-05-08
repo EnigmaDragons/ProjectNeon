@@ -4,7 +4,7 @@ using System.Linq;
 
 public enum Rarity
 {
-    Starter = 0, // Simple cards, normal power level
+    Starter = 0, // Simple cards, 0.8x power level
     Common = 1, // Normal power level
     Uncommon = 2, // 1.2x power level, slightly more complex
     Rare = 3, // 1.5x power level, some unique mechanics and more complex cards
@@ -13,14 +13,7 @@ public enum Rarity
 
 public static class RarityExtensions
 {
-    public static readonly Dictionary<Rarity, int> RarityFactors = new Dictionary<Rarity, int>
-    {
-        { Rarity.Starter, 8 },
-        { Rarity.Common, 80 },
-        { Rarity.Uncommon, 24 },
-        { Rarity.Rare, 6 },
-        { Rarity.Epic, 2 }
-    };
+    private static readonly RarityFactors RarityFactors = new DefaultRarityFactors();
 
     private static IEnumerable<Rarity> Factored(Rarity r) => Enumerable.Range(0, RarityFactors[r]).Select(_ => r);
 
