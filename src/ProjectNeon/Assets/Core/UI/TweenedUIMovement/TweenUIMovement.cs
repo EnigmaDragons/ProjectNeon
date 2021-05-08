@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTweeningRequested, SnapBackTweenRequested, GoToTweenRequested>
 {
-    private ConcurrentQueue<QueuedTweenRequest> _inbox = new ConcurrentQueue<QueuedTweenRequest>();
-    private List<TweenProgress> _movements = new List<TweenProgress>();
+    private readonly ConcurrentQueue<QueuedTweenRequest> _inbox = new ConcurrentQueue<QueuedTweenRequest>();
+    private readonly List<TweenProgress> _movements = new List<TweenProgress>();
 
     protected override void Execute(TweenMovementRequested msg) => _inbox.Enqueue(new QueuedTweenRequest(msg));
     protected override void Execute(SnapBackTweenRequested msg) => _inbox.Enqueue(new QueuedTweenRequest(msg));
@@ -23,7 +23,7 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
     private void CleanUpFinishedMovements()
     {
         foreach (var movement in _movements.ToArray())
-            if ((movement.MovementType != TweenMovementType.RubberBand && movement.T >= 1) || (movement.Reverse && movement.T <= 0))
+            if (!movement.IsActive || (movement.MovementType != TweenMovementType.RubberBand && movement.T >= 1) || (movement.Reverse && movement.T <= 0))
                 _movements.Remove(movement);
     }
 
@@ -122,6 +122,9 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
     {
         foreach (var movement in _movements)
         {
+            if (!movement.IsActive)
+                continue;
+
             var beforeT = movement.T;
             if (movement.Reverse)
                 movement.T = Math.Max(0, beforeT - Time.deltaTime / movement.Seconds);
@@ -142,6 +145,7 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
     
     private class TweenProgress
     {
+        public bool IsActive => Transform != null;
         public Transform Transform;
         public Vector3 RelativeDistance;
         public float Seconds;
