@@ -11,6 +11,7 @@ public class InMemoryCard : CardTypeData
     public Maybe<CharacterClass> LimitedToClass { get; } = Maybe<CharacterClass>.Missing();
     public CardActionSequence[] ActionSequences { get; set; } = new CardActionSequence[0];
     public Maybe<CardTypeData> ChainedCard { get; } = Maybe<CardTypeData>.Missing();
+    public HashSet<string> Archetypes { get; } = new HashSet<string>();
     
     public Sprite Art { get; }
     public string Description { get; }

@@ -19,6 +19,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private CardType chainedCard;
     [SerializeField] private string functionalityIssues;
     [SerializeField] private string presentationIssues;
+    [SerializeField] private StringVariable[] archetypes;
 
     public string Name => !string.IsNullOrWhiteSpace(customName) 
         ? customName 
@@ -37,6 +38,7 @@ public class CardType : ScriptableObject, CardTypeData
     public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();
     public CardActionV2[] AllCardEffectSteps => Actions.SelectMany(a => a.Actions).ToArray(); 
     public Maybe<CardTypeData> ChainedCard => chainedCard;
+    public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
 
     public override string ToString() => Name;
     public override int GetHashCode() => ToString().GetHashCode();

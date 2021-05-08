@@ -16,6 +16,7 @@ public interface CardTypeData
     CardActionSequence[] ActionSequences  { get; }
     Maybe<CardTypeData> ChainedCard { get; }
     Rarity Rarity { get; }
+    HashSet<string> Archetypes { get; }
 }
 
 public static class CardTypeDataExtensions
