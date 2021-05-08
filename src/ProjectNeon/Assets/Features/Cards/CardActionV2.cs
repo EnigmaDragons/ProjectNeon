@@ -9,11 +9,15 @@ public class CardActionV2
     [SerializeField] private ActionConditionData conditionData = new ActionConditionData();
     [SerializeField] private AnimationData characterAnimation;
     [SerializeField] private AtTargetAnimationData atTargetAnimation;
+    
+    // TODO: Collapse these two together into an object with the previous. Create a tool to find all usages.
     [SerializeField] private Enemy enemyToSpawn;
+    [SerializeField] private Vector3 enemySpawnOffset = Vector3.zero; 
 
     public CardBattleActionType Type => type;
     public EffectData BattleEffect => battleEffect;
     public Enemy EnemyToSpawn => enemyToSpawn;
+    public Vector3 EnemySpawnOffset => enemySpawnOffset;
     public ActionConditionData ConditionData => conditionData;
     public AnimationData CharacterAnimation => characterAnimation;
     public AtTargetAnimationData AtTargetAnimation => atTargetAnimation;

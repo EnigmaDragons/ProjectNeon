@@ -67,8 +67,12 @@ public class CardActionsDataEditor : Editor
                 PresentUnchanged(serializedObject.FindProperty($"Actions.Array.data[{refBrokeni}].battleEffect"));
             if (action.Type == CardBattleActionType.Condition)
                 PresentUnchanged(serializedObject.FindProperty($"Actions.Array.data[{refBrokeni}].conditionData"));
+            
             if (action.Type == CardBattleActionType.SpawnEnemy)
                 PresentUnchanged(serializedObject.FindProperty($"Actions.Array.data[{refBrokeni}].enemyToSpawn"));
+            if (action.Type == CardBattleActionType.SpawnEnemy)
+                PresentUnchanged(serializedObject.FindProperty($"Actions.Array.data[{refBrokeni}].enemySpawnOffset"));
+            
             EditorGUI.indentLevel--;
         }
         EditorGUI.indentLevel--;

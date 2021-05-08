@@ -8,7 +8,7 @@ public sealed class Maybe<T>
     [SerializeField] private bool isPresent;
 
     public bool IsMissing => !isPresent;
-    public bool IsPresent => isPresent;
+    public bool IsPresent => isPresent && value != null; // Null check necessary since Unity objects can't be accessed when destroyed
     public T Value => value;
 
     public Maybe(T obj)

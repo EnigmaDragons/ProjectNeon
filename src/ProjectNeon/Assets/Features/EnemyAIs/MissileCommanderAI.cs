@@ -9,11 +9,8 @@ public class MissileCommanderAI : StatefulTurnAI
 
     private int _currentTurnNumber;
     
-    public override void InitForBattle()
-    {
-        _currentTurnPlayed = new List<IPlayedCard>();
-    }
-    
+    public override void InitForBattle() => _currentTurnPlayed = new List<IPlayedCard>();
+
     protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
     {
         UpdateTurnTracking(battleState.TurnNumber);

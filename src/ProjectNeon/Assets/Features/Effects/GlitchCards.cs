@@ -12,7 +12,7 @@ public class GlitchCards : Effect
     public GlitchCards(int maxCards, string location, Func<IEnumerable<Card>, IEnumerable<Card>> orderBy)
     {
         _maxCards = maxCards;
-        _location = (CardLocation) int.Parse(location);
+        _location = string.IsNullOrWhiteSpace(location) ? CardLocation.Nowhere : (CardLocation) int.Parse(location);
         _orderBy = orderBy;
     }
     

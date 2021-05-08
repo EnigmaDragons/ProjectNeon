@@ -54,7 +54,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         return enemyObject;
     }
 
-    private GameObject AddEnemy(EnemyInstance enemy, Member member)
+    private GameObject AddEnemy(EnemyInstance enemy, Member member, Vector3 offset)
     {
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
@@ -71,7 +71,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         {
             _enemyPositions.Add(new Tuple<int, Member>(i, member));
         }
-        t.localPosition = transform.localPosition - new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1);
+        t.localPosition = transform.localPosition - new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1) + offset;
         return enemyObject;
     }
     
@@ -102,17 +102,17 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
             shield.Init(member);
     }
     
-    public Member Spawn(EnemyInstance enemy)
+    public Member Spawn(EnemyInstance enemy, Vector3 offset)
     {
         DevLog.Write($"Spawning {enemy.Name}");
         var member = enemy.AsMember(state.GetNextEnemyId());
-        var enemyObject = AddEnemy(enemy, member);
+        var enemyObject = AddEnemy(enemy, member, offset);
         state.AddEnemy(enemy, enemyObject, member);
         SetupEnemyUi(member, enemyObject.transform);
         return member;
     }
     
-    public void Despawn(MemberState enemy, BattleState battleState)
+    public void Despawn(MemberState enemy)
     {
         DevLog.Write($"Despawning {enemy.Name}");
         var index = state.GetEnemyIndexByMemberId(enemy.MemberId);

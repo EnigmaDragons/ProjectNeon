@@ -51,7 +51,7 @@ public class MouseHoverProcessor3D : MonoBehaviour
                 }
         }
 
-        if ((_lastHover.IsMissing && hoverCharacter.IsPresent)
+        if ((_lastHover.IsMissing && hoverCharacter.IsPresent && hoverCharacter.Value != null)
             || (_lastHover.IsPresent && hoverCharacter.IsMissing)
             || (_lastHover.IsPresent && hoverCharacter.IsPresent &&
                 _lastHover.Value.Member.Id != hoverCharacter.Value.Member.Id))
