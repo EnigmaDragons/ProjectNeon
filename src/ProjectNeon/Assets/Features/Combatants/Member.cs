@@ -9,16 +9,17 @@ public class Member
     public string Class { get; }
     public TeamType TeamType { get; }
     public BattleRole BattleRole { get; }
+    public Color HeroTint { get; }
     public MemberState State { get; }
 
     public override bool Equals(object obj) => obj is Member && ((Member)obj).Id == Id;
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{Name} {Id}";
     
-    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
-        : this(id, name, characterClass, team, baseStats, battleRole, primaryStat, baseStats.MaxHp()) {}
+    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, Color heroTint)
+        : this(id, name, characterClass, team, baseStats, battleRole, primaryStat, heroTint, baseStats.MaxHp()) {}
     
-    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp)
+    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, Color heroTint, int initialHp)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {name} is 0");
@@ -28,6 +29,7 @@ public class Member
         Class = characterClass;
         TeamType = team;
         BattleRole = battleRole;
+        HeroTint = heroTint;
         State = new MemberState(id, name, baseStats, primaryStat, initialHp);
     }
 

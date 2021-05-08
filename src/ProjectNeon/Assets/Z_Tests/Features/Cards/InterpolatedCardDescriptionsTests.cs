@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using UnityEngine;
 
 public sealed class InterpolatedCardDescriptionsTests
 {
@@ -10,7 +11,8 @@ public sealed class InterpolatedCardDescriptionsTests
             .With(StatType.Attack, 8)
             .With(new InMemoryResourceType("Ammo") { MaxAmount = 6, StartingAmount = 6}), 
         BattleRole.Unknown,
-        StatType.Attack);
+        StatType.Attack,
+        Color.white);
     
     private readonly EffectData BasicAttack = new EffectData
     {
@@ -125,7 +127,8 @@ public sealed class InterpolatedCardDescriptionsTests
                 .With(StatType.MaxShield, 16)
                 .With(new InMemoryResourceType("Ammo") {MaxAmount = 6, StartingAmount = 6}),
             BattleRole.Unknown,
-            StatType.Attack);
+            StatType.Attack,
+            Color.white);
         update(m);
         return m;
     }

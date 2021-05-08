@@ -11,6 +11,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private Deck startingDeck;
+    [SerializeField] private Color tint;
     [SerializeField] private int startingCredits = 100;
     
     // Stats
@@ -43,6 +44,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public HeroLevelUpPathway LevelUpTree => levelUpTree;
     public HeroFlavorDetails Flavor => flavorDetails;
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
+    public Color Tint => tint;
 
     public IStats Stats => new StatAddends
         {

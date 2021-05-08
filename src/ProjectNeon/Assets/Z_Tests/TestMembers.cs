@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using UnityEngine;
 
 public static class TestMembers
 {
@@ -24,6 +25,7 @@ public static class TestMembers
             TeamType.Party,
             initStats(DefaultStats().With(resources)),
             BattleRole.Unknown,
-            StatType.Attack
+            StatType.Attack,
+            Color.white
         );
 }

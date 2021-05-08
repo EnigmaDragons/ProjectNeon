@@ -75,7 +75,7 @@ public class EnemyInstance
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Name, "Enemy", TeamType.Enemies, stats, Role, stats.PrimaryStat(stats));
+        var m = new Member(id, Name, "Enemy", TeamType.Enemies, stats, Role, stats.PrimaryStat(stats), new Color(160 / 255, 73 / 255, 77 / 255));
         return m;
     }
     
