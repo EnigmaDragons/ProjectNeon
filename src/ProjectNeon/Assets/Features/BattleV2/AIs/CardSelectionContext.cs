@@ -18,15 +18,13 @@ public sealed class CardSelectionContext
     public string CardOptionsString => $"[{string.Join(", ", CardOptions.Select(x => x.Name))}]";
     
     public CardSelectionContext(int memberId, BattleState state, AIStrategy strategy)
-        : this(state.Members[memberId], state, strategy, state.GetPlayableCards(memberId)) {}
+        : this(state.Members[memberId], state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, state.GetPlayableCards(memberId)) {}
     
     public CardSelectionContext(Member member, BattleState state, AIStrategy strategy)
-        : this(member, state, strategy, state.GetPlayableCards(member.Id)) {}
-    
-    public CardSelectionContext(Member member, BattleState state, AIStrategy strategy, IEnumerable<CardTypeData> options)
-        : this(member, state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, options) {}
-    
-    public CardSelectionContext(Member member, Member[] allMembers, AIStrategy strategy, PartyAdventureState partyAdventureState, CardPlayZones zones, IEnumerable<CardTypeData> options)
+        : this(member, state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, state.GetPlayableCards(member.Id)) {}
+
+    private CardSelectionContext(Member member, Member[] allMembers, AIStrategy strategy, 
+        PartyAdventureState partyAdventureState, CardPlayZones zones, IEnumerable<CardTypeData> options)
     {
         Member = member;
         AllMembers = allMembers;

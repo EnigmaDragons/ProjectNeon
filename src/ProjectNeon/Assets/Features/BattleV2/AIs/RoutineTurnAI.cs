@@ -18,24 +18,31 @@ public abstract class RoutineTurnAI : TurnAI
         var ctx = new CardSelectionContext(memberId, battleState, strategy);
         if (!ctx.CardOptions.Any())
             return ctx.WithSelectedTargetsPlayedCard();
-        if (_currentRoutineMap.ContainsKey(memberId))
-        {
-            while (_currentRoutineMap[memberId].Any() && !ctx.CardOptions.Any(x => x.Name.Equals(_currentRoutineMap[memberId].Peek())))
-                _currentRoutineMap[memberId].Dequeue();
-            if (!_currentRoutineMap[memberId].Any())
-                _currentRoutineMap[memberId] = ChooseRoutine(ctx);
-        }
-        else
-        {
+        
+        // Init If Needed
+        if (!_currentRoutineMap.ContainsKey(memberId))
             _currentRoutineMap[memberId] = ChooseRoutine(ctx);
-        }
-        while (_currentRoutineMap[memberId].Any() && !ctx.CardOptions.Any(x => x.Name.Equals(_currentRoutineMap[memberId].Peek())))
-            _currentRoutineMap[memberId].Dequeue();
+        var queue = _currentRoutineMap[memberId];
+        
+        // Clear Old Routine if Not Possible
+        while (queue.Any() && !ctx.CardOptions.Any(x => x.Name.Equals(queue.Peek())))
+            queue.Dequeue();
+        
+        // Choose a New Routine if Needed
+        if (!queue.Any())
+            _currentRoutineMap[memberId] = ChooseRoutine(ctx);
+        while (queue.Any() && !ctx.CardOptions.Any(x => x.Name.Equals(queue.Peek())))
+            queue.Dequeue();
+        
+        // Happens if there is a bad routine, or if the Enemy has been CCed based on Card Type
         if (!_currentRoutineMap[memberId].Any())
-            Log.Error($"{this.GetType().Name} couldn't supply a routine that had an available action, when there was card options to choose");
-        var playedCard = ctx
-            .WithSelectedCardByNameIfPresent(_currentRoutineMap[memberId].Peek())
-            .WithSelectedTargetsPlayedCard();
+            Log.Info($"{GetType().Name} couldn't supply a routine that had an available action, when there were card options to choose");
+
+        var playedCard = queue.Any()
+            ? ctx
+                .WithSelectedCardByNameIfPresent(queue.Peek())
+                .WithSelectedTargetsPlayedCard()
+            : ctx.WithSelectedTargetsPlayedCard();
         return playedCard;
     }
 
