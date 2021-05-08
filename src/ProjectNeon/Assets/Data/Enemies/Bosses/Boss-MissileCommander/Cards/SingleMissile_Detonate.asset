@@ -17,8 +17,8 @@ MonoBehaviour:
   description: Deals {E[0]}. Detonates on impact
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 04000000
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
   cost:
     cost: 2
     resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
@@ -31,15 +31,14 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 2
     cardActions: {fileID: 11400000, guid: b14860503873b564ba551b5ae42a234d, type: 2}
     repeatX: 0
   - scope: 0
     group: 0
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: d07332de98bcb8d4292b80a5c1e977c4, type: 2}
     repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  timingType: 0
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}

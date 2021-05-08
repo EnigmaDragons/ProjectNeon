@@ -17,6 +17,7 @@ MonoBehaviour:
   description: 'Deal {E[0]}. Gain {E[1]}. '
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 040000000700000019000000
+  speed: 0
   onlyPlayableByClass: {fileID: 0}
   cost:
     cost: 2
@@ -30,12 +31,14 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 1
     cardActions: {fileID: 11400000, guid: 3417eeaea7b942241828552a52ec13bf, type: 2}
+    repeatX: 0
   - scope: 0
     group: 0
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: ebf1c06089262bb4a90030b728ff27be, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}

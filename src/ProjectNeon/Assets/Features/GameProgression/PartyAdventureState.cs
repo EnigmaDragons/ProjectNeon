@@ -13,6 +13,7 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private PartyCardCollection cards;
     [SerializeField] private PartyEquipmentCollection equipment;
     [SerializeField] private Hero[] heroes = new Hero[0];
+    [SerializeField, HideInInspector] public CardType[] allCards;
 
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
@@ -38,12 +39,13 @@ public sealed class PartyAdventureState : ScriptableObject
             if(!h.Character.DeckIsValid())
                 Log.Error($"{h.Name} doesn't have a legal deck");
         });
-        
-        var allStartingCards = Decks.SelectMany(d => d.Cards)
-            .Concat(party.Heroes.SelectMany(h => h.AdditionalStartingCards))
-            .ToList();
+
+
+        var allStartingCards = allCards.Where(card => card.Rarity == Rarity.Starter 
+            && party.Heroes.None(hero => hero.ClassCard.Name == card.Name)
+            && party.Heroes.Any(hero => card.Archetypes.All(archetype => hero.Archetypes.Contains(archetype)))).ToArray();
         cards.Initialized(allStartingCards);
-        allStartingCards.Distinct().ForEach(c => cards.EnsureHasAtLeast(c, 4));
+        allStartingCards.Distinct().ForEach(c => cards.Add(c, 4));
         
         equipment = new PartyEquipmentCollection();
         return this;

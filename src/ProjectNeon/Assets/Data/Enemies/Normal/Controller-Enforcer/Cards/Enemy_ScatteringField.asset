@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Enemy_ScatteringField
   m_EditorClassIdentifier: 
+  customName: 
   art: {fileID: 21300000, guid: e8e868bcda115374ca4a8abf1204e9f1, type: 3}
   description: Gives -3 ATK to all enemies for 3 Turns
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
   tags: 0700000017000000
+  speed: 0
   onlyPlayableByClass: {fileID: 0}
   cost:
     cost: 0
@@ -29,7 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 1
     group: 1
-    avoidance: 2
     cardActions: {fileID: 11400000, guid: a1886f4f7945f5341a4eeb91c2faec8a, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}

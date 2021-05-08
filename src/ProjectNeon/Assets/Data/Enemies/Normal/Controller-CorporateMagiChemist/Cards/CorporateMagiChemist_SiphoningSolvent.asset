@@ -18,8 +18,8 @@ MonoBehaviour:
     gains these lost stats.
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
   tags: 0400000002000000170000001a000000
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -32,11 +32,14 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 2
     cardActions: {fileID: 11400000, guid: 10621a1639597ff4d8ba6e5496d7d5cc, type: 2}
+    repeatX: 0
   - scope: 0
     group: 2
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: e3ae05a0a312617478c9b299d569fbaf, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: Ally Effect is not contingent on Hitting the Enemy
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}

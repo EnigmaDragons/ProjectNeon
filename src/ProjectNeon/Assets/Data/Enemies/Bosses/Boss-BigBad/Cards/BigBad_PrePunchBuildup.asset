@@ -17,8 +17,8 @@ MonoBehaviour:
   description: Gain <b>+2 ATK</b> for 2 Turns. Apply <b>Vulnerable 2<b>
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
@@ -31,11 +31,14 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 0
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: 8f66d0b1219931a4aab4775b7583a73b, type: 2}
+    repeatX: 0
   - scope: 0
     group: 1
-    avoidance: 2
     cardActions: {fileID: 11400000, guid: de4194ae361cfee478e449bedd9154ca, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}

@@ -17,8 +17,8 @@ MonoBehaviour:
   description: Grant {E[0]} shield
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
   tags: 0700000001000000
-  onlyPlayableByClass: {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
@@ -31,8 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 4
     group: 2
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: 59485e72ac91f0d4ab77966aad9871a8, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
