@@ -17,11 +17,11 @@ public class ShopSelectionPicker
     
     public CardType[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
     {
-        var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All));
+        var heroArchetypeSets = new List<HashSet<string>>(party.BaseHeroes.Select(h => h.Archetypes));
 
         var weightedCards = cards
             .AllExceptStarters
-            .Where(x => x.LimitedToClass.IsMissingOr(c => partyClasses.Contains(c.Name)))
+            .Where(x => x.Archetypes.None() || heroArchetypeSets.Any(p => x.Archetypes.All(p.Contains)))
             .Where(x => rarities.None() || rarities.Contains(x.Rarity))
             .FactoredByRarity(factors, x => x.Rarity)
             .ToArray()
