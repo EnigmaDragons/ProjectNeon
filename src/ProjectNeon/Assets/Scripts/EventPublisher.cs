@@ -32,4 +32,5 @@ public class EventPublisher : ScriptableObject
     public void GiveAnInjury() => Message.Publish(new UpdatePartyAdventureState(p => p.Heroes[0].Apply(new AdditiveStatInjury { Stat = new StringReference("MaxHp"), Amount = -3 })));
     public void HideHeroLevelUpPathway() => Message.Publish(new HideHeroLevelUpPathway());
     public void GivePartyXp() => Message.Publish(new GivePartyXp(100));
+    public void CancelTargetSelection() => Message.Publish(new CancelTargetSelectionRequested());
 }

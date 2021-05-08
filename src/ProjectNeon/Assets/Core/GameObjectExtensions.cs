@@ -4,7 +4,9 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 public static class GameObjectExtensions
-{
+{    
+    public static void ExecuteAfterTinyDelay(this MonoBehaviour o, Action a) 
+        => o.StartCoroutine(ExecuteAfterDelay(a, 0.02f));
     public static void ExecuteAfterDelay(this MonoBehaviour o, Action a, float secondsDelay) 
         => o.StartCoroutine(ExecuteAfterDelay(a, secondsDelay));
     

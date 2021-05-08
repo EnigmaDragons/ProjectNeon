@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+[Obsolete]
 public class MouseTargetHoverCharacter : OnMessage<CharacterHoverChanged, TargetSelectionBegun, SelectionPossibleTargetsAvailable, TargetSelectionFinished>
 {
     [SerializeField] private BattlePlayerTargetingState targeting;

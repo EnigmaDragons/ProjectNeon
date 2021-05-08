@@ -45,6 +45,7 @@ public sealed class HandVisualizer : MonoBehaviour
         Hand.OnZoneCardsChanged.Subscribe(new GameEventSubscription(Hand.OnZoneCardsChanged.name, x => _isDirty = true, this));
         Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
         Message.Subscribe<PlayerCardCanceled>(_ => _isDirty = true, this);
+        Message.Subscribe<CancelTargetSelectionRequested>(_ => CancelCardPlays(), this);
     }
 
     void OnDisable()
@@ -63,6 +64,11 @@ public sealed class HandVisualizer : MonoBehaviour
         UpdateVisibleCards();
     }
 
+    private void CancelCardPlays()
+    {
+        ShownCards.ForEach(c => c.Cancel());
+    }
+    
     public void SetCardPlayingAllowed(bool isAllowed)
     {
         allowInteractions = isAllowed;

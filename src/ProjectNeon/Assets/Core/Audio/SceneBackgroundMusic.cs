@@ -5,8 +5,8 @@ public sealed class SceneBackgroundMusic : MonoBehaviour
     [SerializeField] private AudioClip music;
     [SerializeField] private GameMusicPlayer musicPlayer;
     
-    private void OnEnable()
+    private void Start()
     {
-        musicPlayer.PlaySelectedMusicLooping(music);
+        this.ExecuteAfterTinyDelay(() =>  musicPlayer.PlaySelectedMusicLooping(music));
     }
 }

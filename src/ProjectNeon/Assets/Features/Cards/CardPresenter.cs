@@ -311,12 +311,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private bool _isDragging = false;
     
     public void OnDrag(PointerEventData eventData)
-        => WhenActivatableHand(() =>
-        {
-            if (!_requiresPlayerTargeting || !IsPlayable)
-                transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor, eventData.delta.y * dragScaleFactor, 0);
-        }, () => { });
-    
+    {
+        if (!_isDragging)
+            eventData.pointerDrag = null;
+        else
+            WhenActivatableHand(() =>
+            {
+                if (!_requiresPlayerTargeting || !IsPlayable)
+                    transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor,
+                        eventData.delta.y * dragScaleFactor, 0);
+            }, () => { });
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
         => WhenActivatableHand(() =>
         {
@@ -359,6 +365,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Message.Publish(new HideMouseTargetArrow());
     }
 
+    public void Cancel() => ReturnHandToNormal();
+    
     public void Discard()
     {
         Debug.Log("Discard");
