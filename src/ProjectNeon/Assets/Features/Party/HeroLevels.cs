@@ -48,7 +48,10 @@ public class HeroLevels
         levelUpPoints--;
     }
 
-    private static int LevelThreshold(int level) => NextLevelUpNumber(level - 1) * curveFactor + curveOffset;
+    private static int LevelThreshold(int level) 
+        => level == 1 
+            ? 0 
+            : NextLevelUpNumber(level - 1) * curveFactor + curveOffset;
 
     private static int NextLevelUpNumber(int value)
     {

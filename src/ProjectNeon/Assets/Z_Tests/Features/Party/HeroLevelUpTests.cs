@@ -48,6 +48,22 @@ public class HeroLevelUpTests
         AssertLevelAfterXpGain(hero, 15, 750);
     }
 
+    [Test]
+    public void Hero_WithSmallLevel1Xp_HasLevelProgress()
+    {
+        var hero = new Hero(new InMemoryHeroCharacter
+        {
+            Class = TestClasses.Soldier,
+            Stats = new StatAddends()
+                .With(StatType.Damagability, 1)
+                .With(StatType.MaxHP, 10)
+        }, new RuntimeDeck());
+        
+        hero.AddXp(5);
+        
+        Assert.IsTrue(hero.Levels.NextLevelProgress > 0);
+    }
+
     private void AssertLevelAfterXpGain(Hero h, int level, int xp)
     {
         h.AddXp(xp);
