@@ -18,4 +18,22 @@ public sealed class GainCreditsTests
         
         Assert.AreEqual(5, adventureState.Credits);
     }
+    
+    [Test]
+    public void GainNegativeCredits_DoesntGoBelowZero()
+    {
+        var adventureState = PartyAdventureState.InMemory();
+        adventureState.UpdateCreditsBy(10);
+        
+        var effectContext = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(), ResourceQuantity.None, adventureState, 
+            new PlayerState(0), new Dictionary<int, Member>(), CardPlayZones.InMemory, new UnpreventableContext());
+        
+        AllEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.GainCredits,
+            FloatAmount = new FloatReference(-20)
+        }, effectContext);
+        
+        Assert.AreEqual(0, adventureState.Credits);
+    }
 }
