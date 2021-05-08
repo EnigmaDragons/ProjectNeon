@@ -67,7 +67,8 @@ public static class AllEffects
         { EffectType.TransferPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 
             BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
                 Formula.Evaluate(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount).CeilingInt())) },
-        { EffectType.AdjustCardTagPrevention, e => new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)) },
+        { EffectType.AdjustCardTagPrevention, e => AegisPreventable.If(
+            new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)), e.BaseAmount > 0, $"Block Card Type {e.EffectScope}") },
         { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", 
             () => m.AdjustPrimaryResource(99))) }
     };
