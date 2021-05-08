@@ -6,6 +6,7 @@ public class CharacterReactionsSoundPlayer : OnMessage<DisplayCharacterWordReque
 {
     [SerializeField] private BattleState state;
     [SerializeField] private AudioClipVolume dodgedSound;
+    [SerializeField] private AudioClipVolume reactionSound;
     [SerializeField] private AudioSource source;
 
     private Dictionary<string, Func<AudioClipVolume>> sounds = new Dictionary<string, Func<AudioClipVolume>>();
@@ -15,6 +16,7 @@ public class CharacterReactionsSoundPlayer : OnMessage<DisplayCharacterWordReque
         sounds = new Dictionary<string, Func<AudioClipVolume>>
         {
             {"Dodged!", () => dodgedSound},
+            {"Reaction!", () => reactionSound},
         };
     }
     
