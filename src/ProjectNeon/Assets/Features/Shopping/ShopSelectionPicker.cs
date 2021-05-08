@@ -17,12 +17,9 @@ public class ShopSelectionPicker
     
     public CardType[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
     {
-        var heroArchetypeSets = new List<HashSet<string>>(party.BaseHeroes.Select(h => h.Archetypes));
-
-        var weightedCards = cards
-            .AllExceptStarters
-            .Where(x => x.Archetypes.None() || heroArchetypeSets.Any(p => x.Archetypes.All(p.Contains)))
-            .Where(x => rarities.None() || rarities.Contains(x.Rarity))
+        var weightedCards = party.BaseHeroes
+            .SelectMany(h => cards.Get(h.Archetypes, rarities))
+            .Distinct()
             .FactoredByRarity(factors, x => x.Rarity)
             .ToArray()
             .Shuffled();

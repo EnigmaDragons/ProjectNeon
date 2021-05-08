@@ -6,7 +6,7 @@ using System.Linq;
 
 public class FindEffectsEditor : EditorWindow
 {
-    [MenuItem("Tools/Neon/Find Effects")]
+    [MenuItem("Neon/Find Effects")]
     static void SelectGameObjects()
     {
         GetWindow(typeof(FindEffectsEditor)).Show();

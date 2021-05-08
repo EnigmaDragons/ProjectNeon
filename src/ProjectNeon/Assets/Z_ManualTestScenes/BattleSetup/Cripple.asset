@@ -17,6 +17,7 @@ MonoBehaviour:
   description: 'Applies Injury: {E[0]}'
   typeDescription: {fileID: 11400000, guid: 9899a7b68bc22484e927e10f3ea183b5, type: 2}
   tags: 1d000000
+  speed: 0
   onlyPlayableByClass: {fileID: 0}
   cost:
     cost: 0
@@ -30,8 +31,11 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 1
     cardActions: {fileID: 11400000, guid: 6acd1bec4b167994a8760e47eab82b6c, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 6e830fecb2a53194ebaf8c10628aae6c, type: 2}
+  isWIP: 0

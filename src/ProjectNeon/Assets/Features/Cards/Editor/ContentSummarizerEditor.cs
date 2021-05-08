@@ -7,7 +7,7 @@ namespace Features.Cards.Editor
 {
     public sealed class ContentSummarizerEditor : EditorWindow
     {
-        [MenuItem("Tools/Neon/Content Summary")]
+        [MenuItem("Neon/Content Summary")]
         static void SelectGameObjects()
         {
             GetWindow(typeof(ContentSummarizerEditor)).Show();
