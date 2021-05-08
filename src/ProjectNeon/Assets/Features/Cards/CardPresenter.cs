@@ -236,7 +236,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);
         cardCostPresenter.Render(_card, _cardType);
-        tint.color = _cardType.LimitedToClass.Select(c => c.Tint, () => Color.white);
+        tint.color = _card == null 
+            ? Color.white
+            : _card.Owner.HeroTint;
         canPlayHighlight.SetActive(IsPlayable);
         highlight.SetActive(IsPlayable);
         if (_card == null || _card.Mode != CardMode.Glitched)

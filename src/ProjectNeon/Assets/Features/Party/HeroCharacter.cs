@@ -15,6 +15,7 @@ public interface HeroCharacter
     HeroSkill[] Skills { get; }
     HeroLevelUpPathway LevelUpTree { get; }
     HashSet<string> Archetypes { get; }
+    public Color Tint { get; }
 }
 
 public class InMemoryHeroCharacter : HeroCharacter
@@ -32,6 +33,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public HeroSkill[] Skills { get; } = new HeroSkill[0];
     public HeroLevelUpPathway LevelUpTree { get; set; }
     public HashSet<string> Archetypes { get; } = new HashSet<string>();
+    public Color Tint { get; } = Color.white;
 }
 
 public static class HeroCharacterExtensions
