@@ -17,8 +17,8 @@ MonoBehaviour:
   description: Deal {E[0]} damage. Lose all shields.
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
   tags: 
-  onlyPlayableByClass: {fileID: 11400000, guid: f6fbdbca14e1b7d4e92612f1834f9db5,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: f6fbdbca14e1b7d4e92612f1834f9db5, type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
@@ -31,15 +31,14 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 2
     cardActions: {fileID: 11400000, guid: 67eca0a495c9b454eab591093504d412, type: 2}
     repeatX: 0
   - scope: 0
     group: 0
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: d6c8d7c7531f7ed49a97f974b2e37788, type: 2}
     repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  timingType: 0
+  archetypes:
+  - {fileID: 11400000, guid: 7d98e58a5a0c0324cba2d160eb477eab, type: 2}

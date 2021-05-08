@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: MedTech_Scan
   m_EditorClassIdentifier: 
+  customName: 
   art: {fileID: 21300000, guid: f1a2639f42b92d545b9d20afa86689f6, type: 3}
   description: Apply <b>Vulnerable</b> {D[0]}
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
-  onlyPlayableByClass: {fileID: 11400000, guid: a6db77c3bda412d42b6a422b91d39c05,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: a6db77c3bda412d42b6a422b91d39c05, type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
@@ -30,7 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 2
     cardActions: {fileID: 11400000, guid: 9f6268a88a87be94ba67813ba438e1f7, type: 2}
+    repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 27cbd856049e7604cb797c63cb6ff475, type: 2}

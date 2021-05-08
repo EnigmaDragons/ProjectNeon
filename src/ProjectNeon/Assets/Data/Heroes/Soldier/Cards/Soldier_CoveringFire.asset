@@ -17,6 +17,7 @@ MonoBehaviour:
   description: Deal {E[0]}. Reduce the enemy's <b>ATK</b> by 30% this turn.
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
+  speed: 0
   onlyPlayableByClass: {fileID: 11400000, guid: 1a326935dbf5d6941acd1038e9c4d77f, type: 2}
   cost:
     cost: 2
@@ -30,9 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    avoidance: 1
     cardActions: {fileID: 11400000, guid: d759617ca45a6c244b3f24db0d271671, type: 2}
     repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 74647fbc9bec61f46b08322d05272b01, type: 2}
