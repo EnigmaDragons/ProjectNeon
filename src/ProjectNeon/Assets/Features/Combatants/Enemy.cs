@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -25,7 +24,11 @@ public class Enemy : ScriptableObject
         var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();
         if (detail == null)
             Log.Error($"Enemy {enemyName} has no stage details and can not be used");
-        return new EnemyInstance(resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield, detail.toughness, detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, prefab, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, isHasty, unique);
+        return new EnemyInstance(resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
+            detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield, detail.toughness, 
+            detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
+            prefab, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 
+            isHasty, unique, detail.CounterAdjustments);
     } 
     public EffectData[] Effects => stageDetails.SelectMany(x => x.startOfBattleEffects).ToArray();
 }

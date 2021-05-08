@@ -10,6 +10,10 @@ public class EnemyStageDetails
     public int maxHp;
     public int maxShield;
     public int startingShield;
+    public int startingAegis;
+    public int startingPhase = 0;
+    public int startingDodge;
+    public int startingTaunt;
     public int toughness;
     public int attack;
     public int magic;
@@ -23,4 +27,12 @@ public class EnemyStageDetails
     public int cardsPerTurn = 1;
     public EffectData[] startOfBattleEffects = new EffectData[0];
     public List<CardType> Cards = new List<CardType>();
+
+    public Dictionary<string, int> CounterAdjustments => new Dictionary<string, int>
+    {
+        {TemporalStatType.Aegis.ToString(), startingAegis},
+        {TemporalStatType.Dodge.ToString(), startingDodge},
+        {TemporalStatType.Phase.ToString(), startingPhase},
+        {TemporalStatType.Taunt.ToString(), startingTaunt},
+    };
 }

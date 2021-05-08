@@ -20,6 +20,7 @@ public class EnemyInstance
     private readonly float _armor;
     private readonly float _resistance;
     private readonly int _cardsPerTurn;
+    private readonly Dictionary<string, int> _counterAdjustments;
 
     public GameObject Prefab { get; }
     public TurnAI AI { get; }
@@ -36,7 +37,11 @@ public class EnemyInstance
     public bool DeckIsValid => Cards.None(x => x == null);
     public bool IsReadyForPlay => Cards != null && Prefab != null && AI != null;
 
-    public EnemyInstance(ResourceType resourceType, EffectData[] startOfBattleEffects, int startingResourceAmount, int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, int toughness, int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, GameObject prefab, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, int preferredTurnOrder, string name, string deathEffect, bool isHasty, bool isUnique)
+    public EnemyInstance(ResourceType resourceType, EffectData[] startOfBattleEffects, int startingResourceAmount, 
+        int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
+        int toughness, int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
+        GameObject prefab, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
+        int preferredTurnOrder, string name, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments)
     {
         _resourceType = resourceType;
         _startOfBattleEffects = startOfBattleEffects;
@@ -53,6 +58,7 @@ public class EnemyInstance
         _armor = armor;
         _resistance = resistance;
         _cardsPerTurn = cardsPerTurn;
+        _counterAdjustments = counterAdjustments;
         Prefab = prefab;
         AI = ai;
         Cards = cards;
@@ -80,6 +86,7 @@ public class EnemyInstance
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = _resourceType.Name, Amount = _resourceGainPerTurn}, m));
+        _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         _startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx));
         return m;
     }
