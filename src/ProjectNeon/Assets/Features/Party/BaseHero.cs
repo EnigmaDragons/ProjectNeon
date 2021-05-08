@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameContent/HeroCharacter")]
@@ -7,6 +9,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
     [SerializeField] private CharacterClass characterClass;
+    [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private Deck startingDeck;
     [SerializeField] private int startingCredits = 100;
     
@@ -39,6 +42,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public HeroSkill[] Skills => skills;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;
     public HeroFlavorDetails Flavor => flavorDetails;
+    public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
 
     public IStats Stats => new StatAddends
         {
