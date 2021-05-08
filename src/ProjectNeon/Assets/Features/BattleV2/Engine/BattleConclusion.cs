@@ -16,15 +16,15 @@ public class BattleConclusion : OnMessage<BattleFinished>
     
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
-        var rewardPicker = new ShopSelectionPicker();
+        var rewardPicker = new ShopSelectionPicker(adventure2.CurrentStage.RewardRarityFactors, state.Party);
         if (state.IsEliteBattle)
         {
             // Tuned Reward Set
             var rewardEquips = rewardPicker
-                .PickEquipments(state.Party, equipmentPrizePool, 1, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
+                .PickEquipments(equipmentPrizePool, 1, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
                 .ToList();
             
-            var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(state.Party, equipmentPrizePool, 20));
+            var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20));
             while (rewardEquips.Count < 3)
             {
                 var nextEquipment = possibleEquips.Dequeue();
@@ -40,7 +40,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         }
         else
         {
-            var rewardCards = rewardPicker.PickCards(state.Party, cardPrizePool, 3);
+            var rewardCards = rewardPicker.PickCards(cardPrizePool, 3);
             Message.Publish(new GetUserSelectedCard(rewardCards, card =>
             {
                 card.IfPresent(c => state.SetRewardCards(c));

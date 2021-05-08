@@ -13,18 +13,14 @@ public enum Rarity
 
 public static class RarityExtensions
 {
-    private static readonly RarityFactors RarityFactors = new DefaultRarityFactors();
+    private static IEnumerable<Rarity> Factored(RarityFactors f, Rarity r) => Enumerable.Range(0, f[r]).Select(_ => r);
 
-    private static IEnumerable<Rarity> Factored(Rarity r) => Enumerable.Range(0, RarityFactors[r]).Select(_ => r);
+    public static IEnumerable<T> FactoredByRarity<T>(this IEnumerable<T> items, RarityFactors factors, Func<T, Rarity> getRarity)
+        => items.SelectMany(item => Enumerable.Range(0, factors[getRarity(item)]).Select(_ => item));
 
-    public static IEnumerable<T> FactoredByRarity<T>(this IEnumerable<T> items, Func<T, Rarity> getRarity)
-        => items.SelectMany(item => Enumerable.Range(0, RarityFactors[getRarity(item)]).Select(_ => item));
-
-    public static IEnumerable<Rarity> Random(this Rarity[] rarities, int n)
+    public static IEnumerable<Rarity> Random(this Rarity[] rarities, RarityFactors f, int n)
         => Enumerable.Range(0, n).Select(_ => rarities.Random());
-    public static Rarity Random(this Rarity[] rarities)
-        => rarities.SelectMany(Factored).Random();
-
-    public static Rarity RandomNonStarter() => Random(new[] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic});
+    public static Rarity Random(this Rarity[] rarities, RarityFactors f)
+        => rarities.SelectMany(r => Factored(f, r)).Random();
 }
 

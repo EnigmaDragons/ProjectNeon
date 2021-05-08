@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Obsolete("V1 Shops")]
 public sealed class ShopPresenter : MonoBehaviour
 {
     [SerializeField] private ShopCardPool cards;
@@ -32,8 +34,8 @@ public sealed class ShopPresenter : MonoBehaviour
     public void GetMoreInventory()
     {
         Clear();
-        _selection = new ShopSelectionPicker()
-            .GenerateV1MixedShopSelection(cards, equipment, party);
+        _selection = new ShopSelectionPicker(new DefaultRarityFactors(), party)
+            .GenerateV1MixedShopSelection(cards, equipment);
         _selection.Cards.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)
                 .Initialized(c));

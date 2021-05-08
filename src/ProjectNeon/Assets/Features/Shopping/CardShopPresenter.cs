@@ -6,6 +6,7 @@ public class CardShopPresenter : MonoBehaviour
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private ShopCardPurchaseSlot cardPurchasePrototype;
     [SerializeField] private GameObject cardParent;
+    [SerializeField] private AdventureProgress2 adventure;
  
     private int _numCards;
 
@@ -27,7 +28,8 @@ public class CardShopPresenter : MonoBehaviour
     public void GetMoreInventory()
     {
         Clear();
-        var selection = new ShopSelectionPicker().GenerateCardSelection(party, cards, _numCards);
+        var selection = new ShopSelectionPicker(adventure.CurrentStage.RewardRarityFactors, party)
+            .GenerateCardSelection(cards, _numCards);
         selection.Cards.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)
                 .Initialized(c));

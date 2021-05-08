@@ -15,6 +15,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
     [SerializeField] private StoryEquipmentRewardPresenter equipmentPrototype;
     [SerializeField] private StoryCardRewardPresenter cardPrototype;
     [SerializeField] private StoryEventResultTextPresenter textPrototype;
+    [SerializeField] private AdventureProgress2 adventure;
     
     private TextCommandButton[] _buttons;
 
@@ -23,7 +24,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
         Message.Publish(new HideDieRoll());
         rewardParent.DestroyAllChildren();
         InitFreshOptionsButtons();
-        var ctx = new StoryEventContext(party, allEquipmentPool);
+        var ctx = new StoryEventContext(adventure.CurrentStage.RewardRarityFactors, party, allEquipmentPool);
         storyTextArea.text = s.StoryText;
         for (var i = _buttons.Length - 1; i > -1; i--)
         {
