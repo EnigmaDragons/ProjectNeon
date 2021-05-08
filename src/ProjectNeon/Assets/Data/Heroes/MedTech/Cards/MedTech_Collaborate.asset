@@ -17,8 +17,8 @@ MonoBehaviour:
   description: Gain 1 Chems. Draw +2 cards {D[0]}
   typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
   tags: 
-  onlyPlayableByClass: {fileID: 11400000, guid: a6db77c3bda412d42b6a422b91d39c05,
-    type: 2}
+  speed: 0
+  onlyPlayableByClass: {fileID: 11400000, guid: a6db77c3bda412d42b6a422b91d39c05, type: 2}
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 5f59f3b05e7d8f44386acdc4edce5618, type: 2}
@@ -31,9 +31,10 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 0
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: 5e0a0e0c10fdad84fa6030d083a6a5ef, type: 2}
     repeatX: 0
   chainedCard: {fileID: 0}
   functionalityIssues: Card drawing should scale off of Leadership
   presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 27cbd856049e7604cb797c63cb6ff475, type: 2}
