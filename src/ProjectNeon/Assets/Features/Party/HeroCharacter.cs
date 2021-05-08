@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface HeroCharacter
@@ -13,6 +14,7 @@ public interface HeroCharacter
     HeroFlavorDetails Flavor { get; }
     HeroSkill[] Skills { get; }
     HeroLevelUpPathway LevelUpTree { get; }
+    HashSet<string> Archetypes { get; }
 }
 
 public class InMemoryHeroCharacter : HeroCharacter
@@ -29,6 +31,7 @@ public class InMemoryHeroCharacter : HeroCharacter
         = new HeroFlavorDetails { HeroDescription = "Desc", RoleDescription = "Desc", BackStory = "BackStory" };
     public HeroSkill[] Skills { get; } = new HeroSkill[0];
     public HeroLevelUpPathway LevelUpTree { get; set; }
+    public HashSet<string> Archetypes { get; } = new HashSet<string>();
 }
 
 public static class HeroCharacterExtensions
