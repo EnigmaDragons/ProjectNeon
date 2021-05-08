@@ -7,7 +7,7 @@ using System.Linq;
 
 public class FindCardsEditor : EditorWindow
 {
-    [MenuItem("Tools/Neon/Find Cards")]
+    [MenuItem("Neon/Find Cards")]
     static void SelectGameObjects()
     {
         GetWindow(typeof(FindCardsEditor)).Show();

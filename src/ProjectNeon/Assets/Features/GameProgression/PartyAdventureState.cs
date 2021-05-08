@@ -13,7 +13,7 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private PartyCardCollection cards;
     [SerializeField] private PartyEquipmentCollection equipment;
     [SerializeField] private Hero[] heroes = new Hero[0];
-    [SerializeField, HideInInspector] public CardType[] allCards;
+    [SerializeField] private ShopCardPool allCards;
 
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
@@ -41,11 +41,9 @@ public sealed class PartyAdventureState : ScriptableObject
         });
 
 
-        var allStartingCards = allCards.Where(card => card.Rarity == Rarity.Starter 
-            && party.Heroes.None(hero => hero.ClassCard.Name == card.Name)
-            && party.Heroes.Any(hero => card.Archetypes.All(archetype => hero.Archetypes.Contains(archetype)))).ToArray();
+        var allStartingCards = party.Heroes.SelectMany(h => allCards.Get(h.Archetypes, Rarity.Starter)).ToArray();
         cards.Initialized(allStartingCards);
-        allStartingCards.Distinct().ForEach(c => cards.Add(c, 4));
+        allStartingCards.ForEach(c => cards.Add(c, 4));
         
         equipment = new PartyEquipmentCollection();
         return this;
