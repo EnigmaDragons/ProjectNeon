@@ -28,7 +28,7 @@ public class CardShopPresenter : MonoBehaviour
     public void GetMoreInventory()
     {
         Clear();
-        var selection = new ShopSelectionPicker(adventure.CurrentStage.RewardRarityFactors, party)
+        var selection = new ShopSelectionPicker(adventure.Stage, adventure.CurrentStage.RewardRarityFactors, party)
             .GenerateCardSelection(cards, _numCards);
         selection.Cards.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)

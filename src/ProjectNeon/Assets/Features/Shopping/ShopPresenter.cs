@@ -34,7 +34,7 @@ public sealed class ShopPresenter : MonoBehaviour
     public void GetMoreInventory()
     {
         Clear();
-        _selection = new ShopSelectionPicker(new DefaultRarityFactors(), party)
+        _selection = new ShopSelectionPicker(1, new DefaultRarityFactors(), party)
             .GenerateV1MixedShopSelection(cards, equipment);
         _selection.Cards.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)

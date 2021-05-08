@@ -1,12 +1,14 @@
 
 public class StoryEventContext
 {
+    public int CurrentStage { get; }
     public RarityFactors RarityFactors { get; }
     public PartyAdventureState Party { get; }
     public EquipmentPool EquipmentPool { get; }
 
-    public StoryEventContext(RarityFactors rarityFactors, PartyAdventureState party, EquipmentPool equipmentPool)
+    public StoryEventContext(int currentStage, RarityFactors rarityFactors, PartyAdventureState party, EquipmentPool equipmentPool)
     {
+        CurrentStage = currentStage;
         RarityFactors = rarityFactors;
         Party = party;
         EquipmentPool = equipmentPool;

@@ -24,7 +24,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
         Message.Publish(new HideDieRoll());
         rewardParent.DestroyAllChildren();
         InitFreshOptionsButtons();
-        var ctx = new StoryEventContext(adventure.CurrentStage.RewardRarityFactors, party, allEquipmentPool);
+        var ctx = new StoryEventContext(adventure.Stage, adventure.CurrentStage.RewardRarityFactors, party, allEquipmentPool);
         storyTextArea.text = s.StoryText;
         for (var i = _buttons.Length - 1; i > -1; i--)
         {

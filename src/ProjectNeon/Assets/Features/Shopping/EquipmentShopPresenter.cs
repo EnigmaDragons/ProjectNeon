@@ -30,7 +30,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     public void GetMoreInventory()
     {
         Clear();
-        _selection = new ShopSelectionPicker(adventure.CurrentStage.RewardRarityFactors, party)
+        _selection = new ShopSelectionPicker(adventure.Stage, adventure.CurrentStage.RewardRarityFactors, party)
             .GenerateEquipmentSelection(equipment, _numEquips);
         _selection.Equipment.ForEach(c => 
             Instantiate(equipmentPurchasePrototype, equipmentParent.transform)

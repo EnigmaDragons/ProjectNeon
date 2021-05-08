@@ -4,16 +4,17 @@ using System.Linq;
 
 public class ShopSelectionPicker
 {
+    private readonly int stage;
     private readonly RarityFactors factors;
     private readonly PartyAdventureState party;
 
-    public ShopSelectionPicker(RarityFactors factors, PartyAdventureState party)
+    public ShopSelectionPicker(int stage, RarityFactors factors, PartyAdventureState party)
     {
+        this.stage = stage;
         this.factors = factors;
         this.party = party;
     }
     
-    // TODO Move Card and Equipment Pools to Ctor
     public CardType[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
     {
         var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All));
@@ -56,21 +57,47 @@ public class ShopSelectionPicker
 
     public ShopSelection GenerateCardSelection(ShopCardPool cards, int numCards)
     {
-        var selectedCards = PickCards(cards, 1, Rarity.Rare, Rarity.Epic)
-            .Concat(PickCards(cards, 2, Rarity.Uncommon))
-            .Concat(PickCards(cards, numCards - 3, Rarity.Common))
-            .ToArray()
-            .Shuffled();
+        CardType[] selectedCards;
+        if (stage > 1)
+        {
+            selectedCards = PickCards(cards, 2, Rarity.Rare, Rarity.Epic)
+                .Concat(PickCards(cards, 3, Rarity.Uncommon))
+                .Concat(PickCards(cards, numCards - 5, Rarity.Common))
+                .ToArray()
+                .Shuffled();
+        }
+        else
+        {            
+            selectedCards = PickCards(cards, 1, Rarity.Rare, Rarity.Epic)
+                .Concat(PickCards(cards, 2, Rarity.Uncommon))
+                .Concat(PickCards(cards, numCards - 3, Rarity.Common))
+                .ToArray()
+                .Shuffled();
+        }
+
         return new ShopSelection(new List<Equipment>(), selectedCards.ToList());
     }
     
     public ShopSelection GenerateEquipmentSelection(EquipmentPool equipment, int numEquips)
     {
-        var selectedEquipment = PickEquipments(equipment, 1, Rarity.Rare, Rarity.Epic)
-            .Concat(PickEquipments(equipment, 2, Rarity.Uncommon))
-            .Concat(PickEquipments(equipment, numEquips - 3, Rarity.Common))
-            .ToArray()
-            .Shuffled();
+        Equipment[] selectedEquipment;
+        if (stage > 1)
+        {
+            selectedEquipment = PickEquipments(equipment, 2, Rarity.Rare, Rarity.Epic)
+                .Concat(PickEquipments(equipment, 3, Rarity.Uncommon))
+                .Concat(PickEquipments(equipment, numEquips - 5, Rarity.Common))
+                .ToArray()
+                .Shuffled();
+        }
+        else
+        {
+            selectedEquipment = PickEquipments(equipment, 1, Rarity.Rare, Rarity.Epic)
+                .Concat(PickEquipments(equipment, 2, Rarity.Uncommon))
+                .Concat(PickEquipments(equipment, numEquips - 3, Rarity.Common))
+                .ToArray()
+                .Shuffled();
+        }
+
         return new ShopSelection(selectedEquipment.ToList(), new List<CardType>());
     }
 
