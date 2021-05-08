@@ -21,9 +21,9 @@ public class LibraryUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDe
         var heroChanged = state.SelectedHeroesDeck.Hero != _selectedHero;
         _selectedHero = state.SelectedHeroesDeck.Hero;
         var cardsForHero = new KeyValuePair<CardType, int>(_selectedHero.ClassCard, 0).Concat(partyCards.AllCards
-                .Where(x => !x.Key.LimitedToClass.IsPresent || x.Key.LimitedToClass.Value.Name == state.SelectedHeroesDeck.Hero.Class.Name));
+                .Where(cardWithCount => cardWithCount.Key.Archetypes.All(archetype => _selectedHero.Archetypes.Contains(archetype))));
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
-            c => new Tuple<int, int>(c.Value, c.Value - state.SelectedHeroesDeck.Deck.Count(card => card == c.Key)));
+            c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card == c.Key))));
         pageViewer.Init(
             cardInLibraryButtonTemplate.gameObject, 
             emptyCard, 
