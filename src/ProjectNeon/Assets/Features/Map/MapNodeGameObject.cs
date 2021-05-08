@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -38,7 +39,9 @@ public class MapNodeGameObject : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void SetCanTravelTo(bool canTravelTo)
     {
         button.interactable = canTravelTo;
-        button.spriteState = canTravelTo || gameMap.CurrentMapNode.X + 20 >= gameMap.GetMapNode(_nodeId).X ? _revealedSpriteState : _hiddenSpriteState;
+        button.spriteState = !CanBeHidden || canTravelTo || gameMap.CurrentMapNode.X + 20 >= gameMap.GetMapNode(_nodeId).X 
+            ? _revealedSpriteState 
+            : _hiddenSpriteState;
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -56,4 +59,12 @@ public class MapNodeGameObject : MonoBehaviour, IPointerEnterHandler, IPointerEx
         _rulesPanel.IfPresent(r => r.SetActive(false));
         Message.Publish(new HideTooltip());
     }
+
+    private static readonly HashSet<string> AlwaysShownNodeNames = new HashSet<string>
+    {
+        "Clinic",
+        "Boss Battle"
+    };
+
+    private bool CanBeHidden => !AlwaysShownNodeNames.Contains(segment.Name);
 }
