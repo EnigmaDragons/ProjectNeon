@@ -9,6 +9,7 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
     [SerializeField] private SpriteRenderer spritePrototype;
     [SerializeField] private float xSpacingWidth;
     [SerializeField] private float iconWidth;
+    [SerializeField] private float animDuration = 0.5f;
 
     private readonly List<SpriteRenderer> _icons = new List<SpriteRenderer>();
 
@@ -18,17 +19,17 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
     public VisualResourceCounterPresenter Initialized(Member m)
     {
         _member = m;
-        UpdateUi();
+        UpdateUi(false);
         return this;
     }
     
     protected override void Execute(MemberStateChanged msg)
     {
         if (msg.State.MemberId == _member.Id)
-            UpdateUi();
+            UpdateUi(true);
     }
 
-    private void UpdateUi()
+    private void UpdateUi(bool shouldAnimate)
     {
         var resourceAmount = _member.State.PrimaryResourceAmount;
         var primaryResourceIcon = _member.State.ResourceTypes[0].Icon;
@@ -41,12 +42,16 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
             else
                 _icons[i].gameObject.SetActive(i < resourceAmount);
             
-            _icons[i].sprite = primaryResourceIcon;
-            _icons[i].transform.localScale = spritePrototype.transform.localScale;
-            if (i + 1 > _lastAmount)
+            var icon = _icons[i];
+            icon.sprite = primaryResourceIcon;
+            var t = icon.transform;
+            t.localScale = spritePrototype.transform.localScale;
+            if (shouldAnimate && i + 1 > _lastAmount)
             {
-                Message.Publish(new TweenMovementRequested(_icons[i].transform, new Vector3(0.6f, 0.6f, 0.6f), 1, MovementDimension.Scale, TweenMovementType.RubberBand, "ResourceGain"));
-                StartCoroutine(SnapBack(_icons[i].transform));
+                Message.Publish(new StopMovementTweeningRequested(t, MovementDimension.Scale));
+                Message.Publish(new TweenMovementRequested(t, new Vector3(0.4f, 0.4f, 0.4f), animDuration, 
+                    MovementDimension.Scale, TweenMovementType.RubberBand, "ResourceGain") { UseScaledTime = false });
+                StartCoroutine(SnapBack(t));
             }
         }
 
@@ -55,7 +60,7 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
 
     private IEnumerator SnapBack(Transform iconTransform)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(animDuration);
         Message.Publish(new SnapBackTweenRequested(iconTransform, "ResourceGain"));
     }
 }
