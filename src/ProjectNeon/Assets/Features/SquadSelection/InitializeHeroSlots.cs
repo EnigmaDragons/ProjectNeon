@@ -8,6 +8,8 @@ public class InitializeHeroSlots : MonoBehaviour
     [SerializeField] private SquadSlot slotPrefab;
     [SerializeField] private CurrentAdventure current;
 
+    private void Awake() => gameObject.DestroyAllChildren();
+    
     private void OnEnable()
     {
         heroPool.ClearSelections();
