@@ -7,7 +7,7 @@ public class EquipmentTests
     {
         var hero = new Hero(new InMemoryHeroCharacter
         {
-            Class = TestClasses.Soldier,
+            Class = "soldier",
             Stats = new StatAddends()
                 .With(StatType.Damagability, 1)
                 .With(StatType.Attack, 8)
@@ -40,7 +40,7 @@ public class EquipmentTests
         
         var hero = new Hero(new InMemoryHeroCharacter
         {
-            Class = TestClasses.Soldier,
+            Class = "soldier",
             Stats = new StatAddends()
                 .With(StatType.MaxHP, 10)
         }, new RuntimeDeck());
@@ -70,7 +70,7 @@ public class EquipmentTests
         
         var hero = new Hero(new InMemoryHeroCharacter
         {
-            Class = TestClasses.Soldier,
+            Class = "soldier",
             Stats = new StatAddends()
                 .With(StatType.Damagability, 1f)
                 .With(StatType.MaxHP, 10)
@@ -101,7 +101,7 @@ public class EquipmentTests
         };
         var hero = new Hero(new InMemoryHeroCharacter
         {
-            Class = TestClasses.Soldier,
+            Class = "soldier",
             Stats = new StatAddends()
                 .With(StatType.Damagability, 1f)
                 .With(StatType.MaxHP, 10)

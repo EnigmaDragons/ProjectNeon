@@ -20,7 +20,7 @@ public class FullLibraryUI : MonoBehaviour
             cardInLibraryButtonTemplate.gameObject, 
             emptyCard, 
             allCards.All
-                .OrderBy(c => c.LimitedToClass.Select(l => l.Name, ""))
+                .OrderBy(c => string.Join("&", c.Archetypes.OrderBy(a => a)))
                 .ThenBy(c => c.Rarity)
                 .ThenBy(c => c.Cost.BaseAmount)
                 .ThenBy(c => c.Name)

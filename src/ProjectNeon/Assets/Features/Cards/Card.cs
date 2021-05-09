@@ -10,11 +10,9 @@ public sealed class Card
 
     public CardMode Mode { get; private set; }
     public bool IsActive => Mode != CardMode.Dead && Mode != CardMode.Glitched;
-
-    public CardTypeData BasicType => LimitedToClass.Value.BasicCard;
-    public Maybe<CharacterClass> LimitedToClass => type.LimitedToClass;
-    public CardTypeData Type => Mode == CardMode.Basic && LimitedToClass.IsPresent 
-        ? LimitedToClass.Value.BasicCard 
+    
+    public CardTypeData Type => Mode == CardMode.Basic && Owner != null
+        ? Owner.BasicCard.Value
         : type;
 
     public Member Owner => owner;

@@ -85,7 +85,7 @@ public class BattleTestSetup : MonoBehaviour
     
     public void SetupCardTest()
     {
-        var hero = allHeroes.First(h => h.Class.Equals(cards.First().LimitedToClass.Value));
+        var hero = allHeroes.First(h => cards.First().Archetypes.All(h.Archetypes.Contains));
         setup.InitParty(hero, hero2, hero3);
         setup.InitPartyDecks(Enumerable.Range(0, 12).Select(i => cards[i % cards.Length]).ToList(), new List<CardType>(), new List<CardType>());
         var equipment = hero.Name.Equals(hero1.Name) 

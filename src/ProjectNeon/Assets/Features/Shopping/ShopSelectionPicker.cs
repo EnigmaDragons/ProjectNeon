@@ -34,7 +34,6 @@ public class ShopSelectionPicker
         params Rarity[] rarities)
     {
         rarities = rarities.None() ? new[] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic} : rarities;
-        var partyClasses = new HashSet<string>(party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All));
         var randomRarities = rarities.Random(factors, numEquipment).ToArray();
         var randomSlots = equipmentPool.Random(numEquipment).ToArray();
         var groups = new Dictionary<Rarity, Dictionary<EquipmentSlot, int>>();

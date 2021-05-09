@@ -18,7 +18,7 @@ public static class IPlayedCardExtensions
 
 public sealed class PlayedCardSnapshot
 {
-    public Member Member { get; }
+    public MemberSnapshot Member { get; }
     public bool WasDiscarded { get; }
     public CardTypeData Card { get; }
     public Target[] Targets { get; }
@@ -28,7 +28,7 @@ public sealed class PlayedCardSnapshot
 
     public PlayedCardSnapshot(IPlayedCard p)
     {
-        Member = p.Member;
+        Member = p.Member.GetSnapshot();
         WasDiscarded = !p.Card.IsActive;
         Card = p.Card.Type;
         Targets = p.Targets;

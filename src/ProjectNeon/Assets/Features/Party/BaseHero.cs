@@ -8,7 +8,9 @@ public class BaseHero : ScriptableObject, HeroCharacter
 {
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
-    [SerializeField] private CharacterClass characterClass;
+    [SerializeField] private StringReference className;
+    [SerializeField] private BattleRole battleRole;
+    [SerializeField] private CardType basic;
     [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private Deck startingDeck;
     [SerializeField] private Color tint;
@@ -35,10 +37,11 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public string Name => name;
     public Sprite Bust => bust;
     public GameObject Body => body;
-    public CharacterClass Class => characterClass;
+    public string Class => className;
+    public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
     public CardType[] AdditionalStartingCards => additionalStartingCards ?? new CardType[0];
-    public CardType ClassCard => Class.BasicCard;
+    public CardType ClassCard => basic;
     public int StartingCredits => startingCredits;
     public HeroSkill[] Skills => skills;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;

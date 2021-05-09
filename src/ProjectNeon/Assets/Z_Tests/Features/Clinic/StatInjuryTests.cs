@@ -40,7 +40,7 @@ public class StatInjuryTests
         setStats(stats);
         return new Hero(new InMemoryHeroCharacter
         {
-            Class = TestClasses.Soldier,
+            Class = "soldier",
             Stats = stats
         }, new RuntimeDeck());
     }

@@ -12,7 +12,6 @@ public interface CardTypeData
     string Description  { get; }
     HashSet<CardTag> Tags  { get; }
     string TypeDescription  { get; }
-    Maybe<CharacterClass> LimitedToClass  { get; }
     CardActionSequence[] ActionSequences  { get; }
     Maybe<CardTypeData> ChainedCard { get; }
     Rarity Rarity { get; }

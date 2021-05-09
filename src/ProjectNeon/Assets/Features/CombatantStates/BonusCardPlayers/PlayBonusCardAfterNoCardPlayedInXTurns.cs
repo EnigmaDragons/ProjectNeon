@@ -2,20 +2,20 @@ using System.Linq;
 
 public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusCardPlayer
 {
-    private readonly StringReference _className;
+    private readonly int _memberId;
     private readonly CardType _bonusCard;
     private readonly int _numTurns;
 
     public override IStats Stats { get; } = new StatAddends();
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
-    public override ITemporalState CloneOriginal() => new PlayBonusCardAfterNoCardPlayedInXTurns(_className, _bonusCard, _numTurns, Status);
+    public override ITemporalState CloneOriginal() => new PlayBonusCardAfterNoCardPlayedInXTurns(_memberId, _bonusCard, _numTurns, Status);
     public override IPayloadProvider OnTurnStart() => new NoPayload();
     public override IPayloadProvider OnTurnEnd() => new NoPayload();
 
-    public PlayBonusCardAfterNoCardPlayedInXTurns(StringReference className, CardType bonusCard, int numTurns, StatusDetail status)
+    public PlayBonusCardAfterNoCardPlayedInXTurns(int memberId, CardType bonusCard, int numTurns, StatusDetail status)
         : base(TemporalStateMetadata.Unlimited(false, status))
     {
-        _className = className;
+        _memberId = memberId;
         _bonusCard = bonusCard;
         _numTurns = numTurns;
     }
@@ -26,7 +26,7 @@ public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusC
                || snapshot.PlayedCardHistory
                     .TakeLast(_numTurns)
                     .SelectMany(x => x)
-                    .Any(x => _className.Value.Equals(x.LimitedToClass.Select(c => c.Name, "")))
+                    .Any(x => x.Member.Id == _memberId)
             ? Maybe<CardType>.Missing()
             : _bonusCard;
     }
