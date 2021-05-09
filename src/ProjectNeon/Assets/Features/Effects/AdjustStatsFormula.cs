@@ -1,4 +1,7 @@
 
+using System;
+using UnityEngine;
+
 public class AdjustStatsFormula : Effect
 {
     private readonly EffectData _e;
@@ -43,6 +46,15 @@ public class AdjustStatsFormula : Effect
             }
         });
     }
+
+    private int CurrentStatAmount(Member m, string stat)
+    {
+        if (Enum.TryParse<StatType>(stat, out var statType))
+            return m.State[statType].CeilingInt();
+        if (Enum.TryParse<TemporalStatType>(stat, out var temporalStatType))
+            return m.State[temporalStatType].CeilingInt();
+        return 0;
+    }
     
     private void ApplyAdditive(EffectContext ctx)
     {
@@ -61,9 +73,12 @@ public class AdjustStatsFormula : Effect
             if (ctx.Preventions.IsAegising(m))
                 BattleLog.Write($"{m.Name} prevented {stat} debuff with an Aegis");
             else
-            {
-                BattleLog.Write($"{m.Name}'s {stat} is adjusted by {formulaAmount}");
-                var stats = new AdjustedStats(new StatAddends().WithRaw(stat, formulaAmount),
+            {                
+                var finalAmount = isDebuff 
+                    ? Mathf.Clamp(formulaAmount, -CurrentStatAmount(m, stat), 0) 
+                    : formulaAmount;
+                BattleLog.Write($"{m.Name}'s {stat} is adjusted by {finalAmount}");
+                var stats = new AdjustedStats(new StatAddends().WithRaw(stat, finalAmount),
                     _e.ForSimpleDurationStatAdjustment());
                 m.State.ApplyTemporaryAdditive(stats);
             }
