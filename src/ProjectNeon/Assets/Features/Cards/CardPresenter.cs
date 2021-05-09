@@ -28,6 +28,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Material glitchMaterial;
     [SerializeField] private DragRotator dragRotator;
     [SerializeField] private GameObject[] onlyEnabledInHand;
+    [SerializeField] private ArchetypeTints archetypeTints;
 
     private Card _card;
     private CardTypeData _cardType;
@@ -237,7 +238,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         target.Set(_cardType);
         cardCostPresenter.Render(_card, _cardType);
         tint.color = _card == null 
-            ? Color.white
+            ?  archetypeTints.ForArchetypes(_cardType.Archetypes)
             : _card.Owner.HeroTint;
         canPlayHighlight.SetActive(IsPlayable);
         highlight.SetActive(IsPlayable);
