@@ -28,11 +28,12 @@ public class ShopCardPool : ScriptableObject
         return subPools.SelectMany(x => x.Get(includedArchetypes, includedRarities));
     }
     
-    public void TestInit(string[] archetypes, Rarity[] rarities, IEnumerable<ShopCardPool> subPools, IEnumerable<CardType> cards)
+    public ShopCardPool Initialized(string[] archetypes, Rarity[] rarities, IEnumerable<ShopCardPool> subPools, IEnumerable<CardType> cards)
     {
         _archetypes = archetypes;
         this.includedRarities = rarities;
         this.subPools = subPools.ToList();
         allCards = cards.ToList();
+        return this;
     }
 }

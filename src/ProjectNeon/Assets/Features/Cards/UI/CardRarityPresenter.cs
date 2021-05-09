@@ -18,6 +18,7 @@ public class CardRarityPresenter : MonoBehaviour
         _sprites = new Dictionary<Rarity, Sprite>
         {
             {Rarity.Starter, starter},
+            {Rarity.Basic, starter},
             {Rarity.Common, common},
             {Rarity.Uncommon, uncommon},
             {Rarity.Rare, rare},

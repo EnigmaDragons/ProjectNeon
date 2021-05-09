@@ -24,10 +24,10 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
         _onClick = onClick;
         nameLabel.text = e.Name;
         slotLabel.text = $"{e.Slot}";
-        var classesText = e.Classes.Any(c => c.Equals(CharacterClass.All))
-            ? CharacterClass.All
-            : string.Join(",", e.Classes.Select(c => c));
-        classesLabel.text = $"Classes: {classesText}";
+        var archetypeText = e.Archetypes.Any()
+            ? string.Join(",", e.Archetypes.Select(c => c))
+            : "All";
+        classesLabel.text = $"Archetypes: {archetypeText}";
         descriptionLabel.text = e.Description;
         rarity.Set(e.Rarity);
         slotIcon.sprite = slotIcons.All[e.Slot];

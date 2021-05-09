@@ -16,14 +16,17 @@ MonoBehaviour:
   rarity: 2
   slot: 0
   cost: 80
-  canUseClasses:
-  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
+  archetypes: []
   modifiers: []
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 0
+    BaseAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      Variable: {fileID: 0}
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -37,9 +40,26 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    ReferencedEffectSequence: {fileID: 0}
-    ReactionSequence: {fileID: 0}
     StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 
+    FlavorText:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
   numSlots: 0
   statModifierSlots:
   - ModifierType: 0

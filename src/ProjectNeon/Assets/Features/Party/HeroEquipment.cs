@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class HeroEquipment
 {
-    [SerializeField] private CharacterClass characterClass;
+    [SerializeField] private string[] archetypes;
     [SerializeField] private string weaponName;
     [SerializeField] private string armorName;
     [SerializeField] private string[] augments = new string[3];
@@ -15,20 +15,20 @@ public class HeroEquipment
     private readonly Equipment[] _augments = new Equipment[3];
 
     public HeroEquipment() {}
-    public HeroEquipment(CharacterClass c) => characterClass = c;
+    public HeroEquipment(params string[] a) => archetypes = a;
 
     public Maybe<Equipment> Weapon => new Maybe<Equipment>(_weapon);
     public Maybe<Equipment> Armor => new Maybe<Equipment>(_armor);
-    public Equipment[] Augments => _augments.Where(a => a?.Classes != null).ToArray();
+    public Equipment[] Augments => _augments.Where(a => a?.Archetypes != null).ToArray();
     
     public Equipment[] All => new []{ _weapon, _armor }
         .Concat(_augments)
-        .Where(a => a?.Classes != null) // Nasty Hack to make this both handle optional serializables and make this work for Standalone Unit Tests
+        .Where(a => a?.Archetypes != null) // Nasty Hack to make this both handle optional serializables and make this work for Standalone Unit Tests
         .ToArray();
     
     public bool CanEquip(Equipment e)
     {
-        return e.Classes.None() || e.Classes.Any(c => c.Equals(CharacterClass.All) || c.Equals(characterClass.Name));
+        return e.Archetypes.All(archetypes.Contains);
     }
 
     public void Unequip(Equipment e)

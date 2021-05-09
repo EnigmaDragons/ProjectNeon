@@ -39,24 +39,23 @@ public class EquipmentPool : ScriptableObject
         return Enumerable.Range(0, n).Select(_ => factoredList.Random());
     }
     
-    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HashSet<string> partyClasses, int n) => All
-        .Where(x => x.Slot == slot && x.Rarity == rarity && (x.Classes.None() || x.Classes.Any(partyClasses.Contains)))
+    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, int n) => All
+        .Where(x => x.Slot == slot && x.Rarity == rarity && party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains)))
         .DistinctBy(x => x.Description)
         .ToArray()
         .Shuffled()
         .Take(n);
 
-    public Equipment Random(EquipmentSlot slot, Rarity rarity, HashSet<string> partyClasses)
+    public Equipment Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party)
     {
         try
         {
-            return All.Where(x => x.Slot == slot && x.Rarity == rarity &&
-                            (x.Classes.None() || x.Classes.Any(partyClasses.Contains)))
+            return All.Where(x => x.Slot == slot && x.Rarity == rarity && party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains)))
                 .Random();
         }
         catch (Exception e)
         {
-            Log.Error($"Tried to get Random Equipment: {slot} {rarity} for {string.Join(", ", partyClasses)} and got {e.Message}");
+            Log.Error($"Tried to get Random Equipment: {slot} {rarity} for {string.Join(", ", party.Select(x => x.Name))} and got {e.Message}");
             return All.Random();
         }
     }

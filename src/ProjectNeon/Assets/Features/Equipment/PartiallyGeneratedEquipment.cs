@@ -8,7 +8,7 @@ public sealed class PartiallyGeneratedEquipment : ScriptableObject, Equipment
     [SerializeField] private Rarity rarity;
     [SerializeField] private EquipmentSlot slot;
     [SerializeField] private int cost;
-    [SerializeField] private CharacterClass[] canUseClasses = new CharacterClass[1];
+    [SerializeField] private StringVariable[] archetypes = new StringVariable[1];
     [SerializeField] private EquipmentStatModifier[] modifiers = new EquipmentStatModifier[1];
     [SerializeField] private ResourceTypeModifications[] resourceModifiers = new ResourceTypeModifications[0];
     [SerializeField] private EffectData[] turnStartEffects = new EffectData[0];
@@ -22,7 +22,7 @@ public sealed class PartiallyGeneratedEquipment : ScriptableObject, Equipment
     public string Name => EquipmentGenerator.NameFor(slot, rarity);
     public int Price => cost;
     public Rarity Rarity => rarity;
-    public string[] Classes => canUseClasses.Select(c => c.Name).ToArray();
+    public string[] Archetypes => archetypes.Select(a => a.Value).ToArray();
     public EquipmentSlot Slot => slot;
 
     public IResourceType[] ResourceModifiers => resourceModifiers.Cast<IResourceType>().ToArray();

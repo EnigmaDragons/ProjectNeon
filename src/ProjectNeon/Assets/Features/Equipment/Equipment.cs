@@ -6,7 +6,7 @@ public interface Equipment
     string Description { get; }
     int Price { get; }
     Rarity Rarity { get; }
-    string[] Classes { get; }
+    string[] Archetypes { get; }
     EquipmentSlot Slot { get; }
     EquipmentStatModifier[] Modifiers { get; }
     IResourceType[] ResourceModifiers { get; }

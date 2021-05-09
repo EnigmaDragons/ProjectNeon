@@ -32,7 +32,7 @@ public class InMemoryHeroCharacter : HeroCharacter
         = new HeroFlavorDetails { HeroDescription = "Desc", RoleDescription = "Desc", BackStory = "BackStory" };
     public HeroSkill[] Skills { get; } = new HeroSkill[0];
     public HeroLevelUpPathway LevelUpTree { get; set; }
-    public HashSet<string> Archetypes { get; } = new HashSet<string>();
+    public HashSet<string> Archetypes { get; set; } = new HashSet<string>();
     public Color Tint { get; } = Color.white;
 }
 

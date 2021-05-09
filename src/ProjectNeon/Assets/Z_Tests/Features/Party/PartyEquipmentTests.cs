@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
@@ -8,7 +9,7 @@ public class PartyEquipmentTests
     {
         var collection = new PartyEquipmentCollection();
         
-        var equip = new InMemoryEquipment().Initialized(TestClasses.Soldier);
+        var equip = new InMemoryEquipment().Initialized("soldier");
         
         collection.Add(equip, equip);
         collection.MarkEquipped(equip);
@@ -22,12 +23,12 @@ public class PartyEquipmentTests
     }
     
     [Test]
-    public void PartyEquipmentCollection_DuplicateEquipment_CorrectAvailablesForClass()
+    public void PartyEquipmentCollection_DuplicateEquipment_CorrectAvailablesForArchetype()
     {
         var collection = new PartyEquipmentCollection();
-        var soldier = TestClasses.Soldier;
+        var soldier = new InMemoryHeroCharacter() {Archetypes = new HashSet<string> {"soldier"}};
         
-        var equip = new InMemoryEquipment().Initialized(soldier);
+        var equip = new InMemoryEquipment().Initialized("soldier");
         
         collection.Add(equip, equip);
         Assert.AreEqual(2, collection.AvailableFor(soldier).Count());
