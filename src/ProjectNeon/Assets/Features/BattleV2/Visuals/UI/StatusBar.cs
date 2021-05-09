@@ -32,7 +32,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             .ForEach(s => statuses.Add(new CurrentStatusValue { 
                 Type = statusTag.ToString(), 
                 Icon = icons[statusTag].Icon, 
-                Tooltip = s.Status.CustomText.OrDefault(() => "Unknown Trap Power") 
+                Tooltip = s.Status.CustomText.OrDefault(() => defaultText) 
             }));
 
     private void UpdateUi()

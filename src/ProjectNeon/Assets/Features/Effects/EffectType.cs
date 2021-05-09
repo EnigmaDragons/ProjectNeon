@@ -41,7 +41,7 @@ public enum EffectType
     // Reactions
     ReactWithEffect = 74,
     ReactWithCard = 75,
-    [Obsolete("Not Actually an OnDeath Effect. This has a hack that PREVENTS death.")] OnDeath = 25,
+    OnDeath = 25,
 
     // Transformers
     DoubleTheEffectAndMinusDurationTransformer = 28,
