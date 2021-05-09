@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 public class CardInLibraryButton : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class CardInLibraryButton : MonoBehaviour
     
     public void Init(CardType card, int numTotal, int numAvailable)
     {
-        var action = numAvailable > 0 
+        var action = numAvailable > 0 && state.SelectedHeroesDeck.Deck.Count(x => x == card) < 4
             ? (Action)(() => AddCard(card))
             : () => { };
         presenter.Set(card, action);
