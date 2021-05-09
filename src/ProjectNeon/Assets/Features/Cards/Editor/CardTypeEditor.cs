@@ -9,7 +9,7 @@ using UnityEngine;
 public class CardTypeEditor : Editor
 {
     private CardType targetCard;
-    private SerializedProperty customName, functionalityIssues, art, description, typeDescription, tags, onlyPlayableByClass, 
+    private SerializedProperty customName, functionalityIssues, art, description, typeDescription, tags, 
         cost, gain, rarity, cardAction1, cardAction2, chainedCard, presentationIssues, speed, archetypes, isWip;
 
     public void OnEnable()
@@ -20,7 +20,6 @@ public class CardTypeEditor : Editor
         description = serializedObject.FindProperty("description");
         typeDescription = serializedObject.FindProperty("typeDescription");
         tags = serializedObject.FindProperty("tags");
-        onlyPlayableByClass = serializedObject.FindProperty("onlyPlayableByClass");
         cost = serializedObject.FindProperty("cost");
         gain = serializedObject.FindProperty("onPlayGain");
         rarity = serializedObject.FindProperty("rarity");
@@ -38,10 +37,8 @@ public class CardTypeEditor : Editor
         PresentUnchanged(art);
         PresentUnchanged(description);
         PresentUnchanged(typeDescription);
-        PresentUnchanged(onlyPlayableByClass);
         PresentUnchanged(archetypes);
         PresentUnchanged(rarity);
-        PresentUnchanged(isWip);
         DrawUILine(Color.black);
         PresentUnchanged(speed);
         PresentUnchanged(cost);
@@ -51,6 +48,7 @@ public class CardTypeEditor : Editor
         DrawUILine(Color.black);
         PresentUnchanged(tags);
         DrawUILine(Color.black);
+        PresentUnchanged(isWip);
         PresentUnchanged(functionalityIssues);
         PresentUnchanged(presentationIssues);
     }

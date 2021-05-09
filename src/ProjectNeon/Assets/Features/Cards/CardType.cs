@@ -38,6 +38,7 @@ public class CardType : ScriptableObject, CardTypeData
     public CardActionV2[] AllCardEffectSteps => Actions.SelectMany(a => a.Actions).ToArray(); 
     public Maybe<CardTypeData> ChainedCard => chainedCard;
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
+    public string ArchetypeKey => string.Join(" + ", Archetypes.OrderBy(a => a));
     public bool IsWip => isWIP;
 
     public override string ToString() => Name;

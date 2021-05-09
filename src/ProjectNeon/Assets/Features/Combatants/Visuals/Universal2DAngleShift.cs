@@ -2,7 +2,7 @@
 
 public class Universal2DAngleShift : MonoBehaviour
 {
-    private const float angle = 26;
+    public const float angle = 26;
 
     private void Awake()
     {

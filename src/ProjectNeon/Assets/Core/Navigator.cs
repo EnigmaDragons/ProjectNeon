@@ -23,4 +23,14 @@ public sealed class Navigator : ScriptableObject
         Message.Publish(new NavigateToSceneRequested(sceneName));
         //SceneManager.LoadScene(name);
     }
+    
+    public void ExitGame()
+    {     
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBGL
+#else
+        Application.Quit();
+#endif
+    }
 }

@@ -105,4 +105,14 @@ public static class CollectionExtensions
         var maybeNext = items.Take(1).ToArray();
         return maybeNext.Any() ? new Maybe<T>(maybeNext[0]) : Maybe<T>.Missing();
     }
+    
+    public static IEnumerable<IEnumerable<T>> Permutations<T>(this IEnumerable<T> list, int depth)
+    {
+        if (depth == 1) 
+            return list.Select(t => new T[] { t });
+        
+        return Permutations(list, depth - 1)
+            .SelectMany(t => list.Where(e => !t.Contains(e)),
+                (t1, t2) => t1.Concat(new T[] { t2 }));
+    }
 }

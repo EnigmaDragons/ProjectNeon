@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Soldier_JammingGrenade
+  m_EditorClassIdentifier: 
+  customName: 
+  art: {fileID: 21300000, guid: f68a738e705f8714da1dfcc7cd8ba063, type: 3}
+  description: Deal {E[0]}. <b>Confuse</b> enemies for 2 turns.
+  typeDescription: {fileID: 11400000, guid: 9899a7b68bc22484e927e10f3ea183b5, type: 2}
+  tags: 25000000
+  speed: 0
+  cost:
+    cost: 1
+    resourceType: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
+    plusXCost: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
+    plusXCost: 0
+  rarity: 2
+  actionSequences:
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: 38c269195a3b27e42b2f0b3f783d7632, type: 2}
+    repeatX: 0
+  chainedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
+  isWIP: 0
