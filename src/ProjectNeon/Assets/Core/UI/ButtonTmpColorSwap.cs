@@ -10,7 +10,11 @@ public class ButtonTmpColorSwap : MonoBehaviour
     
     private void Awake() => _defaultColor = text.color;
 
-    public void OnPointerEnter() => text.color = hoverColor;
+    private void OnEnable() => Reset();
+    private void OnDisable() => Reset();
 
-    public void OnPointerExit() => text.color = _defaultColor;
+    public void OnPointerEnter() => text.color = hoverColor;
+    public void OnPointerExit() => Reset();
+    
+    private void Reset() => text.color = _defaultColor;
 }
