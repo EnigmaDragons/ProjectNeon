@@ -45,4 +45,6 @@ public class CardType : ScriptableObject, CardTypeData
     public override string ToString() => Name;
     public override int GetHashCode() => ToString().GetHashCode();
     public override bool Equals(object other) => other is CardType && other.ToString() == ToString();
+
+    public void TestInit(Rarity rarity) => this.rarity = rarity;
 }

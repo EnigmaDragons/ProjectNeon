@@ -17,8 +17,7 @@ public class ShopSelectionPicker
     
     public CardType[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
     {
-        var weightedCards = party.BaseHeroes
-            .SelectMany(h => cards.Get(h.Archetypes, rarities))
+        var weightedCards = party.BaseHeroes.SelectMany(h => cards.Get(h.Archetypes, rarities))
             .Distinct()
             .FactoredByRarity(factors, x => x.Rarity)
             .ToArray()
@@ -101,7 +100,7 @@ public class ShopSelectionPicker
     [Obsolete("V1 Shops")]
     public ShopSelection GenerateV1MixedShopSelection(ShopCardPool cards, EquipmentPool equipment)
     {
-        var selectedCards = PickCards(cards, 4);
+        var selectedCards = PickCards(cards, 4, RarityExtensions.AllExceptStarters);
         var selectedEquipment = PickEquipments(equipment, 4);
         
         return new ShopSelection(selectedEquipment.ToList(), selectedCards.ToList());
