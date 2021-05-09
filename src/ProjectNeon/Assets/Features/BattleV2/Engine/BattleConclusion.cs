@@ -44,7 +44,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         }
         else
         {
-            var rewardCards = rewardPicker.PickCards(cardPrizePool, 3);
+            var rewardCards = rewardPicker.PickCards(cardPrizePool, 3, RarityExtensions.AllExceptStarters);
             Message.Publish(new GetUserSelectedCard(rewardCards, card =>
             {
                 card.IfPresent(c => state.SetRewardCards(c));

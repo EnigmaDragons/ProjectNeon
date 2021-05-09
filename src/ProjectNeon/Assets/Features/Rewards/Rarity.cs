@@ -22,5 +22,7 @@ public static class RarityExtensions
         => Enumerable.Range(0, n).Select(_ => rarities.Random());
     public static Rarity Random(this Rarity[] rarities, RarityFactors f)
         => rarities.SelectMany(r => Factored(f, r)).Random();
+    
+    public static Rarity[] AllExceptStarters { get; } = {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic};
 }
 
