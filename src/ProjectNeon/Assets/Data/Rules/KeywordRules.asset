@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: KeywordRules
   m_EditorClassIdentifier: 
   items:
-  - Key:
+  - title: Blind
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 2a9cacd00d257904eab63601fd900c4a, type: 2}
@@ -22,7 +23,8 @@ MonoBehaviour:
 
       Guarantees that the next attack made by that character
       will miss.'
-  - Key:
+  - title: ExtraCardPlays
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 85f49375563a056468197eb85a992b6b, type: 2}
@@ -31,7 +33,8 @@ MonoBehaviour:
 
       Allows your team to play to play X additional
       cards.'
-  - Key:
+  - title: Vulnerable
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: a44ad20938ad98d4ba2a05ebec66e947, type: 2}
@@ -40,7 +43,8 @@ MonoBehaviour:
 
       Takes an additional 33% damage. Lasts for X
       turns.'
-  - Key:
+  - title: X Cost
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 16649ed163ec1304a9b194f1c7a14f2d, type: 2}
@@ -49,7 +53,8 @@ MonoBehaviour:
 
       Expends all of the associated resource. Grants
       effects that scale off the amount of resources spent.'
-  - Key:
+  - title: Taunt
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 5e53e1eb700232049a0c1d2017a544d1, type: 2}
@@ -58,7 +63,8 @@ MonoBehaviour:
 
       While an opponent has taunt, all single target cards
       must target that character.'
-  - Key:
+  - title: Vulnerable
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: a44ad20938ad98d4ba2a05ebec66e947, type: 2}
@@ -67,7 +73,8 @@ MonoBehaviour:
 
       A vulnerable character receives 33% more damage.
       Applies after all defenses.'
-  - Key:
+  - title: Stun
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: c05ba6d66feae7c47a741c621c3f426a, type: 2}
@@ -79,7 +86,8 @@ MonoBehaviour:
 
       Also,
       stunned characters cannot perform reactions.'
-  - Key:
+  - title: Chain
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: fd1bc03b29650184780e2f8f323906c6, type: 2}
@@ -89,14 +97,16 @@ MonoBehaviour:
       Play a free copy of the Chained card if all the
       non-Instant cards you play this turn belong to a single character and this
       card is the last card played.'
-  - Key:
+  - title: Card Cycles
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
     Value: "<b>Card Cycles</b>\n\nAdjusts the number of Card Cycles you can perform
       during a turn. \n\nCycling a card discards the selected card and immediately
       draws a new one."
-  - Key:
+  - title: Double Damage
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 567892c0029f4214c9f52b55b76d4c4f, type: 2}
@@ -106,7 +116,8 @@ MonoBehaviour:
       Doubles the amount of damage done by the
       next damaging effect. If there are more than 1 damaging effects being applied,
       only the first is modified.'
-  - Key:
+  - title: Disabled
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 23eac25f0ddcf694a87342b19212581c, type: 2}
@@ -114,7 +125,8 @@ MonoBehaviour:
 
 
       A disabled character may not play any cards.'
-  - Key:
+  - title: Stealth
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 054e3937185a0cf41b7264b099d2c6b5, type: 2}
@@ -123,7 +135,8 @@ MonoBehaviour:
 
       Stealthed characters may not be directly targeted.
       They lose stealth when they perform an offensive action .'
-  - Key:
+  - title: Inhibit
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: b489d7b0df32f4d4cac325baba2a39a8, type: 2}
@@ -132,7 +145,8 @@ MonoBehaviour:
 
       Guarantees that the next spell made by that character
       will fizzle.'
-  - Key:
+  - title: Drain
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 55fc0ec6651d2ee4abd5347444c1dec9, type: 2}
@@ -141,7 +155,8 @@ MonoBehaviour:
 
       Remove from targets and gain a corresponding amount
       for yourself.'
-  - Key:
+  - title: Quick
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 5ce2e581031f090468e64b6e75e49c9c, type: 2}
@@ -150,7 +165,8 @@ MonoBehaviour:
 
       Does not cost a turn card play. You can play this
       and still play all the other cards you would normally play.'
-  - Key:
+  - title: Confused
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 2787b5e273649eb4aabd48d80ce6fa22, type: 2}
@@ -159,7 +175,8 @@ MonoBehaviour:
 
       Confused characters may not choose targets. Card
       effects will be targeted randomly.'
-  - Key:
+  - title: Dodge
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
@@ -167,7 +184,8 @@ MonoBehaviour:
 
 
       Prevent the next action damage that would be received.'
-  - Key:
+  - title: Aegis
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
@@ -175,3 +193,13 @@ MonoBehaviour:
 
 
       Prevent the next harmful effect that would be received.'
+  - title: Lifesteal
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 8aee5857c9a3d794a8f461309134108c, type: 2}
+    Value: '<b>Lifesteal</b>
+
+
+      Next time you deal damage, heal yourself for
+      a portion of the amount dealt.'

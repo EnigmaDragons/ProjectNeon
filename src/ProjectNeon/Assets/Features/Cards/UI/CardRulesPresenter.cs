@@ -51,6 +51,7 @@ public class CardRulesPresenter : MonoBehaviour
                     PlayerStatType.CardCycles.ToString(),
                     TemporalStatType.Disabled.ToString(),
                     TemporalStatType.Stealth.ToString(),
+                    TemporalStatType.Lifesteal.ToString(),
                     TemporalStatType.Confused.ToString());
             });
 
