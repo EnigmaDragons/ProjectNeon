@@ -16,7 +16,7 @@ public class Hero
         this.character = character;
         this.deck = deck;
         levels = new HeroLevels();
-        equipment = new HeroEquipment(character.Class);
+        equipment = new HeroEquipment(character.Archetypes.ToArray());
         health = new HeroHealth(() => Stats);
     }
 

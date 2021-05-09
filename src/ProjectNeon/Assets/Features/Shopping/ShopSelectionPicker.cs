@@ -48,7 +48,7 @@ public class ShopSelectionPicker
                 groups[rarity][slot] = 0;
             groups[rarity][slot]++;
         });
-        return groups.SelectMany(r => r.Value.SelectMany(s => equipmentPool.Random(s.Key, r.Key, partyClasses, s.Value))).ToArray();
+        return groups.SelectMany(r => r.Value.SelectMany(s => equipmentPool.Random(s.Key, r.Key, party.BaseHeroes, s.Value))).ToArray();
     }
 
     public ShopSelection GenerateCardSelection(ShopCardPool cards, int numCards)

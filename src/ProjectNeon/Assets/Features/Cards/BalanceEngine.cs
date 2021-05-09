@@ -7,8 +7,9 @@ public class BalanceEngine
     private static readonly Dictionary<Rarity, float> RarityWorthFactor = new Dictionary<Rarity, float>
     {
         { Rarity.Starter, 0.8f },
-        { Rarity.Common, 1.0f},
-        { Rarity.Uncommon, 1.2f},
+        { Rarity.Basic, 1.0f },
+        { Rarity.Common, 1.2f},
+        { Rarity.Uncommon, 1.5f},
         { Rarity.Rare, 1.8f},
         { Rarity.Epic, 2.5f}
     };
@@ -16,6 +17,7 @@ public class BalanceEngine
     private static readonly Dictionary<Rarity, float> RarityFlatStat = new Dictionary<Rarity, float>
     {
         { Rarity.Starter, 10f },
+        { Rarity.Basic, 10f },
         { Rarity.Common, 11f},
         { Rarity.Uncommon, 12f},
         { Rarity.Rare, 13f},
@@ -26,6 +28,7 @@ public class BalanceEngine
     private static readonly Dictionary<Rarity, float> RarityPrimaryStat = new Dictionary<Rarity, float>
     {
         { Rarity.Starter, 10f },
+        { Rarity.Basic, 10f },
         { Rarity.Common, 11f},
         { Rarity.Uncommon, 12f},
         { Rarity.Rare, 13f},
@@ -35,6 +38,7 @@ public class BalanceEngine
     private static readonly Dictionary<Rarity, float> RaritySecondaryStat = new Dictionary<Rarity, float>
     {
         { Rarity.Starter, 8f },
+        { Rarity.Basic, 8f },
         { Rarity.Common, 9f},
         { Rarity.Uncommon, 9f},
         { Rarity.Rare, 10f},

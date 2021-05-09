@@ -5,6 +5,7 @@ public class DefaultRarityFactors : RarityFactors
     public static readonly Dictionary<Rarity, int> Value = new Dictionary<Rarity, int>
     {
         { Rarity.Starter, 8 },
+        { Rarity.Basic, 0 },
         { Rarity.Common, 80 },
         { Rarity.Uncommon, 24 },
         { Rarity.Rare, 6 },

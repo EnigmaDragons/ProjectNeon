@@ -3,20 +3,20 @@ using NUnit.Framework;
 public class BalanceEngineTests
 {
     [Test]
-    public void BalanceEngine_CommonGain3Energy_IsBalanced() 
+    public void BalanceEngine_BasicGain3Energy_IsBalanced() 
         => AssertIsBalanced(new InMemoryCard
         {
             Name = "Energize",
-            Rarity = Rarity.Common,
+            Rarity = Rarity.Basic,
             Gain = new InMemoryResourceAmount(3, "Energy")
         });
 
     [Test]
-    public void BalanceEngine_CommonScalingAttack_IsBalanced() 
+    public void BalanceEngine_BasicScalingAttack_IsBalanced() 
         => AssertIsBalanced(new InMemoryCard
         {
             Name = "Slash",
-            Rarity = Rarity.Common,
+            Rarity = Rarity.Basic,
             ActionSequences = new[] { CardActionSequence.Create(
                 Scope.One, Group.Opponent,
                 TestableObjectFactory.Create<CardActionsData>()

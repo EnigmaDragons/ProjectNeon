@@ -5,6 +5,7 @@ using System.Linq;
 public enum Rarity
 {
     Starter = 0, // Simple cards, 0.8x power level
+    Basic = 5, // Character Specific Card 1.0x power level
     Common = 1, // Normal power level
     Uncommon = 2, // 1.2x power level, slightly more complex
     Rare = 3, // 1.5x power level, some unique mechanics and more complex cards

@@ -12,8 +12,7 @@ public class EquipmentReward : StoryResult
 
     public override void Apply(StoryEventContext ctx)
     {
-        var equipment = ctx.EquipmentPool.Random(slot, rarity, 
-            new HashSet<string>(ctx.Party.BaseHeroes.Select(h => h.Class.Name).Concat(CharacterClass.All)));
+        var equipment = ctx.EquipmentPool.Random(slot, rarity, ctx.Party.BaseHeroes);
         ctx.Party.Add(equipment);
         Message.Publish(new ShowGainedEquipment(equipment));
     }

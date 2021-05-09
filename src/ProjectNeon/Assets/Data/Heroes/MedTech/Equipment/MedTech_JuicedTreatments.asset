@@ -19,6 +19,8 @@ MonoBehaviour:
   priceFactor: 1
   canUseClasses:
   - {fileID: 11400000, guid: a6db77c3bda412d42b6a422b91d39c05, type: 2}
+  archetypes:
+  - {fileID: 11400000, guid: 27cbd856049e7604cb797c63cb6ff475, type: 2}
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -55,8 +57,13 @@ MonoBehaviour:
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReactionConditionType: 15
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
       scope: 3
       cardActions: {fileID: 11400000, guid: 30dff0f38250a534e8caeac70a849757, type: 2}
+    BonusCardType: {fileID: 0}

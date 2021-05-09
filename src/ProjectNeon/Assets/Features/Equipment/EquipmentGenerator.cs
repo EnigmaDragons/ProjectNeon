@@ -122,7 +122,7 @@ public class EquipmentGenerator
             Name = name,
             Rarity = rarity,
             Price = CardShopPricing.EquipmentShopPrice(rarity, 1f),
-            Classes = new [] { CharacterClass.All },
+            Archetypes = new string[0],
             Description = description,
             Modifiers = modifiers.ToArray(),
             Slot = slot

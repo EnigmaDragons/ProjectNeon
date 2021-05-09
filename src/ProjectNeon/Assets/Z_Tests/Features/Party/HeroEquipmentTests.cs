@@ -6,27 +6,27 @@ public class HeroEquipmentTests
     [Test]
     public void HeroEquipment_New_NoEquipment()
     {
-        var heroEquipment = new HeroEquipment(TestClasses.Soldier);
+        var heroEquipment = new HeroEquipment();
         
         Assert.AreEqual(0, heroEquipment.All.Length);
     }
     
     [Test]
-    public void HeroEquipment_CanEquipForNonMatchingClass_IsFalse()
+    public void HeroEquipment_CanEquipForNonMatchingArchetype_IsFalse()
     {
-        var heroEquipment = new HeroEquipment(TestClasses.Soldier);
+        var heroEquipment = new HeroEquipment("soldier");
 
-        var sword = new InMemoryEquipment().Initialized(TestClasses.Paladin);
+        var sword = new InMemoryEquipment().Initialized("paladin");
         
         Assert.IsFalse(heroEquipment.CanEquip(sword));
     }
     
     [Test]
-    public void HeroEquipment_CanEquipForMatchingClass_IsTrue()
+    public void HeroEquipment_CanEquipForMatchingArchetype_IsTrue()
     {
-        var heroEquipment = new HeroEquipment(TestClasses.Soldier);
+        var heroEquipment = new HeroEquipment("soldier");
 
-        var gun = new InMemoryEquipment().Initialized(TestClasses.Soldier);
+        var gun = new InMemoryEquipment().Initialized("soldier");
         
         Assert.IsTrue(heroEquipment.CanEquip(gun));
     }
@@ -34,8 +34,8 @@ public class HeroEquipmentTests
     [Test]
     public void HeroEquipment_EquipWeapon_IsEquipped()
     {
-        var heroEquipment = new HeroEquipment(TestClasses.Soldier);
-        var gun = new InMemoryEquipment().Initialized(TestClasses.Soldier);
+        var heroEquipment = new HeroEquipment("soldier");
+        var gun = new InMemoryEquipment().Initialized("soldier");
         
         heroEquipment.Equip(gun);
 
@@ -45,7 +45,7 @@ public class HeroEquipmentTests
     [Test]
     public void HeroEquipment_UnequipAugmentWhenHasTwoCopies_StillHasOneEquipped()
     {
-        var heroEquipment = new HeroEquipment(TestClasses.Soldier);
+        var heroEquipment = new HeroEquipment("soldier");
         var augment = new InMemoryEquipment { Slot = EquipmentSlot.Augmentation };
         
         heroEquipment.Equip(augment);
