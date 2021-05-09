@@ -11,6 +11,7 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
     [SerializeField] private TextMeshPro nameLabel;
     [SerializeField] private DamageNumbersController numbers;
     [SerializeField] private CharacterWordsController words;
+    [SerializeField] private OnlyShowWhenHovered hoverReveal;
 
     private Member _member;
 
@@ -30,6 +31,7 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
             resourceCounter2.Initialized(m);
         statusBar.Initialized(m);
         nameLabel.text = m.Name.WithSpaceBetweenWords();
+        hoverReveal.Initialized(m);
         return this;
     }
     
