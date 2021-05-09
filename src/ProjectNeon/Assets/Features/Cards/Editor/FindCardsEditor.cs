@@ -34,6 +34,9 @@ public class FindCardsEditor : EditorWindow
     
     // By Card Type Description
     private string _cardTypeDescription;
+    
+    // By Archetype 
+    private string _archetype;
 
     void OnGUI()
     {
@@ -51,6 +54,22 @@ public class FindCardsEditor : EditorWindow
         }
         DrawUILine();
 
+        var raritySortOrder = new List<Rarity> {Rarity.Basic, Rarity.Starter, Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic};
+        static string WipWord(bool isWip) => isWip ? "WIP - " : "";
+        _archetype = GUILayout.TextField(_archetype);
+        if (GUILayout.Button("Find By Archetype"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(c => c.ArchetypeKey.Equals(_archetype))
+                .OrderBy(e => e.IsWip ? 99 : 0)
+                .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
+                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .ToArray();
+            ShowCards($"Archetype {_archetype}", cards);
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
         if (GUILayout.Button("Show All Unused Effects"))
         {
             var zeroUsageResults = Enum.GetValues(typeof(EffectType)).Cast<EffectType>()
