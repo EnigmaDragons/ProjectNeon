@@ -39,7 +39,6 @@ public class CardTypeEditor : Editor
         PresentUnchanged(typeDescription);
         PresentUnchanged(archetypes);
         PresentUnchanged(rarity);
-        PresentUnchanged(isWip);
         DrawUILine(Color.black);
         PresentUnchanged(speed);
         PresentUnchanged(cost);
@@ -49,6 +48,7 @@ public class CardTypeEditor : Editor
         DrawUILine(Color.black);
         PresentUnchanged(tags);
         DrawUILine(Color.black);
+        PresentUnchanged(isWip);
         PresentUnchanged(functionalityIssues);
         PresentUnchanged(presentationIssues);
     }

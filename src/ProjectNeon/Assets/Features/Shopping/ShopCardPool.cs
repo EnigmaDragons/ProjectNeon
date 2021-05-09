@@ -8,7 +8,7 @@ public class ShopCardPool : ScriptableObject
 {
     //public so editor script can access
     public StringVariable[] archetypes;
-    public Rarity[] includedRarities;
+    public Rarity[] includedRarities = new Rarity[] {Rarity.Starter, Rarity.Basic, Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic};
     [SerializeField] private List<ShopCardPool> subPools;
     [UnityEngine.UI.Extensions.ReadOnly] public List<CardType> allCards;
 
