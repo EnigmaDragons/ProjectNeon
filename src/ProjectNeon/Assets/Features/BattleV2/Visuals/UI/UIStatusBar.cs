@@ -11,6 +11,7 @@ public sealed class UIStatusBar : StatusBar
     
     private void Awake()
     {
+        gameObject.DestroyAllChildren();
         Enumerable.Range(0, 8).ForEach(_ => _icons.Add(Instantiate(iconPrototype, transform)));
         UpdateStatuses(new List<CurrentStatusValue>());
     }
