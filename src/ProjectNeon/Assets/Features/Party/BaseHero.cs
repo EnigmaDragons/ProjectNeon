@@ -15,7 +15,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private Deck startingDeck;
     [SerializeField] private Color tint;
     [SerializeField] private int startingCredits = 100;
-    
+
     // Stats
     [SerializeField] private int maxHp = 40;
     [SerializeField] private int maxShield = 12;
@@ -68,4 +68,22 @@ public class BaseHero : ScriptableObject, HeroCharacter
         .With(StatType.Leadership, leadership)
         .With(StatType.Damagability, 1f)
         .With(StatType.Healability, 1f);
+    
+    public HashSet<string> ArchetypeKeys
+    {
+        get
+        {
+            var archetypes = Archetypes.ToList();
+            var archetypeKeys = new HashSet<string>();
+            // Singles
+            archetypes.ForEach(a => archetypeKeys.Add(a));
+            // Duals
+            archetypes.Permutations(2)
+                .Select(p => string.Join(" + ", p))
+                .ForEach(a => archetypeKeys.Add(a));
+            // Triple
+            archetypeKeys.Add(string.Join(" + ", archetypes));
+            return archetypeKeys;
+        }
+    }
 }

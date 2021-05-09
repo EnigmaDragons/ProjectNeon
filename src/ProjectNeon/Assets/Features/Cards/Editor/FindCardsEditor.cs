@@ -37,7 +37,13 @@ public class FindCardsEditor : EditorWindow
     
     // By Archetype 
     private string _archetype;
+    
+    // By Set of Archetypes
+    private string _archetypesString;
 
+    // By Hero
+    private string _heroString;
+    
     void OnGUI()
     {
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
@@ -148,6 +154,52 @@ public class FindCardsEditor : EditorWindow
                 .Select(e => e.name)
                 .ToArray();
             ShowCards($"Card Type Description Is {_searchString}", cards);
+            GUIUtility.ExitGUI();
+        }
+        
+        _archetypesString = GUILayout.TextField(_archetypesString);
+        if (GUILayout.Button("Find By Set of Comma-Separated Archetypes"))
+        {
+            var archetypes = _archetypesString.Split(',').Select(s => s.Trim()).ToList();
+            var archetypeKeys = new HashSet<string>();
+            
+            // Singles
+            archetypes.ForEach(a => archetypeKeys.Add(a));
+            // Duals
+            archetypes.Permutations(2).Select(p => string.Join(" + ", p))
+                .ForEach(a => archetypeKeys.Add(a));
+            // Triple
+            archetypeKeys.Add(string.Join(" + ", archetypes));
+
+            var cards = GetAllInstances<CardType>()
+                .Where(c => archetypeKeys.Contains(c.ArchetypeKey))
+                .OrderBy(e => e.IsWip ? 99 : 0)
+                .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
+                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .ToArray();
+            ShowCards($"Archectype Set Is {_archetypesString}. Total Cards: {cards.Length}", cards);
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        _heroString = GUILayout.TextField(_heroString);
+        if (GUILayout.Button("Find By Hero"))
+        {
+            var heroes = GetAllInstances<BaseHero>()
+                .Where(h => h.Name.Equals(_heroString, StringComparison.InvariantCultureIgnoreCase));
+            if (!heroes.Any())
+                GUIUtility.ExitGUI();
+
+            var hero = heroes.First();
+            var archetypeKeys = hero.ArchetypeKeys;
+
+            var cards = GetAllInstances<CardType>()
+                .Where(c => archetypeKeys.Contains(c.ArchetypeKey))
+                .OrderBy(e => e.IsWip ? 99 : 0)
+                .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
+                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .ToArray();
+            ShowCards($"Hero {_heroString}. Total Cards: {cards.Length}", cards);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
