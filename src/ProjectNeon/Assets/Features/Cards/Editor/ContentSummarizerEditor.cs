@@ -30,7 +30,7 @@ namespace Features.Cards.Editor
                     .ToArray();
 
                 GetWindow<ListDisplayWindow>()
-                    .Initialized($"Cards By Class", "", result)
+                    .Initialized($"Cards By Archetype", "", result)
                     .Show();
                 GUIUtility.ExitGUI();
             }
