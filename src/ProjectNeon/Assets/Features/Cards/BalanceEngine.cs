@@ -86,15 +86,15 @@ public class BalanceEngine
     {
         var targetPower = RarityWorthFactor.VerboseGetValue(c.Rarity, "Rarity") + ResourceValue(c.Cost);
         var resourceGainValue = ResourceValue(c.Gain);
-        var effectPowerLevel = c.ActionSequences.Sum(a => PowerLevel(c.Rarity, c.LimitedToClass, a));
+        var effectPowerLevel = c.ActionSequences.Sum(a => PowerLevel(c.Rarity, a));
         var actualPower = resourceGainValue + effectPowerLevel;
         return new BalanceAssessment(c.Name, targetPower, actualPower);
     }
 
-    private static float PowerLevel(Rarity r, Maybe<CharacterClass> c, CardActionSequence seq)
+    private static float PowerLevel(Rarity r, CardActionSequence seq)
     {
         var battleEffects = seq.CardActions.BattleEffects;
-        var effectPowerLevel = battleEffects.Sum(b => PowerLevel(seq.Scope, seq.Group, r, c, b));
+        var effectPowerLevel = battleEffects.Sum(b => PowerLevel(seq.Scope, seq.Group, r, b));
         return effectPowerLevel;
     }
     
@@ -112,13 +112,10 @@ public class BalanceEngine
         return isDamage ? new[] {BalanceTag.Damage} : new BalanceTag[0];
     }
 
-    private static float PowerLevel(Scope s, Group g, Rarity r, Maybe<CharacterClass> c, EffectData e)
+    private static float PowerLevel(Scope s, Group g, Rarity r, EffectData e)
     {
         var scopeFactor = ScopeFactor(s, g, ImpliedBalanceTags(e));
         var effectValue = 1f;
         return effectValue * scopeFactor;
     }
-
-    private static bool IsPrimaryStat(Maybe<CharacterClass> c, StatType s)
-        => c.IsPresent ? c.Value.PrimaryStat == s : true;
 }

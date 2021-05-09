@@ -4,19 +4,19 @@ using System.Linq;
 public sealed class BattleStateSnapshot
 {
     public BattleV2Phase Phase { get; }
-    public List<CardTypeData[]> PlayedCardHistory { get; }
+    public List<PlayedCardSnapshot[]> PlayedCardHistory { get; }
     public Dictionary<int, MemberSnapshot> Members { get; }
 
     public BattleStateSnapshot(params MemberSnapshot[] snapshots) 
-        : this(BattleV2Phase.NotBegun, new List<CardTypeData[]>(), snapshots.ToDictionary(m => m.Id, m => m)) {}
+        : this(BattleV2Phase.NotBegun, new List<PlayedCardSnapshot[]>(), snapshots.ToDictionary(m => m.Id, m => m)) {}
     
     public BattleStateSnapshot(BattleV2Phase phase, params MemberSnapshot[] snapshots) 
-        : this(phase, new List<CardTypeData[]>(), snapshots.ToDictionary(m => m.Id, m => m)) {}
+        : this(phase, new List<PlayedCardSnapshot[]>(), snapshots.ToDictionary(m => m.Id, m => m)) {}
     
-    public BattleStateSnapshot(BattleV2Phase phase, List<CardTypeData[]> playedCardHistory, params MemberSnapshot[] snapshots) 
+    public BattleStateSnapshot(BattleV2Phase phase, List<PlayedCardSnapshot[]> playedCardHistory, params MemberSnapshot[] snapshots) 
         : this(phase, playedCardHistory, snapshots.ToDictionary(m => m.Id, m => m)) {}
     
-    public BattleStateSnapshot(BattleV2Phase phase, List<CardTypeData[]> playedCardHistory, Dictionary<int, MemberSnapshot> members)
+    public BattleStateSnapshot(BattleV2Phase phase, List<PlayedCardSnapshot[]> playedCardHistory, Dictionary<int, MemberSnapshot> members)
     {
         Phase = phase;
         PlayedCardHistory = playedCardHistory;

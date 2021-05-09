@@ -7,7 +7,7 @@ public class HeroLevelUpTests
     {
         var hero = new Hero(new InMemoryHeroCharacter
         {
-            Class = TestClasses.Soldier,
+            Class = "soldier",
             Stats = new StatAddends()
                 .With(StatType.Damagability, 1)
                 .With(StatType.MaxHP, 10)
@@ -25,7 +25,7 @@ public class HeroLevelUpTests
     {
         var hero = new Hero(new InMemoryHeroCharacter
         {
-            Class = TestClasses.Soldier,
+            Class = "soldier",
             Stats = new StatAddends()
                 .With(StatType.Damagability, 1)
                 .With(StatType.MaxHP, 10)
@@ -53,7 +53,7 @@ public class HeroLevelUpTests
     {
         var hero = new Hero(new InMemoryHeroCharacter
         {
-            Class = TestClasses.Soldier,
+            Class = "soldier",
             Stats = new StatAddends()
                 .With(StatType.Damagability, 1)
                 .With(StatType.MaxHP, 10)

@@ -21,7 +21,7 @@ public class Hero
     }
 
     public string Name => character.Name;
-    public CharacterClass Class => character.Class;
+    public string Class => character.Class;
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
     public int CurrentHp => Stats.MaxHp() - health.MissingHp;
@@ -61,14 +61,14 @@ public class Hero
     public Member AsMemberForTests(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, stats, Character.Class.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp);
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp, Character.ClassCard);
         return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext()));
     }
 
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class.Name, TeamType.Party, stats, Character.Class.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp);
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp, Character.ClassCard);
         return m;
     }
 

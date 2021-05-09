@@ -15,10 +15,10 @@ namespace Features.Cards.Editor
         
         void OnGUI()
         {
-            if (GUILayout.Button("Cards By Class"))
+            if (GUILayout.Button("Cards By Archetypes"))
             {
                 var result = GetAllInstances<CardType>()
-                    .GroupBy(x => x.LimitedToClass.Select(c => c.Name, "Enemy"))
+                    .GroupBy(x => string.Join(" + ", x.Archetypes.OrderBy(a => a)))
                     .ToDictionary(
                         x => x.Key, // By Class 
                         x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
@@ -38,7 +38,7 @@ namespace Features.Cards.Editor
             if (GUILayout.Button("Cards By Cost"))
             {
                 var result = GetAllInstances<CardType>()
-                    .GroupBy(x => x.LimitedToClass.Select(c => c.Name, "Enemy"))
+                    .GroupBy(x => string.Join(" + ", x.Archetypes.OrderBy(a => a)))
                     .ToDictionary(
                         x => x.Key, // By Class 
                         x => x.GroupBy(g => (g.Cost.ToString(), g.Cost.BaseAmount)).OrderBy(r => r.Key.BaseAmount) // By Cost
@@ -58,7 +58,7 @@ namespace Features.Cards.Editor
             if (GUILayout.Button("Cards By Type"))
             {
                 var result = GetAllInstances<CardType>()
-                    .GroupBy(x => x.LimitedToClass.Select(c => c.Name, "Enemy"))
+                    .GroupBy(x => string.Join(" + ", x.Archetypes.OrderBy(a => a)))
                     .ToDictionary(
                         x => x.Key, // By Class 
                         x => x.GroupBy(g => g.TypeDescription).OrderBy(r => r.Key) // By Type
