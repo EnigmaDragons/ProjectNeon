@@ -65,7 +65,8 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
                 Seconds = request.Seconds, 
                 MovementType = request.MovementType, 
                 MovementName = request.MovementName,
-                Dimension = request.Dimension
+                Dimension = request.Dimension,
+                UseScaledTime = request.UseScaledTime
             });
     }
 
@@ -126,10 +127,11 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
                 continue;
 
             var beforeT = movement.T;
+            var deltaTime = movement.UseScaledTime ? Time.deltaTime : Time.unscaledDeltaTime;
             if (movement.Reverse)
-                movement.T = Math.Max(0, beforeT - Time.deltaTime / movement.Seconds);
+                movement.T = Math.Max(0, beforeT - deltaTime / movement.Seconds);
             else
-                movement.T = Math.Min(1, beforeT + Time.deltaTime / movement.Seconds);
+                movement.T = Math.Min(1, beforeT + deltaTime / movement.Seconds);
             var afterT = movement.T;
             var beforeDistance = movement.RelativeDistance * EaseInOutCubic(beforeT);
             var afterDistance = movement.RelativeDistance * EaseInOutCubic(afterT);
@@ -152,6 +154,7 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
         public TweenMovementType MovementType;
         public string MovementName;
         public MovementDimension Dimension;
+        public bool UseScaledTime = true;
         
         public float T;
         public bool Reverse;

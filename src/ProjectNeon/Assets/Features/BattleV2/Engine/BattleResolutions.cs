@@ -162,7 +162,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         if (reactionCard.IsPlayableBy(r.Source))
         {
             BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
-            Message.Publish(new PlayRawBattleEffect("ReactionText"));
+            Message.Publish(new DisplayCharacterWordRequested(r.Source, "Reaction!"));
             var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
             reactionZone.PutOnBottom(card);
             currentResolvingCardZone.Set(card);
