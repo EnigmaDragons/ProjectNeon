@@ -14,7 +14,7 @@ public class SelectHeroButton : MonoBehaviour
     public void Init(HeroesDeck heroesDeck)
     {
         _heroesDeck = heroesDeck;
-        image.sprite = _heroesDeck.Hero.Bust;
+        image.sprite = _heroesDeck.Hero.Character.Bust;
     }
 
     public void SelectHero()

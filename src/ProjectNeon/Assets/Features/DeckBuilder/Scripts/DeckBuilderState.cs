@@ -10,6 +10,7 @@ public class DeckBuilderState : ScriptableObject
     public bool ShowFormulas { get; set; }
     public Rarity[] ShowRarities { get; set; }
     public string[] ShowArchetypes { get; set; }
+    public EquipmentSlot[] ShowEquipmentSlots { get; set; }
 
     public HeroesDeck SelectedHeroesDeck
     {

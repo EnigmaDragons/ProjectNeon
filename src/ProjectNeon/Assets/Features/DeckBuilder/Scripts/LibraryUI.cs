@@ -18,8 +18,8 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
 
     private void GenerateLibrary()
     {
-        var heroChanged = state.SelectedHeroesDeck.Hero != _selectedHero;
-        _selectedHero = state.SelectedHeroesDeck.Hero;
+        var heroChanged = state.SelectedHeroesDeck.Hero.Character != _selectedHero;
+        _selectedHero = state.SelectedHeroesDeck.Hero.Character;
         var cardsForHero = partyCards.AllCards
             .Where(cardWithCount => cardWithCount.Key.Archetypes.All(archetype => _selectedHero.Archetypes.Contains(archetype)) 
                 && (state.ShowRarities.None() 
