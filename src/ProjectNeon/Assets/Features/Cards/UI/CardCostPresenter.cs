@@ -17,7 +17,7 @@ public class CardCostPresenter : MonoBehaviour
         if (hasCost)
         {
             costLabel.text = CostLabel(c, cost);
-            costResourceTypeIcon.sprite = cost.ResourceType.Name.Equals("PrimaryResource") 
+            costResourceTypeIcon.sprite = c != null && cost.ResourceType.Name.Equals("PrimaryResource") 
                 ? c.Owner.State.PrimaryResource.Icon 
                 : cost.ResourceType.Icon;
         }
