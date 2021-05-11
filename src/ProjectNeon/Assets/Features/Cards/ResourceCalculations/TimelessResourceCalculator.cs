@@ -6,7 +6,8 @@ public static class TimelessResourceCalculator
     public static ResourceCalculations CalculateResources(this CardTypeData card, MemberState member) 
         => CalculateResources(card.Cost, card.Gain, member);
     public static ResourceCalculations CalculateResources(IResourceAmount cost, IResourceAmount gain, MemberState member)
-        => new ResourceCalculations(cost.ResourceType, ResourcesPaid(cost, member), gain.ResourceType, ResourcesGained(gain, member), XAmountPaid(cost, member), XAmountPaid(cost, member));
+        => new ResourceCalculations(cost.ResourceType.Name.Equals("PrimaryResource") ? member.PrimaryResource : cost.ResourceType, 
+            ResourcesPaid(cost, member), gain.ResourceType, ResourcesGained(gain, member), XAmountPaid(cost, member), XAmountPaid(cost, member));
 
     public static ResourceCalculations ClampResources(this ResourceCalculations calculations, Member member)
         => new ResourceCalculations(

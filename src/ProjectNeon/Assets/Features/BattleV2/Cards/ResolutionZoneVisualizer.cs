@@ -39,7 +39,7 @@ public class ResolutionZoneVisualizer : MonoBehaviour
         {
             Log.Info("No Resolution Zone cards.");
             _card = Maybe<Card>.Missing();
-            DestroyImmediate(_lastCard.gameObject);
+            Clear();
         }
         else if (_card.Select(c => c.Id, -1) != zone.Cards.First().Id)
         {
@@ -47,15 +47,20 @@ public class ResolutionZoneVisualizer : MonoBehaviour
             Show(zone.Cards.First());
         }
     }
-
+    
     void Show(Card c)
     {
-        if (_lastCard != null)
-            DestroyImmediate(_lastCard);
+        Clear();
         
         _lastCard = Instantiate(cardProto, transform);
         _lastCard.Set(c);
         _lastCard.transform.localScale = startingScale;
         Message.Publish(new TweenMovementRequested(_lastCard.transform, animScaleAmount, 0.6f, MovementDimension.Scale, TweenMovementType.GoTo, "Resolving Card"));
+    }
+    
+    private void Clear()
+    {
+        if (_lastCard != null)
+            DestroyImmediate(_lastCard.gameObject);
     }
 }

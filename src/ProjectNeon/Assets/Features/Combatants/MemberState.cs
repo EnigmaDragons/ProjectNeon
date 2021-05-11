@@ -63,6 +63,9 @@ public sealed class MemberState : IStats
 
         baseStats.ResourceTypes?.ForEach(r =>
             _counters[r.Name] = new BattleCounter(r.Name, r.StartingAmount, () => r.MaxAmount));
+        if (baseStats.ResourceTypes.Length > 0)
+            _counters["PrimaryResource"] = _counters[baseStats.ResourceTypes[0].Name];
+        
         _counters[TemporalStatType.Phase.ToString()].Set(1);
         _counters["None"] = new BattleCounter("None", 0, () => 0);
         _counters[""] = new BattleCounter("", 0, () => 0);
@@ -306,7 +309,7 @@ public sealed class MemberState : IStats
     public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
     public void AdjustPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
     public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType, qty.Amount);
-    public void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
+    private void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
     public StatType PrimaryStat => _primaryStat; 
