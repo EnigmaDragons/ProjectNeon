@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Pyromancer_Ignition_E1
+  m_Name: Affliction_SoulBurn_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -51,7 +51,6 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
-        avoidance: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
     conditionData:
@@ -70,43 +69,44 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 827ee69f817df7e479315afc06a743db, type: 2}
+        Variable: {fileID: 11400000, guid: c280ce9d79081424a93be4b8b7944371, type: 2}
       size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 1, g: 0.51692384, b: 0, a: 1}
+        ConstantValue: {r: 0.4129634, g: 0, b: 1, a: 1}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 31
+      EffectType: 54
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0.8
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: -1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      StatusTag: 0
+      StatusTag: 7
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.8 * Magic
+      Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: b991dc72d96684e48bed978127b58ffd, type: 2}
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -116,7 +116,6 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
-        avoidance: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
     conditionData:
@@ -143,68 +142,4 @@ MonoBehaviour:
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
-  - type: 20
-    battleEffect:
-      EffectType: 0
-      BaseAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 0
-      Formula: 
-      FlavorText:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        avoidance: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
-    conditionData:
-      ConditionType: 7
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedEffect: {fileID: 11400000, guid: 0c630672f00a1cd45b3a531753dcf9d5, type: 2}
-    characterAnimation: {fileID: 0}
-    atTargetAnimation:
-      animation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      size: 1
-      speed: 1
-      color:
-        UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
-        Variable: {fileID: 0}
-    enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
