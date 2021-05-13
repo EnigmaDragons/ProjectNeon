@@ -27,6 +27,10 @@ public static class CardTypeDataExtensions
     public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c);
 
     public static IEnumerable<EffectData> BattleEffects(this CardTypeData c) => c.ActionSequences.SelectMany(a => a.CardActions.BattleEffects);
+    
+    public static IEnumerable<ActionConditionData> Conditions(this CardTypeData c) => c.ActionSequences
+        .SelectMany(a => a.CardActions.Actions.Where(x => x.Type == CardBattleActionType.Condition)
+            .Select(x => x.ConditionData));
 
     public static IEnumerable<EffectData> ReactionBattleEffects(this CardTypeData card) 
         => card.Actions()
