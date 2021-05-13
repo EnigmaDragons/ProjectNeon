@@ -28,7 +28,7 @@ public static class InterpolatedCardDescriptions
             var conditionalBattleEffects = card.Actions()
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
                 .SelectMany(b => b.ConditionData.ReferencedEffect.BattleEffects);
-                        
+
             return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), owner, xCost, card.ChainedCard);
         }
         catch (Exception e)
