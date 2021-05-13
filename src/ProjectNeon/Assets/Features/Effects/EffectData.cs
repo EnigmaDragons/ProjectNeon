@@ -17,6 +17,7 @@ public sealed class EffectData
     public IntReference NumberOfTurns = new IntReference(0);
     public StringReference EffectScope = new StringReference { UseConstant = false };
     public bool HitsRandomTargetMember;
+    public bool TargetsSource;
     
     public StatusDetail StatusDetail => new StatusDetail(StatusTag, string.IsNullOrWhiteSpace(StatusDetailText) ? Maybe<string>.Missing() : StatusDetailText);
     public StatusTag StatusTag;

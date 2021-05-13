@@ -8,7 +8,7 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(EffectData))]
 public class EffectDataEditor : PropertyDrawer
 {
-    private List<string> _globalProperties = new List<string> { "TurnDelay" };
+    private List<string> _globalProperties = new List<string> { "TurnDelay", "TargetsSource" };
     
     private DictionaryWithDefault<EffectType, string[]> _relevantProperties = new DictionaryWithDefault<EffectType, string[]>(new string[] { "BaseAmount", "FloatAmount", "NumberOfTurns", "HitsRandomTargetMember" })
     {

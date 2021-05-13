@@ -104,7 +104,9 @@ public static class AllEffects
             DevLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
             if (effectData.TurnDelay > 0)
                 BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
-            effect.Apply(ctx);
+            var updateTarget = effectData.TargetsSource ? new Single(ctx.Source) : ctx.Target;
+            var updatedContext = ctx.Retargeted(ctx.Source, updateTarget);
+            effect.Apply(updatedContext);
         }
         catch (Exception e)
         {
