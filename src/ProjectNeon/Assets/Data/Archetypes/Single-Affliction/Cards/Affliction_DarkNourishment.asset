@@ -10,31 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Affliction_Retraumatize
+  m_Name: Affliction_DarkNourishment
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: 34b1fd4f79c0f3c4fa6680203614ac21, type: 3}
-  description: Apply an extra fresh copy of every Damage Over Time effect.
-  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  art: {fileID: 21300000, guid: 93148d9741cdad245b5e0c1f713cfe16, type: 3}
+  description: 
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   cost:
-    cost: 2
+    cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 2
+  rarity: 3
   actionSequences:
   - scope: 1
     group: 1
-    cardActions: {fileID: 11400000, guid: 9cc6944c8ea211e4fb2030b2a53664b0, type: 2}
+    cardActions: {fileID: 0}
     repeatX: 0
   chainedCard: {fileID: 0}
-  functionalityIssues: 
+  functionalityIssues: Need to evalution condition separate for each member of the
+    target group
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
-  isWIP: 0
+  isWIP: 1
