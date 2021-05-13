@@ -19,5 +19,6 @@ public enum ReactionConditionType
     OnAegised = 31,
     OnNearDeath = 32,
     OnAllyDeath = 33,
+    OnAfflicted = 34,
     OnDeath = 99,
 }

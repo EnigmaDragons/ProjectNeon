@@ -99,6 +99,12 @@ public static class CollectionExtensions
         if (condition)
             items.Add(item);
     }
+    
+    public static void AddIf<T>(this HashSet<T> items, T item, bool condition)
+    {
+        if (condition)
+            items.Add(item);
+    }
 
     public static Maybe<T> FirstAsMaybe<T>(this IEnumerable<T> items)
     {

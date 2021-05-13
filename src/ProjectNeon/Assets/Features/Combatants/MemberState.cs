@@ -76,7 +76,9 @@ public sealed class MemberState : IStats
     // Queries
     public MemberStateSnapshot ToSnapshot()
         => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats,
-            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount);
+            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount, 
+                new DictionaryWithDefault<StatusTag, int>(0, Enum.GetValues(typeof(StatusTag)).Cast<StatusTag>()
+                    .SafeToDictionary(s => s, s => StatusesOfType(s).Length)));
 
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
