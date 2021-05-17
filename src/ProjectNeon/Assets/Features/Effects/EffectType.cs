@@ -2,8 +2,6 @@
 // NUMBERS AVAILABLE: 39-43, 47, 48, 53, 
 // LAST NUMBER USED: 85
 
-using System;
-
 public enum EffectType
 {
     Nothing = 0,
@@ -22,7 +20,7 @@ public enum EffectType
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
     DelayedStartOfTurn = 23,
-    
+
     // Resets
     RemoveDebuffs = 4,
     ResetStatToBase = 83,

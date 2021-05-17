@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class Member 
@@ -45,6 +48,8 @@ public class Member
 public static class MemberExtensions
 {
     private static int RoundUp(float v) => Mathf.CeilToInt(v);
+
+    public static string Names(this IEnumerable<Member> members) => string.Join(", ", members.Select(m => m.Name));
     
     public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.Name, m.Class, m.TeamType, m.State.ToSnapshot());
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);
@@ -69,6 +74,7 @@ public static class MemberExtensions
     public static bool HasAttackBuff(this Member m) => m.State.DifferenceFromBase(StatType.Attack) > 0;
     public static bool HasDoubleDamage(this Member m) => m.State[TemporalStatType.DoubleDamage] > 0;
     public static bool HasTaunt(this Member m) => m.State[TemporalStatType.Taunt] > 0;
+    public static bool IsAfflicted(this Member m) => m.State.StatusesOfType(StatusTag.DamageOverTime).Length > 0;
     public static bool IsStealth(this Member m) => m.State[TemporalStatType.Stealth] > 0;
     public static bool IsConfused(this Member m) => m.State[TemporalStatType.Confused] > 0;
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);

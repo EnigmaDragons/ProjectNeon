@@ -1,6 +1,6 @@
 using System.Linq;
 
-public sealed class TargetSlainCondition : Condition
+public sealed class TargetSlainCondition : ILogicFlow
 {
     private readonly CardActionsData _effect;
 

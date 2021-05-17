@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-public class TargetIsBelowPercentageLifeCondition : Condition
+public class TargetIsBelowPercentageLifeCondition : ILogicFlow
 {
     private readonly float _percentage;
     private readonly CardActionsData _effect;

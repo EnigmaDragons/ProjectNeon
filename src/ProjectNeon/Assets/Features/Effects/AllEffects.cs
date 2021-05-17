@@ -69,8 +69,7 @@ public static class AllEffects
                 Formula.Evaluate(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount).CeilingInt())) },
         { EffectType.AdjustCardTagPrevention, e => AegisPreventable.If(
             new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)), e.BaseAmount > 0, $"Block Card Type {e.EffectScope}") },
-        { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", 
-            () => m.AdjustPrimaryResource(99))) }
+        { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", () => m.AdjustPrimaryResource(99))) }
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
@@ -106,7 +105,12 @@ public static class AllEffects
                 BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
             var updateTarget = effectData.TargetsSource ? new Single(ctx.Source) : ctx.Target;
             var updatedContext = ctx.Retargeted(ctx.Source, updateTarget);
-            effect.Apply(updatedContext);
+
+            var shouldNotApplyReason = effectData.Condition().GetShouldNotApplyReason(updatedContext);
+            if (shouldNotApplyReason.IsPresent)
+                DevLog.Write($"Did not apply {effectData.EffectType} because {shouldNotApplyReason.Value}");
+            else
+                effect.Apply(updatedContext);
         }
         catch (Exception e)
         {

@@ -4,7 +4,7 @@ using System.Linq;
 
 public class AllConditions
 {
-    private static readonly Dictionary<ActionConditionType, Func<ActionConditionData, Condition>> CreateConditionOfType = new Dictionary<ActionConditionType, Func<ActionConditionData, Condition>>
+    private static readonly Dictionary<ActionConditionType, Func<ActionConditionData, ILogicFlow>> CreateConditionOfType = new Dictionary<ActionConditionType, Func<ActionConditionData, ILogicFlow>>
     {
         { ActionConditionType.Nothing, e => new NoCondition()},
         { ActionConditionType.PerformerHasResource, e => new PerformerHasResourceCondition(e.IntAmount, e.EffectScope, e.ReferencedEffect)},
@@ -16,6 +16,7 @@ public class AllConditions
             ctx => ctx.Target.Members.All(m => m.State.HasStatus(StatusTag.DamageOverTime))) },
         { ActionConditionType.PerformerHasNoPrimaryResources, e => new SimpleCondition(e.ReferencedEffect, 
             ctx => ctx.Target.Members.All(m => m.PrimaryResourceAmount() == 0)) },
+        {ActionConditionType.ApplyToEachTargetMemberIndividually, e => new ApplyToEachTargetMemberIndividually(e.ReferencedEffect) }
     };
 
     public static IPayloadProvider Resolve(ActionConditionData conditionData, CardActionContext ctx)
@@ -25,7 +26,7 @@ public class AllConditions
         return condition.Resolve(ctx);
     }
 
-    public static Condition Create(ActionConditionData conditionData)
+    public static ILogicFlow Create(ActionConditionData conditionData)
     {
         var conditionType = conditionData.ConditionType;
         if (!CreateConditionOfType.ContainsKey(conditionType))

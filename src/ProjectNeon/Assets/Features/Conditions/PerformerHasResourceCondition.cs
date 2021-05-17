@@ -1,4 +1,4 @@
-﻿public class PerformerHasResourceCondition : Condition
+﻿public class PerformerHasResourceCondition : ILogicFlow
 {
     private readonly int _amount;
     private readonly string _resource;

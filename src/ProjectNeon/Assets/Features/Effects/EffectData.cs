@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,6 +9,7 @@ public sealed class EffectData
     public static readonly EffectData Nothing = new EffectData(); 
     
     public EffectType EffectType;
+    public StaticEffectCondition[] Conditions;
     public IntReference BaseAmount = new IntReference(0);
     public FloatReference FloatAmount = new FloatReference(0);
     public int IntAmount => FloatAmount.Value.CeilingInt();
@@ -56,4 +58,9 @@ public static class EffectDataExtensions
             Formula = e.Formula,
             FlavorText = e.FlavorText
         };
+
+    public static EffectCondition Condition(this EffectData e) =>
+        e.Conditions != null && e.Conditions.Length > 0 
+            ? (EffectCondition)new AndEffectCondition(e.Conditions.Cast<EffectCondition>().ToArray()) 
+            : new NoEffectCondition();
 }

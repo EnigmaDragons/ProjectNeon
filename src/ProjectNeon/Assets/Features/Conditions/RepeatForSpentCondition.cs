@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-public class RepeatForSpentCondition : Condition
+public class RepeatForSpentCondition : ILogicFlow
 {
     private readonly CardActionsData _effect;
 
