@@ -28,4 +28,9 @@ public static class TestMembers
             StatType.Attack,
             Color.white
         );
+
+    public static Member AnyAlly() => Any();
+
+    public static Member AnyEnemy() => new Member(NextId(), "Any Name", "Any Class", TeamType.Enemies, DefaultStats(),
+        BattleRole.Unknown, StatType.Attack, Color.black);
 }
