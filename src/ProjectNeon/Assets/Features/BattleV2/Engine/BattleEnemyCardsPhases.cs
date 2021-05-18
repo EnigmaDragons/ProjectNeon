@@ -20,7 +20,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
     public void BeginPlayingAllHastyEnemyCards() => PlayNextHastyCard();
     private void PlayNextHastyCard()
     {
-        DevLog.Info("Began Playing Next Hasty Card.");
+        DevLog.Info("Enemies - Began Playing Next Hasty Card.");
         RemoveUnconsciousEnemiesFromActPool();
         _enemiesToActThisTurn
             .Where(x => x.Enemy.IsHasty)
@@ -34,7 +34,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
 
     private void PlayNextStandardCard()
     {
-        DevLog.Info("Began Playing Next Standard Card.");
+        DevLog.Info("Enemies - Began Playing Next Standard Card.");
         RemoveUnconsciousEnemiesFromActPool();
         _enemiesToActThisTurn
             .Where(x => !x.Enemy.IsHasty)
@@ -64,7 +64,6 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
 
     private void PlayNextCardInPhase()
     {
-        DevLog.Write($"Enemy Cards - Current Phase{_phase}");
         if (_phase == BattleV2Phase.HastyEnemyCards)
             PlayNextHastyCard();
         if (_phase == BattleV2Phase.EnemyCards)

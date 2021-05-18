@@ -22,7 +22,7 @@ public class AllConditions
     public static IPayloadProvider Resolve(ActionConditionData conditionData, CardActionContext ctx)
     {
         var condition = Create(conditionData);
-        Log.Info($"Checking {conditionData.ConditionType}");
+        Log.Info($"Logic Flow {conditionData.ConditionType}");
         return condition.Resolve(ctx);
     }
 

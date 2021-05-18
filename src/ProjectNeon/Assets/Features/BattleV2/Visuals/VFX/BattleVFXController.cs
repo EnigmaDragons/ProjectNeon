@@ -39,7 +39,10 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
         }
         else if (e.Group == Group.All)
+        {
             LogInfo($"All Characters VFX not supported yet");
+            Message.Publish(new Finished<BattleEffectAnimationRequested>());
+        }
         else
         {
             var performerTeam = state.Members[e.PerformerId].TeamType;
