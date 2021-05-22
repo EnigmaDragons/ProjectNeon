@@ -88,7 +88,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
             
             var archetypeKeys = hero.ArchetypeKeys;
             var cards = GetAllInstances<CardType>()
-                .Where(c => archetypeKeys.Contains(c.ArchetypeKey))
+                .Where(c => !c.IsWip && archetypeKeys.Contains(c.ArchetypeKey))
                 .GroupBy(c => c.ArchetypeKey)
                 .ToDictionary(
                     x => x.Key, // By Archetype 
