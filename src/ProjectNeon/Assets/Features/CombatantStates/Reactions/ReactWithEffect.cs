@@ -92,10 +92,13 @@ public class EffectReactWith : Effect
         },
         { ReactionConditionType.OnTagPlayed, ctx => effect =>
             {
+                Log.Info(ctx.ReactionEffectScope);
                 var tag = ctx.ReactionEffectScope.EnumVal<CardTag>();
                 return ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(tag));
             }
         },
+        { ReactionConditionType.OnArchetypePlayed, ctx => effect => ctx.Actor.IsConscious() 
+           && effect.Card.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope))},
         { ReactionConditionType.OnDodged, ctx => effect => ctx.Possessor.IsConscious() 
            && effect.Preventions.IsDodging(ctx.Possessor) 
            && Decreased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Dodge]))},
@@ -154,6 +157,7 @@ public class EffectReactWith : Effect
         _reactionCard = reactionCard;
         _conditionType = conditionType;
         _conditionBuilder = Conditions.VerboseGetValue(conditionType, conditionType.ToString());
+        _reactionEffectContext = reactionBonusEffectContext;
         if (reactionCard.IsMissing && reactionEffect.IsMissing)
             Log.Info($"React With neither has an Effect nor a Card.");
     }

@@ -119,7 +119,8 @@ public class CardResolutionZone : ScriptableObject
                 m.Lose(played.Spent);
                 m.Gain(played.Gained);
             });
-            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}"); 
+            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
+            BattleLog.WriteIf(played.Gained, x => $"{played.Member.Name} Gained {x}", x => x.Amount > 0);
         }
     }
     
@@ -153,13 +154,25 @@ public class CardResolutionZone : ScriptableObject
         {
             if (!card.IsActive)
             {
-                BattleLog.Write($"{card.Name} does not resolve.");
+                BattleLog.Write($"{card.Name} is {card.Mode}, so it does not resolve.");
                 Message.Publish(new CardResolutionFinished(played.Member.Id));
             }
             else if (card.Owner.IsStunnedForCard())
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.CardStun, -1);
+                Message.Publish(new CardResolutionFinished(played.Member.Id));
+            }
+            else if (card.IsAttack && card.Owner.IsBlinded())
+            {
+                BattleLog.Write($"{card.Owner.Name} was blinded, so {card.Name} does not resolve.");
+                card.Owner.State.Adjust(TemporalStatType.Blind, -1);
+                Message.Publish(new CardResolutionFinished(played.Member.Id));
+            }
+            else if (!card.IsAttack && card.Owner.IsInhibited())
+            {
+                BattleLog.Write($"{card.Owner.Name} was inhibited, so {card.Name} does not resolve.");
+                card.Owner.State.Adjust(TemporalStatType.Inhibit, -1);
                 Message.Publish(new CardResolutionFinished(played.Member.Id));
             }
             else
