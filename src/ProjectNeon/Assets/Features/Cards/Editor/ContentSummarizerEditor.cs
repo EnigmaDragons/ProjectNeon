@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace Features.Cards.Editor
         {
             GetWindow(typeof(ContentSummarizerEditor)).Show();
         }
+
+        private static string HeroName;
         
         void OnGUI()
         {
@@ -74,6 +77,97 @@ namespace Features.Cards.Editor
                     .Show();
                 GUIUtility.ExitGUI();
             }
+            
+            DrawUILine();
+            HeroName = GUILayout.TextField(HeroName);
+            if (GUILayout.Button("Hero Content Summary"))
+            {
+                var hero = GetAllInstances<BaseHero>().FirstOrDefault(x => x.Name.Equals(HeroName));
+                if (hero == null)
+                    GUIUtility.ExitGUI();
+                
+                var result = new List<string>();
+                
+                var archetypeKeys = hero.ArchetypeKeys;
+                var cards = GetAllInstances<CardType>()
+                    .Where(c => archetypeKeys.Contains(c.ArchetypeKey))
+                    .GroupBy(c => c.ArchetypeKey)
+                    .ToDictionary(
+                        x => x.Key, // By Archetype 
+                        x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
+                            .ToDictionary(
+                                r => r.Key,
+                                r => r.Count()));
+                
+                var equipments = GetAllInstances<StaticEquipment>()
+                    .Where(e => archetypeKeys.Contains(e.ArchetypeKey))
+                    .GroupBy(c => c.ArchetypeKey)
+                    .ToDictionary(
+                        x => x.Key, // By Archetype 
+                        x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
+                            .ToDictionary(
+                                r => r.Key,
+                                r => r.Count()));
+
+                foreach (var arch in archetypeKeys.Where(a => a.Count(c => c.Equals('+')) < 2))
+                {
+                    result.Add(cards.TryGetValue(arch, out var a)
+                        ? $"{arch} Cards - Total {a.Sum(v => v.Value)} - {string.Join(", ", a.Select(v => $"{v.Key}: {v.Value}{TargetCardNumbers(arch, v.Key)}"))}"
+                        : $"{arch} Cards - All {ArchCardsExpected(arch)} Missing");
+                }
+                
+                foreach (var arch in archetypeKeys.Where(a => !a.Contains("+")))
+                {
+                    result.Add(equipments.TryGetValue(arch, out var e)
+                        ? $"{arch} Equips - Total {e.Sum(v => v.Value)} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
+                        : $"{arch} Equips - All 4 Missing");
+                }
+                
+                GetWindow<ListDisplayWindow>()
+                    .Initialized($"Hero Content Summary", "", result.ToArray())
+                    .Show();
+                GUIUtility.ExitGUI();
+            }
+        }
+
+        private string ArchCardsExpected(string arch) => arch.Contains("+") ? "5" : "12";
+        
+        private string TargetEquipmentNumbers(string arch, Rarity r)
+        {
+            if (arch.Contains("+"))
+                return "";
+            
+            return r switch
+            {
+                Rarity.Common => "/1",
+                Rarity.Uncommon => "/1",
+                Rarity.Rare => "/1",
+                Rarity.Epic => "/1",
+                _ => ""
+            };
+        }
+        
+        private string TargetCardNumbers(string arch, Rarity r)
+        {
+            if (arch.Contains("+"))
+            {
+                return r switch
+                {
+                    Rarity.Uncommon => "/2",
+                    Rarity.Rare => "/2",
+                    Rarity.Epic => "/1",
+                    _ => ""
+                };
+            }
+
+            return r switch
+            {
+                Rarity.Common => "/4",
+                Rarity.Uncommon => "/3",
+                Rarity.Rare => "/2",
+                Rarity.Epic => "/1",
+                _ => ""
+            };
         }
         
         private static T[] GetAllInstances<T>() where T : ScriptableObject
@@ -87,6 +181,17 @@ namespace Features.Cards.Editor
             }
  
             return a;
+        }
+        
+        private void DrawUILine() => DrawUILine(Color.black);
+        private void DrawUILine(Color color, int thickness = 2, int padding = 10)
+        {
+            Rect r = EditorGUILayout.GetControlRect(GUILayout.Height(padding+thickness));
+            r.height = thickness;
+            r.y+=padding/2;
+            r.x-=2;
+            r.width +=6;
+            EditorGUI.DrawRect(r, color);
         }
     }
 }

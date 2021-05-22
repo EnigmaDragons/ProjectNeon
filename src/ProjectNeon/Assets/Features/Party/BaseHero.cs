@@ -78,7 +78,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
             // Singles
             archetypes.ForEach(a => archetypeKeys.Add(a));
             // Duals
-            archetypes.Permutations(2)
+            archetypes.Combinations(2)
                 .Select(p => string.Join(" + ", p))
                 .ForEach(a => archetypeKeys.Add(a));
             // Triple

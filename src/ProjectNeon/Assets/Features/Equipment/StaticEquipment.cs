@@ -25,6 +25,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     public int Price => CardShopPricing.EquipmentShopPrice(rarity, priceFactor);
     public Rarity Rarity => rarity;
     public string[] Archetypes => archetypes.Select(a => a.Value).ToArray();
+    public string ArchetypeKey => string.Join(" + ", Archetypes.OrderBy(a => a));
     public EquipmentSlot Slot => slot;
     public EquipmentStatModifier[] Modifiers => modifiers.ToArray();
     public IResourceType[] ResourceModifiers => resourceModifiers;
