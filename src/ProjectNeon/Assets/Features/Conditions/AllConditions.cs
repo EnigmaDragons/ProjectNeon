@@ -10,6 +10,7 @@ public class AllConditions
         { ActionConditionType.PerformerHasResource, e => new PerformerHasResourceCondition(e.IntAmount, e.EffectScope, e.ReferencedEffect)},
         { ActionConditionType.TargetIsBelowPercentageLife, e => new TargetIsBelowPercentageLifeCondition(e.FloatAmount, e.ReferencedEffect)},
         { ActionConditionType.RepeatForSpent, e => new RepeatForSpentCondition(e.ReferencedEffect) },
+        { ActionConditionType.RepeatNumberOfTimes, e => new RepeatNumberOfTimes(e.IntAmount, e.ReferencedEffect) },
         { ActionConditionType.TargetSufferedDamage, e => new TargetSufferedDamageCondition(e.ReferencedEffect) },
         { ActionConditionType.AllyIsUnconscious, e => new UnconsciousAllyCondition(e.ReferencedEffect) },
         { ActionConditionType.TargetHasDamageOverTime, e => new SimpleCondition(e.ReferencedEffect, 
