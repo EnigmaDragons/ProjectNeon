@@ -41,6 +41,7 @@ public class CardRulesPresenter : MonoBehaviour
                 rulesToShow.AddIf(TemporalStatType.Disabled.ToString(), b.EffectType == EffectType.DisableForTurns);
                 rulesToShow.AddIf("Stealth", b.EffectType == EffectType.EnterStealth);
                 rulesToShow.AddIf("Drain", b.EffectType == EffectType.TransferPrimaryResourceFormula);
+                rulesToShow.AddIf("Igniting", "Igniting".Equals(b.ReactionEffectScope.Value));
 
                 AddAllMatchingEffectScopeRules(rulesToShow, b,
                     TemporalStatType.Dodge.ToString(),
