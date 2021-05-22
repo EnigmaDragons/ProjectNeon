@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -27,6 +29,8 @@ public sealed class Card
     public CardActionSequence[] ActionSequences => Type.ActionSequences;
     public Maybe<CardTypeData> ChainedCard => Type.ChainedCard;
     public Maybe<ResourceQuantity> LockedXValue { get; private set; } = Maybe<ResourceQuantity>.Missing();
+    public HashSet<string> Archetypes => Type.Archetypes;
+    public bool IsAttack => Type.Tags.Contains(CardTag.Attack) || Type.TypeDescription.Equals("Attack");
 
     public Card(int id, Member owner, CardTypeData type)
     {

@@ -40,4 +40,5 @@ public enum CardTag
     Grenade = 37,
     SelfOnly = 38,
     Glitch = 39,
+    Igniting = 40,
 }
