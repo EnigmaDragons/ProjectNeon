@@ -10,11 +10,13 @@ public class CardActionSequence
     [SerializeField] private Group group;
     [SerializeField] public CardActionsData cardActions;
     [SerializeField] private bool repeatX;
+    [SerializeField] private int repeatCount;
 
     public Scope Scope => scope;
     public Group Group => group;
     public CardActionsData CardActions => cardActions;
     public bool RepeatX => repeatX;
+    public int RepeatCount => repeatCount;
     
     public static CardActionSequence Create(Scope s, Group g, CardActionsData data, bool repeatX)
     {

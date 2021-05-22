@@ -21,7 +21,7 @@ public static class BattleCardExecution
         for (var i = 0; i < card.ActionSequences.Length; i++)
         {
             var seq = card.ActionSequences[i];
-            var numRepetitions = seq.RepeatX ? xPaidAmount.Amount : 1;
+            var numRepetitions = seq.RepeatX ? xPaidAmount.Amount : seq.RepeatCount > 0 ? seq.RepeatCount : 1;
             sequences.AddRange(Enumerable.Range(0, numRepetitions).Select(_ => seq));
             sequenceTargets.AddRange(Enumerable.Range(0, numRepetitions).Select(_ => targets[i]));
         }
