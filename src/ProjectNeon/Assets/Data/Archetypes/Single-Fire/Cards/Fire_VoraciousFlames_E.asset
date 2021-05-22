@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Pyromancer_WallOfFlames_R_E
+  m_Name: Fire_VoraciousFlames_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
     battleEffect:
       EffectType: 0
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -33,6 +34,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -51,7 +53,6 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
-        avoidance: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
     conditionData:
@@ -70,38 +71,41 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 827ee69f817df7e479315afc06a743db, type: 2}
+        Variable: {fileID: 11400000, guid: b645b0a90bcc1004a9a8b7cb43b42094, type: 2}
       size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 1, g: 0.51692384, b: 0, a: 1}
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 31
+      EffectType: 74
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0.4
+        ConstantValue: -1
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 1
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
       HitsRandomTargetMember: 0
-      StatusTag: 0
-      StatusDetailText: 
+      TargetsSource: 0
+      StatusTag: 5
+      StatusDetailText: When Attacked, All Enemies Are Burned
       TurnDelay: 0
-      Formula: 0.4 * Magic
+      Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -115,9 +119,8 @@ MonoBehaviour:
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
-        scope: 0
-        avoidance: 0
-        cardActions: {fileID: 0}
+        scope: 4
+        cardActions: {fileID: 11400000, guid: ee35a2582ce72a5478cf99f002fe97f2, type: 2}
       BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
@@ -143,3 +146,4 @@ MonoBehaviour:
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
