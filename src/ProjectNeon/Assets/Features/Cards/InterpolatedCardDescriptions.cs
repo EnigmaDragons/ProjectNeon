@@ -151,6 +151,8 @@ public static class InterpolatedCardDescriptions
                        + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
         if (data.EffectType == EffectType.AntiHeal)
             coreDesc = $"halves healing {DurationDescription(data)}";
+        if (data.EffectType == EffectType.RemoveDebuffs)
+            coreDesc = "removes all debuffs";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 
