@@ -7,6 +7,7 @@ public class StaticEquipment : ScriptableObject, Equipment
 {
     [SerializeField] private string displayName;
     [SerializeField] private string description;
+    [SerializeField] private bool isWIP;
     [SerializeField] private Rarity rarity;
     [SerializeField] private EquipmentSlot slot;
     [SerializeField] private float priceFactor = 1f;
@@ -22,6 +23,7 @@ public class StaticEquipment : ScriptableObject, Equipment
         : name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
     
     public string Description => description;
+    public bool IsWip => isWIP;
     public int Price => CardShopPricing.EquipmentShopPrice(rarity, priceFactor);
     public Rarity Rarity => rarity;
     public string[] Archetypes => archetypes.Select(a => a.Value).ToArray();
