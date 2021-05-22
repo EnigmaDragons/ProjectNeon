@@ -187,6 +187,7 @@ public class CardResolutionZone : ScriptableObject
         Log.Info($"Wrapped Up {played.Card.Name}. Pending Cards {_pendingMoves.Count}");
         if (played.Member.TeamType.Equals(TeamType.Party) && !played.IsTransient)
             playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());
+        played.Member.State.RemoveTemporaryEffects(x => x.Status.Tag == StatusTag.CurrentCardOnly);
         isResolving = _pendingMoves.Any();
     }
 
