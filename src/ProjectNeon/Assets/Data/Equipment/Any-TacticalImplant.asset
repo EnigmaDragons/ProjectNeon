@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Tactical Implant
   description: +1 Cycle per turn
+  isWIP: 1
   rarity: 1
   slot: 2
   priceFactor: 1
-  canUseClasses:
-  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
+  archetypes: []
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -55,6 +55,10 @@ MonoBehaviour:
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
