@@ -1,32 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectTabButton : OnMessage<CustomizationTabSwitched>
+public class SelectTabButton : MonoBehaviour
 {
-    [SerializeField] private string tabName;
     [SerializeField] private Image selected;
     [SerializeField] private Button button;
-    [SerializeField] private bool startsActive;
-    [SerializeField] private GameObject tab;
 
-    private bool _selected;
-    
-    private void Awake()
+    public void Init(Action onClick, bool isSelected)
     {
-        _selected = startsActive;
-        tab.SetActive(_selected);
-        selected.gameObject.SetActive(startsActive);
-        button.onClick.AddListener(() =>
-        {
-            if (!_selected)
-                Message.Publish(new CustomizationTabSwitched { TabName = tabName });
-        });
+        button.onClick.AddListener(() => onClick());
+        SetSelected(isSelected);
     }
-    
-    protected override void Execute(CustomizationTabSwitched msg)
+
+    public void SetSelected(bool isSelected)
     {
-        _selected = msg.TabName == tabName;
-        selected.gameObject.SetActive(_selected);
-        tab.SetActive(_selected);
+        selected.gameObject.SetActive(isSelected);
     }
 }

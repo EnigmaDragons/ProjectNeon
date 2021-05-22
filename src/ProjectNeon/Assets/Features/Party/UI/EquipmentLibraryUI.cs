@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EquipmentLibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFiltersChanged>
+public class EquipmentLibraryUI : OnMessage<EquipmentPicketCurrentGearChanged, DeckBuilderFiltersChanged>
 {
     [SerializeField] private PageViewer pageViewer;
     [SerializeField] private EquipmentInLibraryButton equipmentInLibraryButtonTemplate;
@@ -13,12 +13,11 @@ public class EquipmentLibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckB
     
     private HeroCharacter _selectedHero;
     
-    protected override void Execute(DeckBuilderCurrentDeckChanged msg) => GenerateLibrary();
+    protected override void Execute(EquipmentPicketCurrentGearChanged msg) => GenerateLibrary();
     protected override void Execute(DeckBuilderFiltersChanged msg) => GenerateLibrary();
     
-    private void GenerateLibrary()
+    public void GenerateLibrary()
     {
-        var heroChanged = builderState.SelectedHeroesDeck.Hero.Character != _selectedHero;
         _selectedHero = builderState.SelectedHeroesDeck.Hero.Character;
         var equipUsage = new Dictionary<Equipment, bool>();
         partyState.Equipment.Available
@@ -39,6 +38,8 @@ public class EquipmentLibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckB
             equipmentInLibraryButtonTemplate.gameObject,
             emptyEquipment,
             equipUsage
+                .OrderBy(x => x.Key.Rarity)
+                .ThenBy(x => x.Key.Name)
                 .Select(x => InitEquipmentInLibraryButton(x.Key, x.Value))
                 .ToList(),
             x => {},

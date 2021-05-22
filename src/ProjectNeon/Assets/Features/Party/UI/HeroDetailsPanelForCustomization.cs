@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, DeckBuilderCurrentDeckChanged>
+public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, DeckBuilderHeroSelected>
 {
     [SerializeField] private DeckBuilderState deckBuilderState;
     [SerializeField] private Image heroBust;
@@ -33,5 +33,5 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
     }
 
     protected override void Execute(HeroStateChanged msg) => Initialized();
-    protected override void Execute(DeckBuilderCurrentDeckChanged msg) => Initialized();
+    protected override void Execute(DeckBuilderHeroSelected msg) => Initialized();
 }

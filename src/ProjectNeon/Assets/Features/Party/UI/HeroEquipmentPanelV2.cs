@@ -15,9 +15,17 @@ public class HeroEquipmentPanelV2 : MonoBehaviour
     {
         var h = state.SelectedHeroesDeck.Hero;
         weaponSlot.Initialized(EquipmentSlot.Weapon, h.Equipment.Weapon, 
-            () => h.Equipment.Weapon.IfPresent(e => party.UnequipFrom(e, h)));
+            () => h.Equipment.Weapon.IfPresent(e =>
+            {
+                party.UnequipFrom(e, h);
+                Message.Publish(new EquipmentPicketCurrentGearChanged());
+            }));
         armorSlot.Initialized(EquipmentSlot.Armor, h.Equipment.Armor, 
-            () => h.Equipment.Armor.IfPresent(e => party.UnequipFrom(e, h)));
+            () => h.Equipment.Armor.IfPresent(e =>
+            {
+                party.UnequipFrom(e, h);
+                Message.Publish(new EquipmentPicketCurrentGearChanged());
+            }));
         InitAugmentSlot(augment1Slot, 1);
         InitAugmentSlot(augment2Slot, 2);
         InitAugmentSlot(augment3Slot, 3);
@@ -32,6 +40,10 @@ public class HeroEquipmentPanelV2 : MonoBehaviour
             ? new Maybe<Equipment>(augments[slot - 1])
             : Maybe<Equipment>.Missing();
         augmentSlot.Initialized(EquipmentSlot.Augmentation, a,
-            () => a.IfPresent(e => party.UnequipFrom(e, h)));
+            () => a.IfPresent(e =>
+            {
+                party.UnequipFrom(e, h);
+                Message.Publish(new EquipmentPicketCurrentGearChanged());
+            }));
     }
 }
