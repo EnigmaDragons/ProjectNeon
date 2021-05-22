@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Scheme_Collaborate
+  m_EditorClassIdentifier: 
+  customName: 
+  art: {fileID: 21300000, guid: 0437cda0ab936e04aa1d283b584cbf57, type: 3}
+  description: Gain 1 Primary Resource. Draw +2 cards {D[0]}
+  typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
+  tags: 
+  speed: 0
+  cost:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
+    plusXCost: 0
+  onPlayGain:
+    cost: 1
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
+    plusXCost: 0
+  rarity: 0
+  actionSequences:
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 5e0a0e0c10fdad84fa6030d083a6a5ef, type: 2}
+    repeatX: 0
+  chainedCard: {fileID: 0}
+  functionalityIssues: Card drawing should scale off of Leadership
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
+  isWIP: 0
