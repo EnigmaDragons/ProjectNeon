@@ -119,7 +119,8 @@ public class CardResolutionZone : ScriptableObject
                 m.Lose(played.Spent);
                 m.Gain(played.Gained);
             });
-            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}"); 
+            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
+            BattleLog.WriteIf(played.Gained, x => $"{played.Member.Name} Gained {x}", x => x.Amount > 0);
         }
     }
     
