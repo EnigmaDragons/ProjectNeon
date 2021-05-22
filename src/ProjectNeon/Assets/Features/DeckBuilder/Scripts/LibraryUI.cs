@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LibraryUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckChanged>
+public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFiltersChanged>
 {
     [SerializeField] private PageViewer pageViewer;
     [SerializeField] private CardInLibraryButton cardInLibraryButtonTemplate;
@@ -13,15 +13,23 @@ public class LibraryUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDe
 
     private HeroCharacter _selectedHero;
     
-    protected override void Execute(DeckBuilderHeroSelected msg) => GenerateLibrary();
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => GenerateLibrary();
-    
+    protected override void Execute(DeckBuilderFiltersChanged msg) => GenerateLibrary();
+
     private void GenerateLibrary()
     {
-        var heroChanged = state.SelectedHeroesDeck.Hero != _selectedHero;
-        _selectedHero = state.SelectedHeroesDeck.Hero;
-        var cardsForHero = new KeyValuePair<CardType, int>(_selectedHero.ClassCard, 0).Concat(partyCards.AllCards
-                .Where(cardWithCount => cardWithCount.Key.Archetypes.All(archetype => _selectedHero.Archetypes.Contains(archetype))));
+        var heroChanged = state.SelectedHeroesDeck.Hero.Character != _selectedHero;
+        _selectedHero = state.SelectedHeroesDeck.Hero.Character;
+        var cardsForHero = partyCards.AllCards
+            .Where(cardWithCount => cardWithCount.Key.Archetypes.All(archetype => _selectedHero.Archetypes.Contains(archetype)) 
+                && (state.ShowRarities.None() 
+                    || state.ShowRarities.Contains(cardWithCount.Key.Rarity)) 
+                && (state.ShowArchetypes.None() 
+                    || (cardWithCount.Key.Archetypes.None() && state.ShowArchetypes.Contains("")) 
+                    || cardWithCount.Key.Archetypes.Any(state.ShowArchetypes.Contains)))
+            .ToList();
+        if (state.ShowRarities.None() || state.ShowRarities.Contains(Rarity.Basic))
+            cardsForHero.Insert(0, new KeyValuePair<CardType, int>(_selectedHero.ClassCard, 0));
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
             c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card == c.Key))));
         pageViewer.Init(
