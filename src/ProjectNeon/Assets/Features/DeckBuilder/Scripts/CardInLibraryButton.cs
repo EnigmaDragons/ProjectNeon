@@ -17,9 +17,11 @@ public class CardInLibraryButton : MonoBehaviour
     
     public void Init(CardType card, int numTotal, int numAvailable)
     {
-        var action = numAvailable > 0 && state.SelectedHeroesDeck.Deck.Count(x => x == card) < 4
-            ? (Action)(() => AddCard(card))
-            : () => { };
+        var action = numAvailable > 0 
+            && state.SelectedHeroesDeck.Deck.Count(x => x == card) < 4 
+            && (state.SelectedHeroesDeck.Deck.GroupBy(x => x.Name).Count() < 12 || state.SelectedHeroesDeck.Deck.Any(x => x.Name == card.Name))
+                ? (Action)(() => AddCard(card))
+                : () => { };
         presenter.Set(card, action);
         numCopiesLabel.text = $"{numAvailable}/{numTotal}";
     }
