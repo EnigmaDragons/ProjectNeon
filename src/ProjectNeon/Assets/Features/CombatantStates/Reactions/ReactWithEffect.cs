@@ -90,13 +90,9 @@ public class EffectReactWith : Effect
                 return ctx.Possessor.State.PrimaryResourceAmount == 0;
             }
         },
-        { ReactionConditionType.OnTagPlayed, ctx => effect =>
-            {
-                Log.Info(ctx.ReactionEffectScope);
-                var tag = ctx.ReactionEffectScope.EnumVal<CardTag>();
-                return ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(tag));
-            }
-        },
+        { ReactionConditionType.OnTagPlayed, ctx => effect 
+            => IsRelevant(ReactionConditionType.OnTagPlayed, effect, ctx) 
+               && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(ctx.ReactionEffectScope.EnumVal<CardTag>()))},
         { ReactionConditionType.OnArchetypePlayed, ctx => effect => ctx.Actor.IsConscious() 
            && effect.Card.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope))},
         { ReactionConditionType.OnDodged, ctx => effect => ctx.Possessor.IsConscious() 
@@ -112,6 +108,11 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnAfflicted, ctx => effect => ctx.Actor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) }
     };
 
+    private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
+        => (effect.EffectData.EffectType != EffectType.ReactWithCard || effect.EffectData.ReactionConditionType != type)
+           && (effect.EffectData.EffectType != EffectType.ReactWithEffect || effect.EffectData.ReactionConditionType != type)
+           && ctx.Actor.IsConscious();
+    
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
     private static bool Decreased(int[] values)
     {

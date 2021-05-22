@@ -10,27 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Fire_DevastatingInferno
+  m_Name: Fire_Char
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: f6e1c225222859449b5b5596f9dd0f69, type: 3}
-  description: 'Gives {E[0]}. Deals {E[1]}. When <b>Ignited</b>: Deals {RE[0]}'
+  art: {fileID: 21300000, guid: da76d80fad54a254fb77bd0490bfdde7, type: 3}
+  description: 'Deal {E[1]}. <b>On Slay</b>: Deal {RE[0]} to all Enemies.'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 28000000
+  tags: 
   speed: 0
   cost:
-    cost: 0
+    cost: 2
     resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
-    plusXCost: 1
+    plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
     plusXCost: 0
-  rarity: 4
+  rarity: 1
   actionSequences:
-  - scope: 1
+  - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 60583e28708591d49b94ea2357dab695, type: 2}
+    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 4e51ec4c7babfd74a9dd9e78cc967c8f, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 53b9c670626dbfd4686f2602fd8786f2, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
