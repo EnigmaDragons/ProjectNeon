@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: 
   art: {fileID: 21300000, guid: f6e1c225222859449b5b5596f9dd0f69, type: 3}
-  description: 
+  description: 'Gives {E[0]}. Deals {E[1]}. When <b>Ignited</b>: Deals {RE[0]}'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 
+  tags: 28000000
   speed: 0
   cost:
     cost: 0
@@ -28,13 +28,14 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 4
   actionSequences:
-  - scope: 0
+  - scope: 1
     group: 1
-    cardActions: {fileID: 0}
+    cardActions: {fileID: 11400000, guid: 60583e28708591d49b94ea2357dab695, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
-  isWIP: 1
+  isWIP: 0
