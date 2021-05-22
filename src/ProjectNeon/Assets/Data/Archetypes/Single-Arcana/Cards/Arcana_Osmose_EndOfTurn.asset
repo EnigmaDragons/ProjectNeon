@@ -10,48 +10,53 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Pyromancer_MasochisticTendencies_E
+  m_Name: Arcana_Osmose_EndOfTurn
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 74
+      EffectType: 66
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: -1
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
-        ConstantValue: 3
+        ConstantValue: 1
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      StatusTag: 5
-      StatusDetailText: When damaged, gain 1 Flames
+      TargetsSource: 0
+      StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 1
-      ReactionSequence: {fileID: 11400000, guid: 1ecc000e039884747a87885e5c225f98,
-        type: 2}
+      ReferencedSequence: {fileID: 11400000, guid: 4325032065c125247a00d4d00295bacb, type: 2}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
-        cardActions: {fileID: 11400000, guid: 7351ab16d75929b49a6e455d88383f59, type: 2}
+        cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
     conditionData:
-      ConditionType: 4
+      ConditionType: 0
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -74,3 +79,4 @@ MonoBehaviour:
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}

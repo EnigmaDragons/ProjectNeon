@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Pyromancer_MasochisticTendencies_R_E
+  m_Name: Arcana_Determination_E_Trigger
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 82
+      EffectType: 7
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -30,13 +31,14 @@ MonoBehaviour:
         Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+        ConstantValue: Flames
+        Variable: {fileID: 11400000, guid: 0c6bbe1c97723cd43a9e4f1d93fae9c7, type: 2}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1
+      Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -77,3 +79,4 @@ MonoBehaviour:
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}

@@ -10,28 +10,51 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Pyromancer_FlamingEmbers_OnTurnStart
+  m_Name: Arcana_Osmose_C_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
       EffectType: 7
+      Conditions: []
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 6
         FloatVariable: {fileID: 0}
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       EffectScope:
-        UseConstant: 1
-        ConstantValue: Flames
-        Variable: {fileID: 0}
+        UseConstant: 0
+        ConstantValue: Primary
+        Variable: {fileID: 11400000, guid: 0c6bbe1c97723cd43a9e4f1d93fae9c7, type: 2}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
+      TargetsSource: 0
       StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -43,12 +66,17 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
-    characterAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+    characterAnimation: {fileID: 0}
     atTargetAnimation:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
