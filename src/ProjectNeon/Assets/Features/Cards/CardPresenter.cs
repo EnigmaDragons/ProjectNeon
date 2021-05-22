@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,6 +16,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private Image art;
     [SerializeField] private Image tint;
+    [SerializeField] private UnityEngine.UI.Extensions.Gradient tintGradient;
     [SerializeField] private GameObject canPlayHighlight;
     [SerializeField] private GameObject highlight;
     [SerializeField] private GameObject darken;
@@ -237,9 +240,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);
         cardCostPresenter.Render(_card, _cardType);
-        tint.color = _card == null 
-            ?  archetypeTints.ForArchetypes(_cardType.Archetypes)
-            : _card.Owner.HeroTint;
+        SetCardTint();
         canPlayHighlight.SetActive(IsPlayable);
         highlight.SetActive(IsPlayable);
         if (_card == null || _card.Mode != CardMode.Glitched)
@@ -249,6 +250,31 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         dragRotator.Reset();
         dragRotator.enabled = _isHand;
         onlyEnabledInHand.ForEach(o => o.SetActive(_isHand));
+    }
+
+    private void SetCardTint()
+    {
+        tint.color = _card == null
+            ? Color.white
+            : _card.Owner.HeroTint;
+        tintGradient.enabled = _card == null;
+        if (_cardType.Archetypes.Count == 0)
+        {
+            var archetypeTint = archetypeTints.ForArchetypes(new HashSet<string>());
+            tintGradient.Vertex1 = archetypeTint;
+            tintGradient.Vertex2 = archetypeTint;
+        }
+        else if (_cardType.Archetypes.Count == 1)
+        {
+            var archetypeTint = archetypeTints.ForArchetypes(_cardType.Archetypes);
+            tintGradient.Vertex1 = archetypeTint;
+            tintGradient.Vertex2 = archetypeTint;
+        }
+        else
+        {
+            tintGradient.Vertex1 = archetypeTints.ForArchetypes(new HashSet<string>(new[] {_cardType.Archetypes.OrderBy(x => x).First()}));
+            tintGradient.Vertex2 = archetypeTints.ForArchetypes(new HashSet<string>(new[] {_cardType.Archetypes.OrderBy(x => x).Last()}));
+        }
     }
 
     private bool AreCloseEnough(float first, float second) => (first - second).IsFloatZero();
