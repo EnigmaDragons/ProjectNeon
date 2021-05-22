@@ -8,6 +8,7 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
     [SerializeField] private Image heroBust;
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private TextMeshProUGUI classLabel;
+    [SerializeField] private MemberResourcePanel resources;
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private HeroEquipmentPanelV2 equipment;
     [SerializeField] private HeroInjuryPanel injuries;
@@ -21,6 +22,7 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
         classLabel.text = hero.Class;
         levelLabel.text = hero.Level.ToString();
         heroBust.sprite = hero.Character.Bust;
+        resources.Initialized(hero);
         stats.Initialized(hero);
         injuries.Init(hero);
         equipment.Initialized();
