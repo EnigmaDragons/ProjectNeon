@@ -19,6 +19,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         if (GUILayout.Button("Cards By Archetypes"))
         {
             var result = GetAllInstances<CardType>()
+                .Where(c => !c.IsWip)
                 .GroupBy(x => x.ArchetypeKey)
                 .ToDictionary(
                     x => x.Key, // By Archetype 
