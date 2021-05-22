@@ -7,8 +7,8 @@ public class TintToggle : MonoBehaviour
     [SerializeField] private Toggle toggle;
     [SerializeField] private Image[] images;
     [SerializeField] private TextMeshProUGUI[] texts;
-    [SerializeField] private Color on;
-    [SerializeField] private Color off;
+    [SerializeField] public Color on;
+    [SerializeField] public Color off;
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class TintToggle : MonoBehaviour
 
     private void OnEnable() => UpdateTint(toggle.isOn);
 
-    private void UpdateTint(bool isOn)
+    public void UpdateTint(bool isOn)
     {
         images.ForEach(image => image.color = isOn ? on : off);
         texts.ForEach(text => text.color = isOn ? on : off);
