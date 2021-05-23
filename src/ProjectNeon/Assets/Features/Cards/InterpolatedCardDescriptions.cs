@@ -171,6 +171,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" 
                        + $"gives {Bold(FormulaAmount(data, owner, xCost))} " 
                        + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
+        if (data.EffectType == EffectType.GainCredits)
+            coreDesc = $"gives {Bold($"{data.BaseAmount} Creds")}";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 
@@ -265,6 +267,8 @@ public static class InterpolatedCardDescriptions
             return $"{data.TotalIntAmount}";
         if (data.EffectType == EffectType.TransferPrimaryResourceFormula)
             return $"{FormulaAmount(data, owner, xCost)}";
+        if (data.EffectType == EffectType.GainCredits)
+            return $"{data.BaseAmount}";
 
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";

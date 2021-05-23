@@ -116,8 +116,8 @@ public class CardResolutionZone : ScriptableObject
             played.Member.State.RecordUsage(played.Card);
             played.Member.Apply(m =>
             {
-                m.Lose(played.Spent);
-                m.Gain(played.Gained);
+                m.Lose(played.Spent, battleState.Party);
+                m.Gain(played.Gained, battleState.Party);
             });
             DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
             BattleLog.WriteIf(played.Gained, x => $"{played.Member.Name} Gained {x}", x => x.Amount > 0);
@@ -211,7 +211,7 @@ public class CardResolutionZone : ScriptableObject
             Log.Info($"Num Bonus Cards {member.Name}: {bonusCards.Length}");
             foreach (var card in bonusCards)
             {
-                if (!card.IsPlayableBy(member)) 
+                if (!card.IsPlayableBy(member, battleState.Party)) 
                     continue;
                 
                 var targets = GetTargets(member, card, Maybe<Target[]>.Missing());

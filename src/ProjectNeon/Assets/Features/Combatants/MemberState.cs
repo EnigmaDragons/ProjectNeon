@@ -309,11 +309,23 @@ public sealed class MemberState : IStats
     public void ReducePreventedTagCounters() => _preventedTags.ToList().ForEach(x => _preventedTags[x.Key] = x.Value > 0 ? x.Value - 1 : 0);
     
     // Resource Commands
-    public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
-    public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
+    public void Gain(ResourceQuantity qty, PartyAdventureState partyState) => GainResource(qty.ResourceType, qty.Amount, partyState);
+    public void GainResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
+    {
+        if (resourceName == "Creds")
+            partyState.UpdateCreditsBy(amount);
+        else
+            Counter(resourceName).ChangeBy(amount);
+    });
     public void AdjustPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
-    public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType, qty.Amount);
-    private void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
+    public void Lose(ResourceQuantity qty, PartyAdventureState partyState) => LoseResource(qty.ResourceType, qty.Amount, partyState);
+    private void LoseResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
+    {
+        if (resourceName == "Creds")
+            partyState.UpdateCreditsBy(-amount);
+        else
+            Counter(resourceName).ChangeBy(-amount);
+    });
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
     public StatType PrimaryStat => _primaryStat; 
