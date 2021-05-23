@@ -46,7 +46,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     {
         _currentBattleEffectContext = new Maybe<(ApplyBattleEffect, BattleStateSnapshot)>((msg, state.GetSnapshot()));
         var ctx = ApplyEffectsWithRetargetingIfAllTargetsUnconscious(msg);
-        if (ctx.Selections.CardSelectionOptions.Any())
+        if (ctx.Selections.CardSelectionOptions?.Any() ?? false)
         {
             var action = ctx.Selections.OnCardSelected;
             ctx.Selections.OnCardSelected = card => { action(card); FinalizeBattleEffect(); };
@@ -111,14 +111,14 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             if (newTargets.Any())
             {
                 var retargetedContext = new EffectContext(msg.Source, newTargets.Random(), msg.Card, msg.XPaidAmount,
-                    partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions);
+                    partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext());
                 AllEffects.Apply(msg.Effect, retargetedContext);
                 return retargetedContext;
             }
         }
         
         var context = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, 
-            partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions);
+            partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext());
         AllEffects.Apply(msg.Effect, context);
         return context;
     }

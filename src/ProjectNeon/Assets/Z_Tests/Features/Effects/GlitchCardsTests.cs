@@ -12,7 +12,7 @@ public sealed class GlitchCardsTests
         var cardPlayZones = CardPlayZones.InMemory;
         cardPlayZones.TestInit(member1HandCard1);
         var effectContext = new EffectContext(TestMembers.Any(), new Single(member1), Maybe<Card>.Missing(), ResourceQuantity.None, PartyAdventureState.InMemory(), 
-            new PlayerState(0), new Dictionary<int, Member>(), cardPlayZones, new UnpreventableContext());
+            new PlayerState(0), new Dictionary<int, Member>(), cardPlayZones, new UnpreventableContext(), new SelectionContext());
         
         AllEffects.Apply(new EffectData
         {

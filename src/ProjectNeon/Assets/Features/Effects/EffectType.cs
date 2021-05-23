@@ -52,7 +52,7 @@ public enum EffectType
     GlitchRandomCards = 33,
     FillHandWithOwnersCards = 41,
     DrawSelectedCard = 42,
-    
+
     // Statuses
     DisableForTurns = 13,
     ApplyVulnerable = 10,
