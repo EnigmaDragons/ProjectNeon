@@ -21,5 +21,6 @@ public enum StatusTag
     OnClipUsed = 18,
     OnAllyDeath = 19,
     OnAfflicted = 20,
-    CurrentCardOnly = 21
+    CurrentCardOnly = 21,
+    OnIgnited = 22,
 }
