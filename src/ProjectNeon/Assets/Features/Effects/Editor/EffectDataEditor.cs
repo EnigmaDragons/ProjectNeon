@@ -26,6 +26,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.GainCredits, new [] {"BaseAmount" }},
         {EffectType.AdjustPrimaryResourceFormula, new [] {"Formula"}},
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "DurationFormula", "EffectScope" }},
+        {EffectType.AdjustPlayerStatsFormula, new [] { "Formula", "DurationFormula", "EffectScope" }},
         {EffectType.AtStartOfTurn, new [] { "DurationFormula", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
         {EffectType.AtEndOfTurn, new [] { "DurationFormula", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
         {EffectType.DuplicateStatesOfType, new [] { "StatusTag" }},

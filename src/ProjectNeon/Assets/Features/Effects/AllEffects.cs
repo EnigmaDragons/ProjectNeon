@@ -30,8 +30,10 @@ public static class AllEffects
                 TemporalStateMetadata.DebuffForDuration(duration, new StatusDetail(StatusTag.Vulnerable))))), e.DurationFormula), "Vulernable") },
         { EffectType.DisableForTurns, e => new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} is disabled for {duration} turns.", () => m.ApplyTemporaryAdditive(new DisableForTurns(duration))), e.DurationFormula)},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.DurationFormula) },
-        { EffectType.AdjustPlayerStats, e => new PlayerEffect((p, duration) => p.AddState(
-            new AdjustedPlayerStats(new PlayerStatAddends().With(e.EffectScope.Value.EnumVal<PlayerStatType>(), e.IntAmount), duration, e.IntAmount < 0)), e.DurationFormula) },
+        { EffectType.AdjustPlayerStats, e => new PlayerEffect((p, duration, amount) => p.AddState(
+            new AdjustedPlayerStats(new PlayerStatAddends().With(e.EffectScope.Value.EnumVal<PlayerStatType>(), amount), duration, amount < 0)), e.DurationFormula, e.IntAmount.ToString()) },
+        { EffectType.AdjustPlayerStatsFormula, e => new PlayerEffect((p, duration, amount) => p.AddState(
+            new AdjustedPlayerStats(new PlayerStatAddends().With(e.EffectScope.Value.EnumVal<PlayerStatType>(), amount), duration, amount < 0)), e.DurationFormula, e.Formula) },
         { EffectType.GainCredits, e => new PartyEffect(p => BattleLoggedItem(v => $"{GainedOrLostTerm(v)} {v} credits", p.UpdateCreditsBy(e.TotalIntAmount))) },
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
         { EffectType.AtEndOfTurn, e => new EndOfTurnEffect(e) },

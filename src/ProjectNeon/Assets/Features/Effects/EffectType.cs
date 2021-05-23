@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 28, 39-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 39-43, 47, 48, 53, 
 // LAST NUMBER USED: 86
 
 public enum EffectType
@@ -65,6 +65,7 @@ public enum EffectType
     
     // Party Effects
     AdjustPlayerStats = 49,
+    AdjustPlayerStatsFormula = 28,
     GainCredits = 52,
     ApplyAdditiveStatInjury = 71,
     ApplyMultiplicativeStatInjury = 72,
