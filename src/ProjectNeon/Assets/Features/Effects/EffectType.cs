@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 39-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 28, 39-43, 47, 48, 53, 
 // LAST NUMBER USED: 85
 
 public enum EffectType
@@ -42,7 +42,6 @@ public enum EffectType
     OnDeath = 25,
 
     // Transformers
-    DoubleTheEffectAndMinusDurationTransformer = 28,
     AddToXCostTransformer = 32,
     
     // Cards Effects

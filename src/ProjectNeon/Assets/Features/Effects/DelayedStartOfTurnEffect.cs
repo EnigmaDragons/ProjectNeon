@@ -1,4 +1,6 @@
-﻿public class DelayedStartOfTurnEffect : Effect
+﻿using UnityEngine;
+
+public class DelayedStartOfTurnEffect : Effect
 {
     private readonly EffectData _source;
 
@@ -8,6 +10,6 @@
     {
         ctx.Target.ApplyToAllConsciousMembers(m => m.State.ApplyTemporaryAdditive(
             new DelayedStartOfTurnState(ctx, m, _source.ReferencedSequence, 
-                TemporalStateMetadata.ForDuration(_source.NumberOfTurns, _source.EffectScope.Value.Equals("Debuff"), new StatusDetail(_source.StatusTag)))));
+                TemporalStateMetadata.ForDuration(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m.State, _source.DurationFormula, ctx.XPaidAmount)), _source.EffectScope.Value.Equals("Debuff"), new StatusDetail(_source.StatusTag)))));
     }
 }

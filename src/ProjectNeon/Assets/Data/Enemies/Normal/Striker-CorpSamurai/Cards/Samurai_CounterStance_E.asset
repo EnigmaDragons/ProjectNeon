@@ -16,6 +16,7 @@ MonoBehaviour:
   - type: 1
     battleEffect:
       EffectType: 75
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -24,6 +25,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: -1
         FloatVariable: {fileID: 0}
+      DurationFormula: 2
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 2
@@ -33,6 +35,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 1
       StatusDetailText: 
       TurnDelay: 0
@@ -43,8 +46,11 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
-      ReactionSequence: {fileID: 11400000, guid: 807e25dcc1699944aaae59df86d21b1f,
-        type: 2}
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 807e25dcc1699944aaae59df86d21b1f, type: 2}
       ReactionEffect:
         reactor: 0
         scope: 0
@@ -74,3 +80,4 @@ MonoBehaviour:
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
