@@ -52,7 +52,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.DamageOverTimeFormula, new [] { "Formula", "DurationFormula" }},
         {EffectType.ResolveInnerEffect, new [] { "ReferencedSequence" }},
         {EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, new [] { "BaseAmount" }},
-        {EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, new [] { "FloatAmount" }}
+        {EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, new [] { "FloatAmount" }},
+        {EffectType.FillHandWithOwnersCards, new string[0]},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
