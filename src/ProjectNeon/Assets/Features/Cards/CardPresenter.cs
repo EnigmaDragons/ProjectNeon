@@ -68,6 +68,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
 
     public void Set(Card card) => Set("Library", card, () => { }, () => {}, () => { }, (_, __) => false, () => false);
+    public void Set(Card card, Action onClick) => Set("Library", card, onClick, () => {}, () => { }, (_, __) => false, () => false);
     public void Set(CardTypeData card) => Set(card, () => { });
     
     public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Action onDiscard, Func<BattleState, Card, bool> getCanPlay, Func<bool> getCanActivate)

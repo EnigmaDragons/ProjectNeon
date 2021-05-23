@@ -20,6 +20,7 @@ public class EffectContext
     public IDictionary<int, Member> BattleMembers { get; } // This should probably be converted to be lazy so that it's accurate no matter when the Context is created
     public CardPlayZones PlayerCardZones { get; }
     public PreventionContext Preventions { get; }
+    public SelectionContext Selections { get; } = new SelectionContext();
 
     public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, 
         PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones, PreventionContext preventions)

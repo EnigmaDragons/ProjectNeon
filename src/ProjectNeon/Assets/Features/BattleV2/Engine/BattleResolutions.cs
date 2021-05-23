@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +39,28 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     }
 
     public bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && resolutionZone.IsDone && _instantReactions.None() && !_resolvingEffect;
-    
+
+    private Maybe<(ApplyBattleEffect, BattleStateSnapshot)> _currentBattleEffectContext;
+
     protected override void Execute(ApplyBattleEffect msg)
     {
-        var battleSnapshotBefore = state.GetSnapshot();
-        ApplyEffectsWithRetargetingIfAllTargetsUnconscious(msg);
+        _currentBattleEffectContext = new Maybe<(ApplyBattleEffect, BattleStateSnapshot)>((msg, state.GetSnapshot()));
+        var ctx = ApplyEffectsWithRetargetingIfAllTargetsUnconscious(msg);
+        if (ctx.Selections.CardSelectionOptions.Any())
+        {
+            var action = ctx.Selections.OnCardSelected;
+            ctx.Selections.OnCardSelected = card => { action(card); FinalizeBattleEffect(); };
+            Message.Publish(new PresentCardSelection { Selectons = ctx.Selections });
+        }
+        else
+        {
+            FinalizeBattleEffect();   
+        }
+    }
+
+    private void FinalizeBattleEffect()
+    {
+        var (msg, battleSnapshotBefore) = _currentBattleEffectContext.Value;
         var battleSnapshotAfter = state.GetSnapshot();
         
         var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction, msg.Card, msg.Preventions);
@@ -59,6 +77,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         
         state.CleanupExpiredMemberStates();
         
+        _currentBattleEffectContext = Maybe<(ApplyBattleEffect, BattleStateSnapshot)>.Missing();
+
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 
@@ -79,7 +99,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         Message.Publish(new Finished<CardActionPrevented>());
     }
     
-    private void ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
+    private EffectContext ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
     {
         if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
             msg.Source.State.ExitStealth();
@@ -90,14 +110,17 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
             if (newTargets.Any())
             {
-                AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, newTargets.Random(), msg.Card, msg.XPaidAmount, 
-                    partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions));
-                return;
+                var retargetedContext = new EffectContext(msg.Source, newTargets.Random(), msg.Card, msg.XPaidAmount,
+                    partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions);
+                AllEffects.Apply(msg.Effect, retargetedContext);
+                return retargetedContext;
             }
         }
         
-        AllEffects.Apply(msg.Effect, new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, 
-            partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions));   
+        var context = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, 
+            partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions);
+        AllEffects.Apply(msg.Effect, context);
+        return context;
     }
 
     protected override void Execute(SpawnEnemy msg)
