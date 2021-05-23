@@ -163,6 +163,10 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"halves healing {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.RemoveDebuffs)
             coreDesc = "removes all debuffs";
+        if (data.EffectType == EffectType.AdjustPlayerStatsFormula)
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" 
+                       + $"gives {Bold(FormulaAmount(data, owner, xCost))} " 
+                       + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 
@@ -242,7 +246,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustCounterFormula)
             return $"{FormulaAmount(data, owner, xCost)} {Bold(data.EffectScope.Value.WithSpaceBetweenWords())}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            return $"{FormulaAmount(data, owner, xCost)} Primary Resource";
+            return $"{FormulaAmount(data, owner, xCost)} Resources";
         if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)
             return owner.IsPresent
                 ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.Toughness]))).ToString()
