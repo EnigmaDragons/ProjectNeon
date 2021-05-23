@@ -6,12 +6,15 @@ public class PlayerState
 {
     private IPlayerStats _playerBaseStats;
     private readonly List<ITemporalPlayerState> _mods = new List<ITemporalPlayerState>();
+    private int _bonusCyclesThisTurn = 0;
     
     public IPlayerStats CurrentStats => _playerBaseStats
         .Plus(_mods.Where(x => x.IsActive).Select(x => x.PlayerStats));
 
+    public int NumberOfRecyclesRemainingThisTurn => CardCycles - NumberOfCyclesUsedThisTurn + _bonusCyclesThisTurn;
     public int CardDraws => CurrentStats.CardDraw();
     public int CardCycles => CurrentStats.CardCycles();
+    public int NumberOfCyclesUsedThisTurn { get; set; }
 
     public PlayerState(int numCardCycles = 0)
     {
@@ -35,6 +38,8 @@ public class PlayerState
     public void OnTurnEnd()
         => PublishAfter(() =>
         {
+            NumberOfCyclesUsedThisTurn = 0;
+            _bonusCyclesThisTurn = 0;
             _mods.ForEach(m => m.OnTurnEnd());
             _mods.RemoveAll(m => !m.IsActive);
         });
@@ -43,5 +48,14 @@ public class PlayerState
     {
         a();
         Message.Publish(new PlayerStateChanged(this));
+    }
+    
+    public void AddFreeCycleCount(int amount)
+    {
+        PublishAfter(() =>
+        {
+            NumberOfCyclesUsedThisTurn += amount;
+            _bonusCyclesThisTurn += amount;
+        });   
     }
 }

@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Scheme_ResourcefulSetup
+  m_Name: Scheme_MeticulousScheme
   m_EditorClassIdentifier: 
   customName: 
   art: {fileID: 0}
-  description: 
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  description: For each card in hand and every card cycled this turn, give +1 primary
+    stat to target.
+  typeDescription: {fileID: 11400000, guid: 54b26ffa8165e3942bf340ce48cb1299, type: 2}
   tags: 
   speed: 0
   cost:
@@ -26,11 +27,11 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 2
+  rarity: 3
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: f36d1815a3510624d8969d3bfc7658a0, type: 2}
+    group: 2
+    cardActions: {fileID: 11400000, guid: afc71f98ab555c541b31aca750e75552, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
