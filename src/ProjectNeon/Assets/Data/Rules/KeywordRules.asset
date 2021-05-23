@@ -21,8 +21,8 @@ MonoBehaviour:
     Value: '<b>Blind</b>
 
 
-      Guarantees that the next attack made by that character
-      will miss.'
+      Guarantees that the next attack card played will
+      miss.'
   - title: ExtraCardPlays
     Key:
       UseConstant: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
     Value: '<b>Inhibit</b>
 
 
-      Guarantees that the next spell made by that character
+      Guarantees that the next non-attack card played
       will fizzle.'
   - title: Drain
     Key:
@@ -213,3 +213,23 @@ MonoBehaviour:
 
       If target is already suffering from a Damage
       over Time (DoT) effect, perform the stated effect.'
+  - title: Igniting
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4b0b51b4c4c327e48a3da0c002230222, type: 2}
+    Value: '<b>Ignite</b>
+
+
+      When targeted by a Fire Card, <b>Ignited</b> effects
+      are triggered and consumed.'
+  - title: OnSlay
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7caa2475e493fe74fa693152459f13e5, type: 2}
+    Value: '<b>Slay</b>
+
+
+      When a target is killed by your action, trigger the
+      stated effect.'

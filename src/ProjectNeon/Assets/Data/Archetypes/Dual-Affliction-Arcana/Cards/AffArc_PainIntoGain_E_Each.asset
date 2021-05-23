@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Fire_SearingOil_RE
+  m_Name: AffArc_PainIntoGain_E_Each
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 31
-      Conditions: []
+      EffectType: 86
+      Conditions:
+      - {fileID: 11400000, guid: b857806ba4dfebf4d979dc778dc93cb5, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -25,7 +26,6 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 0
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
@@ -39,12 +39,12 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.6 * Magic
+      Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 101b74489c0f98f4e8ca40e2f7ba4295, type: 2}
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1

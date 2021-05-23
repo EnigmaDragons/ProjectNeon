@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE: 28, 39-43, 47, 48, 53, 
-// LAST NUMBER USED: 85
+// LAST NUMBER USED: 86
 
 public enum EffectType
 {
@@ -75,4 +75,5 @@ public enum EffectType
     ShowCustomTooltip = 73,
     LeaveBattle = 34,
     AdjustCardTagPrevention = 37,
+    ResolveFirstInnerEffect = 86,
 }
