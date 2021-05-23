@@ -33,7 +33,7 @@ public static class InterpolatedCardDescriptions
                 .Where(a => a.ReferencedSequence != null)
                 .SelectMany(c => c.ReferencedSequence.BattleEffects);
 
-            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard);
+            return InterpolatedDescription(desc, card.Speed == CardSpeed.Quick, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard);
         }
         catch (Exception e)
         {
@@ -47,6 +47,7 @@ public static class InterpolatedCardDescriptions
     }
 
     public static string InterpolatedDescription(string desc, 
+        bool isQuick,
         EffectData[] effects, 
         EffectData[] reactionEffects,
         EffectData[] innerEffects,
@@ -59,6 +60,8 @@ public static class InterpolatedCardDescriptions
         if (desc.Trim().Equals("{Auto}", StringComparison.InvariantCultureIgnoreCase))
         {
             var sb = new StringBuilder();
+            if (isQuick)
+                sb.Append("<b>Quick:</b> ");
             sb.Append(AutoDescription(effects, owner, xCost));
             sb = new StringBuilder(ShortenRepeatedEffects(sb.ToString()));
             sb.Append(chainedCard.Select(c => $". {Bold("Chain:")} {c.Name}", ""));
@@ -232,7 +235,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.DealRawDamageFormula)
             return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula
-                || data.EffectType == EffectType.HealFormula)
+                || data.EffectType == EffectType.HealFormula || data.EffectType == EffectType.AdjustPlayerStatsFormula)
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
             return $"x{FormulaAmount(data, owner, xCost)}";
