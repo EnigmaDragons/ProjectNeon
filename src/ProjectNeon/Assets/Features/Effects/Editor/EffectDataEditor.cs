@@ -41,7 +41,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AttackFormula, new [] { "Formula", "HitsRandomTargetMember" }},
         {EffectType.MagicAttackFormula, new [] { "Formula", "HitsRandomTargetMember" }},
         {EffectType.AddToXCostTransformer, new [] { "FloatAmount", "DurationFormula", "StatusTag", "StatusDetailText" }},
-        {EffectType.RedrawHandOfCards, new string[0] },
+        {EffectType.CycleAllCardsInHand, new string[0] },
         {EffectType.DrawCards, new [] { "Formula" } },
         {EffectType.GlitchRandomCards, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.LeaveBattle, new string[0]},
@@ -50,7 +50,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.Reload, new string[0]},
         {EffectType.DamageOverTimeFormula, new [] { "Formula", "DurationFormula" }},
-        {EffectType.ResolveInnerEffect, new [] { "ReferencedSequence" }}
+        {EffectType.ResolveInnerEffect, new [] { "ReferencedSequence" }},
+        {EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, new [] { "BaseAmount" }}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

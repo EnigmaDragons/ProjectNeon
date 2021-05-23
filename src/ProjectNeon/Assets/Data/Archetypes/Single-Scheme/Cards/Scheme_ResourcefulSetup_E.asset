@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Scheme_StrategyMeeting_E
+  m_Name: Scheme_ResourcefulSetup_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 68
+      EffectType: 28
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -25,17 +25,17 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 3
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 88d65c262b0c2b240a5c8915b576c16e, type: 2}
+        Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.28 * Leadership
+      Formula: 0.29 * Leadership
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -77,19 +77,19 @@ MonoBehaviour:
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
-  - type: 31
+  - type: 1
     battleEffect:
-      EffectType: 0
+      EffectType: 39
       Conditions: []
       BaseAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: -1
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
@@ -130,14 +130,14 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     atTargetAnimation:
       animation:
-        UseConstant: 0
+        UseConstant: 1
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 7d1b3b13f4073b140a8b938533eb1c54, type: 2}
+        Variable: {fileID: 0}
       size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 1, g: 1, b: 1, a: 1}
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}

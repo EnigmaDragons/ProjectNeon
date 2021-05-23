@@ -20,7 +20,8 @@ public class CardPlayZones : ScriptableObject
     public CardPlayZone PlayZone => playZone;
     public CardPlayZone DiscardZone => discardZone;
     public CardPlayZone SelectionZone => selectionZone;
-
+    public Card[] AllCards => DrawZone.Cards.Concat(HandZone.Cards).Concat(DiscardZone.Cards).ToArray();
+    
     public void ClearAll()
     {
         drawZone.Clear();
@@ -44,6 +45,13 @@ public class CardPlayZones : ScriptableObject
     {
         while(HandZone.HasCards)
             DiscardZone.PutOnBottom(HandZone.DrawOneCard());
+    }
+
+    public void CycleHand()
+    {
+        var i = HandZone.Cards.Length;
+        DiscardHand();
+        DrawCards(i);
     }
     
     public IEnumerator DrawHandAsync(int handSize)

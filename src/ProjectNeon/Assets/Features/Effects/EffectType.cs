@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 39-43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 40-43, 47, 48, 53, 
 // LAST NUMBER USED: 86
 
 public enum EffectType
@@ -35,6 +35,7 @@ public enum EffectType
     AdjustPrimaryResourceFormula = 82,
     TransferPrimaryResourceFormula = 35,
     Reload = 38,
+    AdjustCostOfAllCardsInHandAtEndOfTurn = 39, //once we have more cost modifying cards we can build a more generic type
     
     // Reactions
     ReactWithEffect = 74,
@@ -46,7 +47,7 @@ public enum EffectType
     
     // Cards Effects
     PlayBonusCardAfterNoCardPlayedInXTurns = 76,
-    RedrawHandOfCards = 77,
+    CycleAllCardsInHand = 77,
     DrawCards = 81,
     GlitchRandomCards = 33,
     
