@@ -17,5 +17,5 @@ public enum TemporalStatType
     Aegis = 16,
     PreventDeath = 17,
     Prominent = 18,
-    Mark = 19,
+    Marked = 19,
 }
