@@ -15,7 +15,8 @@ public class AtStartOfTurnTests
             ReferencedSequence = TestableObjectFactory.Create<CardActionsData>().Initialized(new CardActionV2(new EffectData
             {
                 EffectType = EffectType.HealFormula,
-                Formula = "1"
+                Formula = "1",
+                DurationFormula = "0"
             }))
         }, member, member);
         

@@ -47,7 +47,8 @@ public class ReactWithEffectTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.ApplyVulnerable,
-            FloatAmount = new FloatReference(1)
+            FloatAmount = new FloatReference(1),
+            DurationFormula = "0"
         }, attacker, possessor);
         
         Assert.AreEqual(5, possessor.CurrentShield());
