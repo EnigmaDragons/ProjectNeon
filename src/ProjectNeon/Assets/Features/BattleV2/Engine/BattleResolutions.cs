@@ -117,7 +117,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         AllEffects.Apply(msg.Effect, ctx);
         
         // Stealth Processing
-        if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
+        if (msg.Source.IsStealthed() && StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
             msg.Source.State.BreakStealth();
         
         return ctx;

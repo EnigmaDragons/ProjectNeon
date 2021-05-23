@@ -348,8 +348,7 @@ public sealed class MemberState : IStats
     {
         TemporalStatType.Taunt,
         TemporalStatType.Stealth, // Should this be reduced?
-        TemporalStatType.Confused,
-        TemporalStatType.Prominent
+        TemporalStatType.Confused
     };
     
     public IPayloadProvider[] GetTurnEndEffects()
@@ -360,6 +359,8 @@ public sealed class MemberState : IStats
             _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
             _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
             _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
+            _counters[TemporalStatType.Prominent.ToString()].Set(0);
+            Log.Info(_counters[TemporalStatType.Prominent.ToString()].ToString());
             ReducePreventedTagCounters();
         });
         

@@ -100,7 +100,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1 * Attack
+      Formula: 1.3 * Attack
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -145,7 +145,8 @@ MonoBehaviour:
   - type: 1
     battleEffect:
       EffectType: 30
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: f09d49277b0688143abd8a54fa2c093b, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
