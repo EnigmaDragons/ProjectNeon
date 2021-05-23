@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -13,7 +14,8 @@ public class HeroEquipment
     private Equipment _weapon;
     private Equipment _armor;
     private readonly Equipment[] _augments = new Equipment[3];
-
+    private readonly List<Equipment> _permanents = new List<Equipment>();
+    
     public HeroEquipment() {}
     public HeroEquipment(params string[] a) => archetypes = a;
 
@@ -23,6 +25,7 @@ public class HeroEquipment
     
     public Equipment[] All => new []{ _weapon, _armor }
         .Concat(_augments)
+        .Concat(_permanents)
         .Where(a => a?.Archetypes != null) // Nasty Hack to make this both handle optional serializables and make this work for Standalone Unit Tests
         .ToArray();
     
@@ -45,6 +48,8 @@ public class HeroEquipment
                 return;
             }
     }
+
+    public void EquipPermanent(Equipment e) => _permanents.Add(e);
 
     public void Equip(Equipment e)
     {

@@ -10,6 +10,7 @@ public class Hero
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
     [SerializeField] private HeroLevels levels;
+    [SerializeField] private CardType basicCard;
 
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
@@ -18,6 +19,7 @@ public class Hero
         levels = new HeroLevels();
         equipment = new HeroEquipment(character.Archetypes.ToArray());
         health = new HeroHealth(() => Stats);
+        basicCard = character.ClassCard;
     }
 
     public string Name => character.Name;
@@ -30,6 +32,7 @@ public class Hero
     public HeroHealth Health => health;
     public HeroLevels Levels => levels;
     public int Level => levels.CurrentLevel;
+    public CardType BasicCard => basicCard;
 
     public IStats BaseStats => 
         Character.Stats.Plus(levels.LevelUpStats);
@@ -46,14 +49,16 @@ public class Hero
     public void HealToFull() => UpdateState(() => health.HealToFull());
     public void SetHp(int hp) => UpdateState(() => health.SetHp(hp));
     public void AdjustHp(int amount) => UpdateState(() => health.AdjustHp(amount));
-    
+
+    public void SetBasic(CardType c) => basicCard = c;
     public void SetDeck(RuntimeDeck d) => deck = d;
     public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
     public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
+    public void ApplyPermanent(Equipment e) => UpdateState(() => equipment.EquipPermanent(e));
     
     // Progression
-    [Obsolete("Just use XP instead")] public void LevelUp(int numLevels) => UpdateState(() => levels.LevelUp(numLevels));
+    // [Obsolete("Just use XP instead")] public void LevelUp(int numLevels) => UpdateState(() => levels.LevelUp(numLevels));
     public void AddXp(int xp) => UpdateState(() => levels.AddXp(xp));
     public void ApplyLevelUpPoint(StatAddends stats) => UpdateState(() => levels.ApplyLevelUpStats(stats));
 
@@ -61,14 +66,14 @@ public class Hero
     public Member AsMemberForTests(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp, Character.ClassCard);
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp, basicCard);
         return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext()));
     }
 
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp, Character.ClassCard);
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp, basicCard);
         return m;
     }
 
