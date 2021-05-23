@@ -73,7 +73,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     {
         get
         {
-            var archetypes = Archetypes.ToList();
+            var archetypes = Archetypes.OrderBy(a => a).ToList();
             var archetypeKeys = new HashSet<string>();
             // Singles
             archetypes.ForEach(a => archetypeKeys.Add(a));
