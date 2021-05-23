@@ -24,6 +24,7 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     public HashSet<CardTag> Tags => new HashSet<CardTag>();
     public CardActionSequence[] ActionSequences => new[] { CardActionSequence.ForReaction(ActionSequence.CardActions) };
     public Maybe<CardTypeData> ChainedCard => Maybe<CardTypeData>.Missing();
+    public Maybe<CardTypeData> SwappedCard => Maybe<CardTypeData>.Missing();
     public Rarity Rarity => Rarity.Starter;
     public HashSet<string> Archetypes { get; } = new HashSet<string>();
     public Maybe<CardCondition> HighlightCondition { get; } = Maybe<CardCondition>.Missing();

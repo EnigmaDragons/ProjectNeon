@@ -236,16 +236,23 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType.ChainedCard.IfPresent(chain =>
         {
             if (_isHand)
-                Message.Publish(new ShowChainedCard(chainedCardParent, new Card(-1, _card.Owner, chain)));
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain)));
             else
-                Message.Publish(new ShowChainedCard(chainedCardParent, chain));
+                Message.Publish(new ShowReferencedCard(chainedCardParent, chain));
+        });
+        _cardType.SwappedCard.IfPresent(swap =>
+        {
+            if (_isHand)
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, swap)));
+            else
+                Message.Publish(new ShowReferencedCard(chainedCardParent, swap));
         });
     }
     
     private void HideComprehensiveCardInfo()
     {
         rules.Hide();
-        Message.Publish(new HideChainedCard());
+        Message.Publish(new HideReferencedCard());
     }
     
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);

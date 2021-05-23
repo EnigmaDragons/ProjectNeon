@@ -26,6 +26,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private float armor = 0;
     [SerializeField] private float resistance = 0;
     [SerializeField] private int leadership = 0;
+    [SerializeField] private int economy = 0;
     [SerializeField] private ResourceType resource1;
     [SerializeField] private ResourceType resource2;
     [SerializeField] private HeroSkill[] skills;
@@ -66,6 +67,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
         .With(StatType.Armor, armor)
         .With(StatType.Resistance, resistance)
         .With(StatType.Leadership, leadership)
+        .With(StatType.Economy, economy)
         .With(StatType.Damagability, 1f)
         .With(StatType.Healability, 1f);
     

@@ -33,7 +33,7 @@ public static class InterpolatedCardDescriptions
                 .Where(a => a.ReferencedSequence != null)
                 .SelectMany(c => c.ReferencedSequence.BattleEffects);
 
-            return InterpolatedDescription(desc, card.Speed == CardSpeed.Quick, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard);
+            return InterpolatedDescription(desc, card.Speed == CardSpeed.Quick, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard, card.SwappedCard);
         }
         catch (Exception e)
         {
@@ -53,7 +53,8 @@ public static class InterpolatedCardDescriptions
         EffectData[] innerEffects,
         Maybe<Member> owner, 
         ResourceQuantity xCost,
-        Maybe<CardTypeData> chainedCard)
+        Maybe<CardTypeData> chainedCard,
+        Maybe<CardTypeData> swappedCard)
     {
         var result = desc;
 
@@ -65,6 +66,7 @@ public static class InterpolatedCardDescriptions
             sb.Append(AutoDescription(effects, owner, xCost));
             sb = new StringBuilder(ShortenRepeatedEffects(sb.ToString()));
             sb.Append(chainedCard.Select(c => $". {Bold("Chain:")} {c.Name}", ""));
+            sb.Append(swappedCard.Select(c => $". {Bold("Swap:")} {c.Name}", ""));
             return sb.ToString();
         }
 
@@ -344,5 +346,6 @@ public static class InterpolatedCardDescriptions
         { StatType.Magic.ToString(), "MAG" },
         { StatType.Armor.ToString(), "ARM" },
         { StatType.Toughness.ToString(), "TGH" },
+        { StatType.Economy.ToString(), "ECON" },
     }; 
 }
