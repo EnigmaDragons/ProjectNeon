@@ -91,7 +91,13 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         if (_member.State.HasStatus(StatusTag.HealOverTime))
             statuses.Add(new CurrentStatusValue {  Type = StatusTag.HealOverTime.ToString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
-        
+
+        if (_member.State[TemporalStatType.Prominent] > 0)
+        {
+            Log.Info($"Update Status Bar UI - {_member.Name} - Prominent {_member.State[TemporalStatType.Prominent]}");
+            statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Prominent.ToString(), Icon = icons[TemporalStatType.Prominent].Icon, Tooltip = "Heroes cannot stealth while prominent." });
+        }
+
         AddCustomTextStatusIcons(statuses, StatusTag.OnHit, "Secret On Hit Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnDeath, "Secret On Death Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnDamaged, "Secret On Damaged Effect");

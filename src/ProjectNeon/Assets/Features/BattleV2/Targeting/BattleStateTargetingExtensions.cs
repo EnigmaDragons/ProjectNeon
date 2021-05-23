@@ -68,7 +68,7 @@ public static class BattleStateTargetingExtensions
         {
             var doesEnemyHaveTaunt = teamMembers.Any(m => m.HasTaunt() && m.TeamType != myTeam);
             var membersWithTaunt = teamMembers.Where(m => m.HasTaunt() || m.TeamType == myTeam).ToArray();
-            var membersWithoutStealth = teamMembers.Where(m => !m.IsStealth() || m.TeamType == myTeam).ToArray();
+            var membersWithoutStealth = teamMembers.Where(m => !m.IsStealthed() || m.TeamType == myTeam).ToArray();
             var members = doesEnemyHaveTaunt
                 ? membersWithTaunt
                 : membersWithoutStealth;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public sealed class MemberState : IStats
 {
@@ -106,6 +105,8 @@ public sealed class MemberState : IStats
                 return PrimaryResourceAmount * (1f / 3f);
             if (PrimaryResource.Name == "Flames")
                 return PrimaryResourceAmount * (1f / 3f);
+            if (PrimaryResource.Name == "Ambition")
+                return PrimaryResourceAmount * (1f / 4f);
             return 0f;
         }
     }
@@ -242,10 +243,11 @@ public sealed class MemberState : IStats
         RemoveTemporaryEffects(s => s.IsDebuff);
     });
 
-    public void ExitStealth() => PublishAfter(() =>
+    public void BreakStealth() => PublishAfter(() =>
     {
         RemoveTemporaryEffects(t => t.Status.Tag == StatusTag.Stealth);
         _counters[TemporalStatType.Stealth.ToString()].Set(0);
+        _counters[TemporalStatType.Prominent.ToString()].Set(1);
     });
 
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() =>
@@ -344,8 +346,8 @@ public sealed class MemberState : IStats
 
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType>
     {
-        TemporalStatType.Taunt, 
-        TemporalStatType.Stealth, 
+        TemporalStatType.Taunt,
+        TemporalStatType.Stealth, // Should this be reduced?
         TemporalStatType.Confused
     };
     
@@ -357,6 +359,8 @@ public sealed class MemberState : IStats
             _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
             _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
             _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
+            _counters[TemporalStatType.Prominent.ToString()].Set(0);
+            Log.Info(_counters[TemporalStatType.Prominent.ToString()].ToString());
             ReducePreventedTagCounters();
         });
         
