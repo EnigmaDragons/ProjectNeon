@@ -19,6 +19,8 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private string functionalityIssues;
     [SerializeField] private string presentationIssues;
     [SerializeField] private StringVariable[] archetypes;
+    [SerializeField] private StaticCardCondition[] highlightCondition;
+    [SerializeField] private StaticCardCondition[] unhighlightCondition;
     [SerializeField] private bool isWIP;
 
     public string Name => !string.IsNullOrWhiteSpace(customName) 
@@ -40,6 +42,12 @@ public class CardType : ScriptableObject, CardTypeData
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
     public string ArchetypeKey => string.Join(" + ", Archetypes.OrderBy(a => a));
     public bool IsWip => isWIP;
+    public Maybe<CardCondition> HighlightCondition => highlightCondition != null && highlightCondition.Length > 0
+        ? new Maybe<CardCondition>(new AndCardCondition(highlightCondition.Cast<CardCondition>().ToArray()))
+        : Maybe<CardCondition>.Missing();
+    public Maybe<CardCondition> UnhighlightCondition => unhighlightCondition != null && unhighlightCondition.Length > 0
+        ? new Maybe<CardCondition>(new AndCardCondition(unhighlightCondition.Cast<CardCondition>().ToArray()))
+        : Maybe<CardCondition>.Missing();
 
     public override string ToString() => Name;
     public override int GetHashCode() => ToString().GetHashCode();

@@ -16,6 +16,8 @@ public interface CardTypeData
     Maybe<CardTypeData> ChainedCard { get; }
     Rarity Rarity { get; }
     HashSet<string> Archetypes { get; }
+    Maybe<CardCondition> HighlightCondition { get; }
+    Maybe<CardCondition> UnhighlightCondition { get; }
 }
 
 public static class CardTypeDataExtensions

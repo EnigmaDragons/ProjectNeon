@@ -10,7 +10,7 @@ public class CardTypeEditor : Editor
 {
     private CardType targetCard;
     private SerializedProperty customName, functionalityIssues, art, description, typeDescription, tags, 
-        cost, gain, rarity, cardAction1, cardAction2, chainedCard, presentationIssues, speed, archetypes, isWip;
+        cost, gain, rarity, cardAction1, cardAction2, chainedCard, presentationIssues, speed, archetypes, isWip, highlightCondition, unhighlightCondition;
 
     public void OnEnable()
     {
@@ -29,6 +29,8 @@ public class CardTypeEditor : Editor
         speed = serializedObject.FindProperty("speed");
         archetypes = serializedObject.FindProperty("archetypes");
         isWip = serializedObject.FindProperty("isWIP");
+        highlightCondition = serializedObject.FindProperty("highlightCondition");
+        unhighlightCondition = serializedObject.FindProperty("unhighlightCondition");
     }
 
     public override void OnInspectorGUI()
@@ -45,6 +47,9 @@ public class CardTypeEditor : Editor
         PresentUnchanged(gain);
         PresentActionSequences();
         PresentUnchanged(chainedCard);
+        DrawUILine(Color.black);
+        PresentUnchanged(highlightCondition);
+        PresentUnchanged(unhighlightCondition);
         DrawUILine(Color.black);
         PresentUnchanged(tags);
         DrawUILine(Color.black);
