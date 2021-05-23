@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
 
@@ -69,7 +70,8 @@ public static class AllEffects
                 Formula.Evaluate(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount).CeilingInt())) },
         { EffectType.AdjustCardTagPrevention, e => AegisPreventable.If(
             new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)), e.BaseAmount > 0, $"Block Card Type {e.EffectScope}") },
-        { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", () => m.AdjustPrimaryResource(99))) }
+        { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", () => m.AdjustPrimaryResource(99))) },
+        { EffectType.ResolveFirstInnerEffect, e => new ResolveFirstInnerEffect(e.ReferencedSequence.BattleEffects.First()) }
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
@@ -104,6 +106,7 @@ public static class AllEffects
             if (effectData.TurnDelay > 0)
                 BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
             var updateTarget = effectData.TargetsSource ? new Single(ctx.Source) : ctx.Target;
+            DevLog.Write($"Targets Source: {effectData.TargetsSource}");
             var updatedContext = ctx.Retargeted(ctx.Source, updateTarget);
 
             var shouldNotApplyReason = effectData.Condition().GetShouldNotApplyReason(updatedContext);

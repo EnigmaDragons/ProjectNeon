@@ -97,11 +97,11 @@ public sealed class InterpolatedCardDescriptionsTests
     private string Description(string s, EffectData e, Maybe<Member> owner, ResourceQuantity xCost)
         => Description(s, new [] {e}, owner, xCost);
     private string Description(string s, EffectData[] e, Maybe<Member> owner, ResourceQuantity xCost) 
-        => InterpolatedCardDescriptions.InterpolatedDescription(s, e, new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing());
+        => InterpolatedCardDescriptions.InterpolatedDescription(s, e, new EffectData[0], new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing());
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner)
         => ReactionDescription(s, re, owner, ResourceQuantity.None);
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner, ResourceQuantity xCost) 
-        => InterpolatedCardDescriptions.InterpolatedDescription(s, new EffectData[0], new [] {re}, owner, xCost, Maybe<CardTypeData>.Missing());
+        => InterpolatedCardDescriptions.InterpolatedDescription(s, new EffectData[0], new [] {re}, new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing());
     private string ForEffect(EffectData e, Maybe<Member> owner, ResourceQuantity xCost) => InterpolatedCardDescriptions.EffectDescription(e, owner, xCost);
 
     private void AssertContainsSprite(string actual) => Assert.IsTrue(actual.Contains("<sprite index="));

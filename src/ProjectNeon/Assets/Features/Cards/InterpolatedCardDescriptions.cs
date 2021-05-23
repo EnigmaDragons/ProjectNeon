@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public static class InterpolatedCardDescriptions
 {
@@ -29,7 +30,11 @@ public static class InterpolatedCardDescriptions
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
                 .SelectMany(b => b.ConditionData.ReferencedEffect.BattleEffects);
 
-            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), owner, xCost, card.ChainedCard);
+            var innerBattleEffects = battleEffects.Concat(conditionalBattleEffects)
+                .Where(a => a.ReferencedSequence != null)
+                .SelectMany(c => c.ReferencedSequence.BattleEffects);
+
+            return InterpolatedDescription(desc, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard);
         }
         catch (Exception e)
         {
@@ -44,7 +49,8 @@ public static class InterpolatedCardDescriptions
 
     public static string InterpolatedDescription(string desc, 
         EffectData[] effects, 
-        EffectData[] reactionEffects, 
+        EffectData[] reactionEffects,
+        EffectData[] innerEffects,
         Maybe<Member> owner, 
         ResourceQuantity xCost,
         Maybe<CardTypeData> chainedCard)
@@ -70,7 +76,7 @@ public static class InterpolatedCardDescriptions
         foreach (Match token in tokens)
         {
             var forReaction = token.Value.StartsWith("{RE[");
-            var prefixes = new[] {"{E", "{D", "{RE"};
+            var prefixes = new[] {"{E", "{D", "{RE", "{IE", "{ID" };
             if (prefixes.None(p => token.Value.StartsWith(p)))
                 throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects, Durations, and Reaction Effects");
 
@@ -86,6 +92,10 @@ public static class InterpolatedCardDescriptions
                 result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex]));
             if (forReaction)
                 result = result.Replace("{RE[" + effectIndex + "]}", Bold(EffectDescription(reactionEffects[effectIndex], owner, xCost)));
+            if (token.Value.StartsWith("{IE"))
+                result = result.Replace("{IE[" + effectIndex + "]}", Bold(EffectDescription(innerEffects[effectIndex], owner, xCost)));
+            if (token.Value.StartsWith("{ID"))
+                result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex]));
         }
 
         return result;

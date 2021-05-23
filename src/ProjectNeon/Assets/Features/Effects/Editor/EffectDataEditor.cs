@@ -48,7 +48,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.TransferPrimaryResourceFormula, new [] { "Formula" } },
         {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.Reload, new string[0]},
-        {EffectType.DamageOverTimeFormula, new [] { "Formula", "NumberOfTurns" }}
+        {EffectType.DamageOverTimeFormula, new [] { "Formula", "NumberOfTurns" }},
+        {EffectType.ResolveFirstInnerEffect, new [] { "ReferencedSequence" }}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
