@@ -69,9 +69,6 @@ public static class InterpolatedCardDescriptions
         var xCostReplacementToken = "{X}";
         result = result.Replace(xCostReplacementToken, Bold(XCostDescription(owner, xCost)));
         
-        foreach (var r in _resourceIcons)
-            result = result.Replace(r.Key, Sprite(r.Value));
-        
         var tokens = Regex.Matches(result, "{(.*?)}");
         foreach (Match token in tokens)
         {
@@ -98,6 +95,9 @@ public static class InterpolatedCardDescriptions
                 result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex], owner, xCost));
         }
 
+        foreach (var r in _resourceIcons)
+            result = result.Replace(r.Key, Sprite(r.Value));
+        
         return result;
     }
 
@@ -134,7 +134,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.ApplyVulnerable)
             coreDesc = $"gives {Bold("Vulnerable")} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope}";
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}"; ;
         if (data.EffectType == EffectType.ReactWithEffect)
@@ -256,7 +256,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.ApplyMultiplicativeStatInjury)
             return $"{data.FloatAmount}x {data.EffectScope}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
-            return $"{WithImplications(data.TotalIntAmount.ToString())}";
+            return $"{WithImplications(data.TotalIntAmount.ToString())} {data.EffectScope.Value.WithSpaceBetweenWords()}";
         if (data.EffectType == EffectType.AdjustPlayerStats)
             return $"{data.TotalIntAmount}";
         if (data.EffectType == EffectType.TransferPrimaryResourceFormula)
