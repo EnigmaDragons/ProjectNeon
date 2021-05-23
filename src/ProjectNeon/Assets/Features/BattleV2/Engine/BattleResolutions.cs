@@ -182,7 +182,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         }
 
         var reactionCard = r.ReactionCard.Value;
-        if (reactionCard.IsPlayableBy(r.Source))
+        if (reactionCard.IsPlayableBy(r.Source, state.Party))
         {
             BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
             Message.Publish(new DisplayCharacterWordRequested(r.Source, "Reaction!"));
@@ -194,8 +194,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             var resourceCalculations = r.Source.CalculateResources(reactionCard);
             var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, resourceCalculations);
             Message.Publish(new CardResolutionStarted(playedCard));
-            r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity));
-            r.Source.Apply(s => s.Gain(resourceCalculations.GainedQuantity));
+            r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity, state.Party));
+            r.Source.Apply(s => s.Gain(resourceCalculations.GainedQuantity, state.Party));
             reactionCard.ActionSequence.Perform(r.Name, r.Source, r.Target, resourceCalculations.XAmountQuantity);
         }
         else

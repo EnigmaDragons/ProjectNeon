@@ -1,7 +1,7 @@
 
 public static class BattleStateExtensions
 {
-    public static bool IsPlayableBy(this CardTypeData c, Member member)
+    public static bool IsPlayableBy(this CardTypeData c, Member member, PartyAdventureState partyState)
     {
         if (c == null)
         {
@@ -20,14 +20,14 @@ public static class BattleStateExtensions
             return false;
         if (member.State.IsPrevented(c.Tags))
             return false;
-        return member.CanAfford(c);
+        return member.CanAfford(c, partyState);
     }
     
-    public static bool IsPlayable(this Card c)
+    public static bool IsPlayable(this Card c, PartyAdventureState partyState)
     {
-        return c.IsActive && IsPlayableBy(c.Type, c.Owner);
+        return c.IsActive && IsPlayableBy(c.Type, c.Owner, partyState);
     }
 
-    public static bool IsAnyFormPlayableByHero(this Card c)
-        => c.IsActive && c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner) || IsPlayableBy(c.Owner.BasicCard.Value, c.Owner);
+    public static bool IsAnyFormPlayableByHero(this Card c, PartyAdventureState partyState)
+        => c.IsActive && c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner, partyState) || IsPlayableBy(c.Owner.BasicCard.Value, c.Owner, partyState);
 }

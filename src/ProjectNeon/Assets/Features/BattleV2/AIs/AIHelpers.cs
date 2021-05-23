@@ -4,7 +4,7 @@ using System.Linq;
 
 public static class AIHelpers
 {
-    public static CardTypeData[] GetPlayableCards(this BattleState s, int memberId)
+    public static CardTypeData[] GetPlayableCards(this BattleState s, int memberId, PartyAdventureState partyState)
     {
         var enemy = s.GetEnemyById(memberId);
         var me = s.Members[memberId];
@@ -15,7 +15,7 @@ public static class AIHelpers
         if (!enemy.DeckIsValid) 
             Log.Error($"{enemy.Name} has a deck with null cards");
 
-        var playableCards = cards.Where(c => c.IsPlayableBy(me)).Cast<CardTypeData>().ToArray();
+        var playableCards = cards.Where(c => c.IsPlayableBy(me, partyState)).Cast<CardTypeData>().ToArray();
         if (!playableCards.Any())
             Log.Info($"{me} has no playable cards in hand");
         return playableCards;

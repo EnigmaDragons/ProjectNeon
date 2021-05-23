@@ -89,14 +89,15 @@ public static class MemberExtensions
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
     public static int ResourceAmount(this Member m, IResourceType resourceType) => RoundUp(m.State[resourceType]);
 
-    public static bool CanAfford(this Member m, CardTypeData c)
+    public static bool CanAfford(this Member m, CardTypeData c, PartyAdventureState partyState)
     {
         try
         {
             if (!c.Cost.PlusXCost && c.Cost.BaseAmount == 0)
                 return true;
             var calc = m.CalculateResources(c);
-            var remaining = m.State.ResourceAmount(calc.ResourcePaidType.Name) - calc.ResourcesPaid;
+            var amountAvailable = c.Cost.ResourceType.Name == "Creds" ? partyState.Credits : m.State.ResourceAmount(calc.ResourcePaidType.Name);
+            var remaining = amountAvailable - calc.ResourcesPaid;
             return remaining >= 0;
         }
         catch (Exception e)

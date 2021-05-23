@@ -133,7 +133,7 @@ public sealed class HandVisualizer : MonoBehaviour
                 () => SelectCard(cardIndex), 
                 () => BeginDragCard(card, cardIndex),
                 () => DiscardCard(cardIndex),
-                (battleState, c2) => allowInteractions && c2.IsPlayable() && battleState.NumberOfCardPlaysRemainingThisTurn > 0,
+                (battleState, c2) => allowInteractions && c2.IsPlayable(battleState.Party) && battleState.NumberOfCardPlaysRemainingThisTurn > 0,
                 () => allowInteractions);
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.SetDisabled(!card.Owner.CanPlayCards() || !_isFocused);
@@ -144,7 +144,7 @@ public sealed class HandVisualizer : MonoBehaviour
             c.transform.SetAsLastSibling();
         }
 
-        if (cards.Any() && state.NumberOfRecyclesRemainingThisTurn == 0 && cards.All(c => !c.IsAnyFormPlayableByHero() || !c.Owner.CanPlayCards()))
+        if (cards.Any() && state.NumberOfRecyclesRemainingThisTurn == 0 && cards.All(c => !c.IsAnyFormPlayableByHero(state.Party) || !c.Owner.CanPlayCards()))
         {
             DevLog.Write("No playable cards. Requesting early turn Confirmation.");
             Message.Publish(new BeginPlayerTurnConfirmation());
