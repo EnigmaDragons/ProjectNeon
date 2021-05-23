@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: 
   art: {fileID: 21300000, guid: 0437cda0ab936e04aa1d283b584cbf57, type: 3}
-  description: Gain 1 Primary Resource. Draw +2 cards {D[0]}
+  description: '{auto}'
   typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
   tags: 
   speed: 0
@@ -23,15 +23,16 @@ MonoBehaviour:
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
   onPlayGain:
-    cost: 1
+    cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 1
   actionSequences:
   - scope: 0
-    group: 0
+    group: 2
     cardActions: {fileID: 11400000, guid: 5e0a0e0c10fdad84fa6030d083a6a5ef, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
   functionalityIssues: Card drawing should scale off of Leadership
   presentationIssues: 
