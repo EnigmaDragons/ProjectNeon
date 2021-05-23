@@ -12,7 +12,9 @@ public class InMemoryCard : CardTypeData
     public Maybe<CardTypeData> ChainedCard { get; } = Maybe<CardTypeData>.Missing();
     public Maybe<CardTypeData> SwappedCard { get; } = Maybe<CardTypeData>.Missing();
     public HashSet<string> Archetypes { get; } = new HashSet<string>();
-    
+    public Maybe<CardCondition> HighlightCondition { get; } = Maybe<CardCondition>.Missing();
+    public Maybe<CardCondition> UnhighlightCondition { get; } = Maybe<CardCondition>.Missing();
+
     public Sprite Art { get; }
     public string Description { get; }
     public HashSet<CardTag> Tags { get; }

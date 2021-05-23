@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: 
   art: {fileID: 21300000, guid: 99ece0fcfb7bda6429f06b14355d2c5c, type: 3}
-  description: 'Deal {E[1]}. <b>Sneak Attack</b>: Deal {E[0]} instead'
+  description: 'Deal {E[1]}. <b>Sneaky</b>: Deal {E[0]} instead'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 04000000
   speed: 0
@@ -34,8 +34,12 @@ MonoBehaviour:
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
+  highlightCondition:
+  - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
+  unhighlightCondition: []
   isWIP: 0

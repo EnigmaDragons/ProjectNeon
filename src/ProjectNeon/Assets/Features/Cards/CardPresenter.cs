@@ -18,6 +18,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Image tint;
     [SerializeField] private UnityEngine.UI.Extensions.Gradient tintGradient;
     [SerializeField] private GameObject canPlayHighlight;
+    [SerializeField] private GameObject conditionMetHighlight;
+    [SerializeField] private GameObject conditionNotMetHighlight;
     [SerializeField] private GameObject highlight;
     [SerializeField] private GameObject darken;
     [SerializeField] private CardControlsPresenter controls;
@@ -106,8 +108,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private void InitFreshCard(Action onClick)
     {
         gameObject.SetActive(true);
-        canPlayHighlight.SetActive(false);
-        highlight.SetActive(false);
+        DisableCanPlayHighlight();
+        DisableSelectedHighlight();
         _onClick = onClick;
         _onMiddleMouse = () => { };
         _onRightClick = () => { };
@@ -134,10 +136,43 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (isDisabled)
         {
             DebugLog($"is disabled.");
-            canPlayHighlight.SetActive(false);
+            DisableCanPlayHighlight();
+            DisableSelectedHighlight();
             controls.SetActive(false);
         }
         darken.SetActive(isDisabled);
+    }
+
+    private void DisableCanPlayHighlight()
+    {
+        canPlayHighlight.SetActive(false);
+        conditionMetHighlight.SetActive(false);
+        conditionNotMetHighlight.SetActive(false);
+    }
+    
+    private void SetCanPlayHighlight(bool highlightShouldBeActive, Maybe<bool> highlightCondition, Maybe<bool> unhighlightCondition)
+    {
+        DisableCanPlayHighlight();
+        if (!highlightShouldBeActive)
+            return;
+        if (unhighlightCondition.IsPresentAnd(c => c))
+            conditionNotMetHighlight.SetActive(true);
+        else if (highlightCondition.IsPresentAnd(c => c))
+            conditionMetHighlight.SetActive(true);
+        else
+            canPlayHighlight.SetActive(true);
+    }
+
+    private void DisableSelectedHighlight()
+    {
+        highlight.SetActive(false);
+    }
+
+    private void SetSelectedHighlight(bool highlightShouldBeActive)
+    {
+        DisableSelectedHighlight();
+        if (!conditionMetHighlight && !conditionNotMetHighlight && highlightShouldBeActive)
+            highlight.SetActive(true);
     }
     
     public void SetHandHighlight(bool active)
@@ -145,11 +180,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
 
-        DebugLog($"Setting Highlight {active}");
+        DebugLog($"Setting Selected Highlight {active}");
+        SetSelectedHighlight(IsPlayable && active);
         controls.SetActive(active);
         SetSiblingIndex(active);
-
-        highlight.SetActive(IsPlayable && active);
+        
         if (active)
             ShowComprehensiveCardInfo();
         else
@@ -249,8 +284,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         target.Set(_cardType);
         cardCostPresenter.Render(_card, _cardType);
         SetCardTint();
-        canPlayHighlight.SetActive(IsPlayable);
-        highlight.SetActive(IsPlayable);
+        SetCanPlayHighlight(IsPlayable, 
+            _card != null 
+                ? _cardType.HighlightCondition.Map(condition => condition.ConditionMet(new CardConditionContext(_card, battleState))) 
+                : Maybe<bool>.Missing(),
+            _card != null 
+                ? _cardType.UnhighlightCondition.Map(condition => condition.ConditionMet(new CardConditionContext(_card, battleState))) 
+                : Maybe<bool>.Missing());
         if (_card == null || _card.Mode != CardMode.Glitched)
             glitchableComponents.ForEach(x => x.material = null);
         else 

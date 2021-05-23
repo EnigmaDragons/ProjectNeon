@@ -79,6 +79,7 @@ public static class MemberExtensions
     public static bool HasTaunt(this Member m) => m.State[TemporalStatType.Taunt] > 0;
     public static bool IsAfflicted(this Member m) => m.State.StatusesOfType(StatusTag.DamageOverTime).Length > 0;
     public static bool IsStealthed(this Member m) => m.State[TemporalStatType.Stealth] > 0;
+    public static bool IsProminent(this Member m) => m.State[TemporalStatType.Prominent] > 0;
     public static bool IsConfused(this Member m) => m.State[TemporalStatType.Confused] > 0;
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int PrimaryResourceAmount(this Member m) => m.State.PrimaryResourceAmount;
