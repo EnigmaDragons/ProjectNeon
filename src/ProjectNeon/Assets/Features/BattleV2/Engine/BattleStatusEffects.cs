@@ -33,6 +33,18 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
         this.ExecuteAfterDelay(ResolveNext, delay);
     }
 
+    private void ProcessCards()
+    {
+        foreach (var card in state.PlayerCardZones.HandZone.Cards.Concat(state.PlayerCardZones.DrawZone.Cards).Concat(state.PlayerCardZones.DiscardZone.Cards))
+        {
+            if (_isProcessingStartOfTurn)
+                card.OnTurnStart();
+            else
+                card.OnTurnEnd();
+            card.CleanExpiredStates();
+        }
+    }
+
     private void ResolveNext()
     {
         if (_instantReactions.Any())
@@ -46,6 +58,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             if (_currentMember.IsPresent)
                 _currentMember.Value.State.CleanExpiredStates();
             _currentMember = Maybe<Member>.Missing();
+            ProcessCards();
             _isProcessing = false;
             if (_isProcessingStartOfTurn)
                 Message.Publish(new StartOfTurnEffectsStatusResolved());

@@ -10,6 +10,8 @@ public sealed class Card
     [SerializeField] private CardTypeData type;
     [SerializeField] private Member owner;
 
+    private readonly List<ITemporalCardState> _temporalStates = new List<ITemporalCardState>();
+    
     public CardMode Mode { get; private set; }
     public bool IsActive => Mode != CardMode.Dead && Mode != CardMode.Glitched;
     
@@ -21,7 +23,7 @@ public sealed class Card
     
     public int Id => id;
     public string Name => Type.Name;
-    public IResourceAmount Cost => Type.Cost;
+    public IResourceAmount Cost => new InMemoryResourceAmount(Math.Max(Type.Cost.BaseAmount + _temporalStates.Where(x => x.IsActive).Sum(x => x.CostAdjustment), 0), Type.Cost.ResourceType.Name, Type.Cost.PlusXCost);
     public IResourceAmount Gain => Type.Gain;
     public Sprite Art => Type.Art;
     public string Description => Type.Description;
@@ -57,4 +59,10 @@ public sealed class Card
         else if (Mode == CardMode.Dead && (mode == CardMode.Normal || mode == CardMode.Glitched))
             Mode = mode;
     }
+    
+    public void AddState(ITemporalCardState state) => _temporalStates.Add(state);
+    public void OnTurnStart() => _temporalStates.Where(x => x.IsActive).ForEach(x => x.OnTurnStart());
+    public void OnTurnEnd() => _temporalStates.Where(x => x.IsActive).ForEach(x => x.OnTurnEnd());
+    public void OnPlayCard() => _temporalStates.Where(x => x.IsActive).ForEach(x => x.OnCardPlay());
+    public void CleanExpiredStates() => _temporalStates.RemoveAll(x => !x.IsActive);
 }

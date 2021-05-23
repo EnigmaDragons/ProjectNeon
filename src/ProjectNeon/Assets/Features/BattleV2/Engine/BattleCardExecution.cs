@@ -9,6 +9,7 @@ public static class BattleCardExecution
     public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount, Action onFinished)
     {
         QueuePayloads(GetPayloads(card, targets, battleStateSnapshot, xPaidAmount), onFinished);
+        card.OnPlayCard();
     }
 
     public static List<IPayloadProvider> GetPayloads(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount)
