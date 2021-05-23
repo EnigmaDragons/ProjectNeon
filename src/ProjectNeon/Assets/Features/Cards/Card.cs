@@ -61,8 +61,8 @@ public sealed class Card
     }
     
     public void AddState(ITemporalCardState state) => _temporalStates.Add(state);
-    public void OnTurnStart() => _temporalStates.Where(x => x.IsActive).ForEach(x => x.OnTurnStart());
-    public void OnTurnEnd() => _temporalStates.Where(x => x.IsActive).ForEach(x => x.OnTurnEnd());
-    public void OnPlayCard() => _temporalStates.Where(x => x.IsActive).ForEach(x => x.OnCardPlay());
+    public void OnTurnStart() => _temporalStates.Where(x => x.IsActive).ToArray().ForEach(x => x.OnTurnStart());
+    public void OnTurnEnd() => _temporalStates.Where(x => x.IsActive).ToArray().ForEach(x => x.OnTurnEnd());
+    public void OnPlayCard() => _temporalStates.Where(x => x.IsActive).ToArray().ForEach(x => x.OnCardPlay());
     public void CleanExpiredStates() => _temporalStates.RemoveAll(x => !x.IsActive);
 }
