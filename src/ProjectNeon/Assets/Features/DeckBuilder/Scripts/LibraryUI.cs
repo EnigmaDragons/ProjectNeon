@@ -28,8 +28,9 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
                     || (cardWithCount.Key.Archetypes.None() && state.ShowArchetypes.Contains("")) 
                     || cardWithCount.Key.Archetypes.Any(state.ShowArchetypes.Contains)))
             .ToList();
-        if (state.ShowRarities.None() || state.ShowRarities.Contains(Rarity.Basic))
-            cardsForHero.Insert(0, new KeyValuePair<CardType, int>(_selectedHero.ClassCard, 0));
+        if ((state.ShowRarities.None() || state.ShowRarities.Contains(Rarity.Basic))
+            && (state.ShowArchetypes.None() || state.ShowArchetypes.Contains(_selectedHero.ClassCard.ArchetypeKey)))
+                cardsForHero.Insert(0, new KeyValuePair<CardType, int>(_selectedHero.ClassCard, 0));
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
             c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card == c.Key))));
         pageViewer.Init(
