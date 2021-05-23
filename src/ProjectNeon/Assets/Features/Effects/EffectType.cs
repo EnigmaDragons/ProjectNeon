@@ -76,5 +76,5 @@ public enum EffectType
     ShowCustomTooltip = 73,
     LeaveBattle = 34,
     AdjustCardTagPrevention = 37,
-    ResolveFirstInnerEffect = 86,
+    ResolveInnerEffect = 86,
 }

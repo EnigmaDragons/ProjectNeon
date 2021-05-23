@@ -255,6 +255,8 @@ public static class InterpolatedCardDescriptions
             return $"{WithImplications(data.TotalIntAmount.ToString())}";
         if (data.EffectType == EffectType.AdjustPlayerStats)
             return $"{data.TotalIntAmount}";
+        if (data.EffectType == EffectType.TransferPrimaryResourceFormula)
+            return $"{FormulaAmount(data, owner, xCost)}";
 
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";

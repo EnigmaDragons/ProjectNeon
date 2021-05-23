@@ -71,7 +71,7 @@ public static class AllEffects
         { EffectType.AdjustCardTagPrevention, e => AegisPreventable.If(
             new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)), e.BaseAmount > 0, $"Block Card Type {e.EffectScope}") },
         { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", () => m.AdjustPrimaryResource(99))) },
-        { EffectType.ResolveFirstInnerEffect, e => new ResolveFirstInnerEffect(e.ReferencedSequence.BattleEffects.First()) }
+        { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence.BattleEffects.ToArray()) }
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
