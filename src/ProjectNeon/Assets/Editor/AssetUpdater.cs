@@ -8,6 +8,7 @@ public class AssetUpdater
     {
         UpdateCardPools();
         UpdateEquipmentPools();
+        EnsureDurationPresent();
     }
 
     [MenuItem("Neon/Update Card Pools")]
@@ -49,6 +50,25 @@ public class AssetUpdater
                 pool.all = validEquipments;
                 EditorUtility.SetDirty(pool);
             }
+        }
+    }
+    
+    private static void EnsureDurationPresent()
+    {
+        var cardActionsDatas = ScriptableExtensions.GetAllInstances<CardActionsData>();
+        foreach (var cardActionsData in cardActionsDatas)
+        {
+            var isDirty = false;
+            foreach (var battleEffect in cardActionsData.BattleEffects)
+            {
+                if (string.IsNullOrWhiteSpace(battleEffect.DurationFormula))
+                {
+                    isDirty = true;
+                    battleEffect.DurationFormula = "0";
+                }
+            }
+            if (isDirty)
+                EditorUtility.SetDirty(cardActionsData);
         }
     }
 }
