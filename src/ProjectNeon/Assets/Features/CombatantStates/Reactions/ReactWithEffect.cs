@@ -94,7 +94,7 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnTagPlayed, ctx => effect 
             => IsRelevant(ReactionConditionType.OnTagPlayed, effect, ctx) 
                && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(ctx.ReactionEffectScope.EnumVal<CardTag>()))},
-        { ReactionConditionType.OnArchetypePlayed, ctx => effect => ctx.Actor.IsConscious() 
+        { ReactionConditionType.OnArchetypePlayed, ctx => effect => IsRelevant(ReactionConditionType.OnArchetypePlayed, effect, ctx)
            && effect.Card.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope))},
         { ReactionConditionType.OnDodged, ctx => effect => ctx.Possessor.IsConscious() 
            && effect.Preventions.IsDodging(ctx.Possessor) 
