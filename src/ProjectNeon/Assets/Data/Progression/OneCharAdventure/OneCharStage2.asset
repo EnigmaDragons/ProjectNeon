@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce358c587d594460908d55aa6ff7b9ca, type: 3}
+  m_Name: OneCharStage2
+  m_EditorClassIdentifier: 
+  displayName: Stage 2
+  gameMap: {fileID: 11400000, guid: 4eba2c3ce068b2c4cbfd28291a61e5b2, type: 2}
+  encounterBuilder: {fileID: 11400000, guid: 017e65d5f8e2ccb44aed935889ba2b06, type: 2}
+  eliteEncounterBuilder: {fileID: 11400000, guid: 8c1ee087999f2954dbb5992ffb9aa500, type: 2}
+  storySetting: 0
+  powerCurve:
+    m_Mode: 1
+    m_CurveMultiplier: 1
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 240
+        inSlope: 160
+        outSlope: 160
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 400
+        inSlope: 160
+        outSlope: 160
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
+  elitePowerCurve:
+    m_Mode: 1
+    m_CurveMultiplier: 1
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 270
+        inSlope: 150
+        outSlope: 150
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 420
+        inSlope: 150
+        outSlope: 150
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
+  possibleBattlegrounds:
+  - {fileID: 8084425420955098557, guid: a5fa22e523b1ac141a1dd4221d31f696, type: 3}
+  - {fileID: 7853507097178230742, guid: f6ff64fc0df3d264ab19f3548f7c9f22, type: 3}
+  - {fileID: 2837013454523630491, guid: a1842bfce8b47894e919acaeee4f0b3f, type: 3}
+  segmentCount: 20
+  bossBattlefield: {fileID: 6606943644605356882, guid: 4ae7a7c83c372354f8ffa700b5333bae, type: 3}
+  bossEnemies:
+  - {fileID: 11400000, guid: e81c9962ff98b7943928d974ef8d5a75, type: 2}
+  nodeTypeOdds: {fileID: 11400000, guid: e9c4fb2c3acf8a440b0000786a798699, type: 2}
+  stageBattleTheme:
+    clip: {fileID: 8300000, guid: f279b0aebb3dde74cbc1da0401e3e505, type: 3}
+    volume: 1
+  rewardRarityFactors: {fileID: 11400000, guid: 39e23f811cf4889478d4a4f0544ad7a2, type: 2}
