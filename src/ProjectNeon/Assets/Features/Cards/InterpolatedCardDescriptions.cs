@@ -94,7 +94,7 @@ public static class InterpolatedCardDescriptions
             if (token.Value.StartsWith("{ID"))
                 result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex], owner, xCost));
         }
-
+        
         foreach (var r in _resourceIcons)
             result = result.Replace(r.Key, Sprite(r.Value));
         
