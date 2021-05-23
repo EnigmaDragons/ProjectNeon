@@ -79,6 +79,7 @@ public static class AllEffects
         { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence.BattleEffects.ToArray()) },
         { EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, e => new AdjustAllCardsCostUntilPlayed(e.BaseAmount) },
         { EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, e => new AdjustPrimaryStatForEveryCardCycledAndInHand(e) },
+        { EffectType.FillHandWithOwnersCards, e => new FillHandWithOwnersCards() },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

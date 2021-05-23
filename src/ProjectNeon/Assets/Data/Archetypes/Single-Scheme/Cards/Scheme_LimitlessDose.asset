@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: 
   art: {fileID: 21300000, guid: 35b5856c2851fc348a44c5af575a3c04, type: 3}
-  description: Next turn, <b>Disable</b> all other allies, play +1 card and gain
-    +5 cycles
+  description: Next turn, fill your hand with the targets cards and play +1 card
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
@@ -27,16 +26,13 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: 5f59f3b05e7d8f44386acdc4edce5618, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 4
   actionSequences:
-  - scope: 2
-    group: 2
-    cardActions: {fileID: 11400000, guid: 6a9515d80c3ac814c9986391d1125a43, type: 2}
-    repeatX: 0
   - scope: 0
-    group: 0
+    group: 2
     cardActions: {fileID: 11400000, guid: 1d74447dbf81c444089b9d14d7fa3259, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
