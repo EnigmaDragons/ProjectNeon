@@ -14,6 +14,7 @@ public interface CardTypeData
     string TypeDescription  { get; }
     CardActionSequence[] ActionSequences  { get; }
     Maybe<CardTypeData> ChainedCard { get; }
+    Maybe<CardTypeData> SwappedCard { get; }
     Rarity Rarity { get; }
     HashSet<string> Archetypes { get; }
 }

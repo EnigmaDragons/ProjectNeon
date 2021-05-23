@@ -12,5 +12,6 @@ public enum StatType
     Leadership = 8,
     MaxShield = 9,
     StartingShield = 10,
+    Economy = 11,
     ExtraCardPlays = 30,
 }

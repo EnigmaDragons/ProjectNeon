@@ -12,6 +12,7 @@ public sealed class MemberStatPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI armorLabel;
     [SerializeField] private TextMeshProUGUI resistLabel;
     [SerializeField] private TextMeshProUGUI toughLabel;
+    [SerializeField] private TextMeshProUGUI econLabel;
     [SerializeField] private Color buffColor = Color.green;
     [SerializeField] private Color debuffColor = Color.red;
 
@@ -36,6 +37,8 @@ public sealed class MemberStatPanel : MonoBehaviour
         resistLabel.color = ColorFor(difference.Resistance());
         toughLabel.text = $"{m.Toughness()}";
         toughLabel.color = ColorFor(difference.Toughness());
+        econLabel.text = $"{m.Economy()}";
+        econLabel.color = ColorFor(difference.Economy());
         return this;
     }
 
@@ -50,6 +53,7 @@ public sealed class MemberStatPanel : MonoBehaviour
         armorLabel.text = $"{s.Armor()}";
         resistLabel.text = $"{s.Resistance()}";
         toughLabel.text = $"{s.Toughness()}";
+        econLabel.text = $"{s.Economy()}";
         return this;
     }
 

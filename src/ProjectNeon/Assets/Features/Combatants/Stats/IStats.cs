@@ -22,6 +22,7 @@ public static class StatsExtensions
     public static int Attack(this IStats stats) => stats[StatType.Attack].RoundUp();
     public static int Magic(this IStats stats) => stats[StatType.Magic].RoundUp();
     public static int Leadership(this IStats stats) => stats[StatType.Leadership].RoundUp();
+    public static int Economy(this IStats stats) => stats[StatType.Economy].RoundUp();
     public static int Armor(this IStats stats) => stats[StatType.Armor].RoundUp();
     public static int Resistance(this IStats stats) => stats[StatType.Resistance].RoundUp();
     public static int ExtraCardPlays(this IStats stats) => stats[StatType.ExtraCardPlays].RoundUp();

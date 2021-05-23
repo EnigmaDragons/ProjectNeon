@@ -104,6 +104,7 @@ public class EnemyInstance
         .With(StatType.Attack, _attack)
         .With(StatType.Magic, _magic)
         .With(StatType.Leadership, _leadership)
+        .With(StatType.Economy, 0)
         .With(StatType.Armor, _armor)
         .With(StatType.Resistance, _resistance)
         .With(StatType.Damagability, 1f)
