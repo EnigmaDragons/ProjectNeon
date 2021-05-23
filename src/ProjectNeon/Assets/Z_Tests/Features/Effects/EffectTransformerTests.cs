@@ -54,7 +54,7 @@ public class TestEffectTransformer : EffectTransformerBase
         {
             EffectType = EffectType.AdjustStatAdditivelyFormula,
             EffectScope = new StringReference("Attack"),
-            NumberOfTurns = new IntReference(-1),
+            DurationFormula = "-1",
             Formula = "1"
         };
     }) {}

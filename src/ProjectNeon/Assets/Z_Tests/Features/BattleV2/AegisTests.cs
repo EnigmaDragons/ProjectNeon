@@ -76,8 +76,8 @@ public class AegisTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.DamageOverTimeFormula, 
-            Formula = "2", 
-            NumberOfTurns = new IntReference(3)
+            Formula = "2",
+            DurationFormula = "3",
         }, attacker, defender);
         
         Assert.AreEqual(0, defender.State.StatusesOfType(StatusTag.DamageOverTime).Length);
@@ -96,7 +96,7 @@ public class AegisTests
             EffectType = effectType,
             Formula = "2",
             EffectScope = new StringReference(StatType.Attack.ToString()),
-            NumberOfTurns = new IntReference(1)
+            DurationFormula = "1"
         }, member, member);
         
         Assert.AreEqual(expectedAttack, member.Attack());
@@ -114,7 +114,7 @@ public class AegisTests
             EffectType = EffectType.AdjustStatAdditivelyFormula,
             Formula = "-1",
             EffectScope = new StringReference(StatType.Attack.ToString()),
-            NumberOfTurns = new IntReference(1)
+            DurationFormula = "1"
         }, member, member);
         
         Assert.AreEqual(2, member.Attack());
@@ -132,7 +132,7 @@ public class AegisTests
             EffectType = EffectType.AdjustStatMultiplicativelyFormula,
             Formula = "0.5",
             EffectScope = new StringReference(StatType.Attack.ToString()),
-            NumberOfTurns = new IntReference(1)
+            DurationFormula = "1"
         }, member, member);
         
         Assert.AreEqual(2, member.Attack());
@@ -230,7 +230,7 @@ public class AegisTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.ApplyVulnerable,
-            NumberOfTurns = new IntReference(1)
+            DurationFormula = "1"
         }, attacker, defender);
         
         Assert.AreEqual(1, defender.State.Damagability());

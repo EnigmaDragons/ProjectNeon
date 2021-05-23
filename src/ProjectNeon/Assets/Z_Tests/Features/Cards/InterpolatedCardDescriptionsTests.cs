@@ -39,7 +39,7 @@ public sealed class InterpolatedCardDescriptionsTests
     [Test]
     public void Interpolated_Duration_IsCorrect()
         => AssertMatchesIgnoreStyling("Deal 3 for 2 turns", 
-            Description("Deal 3 {D[0]}", new EffectData {NumberOfTurns = new IntReference(2)}, Owner));
+            Description("Deal 3 {D[0]}", new EffectData {DurationFormula = "2"}, Owner));
 
     [Test]
     public void Interpolated_XCost_WithOwner_IsCorrect()
@@ -83,7 +83,7 @@ public sealed class InterpolatedCardDescriptionsTests
     public void Interpolated_Auto_GivesVulnerableNextTurn_IsCorrect()
         => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for the turn",
             Description("{Auto}", 
-                new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, NumberOfTurns = new IntReference(1)},
+                new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, DurationFormula = "1"},
                 Owner));
 
     [Test]

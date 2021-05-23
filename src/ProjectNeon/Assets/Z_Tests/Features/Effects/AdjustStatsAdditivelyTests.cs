@@ -9,7 +9,7 @@ public class AdjustStatsAdditivelyTests
         {
             EffectType = EffectType.AdjustStatAdditivelyFormula, 
             EffectScope = new StringReference("Attack"), 
-            NumberOfTurns = new IntReference(-1),
+            DurationFormula = "-1",
             Formula = "1"
         };
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
@@ -26,7 +26,7 @@ public class AdjustStatsAdditivelyTests
         {
             EffectType = EffectType.AdjustStatAdditivelyFormula, 
             EffectScope = new StringReference("MaxHP"), 
-            NumberOfTurns = new IntReference(-1),
+            DurationFormula = "-1",
             Formula = "1"
         };
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));

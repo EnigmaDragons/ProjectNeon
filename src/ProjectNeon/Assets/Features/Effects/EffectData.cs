@@ -17,7 +17,6 @@ public sealed class EffectData
     public int TotalIntAmount => TotalAmount.CeilingInt();
     
     [TextArea(minLines:1, maxLines:9)] public string DurationFormula;
-    public IntReference NumberOfTurns = new IntReference(0);
     public StringReference EffectScope = new StringReference { UseConstant = false };
     public bool HitsRandomTargetMember;
     public bool TargetsSource;

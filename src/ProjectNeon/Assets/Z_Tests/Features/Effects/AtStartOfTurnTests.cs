@@ -11,7 +11,7 @@ public class AtStartOfTurnTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.AtStartOfTurn,
-            NumberOfTurns = new IntReference(3),
+            DurationFormula = "3",
             ReferencedSequence = TestableObjectFactory.Create<CardActionsData>().Initialized(new CardActionV2(new EffectData
             {
                 EffectType = EffectType.HealFormula,

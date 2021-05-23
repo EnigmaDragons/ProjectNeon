@@ -12,7 +12,7 @@ public sealed class ReactiveTriggerTests
         {
             EffectType = EffectType.ReactWithCard,
             ReactionConditionType = ReactionConditionType.OnAttacked,
-            NumberOfTurns = new IntReference(3),
+            DurationFormula = "3",
             FloatAmount = new FloatReference(-1),
             ReactionSequence = TestCards.ReactionCard(
                 ReactiveMember.Possessor, 
@@ -22,7 +22,7 @@ public sealed class ReactiveTriggerTests
                     EffectType = EffectType.AdjustStatAdditivelyFormula, 
                     Formula = "1", 
                     EffectScope = new StringReference("Armor"), 
-                    NumberOfTurns = new IntReference(-1)
+                    DurationFormula = "-1"
                 })
         }, target, target);
         
@@ -53,7 +53,7 @@ public sealed class ReactiveTriggerTests
         {
             EffectType = EffectType.ReactWithCard,
             ReactionConditionType = ReactionConditionType.OnAttacked,
-            NumberOfTurns = new IntReference(3),
+            DurationFormula = "3",
             FloatAmount = new FloatReference(-1),
             ReactionSequence = reactionCardType
         }, target, target);
