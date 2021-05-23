@@ -101,26 +101,26 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     
     private EffectContext ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
     {
-        if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
-            msg.Source.State.ExitStealth();
-        
+        // Retargeting
+        var target = msg.Target;
         if (msg.CanRetarget && msg.Target.Members.All(m => !m.IsConscious()))
         {
             DevLog.Write("Retargeting Battle Effect");
             var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
             if (newTargets.Any())
-            {
-                var retargetedContext = new EffectContext(msg.Source, newTargets.Random(), msg.Card, msg.XPaidAmount,
-                    partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext());
-                AllEffects.Apply(msg.Effect, retargetedContext);
-                return retargetedContext;
-            }
+                target = newTargets.Random();
         }
         
-        var context = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, 
+        // Core Execution
+        var ctx = new EffectContext(msg.Source, target, msg.Card, msg.XPaidAmount, 
             partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext());
-        AllEffects.Apply(msg.Effect, context);
-        return context;
+        AllEffects.Apply(msg.Effect, ctx);
+        
+        // Stealth Processing
+        if (StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
+            msg.Source.State.BreakStealth();
+        
+        return ctx;
     }
 
     protected override void Execute(SpawnEnemy msg)
