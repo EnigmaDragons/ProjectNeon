@@ -41,7 +41,7 @@ public class AdjustStatsFormula : Effect
             else
             {
                 BattleLog.Write($"{m.Name}'s {stat} is adjusted by x{formulaAmount}");
-                var stats = new AdjustedStats(new StatMultipliers().WithRaw(stat, formulaAmount), _e.ForSimpleDurationStatAdjustment());
+                var stats = new AdjustedStats(new StatMultipliers().WithRaw(stat, formulaAmount), _e.ForSimpleDurationStatAdjustment(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount))));
                 m.State.ApplyTemporaryMultiplier(stats);
             }
         });
@@ -79,7 +79,7 @@ public class AdjustStatsFormula : Effect
                     : formulaAmount;
                 BattleLog.Write($"{m.Name}'s {stat} is adjusted by {finalAmount}");
                 var stats = new AdjustedStats(new StatAddends().WithRaw(stat, finalAmount),
-                    _e.ForSimpleDurationStatAdjustment());
+                    _e.ForSimpleDurationStatAdjustment(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount))));
                 m.State.ApplyTemporaryAdditive(stats);
             }
         });

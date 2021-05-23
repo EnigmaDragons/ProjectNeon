@@ -14,7 +14,7 @@ public class OnShieldBrokenTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.ReactWithCard,
-            NumberOfTurns = new IntReference(3),
+            DurationFormula = "3",
             FloatAmount = new FloatReference(-1),
             ReactionConditionType = ReactionConditionType.OnShieldBroken,
             ReactionSequence = TestCards.ReactionCard(
@@ -24,7 +24,7 @@ public class OnShieldBrokenTests
                     EffectType = EffectType.AdjustStatAdditivelyFormula, 
                     Formula = "1", 
                     EffectScope = new StringReference("Armor"), 
-                    NumberOfTurns = new IntReference(-1) 
+                    DurationFormula = "-1"
                 })
         }, target, target);
 

@@ -63,7 +63,7 @@ public class EquipmentTests
                     EffectType = EffectType.AdjustStatAdditivelyFormula,
                     Formula = "1",
                     EffectScope = new StringReference(StatType.Armor.ToString()),
-                    NumberOfTurns = new IntReference(-1)
+                    DurationFormula = "-1"
                 }
             }
         };

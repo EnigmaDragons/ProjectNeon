@@ -89,13 +89,13 @@ public static class InterpolatedCardDescriptions
             if (token.Value.StartsWith("{E["))
                 result = result.Replace("{E[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner, xCost)));
             if (token.Value.StartsWith("{D["))
-                result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex]));
+                result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex], owner, xCost));
             if (forReaction)
                 result = result.Replace("{RE[" + effectIndex + "]}", Bold(EffectDescription(reactionEffects[effectIndex], owner, xCost)));
             if (token.Value.StartsWith("{IE"))
                 result = result.Replace("{IE[" + effectIndex + "]}", Bold(EffectDescription(innerEffects[effectIndex], owner, xCost)));
             if (token.Value.StartsWith("{ID"))
-                result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex]));
+                result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex], owner, xCost));
         }
 
         return result;
@@ -124,27 +124,27 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.MagicAttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.DamageOverTimeFormula)
-            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))} {DurationDescription(data)}";
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustCounterFormula)
             coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data)}";
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data)}";
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.ApplyVulnerable)
-            coreDesc = $"gives {Bold("Vulnerable")} {DurationDescription(data)}";
+            coreDesc = $"gives {Bold("Vulnerable")} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}"; ;
         if (data.EffectType == EffectType.ReactWithEffect)
-            coreDesc = $"{WithCommaIfPresent(DurationDescription(data))}" +
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" +
                        $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
                        $"{ReactionSourceDescription(owner, data.ReactionEffect.Reactor)}" +
                        $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
                        $"to {ReactiveTargetFriendlyName(data.ReactionEffect.Scope)}";
         if (data.EffectType == EffectType.ReactWithCard)
-            coreDesc = $"{WithCommaIfPresent(DurationDescription(data))}" +
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" +
                        $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
                        $"{ReactionSourceDescription(owner, data.ReactionSequence.ActionSequence.Reactor)}" +
                        $"{AutoDescription(data.ReactionSequence.ActionSequence.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
@@ -156,11 +156,11 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.EnterStealth)
             coreDesc = $"enter {Bold(TemporalStatType.Stealth.ToString())}";
         if (data.EffectType == EffectType.AdjustPlayerStats)
-            coreDesc = $"{WithCommaIfPresent(DurationDescription(data))}" 
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" 
                        + $"gives {Bold(EffectDescription(data, owner, xCost))} " 
                        + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
         if (data.EffectType == EffectType.AntiHeal)
-            coreDesc = $"halves healing {DurationDescription(data)}";
+            coreDesc = $"halves healing {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.RemoveDebuffs)
             coreDesc = "removes all debuffs";
         if (coreDesc == "")
@@ -292,15 +292,16 @@ public static class InterpolatedCardDescriptions
             .Replace("999", "Max");
     }
 
-    private static string DurationDescription(EffectData data)
+    private static string DurationDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
-        var value = data.NumberOfTurns.Value;
+        if (owner.IsMissing)
+            return $"for {FormattedFormula(data.DurationFormula)} turns";
+        var value = RoundUp(Formula.Evaluate(owner.Value.State.ToSnapshot(), data.DurationFormula, xCost));
         var turnString = value < 0
                         ? "for the battle" 
                         : value < 2
                             ? data.TurnDelay == 0 ? "this turn" : "for the turn" 
                             : $"for {Bold(value.ToString())} turns";
-
         return $"{turnString}";
     }
 

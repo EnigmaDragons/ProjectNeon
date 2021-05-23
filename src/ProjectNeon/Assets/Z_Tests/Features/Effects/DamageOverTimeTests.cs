@@ -10,7 +10,7 @@ public class DamageOverTimeTests
         TestEffects.Apply(new EffectData { 
             EffectType = EffectType.DamageOverTimeFormula, 
             Formula = "2",
-            NumberOfTurns = new IntReference(2) 
+            DurationFormula = "2"
         }, target, target);
 
         Assert.AreEqual(10, target.State[TemporalStatType.HP]);

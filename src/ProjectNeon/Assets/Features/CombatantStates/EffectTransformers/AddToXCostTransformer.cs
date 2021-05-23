@@ -1,4 +1,6 @@
-﻿public sealed class EffectAddToXCostTransformer : Effect
+﻿using UnityEngine;
+
+public sealed class EffectAddToXCostTransformer : Effect
 {
     private readonly EffectData _data;
 
@@ -10,20 +12,20 @@
     public void Apply(EffectContext ctx)
     {
         ctx.Target.ApplyToAllConscious(m =>
-            m.AddEffectTransformer(new AddToXCostTransformer(_data)));
+            m.AddEffectTransformer(new AddToXCostTransformer(_data, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m, _data.DurationFormula, ctx.XPaidAmount)))));
     }
 }
 
 public class AddToXCostTransformer : EffectTransformerBase
 {
-    public AddToXCostTransformer(EffectData data) : base(false, data.NumberOfTurns, data.IntAmount, data.StatusDetail, 
-        (effect, context) => effect.Formula.Contains("X"),
+    public AddToXCostTransformer(EffectData data, int numberOfTurns) : base(false, numberOfTurns, data.IntAmount, data.StatusDetail, 
+        (effect, context) => effect.Formula.Contains("X") || effect.DurationFormula.Contains("X"),
         (effect, context) => new EffectData
         {
             EffectType = effect.EffectType,
             BaseAmount = effect.BaseAmount,
             FloatAmount = effect.FloatAmount,
-            NumberOfTurns = effect.NumberOfTurns,
+            DurationFormula = effect.DurationFormula.Replace("X", "(X + 1)"),
             EffectScope = effect.EffectScope,
             HitsRandomTargetMember = effect.HitsRandomTargetMember,
             ReferencedSequence = effect.ReferencedSequence,

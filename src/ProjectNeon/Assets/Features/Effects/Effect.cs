@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public interface Effect
 {
@@ -84,8 +85,10 @@ public class FullContextEffect : Effect
 {
     private readonly Action<EffectContext, Target> _apply;
 
-    public FullContextEffect(Action<EffectContext> apply) => _apply = (ctx, __) => apply(ctx);
-    public FullContextEffect(Action<EffectContext, MemberState> applyToOne) : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, member))) { }
+    public FullContextEffect(Action<EffectContext, int> apply, string durationFormula) 
+        : this((ctx, duration, m) => apply(ctx, duration), durationFormula) {}
+    public FullContextEffect(Action<EffectContext, int, MemberState> applyToOne, string durationFormula) 
+        : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, Mathf.CeilToInt(Formula.Evaluate(src.SourceSnapshot.State, member, durationFormula, src.XPaidAmount)), member))) { }
     private FullContextEffect(Action<EffectContext, Target> apply) => _apply = apply;
 
     public void Apply(EffectContext ctx) => _apply(ctx, ctx.Target);

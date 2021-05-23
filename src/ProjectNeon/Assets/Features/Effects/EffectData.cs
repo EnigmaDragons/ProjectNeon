@@ -16,7 +16,7 @@ public sealed class EffectData
     public float TotalAmount => FloatAmount.Value + BaseAmount;
     public int TotalIntAmount => TotalAmount.CeilingInt();
     
-    public IntReference NumberOfTurns = new IntReference(0);
+    [TextArea(minLines:1, maxLines:9)] public string DurationFormula = "0";
     public StringReference EffectScope = new StringReference { UseConstant = false };
     public bool HitsRandomTargetMember;
     public bool TargetsSource;
@@ -48,7 +48,7 @@ public static class EffectDataExtensions
             EffectType = e.EffectType,
             FloatAmount = e.FloatAmount,
             BaseAmount = e.BaseAmount,
-            NumberOfTurns = e.NumberOfTurns,
+            DurationFormula = e.DurationFormula,
             EffectScope = e.EffectScope,
             HitsRandomTargetMember = e.HitsRandomTargetMember,
             ReferencedSequence = e.ReferencedSequence,
