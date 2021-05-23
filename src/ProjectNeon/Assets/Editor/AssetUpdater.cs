@@ -8,21 +8,6 @@ public class AssetUpdater
     {
         UpdateCardPools();
         UpdateEquipmentPools();
-        var cardActionsDatas = ScriptableExtensions.GetAllInstances<CardActionsData>();
-        foreach (var cardActionsData in cardActionsDatas)
-        {
-            var shouldSetDirty = false;
-            foreach (var battleEffect in cardActionsData.BattleEffects)
-            {
-                if (battleEffect.DurationFormula != battleEffect.NumberOfTurns.ToString())
-                {
-                    battleEffect.DurationFormula = battleEffect.NumberOfTurns.ToString();
-                    shouldSetDirty = true;
-                }
-            }
-            if (shouldSetDirty)
-                EditorUtility.SetDirty(cardActionsData);
-        }
     }
 
     [MenuItem("Neon/Update Card Pools")]
