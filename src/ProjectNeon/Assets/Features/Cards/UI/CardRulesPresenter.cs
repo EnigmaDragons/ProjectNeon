@@ -37,6 +37,7 @@ public class CardRulesPresenter : MonoBehaviour
             var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());
             battleEffects.ForEach(b =>
             {
+                rulesToShow.AddIf("TagPlayed", b.Formula.Contains("Tag["));
                 rulesToShow.AddIf("Vulnerable", b.EffectType == EffectType.ApplyVulnerable);
                 rulesToShow.AddIf(TemporalStatType.Disabled.ToString(), b.EffectType == EffectType.DisableForTurns);
                 rulesToShow.AddIf("Stealth", b.EffectType == EffectType.EnterStealth);
