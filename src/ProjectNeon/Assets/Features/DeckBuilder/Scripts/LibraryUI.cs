@@ -27,6 +27,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
                 && (state.ShowArchetypes.None() 
                     || (cardWithCount.Key.Archetypes.None() && state.ShowArchetypes.Contains("")) 
                     || cardWithCount.Key.Archetypes.Any(state.ShowArchetypes.Contains)))
+            .OrderBy(c => c.Key.Archetypes.None() ? 999 : 0)
             .ToList();
         if ((state.ShowRarities.None() || state.ShowRarities.Contains(Rarity.Basic))
             && (state.ShowArchetypes.None() || state.ShowArchetypes.Contains(_selectedHero.ClassCard.ArchetypeKey)))
