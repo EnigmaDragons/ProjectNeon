@@ -50,6 +50,7 @@ MonoBehaviour:
     cardsPerTurn: 2
     startOfBattleEffects:
     - EffectType: 74
+      Conditions: []
       BaseAmount:
         UseConstant: 0
         ConstantValue: 0
@@ -58,15 +59,13 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 1
         FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: -1
-        Variable: {fileID: 11400000, guid: abac7cad4010ceb45b92ade783e2defa, type: 2}
+      DurationFormula: -1
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 14
       StatusDetailText: 'On Bloodied: Secret Effect'
       TurnDelay: 0
@@ -88,6 +87,7 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: 62bbd6b232af1ef4b826976b5d29b1c6, type: 2}
       BonusCardType: {fileID: 0}
     - EffectType: 79
+      Conditions: []
       BaseAmount:
         UseConstant: 0
         ConstantValue: 0
@@ -96,15 +96,13 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 1
         FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: -1
-        Variable: {fileID: 11400000, guid: abac7cad4010ceb45b92ade783e2defa, type: 2}
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 11400000, guid: c776ae0c47cabd94e8fc5f9e6804abb2, type: 2}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 14
       StatusDetailText: 'On Bloodied: Secret Effect'
       TurnDelay: 0
