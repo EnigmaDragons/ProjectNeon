@@ -28,6 +28,7 @@ MonoBehaviour:
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 49
+    Conditions: []
     BaseAmount:
       UseConstant: 1
       ConstantValue: 1
@@ -36,15 +37,13 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 1
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 1
-      ConstantValue: -1
-      Variable: {fileID: 0}
+    DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
