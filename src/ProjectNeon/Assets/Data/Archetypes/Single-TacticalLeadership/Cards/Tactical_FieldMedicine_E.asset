@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Soldier_FullRetreat_E
+  m_Name: Tactical_FieldMedicine_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -25,7 +25,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
@@ -68,22 +68,22 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 68a0e142a2ed44b49bc22b0aaab590d0, type: 2}
+        Variable: {fileID: 11400000, guid: 338c4c289b5a2c9448f7cd83e239a981, type: 2}
       size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        ConstantValue: {r: 0, g: 1, b: 0.5929899, a: 1}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 79
+      EffectType: 29
       Conditions: []
       BaseAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
@@ -93,13 +93,13 @@ MonoBehaviour:
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
+        Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1
+      Formula: 0.75 * Leadership
       FlavorText:
         UseConstant: 1
         ConstantValue: 
