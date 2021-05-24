@@ -10,31 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Soldier_Repurpose
+  m_Name: Soldier_HomingGrenade
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: 2de10ae2941e90a479ea533ff71cd4bb, type: 3}
-  description: Gain 2 Grenades
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
-  tags: 
+  art: {fileID: 21300000, guid: c46214607cb3bdc4c884e92fe63fa6ee, type: 3}
+  description: '{auto}'
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  tags: 25000000
   speed: 0
   cost:
-    cost: 4
-    resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
+    cost: 1
+    resourceType: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
     plusXCost: 0
   onPlayGain:
-    cost: 2
+    cost: 0
     resourceType: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
     plusXCost: 0
   rarity: 1
   actionSequences:
-  - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: b51c8553975340f41bfee2eb38a7ee57, type: 2}
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: 04b3da5bcc8813a4e9472fda60753e0b, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0
