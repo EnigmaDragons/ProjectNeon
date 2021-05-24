@@ -36,6 +36,8 @@ namespace ChangeLogGenerator
             var cleansedLines = commitLog
                 .Where(c => !c.StartsWith("Merge"))
                 .Where(c => !c.StartsWith("Co-authored"))
+                .Where(c => !c.StartsWith("*"))
+                .Where(c => !c.StartsWith("Ignore"))
                 .Select(c => {
                     var delimiterIndex = Math.Max(c.IndexOf("close"), Math.Max(c.IndexOf("Close"), c.IndexOf("(#")));
                     var cleaned = delimiterIndex > -1 
