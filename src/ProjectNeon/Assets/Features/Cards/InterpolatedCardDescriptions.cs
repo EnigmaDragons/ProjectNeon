@@ -154,7 +154,7 @@ public static class InterpolatedCardDescriptions
                        $"{AutoDescription(data.ReactionSequence.ActionSequence.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
                        $"to {ReactiveTargetFriendlyName(data.ReactionSequence.ActionSequence.Scope)}";
         if (data.EffectType == EffectType.ShieldFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} Shield";
+            coreDesc = $"shield {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.DrawCards)
             coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} Cards";
         if (data.EffectType == EffectType.EnterStealth)
@@ -345,7 +345,7 @@ public static class InterpolatedCardDescriptions
     
     private static Dictionary<string, string> StatAbbreviations = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
     {
-        { StatType.Leadership.ToString(), "LEAD" },
+        { StatType.Leadership.ToString(), "LD" },
         { StatType.Attack.ToString(), "ATK" },
         { StatType.Magic.ToString(), "MAG" },
         { StatType.Armor.ToString(), "ARM" },
