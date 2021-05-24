@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Soldier_CounterAttack
+  m_Name: RifTac_FocusFire
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: 4b75ff3d155efe0468ae35e3a641dcae, type: 3}
-  description: Whenever target is attacked this turn, fire back for 1 Ammo, {RE[0]}.
-  typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
+  art: {fileID: 21300000, guid: c23b8457f90907d4098448155444cde0, type: 3}
+  description: 'Deal {E[0]}. Apply <b>vulnerable</b> until end of turn. '
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   cost:
-    cost: 0
+    cost: 2
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
     plusXCost: 0
   onPlayGain:
@@ -29,12 +29,17 @@ MonoBehaviour:
   rarity: 2
   actionSequences:
   - scope: 0
-    group: 2
-    cardActions: {fileID: 11400000, guid: 5c0f042e5d89acf4587212c3d180ebcf, type: 2}
+    group: 1
+    cardActions: {fileID: 11400000, guid: ccffc98f5556cd847bb2eb579a1a64c7, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
+  - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   - {fileID: 11400000, guid: e97bda47e14bfeb49b6a38e814d38a6d, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0
