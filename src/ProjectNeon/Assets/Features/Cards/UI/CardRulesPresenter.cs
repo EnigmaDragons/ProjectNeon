@@ -33,6 +33,7 @@ public class CardRulesPresenter : MonoBehaviour
             rulesToShow.AddIf("Quick", d.Speed == CardSpeed.Quick);
             rulesToShow.AddIf("Afflicted", d.Conditions().Any(x => x.ConditionType == ActionConditionType.TargetHasDamageOverTime) 
                                            || d.Description.IndexOf("Afflict", StringComparison.OrdinalIgnoreCase) >= 0);
+            rulesToShow.AddIf("Bloodied", d.Description.IndexOf("Bloodied", StringComparison.OrdinalIgnoreCase) >= 0);
 
             var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());
             battleEffects.ForEach(b =>
