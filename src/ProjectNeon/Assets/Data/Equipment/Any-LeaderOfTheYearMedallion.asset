@@ -14,17 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Leader of the Year Medallion
   description: Team Plays an Extra Card Every Turn
+  isWIP: 0
   rarity: 4
   slot: 2
   priceFactor: 1.8
-  canUseClasses:
-  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
+  archetypes: []
   modifiers: []
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 49
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -33,15 +34,13 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 1
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 11400000, guid: abac7cad4010ceb45b92ade783e2defa, type: 2}
+    DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 85f49375563a056468197eb85a992b6b, type: 2}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0

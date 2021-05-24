@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Emergency Tactical Shield
   description: 'On Vulnerable: Shield Toughness'
+  isWIP: 0
   rarity: 2
   slot: 2
   priceFactor: 1
-  canUseClasses:
-  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
   archetypes: []
   modifiers:
   - ModifierType: 0
@@ -29,6 +28,7 @@ MonoBehaviour:
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 74
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -37,15 +37,13 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: -1
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 1
-      ConstantValue: -1
-      Variable: {fileID: 0}
+    DurationFormula: -1
     EffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
     StatusTag: 12
     StatusDetailText: 'On Vulnerable: Shield Toughness'
     TurnDelay: 0

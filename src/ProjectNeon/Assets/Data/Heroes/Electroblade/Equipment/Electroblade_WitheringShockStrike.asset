@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Withering Shock Strike
   description: Apply Vulnerable when you Stun an enemy
+  isWIP: 0
   rarity: 3
   slot: 2
   priceFactor: 1
-  canUseClasses:
-  - {fileID: 11400000, guid: 202dcfe5982f06e49932f788858d32fe, type: 2}
   archetypes:
   - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
   modifiers:
@@ -30,6 +29,7 @@ MonoBehaviour:
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 74
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -38,15 +38,13 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: -1
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 1
-      ConstantValue: -1
-      Variable: {fileID: 0}
+    DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
     StatusTag: 12
     StatusDetailText: Apply Vulnerable when you Stun an enemy
     TurnDelay: 0
