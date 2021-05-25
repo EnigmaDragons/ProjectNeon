@@ -156,6 +156,18 @@ public class FindCardsEditor : EditorWindow
             ShowCards($"Card Type Description Is {_searchString}", cards);
             GUIUtility.ExitGUI();
         }
+        DrawUILine();
+        
+        if (GUILayout.Button("Find Chain Cards"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(c => c.ChainedCard.IsPresent)
+                .Select(e => e.name)
+                .ToArray();
+            ShowCards($"Chain Cards", cards);
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
         
         _archetypesString = GUILayout.TextField(_archetypesString);
         if (GUILayout.Button("Find By Set of Comma-Separated Archetypes"))
