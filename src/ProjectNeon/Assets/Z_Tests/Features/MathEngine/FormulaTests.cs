@@ -35,8 +35,8 @@ public class FormulaTests
     [Test] public void Formula_Leadership() 
         => AssertResultsIs(1.8f, "0.18 * Leadership", TestMembers.Create(s => s.With(StatType.Leadership, 10)));
     
-    [Test] public void Formula_Economic() 
-        => AssertResultsIs(1.8f, "0.18 * Economic", TestMembers.Create(s => s.With(StatType.Economy, 10)));
+    [Test] public void Formula_Economy() 
+        => AssertResultsIs(1.8f, "0.18 * Economy", TestMembers.Create(s => s.With(StatType.Economy, 10)));
     
     [Test] public void Formula_PercentOfHp() 
         => AssertResultsIs(10, "0.5 * HP", TestMembers.Create(s => s.With(StatType.MaxHP, 20)));

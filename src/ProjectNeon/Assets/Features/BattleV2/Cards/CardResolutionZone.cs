@@ -223,13 +223,7 @@ public class CardResolutionZone : ScriptableObject
     
     private void AddChainedCardIfApplicable(IPlayedCard trigger)
     {
-        if (trigger.Card.ChainedCard.IsMissing || 
-            _movesThisTurn
-                .Concat(_pendingMoves)
-                .Where(x => x.Member.TeamType == TeamType.Party)
-                .Select(m => m.Member.Id)
-                .Distinct()
-                .Count() > 1)
+        if (!CanChain.Evaluate(new CardConditionContext(trigger.Card, battleState, _pendingMoves)))
             return;
         
         var chainingMove = trigger;
