@@ -7,6 +7,7 @@ public sealed class Card
     [SerializeField] private int id;
     [SerializeField] private CardTypeData type;
     [SerializeField] private Member owner;
+    [SerializeField] private readonly Maybe<Color> tint;
 
     public CardMode Mode { get; private set; }
     public bool IsActive => Mode != CardMode.Dead && Mode != CardMode.Glitched;
@@ -27,12 +28,18 @@ public sealed class Card
     public CardActionSequence[] ActionSequences => Type.ActionSequences;
     public Maybe<CardTypeData> ChainedCard => Type.ChainedCard;
     public Maybe<ResourceQuantity> LockedXValue { get; private set; } = Maybe<ResourceQuantity>.Missing();
+    public Color Tint => tint.OrDefault(Color.white);
 
+    
     public Card(int id, Member owner, CardTypeData type)
+        : this(id, owner, type, Maybe<Color>.Missing()) {}
+    
+    public Card(int id, Member owner, CardTypeData type, Maybe<Color> tint)
     {
         this.owner = owner ?? throw new ArgumentNullException(nameof(owner));
         this.id = id;
         this.type = type;
+        this.tint = tint;
     }
     
     public Card RevertedToStandard()

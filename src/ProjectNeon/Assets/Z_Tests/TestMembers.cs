@@ -25,7 +25,6 @@ public static class TestMembers
             TeamType.Party,
             initStats(DefaultStats().With(resources)),
             BattleRole.Unknown,
-            StatType.Attack,
-            Color.white
+            StatType.Attack
         );
 }

@@ -197,7 +197,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType.ChainedCard.IfPresent(chain =>
         {
             if (_isHand)
-                Message.Publish(new ShowChainedCard(chainedCardParent, new Card(-1, _card.Owner, chain)));
+                Message.Publish(new ShowChainedCard(chainedCardParent, new Card(-1, _card.Owner, chain, new Maybe<Color>(_card.Tint))));
             else
                 Message.Publish(new ShowChainedCard(chainedCardParent, chain));
         });
@@ -239,7 +239,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         cardCostPresenter.Render(_card, _cardType);
         tint.color = _card == null 
             ?  archetypeTints.ForArchetypes(_cardType.Archetypes)
-            : _card.Owner.HeroTint;
+            : _card.Tint;
         canPlayHighlight.SetActive(IsPlayable);
         highlight.SetActive(IsPlayable);
         if (_card == null || _card.Mode != CardMode.Glitched)
