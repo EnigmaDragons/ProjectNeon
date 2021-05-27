@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class Member 
@@ -43,6 +46,8 @@ public class Member
 public static class MemberExtensions
 {
     private static int RoundUp(float v) => Mathf.CeilToInt(v);
+
+    public static string Names(this IEnumerable<Member> members) => string.Join(", ", members.Select(m => m.Name));
     
     public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.Name, m.Class, m.TeamType, m.State.ToSnapshot());
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);
@@ -54,6 +59,7 @@ public static class MemberExtensions
     public static int Attack(this Member m) => m.State.Attack();
     public static int Magic(this Member m) => m.State.Magic();
     public static int Leadership(this Member m) => m.State.Leadership();
+    public static int Economic(this Member m) => m.State.Economy();
     public static int Armor(this Member m) => m.State.Armor();
     public static int Resistance(this Member m) => m.State.Resistance();
     public static int Toughness(this Member m) => m.State.Toughness();
@@ -63,11 +69,16 @@ public static class MemberExtensions
     public static bool IsVulnerable(this Member m) => m.State.Damagability() > 1;
     public static bool IsDisabled(this Member m) => m.State[TemporalStatType.Disabled] > 0;
     public static bool IsStunnedForCard(this Member m) => m.State[TemporalStatType.CardStun] > 0;
+    public static bool IsBlinded(this Member m) => m.State[TemporalStatType.Blind] > 0;
+    public static bool IsInhibited(this Member m) => m.State[TemporalStatType.Inhibit] > 0;
     public static bool CanReact(this Member m) => !m.IsDisabled() && !m.IsStunnedForCard();
     public static bool HasAttackBuff(this Member m) => m.State.DifferenceFromBase(StatType.Attack) > 0;
     public static bool HasDoubleDamage(this Member m) => m.State[TemporalStatType.DoubleDamage] > 0;
     public static bool HasTaunt(this Member m) => m.State[TemporalStatType.Taunt] > 0;
-    public static bool IsStealth(this Member m) => m.State[TemporalStatType.Stealth] > 0;
+    public static bool IsAfflicted(this Member m) => m.State.StatusesOfType(StatusTag.DamageOverTime).Length > 0;
+    public static bool IsBloodied(this Member m) => m.MaxHp() / m.CurrentHp() >= 2;
+    public static bool IsStealthed(this Member m) => m.State[TemporalStatType.Stealth] > 0;
+    public static bool IsProminent(this Member m) => m.State[TemporalStatType.Prominent] > 0;
     public static bool IsConfused(this Member m) => m.State[TemporalStatType.Confused] > 0;
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int PrimaryResourceAmount(this Member m) => m.State.PrimaryResourceAmount;
@@ -78,14 +89,15 @@ public static class MemberExtensions
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
     public static int ResourceAmount(this Member m, IResourceType resourceType) => RoundUp(m.State[resourceType]);
 
-    public static bool CanAfford(this Member m, CardTypeData c)
+    public static bool CanAfford(this Member m, CardTypeData c, PartyAdventureState partyState)
     {
         try
         {
             if (!c.Cost.PlusXCost && c.Cost.BaseAmount == 0)
                 return true;
             var calc = m.CalculateResources(c);
-            var remaining = m.State.ResourceAmount(calc.ResourcePaidType.Name) - calc.ResourcesPaid;
+            var amountAvailable = c.Cost.ResourceType.Name == "Creds" ? partyState.Credits : m.State.ResourceAmount(calc.ResourcePaidType.Name);
+            var remaining = amountAvailable - calc.ResourcesPaid;
             return remaining >= 0;
         }
         catch (Exception e)

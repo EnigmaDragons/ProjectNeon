@@ -33,6 +33,10 @@ MonoBehaviour:
     maxHp: 76
     maxShield: 26
     startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
     toughness: 12
     attack: 12
     magic: 12
@@ -46,6 +50,7 @@ MonoBehaviour:
     cardsPerTurn: 1
     startOfBattleEffects:
     - EffectType: 74
+      Conditions: []
       BaseAmount:
         UseConstant: 0
         ConstantValue: 0
@@ -54,15 +59,13 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: -1
         FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 11400000, guid: abac7cad4010ceb45b92ade783e2defa, type: 2}
+      DurationFormula: -1
       EffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 9
       StatusDetailText: 'On Damaged: Gains Shields'
       TurnDelay: 0
@@ -84,6 +87,7 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: bf674097bc9a92b4586206e7adad0830, type: 2}
       BonusCardType: {fileID: 0}
     - EffectType: 79
+      Conditions: []
       BaseAmount:
         UseConstant: 0
         ConstantValue: 0
@@ -92,15 +96,13 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: -1
         FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 11400000, guid: abac7cad4010ceb45b92ade783e2defa, type: 2}
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 9
       StatusDetailText: 'On Damaged: Gains Shields'
       TurnDelay: 0

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Portable Synthesizer
   description: 'Each turn: Lose 1 cred. Gain 1 primary resource'
+  isWIP: 0
   rarity: 2
   slot: 2
   priceFactor: 1
-  canUseClasses:
-  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
+  archetypes: []
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -28,6 +28,7 @@ MonoBehaviour:
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 54
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -36,15 +37,13 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 1
-      ConstantValue: -1
-      Variable: {fileID: 0}
+    DurationFormula: -1
     EffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
     StatusTag: 12
     StatusDetailText: 'Each turn: Lose 1 cred. Gain 1 primary resource'
     TurnDelay: 0

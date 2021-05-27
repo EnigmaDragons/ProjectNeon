@@ -1,6 +1,6 @@
 using System.Linq;
 
-public class UnconsciousAllyCondition : Condition
+public class UnconsciousAllyCondition : ILogicFlow
 {
     private readonly CardActionsData _effect;
 

@@ -1,8 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 39-43, 47, 48, 53, 
-// LAST NUMBER USED: 85
-
-using System;
+// NUMBERS AVAILABLE: 43, 47, 48, 53, 
+// LAST NUMBER USED: 86
 
 public enum EffectType
 {
@@ -22,7 +20,7 @@ public enum EffectType
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
     DelayedStartOfTurn = 23,
-    
+
     // Resets
     RemoveDebuffs = 4,
     ResetStatToBase = 83,
@@ -37,6 +35,7 @@ public enum EffectType
     AdjustPrimaryResourceFormula = 82,
     TransferPrimaryResourceFormula = 35,
     Reload = 38,
+    AdjustCostOfAllCardsInHandAtEndOfTurn = 39, //once we have more cost modifying cards we can build a more generic type
     
     // Reactions
     ReactWithEffect = 74,
@@ -44,15 +43,16 @@ public enum EffectType
     OnDeath = 25,
 
     // Transformers
-    DoubleTheEffectAndMinusDurationTransformer = 28,
     AddToXCostTransformer = 32,
     
     // Cards Effects
     PlayBonusCardAfterNoCardPlayedInXTurns = 76,
-    RedrawHandOfCards = 77,
+    CycleAllCardsInHand = 77,
     DrawCards = 81,
     GlitchRandomCards = 33,
-    
+    FillHandWithOwnersCards = 41,
+    DrawSelectedCard = 42,
+
     // Statuses
     DisableForTurns = 13,
     ApplyVulnerable = 10,
@@ -68,6 +68,7 @@ public enum EffectType
     
     // Party Effects
     AdjustPlayerStats = 49,
+    AdjustPlayerStatsFormula = 28,
     GainCredits = 52,
     ApplyAdditiveStatInjury = 71,
     ApplyMultiplicativeStatInjury = 72,
@@ -78,4 +79,6 @@ public enum EffectType
     ShowCustomTooltip = 73,
     LeaveBattle = 34,
     AdjustCardTagPrevention = 37,
+    ResolveInnerEffect = 86,
+    AdjustPrimaryStatForEveryCardCycledAndInHand = 40,
 }

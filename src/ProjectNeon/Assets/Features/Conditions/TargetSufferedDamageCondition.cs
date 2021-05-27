@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-public class TargetSufferedDamageCondition : Condition
+public class TargetSufferedDamageCondition : ILogicFlow
 {
     private readonly CardActionsData _effect;
 

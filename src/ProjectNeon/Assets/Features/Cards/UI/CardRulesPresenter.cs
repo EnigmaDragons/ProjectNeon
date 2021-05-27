@@ -31,14 +31,20 @@ public class CardRulesPresenter : MonoBehaviour
             rulesToShow.AddIf("X-Cost", d.Cost.PlusXCost);
             rulesToShow.AddIf("Chain", d.ChainedCard.IsPresent);
             rulesToShow.AddIf("Quick", d.Speed == CardSpeed.Quick);
+            rulesToShow.AddIf("Afflicted", d.Conditions().Any(x => x.ConditionType == ActionConditionType.TargetHasDamageOverTime) 
+                                           || d.Description.IndexOf("Afflict", StringComparison.OrdinalIgnoreCase) >= 0);
+            rulesToShow.AddIf("Bloodied", d.Description.IndexOf("Bloodied", StringComparison.OrdinalIgnoreCase) >= 0);
 
             var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());
             battleEffects.ForEach(b =>
             {
+                rulesToShow.AddIf("TagPlayed", b.Formula.Contains("Tag["));
                 rulesToShow.AddIf("Vulnerable", b.EffectType == EffectType.ApplyVulnerable);
                 rulesToShow.AddIf(TemporalStatType.Disabled.ToString(), b.EffectType == EffectType.DisableForTurns);
                 rulesToShow.AddIf("Stealth", b.EffectType == EffectType.EnterStealth);
                 rulesToShow.AddIf("Drain", b.EffectType == EffectType.TransferPrimaryResourceFormula);
+                rulesToShow.AddIf("Igniting", "Igniting".Equals(b.ReactionEffectScope.Value));
+                rulesToShow.AddIf(ReactionConditionType.OnSlay.ToString(), ReactionConditionType.OnSlay == b.ReactionConditionType);
 
                 AddAllMatchingEffectScopeRules(rulesToShow, b,
                     TemporalStatType.Dodge.ToString(),

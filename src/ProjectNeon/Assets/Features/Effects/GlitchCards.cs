@@ -21,9 +21,9 @@ public class GlitchCards : Effect
         List<Card> possibleCards = new List<Card>();
         if (_location.HasFlag(CardLocation.Hand))
             possibleCards.AddRange(ctx.PlayerCardZones.HandZone.Cards);
-        else if (_location.HasFlag(CardLocation.Deck))
+        if (_location.HasFlag(CardLocation.Deck))
             possibleCards.AddRange(ctx.PlayerCardZones.DrawZone.Cards);
-        else if (_location.HasFlag(CardLocation.Discard))
+        if (_location.HasFlag(CardLocation.Discard))
             possibleCards.AddRange(ctx.PlayerCardZones.DiscardZone.Cards);
         var filteredCards = possibleCards
             .Where(card => ctx.Target.Members.Any(m => card.Owner.Id == m.Id) && card.Mode != CardMode.Glitched)

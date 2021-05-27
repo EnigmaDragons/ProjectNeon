@@ -82,10 +82,10 @@ public class EnemyInstance
     public Member SetupMemberState(Member m, BattleState state)
     {
         var ctx = new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, 
-            state.Members, state.PlayerCardZones, new UnpreventableContext());
+            state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext());
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         m.State.ApplyPersistentState(
-            new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = _resourceType.Name, Amount = _resourceGainPerTurn}, m));
+            new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = _resourceType.Name, Amount = _resourceGainPerTurn}, m, state.Party));
         _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         _startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx));
         return m;
@@ -104,6 +104,7 @@ public class EnemyInstance
         .With(StatType.Attack, _attack)
         .With(StatType.Magic, _magic)
         .With(StatType.Leadership, _leadership)
+        .With(StatType.Economy, 0)
         .With(StatType.Armor, _armor)
         .With(StatType.Resistance, _resistance)
         .With(StatType.Damagability, 1f)

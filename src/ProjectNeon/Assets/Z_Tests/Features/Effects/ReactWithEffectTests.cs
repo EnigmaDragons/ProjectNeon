@@ -13,7 +13,7 @@ public class ReactWithEffectTests
             EffectType = EffectType.ReactWithEffect,
             ReactionConditionType = ReactionConditionType.OnCausedStun,
             FloatAmount = new FloatReference(-1),
-            NumberOfTurns = new IntReference(-1),
+            DurationFormula = "-1",
             ReactionEffect = TestCards.ReactionEffect(
                     ReactiveMember.Possessor, 
                     ReactiveTargetScope.Target, 
@@ -47,7 +47,8 @@ public class ReactWithEffectTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.ApplyVulnerable,
-            FloatAmount = new FloatReference(1)
+            FloatAmount = new FloatReference(1),
+            DurationFormula = "0"
         }, attacker, possessor);
         
         Assert.AreEqual(5, possessor.CurrentShield());
@@ -77,7 +78,7 @@ public class ReactWithEffectTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.ApplyVulnerable,
-            NumberOfTurns = new IntReference(1)
+            DurationFormula = "1"
         }, attacker, possessor);
         
         Assert.AreEqual(5, possessor.CurrentShield());
@@ -89,7 +90,7 @@ public class ReactWithEffectTests
             EffectType = EffectType.ReactWithEffect,
             ReactionConditionType = condition,
             FloatAmount = new FloatReference(-1),
-            NumberOfTurns = new IntReference(-1),
+            DurationFormula = "-1",
             ReactionEffect = Gain5Shield
         };
     

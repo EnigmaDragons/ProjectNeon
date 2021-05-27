@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class SimpleCondition : Condition
+public class SimpleCondition : ILogicFlow
 {
     private readonly CardActionsData _effect;
     private readonly Func<CardActionContext, bool> _condition;

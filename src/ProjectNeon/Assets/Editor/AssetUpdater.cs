@@ -7,6 +7,8 @@ public class AssetUpdater
     public static void Go()
     {
         UpdateCardPools();
+        UpdateEquipmentPools();
+        EnsureDurationPresent();
     }
 
     [MenuItem("Neon/Update Card Pools")]
@@ -17,16 +19,56 @@ public class AssetUpdater
         foreach (var pool in cardPools)
         {
             var validCards =  cards.Where(card => !card.IsWip
-                  && pool.includedRarities.Contains(card.Rarity)
-                  && pool.archetypes.Length == card.Archetypes.Count
-                  && card.Archetypes.All(cardArchetype => pool.archetypes.Any(poolArchetype => poolArchetype.Value == cardArchetype)))
+                    && pool.includedRarities.Contains(card.Rarity)
+                    && pool.archetypes.Length == card.Archetypes.Count
+                    && card.Archetypes.All(cardArchetype => pool.archetypes.Any(poolArchetype => poolArchetype.Value == cardArchetype)))
                 .ToList();
-            if (validCards.Count != pool.allCards.Count ||
-                validCards.Any(validCard => !pool.allCards.Contains(validCard)))
+            if (validCards.Count != pool.allCards.Count 
+                || validCards.Any(validCard => !pool.allCards.Contains(validCard)))
             {
                 pool.allCards = validCards;
                 EditorUtility.SetDirty(pool);
             }
+        }
+    }
+
+    [MenuItem("Neon/Update Equipment Pools")]
+    private static void UpdateEquipmentPools()
+    {
+        var equipments = ScriptableExtensions.GetAllInstances<StaticEquipment>();
+        var equipmentPools = ScriptableExtensions.GetAllInstances<EquipmentPool>();
+        foreach (var pool in equipmentPools)
+        {
+            var validEquipments = equipments.Where(equipment => !equipment.IsWip
+                    && pool.includedRarities.Contains(equipment.Rarity)
+                    && pool.archetypes.Length == equipment.Archetypes.Length
+                    && equipment.Archetypes.All(equipmentArchetype => pool.archetypes.Any(poolArchetype => poolArchetype.Value == equipmentArchetype)))
+                .ToList();
+            if (validEquipments.Count != pool.all.Count
+                || validEquipments.Any(validEquipment => !pool.all.Contains(validEquipment)))
+            {
+                pool.all = validEquipments;
+                EditorUtility.SetDirty(pool);
+            }
+        }
+    }
+    
+    private static void EnsureDurationPresent()
+    {
+        var cardActionsDatas = ScriptableExtensions.GetAllInstances<CardActionsData>();
+        foreach (var cardActionsData in cardActionsDatas)
+        {
+            var isDirty = false;
+            foreach (var battleEffect in cardActionsData.BattleEffects)
+            {
+                if (string.IsNullOrWhiteSpace(battleEffect.DurationFormula))
+                {
+                    isDirty = true;
+                    battleEffect.DurationFormula = "0";
+                }
+            }
+            if (isDirty)
+                EditorUtility.SetDirty(cardActionsData);
         }
     }
 }

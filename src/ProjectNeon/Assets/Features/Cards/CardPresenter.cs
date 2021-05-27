@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,7 +16,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private Image art;
     [SerializeField] private Image tint;
+    [SerializeField] private UnityEngine.UI.Extensions.Gradient tintGradient;
     [SerializeField] private GameObject canPlayHighlight;
+    [SerializeField] private GameObject conditionMetHighlight;
+    [SerializeField] private GameObject conditionNotMetHighlight;
     [SerializeField] private GameObject highlight;
     [SerializeField] private GameObject darken;
     [SerializeField] private CardControlsPresenter controls;
@@ -65,6 +70,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
 
     public void Set(Card card) => Set("Library", card, () => { }, () => {}, () => { }, (_, __) => false, () => false);
+    public void Set(Card card, Action onClick) => Set("Library", card, onClick, () => {}, () => { }, (_, __) => false, () => false);
     public void Set(CardTypeData card) => Set(card, () => { });
     
     public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Action onDiscard, Func<BattleState, Card, bool> getCanPlay, Func<bool> getCanActivate)
@@ -102,8 +108,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private void InitFreshCard(Action onClick)
     {
         gameObject.SetActive(true);
-        canPlayHighlight.SetActive(false);
-        highlight.SetActive(false);
+        DisableCanPlayHighlight();
+        DisableSelectedHighlight();
         _onClick = onClick;
         _onMiddleMouse = () => { };
         _onRightClick = () => { };
@@ -130,10 +136,43 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (isDisabled)
         {
             DebugLog($"is disabled.");
-            canPlayHighlight.SetActive(false);
+            DisableCanPlayHighlight();
+            DisableSelectedHighlight();
             controls.SetActive(false);
         }
         darken.SetActive(isDisabled);
+    }
+
+    private void DisableCanPlayHighlight()
+    {
+        canPlayHighlight.SetActive(false);
+        conditionMetHighlight.SetActive(false);
+        conditionNotMetHighlight.SetActive(false);
+    }
+    
+    private void SetCanPlayHighlight(bool highlightShouldBeActive, Maybe<bool> highlightCondition, Maybe<bool> unhighlightCondition)
+    {
+        DisableCanPlayHighlight();
+        if (!highlightShouldBeActive)
+            return;
+        if (unhighlightCondition.IsPresentAnd(c => c))
+            conditionNotMetHighlight.SetActive(true);
+        else if (highlightCondition.IsPresentAnd(c => c))
+            conditionMetHighlight.SetActive(true);
+        else
+            canPlayHighlight.SetActive(true);
+    }
+
+    private void DisableSelectedHighlight()
+    {
+        highlight.SetActive(false);
+    }
+
+    private void SetSelectedHighlight(bool highlightShouldBeActive)
+    {
+        DisableSelectedHighlight();
+        if (!conditionMetHighlight && !conditionNotMetHighlight && highlightShouldBeActive)
+            highlight.SetActive(true);
     }
     
     public void SetHandHighlight(bool active)
@@ -141,11 +180,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
 
-        DebugLog($"Setting Highlight {active}");
+        DebugLog($"Setting Selected Highlight {active}");
+        SetSelectedHighlight(IsPlayable && active);
         controls.SetActive(active);
         SetSiblingIndex(active);
-
-        highlight.SetActive(IsPlayable && active);
+        
         if (active)
             ShowComprehensiveCardInfo();
         else
@@ -197,16 +236,23 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType.ChainedCard.IfPresent(chain =>
         {
             if (_isHand)
-                Message.Publish(new ShowChainedCard(chainedCardParent, new Card(-1, _card.Owner, chain, new Maybe<Color>(_card.Tint))));
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain, _card.Tint)));
             else
-                Message.Publish(new ShowChainedCard(chainedCardParent, chain));
+                Message.Publish(new ShowReferencedCard(chainedCardParent, chain));
+        });
+        _cardType.SwappedCard.IfPresent(swap =>
+        {
+            if (_isHand)
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, swap)));
+            else
+                Message.Publish(new ShowReferencedCard(chainedCardParent, swap));
         });
     }
     
     private void HideComprehensiveCardInfo()
     {
         rules.Hide();
-        Message.Publish(new HideChainedCard());
+        Message.Publish(new HideReferencedCard());
     }
     
     public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
@@ -237,11 +283,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);
         cardCostPresenter.Render(_card, _cardType);
-        tint.color = _card == null 
-            ?  archetypeTints.ForArchetypes(_cardType.Archetypes)
-            : _card.Tint;
-        canPlayHighlight.SetActive(IsPlayable);
-        highlight.SetActive(IsPlayable);
+        SetCardTint();
+        SetCanPlayHighlight(IsPlayable, 
+            _card != null 
+                ? _cardType.HighlightCondition.Map(condition => condition.ConditionMet(new CardConditionContext(_card, battleState))) 
+                : Maybe<bool>.Missing(),
+            _card != null 
+                ? _cardType.UnhighlightCondition.Map(condition => condition.ConditionMet(new CardConditionContext(_card, battleState))) 
+                : Maybe<bool>.Missing());
         if (_card == null || _card.Mode != CardMode.Glitched)
             glitchableComponents.ForEach(x => x.material = null);
         else 
@@ -249,6 +298,31 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         dragRotator.Reset();
         dragRotator.enabled = _isHand;
         onlyEnabledInHand.ForEach(o => o.SetActive(_isHand));
+    }
+
+    private void SetCardTint()
+    {
+        tint.color = _card == null
+            ? Color.white
+            : _card.Tint;
+        tintGradient.enabled = _card == null;
+        if (_cardType.Archetypes.Count == 0)
+        {
+            var archetypeTint = archetypeTints.ForArchetypes(new HashSet<string>());
+            tintGradient.Vertex1 = archetypeTint;
+            tintGradient.Vertex2 = archetypeTint;
+        }
+        else if (_cardType.Archetypes.Count == 1)
+        {
+            var archetypeTint = archetypeTints.ForArchetypes(_cardType.Archetypes);
+            tintGradient.Vertex1 = archetypeTint;
+            tintGradient.Vertex2 = archetypeTint;
+        }
+        else
+        {
+            tintGradient.Vertex1 = archetypeTints.ForArchetypes(new HashSet<string>(new[] {_cardType.Archetypes.OrderBy(x => x).First()}));
+            tintGradient.Vertex2 = archetypeTints.ForArchetypes(new HashSet<string>(new[] {_cardType.Archetypes.OrderBy(x => x).Last()}));
+        }
     }
 
     private bool AreCloseEnough(float first, float second) => (first - second).IsFloatZero();

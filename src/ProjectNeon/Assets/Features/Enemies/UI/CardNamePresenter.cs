@@ -24,8 +24,8 @@ public class CardNamePresenter : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerEnter(PointerEventData eventData) => OnHover();
     public void OnPointerExit(PointerEventData eventData) => OnExit();
     public void OnHover() => Message.Publish(
-        new ShowChainedCard(hoverCardArea, _owner.Select(o => _card.CreateInstance(o.Id, o), Maybe<Card>.Missing), _card));
-    public void OnExit() => Message.Publish(new HideChainedCard());
+        new ShowReferencedCard(hoverCardArea, _owner.Select(o => _card.CreateInstance(o.Id, o), Maybe<Card>.Missing), _card));
+    public void OnExit() => Message.Publish(new HideReferencedCard());
     
     public void OnPointerDown(PointerEventData eventData)
     {

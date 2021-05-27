@@ -17,7 +17,7 @@ public class SpiderlingAI : StatefulTurnAI
     {        
         if (!_targetMap.ContainsKey(memberId) || !battleState.Members[_targetMap[memberId]].IsConscious())
         {
-            var card = battleState.GetPlayableCards(memberId).First(x => x.Name == "Leaping Strike");
+            var card = battleState.GetPlayableCards(memberId, battleState.Party).First(x => x.Name == "Leaping Strike");
             var target = strategy.AttackTargetFor(card.ActionSequences[0]);
             return new PlayedCardV2(battleState.Members[memberId], target.AsArray(), card.CreateInstance(battleState.GetNextCardId(), battleState.Members[memberId]));
         }

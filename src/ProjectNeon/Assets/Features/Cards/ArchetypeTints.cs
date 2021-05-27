@@ -13,6 +13,6 @@ public class ArchetypeTints : ScriptableObject
     {
         if (_tintMap == null)
             _tintMap = new DictionaryWithDefault<string, Color>(Color.white, tints.ToDictionary(x => x.Archetypes.Any() ? string.Join("&", x.Archetypes.Select(a => a.Value).OrderBy(a => a)) : "", x => x.Tint));
-        return _tintMap[archetypes.Any() ? string.Join("&", archetypes) : ""];
+        return _tintMap[archetypes.Any() ? string.Join("&", archetypes.OrderBy(a => a)) : ""];
     }
 }

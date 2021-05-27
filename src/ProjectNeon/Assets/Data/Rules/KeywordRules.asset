@@ -21,8 +21,8 @@ MonoBehaviour:
     Value: '<b>Blind</b>
 
 
-      Guarantees that the next attack made by that character
-      will miss.'
+      Guarantees that the next attack card played will
+      miss.'
   - title: ExtraCardPlays
     Key:
       UseConstant: 0
@@ -134,7 +134,8 @@ MonoBehaviour:
 
 
       Stealthed characters may not be directly targeted.
-      They lose stealth when they perform an offensive action .'
+      They lose stealth when they perform an offensive action. Heroes cannot stealth
+      when Prominent.'
   - title: Inhibit
     Key:
       UseConstant: 0
@@ -143,7 +144,7 @@ MonoBehaviour:
     Value: '<b>Inhibit</b>
 
 
-      Guarantees that the next spell made by that character
+      Guarantees that the next non-attack card played
       will fizzle.'
   - title: Drain
     Key:
@@ -203,3 +204,53 @@ MonoBehaviour:
 
       Next time you deal damage, heal yourself for
       a portion of the amount dealt.'
+  - title: Afflicted
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: c35fe04b457fedd47bb98900e8a0fbd6, type: 2}
+    Value: '<b>Afflicted</b>
+
+
+      If target is already suffering from a Damage
+      over Time (DoT) effect, perform the stated effect.'
+  - title: Igniting
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4b0b51b4c4c327e48a3da0c002230222, type: 2}
+    Value: '<b>Ignite</b>
+
+
+      When targeted by a Fire Card, <b>Ignited</b> effects
+      are triggered and consumed.'
+  - title: OnSlay
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7caa2475e493fe74fa693152459f13e5, type: 2}
+    Value: '<b>Slay</b>
+
+
+      When a target is killed by your action, trigger the
+      stated effect.'
+  - title: TagPlayed
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 8fd06c4c4bed69e4ab9987561080fa5f, type: 2}
+    Value: '<b>Tag[type]</b>
+
+
+      This counts each card played with that tag during
+      this battle'
+  - title: Bloodied
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4ee632d8595bb2641ab23295349c92e0, type: 2}
+    Value: '<b>Bloodied</b>
+
+
+      The bonus effect applies if the target is at
+      or below half of their maximum health'

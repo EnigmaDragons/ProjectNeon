@@ -32,7 +32,7 @@ public class DetailedSingleCardView : OnMessage<ShowDetailedCardView, HideDetail
 
     protected override void Execute(HideDetailedCardView msg)
     {
-        Message.Publish(new HideChainedCard());
+        Message.Publish(new HideReferencedCard());
         viewParent.SetActive(false);
     }
 }

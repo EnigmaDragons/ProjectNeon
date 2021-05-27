@@ -9,4 +9,6 @@
     AllyIsUnconscious = 6,
     TargetHasDamageOverTime = 7,
     PerformerHasNoPrimaryResources = 8,
+    ApplyToEachTargetMemberIndividually = 9,
+    RepeatNumberOfTimes = 10,
 }

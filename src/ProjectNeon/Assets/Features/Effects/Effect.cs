@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public interface Effect
 {
@@ -19,9 +20,11 @@ public class EffectContext
     public IDictionary<int, Member> BattleMembers { get; } // This should probably be converted to be lazy so that it's accurate no matter when the Context is created
     public CardPlayZones PlayerCardZones { get; }
     public PreventionContext Preventions { get; }
+    public SelectionContext Selections { get; }
 
     public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, 
-        PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones, PreventionContext preventions)
+        PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones, PreventionContext preventions, 
+        SelectionContext selections)
     {
         Source = source;
         SourceSnapshot = source.GetSnapshot();
@@ -34,6 +37,7 @@ public class EffectContext
         Card = card;
         XPaidAmount = xPaidAmount;
         Preventions = preventions;
+        Selections = selections;
         if (XPaidAmount == null)
         {
             Log.Error("XPaidAmount is null");
@@ -44,11 +48,11 @@ public class EffectContext
     }
     
     public EffectContext Retargeted(Member source, Target target) 
-        => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, PlayerCardZones, Preventions);
+        => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, PlayerCardZones, Preventions, Selections);
 
     public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)
         => new EffectContext(source, target, card, xPaidAmount, PartyAdventureState.InMemory(), new PlayerState(), 
-            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions);
+            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions, new SelectionContext());
 }
 
 public static class EffectExtensions
@@ -58,7 +62,7 @@ public static class EffectExtensions
 
     private static void ApplyForTests(this Effect effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid) 
         => effect.Apply(new EffectContext(source, target, card, xAmountPaid, PartyAdventureState.InMemory(), new PlayerState(0), 
-            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, new PreventionContextMut(target)));
+            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, new PreventionContextMut(target), new SelectionContext()));
 }
 
 public sealed class NoEffect : Effect
@@ -84,8 +88,10 @@ public class FullContextEffect : Effect
 {
     private readonly Action<EffectContext, Target> _apply;
 
-    public FullContextEffect(Action<EffectContext> apply) => _apply = (ctx, __) => apply(ctx);
-    public FullContextEffect(Action<EffectContext, MemberState> applyToOne) : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, member))) { }
+    public FullContextEffect(Action<EffectContext, int> apply, string durationFormula) 
+        : this((ctx, duration, m) => apply(ctx, duration), durationFormula) {}
+    public FullContextEffect(Action<EffectContext, int, MemberState> applyToOne, string durationFormula) 
+        : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, Mathf.CeilToInt(Formula.Evaluate(src.SourceSnapshot.State, member, durationFormula, src.XPaidAmount)), member))) { }
     private FullContextEffect(Action<EffectContext, Target> apply) => _apply = apply;
 
     public void Apply(EffectContext ctx) => _apply(ctx, ctx.Target);

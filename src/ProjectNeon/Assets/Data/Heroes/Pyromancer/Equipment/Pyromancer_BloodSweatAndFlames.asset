@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Blood, Sweat & Flames
   description: 'When Bloodied: Gain 5 Flames'
+  isWIP: 0
   rarity: 3
   slot: 2
   priceFactor: 1
-  canUseClasses:
-  - {fileID: 11400000, guid: 63722b0aa1473de4cb961f4e32a9d50d, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 4d0a0c42368d68b4593cdbbff300f064, type: 2}
   modifiers:
@@ -30,6 +29,7 @@ MonoBehaviour:
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 74
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -38,15 +38,13 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: -1
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 1
-      ConstantValue: -1
-      Variable: {fileID: 0}
+    DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
     StatusTag: 12
     StatusDetailText: 'When Bloodied: Gain 5 Flames'
     TurnDelay: 0

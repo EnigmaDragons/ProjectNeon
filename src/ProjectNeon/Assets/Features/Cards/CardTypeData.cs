@@ -14,8 +14,11 @@ public interface CardTypeData
     string TypeDescription  { get; }
     CardActionSequence[] ActionSequences  { get; }
     Maybe<CardTypeData> ChainedCard { get; }
+    Maybe<CardTypeData> SwappedCard { get; }
     Rarity Rarity { get; }
     HashSet<string> Archetypes { get; }
+    Maybe<CardCondition> HighlightCondition { get; }
+    Maybe<CardCondition> UnhighlightCondition { get; }
 }
 
 public static class CardTypeDataExtensions
@@ -28,6 +31,10 @@ public static class CardTypeDataExtensions
     public static Card CreateInstance(this CardTypeData c, int id, Member owner, Maybe<Color> tint) => new Card(id, owner, c, tint);
 
     public static IEnumerable<EffectData> BattleEffects(this CardTypeData c) => c.ActionSequences.SelectMany(a => a.CardActions.BattleEffects);
+    
+    public static IEnumerable<ActionConditionData> Conditions(this CardTypeData c) => c.ActionSequences
+        .SelectMany(a => a.CardActions.Actions.Where(x => x.Type == CardBattleActionType.Condition)
+            .Select(x => x.ConditionData));
 
     public static IEnumerable<EffectData> ReactionBattleEffects(this CardTypeData card) 
         => card.Actions()

@@ -33,6 +33,7 @@ public static class Formula
         { "MAG", StatType.Magic.ToString() },
         { "ARM", StatType.Armor.ToString() },
         { "TGH", StatType.Toughness.ToString() },
+        { "ECON", StatType.Economy.ToString() },
     };
 
     private static string ReplaceTags(string expression, FormulaContext ctx)

@@ -27,5 +27,7 @@ public class TransferPrimaryResource : Effect
             }
         }
         ctx.Source.State.AdjustPrimaryResource(drainedResources);
+        if (drainedResources > 0)
+            BattleLog.Write($"{ctx.Source} gained {drainedResources} {ctx.Source.PrimaryResource().ResourceType}");
     }
 }

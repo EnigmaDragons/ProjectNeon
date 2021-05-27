@@ -16,4 +16,6 @@ public enum TemporalStatType
     Dodge = 15,
     Aegis = 16,
     PreventDeath = 17,
+    Prominent = 18,
+    Marked = 19,
 }

@@ -16,6 +16,7 @@ MonoBehaviour:
   - type: 31
     battleEffect:
       EffectType: 0
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -24,6 +25,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
+      DurationFormula: 
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
@@ -33,15 +35,27 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
+      TargetsSource: 0
       StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -61,11 +75,16 @@ MonoBehaviour:
         Variable: {fileID: 11400000, guid: e643d44fa8caf15479f6f58fcfff7c06, type: 2}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
       EffectType: 22
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -74,6 +93,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
+      DurationFormula: 0
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
@@ -83,15 +103,27 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReferencedSequence: {fileID: 0}
-      ReactionSequence: {fileID: 0}
+      TargetsSource: 0
       StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
       Formula: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -111,5 +143,9 @@ MonoBehaviour:
         Variable: {fileID: 0}
       size: 1
       speed: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}

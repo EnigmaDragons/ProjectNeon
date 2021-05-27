@@ -6,7 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Shopping/EquipmentPool")]
 public class EquipmentPool : ScriptableObject
 {
-    [SerializeField] private List<StaticEquipment> all;
+    //public so editor script can access
+    public StringVariable[] archetypes;
+    public Rarity[] includedRarities = new Rarity[] {Rarity.Starter, Rarity.Basic, Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic};
+    [UnityEngine.UI.Extensions.ReadOnly] public List<StaticEquipment> all;
     [SerializeField] private EquipmentPool[] subPools = new EquipmentPool[0];
     [SerializeField] private int numRandomCommons = 32;
     [SerializeField] private int numRandomUncommons = 16;

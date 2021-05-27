@@ -31,7 +31,7 @@ public class EnemyDetailsViewController : OnMessage<ShowEnemyDetails, HideEnemyD
 
     protected override void Execute(HideEnemyDetails msg)
     {
-        Message.Publish(new HideChainedCard());
+        Message.Publish(new HideReferencedCard());
         viewParent.SetActive(false);
     }
 }

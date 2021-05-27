@@ -10,7 +10,7 @@ public class CardTypeEditor : Editor
 {
     private CardType targetCard;
     private SerializedProperty customName, functionalityIssues, art, description, typeDescription, tags, 
-        cost, gain, rarity, cardAction1, cardAction2, chainedCard, presentationIssues, speed, archetypes, isWip;
+        cost, gain, rarity, cardAction1, cardAction2, chainedCard, presentationIssues, speed, archetypes, isWip, highlightCondition, unhighlightCondition, swappedCard;
 
     public void OnEnable()
     {
@@ -24,11 +24,14 @@ public class CardTypeEditor : Editor
         gain = serializedObject.FindProperty("onPlayGain");
         rarity = serializedObject.FindProperty("rarity");
         chainedCard = serializedObject.FindProperty("chainedCard");
+        swappedCard = serializedObject.FindProperty("swappedCard");
         functionalityIssues = serializedObject.FindProperty("functionalityIssues");
         presentationIssues = serializedObject.FindProperty("presentationIssues");
         speed = serializedObject.FindProperty("speed");
         archetypes = serializedObject.FindProperty("archetypes");
         isWip = serializedObject.FindProperty("isWIP");
+        highlightCondition = serializedObject.FindProperty("highlightCondition");
+        unhighlightCondition = serializedObject.FindProperty("unhighlightCondition");
     }
 
     public override void OnInspectorGUI()
@@ -45,6 +48,10 @@ public class CardTypeEditor : Editor
         PresentUnchanged(gain);
         PresentActionSequences();
         PresentUnchanged(chainedCard);
+        PresentUnchanged(swappedCard);
+        DrawUILine(Color.black);
+        PresentUnchanged(highlightCondition);
+        PresentUnchanged(unhighlightCondition);
         DrawUILine(Color.black);
         PresentUnchanged(tags);
         DrawUILine(Color.black);
@@ -105,6 +112,7 @@ public class CardTypeEditor : Editor
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].group"));
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].scope"));
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].repeatX"));
+            PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].repeatCount"));
             PresentUnchanged(serializedObject.FindProperty($"actionSequences.Array.data[{refBrokenI}].cardActions"), "Effect Sequence");
             EditorGUI.indentLevel--;
         }

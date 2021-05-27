@@ -116,10 +116,11 @@ public class CardResolutionZone : ScriptableObject
             played.Member.State.RecordUsage(played.Card);
             played.Member.Apply(m =>
             {
-                m.Lose(played.Spent);
-                m.Gain(played.Gained);
+                m.Lose(played.Spent, battleState.Party);
+                m.Gain(played.Gained, battleState.Party);
             });
-            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}"); 
+            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
+            BattleLog.WriteIf(played.Gained, x => $"{played.Member.Name} Gained {x}", x => x.Amount > 0);
         }
     }
     
@@ -153,13 +154,25 @@ public class CardResolutionZone : ScriptableObject
         {
             if (!card.IsActive)
             {
-                BattleLog.Write($"{card.Name} does not resolve.");
+                BattleLog.Write($"{card.Name} is {card.Mode}, so it does not resolve.");
                 Message.Publish(new CardResolutionFinished(played.Member.Id));
             }
             else if (card.Owner.IsStunnedForCard())
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.CardStun, -1);
+                Message.Publish(new CardResolutionFinished(played.Member.Id));
+            }
+            else if (card.IsAttack && card.Owner.IsBlinded())
+            {
+                BattleLog.Write($"{card.Owner.Name} was blinded, so {card.Name} does not resolve.");
+                card.Owner.State.Adjust(TemporalStatType.Blind, -1);
+                Message.Publish(new CardResolutionFinished(played.Member.Id));
+            }
+            else if (!card.IsAttack && card.Owner.IsInhibited())
+            {
+                BattleLog.Write($"{card.Owner.Name} was inhibited, so {card.Name} does not resolve.");
+                card.Owner.State.Adjust(TemporalStatType.Inhibit, -1);
                 Message.Publish(new CardResolutionFinished(played.Member.Id));
             }
             else
@@ -173,7 +186,17 @@ public class CardResolutionZone : ScriptableObject
     {
         Log.Info($"Wrapped Up {played.Card.Name}. Pending Cards {_pendingMoves.Count}");
         if (played.Member.TeamType.Equals(TeamType.Party) && !played.IsTransient)
-            playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());
+        {
+            if (physicalCard.Type.SwappedCard.IsPresent)
+            {
+                playedDiscardZone.PutOnBottom(new Card(battleState.GetNextCardId(), physicalCard.Owner, physicalCard.Type.SwappedCard.Value));
+            }
+            else
+            {
+                playedDiscardZone.PutOnBottom(physicalCard.RevertedToStandard());   
+            }
+        }
+        played.Member.State.RemoveTemporaryEffects(x => x.Status.Tag == StatusTag.CurrentCardOnly);
         isResolving = _pendingMoves.Any();
     }
 
@@ -188,7 +211,7 @@ public class CardResolutionZone : ScriptableObject
             Log.Info($"Num Bonus Cards {member.Name}: {bonusCards.Length}");
             foreach (var card in bonusCards)
             {
-                if (!card.IsPlayableBy(member)) 
+                if (!card.IsPlayableBy(member, battleState.Party)) 
                     continue;
                 
                 var targets = GetTargets(member, card, Maybe<Target[]>.Missing());
@@ -200,13 +223,7 @@ public class CardResolutionZone : ScriptableObject
     
     private void AddChainedCardIfApplicable(IPlayedCard trigger)
     {
-        if (trigger.Card.ChainedCard.IsMissing || 
-            _movesThisTurn
-                .Concat(_pendingMoves)
-                .Where(x => x.Member.TeamType == TeamType.Party)
-                .Select(m => m.Member.Id)
-                .Distinct()
-                .Count() > 1)
+        if (!CanChain.Evaluate(new CardConditionContext(trigger.Card, battleState, _pendingMoves)))
             return;
         
         var chainingMove = trigger;

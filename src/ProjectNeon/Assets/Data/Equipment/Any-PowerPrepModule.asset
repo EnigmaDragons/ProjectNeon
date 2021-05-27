@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: 
   description: Start battle with Double Damage
+  isWIP: 0
   rarity: 3
   slot: 2
   priceFactor: 1
-  canUseClasses:
-  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
+  archetypes: []
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 67
+  - EffectType: 79
+    Conditions: []
     BaseAmount:
       UseConstant: 1
       ConstantValue: 1
@@ -36,25 +37,27 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
+    DurationFormula: 0
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 567892c0029f4214c9f52b55b76d4c4f, type: 2}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 
+    Formula: 1
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0

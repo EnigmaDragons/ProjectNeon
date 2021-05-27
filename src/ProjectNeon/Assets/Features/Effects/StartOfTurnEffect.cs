@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class StartOfTurnEffect : Effect
 {
     private readonly EffectData _source;
@@ -9,6 +11,6 @@ public class StartOfTurnEffect : Effect
     {
         ctx.Target.ApplyToAllConsciousMembers(m => m.State.ApplyTemporaryAdditive(
             new AtStartOfTurnState(ctx, m, _source.ReferencedSequence,
-                TemporalStateMetadata.ForDuration(_source.NumberOfTurns, _source.EffectScope.Value.Equals("Debuff"), _source.StatusDetail))));
+                TemporalStateMetadata.ForDuration(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m.State, _source.DurationFormula, ctx.XPaidAmount)), _source.EffectScope.Value.Equals("Debuff"), _source.StatusDetail))));
     }
 }

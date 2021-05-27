@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 public sealed class VulnerableTests
 {
-    private EffectData Vulnerable(int duration = 1) => new EffectData { EffectType = EffectType.ApplyVulnerable, NumberOfTurns = new IntReference(duration) };
+    private EffectData Vulnerable(int duration = 1) => new EffectData { EffectType = EffectType.ApplyVulnerable, DurationFormula = duration.ToString() };
     
     [Test]
     public void VulnerableMember_IsAttacked_TakesCorrectDamage()

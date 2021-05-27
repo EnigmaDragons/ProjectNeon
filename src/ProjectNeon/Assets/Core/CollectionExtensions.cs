@@ -99,6 +99,12 @@ public static class CollectionExtensions
         if (condition)
             items.Add(item);
     }
+    
+    public static void AddIf<T>(this HashSet<T> items, T item, bool condition)
+    {
+        if (condition)
+            items.Add(item);
+    }
 
     public static Maybe<T> FirstAsMaybe<T>(this IEnumerable<T> items)
     {
@@ -114,5 +120,46 @@ public static class CollectionExtensions
         return Permutations(list, depth - 1)
             .SelectMany(t => list.Where(e => !t.Contains(e)),
                 (t1, t2) => t1.Concat(new T[] { t2 }));
+    }
+    
+    public static IEnumerable<IEnumerable<T>> Combinations<T>(this IEnumerable<T> elements, int depth)
+    {
+        var elem = elements.ToArray();
+        var size = elem.Length;
+ 
+        if (depth > size) 
+            yield break;
+ 
+        var numbers = new int[depth];
+        for (var i = 0; i < depth; i++)
+            numbers[i] = i;
+        
+        do
+            yield return numbers.Select(n => elem[n]);
+        while (NextCombination(numbers, size, depth));
+    }
+    
+    private static bool NextCombination(IList<int> num, int n, int k)
+    {
+        bool finished;
+        var changed = finished = false;
+ 
+        if (k <= 0) 
+            return false;
+ 
+        for (var i = k - 1; !finished && !changed; i--)
+        {
+            if (num[i] < n - 1 - (k - 1) + i)
+            {
+                num[i]++;
+                if (i < k - 1)
+                    for (var j = i + 1; j < k; j++)
+                        num[j] = num[j - 1] + 1;
+                changed = true;
+            }
+            finished = i == 0;
+        }
+ 
+        return changed;
     }
 }

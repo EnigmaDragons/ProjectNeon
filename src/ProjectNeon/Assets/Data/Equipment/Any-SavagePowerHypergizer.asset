@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: 
   description: 'On Slay: Gives Double Damage'
+  isWIP: 0
   rarity: 4
   slot: 2
   priceFactor: 1
-  canUseClasses:
-  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
+  archetypes: []
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -28,6 +28,7 @@ MonoBehaviour:
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 74
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -36,15 +37,13 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: -1
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 1
-      ConstantValue: -1
-      Variable: {fileID: 0}
+    DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
     StatusTag: 12
     StatusDetailText: <b>On Slay:</b> Gives Double Damage
     TurnDelay: 0
@@ -55,6 +54,10 @@ MonoBehaviour:
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReactionConditionType: 21
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1

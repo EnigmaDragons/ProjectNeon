@@ -55,6 +55,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddBuffAmountIconIfApplicable(statuses, StatType.Attack);
         AddBuffAmountIconIfApplicable(statuses, StatType.Magic);        
         AddBuffAmountIconIfApplicable(statuses, StatType.Leadership);
+        AddBuffAmountIconIfApplicable(statuses, StatType.Economy);
         AddStatusIconIfApplicable(statuses, TemporalStatType.Blind, true, v => $"Blinded (guaranteed miss) for {v} Attacks");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Inhibit, true, v => $"Inhibited (guaranteed miss) for {v} Spells");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => $"Taunt for {v} Turns");
@@ -70,7 +71,10 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddCustomTextStatusIcons(statuses, StatusTag.OnShieldBroken, "Unknown On Shield Broken Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnHpDamageDealt, "Unknown On Hp Damage Dealt Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnAllyDeath, "Unknown On Ally Death Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.OnAfflicted, "Unknown On Afflicted Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.OnIgnited, "Unknown On Ignited Effect");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => $"Received {v} Injuries, applied at end of battle");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Marked, true, v => $"Marked. Subject to Assassination Effects.");
 
         var extraCardBuffAmount = CeilingInt(_member.State[StatType.ExtraCardPlays] - _member.State.BaseStats.ExtraCardPlays());
         if (extraCardBuffAmount != 0)
@@ -88,7 +92,13 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         if (_member.State.HasStatus(StatusTag.HealOverTime))
             statuses.Add(new CurrentStatusValue {  Type = StatusTag.HealOverTime.ToString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
-        
+
+        if (_member.State[TemporalStatType.Prominent] > 0)
+        {
+            Log.Info($"Update Status Bar UI - {_member.Name} - Prominent {_member.State[TemporalStatType.Prominent]}");
+            statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Prominent.ToString(), Icon = icons[TemporalStatType.Prominent].Icon, Tooltip = "Heroes cannot stealth while prominent." });
+        }
+
         AddCustomTextStatusIcons(statuses, StatusTag.OnHit, "Secret On Hit Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnDeath, "Secret On Death Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnDamaged, "Secret On Damaged Effect");

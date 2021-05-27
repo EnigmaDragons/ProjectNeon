@@ -13,6 +13,8 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     private bool _isLoading;
     private float _startedTransitionAt;
     private AsyncOperation _loadState;
+
+    private void Awake() => Application.targetFrameRate = 60;
     
     protected override void Execute(NavigateToSceneRequested msg)
     {

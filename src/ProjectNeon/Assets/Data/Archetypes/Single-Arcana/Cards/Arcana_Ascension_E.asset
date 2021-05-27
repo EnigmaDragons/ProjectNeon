@@ -16,6 +16,7 @@ MonoBehaviour:
   - type: 31
     battleEffect:
       EffectType: 0
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -24,6 +25,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
+      DurationFormula: 
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
@@ -33,6 +35,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -74,13 +77,14 @@ MonoBehaviour:
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 1, g: 0.51692384, b: 0, a: 1}
+        ConstantValue: {r: 1, g: 0, b: 0.45622635, a: 1}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
       EffectType: 68
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -89,6 +93,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 4
         FloatVariable: {fileID: 0}
+      DurationFormula: 3
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 3
@@ -98,6 +103,7 @@ MonoBehaviour:
         ConstantValue: Magic
         Variable: {fileID: 11400000, guid: e04cb353987dbad4094394cb66ac1c6a, type: 2}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -146,6 +152,7 @@ MonoBehaviour:
   - type: 1
     battleEffect:
       EffectType: 80
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -154,6 +161,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 2
         FloatVariable: {fileID: 0}
+      DurationFormula: 0
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 0
@@ -163,6 +171,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -211,6 +220,7 @@ MonoBehaviour:
   - type: 1
     battleEffect:
       EffectType: 54
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -219,6 +229,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
+      DurationFormula: 3
       NumberOfTurns:
         UseConstant: 1
         ConstantValue: 3
@@ -228,6 +239,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
       StatusTag: 7
       StatusDetailText: Gain Primary Resource
       TurnDelay: 0

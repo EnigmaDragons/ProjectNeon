@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public sealed class MemberState : IStats
 {
@@ -76,7 +75,9 @@ public sealed class MemberState : IStats
     // Queries
     public MemberStateSnapshot ToSnapshot()
         => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats,
-            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount);
+            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount, 
+                new DictionaryWithDefault<StatusTag, int>(0, Enum.GetValues(typeof(StatusTag)).Cast<StatusTag>()
+                    .SafeToDictionary(s => s, s => StatusesOfType(s).Length)));
 
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
@@ -104,6 +105,8 @@ public sealed class MemberState : IStats
                 return PrimaryResourceAmount * (1f / 3f);
             if (PrimaryResource.Name == "Flames")
                 return PrimaryResourceAmount * (1f / 3f);
+            if (PrimaryResource.Name == "Ambition")
+                return PrimaryResourceAmount * (1f / 4f);
             return 0f;
         }
     }
@@ -240,10 +243,11 @@ public sealed class MemberState : IStats
         RemoveTemporaryEffects(s => s.IsDebuff);
     });
 
-    public void ExitStealth() => PublishAfter(() =>
+    public void BreakStealth() => PublishAfter(() =>
     {
         RemoveTemporaryEffects(t => t.Status.Tag == StatusTag.Stealth);
         _counters[TemporalStatType.Stealth.ToString()].Set(0);
+        _counters[TemporalStatType.Prominent.ToString()].Set(1);
     });
 
     public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() =>
@@ -305,16 +309,28 @@ public sealed class MemberState : IStats
     public void ReducePreventedTagCounters() => _preventedTags.ToList().ForEach(x => _preventedTags[x.Key] = x.Value > 0 ? x.Value - 1 : 0);
     
     // Resource Commands
-    public void Gain(ResourceQuantity qty) => GainResource(qty.ResourceType, qty.Amount);
-    public void GainResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(amount));
+    public void Gain(ResourceQuantity qty, PartyAdventureState partyState) => GainResource(qty.ResourceType, qty.Amount, partyState);
+    public void GainResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
+    {
+        if (resourceName == "Creds")
+            partyState.UpdateCreditsBy(amount);
+        else
+            Counter(resourceName).ChangeBy(amount);
+    });
     public void AdjustPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
-    public void Lose(ResourceQuantity qty) => LoseResource(qty.ResourceType, qty.Amount);
-    private void LoseResource(string resourceName, int amount) => PublishAfter(() => Counter(resourceName).ChangeBy(-amount));
+    public void Lose(ResourceQuantity qty, PartyAdventureState partyState) => LoseResource(qty.ResourceType, qty.Amount, partyState);
+    private void LoseResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
+    {
+        if (resourceName == "Creds")
+            partyState.UpdateCreditsBy(-amount);
+        else
+            Counter(resourceName).ChangeBy(-amount);
+    });
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
     public StatType PrimaryStat => _primaryStat; 
 
-    public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any(); 
+    public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any() || _temporalStatsToReduceAtEndOfTurn.Any(x => this[x] > 0); 
     public IPayloadProvider[] GetTurnStartEffects()
     {
         _persistentStates.ForEach(m => m.OnTurnStart());
@@ -342,9 +358,10 @@ public sealed class MemberState : IStats
 
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType>
     {
-        TemporalStatType.Taunt, 
-        TemporalStatType.Stealth, 
-        TemporalStatType.Confused
+        TemporalStatType.Taunt,
+        TemporalStatType.Stealth, // Should this be reduced?
+        TemporalStatType.Confused,
+        TemporalStatType.Prominent
     };
     
     public IPayloadProvider[] GetTurnEndEffects()

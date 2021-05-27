@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,15 +9,17 @@ public sealed class EffectData
     public static readonly EffectData Nothing = new EffectData(); 
     
     public EffectType EffectType;
+    public StaticEffectCondition[] Conditions;
     public IntReference BaseAmount = new IntReference(0);
     public FloatReference FloatAmount = new FloatReference(0);
     public int IntAmount => FloatAmount.Value.CeilingInt();
     public float TotalAmount => FloatAmount.Value + BaseAmount;
     public int TotalIntAmount => TotalAmount.CeilingInt();
     
-    public IntReference NumberOfTurns = new IntReference(0);
+    public string DurationFormula = "0";
     public StringReference EffectScope = new StringReference { UseConstant = false };
     public bool HitsRandomTargetMember;
+    public bool TargetsSource;
     
     public StatusDetail StatusDetail => new StatusDetail(StatusTag, string.IsNullOrWhiteSpace(StatusDetailText) ? Maybe<string>.Missing() : StatusDetailText);
     public StatusTag StatusTag;
@@ -45,7 +48,7 @@ public static class EffectDataExtensions
             EffectType = e.EffectType,
             FloatAmount = e.FloatAmount,
             BaseAmount = e.BaseAmount,
-            NumberOfTurns = e.NumberOfTurns,
+            DurationFormula = e.DurationFormula,
             EffectScope = e.EffectScope,
             HitsRandomTargetMember = e.HitsRandomTargetMember,
             ReferencedSequence = e.ReferencedSequence,
@@ -55,4 +58,9 @@ public static class EffectDataExtensions
             Formula = e.Formula,
             FlavorText = e.FlavorText
         };
+
+    public static EffectCondition Condition(this EffectData e) =>
+        e.Conditions != null && e.Conditions.Length > 0 
+            ? (EffectCondition)new AndEffectCondition(e.Conditions.Cast<EffectCondition>().ToArray()) 
+            : new NoEffectCondition();
 }

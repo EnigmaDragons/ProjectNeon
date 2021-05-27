@@ -6,10 +6,11 @@ using UnityEngine;
 public class CardActionsData : ScriptableObject
 {
     public CardActionV2[] Actions = new CardActionV2[0];
+
     public IEnumerable<EffectData> BattleEffects => Actions
         .Where(x => x.Type == CardBattleActionType.Battle)
         .Select(a => a.BattleEffect);
-        
+    
     public CardActionsData Initialized(params CardActionV2[] actions)
     {
         Actions = actions;

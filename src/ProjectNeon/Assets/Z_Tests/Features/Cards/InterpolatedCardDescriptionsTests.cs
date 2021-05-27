@@ -38,7 +38,7 @@ public sealed class InterpolatedCardDescriptionsTests
     [Test]
     public void Interpolated_Duration_IsCorrect()
         => AssertMatchesIgnoreStyling("Deal 3 for 2 turns", 
-            Description("Deal 3 {D[0]}", new EffectData {NumberOfTurns = new IntReference(2)}, Owner));
+            Description("Deal 3 {D[0]}", new EffectData {DurationFormula = "2"}, Owner));
 
     [Test]
     public void Interpolated_XCost_WithOwner_IsCorrect()
@@ -82,13 +82,18 @@ public sealed class InterpolatedCardDescriptionsTests
     public void Interpolated_Auto_GivesVulnerableNextTurn_IsCorrect()
         => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for the turn",
             Description("{Auto}", 
-                new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, NumberOfTurns = new IntReference(1)},
+                new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, DurationFormula = "1"},
                 Owner));
 
     [Test]
-    public void Interpolated_Auto_RepeatedText_Iscorrect()
+    public void Interpolated_Auto_RepeatedText_IsCorrect()
         => AssertMatchesIgnoreStyling("2 Times: Deal 8", Description("{Auto}", new[] {BasicAttack, BasicAttack}, Owner));
 
+    [Test]
+    public void Interpolated_Auto_QuickSpeed_IsCorrect() 
+        => AssertMatchesIgnoreStyling("Quick: ", 
+            InterpolatedCardDescriptions.InterpolatedDescription("{auto}", true, new EffectData[0], new EffectData[0], new EffectData[0], Owner, ResourceQuantity.None, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing()));
+    
     private string Description(string s, EffectData e, Maybe<Member> owner)
         => Description(s, e, owner, ResourceQuantity.None);
     private string Description(string s, EffectData[] e, Maybe<Member> owner)
@@ -96,11 +101,11 @@ public sealed class InterpolatedCardDescriptionsTests
     private string Description(string s, EffectData e, Maybe<Member> owner, ResourceQuantity xCost)
         => Description(s, new [] {e}, owner, xCost);
     private string Description(string s, EffectData[] e, Maybe<Member> owner, ResourceQuantity xCost) 
-        => InterpolatedCardDescriptions.InterpolatedDescription(s, e, new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing());
+        => InterpolatedCardDescriptions.InterpolatedDescription(s, false, e, new EffectData[0], new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing());
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner)
         => ReactionDescription(s, re, owner, ResourceQuantity.None);
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner, ResourceQuantity xCost) 
-        => InterpolatedCardDescriptions.InterpolatedDescription(s, new EffectData[0], new [] {re}, owner, xCost, Maybe<CardTypeData>.Missing());
+        => InterpolatedCardDescriptions.InterpolatedDescription(s, false, new EffectData[0], new [] {re}, new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing());
     private string ForEffect(EffectData e, Maybe<Member> owner, ResourceQuantity xCost) => InterpolatedCardDescriptions.EffectDescription(e, owner, xCost);
 
     private void AssertContainsSprite(string actual) => Assert.IsTrue(actual.Contains("<sprite index="));
