@@ -27,7 +27,8 @@ public static class CardTypeDataExtensions
 
     public static CardActionsData[] Actions(this CardTypeData c) => c.ActionSequences.Select(a => a.CardActions).ToArray();
     
-    public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c);
+    public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c, Maybe<Color>.Missing());
+    public static Card CreateInstance(this CardTypeData c, int id, Member owner, Maybe<Color> tint) => new Card(id, owner, c, tint);
 
     public static IEnumerable<EffectData> BattleEffects(this CardTypeData c) => c.ActionSequences.SelectMany(a => a.CardActions.BattleEffects);
     

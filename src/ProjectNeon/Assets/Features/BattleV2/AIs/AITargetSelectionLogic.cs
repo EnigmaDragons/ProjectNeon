@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public static class AITargetSelectionLogic
 {
+    private static readonly Color EnemyCardTint = new Color(160 / 255, 73 / 255, 77 / 255);
     private static bool ShouldLogAiDetails = false;
     
     public static Target[] SelectedTargets(this CardSelectionContext ctx)
@@ -101,7 +103,7 @@ public static class AITargetSelectionLogic
         
         var targets = ctx.SelectedTargets(isPreferredTarget);
 
-        var card = ctx.SelectedCard.Value.CreateInstance(NextCardId.Get(), ctx.Member);
+        var card = ctx.SelectedCard.Value.CreateInstance(NextCardId.Get(), ctx.Member, EnemyCardTint);
         RecordNonStackingTags(CardTag.Disable, ctx, targets);
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
         RecordNonStackingTags(CardTag.Taunt, ctx, targets);

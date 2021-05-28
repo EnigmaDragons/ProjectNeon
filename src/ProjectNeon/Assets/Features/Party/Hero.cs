@@ -66,14 +66,14 @@ public class Hero
     public Member AsMemberForTests(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp, basicCard);
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), CurrentHp, basicCard);
         return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext()));
     }
 
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), Character.Tint, CurrentHp, basicCard);
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), CurrentHp, basicCard);
         return m;
     }
 

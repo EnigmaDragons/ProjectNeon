@@ -25,12 +25,11 @@ public static class TestMembers
             TeamType.Party,
             initStats(DefaultStats().With(resources)),
             BattleRole.Unknown,
-            StatType.Attack,
-            Color.white
+            StatType.Attack
         );
 
     public static Member AnyAlly() => Any();
 
     public static Member AnyEnemy() => new Member(NextId(), "Any Name", "Any Class", TeamType.Enemies, DefaultStats(),
-        BattleRole.Unknown, StatType.Attack, Color.black);
+        BattleRole.Unknown, StatType.Attack);
 }
