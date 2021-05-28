@@ -40,7 +40,7 @@ public class CardType : ScriptableObject, CardTypeData
     public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();
     public CardActionV2[] AllCardEffectSteps => Actions.SelectMany(a => a.Actions).ToArray(); 
     public Maybe<CardTypeData> ChainedCard => chainedCard;
-    public Maybe<CardTypeData> SwappedCard => chainedCard;
+    public Maybe<CardTypeData> SwappedCard => swappedCard;
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
     public string ArchetypeKey => string.Join(" + ", Archetypes.OrderBy(a => a));
     public bool IsWip => isWIP;
