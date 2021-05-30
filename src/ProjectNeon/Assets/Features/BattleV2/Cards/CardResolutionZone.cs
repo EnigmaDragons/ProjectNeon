@@ -231,7 +231,7 @@ public class CardResolutionZone : ScriptableObject
         var card = chainingMove.Card.ChainedCard.Value;
         var targets = GetTargets(owner, card, chainingMove.Targets);
 
-        Queue(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true));
+        Queue(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner), true, ResourceCalculations.Free));
         Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
     }
     

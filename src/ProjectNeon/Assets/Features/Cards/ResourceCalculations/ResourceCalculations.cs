@@ -1,5 +1,7 @@
 ﻿public class ResourceCalculations
 {
+    public static readonly ResourceCalculations Free = new ResourceCalculations(new InMemoryResourceType(), 0, new InMemoryResourceType(), 0, 0, 0);
+    
     public IResourceType ResourcePaidType { get; }
     public int ResourcesPaid { get; }
     public IResourceType ResourceGainedType { get; }
