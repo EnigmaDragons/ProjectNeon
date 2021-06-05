@@ -65,7 +65,6 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         
         var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction, msg.Card, msg.Preventions);
         var reactions = state.Members
-            .Where(x => x.Value.CanReact())
             .Select(x => x.Value)
             .SelectMany(v => v.State.GetReactions(effectResolved)).ToList();
 

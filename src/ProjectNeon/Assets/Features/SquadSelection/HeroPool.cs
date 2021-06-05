@@ -9,6 +9,7 @@ public sealed class HeroPool : ScriptableObject
     [SerializeField] private Library library;
     [SerializeField] private BaseHero[] selected;
 
+    public int TotalHeroesCount => library.UnlockedHeroes.Length;
     public IEnumerable<BaseHero> AvailableHeroes => library.UnlockedHeroes.Except(selected).ToArray();
     public BaseHero[] SelectedHeroes => selected.ToArray();
 
