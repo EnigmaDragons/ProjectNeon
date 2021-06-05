@@ -3,13 +3,15 @@ public abstract class TemporalStateBase : ITemporalState
 {
     protected readonly TemporalStateTracker Tracker;
 
+    public int OriginatorId => Tracker.Metadata.OriginatorId;
     public StatusDetail Status => Tracker.Status;
     public bool IsDebuff => Tracker.IsDebuff;
     public bool IsActive => Tracker.IsActive;
     public Maybe<int> RemainingTurns => Tracker.RemainingTurns;
 
-    public TemporalStateBase(TemporalStateMetadata metadata) => Tracker = metadata.CreateTracker();
-    
+    protected TemporalStateBase(TemporalStateMetadata metadata) 
+        => Tracker = metadata.CreateTracker();
+
     public abstract IStats Stats { get; }
     public abstract Maybe<int> Amount { get; }
     public abstract IPayloadProvider OnTurnStart();

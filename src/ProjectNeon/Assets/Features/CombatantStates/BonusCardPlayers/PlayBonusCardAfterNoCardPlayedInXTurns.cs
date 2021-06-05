@@ -2,6 +2,7 @@ using System.Linq;
 
 public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusCardPlayer
 {
+    private readonly int _originatorId;
     private readonly int _memberId;
     private readonly CardType _bonusCard;
     private readonly int _numTurns;
@@ -13,7 +14,7 @@ public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusC
     public override IPayloadProvider OnTurnEnd() => new NoPayload();
 
     public PlayBonusCardAfterNoCardPlayedInXTurns(int memberId, CardType bonusCard, int numTurns, StatusDetail status)
-        : base(TemporalStateMetadata.Unlimited(false, status))
+        : base(TemporalStateMetadata.Unlimited(-1, false, status))
     {
         _memberId = memberId;
         _bonusCard = bonusCard;

@@ -9,7 +9,7 @@ public class RemoveDebuffsTests
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
         target.State.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(StatType.Attack, -5), 
-            TemporalStateMetadata.DebuffForDuration(5)));
+            TemporalStateMetadata.DebuffForDuration(target.Id, 5)));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 
@@ -22,7 +22,7 @@ public class RemoveDebuffsTests
         var removeDebuffs = new EffectData { EffectType = EffectType.RemoveDebuffs };
         var target = TestMembers.Create(s => s.With(StatType.Attack, 10));
         target.State.ApplyTemporaryMultiplier(new AdjustedStats(new StatAddends().With(StatType.Attack, -5),
-            TemporalStateMetadata.DebuffForDuration(5)));
+            TemporalStateMetadata.DebuffForDuration(target.Id, 5)));
 
         TestEffects.Apply(removeDebuffs, TestMembers.Any(), target);
 

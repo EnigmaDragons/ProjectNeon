@@ -48,7 +48,7 @@ public class EffectTransformerTests
 
 public class TestEffectTransformer : EffectTransformerBase
 {
-    public TestEffectTransformer(int uses, Func<EffectData, EffectContext, bool> shouldTransform) : base(false, -1, uses, new StatusDetail(StatusTag.None),  shouldTransform, (effect, context) =>
+    public TestEffectTransformer(int uses, Func<EffectData, EffectContext, bool> shouldTransform) : base(-1, false, -1, uses, new StatusDetail(StatusTag.None),  shouldTransform, (effect, context) =>
     {
         return new EffectData
         {

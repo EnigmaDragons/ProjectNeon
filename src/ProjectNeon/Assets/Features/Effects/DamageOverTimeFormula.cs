@@ -13,7 +13,7 @@ public class DamageOverTimeFormula : Effect
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
             var calculatedAmount = Formula.Evaluate(new FormulaContext(sourceSnapshot, m, ctx.XPaidAmount), _e.Formula).CeilingInt();
-            m.State.ApplyTemporaryAdditive(new DamageOverTimeState(calculatedAmount, m, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount))));
+            m.State.ApplyTemporaryAdditive(new DamageOverTimeState(ctx.Source.Id, calculatedAmount, m, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount))));
         });
     }
 }

@@ -7,7 +7,8 @@ public class ResourceCalculatorBase : ResourceCalculator
     private readonly Func<Card, bool> _isUsedOn;
     private readonly Func<CardTypeData, MemberState, ResourceCalculations> _calc;
     private readonly HashSet<int> _cardIds = new HashSet<int>();
-    
+
+    public int OriginatorId => _tracker.Metadata.OriginatorId;
     public Maybe<int> Amount => _tracker.RemainingUses;
     public IStats Stats => new StatAddends();
     public StatusDetail Status => _tracker.Status;
@@ -15,8 +16,8 @@ public class ResourceCalculatorBase : ResourceCalculator
     public bool IsActive => _tracker.IsActive;
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
     
-    public ResourceCalculatorBase(bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<Card, bool> isUsedOn, Func<CardTypeData, MemberState, ResourceCalculations> calc)
-        : this(new TemporalStateMetadata(isDebuff, maxUses, maxDurationTurns, status), isUsedOn, calc) {}
+    public ResourceCalculatorBase(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<Card, bool> isUsedOn, Func<CardTypeData, MemberState, ResourceCalculations> calc)
+        : this(new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), isUsedOn, calc) {}
     public ResourceCalculatorBase(TemporalStateMetadata metadata, Func<Card, bool> isUsedOn, Func<CardTypeData, MemberState, ResourceCalculations> calc)
     {
         _tracker = new TemporalStateTracker(metadata);

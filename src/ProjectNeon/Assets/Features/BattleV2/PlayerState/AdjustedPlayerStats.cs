@@ -15,7 +15,7 @@ public class AdjustedPlayerStats : TemporalStateBase, ITemporalPlayerState
     void ITemporalPlayerState.OnTurnEnd() => Tracker.AdvanceTurn();
 
     public AdjustedPlayerStats(IPlayerStats stats, int duration, bool isDebuff)
-        : base(TemporalStateMetadata.ForDuration(duration, isDebuff))
+        : base(TemporalStateMetadata.ForDuration(-1, duration, isDebuff))
     {
         PlayerStats = stats;
     }
