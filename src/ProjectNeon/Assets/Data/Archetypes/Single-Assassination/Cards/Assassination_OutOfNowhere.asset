@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Assassination_OutOfNowhere
+  m_EditorClassIdentifier: 
+  customName: 
+  art: {fileID: 21300000, guid: bf24adab29cce154e9eefdb912e1446c, type: 3}
+  description: '<b>On Death</b>: You gain 6 PrimaryResource. Deal {E[1]}. <b>Sneaky</b>:
+    Deal {E[2]} instead. <b>Re-Stealth</b>'
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  tags: 
+  speed: 0
+  cost:
+    cost: 3
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
+    plusXCost: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
+    plusXCost: 0
+  rarity: 4
+  actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 1864b45bfc2e5394b9ac74c54b3104d6, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
+  highlightCondition:
+  - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
+  unhighlightCondition: []
+  isWIP: 0

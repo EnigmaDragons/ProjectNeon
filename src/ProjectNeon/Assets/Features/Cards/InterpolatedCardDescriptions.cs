@@ -218,6 +218,8 @@ public static class InterpolatedCardDescriptions
         { "Flames", 7},
         { "Mana", 8},
         { "Tech Points", 9},
+        { "PrimaryResource", 8 },
+        { "Primary Resource", 8 }
     };
     private static string PhysDamageIcon => Sprite(0);
     private static string RawDamageIcon => Sprite(1);
