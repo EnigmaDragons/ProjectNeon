@@ -19,28 +19,28 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPicketCurrentGearChanged, D
     public void GenerateLibrary()
     {
         _selectedHero = builderState.SelectedHeroesDeck.Hero.Character;
-        var equipUsage = new Dictionary<Equipment, bool>();
+        var equipUsage = new List<(Equipment, bool)>();
         partyState.Equipment.Available
             .Where(e => e.Archetypes.All(_selectedHero.Archetypes.Contains)
                 && (builderState.ShowRarities.None() 
                     || builderState.ShowRarities.Contains(e.Rarity))
                 && (builderState.ShowEquipmentSlots.None()
                     || builderState.ShowEquipmentSlots.Contains(e.Slot)))
-            .ForEach(x => equipUsage.Add(x, x.Slot != EquipmentSlot.Augmentation || builderState.SelectedHeroesDeck.Hero.Equipment.Augments.Length != 3));
+            .ForEach(x => equipUsage.Add((x, x.Slot != EquipmentSlot.Augmentation || builderState.SelectedHeroesDeck.Hero.Equipment.Augments.Length != 3)));
         partyState.Equipment.Equipped
             .Where(e => e.Archetypes.All(_selectedHero.Archetypes.Contains)
                 && (builderState.ShowRarities.None() 
                     || builderState.ShowRarities.Contains(e.Rarity))
                 && (builderState.ShowEquipmentSlots.None()
                     || builderState.ShowEquipmentSlots.Contains(e.Slot)))
-            .ForEach(x => equipUsage.Add(x, false));
+            .ForEach(x => equipUsage.Add((x, false)));
         pageViewer.Init(
             equipmentInLibraryButtonTemplate.gameObject,
             emptyEquipment,
             equipUsage
-                .OrderBy(x => x.Key.Rarity)
-                .ThenBy(x => x.Key.Name)
-                .Select(x => InitEquipmentInLibraryButton(x.Key, x.Value))
+                .OrderBy(x => x.Item1.Rarity)
+                .ThenBy(x => x.Item1.Name)
+                .Select(x => InitEquipmentInLibraryButton(x.Item1, x.Item2))
                 .ToList(),
             x => {},
             false);
