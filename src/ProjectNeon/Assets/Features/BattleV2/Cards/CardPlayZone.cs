@@ -66,5 +66,14 @@ public class CardPlayZone : ScriptableObject
         onZoneCardsChanged.Publish();
     }
     
-    public static CardPlayZone InMemory => (CardPlayZone)FormatterServices.GetUninitializedObject(typeof(CardPlayZone));
+    public static CardPlayZone InMemory
+    {
+        get
+        {
+            var zone = (CardPlayZone) FormatterServices.GetUninitializedObject(typeof(CardPlayZone));
+            zone.maxCards = new IntReference(99);
+            zone.onZoneCardsChanged = new GameEvent();
+            return zone;
+        }
+    }
 }

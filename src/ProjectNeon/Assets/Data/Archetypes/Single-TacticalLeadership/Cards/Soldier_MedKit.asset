@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Soldier_MedKit
   m_EditorClassIdentifier: 
+  Id: 133
   customName: 
   art: {fileID: 21300000, guid: 40fd504cd19f6e24b9628f639e1d3bd0, type: 3}
   description: '{Auto}'
   typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
   tags: 
   speed: 0
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
@@ -32,9 +34,13 @@ MonoBehaviour:
     group: 2
     cardActions: {fileID: 11400000, guid: 32e5a553bc9f2824e9c7a2d888733cc8, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: e97bda47e14bfeb49b6a38e814d38a6d, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0

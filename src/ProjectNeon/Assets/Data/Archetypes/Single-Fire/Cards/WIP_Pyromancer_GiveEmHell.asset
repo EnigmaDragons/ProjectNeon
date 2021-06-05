@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: WIP_Pyromancer_GiveEmHell
   m_EditorClassIdentifier: 
+  Id: 80
   customName: Give 'Em Hell
   art: {fileID: 21300000, guid: 4a2e82558a1774a46b6e6ec9d790ed9f, type: 3}
   description: 'Deal {E[0]}. Then, deal {E[1]} to yourself. '
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
   tags: 
   speed: 0
+  isSinglePlay: 0
   cost:
     cost: 2
     resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
@@ -32,13 +34,18 @@ MonoBehaviour:
     group: 1
     cardActions: {fileID: 11400000, guid: 61ff858a38cb87c498ec77cc7b73fd28, type: 2}
     repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: 8d924477368e4f044b55a876576da6f7, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: Chnage to AoE
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 1

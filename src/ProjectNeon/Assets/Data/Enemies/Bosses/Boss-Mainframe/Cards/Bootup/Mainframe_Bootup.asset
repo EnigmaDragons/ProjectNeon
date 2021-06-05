@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Mainframe_Bootup
   m_EditorClassIdentifier: 
+  Id: 157
   customName: 
   art: {fileID: 21300000, guid: 25c53461394c87b4da054146b35e8caa, type: 3}
   description: Gain 3 Tech Points
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -33,8 +34,13 @@ MonoBehaviour:
     group: 0
     cardActions: {fileID: 11400000, guid: 7ae471f179f2a434bb120a12d9a26b8c, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0

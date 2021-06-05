@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Rifle_SiphonShot
   m_EditorClassIdentifier: 
+  Id: 102
   customName: 
   art: {fileID: 21300000, guid: bde6bfe804c160c49bf3fe936d2ee14e, type: 3}
   description: Gives self {E[0]}. Deal {E[1]}
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 04000000
   speed: 0
+  isSinglePlay: 0
   cost:
     cost: 1
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
@@ -32,17 +34,23 @@ MonoBehaviour:
     group: 1
     cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
     repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: c13a0526c08d1ae4692a2bd86698e8f9, type: 2}
     repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 1
     cardActions: {fileID: 11400000, guid: 2eb832217441de7478c29b71c90d841f, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0

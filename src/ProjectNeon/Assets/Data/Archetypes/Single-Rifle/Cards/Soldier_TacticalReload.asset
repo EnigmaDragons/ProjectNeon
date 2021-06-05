@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Soldier_TacticalReload
   m_EditorClassIdentifier: 
+  Id: 113
   customName: 
   art: {fileID: 21300000, guid: ceba42db100efdd4d9fca939f758ca02, type: 3}
   description: '{Auto}'
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
@@ -32,9 +34,13 @@ MonoBehaviour:
     group: 0
     cardActions: {fileID: 11400000, guid: 257b8b9404df7d54dbfdc944e38e967a, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0

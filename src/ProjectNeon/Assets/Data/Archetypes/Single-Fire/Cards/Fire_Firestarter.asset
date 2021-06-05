@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Fire_Firestarter
   m_EditorClassIdentifier: 
+  Id: 70
   customName: 
   art: {fileID: 21300000, guid: 28d80bd7fdcd4aa41b765b007657d1c2, type: 3}
   description: '{Auto}'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 28000000
   speed: 0
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
@@ -32,9 +34,13 @@ MonoBehaviour:
     group: 1
     cardActions: {fileID: 11400000, guid: 9d1775e5cb31b1a47a3fc5dc9efefee2, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0

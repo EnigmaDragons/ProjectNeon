@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Enemy_Scamper
   m_EditorClassIdentifier: 
+  Id: 197
   customName: 
   art: {fileID: 21300000, guid: ffae6c64e7f487f4e95edbfe728445f2, type: 3}
   description: '{Auto}'
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 26000000
   speed: 0
-  onlyPlayableByClass: {fileID: 0}
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -33,12 +34,18 @@ MonoBehaviour:
     group: 0
     cardActions: {fileID: 11400000, guid: 9994eec2e0450a34bbe8a460a47ed74e, type: 2}
     repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: 3abfe5767a2ad4e42b50290ce4a2f033, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0
