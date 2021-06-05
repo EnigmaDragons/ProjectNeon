@@ -13,26 +13,38 @@ MonoBehaviour:
   m_Name: Assassination_PrepareAmbush
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 0}
-  description: 
-  typeDescription: {fileID: 0}
+  art: {fileID: 21300000, guid: c55fb3b205d16ab41aa6d8a537a2fe04, type: 3}
+  description: '{Auto}'
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
   cost:
     cost: 0
-    resourceType: {fileID: 0}
+    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
   onPlayGain:
     cost: 0
-    resourceType: {fileID: 0}
+    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
-  rarity: 0
-  actionSequences: []
-  chainedCard: {fileID: 0}
+  rarity: 3
+  actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 891e63ca0c674c54e9119d3ac60b85f5, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 11400000, guid: 0d700e29dd3bfb94fafccc1c08b4108a, type: 2}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  archetypes: []
+  archetypes:
+  - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
   highlightCondition: []
-  unhighlightCondition: []
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 4789d19598838464e801c47edc10315a, type: 2}
   isWIP: 0

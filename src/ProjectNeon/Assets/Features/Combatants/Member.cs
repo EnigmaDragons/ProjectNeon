@@ -80,6 +80,7 @@ public static class MemberExtensions
     public static bool IsStealthed(this Member m) => m.State[TemporalStatType.Stealth] > 0;
     public static bool IsProminent(this Member m) => m.State[TemporalStatType.Prominent] > 0;
     public static bool IsConfused(this Member m) => m.State[TemporalStatType.Confused] > 0;
+    public static bool IsMarked(this Member m) => m.State[TemporalStatType.Marked] > 0;
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int PrimaryResourceAmount(this Member m) => m.State.PrimaryResourceAmount;
     public static ResourceQuantity PrimaryResource(this Member m) => m.State.CurrentPrimaryResources;

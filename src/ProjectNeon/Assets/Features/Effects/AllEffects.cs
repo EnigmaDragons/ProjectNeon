@@ -112,11 +112,11 @@ public static class AllEffects
                              : effectData.TurnDelay == 1
                                 ? " at the start of next turn" 
                                 : $" in {effectData.TurnDelay} turns";
-            DevLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
+            var targets = effectData.TargetsSource ? ctx.Source.Name : ctx.Target.MembersDescriptions();
+            DevLog.Write($"Applying Effect of {effectData.EffectType} to {targets}{whenClause}");
             if (effectData.TurnDelay > 0)
                 BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
             var updateTarget = effectData.TargetsSource ? new Single(ctx.Source) : ctx.Target;
-            DevLog.Write($"Targets Source: {effectData.TargetsSource}");
             var updatedContext = ctx.Retargeted(ctx.Source, updateTarget);
 
             var shouldNotApplyReason = effectData.Condition().GetShouldNotApplyReason(updatedContext);
