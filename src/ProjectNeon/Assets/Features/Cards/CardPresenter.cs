@@ -234,6 +234,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void ShowComprehensiveCardInfo()
     {
+        Message.Publish(new HideReferencedCard());
         rules.Show(_cardType);
 
         _cardType.ChainedCard.IfPresent(chain =>
