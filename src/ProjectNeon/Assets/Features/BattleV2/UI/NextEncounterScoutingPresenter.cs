@@ -1,3 +1,5 @@
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,7 @@ public class NextEncounterScoutingPresenter : MonoBehaviour
     [SerializeField] private EnemyDetailsView enemyDetails;
     [SerializeField] private Button previous;
     [SerializeField] private Button next;
+    [SerializeField] private TextMeshProUGUI enemyList;
 
     private int _enemyIndex;
     
@@ -37,5 +40,6 @@ public class NextEncounterScoutingPresenter : MonoBehaviour
         previous.gameObject.SetActive(_enemyIndex > 0);
         next.gameObject.SetActive(state.NextEncounterEnemies.Length - 1 > _enemyIndex);
         enemyDetails.Show(state.NextEncounterEnemies[_enemyIndex]);
+        enemyList.text = string.Join("\n", state.NextEncounterEnemies.Select(x => x.Name));
     }
 }
