@@ -11,6 +11,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private StringVariable typeDescription;
     [SerializeField] private CardTag[] tags;
     [SerializeField] private CardSpeed speed;
+    [SerializeField] private bool isSinglePlay;
     [SerializeField] private ResourceCost cost;
     [SerializeField] private ResourceCost onPlayGain;
     [SerializeField] private Rarity rarity;
@@ -50,6 +51,7 @@ public class CardType : ScriptableObject, CardTypeData
     public Maybe<CardCondition> UnhighlightCondition => unhighlightCondition != null && unhighlightCondition.Length > 0
         ? new Maybe<CardCondition>(new AndCardCondition(unhighlightCondition.Cast<CardCondition>().ToArray()))
         : Maybe<CardCondition>.Missing();
+    public bool IsSinglePlay => isSinglePlay;
 
     public override string ToString() => Name;
     public override int GetHashCode() => ToString().GetHashCode();

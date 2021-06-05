@@ -14,6 +14,7 @@ public class InMemoryCard : CardTypeData
     public HashSet<string> Archetypes { get; } = new HashSet<string>();
     public Maybe<CardCondition> HighlightCondition { get; } = Maybe<CardCondition>.Missing();
     public Maybe<CardCondition> UnhighlightCondition { get; } = Maybe<CardCondition>.Missing();
+    public bool IsSinglePlay { get; } = false;
 
     public Sprite Art { get; }
     public string Description { get; }

@@ -9,7 +9,10 @@ public class PlayedCardV2 : IPlayedCard
     private readonly bool _isTransient;
     private readonly ResourceQuantity _lockedXValue;
 
-    public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient = false)
+    public PlayedCardV2(Member performer, Target[] targets, Card card)
+        : this(performer, targets, card, card.IsSinglePlay, performer.CalculateResources(card.Type)) {}
+    
+    public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient)
         : this(performer, targets, card, isTransient, performer.CalculateResources(card.Type)) {}
     
     public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient, ResourceCalculations calculations)

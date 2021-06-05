@@ -34,6 +34,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private DragRotator dragRotator;
     [SerializeField] private GameObject[] onlyEnabledInHand;
     [SerializeField] private ArchetypeTints archetypeTints;
+    [SerializeField] private Image background;
+    [SerializeField] private Sprite standardCard;
+    [SerializeField] private Sprite transientCard;
 
     private Card _card;
     private CardTypeData _cardType;
@@ -298,6 +301,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         dragRotator.Reset();
         dragRotator.enabled = _isHand;
         onlyEnabledInHand.ForEach(o => o.SetActive(_isHand));
+        background.sprite = _card?.IsSinglePlay ?? _cardType.IsSinglePlay ? transientCard : standardCard;
     }
 
     private void SetCardTint()
