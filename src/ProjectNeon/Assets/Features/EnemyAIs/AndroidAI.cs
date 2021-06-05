@@ -3,7 +3,7 @@
 [CreateAssetMenu(menuName = "AI/Android")]
 public class AndroidAI : TurnAI
 {
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
+    public override IPlayedCard InnerPlay(int memberId, BattleState battleState, AIStrategy strategy)
     {
         return Anticipate(memberId, battleState, strategy);
     }

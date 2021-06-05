@@ -5,7 +5,7 @@ public abstract class RoutineTurnAI : TurnAI
 {
     private readonly Dictionary<int, Queue<string>> _currentRoutineMap = new Dictionary<int, Queue<string>>();
 
-    public sealed override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
+    public sealed override IPlayedCard InnerPlay(int memberId, BattleState battleState, AIStrategy strategy)
     {
         var anticipatedCard = Anticipate(memberId, battleState, strategy);
         if (_currentRoutineMap[memberId].Any())

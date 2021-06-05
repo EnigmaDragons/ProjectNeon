@@ -18,12 +18,13 @@ public class EffectContext
     public PlayerState PlayerState { get; }
     public PartyAdventureState AdventureState { get; }
     public IDictionary<int, Member> BattleMembers { get; } // This should probably be converted to be lazy so that it's accurate no matter when the Context is created
+    public IDictionary<int, EnemyInstance> Enemies { get; }
     public CardPlayZones PlayerCardZones { get; }
     public PreventionContext Preventions { get; }
     public SelectionContext Selections { get; }
 
     public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, 
-        PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones, PreventionContext preventions, 
+        PlayerState playerState, IDictionary<int, Member> battleMembers, IDictionary<int, EnemyInstance> enemies, CardPlayZones playerCardZones, PreventionContext preventions, 
         SelectionContext selections)
     {
         Source = source;
@@ -33,6 +34,7 @@ public class EffectContext
         AdventureState = adventureState;
         PlayerState = playerState;
         BattleMembers = battleMembers;
+        Enemies = enemies;
         PlayerCardZones = playerCardZones;
         Card = card;
         XPaidAmount = xPaidAmount;
@@ -48,11 +50,11 @@ public class EffectContext
     }
     
     public EffectContext Retargeted(Member source, Target target) 
-        => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, PlayerCardZones, Preventions, Selections);
+        => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, Enemies, PlayerCardZones, Preventions, Selections);
 
     public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)
         => new EffectContext(source, target, card, xPaidAmount, PartyAdventureState.InMemory(), new PlayerState(), 
-            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions, new SelectionContext());
+            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), new Dictionary<int, EnemyInstance>(), CardPlayZones.InMemory, preventions, new SelectionContext());
 }
 
 public static class EffectExtensions
@@ -62,7 +64,7 @@ public static class EffectExtensions
 
     private static void ApplyForTests(this Effect effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid) 
         => effect.Apply(new EffectContext(source, target, card, xAmountPaid, PartyAdventureState.InMemory(), new PlayerState(0), 
-            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, new PreventionContextMut(target), new SelectionContext()));
+            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), new Dictionary<int, EnemyInstance>(), CardPlayZones.InMemory, new PreventionContextMut(target), new SelectionContext()));
 }
 
 public sealed class NoEffect : Effect

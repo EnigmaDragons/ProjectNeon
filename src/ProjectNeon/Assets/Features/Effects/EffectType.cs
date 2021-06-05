@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE: 43, 47, 48, 53, 
+// NUMBERS AVAILABLE: 47, 48, 53, 
 // LAST NUMBER USED: 86
 
 public enum EffectType
@@ -81,4 +81,5 @@ public enum EffectType
     AdjustCardTagPrevention = 37,
     ResolveInnerEffect = 86,
     AdjustPrimaryStatForEveryCardCycledAndInHand = 40,
+    ControlOpponent = 43,
 }

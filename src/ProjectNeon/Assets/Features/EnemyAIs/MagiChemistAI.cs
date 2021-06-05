@@ -14,7 +14,7 @@ public class MagiChemistAI : TurnAI
         return played;
     }
 
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
+    public override IPlayedCard InnerPlay(int memberId, BattleState battleState, AIStrategy strategy)
         => WithTrackedState(Select(memberId, battleState, strategy));
 
     public override IPlayedCard Anticipate(int memberId, BattleState battleState, AIStrategy strategy)

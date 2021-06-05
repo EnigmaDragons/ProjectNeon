@@ -113,7 +113,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         
         // Core Execution
         var ctx = new EffectContext(msg.Source, target, msg.Card, msg.XPaidAmount, 
-            partyAdventureState, state.PlayerState, state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext());
+            partyAdventureState, state.PlayerState, state.Members, state.EnemiesById, state.PlayerCardZones, msg.Preventions, new SelectionContext());
         AllEffects.Apply(msg.Effect, ctx);
         
         // Stealth Processing

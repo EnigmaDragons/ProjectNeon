@@ -13,7 +13,7 @@ public class AssassinDroneAI : TurnAI
         _hasStealthedLastTurn = new DictionaryWithDefault<int, bool>(false);
     }
 
-    public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy) 
+    public override IPlayedCard InnerPlay(int memberId, BattleState battleState, AIStrategy strategy) 
         => WithTrackedState(Anticipate(memberId, battleState, strategy));
 
     public override IPlayedCard Anticipate(int memberId, BattleState battleState, AIStrategy strategy)

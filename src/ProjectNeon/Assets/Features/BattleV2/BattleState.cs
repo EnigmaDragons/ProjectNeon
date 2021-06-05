@@ -63,6 +63,7 @@ public class BattleState : ScriptableObject
     public EnemyArea EnemyArea => enemies;
     public GameObject Battlefield => nextBattlegroundPrototype;
     public IDictionary<int, Member> Members => _membersById;
+    public IDictionary<int, EnemyInstance> EnemiesById => _enemiesById;
     public Member[] MembersWithoutIds => Members.Values.ToArray();
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] EnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
