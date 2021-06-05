@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Assassination_DeadlyBlade
+  m_Name: Assassination_CleverPlot
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: 7f3a8495d599cbb4d891ab02696942d4, type: 3}
-  description: '{Auto}'
-  typeDescription: {fileID: 11400000, guid: da1c37401e6341648be045665c941fed, type: 2}
+  art: {fileID: 21300000, guid: 6ae8f1ce72b0a344d928bdb988bfdd64, type: 3}
+  description: 'Gives <b>1 Mark</b>. <b>On Death</b>: Transfers Marks to one random
+    ally. <b>Chain:</b> Linger'
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
   cost:
@@ -26,14 +27,14 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 1
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: 300a983afa3d9a444a9dd727695c2a43, type: 2}
+    group: 1
+    cardActions: {fileID: 11400000, guid: 560d951e80e8cc24b8276b8c1dbe4773, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 0}
+  chainedCard: {fileID: 11400000, guid: ca4c69ad8c3469248be9d1ee921ef15b, type: 2}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
@@ -41,4 +42,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 1
+  isWIP: 0

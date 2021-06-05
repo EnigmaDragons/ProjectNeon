@@ -10,27 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Assassination_DeadlyBlade
+  m_Name: Assassination_CoupDeGrace
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: 7f3a8495d599cbb4d891ab02696942d4, type: 3}
-  description: '{Auto}'
-  typeDescription: {fileID: 11400000, guid: da1c37401e6341648be045665c941fed, type: 2}
+  art: {fileID: 21300000, guid: c43ca6ef96bc7a9439b159c1627fa533, type: 3}
+  description: '<b>On Slay</b>: You gain 3 PrimaryResource. Deal {E[1]}. <b>Bloodied</b>:
+    Deal {E[2]} instead'
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    cost: 1
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 2
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: 300a983afa3d9a444a9dd727695c2a43, type: 2}
+    group: 1
+    cardActions: {fileID: 11400000, guid: a05839bc3af40b44997dfe676239137e, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -39,6 +40,7 @@ MonoBehaviour:
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
-  highlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: faea937476523c74391f5093546460f7, type: 2}
   unhighlightCondition: []
-  isWIP: 1
+  isWIP: 0

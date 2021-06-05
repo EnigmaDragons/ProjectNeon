@@ -6,9 +6,9 @@ public class TargetIsBloodied : StaticEffectCondition
 {
     public override Maybe<string> GetShouldNotApplyReason(EffectContext ctx)
     {
-        var notAfflictedMembers = ctx.Target.Members.Where(m => !m.IsBloodied());
-        return notAfflictedMembers.Any()
-            ? new Maybe<string>($"{notAfflictedMembers.Names()} not bloodied")
+        var notBloodiedMembers = ctx.Target.Members.Where(m => !m.IsBloodied());
+        return notBloodiedMembers.Any()
+            ? new Maybe<string>($"{notBloodiedMembers.Names()} not bloodied")
             : Maybe<string>.Missing();
     }
 }

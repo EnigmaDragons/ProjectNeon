@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using DG.DemiEditor;
 using UnityEditor;
 using UnityEngine;
 
@@ -39,6 +40,11 @@ public class CardTypeEditor : Editor
     {
         PresentUnchanged(customName);
         PresentUnchanged(art);
+        if (GUILayout.Button("Generate Auto Description"))
+        {
+            targetCard.description = targetCard.AutoDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
+            EditorUtility.SetDirty(target);
+        }
         PresentUnchanged(description);
         PresentUnchanged(typeDescription);
         PresentUnchanged(archetypes);
@@ -60,6 +66,7 @@ public class CardTypeEditor : Editor
         PresentUnchanged(isWip);
         PresentUnchanged(functionalityIssues);
         PresentUnchanged(presentationIssues);
+        DrawUILine(Color.black);
     }
 
     private void PresentUnchanged(SerializedProperty serializedProperty)
@@ -101,9 +108,15 @@ public class CardTypeEditor : Editor
                     EditorUtility.SetDirty(target);
                 });
                 if (refBrokenI > 0)
+                {
                     menu.AddItem(new GUIContent("Move Up"), false, () => targetCard.actionSequences.SwapItems(refBrokenI, refBrokenI - 1));
+                    EditorUtility.SetDirty(target);
+                }
                 if (refBrokenI < sequences.Length - 1)
+                {
                     menu.AddItem(new GUIContent("Move Down"), false, () => targetCard.actionSequences.SwapItems(refBrokenI, refBrokenI + 1));
+                    EditorUtility.SetDirty(target);
+                }
                 menu.AddItem(new GUIContent("Delete"), false, () =>
                 {
                     targetCard.actionSequences = sequences.Where(x => x != sequence).ToArray();

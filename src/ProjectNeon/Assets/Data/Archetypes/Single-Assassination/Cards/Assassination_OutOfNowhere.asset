@@ -10,27 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Assassination_PrepareAmbush
+  m_Name: Assassination_OutOfNowhere
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: c55fb3b205d16ab41aa6d8a537a2fe04, type: 3}
-  description: '{Auto}'
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  art: {fileID: 21300000, guid: bf24adab29cce154e9eefdb912e1446c, type: 3}
+  description: '<b>On Death</b>: You gain 6 PrimaryResource. Deal {E[1]}. <b>Sneaky</b>:
+    Deal {E[2]} instead. <b>Re-Stealth</b>'
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    cost: 3
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
   onPlayGain:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 4
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 891e63ca0c674c54e9119d3ac60b85f5, type: 2}
+    cardActions: {fileID: 11400000, guid: 1864b45bfc2e5394b9ac74c54b3104d6, type: 2}
     repeatX: 0
     repeatCount: 0
   - scope: 0
@@ -38,13 +39,13 @@ MonoBehaviour:
     cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 11400000, guid: 0d700e29dd3bfb94fafccc1c08b4108a, type: 2}
+  chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
-  highlightCondition: []
-  unhighlightCondition:
-  - {fileID: 11400000, guid: 4789d19598838464e801c47edc10315a, type: 2}
+  highlightCondition:
+  - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
+  unhighlightCondition: []
   isWIP: 0
