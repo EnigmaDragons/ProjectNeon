@@ -141,11 +141,16 @@ public sealed class MemberState : IStats
 
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
-        _reactiveStates
+        ApplicableReactiveStates
             .Select(x => x.OnEffectResolved(e))
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
+
+    private IEnumerable<ReactiveStateV2> ApplicableReactiveStates =>
+        this[TemporalStatType.Disabled] > 0 || this[TemporalStatType.CardStun] > 0
+            ? _reactiveStates.Where(x => x.Status.Tag != StatusTag.CounterAttack)
+            : _reactiveStates;
     
     public EffectData Transform(EffectData effect, EffectContext context)
     {
