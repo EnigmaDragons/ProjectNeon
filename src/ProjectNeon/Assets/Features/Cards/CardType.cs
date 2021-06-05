@@ -7,7 +7,7 @@ public class CardType : ScriptableObject, CardTypeData
 {
     [SerializeField] private string customName;
     [PreviewSprite] [SerializeField] private Sprite art;
-    [SerializeField] [TextArea(1, 12)] private string description;
+    [SerializeField] [TextArea(1, 12)] public string description;
     [SerializeField] private StringVariable typeDescription;
     [SerializeField] private CardTag[] tags;
     [SerializeField] private CardSpeed speed;

@@ -5,6 +5,8 @@ public enum ReactiveTargetScope
     Source = 2,
     Target = 3,
     AllEnemies = 4,
+    OneRandomEnemy = 8,
     AllAllies = 5,
-    Everyone = 6
+    OneRandomAlly = 7,
+    Everyone = 6,
 }

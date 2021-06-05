@@ -10,30 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Assassination_BladeFrenzy
+  m_Name: Assassination_Linger
   m_EditorClassIdentifier: 
   customName: 
-  art: {fileID: 21300000, guid: 435d71d3b59ba6e409cec5a4b072bc03, type: 3}
-  description: 'Repeat While Enemy Has Marks: Deal {E[1]}. Gives self <b>1</b> ATK.
-    Remove <b>1 Mark</b>.'
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  art: {fileID: 21300000, guid: 0bc52cc634602cb45b3efab5e10ee8d8, type: 3}
+  description: '{Auto}'
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
   cost:
-    cost: 3
+    cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 0
   actionSequences:
   - scope: 0
-    group: 1
-    cardActions: {fileID: 11400000, guid: 85c27dc5cb15f954caa42c9b1a6c68a7, type: 2}
+    group: 0
+    cardActions: {fileID: 11400000, guid: 94be55b3190890245b6331d06c41e3c5, type: 2}
     repeatX: 0
-    repeatCount: 12
+    repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
@@ -41,6 +40,5 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
   highlightCondition: []
-  unhighlightCondition:
-  - {fileID: 11400000, guid: b3610e13c3ce5fa4388644484ce3fe1c, type: 2}
-  isWIP: 0
+  unhighlightCondition: []
+  isWIP: 1

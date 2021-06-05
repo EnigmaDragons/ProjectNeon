@@ -90,6 +90,10 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
             target = new Multiple(members.Values.ToArray().GetConsciousAllies(reactor));
         if (action.Scope == ReactiveTargetScope.Everyone)
             target = new Multiple(members.Values.Where(x => x.IsConscious()).ToArray());
+        if (action.Scope == ReactiveTargetScope.OneRandomAlly)
+            target = new Single(members.Values.ToArray().GetConsciousAllies(reactor).Random());
+        if (action.Scope == ReactiveTargetScope.OneRandomEnemy)
+            target = new Single(members.Values.ToArray().GetConsciousEnemies(reactor).Random());
         return target;
     }
 
