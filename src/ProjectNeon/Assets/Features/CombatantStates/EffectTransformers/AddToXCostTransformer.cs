@@ -12,13 +12,13 @@ public sealed class EffectAddToXCostTransformer : Effect
     public void Apply(EffectContext ctx)
     {
         ctx.Target.ApplyToAllConscious(m =>
-            m.AddEffectTransformer(new AddToXCostTransformer(_data, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m, _data.DurationFormula, ctx.XPaidAmount)))));
+            m.AddEffectTransformer(new AddToXCostTransformer(ctx.Source.Id, _data, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m, _data.DurationFormula, ctx.XPaidAmount)))));
     }
 }
 
 public class AddToXCostTransformer : EffectTransformerBase
 {
-    public AddToXCostTransformer(EffectData data, int numberOfTurns) : base(false, numberOfTurns, data.IntAmount, data.StatusDetail, 
+    public AddToXCostTransformer(int originatorId, EffectData data, int numberOfTurns) : base(originatorId, false, numberOfTurns, data.IntAmount, data.StatusDetail, 
         (effect, context) => effect.Formula.Contains("X") || effect.DurationFormula.Contains("X"),
         (effect, context) => new EffectData
         {

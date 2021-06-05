@@ -27,8 +27,9 @@ public static class AllEffects
         { EffectType.DamageOverTimeFormula, e => new AegisPreventable(new DamageOverTimeFormula(e), "Damage Over Time") },
         { EffectType.ApplyVulnerable, e => new AegisPreventable(new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} has become vulnerable",
             () => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), 
-                TemporalStateMetadata.DebuffForDuration(duration, new StatusDetail(StatusTag.Vulnerable))))), e.DurationFormula), "Vulernable") },
-        { EffectType.DisableForTurns, e => new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} is disabled for {duration} turns.", () => m.ApplyTemporaryAdditive(new DisableForTurns(duration))), e.DurationFormula)},
+                TemporalStateMetadata.DebuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Vulnerable))))), e.DurationFormula), "Vulernable") },
+        { EffectType.DisableForTurns, e => new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} is disabled for {duration} turns.", 
+            () => m.ApplyTemporaryAdditive(new DisableForTurns(ctx.Source.Id, duration))), e.DurationFormula)},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.DurationFormula) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect((p, duration, amount) => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With(e.EffectScope.Value.EnumVal<PlayerStatType>(), amount), duration, amount < 0)), e.DurationFormula, e.IntAmount.ToString()) },
@@ -39,10 +40,10 @@ public static class AllEffects
         { EffectType.AtEndOfTurn, e => new EndOfTurnEffect(e) },
         { EffectType.DelayedStartOfTurn, e => new DelayedStartOfTurnEffect(e) },
         { EffectType.EnterStealth, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(TemporalStatType.Stealth, 1), 
-            TemporalStateMetadata.BuffForDuration(duration, new StatusDetail(StatusTag.Stealth)))), e.DurationFormula) },
+            TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Stealth)))), e.DurationFormula) },
         { EffectType.GainDoubleDamage, e => new SimpleEffect(m => m.Adjust(TemporalStatType.DoubleDamage, e.IntAmount))},
         { EffectType.AntiHeal, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryMultiplier(
-            new AdjustedStats(new StatMultipliers().With(StatType.Healability, 0.5f),  TemporalStateMetadata.DebuffForDuration(duration, new StatusDetail(StatusTag.AntiHeal)))), e.DurationFormula)},
+            new AdjustedStats(new StatMultipliers().With(StatType.Healability, 0.5f),  TemporalStateMetadata.DebuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.AntiHeal)))), e.DurationFormula)},
         { EffectType.FullyReviveAllAllies, e => new FullyReviveAllAllies() },
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
@@ -51,7 +52,7 @@ public static class AllEffects
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
         { EffectType.ShowCustomTooltip, e => new FullContextEffect((ctx, duration, m) => m.AddCustomStatus(
-            new CustomStatusIcon(e.FlavorText, e.EffectScope, e.IntAmount, e.ForSimpleDurationStatAdjustment(duration))), e.DurationFormula) },
+            new CustomStatusIcon(e.FlavorText, e.EffectScope, e.IntAmount, e.ForSimpleDurationStatAdjustment(ctx.Source.Id, duration))), e.DurationFormula) },
         { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.DurationFormula, e.ReactionSequence) },
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(m.MemberId, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
@@ -76,7 +77,7 @@ public static class AllEffects
         { EffectType.AdjustCardTagPrevention, e => AegisPreventable.If(
             new SimpleEffect(m => m.PreventCardTag(e.EffectScope.Value.EnumVal<CardTag>(), e.BaseAmount)), e.BaseAmount > 0, $"Block Card Type {e.EffectScope}") },
         { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", () => m.AdjustPrimaryResource(99))) },
-        { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence.BattleEffects.ToArray()) },
+        { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
         { EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, e => new AdjustAllCardsCostUntilPlayed(e.BaseAmount) },
         { EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, e => new AdjustPrimaryStatForEveryCardCycledAndInHand(e) },
         { EffectType.FillHandWithOwnersCards, e => new FillHandWithOwnersCards() },

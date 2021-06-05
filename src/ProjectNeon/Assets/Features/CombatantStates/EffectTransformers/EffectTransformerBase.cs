@@ -8,6 +8,7 @@ public abstract class EffectTransformerBase : EffectTransformer
     private readonly Func<EffectData, EffectContext, EffectData> _modify;
     private HashSet<int> _cardIds = new HashSet<int>();
 
+    public int OriginatorId => _tracker.Metadata.OriginatorId;
     public Maybe<int> Amount => _tracker.RemainingUses;
     public IStats Stats => new StatAddends();
     public StatusDetail Status => _tracker.Status;
@@ -15,8 +16,8 @@ public abstract class EffectTransformerBase : EffectTransformer
     public bool IsActive => _tracker.IsActive;
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
     
-    public EffectTransformerBase(bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<EffectData, EffectContext, bool> shouldModify, Func<EffectData, EffectContext, EffectData> modify)
-        : this(new TemporalStateMetadata(isDebuff, maxUses, maxDurationTurns, status), shouldModify, modify) {}
+    public EffectTransformerBase(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<EffectData, EffectContext, bool> shouldModify, Func<EffectData, EffectContext, EffectData> modify)
+        : this(new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), shouldModify, modify) {}
     public EffectTransformerBase(TemporalStateMetadata metadata, Func<EffectData, EffectContext, bool> shouldModify, Func<EffectData, EffectContext, EffectData> modify)
     {
         _tracker = new TemporalStateTracker(metadata);

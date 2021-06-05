@@ -3,8 +3,8 @@
     private readonly int _amount;
     private readonly Member _target;
 
-    public HealOverTimeState(int amount, Member target, int turns)
-        : this(amount, target, TemporalStateMetadata.BuffForDuration(turns, new StatusDetail(StatusTag.HealOverTime))) {}
+    public HealOverTimeState(int originatorId, int amount, Member target, int turns)
+        : this(amount, target, TemporalStateMetadata.BuffForDuration(originatorId, turns, new StatusDetail(StatusTag.HealOverTime))) {}
     
     public HealOverTimeState(int amount, Member target, TemporalStateMetadata metadata)
         : base(metadata) 

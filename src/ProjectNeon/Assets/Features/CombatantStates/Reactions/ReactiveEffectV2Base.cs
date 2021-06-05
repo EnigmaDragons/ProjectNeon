@@ -7,6 +7,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     private readonly TemporalStateTracker _tracker;
     private readonly Func<EffectResolved, Maybe<ProposedReaction>> _createMaybeEffect;
 
+    public int OriginatorId => _tracker.Metadata.OriginatorId;
     public Maybe<int> Amount => _tracker.RemainingUses;
     public IStats Stats => new StatAddends();
     public StatusDetail Status => _tracker.Status;
@@ -14,8 +15,8 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     public bool IsActive => _tracker.IsActive;
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
 
-    public ReactiveEffectV2Base(bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
-        : this(new TemporalStateMetadata(isDebuff, maxUses, maxDurationTurns, status), createMaybeEffect) {}
+    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+        : this(new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), createMaybeEffect) {}
     public ReactiveEffectV2Base(TemporalStateMetadata metadata, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
     {
         _tracker = new TemporalStateTracker(metadata);

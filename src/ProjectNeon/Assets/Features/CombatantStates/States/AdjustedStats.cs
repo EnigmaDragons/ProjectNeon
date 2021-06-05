@@ -1,8 +1,8 @@
 ﻿
 public class AdjustedStats : TemporalStateBase
 {
-    public static AdjustedStats CreateIndefinite(IStats stats, bool isDebuff)
-        => new AdjustedStats(stats, TemporalStateMetadata.Unlimited(isDebuff));
+    public static AdjustedStats CreateIndefinite(int originatorId, IStats stats, bool isDebuff)
+        => new AdjustedStats(stats, TemporalStateMetadata.Unlimited(originatorId, isDebuff));
     
     public AdjustedStats(IStats stats, TemporalStateMetadata metadata)
         : base(metadata)

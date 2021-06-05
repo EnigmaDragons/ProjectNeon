@@ -31,7 +31,7 @@ public class EffectConditionTests
     public void TargetIsAfflicted_IsAfflicted_NoReasons()
     {
         var member = TestMembers.Any();
-        member.Apply(s => s.ApplyTemporaryAdditive(new DamageOverTimeState(5, member, 5)));
+        member.Apply(s => s.ApplyTemporaryAdditive(new DamageOverTimeState(member.Id, 5, member, 5)));
 
         var reason = GetShouldNotApplyReason<TargetIsAfflicted>(member);
 

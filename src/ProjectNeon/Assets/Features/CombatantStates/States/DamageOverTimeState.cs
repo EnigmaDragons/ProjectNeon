@@ -4,8 +4,8 @@ public class DamageOverTimeState : TemporalStateBase
     private readonly int _amount;
     private readonly Member _target;
 
-    public DamageOverTimeState(int amount, Member target, int turns)
-        : this(amount, target, TemporalStateMetadata.DebuffForDuration(turns, new StatusDetail(StatusTag.DamageOverTime))) {}
+    public DamageOverTimeState(int originatorId, int amount, Member target, int turns)
+        : this(amount, target, TemporalStateMetadata.DebuffForDuration(originatorId, turns, new StatusDetail(StatusTag.DamageOverTime))) {}
     
     public DamageOverTimeState(int amount, Member target, TemporalStateMetadata metadata)
         : base(metadata) 
