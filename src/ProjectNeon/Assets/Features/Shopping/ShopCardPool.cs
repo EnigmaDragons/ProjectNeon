@@ -10,7 +10,7 @@ public class ShopCardPool : ScriptableObject
     public StringVariable[] archetypes;
     public Rarity[] includedRarities = new Rarity[] {Rarity.Starter, Rarity.Basic, Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic};
     [SerializeField] private List<ShopCardPool> subPools;
-    [UnityEngine.UI.Extensions.ReadOnly] public List<CardType> allCards;
+    [UnityEngine.UI.Extensions.ReadOnly] public List<CardType> allCards; //Unity Collection Readonly
 
     private string[] _archetypes;
     private string[] Archetypes => _archetypes ??= archetypes.Select(x => x.Value).ToArray();
