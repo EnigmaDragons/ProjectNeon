@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class StatusBar : OnMessage<MemberStateChanged>
 {
+    [SerializeField] private BattleState battleState;
     [SerializeField] private StatusIcons icons;
 
     private List<CurrentStatusValue> _lastStatuses = new List<CurrentStatusValue>();
@@ -32,7 +33,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             .ForEach(s => statuses.Add(new CurrentStatusValue { 
                 Type = statusTag.ToString(), 
                 Icon = icons[statusTag].Icon, 
-                Tooltip = s.Status.CustomText.OrDefault(() => defaultText) 
+                Tooltip = s.Status.CustomText.OrDefault(() => defaultText)
+                    .Replace("[Originator]", battleState.Members[s.OriginatorId].ToString())
             }));
 
     private void UpdateUi()
