@@ -13,9 +13,13 @@ public static class InterpolatedCardDescriptions
 
     public static string InterpolatedDescription(this Card card, ResourceQuantity xCost) 
         => card.Type.InterpolatedDescription(card.Owner, xCost);
-    public static string InterpolatedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost)
+
+    public static string AutoDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost)
+        => InterpolatedDescription(card, owner, xCost, "{Auto}");
+    
+    public static string InterpolatedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, string overrideDescription = null)
     {
-        var desc = card.Description;
+        var desc = overrideDescription ?? card.Description;
 
         try
         {

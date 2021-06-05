@@ -41,7 +41,7 @@ public class CardTypeEditor : Editor
         PresentUnchanged(art);
         if (GUILayout.Button("Generate Auto Description"))
         {
-            targetCard.description = targetCard.InterpolatedDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
+            targetCard.description = targetCard.AutoDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
             EditorUtility.SetDirty(target);
         }
         PresentUnchanged(description);
