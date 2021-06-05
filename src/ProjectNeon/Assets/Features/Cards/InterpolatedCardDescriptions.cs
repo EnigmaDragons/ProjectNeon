@@ -316,14 +316,20 @@ public static class InterpolatedCardDescriptions
 
     private static string DurationDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
+        var turnString = "";
         if (owner.IsMissing)
-            return $"for {FormattedFormula(data.DurationFormula)} turns";
-        var value = RoundUp(Formula.Evaluate(owner.Value.State.ToSnapshot(), data.DurationFormula, xCost));
-        var turnString = value < 0
-                        ? "for the battle" 
-                        : value < 2
-                            ? data.TurnDelay == 0 ? "this turn" : "for the turn" 
-                            : $"for {Bold(value.ToString())} turns";
+        {
+            turnString = $"for {Bold(FormattedFormula(data.DurationFormula))} turns";
+        }
+        else
+        {
+            var value = RoundUp(Formula.Evaluate(owner.Value.State.ToSnapshot(), data.DurationFormula, xCost));
+            turnString = value < 0
+                ? "for the battle" 
+                : $"for {Bold(value.ToString())} turns";
+        }
+        if (turnString.Equals($"for {Bold("1")} turns"))
+            turnString = data.TurnDelay == 0 ? "this turn" : "for the turn";
         return $"{turnString}";
     }
 
