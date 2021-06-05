@@ -15,6 +15,8 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
     [SerializeField] private TextCommandButton fightButtonCont;
     [SerializeField] private Navigator navigator;
     [SerializeField] private EquipmentLibraryUI equipmentLibraryUI;
+    [SerializeField] private LibraryFilterUI cardFilter;
+    [SerializeField] private HeroDetailsPanelForCustomization heroDetails;
 
     private void Awake()
     {
@@ -40,6 +42,8 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
     {
         parent.SetActive(true);
         equipmentLibraryUI.GenerateLibrary();
+        cardFilter.Regenerate();
+        heroDetails.Initialized();
         if (msg.AllowDone)
         {
             saveButton.gameObject.SetActive(true);
