@@ -106,6 +106,9 @@ public static class InterpolatedCardDescriptions
         foreach (var r in _resourceIcons)
             result = result.Replace(r.Key, Sprite(r.Value));
         
+        // Add Line Breaks
+        result = result.Replace("\\n", "\n");
+        
         return result;
     }
 
@@ -256,7 +259,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.ShieldFormula)
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.AdjustCounterFormula)
-            return $"{FormulaAmount(data, owner, xCost)} {Bold(FriendlyScopeName(data.EffectScope.Value))}";
+            return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
             return $"{FormulaAmount(data, owner, xCost)} Resources";
         if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)

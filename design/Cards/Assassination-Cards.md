@@ -2,40 +2,34 @@ Assassination
 
 - Gain Stealth
 - Apply Temp Marks
-- Buff Self
 - Lots of Chain
 - Deal Single Target Damage
 - On Slay Triggers
-Sometimes (Apply Vulnerable)
 
 Starter
-- Gain Stealth - Stealth. Gain Resource
-- Hidden Blade - Damage/Sneak Attack
+X - Gain Stealth - Stealth. Gain Resource
+X - Hidden Blade - Damage/Sneak Attack
 
 Common
-- Nasty Gash - Damage. Mark 1
-- Rending Slash - Deal X. Consumes all Marks to deal an additional Marks-Squared damage.
-- Blade Frenzy -  Deal Damage. Apply Mark - Chain: More Damage and Marks
-- Surprise Stab - Opener: Apply Mark. 
+X - Nasty Gash - Damage. Mark 1
+X - Rending Slash - Deal X. Consumes all Marks to deal an additional Marks-Squared damage.
+X - Double Slash -  Deal Damage. Apply Mark - Chain: More Damage and Marks
+X - Clever Plot - Apply Marks. Add On Slay. Chain: Gain Resources.
 
 Uncommon
-- Lie In Wait - Stealth. Mark X. Gain Resource
-- Coup De Grace - Extra Damage to Bloodied. On Slay:
-- Chain
+X - Lie In Wait - Stealth. Mark X. Gain Resource
+X - Coup De Grace - Extra Damage to Bloodied. On Slay: Gain big resources
+X - Vicious Stab - Sneaky. Chain
 
 Rare
-- Prepare Ambush - Apply Vulnerable. Enter Stealth. Chain: Gain big Attack buff for next turn
-- 
+X - Prepare Ambush - Apply Vulnerable next turn. Enter Stealth. Chain: Gain big Attack buff for next turn
+X - Blade Frenzy - Repeat Until Enemy has no marks: Gain +1 Attack this turn, Deal N, Remove 1 Mark
 
 Epic 
-- Out of Nowhere - 1 Enemy - Sneak Attack Huge Damage. On Slay Trigger. Remove Prominent. ReStealth
+X - Out of Nowhere - 1 Enemy - Sneak Attack Huge Damage. On Slay Trigger. Remove Prominent. ReStealth
 
-
-Opener Keyword
-
-
-4 Stealth
-4 Chains
-2 Mark Consumers
-2 Openers
-3 Sneaky
+4 Stealth (Shadow/Prepare Ambush/Lie In Wait/Out Of Nowhere)
+4 Chains (Double Slash/Prepare Ambush/Clever Plot/Vicious Stab)
+3 Sneaky (Hidden Blade/Out of Nowhere/Vicious Stab)
+3 On Death/Slay (Out of Nowhere/Clever Plot/Coup De Grace)
+3 Mark Consumers/Rewarder (Blade Frenzy/Rending Slash)

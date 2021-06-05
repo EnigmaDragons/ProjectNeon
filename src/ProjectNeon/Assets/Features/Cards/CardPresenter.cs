@@ -27,6 +27,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private float dragScaleFactor = 1 / 0.7f;
     [SerializeField] private float highlightedScale = 1.7f;
     [SerializeField] private CardRulesPresenter rules;
+    [SerializeField] private CardTargetRulePresenter targetRule;
     [SerializeField] private GameObject chainedCardParent;
     [SerializeField] private CardCostPresenter cardCostPresenter;
     [SerializeField] private Image[] glitchableComponents; 
@@ -111,6 +112,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private void InitFreshCard(Action onClick)
     {
         gameObject.SetActive(true);
+        targetRule.Hide();
+        controls.SetActive(false);
         DisableCanPlayHighlight();
         DisableSelectedHighlight();
         _onClick = onClick;
@@ -234,7 +237,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void ShowComprehensiveCardInfo()
     {
+        Message.Publish(new HideReferencedCard());
         rules.Show(_cardType);
+        targetRule.Show(_cardType.ActionSequences.First());
 
         _cardType.ChainedCard.IfPresent(chain =>
         {
@@ -255,6 +260,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private void HideComprehensiveCardInfo()
     {
         rules.Hide();
+        targetRule.Hide();
         Message.Publish(new HideReferencedCard());
     }
     
@@ -281,7 +287,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         description.text = _card != null 
             ? _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity)) 
             : _cardType.InterpolatedDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
-        type.text = _cardType.TypeDescription;
+        type.text = _cardType.ArchetypeDescription();
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);

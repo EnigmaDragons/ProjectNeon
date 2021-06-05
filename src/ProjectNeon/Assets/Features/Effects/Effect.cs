@@ -72,7 +72,6 @@ public sealed class NoEffect : Effect
     public void Apply(EffectContext ctx) {}
 }
 
-
 public sealed class SimpleEffect : Effect
 {
     private readonly Action<Member, Target> _apply;
