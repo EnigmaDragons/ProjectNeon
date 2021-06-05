@@ -36,6 +36,7 @@ public class CardRulesPresenter : MonoBehaviour
             rulesToShow.AddIf("Bloodied", d.Description.IndexOf("Bloodied", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("Bloodied", d.Description.IndexOf("Bloody", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("Sneaky", d.Description.IndexOf("Sneaky", StringComparison.OrdinalIgnoreCase) >= 0);
+            rulesToShow.AddIf(TemporalStatType.Marked.ToString(), d.Description.IndexOf("Mark", StringComparison.OrdinalIgnoreCase) >= 0);
 
             var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());
             battleEffects.ForEach(b =>
@@ -60,7 +61,8 @@ public class CardRulesPresenter : MonoBehaviour
                     TemporalStatType.Disabled.ToString(),
                     TemporalStatType.Stealth.ToString(),
                     TemporalStatType.Lifesteal.ToString(),
-                    TemporalStatType.Confused.ToString());
+                    TemporalStatType.Confused.ToString(),
+                    TemporalStatType.Marked.ToString());
             });
 
             rulesToShow
