@@ -19,6 +19,7 @@ public interface CardTypeData
     HashSet<string> Archetypes { get; }
     Maybe<CardCondition> HighlightCondition { get; }
     Maybe<CardCondition> UnhighlightCondition { get; }
+    bool IsSinglePlay { get; }
 }
 
 public static class CardTypeDataExtensions

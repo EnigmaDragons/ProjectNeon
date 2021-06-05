@@ -41,7 +41,8 @@ public sealed class Card : CardTypeData
     public bool IsAttack => _type.Tags.Contains(CardTag.Attack) || _type.TypeDescription.Equals("Attack");
     public Maybe<CardCondition> HighlightCondition => _type.HighlightCondition;
     public Maybe<CardCondition> UnhighlightCondition => _type.UnhighlightCondition;
-    
+    public bool IsSinglePlay => _type.IsSinglePlay;
+
     public Card(int id, Member owner, CardTypeData type)
         : this(id, owner, type, Maybe<Color>.Missing()) {}
     
