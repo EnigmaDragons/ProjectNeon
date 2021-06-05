@@ -21,6 +21,8 @@ public class InitializeHeroSlots : MonoBehaviour
             s.Init(i);
             if (current.Adventure.RequiredHeroes.Length > i)
                 s.SelectRequiredHero(current.Adventure.RequiredHeroes[i]);
+            if (current.Adventure.PartySize >= heroPool.TotalHeroesCount)
+                s.SetNoChoicesAvailable();
         }
     }
 }

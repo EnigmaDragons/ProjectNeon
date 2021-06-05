@@ -35,9 +35,11 @@ public class SquadSlot : MonoBehaviour
     public void SelectRequiredHero(BaseHero c)
     {
         SelectHero(_index, c);
-        controls.ForEach(x => x.SetActive(false));
+        SetNoChoicesAvailable();
     }
 
+    public void SetNoChoicesAvailable() => controls.ForEach(x => x.SetActive(false));
+    
     private void SelectHero(int index, BaseHero c)
     {
         current = c;
