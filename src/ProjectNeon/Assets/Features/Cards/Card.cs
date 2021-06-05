@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public sealed class Card
+public sealed class Card : CardTypeData
 {
     [SerializeField] private int id;
     [SerializeField] private CardTypeData type;
@@ -15,26 +15,32 @@ public sealed class Card
     
     public CardMode Mode { get; private set; }
     public bool IsActive => Mode != CardMode.Dead && Mode != CardMode.Glitched;
-    
-    public CardTypeData Type => Mode == CardMode.Basic && Owner != null
-        ? Owner.BasicCard.Value
-        : type;
+
+    private bool IsBasic => Mode == CardMode.Basic && Owner != null;
+    private CardTypeData _type => IsBasic ? Owner.BasicCard.Value : type;
+    public CardTypeData Type => IsBasic ? Owner.BasicCard.Value : (CardTypeData)this;
 
     public Member Owner => owner;
     
     public int Id => id;
-    public string Name => Type.Name;
-    public IResourceAmount Cost => new InMemoryResourceAmount(Math.Max(Type.Cost.BaseAmount + _temporalStates.Where(x => x.IsActive).Sum(x => x.CostAdjustment), 0), Type.Cost.ResourceType.Name, Type.Cost.PlusXCost);
-    public IResourceAmount Gain => Type.Gain;
-    public Sprite Art => Type.Art;
-    public string Description => Type.Description;
-    public string TypeDescription => Type.TypeDescription;
-    public CardActionSequence[] ActionSequences => Type.ActionSequences;
-    public Maybe<CardTypeData> ChainedCard => Type.ChainedCard;
+    public string Name => _type.Name;
+    public IResourceAmount Cost => new InMemoryResourceAmount(Math.Max(_type.Cost.BaseAmount + _temporalStates.Where(x => x.IsActive).Sum(x => x.CostAdjustment), 0), _type.Cost.ResourceType.Name, _type.Cost.PlusXCost);
+    public IResourceAmount Gain => _type.Gain;
+    public CardSpeed Speed => _type.Speed;
+    public Sprite Art => _type.Art;
+    public string Description => _type.Description;
+    public HashSet<CardTag> Tags => _type.Tags;
+    public string TypeDescription => _type.TypeDescription;
+    public CardActionSequence[] ActionSequences => _type.ActionSequences;
+    public Maybe<CardTypeData> ChainedCard => _type.ChainedCard;
+    public Maybe<CardTypeData> SwappedCard => _type.SwappedCard;
+    public Rarity Rarity => _type.Rarity;
     public Maybe<ResourceQuantity> LockedXValue { get; private set; } = Maybe<ResourceQuantity>.Missing();
     public Color Tint => tint.OrDefault(Color.white);
-    public HashSet<string> Archetypes => Type.Archetypes;
-    public bool IsAttack => Type.Tags.Contains(CardTag.Attack) || Type.TypeDescription.Equals("Attack");
+    public HashSet<string> Archetypes => _type.Archetypes;
+    public bool IsAttack => _type.Tags.Contains(CardTag.Attack) || _type.TypeDescription.Equals("Attack");
+    public Maybe<CardCondition> HighlightCondition => _type.HighlightCondition;
+    public Maybe<CardCondition> UnhighlightCondition => _type.UnhighlightCondition;
     
     public Card(int id, Member owner, CardTypeData type)
         : this(id, owner, type, Maybe<Color>.Missing()) {}
