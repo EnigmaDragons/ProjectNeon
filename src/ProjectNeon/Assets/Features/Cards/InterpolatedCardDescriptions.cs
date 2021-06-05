@@ -250,7 +250,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.ShieldFormula)
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.AdjustCounterFormula)
-            return $"{FormulaAmount(data, owner, xCost)} {Bold(data.EffectScope.Value.WithSpaceBetweenWords())}";
+            return $"{FormulaAmount(data, owner, xCost)} {Bold(FriendlyScopeName(data.EffectScope.Value))}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
             return $"{FormulaAmount(data, owner, xCost)} Resources";
         if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)
@@ -272,6 +272,16 @@ public static class InterpolatedCardDescriptions
 
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";
+    }
+
+    private static string FriendlyScopeName(string raw)
+    {
+        var tmp = raw;
+        if (StatAbbreviations.TryGetValue(raw, out var friendly))
+            tmp = friendly;
+        if (TemporalStatFriendlyNames.TryGetValue(raw, out var friendly2))
+            tmp = friendly2;
+        return tmp.WithSpaceBetweenWords();
     }
 
     private static string FormulaAmount(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
@@ -333,10 +343,8 @@ public static class InterpolatedCardDescriptions
         var newS = s;
         newS = newS.Replace(" * ", "x ");
         foreach (var stat in StatAbbreviations)
-        {
             if (newS.Contains(stat.Key))
                 newS = newS.Replace(stat.Key, stat.Value);
-        }
 
         return newS;
     }
@@ -351,5 +359,10 @@ public static class InterpolatedCardDescriptions
         { StatType.Armor.ToString(), "ARM" },
         { StatType.Toughness.ToString(), "TGH" },
         { StatType.Economy.ToString(), "ECON" },
-    }; 
+    };
+
+    private static Dictionary<string, string> TemporalStatFriendlyNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+    {
+        {TemporalStatType.Marked.ToString(), "Mark"},
+    };
 }
