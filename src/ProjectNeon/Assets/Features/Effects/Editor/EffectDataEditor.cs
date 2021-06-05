@@ -55,6 +55,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, new [] { "FloatAmount", "DurationFormula" }},
         {EffectType.FillHandWithOwnersCards, new string[0]},
         {EffectType.DrawSelectedCard, new [] { "EffectScope" }},
+        {EffectType.ChooseCardToCreate, new [] { "EffectScope", "BaseAmount" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

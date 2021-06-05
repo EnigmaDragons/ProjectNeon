@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Fire_FlameVolley
   m_EditorClassIdentifier: 
+  Id: 71
   customName: 
   art: {fileID: 21300000, guid: 0a272cc9f623e7f43a62e0d7b16a4519, type: 3}
   description: '<b>6 Times</b>: {E[0]} to a random enemy'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 28000000
   speed: 0
+  isSinglePlay: 0
   cost:
     cost: 4
     resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
@@ -34,8 +36,11 @@ MonoBehaviour:
     repeatX: 0
     repeatCount: 6
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: Needs Individual Fireballs Lobbed
   archetypes:
   - {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0

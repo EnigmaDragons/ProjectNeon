@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Mainframe_TrackTarget2
   m_EditorClassIdentifier: 
+  Id: 169
   customName: Track Target 2.0
   art: {fileID: 21300000, guid: 5c6bb68ad5ff99d478390d3f5582a6b6, type: 3}
   description: Give vulnerable next turn. Gain {E[1]} attack next turn.
   typeDescription: {fileID: 11400000, guid: 54b26ffa8165e3942bf340ce48cb1299, type: 2}
   tags: 0800000002000000
   speed: 0
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -33,12 +34,18 @@ MonoBehaviour:
     group: 1
     cardActions: {fileID: 11400000, guid: 79f0fb0e645b3d648ba27e6e07bc9320, type: 2}
     repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: c75f982e4743a2e499a467b97413b752, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0

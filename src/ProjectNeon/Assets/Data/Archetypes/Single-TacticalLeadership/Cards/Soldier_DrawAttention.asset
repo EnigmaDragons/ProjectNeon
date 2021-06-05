@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Soldier_DrawAttention
   m_EditorClassIdentifier: 
+  Id: 130
   customName: 
   art: {fileID: 21300000, guid: e370e3c567d3f9c479a8911c2216399f, type: 3}
   description: '{Auto}'
   typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
   tags: 
   speed: 0
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
@@ -32,9 +34,13 @@ MonoBehaviour:
     group: 0
     cardActions: {fileID: 11400000, guid: 9bf5467d14df2bd4f8f715fea712bce8, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: e97bda47e14bfeb49b6a38e814d38a6d, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0

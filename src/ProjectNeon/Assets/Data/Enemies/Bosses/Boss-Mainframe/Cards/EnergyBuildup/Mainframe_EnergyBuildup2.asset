@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Mainframe_EnergyBuildup2
   m_EditorClassIdentifier: 
+  Id: 165
   customName: Energy Buildup 2.0
   art: {fileID: 21300000, guid: 48425972d39a30a42acd465f74674e06, type: 3}
   description: Gain {E[0]} shields. Gain 1 armor and resistance.
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
   tags: 01000000070000001c00000018000000
   speed: 0
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -33,12 +34,18 @@ MonoBehaviour:
     group: 0
     cardActions: {fileID: 11400000, guid: b9c0166973fad284a824faca44edc72f, type: 2}
     repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: 18e180b32c7128c498f0f129b1a28df4, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0

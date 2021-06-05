@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Mainframe_DeploySeeker3
   m_EditorClassIdentifier: 
+  Id: 160
   customName: Seeker Drone 3.0
   art: {fileID: 21300000, guid: 50e70e466ef84d049934bd43de6058c4, type: 3}
   description: Deploy a Seeker Drone with <b>Aegis</b> and 3 Tech Points.
   typeDescription: {fileID: 11400000, guid: f974aacc43585e14ebf56799cef40073, type: 2}
   tags: 03000000
   speed: 0
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
+  isSinglePlay: 0
   cost:
     cost: 3
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -33,8 +34,13 @@ MonoBehaviour:
     group: 0
     cardActions: {fileID: 11400000, guid: 4124ba4225089bc418710cd02c0bcc99, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0

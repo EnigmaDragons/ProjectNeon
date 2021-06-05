@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: RiotSec_SquadSuperShield
   m_EditorClassIdentifier: 
+  Id: 321
   customName: 
   art: {fileID: 21300000, guid: 0dc08c2d77771a44995deaa8c53abd0e, type: 3}
   description: '{Auto}'
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
   tags: 
   speed: 0
-  onlyPlayableByClass: {fileID: 11400000, guid: f6fbdbca14e1b7d4e92612f1834f9db5, type: 2}
+  isSinglePlay: 0
   cost:
     cost: 4
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
@@ -33,8 +34,13 @@ MonoBehaviour:
     group: 2
     cardActions: {fileID: 11400000, guid: 591160308cda10a4bb651462deb287d1, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 7d98e58a5a0c0324cba2d160eb477eab, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0

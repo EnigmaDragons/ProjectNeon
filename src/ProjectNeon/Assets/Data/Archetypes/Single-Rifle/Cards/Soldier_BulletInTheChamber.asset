@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Soldier_BulletInTheChamber
   m_EditorClassIdentifier: 
+  Id: 104
   customName: 
   art: {fileID: 21300000, guid: 1ec90d899e403434483a09bcbd6a7d5c, type: 3}
   description: '<b>Quick</b>: Gain 1 Ammo'
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 1
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
@@ -32,9 +34,13 @@ MonoBehaviour:
     group: 0
     cardActions: {fileID: 11400000, guid: fa115a0eb66d07744b6962b53458b3f8, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0

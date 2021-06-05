@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Spiderling_PainfulAttachment
   m_EditorClassIdentifier: 
+  Id: 204
   customName: 
   art: {fileID: 21300000, guid: 9fd243eed9935cf42806cf52d74913e9, type: 3}
   description: '{Auto}'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 04000000030000000c000000
   speed: 0
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
+  isSinglePlay: 0
   cost:
     cost: 3
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -33,13 +34,19 @@ MonoBehaviour:
     group: 1
     cardActions: {fileID: 11400000, guid: 014528a8257259347ab013d0532b99e4, type: 2}
     repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: a321bc5f4c2c81e49b3d2682f12d2cf2, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: doesn't disappear on death. should do somethign better than
     more damagerever
   presentationIssues: unoriginal art
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0

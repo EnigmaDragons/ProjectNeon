@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Spellslinger_Calm
   m_EditorClassIdentifier: 
+  Id: 191
   customName: 
   art: {fileID: 21300000, guid: 14d679cd01d73b34f925f14cceb2db36, type: 3}
   description: '{auto}'
   typeDescription: {fileID: 11400000, guid: 54b26ffa8165e3942bf340ce48cb1299, type: 2}
   tags: 0f000000
   speed: 0
-  onlyPlayableByClass: {fileID: 0}
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -33,8 +34,13 @@ MonoBehaviour:
     group: 0
     cardActions: {fileID: 11400000, guid: c6e7a407e2e21c545a43cd50a487e509, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0

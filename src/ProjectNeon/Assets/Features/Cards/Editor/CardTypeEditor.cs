@@ -11,7 +11,7 @@ public class CardTypeEditor : Editor
 {
     private CardType targetCard;
     private SerializedProperty customName, functionalityIssues, art, description, typeDescription, tags, 
-        cost, gain, rarity, cardAction1, cardAction2, chainedCard, presentationIssues, speed, archetypes, isWip, highlightCondition, unhighlightCondition, swappedCard, isSinglePlay;
+        cost, gain, rarity, cardAction1, cardAction2, chainedCard, presentationIssues, speed, archetypes, isWip, highlightCondition, unhighlightCondition, swappedCard, isSinglePlay, id;
 
     public void OnEnable()
     {
@@ -34,10 +34,14 @@ public class CardTypeEditor : Editor
         highlightCondition = serializedObject.FindProperty("highlightCondition");
         unhighlightCondition = serializedObject.FindProperty("unhighlightCondition");
         isSinglePlay = serializedObject.FindProperty("isSinglePlay");
+        id = serializedObject.FindProperty("Id");
     }
 
     public override void OnInspectorGUI()
     {
+        GUI.enabled = false;
+        PresentUnchanged(id);
+        GUI.enabled = true;
         PresentUnchanged(customName);
         PresentUnchanged(art);
         if (GUILayout.Button("Generate Auto Description"))

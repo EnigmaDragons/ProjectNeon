@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Soldier_LastRound
   m_EditorClassIdentifier: 
+  Id: 109
   customName: 
   art: {fileID: 21300000, guid: 20496b3a9861d8f489edd7c5e5594934, type: 3}
   description: Deal <b>0.9 ATK</b>. Doubled if it empties your Ammo.
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
+  isSinglePlay: 0
   cost:
     cost: 1
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
@@ -32,9 +34,13 @@ MonoBehaviour:
     group: 1
     cardActions: {fileID: 11400000, guid: 898096d974df3eb4eb522afe0ce27c3c, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0

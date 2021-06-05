@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Basic_EnergyBolt
   m_EditorClassIdentifier: 
+  Id: 143
   customName: 
   art: {fileID: 21300000, guid: d98b1808b48798644924e33c9e17ade6, type: 3}
   description: Deal {E[0]}
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
   tags: 0400000015000000
   speed: 0
-  onlyPlayableByClass: {fileID: 0}
+  isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
@@ -33,8 +34,13 @@ MonoBehaviour:
     group: 1
     cardActions: {fileID: 11400000, guid: c97a19dece64e2142ba12141e8c6faac, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0

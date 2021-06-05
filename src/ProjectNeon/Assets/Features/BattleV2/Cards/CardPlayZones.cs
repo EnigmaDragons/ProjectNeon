@@ -79,6 +79,16 @@ public class CardPlayZones : ScriptableObject
         handZone = CardPlayZone.InMemory;
         handZone.Init(hand);
     }
+    
+    public void TestInitFull(Card[] draw, Card[] hand, Card[] discard)
+    {
+        drawZone = CardPlayZone.InMemory;
+        drawZone.Init(draw);
+        handZone = CardPlayZone.InMemory;
+        handZone.Init(hand);
+        discardZone = CardPlayZone.InMemory;
+        discardZone.Init(discard);
+    }
 
     public static CardPlayZones InMemory => (CardPlayZones)FormatterServices.GetUninitializedObject(typeof(CardPlayZones));
 }

@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: SeekerDrone_OverloadedExplosion
   m_EditorClassIdentifier: 
+  Id: 200
   customName: 
   art: {fileID: 21300000, guid: b4d5f39f2c39c2044b620e95f9a239a1, type: 3}
   description: Deal {E[0]} and injure 7 max hp on all enemies. Die.
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 0300000004000000
   speed: 0
-  onlyPlayableByClass: {fileID: 11400000, guid: 3b11208aadd47074fa26dbd3032de3f0, type: 2}
+  isSinglePlay: 0
   cost:
     cost: 3
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
@@ -33,12 +34,18 @@ MonoBehaviour:
     group: 1
     cardActions: {fileID: 11400000, guid: 8f6c19922d4ae394782648d6a72a511f, type: 2}
     repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: 76e4e17f6e64b404986e69c1d85fd877, type: 2}
     repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
   functionalityIssues: change to injure equipment slot once equipment slots exist
   presentationIssues: unoriginal art
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0

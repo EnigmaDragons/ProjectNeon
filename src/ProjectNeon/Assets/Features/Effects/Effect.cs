@@ -21,10 +21,11 @@ public class EffectContext
     public CardPlayZones PlayerCardZones { get; }
     public PreventionContext Preventions { get; }
     public SelectionContext Selections { get; }
+    public Dictionary<int, CardTypeData> AllCards { get; }
 
     public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, 
         PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones, PreventionContext preventions, 
-        SelectionContext selections)
+        SelectionContext selections, Dictionary<int, CardTypeData> allCards)
     {
         Source = source;
         SourceSnapshot = source.GetSnapshot();
@@ -38,6 +39,7 @@ public class EffectContext
         XPaidAmount = xPaidAmount;
         Preventions = preventions;
         Selections = selections;
+        AllCards = allCards;
         if (XPaidAmount == null)
         {
             Log.Error("XPaidAmount is null");
@@ -48,11 +50,11 @@ public class EffectContext
     }
     
     public EffectContext Retargeted(Member source, Target target) 
-        => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, PlayerCardZones, Preventions, Selections);
+        => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, PlayerCardZones, Preventions, Selections, AllCards);
 
     public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)
         => new EffectContext(source, target, card, xPaidAmount, PartyAdventureState.InMemory(), new PlayerState(), 
-            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions, new SelectionContext());
+            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions, new SelectionContext(), new Dictionary<int, CardTypeData>());
 }
 
 public static class EffectExtensions
@@ -62,7 +64,7 @@ public static class EffectExtensions
 
     private static void ApplyForTests(this Effect effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid) 
         => effect.Apply(new EffectContext(source, target, card, xAmountPaid, PartyAdventureState.InMemory(), new PlayerState(0), 
-            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, new PreventionContextMut(target), new SelectionContext()));
+            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, new PreventionContextMut(target), new SelectionContext(), new Dictionary<int, CardTypeData>()));
 }
 
 public sealed class NoEffect : Effect

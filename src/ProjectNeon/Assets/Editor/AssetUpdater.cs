@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 
 public class AssetUpdater
@@ -8,6 +9,8 @@ public class AssetUpdater
     {
         UpdateCardPools();
         UpdateEquipmentPools();
+        UpdateCardIDs();
+        UpdateAllCards();
         EnsureDurationPresent();
     }
 
@@ -51,6 +54,45 @@ public class AssetUpdater
                 EditorUtility.SetDirty(pool);
             }
         }
+    }
+
+    [MenuItem("Neon/Update Card IDs")]
+    private static void UpdateCardIDs()
+    {
+        var cards = ScriptableExtensions.GetAllInstances<CardType>();
+        var map = Enumerable.Range(0, cards.Length + 1).ToDictionary(x => x, x => new List<CardType>());
+        cards.ForEach(x => map[x.Id].Add(x));
+        for (int i = 1; i < map.Count; i++)
+        {
+            while (map[i].Count > 1)
+            {
+                var card = map[i][0];
+                card.Id = 0;
+                map[i].Remove(card);
+            }
+        }
+        for (int i = 1; i < map.Count; i++)
+        {
+            if (map[i].Count == 0)
+            {
+                var card = map[0][0];
+                card.Id = i;
+                EditorUtility.SetDirty(card);
+                map[0].Remove(card);
+            }
+        }
+    }
+
+    [MenuItem("Neon/UpdateAllCards")]
+    private static void UpdateAllCards()
+    {
+        var cards = ScriptableExtensions.GetAllInstances<CardType>();
+        var allCards = ScriptableExtensions.GetAllInstances<AllCards>();
+        allCards.ForEach(x =>
+        {
+            x.Cards = cards;
+            EditorUtility.SetDirty(x);
+        });
     }
     
     private static void EnsureDurationPresent()
