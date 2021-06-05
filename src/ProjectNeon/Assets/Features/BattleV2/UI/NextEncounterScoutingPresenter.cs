@@ -1,22 +1,41 @@
-using System.Linq;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class NextEncounterScoutingPresenter : OnMessage<BattleStateChanged>
+public class NextEncounterScoutingPresenter : MonoBehaviour
 {
     [SerializeField] private BattleState state;
-    [SerializeField] private GameObject target;
-    [SerializeField] private TextMeshProUGUI enemiesList;
+    [SerializeField] private EnemyDetailsView enemyDetails;
+    [SerializeField] private Button previous;
+    [SerializeField] private Button next;
 
-    protected override void AfterEnable() => Render();
+    private int _enemyIndex;
+    
+    private void Awake()
+    {
+        previous.onClick.AddListener(() =>
+        {
+            _enemyIndex--;
+            Render();
+        });
+        next.onClick.AddListener(() =>
+        {
+            _enemyIndex++;
+            Render();
+        });
+    }
+    
+    private void OnEnable() => Render();
 
     private void Render()
     {
         Debug.Log($"Scouting has Custom Encounter {state.HasCustomEnemyEncounter}");
-        target.SetActive(state.HasCustomEnemyEncounter);
-        if (state.HasCustomEnemyEncounter)
-            enemiesList.text = string.Join("\n", state.NextEncounterEnemies.Select(x => x.Name));
+        if (!state.HasCustomEnemyEncounter)
+            return;
+        
+        if (_enemyIndex >= state.NextEncounterEnemies.Length)
+            _enemyIndex = 0;
+        previous.gameObject.SetActive(_enemyIndex > 0);
+        next.gameObject.SetActive(state.NextEncounterEnemies.Length - 1 > _enemyIndex);
+        enemyDetails.Show(state.NextEncounterEnemies[_enemyIndex]);
     }
-
-    protected override void Execute(BattleStateChanged msg) => Render();
 }
