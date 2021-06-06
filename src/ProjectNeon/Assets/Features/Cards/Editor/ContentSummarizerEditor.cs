@@ -109,19 +109,39 @@ public sealed class ContentSummarizerEditor : EditorWindow
                             r => r.Key,
                             r => r.Count()));
 
+            var expectedCardsCounter = 0;
+            var presentCardsCounter = 0;
             foreach (var arch in archetypeKeys.Where(a => a.Count(c => c.Equals('+')) < 2))
             {
-                result.Add(cards.TryGetValue(arch, out var a)
-                    ? $"{arch} Cards - Total {a.Sum(v => v.Value)} - {string.Join(", ", a.Select(v => $"{v.Key}: {v.Value}{TargetCardNumbers(arch, v.Key)}"))}"
-                    : $"{arch} Cards - All {ArchCardsExpected(arch)} Missing");
+                var hasValue = cards.TryGetValue(arch, out var a);
+                var numCards = hasValue ? a.Sum(v => v.Value) : 0;
+                expectedCardsCounter += ArchCardsExpected(arch);
+                presentCardsCounter += numCards;
+                result.Add(hasValue
+                    ? $"{arch} Cards - Total {numCards} - {string.Join(", ", a.Select(v => $"{v.Key}: {v.Value}{TargetCardNumbers(arch, v.Key)}"))}"
+                    : $"{arch} Cards - All {ArchCardsExpectedStr(arch)} Missing");
             }
-            
+
+            var expectedEquipCounter = 0;
+            var presentEquipCounter = 0;
             foreach (var arch in archetypeKeys.Where(a => !a.Contains("+")))
             {
-                result.Add(equipments.TryGetValue(arch, out var e)
-                    ? $"{arch} Equips - Total {e.Sum(v => v.Value)} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
+                var hasValue = equipments.TryGetValue(arch, out var e);
+                var numEquips = hasValue ? e.Sum(v => v.Value) : 0;
+                expectedEquipCounter += 4;
+                presentEquipCounter += numEquips;
+                result.Add(hasValue
+                    ? $"{arch} Equips - Total {numEquips} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
                     : $"{arch} Equips - All 4 Missing");
             }
+
+            var expectedAllCounter = expectedCardsCounter + expectedEquipCounter;
+            var presentAllCounter = presentCardsCounter + presentEquipCounter;
+            var percentage = expectedAllCounter > 0 
+                ? presentAllCounter/(float)expectedAllCounter
+                : 0;
+            result.Add($"{HeroName} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} Cards {presentCardsCounter}/{expectedCardsCounter} Equips {presentEquipCounter}/{expectedEquipCounter}");
+            result = result.OrderBy(r => r.Contains("%") ? -1 : 0).ToList();
             
             GetWindow<ListDisplayWindow>()
                 .Initialized($"Hero Content Summary", "", result.ToArray())
@@ -130,7 +150,8 @@ public sealed class ContentSummarizerEditor : EditorWindow
         }
     }
 
-    private string ArchCardsExpected(string arch) => arch.Contains("+") ? "5" : "12";
+    private string ArchCardsExpectedStr(string arch) => ArchCardsExpected(arch).ToString();
+    private int ArchCardsExpected(string arch) => arch.Contains("+") ? 5 : 12;
     
     private string TargetEquipmentNumbers(string arch, Rarity r)
     {
