@@ -26,6 +26,12 @@ public sealed class Maybe<T>
             action(value);
     }
 
+    public void IfPresentAndMatches(Func<T, bool> condition, Action<T> action)
+    {
+        if (IsPresent && condition(value))
+            action(value);
+    }
+
     public void ExecuteIfPresentOrElse(Action<T> ifPresent, Action elseAction)
     {
         if (isPresent)
