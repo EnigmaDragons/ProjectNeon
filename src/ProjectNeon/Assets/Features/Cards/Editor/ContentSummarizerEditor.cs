@@ -115,9 +115,10 @@ public sealed class ContentSummarizerEditor : EditorWindow
             {
                 var hasValue = cards.TryGetValue(arch, out var a);
                 var numCards = hasValue ? a.Sum(v => v.Value) : 0;
-                expectedCardsCounter += ArchCardsExpected(arch);
+                var archExpected = ArchCardsExpected(arch);
+                expectedCardsCounter += archExpected;
                 presentCardsCounter += numCards;
-                var checkChar = presentCardsCounter >= expectedCardsCounter ? "✓" : "✗";
+                var checkChar = numCards >= archExpected ? "✓" : "✗";
                 result.Add(hasValue
                     ? $"{checkChar} - {arch} Cards - Total {numCards} - {string.Join(", ", a.Select(v => $"{v.Key}: {v.Value}{TargetCardNumbers(arch, v.Key)}"))}"
                     : $"{checkChar} - {arch} Cards - All {ArchCardsExpectedStr(arch)} Missing");
@@ -129,9 +130,10 @@ public sealed class ContentSummarizerEditor : EditorWindow
             {
                 var hasValue = equipments.TryGetValue(arch, out var e);
                 var numEquips = hasValue ? e.Sum(v => v.Value) : 0;
-                expectedEquipCounter += 4;
+                var archExpected = 4;
+                expectedEquipCounter += archExpected;
                 presentEquipCounter += numEquips;
-                var checkChar = presentEquipCounter >= expectedEquipCounter ? "✓" : "✗";
+                var checkChar = numEquips >= archExpected ? "✓" : "✗";
                 result.Add(hasValue
                     ? $"{checkChar} - {arch} Equips - Total {numEquips} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
                     : $"{checkChar} - {arch} Equips - All 4 Missing");

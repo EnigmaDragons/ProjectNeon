@@ -24,7 +24,8 @@ public sealed class Card : CardTypeData
     
     public int Id => id;
     public string Name => _type.Name;
-    public IResourceAmount Cost => new InMemoryResourceAmount(Math.Max(_type.Cost.BaseAmount + _temporalStates.Where(x => x.IsActive).Sum(x => x.CostAdjustment), 0), _type.Cost.ResourceType.Name, _type.Cost.PlusXCost);
+    public IResourceAmount Cost => new InMemoryResourceAmount(
+        Math.Max(_type.Cost.BaseAmount + _temporalStates.Where(x => x.IsActive).Sum(x => x.CostAdjustment), 0), _type.Cost.ResourceType, _type.Cost.PlusXCost);
     public IResourceAmount Gain => _type.Gain;
     public CardSpeed Speed => _type.Speed;
     public Sprite Art => _type.Art;

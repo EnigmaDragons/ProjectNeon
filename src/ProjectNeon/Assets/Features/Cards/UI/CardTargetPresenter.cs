@@ -16,7 +16,13 @@ public class CardTargetPresenter : MonoBehaviour
     public void Set(CardTypeData c)
     {
         if (c.ActionSequences.None())
+        {
             Log.Error($"{c.Name} has no Action Sequences");
+            if (string.IsNullOrWhiteSpace(c.Name))
+                Log.Error($"Error card has Archetypes {c.ArchetypeDescription()}");
+            return;
+        }
+
         var firstSeq = c.ActionSequences.First();
         targetIcon.sprite = firstSeq.Scope == Scope.One || firstSeq.Scope == Scope.OneExceptSelf
             ? singleTargetSprite

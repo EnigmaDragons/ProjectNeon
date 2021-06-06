@@ -24,7 +24,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private StaticCardCondition[] highlightCondition;
     [SerializeField] private StaticCardCondition[] unhighlightCondition;
-    [SerializeField] private bool isWIP;
+    [SerializeField] private bool isWIP = true;
 
     public string Name => !string.IsNullOrWhiteSpace(customName) 
         ? customName 

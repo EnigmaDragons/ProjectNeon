@@ -19,7 +19,6 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, HideTooltip>
     {
         var mousePos = Input.mousePosition;
         var wouldBeOffscreen = Screen.width - Input.mousePosition.x < _rect.sizeDelta.x;
-        Debug.Log($"Screen Width {Screen.width} Mouse Pos {mousePos} Rect Size {_rect.sizeDelta}");
         panel.transform.position = wouldBeOffscreen
             ? mousePos - new Vector3(_rect.sizeDelta.x + 92, 0)
             : mousePos;
