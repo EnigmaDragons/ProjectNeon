@@ -31,9 +31,16 @@ public class BattleSetupV2 : MonoBehaviour
     public void InitPartyEquipment(IEnumerable<Equipment> h1, IEnumerable<Equipment> h2, IEnumerable<Equipment> h3)
     {
         h1.Concat(h2).Concat(h3).ForEach(e => party.Add(e));
-        h1.ForEach(e => party.EquipTo(e, party.Heroes[0]));
-        h2.ForEach(e => party.EquipTo(e, party.Heroes[1]));
-        h3.ForEach(e => party.EquipTo(e, party.Heroes[2]));
+        h1.ForEach(e => InitEquipmentForHero(party.Heroes[0], e));
+        h2.ForEach(e => InitEquipmentForHero(party.Heroes[1], e));
+        h3.ForEach(e => InitEquipmentForHero(party.Heroes[2], e));
+    }
+    private void InitEquipmentForHero(Hero hero, Equipment equip)
+    {
+        if (equip.Slot == EquipmentSlot.Permanent)
+            hero.ApplyPermanent(equip);
+        else
+            party.EquipTo(equip, hero);
     }
     public void InitPartyDecks(List<CardTypeData> d1, List<CardTypeData> d2, List<CardTypeData> d3) => party.UpdateDecks(d1, d2, d3);
     public void InitEncounterBuilder(EncounterBuilder e) => encounterBuilder = e;

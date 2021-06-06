@@ -47,6 +47,6 @@ public static class TemporalStateMetadataExtesions
 {
     public static TemporalStateTracker CreateTracker(this TemporalStateMetadata m) => new TemporalStateTracker(m);
 
-    public static TemporalStateMetadata ForSimpleDurationStatAdjustment(this EffectData e, int duration, int originatorId)
+    public static TemporalStateMetadata ForSimpleDurationStatAdjustment(this EffectData e, int originatorId, int duration)
         => TemporalStateMetadata.ForDuration(originatorId, duration, e.IntAmount < 0, new StatusDetail(StatusTag.None, Maybe<string>.Missing()));
 }
