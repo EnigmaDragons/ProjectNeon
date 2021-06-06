@@ -17,7 +17,7 @@ public class ChooseCardToDrawTests
         var context = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(),
             ResourceQuantity.None, PartyAdventureState.InMemory(),
             new PlayerState(0), new Dictionary<int, Member>(), cardPlayZones, new UnpreventableContext(),
-            new SelectionContext(), allCards);
+            new SelectionContext(), allCards, 0, 0);
 
         AllEffects.Apply(new EffectData
         {

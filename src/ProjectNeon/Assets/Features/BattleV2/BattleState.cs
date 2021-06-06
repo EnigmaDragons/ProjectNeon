@@ -36,6 +36,7 @@ public class BattleState : ScriptableObject
     
     private int _numPlayerDiscardsUsedThisTurn = 0;
 
+    public int CreditsAtStartOfBattle { get; private set; }
     public bool IsSelectingTargets = false;
     public BattleV2Phase Phase => phase;
     public int TurnNumber => turnNumber;
@@ -165,6 +166,7 @@ public class BattleState : ScriptableObject
         _unconsciousMembers = new Dictionary<int, Member>();
         _playedCardHistory = new List<List<PlayedCardSnapshot>> { new List<PlayedCardSnapshot>() };
         turnNumber = 1;
+        CreditsAtStartOfBattle = party.Credits;
         
         DevLog.Write("Finished Battle State Init");
         return result;

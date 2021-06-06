@@ -19,7 +19,7 @@ public class DrawSelectedCardTests
         _cardPlayZones = CardPlayZones.InMemory;
         _cardPlayZones.TestInitFull(new [] { _deckCard }, new Card[0], new [] { _discardCard1, _discardCard2 });
         _context = new EffectContext(TestMembers.Any(), new Single(_member), Maybe<Card>.Missing(), ResourceQuantity.None, PartyAdventureState.InMemory(), 
-            new PlayerState(0), new Dictionary<int, Member>(), _cardPlayZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>());
+            new PlayerState(0), new Dictionary<int, Member>(), _cardPlayZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), 0, 0);
     }
     
     [Test]
