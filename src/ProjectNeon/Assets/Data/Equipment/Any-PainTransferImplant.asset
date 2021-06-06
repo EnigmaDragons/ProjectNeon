@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Any-PainTransferImplant
   m_EditorClassIdentifier: 
   displayName: Pain Transfer Implant
-  description: 'On Magic Attacked: Gain 1 Magic next turn'
-  isWIP: 0
+  description: 'On Attacked: Gain 2 Magic next turn'
+  archetypes: []
   rarity: 1
   slot: 2
   priceFactor: 1
-  archetypes: []
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -44,8 +43,9 @@ MonoBehaviour:
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 12
-    StatusDetailText: 'On Magic Attacked: Gain 1 Magic next turn'
+    StatusDetailText: 'On Attacked: Gain 2 Magic next turn'
     TurnDelay: 0
     Formula: 
     FlavorText:
@@ -53,7 +53,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 3
+    ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
@@ -64,3 +64,4 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: f4fcda4b439dc1b46a52f0865e9022f0, type: 2}
     BonusCardType: {fileID: 0}
+  isWIP: 0
