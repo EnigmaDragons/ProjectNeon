@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EquipmentLibraryUI : OnMessage<EquipmentPicketCurrentGearChanged, DeckBuilderFiltersChanged>
+public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, DeckBuilderFiltersChanged>
 {
     [SerializeField] private PageViewer pageViewer;
     [SerializeField] private EquipmentInLibraryButton equipmentInLibraryButtonTemplate;
@@ -13,7 +13,7 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPicketCurrentGearChanged, D
     
     private HeroCharacter _selectedHero;
     
-    protected override void Execute(EquipmentPicketCurrentGearChanged msg) => GenerateLibrary();
+    protected override void Execute(EquipmentPickerCurrentGearChanged msg) => GenerateLibrary();
     protected override void Execute(DeckBuilderFiltersChanged msg) => GenerateLibrary();
     
     public void GenerateLibrary()

@@ -26,7 +26,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
         slotLabel.text = $"{e.Slot}";
         var archetypeText = e.Archetypes.Any()
             ? string.Join(",", e.Archetypes.Select(c => c))
-            : "All";
+            : "Any";
         classesLabel.text = $"Archetypes: {archetypeText}";
         descriptionLabel.text = e.Description;
         rarity.Set(e.Rarity);
