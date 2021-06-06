@@ -90,8 +90,11 @@ public class AssetUpdater
         var allCards = ScriptableExtensions.GetAllInstances<AllCards>();
         allCards.ForEach(x =>
         {
-            x.Cards = cards;
-            EditorUtility.SetDirty(x);
+            if (x.Cards.Length != cards.Length || cards.Any(card => !x.Cards.Contains(card)))
+            {
+                x.Cards = cards;
+                EditorUtility.SetDirty(x);   
+            }
         });
     }
     

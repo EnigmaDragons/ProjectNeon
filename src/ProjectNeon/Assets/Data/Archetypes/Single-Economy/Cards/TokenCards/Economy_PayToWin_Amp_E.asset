@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Economy_Cleanser_E
+  m_Name: Economy_PayToWin_Amp_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 4
+      EffectType: 79
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -29,13 +29,13 @@ MonoBehaviour:
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 567892c0029f4214c9f52b55b76d4c4f, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 1
       FlavorText:
         UseConstant: 1
         ConstantValue: 
