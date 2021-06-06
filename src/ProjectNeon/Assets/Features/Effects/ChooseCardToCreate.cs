@@ -14,10 +14,15 @@ public class ChooseCardToCreate : Effect
     
     public void Apply(EffectContext ctx)
     {
-        ctx.Selections.CardSelectionOptions = _choiceCardIds
-            .Shuffled()
-            .Take(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount)))
-            .Select(x => new Card(-1, ctx.Source, ctx.AllCards[x])).ToArray();
+        var cardsToChoose = Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount));
+        
+        ctx.Selections.CardSelectionOptions = cardsToChoose >= _choiceCardIds.Length 
+            ? _choiceCardIds.Select(x => new Card(-1, ctx.Source, ctx.AllCards[x])).ToArray()
+            : _choiceCardIds
+                .Shuffled()
+                .Take(cardsToChoose)
+                .Select(x => new Card(-1, ctx.Source, ctx.AllCards[x]))
+                .ToArray();
         ctx.Selections.OnCardSelected = card => ctx.PlayerCardZones.HandZone.PutOnBottom(card);
     }
 }
