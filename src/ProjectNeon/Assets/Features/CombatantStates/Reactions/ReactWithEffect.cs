@@ -87,8 +87,7 @@ public class EffectReactWith : Effect
                     return true;
                 if (!effect.Source.Equals(ctx.Possessor))
                     return false;
-                //TODO: Couldn't find a way to check that ammo was spent on this effect
-                return ctx.Possessor.State.PrimaryResourceAmount == 0;
+                return ctx.Possessor.State.PrimaryResourceAmount == 0 && effect.BattleBefore.Members[ctx.Possessor.Id].State.PrimaryResourceAmount > 0;
             }
         },
         { ReactionConditionType.OnTagPlayed, ctx => effect 
@@ -106,7 +105,10 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnAllyDeath, ctx => effect => ctx.Actor.IsConscious() 
             && effect.BattleBefore.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) 
               > effect.BattleAfter.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) },
-        { ReactionConditionType.OnAfflicted, ctx => effect => ctx.Actor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) }
+        { ReactionConditionType.OnAfflicted, ctx => effect => ctx.Actor.IsConscious() 
+            && Increased(Select(effect, ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) },
+        { ReactionConditionType.OnAppliedMark, ctx => effect => ctx.Actor.IsConscious() 
+            && Increased(Select(effect, b => b.TargetMembers(effect.Target).Sum(x => x.State[TemporalStatType.Marked]))) }
     };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
@@ -121,8 +123,10 @@ public class EffectReactWith : Effect
         return values.Last() < values.First();
     }
 
-    private static bool Increased(int[] values) => values.Last() > values.First();
-    
+    private static bool Increased(params int[] values) => values.Last() > values.First();
+
+    private static int[] Select(EffectResolved e, Func<BattleStateSnapshot, int> selector)
+        => new[] {selector(e.BattleBefore), selector(e.BattleAfter)};
     private static int[] Select(EffectResolved e, Member possessor, Func<MemberSnapshot, int> selector)
         => new[] {selector(e.BattleBefore.Members[possessor.Id]), selector(e.BattleAfter.Members[possessor.Id])};
     
