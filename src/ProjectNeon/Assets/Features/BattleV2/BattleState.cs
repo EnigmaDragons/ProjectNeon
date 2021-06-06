@@ -112,7 +112,7 @@ public class BattleState : ScriptableObject
     }
 
     public int GetNextCardId() => NextCardId.Get();
-    
+
     private int EnemyStartingIndex => 4;
     private int _nextEnemyId = 0;
     public int GetNextEnemyId() => _nextEnemyId++;

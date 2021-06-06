@@ -185,7 +185,7 @@ public class CardResolutionZone : ScriptableObject
     private void WrapupCard(IPlayedCard played, Card physicalCard)
     {
         Log.Info($"Wrapped Up {played.Card.Name}. Pending Cards {_pendingMoves.Count}");
-        if (played.Member.TeamType.Equals(TeamType.Party) && !played.IsTransient)
+        if (played.Member.TeamType.Equals(TeamType.Party) && !played.IsTransient && !played.IsSingleUse)
         {
             if (physicalCard.Type.SwappedCard.IsPresent)
             {

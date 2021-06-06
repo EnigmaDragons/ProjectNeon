@@ -18,22 +18,28 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
         var cardTemplate = ctx.AllCards[_template];
         ctx.Selections.CardSelectionOptions = ctx.BattleMembers
             .Where(x => x.Value.TeamType == TeamType.Enemies && x.Value.IsConscious())
-            .Select(x => new Card(-1, ctx.Source, new InMemoryCard()
-            {
-                Name = cardTemplate.Name,
-                Rarity = cardTemplate.Rarity,
-                Cost = new InMemoryResourceAmount(CalculatePrice(x.Value, ctx.EnemyTypes[x.Key]), "Creds"),
-                Gain = cardTemplate.Gain,
-                Speed = cardTemplate.Speed,
-                ActionSequences = new CardActionSequence[] { cardTemplate.ActionSequences[0].CloneForBuyout(new EffectData { EffectType = EffectType.BuyoutEnemyById, EffectScope = new StringReference(x.Key.ToString()) }) },
-                Archetypes = cardTemplate.Archetypes,
-                IsSinglePlay = true,
-                Art = cardTemplate.Art,
-                Description = $"{ctx.EnemyTypes[x.Key].Name} is paid off to leave the battle.",
-                Tags = cardTemplate.Tags,
-                TypeDescription = cardTemplate.TypeDescription
-            }))
-            .Concat(_otherOptions.Select(x => new Card(-1, ctx.Source, ctx.AllCards[x])))
+            .Select(x => new Card(NextCardId.Get(), ctx.Source, new InMemoryCard()
+                {
+                    Name = cardTemplate.Name,
+                    Rarity = cardTemplate.Rarity,
+                    Cost = new InMemoryResourceAmount(CalculatePrice(x.Value, ctx.EnemyTypes[x.Key]), "Creds"),
+                    Gain = cardTemplate.Gain,
+                    Speed = cardTemplate.Speed,
+                    ActionSequences = new CardActionSequence[]
+                    {
+                        cardTemplate.ActionSequences[0].CloneForBuyout(new EffectData
+                        {
+                            EffectType = EffectType.BuyoutEnemyById, EffectScope = new StringReference(x.Key.ToString())
+                        })
+                    },
+                    Archetypes = cardTemplate.Archetypes,
+                    IsSinglePlay = true,
+                    Art = cardTemplate.Art,
+                    Description = $"{ctx.EnemyTypes[x.Key].Name} is paid off to leave the battle.",
+                    Tags = cardTemplate.Tags,
+                    TypeDescription = cardTemplate.TypeDescription
+                }))
+            .Concat(_otherOptions.Select(x => new Card(NextCardId.Get(), ctx.Source, ctx.AllCards[x])))
             .ToArray();
         ctx.Selections.OnCardSelected = card => ctx.PlayerCardZones.HandZone.PutOnBottom(card);
     }
