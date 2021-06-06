@@ -53,8 +53,13 @@ public sealed class PartyAdventureState : ScriptableObject
     public void UpdateAdventureHp(int[] hps) => UpdateState(() => hps.ForEachIndex((hp, i) => heroes[i].SetHp(hp)));
     public int UpdateCreditsBy(int amount, bool canGoBelowZero = false)
     {
+        if (amount == 0)
+            return 0;
+        
         var creditsBefore = credits;
         UpdateState(() => credits = Mathf.Clamp(credits + amount, canGoBelowZero ? int.MinValue : 0, int.MaxValue));
+        if (credits - creditsBefore != 0)
+            Message.Publish(new PartyCreditsChanged(creditsBefore, credits));
         return credits - creditsBefore;
     }
 

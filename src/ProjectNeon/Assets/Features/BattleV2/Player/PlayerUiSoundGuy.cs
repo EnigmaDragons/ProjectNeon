@@ -8,6 +8,7 @@ public class PlayerUiSoundGuy : MonoBehaviour
     [SerializeField] private AudioClipVolume onCancel;
     [SerializeField] private AudioClipVolume onCardDrawn;
     [SerializeField] private AudioClipVolume onShuffled;
+    [SerializeField] private AudioClipVolume onCreditsChanged;
     [SerializeField] private float repeatCooldown = 0.4f;
 
     private readonly Dictionary<string, float> _lastPlayed = new Dictionary<string, float>();
@@ -19,6 +20,7 @@ public class PlayerUiSoundGuy : MonoBehaviour
         Message.Subscribe<PlayerCardCanceled>(_ => Play(onCancel), this);
         Message.Subscribe<PlayerCardDrawn>(_ => Play(onCardDrawn, false), this);
         Message.Subscribe<PlayerDeckShuffled>(_ => Play(onShuffled), this);
+        Message.Subscribe<PartyCreditsChanged>(_ => Play(onCreditsChanged, false), this);
     }
 
     private void OnDisable()
