@@ -5,7 +5,7 @@ public class AddToXCostTransformerTest
     [Test]
     public void AddToXCostTransformer_AppliesToXCostFormulas()
     {
-        var member = TestMembers.Create("Bob", x => x.With(StatType.MaxHP, 10));
+        var member = TestMembers.Create(x => x.With(StatType.MaxHP, 10));
         member.State.AddEffectTransformer(new AddToXCostTransformer(member.Id, new EffectData { FloatAmount = new FloatReference(-1), DurationFormula = "0" }, -1));
         var effect1 = new EffectData
         {

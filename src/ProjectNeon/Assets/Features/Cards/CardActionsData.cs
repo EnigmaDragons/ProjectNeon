@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect")]
@@ -16,4 +18,9 @@ public class CardActionsData : ScriptableObject
         Actions = actions;
         return this;
     }
+    
+    public CardActionsData CloneForBuyout(EffectData buyoutData) => ((CardActionsData)FormatterServices.GetUninitializedObject(typeof(CardActionsData)))
+        .Initialized(Actions.Select(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.EffectType == EffectType.BuyoutEnemyById 
+            ? x.Clone(buyoutData) 
+            : x).ToArray());
 }

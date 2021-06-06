@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 public class ChooseBuyoutCardOrDefaultToCreate : Effect
@@ -26,7 +25,7 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
                 Cost = new InMemoryResourceAmount(CalculatePrice(x.Value, ctx.EnemyTypes[x.Key]), "Creds"),
                 Gain = cardTemplate.Gain,
                 Speed = cardTemplate.Speed,
-                //ActionSequences = ,
+                ActionSequences = new CardActionSequence[] { cardTemplate.ActionSequences[0].CloneForBuyout(new EffectData { EffectType = EffectType.BuyoutEnemyById, EffectScope = new StringReference(x.Key.ToString()) }) },
                 Archetypes = cardTemplate.Archetypes,
                 IsSinglePlay = true,
                 Art = cardTemplate.Art,
@@ -34,6 +33,7 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
                 Tags = cardTemplate.Tags,
                 TypeDescription = cardTemplate.TypeDescription
             }))
+            .Concat(_otherOptions.Select(x => new Card(-1, ctx.Source, ctx.AllCards[x])))
             .ToArray();
         ctx.Selections.OnCardSelected = card => ctx.PlayerCardZones.HandZone.PutOnBottom(card);
     }

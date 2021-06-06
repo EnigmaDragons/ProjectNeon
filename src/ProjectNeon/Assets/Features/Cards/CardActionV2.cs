@@ -27,4 +27,15 @@ public class CardActionV2
     {
         battleEffect = e;
     }
+
+    public CardActionV2 Clone(EffectData dataToReplace) => new CardActionV2
+    {
+        type = type, 
+        battleEffect = dataToReplace, 
+        conditionData = conditionData,
+        characterAnimation = characterAnimation, 
+        atTargetAnimation = atTargetAnimation, 
+        enemyToSpawn = enemyToSpawn,
+        enemySpawnOffset = enemySpawnOffset
+    };
 }
