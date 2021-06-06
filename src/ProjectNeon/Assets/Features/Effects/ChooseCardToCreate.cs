@@ -17,11 +17,11 @@ public class ChooseCardToCreate : Effect
         var cardsToChoose = Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount));
         
         ctx.Selections.CardSelectionOptions = cardsToChoose >= _choiceCardIds.Length 
-            ? _choiceCardIds.Select(x => new Card(NextCardId.Get(), ctx.Source, ctx.AllCards[x])).ToArray()
+            ? _choiceCardIds.Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x])).ToArray()
             : _choiceCardIds
                 .Shuffled()
                 .Take(cardsToChoose)
-                .Select(x => new Card(NextCardId.Get(), ctx.Source, ctx.AllCards[x]))
+                .Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x]))
                 .ToArray();
         ctx.Selections.OnCardSelected = card => ctx.PlayerCardZones.HandZone.PutOnBottom(card);
     }

@@ -8,7 +8,7 @@
             if (card.Owner.Id != targetId)
             {
                 ctx.PlayerCardZones.HandZone.Remove(card);
-                ctx.PlayerCardZones.DiscardZone.PutOnTop(card);
+                ctx.PlayerCardZones.DiscardZone.PutOnBottom(card);
             }
         }
         while (!ctx.PlayerCardZones.HandZone.IsFull && ctx.PlayerCardZones.HandZone.Cards.Length < ctx.PlayerState.CardDraws)

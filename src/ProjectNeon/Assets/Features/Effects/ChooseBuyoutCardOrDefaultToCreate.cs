@@ -18,7 +18,7 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
         var cardTemplate = ctx.AllCards[_template];
         ctx.Selections.CardSelectionOptions = ctx.BattleMembers
             .Where(x => x.Value.TeamType == TeamType.Enemies && x.Value.IsConscious())
-            .Select(x => new Card(NextCardId.Get(), ctx.Source, new InMemoryCard()
+            .Select(x => new Card(ctx.GetNextCardId(), ctx.Source, new InMemoryCard()
                 {
                     Name = cardTemplate.Name,
                     Rarity = cardTemplate.Rarity,
@@ -39,7 +39,7 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
                     Tags = cardTemplate.Tags,
                     TypeDescription = cardTemplate.TypeDescription
                 }))
-            .Concat(_otherOptions.Select(x => new Card(NextCardId.Get(), ctx.Source, ctx.AllCards[x])))
+            .Concat(_otherOptions.Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x])))
             .ToArray();
         ctx.Selections.OnCardSelected = card => ctx.PlayerCardZones.HandZone.PutOnBottom(card);
     }
