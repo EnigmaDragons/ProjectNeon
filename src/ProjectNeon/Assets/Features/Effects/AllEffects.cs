@@ -83,6 +83,7 @@ public static class AllEffects
         { EffectType.FillHandWithOwnersCards, e => new FillHandWithOwnersCards() },
         { EffectType.DrawSelectedCard, e => new DrawSelectedCard(e.EffectScope) },
         { EffectType.ChooseCardToCreate, e => new ChooseCardToCreate(e.EffectScope, e.Formula) },
+        { EffectType.DrawCardOfArchetype, e => new DrawCardOfArchetype(e.EffectScope) },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

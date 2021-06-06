@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -180,6 +181,8 @@ public static class InterpolatedCardDescriptions
                        + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
         if (data.EffectType == EffectType.GainCredits)
             coreDesc = $"gives {Bold($"{data.BaseAmount} Creds")}";
+        if (data.EffectType == EffectType.DrawCardOfArchetype)
+            coreDesc = $"choose and draw {AOrAn(data.EffectScope)} {Bold(data.EffectScope.ToString().WithSpaceBetweenWords())} card";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 
@@ -198,6 +201,7 @@ public static class InterpolatedCardDescriptions
             : value;
     }
 
+    private static string AOrAn(string archetype) => "aeiouAEIOU".IndexOf(archetype[0]) >= 0 ? "an" : "a";
     private static string WithCommaIfPresent(string value) => string.IsNullOrWhiteSpace(value) ? "" : $"{value}, ";
     
     private static string GivesOrRemoves(string remainingEffectDesc) 

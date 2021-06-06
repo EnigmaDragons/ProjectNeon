@@ -56,6 +56,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.FillHandWithOwnersCards, new string[0]},
         {EffectType.DrawSelectedCard, new [] { "EffectScope" }},
         {EffectType.ChooseCardToCreate, new [] { "EffectScope", "Formula" }},
+        {EffectType.DrawCardOfArchetype, new [] { "EffectScope" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
