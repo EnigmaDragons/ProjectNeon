@@ -8,6 +8,7 @@ public sealed class LevelUpOptionPresenter : MonoBehaviour, IPointerDownHandler,
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Image button;
     [SerializeField] private Sprite hoverImg;
+    [SerializeField] private GameObject hasDetailPrompt;
 
     private Sprite _defaultImg;
     private HeroLevelUpOption _option;
@@ -19,6 +20,7 @@ public sealed class LevelUpOptionPresenter : MonoBehaviour, IPointerDownHandler,
     {
         _option = o;
         text.text = o.Description.Replace("\\n", "\n");
+        hasDetailPrompt.SetActive(o.HasDetail);
         return this;
     }
 
