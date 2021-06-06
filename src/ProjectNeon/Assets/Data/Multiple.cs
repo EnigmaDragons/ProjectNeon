@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 public class Multiple : Target
 {
     public Member[] Members { get; }
 
+    public Multiple(IEnumerable<Member> members)
+        : this(members.ToArray()) {}
+    
     public Multiple(Member[] members)
     {
         Members = members;

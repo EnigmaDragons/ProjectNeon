@@ -50,7 +50,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.Reload, new string[0]},
         {EffectType.DamageOverTimeFormula, new [] { "Formula", "DurationFormula" }},
-        {EffectType.ResolveInnerEffect, new [] { "ReferencedSequence" }},
+        {EffectType.ResolveInnerEffect, new [] { "ReTargetScope", "ReferencedSequence" }},
         {EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, new [] { "BaseAmount" }},
         {EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, new [] { "FloatAmount", "DurationFormula" }},
         {EffectType.FillHandWithOwnersCards, new string[0]},

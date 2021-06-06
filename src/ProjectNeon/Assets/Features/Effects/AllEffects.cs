@@ -116,13 +116,10 @@ public static class AllEffects
                              : effectData.TurnDelay == 1
                                 ? " at the start of next turn" 
                                 : $" in {effectData.TurnDelay} turns";
-            var targets = effectData.TargetsSource ? ctx.Source.Name : ctx.Target.MembersDescriptions();
-            DevLog.Write($"Applying Effect of {effectData.EffectType} to {targets}{whenClause}");
+            
+            var updatedContext = AutoRetargeted(effectData, ctx, whenClause);
             if (effectData.TurnDelay > 0)
                 BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
-            var updateTarget = effectData.TargetsSource ? new Single(ctx.Source) : ctx.Target;
-            var updatedContext = ctx.Retargeted(ctx.Source, updateTarget);
-
             var shouldNotApplyReason = effectData.Condition().GetShouldNotApplyReason(updatedContext);
             if (shouldNotApplyReason.IsPresent)
                 DevLog.Write($"Did not apply {effectData.EffectType} because {shouldNotApplyReason.Value}");
@@ -136,6 +133,25 @@ public static class AllEffects
             throw;
             #endif
         }
+    }
+
+    private static EffectContext AutoRetargeted(EffectData effectData, EffectContext ctx, string whenClause)
+    {
+        var retargetScope = effectData.TargetsSource ? AutoReTargetScope.Source : effectData.ReTargetScope;
+        var updateTarget = retargetScope switch
+            {
+                AutoReTargetScope.None => ctx.Target,
+                AutoReTargetScope.Source => new Single(ctx.Source),
+                AutoReTargetScope.Everyone => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious())),
+                AutoReTargetScope.AllAllies => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType)),
+                AutoReTargetScope.RandomAlly => new Single(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType).Random()),
+                AutoReTargetScope.AllEnemies => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType)),
+                AutoReTargetScope.RandomEnemy => new Single(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType).Random()),
+            };
+
+        var targetsDesc = retargetScope == AutoReTargetScope.Source ? ctx.Source.Name : ctx.Target.MembersDescriptions();
+        DevLog.Write($"Applying Effect of {effectData.EffectType} to {targetsDesc}{whenClause}");
+        return ctx.Retargeted(ctx.Source, updateTarget);
     }
 
     public static Effect Create(EffectData effectData)
