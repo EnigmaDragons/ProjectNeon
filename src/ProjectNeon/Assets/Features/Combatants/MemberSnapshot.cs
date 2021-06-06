@@ -30,4 +30,5 @@ public static class MemberSnapshotExtensions
     public static bool IsUnconscious(this MemberSnapshot m) => m.State.Hp < 1;
     public static bool IsConscious(this MemberSnapshot m) => !IsUnconscious(m);
     public static bool IsBloodied(this MemberSnapshot m) => m.State.Hp <= m.State.MaxHp / 2;
+    public static bool IsStealthed(this MemberSnapshot m) => m.State[TemporalStatType.Stealth] > 0;
 }
