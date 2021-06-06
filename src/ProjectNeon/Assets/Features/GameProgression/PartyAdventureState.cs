@@ -81,9 +81,9 @@ public sealed class PartyAdventureState : ScriptableObject
         throw new KeyNotFoundException($"Hero {hero.Name} not found in Party");
     }
     public void UpdateDecks(Deck one, Deck two, Deck three) 
-        => UpdateDecks(one.Cards, two.Cards, three.Cards);
+        => UpdateDecks(one.CardTypes, two.CardTypes, three.CardTypes);
 
-    public void UpdateDecks(params List<CardType>[] decks) =>
+    public void UpdateDecks(params List<CardTypeData>[] decks) =>
         UpdateState(() =>
         {
             heroes[0].SetDeck(CreateDeck(decks[0]));
@@ -93,7 +93,7 @@ public sealed class PartyAdventureState : ScriptableObject
                 heroes[2]?.SetDeck(CreateDeck(decks[2]));
         });
 
-    public void Add(params CardType[] c) => UpdateState(() => Cards.Add(c));
+    public void Add(params CardTypeData[] c) => UpdateState(() => Cards.Add(c));
     public void Add(params Equipment[] e) => UpdateState(() => equipment.Add(e));
     public void EquipTo(Equipment e, Hero h) => UpdateState(() =>
     {
@@ -109,8 +109,8 @@ public sealed class PartyAdventureState : ScriptableObject
         DevLog.Info($"Equipment - Unequipped {e.Name} from {h.Name}. Available: {equipment.Available.Count}. Equipped: {equipment.Equipped.Count}");
     });
 
-    private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.Cards);
-    private RuntimeDeck CreateDeck(List<CardType> cards) => new RuntimeDeck { Cards = cards };
+    private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.CardTypes);
+    private RuntimeDeck CreateDeck(List<CardTypeData> cards) => new RuntimeDeck { Cards = cards };
 
     private void UpdateState(Action update)
     {

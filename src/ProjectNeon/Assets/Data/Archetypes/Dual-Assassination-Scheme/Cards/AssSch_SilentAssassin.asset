@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Scheme_Trap
+  m_Name: AssSch_SilentAssassin
   m_EditorClassIdentifier: 
-  id: 127
+  id: 346
   customName: 
-  art: {fileID: 21300000, guid: 3b107cec57906ff46a973dffe36bf358, type: 3}
-  description: '{auto}'
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 04000000
+  art: {fileID: 21300000, guid: 756f95f9440a9ff47aacf87f5a4d30e4, type: 3}
+  description: 'Applies {E[0]} next turn. Enter <b>Stealth</b>. Gain <b>Double Damage</b>. '
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  tags: 
   speed: 0
   isSinglePlay: 0
   cost:
@@ -28,20 +28,26 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 4
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: a8b13a34708bd66448bb4fe9b34cfd02, type: 2}
+    cardActions: {fileID: 11400000, guid: 48ffd06f88a8ae24c92236977f5db3b0, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 11400000, guid: c1d7c88b2bacdb641881c2a87450f284, type: 2}
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 8b64a9ba285ab93498fc4be333016489, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
+  - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
-  highlightCondition:
-  - {fileID: 11400000, guid: 2eeb2268469a74b4a9d34016563badca, type: 2}
-  unhighlightCondition: []
+  highlightCondition: []
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 4789d19598838464e801c47edc10315a, type: 2}
   isWIP: 0

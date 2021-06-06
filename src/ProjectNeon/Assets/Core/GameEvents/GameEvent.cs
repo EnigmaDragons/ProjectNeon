@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Runtime.Serialization;
 
 [CreateAssetMenu(fileName = "New Game Event", menuName = "Game Event")]
 [Obsolete] 
@@ -18,4 +19,14 @@ public class GameEvent : ScriptableObject
     public void Unsubscribe(object owner) => listeners = CleansedListeners.Where(l => !ReferenceEquals(l.Owner, owner));
 
     private IEnumerable<GameEventSubscription> CleansedListeners => listeners.Where(x => x.Owner != null);
+    
+    public static GameEvent InMemory
+    {
+        get
+        {
+            var e = (GameEvent) FormatterServices.GetUninitializedObject(typeof(GameEvent));
+            e.listeners = Array.Empty<GameEventSubscription>();
+            return e;
+        }
+    }
 }

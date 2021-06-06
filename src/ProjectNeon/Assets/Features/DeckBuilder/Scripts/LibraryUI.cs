@@ -30,8 +30,8 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
             .OrderBy(c => c.Key.Archetypes.None() ? 999 : 0)
             .ToList();
         if ((state.ShowRarities.None() || state.ShowRarities.Contains(Rarity.Basic))
-            && (state.ShowArchetypes.None() || state.ShowArchetypes.Contains(_selectedHero.ClassCard.ArchetypeKey)))
-                cardsForHero.Insert(0, new KeyValuePair<CardType, int>(_selectedHero.ClassCard, 0));
+            && (state.ShowArchetypes.None() || state.ShowArchetypes.Contains(_selectedHero.ClassCard.GetArchetypeKey())))
+                cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(_selectedHero.ClassCard, 0));
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
             c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card == c.Key))));
         pageViewer.Init(
@@ -44,12 +44,12 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
             !heroChanged);
     }
 
-    private Action<GameObject> InitCardInLibraryButton(CardType card, int numTotal, int numAvailable)
+    private Action<GameObject> InitCardInLibraryButton(CardTypeData card, int numTotal, int numAvailable)
     {
         void Init(GameObject gameObj)
         {
             var button = gameObj.GetComponent<CardInLibraryButton>();
-                if (card == _selectedHero.ClassCard)
+                if (card.Equals(_selectedHero.ClassCard))
                     button.InitBasic(card);
                 else
                     button.Init(card, numTotal, numAvailable);

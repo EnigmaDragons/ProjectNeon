@@ -1,7 +1,7 @@
 
 public class ShowCardReward
 {
-    public CardType Card { get; }
+    public CardTypeData Card { get; }
 
-    public ShowCardReward(CardType c) => Card = c;
+    public ShowCardReward(CardTypeData c) => Card = c;
 }

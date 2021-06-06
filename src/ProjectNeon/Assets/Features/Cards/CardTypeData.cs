@@ -27,7 +27,10 @@ public static class CardTypeDataExtensions
     public static bool Is(this CardTypeData c, params CardTag[] tags) => tags.All(tag => c.Tags.Contains(tag));
 
     public static CardActionsData[] Actions(this CardTypeData c) => c.ActionSequences.Select(a => a.CardActions).ToArray();
-    public static string ArchetypeDescription(this CardTypeData c) => c.Archetypes.None() ? "General" : string.Join(" - ", c.Archetypes.OrderBy(a => a));
+    public static string ArchetypeDescription(this CardTypeData c) => c.Archetypes.None() 
+        ? "General" 
+        : string.Join(" - ", c.Archetypes.OrderBy(a => a).Select(a => a.WithSpaceBetweenWords()));
+    public static string GetArchetypeKey(this CardTypeData c) => string.Join(" + ", c.Archetypes.OrderBy(a => a));
     
     public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c, Maybe<Color>.Missing());
     public static Card CreateInstance(this CardTypeData c, int id, Member owner, Maybe<Color> tint) => new Card(id, owner, c, tint);

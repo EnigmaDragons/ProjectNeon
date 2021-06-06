@@ -4,10 +4,10 @@ using System.Linq;
 
 public class GetUserSelectedCard
 {
-    public CardType[] Options { get; }
-    public Action<Maybe<CardType>> OnSelected { get; }
+    public CardTypeData[] Options { get; }
+    public Action<Maybe<CardTypeData>> OnSelected { get; }
 
-    public GetUserSelectedCard(IEnumerable<CardType> options, Action<Maybe<CardType>> onSelected)
+    public GetUserSelectedCard(IEnumerable<CardTypeData> options, Action<Maybe<CardTypeData>> onSelected)
     {
         Options = options.ToArray();
         OnSelected = onSelected;

@@ -37,21 +37,21 @@ public class ShopCardPoolTests
     {
         var cards = _cardPool.Get(new HashSet<string>()).ToArray();
         Assert.AreEqual(6, cards.Length);
-        Assert.Contains(_starterArchetype1, cards);
-        Assert.Contains(_commonArchetype2, cards);
-        Assert.Contains(_uncommonArchetype2, cards);
-        Assert.Contains(_rareNeutral, cards);
-        Assert.Contains(_epicArchetype1And2, cards);
-        Assert.Contains(_rareArchetype3, cards);
+        AssertSafeContains(_starterArchetype1, cards);
+        AssertSafeContains(_commonArchetype2, cards);
+        AssertSafeContains(_uncommonArchetype2, cards);
+        AssertSafeContains(_rareNeutral, cards);
+        AssertSafeContains(_epicArchetype1And2, cards);
+        AssertSafeContains(_rareArchetype3, cards);
     }
-
+    
     [Test]
     public void SpecifiedArchetype_ReturnsListWithThatArchetypeAndNeutralCard()
     {
         var cards = _cardPool.Get(new HashSet<string> {_archetype1}).ToArray();
         Assert.AreEqual(2, cards.Length);
-        Assert.Contains(_starterArchetype1, cards);
-        Assert.Contains(_rareNeutral, cards);
+        AssertSafeContains(_starterArchetype1, cards);
+        AssertSafeContains(_rareNeutral, cards);
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class ShopCardPoolTests
     {
         var cards = _cardPool.Get(new HashSet<string>(), Rarity.Starter).ToArray();
         Assert.AreEqual(1, cards.Length);
-        Assert.Contains(_starterArchetype1, cards);
+        AssertSafeContains(_starterArchetype1, cards);
     }
 
     [Test]
@@ -67,7 +67,7 @@ public class ShopCardPoolTests
     {
         var cards = _cardPool.Get(new HashSet<string>(), Rarity.Common).ToArray();
         Assert.AreEqual(1, cards.Length);
-        Assert.Contains(_commonArchetype2, cards);
+        AssertSafeContains(_commonArchetype2, cards);
     }
 
     [Test]
@@ -75,10 +75,15 @@ public class ShopCardPoolTests
     {
         var cards = _cardPool.Get(new HashSet<string> {_archetype1, _archetype2}).ToArray();
         Assert.AreEqual(5, cards.Length);
-        Assert.Contains(_starterArchetype1, cards);
-        Assert.Contains(_commonArchetype2, cards);
-        Assert.Contains(_uncommonArchetype2, cards);
-        Assert.Contains(_rareNeutral, cards);
-        Assert.Contains(_epicArchetype1And2, cards);
+        AssertSafeContains(_starterArchetype1, cards);
+        AssertSafeContains(_commonArchetype2, cards);
+        AssertSafeContains(_uncommonArchetype2, cards);
+        AssertSafeContains(_rareNeutral, cards);
+        AssertSafeContains(_epicArchetype1And2, cards);
+    }
+    
+    private void AssertSafeContains<T>(T item, ICollection<T> collection)
+    {
+        Assert.IsTrue(collection.Any(x => ReferenceEquals(x, item)));
     }
 }

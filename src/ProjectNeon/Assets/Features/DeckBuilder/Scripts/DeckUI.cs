@@ -35,7 +35,7 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
             false);
     }
 
-    private Action<GameObject> InitCardInDeckButton(CardType card)
+    private Action<GameObject> InitCardInDeckButton(CardTypeData card)
     {
         Action<GameObject> init = gameObj =>
         {

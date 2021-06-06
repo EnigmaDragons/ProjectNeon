@@ -11,7 +11,7 @@ public class ProposedReaction
     
     public ProposedReaction(ReactionCardType a, Member source, Target target)
     {
-        ReactionCard = a;
+        ReactionCard = Maybe<ReactionCardType>.Present(a);
         Source = source;
         Target = target;
         ReactionSequence = a.ActionSequence;

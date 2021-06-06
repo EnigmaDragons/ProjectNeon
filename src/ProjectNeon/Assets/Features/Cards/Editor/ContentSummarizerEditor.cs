@@ -20,7 +20,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         {
             var result = GetAllInstances<CardType>()
                 .Where(c => !c.IsWip)
-                .GroupBy(x => x.ArchetypeKey)
+                .GroupBy(x => x.GetArchetypeKey())
                 .ToDictionary(
                     x => x.Key, // By Archetype 
                     x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
@@ -41,7 +41,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         {
             var result = GetAllInstances<CardType>()
                 .Where(c => !c.IsWip)
-                .GroupBy(x => x.ArchetypeKey)
+                .GroupBy(x => x.GetArchetypeKey())
                 .ToDictionary(
                     x => x.Key, // By Archetype 
                     x => x.GroupBy(g => (g.Cost.ToString(), g.Cost.BaseAmount)).OrderBy(r => r.Key.BaseAmount) // By Cost
@@ -61,7 +61,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         if (GUILayout.Button("Cards By Type"))
         {
             var result = GetAllInstances<CardType>()
-                .GroupBy(x => x.ArchetypeKey)
+                .GroupBy(x => x.GetArchetypeKey())
                 .ToDictionary(
                     x => x.Key, // By Archetype 
                     x => x.GroupBy(g => g.TypeDescription).OrderBy(r => r.Key) // By Type
@@ -90,8 +90,8 @@ public sealed class ContentSummarizerEditor : EditorWindow
             
             var archetypeKeys = hero.ArchetypeKeys;
             var cards = GetAllInstances<CardType>()
-                .Where(c => !c.IsWip && archetypeKeys.Contains(c.ArchetypeKey))
-                .GroupBy(c => c.ArchetypeKey)
+                .Where(c => !c.IsWip && archetypeKeys.Contains(c.GetArchetypeKey()))
+                .GroupBy(c => c.GetArchetypeKey())
                 .ToDictionary(
                     x => x.Key, // By Archetype 
                     x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity

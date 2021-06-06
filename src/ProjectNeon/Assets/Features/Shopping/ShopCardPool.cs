@@ -15,9 +15,9 @@ public class ShopCardPool : ScriptableObject
     private string[] _archetypes;
     private string[] Archetypes => _archetypes ??= archetypes.Select(x => x.Value).ToArray();
 
-    public IEnumerable<CardType> All => subPools.SelectMany(s => s.All).Concat(allCards);
+    public IEnumerable<CardTypeData> All => subPools.SelectMany(s => s.All).Concat(allCards);
 
-    public IEnumerable<CardType> Get(HashSet<string> includedArchetypes, params Rarity[] includedRarities)
+    public IEnumerable<CardTypeData> Get(HashSet<string> includedArchetypes, params Rarity[] includedRarities)
     {
         var isSelectedPool = includedArchetypes.None() || Archetypes.All(includedArchetypes.Contains);
         if (isSelectedPool && (includedRarities == this.includedRarities || includedRarities.None()))

@@ -70,9 +70,9 @@ public class CardPlayZone : ScriptableObject
     {
         get
         {
-            var zone = (CardPlayZone) FormatterServices.GetUninitializedObject(typeof(CardPlayZone));
+            var zone = (CardPlayZone)FormatterServices.GetUninitializedObject(typeof(CardPlayZone));
             zone.maxCards = new IntReference(99);
-            zone.onZoneCardsChanged = new GameEvent();
+            zone.onZoneCardsChanged = GameEvent.InMemory;
             return zone;
         }
     }

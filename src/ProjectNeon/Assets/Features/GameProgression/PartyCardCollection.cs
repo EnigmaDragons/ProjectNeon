@@ -5,15 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "OnlyOnce/PartyCardCollection")]
 public sealed class PartyCardCollection : ScriptableObject
 {
-    [SerializeField] private List<CardType> allCards = new List<CardType>();
+    [SerializeField] private List<CardTypeData> allCards = new List<CardTypeData>();
 
-    private Dictionary<CardType, int> cardsWithCounts = new Dictionary<CardType, int>();
+    private Dictionary<CardTypeData, int> cardsWithCounts = new Dictionary<CardTypeData, int>();
 
-    public Dictionary<CardType, int> AllCards => cardsWithCounts;
+    public Dictionary<CardTypeData, int> AllCards => cardsWithCounts;
     
-    public PartyCardCollection Initialized(IEnumerable<CardType> cards)
+    public PartyCardCollection Initialized(IEnumerable<CardTypeData> cards)
     {
-        allCards = new List<CardType>();
+        allCards = new List<CardTypeData>();
         allCards.AddRange(cards);
         cardsWithCounts = allCards
             .GroupBy(c => c.Name)
@@ -21,7 +21,7 @@ public sealed class PartyCardCollection : ScriptableObject
         return this;
     }
 
-    public void Add(params CardType[] cards)
+    public void Add(params CardTypeData[] cards)
     {
         cards.ForEach(c =>
         {
@@ -32,7 +32,7 @@ public sealed class PartyCardCollection : ScriptableObject
         });
     }
 
-    public void Add(CardType card, int count)
+    public void Add(CardTypeData card, int count)
     {
         allCards.Add(card);
         if (!cardsWithCounts.ContainsKey(card))
@@ -40,7 +40,7 @@ public sealed class PartyCardCollection : ScriptableObject
         cardsWithCounts[card] = cardsWithCounts[card] + count;
     }
 
-    public void EnsureHasAtLeast(CardType c, int numCopies)
+    public void EnsureHasAtLeast(CardTypeData c, int numCopies)
     {
         var amount = cardsWithCounts.ContainsKey(c) ? cardsWithCounts[c] : 0;
         var numAdditionalNeeded = numCopies - amount;

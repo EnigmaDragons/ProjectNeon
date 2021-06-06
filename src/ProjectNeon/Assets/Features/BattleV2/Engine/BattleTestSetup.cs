@@ -50,7 +50,7 @@ public class BattleTestSetup : MonoBehaviour
     {
         setup.InitParty(hero1, hero2, hero3);
         if (hero1Deck != null)
-            setup.InitPartyDecks(hero1Deck.Cards, hero2Deck.Cards, hero3Deck.Cards);
+            setup.InitPartyDecks(hero1Deck.CardTypes, hero2Deck.CardTypes, hero3Deck.CardTypes);
         setup.InitPartyEquipment(hero1Equipment, hero2Equipment, hero3Equipment);
     }
 
@@ -87,7 +87,7 @@ public class BattleTestSetup : MonoBehaviour
     {
         var hero = allHeroes.First(h => cards.First().Archetypes.All(h.Archetypes.Contains));
         setup.InitParty(hero, hero2, hero3);
-        setup.InitPartyDecks(Enumerable.Range(0, 12).Select(i => cards[i % cards.Length]).ToList(), new List<CardType>(), new List<CardType>());
+        setup.InitPartyDecks(Enumerable.Range(0, 12).Select(i => cards[i % cards.Length]).Cast<CardTypeData>().ToList(), new List<CardTypeData>(), new List<CardTypeData>());
         var equipment = hero.Name.Equals(hero1.Name) 
             ? hero1Equipment : hero.Name.Equals(hero2.Name) 
             ? hero2Equipment : hero.Name.Equals(hero3.Name) 

@@ -15,7 +15,7 @@ public class ShopSelectionPicker
         this.party = party;
     }
     
-    public CardType[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
+    public CardTypeData[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
     {
         var weightedCards = party.BaseHeroes.SelectMany(h => cards.Get(h.Archetypes, rarities))
             .Distinct()
@@ -23,7 +23,7 @@ public class ShopSelectionPicker
             .ToArray()
             .Shuffled();
 
-        var selectedCards = new HashSet<CardType>();
+        var selectedCards = new HashSet<CardTypeData>();
         for (var i = 0; i < weightedCards.Length && selectedCards.Count < numCards; i++)
             selectedCards.Add(weightedCards[i]);
         
@@ -52,7 +52,7 @@ public class ShopSelectionPicker
 
     public ShopSelection GenerateCardSelection(ShopCardPool cards, int numCards)
     {
-        CardType[] selectedCards;
+        CardTypeData[] selectedCards;
         if (stage > 1)
         {
             selectedCards = PickCards(cards, 2, Rarity.Rare, Rarity.Epic)
@@ -93,7 +93,7 @@ public class ShopSelectionPicker
                 .Shuffled();
         }
 
-        return new ShopSelection(selectedEquipment.ToList(), new List<CardType>());
+        return new ShopSelection(selectedEquipment.ToList(), new List<CardTypeData>());
     }
 
     [Obsolete("V1 Shops")]
