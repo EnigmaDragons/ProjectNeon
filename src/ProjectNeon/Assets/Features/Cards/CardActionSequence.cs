@@ -34,4 +34,7 @@ public class CardActionSequence
         var c = new CardActionSequence {cardActions = d};
         return c;
     }
+
+    public CardActionSequence CloneForBuyout(EffectData buyoutData) =>
+        CardActionSequence.Create(scope, @group, cardActions.CloneForBuyout(buyoutData), repeatX);
 }
