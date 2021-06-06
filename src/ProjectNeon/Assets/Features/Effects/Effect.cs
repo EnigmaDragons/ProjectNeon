@@ -22,10 +22,12 @@ public class EffectContext
     public PreventionContext Preventions { get; }
     public SelectionContext Selections { get; }
     public Dictionary<int, CardTypeData> AllCards { get; }
+    public int StartingCredits { get; }
+    public int CurrentCredits { get; }
 
     public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, 
         PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones, PreventionContext preventions, 
-        SelectionContext selections, Dictionary<int, CardTypeData> allCards)
+        SelectionContext selections, Dictionary<int, CardTypeData> allCards, int startingCredits, int currentCredits)
     {
         Source = source;
         SourceSnapshot = source.GetSnapshot();
@@ -40,6 +42,8 @@ public class EffectContext
         Preventions = preventions;
         Selections = selections;
         AllCards = allCards;
+        StartingCredits = startingCredits;
+        CurrentCredits = currentCredits;
         if (XPaidAmount == null)
         {
             Log.Error("XPaidAmount is null");
@@ -50,11 +54,11 @@ public class EffectContext
     }
     
     public EffectContext Retargeted(Member source, Target target) 
-        => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, PlayerCardZones, Preventions, Selections, AllCards);
+        => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, PlayerCardZones, Preventions, Selections, AllCards, StartingCredits, CurrentCredits);
 
     public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)
         => new EffectContext(source, target, card, xPaidAmount, PartyAdventureState.InMemory(), new PlayerState(), 
-            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions, new SelectionContext(), new Dictionary<int, CardTypeData>());
+            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions, new SelectionContext(), new Dictionary<int, CardTypeData>(), 0, 0);
 }
 
 public static class EffectExtensions
@@ -64,7 +68,7 @@ public static class EffectExtensions
 
     private static void ApplyForTests(this Effect effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid) 
         => effect.Apply(new EffectContext(source, target, card, xAmountPaid, PartyAdventureState.InMemory(), new PlayerState(0), 
-            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, new PreventionContextMut(target), new SelectionContext(), new Dictionary<int, CardTypeData>()));
+            target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, new PreventionContextMut(target), new SelectionContext(), new Dictionary<int, CardTypeData>(), 0, 0));
 }
 
 public sealed class NoEffect : Effect
