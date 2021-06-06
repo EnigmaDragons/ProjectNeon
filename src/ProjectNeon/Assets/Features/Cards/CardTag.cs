@@ -41,4 +41,5 @@ public enum CardTag
     SelfOnly = 38,
     Glitch = 39,
     Igniting = 40,
+    CredAdjust = 41,
 }
