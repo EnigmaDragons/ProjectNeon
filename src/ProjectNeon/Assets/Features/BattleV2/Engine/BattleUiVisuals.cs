@@ -63,7 +63,6 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
 
     private void RefreshHandVisibility()
     {
-        hand.SetActive(battleState.Phase == BattleV2Phase.PlayCards && 
-                       (battleState.NumberOfCardPlaysRemainingThisTurn > 0 || battleState.NumberOfRecyclesRemainingThisTurn > 0));
+        hand.SetActive(battleState.Phase == BattleV2Phase.PlayCards && battleState.HasMorePlaysAvailableThisTurn);
     }
 }

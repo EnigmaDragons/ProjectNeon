@@ -59,7 +59,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         else
             Message.Publish(new PlayerTurnConfirmationAborted());
         
-        if (battleState.NumberOfCardPlaysRemainingThisTurn <= 0 && battleState.NumberOfRecyclesRemainingThisTurn <= 0)
+        if (!battleState.HasMorePlaysAvailableThisTurn)
             Confirm();
     }
 
