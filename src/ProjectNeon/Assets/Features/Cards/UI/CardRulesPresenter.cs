@@ -30,12 +30,16 @@ public class CardRulesPresenter : MonoBehaviour
             var rulesToShow = new List<string>();
             rulesToShow.AddIf("X-Cost", d.Cost.PlusXCost);
             rulesToShow.AddIf("Chain", d.ChainedCard.IsPresent);
+            rulesToShow.AddIf("Swap", d.SwappedCard.IsPresent);
             rulesToShow.AddIf("Quick", d.Speed == CardSpeed.Quick);
             rulesToShow.AddIf("Afflicted", d.Conditions().Any(x => x.ConditionType == ActionConditionType.TargetHasDamageOverTime) 
                                            || d.Description.IndexOf("Afflict", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("Bloodied", d.Description.IndexOf("Bloodied", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("Bloodied", d.Description.IndexOf("Bloody", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("Sneaky", d.Description.IndexOf("Sneaky", StringComparison.OrdinalIgnoreCase) >= 0);
+            rulesToShow.AddIf("Profitable", d.Description.IndexOf("profitable", StringComparison.OrdinalIgnoreCase) >= 0);
+            rulesToShow.AddIf("SingleUse", d.IsSinglePlay);
+            rulesToShow.AddIf("Buyout", d.Description.IndexOf("Buyout", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf(TemporalStatType.Marked.ToString(), d.Description.IndexOf("Mark", StringComparison.OrdinalIgnoreCase) >= 0);
 
             var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());

@@ -379,7 +379,7 @@ public static class InterpolatedCardDescriptions
         { StatType.Magic.ToString(), "MAG" },
         { StatType.Armor.ToString(), "ARM" },
         { StatType.Toughness.ToString(), "TGH" },
-        { StatType.Economy.ToString(), "ECON" },
+        { StatType.Economy.ToString(), "EC" },
     };
 
     private static Dictionary<string, string> TemporalStatFriendlyNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
