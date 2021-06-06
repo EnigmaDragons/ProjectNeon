@@ -15,8 +15,7 @@ public class ChooseCardToDrawTests
         var cardPlayZones = CardPlayZones.InMemory;
         cardPlayZones.TestInit();
         var context = EffectContext.ForTests(TestMembers.Any(), new Single(TestMembers.Any()), cardPlayZones, allCards);
-        NextCardId.Reset();
-        
+
         AllEffects.Apply(new EffectData
         {
             EffectType = EffectType.ChooseCardToCreate,
@@ -26,7 +25,6 @@ public class ChooseCardToDrawTests
 
         Assert.AreEqual(context.Selections.CardSelectionOptions.Length, 2);
         Assert.NotNull(context.Selections.OnCardSelected);
-        Assert.AreEqual(2, NextCardId.Get());
 
         context.Selections.OnCardSelected(context.Selections.CardSelectionOptions[0]);
 

@@ -19,9 +19,8 @@ public class ChooseBuyoutCardOrDefaultToCreateTests
         var allCards = new Dictionary<int, CardTypeData> { { 1, templateCard }, { 2, defaultCard } };
         var effectContext = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(), ResourceQuantity.None, 
             PartyAdventureState.InMemory(), new PlayerState(), battleMembers, CardPlayZones.InMemory, new UnpreventableContext(),
-            new SelectionContext(), allCards, 0, 0, enemies);
-        NextCardId.Reset();
-        
+            new SelectionContext(), allCards, 0, 0, enemies, () => 0);
+
         AllEffects.Apply(new EffectData
         {
             EffectType = EffectType.ChooseBuyoutCardsOrDefault,
@@ -37,6 +36,5 @@ public class ChooseBuyoutCardOrDefaultToCreateTests
             && x.ActionSequences[0].cardActions.Actions[0].BattleEffect.EffectType == EffectType.BuyoutEnemyById 
             && x.ActionSequences[0].cardActions.Actions[0].BattleEffect.EffectScope.Value == "2"));
         Assert.NotNull(effectContext.Selections.OnCardSelected);
-        Assert.AreEqual(3, NextCardId.Get());
     }
 }
