@@ -12,5 +12,7 @@ public sealed class UiSfxPlayer : ScriptableObject
     {
         if (source != null)
             source.PlayOneShot(c, volume);
+        else
+            Log.Error("Tried to play a Null UI Sound Effect");
     }
 }
