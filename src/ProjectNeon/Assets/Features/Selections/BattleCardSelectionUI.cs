@@ -12,6 +12,8 @@ public class BattleCardSelectionUI : OnMessage<PresentCardSelection>
     private Action<Card> _onSelected = _ => { };
     private void ClearView() => optionsParent.DestroyAllChildren();
 
+    private void Awake() => view.SetActive(false);
+    
     protected override void Execute(PresentCardSelection msg)
     {
         _hasSelected = false;
