@@ -1,6 +1,4 @@
 
-using UnityEngine;
-
 public class MouseHoverStatusIcon
 {
     private Maybe<WorldStatusIconPresenter> _last = Maybe<WorldStatusIconPresenter>.Missing();
@@ -17,6 +15,7 @@ public class MouseHoverStatusIcon
         }
         else if (icon.IsMissing)
         {
+            _last.IfPresent(l => l.HideTooltip());
             _last = Maybe<WorldStatusIconPresenter>.Missing();
             Message.Publish(new HideTooltip());
         }

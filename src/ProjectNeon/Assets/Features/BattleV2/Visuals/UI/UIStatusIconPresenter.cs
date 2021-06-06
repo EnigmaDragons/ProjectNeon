@@ -1,4 +1,3 @@
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,6 +10,7 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
 
     private Vector3 _originalScale;
     private string _tooltip = "";
+    private Maybe<int> _originator = Maybe<int>.Missing();
 
     private void Awake()
     {
@@ -23,6 +23,7 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
         label.text = s.Text;
         gameObject.SetActive(true);
         _tooltip = s.Tooltip;
+        _originator = s.OriginatorId;
         if (s.IsChanged)
         {
             Message.Publish(new TweenMovementRequested(transform, new Vector3(0.56f, 0.56f, 0.56f), 1, MovementDimension.Scale));
@@ -30,6 +31,15 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new ShowTooltip(_tooltip));
-    public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Message.Publish(new ShowTooltip(_tooltip));
+        _originator.IfPresent(id => Message.Publish(new ActivateMemberHighlight(id, MemberHighlightType.StatusOriginator, true)));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Message.Publish(new HideTooltip());
+        _originator.IfPresent(id => Message.Publish(new DeactivateMemberHighlight(id, MemberHighlightType.StatusOriginator)));
+    }
 }
