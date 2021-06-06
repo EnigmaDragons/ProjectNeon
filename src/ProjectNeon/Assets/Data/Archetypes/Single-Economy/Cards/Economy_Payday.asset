@@ -10,33 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Economy_Microtransaction
+  m_Name: Economy_Payday
   m_EditorClassIdentifier: 
-  id: 65
-  customName: Micro Transaction
-  art: {fileID: 21300000, guid: ecc2b0d29cfe74347abea63db4be2561, type: 3}
-  description: '{auto}'
+  id: 0
+  customName: 
+  art: {fileID: 21300000, guid: cfd5b570c6d44f84c96d35c52975ade8, type: 3}
+  description: 'Gives {E[0]}
+
+    Gives <b>10 Creds</b>
+
+    <b>Swap:</b> Blackmail'
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 15
+    cost: 0
     resourceType: {fileID: 11400000, guid: 6b5b53513be79104389fa0628a71e30d, type: 2}
     plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 6b5b53513be79104389fa0628a71e30d, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 3
   actionSequences:
+  - scope: 1
+    group: 2
+    cardActions: {fileID: 11400000, guid: e7b34a46148b5a34280aef91b2b98ba3, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
-    cardActions: {fileID: 11400000, guid: ed19bb82a47e95d4aa58f41bffb7b648, type: 2}
+    cardActions: {fileID: 11400000, guid: 18569a87af79ead46ad5788e20820bed, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
-  swappedCard: {fileID: 11400000, guid: d09b59b37c17c25429f3e71bd0ce4361, type: 2}
+  swappedCard: {fileID: 11400000, guid: 9bced3baef9d75247ad09da33c636d4c, type: 2}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
