@@ -34,7 +34,7 @@ public class CardTypeEditor : Editor
         highlightCondition = serializedObject.FindProperty("highlightCondition");
         unhighlightCondition = serializedObject.FindProperty("unhighlightCondition");
         isSinglePlay = serializedObject.FindProperty("isSinglePlay");
-        id = serializedObject.FindProperty("Id");
+        id = serializedObject.FindProperty("id");
     }
 
     public override void OnInspectorGUI()

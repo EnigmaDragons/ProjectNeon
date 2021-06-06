@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Card")]
 public class CardType : ScriptableObject, CardTypeData
 {
-    [SerializeField, ReadOnly] public int Id;
+    [SerializeField, ReadOnly] public int id;
     [SerializeField] private string customName;
     [PreviewSprite] [SerializeField] private Sprite art;
     [SerializeField] [TextArea(1, 12)] public string description;

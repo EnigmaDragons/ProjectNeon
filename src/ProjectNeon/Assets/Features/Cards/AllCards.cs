@@ -6,7 +6,7 @@ using UnityEngine;
 public class AllCards : ScriptableObject
 {
     private Dictionary<int, CardTypeData> _map;
-    [UnityEngine.UI.Extensions.ReadOnly] public CardType[] Cards;
+    [UnityEngine.UI.Extensions.ReadOnly] public CardType[] Cards; //Unity Collection Readonly
 
-    public Dictionary<int, CardTypeData> GetMap() => _map ??= Cards.ToDictionary(x => x.Id, x => (CardTypeData)x);
+    public Dictionary<int, CardTypeData> GetMap() => _map ??= Cards.ToDictionary(x => x.id, x => (CardTypeData)x);
 }

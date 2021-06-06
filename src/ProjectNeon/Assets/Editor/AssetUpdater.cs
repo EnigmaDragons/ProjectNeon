@@ -61,13 +61,13 @@ public class AssetUpdater
     {
         var cards = ScriptableExtensions.GetAllInstances<CardType>();
         var map = Enumerable.Range(0, cards.Length + 1).ToDictionary(x => x, x => new List<CardType>());
-        cards.ForEach(x => map[x.Id].Add(x));
+        cards.ForEach(x => map[x.id].Add(x));
         for (int i = 1; i < map.Count; i++)
         {
             while (map[i].Count > 1)
             {
                 var card = map[i][0];
-                card.Id = 0;
+                card.id = 0;
                 map[i].Remove(card);
             }
         }
@@ -76,7 +76,7 @@ public class AssetUpdater
             if (map[i].Count == 0)
             {
                 var card = map[0][0];
-                card.Id = i;
+                card.id = i;
                 EditorUtility.SetDirty(card);
                 map[0].Remove(card);
             }
