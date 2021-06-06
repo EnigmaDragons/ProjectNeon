@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Electroblade_WeakPoints
   m_EditorClassIdentifier: 
   displayName: Weak Points
-  description: 
+  description: Defenseless enemies take 5 damage when hit each turn
   archetypes:
   - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
   rarity: 4
@@ -39,6 +39,7 @@ MonoBehaviour:
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
+    ReTargetScope: 21
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -47,7 +48,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 0}
+    ReferencedSequence: {fileID: 11400000, guid: 82efd59cb83d093429bc594206939615, type: 2}
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
