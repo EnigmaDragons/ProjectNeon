@@ -34,6 +34,8 @@ public static class Formula
         { "ARM", StatType.Armor.ToString() },
         { "TGH", StatType.Toughness.ToString() },
         { "ECON", StatType.Economy.ToString() },
+        { "LD", StatType.Economy.ToString() },
+        { "EC", StatType.Economy.ToString() },
     };
 
     private static string ReplaceTags(string expression, FormulaContext ctx)
