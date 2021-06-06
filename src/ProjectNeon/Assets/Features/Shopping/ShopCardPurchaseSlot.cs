@@ -9,7 +9,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
     [SerializeField] private GameObject soldVisual;
     [SerializeField] private PartyAdventureState party;
 
-    private CardType _card;
+    private CardTypeData _card;
     private int _price;
     private bool _purchased;
 
@@ -18,7 +18,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
         UpdateAffordability();
     }
     
-    public ShopCardPurchaseSlot Initialized(CardType c)
+    public ShopCardPurchaseSlot Initialized(CardTypeData c)
     {
         soldVisual.SetActive(false);
         _card = c;

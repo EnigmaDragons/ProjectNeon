@@ -30,7 +30,7 @@ public class FullLibraryUI : MonoBehaviour
             false);
     }
 
-    private Action<GameObject> InitCardInLibraryButton(CardType card)
+    private Action<GameObject> InitCardInLibraryButton(CardTypeData card)
     {
         void Init(GameObject gameObj) => gameObj.GetComponent<CardInLibraryButton>().InitInfoOnly(card);
         return Init;

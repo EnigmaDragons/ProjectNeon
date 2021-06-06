@@ -4,5 +4,5 @@ public class StoryCardRewardPresenter : MonoBehaviour
 {
     [SerializeField] private CardPresenter presenter;
 
-    public void Init(CardType c) => presenter.Set(c, () => { });
+    public void Init(CardTypeData c) => presenter.Set(c, () => { });
 }

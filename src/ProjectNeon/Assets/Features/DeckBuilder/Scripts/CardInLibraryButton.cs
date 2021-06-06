@@ -9,13 +9,13 @@ public class CardInLibraryButton : MonoBehaviour
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private TextMeshProUGUI numCopiesLabel;
 
-    public void InitInfoOnly(CardType card)
+    public void InitInfoOnly(CardTypeData card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "";
     }
     
-    public void Init(CardType card, int numTotal, int numAvailable)
+    public void Init(CardTypeData card, int numTotal, int numAvailable)
     {
         var action = numAvailable > 0 
             && state.SelectedHeroesDeck.Deck.Count(x => x == card) < 4 
@@ -26,13 +26,13 @@ public class CardInLibraryButton : MonoBehaviour
         numCopiesLabel.text = $"{numAvailable}/{numTotal}";
     }
     
-    public void InitBasic(CardType card)
+    public void InitBasic(CardTypeData card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "Basic";
     }
 
-    public void AddCard(CardType card)
+    public void AddCard(CardTypeData card)
     {
         state.SelectedHeroesDeck.Deck.Add(card);
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));

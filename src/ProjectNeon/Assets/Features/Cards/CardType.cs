@@ -44,7 +44,6 @@ public class CardType : ScriptableObject, CardTypeData
     public Maybe<CardTypeData> ChainedCard => chainedCard;
     public Maybe<CardTypeData> SwappedCard => swappedCard;
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
-    public string ArchetypeKey => string.Join(" + ", Archetypes.OrderBy(a => a));
     public bool IsWip => isWIP;
     public Maybe<CardCondition> HighlightCondition => highlightCondition != null && highlightCondition.Length > 0
         ? new Maybe<CardCondition>(new AndCardCondition(highlightCondition.Cast<CardCondition>().ToArray()))

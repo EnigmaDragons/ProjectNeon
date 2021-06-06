@@ -25,7 +25,7 @@ public class BattleState : ScriptableObject
     [Header("ReadOnly")]
     [SerializeField, ReadOnly] private List<string> memberNames;
     [SerializeField, ReadOnly] private int rewardCredits;
-    [SerializeField, ReadOnly] private CardType[] rewardCards;
+    [SerializeField, ReadOnly] private CardTypeData[] rewardCards;
     [SerializeField, ReadOnly] private Equipment[] rewardEquipments;
     [SerializeField, ReadOnly] private int rewardXp = 0;
     [SerializeField, ReadOnly] private int turnNumber;
@@ -54,7 +54,7 @@ public class BattleState : ScriptableObject
     
     public int RewardCredits => rewardCredits;
     public int RewardXp => rewardXp;
-    public CardType[] RewardCards => rewardCards; 
+    public CardTypeData[] RewardCards => rewardCards; 
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
     public EnemyInstance[] NextEncounterEnemies => nextEnemies.ToArray();
     public int Stage => adventureProgress.Stage;
@@ -222,7 +222,7 @@ public class BattleState : ScriptableObject
     public void UseRecycle() => UpdateState(() => PlayerState.NumberOfCyclesUsedThisTurn++);
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void AddRewardXp(int xp) => UpdateState(() => rewardXp += xp); 
-    public void SetRewardCards(params CardType[] cards) => UpdateState(() => rewardCards = cards);
+    public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewardCards = cards);
     public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewardEquipments = equipments);
 
     public void AddEnemy(EnemyInstance e, GameObject gameObject, Member member) 

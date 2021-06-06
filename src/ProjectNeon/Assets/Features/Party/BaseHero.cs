@@ -42,7 +42,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
     public CardType[] AdditionalStartingCards => additionalStartingCards ?? new CardType[0];
-    public CardType ClassCard => basic;
+    public CardTypeData ClassCard => basic;
     public int StartingCredits => startingCredits;
     public HeroSkill[] Skills => skills;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;

@@ -66,7 +66,7 @@ public class FindCardsEditor : EditorWindow
         if (GUILayout.Button("Find By Archetype"))
         {
             var cards = GetAllInstances<CardType>()
-                .Where(c => c.ArchetypeKey.Equals(_archetype))
+                .Where(c => c.GetArchetypeKey().Equals(_archetype))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
                 .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
@@ -184,7 +184,7 @@ public class FindCardsEditor : EditorWindow
             archetypeKeys.Add(string.Join(" + ", archetypes));
 
             var cards = GetAllInstances<CardType>()
-                .Where(c => archetypeKeys.Contains(c.ArchetypeKey))
+                .Where(c => archetypeKeys.Contains(c.GetArchetypeKey()))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
                 .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
@@ -206,7 +206,7 @@ public class FindCardsEditor : EditorWindow
             var archetypeKeys = hero.ArchetypeKeys;
 
             var cards = GetAllInstances<CardType>()
-                .Where(c => archetypeKeys.Contains(c.ArchetypeKey))
+                .Where(c => archetypeKeys.Contains(c.GetArchetypeKey()))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
                 .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,16 +12,16 @@ public class Member
     public TeamType TeamType { get; }
     public BattleRole BattleRole { get; }
     public MemberState State { get; }
-    public Maybe<CardType> BasicCard { get; }
+    public Maybe<CardTypeData> BasicCard { get; }
 
     public override bool Equals(object obj) => obj is Member && ((Member)obj).Id == Id;
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{Name} {Id}";
     
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
-        : this(id, name, characterClass, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardType>.Missing()) {}
+        : this(id, name, characterClass, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
     
-    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp, Maybe<CardType> basicCard)
+    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp, Maybe<CardTypeData> basicCard)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {name} is 0");

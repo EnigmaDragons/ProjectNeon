@@ -11,7 +11,7 @@ public class Hero
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
     [SerializeField] private HeroLevels levels;
-    [SerializeField] private CardType basicCard;
+    [SerializeField] private CardTypeData basicCard = new InMemoryCard();
 
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
@@ -33,7 +33,7 @@ public class Hero
     public HeroHealth Health => health;
     public HeroLevels Levels => levels;
     public int Level => levels.CurrentLevel;
-    public CardType BasicCard => basicCard;
+    public CardTypeData BasicCard => basicCard;
 
     public IStats BaseStats => 
         Character.Stats.Plus(levels.LevelUpStats);
@@ -67,14 +67,14 @@ public class Hero
     public Member AsMemberForTests(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), CurrentHp, basicCard);
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), CurrentHp, new Maybe<CardTypeData>(basicCard));
         return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext()));
     }
 
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), CurrentHp, basicCard);
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), CurrentHp, new Maybe<CardTypeData>(basicCard));
         return m;
     }
 

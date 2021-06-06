@@ -3,9 +3,9 @@ using System.Collections.Generic;
 public class ShopSelection
 {
     public List<Equipment> Equipment { get; }
-    public List<CardType> Cards { get; }
+    public List<CardTypeData> Cards { get; }
 
-    public ShopSelection(List<Equipment> equipment, List<CardType> cards)
+    public ShopSelection(List<Equipment> equipment, List<CardTypeData> cards)
     {
         Equipment = equipment;
         Cards = cards;

@@ -10,7 +10,7 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
     [SerializeField] private HoverCard hoverCard;
 
     private Canvas _canvas;
-    private CardType _card;
+    private CardTypeData _card;
     private int _count;
     private GameObject _hoverCard;
     
@@ -18,7 +18,7 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
     private void OnDestroy() => OnExit();
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => UpdateInfo();
     
-    public void Init(CardType card)
+    public void Init(CardTypeData card)
     {
         _card = card;
         UpdateInfo();

@@ -35,7 +35,7 @@ public class BattleSetupV2 : MonoBehaviour
         h2.ForEach(e => party.EquipTo(e, party.Heroes[1]));
         h3.ForEach(e => party.EquipTo(e, party.Heroes[2]));
     }
-    public void InitPartyDecks(List<CardType> d1, List<CardType> d2, List<CardType> d3) => party.UpdateDecks(d1, d2, d3);
+    public void InitPartyDecks(List<CardTypeData> d1, List<CardTypeData> d2, List<CardTypeData> d3) => party.UpdateDecks(d1, d2, d3);
     public void InitEncounterBuilder(EncounterBuilder e) => encounterBuilder = e;
     public void InitEncounter(IEnumerable<EnemyInstance> enemies)
     {
