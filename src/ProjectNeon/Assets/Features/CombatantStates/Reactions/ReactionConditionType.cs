@@ -14,6 +14,7 @@ public enum ReactionConditionType
     OnDamageDealt = 22,
     OnHpDamageDealt = 23,
     OnAppliedMark = 24,
+    OnStealthed = 25,
     OnClipUsed = 27,
     OnTagPlayed = 29,
     OnDodged = 30,

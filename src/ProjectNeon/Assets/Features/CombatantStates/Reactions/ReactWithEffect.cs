@@ -108,7 +108,10 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnAfflicted, ctx => effect => ctx.Actor.IsConscious() 
             && Increased(Select(effect, ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) },
         { ReactionConditionType.OnAppliedMark, ctx => effect => ctx.Actor.IsConscious() 
-            && Increased(Select(effect, b => b.TargetMembers(effect.Target).Sum(x => x.State[TemporalStatType.Marked]))) }
+            && Increased(Select(effect, b => b.TargetMembers(effect.Target).Sum(x => x.State[TemporalStatType.Marked]))) },
+        { ReactionConditionType.OnStealthed, ctx => effect => ctx.Actor.IsConscious() 
+            && !effect.BattleBefore.Members[ctx.Possessor.Id].IsStealthed()
+            && Increased(Select(effect, ctx.Actor, m => m.State[TemporalStatType.Stealth])) }
     };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
