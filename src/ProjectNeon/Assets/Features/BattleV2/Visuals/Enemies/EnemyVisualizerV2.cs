@@ -100,6 +100,12 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
             Log.Info($"{member.Name} is missing a {nameof(ShieldVisual)}");
         else
             shield.Init(member);
+        
+        var highlighter = obj.GetComponentInChildren<MemberHighlighter>();
+        if (highlighter == null)
+            Debug.LogError($"{member.Name} is missing a {nameof(MemberHighlighter)}");
+        else
+            highlighter.Init(member);
     }
     
     public Member Spawn(EnemyInstance enemy, Vector3 offset)

@@ -34,7 +34,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
                 Type = statusTag.ToString(), 
                 Icon = icons[statusTag].Icon, 
                 Tooltip = s.Status.CustomText.OrDefault(() => defaultText)
-                    .Replace("[Originator]", battleState.Members[s.OriginatorId].ToString())
+                    .Replace("[Originator]", battleState.Members[s.OriginatorId].ToString()),
+                OriginatorId = s.OriginatorId
             }));
 
     private void UpdateUi()
@@ -90,23 +91,20 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         statuses.AddRange(_member.State.StatusesOfType(StatusTag.DamageOverTime)
             .Select(s => new CurrentStatusValue { Type = StatusTag.DamageOverTime.ToString(), Icon = icons[StatusTag.DamageOverTime].Icon, Text = s.RemainingTurns.Select(r => r.ToString(), () => ""), 
-                Tooltip = $"Takes {s.Amount.Value} at the Start of the next {s.RemainingTurns.Value} turns"}));
+                Tooltip = $"Takes {s.Amount.Value} at the Start of the next {s.RemainingTurns.Value} turns", OriginatorId = s.OriginatorId }));
         
         if (_member.State.HasStatus(StatusTag.HealOverTime))
             statuses.Add(new CurrentStatusValue {  Type = StatusTag.HealOverTime.ToString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
 
         if (_member.State[TemporalStatType.Prominent] > 0)
-        {
-            Log.Info($"Update Status Bar UI - {_member.Name} - Prominent {_member.State[TemporalStatType.Prominent]}");
             statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Prominent.ToString(), Icon = icons[TemporalStatType.Prominent].Icon, Tooltip = "Heroes cannot stealth while prominent." });
-        }
 
         AddCustomTextStatusIcons(statuses, StatusTag.OnHit, "Secret On Hit Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnDeath, "Secret On Death Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnDamaged, "Secret On Damaged Effect");
         
         foreach (var s in _member.State.CustomStatuses())
-            statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip});;
+            statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip, OriginatorId = s.OriginatorId });;
         
         if (_member.State.HasStatus(StatusTag.StartOfTurnTrigger))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.StartOfTurnTrigger.ToString(),  Icon = icons[StatusTag.StartOfTurnTrigger].Icon, Tooltip = "Start of Turn Effect Trigger" });
