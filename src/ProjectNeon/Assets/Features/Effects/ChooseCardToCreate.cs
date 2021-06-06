@@ -1,19 +1,23 @@
 ﻿using System.Linq;
+using UnityEngine;
 
 public class ChooseCardToCreate : Effect
 {
     private readonly int[] _choiceCardIds;
-    private readonly int _choiceCount;
+    private readonly string _choicesFormula;
 
-    public ChooseCardToCreate(string choiceCardIds, int choiceCount)
+    public ChooseCardToCreate(string choiceCardIds, string choicesFormula)
     {
         _choiceCardIds = choiceCardIds.Split(',').Select(int.Parse).ToArray();
-        _choiceCount = choiceCount;
+        _choicesFormula = choicesFormula;
     }
     
     public void Apply(EffectContext ctx)
     {
-        ctx.Selections.CardSelectionOptions = _choiceCardIds.Shuffled().Take(_choiceCount).Select(x => new Card(-1, ctx.Source, ctx.AllCards[x])).ToArray();
+        ctx.Selections.CardSelectionOptions = _choiceCardIds
+            .Shuffled()
+            .Take(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount)))
+            .Select(x => new Card(-1, ctx.Source, ctx.AllCards[x])).ToArray();
         ctx.Selections.OnCardSelected = card => ctx.PlayerCardZones.HandZone.PutOnBottom(card);
     }
 }

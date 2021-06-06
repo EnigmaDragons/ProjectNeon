@@ -23,7 +23,7 @@ public class ChooseCardToDrawTests
         {
             EffectType = EffectType.ChooseCardToCreate,
             EffectScope = new StringReference("1,2,3"),
-            BaseAmount = new IntReference(2),
+            Formula = "2",
         }, context);
 
         Assert.AreEqual(context.Selections.CardSelectionOptions.Length, 2);

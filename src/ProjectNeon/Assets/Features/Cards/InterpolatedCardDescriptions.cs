@@ -248,7 +248,9 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.DealRawDamageFormula)
             return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula
-                || data.EffectType == EffectType.HealFormula || data.EffectType == EffectType.AdjustPlayerStatsFormula)
+                || data.EffectType == EffectType.HealFormula 
+                || data.EffectType == EffectType.AdjustPlayerStatsFormula
+                || data.EffectType == EffectType.ChooseCardToCreate)
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
             return $"x{FormulaAmount(data, owner, xCost)}";
