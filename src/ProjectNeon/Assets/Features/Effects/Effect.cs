@@ -24,6 +24,7 @@ public class EffectContext
     public Dictionary<int, CardTypeData> AllCards { get; }
     public int StartingCredits { get; }
     public int CurrentCredits { get; }
+    public IDictionary<int, EnemyInstance> EnemyTypes { get; }
 
     public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, 
         PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones, PreventionContext preventions, 
