@@ -61,7 +61,13 @@ public class AssetUpdater
     {
         var cards = ScriptableExtensions.GetAllInstances<CardType>();
         var map = Enumerable.Range(0, cards.Length + 1).ToDictionary(x => x, x => new List<CardType>());
-        cards.ForEach(x => map[x.id].Add(x));
+        foreach (var c in cards)
+        {
+            if (map.TryGetValue(c.id, out var collection))
+                collection.Add(c);
+            else
+                map[0].Add(c);
+        }
         for (int i = 1; i < map.Count; i++)
         {
             while (map[i].Count > 1)
