@@ -54,9 +54,9 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
                 return 999999;
         }
         else if (type.Tier == EnemyTier.Elite)
-            return Mathf.CeilToInt(percentage * type.PowerLevel * 1.5f);
+            return Mathf.CeilToInt(percentage * type.PowerLevel * 1.4f);
         else if (type.Tier == EnemyTier.Minion)
-            return Mathf.CeilToInt(percentage * type.PowerLevel * 0.5f);
-        return Mathf.CeilToInt(percentage * type.PowerLevel * 1);
+            return Mathf.CeilToInt(percentage * type.PowerLevel * 0.35f);
+        return Mathf.CeilToInt(percentage * type.PowerLevel * 0.7f);
     }
 }
