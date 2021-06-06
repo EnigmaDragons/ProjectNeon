@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
+  m_Name: Electroblade_InTheRhythm
+  m_EditorClassIdentifier: 
+  displayName: In The Rhythm
+  description: Gain +1 Attack for the turn when you deal damage
+  archetypes:
+  - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
+  rarity: 4
+  slot: 3
+  priceFactor: 1
+  modifiers: []
+  resourceModifiers: []
+  turnStartEffects: []
+  turnEndEffects: []
+  battleStartEffects:
+  - EffectType: 74
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: -1
+      FloatVariable: {fileID: 0}
+    DurationFormula: -1
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    StatusTag: 12
+    StatusDetailText: Gain +1 Attack for the turn when you deal damage
+    TurnDelay: 0
+    Formula: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 22
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 11400000, guid: 16f953c7bfe5a1e42a773f0351848405, type: 2}
+    BonusCardType: {fileID: 0}
+  isWIP: 1
