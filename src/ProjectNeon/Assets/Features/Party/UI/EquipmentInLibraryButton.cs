@@ -7,6 +7,8 @@ public class EquipmentInLibraryButton : MonoBehaviour
     [SerializeField] private PartyAdventureState partyAdventureState;
     [SerializeField] private GameObject darken;
     
+    public void InitInfoOnly(Equipment e) => presenter.Set(e, () => { });
+
     public void Init(Equipment e, bool canAdd)
     {
         if (canAdd)
@@ -28,6 +30,6 @@ public class EquipmentInLibraryButton : MonoBehaviour
         if (e.Slot == EquipmentSlot.Armor && deckBuilderState.SelectedHeroesDeck.Hero.Equipment.Armor.IsPresent)
             partyAdventureState.UnequipFrom(deckBuilderState.SelectedHeroesDeck.Hero.Equipment.Armor.Value, deckBuilderState.SelectedHeroesDeck.Hero);
         partyAdventureState.EquipTo(e, deckBuilderState.SelectedHeroesDeck.Hero);
-        Message.Publish(new EquipmentPicketCurrentGearChanged());
+        Message.Publish(new EquipmentPickerCurrentGearChanged());
     }
 }
