@@ -33,7 +33,7 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Message.Publish(new ShowTooltip(_tooltip));
+        Message.Publish(new ShowTooltip(_tooltip, true));
         _originator.IfPresent(id => Message.Publish(new ActivateMemberHighlight(id, MemberHighlightType.StatusOriginator, true)));
     }
 
