@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
+  m_Name: Rifle_GunsBlazing
+  m_EditorClassIdentifier: 
+  displayName: Guns Blazing
+  description: Everytime you empty your clip or reload gain +3 Attack for 2 turns
+  archetypes:
+  - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
+  rarity: 4
+  slot: 0
+  priceFactor: 1
+  modifiers: []
+  resourceModifiers: []
+  turnStartEffects: []
+  turnEndEffects: []
+  battleStartEffects:
+  - EffectType: 74
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: -1
+      FloatVariable: {fileID: 0}
+    DurationFormula: -1
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
+    StatusTag: 12
+    StatusDetailText: Everytime you empty your clip or reload gain +3 Attack for
+      2 turns
+    TurnDelay: 0
+    Formula: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 27
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 11400000, guid: 08d59c0e838d33044b796a0b920d29e3, type: 2}
+    BonusCardType: {fileID: 0}
+  isWIP: 1

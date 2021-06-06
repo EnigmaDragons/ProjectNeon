@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
+  m_Name: Ordanance_EndlessNades
+  m_EditorClassIdentifier: 
+  displayName: Endless Nades
+  description: 'Start of Turn: if you have no grenades gain 1'
+  archetypes:
+  - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
+  rarity: 4
+  slot: 3
+  priceFactor: 1
+  modifiers: []
+  resourceModifiers: []
+  turnStartEffects:
+  - EffectType: 7
+    Conditions:
+    - {fileID: 11400000, guid: bc0f31a058098a84a89e505a4d7d2519, type: 2}
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 1
+      FloatVariable: {fileID: 0}
+    DurationFormula: 0
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: Grenades
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
+    StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  turnEndEffects: []
+  battleStartEffects: []
+  isWIP: 1
