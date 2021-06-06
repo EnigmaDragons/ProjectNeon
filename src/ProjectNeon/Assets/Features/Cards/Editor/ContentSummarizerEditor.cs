@@ -117,9 +117,10 @@ public sealed class ContentSummarizerEditor : EditorWindow
                 var numCards = hasValue ? a.Sum(v => v.Value) : 0;
                 expectedCardsCounter += ArchCardsExpected(arch);
                 presentCardsCounter += numCards;
+                var checkChar = presentCardsCounter >= expectedCardsCounter ? "✓" : "✗";
                 result.Add(hasValue
-                    ? $"{arch} Cards - Total {numCards} - {string.Join(", ", a.Select(v => $"{v.Key}: {v.Value}{TargetCardNumbers(arch, v.Key)}"))}"
-                    : $"{arch} Cards - All {ArchCardsExpectedStr(arch)} Missing");
+                    ? $"{checkChar} - {arch} Cards - Total {numCards} - {string.Join(", ", a.Select(v => $"{v.Key}: {v.Value}{TargetCardNumbers(arch, v.Key)}"))}"
+                    : $"{checkChar} - {arch} Cards - All {ArchCardsExpectedStr(arch)} Missing");
             }
 
             var expectedEquipCounter = 0;
@@ -130,9 +131,10 @@ public sealed class ContentSummarizerEditor : EditorWindow
                 var numEquips = hasValue ? e.Sum(v => v.Value) : 0;
                 expectedEquipCounter += 4;
                 presentEquipCounter += numEquips;
+                var checkChar = presentEquipCounter >= expectedEquipCounter ? "✓" : "✗";
                 result.Add(hasValue
-                    ? $"{arch} Equips - Total {numEquips} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
-                    : $"{arch} Equips - All 4 Missing");
+                    ? $"{checkChar} - {arch} Equips - Total {numEquips} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
+                    : $"{checkChar} - {arch} Equips - All 4 Missing");
             }
 
             var expectedAllCounter = expectedCardsCounter + expectedEquipCounter;
@@ -140,7 +142,8 @@ public sealed class ContentSummarizerEditor : EditorWindow
             var percentage = expectedAllCounter > 0 
                 ? presentAllCounter/(float)expectedAllCounter
                 : 0;
-            result.Add($"{HeroName} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} Cards {presentCardsCounter}/{expectedCardsCounter} Equips {presentEquipCounter}/{expectedEquipCounter}");
+            var finalCheckChar = presentAllCounter >= expectedAllCounter ? "✓" : "✗";
+            result.Add($"{finalCheckChar} - {HeroName} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} Cards {presentCardsCounter}/{expectedCardsCounter} Equips {presentEquipCounter}/{expectedEquipCounter}");
             result = result.OrderBy(r => r.Contains("%") ? -1 : 0).ToList();
             
             GetWindow<ListDisplayWindow>()
