@@ -29,6 +29,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private Equipment[] rewardEquipments;
     [SerializeField, ReadOnly] private int rewardXp = 0;
     [SerializeField, ReadOnly] private int turnNumber;
+    [SerializeField, ReadOnly] private PlayerState playerState = new PlayerState();
     
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
@@ -43,7 +44,7 @@ public class BattleState : ScriptableObject
     public int NumberOfRecyclesRemainingThisTurn => PlayerState.NumberOfRecyclesRemainingThisTurn;
     private int CurrentTurnPartyNonBonusStandardCardPlays => CurrentTurnCardPlays()
         .Count(x => x.Member.TeamType == TeamType.Party && !x.WasTransient && x.Card.Speed == CardSpeed.Standard);
-    public int NumberOfCardPlaysRemainingThisTurn => _playerState.CurrentStats.CardPlays() - CurrentTurnPartyNonBonusStandardCardPlays - _numPlayerDiscardsUsedThisTurn;
+    public int NumberOfCardPlaysRemainingThisTurn => playerState.CurrentStats.CardPlays() - CurrentTurnPartyNonBonusStandardCardPlays - _numPlayerDiscardsUsedThisTurn;
     public bool HasMorePlaysAvailableThisTurn =>
         NumberOfCardPlaysRemainingThisTurn > 0 ||
         NumberOfRecyclesRemainingThisTurn > 0 ||
@@ -72,12 +73,11 @@ public class BattleState : ScriptableObject
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] EnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
     public (Member Member, EnemyInstance Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
-    public PlayerState PlayerState => _playerState;
+    public PlayerState PlayerState => playerState;
     private Dictionary<int, EnemyInstance> _enemiesById = new Dictionary<int, EnemyInstance>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
-    private PlayerState _playerState = new PlayerState(0);
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
 
     // Setup
@@ -147,7 +147,7 @@ public class BattleState : ScriptableObject
         }
         _nextEnemyId = id + 1;
 
-        _playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
+        playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
         _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
             .Concat(result.Select(e => e.Item2))
             .ToDictionary(x => x.Id, x => x);
@@ -266,7 +266,7 @@ public class BattleState : ScriptableObject
     }
     
     private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => Math.Min(h.CurrentHp(), h.State.BaseStats.MaxHp())).ToArray());
-    private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits + _playerState.BonusCredits);
+    private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits + playerState.BonusCredits);
     private void GrantRewardCards() => Party.Add(rewardCards);
     private void GrantRewardEquipment() => Party.Add(rewardEquipments);
     private void GrantRewardXp() => Party.AwardXp(rewardXp);

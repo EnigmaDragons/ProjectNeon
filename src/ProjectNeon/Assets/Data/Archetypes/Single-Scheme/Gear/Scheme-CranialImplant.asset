@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Any-TacticalImplant
+  m_Name: Scheme-CranialImplant
   m_EditorClassIdentifier: 
-  displayName: Tactical Implant
+  displayName: Cranial Implant
   description: +1 Cycle per turn
-  isWIP: 1
+  archetypes:
+  - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   rarity: 1
   slot: 2
   priceFactor: 1
-  archetypes: []
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -64,3 +64,4 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  isWIP: 0
