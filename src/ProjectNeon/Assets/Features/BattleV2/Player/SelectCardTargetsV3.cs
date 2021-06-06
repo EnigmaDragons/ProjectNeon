@@ -6,7 +6,6 @@ using UnityEngine;
 public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndTargetSelectionRequested, CancelTargetSelectionRequested>
 {
     [SerializeField] private CardResolutionZone cardResolutionZone;
-    [SerializeField] private CardPlayZone destinationCardZone;
     [SerializeField] private CardPlayZone sourceCardZone;
     [SerializeField] private CardPlayZone discardZone;
     [SerializeField] private BattleState battleState;
@@ -62,7 +61,6 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         cardResolutionZone.PlayImmediately(playedCard);
         Message.Publish(new PlayerCardSelected());
         sourceCardZone.Remove(card);
-        destinationCardZone.PutOnBottom(card);
         OnSelectionComplete();
     }
 
