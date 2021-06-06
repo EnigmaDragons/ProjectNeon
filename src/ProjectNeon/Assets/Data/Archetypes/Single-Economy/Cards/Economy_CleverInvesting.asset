@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Economy_Bounty_FreelanceSnipe
+  m_Name: Economy_CleverInvesting
   m_EditorClassIdentifier: 
-  id: 338
-  customName: Freelance Snipe
-  art: {fileID: 21300000, guid: a9157be9e2d8762429d1dfc4a8276e98, type: 3}
-  description: <b>Quick:</b> Deal <b>2x ECON <sprite index=0></b>
+  id: 342
+  customName: 
+  art: {fileID: 21300000, guid: d152e9b6725774e46aecd8c1cda412ad, type: 3}
+  description: '{auto}'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 29000000
-  speed: 1
-  isSinglePlay: 1
+  tags: 
+  speed: 0
+  isSinglePlay: 0
   cost:
-    cost: 30
-    resourceType: {fileID: 11400000, guid: 6b5b53513be79104389fa0628a71e30d, type: 2}
-    plusXCost: 0
+    cost: 0
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
+    plusXCost: 1
   onPlayGain:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 6b5b53513be79104389fa0628a71e30d, type: 2}
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 2
+  rarity: 4
   actionSequences:
-  - scope: 0
+  - scope: 1
     group: 1
-    cardActions: {fileID: 11400000, guid: c54b4953df103fe4699f5e28f60f04b3, type: 2}
+    cardActions: {fileID: 11400000, guid: 2976736ecd0447149b4738625b3e3dd8, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -43,4 +43,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3ce0b551899476478f607da76d55580, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 1
+  isWIP: 0
