@@ -22,6 +22,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     private readonly Dictionary<HeroCharacter, SpriteRenderer> _renderers = new Dictionary<HeroCharacter, SpriteRenderer>();
     private readonly Dictionary<HeroCharacter, HoverCharacter> _hovers  = new Dictionary<HeroCharacter, HoverCharacter>();
     private readonly Dictionary<HeroCharacter, ShieldVisual> _shields  = new Dictionary<HeroCharacter, ShieldVisual>();
+    private readonly Dictionary<HeroCharacter, MemberHighlighter> _highlighters  = new Dictionary<HeroCharacter, MemberHighlighter>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     private readonly Dictionary<HeroCharacter, CharacterWordsController> _words  = new Dictionary<HeroCharacter, CharacterWordsController>();
     private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
@@ -49,6 +50,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         _words.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _hovers.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _shields.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _highlighters.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
     private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
@@ -84,6 +86,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
             Debug.LogError($"{hero.Name} is missing a {nameof(ShieldVisual)}");
         else
             _shields[hero] = shield;
+        
+        var highlighter = character.GetComponentInChildren<MemberHighlighter>();
+        if (highlighter == null)
+            Debug.LogError($"{hero.Name} is missing a {nameof(MemberHighlighter)}");
+        else
+            _highlighters[hero] = highlighter;
          
         character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
     }

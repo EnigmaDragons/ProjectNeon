@@ -4,6 +4,7 @@ public class CustomStatusIcon
     public string Tooltip { get; }
     public string IconName { get; }
     public int Number { get; }
+    public int OriginatorId { get; }
     public TemporalStateTracker StateTracker { get; }
 
     public CustomStatusIcon(string tooltip, string iconName, int number, TemporalStateMetadata temporalMetadata)
@@ -11,6 +12,7 @@ public class CustomStatusIcon
         Tooltip = tooltip;
         IconName = iconName;
         Number = number;
+        OriginatorId = temporalMetadata.OriginatorId;
         StateTracker = new TemporalStateTracker(temporalMetadata);
     }
 
