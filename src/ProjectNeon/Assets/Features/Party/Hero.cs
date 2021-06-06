@@ -62,6 +62,7 @@ public class Hero
     // [Obsolete("Just use XP instead")] public void LevelUp(int numLevels) => UpdateState(() => levels.LevelUp(numLevels));
     public void AddXp(int xp) => UpdateState(() => levels.AddXp(xp));
     public void ApplyLevelUpPoint(StatAddends stats) => UpdateState(() => levels.ApplyLevelUpStats(stats));
+    public void RecordLevelUpPointSpent() => UpdateState(() => levels.RecordLevelUpCompleted());
 
     // Cleanup Duplication
     public Member AsMemberForTests(int id)

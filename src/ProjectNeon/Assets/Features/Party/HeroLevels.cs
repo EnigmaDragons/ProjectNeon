@@ -39,6 +39,17 @@ public class HeroLevels
             AddXp(XpTowardsNextLevelUp);
     }
 
+    public void RecordLevelUpCompleted()
+    {
+        if (levelUpPoints < 1)
+        {
+            Log.Error("Attempted to apply Level Up Perk with no Level Up Points");
+            return;
+        }
+
+        levelUpPoints--;
+    }
+
     public void ApplyLevelUpStats(StatAddends s)
     {
         if (levelUpPoints < 1)
