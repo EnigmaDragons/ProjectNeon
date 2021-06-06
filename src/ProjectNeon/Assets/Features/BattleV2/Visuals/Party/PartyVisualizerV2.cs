@@ -22,6 +22,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     private readonly Dictionary<HeroCharacter, SpriteRenderer> _renderers = new Dictionary<HeroCharacter, SpriteRenderer>();
     private readonly Dictionary<HeroCharacter, HoverCharacter> _hovers  = new Dictionary<HeroCharacter, HoverCharacter>();
     private readonly Dictionary<HeroCharacter, ShieldVisual> _shields  = new Dictionary<HeroCharacter, ShieldVisual>();
+    private readonly Dictionary<HeroCharacter, CharacterCreatorStealthTransparency> _stealths = new Dictionary<HeroCharacter, CharacterCreatorStealthTransparency>();
     private readonly Dictionary<HeroCharacter, MemberHighlighter> _highlighters  = new Dictionary<HeroCharacter, MemberHighlighter>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     private readonly Dictionary<HeroCharacter, CharacterWordsController> _words  = new Dictionary<HeroCharacter, CharacterWordsController>();
@@ -50,6 +51,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         _words.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _hovers.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _shields.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _stealths.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _highlighters.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
@@ -93,6 +95,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         else
             _highlighters[hero] = highlighter;
          
+        var stealth = character.GetComponentInChildren<CharacterCreatorStealthTransparency>();
+        if (stealth == null)
+            Debug.LogError($"{hero.Name} is missing a {nameof(CharacterCreatorStealthTransparency)}");
+        else
+            _stealths[hero] = stealth;
+        
         character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
     }
 
