@@ -11,29 +11,36 @@ public class ShopCardPool : ScriptableObject
     public Rarity[] includedRarities = new Rarity[] {Rarity.Starter, Rarity.Basic, Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic};
     [SerializeField] private List<ShopCardPool> subPools;
     [UnityEngine.UI.Extensions.ReadOnly] public List<CardType> allCards; //Unity Collection Readonly
-
-    private string[] _archetypes;
-    private string[] Archetypes => _archetypes ??= archetypes.Select(x => x.Value).ToArray();
-
+    
     public IEnumerable<CardTypeData> All => subPools.SelectMany(s => s.All).Concat(allCards);
 
-    public IEnumerable<CardTypeData> Get(HashSet<string> includedArchetypes, params Rarity[] includedRarities)
+    public IEnumerable<CardTypeData> Get(HashSet<string> archetypesToGet, params Rarity[] raritiesToGet)
     {
-        var isSelectedPool = includedArchetypes.None() || Archetypes.All(includedArchetypes.Contains);
-        if (isSelectedPool && (includedRarities == this.includedRarities || includedRarities.None()))
-            return subPools.SelectMany(x => x.Get(includedArchetypes, includedRarities)).Concat(allCards);
-        if (isSelectedPool && this.includedRarities.Any(includedRarities.Contains))
-            return subPools.SelectMany(x => x.Get(includedArchetypes, includedRarities))
-                .Concat(allCards.Where(x => includedRarities.Contains(x.Rarity)));
-        return subPools.SelectMany(x => x.Get(includedArchetypes, includedRarities));
+        var isSelectedPool = archetypesToGet.None() || Archetypes().All(archetypesToGet.Contains);
+        if (isSelectedPool && (includedRarities.All(raritiesToGet.Contains) || raritiesToGet.None()))
+            return subPools.SelectMany(x => x.Get(archetypesToGet, raritiesToGet)).Concat(allCards);
+        if (isSelectedPool && includedRarities.Any(raritiesToGet.Contains))
+            return subPools.SelectMany(x => x.Get(archetypesToGet, raritiesToGet))
+                .Concat(allCards.Where(x => raritiesToGet.Contains(x.Rarity)));
+        return subPools.SelectMany(x => x.Get(archetypesToGet, raritiesToGet));
     }
-    
-    public ShopCardPool Initialized(string[] archetypes, Rarity[] rarities, IEnumerable<ShopCardPool> subPools, IEnumerable<CardType> cards)
+
+    public ShopCardPool Initialized(string[] archetypesToSet, Rarity[] rarities, IEnumerable<ShopCardPool> subPoolsToSet, IEnumerable<CardType> cards)
     {
-        _archetypes = archetypes;
-        this.includedRarities = rarities;
-        this.subPools = subPools.ToList();
+        _archetypes = archetypesToSet;
+        includedRarities = rarities;
+        subPools = subPoolsToSet.ToList();
         allCards = cards.ToList();
         return this;
     }
+
+    private string[] _archetypes;
+
+    private string[] Archetypes()
+    {
+        //Thanks Unity Serialization
+        if (_archetypes == null || (_archetypes.Length == 0 && archetypes != null && archetypes.Length > 0))
+            _archetypes = archetypes.Select(x => x.Value).ToArray();
+        return _archetypes;
+    } 
 }
