@@ -14,4 +14,5 @@ public class PermanentEquipmentLevelUpOption : HeroLevelUpOption
     }
 
     public override void ShowDetail() {}
+    public override bool HasDetail => false;
 }
