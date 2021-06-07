@@ -10,10 +10,12 @@ public class SquadSlot : MonoBehaviour
     
     [ReadOnly, SerializeField] private BaseHero current;
     private int _index;
+    private BaseHero[] _bannedHeroes;
     
-    public void Init(int index)
+    public void Init(int index, BaseHero[] bannedHeroes)
     {
         _index = index;
+        _bannedHeroes = bannedHeroes;
         SelectNextHero();
         SelectPreviousHero();
     }
@@ -22,7 +24,10 @@ public class SquadSlot : MonoBehaviour
     {
         if (current != null)
             heroPool.Unselect(_index, current);
-        SelectHero(_index, AvailableHeroes.Concat(AvailableHeroes).SkipWhile(x => current != null && x != current).Skip(1).First());
+        SelectHero(_index, AvailableHeroes.Concat(AvailableHeroes)
+            .SkipWhile(x => current != null && x != current)
+            .Skip(1)
+            .First());
     }
 
     public void SelectPreviousHero()
@@ -47,5 +52,5 @@ public class SquadSlot : MonoBehaviour
         presenter.Select(c);
     }
 
-    private IEnumerable<BaseHero> AvailableHeroes => heroPool.AvailableHeroes;
+    private IEnumerable<BaseHero> AvailableHeroes => heroPool.AvailableHeroes.Except(_bannedHeroes);
 }
