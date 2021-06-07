@@ -20,7 +20,7 @@ public static class RarityExtensions
         => items.SelectMany(item => Enumerable.Range(0, factors[getRarity(item)]).Select(_ => item));
 
     public static IEnumerable<Rarity> Random(this Rarity[] rarities, RarityFactors f, int n)
-        => Enumerable.Range(0, n).Select(_ => rarities.Random());
+        => Enumerable.Range(0, n).Select(_ => rarities.Random(f));
     public static Rarity Random(this Rarity[] rarities, RarityFactors f)
         => rarities.SelectMany(r => Factored(f, r)).Random();
     

@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(menuName = "Adventure/Adventure")]
 public class Adventure : ScriptableObject
@@ -11,6 +11,7 @@ public class Adventure : ScriptableObject
     [SerializeField] private Sprite adventureImage;
     [SerializeField] private int partySize;
     [SerializeField] private BaseHero[] requiredHeroes;
+    [SerializeField] private BaseHero[] bannedHeroes;
     [SerializeField] private int baseNumberOfCardCycles = 2;
     [SerializeField] private float rewardCreditsPerPowerLevel = 1f;
     [SerializeField] private float xpPerPowerLevel = 0.2f;
@@ -25,6 +26,7 @@ public class Adventure : ScriptableObject
     public Sprite AdventureImage => adventureImage;
     public int PartySize => partySize;
     public BaseHero[] RequiredHeroes => requiredHeroes;
+    public BaseHero[] BannedHeroes => bannedHeroes == null ? Array.Empty<BaseHero>() : bannedHeroes;
     public int BaseNumberOfCardCycles => baseNumberOfCardCycles;
     public float RewardCreditsPerPowerLevel => rewardCreditsPerPowerLevel;
     public float XpPerPowerLevel => xpPerPowerLevel;
