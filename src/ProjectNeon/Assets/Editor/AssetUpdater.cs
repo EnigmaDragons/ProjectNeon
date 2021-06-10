@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using Object = UnityEngine.Object;
 
 public class AssetUpdater
 {
     [MenuItem("Neon/Update All Assets")]
     public static void Go()
     {
+        UpdateHeroes();
         UpdateCardPools();
         UpdateEquipmentPools();
         UpdateCardIDs();
@@ -14,6 +17,43 @@ public class AssetUpdater
         EnsureDurationPresent();
     }
 
+    [MenuItem("Neon/Update Heroes")]
+    private static void UpdateHeroes()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<BaseHero>(), h => h.id, (h, id) => h.id = id);
+    }
+
+    private static void AssignAllIds<T>(T[] items, Func<T, int> getId, Action<T, int> setId) where T : Object
+    {
+        var map = Enumerable.Range(0, items.Length + 1).ToDictionary(x => x, x => new List<T>());
+        foreach (var h in items)
+        {
+            if (map.TryGetValue(getId(h), out var collection))
+                collection.Add(h);
+            else
+                map[0].Add(h);
+        }
+        for (var i = 1; i < map.Count; i++)
+        {
+            while (map[i].Count > 1)
+            {
+                var item = map[i][0];
+                setId(item, 0);
+                map[i].Remove(item);
+            }
+        }
+        for (var i = 1; i < map.Count; i++)
+        {
+            if (map[i].Count == 0)
+            {
+                var item = map[0][0];
+                setId(item, i);
+                EditorUtility.SetDirty(item);
+                map[0].Remove(item);
+            }
+        }   
+    }
+    
     [MenuItem("Neon/Update Card Pools")]
     private static void UpdateCardPools()
     {
@@ -59,34 +99,7 @@ public class AssetUpdater
     [MenuItem("Neon/Update Card IDs")]
     private static void UpdateCardIDs()
     {
-        var cards = ScriptableExtensions.GetAllInstances<CardType>();
-        var map = Enumerable.Range(0, cards.Length + 1).ToDictionary(x => x, x => new List<CardType>());
-        foreach (var c in cards)
-        {
-            if (map.TryGetValue(c.id, out var collection))
-                collection.Add(c);
-            else
-                map[0].Add(c);
-        }
-        for (int i = 1; i < map.Count; i++)
-        {
-            while (map[i].Count > 1)
-            {
-                var card = map[i][0];
-                card.id = 0;
-                map[i].Remove(card);
-            }
-        }
-        for (int i = 1; i < map.Count; i++)
-        {
-            if (map[i].Count == 0)
-            {
-                var card = map[0][0];
-                card.id = i;
-                EditorUtility.SetDirty(card);
-                map[0].Remove(card);
-            }
-        }
+        AssignAllIds(ScriptableExtensions.GetAllInstances<CardType>(), c => c.id, (c, id) => c.id = id);
     }
 
     [MenuItem("Neon/UpdateAllCards")]

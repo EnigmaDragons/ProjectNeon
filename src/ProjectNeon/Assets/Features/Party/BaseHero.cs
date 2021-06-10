@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameContent/HeroCharacter")]
 public class BaseHero : ScriptableObject, HeroCharacter
 {
+    [SerializeField, ReadOnly] public int id;
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
     [SerializeField] private StringReference className;
@@ -35,6 +36,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private HeroFlavorDetails flavorDetails;
     [SerializeField] private HeroLevelUpPathway levelUpTree;
 
+    public int Id => id;
     public string Name => name;
     public Sprite Bust => bust;
     public GameObject Body => body;

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class SquadSelectionHandler : OnMessage<ConfirmSquadSelection>
@@ -11,6 +10,12 @@ public class SquadSelectionHandler : OnMessage<ConfirmSquadSelection>
     {        
         var heroes = pool.SelectedHeroes;
         party.Initialized(heroes[0], heroes[1], heroes[2]);
+        CurrentGameData.Write(s =>
+        {
+            s.IsInitialized = true;
+            s.PartyData = party.GetData();
+            return s;
+        });
         navigator.NavigateToGameScene();
     }
 }

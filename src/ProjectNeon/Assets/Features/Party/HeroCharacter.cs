@@ -3,6 +3,7 @@ using UnityEngine;
 
 public interface HeroCharacter
 {
+    int Id { get; }
     string Name { get; }
     
     Sprite Bust { get; }
@@ -22,6 +23,7 @@ public interface HeroCharacter
 
 public class InMemoryHeroCharacter : HeroCharacter
 {
+    public int Id { get; set; } = Rng.Int();
     public string Name { get; set; } = "Unknown";
     public Sprite Bust { get; set; }
     public GameObject Body { get; set; }
