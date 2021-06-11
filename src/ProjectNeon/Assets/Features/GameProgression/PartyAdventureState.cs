@@ -26,6 +26,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public PartyEquipmentCollection Equipment => equipment;
     
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
+
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
         party.Initialized(one, two, three);
