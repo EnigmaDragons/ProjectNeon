@@ -5,6 +5,7 @@ public class GameData
 {
     public string VersionNumber = "Not Initialized";
     public bool IsInitialized = false;
+    public CurrentGamePhase Phase = CurrentGamePhase.NotStarted;
     public GamePartyData PartyData = new GamePartyData();
     public GameAdventureProgressData AdventureProgress = new GameAdventureProgressData();
 }
@@ -12,6 +13,7 @@ public class GameData
 [Serializable]
 public class GameAdventureProgressData
 {
+    public int AdventureId = -1;
 }
 
 [Serializable]

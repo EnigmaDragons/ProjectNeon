@@ -23,6 +23,5 @@ public static class CurrentGameData
     }
 
     public static void Save() => _stored.Write(_ => _current);
-
     public static void Clear() => _stored.Write(_ => new GameData { VersionNumber = _version });
 }

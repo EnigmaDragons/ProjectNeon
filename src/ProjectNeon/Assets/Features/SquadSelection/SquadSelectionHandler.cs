@@ -13,6 +13,7 @@ public class SquadSelectionHandler : OnMessage<ConfirmSquadSelection>
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;
+            s.Phase = CurrentGamePhase.SelectedSquad;
             s.PartyData = party.GetData();
             return s;
         });

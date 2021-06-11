@@ -14,4 +14,6 @@ public class Library : ScriptableObject
     public Adventure[] UnlockedAdventures => unlockedAdventures;
 
     public BaseHero HeroById(int id) => unlockedHeroes.Where(h => h.Id == id).FirstAsMaybe().Select(h => h, () => noHero);
+
+    public Maybe<Adventure> GetAdventureById(int adventureId) => unlockedAdventures.Where(a => a.id == adventureId).FirstAsMaybe();
 }

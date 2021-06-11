@@ -37,6 +37,14 @@ public class AdventureProgress2 : ScriptableObject
         Reset();
         Log.Info($"Init Adventure. {this}");
     }
+
+    public void Init(Adventure adventure)
+    {
+        currentAdventure.Adventure = adventure;
+        Init();
+        Log.Info($"Is advancing the adventure. {this}");
+        Advance();
+    }
     
     public override string ToString() =>
         $"Adventure: {currentAdventure.name}. Stage: {currentStageIndex}. StageSegment: {currentStageSegmentIndex}";
