@@ -3,6 +3,7 @@
 [Serializable]
 public class GameData
 {
+    public string VersionNumber = "Not Initialized";
     public bool IsInitialized = false;
     public GamePartyData PartyData = new GamePartyData();
     public GameAdventureProgressData AdventureProgress = new GameAdventureProgressData();
