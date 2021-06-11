@@ -10,13 +10,43 @@ public class AssetUpdater
     public static void Go()
     {
         UpdateHeroes();
+        UpdateAdventures();
         UpdateCardPools();
         UpdateEquipmentPools();
         UpdateCardIDs();
         UpdateAllCards();
         EnsureDurationPresent();
+        Log.Info("Asset Updates Complete");
     }
 
+    [MenuItem("Neon/Update Card Pools")]
+    private static void UpdateCardPools()
+    {
+        var cards = ScriptableExtensions.GetAllInstances<CardType>();
+        var cardPools = ScriptableExtensions.GetAllInstances<ShopCardPool>();
+        foreach (var pool in cardPools)
+        {
+            var validCards =  cards.Where(card => !card.IsWip
+                                                  && pool.includedRarities.Contains(card.Rarity)
+                                                  && pool.archetypes.Length == card.Archetypes.Count
+                                                  && card.Archetypes.All(cardArchetype => pool.archetypes.Any(poolArchetype => poolArchetype.Value == cardArchetype)))
+                .ToList();
+            if (validCards.Count != pool.allCards.Count 
+                || validCards.Any(validCard => !pool.allCards.Contains(validCard)))
+            {
+                pool.allCards = validCards;
+                EditorUtility.SetDirty(pool);
+            }
+        }
+    }
+
+    
+    [MenuItem("Neon/Update Adventures")]
+    private static void UpdateAdventures()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<Adventure>(), h => h.id, (h, id) => h.id = id);
+    }
+    
     [MenuItem("Neon/Update Heroes")]
     private static void UpdateHeroes()
     {
@@ -52,27 +82,6 @@ public class AssetUpdater
                 map[0].Remove(item);
             }
         }   
-    }
-    
-    [MenuItem("Neon/Update Card Pools")]
-    private static void UpdateCardPools()
-    {
-        var cards = ScriptableExtensions.GetAllInstances<CardType>();
-        var cardPools = ScriptableExtensions.GetAllInstances<ShopCardPool>();
-        foreach (var pool in cardPools)
-        {
-            var validCards =  cards.Where(card => !card.IsWip
-                    && pool.includedRarities.Contains(card.Rarity)
-                    && pool.archetypes.Length == card.Archetypes.Count
-                    && card.Archetypes.All(cardArchetype => pool.archetypes.Any(poolArchetype => poolArchetype.Value == cardArchetype)))
-                .ToList();
-            if (validCards.Count != pool.allCards.Count 
-                || validCards.Any(validCard => !pool.allCards.Contains(validCard)))
-            {
-                pool.allCards = validCards;
-                EditorUtility.SetDirty(pool);
-            }
-        }
     }
 
     [MenuItem("Neon/Update Equipment Pools")]

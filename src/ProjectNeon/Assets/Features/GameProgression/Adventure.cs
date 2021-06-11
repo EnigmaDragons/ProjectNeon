@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Adventure/Adventure")]
 public class Adventure : ScriptableObject
 {
+    [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private Stage[] stages;
     [SerializeField] private DynamicStage[] dynamicStages;
     [SerializeField] private string adventureTitle;
@@ -19,6 +20,7 @@ public class Adventure : ScriptableObject
 
     // @todo #1:15min Design. What happens when the adventure is won?
 
+    public int Id => id;
     public string Title => adventureTitle;
     public string Story => story;
     public Stage[] Stages => stages.ToArray();

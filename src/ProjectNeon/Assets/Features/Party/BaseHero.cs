@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameContent/HeroCharacter")]
 public class BaseHero : ScriptableObject, HeroCharacter
 {
-    [SerializeField, ReadOnly] public int id;
+    [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
     [SerializeField] private StringReference className;
