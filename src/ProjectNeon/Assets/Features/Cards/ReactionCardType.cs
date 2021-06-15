@@ -11,9 +11,12 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     [SerializeField] private ResourceCost onPlayGain;
     [SerializeField] private CardReactionSequence actionSequence;
 
+
     public string Name => string.IsNullOrWhiteSpace(displayName) 
         ? name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords() 
         : displayName;
+
+    public int Id => -1;
     public Sprite Art => art;
     public string Description => description;
     public string TypeDescription => "Reaction";

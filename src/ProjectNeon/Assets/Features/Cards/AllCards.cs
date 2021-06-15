@@ -9,4 +9,5 @@ public class AllCards : ScriptableObject
     [UnityEngine.UI.Extensions.ReadOnly] public CardType[] Cards; //Unity Collection Readonly
 
     public Dictionary<int, CardTypeData> GetMap() => _map ??= Cards.ToDictionary(x => x.id, x => (CardTypeData)x);
+    public Maybe<CardTypeData> GetCardById(int id) => GetMap().ValueOrMaybe(id);
 }

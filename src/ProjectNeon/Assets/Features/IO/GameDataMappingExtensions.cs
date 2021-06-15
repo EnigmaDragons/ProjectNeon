@@ -8,6 +8,9 @@ public static class GameDataMappingExtensions
             Heroes = s.Heroes.Select(h => new GameHeroData
             {
                 BaseHeroId = h.Character.Id,
-            }).ToArray() 
+            }).ToArray(),
+            CardIds = s.Cards.AllCards
+                .SelectMany(cSlot => Enumerable.Range(0, cSlot.Value).Select(_ => cSlot.Key.Id))
+                .ToArray()
         };
 }

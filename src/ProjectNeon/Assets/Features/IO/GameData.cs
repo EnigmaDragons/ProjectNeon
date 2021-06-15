@@ -20,8 +20,8 @@ public class GameAdventureProgressData
 public class GamePartyData
 {
     public int Credits = 0;
-    public int[] CardIds = Array.Empty<int>();
     public GameHeroData[] Heroes = Array.Empty<GameHeroData>();
+    public int[] CardIds = Array.Empty<int>();
 }
 
 [Serializable]

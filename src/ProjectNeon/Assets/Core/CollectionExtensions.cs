@@ -112,6 +112,9 @@ public static class CollectionExtensions
         return maybeNext.Any() ? new Maybe<T>(maybeNext[0]) : Maybe<T>.Missing();
     }
     
+    public static Maybe<TValue> ValueOrMaybe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) =>
+        dictionary.TryGetValue(key, out var val) ? new Maybe<TValue>(val, true) : Maybe<TValue>.Missing();
+
     public static IEnumerable<IEnumerable<T>> Permutations<T>(this IEnumerable<T> list, int depth)
     {
         if (depth == 1) 

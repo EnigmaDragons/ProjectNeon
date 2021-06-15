@@ -29,7 +29,8 @@ public class CardType : ScriptableObject, CardTypeData
     public string Name => !string.IsNullOrWhiteSpace(customName) 
         ? customName 
         : name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
-    
+
+    public int Id => id;
     public IResourceAmount Cost => cost;
     public IResourceAmount Gain => onPlayGain;
     public CardSpeed Speed => speed;

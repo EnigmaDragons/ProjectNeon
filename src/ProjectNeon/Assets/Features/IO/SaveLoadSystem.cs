@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "OnlyOnce/SaveLoadSystem")]
@@ -45,6 +46,10 @@ public sealed class SaveLoadSystem : ScriptableObject
             library.HeroById(partyData.Heroes[0].BaseHeroId),
             numHeroes > 1 ? library.HeroById(partyData.Heroes[1].BaseHeroId) : library.HeroById(0),
             numHeroes > 2 ? library.HeroById(partyData.Heroes[2].BaseHeroId) : library.HeroById(0));
+        var maybeCards = partyData.CardIds.Select(id => library.GetCardById(id));
+        if (maybeCards.Any(c => c.IsMissing))
+            return false;
+        party.Cards.Initialized(maybeCards.Select(c => c.Value));
         return true;
     }
 }

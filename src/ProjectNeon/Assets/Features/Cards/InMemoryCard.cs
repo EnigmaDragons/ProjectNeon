@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class InMemoryCard : CardTypeData
 {
+    public int Id { get; set; } = -1;
     public string Name { get; set; } = "Unnamed";
     public Rarity Rarity { get; set; } = Rarity.Common;
     public IResourceAmount Cost { get; set; } = new InMemoryResourceAmount(0, "None", false);

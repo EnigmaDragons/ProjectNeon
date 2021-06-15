@@ -15,7 +15,7 @@ public static class CurrentGameData
         _stored = stored;
         _current = _stored.Get();
     }
-
+    
     public static void Write(Func<GameData, GameData> transform)
     {
         _stored.Write(transform);

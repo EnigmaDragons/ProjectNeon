@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface CardTypeData 
 {
+    int Id { get; }
     string Name { get; }
     IResourceAmount Cost { get; }
     IResourceAmount Gain  { get; }
