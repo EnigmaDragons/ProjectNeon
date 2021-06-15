@@ -32,7 +32,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         var selectedAdventure = library.GetAdventureById(adventureProgress.AdventureId);
         if (selectedAdventure.IsMissing)
         {
-            Log.Error($"Adventure ");
+            Log.Error($"Unknown Adventure {adventureProgress.AdventureId}");
             return false;
         }
         adventure.Init(selectedAdventure.Value);
@@ -42,14 +42,19 @@ public sealed class SaveLoadSystem : ScriptableObject
     private bool InitParty(GamePartyData partyData)
     {
         var numHeroes = partyData.Heroes.Length;
-        party.Initialized(
-            library.HeroById(partyData.Heroes[0].BaseHeroId),
-            numHeroes > 1 ? library.HeroById(partyData.Heroes[1].BaseHeroId) : library.HeroById(0),
-            numHeroes > 2 ? library.HeroById(partyData.Heroes[2].BaseHeroId) : library.HeroById(0));
         var maybeCards = partyData.CardIds.Select(id => library.GetCardById(id));
         if (maybeCards.Any(c => c.IsMissing))
+        {
+            Log.Error($"Missing Some Cards");
             return false;
-        party.Cards.Initialized(maybeCards.Select(c => c.Value));
+        }
+        
+        party.InitFromSave(
+            library.HeroById(partyData.Heroes[0].BaseHeroId),
+            numHeroes > 1 ? library.HeroById(partyData.Heroes[1].BaseHeroId) : library.HeroById(0),
+            numHeroes > 2 ? library.HeroById(partyData.Heroes[2].BaseHeroId) : library.HeroById(0),
+            partyData.Credits,
+            maybeCards.Select(c => c.Value).ToArray());
         return true;
     }
 }
