@@ -10,8 +10,22 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private Library library;
 
     public bool HasSavedGame => CurrentGameData.HasActiveGame;
-    public void SaveCheckpoint() => CurrentGameData.Save();
+    public void SaveCheckpoint() => SaveCurrentGame();
     public void ClearCurrentSlot() => CurrentGameData.Clear();
+
+    private void SaveCurrentGame()
+    {
+        CurrentGameData.Write(s =>
+        {
+            s.IsInitialized = true;
+            s.AdventureProgress = new GameAdventureProgressData
+            {
+                AdventureId = adventure.CurrentAdventureId
+            };
+            s.PartyData = party.GetData();
+            return s;
+        });
+    }
 
     public CurrentGamePhase LoadSavedGame()
     {
@@ -45,7 +59,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         var maybeCards = partyData.CardIds.Select(id => library.GetCardById(id));
         if (maybeCards.Any(c => c.IsMissing))
         {
-            Log.Error($"Missing Some Cards");
+            Log.Error($"Load Failed - Missing Some Cards");
             return false;
         }
         
@@ -55,6 +69,15 @@ public sealed class SaveLoadSystem : ScriptableObject
             numHeroes > 2 ? library.HeroById(partyData.Heroes[2].BaseHeroId) : library.HeroById(0),
             partyData.Credits,
             maybeCards.Select(c => c.Value).ToArray());
+
+        var deckMaybeCards = partyData.Heroes.Select(h => h.Deck.CardIds.Select(id => library.GetCardById(id)).ToList());
+        if (deckMaybeCards.Any(d => d.Any(c => c.IsMissing)))
+        {
+            Log.Error($"Load Failed - Missing Some Cards from Decks");
+            return false;
+        }
+
+        party.UpdateDecks(deckMaybeCards.Select(d => d.Select(c => c.Value).ToList()).ToArray());
         return true;
     }
 }

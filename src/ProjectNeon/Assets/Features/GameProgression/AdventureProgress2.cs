@@ -10,6 +10,7 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private int currentStageSegmentIndex;
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
 
+    public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentStageSegmentIndex => currentStageSegmentIndex;
     public bool IsFinalStage => currentStageIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap.CurrentMapNode.Type == MapNodeType.Boss && currentStageSegmentIndex > 0;
