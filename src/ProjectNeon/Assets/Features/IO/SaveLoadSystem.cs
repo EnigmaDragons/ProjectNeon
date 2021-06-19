@@ -68,7 +68,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             partyData.Credits,
             maybeCards.Select(c => c.Value).ToArray(),
             maybeEquipments.Select(e => e.Value).ToArray());
-
+        
         var deckMaybeCards = partyData.Heroes.Select(h => h.Deck.CardIds.Select(id => library.GetCardById(id)).ToList());
         if (deckMaybeCards.Any(d => d.Any(c => c.IsMissing)))
             return LoadFailedReason("Missing Cards From Decks");
@@ -76,12 +76,21 @@ public sealed class SaveLoadSystem : ScriptableObject
         
         for (var i = 0; i < numHeroes; i++)
         {
+            var hero = party.Heroes[i];
             var maybeBasicCard = library.GetCardById(partyData.Heroes[i].BasicCardId);
             if (!maybeBasicCard.IsPresent)
                 return LoadFailedReason("Unknown Basic Card");
-            party.Heroes[i].SetBasic(maybeBasicCard.Value);
+            hero.SetBasic(maybeBasicCard.Value);
+
+            foreach (var equipmentIdName in partyData.Heroes[i].EquipmentIdNames)
+            {
+                var maybeEquipment = party.Equipment.Available.Where(x => x.Id == equipmentIdName.Id && x.Name.Equals(equipmentIdName.Name)).FirstAsMaybe();
+                if (!maybeEquipment.IsPresent)
+                    return LoadFailedReason($"Cannot find Hero's Equipped {equipmentIdName.Name} in party equipment");
+                party.EquipTo(maybeEquipment.Value, hero);
+            }
         }
-        
+
         return true;
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 [Serializable]
 public class GameData
@@ -31,6 +32,7 @@ public class GameHeroData
     public int BaseHeroId = -1;
     public int BasicCardId = -1;
     public GameDeckData Deck = new GameDeckData();
+    public GameEquipmentIdName[] EquipmentIdNames = Array.Empty<GameEquipmentIdName>();
 }
 
 [Serializable]
@@ -39,6 +41,12 @@ public class GameDeckData
     public int[] CardIds = Array.Empty<int>();
 }
 
+[Serializable]
+public class GameEquipmentIdName
+{
+    public int Id = -1;
+    public string Name = "";
+}
 
 [Serializable]
 public class GameEquipmentData
