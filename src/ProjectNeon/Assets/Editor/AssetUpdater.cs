@@ -16,6 +16,7 @@ public class AssetUpdater
         UpdateCardIDs();
         UpdateAllCards();
         UpdateEquipmentIDs();
+        UpdateAllEquipments();
         EnsureDurationPresent();
         Log.Info("Asset Updates Complete");
     }
@@ -130,6 +131,18 @@ public class AssetUpdater
                 x.Cards = cards;
                 EditorUtility.SetDirty(x);   
             }
+        });
+    }
+
+    [MenuItem("Neon/UpdateAllEquipments")]
+    private static void UpdateAllEquipments()
+    {
+        var equipments = ScriptableExtensions.GetAllInstances<StaticEquipment>();
+        var allEquipments = ScriptableExtensions.GetAllInstances<AllEquipment>();
+        allEquipments.ForEach(x =>
+        {
+            x.Equipments = equipments;
+            EditorUtility.SetDirty(x);
         });
     }
     

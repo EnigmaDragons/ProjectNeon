@@ -15,6 +15,7 @@ public static class GameDataMappingExtensions
                 }).ToArray(),
             CardIds = s.Cards.AllCards
                 .SelectMany(cSlot => Enumerable.Range(0, cSlot.Value).Select(_ => cSlot.Key.Id))
-                .ToArray()
+                .ToArray(),
+            Equipment = s.Equipment.All.Select(x => x.GetData()).ToArray()
         };
 }

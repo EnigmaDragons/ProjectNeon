@@ -14,6 +14,8 @@ public interface Equipment
     EffectData[] TurnStartEffects { get; }
     EffectData[] TurnEndEffects { get; }
     EffectData[] BattleStartEffects { get; }
+
+    GameEquipmentData GetData();
 }
 
 public static class EquipmentExtensions

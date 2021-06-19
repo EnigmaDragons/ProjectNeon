@@ -45,10 +45,7 @@ public sealed class SaveLoadSystem : ScriptableObject
     {
         var selectedAdventure = library.GetAdventureById(adventureProgress.AdventureId);
         if (selectedAdventure.IsMissing)
-        {
-            Log.Error($"Unknown Adventure {adventureProgress.AdventureId}");
-            return false;
-        }
+            return LoadFailedReason($"Unknown Adventure {adventureProgress.AdventureId}");
         adventure.Init(selectedAdventure.Value);
         return true;
     }
@@ -58,34 +55,39 @@ public sealed class SaveLoadSystem : ScriptableObject
         var numHeroes = partyData.Heroes.Length;
         var maybeCards = partyData.CardIds.Select(id => library.GetCardById(id));
         if (maybeCards.Any(c => c.IsMissing))
-        {
-            Log.Error($"Load Failed - Missing Some Cards");
-            return false;
-        }
+            return LoadFailedReason("Missing Cards");
+
+        var maybeEquipments = partyData.Equipment.Select(e => library.GetEquipment(e));
+        if (maybeEquipments.Any(c => c.IsMissing))
+            return LoadFailedReason("Missing Equipments");
         
         party.InitFromSave(
             library.HeroById(partyData.Heroes[0].BaseHeroId),
             numHeroes > 1 ? library.HeroById(partyData.Heroes[1].BaseHeroId) : library.HeroById(0),
             numHeroes > 2 ? library.HeroById(partyData.Heroes[2].BaseHeroId) : library.HeroById(0),
             partyData.Credits,
-            maybeCards.Select(c => c.Value).ToArray());
+            maybeCards.Select(c => c.Value).ToArray(),
+            maybeEquipments.Select(e => e.Value).ToArray());
 
         var deckMaybeCards = partyData.Heroes.Select(h => h.Deck.CardIds.Select(id => library.GetCardById(id)).ToList());
         if (deckMaybeCards.Any(d => d.Any(c => c.IsMissing)))
-        {
-            Log.Error($"Load Failed - Missing Some Cards from Decks");
-            return false;
-        }
+            return LoadFailedReason("Missing Cards From Decks");
         party.UpdateDecks(deckMaybeCards.Select(d => d.Select(c => c.Value).ToList()).ToArray());
         
         for (var i = 0; i < numHeroes; i++)
         {
             var maybeBasicCard = library.GetCardById(partyData.Heroes[i].BasicCardId);
             if (!maybeBasicCard.IsPresent)
-                Log.Error($"Load Failed - Unknown Basic Card");
+                return LoadFailedReason("Unknown Basic Card");
             party.Heroes[i].SetBasic(maybeBasicCard.Value);
         }
         
         return true;
+    }
+
+    private bool LoadFailedReason(string reason)
+    {
+        Log.Error($"Load Failed - {reason}");
+        return false;
     }
 }

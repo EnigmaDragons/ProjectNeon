@@ -15,6 +15,8 @@ public class PartyEquipmentCollection
 
     public IEnumerable<Equipment> AvailableFor(HeroCharacter c) =>
         Available.Where(e => e.Archetypes.All(c.Archetypes.Contains)).ToList();
+
+    public PartyEquipmentCollection(params Equipment[] e) => Add(e);
     
     public void Add(params Equipment[] e)
     {

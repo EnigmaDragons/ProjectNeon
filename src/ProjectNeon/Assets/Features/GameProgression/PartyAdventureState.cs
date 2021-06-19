@@ -50,14 +50,14 @@ public sealed class PartyAdventureState : ScriptableObject
         return this;
     }
 
-    public void InitFromSave(BaseHero one, BaseHero two, BaseHero three, int numCredits, CardTypeData[] partyCards)
+    public void InitFromSave(BaseHero one, BaseHero two, BaseHero three, int numCredits, CardTypeData[] partyCards, Equipment[] equipments)
     {
         party.Initialized(one, two, three);
         var baseHeroes = party.Heroes;
         heroes = baseHeroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
         credits = numCredits;
         cards.Initialized(partyCards);
-        equipment = new PartyEquipmentCollection();
+        equipment = new PartyEquipmentCollection(equipments);
     }
 
     public void AwardXp(int xp) => UpdateState(() => heroes.ForEach(h => h.AddXp(xp)));
