@@ -22,7 +22,8 @@ public static class CollectionExtensions
         copyList.Remove(item);
         return copyList;
     }
-    
+
+    public static IEnumerable<T> NumCopies<T>(this IEnumerable<T> items, int numCopies) => Enumerable.Range(0, numCopies).SelectMany(_ => items);
     public static T[] AsArray<T>(this T item) => new [] {item};
     public static TValue ValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey key, TValue defaultValue) => d.TryGetValue(key, out var value) ? value : defaultValue;
     public static TValue ValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> d, TKey key, Func<TValue> getDefault) => d.TryGetValue(key, out var value) ? value : getDefault();

@@ -17,7 +17,7 @@ public sealed class PartyCardCollection : ScriptableObject
         allCards.AddRange(cards);
         cardsWithCounts = allCards
             .GroupBy(c => c.Name)
-            .ToDictionary(c => c.First(), c => 0);
+            .ToDictionary(c => c.First(), c => c.Count());
         return this;
     }
 

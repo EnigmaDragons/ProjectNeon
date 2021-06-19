@@ -42,9 +42,8 @@ public sealed class PartyAdventureState : ScriptableObject
         });
 
 
-        var allStartingCards = party.Heroes.SelectMany(h => allCards.Get(h.Archetypes, Rarity.Starter)).ToArray();
+        var allStartingCards = party.Heroes.SelectMany(h => allCards.Get(h.Archetypes, Rarity.Starter).NumCopies(4)).ToArray();
         cards.Initialized(allStartingCards); 
-        allStartingCards.ForEach(c => cards.Add(c, 4)); // This looks suspicious
         
         equipment = new PartyEquipmentCollection();
         return this;
