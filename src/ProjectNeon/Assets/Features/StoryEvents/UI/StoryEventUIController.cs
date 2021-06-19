@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class StoryEventUIController : OnMessage<BeginStoryEvent, MarkStoryEventCompleted>
@@ -14,6 +13,7 @@ public class StoryEventUIController : OnMessage<BeginStoryEvent, MarkStoryEventC
 
     protected override void Execute(MarkStoryEventCompleted msg)
     {
+        Message.Publish(new AutoSaveRequested());
         ui.SetActive(false);
     }
 }
