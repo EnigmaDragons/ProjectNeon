@@ -12,6 +12,7 @@ public abstract class HeroLevelUpOption : ScriptableObject
     {
         Apply(h);
         h.RecordLevelUpPointSpent(Id);
+        Message.Publish(new AutoSaveRequested());
     }
     
     public abstract void Apply(Hero h);
