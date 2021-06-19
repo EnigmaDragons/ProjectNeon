@@ -9,7 +9,8 @@ public class StatIncreaseLevelUpOption : HeroLevelUpOption
     public override string IconName => stat.Value;
     public override string Description => $"+{amount} {stat.Value}";
     
-    public override void Apply(Hero h) => h.ApplyLevelUpPoint(new StatAddends().WithRaw(stat.Value, amount));
+    public override void Apply(Hero h) => h.AddToStats(new StatAddends().WithRaw(stat.Value, amount));
+
     public override void ShowDetail() {}
     public override bool HasDetail => false;
 }

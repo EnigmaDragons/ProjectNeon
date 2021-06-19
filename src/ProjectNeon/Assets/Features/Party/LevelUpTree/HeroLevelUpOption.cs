@@ -7,6 +7,13 @@ public abstract class HeroLevelUpOption : ScriptableObject
     public int Id => id;
     public abstract string IconName { get; }
     public abstract string Description { get; }
+
+    public void SelectAsLevelUp(Hero h)
+    {
+        Apply(h);
+        h.RecordLevelUpPointSpent(Id);
+    }
+    
     public abstract void Apply(Hero h);
     public abstract void ShowDetail();
     public abstract bool HasDetail { get; }

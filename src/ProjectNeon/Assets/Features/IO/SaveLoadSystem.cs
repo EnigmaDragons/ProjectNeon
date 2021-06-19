@@ -94,6 +94,14 @@ public sealed class SaveLoadSystem : ScriptableObject
                     return LoadFailedReason($"Cannot find Hero's Equipped {equipmentIdName.Name} in party equipment");
                 party.EquipTo(maybeEquipment.Value, hero);
             }
+
+            foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds)
+            {
+                var maybePerk = library.GetLevelUpPerkById(optionId);
+                if (!maybePerk.IsPresent)
+                    return LoadFailedReason("Select Level Up Perk not found");
+                maybePerk.Value.Apply(hero);
+            }
         }
 
         return true;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -6,21 +7,22 @@ public class HeroLevels
 {
     [SerializeField] private int currentLevel = 1;
     [SerializeField] private int currentXp = 0;
-    [SerializeField] private int levelUpPoints = 0;
+    [SerializeField] private int unspentLevelUpPoints = 0;
+    [SerializeField] private int totalLevelUpPoints = 0;
     [SerializeField] private int nextXpThreshold = LevelThreshold(2);
+    [SerializeField] private List<int> selectedLevelUpOptionsIds = new List<int>();
 
     private static int curveOffset = 50;
     private static int curveFactor = 50;
-    private IStats _levelUpStats = new StatAddends();
     
     public int CurrentLevel => currentLevel;
     public int Xp => currentXp;
-    public int LevelUpPoints => levelUpPoints;
-    public float NextLevelProgress => (float)XpTowardsNextLevelUp / XpRequiredForNextLevel; 
+    public int UnspentLevelUpPoints => unspentLevelUpPoints;
+    public float NextLevelProgress => (float)XpTowardsNextLevelUp / XpRequiredForNextLevel;
+    public int[] SelectedLevelUpOptionIds => selectedLevelUpOptionsIds.ToArray();
 
     public int XpRequiredForNextLevel => LevelThreshold(currentLevel + 1) - LevelThreshold(currentLevel);
     public int XpTowardsNextLevelUp => currentXp - LevelThreshold(currentLevel);
-    public IStats LevelUpStats => _levelUpStats;
 
     public void AddXp(int xp)
     {
@@ -28,7 +30,8 @@ public class HeroLevels
         while (currentXp >= nextXpThreshold)
         {
             currentLevel++;
-            levelUpPoints++;
+            totalLevelUpPoints++;
+            unspentLevelUpPoints++;
             nextXpThreshold = LevelThreshold(currentLevel + 1);
         }
     }
@@ -39,26 +42,18 @@ public class HeroLevels
             AddXp(XpTowardsNextLevelUp);
     }
 
-    public void RecordLevelUpCompleted()
+    public void RecordLevelUpCompleted(int levelUpOptionId)
     {
-        if (levelUpPoints < 1)
+        if (unspentLevelUpPoints < 1)
         {
             Log.Error("Attempted to apply Level Up Perk with no Level Up Points");
             return;
         }
 
-        levelUpPoints--;
+        unspentLevelUpPoints--;
+        selectedLevelUpOptionsIds.Add(levelUpOptionId);
     }
-
-    public void ApplyLevelUpStats(StatAddends s)
-    {
-        if (levelUpPoints < 1)
-            return;
-        
-        _levelUpStats = _levelUpStats.Plus(s);
-        levelUpPoints--;
-    }
-
+    
     private static int LevelThreshold(int level) 
         => level == 1 
             ? 0 
@@ -83,9 +78,9 @@ public class HeroLevels
         var h = new HeroLevels
         {
             currentLevel = currentLevel, 
-            levelUpPoints = levelUpPoints, 
+            unspentLevelUpPoints = unspentLevelUpPoints, 
             currentXp = currentXp, 
-            nextXpThreshold = nextXpThreshold
+            nextXpThreshold = nextXpThreshold,
         };
         h.AddXp(xp);
         return h;

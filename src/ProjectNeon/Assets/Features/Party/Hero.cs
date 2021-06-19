@@ -13,6 +13,8 @@ public class Hero
     [SerializeField] private HeroLevels levels;
     [SerializeField] private CardTypeData basicCard;
 
+    private IStats _statAdditions = new StatAddends(); 
+
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
         this.character = character;
@@ -36,11 +38,11 @@ public class Hero
     public CardTypeData BasicCard => basicCard;
 
     public IStats BaseStats => 
-        Character.Stats.Plus(levels.LevelUpStats);
+        Character.Stats.Plus(_statAdditions);
     
     // TODO: Maybe don't calculate this every time
     public IStats Stats => Character.Stats
-        .Plus(levels.LevelUpStats)
+        .Plus(_statAdditions)
         .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers).ToArray()))
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
         .Plus(health.AdditiveStats)
@@ -60,6 +62,7 @@ public class Hero
         h.Init(() => Stats);
     }
 
+    public void AddToStats(IStats stats) => UpdateState(() => _statAdditions = _statAdditions.Plus(stats));
     public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
     public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
@@ -67,8 +70,7 @@ public class Hero
     
     // Progression
     public void AddXp(int xp) => UpdateState(() => levels.AddXp(xp));
-    public void ApplyLevelUpPoint(StatAddends stats) => UpdateState(() => levels.ApplyLevelUpStats(stats));
-    public void RecordLevelUpPointSpent() => UpdateState(() => levels.RecordLevelUpCompleted());
+    public void RecordLevelUpPointSpent(int levelUpOptionId) => UpdateState(() => levels.RecordLevelUpCompleted(levelUpOptionId));
 
     // Cleanup Duplication
     public Member AsMemberForTests(int id)

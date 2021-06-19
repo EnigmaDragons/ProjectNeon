@@ -7,11 +7,8 @@ public class PermanentEquipmentLevelUpOption : HeroLevelUpOption
     
     public override string IconName => "";
     public override string Description => $"Permanent: {equipment.Name}";
-    public override void Apply(Hero h)
-    {
-        h.ApplyPermanent(equipment);
-        h.RecordLevelUpPointSpent();
-    }
+
+    public override void Apply(Hero h) => h.ApplyPermanent(equipment);
 
     public override void ShowDetail() {}
     public override bool HasDetail => false;

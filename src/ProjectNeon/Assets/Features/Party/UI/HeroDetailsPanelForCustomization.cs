@@ -28,7 +28,7 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
         equipment.Initialized();
         
         levelUpButton?.gameObject.SetActive(false);
-        if (levelUpButton != null && hero.Levels.LevelUpPoints > 0)
+        if (levelUpButton != null && hero.Levels.UnspentLevelUpPoints > 0)
             levelUpButton.Init("Level Up", () => Message.Publish(new LevelUpHero(hero)));
         
         return this;
