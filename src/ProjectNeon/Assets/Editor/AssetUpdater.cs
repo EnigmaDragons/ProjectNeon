@@ -13,6 +13,7 @@ public class AssetUpdater
         UpdateAdventures();
         UpdateCardPools();
         UpdateEquipmentPools();
+        UpdateLevelUpOptions();
         UpdateCardIDs();
         UpdateAllCards();
         UpdateEquipmentIDs();
@@ -21,7 +22,7 @@ public class AssetUpdater
         Log.Info("Asset Updates Complete");
     }
 
-    [MenuItem("Neon/Update Card Pools")]
+    [MenuItem("Neon/Update/Update Card Pools")]
     private static void UpdateCardPools()
     {
         var cards = ScriptableExtensions.GetAllInstances<CardType>();
@@ -42,20 +43,31 @@ public class AssetUpdater
         }
     }
 
-    
-    [MenuItem("Neon/Update Adventures")]
+    [MenuItem("Neon/Update/Update Level Up Options")]
+    private static void UpdateLevelUpOptions()
+    {
+        var levelUpOptions = ScriptableExtensions.GetAllInstances<HeroLevelUpOption>();
+        AssignAllIds(levelUpOptions, x => x.id, (x, id) => x.id = id);
+        ScriptableExtensions.GetAllInstances<AllLevelUpOptions>().ForEach(x =>
+        {
+            x.LevelUps = levelUpOptions;
+            EditorUtility.SetDirty(x);
+        });
+    }
+
+    [MenuItem("Neon/Update/Update Adventures")]
     private static void UpdateAdventures()
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<Adventure>(), x => x.id, (x, id) => x.id = id);
     }
     
-    [MenuItem("Neon/Update Heroes")]
+    [MenuItem("Neon/Update/Update Heroes")]
     private static void UpdateHeroes()
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<BaseHero>(), x => x.id, (x, id) => x.id = id);
     }
 
-    [MenuItem("Neon/Update Static Equipment")]
+    [MenuItem("Neon/Update/Update Static Equipment")]
     private static void UpdateEquipmentIDs()
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<StaticEquipment>(), x => x.id, (x, id) => x.id = id);
@@ -92,7 +104,7 @@ public class AssetUpdater
         }   
     }
 
-    [MenuItem("Neon/Update Equipment Pools")]
+    [MenuItem("Neon/Update/Update Equipment Pools")]
     private static void UpdateEquipmentPools()
     {
         var equipments = ScriptableExtensions.GetAllInstances<StaticEquipment>();
@@ -113,13 +125,13 @@ public class AssetUpdater
         }
     }
 
-    [MenuItem("Neon/Update Card IDs")]
+    [MenuItem("Neon/Update/Update Card IDs")]
     private static void UpdateCardIDs()
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<CardType>(), c => c.id, (c, id) => c.id = id);
     }
 
-    [MenuItem("Neon/UpdateAllCards")]
+    [MenuItem("Neon/Update/UpdateAllCards")]
     private static void UpdateAllCards()
     {
         var cards = ScriptableExtensions.GetAllInstances<CardType>();
@@ -134,7 +146,7 @@ public class AssetUpdater
         });
     }
 
-    [MenuItem("Neon/UpdateAllEquipments")]
+    [MenuItem("Neon/Update/UpdateAllEquipments")]
     private static void UpdateAllEquipments()
     {
         var equipments = ScriptableExtensions.GetAllInstances<StaticEquipment>();
