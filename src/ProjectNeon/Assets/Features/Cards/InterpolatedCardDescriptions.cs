@@ -307,10 +307,13 @@ public static class InterpolatedCardDescriptions
     private static string EvaluatedFormula(EffectData data, Member owner, ResourceQuantity xCost)
     {
         var f = data.InterpolateFriendlyFormula();
-        if (f.InterpolatePartialFormula != null && f.InterpolatePartialFormula.IsSupplied)
+        if (f.ShouldUsePartialFormula)
         {
             var ipf = f.InterpolatePartialFormula;
-            return FormattedFormula($"{ipf.Prefix} {FormulaResult(ipf.EvaluationPartialFormula, owner, xCost)} {ipf.Suffix}".Trim());
+            var formulaResult = ipf.EvaluationPartialFormula.Length > 0
+                ? FormulaResult(ipf.EvaluationPartialFormula, owner, xCost).ToString("f2")
+                : "";
+            return FormattedFormula($"{ipf.Prefix} {formulaResult} {ipf.Suffix}".Trim());
         }
 
         return RoundUp(FormulaResult(f.FullFormula, owner, xCost)).ToString();
