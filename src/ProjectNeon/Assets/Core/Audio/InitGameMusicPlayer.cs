@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public sealed class InitGameMusicPlayer : CrossSceneSingleInstance
+public sealed class InitGameMusicPlayer : MonoBehaviour
 {
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private GameMusicPlayer musicPlayer;
 
-    protected override void OnAwake() => musicPlayer.Init(musicSource);
-
-    protected override string UniqueTag => "Music";
+    private void Awake() => musicPlayer.InitIfNeeded(musicSource);
 }

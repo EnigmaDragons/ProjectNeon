@@ -4,19 +4,18 @@
 using UnityEngine.Windows;
 #endif
 
-public class EzScreen : CrossSceneSingleInstance
+public class EditorEzScreenSingleton : CrossSceneSingleInstance
 {
     [SerializeField] private string filename;
     
     protected override string UniqueTag => "Screenshots";
     private static int _counter;
 
+#if UNITY_EDITOR_WIN
     protected override void OnAwake()
     {
-#if UNITY_EDITOR_WIN
         while (File.Exists($"{filename}_{_counter}.png"))
             _counter++;
-#endif
     }
 
     private void Update()
@@ -28,4 +27,5 @@ public class EzScreen : CrossSceneSingleInstance
             Log.Info($"Captured screenshot: {n}");
         }
     }
+#endif
 }

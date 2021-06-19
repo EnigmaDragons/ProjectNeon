@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public sealed class InitUiSfxPlayer : CrossSceneSingleInstance
+public sealed class InitUiSfxPlayer : MonoBehaviour
 {
     [SerializeField] private AudioSource uiAudioSource;
     [SerializeField] private UiSfxPlayer uiSfxPlayer;
 
-    protected override string UniqueTag => "UiSounds";
-    protected override void OnAwake() => uiSfxPlayer.Init(uiAudioSource);
+    private void Awake() => uiSfxPlayer.InitIfNeeded(uiAudioSource);
 }
