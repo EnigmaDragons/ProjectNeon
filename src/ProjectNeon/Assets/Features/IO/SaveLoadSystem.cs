@@ -80,6 +80,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             var heroSaveData = partyData.Heroes[i];
             
             hero.SetLevels(heroSaveData.Levels);
+            hero.SetHealth(heroSaveData.Health);
+            
             var maybeBasicCard = library.GetCardById(heroSaveData.BasicCardId);
             if (!maybeBasicCard.IsPresent)
                 return LoadFailedReason("Unknown Basic Card");

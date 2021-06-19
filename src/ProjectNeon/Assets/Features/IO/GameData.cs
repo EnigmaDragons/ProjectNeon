@@ -31,6 +31,7 @@ public class GameHeroData
     public int BaseHeroId = -1;
     public int BasicCardId = -1;
     public HeroLevels Levels = new HeroLevels();
+    public HeroHealth Health = new HeroHealth();
     public GameDeckData Deck = new GameDeckData();
     public GameEquipmentIdName[] EquipmentIdNames = Array.Empty<GameEquipmentIdName>();
 }
