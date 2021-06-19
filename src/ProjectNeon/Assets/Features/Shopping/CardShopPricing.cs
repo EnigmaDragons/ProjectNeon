@@ -20,7 +20,7 @@ public static class CardShopPricing
     public static int EquipmentShopPrice(this Rarity rarity, float priceFactor)
     {
         if (rarity == Rarity.Common)
-            return WithShopPricingVariance(100 * priceFactor);
+            return WithShopPricingVariance(80 * priceFactor);
         if (rarity == Rarity.Uncommon)
             return WithShopPricingVariance(200 * priceFactor);
         if (rarity == Rarity.Rare)
