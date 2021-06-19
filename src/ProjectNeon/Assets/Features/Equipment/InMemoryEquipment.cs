@@ -1,5 +1,6 @@
 public class InMemoryEquipment : Equipment
 {
+    public int Id { get; set; } = -1;
     public string Name { set; get; }
     public string Description { set; get; }
     public int Price { set; get; }

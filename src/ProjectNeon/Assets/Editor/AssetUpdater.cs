@@ -15,6 +15,7 @@ public class AssetUpdater
         UpdateEquipmentPools();
         UpdateCardIDs();
         UpdateAllCards();
+        UpdateEquipmentIDs();
         EnsureDurationPresent();
         Log.Info("Asset Updates Complete");
     }
@@ -44,13 +45,19 @@ public class AssetUpdater
     [MenuItem("Neon/Update Adventures")]
     private static void UpdateAdventures()
     {
-        AssignAllIds(ScriptableExtensions.GetAllInstances<Adventure>(), h => h.id, (h, id) => h.id = id);
+        AssignAllIds(ScriptableExtensions.GetAllInstances<Adventure>(), x => x.id, (x, id) => x.id = id);
     }
     
     [MenuItem("Neon/Update Heroes")]
     private static void UpdateHeroes()
     {
-        AssignAllIds(ScriptableExtensions.GetAllInstances<BaseHero>(), h => h.id, (h, id) => h.id = id);
+        AssignAllIds(ScriptableExtensions.GetAllInstances<BaseHero>(), x => x.id, (x, id) => x.id = id);
+    }
+
+    [MenuItem("Neon/Update Static Equipment")]
+    private static void UpdateEquipmentIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<StaticEquipment>(), x => x.id, (x, id) => x.id = id);
     }
 
     private static void AssignAllIds<T>(T[] items, Func<T, int> getId, Action<T, int> setId) where T : Object

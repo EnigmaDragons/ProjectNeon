@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Pyromancer_BloodSweatAndFlames
   m_EditorClassIdentifier: 
+  id: 42
   displayName: Blood, Sweat & Flames
   description: 'When Bloodied: Gain 5 Flames'
-  isWIP: 0
+  archetypes:
+  - {fileID: 11400000, guid: 4d0a0c42368d68b4593cdbbff300f064, type: 2}
   rarity: 3
   slot: 2
   priceFactor: 1
-  archetypes:
-  - {fileID: 11400000, guid: 4d0a0c42368d68b4593cdbbff300f064, type: 2}
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 12
     StatusDetailText: 'When Bloodied: Gain 5 Flames'
     TurnDelay: 0
@@ -65,3 +66,4 @@ MonoBehaviour:
       scope: 1
       cardActions: {fileID: 11400000, guid: b683abeee24548641a964f109c7bfceb, type: 2}
     BonusCardType: {fileID: 0}
+  isWIP: 0

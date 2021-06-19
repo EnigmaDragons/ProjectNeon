@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Medic_JuicedTreatments
   m_EditorClassIdentifier: 
+  id: 5
   displayName: 
   description: When you heal an ally, gives them +1 to all stats for the turn
-  isWIP: 0
+  archetypes:
+  - {fileID: 11400000, guid: 0cfa74ebc446153468352fc38ea01644, type: 2}
   rarity: 1
   slot: 2
   priceFactor: 1
-  archetypes:
-  - {fileID: 11400000, guid: 0cfa74ebc446153468352fc38ea01644, type: 2}
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 826fe4704cc583945b74f7f805dfb908, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 12
     StatusDetailText: When you heal an ally, gives them +1 to all stats for the turn
     TurnDelay: 0
@@ -65,3 +66,4 @@ MonoBehaviour:
       scope: 3
       cardActions: {fileID: 11400000, guid: 30dff0f38250a534e8caeac70a849757, type: 2}
     BonusCardType: {fileID: 0}
+  isWIP: 0

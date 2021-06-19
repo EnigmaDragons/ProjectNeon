@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Electroblade_WitheringShockStrike
   m_EditorClassIdentifier: 
+  id: 35
   displayName: Withering Shock Strike
   description: Apply Vulnerable when you Stun an enemy
-  isWIP: 0
+  archetypes:
+  - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
   rarity: 3
   slot: 2
   priceFactor: 1
-  archetypes:
-  - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 12
     StatusDetailText: Apply Vulnerable when you Stun an enemy
     TurnDelay: 0
@@ -65,3 +66,4 @@ MonoBehaviour:
       scope: 3
       cardActions: {fileID: 11400000, guid: 0dd71162ba6ddc0428e342ca6fc172c9, type: 2}
     BonusCardType: {fileID: 0}
+  isWIP: 0

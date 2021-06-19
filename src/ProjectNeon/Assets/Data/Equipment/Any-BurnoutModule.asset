@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Any-BurnoutModule
   m_EditorClassIdentifier: 
+  id: 15
   displayName: Burnout Module
   description: The first card you play each turn with a duration, loses 1 duration
     but it's twice as effective
-  isWIP: 0
+  archetypes: []
   rarity: 3
   slot: 2
   priceFactor: 1
-  archetypes: []
   modifiers: []
   resourceModifiers: []
   turnStartEffects: []
@@ -43,6 +43,7 @@ MonoBehaviour:
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 12
     StatusDetailText: The first card you play each turn with a duration, loses 1
       duration but it's twice as effective
@@ -64,3 +65,4 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  isWIP: 0

@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Rifle_AutoMagRifle
   m_EditorClassIdentifier: 
+  id: 6
   displayName: Auto-Mag Rifle
   description: Reloads 1 ammo at the end of turn
+  archetypes:
+  - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   rarity: 2
   slot: 0
   priceFactor: 1
-  archetypes:
-  - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   modifiers: []
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects:
   - EffectType: 82
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -32,15 +34,14 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
+    DurationFormula: 0
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -62,3 +63,4 @@ MonoBehaviour:
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
   battleStartEffects: []
+  isWIP: 0
