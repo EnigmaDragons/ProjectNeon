@@ -74,6 +74,10 @@ public class BattleConclusion : OnMessage<BattleFinished>
         if (msg.Winner == TeamType.Party)
             Advance();
         else
+        {
+            Log.Info("Navigating to defeat screen");
+            CurrentGameData.Clear();
             this.ExecuteAfterDelay(() => navigator.NavigateToDefeatScene(), secondsBeforeReturnToAdventure);
+        }
     }
 }
