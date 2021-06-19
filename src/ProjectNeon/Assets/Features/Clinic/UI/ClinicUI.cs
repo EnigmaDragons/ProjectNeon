@@ -9,6 +9,7 @@ public class ClinicUI : OnMessage<RequestClinicHealService>
     [SerializeField] private TextMeshProUGUI serviceCostLabel;
     [SerializeField] private int subsequentServiceCost = 20;
     
+    protected override void AfterDisable() => Message.Publish(new AutoSaveRequested());
     protected override void AfterEnable()
     {
         patientParent.DestroyAllChildren();

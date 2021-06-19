@@ -25,6 +25,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     }
 
     protected override void AfterEnable() => GetMoreInventory();
+    protected override void AfterDisable() => Message.Publish(new AutoSaveRequested());
     protected override void Execute(GetFreshEquipmentSet msg) => GetMoreInventory();
 
     public void GetMoreInventory()

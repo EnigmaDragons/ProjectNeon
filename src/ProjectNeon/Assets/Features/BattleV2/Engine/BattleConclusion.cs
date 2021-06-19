@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Features.GameProgression.Messages;
 using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>

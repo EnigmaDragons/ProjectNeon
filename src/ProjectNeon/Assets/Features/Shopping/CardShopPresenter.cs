@@ -24,6 +24,7 @@ public class CardShopPresenter : MonoBehaviour
     }
 
     private void OnEnable() => GetMoreInventory();
+    private void OnDisable() => Message.Publish(new AutoSaveRequested());
 
     public void GetMoreInventory()
     {

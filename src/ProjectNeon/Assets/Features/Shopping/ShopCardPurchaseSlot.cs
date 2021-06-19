@@ -45,7 +45,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
         cardPresenter.Clear();
         soldVisual.SetActive(true);
         party.UpdateCreditsBy(-_price);
-        party.Cards.Add(_card);
+        party.Add(_card);
     }
 
     protected override void Execute(PartyAdventureStateChanged msg) => UpdateAffordability();
