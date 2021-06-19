@@ -76,8 +76,16 @@ public sealed class SaveLoadSystem : ScriptableObject
             Log.Error($"Load Failed - Missing Some Cards from Decks");
             return false;
         }
-
         party.UpdateDecks(deckMaybeCards.Select(d => d.Select(c => c.Value).ToList()).ToArray());
+        
+        for (var i = 0; i < numHeroes; i++)
+        {
+            var maybeBasicCard = library.GetCardById(partyData.Heroes[i].BasicCardId);
+            if (!maybeBasicCard.IsPresent)
+                Log.Error($"Load Failed - Unknown Basic Card");
+            party.Heroes[i].SetBasic(maybeBasicCard.Value);
+        }
+        
         return true;
     }
 }

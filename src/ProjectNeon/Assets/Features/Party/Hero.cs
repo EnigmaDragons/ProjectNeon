@@ -11,7 +11,7 @@ public class Hero
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
     [SerializeField] private HeroLevels levels;
-    [SerializeField] private CardTypeData basicCard = new InMemoryCard();
+    [SerializeField] private CardTypeData basicCard;
 
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
@@ -51,7 +51,7 @@ public class Hero
     public void SetHp(int hp) => UpdateState(() => health.SetHp(hp));
     public void AdjustHp(int amount) => UpdateState(() => health.AdjustHp(amount));
 
-    public void SetBasic(CardType c) => basicCard = c;
+    public void SetBasic(CardTypeData c) => basicCard = c;
     public void SetDeck(RuntimeDeck d) => deck = d;
     public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
     public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
@@ -59,7 +59,6 @@ public class Hero
     public void ApplyPermanent(Equipment e) => UpdateState(() => equipment.EquipPermanent(e));
     
     // Progression
-    // [Obsolete("Just use XP instead")] public void LevelUp(int numLevels) => UpdateState(() => levels.LevelUp(numLevels));
     public void AddXp(int xp) => UpdateState(() => levels.AddXp(xp));
     public void ApplyLevelUpPoint(StatAddends stats) => UpdateState(() => levels.ApplyLevelUpStats(stats));
     public void RecordLevelUpPointSpent() => UpdateState(() => levels.RecordLevelUpCompleted());

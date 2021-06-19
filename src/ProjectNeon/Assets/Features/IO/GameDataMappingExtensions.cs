@@ -10,6 +10,7 @@ public static class GameDataMappingExtensions
                 .Select(h => new GameHeroData
                 {
                     BaseHeroId = h.Character.Id,
+                    BasicCardId = h.BasicCard.Id,
                     Deck = new GameDeckData { CardIds = h.Deck.Cards.Select(c => c.Id).ToArray() }
                 }).ToArray(),
             CardIds = s.Cards.AllCards
