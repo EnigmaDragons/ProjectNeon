@@ -14,6 +14,15 @@ public class GameData
 public class GameAdventureProgressData
 {
     public int AdventureId = -1;
+    public GameAdventureProgressType Type = GameAdventureProgressType.Unknown;
+    public int CurrentChapterIndex = -1;
+    public int CurrentStageSegmentIndex = -1;
+}
+
+public enum GameAdventureProgressType
+{
+    Unknown = 0,
+    V2 = 1,
 }
 
 [Serializable]

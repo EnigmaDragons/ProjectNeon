@@ -15,11 +15,11 @@ public class BattleConclusion : OnMessage<BattleFinished>
     
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
-        var rewardFactors = adventure2.Stage > 0
-            ? adventure2.CurrentStage.RewardRarityFactors
+        var rewardFactors = adventure2.CurrentChapterNumber > 0
+            ? adventure2.CurrentChapter.RewardRarityFactors
             : new DefaultRarityFactors();
         
-        var rewardPicker = new ShopSelectionPicker(adventure2.Stage, rewardFactors, state.Party);
+        var rewardPicker = new ShopSelectionPicker(adventure2.CurrentChapterNumber, rewardFactors, state.Party);
         if (state.IsEliteBattle)
         {
             // Tuned Reward Set

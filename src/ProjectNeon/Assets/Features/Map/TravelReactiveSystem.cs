@@ -16,7 +16,9 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
     {
         if (_isTraveling)
             return;
-        adventure.Advance();
+        if (!msg.TravelInstantly)
+            adventure.Advance();
+        
         _isTraveling = true;
         gameMap.MoveTo(msg.NodeId);
         gameMap.AllGameObjects.ForEach(x => x.SetCanTravelTo(false));
@@ -29,8 +31,18 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
         _travelTo = msg.Node;
         _onArrive = msg.OnArrive;
         PlayerToken.GetComponent<Floating>().enabled = false;
+        if (msg.TravelInstantly)
+            TravelInstantly();
     }
 
+    private void TravelInstantly()
+    {
+        _isTraveling = false;
+        PlayerToken.transform.position = _travelTo.transform.position;
+        _onArrive();
+        Log.Info($"Travel Instantly Finished");
+    }
+    
     private void Update()
     {
         if (!_isTraveling)
@@ -42,6 +54,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
             StartFloating();
             _isTraveling = false;
         }
+
         PlayerToken.transform.position = Vector3.MoveTowards(PlayerToken.transform.position, _travelTo.transform.position, speed * Time.deltaTime);
     }
     

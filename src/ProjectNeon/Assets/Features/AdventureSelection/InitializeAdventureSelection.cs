@@ -32,10 +32,7 @@ public class InitializeAdventureSelection : MonoBehaviour
             {
                 s.IsInitialized = true;
                 s.Phase = CurrentGamePhase.SelectedAdventure;
-                s.AdventureProgress = new GameAdventureProgressData
-                {
-                    AdventureId = adventure.Id
-                };
+                s.AdventureProgress = adventureProgress2.GetData();
                 return s;
             });
             navigator.NavigateToSquadSelection();

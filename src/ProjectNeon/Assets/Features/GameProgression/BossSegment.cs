@@ -9,5 +9,5 @@ public class BossSegment : StageSegment
     public override Maybe<string> Detail => Maybe<string>.Missing();
 
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx)
-        => new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentStage.BossBattlefield, false, ctx.Adventure.CurrentStage.BossEnemies.Select(x => x.GetEnemy(ctx.Adventure.Stage)).ToArray());
+        => new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentChapter.BossBattlefield, false, ctx.Adventure.CurrentChapter.BossEnemies.Select(x => x.GetEnemy(ctx.Adventure.CurrentChapterNumber)).ToArray());
 }

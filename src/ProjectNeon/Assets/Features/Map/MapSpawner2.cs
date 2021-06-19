@@ -47,8 +47,33 @@ public class MapSpawner2 : MonoBehaviour
         mapRect.GetWorldCorners(corners);
         SpawnNodes((RectTransform)nodes.transform, corners[1]);
         SpawnLines((RectTransform)lines.transform);
-        SpawnToken(map.gameObject);
         ConvertAdjacentNodesToDeterministic();
+        SpawnToken(map.gameObject);
+        TravelNextIfNeededBasedOnAdventureProgress();
+        StartPlayerTokenFloating();
+    }
+
+    private void TravelNextIfNeededBasedOnAdventureProgress()
+    {
+        var numToMove = progress.CurrentStageSegmentIndex - gameMap.NumMovesMade;
+        Log.Info($"{numToMove} remaining spaces to move.");
+        if (numToMove == 0)
+            return;
+        
+        var currentNode = gameMap.CurrentMapNode;
+        var destinationNodeId = currentNode.ChildrenIds.Random();
+        var destinationNodeGameObject = gameMap.GameObjects[destinationNodeId];
+        Message.Publish(new TravelToNode { 
+            OnArrive = () =>
+            {
+                Log.Info("Arrived at Location");
+                ConvertAdjacentNodesToDeterministic();
+                TravelNextIfNeededBasedOnAdventureProgress();
+            },
+            Node = destinationNodeGameObject.gameObject,
+            NodeId = destinationNodeId,
+            TravelInstantly = true
+        });
     }
     
     private void Start() => Message.Publish(new FocusOnMapElement { MapElement = (RectTransform)_playerToken.transform });
@@ -56,18 +81,18 @@ public class MapSpawner2 : MonoBehaviour
     private void GenerateMap()
     {
         var size = gameMap.Map.ArtPrototype.GetComponent<RectTransform>().sizeDelta;
-        var columnSize = (size.x - Margin.z - Margin.x) / (progress.CurrentStage.SegmentCount + 1);
+        var columnSize = (size.x - Margin.z - Margin.x) / (progress.CurrentChapter.SegmentCount + 1);
         var height = size.y - Margin.y - Margin.w;
         var startNode = MapNode.GenerateNew(
             x: (int) Mathf.Round(columnSize / 2 + Margin.z),
             y: (int) Mathf.Round(height / 2 + Margin.w));
         startNode.Type = MapNodeType.Start;
         var bossNode = MapNode.GenerateNew(
-            x: (int) Mathf.Round(columnSize / 2 + Margin.z + columnSize * progress.CurrentStage.SegmentCount),
+            x: (int) Mathf.Round(columnSize / 2 + Margin.z + columnSize * progress.CurrentChapter.SegmentCount),
             y: (int) Mathf.Round(height / 2 + Margin.w));
         bossNode.Type = MapNodeType.Boss;
         var columns = new List<List<MapNode>> { new List<MapNode> { startNode }, new List<MapNode> { bossNode } };
-        for (var column = 1; column < progress.CurrentStage.SegmentCount; column++)
+        for (var column = 1; column < progress.CurrentChapter.SegmentCount; column++)
         {
             var nodesInColumn = Rng.Int(gameMap.Map.MinPaths, gameMap.Map.MaxPaths + 1);
             var rowSize = height / nodesInColumn;
@@ -148,10 +173,9 @@ public class MapSpawner2 : MonoBehaviour
         rect.pivot = new Vector2(0.5f, 0.5f);
         rect.anchoredPosition = ((RectTransform) gameMap.GameObjects[gameMap.CurrentPositionId].transform).anchoredPosition;
         travelReactiveSystem.PlayerToken = _playerToken;
-        StartFloating();
     }
 
-    private void StartFloating()
+    private void StartPlayerTokenFloating()
     {
         var floating = _playerToken.GetComponent<Floating>();
         if (floating != null)

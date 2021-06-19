@@ -21,4 +21,13 @@ public static class GameDataMappingExtensions
                 .ToArray(),
             Equipment = s.Equipment.All.Select(x => x.GetData()).ToArray()
         };
+
+    public static GameAdventureProgressData GetData(this AdventureProgress2 p)
+        => new GameAdventureProgressData
+        {
+            AdventureId = p.CurrentAdventureId,
+            Type = GameAdventureProgressType.V2,
+            CurrentChapterIndex = p.CurrentChapterIndex,
+            CurrentStageSegmentIndex = p.CurrentStageSegmentIndex
+        };
 }

@@ -6,5 +6,5 @@ public class CurrentStageNamePresenter : MonoBehaviour
     [SerializeField] private AdventureProgress2 progress;
     [SerializeField] private TextMeshProUGUI label;
 
-    private void Awake() => label.text = $"{progress.CurrentStage.DisplayName}";
+    private void Awake() => label.text = $"{progress.CurrentChapter.DisplayName}";
 }

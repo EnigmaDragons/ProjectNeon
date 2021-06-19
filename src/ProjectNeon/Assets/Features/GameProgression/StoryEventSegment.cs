@@ -16,7 +16,7 @@ public class StoryEventSegment : StageSegment
         var encountered = new HashSet<string>(adventure.FinishedStoryEvents);
         var storyEvent = events.AllEvents
             .Where(x => 
-                x.StorySetting == adventure.CurrentStage.StorySetting
+                x.StorySetting == adventure.CurrentChapter.StorySetting
                 && !encountered.Contains(x.name))
             .Random();
         adventure.RecordEncounteredStoryEvent(storyEvent);

@@ -6,4 +6,5 @@ public class TravelToNode
     public Action OnArrive;
     public GameObject Node;
     public string NodeId;
+    public bool TravelInstantly;
 }

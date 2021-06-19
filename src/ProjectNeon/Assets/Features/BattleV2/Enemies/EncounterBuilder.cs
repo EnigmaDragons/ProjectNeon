@@ -43,7 +43,7 @@ public class EncounterBuilder : ScriptableObject
         while (numRemainingMustIncludes > 0)
         {
             var nextEnemy = mustIncludePossibilities.Random();
-            var nextEnemyInstance = nextEnemy.GetEnemy(currentAdventureProgress.Stage);
+            var nextEnemyInstance = nextEnemy.GetEnemy(currentAdventureProgress.CurrentChapterNumber);
             enemies.Add(nextEnemyInstance);
             Log($"Added \"Must Include\" {nextEnemyInstance.Name} to Encounter");
             numRemainingMustIncludes--;
@@ -51,7 +51,7 @@ public class EncounterBuilder : ScriptableObject
         }
 
         while (_selector.TryGetEnemy(
-            new EncounterBuildingContext(enemies.ToArray(), possible.Select(x => x.GetEnemy(currentAdventureProgress.Stage)).ToArray(), currentDifficulty, difficulty), out EnemyInstance enemy))
+            new EncounterBuildingContext(enemies.ToArray(), possible.Select(x => x.GetEnemy(currentAdventureProgress.CurrentChapterNumber)).ToArray(), currentDifficulty, difficulty), out EnemyInstance enemy))
         {
             enemies.Add(enemy);
             Log($"Added {enemy.Name} to Encounter");

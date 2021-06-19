@@ -8,7 +8,7 @@ public class BattleStageMusicStarter : MonoBehaviour
 
     private void Start()
     {
-        var stageMusic = adventure.CurrentStage.StageBattleTheme;
+        var stageMusic = adventure.CurrentChapter.StageBattleTheme;
         var musicToPlay = stageMusic ?? defaultBattleTheme;
         player.PlaySelectedMusicLooping(musicToPlay.clip);
     }

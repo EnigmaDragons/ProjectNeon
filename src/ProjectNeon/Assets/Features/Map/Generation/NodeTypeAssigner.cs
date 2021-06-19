@@ -15,7 +15,7 @@ public class NodeTypeAssigner
     public void Assign(List<List<MapNode>> map)
     {
         var totalNodes = map.SelectMany(x => x).Count() - 2;
-        var possibilities = _progress.CurrentStage.NodeTypeOdds.GenerateFreshSet();
+        var possibilities = _progress.CurrentChapter.NodeTypeOdds.GenerateFreshSet();
         possibilities = Enumerable.Range(0, (int)Math.Ceiling((decimal)totalNodes / possibilities.Count)).SelectMany(x => possibilities).ToList();
         var nodeTypes = possibilities.Distinct().ToArray();
         for (var column = map.Count - 2; column > 0; column--)

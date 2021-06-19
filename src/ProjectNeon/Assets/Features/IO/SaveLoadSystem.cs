@@ -18,10 +18,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;
-            s.AdventureProgress = new GameAdventureProgressData
-            {
-                AdventureId = adventure.CurrentAdventureId
-            };
+            s.AdventureProgress = adventure.GetData();
             s.PartyData = party.GetData();
             return s;
         });
@@ -46,7 +43,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         var selectedAdventure = library.GetAdventureById(adventureProgress.AdventureId);
         if (selectedAdventure.IsMissing)
             return LoadFailedReason($"Unknown Adventure {adventureProgress.AdventureId}");
-        adventure.Init(selectedAdventure.Value);
+        adventure.Init(selectedAdventure.Value, adventureProgress.CurrentChapterIndex, adventureProgress.CurrentStageSegmentIndex);
         return true;
     }
 
