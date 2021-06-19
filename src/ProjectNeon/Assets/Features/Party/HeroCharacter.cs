@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public interface HeroCharacter
@@ -44,4 +45,19 @@ public class InMemoryHeroCharacter : HeroCharacter
 public static class HeroCharacterExtensions
 {
     public static bool DeckIsValid(this HeroCharacter h) => h.Deck.Cards.None(x => x == null);
+    
+    public static HashSet<string> ArchetypeKeys(this HeroCharacter h)
+    {
+        var archetypes = h.Archetypes.OrderBy(a => a).ToList();
+        var archetypeKeys = new HashSet<string>();
+        // Singles
+        archetypes.ForEach(a => archetypeKeys.Add(a));
+        // Duals
+        archetypes.Combinations(2)
+            .Select(p => string.Join(" + ", p))
+            .ForEach(a => archetypeKeys.Add(a));
+        // Triple
+        archetypeKeys.Add(string.Join(" + ", archetypes));
+        return archetypeKeys;
+    }
 }
