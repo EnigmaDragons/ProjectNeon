@@ -14,6 +14,12 @@ public class CardInLibraryButton : MonoBehaviour
         presenter.Set(card, () => { });
         numCopiesLabel.text = "";
     }
+
+    public void InitInfoOnly(Card card)
+    {
+        presenter.Set(card);
+        numCopiesLabel.text = "";
+    }
     
     public void Init(CardTypeData card, int numTotal, int numAvailable)
     {

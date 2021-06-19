@@ -8,7 +8,7 @@ public static class CollectionExtensions
     public static bool None<T>(this IEnumerable<T> items) => !items.Any();
     public static bool None<T>(this IEnumerable<T> items, Func<T, bool> condition) => !items.Any(condition);
     [Obsolete] public static void CopiedForEach<T>(this IEnumerable<T> items, Action<T> action) => items.ToList().ForEach(action);
-    [Obsolete] public static IEnumerable<T> Concat<T>(this IEnumerable<T> items, T item) => items.Concat(item.AsArray());
+    public static IEnumerable<T> Concat<T>(this IEnumerable<T> items, T item) => items.Concat(item.AsArray());
     [Obsolete] public static IEnumerable<T> Concat<T>(this T item, IEnumerable<T> items) => item.AsArray().Concat(items);
     [Obsolete] public static IEnumerable<T> ConcatIf<T>(this IEnumerable<T> items, T item, Func<T, bool> condition) 
         => item != null && condition(item) ? items.Concat(item) : items;

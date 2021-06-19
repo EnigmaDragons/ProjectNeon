@@ -60,4 +60,11 @@ public static class HeroCharacterExtensions
         archetypeKeys.Add(string.Join(" + ", archetypes));
         return archetypeKeys;
     }
+    
+    public static Member AsMemberForLibrary(this HeroCharacter h)
+    {
+        var stats = h.Stats;
+        var m = new Member(-1, h.Name, h.Class, TeamType.Party, stats, h.BattleRole, stats.PrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.ClassCard));
+        return m;
+    }
 }
