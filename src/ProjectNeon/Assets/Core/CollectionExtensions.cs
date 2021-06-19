@@ -72,7 +72,8 @@ public static class CollectionExtensions
         Func<T, TKey> keySelector, Func<T, TValue> valueSelector)
     {
         var dictionary = new Dictionary<TKey, TValue>();
-        items.ForEach(i => dictionary[keySelector(i)] = valueSelector(i));
+        foreach(var i in items)
+            dictionary[keySelector(i)] = valueSelector(i);
         return dictionary;
     }
 

@@ -301,8 +301,23 @@ public static class InterpolatedCardDescriptions
 
     private static string FormulaAmount(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
         => WithImplications(owner.IsPresent
-            ? RoundUp(Formula.Evaluate(owner.Value.State.ToSnapshot(), data.Formula, xCost)).ToString()
+            ? EvaluatedFormula(data, owner.Value, xCost)
             : FormattedFormula(data.Formula));
+
+    private static string EvaluatedFormula(EffectData data, Member owner, ResourceQuantity xCost)
+    {
+        var f = data.InterpolateFriendlyFormula();
+        if (f.InterpolatePartialFormula != null && f.InterpolatePartialFormula.IsSupplied)
+        {
+            var ipf = f.InterpolatePartialFormula;
+            return FormattedFormula($"{ipf.Prefix} {FormulaResult(ipf.EvaluationPartialFormula, owner, xCost)} {ipf.Suffix}".Trim());
+        }
+
+        return RoundUp(FormulaResult(f.FullFormula, owner, xCost)).ToString();
+    }
+
+    private static float FormulaResult(string formula, Member owner, ResourceQuantity xCost)
+        => Formula.Evaluate(owner.State.ToSnapshot(), formula, xCost);
     
     private static string MagicAmount(EffectData data, Maybe<Member> owner) 
         => WithImplications(owner.IsPresent

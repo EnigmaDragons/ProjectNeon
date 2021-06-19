@@ -89,7 +89,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _getCanActivate = getCanActivate;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _onRightClick = _isHand ? ToggleAsBasic : (Action)(() => { });
+        _onRightClick = _isHand ? ToggleAsBasic : (Action)_cardType.ShowDetailedCardView;
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
     }
