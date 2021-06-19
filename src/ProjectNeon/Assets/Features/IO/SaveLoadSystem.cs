@@ -77,12 +77,15 @@ public sealed class SaveLoadSystem : ScriptableObject
         for (var i = 0; i < numHeroes; i++)
         {
             var hero = party.Heroes[i];
-            var maybeBasicCard = library.GetCardById(partyData.Heroes[i].BasicCardId);
+            var heroSaveData = partyData.Heroes[i];
+            
+            hero.SetLevels(heroSaveData.Levels);
+            var maybeBasicCard = library.GetCardById(heroSaveData.BasicCardId);
             if (!maybeBasicCard.IsPresent)
                 return LoadFailedReason("Unknown Basic Card");
             hero.SetBasic(maybeBasicCard.Value);
 
-            foreach (var equipmentIdName in partyData.Heroes[i].EquipmentIdNames)
+            foreach (var equipmentIdName in heroSaveData.EquipmentIdNames)
             {
                 var maybeEquipment = party.Equipment.Available.Where(x => x.Id == equipmentIdName.Id && x.Name.Equals(equipmentIdName.Name)).FirstAsMaybe();
                 if (!maybeEquipment.IsPresent)
@@ -93,7 +96,7 @@ public sealed class SaveLoadSystem : ScriptableObject
 
         return true;
     }
-
+    
     private bool LoadFailedReason(string reason)
     {
         Log.Error($"Load Failed - {reason}");

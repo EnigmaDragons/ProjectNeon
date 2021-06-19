@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 [Serializable]
 public class GameData
@@ -7,8 +6,8 @@ public class GameData
     public string VersionNumber = "Not Initialized";
     public bool IsInitialized = false;
     public CurrentGamePhase Phase = CurrentGamePhase.NotStarted;
-    public GamePartyData PartyData = new GamePartyData();
     public GameAdventureProgressData AdventureProgress = new GameAdventureProgressData();
+    public GamePartyData PartyData = new GamePartyData();
 }
 
 [Serializable]
@@ -31,6 +30,7 @@ public class GameHeroData
 {
     public int BaseHeroId = -1;
     public int BasicCardId = -1;
+    public HeroLevels Levels = new HeroLevels();
     public GameDeckData Deck = new GameDeckData();
     public GameEquipmentIdName[] EquipmentIdNames = Array.Empty<GameEquipmentIdName>();
 }

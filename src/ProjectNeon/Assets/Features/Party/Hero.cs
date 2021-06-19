@@ -53,6 +53,7 @@ public class Hero
 
     public void SetBasic(CardTypeData c) => basicCard = c;
     public void SetDeck(RuntimeDeck d) => deck = d;
+    public void SetLevels(HeroLevels l) => levels = l;
     public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
     public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
