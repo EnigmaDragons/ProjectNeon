@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class CardShopPresenter : MonoBehaviour
@@ -31,7 +32,8 @@ public class CardShopPresenter : MonoBehaviour
         Clear();
         var selection = new ShopSelectionPicker(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party)
             .GenerateCardSelection(cards, _numCards);
-        selection.Cards.ForEach(c => 
+        var cardsWithOwners = selection.Cards.Select(c => c.ToNonBattleCard(party));
+        cardsWithOwners.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)
                 .Initialized(c));
     }

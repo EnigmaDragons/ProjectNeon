@@ -51,14 +51,10 @@ public class BattleConclusion : OnMessage<BattleFinished>
     private void GetUserSelectedRewardCard(Action onFinished, ShopSelectionPicker rewardPicker)
     {
         var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, RarityExtensions.AllExceptStarters);
-        var rewardCards = rewardCardTypes.Select(x =>
-        {
-            var hero = state.Party.BestMatchFor(x.GetArchetypeKey());
-            return new Card(-1, hero.AsMember(-1), x, hero.Character.Tint);
-        });
+        var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party));
         Message.Publish(new GetUserSelectedCard(rewardCards, card =>
         {
-            card.IfPresent(c => state.SetRewardCards(c));
+            card.IfPresent(c => state.SetRewardCards(c.BaseType));
             onFinished();
         }));
     }

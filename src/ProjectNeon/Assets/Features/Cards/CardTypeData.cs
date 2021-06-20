@@ -55,4 +55,10 @@ public static class CardTypeDataExtensions
                 .SelectMany(c => c.ReactionEffect.CardActions.BattleEffects));
 
     public static void ShowDetailedCardView(this CardTypeData c) => Message.Publish(new ShowDetailedCardView(c));
+
+    public static Card ToNonBattleCard(this CardTypeData c, PartyAdventureState party)
+    {
+        var hero = party.BestMatchFor(c.GetArchetypeKey());
+        return new Card(-1, hero.AsMember(-1), c, hero.Character.Tint);
+    }
 }

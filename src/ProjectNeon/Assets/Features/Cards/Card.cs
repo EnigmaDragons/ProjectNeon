@@ -18,8 +18,9 @@ public sealed class Card : CardTypeData
 
     private bool IsBasic => Mode == CardMode.Basic && Owner != null;
     private CardTypeData _type => IsBasic ? Owner.BasicCard.Value : type;
-    public CardTypeData Type => IsBasic ? Owner.BasicCard.Value : (CardTypeData)this;
-
+    public CardTypeData Type => IsBasic ? Owner.BasicCard.Value : this;
+    public CardTypeData BaseType => type;
+    
     public Member Owner => owner;
     
     public int Id => id;
