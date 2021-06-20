@@ -75,7 +75,7 @@ public static class MemberExtensions
     public static bool HasDoubleDamage(this Member m) => m.State[TemporalStatType.DoubleDamage] > 0;
     public static bool HasTaunt(this Member m) => m.State[TemporalStatType.Taunt] > 0;
     public static bool IsAfflicted(this Member m) => m.State.StatusesOfType(StatusTag.DamageOverTime).Length > 0;
-    public static bool IsBloodied(this Member m) => m.MaxHp() / m.CurrentHp() >= 2;
+    public static bool IsBloodied(this Member m) => m.CurrentHp() * 2 >= m.MaxHp();
     public static bool IsStealthed(this Member m) => m.State[TemporalStatType.Stealth] > 0;
     public static bool IsProminent(this Member m) => m.State[TemporalStatType.Prominent] > 0;
     public static bool IsConfused(this Member m) => m.State[TemporalStatType.Confused] > 0;
