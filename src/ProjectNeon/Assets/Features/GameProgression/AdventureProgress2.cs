@@ -15,7 +15,7 @@ public class AdventureProgress2 : ScriptableObject
     public int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
     public int CurrentStageSegmentIndex => currentMap3.Progress;
-    public float ProgressToUnlockChapterBoss => CurrentStageSegmentIndex == 0 ? 0 : CurrentStageSegmentIndex / CurrentChapter.SegmentCount;
+    public float ProgressToUnlockChapterBoss => CurrentStageSegmentIndex == 0 ? 0f : (float)CurrentStageSegmentIndex / CurrentChapter.SegmentCount;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1] == MapNodeType.Boss;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
