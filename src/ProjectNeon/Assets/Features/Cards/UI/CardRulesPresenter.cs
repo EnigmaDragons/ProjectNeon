@@ -40,6 +40,7 @@ public class CardRulesPresenter : MonoBehaviour
             rulesToShow.AddIf("Profitable", d.Description.IndexOf("profitable", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("SingleUse", d.IsSinglePlay);
             rulesToShow.AddIf("Buyout", d.Description.IndexOf("Buyout", StringComparison.OrdinalIgnoreCase) >= 0);
+            rulesToShow.AddIf("Critical", d.Description.IndexOf("Crit", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf(TemporalStatType.Marked.ToString(), d.Description.IndexOf("Mark", StringComparison.OrdinalIgnoreCase) >= 0);
 
             var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());
