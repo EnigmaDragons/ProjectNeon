@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MapSpawner3 : MonoBehaviour
+public class MapSpawner3 : OnMessage<NodeFinished>
 {
     [SerializeField] private CurrentGameMap3 gameMap;
     [SerializeField] private AdventureProgress2 progress;
@@ -25,6 +25,8 @@ public class MapSpawner3 : MonoBehaviour
     private MapGenerationRule3[] _rules;
     private GameObject _playerToken;
     private GameObject _map;
+    
+    protected override void Execute(NodeFinished msg) => GenerateNewNodes();
     
     private void Awake()
     {
@@ -68,7 +70,7 @@ public class MapSpawner3 : MonoBehaviour
             obj.Init(progress, x.Position, () =>
             {
                 gameMap.CompletedNodes.Add(x.Type);
-                GenerateNewNodes();
+                gameMap.CurrentChoices = new List<MapNode3>();
             });
             var rect = (RectTransform) obj.transform;
             rect.pivot = new Vector2(0.5f, 0.5f);

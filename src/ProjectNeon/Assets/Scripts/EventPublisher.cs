@@ -35,4 +35,5 @@ public class EventPublisher : ScriptableObject
     public void HideHeroLevelUpPathway() => Message.Publish(new HideHeroLevelUpPathway());
     public void GivePartyXp() => Message.Publish(new GivePartyXp(100));
     public void CancelTargetSelection() => Message.Publish(new CancelTargetSelectionRequested());
+    public void FinishNode() => Message.Publish(new NodeFinished());
 }
