@@ -26,7 +26,9 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
     private void GenerateDeck()
     {
         _cardButtons = new List<CardInDeckButton>();
+        var hero = state.SelectedHeroesDeck.Hero;
         pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.SelectedHeroesDeck.Deck
+            .Select(x => x.ToNonBattleCard(hero))
             .GroupBy(x => x.Name)
             .OrderBy(x => x.First().Rarity)
             .ThenBy(x => x.Key)
@@ -36,6 +38,17 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
     }
 
     private Action<GameObject> InitCardInDeckButton(CardTypeData card)
+    {
+        Action<GameObject> init = gameObj =>
+        {
+            var cardInDeckButton = gameObj.GetComponent<CardInDeckButton>();
+            cardInDeckButton.Init(card);
+            _cardButtons.Add(cardInDeckButton);
+        };
+        return init;
+    }
+    
+    private Action<GameObject> InitCardInDeckButton(Card card)
     {
         Action<GameObject> init = gameObj =>
         {

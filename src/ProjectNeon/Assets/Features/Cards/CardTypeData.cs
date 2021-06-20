@@ -59,6 +59,11 @@ public static class CardTypeDataExtensions
     public static Card ToNonBattleCard(this CardTypeData c, PartyAdventureState party)
     {
         var hero = party.BestMatchFor(c.GetArchetypeKey());
+        return ToNonBattleCard(c, hero);
+    }
+    
+    public static Card ToNonBattleCard(this CardTypeData c, Hero hero)
+    {
         return new Card(-1, hero.AsMember(-1), c, hero.Character.Tint);
     }
 }

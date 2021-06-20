@@ -41,7 +41,7 @@ public class ResolutionZoneVisualizer : MonoBehaviour
             _card = Maybe<Card>.Missing();
             Clear();
         }
-        else if (_card.Select(c => c.Id, -1) != zone.Cards.First().Id)
+        else if (_card.Select(c => c.CardId, -1) != zone.Cards.First().CardId)
         {
             Log.Info("Show new Resolution Zone card.");
             Show(zone.Cards.First());

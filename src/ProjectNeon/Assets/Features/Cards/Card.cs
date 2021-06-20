@@ -22,8 +22,9 @@ public sealed class Card : CardTypeData
     public CardTypeData BaseType => type;
     
     public Member Owner => owner;
-    
-    public int Id => id;
+
+    public int CardId => id;
+    public int Id => _type.Id;
     public string Name => _type.Name;
     public IResourceAmount Cost => new InMemoryResourceAmount(
         Math.Max(_type.Cost.BaseAmount + _temporalStates.Where(x => x.IsActive).Sum(x => x.CostAdjustment), 0), _type.Cost.ResourceType, _type.Cost.PlusXCost);

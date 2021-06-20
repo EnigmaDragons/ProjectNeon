@@ -47,7 +47,7 @@ public class CardPlayZone : ScriptableObject
         return card;
     }
     
-    public void Remove(Card card) => Mutate(c => c.Where(x => x.Id != card.Id));
+    public void Remove(Card card) => Mutate(c => c.Where(x => x.CardId != card.CardId));
 
     public void Clear() => Mutate(c => Array.Empty<Card>());
     public void PutOnTop(Card card) => Mutate(c => card.Concat(c));
