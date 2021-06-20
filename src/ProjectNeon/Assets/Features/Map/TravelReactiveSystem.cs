@@ -4,12 +4,12 @@ using UnityEngine;
 public class TravelReactiveSystem : OnMessage<TravelToNode>
 {
     [SerializeField] private AdventureProgress2 adventure;
-    [SerializeField] private CurrentGameMap2 gameMap;
+    [SerializeField] private CurrentGameMap3 gameMap;
     [SerializeField] private float speed;
     [HideInInspector] public GameObject PlayerToken { private get; set; }
 
     private bool _isTraveling;
-    private GameObject _travelTo;
+    private Vector2 _travelTo;
     private Action _onArrive;
 
     protected override void Execute(TravelToNode msg)
@@ -20,15 +20,8 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
             adventure.Advance();
         
         _isTraveling = true;
-        gameMap.MoveTo(msg.NodeId);
-        gameMap.AllGameObjects.ForEach(x => x.SetCanTravelTo(false));
-        foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
-        {
-            gameMap.GameObjects[childId].SetCanTravelTo(true);
-            gameMap.GameObjects[childId].ConvertToDeterministic(new AdventureGenerationContext(adventure));
-        }
-
-        _travelTo = msg.Node;
+        gameMap.CurrentPosition = msg.Position;
+        _travelTo = msg.Position;
         _onArrive = msg.OnArrive;
         PlayerToken.GetComponent<Floating>().enabled = false;
         if (msg.TravelInstantly)
@@ -38,7 +31,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
     private void TravelInstantly()
     {
         _isTraveling = false;
-        PlayerToken.transform.position = _travelTo.transform.position;
+        PlayerToken.transform.localPosition = _travelTo;
         _onArrive();
         Log.Info($"Travel Instantly Finished");
     }
@@ -48,14 +41,14 @@ public class TravelReactiveSystem : OnMessage<TravelToNode>
         if (!_isTraveling)
             return;
 
-        if (Vector3.Distance(PlayerToken.transform.position, _travelTo.transform.position) < 0.01f)
+        if (Vector3.Distance(PlayerToken.transform.localPosition, _travelTo) < 0.01f)
         {
             _onArrive();
             StartFloating();
             _isTraveling = false;
         }
 
-        PlayerToken.transform.position = Vector3.MoveTowards(PlayerToken.transform.position, _travelTo.transform.position, speed * Time.deltaTime);
+        PlayerToken.transform.localPosition = Vector3.MoveTowards(PlayerToken.transform.localPosition, _travelTo, speed * Time.deltaTime);
     }
     
     private void StartFloating()

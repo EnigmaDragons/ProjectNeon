@@ -1,6 +1,9 @@
-﻿public class MapNode3
+﻿using System;
+using UnityEngine;
+
+[Serializable]
+public class MapNode3
 {
     public MapNodeType Type;
-    public int X;
-    public int Y;
+    public Vector2 Position;
 }

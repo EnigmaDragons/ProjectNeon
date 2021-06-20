@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameState/AdventureProgress2")]
 public class AdventureProgress2 : ScriptableObject
 {
-    [SerializeField] private CurrentGameMap2 currentMap;
+    [Obsolete] [SerializeField] private CurrentGameMap2 currentMap;
+    [SerializeField] private CurrentGameMap3 currentMap3;
     [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private int currentStageSegmentIndex;
@@ -15,7 +18,7 @@ public class AdventureProgress2 : ScriptableObject
     public int CurrentChapterIndex => currentChapterIndex;
     public int CurrentStageSegmentIndex => currentStageSegmentIndex;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
-    public bool IsLastSegmentOfStage => currentMap.CurrentMapNode.Type == MapNodeType.Boss && currentStageSegmentIndex > 0;
+    public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1] == MapNodeType.Boss && currentStageSegmentIndex > 0;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
 
@@ -83,7 +86,7 @@ public class AdventureProgress2 : ScriptableObject
         {
             currentChapterIndex++;
             currentStageSegmentIndex = -1;
-            currentMap.SetMap(CurrentChapter.Map);
+            currentMap3.SetMap(CurrentChapter.Map, CurrentChapter.SegmentCount);
         } else
         {
             Log.Info("Can't advance: is final stage");

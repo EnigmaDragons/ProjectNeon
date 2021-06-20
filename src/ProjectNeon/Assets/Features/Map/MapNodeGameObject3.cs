@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -11,10 +12,16 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     private IStageSegment _arrivalSegment;
     private Maybe<GameObject> _rulesPanel;
     
-    public void Init()
+    public void Init(AdventureProgress2 progress, Vector3 position, Action onArrive)
     {
         _arrivalSegment = segment;
-        button.onClick.AddListener(() => Message.Publish(new TravelToNode { Node = gameObject, OnArrive = () => _arrivalSegment.Start() }));
+        button.onClick.AddListener(() => Message.Publish(new TravelToNode { Position = position, OnArrive = () =>
+            {
+                onArrive();
+                _arrivalSegment.Start();
+            }
+        }));
+        _arrivalSegment = _arrivalSegment.GenerateDeterministic(new AdventureGenerationContext(progress));
     }
     
     private void Awake()
