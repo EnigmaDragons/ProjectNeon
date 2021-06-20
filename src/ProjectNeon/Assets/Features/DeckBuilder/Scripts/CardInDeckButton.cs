@@ -10,7 +10,8 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
     [SerializeField] private HoverCard hoverCard;
 
     private Canvas _canvas;
-    private CardTypeData _card;
+    private Maybe<Card> _card;
+    private CardTypeData _cardType;
     private int _count;
     private GameObject _hoverCard;
     
@@ -18,15 +19,22 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
     private void OnDestroy() => OnExit();
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => UpdateInfo();
     
-    public void Init(CardTypeData card)
+    public void Init(CardTypeData c)
     {
-        _card = card;
+        _cardType = c;
+        UpdateInfo();
+    }
+
+    public void Init(Card c)
+    {
+        _card = c;
+        _cardType = c.BaseType;
         UpdateInfo();
     }
 
     public void RemoveCard()
     {
-        state.SelectedHeroesDeck.Deck.Remove(state.SelectedHeroesDeck.Deck.First(x => x.Name == _card.Name));
+        state.SelectedHeroesDeck.Deck.Remove(state.SelectedHeroesDeck.Deck.First(x => x.Name == _cardType.Name));
         _count--;
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
     }
@@ -34,7 +42,10 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
     public void OnHover()
     {
         _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);
-        _hoverCard.GetComponent<HoverCard>().Init(_card);
+        if (_card.IsPresent)
+            _hoverCard.GetComponent<HoverCard>().Init(_card.Value);
+        else
+            _hoverCard.GetComponent<HoverCard>().Init(_cardType);
     }
 
     public void OnExit()
@@ -45,8 +56,8 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
 
     private void UpdateInfo()
     {
-        _count = state.SelectedHeroesDeck.Deck.Count(x => x.Name == _card.Name);
-        cardNameText.text = _card.Name;
+        _count = state.SelectedHeroesDeck.Deck.Count(x => x.Name == _cardType.Name);
+        cardNameText.text = _cardType.Name;
         countText.text = _count.ToString();
     }
 }

@@ -41,11 +41,11 @@ public abstract class EffectTransformerBase : EffectTransformer
     {
         if (!_shouldModify(effect, context) 
             || context.Card.IsMissing 
-            || (!_cardIds.Contains(context.Card.Value.Id) && !_tracker.IsActive))
+            || (!_cardIds.Contains(context.Card.Value.CardId) && !_tracker.IsActive))
             return effect;
-        if (!_cardIds.Contains(context.Card.Value.Id))
+        if (!_cardIds.Contains(context.Card.Value.CardId))
         {
-            _cardIds.Add(context.Card.Value.Id);
+            _cardIds.Add(context.Card.Value.CardId);
             _tracker.RecordUse();
         }
         return _modify(effect, context);

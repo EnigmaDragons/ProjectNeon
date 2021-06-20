@@ -37,15 +37,15 @@ public class ResourceCalculatorBase : ResourceCalculator
     public void RecordUsageIfApplicable(Card card)
     {
         if (_isUsedOn(card))
-            _cardIds.Add(card.Id);
+            _cardIds.Add(card.CardId);
         _tracker.RecordUse();
     }
 
     public void UndoUsageIfApplicable(Card card)
     {
-        if (_cardIds.Contains(card.Id))
+        if (_cardIds.Contains(card.CardId))
         {
-            _cardIds.Remove(card.Id);
+            _cardIds.Remove(card.CardId);
             _tracker.UndoUse();
         }
     }

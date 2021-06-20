@@ -61,7 +61,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private bool _requiresPlayerTargeting;
 
     public string CardName => _cardType.Name;
-    public bool Contains(Card c) => HasCard && c.Id == _card.Id;
+    public bool Contains(Card c) => HasCard && c.CardId == _card.CardId;
     public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
     public bool IsHighlighted => highlight.activeSelf;

@@ -14,6 +14,11 @@ class HoverCard : MonoBehaviour
         presenter.Set(card, () => {});
     }
 
+    public void Init(Card card)
+    {
+        presenter.Set(card, () => {});
+    }
+
     private void Start()
     {
         _scaler = FindObjectOfType<CanvasScaler>();
