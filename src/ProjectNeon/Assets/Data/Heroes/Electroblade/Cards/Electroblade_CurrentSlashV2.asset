@@ -10,38 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_Impale1
+  m_Name: Electroblade_CurrentSlashV2
   m_EditorClassIdentifier: 
-  id: 287
-  customName: Impale 1.0
-  art: {fileID: 21300000, guid: f3385a400e63d9e4c92efaffc0600e7e, type: 3}
-  description: 'Deal {E[0]}. <b>Chain</b>: Thrust'
+  id: 277
+  customName: 
+  art: {fileID: 21300000, guid: c5a0ce97cf214164aa62eb4dce7227d1, type: 3}
+  description: Gain <b>3</b> Energy. Deal {E[0]}
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 1
-    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-    plusXCost: 0
-  onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 0
+  onPlayGain:
+    cost: 3
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+    plusXCost: 0
+  rarity: 1
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 962d12ddc6f3a8f44b154b73dbeafc5d, type: 2}
+    cardActions: {fileID: 11400000, guid: 73c2c7837c0759541976e12278397369, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 11400000, guid: a4150e7505bfac54a9d7396bb3f0c4a5, type: 2}
+  chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
-  highlightCondition:
-  - {fileID: 11400000, guid: 2eeb2268469a74b4a9d34016563badca, type: 2}
+  highlightCondition: []
   unhighlightCondition: []
   isWIP: 0

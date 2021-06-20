@@ -10,37 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: ElectroBlade_Energize2
+  m_Name: Electroblade_ImpaleV1
   m_EditorClassIdentifier: 
-  id: 282
-  customName: Energize 2.0
-  art: {fileID: 21300000, guid: cc76da89df85c6a45942304bd7e7060b, type: 3}
-  description: Gain 6 Energy
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  id: 287
+  customName: 
+  art: {fileID: 21300000, guid: f3385a400e63d9e4c92efaffc0600e7e, type: 3}
+  description: Deal {E[0]}. <b>Chain:</b> Thrust V1
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
+    cost: 1
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
   onPlayGain:
-    cost: 6
+    cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 0
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: bb7a4b19bec2a1d43b07fc191247faea, type: 2}
+    group: 1
+    cardActions: {fileID: 11400000, guid: 962d12ddc6f3a8f44b154b73dbeafc5d, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 0}
+  chainedCard: {fileID: 11400000, guid: a4150e7505bfac54a9d7396bb3f0c4a5, type: 2}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
-  highlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 2eeb2268469a74b4a9d34016563badca, type: 2}
   unhighlightCondition: []
   isWIP: 0
