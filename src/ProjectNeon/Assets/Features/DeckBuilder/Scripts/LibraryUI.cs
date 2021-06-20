@@ -34,7 +34,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
             && (state.ShowArchetypes.None() || state.ShowArchetypes.Contains(_selectedHero.ClassCard.GetArchetypeKey())))
                 cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(_selectedHero.ClassCard, 0));
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
-            c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card == c.Key))));
+            c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card.Id == c.Key.Id))));
 
         var heroMember = state.SelectedHeroesDeck.Hero.AsMember(-1);  
         var cardActions = !state.ShowFormulas 
@@ -58,7 +58,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
         void Init(GameObject gameObj)
         {
             var button = gameObj.GetComponent<CardInLibraryButton>();
-                if (card.Equals(_selectedHero.ClassCard))
+                if (card.Id.Equals(_selectedHero.ClassCard.Id))
                     button.InitBasic(card);
                 else
                     button.Init(card, numTotal, numAvailable);
@@ -72,7 +72,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
         void Init(GameObject gameObj)
         {
             var button = gameObj.GetComponent<CardInLibraryButton>();
-            if (card.Equals(_selectedHero.ClassCard))
+            if (card.Id.Equals(_selectedHero.ClassCard.Id))
                 button.InitBasic(card);
             else
                 button.Init(card, numTotal, numAvailable);
