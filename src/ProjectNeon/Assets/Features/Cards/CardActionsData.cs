@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
@@ -12,6 +11,10 @@ public class CardActionsData : ScriptableObject
     public IEnumerable<EffectData> BattleEffects => Actions
         .Where(x => x.Type == CardBattleActionType.Battle)
         .Select(a => a.BattleEffect);
+
+    public int NumAnimations => Actions.Count(
+        x => x.Type == CardBattleActionType.AnimateCharacter 
+             || x.Type == CardBattleActionType.AnimateAtTarget);
     
     public CardActionsData Initialized(params CardActionV2[] actions)
     {

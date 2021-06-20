@@ -9,7 +9,7 @@ public class PartyEquipmentCollection
     private List<Equipment> _available = new List<Equipment>();
     private List<Equipment> _equipped = new List<Equipment>();
     
-    public List<Equipment> All => _all.ToList();
+    public List<Equipment> All => (_all ?? new List<Equipment>()).ToList();
     public List<Equipment> Available => _available.ToList();
     public List<Equipment> Equipped => _equipped.ToList();
 

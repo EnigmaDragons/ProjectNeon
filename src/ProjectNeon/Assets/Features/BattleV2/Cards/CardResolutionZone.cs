@@ -161,18 +161,21 @@ public class CardResolutionZone : ScriptableObject
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.CardStun, -1);
+                Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Stunned"));
                 Message.Publish(new CardResolutionFinished(played.Member.Id));
             }
             else if (card.IsAttack && card.Owner.IsBlinded())
             {
                 BattleLog.Write($"{card.Owner.Name} was blinded, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Blind, -1);
+                Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Blinded"));
                 Message.Publish(new CardResolutionFinished(played.Member.Id));
             }
             else if (!card.IsAttack && card.Owner.IsInhibited())
             {
                 BattleLog.Write($"{card.Owner.Name} was inhibited, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Inhibit, -1);
+                Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Inhibited"));
                 Message.Publish(new CardResolutionFinished(played.Member.Id));
             }
             else
@@ -216,7 +219,7 @@ public class CardResolutionZone : ScriptableObject
                 
                 var targets = GetTargets(member, card, Maybe<Target[]>.Missing());
                 PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
-                // Maybe Display cool Bonus Card text here
+                Message.Publish(new DisplayCharacterWordRequested(member, "Bonus Card"));
             }
         }
     }

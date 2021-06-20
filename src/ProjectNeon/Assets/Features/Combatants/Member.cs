@@ -100,7 +100,7 @@ public static class MemberExtensions
             var remaining = amountAvailable - calc.ResourcesPaid;
             return remaining >= 0;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Debug.Log($"{c.Name} has something null");
             throw;
