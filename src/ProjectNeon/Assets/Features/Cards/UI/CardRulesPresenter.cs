@@ -67,7 +67,8 @@ public class CardRulesPresenter : MonoBehaviour
                     TemporalStatType.Stealth.ToString(),
                     TemporalStatType.Lifesteal.ToString(),
                     TemporalStatType.Confused.ToString(),
-                    TemporalStatType.Marked.ToString());
+                    TemporalStatType.Marked.ToString(),
+                    "PrimaryStat");
             });
 
             rulesToShow
