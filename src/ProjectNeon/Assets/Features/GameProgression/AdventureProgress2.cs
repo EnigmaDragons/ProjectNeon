@@ -11,6 +11,7 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
 
+    public Adventure CurrentAdventure => currentAdventure.Adventure;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
