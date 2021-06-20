@@ -23,7 +23,7 @@ public sealed class XpAndLevelUpPresenter : MonoBehaviour
         xp.Init(_hero);
         levelLabel.text = _hero.Level.ToString();
         levelUpButton.gameObject.SetActive(false);
-        if (_hero.Levels.LevelUpPoints > 0)
+        if (_hero.Levels.UnspentLevelUpPoints > 0)
             levelUpButton.Init("Level\nUp", () =>
             {
                 Debug.Log($"Clicked Level Up {_hero.Name}");

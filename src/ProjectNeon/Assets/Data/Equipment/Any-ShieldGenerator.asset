@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Any-ShieldGenerator
   m_EditorClassIdentifier: 
+  id: 28
   displayName: Shield Generator
   description: At start of turn, gain <b>0.33x TGH</b> Shields
-  isWIP: 0
+  archetypes: []
   rarity: 1
   slot: 2
   priceFactor: 1
-  archetypes: []
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -44,6 +44,7 @@ MonoBehaviour:
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 12
     StatusDetailText: At start of turn, gain <b>0.33x TGH</b> Shield
     TurnDelay: 0
@@ -64,3 +65,4 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  isWIP: 0

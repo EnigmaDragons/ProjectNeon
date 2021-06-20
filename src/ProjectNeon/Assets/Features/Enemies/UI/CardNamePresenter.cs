@@ -29,7 +29,12 @@ public class CardNamePresenter : MonoBehaviour, IPointerEnterHandler, IPointerEx
     
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button != PointerEventData.InputButton.Right) 
+            return;
+        
+        if (_owner.IsPresent)
+            new Card(-1, _owner.Value, _card).ShowDetailedCardView();
+        else
             _card.ShowDetailedCardView();
     }
 }

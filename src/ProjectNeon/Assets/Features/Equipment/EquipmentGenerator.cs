@@ -54,10 +54,10 @@ public class EquipmentGenerator
 
     private static readonly Dictionary<Rarity, int[]> RarityPowers = new Dictionary<Rarity, int[]>
     {
-        { Rarity.Common, new []{1}},
+        { Rarity.Common, new []{1, 2}},
         { Rarity.Uncommon, new []{2, 3}},
-        { Rarity.Rare, new [] {4, 5}},
-        { Rarity.Epic, new [] {6, 7}}
+        { Rarity.Rare, new [] {4, 5, 6}},
+        { Rarity.Epic, new [] {6, 7, 8}}
     };
 
     private int PowerLevelFor(Rarity rarity)

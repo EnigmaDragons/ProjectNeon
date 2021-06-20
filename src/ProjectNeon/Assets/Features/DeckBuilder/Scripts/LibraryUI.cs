@@ -28,18 +28,27 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
                     || (cardWithCount.Key.Archetypes.None() && state.ShowArchetypes.Contains("")) 
                     || cardWithCount.Key.Archetypes.Any(state.ShowArchetypes.Contains)))
             .OrderBy(c => c.Key.Archetypes.None() ? 999 : 0)
+            .ThenByDescending(c => (int)c.Key.Rarity)
             .ToList();
         if ((state.ShowRarities.None() || state.ShowRarities.Contains(Rarity.Basic))
             && (state.ShowArchetypes.None() || state.ShowArchetypes.Contains(_selectedHero.ClassCard.GetArchetypeKey())))
                 cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(_selectedHero.ClassCard, 0));
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
             c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card == c.Key))));
+
+        var heroMember = state.SelectedHeroesDeck.Hero.AsMember(-1);  
+        var cardActions = !state.ShowFormulas 
+            ? cardUsage.ToDictionary(c => new Card(-1, heroMember, c.Key), c => c.Value)
+                .Select(x => InitCardInLibraryButton(x.Key, x.Value.Item1, x.Value.Item2))
+                .ToList()
+            : cardUsage
+                .Select(x => InitCardInLibraryButton(x.Key, x.Value.Item1, x.Value.Item2))
+                .ToList();
+        
         pageViewer.Init(
             cardInLibraryButtonTemplate.gameObject, 
             emptyCard, 
-            cardUsage
-                .Select(x => InitCardInLibraryButton(x.Key, x.Value.Item1, x.Value.Item2))
-                .ToList(), 
+            cardActions,
             x => {},
             !heroChanged);
     }
@@ -53,6 +62,20 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
                     button.InitBasic(card);
                 else
                     button.Init(card, numTotal, numAvailable);
+        }
+
+        return Init;
+    }
+    
+    private Action<GameObject> InitCardInLibraryButton(Card card, int numTotal, int numAvailable)
+    {
+        void Init(GameObject gameObj)
+        {
+            var button = gameObj.GetComponent<CardInLibraryButton>();
+            if (card.Equals(_selectedHero.ClassCard))
+                button.InitBasic(card);
+            else
+                button.Init(card, numTotal, numAvailable);
         }
 
         return Init;

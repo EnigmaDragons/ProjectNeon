@@ -27,7 +27,9 @@ public sealed class EffectData
     public string StatusDetailText;
     
     public int TurnDelay;
+    
     [TextArea(minLines:1, maxLines:9)] public string Formula = "";
+    public InterpolatePartialFormula InterpolatePartialFormula = new InterpolatePartialFormula();
     public StringReference FlavorText = new StringReference();
     public CardActionsData ReferencedSequence;
     
@@ -64,4 +66,11 @@ public static class EffectDataExtensions
         e.Conditions != null && e.Conditions.Length > 0 
             ? (EffectCondition)new AndEffectCondition(e.Conditions.Cast<EffectCondition>().ToArray()) 
             : new NoEffectCondition();
+
+    public static InterpolateFriendlyFormula InterpolateFriendlyFormula(this EffectData e)
+        => new InterpolateFriendlyFormula
+        {
+            FullFormula = e.Formula,
+            InterpolatePartialFormula = e.InterpolatePartialFormula
+        };
 }

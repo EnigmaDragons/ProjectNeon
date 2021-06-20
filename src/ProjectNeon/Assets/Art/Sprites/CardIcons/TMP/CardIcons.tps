@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>5.4.0</string>
+        <string>5.5.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -181,14 +181,22 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Icons/0-physical-damage.png</key>
-            <key type="filename">../Icons/1-raw-damage.png</key>
-            <key type="filename">../Icons/2-magic-damage.png</key>
-            <key type="filename">../Icons/3-attack.png</key>
-            <key type="filename">../../Resources/AmmoIcon.png</key>
-            <key type="filename">../../Resources/ChemIcon2.png</key>
-            <key type="filename">../../Resources/EnergyIcon.png</key>
-            <key type="filename">../../Resources/FireIcon.png</key>
+            <key type="filename">../Icons/000-physical-damage.png</key>
+            <key type="filename">../Icons/001-raw-damage.png</key>
+            <key type="filename">../Icons/002-magic-damage.png</key>
+            <key type="filename">../Icons/003-attack.png</key>
+            <key type="filename">../../Resources/010-AmmoIcon.png</key>
+            <key type="filename">../../Resources/011-ChemIcon2.png</key>
+            <key type="filename">../../Resources/012-EnergyIcon.png</key>
+            <key type="filename">../../Resources/013-FireIcon.png</key>
+            <key type="filename">../../Resources/014-GrenadeIcon.png</key>
+            <key type="filename">../../Resources/015-AmbitionIcon.png</key>
+            <key type="filename">../../Resources/016-ManaIcon.png</key>
+            <key type="filename">../../Resources/017-CreditsIcon.png</key>
+            <key type="filename">../../Resources/018-MissileIcon.png</key>
+            <key type="filename">../../Resources/019-TechPointsIcon2.png</key>
+            <key type="filename">../../Resources/998-CreditsIcon_Old.png</key>
+            <key type="filename">../../Resources/999-TechPointsIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,1</point_f>
@@ -200,22 +208,6 @@
                 <rect>32,32,64,64</rect>
                 <key>scale9Paddings</key>
                 <rect>32,32,64,64</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../../Resources/ManaIcon.png</key>
-            <key type="filename">../../Resources/TechPointsIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,1</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9Paddings</key>
-                <rect>64,64,128,128</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

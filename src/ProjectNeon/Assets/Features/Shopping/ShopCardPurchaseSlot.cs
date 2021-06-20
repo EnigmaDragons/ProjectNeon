@@ -9,7 +9,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
     [SerializeField] private GameObject soldVisual;
     [SerializeField] private PartyAdventureState party;
 
-    private CardTypeData _card;
+    private Card _card;
     private int _price;
     private bool _purchased;
 
@@ -18,7 +18,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
         UpdateAffordability();
     }
     
-    public ShopCardPurchaseSlot Initialized(CardTypeData c)
+    public ShopCardPurchaseSlot Initialized(Card c)
     {
         soldVisual.SetActive(false);
         _card = c;
@@ -34,7 +34,9 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
             return;
         
         var canAfford = party.Credits >= _price;
-        cardPresenter.Set(_card, canAfford ? PurchaseCard : (Action)(() => { }));
+        var cardAction = canAfford ? PurchaseCard : (Action) (() => { });
+        cardPresenter.Set(_card, cardAction);
+        
         if (!canAfford)
             cardPresenter.SetDisabled(true);
     }
@@ -45,7 +47,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
         cardPresenter.Clear();
         soldVisual.SetActive(true);
         party.UpdateCreditsBy(-_price);
-        party.Cards.Add(_card);
+        party.Add(_card.BaseType);
     }
 
     protected override void Execute(PartyAdventureStateChanged msg) => UpdateAffordability();

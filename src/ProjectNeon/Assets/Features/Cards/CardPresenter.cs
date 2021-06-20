@@ -89,7 +89,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _getCanActivate = getCanActivate;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _onRightClick = _isHand ? ToggleAsBasic : (Action)(() => { });
+        _onRightClick = _isHand ? ToggleAsBasic : (Action)card.ShowDetailedCardView;
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
     }
@@ -243,15 +243,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         _cardType.ChainedCard.IfPresent(chain =>
         {
-            if (_isHand)
-                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain, _card.Tint)));
+            if (_card != null)
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain, _card.OwnerTint)));
             else
                 Message.Publish(new ShowReferencedCard(chainedCardParent, chain));
         });
         _cardType.SwappedCard.IfPresent(swap =>
         {
-            if (_isHand)
-                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, swap)));
+            if (_card != null)
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, swap, _card.OwnerTint)));
             else
                 Message.Publish(new ShowReferencedCard(chainedCardParent, swap));
         });
@@ -314,8 +314,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         tint.color = _card == null
             ? Color.white
-            : _card.Tint;
-        tintGradient.enabled = _card == null;
+            : _card.OwnerTint.OrDefault(Color.white);
+        tintGradient.enabled = _card == null || _card.OwnerTint.IsMissing;
         if (_cardType.Archetypes.Count == 0)
         {
             var archetypeTint = archetypeTints.ForArchetypes(new HashSet<string>());

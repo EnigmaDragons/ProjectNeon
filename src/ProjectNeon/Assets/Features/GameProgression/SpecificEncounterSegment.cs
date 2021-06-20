@@ -19,7 +19,7 @@ class SpecificEncounterSegment : StageSegment
     {
         Log.Info("Setting Up Specific Encounter");
         battle.SetNextBattleground(battlefield);
-        battle.SetNextEncounter(enemies.Select(x => x.GetEnemy(currentAdventureProgress.Stage)));
+        battle.SetNextEncounter(enemies.Select(x => x.GetEnemy(currentAdventureProgress.CurrentChapterNumber)));
         SceneManager.LoadScene("BattleSceneV2");
     }
 

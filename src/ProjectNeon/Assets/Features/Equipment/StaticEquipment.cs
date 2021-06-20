@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Equipment/Equipment")]
 public class StaticEquipment : ScriptableObject, Equipment
 {
+    [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private string displayName;
     [SerializeField] private string description;
     [SerializeField] private StringVariable[] archetypes = new StringVariable[0];
@@ -21,7 +22,8 @@ public class StaticEquipment : ScriptableObject, Equipment
     public string Name => !string.IsNullOrWhiteSpace(displayName) 
         ? displayName 
         : name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
-    
+
+    public int Id => id;
     public string Description => description;
     public bool IsWip => isWIP;
     public int Price => CardShopPricing.EquipmentShopPrice(rarity, priceFactor);
@@ -34,6 +36,10 @@ public class StaticEquipment : ScriptableObject, Equipment
     public EffectData[] TurnStartEffects => turnStartEffects;
     public EffectData[] TurnEndEffects => turnEndEffects;
     public EffectData[] BattleStartEffects => battleStartEffects;
+
+    public GameEquipmentData GetData() 
+        => new GameEquipmentData { Type = GameEquipmentDataType.StaticEquipmentId, StaticEquipmentId = id };
+
     public IEnumerable<EffectData> AllEffects => TurnStartEffects.Concat(TurnEndEffects).Concat(BattleStartEffects);
 
     public IStats AdditiveStats()

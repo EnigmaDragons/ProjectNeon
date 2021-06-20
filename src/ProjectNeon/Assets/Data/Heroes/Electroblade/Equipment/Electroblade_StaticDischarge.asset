@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Electroblade_StaticDischarge
   m_EditorClassIdentifier: 
+  id: 34
   displayName: Static Discharge
   description: When attacked, if you have 3+ energy expend 3 energy to stun the attacker
-  isWIP: 0
+  archetypes:
+  - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
   rarity: 3
   slot: 2
   priceFactor: 1
-  archetypes:
-  - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 12
     StatusDetailText: When attacked, if you have 3+ energy expend 3 energy to stun
       the attacker
@@ -66,3 +67,4 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  isWIP: 0

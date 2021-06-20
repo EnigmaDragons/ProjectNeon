@@ -1,4 +1,3 @@
-using Features.GameProgression.Messages;
 using UnityEngine;
 
 public sealed class SaveHandler : OnMessage<AutoSaveRequested>

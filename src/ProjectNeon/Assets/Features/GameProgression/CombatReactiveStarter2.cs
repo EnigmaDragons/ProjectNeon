@@ -11,24 +11,24 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     protected override void Execute(EnterRandomCombat msg)
     {
         Log.Info("Setting Up Random Encounter");
-        battleState.SetNextBattleground(progress.CurrentStage.Battleground);
-        battleState.SetNextEncounter(progress.CurrentStage.EncounterBuilder.Generate(progress.CurrentPowerLevel));
+        battleState.SetNextBattleground(progress.CurrentChapter.Battleground);
+        battleState.SetNextEncounter(progress.CurrentChapter.EncounterBuilder.Generate(progress.CurrentPowerLevel));
         eventPublisher.ActivatePartyDetailsWizardFlow();
     }
 
     protected override void Execute(EnterRandomEliteCombat msg)
     {
         Log.Info("Setting Up Random Elite Encounter");
-        battleState.SetNextBattleground(progress.CurrentStage.Battleground);
-        battleState.SetNextEncounter(progress.CurrentStage.EliteEncounterBuilder.Generate(progress.CurrentElitePowerLevel), isElite: true);
+        battleState.SetNextBattleground(progress.CurrentChapter.Battleground);
+        battleState.SetNextEncounter(progress.CurrentChapter.EliteEncounterBuilder.Generate(progress.CurrentElitePowerLevel), isElite: true);
         eventPublisher.ActivatePartyDetailsWizardFlow();
     }
 
     protected override void Execute(EnterBossBattle msg)
     {
         Log.Info("Setting Up Boss Battle");
-        battleState.SetNextBattleground(progress.CurrentStage.BossBattlefield);
-        battleState.SetNextEncounter(progress.CurrentStage.BossEnemies.Select(x => x.GetEnemy(progress.Stage)));
+        battleState.SetNextBattleground(progress.CurrentChapter.BossBattlefield);
+        battleState.SetNextEncounter(progress.CurrentChapter.BossEnemies.Select(x => x.GetEnemy(progress.CurrentChapterNumber)));
         eventPublisher.ActivatePartyDetailsWizardFlow();
     }
 

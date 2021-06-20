@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class CardShopPresenter : MonoBehaviour
@@ -24,13 +25,15 @@ public class CardShopPresenter : MonoBehaviour
     }
 
     private void OnEnable() => GetMoreInventory();
+    private void OnDisable() => Message.Publish(new AutoSaveRequested());
 
     public void GetMoreInventory()
     {
         Clear();
-        var selection = new ShopSelectionPicker(adventure.Stage, adventure.CurrentStage.RewardRarityFactors, party)
+        var selection = new ShopSelectionPicker(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party)
             .GenerateCardSelection(cards, _numCards);
-        selection.Cards.ForEach(c => 
+        var cardsWithOwners = selection.Cards.Select(c => c.ToNonBattleCard(party));
+        cardsWithOwners.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)
                 .Initialized(c));
     }

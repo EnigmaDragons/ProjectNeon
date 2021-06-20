@@ -7,6 +7,6 @@ public class CombatSegment : StageSegment
     public override void Start() => Message.Publish(new EnterRandomCombat());
     public override Maybe<string> Detail => Maybe<string>.Missing();
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx)
-        => new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentStage.Battleground, false,
-             ctx.Adventure.CurrentStage.EncounterBuilder.Generate(ctx.Adventure.CurrentPowerLevel).ToArray());
+        => new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentChapter.Battleground, false,
+             ctx.Adventure.CurrentChapter.EncounterBuilder.Generate(ctx.Adventure.CurrentPowerLevel).ToArray());
 }

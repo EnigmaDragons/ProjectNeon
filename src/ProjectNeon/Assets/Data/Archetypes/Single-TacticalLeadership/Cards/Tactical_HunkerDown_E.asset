@@ -32,10 +32,15 @@ MonoBehaviour:
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.88 * Target[Toughness] * Leadership
+      Formula: '0.088 * Leadership * Target[Toughness] '
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 0.088 * Leadership
+        Prefix: 
+        Suffix: '* Target[Toughness] '
       FlavorText:
         UseConstant: 1
         ConstantValue: 

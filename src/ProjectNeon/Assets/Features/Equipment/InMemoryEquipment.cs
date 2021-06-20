@@ -1,16 +1,98 @@
+using System;
+using System.Linq;
+using UnityEngine;
+
+[Serializable]
 public class InMemoryEquipment : Equipment
 {
-    public string Name { set; get; }
-    public string Description { set; get; }
-    public int Price { set; get; }
-    public Rarity Rarity { set; get; }
-    public string[] Archetypes { set; get; } = new string[0];
-    public EquipmentSlot Slot { set; get; }
-    public EquipmentStatModifier[] Modifiers { get; set; } = new EquipmentStatModifier[0];
-    public IResourceType[] ResourceModifiers { get; set; } = new IResourceType[0];
-    public EffectData[] TurnStartEffects { get; set; } = new EffectData[0];
-    public EffectData[] TurnEndEffects { get; set; } = new EffectData[0];
-    public EffectData[] BattleStartEffects { get; set; } = new EffectData[0];
+    [SerializeField] private int id = -1;
+    [SerializeField] private string name = "None";
+    [SerializeField] private string description = "None";
+    [SerializeField] private int price = 0;
+    [SerializeField] private Rarity rarity = Rarity.Basic;
+    [SerializeField] private string[] archetypes = new string[0];
+    [SerializeField] private EquipmentSlot slot = EquipmentSlot.Weapon;
+    [SerializeField] private EquipmentStatModifier[] modifiers = new EquipmentStatModifier[0];
+    [SerializeField] private SerializableResourceType[] resourceModifiers = new SerializableResourceType[0];
+    [SerializeField] private EffectData[] turnStartEffects = new EffectData[0];
+    [SerializeField] private EffectData[] turnEndEffects = new EffectData[0];
+    [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
+
+    // Necessary for Save Load System
+    public int Id
+    {
+        get => id;
+        set => id = value;
+    }
+    
+    public string Name
+    {
+        set => name = value;
+        get => name;
+    }
+
+    public string Description
+    {
+        set => description = value;
+        get => description;
+    }
+
+    public int Price
+    {
+        set => price = value;
+        get => price;
+    }
+
+    public Rarity Rarity
+    {
+        set => rarity = value;
+        get => rarity;
+    }
+
+    public string[] Archetypes
+    {
+        set => archetypes = value;
+        get => archetypes;
+    }
+
+    public EquipmentSlot Slot
+    {
+        set => slot = value;
+        get => slot;
+    }
+
+    public EquipmentStatModifier[] Modifiers
+    {
+        get => modifiers;
+        set => modifiers = value;
+    }
+
+    public IResourceType[] ResourceModifiers
+    {
+        get => resourceModifiers.Cast<IResourceType>().ToArray();
+        set => resourceModifiers = value.Select(x => new SerializableResourceType(x)).ToArray();
+    }
+
+    public EffectData[] TurnStartEffects
+    {
+        get => turnStartEffects;
+        set => turnStartEffects = value;
+    }
+
+    public EffectData[] TurnEndEffects
+    {
+        get => turnEndEffects;
+        set => turnEndEffects = value;
+    }
+
+    public EffectData[] BattleStartEffects
+    {
+        get => battleStartEffects;
+        set => battleStartEffects = value;
+    }
+
+    public GameEquipmentData GetData() 
+        => new GameEquipmentData { Type = GameEquipmentDataType.GeneratedEquipment, GeneratedEquipment = this };
 
     public Equipment Initialized(string archetype)
     {

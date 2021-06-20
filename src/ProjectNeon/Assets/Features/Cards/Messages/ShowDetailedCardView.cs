@@ -7,7 +7,7 @@ public class ShowDetailedCardView
     public ShowDetailedCardView(Card card) : this(card, card.Type) {}
     public ShowDetailedCardView(CardTypeData cardType) : this(Maybe<Card>.Missing(), cardType) {}
 
-    public ShowDetailedCardView(Maybe<Card> card, CardTypeData cardType)
+    private ShowDetailedCardView(Maybe<Card> card, CardTypeData cardType)
     {
         Card = card;
         CardType = cardType;

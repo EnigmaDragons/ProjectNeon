@@ -2,6 +2,7 @@ using System.Linq;
 
 public interface Equipment
 {
+    int Id { get; }
     string Name { get; }
     string Description { get; }
     int Price { get; }
@@ -13,6 +14,8 @@ public interface Equipment
     EffectData[] TurnStartEffects { get; }
     EffectData[] TurnEndEffects { get; }
     EffectData[] BattleStartEffects { get; }
+
+    GameEquipmentData GetData();
 }
 
 public static class EquipmentExtensions

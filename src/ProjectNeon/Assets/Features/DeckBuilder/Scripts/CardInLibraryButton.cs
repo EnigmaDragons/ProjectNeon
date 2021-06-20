@@ -9,24 +9,47 @@ public class CardInLibraryButton : MonoBehaviour
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private TextMeshProUGUI numCopiesLabel;
 
+    public void InitInfoOnly(Card card)
+    {
+        presenter.Set(card);
+        numCopiesLabel.text = "";
+    }
+
     public void InitInfoOnly(CardTypeData card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "";
     }
+
+    public void Init(Card card, int numTotal, int numAvailable)
+    {
+        presenter.Set(card, CreateCardAction(card, numAvailable));
+        UpdateNumberText(numTotal, numAvailable);
+    }
     
     public void Init(CardTypeData card, int numTotal, int numAvailable)
     {
-        var action = numAvailable > 0 
-            && state.SelectedHeroesDeck.Deck.Count(x => x == card) < 4 
-            && (state.SelectedHeroesDeck.Deck.GroupBy(x => x.Name).Count() < 12 || state.SelectedHeroesDeck.Deck.Any(x => x.Name == card.Name))
-                ? (Action)(() => AddCard(card))
-                : () => { };
-        presenter.Set(card, action);
-        numCopiesLabel.text = $"{numAvailable}/{numTotal}";
+        presenter.Set(card, CreateCardAction(card, numAvailable));
+        UpdateNumberText(numTotal, numAvailable);
+    }
+
+    private Action CreateCardAction(CardTypeData c, int numAvailable) =>
+        numAvailable > 0 
+        && state.SelectedHeroesDeck.Deck.Count(x => x == c) < 4 
+        && (state.SelectedHeroesDeck.Deck.GroupBy(x => x.Name).Count() < 12 || state.SelectedHeroesDeck.Deck.Any(x => x.Name == c.Name))
+            ? (Action)(() => AddCard(c))
+            : () => { };
+    
+    private void UpdateNumberText(int numTotal, int numAvailable) 
+        => numCopiesLabel.text = $"{numAvailable}/{numTotal}";
+
+    public void InitBasic(CardTypeData card)
+    {
+        presenter.Set(card, () => { });
+        numCopiesLabel.text = "Basic";
     }
     
-    public void InitBasic(CardTypeData card)
+    public void InitBasic(Card card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "Basic";

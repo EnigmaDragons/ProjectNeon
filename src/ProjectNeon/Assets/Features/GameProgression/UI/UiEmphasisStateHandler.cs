@@ -14,7 +14,7 @@ public class UiEmphasisStateHandler : OnMessage<PartyAdventureStateChanged, Show
     {
         _numEquipment = party.Equipment.All.Count;
         _numCards = party.Cards.AllCards.Sum(i => i.Value);
-        _numLevelUpPoints = party.Heroes.Sum(h => h.Levels.LevelUpPoints);
+        _numLevelUpPoints = party.Heroes.Sum(h => h.Levels.UnspentLevelUpPoints);
     }
     
     protected override void Execute(PartyAdventureStateChanged msg)
@@ -29,7 +29,7 @@ public class UiEmphasisStateHandler : OnMessage<PartyAdventureStateChanged, Show
             emphasis.Add("Party");
         _numEquipment = newNumEquipment;
 
-        var newNumLevelUpPoints = party.Heroes.Sum(h => h.Levels.LevelUpPoints);
+        var newNumLevelUpPoints = party.Heroes.Sum(h => h.Levels.UnspentLevelUpPoints);
         if (newNumLevelUpPoints > _numLevelUpPoints)
             emphasis.Add("Party");
         _numLevelUpPoints = newNumLevelUpPoints;

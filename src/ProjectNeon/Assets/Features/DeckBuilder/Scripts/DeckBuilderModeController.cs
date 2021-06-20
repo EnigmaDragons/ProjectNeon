@@ -25,6 +25,7 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
             if (state.HeroesDecks.All(x => x.Deck.Count == deckSize))
             {
                 party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
+                Message.Publish(new AutoSaveRequested());
                 parent.SetActive(false);   
             }
         });
@@ -33,6 +34,7 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
             if (state.HeroesDecks.All(x => x.Deck.Count == deckSize))
             {
                 party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
+                Message.Publish(new AutoSaveRequested());
                 navigator.NavigateToBattleScene();
             }
         });

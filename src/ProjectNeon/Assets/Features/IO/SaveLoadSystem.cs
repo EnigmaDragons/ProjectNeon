@@ -18,10 +18,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;
-            s.AdventureProgress = new GameAdventureProgressData
-            {
-                AdventureId = adventure.CurrentAdventureId
-            };
+            s.AdventureProgress = adventure.GetData();
             s.PartyData = party.GetData();
             return s;
         });
@@ -45,11 +42,8 @@ public sealed class SaveLoadSystem : ScriptableObject
     {
         var selectedAdventure = library.GetAdventureById(adventureProgress.AdventureId);
         if (selectedAdventure.IsMissing)
-        {
-            Log.Error($"Unknown Adventure {adventureProgress.AdventureId}");
-            return false;
-        }
-        adventure.Init(selectedAdventure.Value);
+            return LoadFailedReason($"Unknown Adventure {adventureProgress.AdventureId}");
+        adventure.Init(selectedAdventure.Value, adventureProgress.CurrentChapterIndex, adventureProgress.CurrentStageSegmentIndex);
         return true;
     }
 
@@ -58,26 +52,61 @@ public sealed class SaveLoadSystem : ScriptableObject
         var numHeroes = partyData.Heroes.Length;
         var maybeCards = partyData.CardIds.Select(id => library.GetCardById(id));
         if (maybeCards.Any(c => c.IsMissing))
-        {
-            Log.Error($"Load Failed - Missing Some Cards");
-            return false;
-        }
+            return LoadFailedReason("Missing Cards");
+
+        var maybeEquipments = partyData.Equipment.Select(e => library.GetEquipment(e));
+        if (maybeEquipments.Any(c => c.IsMissing))
+            return LoadFailedReason("Missing Equipments");
         
         party.InitFromSave(
             library.HeroById(partyData.Heroes[0].BaseHeroId),
             numHeroes > 1 ? library.HeroById(partyData.Heroes[1].BaseHeroId) : library.HeroById(0),
             numHeroes > 2 ? library.HeroById(partyData.Heroes[2].BaseHeroId) : library.HeroById(0),
             partyData.Credits,
-            maybeCards.Select(c => c.Value).ToArray());
-
+            maybeCards.Select(c => c.Value).ToArray(),
+            maybeEquipments.Select(e => e.Value).ToArray());
+        
         var deckMaybeCards = partyData.Heroes.Select(h => h.Deck.CardIds.Select(id => library.GetCardById(id)).ToList());
         if (deckMaybeCards.Any(d => d.Any(c => c.IsMissing)))
+            return LoadFailedReason("Missing Cards From Decks");
+        party.UpdateDecks(deckMaybeCards.Select(d => d.Select(c => c.Value).ToList()).ToArray());
+        
+        for (var i = 0; i < numHeroes; i++)
         {
-            Log.Error($"Load Failed - Missing Some Cards from Decks");
-            return false;
+            var hero = party.Heroes[i];
+            var heroSaveData = partyData.Heroes[i];
+            
+            hero.SetLevels(heroSaveData.Levels);
+            hero.SetHealth(heroSaveData.Health);
+            
+            var maybeBasicCard = library.GetCardById(heroSaveData.BasicCardId);
+            if (!maybeBasicCard.IsPresent)
+                return LoadFailedReason("Unknown Basic Card");
+            hero.SetBasic(maybeBasicCard.Value);
+
+            foreach (var equipmentIdName in heroSaveData.EquipmentIdNames)
+            {
+                var maybeEquipment = party.Equipment.Available.Where(x => x.Id == equipmentIdName.Id && x.Name.Equals(equipmentIdName.Name)).FirstAsMaybe();
+                if (!maybeEquipment.IsPresent)
+                    return LoadFailedReason($"Cannot find Hero's Equipped {equipmentIdName.Name} in party equipment");
+                party.EquipTo(maybeEquipment.Value, hero);
+            }
+
+            foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds)
+            {
+                var maybePerk = library.GetLevelUpPerkById(optionId);
+                if (!maybePerk.IsPresent)
+                    return LoadFailedReason("Select Level Up Perk not found");
+                maybePerk.Value.Apply(hero);
+            }
         }
 
-        party.UpdateDecks(deckMaybeCards.Select(d => d.Select(c => c.Value).ToList()).ToArray());
         return true;
+    }
+    
+    private bool LoadFailedReason(string reason)
+    {
+        Log.Error($"Load Failed - {reason}");
+        return false;
     }
 }

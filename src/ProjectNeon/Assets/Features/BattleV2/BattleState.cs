@@ -58,7 +58,7 @@ public class BattleState : ScriptableObject
     public CardTypeData[] RewardCards => rewardCards; 
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
     public EnemyInstance[] NextEncounterEnemies => nextEnemies.ToArray();
-    public int Stage => adventureProgress.Stage;
+    public int Stage => adventureProgress.CurrentChapterNumber;
     public bool NeedsCleanup => needsCleanup;
     public bool IsEliteBattle => isEliteBattle;
     public float CreditPerPowerLevelRewardFactor => adventure.Adventure?.RewardCreditsPerPowerLevel ?? 0;

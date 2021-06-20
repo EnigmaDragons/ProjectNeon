@@ -31,7 +31,7 @@ public class HeroLevelUpSelectionPresenter : OnMessage<LevelUpOptionSelected, He
 
     protected override void Execute(LevelUpOptionSelected msg)
     {
-        msg.Selected.Apply(_hero);
+        msg.Selected.SelectAsLevelUp(_hero);
         gameObject.SetActive(false);
     }
 

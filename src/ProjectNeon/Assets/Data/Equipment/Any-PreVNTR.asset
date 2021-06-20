@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Any-PreVNTR
   m_EditorClassIdentifier: 
+  id: 23
   displayName: PreVNRT Mk. 1
   description: Start Battle with 1 Aegis
+  archetypes: []
   rarity: 1
   slot: 2
   priceFactor: 1
-  canUseClasses:
-  - {fileID: 11400000, guid: f3487ecd61c4a2f44a0f51bc4efab062, type: 2}
   modifiers: []
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 79
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -33,15 +34,14 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
+    DurationFormula: 0
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -60,6 +60,6 @@ MonoBehaviour:
     ReactionEffect:
       reactor: 0
       scope: 0
-      avoidance: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  isWIP: 0

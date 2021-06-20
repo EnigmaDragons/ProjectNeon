@@ -10,6 +10,8 @@ public class HeroHealth
     [SerializeField] private List<AdditiveStatInjury> additiveStatInjuries = new List<AdditiveStatInjury>();
     [SerializeField] private List<MultiplicativeStatInjury> multiplicativeStatInjuries = new List<MultiplicativeStatInjury>();
 
+    private Func<IStats> _getCurrentStats;
+    
     public int MissingHp => missingHp;
     public IEnumerable<IStats> AdditiveStats => additiveStatInjuries.Select(i => new StatAddends().WithRaw(i.Stat, i.Amount));
     public IEnumerable<IStats> MultiplicativeStats => multiplicativeStatInjuries.Select(i => new StatMultipliers().WithRaw(i.Stat, i.Amount));
@@ -25,13 +27,10 @@ public class HeroHealth
     private IEnumerable<HeroInjury> AllInjuries => additiveStatInjuries.Cast<HeroInjury>()
         .Concat(multiplicativeStatInjuries);
 
-    private readonly Func<IStats> _getCurrentStats;
-    
-    public HeroHealth(Func<IStats> getCurrentStats)
-    {
-        _getCurrentStats = getCurrentStats;
-    }
-    
+    public HeroHealth() {}
+    public HeroHealth(Func<IStats> getCurrentStats) => _getCurrentStats = getCurrentStats;
+
+    public void Init(Func<IStats> getCurrentStats) => _getCurrentStats = getCurrentStats;
     public void HealToFull() => missingHp = 0;
     public void SetHp(int hp) => missingHp = _getCurrentStats().MaxHp() - hp;
     public void AdjustHp(int amount) => missingHp = Mathf.Clamp(missingHp - amount, 0, _getCurrentStats().MaxHp());

@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: Rifle_SafeAutoReloader
   m_EditorClassIdentifier: 
+  id: 8
   displayName: Safe Auto Reloader
   description: Reload when you play no cards for 2 turns in a row
+  archetypes:
+  - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   rarity: 1
   slot: 2
   priceFactor: 1
-  archetypes:
-  - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   modifiers:
   - ModifierType: 0
     Amount: 0
@@ -28,6 +29,7 @@ MonoBehaviour:
   turnEndEffects: []
   battleStartEffects:
   - EffectType: 76
+    Conditions: []
     BaseAmount:
       UseConstant: 1
       ConstantValue: 2
@@ -36,15 +38,14 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
+    DurationFormula: 0
     EffectScope:
       UseConstant: 1
       ConstantValue: Soldier
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
     StatusTag: 12
     StatusDetailText: Reload when you play no cards for 2 turns in a row
     TurnDelay: 0
@@ -65,3 +66,4 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 11400000, guid: 5ecffafb038b36a419f3b4c8b2e0f2bc, type: 2}
+  isWIP: 0
