@@ -28,7 +28,6 @@ public static class GameDataMappingExtensions
             AdventureId = p.CurrentAdventureId,
             Type = GameAdventureProgressType.V2,
             CurrentChapterIndex = p.CurrentChapterIndex,
-            CurrentStageSegmentIndex = p.CurrentStageSegmentIndex
         };
 
     public static GameMapData GetData(this CurrentGameMap3 map)
@@ -38,6 +37,5 @@ public static class GameDataMappingExtensions
             CompletedNodes = map.CompletedNodes.ToArray(),
             CurrentPosition = map.CurrentPosition,
             CurrentChoices = map.CurrentChoices.ToArray(),
-            TotalNodeCount = map.TotalNodeCount
         };
 }

@@ -55,7 +55,8 @@ public class MapSpawner2 : MonoBehaviour
 
     private void TravelNextIfNeededBasedOnAdventureProgress()
     {
-        var numToMove = progress.CurrentStageSegmentIndex - gameMap.NumMovesMade;
+        //OBSOLETED
+        var numToMove = 5 - gameMap.NumMovesMade;
         Log.Info($"{numToMove} remaining spaces to move.");
         if (numToMove == 0)
             return;

@@ -6,19 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameState/AdventureProgress2")]
 public class AdventureProgress2 : ScriptableObject
 {
-    [Obsolete] [SerializeField] private CurrentGameMap2 currentMap;
     [SerializeField] private CurrentGameMap3 currentMap3;
     [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private int currentChapterIndex;
-    [SerializeField] private int currentStageSegmentIndex;
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
 
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
-    public int CurrentStageSegmentIndex => currentStageSegmentIndex;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
-    public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1] == MapNodeType.Boss && currentStageSegmentIndex > 0;
+    public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1] == MapNodeType.Boss;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
 
@@ -31,10 +28,10 @@ public class AdventureProgress2 : ScriptableObject
         }
     }
     
-    public int CurrentPowerLevel => CurrentChapter.GetPowerLevel(((float)currentStageSegmentIndex + 1) / CurrentChapter.SegmentCount);
-    public int CurrentElitePowerLevel => CurrentChapter.GetElitePowerLevel(((float)currentStageSegmentIndex + 1) / CurrentChapter.SegmentCount);
+    public int CurrentPowerLevel => CurrentChapter.GetPowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount);
+    public int CurrentElitePowerLevel => CurrentChapter.GetElitePowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount);
     private bool HasBegun => currentChapterIndex > -1;
-    private bool CurrentStageIsFinished => HasBegun && currentStageSegmentIndex == CurrentChapter.SegmentCount - 1;
+    private bool CurrentStageIsFinished => HasBegun && currentMap3.Progress == CurrentChapter.SegmentCount;
 
     public void Init()
     {
@@ -48,12 +45,11 @@ public class AdventureProgress2 : ScriptableObject
         Init();
         Advance();
         currentChapterIndex = chapterIndex;
-        currentStageSegmentIndex = stageSegmentIndex;
         Log.Info($"Init Adventure. {this}");
     }
     
     public override string ToString() =>
-        $"Adventure: {currentAdventure.name}. Stage: {currentChapterIndex}. StageSegment: {currentStageSegmentIndex}";
+        $"Adventure: {currentAdventure.name}. Stage: {currentChapterIndex}. StageProgress: {currentMap3.Progress}";
 
     public void InitIfNeeded()
     {
@@ -66,7 +62,6 @@ public class AdventureProgress2 : ScriptableObject
     public void Reset()
     {
         currentChapterIndex = -1;
-        currentStageSegmentIndex = -1;
         finishedStoryEvents.Clear();
     }
 
@@ -76,7 +71,6 @@ public class AdventureProgress2 : ScriptableObject
         {
             AdvanceStage();
         }
-        currentStageSegmentIndex++;
         Log.Info(ToString());
     }
 
@@ -85,8 +79,7 @@ public class AdventureProgress2 : ScriptableObject
         if (!IsFinalStage)
         {
             currentChapterIndex++;
-            currentStageSegmentIndex = -1;
-            currentMap3.SetMap(CurrentChapter.Map, CurrentChapter.SegmentCount);
+            currentMap3.SetMap(CurrentChapter.Map);
         } else
         {
             Log.Info("Can't advance: is final stage");

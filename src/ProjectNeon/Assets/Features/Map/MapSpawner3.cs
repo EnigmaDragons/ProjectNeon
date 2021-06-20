@@ -11,6 +11,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
     [SerializeField] private TravelReactiveSystem travelReactiveSystem;
     [SerializeField] private GameObject playerToken;
     [SerializeField] private PartyAdventureState partyState;
+    [SerializeField] private StageSegment storyEventSegment;
     
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
@@ -53,11 +54,11 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         _activeNodes.ForEach(x => Destroy(x.gameObject));
         var nodes = Enum.GetValues(typeof(MapNodeType)).Cast<MapNodeType>().ToList();
         foreach (var rule in _rules)
-            nodes = rule.FilterNodeTypes(nodes, gameMap, partyState);
+            nodes = rule.FilterNodeTypes(nodes, gameMap, partyState, progress);
         var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.CurrentPosition).ToArray().Shuffled();
         gameMap.CurrentChoices = new List<MapNode3>();
         for (var i = 0; i < nodes.Count; i++)
-            gameMap.CurrentChoices.Add(new MapNode3 { Type = nodes[i], Position = locations[i] });
+            gameMap.CurrentChoices.Add(new MapNode3 { Type = nodes[i], Position = locations[i], HasEventEnroute = progress.CurrentChapter.NodeTypeOdds2.IsThereTravelEvent(gameMap) });
         SpawnNodes();
     }
 
@@ -66,11 +67,12 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         _activeNodes = gameMap.CurrentChoices.Select(x =>
         {
             var obj = Instantiate(GetNodePrefab(x.Type), _map.transform);
+            Action midPoint = x.HasEventEnroute ? () => storyEventSegment.Start() : (Action)(() => travelReactiveSystem.Continue());
             obj.Init(progress, x.Position, () =>
             {
                 gameMap.CompletedNodes.Add(x.Type);
                 gameMap.CurrentChoices = new List<MapNode3>();
-            });
+            }, midPoint);
             var rect = (RectTransform) obj.transform;
             rect.pivot = new Vector2(0.5f, 0.5f);
             rect.anchoredPosition = x.Position;

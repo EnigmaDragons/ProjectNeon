@@ -13,7 +13,8 @@ public class StoryEventUIController : OnMessage<BeginStoryEvent, MarkStoryEventC
 
     protected override void Execute(MarkStoryEventCompleted msg)
     {
-        Message.Publish(new NodeFinished());
+        Message.Publish(new AutoSaveRequested());
+        Message.Publish(new ContinueTraveling());
         ui.SetActive(false);
     }
 }

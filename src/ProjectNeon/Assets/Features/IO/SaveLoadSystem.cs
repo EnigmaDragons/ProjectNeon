@@ -118,7 +118,6 @@ public sealed class SaveLoadSystem : ScriptableObject
         map.CompletedNodes = mapData.CompletedNodes.ToList();
         map.CurrentPosition = mapData.CurrentPosition;
         map.CurrentChoices = mapData.CurrentChoices.ToList();
-        map.TotalNodeCount = mapData.TotalNodeCount;
         return true;
     }
     

@@ -15,7 +15,7 @@ public class AdditionalNodeChoice : MapGenerationRule3
         _requiredExistingNodes = requiredExistingNodes;
     }
     
-    public List<MapNodeType> FilterNodeTypes(List<MapNodeType> list, CurrentGameMap3 map, PartyAdventureState party)
+    public List<MapNodeType> FilterNodeTypes(List<MapNodeType> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
     {
         if (list.Count(x => x == _mapNodeType) != _requiredExistingNodes)
             return list;

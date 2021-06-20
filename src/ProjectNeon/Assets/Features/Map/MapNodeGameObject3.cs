@@ -12,14 +12,14 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     private IStageSegment _arrivalSegment;
     private Maybe<GameObject> _rulesPanel;
     
-    public void Init(AdventureProgress2 progress, Vector3 position, Action onArrive)
+    public void Init(AdventureProgress2 progress, Vector3 position, Action onArrive, Action onMidPointArrive)
     {
         _arrivalSegment = segment;
-        button.onClick.AddListener(() => Message.Publish(new TravelToNode { Position = position, OnArrive = () =>
+        button.onClick.AddListener(() => Message.Publish(new TravelToNode { Position = position, OnMidPointArrive = onMidPointArrive, OnArrive = () =>
             {
                 onArrive();
                 _arrivalSegment.Start();
-            }
+            },
         }));
         _arrivalSegment = _arrivalSegment.GenerateDeterministic(new AdventureGenerationContext(progress));
     }
