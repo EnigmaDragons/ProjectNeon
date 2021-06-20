@@ -24,7 +24,8 @@ public sealed class PartyAdventureState : ScriptableObject
     public RuntimeDeck[] Decks => heroes.Select(h => h.Deck).ToArray();
     public PartyCardCollection Cards => cards;
     public PartyEquipmentCollection Equipment => equipment;
-    
+    private Dictionary<string, List<Hero>> _archKeyHeroes;
+
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
 
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
@@ -46,6 +47,7 @@ public sealed class PartyAdventureState : ScriptableObject
         cards.Initialized(allStartingCards); 
         
         equipment = new PartyEquipmentCollection();
+        InitArchKeyHeroes();
         return this;
     }
 
@@ -57,6 +59,7 @@ public sealed class PartyAdventureState : ScriptableObject
         credits = numCredits;
         cards.Initialized(partyCards);
         equipment = new PartyEquipmentCollection(equipments);
+        InitArchKeyHeroes();
     }
 
     public void AwardXp(int xp) => UpdateState(() => heroes.ForEach(h => h.AddXp(xp)));
@@ -133,4 +136,25 @@ public sealed class PartyAdventureState : ScriptableObject
     }
 
     public static PartyAdventureState InMemory() => (PartyAdventureState) FormatterServices.GetUninitializedObject(typeof(PartyAdventureState));
+    
+    public Hero BestMatchFor(string archetypeKey)
+    {
+        InitArchKeyHeroes();
+        return _archKeyHeroes[archetypeKey].First();
+    }
+
+    private void InitArchKeyHeroes()
+    {
+        _archKeyHeroes = new Dictionary<string, List<Hero>>();
+        foreach (var h in Heroes)
+        {
+            var archKeys = h.Character.ArchetypeKeys();
+            foreach (var a in archKeys)
+            {
+                if (!_archKeyHeroes.ContainsKey(a))
+                    _archKeyHeroes[a] = new List<Hero>();
+                _archKeyHeroes[a].Add(h);
+            };
+        }
+    }
 }

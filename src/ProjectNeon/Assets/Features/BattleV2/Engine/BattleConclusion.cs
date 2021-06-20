@@ -21,37 +21,48 @@ public class BattleConclusion : OnMessage<BattleFinished>
         
         var rewardPicker = new ShopSelectionPicker(adventure2.CurrentChapterNumber, rewardFactors, state.Party);
         if (state.IsEliteBattle)
-        {
-            // Tuned Reward Set
-            var rewardEquips = rewardPicker
-                .PickEquipments(equipmentPrizePool, 1, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
-                .ToList();
-            
-            var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20));
-            while (rewardEquips.Count < 3)
-            {
-                var nextEquipment = possibleEquips.Dequeue();
-                if (!rewardEquips.Any(x => x.Description.Equals(nextEquipment.Description)))
-                    rewardEquips.Add(nextEquipment);
-            }
-            
-            Message.Publish(new GetUserSelectedEquipment(rewardEquips.ToArray().Shuffled(), equipment =>
-            {
-                equipment.IfPresent(e => state.SetRewardEquipment(e));
-                onFinished();
-            }));
-        }
+            GetUserSelectedEquipment(onFinished, rewardPicker);
         else
-        {
-            var rewardCards = rewardPicker.PickCards(cardPrizePool, 3, RarityExtensions.AllExceptStarters);
-            Message.Publish(new GetUserSelectedCard(rewardCards, card =>
-            {
-                card.IfPresent(c => state.SetRewardCards(c));
-                onFinished();
-            }));
-        }
+            GetUserSelectedRewardCard(onFinished, rewardPicker);
     }
-    
+
+    private void GetUserSelectedEquipment(Action onFinished, ShopSelectionPicker rewardPicker)
+    {
+        // Tuned Reward Set
+        var rewardEquips = rewardPicker
+            .PickEquipments(equipmentPrizePool, 1, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
+            .ToList();
+
+        var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20));
+        while (rewardEquips.Count < 3)
+        {
+            var nextEquipment = possibleEquips.Dequeue();
+            if (!rewardEquips.Any(x => x.Description.Equals(nextEquipment.Description)))
+                rewardEquips.Add(nextEquipment);
+        }
+
+        Message.Publish(new GetUserSelectedEquipment(rewardEquips.ToArray().Shuffled(), equipment =>
+        {
+            equipment.IfPresent(e => state.SetRewardEquipment(e));
+            onFinished();
+        }));
+    }
+
+    private void GetUserSelectedRewardCard(Action onFinished, ShopSelectionPicker rewardPicker)
+    {
+        var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, RarityExtensions.AllExceptStarters);
+        var rewardCards = rewardCardTypes.Select(x =>
+        {
+            var hero = state.Party.BestMatchFor(x.GetArchetypeKey());
+            return new Card(-1, hero.AsMember(-1), x, hero.Character.Tint);
+        });
+        Message.Publish(new GetUserSelectedCard(rewardCards, card =>
+        {
+            card.IfPresent(c => state.SetRewardCards(c));
+            onFinished();
+        }));
+    }
+
     private void Advance()
     {
         if (adventure2.IsFinalStageSegment)
