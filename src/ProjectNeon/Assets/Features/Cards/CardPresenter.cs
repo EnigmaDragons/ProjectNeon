@@ -244,7 +244,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType.ChainedCard.IfPresent(chain =>
         {
             if (_isHand)
-                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain, _card.Tint)));
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain, _card.OwnerTint)));
             else
                 Message.Publish(new ShowReferencedCard(chainedCardParent, chain));
         });
@@ -314,8 +314,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         tint.color = _card == null
             ? Color.white
-            : _card.Tint;
-        tintGradient.enabled = _card == null;
+            : _card.OwnerTint.OrDefault(Color.white);
+        tintGradient.enabled = _card == null || _card.OwnerTint.IsMissing;
         if (_cardType.Archetypes.Count == 0)
         {
             var archetypeTint = archetypeTints.ForArchetypes(new HashSet<string>());

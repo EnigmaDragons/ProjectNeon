@@ -37,7 +37,7 @@ public sealed class Card : CardTypeData
     public Maybe<CardTypeData> SwappedCard => _type.SwappedCard;
     public Rarity Rarity => _type.Rarity;
     public Maybe<ResourceQuantity> LockedXValue { get; private set; } = Maybe<ResourceQuantity>.Missing();
-    public Color Tint => tint.OrDefault(Color.white);
+    public Maybe<Color> OwnerTint => tint;
     public HashSet<string> Archetypes => _type.Archetypes;
     public bool IsAttack => _type.Tags.Contains(CardTag.Attack) || _type.TypeDescription.Equals("Attack");
     public Maybe<CardCondition> HighlightCondition => _type.HighlightCondition;
