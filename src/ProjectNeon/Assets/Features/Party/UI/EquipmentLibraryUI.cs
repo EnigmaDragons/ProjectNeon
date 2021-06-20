@@ -10,6 +10,7 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, D
     [SerializeField] private GameObject emptyEquipment;
     [SerializeField] private PartyAdventureState partyState;
     [SerializeField] private DeckBuilderState builderState;
+    [SerializeField] private GameObject noEquipmentMessage;
     
     private HeroCharacter _selectedHero;
     
@@ -34,6 +35,7 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, D
                 && (builderState.ShowEquipmentSlots.None()
                     || builderState.ShowEquipmentSlots.Contains(e.Slot)))
             .ForEach(x => equipUsage.Add((x, false)));
+        noEquipmentMessage.SetActive(!partyState.Equipment.All.Any());
         pageViewer.Init(
             equipmentInLibraryButtonTemplate.gameObject,
             emptyEquipment,
