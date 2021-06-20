@@ -75,6 +75,7 @@ public class MapSpawner3 : MonoBehaviour
             rect.anchoredPosition = x.Position;
             return obj;
         }).ToArray();
+        _playerToken.transform.SetAsLastSibling();
         Message.Publish(new AutoSaveRequested());
     }
     
