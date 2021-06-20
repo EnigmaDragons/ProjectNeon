@@ -34,12 +34,11 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         _rules = progress.CurrentChapter.NodeTypeOdds2.GenerateMapRules().Concat(new MapGenerationRule3[]
         {
-            new EnsureAtLeastOneCombatChoice(),
             new EnsureHelpfulOptionsBeforeBoss(),
             new NoClinicsIfYouAreHighHealth(),
             new NoShopsIfYouAreLowOnMoney(),
+            new EnsureAtLeastTwoChoices(),
             new OnlyBossOnFinalNode(),
-            new EnsureThereIsAtLeastOneNode(),
         }).ToArray();
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();
