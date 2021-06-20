@@ -282,16 +282,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void RenderCardType()
     {
+        var shouldUseLibraryMode = _card == null || (_card.Cost.PlusXCost && !_isHand);
         IsPlayable = CheckIfCanPlay();
         nameLabel.text = _cardType.Name;
-        description.text = _card != null 
+        description.text = !shouldUseLibraryMode
             ? _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity)) 
             : _cardType.InterpolatedDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
         type.text = _cardType.ArchetypeDescription();
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);
-        cardCostPresenter.Render(_card, _cardType);
+        cardCostPresenter.Render(shouldUseLibraryMode ? Maybe<Card>.Missing() : new Maybe<Card>(_card, _card != null), _cardType);
         SetCardTint();
         SetCanPlayHighlight(IsPlayable, 
             _card != null 
