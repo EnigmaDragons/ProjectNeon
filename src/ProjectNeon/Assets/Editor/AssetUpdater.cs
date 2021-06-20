@@ -19,6 +19,8 @@ public class AssetUpdater
         UpdateEquipmentIDs();
         UpdateAllEquipments();
         EnsureDurationPresent();
+        UpdateMapIDs();
+        
         Log.Info("Asset Updates Complete");
     }
 
@@ -156,6 +158,12 @@ public class AssetUpdater
             x.Equipments = equipments;
             EditorUtility.SetDirty(x);
         });
+    }
+
+    [MenuItem("Neon/Update/Update Map IDs")]
+    private static void UpdateMapIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<GameMap3>(), c => c.id, (c, id) => c.id = id);
     }
     
     private static void EnsureDurationPresent()
