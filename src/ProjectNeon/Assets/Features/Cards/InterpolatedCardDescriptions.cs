@@ -223,14 +223,19 @@ public static class InterpolatedCardDescriptions
 
     private static Dictionary<string, int> _resourceIcons = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase)
     {
-        { "Ammo", 4},
-        { "Chems", 5},
-        { "Energy", 6},
-        { "Flames", 7},
-        { "Mana", 8},
-        { "Tech Points", 9},
-        { "PrimaryResource", 8 },
-        { "Primary Resource", 8 }
+        { "Ammo", 4 },
+        { "Chems", 5 },
+        { "Energy", 6 },
+        { "Flames", 7 },
+        { "Mana", 20 },
+        { "Tech Points", 23 },
+        { "PrimaryResource", 20 },
+        { "Primary Resource", 20 },
+        { "Grenades", 8 },
+        { "Grenade", 8 },
+        { "Ambition", 9 },
+        { "Credits", 21},
+        { "Creds", 21},
     };
     private static string PhysDamageIcon => Sprite(0);
     private static string RawDamageIcon => Sprite(1);
