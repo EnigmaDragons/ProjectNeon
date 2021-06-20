@@ -242,7 +242,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Message.Publish(new HideReferencedCard());
         rules.Show(_cardType);
         targetRule.Show(_cardType.ActionSequences.First());
-        scalingRule.Show(_cardType);
+        if (!_isHand)
+            scalingRule.Show(_cardType);
 
         _cardType.ChainedCard.IfPresent(chain =>
         {
@@ -264,6 +265,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         rules.Hide();
         targetRule.Hide();
+        scalingRule.Hide();
         Message.Publish(new HideReferencedCard());
     }
     
