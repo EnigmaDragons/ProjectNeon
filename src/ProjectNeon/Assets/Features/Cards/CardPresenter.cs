@@ -89,7 +89,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _getCanActivate = getCanActivate;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _onRightClick = _isHand ? ToggleAsBasic : (Action)_cardType.ShowDetailedCardView;
+        _onRightClick = _isHand ? ToggleAsBasic : (Action)card.ShowDetailedCardView;
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
     }
@@ -243,15 +243,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         _cardType.ChainedCard.IfPresent(chain =>
         {
-            if (_isHand)
+            if (_card != null)
                 Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain, _card.OwnerTint)));
             else
                 Message.Publish(new ShowReferencedCard(chainedCardParent, chain));
         });
         _cardType.SwappedCard.IfPresent(swap =>
         {
-            if (_isHand)
-                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, swap)));
+            if (_card != null)
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, swap, _card.OwnerTint)));
             else
                 Message.Publish(new ShowReferencedCard(chainedCardParent, swap));
         });
