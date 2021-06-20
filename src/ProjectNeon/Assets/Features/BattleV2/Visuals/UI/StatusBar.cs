@@ -34,7 +34,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
                 Type = statusTag.ToString(), 
                 Icon = icons[statusTag].Icon, 
                 Tooltip = s.Status.CustomText.OrDefault(() => defaultText)
-                    .Replace("[Originator]", battleState.Members[s.OriginatorId].ToString()),
+                    .Replace("[Originator]", battleState.Members.TryGetValue(s.OriginatorId, out var m) 
+                        ? m.ToString() 
+                        : "Originator"),
                 OriginatorId = s.OriginatorId
             }));
 

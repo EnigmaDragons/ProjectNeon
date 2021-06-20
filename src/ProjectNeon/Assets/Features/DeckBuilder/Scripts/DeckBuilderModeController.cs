@@ -58,6 +58,9 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
             fightOnlyElements.ForEach(x => x.SetActive(true));
             fightButton.gameObject.SetActive(true);
         }
+
+        var initialTab = party.Equipment.Available.Any() ? "equipment" : "hero";
+        Message.Publish(new CustomizationTabSwitched { TabName = initialTab });
     }
 
     protected override void Execute(DeckBuilderCurrentDeckChanged msg)

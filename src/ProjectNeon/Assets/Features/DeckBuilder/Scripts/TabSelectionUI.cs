@@ -17,9 +17,8 @@ public class TabSelectionUI : OnMessage<CustomizationTabSwitched>
         equipmentTab.Init(() => Message.Publish(new CustomizationTabSwitched { TabName = "equipment" }), true);
         heroTab.Init(() => Message.Publish(new CustomizationTabSwitched { TabName = "hero" }), false);
         enemyTab.Init(() => Message.Publish(new CustomizationTabSwitched { TabName = "enemy" }), false);
-        Execute(new CustomizationTabSwitched { TabName = "equipment" });
     }
-
+    
     protected override void Execute(CustomizationTabSwitched msg)
     {
         var equipmentTabActive = msg.TabName == "equipment";

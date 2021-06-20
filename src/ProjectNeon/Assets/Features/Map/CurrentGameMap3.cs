@@ -10,7 +10,7 @@ public class CurrentGameMap3 : ScriptableObject
     public Vector2 CurrentPosition { get; set; }
     public List<MapNode3> CurrentChoices { get; set; }
 
-    public void SetMap(GameMap3 map)
+    public void SetMap(GameMap3 map, int totalNodeCount)
     {
         CurrentMap = map;
         CompletedNodes = new List<MapNodeType>();
