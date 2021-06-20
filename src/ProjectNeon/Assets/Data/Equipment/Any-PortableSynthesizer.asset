@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Portable Synthesizer
   description: 'Each turn: Lose 1 cred. Gain 1 primary resource'
   archetypes: []
-  rarity: 2
+  rarity: 3
   slot: 2
   priceFactor: 1
   modifiers:
@@ -49,6 +49,10 @@ MonoBehaviour:
     StatusDetailText: 'Each turn: Lose 1 cred. Gain 1 primary resource'
     TurnDelay: 0
     Formula: 
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 

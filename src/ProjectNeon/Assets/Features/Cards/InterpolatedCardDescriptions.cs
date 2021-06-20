@@ -318,6 +318,7 @@ public static class InterpolatedCardDescriptions
             var formulaResult = ipf.EvaluationPartialFormula.Length > 0
                 ? FormulaResult(ipf.EvaluationPartialFormula, owner, xCost).ToString("0.##")
                 : "";
+            formulaResult = formulaResult.Equals("0") ? "" : formulaResult;
             return FormattedFormula($"{ipf.Prefix} {formulaResult} {ipf.Suffix}".Trim())
                 .Replace("PrimaryResource", owner.PrimaryResource().ResourceType);
         }
