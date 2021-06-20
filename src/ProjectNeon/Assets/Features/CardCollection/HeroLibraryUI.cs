@@ -36,7 +36,7 @@ public class HeroLibraryUI : MonoBehaviour
             cardInLibraryButtonTemplate.gameObject, 
             emptyCard, 
             cards
-                .Select(c => new Card(-1, heroMember, c, archetypeTints.ForArchetypes(c.Archetypes)))
+                .Select(c => new Card(-1, heroMember, c))
                 .Select(InitCardInLibraryButton)
                 .ToList(), 
             x => {},
