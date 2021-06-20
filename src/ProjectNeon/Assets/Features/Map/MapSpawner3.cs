@@ -75,6 +75,7 @@ public class MapSpawner3 : MonoBehaviour
             rect.anchoredPosition = x.Position;
             return obj;
         }).ToArray();
+        Message.Publish(new AutoSaveRequested());
     }
     
     private MapNodeGameObject3 GetNodePrefab(MapNodeType type)

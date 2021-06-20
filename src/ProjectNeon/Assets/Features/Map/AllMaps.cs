@@ -10,6 +10,4 @@ public class AllMaps : ScriptableObject
 
     public Dictionary<int, GameMap3> GetMap() => _map ??= Maps.ToDictionary(x => x.id, x => x);
     public Maybe<GameMap3> GetMapById(int id) => GetMap().ValueOrMaybe(id);
-    
-    
 }

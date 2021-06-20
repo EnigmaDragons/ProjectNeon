@@ -30,4 +30,14 @@ public static class GameDataMappingExtensions
             CurrentChapterIndex = p.CurrentChapterIndex,
             CurrentStageSegmentIndex = p.CurrentStageSegmentIndex
         };
+
+    public static GameMapData GetData(this CurrentGameMap3 map)
+        => new GameMapData
+        {
+            GameMapId = map.CurrentMap.id,
+            CompletedNodes = map.CompletedNodes.ToArray(),
+            CurrentPosition = map.CurrentPosition,
+            CurrentChoices = map.CurrentChoices.ToArray(),
+            TotalNodeCount = map.TotalNodeCount
+        };
 }

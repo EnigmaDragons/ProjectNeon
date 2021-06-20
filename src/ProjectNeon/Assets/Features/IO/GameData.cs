@@ -9,6 +9,7 @@ public class GameData
     public CurrentGamePhase Phase = CurrentGamePhase.NotStarted;
     public GameAdventureProgressData AdventureProgress = new GameAdventureProgressData();
     public GamePartyData PartyData = new GamePartyData();
+    public GameMapData GameMap = new GameMapData();
 }
 
 [Serializable]
@@ -70,6 +71,7 @@ public class GameEquipmentData
 [Serializable]
 public class GameMapData
 {
+    public int GameMapId;
     public MapNodeType[] CompletedNodes;
     public Vector2 CurrentPosition;
     public MapNode3[] CurrentChoices;

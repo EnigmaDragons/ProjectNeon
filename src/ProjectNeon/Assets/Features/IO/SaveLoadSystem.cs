@@ -8,6 +8,8 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private Library library;
+    [SerializeField] private CurrentGameMap3 map;
+    [SerializeField] private AllMaps maps;
 
     public bool HasSavedGame => CurrentGameData.HasActiveGame;
     public void SaveCheckpoint() => SaveCurrentGame();
@@ -20,6 +22,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             s.IsInitialized = true;
             s.AdventureProgress = adventure.GetData();
             s.PartyData = party.GetData();
+            s.GameMap = map.GetData();
             return s;
         });
     }
@@ -32,6 +35,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             loadedSuccessfully = InitAdventure(saveData.AdventureProgress);
         if (loadedSuccessfully && (int) saveData.Phase >= (int) CurrentGamePhase.SelectedSquad)
             loadedSuccessfully = InitParty(saveData.PartyData);
+        if (loadedSuccessfully && (int) saveData.Phase >= (int) CurrentGamePhase.SelectedAdventure)
+            loadedSuccessfully = InitMap(saveData.GameMap);
         if (!loadedSuccessfully) 
             Log.Info("Unable to Load Game");
 
@@ -101,6 +106,19 @@ public sealed class SaveLoadSystem : ScriptableObject
             }
         }
 
+        return true;
+    }
+    
+    private bool InitMap(GameMapData mapData)
+    {
+        var selectedMap = maps.GetMapById(mapData.GameMapId);
+        if (selectedMap.IsMissing)
+            return LoadFailedReason($"Unknown Map {mapData.GameMapId}");
+        map.CurrentMap = selectedMap.Value;
+        map.CompletedNodes = mapData.CompletedNodes.ToList();
+        map.CurrentPosition = mapData.CurrentPosition;
+        map.CurrentChoices = mapData.CurrentChoices.ToList();
+        map.TotalNodeCount = mapData.TotalNodeCount;
         return true;
     }
     
