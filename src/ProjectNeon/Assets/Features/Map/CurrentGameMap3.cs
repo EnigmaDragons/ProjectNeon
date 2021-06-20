@@ -9,6 +9,8 @@ public class CurrentGameMap3 : ScriptableObject
     public Vector2 CurrentPosition { get; set; }
     public List<MapNode3> CurrentChoices { get; set; }
     public int TotalNodeCount { get; set; }
+
+    public float ProgressToUnlockBoss => TotalNodeCount > 1 ? CompletedNodes.Count / (TotalNodeCount - 1f) : 1f; 
     
     public void SetMap(GameMap3 map, int totalNodeCount)
     {

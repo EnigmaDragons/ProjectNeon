@@ -17,6 +17,7 @@ public class AdventureProgress2 : ScriptableObject
     public int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
     public int CurrentStageSegmentIndex => currentStageSegmentIndex;
+    public float ProgressToUnlockChapterBoss => currentMap3.ProgressToUnlockBoss; 
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1] == MapNodeType.Boss && currentStageSegmentIndex > 0;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
@@ -68,6 +69,7 @@ public class AdventureProgress2 : ScriptableObject
         currentChapterIndex = -1;
         currentStageSegmentIndex = -1;
         finishedStoryEvents.Clear();
+        Message.Publish(new AdventureProgressChanged());
     }
 
     public void Advance()
@@ -78,6 +80,7 @@ public class AdventureProgress2 : ScriptableObject
         }
         currentStageSegmentIndex++;
         Log.Info(ToString());
+        Message.Publish(new AdventureProgressChanged());
     }
 
     private void AdvanceStage()
