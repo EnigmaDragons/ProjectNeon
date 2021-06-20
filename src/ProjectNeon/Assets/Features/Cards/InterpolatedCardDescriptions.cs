@@ -297,7 +297,7 @@ public static class InterpolatedCardDescriptions
     private static string FriendlyScopeName(string raw)
     {
         var tmp = raw;
-        if (StatAbbreviations.TryGetValue(raw, out var friendly))
+        if (StatTypeAliases.FullNameToAbbreviations.TryGetValue(raw, out var friendly))
             tmp = friendly;
         if (TemporalStatFriendlyNames.TryGetValue(raw, out var friendly2))
             tmp = friendly2;
@@ -318,7 +318,9 @@ public static class InterpolatedCardDescriptions
             var formulaResult = ipf.EvaluationPartialFormula.Length > 0
                 ? FormulaResult(ipf.EvaluationPartialFormula, owner, xCost).ToString("0.##")
                 : "";
-            return FormattedFormula($"{ipf.Prefix} {formulaResult} {ipf.Suffix}".Trim());
+            formulaResult = formulaResult.Equals("0") ? "" : formulaResult;
+            return FormattedFormula($"{ipf.Prefix} {formulaResult} {ipf.Suffix}".Trim())
+                .Replace("PrimaryResource", owner.PrimaryResource().ResourceType);
         }
 
         return RoundUp(FormulaResult(f.FullFormula, owner, xCost)).ToString();
@@ -386,25 +388,15 @@ public static class InterpolatedCardDescriptions
     {
         var newS = s;
         newS = newS.Replace(" * ", "x ");
-        foreach (var stat in StatAbbreviations)
+        foreach (var stat in StatTypeAliases.FullNameToAbbreviations)
             if (newS.Contains(stat.Key))
                 newS = newS.Replace(stat.Key, stat.Value);
 
         return newS;
     }
 
-    private static string Standardized(string effectScope) => StatAbbreviations.ValueOrDefault(effectScope, () => effectScope);
+    private static string Standardized(string effectScope) => StatTypeAliases.FullNameToAbbreviations.ValueOrDefault(effectScope, () => effectScope);
     
-    private static Dictionary<string, string> StatAbbreviations = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
-    {
-        { StatType.Leadership.ToString(), "LD" },
-        { StatType.Attack.ToString(), "ATK" },
-        { StatType.Magic.ToString(), "MAG" },
-        { StatType.Armor.ToString(), "ARM" },
-        { StatType.Toughness.ToString(), "TGH" },
-        { StatType.Economy.ToString(), "EC" },
-    };
-
     private static Dictionary<string, string> TemporalStatFriendlyNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
     {
         {TemporalStatType.Marked.ToString(), "Mark"},

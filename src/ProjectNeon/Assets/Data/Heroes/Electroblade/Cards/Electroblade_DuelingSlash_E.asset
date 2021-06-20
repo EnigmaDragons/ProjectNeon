@@ -26,20 +26,21 @@ MonoBehaviour:
         ConstantValue: 0
         FloatVariable: {fileID: 0}
       DurationFormula: 
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -84,6 +85,76 @@ MonoBehaviour:
   - type: 1
     battleEffect:
       EffectType: 30
+      Conditions:
+      - {fileID: 11400000, guid: c00249086dc15be4688faeb22fded2b4, type: 2}
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 0
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 1.1 * Attack
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    atTargetAnimation:
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+    enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
+  - type: 1
+    battleEffect:
+      EffectType: 30
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -94,20 +165,21 @@ MonoBehaviour:
         ConstantValue: 0
         FloatVariable: {fileID: 0}
       DurationFormula: 0
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 1.1 * Attack {PrimaryResource > Target[PrimaryResource]:* 2}
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 

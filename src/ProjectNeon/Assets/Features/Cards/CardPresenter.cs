@@ -28,6 +28,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private float highlightedScale = 1.7f;
     [SerializeField] private CardRulesPresenter rules;
     [SerializeField] private CardTargetRulePresenter targetRule;
+    [SerializeField] private CardScaledStatsPresenter scalingRule;
     [SerializeField] private GameObject chainedCardParent;
     [SerializeField] private CardCostPresenter cardCostPresenter;
     [SerializeField] private Image[] glitchableComponents; 
@@ -113,6 +114,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         gameObject.SetActive(true);
         targetRule.Hide();
+        scalingRule.Hide();
         controls.SetActive(false);
         DisableCanPlayHighlight();
         DisableSelectedHighlight();
@@ -240,6 +242,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Message.Publish(new HideReferencedCard());
         rules.Show(_cardType);
         targetRule.Show(_cardType.ActionSequences.First());
+        scalingRule.Show(_cardType);
 
         _cardType.ChainedCard.IfPresent(chain =>
         {
@@ -282,16 +285,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void RenderCardType()
     {
+        var shouldUseLibraryMode = _card == null || (_card.Cost.PlusXCost && !_isHand);
         IsPlayable = CheckIfCanPlay();
         nameLabel.text = _cardType.Name;
-        description.text = _card != null 
+        description.text = !shouldUseLibraryMode
             ? _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity)) 
             : _cardType.InterpolatedDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
         type.text = _cardType.ArchetypeDescription();
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);
-        cardCostPresenter.Render(_card, _cardType);
+        cardCostPresenter.Render(shouldUseLibraryMode ? Maybe<Card>.Missing() : new Maybe<Card>(_card, _card != null), _cardType);
         SetCardTint();
         SetCanPlayHighlight(IsPlayable, 
             _card != null 

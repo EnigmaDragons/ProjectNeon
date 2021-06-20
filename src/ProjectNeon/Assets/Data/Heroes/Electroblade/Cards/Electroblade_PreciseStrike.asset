@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 292
   customName: 
   art: {fileID: 21300000, guid: 37afb2bd1e845f34684cc1efcc944229, type: 3}
-  description: Deal 1 * Attack doubled if they are stunned
+  description: Deal {E[0]} <b>| Crit:</b> Target is stunned
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
@@ -41,6 +41,7 @@ MonoBehaviour:
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
-  highlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 672b8eeaffd779f4fa4e63242da9ba68, type: 2}
   unhighlightCondition: []
   isWIP: 0

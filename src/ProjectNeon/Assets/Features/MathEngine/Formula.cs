@@ -26,33 +26,17 @@ public static class Formula
         return Convert.ToSingle(dataTable.Compute(newExp, null));
     }
     
-    private static Dictionary<string, string> FullStatNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
-    {
-        { "LEAD", StatType.Leadership.ToString() },
-        { "ATK", StatType.Attack.ToString() },
-        { "MAG", StatType.Magic.ToString() },
-        { "ARM", StatType.Armor.ToString() },
-        { "TGH", StatType.Toughness.ToString() },
-        { "ECON", StatType.Economy.ToString() },
-        { "LD", StatType.Economy.ToString() },
-        { "EC", StatType.Economy.ToString() },
-    };
-
     private static string ReplaceTags(string expression, FormulaContext ctx)
     {
         foreach (var tag in Enum.GetValues(typeof(CardTag)).Cast<CardTag>())
-        {
             expression = expression.Replace($"Tag[{tag}]", ctx.Source.TagsPlayed[tag].ToString());
-        }
         return expression;
     }
 
     private static string ReplaceShorthandStatNames(string expression)
     {
-        foreach (var stat in FullStatNames)
-        {
+        foreach (var stat in StatTypeAliases.AbbreviationToFullNames) 
             expression = expression.Replace(stat.Key, stat.Value);
-        }
         return expression;
     }
 
