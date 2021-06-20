@@ -1,8 +1,1 @@
-
-using System;
-
-[Obsolete]
-public class PlayerTurnConfirmed
-{
-    
-}
+public class PlayerTurnConfirmed { }

@@ -43,6 +43,7 @@ public class MapNodeGameObject : MonoBehaviour, IPointerEnterHandler, IPointerEx
             ? _revealedSpriteState 
             : _hiddenSpriteState;
     }
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!button.interactable)

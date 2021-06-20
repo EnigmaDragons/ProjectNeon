@@ -24,7 +24,6 @@ public class BattleSetupV2 : MonoBehaviour
     
     private CardPlayZone Hand => playerCardPlayZones.HandZone;
     private CardPlayZone Deck => playerCardPlayZones.DrawZone;
-    private bool _useCustomEncounter = false;
 
     public void InitBattleField(GameObject battlefield) => state.SetNextBattleground(battlefield);
     public void InitParty(BaseHero h1, BaseHero h2, BaseHero h3) => party.Initialized(h1, h2, h3);
@@ -44,11 +43,7 @@ public class BattleSetupV2 : MonoBehaviour
     }
     public void InitPartyDecks(List<CardTypeData> d1, List<CardTypeData> d2, List<CardTypeData> d3) => party.UpdateDecks(d1, d2, d3);
     public void InitEncounterBuilder(EncounterBuilder e) => encounterBuilder = e;
-    public void InitEncounter(IEnumerable<EnemyInstance> enemies)
-    {
-        _useCustomEncounter = true;
-        enemyArea.Initialized(enemies);
-    }
+    public void InitEncounter(IEnumerable<EnemyInstance> enemies) => enemyArea.Initialized(enemies);
 
     public IEnumerator Execute()
     {

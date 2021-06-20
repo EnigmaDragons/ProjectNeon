@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public static class BattleCardExecution
 {
@@ -28,6 +27,12 @@ public static class BattleCardExecution
         }
 
         var payloads = new List<IPayloadProvider>();
+        var cardHasAnimations = card.ActionSequences.Sum(x => x.CardActions.NumAnimations) > 0;
+        if (!cardHasAnimations)
+        {
+            Log.Warn($"{card.Name} has no animations. Adding wait time where animation would be.");
+            payloads.Add(new SinglePayload(new WaitDuringResolution(1.2f)));
+        }
         for (var i = 0; i < sequences.Count; i++)
         {
             var seq = sequences[i];
