@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 [Serializable]
 public class GameData
@@ -64,6 +65,15 @@ public class GameEquipmentData
     public GameEquipmentDataType Type = GameEquipmentDataType.None;
     public int StaticEquipmentId = -1;
     public InMemoryEquipment GeneratedEquipment = new InMemoryEquipment();
+}
+
+[Serializable]
+public class GameMapData
+{
+    public MapNodeType[] CompletedNodes;
+    public Vector2 CurrentPosition;
+    public MapNode3[] CurrentChoices;
+    public int TotalNodeCount;
 }
 
 public enum GameEquipmentDataType
