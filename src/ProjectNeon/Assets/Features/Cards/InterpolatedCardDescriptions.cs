@@ -311,7 +311,7 @@ public static class InterpolatedCardDescriptions
         {
             var ipf = f.InterpolatePartialFormula;
             var formulaResult = ipf.EvaluationPartialFormula.Length > 0
-                ? FormulaResult(ipf.EvaluationPartialFormula, owner, xCost).ToString("f2")
+                ? FormulaResult(ipf.EvaluationPartialFormula, owner, xCost).ToString("0.##")
                 : "";
             return FormattedFormula($"{ipf.Prefix} {formulaResult} {ipf.Suffix}".Trim());
         }
