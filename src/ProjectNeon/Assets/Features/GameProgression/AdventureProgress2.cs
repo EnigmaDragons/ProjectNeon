@@ -42,7 +42,7 @@ public class AdventureProgress2 : ScriptableObject
         Log.Info($"Init Adventure. {this}");
     }
 
-    public void Init(Adventure adventure, int chapterIndex, int stageSegmentIndex)
+    public void Init(Adventure adventure, int chapterIndex)
     {
         currentAdventure.Adventure = adventure;
         Init();
