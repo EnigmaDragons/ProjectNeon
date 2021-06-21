@@ -6,6 +6,7 @@ public class CustomizationOrchestrator : MonoBehaviour
     [SerializeField] private EquipmentLibraryFilterUI equipmentFilter;
     [SerializeField] private LibraryFilterUI cardFilter;
     [SerializeField] private HeroDetailsPanelForCustomization heroDetails;
+    [SerializeField] private DeckUI deckUI;
     
     private void Awake()
     {
@@ -13,5 +14,6 @@ public class CustomizationOrchestrator : MonoBehaviour
         equipmentFilter.Regenerate();
         cardFilter.Regenerate();
         heroDetails.Initialized();
+        deckUI.GenerateDeck();
     }
 }
