@@ -10,16 +10,22 @@ public class CombatSegment : StageSegment
 
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData)
     {
-        if (string.IsNullOrEmpty(mapData.AdditionalSaveData))
+        if (mapData.EnemyIds == null || !mapData.EnemyIds.Any())
         {
             var enemies = ctx.Adventure.CurrentChapter.EncounterBuilder.Generate(ctx.Adventure.CurrentPowerLevel).ToArray();
-            mapData.AdditionalSaveData = string.Join(",", enemies.Select(x => x.EnemyId));
+            mapData.EnemyIds = enemies.Select(x => x.EnemyId).ToArray();
             return new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentChapter.Battleground, false, enemies);
         }
         else
         {
+            var maybeEnemies = mapData.EnemyIds.Select(x => ctx.Enemies.GetEnemyById(x)).ToArray();
+            if (maybeEnemies.Any(x => x.IsMissing))
+            {
+                mapData.EnemyIds = new int[0];
+                return GenerateDeterministic(ctx, mapData);
+            }
             return new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentChapter.Battleground, false, 
-                mapData.AdditionalSaveData.Split(',').Select(x => ctx.Enemies.GetEnemyById(int.Parse(x)).Value.GetEnemy(ctx.Adventure.CurrentChapterNumber)).ToArray());
+                maybeEnemies.Select(x => x.Value.GetEnemy(ctx.Adventure.CurrentChapterNumber)).ToArray());
         }
     }
 }

@@ -23,7 +23,7 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
         GenerateDeck();
     } 
 
-    private void GenerateDeck()
+    public void GenerateDeck()
     {
         _cardButtons = new List<CardInDeckButton>();
         var hero = state.SelectedHeroesDeck.Hero;

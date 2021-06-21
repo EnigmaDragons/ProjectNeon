@@ -46,7 +46,6 @@ public class AdventureProgress2 : ScriptableObject
     {
         currentAdventure.Adventure = adventure;
         Init();
-        Advance();
         currentChapterIndex = chapterIndex;
         Log.Info($"Init Adventure. {this}");
     }
