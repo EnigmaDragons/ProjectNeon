@@ -10,6 +10,7 @@ public class HeroEquipment
     [SerializeField] private string weaponName;
     [SerializeField] private string armorName;
     [SerializeField] private string[] augments = new string[3];
+    [SerializeField] private string[] permanents = new string[0];
     
     private Equipment _weapon;
     private Equipment _armor;
@@ -49,7 +50,11 @@ public class HeroEquipment
             }
     }
 
-    public void EquipPermanent(Equipment e) => _permanents.Add(e);
+    public void EquipPermanent(Equipment e)
+    {
+        _permanents.Add(e);
+        permanents = _permanents.Select(x => x.Name).ToArray();
+    }
 
     public void Equip(Equipment e)
     {
