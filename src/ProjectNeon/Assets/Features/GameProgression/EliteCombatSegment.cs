@@ -9,16 +9,22 @@ public class EliteCombatSegment : StageSegment
     public override Maybe<string> Detail => Maybe<string>.Missing();
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData)
     {
-        if (string.IsNullOrEmpty(mapData.AdditionalSaveData))
+        if (mapData.EnemyIds == null || !mapData.EnemyIds.Any())
         {
             var enemies = ctx.Adventure.CurrentChapter.EliteEncounterBuilder.Generate(ctx.Adventure.CurrentElitePowerLevel).ToArray();
-            mapData.AdditionalSaveData = string.Join(",", enemies.Select(x => x.EnemyId));
-            return new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentChapter.Battleground, false, enemies);
+            mapData.EnemyIds = enemies.Select(x => x.EnemyId).ToArray();
+            return new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentChapter.Battleground, true, enemies);
         }
         else
         {
-            return new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentChapter.Battleground, false, 
-                mapData.AdditionalSaveData.Split(',').Select(x => ctx.Enemies.GetEnemyById(int.Parse(x)).Value.GetEnemy(ctx.Adventure.CurrentChapterNumber)).ToArray());
+            var maybeEnemies = mapData.EnemyIds.Select(x => ctx.Enemies.GetEnemyById(x)).ToArray();
+            if (maybeEnemies.Any(x => x.IsMissing))
+            {
+                mapData.EnemyIds = new int[0];
+                return GenerateDeterministic(ctx, mapData);
+            }
+            return new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentChapter.Battleground, true, 
+                maybeEnemies.Select(x => x.Value.GetEnemy(ctx.Adventure.CurrentChapterNumber)).ToArray());
         }
     }
 }

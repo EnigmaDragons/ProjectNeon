@@ -75,7 +75,6 @@ public class GameMapData
     public MapNodeType[] CompletedNodes;
     public Vector2 CurrentPosition;
     public MapNode3[] CurrentChoices;
-    public int TotalNodeCount;
 }
 
 public enum GameEquipmentDataType
