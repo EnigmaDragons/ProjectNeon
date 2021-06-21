@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: AggregateLauncher
   m_EditorClassIdentifier: 
+  id: 8
   enemyName: Launcher
   lastBalanceDate: Never
   isCurrentlyWorking: 1
-  deck: {fileID: 11400000, guid: 082c7b63136a01b43bf5f078a4b3e01c, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
   preferredTurnOrder: 99
-  powerLevel: 2
   prefab: {fileID: 3713267803032270616, guid: 2ef4ce17eef5abd4d8e81ffa57eeab12, type: 3}
   deathEffect:
     UseConstant: 1
@@ -28,28 +27,17 @@ MonoBehaviour:
   tier: 3
   unique: 1
   isHasty: 0
-  maxHp: 40
-  maxShield: 14
-  startingShield: 0
-  toughness: 7
-  attack: 16
-  magic: 0
-  leadership: 0
-  armor: 0
-  resistance: 0
-  nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
-  startingResourceAmount: 0
-  maxResourceAmount: 0
-  resourceGainPerTurn: 1
-  cardsPerTurn: 1
-  startOfBattleEffects: []
   stageDetails:
   - stage: 1
     powerLevel: 2
     maxHp: 40
     maxShield: 14
     startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
     toughness: 7
     attack: 16
     magic: 0

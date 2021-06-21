@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: AggregateZapper
   m_EditorClassIdentifier: 
+  id: 10
   enemyName: Zapper
   lastBalanceDate: Never
   isCurrentlyWorking: 1
-  deck: {fileID: 11400000, guid: c169688ec3f08f349ab2ecd1fd764c2d, type: 2}
   ai: {fileID: 11400000, guid: 691e2c196a6982147a0bbab73b5cfc60, type: 2}
   preferredTurnOrder: 99
-  powerLevel: 1
   prefab: {fileID: 5322568388161215517, guid: f3d9e12b0e5c43f4abda843ad0336672, type: 3}
   deathEffect:
     UseConstant: 1
@@ -28,28 +27,17 @@ MonoBehaviour:
   tier: 3
   unique: 1
   isHasty: 0
-  maxHp: 40
-  maxShield: 14
-  startingShield: 0
-  toughness: 7
-  attack: 16
-  magic: 0
-  leadership: 0
-  armor: 0
-  resistance: 0
-  nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
-  startingResourceAmount: 0
-  maxResourceAmount: 0
-  resourceGainPerTurn: 0
-  cardsPerTurn: 1
-  startOfBattleEffects: []
   stageDetails:
   - stage: 1
     powerLevel: 1
     maxHp: 40
     maxShield: 14
     startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
     toughness: 7
     attack: 16
     magic: 0

@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: IncentiveManager
   m_EditorClassIdentifier: 
+  id: 28
   enemyName: Incentive Manager
   lastBalanceDate: 02/27/21
   isCurrentlyWorking: 1
-  deck: {fileID: 11400000, guid: dfa360f7b5c32b845855b30f14be971b, type: 2}
   ai: {fileID: 11400000, guid: 34d9d7dadc289874a9afcd008c18cbe5, type: 2}
   preferredTurnOrder: 999
-  powerLevel: 109
   prefab: {fileID: 450473328322936878, guid: 2c4ac89b98970e2418bd958839de48dd, type: 3}
   deathEffect:
     UseConstant: 1
@@ -28,28 +27,17 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  maxHp: 54
-  maxShield: 20
-  startingShield: 0
-  toughness: 10
-  attack: 0
-  magic: 6
-  leadership: 10
-  armor: 0
-  resistance: 0
-  nonStatCardValueFactor: 10
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  startingResourceAmount: 0
-  maxResourceAmount: 0
-  resourceGainPerTurn: 0
-  cardsPerTurn: 1
-  startOfBattleEffects: []
   stageDetails:
   - stage: 1
     powerLevel: 109
     maxHp: 54
     maxShield: 20
     startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
     toughness: 10
     attack: 0
     magic: 6

@@ -20,6 +20,6 @@ public class RandomEncounterSegment : StageSegment
         SceneManager.LoadScene("BattleSceneV2");
     }
     
-    public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx)
+    public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx , MapNode3 mapData)
         => new GeneratedBattleStageSegment(Name, possibleBattlegrounds.Random(), false, encounterBuilder.Generate(encounterDifficulty).ToArray());
 }

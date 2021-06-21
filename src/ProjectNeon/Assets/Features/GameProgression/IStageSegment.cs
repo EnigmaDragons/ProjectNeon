@@ -8,7 +8,7 @@ public interface IStageSegment
     void Start();
     Maybe<string> Detail { get; }
 
-    IStageSegment GenerateDeterministic(AdventureGenerationContext ctx);
+    IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData);
 }
 
 public sealed class InMemoryStageSegment : IStageSegment
@@ -18,7 +18,7 @@ public sealed class InMemoryStageSegment : IStageSegment
     public string Name { get; }
     public void Start() => _start();
     public Maybe<string> Detail { get; }
-    public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx) => this;
+    public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
 
     public InMemoryStageSegment(string name, Action start, Maybe<string> detail)
     {
@@ -35,7 +35,7 @@ public sealed class GeneratedBattleStageSegment : IStageSegment
     public string Name { get; }
     public void Start() => _start();
     public Maybe<string> Detail { get; }
-    public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx) => this;
+    public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
 
     public GeneratedBattleStageSegment(string name, GameObject battleField, bool isElite, EnemyInstance[] enemies)
     {

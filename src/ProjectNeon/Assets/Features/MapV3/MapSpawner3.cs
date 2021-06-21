@@ -12,6 +12,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
     [SerializeField] private GameObject playerToken;
     [SerializeField] private PartyAdventureState partyState;
     [SerializeField] private StageSegment storyEventSegment;
+    [SerializeField] private AllEnemies allEnemies;
     
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
@@ -68,7 +69,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         {
             var obj = Instantiate(GetNodePrefab(x.Type), _map.transform);
             Action midPoint = x.HasEventEnroute ? () => storyEventSegment.Start() : (Action)(() => travelReactiveSystem.Continue());
-            obj.Init(progress, x.Position, () =>
+            obj.Init(x, progress, allEnemies, () =>
             {
                 gameMap.CompletedNodes.Add(x.Type);
                 gameMap.CurrentChoices = new List<MapNode3>();

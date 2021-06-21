@@ -24,5 +24,5 @@ public class StoryEventSegment : StageSegment
     }
 
     // Only Non-Deterministic for now
-    public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx) => this;
+    public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
 }

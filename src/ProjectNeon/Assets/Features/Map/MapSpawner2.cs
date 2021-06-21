@@ -10,6 +10,7 @@ public class MapSpawner2 : MonoBehaviour
     [SerializeField] private GameObject playerToken;
     [SerializeField] private MapLine line;
     [SerializeField] private GameObject empty;
+    [SerializeField] private AllEnemies enemies;
 
     //Map Inspecific Rules
     [SerializeField] private int nodeVerticalJitter;
@@ -109,7 +110,7 @@ public class MapSpawner2 : MonoBehaviour
     private void ConvertAdjacentNodesToDeterministic()
     {
         foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
-            gameMap.GameObjects[childId].ConvertToDeterministic(new AdventureGenerationContext(progress));
+            gameMap.GameObjects[childId].ConvertToDeterministic(new AdventureGenerationContext(progress, enemies));
     }
 
     private int ColumnX(float columnSize, int column) 

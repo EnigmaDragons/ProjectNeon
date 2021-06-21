@@ -21,6 +21,8 @@ public class AssetUpdater
         EnsureDurationPresent();
         UpdateMapIDs();
         UpdateAllMaps();
+        UpdateEnemyIDs();
+        UpdateAllEnemies();
         Log.Info("Asset Updates Complete");
     }
 
@@ -174,6 +176,24 @@ public class AssetUpdater
         allMaps.ForEach(x =>
         {
             x.Maps = maps;
+            EditorUtility.SetDirty(x);
+        });
+    }
+    
+    [MenuItem("Neon/Update/Update Enemy IDs")]
+    private static void UpdateEnemyIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<Enemy>(), c => c.id, (c, id) => c.id = id);
+    }
+    
+    [MenuItem("Neon/Update/UpdateAllEnemies")]
+    private static void UpdateAllEnemies()
+    {
+        var enemies = ScriptableExtensions.GetAllInstances<Enemy>();
+        var allEnemies = ScriptableExtensions.GetAllInstances<AllEnemies>();
+        allEnemies.ForEach(x =>
+        {
+            x.Enemies = enemies;
             EditorUtility.SetDirty(x);
         });
     }

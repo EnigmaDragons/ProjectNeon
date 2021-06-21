@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: SeekerDrone2
   m_EditorClassIdentifier: 
+  id: 17
   enemyName: Seeker Drone
   lastBalanceDate: Never
   isCurrentlyWorking: 1
-  deck: {fileID: 11400000, guid: 9d56a2e0cf52f6246a7eac19f105bf25, type: 2}
   ai: {fileID: 11400000, guid: b4f8eba69836e4c4aab97eaa0fda4a5b, type: 2}
   preferredTurnOrder: 99
-  powerLevel: 30
   prefab: {fileID: 9060184511325216849, guid: 49c10bb7a15659941967c5ee552c9c42, type: 3}
   deathEffect:
     UseConstant: 1
@@ -28,104 +27,17 @@ MonoBehaviour:
   tier: 1
   unique: 0
   isHasty: 0
-  maxHp: 11
-  maxShield: 4
-  startingShield: 0
-  toughness: 2
-  attack: 0
-  magic: 6
-  leadership: 0
-  armor: 0
-  resistance: 0
-  nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  startingResourceAmount: 0
-  maxResourceAmount: 0
-  resourceGainPerTurn: 0
-  cardsPerTurn: 1
-  startOfBattleEffects:
-  - EffectType: 79
-    BaseAmount:
-      UseConstant: 1
-      ConstantValue: 1
-      Variable: {fileID: 0}
-    FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
-    EffectScope:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
-    HitsRandomTargetMember: 0
-    StatusTag: 0
-    StatusDetailText: 
-    TurnDelay: 0
-    Formula: 1
-    FlavorText:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 0
-    ReactionEffectScope:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReactionSequence: {fileID: 0}
-    ReactionEffect:
-      reactor: 0
-      scope: 0
-      cardActions: {fileID: 0}
-    BonusCardType: {fileID: 0}
-  - EffectType: 79
-    BaseAmount:
-      UseConstant: 1
-      ConstantValue: 1
-      Variable: {fileID: 0}
-    FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
-    EffectScope:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
-    HitsRandomTargetMember: 0
-    StatusTag: 0
-    StatusDetailText: 
-    TurnDelay: 0
-    Formula: 1
-    FlavorText:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 0
-    ReactionEffectScope:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReactionSequence: {fileID: 0}
-    ReactionEffect:
-      reactor: 0
-      scope: 0
-      cardActions: {fileID: 0}
-    BonusCardType: {fileID: 0}
   stageDetails:
   - stage: 1
     powerLevel: 30
     maxHp: 11
     maxShield: 4
     startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
     toughness: 2
     attack: 0
     magic: 6
@@ -139,6 +51,7 @@ MonoBehaviour:
     cardsPerTurn: 1
     startOfBattleEffects:
     - EffectType: 79
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 1
@@ -147,19 +60,22 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 1
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 0
         ConstantValue: 
@@ -177,6 +93,7 @@ MonoBehaviour:
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
     - EffectType: 79
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 1
@@ -185,19 +102,22 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 1
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 0
         ConstantValue: 

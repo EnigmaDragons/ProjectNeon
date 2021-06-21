@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class EnemyInstance : EnemyType
 {
+    private readonly int _enemyId;
     private readonly ResourceType _resourceType;
     private readonly EffectData[] _startOfBattleEffects;
     private readonly int _startingResourceAmount;
@@ -23,6 +24,7 @@ public class EnemyInstance : EnemyType
     private readonly int _cardsPerTurn;
     private readonly Dictionary<string, int> _counterAdjustments;
 
+    public int EnemyId => _enemyId;
     public GameObject Prefab { get; }
     public TurnAI AI { get; }
     public IEnumerable<CardType> Cards { get; }
@@ -38,12 +40,13 @@ public class EnemyInstance : EnemyType
     public bool DeckIsValid => Cards.None(x => x == null);
     public bool IsReadyForPlay => Cards != null && Prefab != null && AI != null;
 
-    public EnemyInstance(ResourceType resourceType, EffectData[] startOfBattleEffects, int startingResourceAmount, 
+    public EnemyInstance(int enemyId, ResourceType resourceType, EffectData[] startOfBattleEffects, int startingResourceAmount, 
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
         int toughness, int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
         int preferredTurnOrder, string name, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments)
     {
+        _enemyId = enemyId;
         _resourceType = resourceType;
         _startOfBattleEffects = startOfBattleEffects;
         _startingResourceAmount = startingResourceAmount;

@@ -23,5 +23,5 @@ class SpecificEncounterSegment : StageSegment
         SceneManager.LoadScene("BattleSceneV2");
     }
 
-    public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx) => this;
+    public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
 }

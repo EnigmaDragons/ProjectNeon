@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameContent/Enemy")]
 public class Enemy : ScriptableObject
 {
+    [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private string enemyName;
     [SerializeField] private string lastBalanceDate = "Never";
     [SerializeField] private bool isCurrentlyWorking = true;
@@ -24,7 +25,7 @@ public class Enemy : ScriptableObject
         var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();
         if (detail == null)
             Log.Error($"Enemy {enemyName} has no stage details and can not be used");
-        return new EnemyInstance(resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
+        return new EnemyInstance(id, resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield, detail.toughness, 
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
             prefab, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 

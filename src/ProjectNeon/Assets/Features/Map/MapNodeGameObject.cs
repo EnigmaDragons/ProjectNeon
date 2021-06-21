@@ -34,7 +34,7 @@ public class MapNodeGameObject : MonoBehaviour, IPointerEnterHandler, IPointerEx
         _rulesPanel.IfPresent(r => r.SetActive(false));
     }
 
-    public void ConvertToDeterministic(AdventureGenerationContext ctx) => _arrivalSegment = segment.GenerateDeterministic(ctx);
+    public void ConvertToDeterministic(AdventureGenerationContext ctx) => _arrivalSegment = segment.GenerateDeterministic(ctx, new MapNode3());
 
     public void SetCanTravelTo(bool canTravelTo)
     {

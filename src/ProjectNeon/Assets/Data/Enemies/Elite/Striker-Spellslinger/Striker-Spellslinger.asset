@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: Striker-Spellslinger
   m_EditorClassIdentifier: 
+  id: 14
   enemyName: Spellslinger
   lastBalanceDate: Never
   isCurrentlyWorking: 1
-  deck: {fileID: 11400000, guid: 69702fe7cf0bc3644bcc4d392776d2bb, type: 2}
   ai: {fileID: 11400000, guid: 2e53d4cc259d3ca42b08031865d2def1, type: 2}
   preferredTurnOrder: 99
-  powerLevel: 221
   prefab: {fileID: 3582005950873257460, guid: c43b214a231893846b22303fa96ea239, type: 3}
   deathEffect:
     UseConstant: 1
@@ -28,66 +27,17 @@ MonoBehaviour:
   tier: 2
   unique: 0
   isHasty: 0
-  maxHp: 64
-  maxShield: 32
-  startingShield: 0
-  toughness: 16
-  attack: 0
-  magic: 19
-  leadership: 0
-  armor: 0
-  resistance: 5
-  nonStatCardValueFactor: 18
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  startingResourceAmount: 0
-  maxResourceAmount: 5
-  resourceGainPerTurn: 1
-  cardsPerTurn: 2
-  startOfBattleEffects:
-  - EffectType: 79
-    BaseAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
-    FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    NumberOfTurns:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
-    EffectScope:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
-    HitsRandomTargetMember: 0
-    StatusTag: 0
-    StatusDetailText: 
-    TurnDelay: 0
-    Formula: 1
-    FlavorText:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 0
-    ReactionEffectScope:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReactionSequence: {fileID: 0}
-    ReactionEffect:
-      reactor: 0
-      scope: 0
-      cardActions: {fileID: 0}
-    BonusCardType: {fileID: 0}
   stageDetails:
   - stage: 1
     powerLevel: 221
     maxHp: 64
     maxShield: 32
     startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
     toughness: 16
     attack: 0
     magic: 19
@@ -101,6 +51,7 @@ MonoBehaviour:
     cardsPerTurn: 2
     startOfBattleEffects:
     - EffectType: 79
+      Conditions: []
       BaseAmount:
         UseConstant: 0
         ConstantValue: 0
@@ -109,19 +60,22 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      NumberOfTurns:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
       HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 1
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 0
         ConstantValue: 

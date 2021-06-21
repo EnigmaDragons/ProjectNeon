@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: Bruiser_GrizzledVeteran
   m_EditorClassIdentifier: 
+  id: 11
   enemyName: Grizzled Veteran
   lastBalanceDate: 2/27/2021
   isCurrentlyWorking: 1
@@ -66,10 +67,15 @@ MonoBehaviour:
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 1
       StatusDetailText: 'On Attacked: Return Fire'
       TurnDelay: 0
       Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 0
         ConstantValue: 
@@ -103,10 +109,15 @@ MonoBehaviour:
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 14
       StatusDetailText: 'On Bloodied: Buffs Own Attack'
       TurnDelay: 0
       Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 0
         ConstantValue: 

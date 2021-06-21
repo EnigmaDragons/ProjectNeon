@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: AggregateSysMon
   m_EditorClassIdentifier: 
+  id: 9
   enemyName: SysMon
   lastBalanceDate: Never
   isCurrentlyWorking: 1
-  deck: {fileID: 11400000, guid: fd2f2505741891047bcc2fcc8c99f386, type: 2}
   ai: {fileID: 11400000, guid: 63893107e543b0d458c4f7f772acf7e4, type: 2}
   preferredTurnOrder: 99
-  powerLevel: 1
   prefab: {fileID: 3285572623789539606, guid: 2412c0a302e548a4cae7ce6459b26886, type: 3}
   deathEffect:
     UseConstant: 1
@@ -28,28 +27,17 @@ MonoBehaviour:
   tier: 3
   unique: 1
   isHasty: 0
-  maxHp: 40
-  maxShield: 40
-  startingShield: 0
-  toughness: 20
-  attack: 14
-  magic: 24
-  leadership: 0
-  armor: 0
-  resistance: 0
-  nonStatCardValueFactor: 0
   resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
-  startingResourceAmount: 0
-  maxResourceAmount: 0
-  resourceGainPerTurn: 0
-  cardsPerTurn: 1
-  startOfBattleEffects: []
   stageDetails:
   - stage: 1
     powerLevel: 1
     maxHp: 40
     maxShield: 40
     startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
     toughness: 20
     attack: 14
     magic: 24
