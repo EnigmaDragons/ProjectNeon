@@ -17,12 +17,19 @@ public class Adventure : ScriptableObject
     [SerializeField] private float rewardCreditsPerPowerLevel = 1f;
     [SerializeField] private float xpPerPowerLevel = 0.2f;
     [SerializeField, TextArea(4, 10)] private string story;
-
-    // @todo #1:15min Design. What happens when the adventure is won?
+    [SerializeField, TextArea(3, 8)] private string mapQuestPrompt;
+    [SerializeField, TextArea(4, 10)] private string defeatConclusion = "";
+    [SerializeField, TextArea(4, 10)] private string victoryConclusion = "";
 
     public int Id => id;
     public string Title => adventureTitle;
     public string Story => story;
+    public Maybe<string> MapQuestPrompt => string.IsNullOrWhiteSpace(mapQuestPrompt)
+        ? Maybe<string>.Missing()
+        : Maybe<string>.Present(mapQuestPrompt);
+    public string DefeatConclusion => defeatConclusion;
+    public string VictoryConclusion => victoryConclusion;
+
     public Stage[] Stages => stages.ToArray();
     public DynamicStage[] DynamicStages => dynamicStages.ToArray();
     public Sprite AdventureImage => adventureImage;

@@ -48,7 +48,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         var selectedAdventure = library.GetAdventureById(adventureProgress.AdventureId);
         if (selectedAdventure.IsMissing)
             return LoadFailedReason($"Unknown Adventure {adventureProgress.AdventureId}");
-        adventure.Init(selectedAdventure.Value, adventureProgress.CurrentChapterIndex, adventureProgress.CurrentStageSegmentIndex);
+        adventure.Init(selectedAdventure.Value, adventureProgress.CurrentChapterIndex);
         return true;
     }
 

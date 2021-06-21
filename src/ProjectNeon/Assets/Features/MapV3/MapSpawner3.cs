@@ -48,6 +48,17 @@ public class MapSpawner3 : OnMessage<NodeFinished>
             GenerateNewNodes();
         else
             SpawnNodes();
+        ShowMapPromptIfJustStarted();
+    }
+
+    private void ShowMapPromptIfJustStarted()
+    {
+        if (progress.CurrentStageSegmentIndex == 0)
+        {
+            var mapPrompt = progress.CurrentAdventure.MapQuestPrompt;
+            if (mapPrompt.IsPresent)
+                Message.Publish(new ShowInfoDialog(mapPrompt.Value, "Got it!"));
+        }
     }
 
     private void GenerateNewNodes()
