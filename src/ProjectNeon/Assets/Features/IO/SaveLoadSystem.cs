@@ -94,7 +94,8 @@ public sealed class SaveLoadSystem : ScriptableObject
                 var maybeEquipment = party.Equipment.Available.Where(x => x.Id == equipmentIdName.Id && x.Name.Equals(equipmentIdName.Name)).FirstAsMaybe();
                 if (!maybeEquipment.IsPresent)
                     return LoadFailedReason($"Cannot find Hero's Equipped {equipmentIdName.Name} in party equipment");
-                party.EquipTo(maybeEquipment.Value, hero);
+                if (maybeEquipment.Value.Slot != EquipmentSlot.Permanent)
+                    party.EquipTo(maybeEquipment.Value, hero);
             }
 
             foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds)

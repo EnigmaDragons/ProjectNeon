@@ -287,7 +287,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void RenderCardType()
     {
-        var shouldUseLibraryMode = _card == null || (_card.Cost.PlusXCost && !_isHand);
+        var shouldUseLibraryMode = _card == null || _card.Owner.TeamType == TeamType.Party && (_card.Cost.PlusXCost && !_isHand);
         IsPlayable = CheckIfCanPlay();
         nameLabel.text = _cardType.Name;
         description.text = !shouldUseLibraryMode
