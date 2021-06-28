@@ -80,6 +80,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddCustomTextStatusIcons(statuses, StatusTag.OnIgnited, "Unknown On Ignited Effect");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => $"Received {v} Injuries, applied at end of battle");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Marked, true, v => $"Marked. Subject to Assassination Effects.");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.PreventResourceGains, true, v => $"Cannot gain resources for {v} Turns");
 
         var extraCardBuffAmount = CeilingInt(_member.State[StatType.ExtraCardPlays] - _member.State.BaseStats.ExtraCardPlays());
         if (extraCardBuffAmount != 0)

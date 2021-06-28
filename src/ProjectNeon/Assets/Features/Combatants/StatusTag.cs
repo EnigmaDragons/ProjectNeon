@@ -23,4 +23,5 @@ public enum StatusTag
     OnAfflicted = 20,
     CurrentCardOnly = 21,
     OnIgnited = 22,
+    ResourceGainsPrevented = 23,
 }

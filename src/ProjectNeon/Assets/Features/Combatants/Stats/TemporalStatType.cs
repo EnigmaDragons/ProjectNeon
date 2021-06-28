@@ -18,4 +18,5 @@ public enum TemporalStatType
     PreventDeath = 17,
     Prominent = 18,
     Marked = 19,
+    PreventResourceGains = 20,
 }

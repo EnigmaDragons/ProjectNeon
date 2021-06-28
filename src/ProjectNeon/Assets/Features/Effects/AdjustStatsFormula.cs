@@ -32,7 +32,7 @@ public class AdjustStatsFormula : Effect
 
             var formulaAmount = Formula.Evaluate(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount);
 
-            var isDebuff = formulaAmount < 1;
+            var isDebuff = StatExtensions.IsPositive(stat) ? formulaAmount < 1 : formulaAmount > 0;
             if (isDebuff) 
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
 

@@ -319,10 +319,15 @@ public sealed class MemberState : IStats
     {
         if (resourceName == "Creds")
             partyState.UpdateCreditsBy(amount);
-        else
+        else if (this[TemporalStatType.PreventResourceGains] == 0)
             Counter(resourceName).ChangeBy(amount);
     });
-    public void AdjustPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
+    public void AdjustPrimaryResource(int numToGive)
+    {
+        if (this[TemporalStatType.PreventResourceGains] == 0)
+            PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
+    }
+
     public void Lose(ResourceQuantity qty, PartyAdventureState partyState) => LoseResource(qty.ResourceType, qty.Amount, partyState);
     private void LoseResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
     {
@@ -366,7 +371,8 @@ public sealed class MemberState : IStats
         TemporalStatType.Taunt,
         TemporalStatType.Stealth, // Should this be reduced?
         TemporalStatType.Confused,
-        TemporalStatType.Prominent
+        TemporalStatType.Prominent,
+        TemporalStatType.PreventResourceGains
     };
     
     public IPayloadProvider[] GetTurnEndEffects()
