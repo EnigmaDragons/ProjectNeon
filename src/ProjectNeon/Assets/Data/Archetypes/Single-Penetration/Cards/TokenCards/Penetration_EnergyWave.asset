@@ -10,16 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_StripDefenses
+  m_Name: Penetration_EnergyWave
   m_EditorClassIdentifier: 
-  id: 297
+  id: 366
   customName: 
-  art: {fileID: 21300000, guid: 83ad942a7cd695a40bcb6ff841739209, type: 3}
-  description: Gives {E[0]} Armor & Resistance
+  art: {fileID: 21300000, guid: 18b254e69e7b79c4bbe90ddc5aa8e7aa, type: 3}
+  description: 'Gives {E[0]} Armor
+
+
+    Deal {E[1]}'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
-  isSinglePlay: 0
+  isSinglePlay: 1
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
@@ -28,11 +31,11 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 3
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: bd44f63e009882647b49c59265879e2c, type: 2}
+    cardActions: {fileID: 11400000, guid: 9805d237900256f47b724abf886f57bd, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -43,4 +46,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 0
+  isWIP: 1
