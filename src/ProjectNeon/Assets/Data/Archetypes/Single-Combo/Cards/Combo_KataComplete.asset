@@ -10,37 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_OmniSlash
+  m_Name: Combo_KataComplete
   m_EditorClassIdentifier: 
-  id: 290
+  id: 289
   customName: 
-  art: {fileID: 21300000, guid: d6fbfafd26b2eb444a0cf171f8c5c94d, type: 3}
+  art: {fileID: 21300000, guid: 05471b7f0aac1fe41bde23ef2ed755de, type: 3}
   description: '{Auto}'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
+    cost: 1
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-    plusXCost: 1
+    plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 2
+  rarity: 3
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 2a0289064ceaccd4eb04a64eb3b7fe01, type: 2}
+    cardActions: {fileID: 11400000, guid: 715ebaf2705fc2446aef71f18c9e5745, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 0}
+  chainedCard: {fileID: 11400000, guid: 105511f417a84e94bb31b0d54c5579f9, type: 2}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
-  highlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 2eeb2268469a74b4a9d34016563badca, type: 2}
   unhighlightCondition: []
   isWIP: 0

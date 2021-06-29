@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
@@ -65,12 +66,23 @@ public class CardPlayZones : ScriptableObject
     
     public void DrawCards(int number) 
         => Enumerable.Range(0, number).ForEach(_ => DrawOneCard());
+    
+    public void DrawCards(int number, Func<Card, bool> cardCondition) 
+        => Enumerable.Range(0, number).ForEach(_ => DrawOneCard(cardCondition));
 
     public void DrawOneCard()
     {
         if (DrawZone.IsEmpty)
             Reshuffle();
         HandZone.PutOnBottom(DrawZone.DrawOneCard());
+        Message.Publish(new PlayerCardDrawn());
+    }
+
+    public void DrawOneCard(Func<Card, bool> cardCondition)
+    {
+        if (!DrawZone.Cards.Any(cardCondition))
+            Reshuffle();
+        HandZone.PutOnBottom(DrawZone.DrawOneCard(cardCondition));
         Message.Publish(new PlayerCardDrawn());
     }
 

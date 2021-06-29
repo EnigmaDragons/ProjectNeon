@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_StaticStrike
+  m_Name: Combo_OmniSlash
   m_EditorClassIdentifier: 
-  id: 296
+  id: 290
   customName: 
-  art: {fileID: 21300000, guid: 937cd3f310cea624382109a693d354c2, type: 3}
-  description: Deal {E[0]}. This turn, when you strike this target, you gain 1 Energy.
+  art: {fileID: 21300000, guid: d6fbfafd26b2eb444a0cf171f8c5c94d, type: 3}
+  description: '{Auto}'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
@@ -23,16 +23,16 @@ MonoBehaviour:
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-    plusXCost: 0
+    plusXCost: 1
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: fc7c95e31ae2f844590961a759d82e2c, type: 2}
+    cardActions: {fileID: 11400000, guid: 2a0289064ceaccd4eb04a64eb3b7fe01, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}

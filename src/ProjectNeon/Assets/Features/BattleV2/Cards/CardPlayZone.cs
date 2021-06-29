@@ -36,6 +36,16 @@ public class CardPlayZone : ScriptableObject
         Mutate(c => c.Skip(1).ToArray());
         return newCard;
     }
+
+    public Card DrawOneCard(Func<Card, bool> cardCondition)
+    {
+        if (!cards.Any(cardCondition))
+            throw new InvalidOperationException($"{name} has no cards that meet the condition");
+
+        var newCard = cards.First(cardCondition);
+        Mutate(c => c.Where(x => x != newCard).ToArray());
+        return newCard;
+    }
     
     public Card Take(int index)
     {

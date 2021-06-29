@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Electroblade_StaticStrike_E
+  m_Name: Combo_StaticStrike_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -26,20 +26,21 @@ MonoBehaviour:
         ConstantValue: 0
         FloatVariable: {fileID: 0}
       DurationFormula: 
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -94,20 +95,21 @@ MonoBehaviour:
         ConstantValue: 0.67
         FloatVariable: {fileID: 0}
       DurationFormula: 0
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
       EffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 0.8 * Attack
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -162,20 +164,21 @@ MonoBehaviour:
         ConstantValue: -1
         FloatVariable: {fileID: 0}
       DurationFormula: 1
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 1
-        Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
         ConstantValue: Originator
         Variable: {fileID: 11400000, guid: 8f022cb97a77e784cbb4e7e63ab09acb, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 5
       StatusDetailText: When hit by Dominik, Dominik gains 1 Energy
       TurnDelay: 0
       Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 

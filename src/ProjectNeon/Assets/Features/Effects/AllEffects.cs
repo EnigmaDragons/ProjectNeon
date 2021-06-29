@@ -68,6 +68,8 @@ public static class AllEffects
             }, e.DurationFormula)},
         { EffectType.DrawCards, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(
             BattleLoggedItem(v => $"Drew {v} cards", Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt())), e.DurationFormula)},
+        { EffectType.DrawCardOfOwner, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(
+            BattleLoggedItem(v => $"Drew {v} cards for {ctx.Source.Name}", Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt()), card => card.Owner.Id == ctx.Source.Id), e.DurationFormula)},
         { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope, cards => cards) },
         { EffectType.LeaveBattle, e => new SimpleEffect(m => Message.Publish(new DespawnEnemy(m))) },
         { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))},

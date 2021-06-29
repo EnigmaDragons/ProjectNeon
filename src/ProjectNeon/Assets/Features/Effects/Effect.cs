@@ -26,11 +26,12 @@ public class EffectContext
     public int CurrentCredits { get; }
     public IDictionary<int, EnemyType> EnemyTypes { get; }
     public Func<int> GetNextCardId { get; }
+    public PlayedCardSnapshot[] CardsPlayedThisTurn { get; }
 
     public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, 
         PlayerState playerState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones, PreventionContext preventions, 
         SelectionContext selections, IDictionary<int, CardTypeData> allCards, int startingCredits, int currentCredits, IDictionary<int, EnemyType> enemyTypes,
-        Func<int> getNextCardId)
+        Func<int> getNextCardId, PlayedCardSnapshot[] cardsPlayedThisTurn)
     {
         Source = source;
         SourceSnapshot = source.GetSnapshot();
@@ -49,6 +50,7 @@ public class EffectContext
         CurrentCredits = currentCredits;
         EnemyTypes = enemyTypes;
         GetNextCardId = getNextCardId;
+        CardsPlayedThisTurn = cardsPlayedThisTurn;
         if (XPaidAmount == null)
         {
             Log.Error("XPaidAmount is null");
@@ -60,22 +62,22 @@ public class EffectContext
     
     public EffectContext Retargeted(Member source, Target target) 
         => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, BattleMembers, PlayerCardZones, 
-            Preventions, Selections, AllCards, StartingCredits, CurrentCredits, EnemyTypes, GetNextCardId);
+            Preventions, Selections, AllCards, StartingCredits, CurrentCredits, EnemyTypes, GetNextCardId, CardsPlayedThisTurn);
 
     public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)
         => new EffectContext(source, target, card, xPaidAmount, PartyAdventureState.InMemory(), new PlayerState(), 
             target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions, new SelectionContext(), 
-            new Dictionary<int, CardTypeData>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0);
+            new Dictionary<int, CardTypeData>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0, new PlayedCardSnapshot[0]);
 
     public static EffectContext ForTests(Member source, Target target, CardPlayZones cardPlayZones, Dictionary<int, CardTypeData> allCards)
         => new EffectContext(source, target, Maybe<Card>.Missing(), ResourceQuantity.None, PartyAdventureState.InMemory(),
             new PlayerState(0), new Dictionary<int, Member>(), cardPlayZones, new UnpreventableContext(), new SelectionContext(), 
-            allCards, 0, 0, new Dictionary<int, EnemyType>(), () => 0);
+            allCards, 0, 0, new Dictionary<int, EnemyType>(), () => 0, new PlayedCardSnapshot[0]);
     
     public static EffectContext ForTests(Member source, Target target, PartyAdventureState adventureState)
         => new EffectContext(source, target, Maybe<Card>.Missing(), ResourceQuantity.None, adventureState,
             new PlayerState(0), new Dictionary<int, Member>(), CardPlayZones.InMemory, new UnpreventableContext(), new SelectionContext(), 
-            new Dictionary<int, CardTypeData>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0);
+            new Dictionary<int, CardTypeData>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0, new PlayedCardSnapshot[0]);
 }
 
 public static class EffectExtensions
@@ -86,7 +88,7 @@ public static class EffectExtensions
     private static void ApplyForTests(this Effect effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid) 
         => effect.Apply(new EffectContext(source, target, card, xAmountPaid, PartyAdventureState.InMemory(), new PlayerState(0), 
             target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, new PreventionContextMut(target), 
-            new SelectionContext(), new Dictionary<int, CardTypeData>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0));
+            new SelectionContext(), new Dictionary<int, CardTypeData>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0, new PlayedCardSnapshot[0]));
 }
 
 public sealed class NoEffect : Effect

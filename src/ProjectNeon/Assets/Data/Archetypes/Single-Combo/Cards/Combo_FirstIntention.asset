@@ -10,38 +10,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_ImpaleV2
+  m_Name: Combo_FirstIntention
   m_EditorClassIdentifier: 
-  id: 288
+  id: 370
   customName: 
-  art: {fileID: 21300000, guid: f3385a400e63d9e4c92efaffc0600e7e, type: 3}
-  description: Deal {E[0]}. <b>Chain:</b> Thrust V1
+  art: {fileID: 21300000, guid: 5ecc77ae4e1bba34bbf9df3c2e7f2141, type: 3}
+  description: 'Deal {E[0]}
+
+
+    Draw 1 of your Cards'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 1
+    cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
   onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 1ff26e340808e904c98df5d11e444ab2, type: 2}
+    cardActions: {fileID: 11400000, guid: a7fafe2c2325d4644a43eeb82d424584, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 11400000, guid: 189e23314e2e77d42b89a0e152bfc7f7, type: 2}
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: d6f85c354a938bf44aa9056a6d923d6c, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
-  highlightCondition:
-  - {fileID: 11400000, guid: 2eeb2268469a74b4a9d34016563badca, type: 2}
+  highlightCondition: []
   unhighlightCondition: []
   isWIP: 0

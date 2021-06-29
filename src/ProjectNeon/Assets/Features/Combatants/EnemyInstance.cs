@@ -87,7 +87,8 @@ public class EnemyInstance : EnemyType
     {
         var ctx = new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, 
             state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), 
-            state.CreditsAtStartOfBattle, state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId());
+            state.CreditsAtStartOfBattle, state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), 
+            () => state.GetNextCardId(), new PlayedCardSnapshot[0]);
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = _resourceType.Name, Amount = _resourceGainPerTurn}, m, state.Party));

@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE:
-// LAST NUMBER USED: 87
+// LAST NUMBER USED: 88
 
 public enum EffectType
 {
@@ -54,6 +54,7 @@ public enum EffectType
     DrawSelectedCard = 42,
     ChooseCardToCreate = 43,
     DrawCardOfArchetype = 87,
+    DrawCardOfOwner = 88,
 
     // Statuses
     DisableForTurns = 13,
