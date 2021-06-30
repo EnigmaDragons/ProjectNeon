@@ -103,7 +103,7 @@ public static class AITargetSelectionLogic
         
         var targets = ctx.SelectedTargets(isPreferredTarget);
 
-        var card = ctx.SelectedCard.Value.CreateInstance(NextCardId.Get(), ctx.Member, EnemyCardTint);
+        var card = ctx.SelectedCard.Value.CreateInstance(NextCardId.Get(), ctx.Member, EnemyCardTint, Maybe<Sprite>.Missing());
         RecordNonStackingTags(CardTag.Disable, ctx, targets);
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
         RecordNonStackingTags(CardTag.Taunt, ctx, targets);

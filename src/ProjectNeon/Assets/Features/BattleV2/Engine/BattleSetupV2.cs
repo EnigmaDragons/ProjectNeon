@@ -110,7 +110,7 @@ public class BattleSetupV2 : MonoBehaviour
             if (hero == null || hero.Name.Equals(""))
                  continue;
             
-            cards.AddRange(party.Decks[i].Cards.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero), hero.Tint)));
+            cards.AddRange(party.Decks[i].Cards.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero), hero.Tint, hero.Bust)));
         }
 
         DevLog.Write("Setting Up Player Hand");

@@ -10,6 +10,7 @@ public sealed class Card : CardTypeData
     [SerializeField] private CardTypeData type;
     [SerializeField] private Member owner;
     [SerializeField] private readonly Maybe<Color> tint;
+    [SerializeField] private readonly Maybe<Sprite> ownerBust;
 
     private readonly List<ITemporalCardState> _temporalStates = new List<ITemporalCardState>();
     
@@ -40,6 +41,7 @@ public sealed class Card : CardTypeData
     public Rarity Rarity => _type.Rarity;
     public Maybe<ResourceQuantity> LockedXValue { get; private set; } = Maybe<ResourceQuantity>.Missing();
     public Maybe<Color> OwnerTint => tint;
+    public Maybe<Sprite> OwnerBust => ownerBust;
     public HashSet<string> Archetypes => _type.Archetypes;
     public bool IsAttack => _type.Tags.Contains(CardTag.Attack) || _type.TypeDescription.Equals("Attack");
     public Maybe<CardCondition> HighlightCondition => _type.HighlightCondition;
@@ -47,14 +49,15 @@ public sealed class Card : CardTypeData
     public bool IsSinglePlay => _type.IsSinglePlay;
 
     public Card(int id, Member owner, CardTypeData type)
-        : this(id, owner, type, Maybe<Color>.Missing()) {}
+        : this(id, owner, type, Maybe<Color>.Missing(), Maybe<Sprite>.Missing()) {}
     
-    public Card(int id, Member owner, CardTypeData type, Maybe<Color> tint)
+    public Card(int id, Member owner, CardTypeData type, Maybe<Color> tint, Maybe<Sprite> ownerBust)
     {
         this.owner = owner ?? throw new ArgumentNullException(nameof(owner));
         this.id = id;
         this.type = type;
         this.tint = tint;
+        this.ownerBust = ownerBust;
     }
     
     public Card RevertedToStandard()

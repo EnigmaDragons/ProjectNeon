@@ -16,6 +16,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private Image art;
     [SerializeField] private Image tint;
+    [SerializeField] private CardBustPresenter bust;
     [SerializeField] private UnityEngine.UI.Extensions.Gradient tintGradient;
     [SerializeField] private GameObject canPlayHighlight;
     [SerializeField] private GameObject conditionMetHighlight;
@@ -248,14 +249,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType.ChainedCard.IfPresent(chain =>
         {
             if (_card != null)
-                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain, _card.OwnerTint)));
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain, _card.OwnerTint, _card.OwnerBust)));
             else
                 Message.Publish(new ShowReferencedCard(chainedCardParent, chain));
         });
         _cardType.SwappedCard.IfPresent(swap =>
         {
             if (_card != null)
-                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, swap, _card.OwnerTint)));
+                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, swap, _card.OwnerTint, _card.OwnerBust)));
             else
                 Message.Publish(new ShowReferencedCard(chainedCardParent, swap));
         });
@@ -298,6 +299,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);
         cardCostPresenter.Render(shouldUseLibraryMode ? Maybe<Card>.Missing() : new Maybe<Card>(_card, _card != null), _cardType);
+        if (_card != null && _card.OwnerBust.IsPresent)
+            bust.Show(_card.OwnerBust.Value);
+        else
+            bust.Hide();
         SetCardTint();
         SetCanPlayHighlight(IsPlayable, 
             _card != null 

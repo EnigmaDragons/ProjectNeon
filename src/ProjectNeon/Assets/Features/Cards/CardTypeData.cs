@@ -33,8 +33,8 @@ public static class CardTypeDataExtensions
         : string.Join(" - ", c.Archetypes.OrderBy(a => a).Select(a => a.WithSpaceBetweenWords()));
     public static string GetArchetypeKey(this CardTypeData c) => string.Join(" + ", c.Archetypes.OrderBy(a => a));
     
-    public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c, Maybe<Color>.Missing());
-    public static Card CreateInstance(this CardTypeData c, int id, Member owner, Maybe<Color> tint) => new Card(id, owner, c, tint);
+    public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c, Maybe<Color>.Missing(), Maybe<Sprite>.Missing());
+    public static Card CreateInstance(this CardTypeData c, int id, Member owner, Maybe<Color> tint, Maybe<Sprite> bust) => new Card(id, owner, c, tint, bust);
 
     public static IEnumerable<EffectData> BattleEffects(this CardTypeData c) => c.ActionSequences.SelectMany(a => a.CardActions.BattleEffects);
     
@@ -64,6 +64,6 @@ public static class CardTypeDataExtensions
     
     public static Card ToNonBattleCard(this CardTypeData c, Hero hero)
     {
-        return new Card(-1, hero.AsMember(-1), c, hero.Character.Tint);
+        return new Card(-1, hero.AsMember(-1), c, hero.Character.Tint, hero.Character.Bust);
     }
 }
