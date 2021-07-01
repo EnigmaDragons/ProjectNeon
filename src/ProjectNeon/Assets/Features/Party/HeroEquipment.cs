@@ -23,6 +23,7 @@ public class HeroEquipment
     public Maybe<Equipment> Weapon => new Maybe<Equipment>(_weapon);
     public Maybe<Equipment> Armor => new Maybe<Equipment>(_armor);
     public Equipment[] Augments => _augments.Where(a => a?.Archetypes != null).ToArray();
+    public int OpenSlots => (Weapon.IsMissing ? 1 : 0) + (Armor.IsMissing ? 1 : 0) + _augments.Count(a => a != null); 
     
     public Equipment[] All => new []{ _weapon, _armor }
         .Concat(_augments)
@@ -35,6 +36,20 @@ public class HeroEquipment
         return e.Archetypes.All(archetypes.Contains);
     }
 
+    public bool HasSpareRoomFor(Equipment e)
+    {
+        if (!CanEquip(e))
+            return false;
+
+        if (e.Slot == EquipmentSlot.Weapon)
+            return Weapon.IsMissing;
+        if (e.Slot == EquipmentSlot.Armor)
+            return Armor.IsPresent;
+        if (e.Slot == EquipmentSlot.Augmentation)
+            return Augments.Length < 3;
+        return true;
+    }
+    
     public void Unequip(Equipment e)
     {
         if (_weapon == e)

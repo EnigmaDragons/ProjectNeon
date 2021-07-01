@@ -26,18 +26,36 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
             {
                 party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
                 Message.Publish(new AutoSaveRequested());
-                parent.SetActive(false);   
+                parent.SetActive(false);
             }
         });
-        fightButton.onClick.AddListener(() =>
-        {
-            if (state.HeroesDecks.All(x => x.Deck.Count == deckSize))
+        fightButton.onClick.AddListener(() => OnFightButtonClicked());
+    }
+
+    private void OnFightButtonClicked()
+    {
+        if (state.HeroesDecks.Any(x => x.Deck.Count != deckSize)) 
+            return;
+        
+        if (party.HasAnyUnequippedGear())
+            Message.Publish(new ShowTwoChoiceDialog
             {
-                party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
-                Message.Publish(new AutoSaveRequested());
-                navigator.NavigateToBattleScene();
-            }
-        });
+                Prompt = "You have unequipped gear. Are you sure you're ready to fight?",
+                PrimaryButtonText = "Yes",
+                PrimaryAction = BeginFight,
+                SecondaryButtonText = "Go Back",
+                SecondaryAction = () => { },
+                UseDarken = true
+            });
+        else
+            BeginFight();
+    }
+
+    private void BeginFight()
+    {
+        party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
+        Message.Publish(new AutoSaveRequested());
+        navigator.NavigateToBattleScene();
     }
     
     protected override void Execute(TogglePartyDetails msg)

@@ -27,6 +27,16 @@ public sealed class PartyAdventureState : ScriptableObject
     private Dictionary<string, List<Hero>> _archKeyHeroes;
 
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
+    
+    public bool HasAnyUnequippedGear()
+    {
+        var availableGear = Equipment.Available;
+        foreach (var gear in availableGear)
+            foreach (var h in heroes)
+                if (h.Equipment.HasSpareRoomFor(gear))
+                    return true;
+        return false;
+    }
 
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
