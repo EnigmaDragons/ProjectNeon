@@ -75,6 +75,29 @@ public class FindEffectsEditor : EditorWindow
                 .Where(e => e.AllEffects.Any(x => (int)x.EffectType == -1))
                 .Select(e => $"Equipment {e.name}")))
             .ToArray();
+
+    private string[] GetAllCardEffectsWith(ReactionConditionType t) =>
+        GetAllInstances<CardActionsData>()
+            .Where(e => e.BattleEffects.Any(x => x.ReactionConditionType == t))
+            .Select(e => $"Card {e.name}")
+            .ToArray();
+    private string[] GetAllEnemiesWith(ReactionConditionType t)=>
+        GetAllInstances<Enemy>()
+            .Where(e => e.Effects.Any(x => x.ReactionConditionType == t))
+            .Select(e => $"Enemy {e.name}")
+            .ToArray();
+    private string[] GetAllEquipmentWith(ReactionConditionType t) => 
+        GetAllInstances<StaticEquipment>()            
+            .Where(e => e.AllEffects.Any(x => x.ReactionConditionType == t))
+            .Select(e => $"Equipment {e.name}")
+            .ToArray();
+    
+    private string[] GetAllContentWithReactionConditionType(ReactionConditionType e)
+        =>  GetAllCardEffectsWith(e)
+            .Concat(GetAllEnemiesWith(e))
+            .Concat(GetAllEquipmentWith(e)).ToArray();
+    
+    private ReactionConditionType _reactionConditionType;
     
     void OnGUI()
     {
@@ -82,6 +105,14 @@ public class FindEffectsEditor : EditorWindow
         if (GUILayout.Button("Search By Effect Type"))
         {
             ShowItems($"Content Using Effect Type - {_effectType}", GetAllContentWithEffectType(_effectType));
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        _reactionConditionType = (ReactionConditionType)EditorGUILayout.EnumPopup("ReactionConditionType", _reactionConditionType);
+        if (GUILayout.Button("Search By Reaction Condition Type"))
+        {
+            ShowItems($"Content Using Effect Type - {_effectType}", GetAllContentWithReactionConditionType(_reactionConditionType));
             GUIUtility.ExitGUI();
         }
         DrawUILine();
