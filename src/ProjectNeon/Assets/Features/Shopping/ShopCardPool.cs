@@ -12,7 +12,7 @@ public class ShopCardPool : ScriptableObject
     [SerializeField] private List<ShopCardPool> subPools;
     [UnityEngine.UI.Extensions.ReadOnly] public List<CardType> allCards; //Unity Collection Readonly
     
-    public IEnumerable<CardTypeData> All => subPools.SelectMany(s => s.All).Concat(allCards);
+    public IEnumerable<CardTypeData> All => subPools.SelectMany(s => s.All).Concat(allCards).Distinct();
 
     public IEnumerable<CardTypeData> Get(HashSet<string> archetypesToGet, params Rarity[] raritiesToGet)
     {
