@@ -130,7 +130,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     protected override void Execute(SpawnEnemy msg)
     {
-        var member = enemies.Spawn(msg.Enemy.GetEnemy(state.Stage), msg.Offset);
+        var member = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset);
         BattleLog.Write($"Spawned {member.Name}");
         Message.Publish(new Finished<SpawnEnemy>());
     }

@@ -20,7 +20,8 @@ public class Enemy : ScriptableObject
     [SerializeField] private ResourceType resourceType;
     [SerializeField] private EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
-    public EnemyInstance GetEnemy(int stage)
+    public int[] Stages => stageDetails.OrderBy(x => x.stage).Select(x => x.stage).ToArray();
+    public EnemyInstance ForStage(int stage)
     {
         var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();
         if (detail == null)

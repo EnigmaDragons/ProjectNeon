@@ -14,7 +14,7 @@ public class EnemyDetailsView : MonoBehaviour
     private void Awake()
     {
         if (!_isInitialized && staringEnemy != null)
-            Show(staringEnemy.GetEnemy(currentAdventureProgress.CurrentChapterNumber));
+            Show(staringEnemy.ForStage(currentAdventureProgress.CurrentChapterNumber));
     }
 
     public void Show(EnemyInstance e)

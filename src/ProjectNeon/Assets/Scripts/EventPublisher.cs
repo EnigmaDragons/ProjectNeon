@@ -36,4 +36,5 @@ public class EventPublisher : ScriptableObject
     public void GivePartyXp() => Message.Publish(new GivePartyXp(100));
     public void CancelTargetSelection() => Message.Publish(new CancelTargetSelectionRequested());
     public void FinishNode() => Message.Publish(new NodeFinished());
+    public void ToggleBestiary() => Message.Publish(new ToggleBestiary());
 }

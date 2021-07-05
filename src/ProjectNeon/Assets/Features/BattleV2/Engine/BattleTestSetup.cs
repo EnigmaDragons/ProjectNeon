@@ -55,7 +55,7 @@ public class BattleTestSetup : MonoBehaviour
     }
 
     public void UseCustomBattlefield() => setup.InitBattleField(battlefield);
-    public void UseFixedEncounter() => state.SetNextEncounter(enemies.Select(x => x.GetEnemy(stage)));
+    public void UseFixedEncounter() => state.SetNextEncounter(enemies.Select(x => x.ForStage(stage)));
     public void UseCustomEncounterSet() => setup.InitEncounterBuilder(encounterBuilder);
     public void SetupBattle() => engine.Setup();
 

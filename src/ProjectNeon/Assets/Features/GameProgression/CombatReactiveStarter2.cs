@@ -28,7 +28,7 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     {
         Log.Info("Setting Up Boss Battle");
         battleState.SetNextBattleground(progress.CurrentChapter.BossBattlefield);
-        battleState.SetNextEncounter(progress.CurrentChapter.BossEnemies.Select(x => x.GetEnemy(progress.CurrentChapterNumber)));
+        battleState.SetNextEncounter(progress.CurrentChapter.BossEnemies.Select(x => x.ForStage(progress.CurrentChapterNumber)));
         eventPublisher.ActivatePartyDetailsWizardFlow();
     }
 

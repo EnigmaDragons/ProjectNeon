@@ -24,7 +24,7 @@ public class EliteCombatSegment : StageSegment
                 return GenerateDeterministic(ctx, mapData);
             }
             return new GeneratedBattleStageSegment(Name, ctx.Adventure.CurrentChapter.Battleground, true, 
-                maybeEnemies.Select(x => x.Value.GetEnemy(ctx.Adventure.CurrentChapterNumber)).ToArray());
+                maybeEnemies.Select(x => x.Value.ForStage(ctx.Adventure.CurrentChapterNumber)).ToArray());
         }
     }
 }
