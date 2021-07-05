@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyDetailsView : MonoBehaviour
 {
     [SerializeField] private Enemy staringEnemy;
+    [SerializeField] private TextMeshProUGUI idLabel;
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private MemberStatPanel statPanel;
     [SerializeField] private ReadOnlyEnemyDeckUI enemyDeckUi;
@@ -20,6 +21,7 @@ public class EnemyDetailsView : MonoBehaviour
     public void Show(EnemyInstance e)
     {
         _isInitialized = true;
+        idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLabel.text = e.Name;
         statPanel.Initialized(e.Stats);
         enemyDeckUi.Show(e.Cards, e.AsMember(-1));   
