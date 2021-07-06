@@ -7,6 +7,7 @@ public class Enemy : ScriptableObject
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private string enemyName;
+    [SerializeField] private bool excludeFromBestiary = false;
     [SerializeField] private string lastBalanceDate = "Never";
     [SerializeField] private bool isCurrentlyWorking = true;
     [SerializeField] private TurnAI ai;
@@ -21,6 +22,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private ResourceType resourceType;
     [SerializeField] private EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
+    public bool ExcludeFromBestiary => excludeFromBestiary;
     public int[] Stages => stageDetails.OrderBy(x => x.stage).Select(x => x.stage).ToArray();
     public EnemyInstance ForStage(int stage)
     {

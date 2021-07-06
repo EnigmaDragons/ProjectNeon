@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class EnemyBestiaryView : MonoBehaviour
     
     private void Awake()
     {
-        _enemies = new IndexSelector<Enemy>(enemies.Enemies);
+        _enemies = new IndexSelector<Enemy>(enemies.Enemies.Where(x => !x.ExcludeFromBestiary).ToArray());
         previousButton.onClick.AddListener(MovePrevious);
         nextButton.onClick.AddListener(MoveNext);
         Render();
