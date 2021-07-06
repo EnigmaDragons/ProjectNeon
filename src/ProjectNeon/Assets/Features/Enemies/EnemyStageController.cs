@@ -1,0 +1,35 @@
+using UnityEngine;
+
+public class EnemyStageController : OnMessage<ShowEnemyOnStage>
+{
+    [SerializeField] private GameObject stage;
+    
+    private Vector3 _initialStagePosition;
+
+    private void Awake()
+    {
+        _initialStagePosition = stage.transform.localPosition;
+    }
+    
+    protected override void Execute(ShowEnemyOnStage msg) => Show(msg.Enemy);
+
+    public void Show(EnemyInstance e)
+    {
+        stage.DestroyAllChildren();
+        RenderEnemyBody(e);
+    }
+    
+    private void RenderEnemyBody(EnemyInstance e)
+    {
+        stage.transform.localPosition = _initialStagePosition - e.LibraryCameraOffset;
+        Log.Info(stage.transform.localPosition.ToString(), stage);
+        var enemyBody = Instantiate(e.Prefab, stage.transform);
+        Log.Info($"Enemy {e.Name}", enemyBody);
+        var enemyUi = enemyBody.GetComponentInChildren<EnemyBattleUIPresenter>();
+        if (enemyUi != null)
+            enemyUi.gameObject.SetActive(false);
+        var enemyAngleShift = enemyBody.GetComponentInChildren<Universal2DAngleShift>();
+        if (enemyAngleShift != null)
+            enemyAngleShift.Revert();
+    }
+}

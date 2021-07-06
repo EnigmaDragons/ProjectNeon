@@ -26,6 +26,7 @@ public class EnemyInstance : EnemyType
 
     public int EnemyId => _enemyId;
     public GameObject Prefab { get; }
+    public Vector3 LibraryCameraOffset { get; }
     public TurnAI AI { get; }
     public IEnumerable<CardType> Cards { get; }
     public BattleRole Role { get; }
@@ -43,7 +44,7 @@ public class EnemyInstance : EnemyType
     public EnemyInstance(int enemyId, ResourceType resourceType, EffectData[] startOfBattleEffects, int startingResourceAmount, 
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
         int toughness, int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
-        GameObject prefab, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
+        GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
         int preferredTurnOrder, string name, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments)
     {
         _enemyId = enemyId;
@@ -64,6 +65,7 @@ public class EnemyInstance : EnemyType
         _cardsPerTurn = cardsPerTurn;
         _counterAdjustments = counterAdjustments;
         Prefab = prefab;
+        LibraryCameraOffset = libraryCameraOffset;
         AI = ai;
         Cards = cards;
         Role = role;

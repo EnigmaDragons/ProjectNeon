@@ -15,13 +15,15 @@ public class EnemyBestiaryView : MonoBehaviour
         _enemies = new IndexSelector<Enemy>(enemies.Enemies);
         previousButton.onClick.AddListener(MovePrevious);
         nextButton.onClick.AddListener(MoveNext);
+        Render();
     }
 
     private void Render()
     {
         var enemy = _enemies.Current;
         var firstStage = enemy.Stages[0];
-        enemyView.Show(enemy.ForStage(firstStage));
+        var enemyInstance = enemy.ForStage(firstStage);
+        enemyView.Show(enemyInstance);
     }
 
     private void MoveNext()

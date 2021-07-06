@@ -12,6 +12,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private TurnAI ai;
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private GameObject prefab;
+    [SerializeField] private Vector3 libraryCameraOffset;
     [SerializeField] private StringReference deathEffect;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private EnemyTier tier; 
@@ -29,7 +30,7 @@ public class Enemy : ScriptableObject
         return new EnemyInstance(id, resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield, detail.toughness, 
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
-            prefab, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 
+            prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 
             isHasty, unique, detail.CounterAdjustments);
     } 
     public EffectData[] Effects => stageDetails.SelectMany(x => x.startOfBattleEffects).ToArray();

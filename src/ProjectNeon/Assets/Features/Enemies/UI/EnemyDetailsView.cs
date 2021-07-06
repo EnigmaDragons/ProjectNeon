@@ -11,6 +11,7 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private AdventureProgress2 currentAdventureProgress;
 
     private bool _isInitialized;
+    private Vector3 _initialStagePosition;
     
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class EnemyDetailsView : MonoBehaviour
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLabel.text = e.Name;
         statPanel.Initialized(e.Stats);
-        enemyDeckUi.Show(e.Cards, e.AsMember(-1));   
+        enemyDeckUi.Show(e.Cards, e.AsMember(-1));
+        Message.Publish(new ShowEnemyOnStage(e));
     }
 }
