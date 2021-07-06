@@ -13,7 +13,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private TurnAI ai;
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private GameObject prefab;
-    [SerializeField] private Vector3 libraryCameraOffset;
+    [SerializeField] private Vector3 libraryCameraOffset = new Vector3(-0.2f, -0.9f, 2.8f);
     [SerializeField] private StringReference deathEffect;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private EnemyTier tier; 
