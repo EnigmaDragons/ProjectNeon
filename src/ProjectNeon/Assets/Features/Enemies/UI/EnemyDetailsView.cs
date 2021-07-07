@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private MemberStatPanel statPanel;
     [SerializeField] private MemberUiBase[] otherViews;
     [SerializeField] private ReadOnlyEnemyDeckUI enemyDeckUi;
+    [SerializeField] private SimpleCardsView cardsView;
     [SerializeField] private AdventureProgress2 currentAdventureProgress;
 
     private int _memberId = int.MinValue;
@@ -28,6 +30,8 @@ public class EnemyDetailsView : MonoBehaviour
         statPanel.Initialized(e.Stats);
         var member = e.AsMember(_memberId++);
         enemyDeckUi.Show(e.Cards, member);
+        if (cardsView != null)
+            cardsView.Show(e.Cards.Select(c => c.CreateInstance(-1, member)));
         otherViews.ForEach(o => o.Init(member));
         Message.Publish(new ShowEnemyOnStage(e));
     }
