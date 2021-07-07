@@ -1,6 +1,4 @@
 
-using UnityEngine;
-
 public abstract class HPBarControllerBase : OnMessage<MemberStateChanged>
 {
     private Member _member = new Member(-1, "None", "", TeamType.Party, new StatAddends(), BattleRole.Unknown, StatType.Attack);

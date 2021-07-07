@@ -11,6 +11,7 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private ReadOnlyEnemyDeckUI enemyDeckUi;
     [SerializeField] private AdventureProgress2 currentAdventureProgress;
 
+    private int _memberId = int.MinValue;
     private bool _isInitialized;
     
     private void Awake()
@@ -25,7 +26,7 @@ public class EnemyDetailsView : MonoBehaviour
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLabel.text = e.Name;
         statPanel.Initialized(e.Stats);
-        var member = e.AsMember(-1);
+        var member = e.AsMember(_memberId++);
         enemyDeckUi.Show(e.Cards, member);
         otherViews.ForEach(o => o.Init(member));
         Message.Publish(new ShowEnemyOnStage(e));

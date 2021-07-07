@@ -36,8 +36,8 @@ MonoBehaviour:
     maxHp: 99
     maxShield: 30
     startingShield: 30
-    startingAegis: 0
-    startingPhase: 0
+    startingAegis: 1
+    startingPhase: 1
     startingDodge: 0
     startingTaunt: 0
     toughness: 15
@@ -52,48 +52,6 @@ MonoBehaviour:
     resourceGainPerTurn: 1
     cardsPerTurn: 1
     startOfBattleEffects:
-    - EffectType: 79
-      Conditions: []
-      BaseAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      DurationFormula: 0
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
-      HitsRandomTargetMember: 0
-      TargetsSource: 0
-      ReTargetScope: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 0
-      Formula: 1
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
     - EffectType: 79
       Conditions: []
       BaseAmount:
@@ -193,48 +151,6 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
-      HitsRandomTargetMember: 0
-      TargetsSource: 0
-      ReTargetScope: 0
-      StatusTag: 19
-      StatusDetailText: 'On Ally Death: Heat Up'
-      TurnDelay: 0
-      Formula: 1
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 33
-      ReactionEffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionSequence: {fileID: 11400000, guid: 46b4ce16b50698149a55a048c88630be, type: 2}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
-    - EffectType: 79
-      Conditions: []
-      BaseAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 1
-        FloatVariable: {fileID: 0}
-      DurationFormula: 0
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: Phase
-        Variable: {fileID: 11400000, guid: abb3ff6dbec4e4d4db521d87a3fd9988, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
