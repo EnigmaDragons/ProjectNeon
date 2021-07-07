@@ -38,7 +38,7 @@ MonoBehaviour:
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
-    startingDodge: 0
+    startingDodge: 1
     startingTaunt: 0
     toughness: 2
     attack: 0
@@ -51,49 +51,7 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 0
     cardsPerTurn: 1
-    startOfBattleEffects:
-    - EffectType: 79
-      Conditions: []
-      BaseAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      DurationFormula: 0
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
-      HitsRandomTargetMember: 0
-      TargetsSource: 0
-      ReTargetScope: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 0
-      Formula: 1
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
+    startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 292c5a425cc7e3343872c2858201a16d, type: 2}
     - {fileID: 11400000, guid: 480e94d58a9effb429780c165339090e, type: 2}
