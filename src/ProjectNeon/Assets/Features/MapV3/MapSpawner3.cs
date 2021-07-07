@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -76,11 +75,12 @@ public class MapSpawner3 : OnMessage<NodeFinished>
 
     private void SpawnNodes()
     {
+        var ctx = new AdventureGenerationContext(progress, allEnemies);
         _activeNodes = gameMap.CurrentChoices.Select(x =>
         {
             var obj = Instantiate(GetNodePrefab(x.Type), _map.transform);
             Action midPoint = x.HasEventEnroute ? () => storyEventSegment.Start() : (Action)(() => travelReactiveSystem.Continue());
-            obj.Init(x, progress, allEnemies, () =>
+            obj.Init(x, ctx, () =>
             {
                 gameMap.CompletedNodes.Add(x.Type);
                 gameMap.CurrentChoices = new List<MapNode3>();
