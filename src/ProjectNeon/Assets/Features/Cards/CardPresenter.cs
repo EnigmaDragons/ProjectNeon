@@ -246,20 +246,19 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (!_isHand)
             scalingRule.Show(_cardType);
 
-        _cardType.ChainedCard.IfPresent(chain =>
-        {
-            if (_card != null)
-                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, chain, _card.OwnerTint, _card.OwnerBust)));
-            else
-                Message.Publish(new ShowReferencedCard(chainedCardParent, chain));
-        });
-        _cardType.SwappedCard.IfPresent(swap =>
-        {
-            if (_card != null)
-                Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, swap, _card.OwnerTint, _card.OwnerBust)));
-            else
-                Message.Publish(new ShowReferencedCard(chainedCardParent, swap));
-        });
+        _cardType.ChainedCard.IfPresent(ShowReferencedCard);
+        _cardType.SwappedCard.IfPresent(ShowReferencedCard);
+        var reactionCards = _cardType.BattleEffects().Where(x => x.IsReactionCard).ToArray();
+        if (reactionCards.Any()) 
+            ShowReferencedCard(reactionCards[0].ReactionSequence);
+    }
+
+    private void ShowReferencedCard(CardTypeData c)
+    {
+        if (_card != null)
+            Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, c, _card.OwnerTint, _card.OwnerBust)));
+        else
+            Message.Publish(new ShowReferencedCard(chainedCardParent, c));
     }
     
     private void HideComprehensiveCardInfo()

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -7,10 +8,10 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     [SerializeField] private string displayName;
     [PreviewSprite] [SerializeField] private Sprite art;
     [SerializeField] [TextArea(1, 12)] private string description;
+    [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private ResourceCost cost;
     [SerializeField] private ResourceCost onPlayGain;
     [SerializeField] private CardReactionSequence actionSequence;
-
 
     public string Name => string.IsNullOrWhiteSpace(displayName) 
         ? name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords() 
@@ -29,7 +30,7 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     public Maybe<CardTypeData> ChainedCard => Maybe<CardTypeData>.Missing();
     public Maybe<CardTypeData> SwappedCard => Maybe<CardTypeData>.Missing();
     public Rarity Rarity => Rarity.Starter;
-    public HashSet<string> Archetypes { get; } = new HashSet<string>();
+    public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
     public Maybe<CardCondition> HighlightCondition { get; } = Maybe<CardCondition>.Missing();
     public Maybe<CardCondition> UnhighlightCondition { get; } = Maybe<CardCondition>.Missing();
     public bool IsSinglePlay { get; } = true;
