@@ -15,6 +15,8 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
     [SerializeField] private GameObject aegisItem;
     [SerializeField] private TextMeshProUGUI aegisLabel;
     [SerializeField] private GameObject stealthItem;
+    [SerializeField] private GameObject tauntItem;
+    [SerializeField] private TextMeshProUGUI tauntLabel;
     
     public override void Init(Member m)
     {
@@ -26,6 +28,7 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
         Set(dodgeItem, dodgeLabel, m.Dodge());
         Set(aegisItem, aegisLabel, m.Aegis());
         stealthItem.SetActive(m.Stealth() > 0);
+        Set(tauntItem, tauntLabel, m.Taunt());
     }
 
     private void Set(GameObject g, TextMeshProUGUI t, int value)

@@ -62,6 +62,7 @@ public static class MemberExtensions
     public static int Armor(this Member m) => m.State.Armor();
     public static int Dodge(this Member m) => RoundUp(m.State[TemporalStatType.Dodge]);
     public static int Aegis(this Member m) => RoundUp(m.State[TemporalStatType.Aegis]);
+    public static int Taunt(this Member m) => RoundUp(m.State[TemporalStatType.Taunt]);
     public static int Stealth(this Member m) => RoundUp(m.State[TemporalStatType.Stealth]);
     public static int Resistance(this Member m) => m.State.Resistance();
     public static int Toughness(this Member m) => m.State.Toughness();
