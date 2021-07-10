@@ -56,6 +56,7 @@ public static class MemberExtensions
     public static int CurrentShield(this Member m) => RoundUp(m.State[TemporalStatType.Shield]);
     public static int MaxShield(this Member m) => RoundUp(m.State.MaxShield());
     public static int Attack(this Member m) => m.State.Attack();
+    public static int ExtraCardPlays(this Member m) => RoundUp(m.State[StatType.ExtraCardPlays]);
     public static int Magic(this Member m) => m.State.Magic();
     public static int Leadership(this Member m) => m.State.Leadership();
     public static int Economic(this Member m) => m.State.Economy();
