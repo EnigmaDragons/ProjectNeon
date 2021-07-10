@@ -17,6 +17,8 @@ public sealed class PartyAdventureState : ScriptableObject
 
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
+    public PartyCorpAffinity CorpAffinity =>
+        PartyCorpAffinityCalculator.ForEquippedEquipment(Heroes.Sum(h => h.Equipment.TotalSlots), equipment.Equipped);
     
     public HeroCharacter[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
     public Hero[] Heroes => heroes;

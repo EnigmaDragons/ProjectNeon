@@ -20,6 +20,7 @@ public class HeroEquipment
     public HeroEquipment() {}
     public HeroEquipment(params string[] a) => archetypes = a;
 
+    public int TotalSlots => 5;
     public Maybe<Equipment> Weapon => new Maybe<Equipment>(_weapon);
     public Maybe<Equipment> Armor => new Maybe<Equipment>(_armor);
     public Equipment[] Augments => _augments.Where(a => a?.Archetypes != null).ToArray();
