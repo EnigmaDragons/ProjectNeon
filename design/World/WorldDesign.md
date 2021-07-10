@@ -1,12 +1,8 @@
 - World Setting
-  - New Delphia City
-  - One Other City
   - Figure out which Year
-  - What's unique about New Delphia City?
-  - What's happening in New Delphia City right now?
-
-- What Is Metroplex Zero?
-  - What is happening at Metroplex Zero?
+  - What Is Metroplex Zero?
+  - What's unique about Metroplex Zero?
+  - What's happening in Metroplex Zero right now?
 
 - What's the team's backstory?
 - Why is the team working togther?
