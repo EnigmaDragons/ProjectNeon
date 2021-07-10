@@ -10,6 +10,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private bool excludeFromBestiary = false;
     [SerializeField] private string lastBalanceDate = "Never";
     [SerializeField] private bool isCurrentlyWorking = true;
+    [SerializeField] private StaticCorp corp;
     [SerializeField] private TurnAI ai;
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private GameObject prefab;
@@ -33,7 +34,7 @@ public class Enemy : ScriptableObject
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield, detail.toughness, 
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
             prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 
-            isHasty, unique, detail.CounterAdjustments);
+            isHasty, unique, detail.CounterAdjustments, corp);
     } 
     public EffectData[] Effects => stageDetails.SelectMany(x => x.startOfBattleEffects).ToArray();
 }

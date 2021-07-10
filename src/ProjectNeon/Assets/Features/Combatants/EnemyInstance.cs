@@ -23,6 +23,7 @@ public class EnemyInstance : EnemyType
     private readonly float _resistance;
     private readonly int _cardsPerTurn;
     private readonly Dictionary<string, int> _counterAdjustments;
+    private readonly Corp _corp;
 
     public int EnemyId => _enemyId;
     public GameObject Prefab { get; }
@@ -31,6 +32,7 @@ public class EnemyInstance : EnemyType
     public IEnumerable<CardType> Cards { get; }
     public BattleRole Role { get; }
     public EnemyTier Tier { get; }
+    public Corp Corp => _corp;
     public int PowerLevel { get; }
     public int PreferredTurnOrder { get; }
     public string Name { get; }
@@ -45,7 +47,7 @@ public class EnemyInstance : EnemyType
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
         int toughness, int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
-        int preferredTurnOrder, string name, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments)
+        int preferredTurnOrder, string name, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp)
     {
         _enemyId = enemyId;
         _resourceType = resourceType;
@@ -64,6 +66,7 @@ public class EnemyInstance : EnemyType
         _resistance = resistance;
         _cardsPerTurn = cardsPerTurn;
         _counterAdjustments = counterAdjustments;
+        _corp = corp != null ? corp : new InMemoryCorp();
         Prefab = prefab;
         LibraryCameraOffset = libraryCameraOffset;
         AI = ai;
