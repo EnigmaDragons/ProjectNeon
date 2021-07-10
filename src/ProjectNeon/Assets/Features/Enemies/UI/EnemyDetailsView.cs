@@ -7,6 +7,7 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private Enemy staringEnemy;
     [SerializeField] private TextMeshProUGUI idLabel;
     [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private TextMeshProUGUI typeLabel;
     [SerializeField] private MemberStatPanel statPanel;
     [SerializeField] private MemberUiBase[] otherViews;
     [SerializeField] private ReadOnlyEnemyDeckUI enemyDeckUi;
@@ -27,6 +28,8 @@ public class EnemyDetailsView : MonoBehaviour
         _isInitialized = true;
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLabel.text = e.Name;
+        if (typeLabel != null)
+            typeLabel.text = e.Role.ToString();
         statPanel.Initialized(e.Stats);
         var member = e.AsMember(InfoMemberId.Get());
         enemyDeckUi.Show(e.Cards, member);
