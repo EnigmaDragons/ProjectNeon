@@ -39,6 +39,7 @@ public class EnemyInstance : EnemyType
     public string DeathEffect { get; }
     public bool IsHasty { get; }
     public bool IsUnique { get; }
+    public int ResourceGainPerTurn => _resourceGainPerTurn;
     
     public bool DeckIsValid => Cards.None(x => x == null);
     public bool IsReadyForPlay => Cards != null && Prefab != null && AI != null;
