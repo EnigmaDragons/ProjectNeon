@@ -1,15 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameContent/Corp")]
-public class Corp : ScriptableObject
+public interface Corp
 {
-    [SerializeField] private StringVariable corpName;
-    [SerializeField] private Sprite logo;
-    [SerializeField] private Color color;
-    [SerializeField] private Corp[] rivalCorps;
-    
-    public string Name => corpName.Value;
-    public Sprite Logo => logo;
-    public Color Color => color;
-    public Corp[] RivalCorps => rivalCorps;
+    string Name { get; }
+    Sprite Logo { get; }
+    Color Color { get; }
+    string[] RivalCorpNames { get; }
 }

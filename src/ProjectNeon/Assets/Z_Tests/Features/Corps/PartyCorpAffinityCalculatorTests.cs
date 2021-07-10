@@ -4,13 +4,21 @@ using NUnit.Framework;
 
 public class PartyCorpAffinityCalculatorTests
 {
-    private string Corp1 = "Corp1";
-    private string Corp2 = "Corp2";
+    private static InMemoryCorp RivalToCorp1 = new InMemoryCorp { Name = "RivalToCorp1", RivalCorpNames = "Corp1".AsArray() };
+    private static InMemoryCorp Corp1 = new InMemoryCorp { Name = "Corp1", RivalCorpNames = RivalToCorp1.Name.AsArray() };
+    private static InMemoryCorp Corp2 = new InMemoryCorp { Name = "Corp2" };
+
+    private readonly Dictionary<string, Corp> _allCorps = new Dictionary<string, Corp>
+    {
+        { Corp1.Name, Corp1 },
+        { Corp2.Name, Corp2 },
+        { RivalToCorp1.Name, RivalToCorp1 }
+    };
 
     [Test]
     public void PartyCorpAffinityCalculator_NoEquipment_NoAffinities()
     {
-        var affinity = PartyCorpAffinityCalculator.ForEquippedEquipment(15, new List<Equipment>());
+        var affinity = GetAffinity(new List<Equipment>());
         
         Assert.IsTrue(affinity.All(x => x.Value == CorpAffinityStrength.None));
     }
@@ -18,7 +26,10 @@ public class PartyCorpAffinityCalculatorTests
     [Test]
     public void PartyCorpAffinityCalculator_OneEquipment_InterestedInCorp1()
     {
-        var affinity = PartyCorpAffinityCalculator.ForEquippedEquipment(15, new List<Equipment> { new InMemoryEquipment { Corp = Corp1 }});
+        var affinity = GetAffinity(new List<Equipment>
+        {
+            new InMemoryEquipment { Corp = Corp1 }
+        });
         
         Assert.AreEqual(CorpAffinityStrength.Interested, affinity[Corp1]);
     }
@@ -26,7 +37,7 @@ public class PartyCorpAffinityCalculatorTests
     [Test]
     public void PartyCorpAffinityCalculator_TwoEquipmentsOfDifferentCorp_InterestedInBothCorps()
     {
-        var affinity = PartyCorpAffinityCalculator.ForEquippedEquipment(15, new List<Equipment>
+        var affinity = GetAffinity(new List<Equipment>
         {
             new InMemoryEquipment { Corp = Corp1 },
             new InMemoryEquipment { Corp = Corp2 },
@@ -39,7 +50,7 @@ public class PartyCorpAffinityCalculatorTests
     [Test]
     public void PartyCorpAffinityCalculator_OneFifthSlotsFilledWithOneCorps_LoyalToCorp()
     {
-        var affinity = PartyCorpAffinityCalculator.ForEquippedEquipment(15, new List<Equipment>
+        var affinity = GetAffinity(new List<Equipment>
         {
             new InMemoryEquipment { Corp = Corp1 },
             new InMemoryEquipment { Corp = Corp1 },
@@ -52,7 +63,7 @@ public class PartyCorpAffinityCalculatorTests
     [Test]
     public void PartyCorpAffinityCalculator_OneFifthSlotsFilledWithOneCorpsButHasSameAmountOfOtherCorp_InterestedInCorps()
     {
-        var affinity = PartyCorpAffinityCalculator.ForEquippedEquipment(15, new List<Equipment>
+        var affinity = GetAffinity(new List<Equipment>
         {
             new InMemoryEquipment { Corp = Corp1 },
             new InMemoryEquipment { Corp = Corp1 },
@@ -69,7 +80,7 @@ public class PartyCorpAffinityCalculatorTests
     [Test]
     public void PartyCorpAffinityCalculator_OneThirdSlotsFilledWithOneCorps_FanaticForCorp()
     {
-        var affinity = PartyCorpAffinityCalculator.ForEquippedEquipment(15, new List<Equipment>
+        var affinity = GetAffinity(new List<Equipment>
         {
             new InMemoryEquipment { Corp = Corp1 },
             new InMemoryEquipment { Corp = Corp1 },
@@ -84,7 +95,7 @@ public class PartyCorpAffinityCalculatorTests
     [Test]
     public void PartyCorpAffinityCalculator_OneThirdSlotsFilledWithOneCorpsButHasSameAmountOfOtherCorp_InterestedInCorps()
     {
-        var affinity = PartyCorpAffinityCalculator.ForEquippedEquipment(15, new List<Equipment>
+        var affinity = GetAffinity(new List<Equipment>
         {
             new InMemoryEquipment { Corp = Corp1 },
             new InMemoryEquipment { Corp = Corp1 },
@@ -101,4 +112,48 @@ public class PartyCorpAffinityCalculatorTests
         Assert.AreEqual(CorpAffinityStrength.Interested, affinity[Corp1]);
         Assert.AreEqual(CorpAffinityStrength.Interested, affinity[Corp2]);
     }
+    
+    [Test]
+    public void PartyCorpAffinityCalculator_EvenAmountOfGearWithRival_NoAffinityForEitherRival()
+    {
+        var affinity = GetAffinity(new List<Equipment>
+        {
+            new InMemoryEquipment { Corp = Corp1 },
+            new InMemoryEquipment { Corp = RivalToCorp1 },
+        });
+        
+        Assert.AreEqual(CorpAffinityStrength.None, affinity[Corp1]);
+        Assert.AreEqual(CorpAffinityStrength.None, affinity[RivalToCorp1]);
+    }
+
+    [Test]
+    public void PartyCorpAffinityCalculator_LoyalForRivalCorp_AffinityLevelRivalToCorp()
+    {
+        var affinity = GetAffinity(new List<Equipment>
+        {
+            new InMemoryEquipment { Corp = RivalToCorp1 },
+            new InMemoryEquipment { Corp = RivalToCorp1 },
+            new InMemoryEquipment { Corp = RivalToCorp1 }
+        });
+        
+        Assert.AreEqual(CorpAffinityStrength.Rival, affinity[Corp1]);
+    }
+    
+    [Test]
+    public void PartyCorpAffinityCalculator_FanaticForRivalCorp_AffinityLevelDetrifactorToCorp()
+    {
+        var affinity = GetAffinity(new List<Equipment>
+        {
+            new InMemoryEquipment { Corp = RivalToCorp1 },
+            new InMemoryEquipment { Corp = RivalToCorp1 }, 
+            new InMemoryEquipment { Corp = RivalToCorp1 },
+            new InMemoryEquipment { Corp = RivalToCorp1 },
+            new InMemoryEquipment { Corp = RivalToCorp1 }
+        });
+        
+        Assert.AreEqual(CorpAffinityStrength.Detrifactor, affinity[Corp1]);
+    }
+    
+    private PartyCorpAffinity GetAffinity(List<Equipment> equipped) =>
+        PartyCorpAffinityCalculator.ForEquippedEquipment(15, _allCorps, equipped);
 }

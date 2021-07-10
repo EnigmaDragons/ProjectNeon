@@ -7,4 +7,6 @@ public class PartyCorpAffinity : DictionaryWithDefault<string, CorpAffinityStren
 
     public PartyCorpAffinity(IDictionary<string, CorpAffinityStrength> values) 
         : base(CorpAffinityStrength.None, values) { }
+
+    public CorpAffinityStrength this[Corp corp] => this[corp.Name];
 }

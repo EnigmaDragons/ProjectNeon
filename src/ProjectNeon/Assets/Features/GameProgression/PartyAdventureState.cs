@@ -17,8 +17,6 @@ public sealed class PartyAdventureState : ScriptableObject
 
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
-    public PartyCorpAffinity CorpAffinity =>
-        PartyCorpAffinityCalculator.ForEquippedEquipment(Heroes.Sum(h => h.Equipment.TotalSlots), equipment.Equipped);
     
     public HeroCharacter[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
     public Hero[] Heroes => heroes;
@@ -29,6 +27,9 @@ public sealed class PartyAdventureState : ScriptableObject
     private Dictionary<string, List<Hero>> _archKeyHeroes;
 
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
+    
+    public PartyCorpAffinity GetCorpAffinity(Dictionary<string, Corp> allCorps) =>
+        PartyCorpAffinityCalculator.ForEquippedEquipment(Heroes.Sum(h => h.Equipment.TotalSlots), allCorps, equipment.Equipped);
     
     public bool HasAnyUnequippedGear()
     {
