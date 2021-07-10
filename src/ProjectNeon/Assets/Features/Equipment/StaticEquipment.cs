@@ -18,6 +18,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     [SerializeField] private EffectData[] turnEndEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
     [SerializeField] private bool isWIP;
+    [SerializeField] private StringVariable corp;
     
     public string Name => !string.IsNullOrWhiteSpace(displayName) 
         ? displayName 
@@ -36,7 +37,8 @@ public class StaticEquipment : ScriptableObject, Equipment
     public EffectData[] TurnStartEffects => turnStartEffects;
     public EffectData[] TurnEndEffects => turnEndEffects;
     public EffectData[] BattleStartEffects => battleStartEffects;
-
+    public string Corp => corp.Value;
+    
     public GameEquipmentData GetData() 
         => new GameEquipmentData { Type = GameEquipmentDataType.StaticEquipmentId, StaticEquipmentId = id };
 
