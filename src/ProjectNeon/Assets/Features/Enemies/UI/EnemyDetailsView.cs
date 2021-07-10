@@ -13,7 +13,6 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private SimpleCardsView cardsView;
     [SerializeField] private AdventureProgress2 currentAdventureProgress;
 
-    private int _memberId = int.MinValue;
     private bool _isInitialized;
     
     private void Awake()
@@ -28,7 +27,7 @@ public class EnemyDetailsView : MonoBehaviour
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLabel.text = e.Name;
         statPanel.Initialized(e.Stats);
-        var member = e.AsMember(_memberId++);
+        var member = e.AsMember(InfoMemberId.Get());
         enemyDeckUi.Show(e.Cards, member);
         if (cardsView != null)
             cardsView.Show(e.Cards.Select(c => c.CreateInstance(-1, member)));

@@ -5,7 +5,6 @@ public class EnemyStageController : OnMessage<ShowEnemyOnStage>
     [SerializeField] private GameObject stage;
     
     private Vector3 _initialStagePosition;
-    private int _memberId = int.MinValue;
 
     private void Awake()
     {
@@ -35,6 +34,6 @@ public class EnemyStageController : OnMessage<ShowEnemyOnStage>
             enemyAngleShift.Revert();
         var shield = enemyBody.GetComponentInChildren<ShieldVisual>();
         if (shield != null)
-            shield.Init(e.AsMember(_memberId++));
+            shield.Init(e.AsMember(InfoMemberId.Get()));
     }
 }
