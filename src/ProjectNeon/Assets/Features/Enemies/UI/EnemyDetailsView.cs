@@ -12,6 +12,7 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private MemberUiBase[] otherViews;
     [SerializeField] private ReadOnlyEnemyDeckUI enemyDeckUi;
     [SerializeField] private SimpleCardsView cardsView;
+    [SerializeField] private GameObject hasUnshownCardsItem;
     [SerializeField] private CorpUiBase corpUi;
     [SerializeField] private EnemyResourceInfoPresenter resources;
     [SerializeField] private AdventureProgress2 currentAdventureProgress;
@@ -40,6 +41,8 @@ public class EnemyDetailsView : MonoBehaviour
             corpUi.Init(e.Corp);
         if (resources != null)
             resources.Init(e);
+        if (hasUnshownCardsItem != null && cardsView != null)
+            hasUnshownCardsItem.SetActive(e.Cards.Distinct().Count() > cardsView.MaxCardsDisplayed);
         otherViews.ForEach(o => o.Init(member));
         Message.Publish(new ShowEnemyOnStage(e));
     }
