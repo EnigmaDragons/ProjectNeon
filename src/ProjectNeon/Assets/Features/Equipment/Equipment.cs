@@ -14,6 +14,7 @@ public interface Equipment
     EffectData[] TurnStartEffects { get; }
     EffectData[] TurnEndEffects { get; }
     EffectData[] BattleStartEffects { get; }
+    string Corp { get; }
 
     GameEquipmentData GetData();
 }

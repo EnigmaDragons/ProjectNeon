@@ -3,11 +3,11 @@
 [CreateAssetMenu(menuName = "GameContent/Corp")]
 public class Corp : ScriptableObject
 {
-    [SerializeField] private string name;
+    [SerializeField] private StringVariable corpName;
     [SerializeField] private Sprite logo;
     [SerializeField] private Color color;
 
-    public string Name => name;
+    public string Name => corpName.Value;
     public Sprite Logo => logo;
     public Color Color => color;
 }
