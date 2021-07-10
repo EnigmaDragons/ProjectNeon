@@ -4,6 +4,7 @@ public interface Corp
 {
     string Name { get; }
     Sprite Logo { get; }
-    Color Color { get; }
+    Color Color1 { get; }
+    Color Color2 { get; }
     string[] RivalCorpNames { get; }
 }
