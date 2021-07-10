@@ -8,6 +8,7 @@ public class StaticCorp : ScriptableObject, Corp
     [SerializeField] private Sprite logo;
     [SerializeField] private Color color;
     [SerializeField] private StaticCorp[] rivalCorps;
+    [SerializeField, TextArea(4, 10)] private string description;
     
     public string Name => corpName.Value;
     public Sprite Logo => logo;
