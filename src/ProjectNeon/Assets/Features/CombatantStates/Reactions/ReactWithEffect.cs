@@ -6,7 +6,8 @@ using UnityEngine;
 public class EffectReactWith : Effect
 {
     private static Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>> Conditions = new Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>>
-    {    
+    {
+        { ReactionConditionType.OnCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(c => c.Owner.Id == ctx.Possessor.Id) },
         { ReactionConditionType.OnAttacked, ctx => effect => 
             ctx.Actor.IsConscious() && (effect.EffectData.EffectType == EffectType.AttackFormula || effect.EffectData.EffectType == EffectType.MagicAttackFormula) 
                                     && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
@@ -29,6 +30,20 @@ public class EffectReactWith : Effect
                 var stunsAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
                     .Sum(x => x.State[TemporalStatType.CardStun] + x.State[TemporalStatType.Disabled]);
                 return stunsAfter > stunsBefore;
+            }
+        },
+        {
+            ReactionConditionType.OnCausedAffliction, ctx => effect => 
+            {
+                if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
+                    return false;
+                
+                var targetMembers = effect.Target.Members;
+                var numBefore = targetMembers.Select(t => effect.BattleBefore.Members[t.Id])
+                    .Sum(x => x.State.StatusesOfType[StatusTag.DamageOverTime]);
+                var numAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
+                    .Sum(x => x.State.StatusesOfType[StatusTag.DamageOverTime]);
+                return numAfter > numBefore;
             }
         },
         { ReactionConditionType.OnSlay, ctx => effect =>

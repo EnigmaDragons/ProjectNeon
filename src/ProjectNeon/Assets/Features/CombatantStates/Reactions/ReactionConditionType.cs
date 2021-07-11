@@ -7,6 +7,7 @@ public enum ReactionConditionType
     OnVulnerable = 5,
     OnShieldBroken = 6,
     OnBloodied = 10,
+    OnCausedAffliction = 14,
     OnCausedHeal = 15,
     OnCausedStun = 20,
     OnSlay = 21,
@@ -22,5 +23,6 @@ public enum ReactionConditionType
     OnAllyDeath = 33,
     OnAfflicted = 34,
     OnArchetypePlayed = 35,
+    OnCardPlayed = 36,
     OnDeath = 99,
 }

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-public class DrawSelectedCard : Effect
+public class ChooseAndDrawSelectedCard : Effect
 {
     private readonly CardLocation _location;
 
-    public DrawSelectedCard(string location)
+    public ChooseAndDrawSelectedCard(string location)
     {
         _location = string.IsNullOrWhiteSpace(location) ? CardLocation.Nowhere : (CardLocation) int.Parse(location);
     }

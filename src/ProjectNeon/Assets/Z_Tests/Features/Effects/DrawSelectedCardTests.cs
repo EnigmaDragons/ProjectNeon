@@ -26,7 +26,7 @@ public class DrawSelectedCardTests
     {
         AllEffects.Apply(new EffectData
         {
-            EffectType = EffectType.DrawSelectedCard,
+            EffectType = EffectType.ChooseAndDrawCard,
             EffectScope = new StringReference(((int)CardLocation.Deck).ToString())
         }, _context);
         
@@ -45,7 +45,7 @@ public class DrawSelectedCardTests
     {
         AllEffects.Apply(new EffectData
         {
-            EffectType = EffectType.DrawSelectedCard,
+            EffectType = EffectType.ChooseAndDrawCard,
             EffectScope = new StringReference(((int)CardLocation.Discard).ToString())
         }, _context);
         
@@ -64,7 +64,7 @@ public class DrawSelectedCardTests
     {
         AllEffects.Apply(new EffectData
         {
-            EffectType = EffectType.DrawSelectedCard,
+            EffectType = EffectType.ChooseAndDrawCard,
             EffectScope = new StringReference("6")
         }, _context);
         

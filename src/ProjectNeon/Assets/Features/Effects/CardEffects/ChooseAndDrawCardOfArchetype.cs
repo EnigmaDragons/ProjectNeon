@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class DrawCardOfArchetype : Effect
+public class ChooseAndDrawCardOfArchetype : Effect
 {
     private readonly string archetype;
 
-    public DrawCardOfArchetype(string archetype)
+    public ChooseAndDrawCardOfArchetype(string archetype)
     {
         this.archetype = archetype;
     }

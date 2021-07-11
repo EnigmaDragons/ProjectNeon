@@ -14,7 +14,7 @@ public static class Formula
     
     public static float Evaluate(FormulaContext ctx, string expression)
     {
-        var newExp = expression;
+        var newExp = string.IsNullOrWhiteSpace(expression) ? "0" : expression;
         newExp = ReplaceTags(newExp, ctx);
         newExp = ReplaceShorthandStatNames(newExp);
         newExp = ReplaceResources(newExp, ctx);

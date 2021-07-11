@@ -13,6 +13,6 @@ public class CorpShopBrandingPresenter : CorpUiBase
         logo.sprite = c.Logo;
         gradient.Vertex1 = c.Color1;
         gradient.Vertex2 = c.Color2;
-        corpShopNameLabel.text = c.GearShopName;
+        corpShopNameLabel.text = c.GearShopData.ShopName;
     }
 }
