@@ -23,8 +23,9 @@ public class MapSpawner3 : OnMessage<NodeFinished>
     [SerializeField] private MapNodeGameObject3 bossNode;
     [SerializeField] private MapNodeGameObject3 clinicNode;
     
-    // Gear Shops Nodes
+    // Corp Nodes
     [SerializeField] private CorpTypedNode[] corpGearNodes;
+    [SerializeField] private CorpTypedNode[] corpClinicNodes;
 
     private MapNodeGameObject3[] _activeNodes;
     private MapGenerationRule3[] _rules;
@@ -120,19 +121,24 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         else if (type == MapNodeType.Boss)
             nodePrefab = bossNode;
         else if (type == MapNodeType.Clinic)
-            nodePrefab = clinicNode;
+            nodePrefab = GetCorpClinicShop(corpName);
         return nodePrefab;
     }
 
     private MapNodeGameObject3 GetCorpGearShop(string corpName)
+        => GetCorpNode(corpName, gearShopNode, corpGearNodes);
+
+    private MapNodeGameObject3 GetCorpClinicShop(string corpName)
+        => GetCorpNode(corpName, clinicNode, corpClinicNodes);
+
+    private MapNodeGameObject3 GetCorpNode(string corpName, MapNodeGameObject3 defaultNode, CorpTypedNode[] corpNodes)
     {
-        var nodePrefab = gearShopNode;
-        var matchingCorpGearNodes = !string.IsNullOrWhiteSpace(corpName)
-            ? corpGearNodes.Where(x => x.Corp.Name.Equals(corpName)).ToArray()
+        var matchingCorpNodes = !string.IsNullOrWhiteSpace(corpName)
+            ? corpNodes.Where(x => x.Corp.Name.Equals(corpName)).ToArray()
             : Array.Empty<CorpTypedNode>();
-        if (matchingCorpGearNodes.Length > 0)
-            nodePrefab = matchingCorpGearNodes[0].Object;
-        return nodePrefab;
+        if (matchingCorpNodes.Length > 0)
+            defaultNode = matchingCorpNodes[0].Object;
+        return defaultNode;
     }
 
     private void SpawnToken(GameObject map)
