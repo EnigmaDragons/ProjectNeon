@@ -47,12 +47,12 @@ public sealed class GeneratedBattleStageSegment : IStageSegment
 
 public sealed class GeneratedEquipmentShopSegment : IStageSegment
 {
-    private readonly string _corp;
+    private readonly string _corpName;
 
-    public string Name => $"{_corp} Equipment Shop";
-    public void Start() => Message.Publish(new ToggleEquipmentShop { Corp = _corp });
+    public string Name => $"{_corpName} Equipment Shop";
+    public void Start() => Message.Publish(new ToggleEquipmentShop { CorpName = _corpName });
     public Maybe<string> Detail => Maybe<string>.Missing();
     public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
 
-    public GeneratedEquipmentShopSegment(string corp) => _corp = corp;
+    public GeneratedEquipmentShopSegment(string corpName) => _corpName = corpName;
 }

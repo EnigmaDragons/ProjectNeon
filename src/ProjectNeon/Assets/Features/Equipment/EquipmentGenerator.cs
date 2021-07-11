@@ -40,13 +40,13 @@ public class EquipmentGenerator
         StatType.Leadership
     };
 
-    private readonly Dictionary<StatType, string> CorpStats = new Dictionary<StatType, string>();
+    private readonly Dictionary<StatType, string> _corpStats = new Dictionary<StatType, string>();
 
     public EquipmentGenerator(AllCorps corps)
     {
         foreach (var corp in corps.Corps)
             foreach (var stat in corp.GeneratedEquipmentPrimaryStatPreference)
-                CorpStats[stat] = corp.Name;
+                _corpStats[stat] = corp.Name;
     }
 
     public Equipment GenerateRandomCommon()
@@ -135,7 +135,7 @@ public class EquipmentGenerator
             Description = description,
             Modifiers = modifiers.ToArray(),
             Slot = slot,
-            Corp = CorpStats[primarySelectedStat]
+            Corp = _corpStats[primarySelectedStat]
         };
     }
 

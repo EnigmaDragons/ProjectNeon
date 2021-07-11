@@ -1,4 +1,4 @@
 public class ToggleEquipmentShop
 {
-    public string Corp { get; set; }
+    public string CorpName { get; set; }
 }

@@ -8,6 +8,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     [SerializeField] private GameObject equipmentParent;
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private ShopState shop;
+    [SerializeField] private AllCorps allCorps;
     [SerializeField] private StringVariable retailerCorp;
 
     private ShopSelection _selection;
@@ -33,11 +34,18 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     public void GetMoreInventory()
     {
         Clear();
+        var isPolyCorp = shop.Corp.Name == retailerCorp.Value;
+        var priceFactor = isPolyCorp
+            ? 1f
+            : AffinityPricingAdjustment.PriceFactor(party.GetCorpAffinity(allCorps.GetMap()), shop.Corp.Name);
+        DevLog.Info($"{shop.Corp.Name} - Price Factor {priceFactor}");
+        
         _selection = new ShopSelectionPicker(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party)
-            .GenerateEquipmentSelection(equipment, _numEquips, shop.Corp == retailerCorp.Value ? "" : shop.Corp);
+            .GenerateEquipmentSelection(equipment, _numEquips, isPolyCorp ? "" : shop.Corp.Name);
+        
         _selection.Equipment.ForEach(c => 
             Instantiate(equipmentPurchasePrototype, equipmentParent.transform)
-                .Initialized(c));
+                .Initialized(c, priceFactor));
     }
 }
 
