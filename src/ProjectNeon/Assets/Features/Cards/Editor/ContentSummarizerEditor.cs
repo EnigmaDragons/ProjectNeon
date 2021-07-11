@@ -153,6 +153,28 @@ public sealed class ContentSummarizerEditor : EditorWindow
                 .Show();
             GUIUtility.ExitGUI();
         }
+        DrawUILine();
+        
+        if (GUILayout.Button("Augments By Corp"))
+        {
+            var result = GetAllInstances<StaticEquipment>()
+                .Where(x => x.Slot == EquipmentSlot.Augmentation)
+                .GroupBy(x => x.Corp)
+                .ToDictionary(
+                    x => x.Key, // By Corp 
+                    x => x.GroupBy(g => g.Rarity).OrderBy(r => r.Key) // By Rarity
+                        .ToDictionary(
+                            r => r.Key, 
+                            r => r.Count()))
+                .OrderByDescending(x => x.Value.Sum(v => v.Value))
+                .Select(x => $"{x.Key} - Total {x.Value.Sum(v => v.Value)} - {string.Join(", " , x.Value.Select(v => $"{v.Key}: {v.Value}"))}")
+                .ToArray();
+
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Augments By Corp", "", result)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
     }
 
     private string ArchCardsExpectedStr(string arch) => ArchCardsExpected(arch).ToString();
