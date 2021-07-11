@@ -4,6 +4,8 @@ using UnityEngine;
 public class MemberSimplifiedVisualStatPanel : MemberUiBase
 {
     [SerializeField] private UIHPBarController hpBar;
+    [SerializeField] private GameObject cardPlaysItem;
+    [SerializeField] private TextMeshProUGUI cardPlaysLabel;
     [SerializeField] private GameObject atkItem;
     [SerializeField] private TextMeshProUGUI atkLabel;
     [SerializeField] private GameObject magicItem;
@@ -21,6 +23,7 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
     public override void Init(Member m)
     {
         hpBar.Init(m);
+        Set(cardPlaysItem, cardPlaysLabel, m.ExtraCardPlays());
         Set(atkItem, atkLabel, m.Attack());
         Set(magicItem, magicLabel, m.Magic());
         armorLabel.text = m.Armor().ToString();

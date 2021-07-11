@@ -6,6 +6,8 @@ public class SimpleCardsView : MonoBehaviour
 {
     [SerializeField] private CardPresenter[] cardPresenters;
 
+    public int MaxCardsDisplayed => cardPresenters.Length;
+    
     public void Show(IEnumerable<Card> cards)
     {
         cardPresenters.ForEach(c => c.gameObject.SetActive(false));

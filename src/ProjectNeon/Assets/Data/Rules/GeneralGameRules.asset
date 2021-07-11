@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GeneralGameRules
   m_EditorClassIdentifier: 
   items:
-  - Key:
+  - title: Hero Level
+    Key:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: bec0857a6a4f8d649ba1c5ef0b9782f9, type: 2}
@@ -22,3 +23,13 @@ MonoBehaviour:
 
       Represents your hero''s current power. Collect
       experience points (XP) to increase your level and become more powerful.'
+  - title: Resource Gain Per Turn
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: bf47bf21f36820143a1b0ef36e671bd3, type: 2}
+    Value: '<b>Resource Gain</b>
+
+
+      Gain this many resources at the end of every
+      turn.'
