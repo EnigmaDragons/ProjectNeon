@@ -4,11 +4,26 @@ using UnityEngine;
 public class CorpGearShopSpeechBubble : CorpAffinityUiBase
 {
     [SerializeField] private GameObject parent;
+    [SerializeField] private DefaultCorpAffinityLines defaultLines;
     [SerializeField] private TextMeshProUGUI speechLabel;
-    [SerializeField] private ShopState shopState;
     
     public override void Init(Corp corp, PartyCorpAffinity affinity)
     {
         parent.SetActive(false);
+        var corpLine = corp.GearShopData.AffinityLines.RandomLine(affinity[corp]);
+        if (corpLine.IsPresent)
+        {
+            parent.SetActive(true);
+            speechLabel.text = corpLine.Value;
+        }
+        else
+        {
+            var defaultLine = defaultLines.Lines.RandomLine(affinity[corp]);
+            if (defaultLine.IsPresent)
+            {
+                parent.SetActive(true);
+                speechLabel.text = defaultLine.Value;
+            }
+        }
     }
 }
