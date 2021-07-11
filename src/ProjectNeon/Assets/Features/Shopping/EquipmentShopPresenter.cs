@@ -10,6 +10,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     [SerializeField] private ShopState shop;
     [SerializeField] private AllCorps allCorps;
     [SerializeField] private CorpUiBase[] corpBranding;
+    [SerializeField] private CorpGearShopSpeechBubble speechBubble;
 
     private ShopSelection _selection;
     private int _numEquips;
@@ -33,13 +34,17 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
 
     public void GetMoreInventory()
     {
-        corpBranding.ForEach(c => c.Init(shop.Corp));
         Clear();
+        
+        var corpAffinity = party.GetCorpAffinity(allCorps.GetMap());
+        corpBranding.ForEach(c => c.Init(shop.Corp));
+        if (speechBubble != null)
+            speechBubble.Init(corpAffinity);
+            
         var isPolyCorp = shop.Corp == allCorps.PolyCorp;
         var priceFactor = isPolyCorp
             ? 1f
-            : AffinityPricingAdjustment.PriceFactor(party.GetCorpAffinity(allCorps.GetMap()), shop.Corp.Name);
-        DevLog.Info($"{shop.Corp.Name} - Price Factor {priceFactor}");
+            : AffinityPricingAdjustment.PriceFactor(corpAffinity, shop.Corp.Name);
         
         _selection = new ShopSelectionPicker(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party)
             .GenerateEquipmentSelection(equipment, _numEquips, isPolyCorp ? "" : shop.Corp.Name);
