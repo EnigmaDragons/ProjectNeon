@@ -10,7 +10,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     [SerializeField] private ShopState shop;
     [SerializeField] private AllCorps allCorps;
     [SerializeField] private CorpUiBase[] corpBranding;
-    [SerializeField] private CorpGearShopSpeechBubble speechBubble;
+    [SerializeField] private CorpAffinityUiBase[] affinityUi;
 
     private ShopSelection _selection;
     private int _numEquips;
@@ -38,8 +38,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
         
         var corpAffinity = party.GetCorpAffinity(allCorps.GetMap());
         corpBranding.ForEach(c => c.Init(shop.Corp));
-        if (speechBubble != null)
-            speechBubble.Init(corpAffinity);
+        affinityUi.ForEach(a => a.Init(shop.Corp, corpAffinity));
             
         var isPolyCorp = shop.Corp == allCorps.PolyCorp;
         var priceFactor = isPolyCorp

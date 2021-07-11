@@ -1,13 +1,13 @@
 using TMPro;
 using UnityEngine;
 
-public class CorpGearShopSpeechBubble : MonoBehaviour
+public class CorpGearShopSpeechBubble : CorpAffinityUiBase
 {
     [SerializeField] private GameObject parent;
     [SerializeField] private TextMeshProUGUI speechLabel;
     [SerializeField] private ShopState shopState;
     
-    public void Init(PartyCorpAffinity affinity)
+    public override void Init(Corp corp, PartyCorpAffinity affinity)
     {
         parent.SetActive(false);
     }
