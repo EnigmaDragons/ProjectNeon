@@ -14,6 +14,8 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private CardRarityPresenter rarity;
     [SerializeField] private Image slotIcon;
     [SerializeField] private EquipmentSlotIcons slotIcons;
+    [SerializeField] private CorpUiBase corpBranding;
+    [SerializeField] private AllCorps allCorps;
 
     private Action _onClick = () => { };
 
@@ -31,6 +33,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
         descriptionLabel.text = e.Description;
         rarity.Set(e.Rarity);
         slotIcon.sprite = slotIcons.All[e.Slot];
+        corpBranding.Init(allCorps.GetCorpByNameOrNone(e.Corp));
         gameObject.SetActive(true);
         return this;
     }

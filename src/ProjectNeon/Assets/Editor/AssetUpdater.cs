@@ -23,6 +23,7 @@ public class AssetUpdater
         UpdateAllMaps();
         UpdateEnemyIDs();
         UpdateAllEnemies();
+        UpdateAllCorps();
         Log.Info("Asset Updates Complete");
     }
 
@@ -145,6 +146,21 @@ public class AssetUpdater
             if (x.Cards.Length != cards.Length || cards.Any(card => !x.Cards.Contains(card)))
             {
                 x.Cards = cards;
+                EditorUtility.SetDirty(x);   
+            }
+        });
+    }
+
+    [MenuItem("Neon/Update/UpdateAllCorps")]
+    private static void UpdateAllCorps()
+    {
+        var corps = ScriptableExtensions.GetAllInstances<StaticCorp>();
+        var allCorps = ScriptableExtensions.GetAllInstances<AllCorps>();
+        allCorps.ForEach(x =>
+        {
+            if (x.Corps == null || x.Corps.Length != corps.Length || corps.Any(card => !x.Corps.Contains(card)))
+            {
+                x.Corps = corps;
                 EditorUtility.SetDirty(x);   
             }
         });
