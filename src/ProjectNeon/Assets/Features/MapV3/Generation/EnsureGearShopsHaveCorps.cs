@@ -3,9 +3,9 @@ using System.Linq;
 
 public class EnsureGearShopsHaveCorps : MapGenerationRule3
 {
-    private readonly string[] _gearCorps;
+    private readonly Corp[] _gearCorps;
 
-    public EnsureGearShopsHaveCorps(string[] gearCorps) => _gearCorps = gearCorps;
+    public EnsureGearShopsHaveCorps(Corp[] gearCorps) => _gearCorps = gearCorps;
     
     public List<MapNode3> FilterNodeTypes(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
     {
@@ -21,7 +21,7 @@ public class EnsureGearShopsHaveCorps : MapGenerationRule3
         {
             if (node.Type == MapNodeType.GearShop)
             {
-                node.Corp = corps[i];
+                node.Corp = corps[i].Name;
                 i++;
             }
         }

@@ -16,8 +16,6 @@ public class NodeTypeOdds2 : ScriptableObject
     [SerializeField] private float[] gearShop3Chances;
     [SerializeField] private float[] storyEventChances;
     [SerializeField] private float[] clinicChances;
-    [SerializeField] private StringVariable retailerCorp;
-    [SerializeField] private StringVariable[] gearCorps;
 
     public bool IsThereTravelEvent(CurrentGameMap3 map)
     {
@@ -44,7 +42,4 @@ public class NodeTypeOdds2 : ScriptableObject
             new AdditionalNodeChoice(MapNodeType.GearShop, gearShop3Chances, 2),
             new PercentChanceBasedOnHowLongItsBeenSinceLastTimeYouHaveDoneIt(MapNodeType.Clinic, clinicChances),
         };
-
-    public string RetailerCorp => retailerCorp.Value;
-    public string[] GearCorps => gearCorps.Select(x => x.Value).ToArray();
 }
