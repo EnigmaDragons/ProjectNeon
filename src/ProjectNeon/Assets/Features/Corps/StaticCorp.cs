@@ -18,5 +18,5 @@ public class StaticCorp : ScriptableObject, Corp
     public Color Color1 => color;
     public Color Color2 => color2;
     public string[] RivalCorpNames => rivalCorps.Select(r => r.Name).ToArray();
-    public StatType[] GeneratedEquipmentPrimaryStatPreference => generatedEquipmentPrimaryStatPreference;
+    public StatType[] GeneratedEquipmentPrimaryStatPreference => generatedEquipmentPrimaryStatPreference ?? new StatType[0];
 }

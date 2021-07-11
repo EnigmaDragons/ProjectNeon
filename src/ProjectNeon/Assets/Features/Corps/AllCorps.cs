@@ -8,9 +8,13 @@ public class AllCorps : ScriptableObject
     private Dictionary<string, Corp> _map;
     [SerializeField] private StaticCorp none;
     [UnityEngine.UI.Extensions.ReadOnly] public StaticCorp[] Corps; //Unity Collection Readonly
-
+    [SerializeField] private StaticCorp polyCorp;
+    [SerializeField] private StaticCorp[] gearSellingCorps;
+    
     public Dictionary<string, Corp> GetMap() => _map ??= Corps.ToDictionary(x => x.Name, x => (Corp)x);
     public Maybe<Corp> GetCorpByName(string corpName) => string.IsNullOrWhiteSpace(corpName) ? none : GetMap().ValueOrMaybe(corpName);
     public Corp GetCorpByNameOrNone(string corpName) => GetCorpByName(corpName).OrDefault(none);
     public Corp[] GetCorps() => _map.Values.ToArray();
+    public Corp PolyCorp => polyCorp;
+    public Corp[] GearSellingCorps => gearSellingCorps;
 }

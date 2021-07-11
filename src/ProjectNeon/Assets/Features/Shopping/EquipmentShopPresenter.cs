@@ -9,7 +9,6 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private ShopState shop;
     [SerializeField] private AllCorps allCorps;
-    [SerializeField] private StringVariable retailerCorp;
 
     private ShopSelection _selection;
     private int _numEquips;
@@ -34,7 +33,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     public void GetMoreInventory()
     {
         Clear();
-        var isPolyCorp = shop.Corp.Name == retailerCorp.Value;
+        var isPolyCorp = shop.Corp == allCorps.PolyCorp;
         var priceFactor = isPolyCorp
             ? 1f
             : AffinityPricingAdjustment.PriceFactor(party.GetCorpAffinity(allCorps.GetMap()), shop.Corp.Name);

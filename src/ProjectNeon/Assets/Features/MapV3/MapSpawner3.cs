@@ -12,6 +12,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
     [SerializeField] private PartyAdventureState partyState;
     [SerializeField] private StageSegment storyEventSegment;
     [SerializeField] private AllEnemies allEnemies;
+    [SerializeField] private AllCorps allCorps;
     
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
@@ -40,7 +41,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
             new NoShopsIfYouAreLowOnMoney(),
             new EnsureAtLeastTwoChoices(),
             new OnlyBossOnFinalNode(),
-            new EnsureGearShopsHaveCorps(progress.CurrentChapter.NodeTypeOdds2.GearCorps)
+            new EnsureGearShopsHaveCorps(allCorps.GearSellingCorps)
         }).ToArray();
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();
