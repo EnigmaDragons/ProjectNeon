@@ -44,7 +44,7 @@ public class EquipmentGenerator
 
     public EquipmentGenerator(AllCorps corps)
     {
-        foreach (var corp in corps.Corps)
+        foreach (var corp in corps.GetCorps())
             foreach (var stat in corp.GeneratedEquipmentPrimaryStatPreference)
                 CorpStats[stat] = corp.Name;
     }

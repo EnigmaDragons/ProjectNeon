@@ -56,3 +56,15 @@ public sealed class GeneratedEquipmentShopSegment : IStageSegment
 
     public GeneratedEquipmentShopSegment(string corp) => _corp = corp;
 }
+
+public sealed class GeneratedClinicSegment : IStageSegment
+{
+    private readonly string _corp;
+
+    public string Name => $"{_corp} Clinic";
+    public void Start() => Message.Publish(new ToggleClinic { CorpName = _corp });
+    public Maybe<string> Detail => Maybe<string>.Missing();
+    public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
+
+    public GeneratedClinicSegment(string corp) => _corp = corp;
+}

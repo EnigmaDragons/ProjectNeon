@@ -4,6 +4,12 @@ using UnityEngine;
 public class ClinicUIController : OnMessage<ToggleClinic>
 {
     [SerializeField] private GameObject clinicUi;
-    
-    protected override void Execute(ToggleClinic msg) => clinicUi.SetActive(!clinicUi.activeSelf);
+    [SerializeField] private ClinicState clinic;
+    [SerializeField] private AllCorps corps;
+
+    protected override void Execute(ToggleClinic msg)
+    {
+        clinic.Corp = corps.GetCorpByNameOrNone(msg.CorpName);
+        clinicUi.SetActive(!clinicUi.activeSelf);
+    } 
 }

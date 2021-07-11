@@ -41,7 +41,8 @@ public class MapSpawner3 : OnMessage<NodeFinished>
             new NoShopsIfYouAreLowOnMoney(),
             new EnsureAtLeastTwoChoices(),
             new OnlyBossOnFinalNode(),
-            new EnsureGearShopsHaveCorps(allCorps.GearSellingCorps)
+            new EnsureNodeTypeHasCorp(MapNodeType.GearShop, allCorps.GearSellingCorps),
+            new EnsureNodeTypeHasCorp(MapNodeType.Clinic, allCorps.ClinicCorps),
         }).ToArray();
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();

@@ -92,7 +92,12 @@ public class ShopSelectionPicker
                 .ToArray()
                 .Shuffled();
         }
-
+        if (selectedEquipment.Length < numEquips)
+            Log.Error($"{corp} doesn't have enough augments");
+        while (selectedEquipment.Length < numEquips)
+        {
+            selectedEquipment = selectedEquipment.Concat(PickEquipments(equipment, 1, corp, Rarity.Common)).ToArray();
+        }
         return new ShopSelection(selectedEquipment.ToList(), new List<CardTypeData>());
     }
 
