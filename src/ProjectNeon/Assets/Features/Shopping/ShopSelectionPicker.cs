@@ -33,7 +33,7 @@ public class ShopSelectionPicker
     public Equipment[] PickEquipments(EquipmentPool equipmentPool, int numEquipment, string corpName,
         params Rarity[] rarities)
     {
-        rarities = rarities.None() ? new[] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic} : rarities;
+        rarities = rarities.None() ? new[] { Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic } : rarities;
         var randomRarities = rarities.Random(factors, numEquipment).ToArray();
         var randomSlots = equipmentPool.Random(numEquipment).ToArray();
         var groups = new Dictionary<Rarity, Dictionary<EquipmentSlot, int>>();

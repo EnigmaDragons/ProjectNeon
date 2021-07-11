@@ -9,6 +9,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private ShopState shop;
     [SerializeField] private AllCorps allCorps;
+    [SerializeField] private CorpUiBase[] corpBranding;
 
     private ShopSelection _selection;
     private int _numEquips;
@@ -32,6 +33,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
 
     public void GetMoreInventory()
     {
+        corpBranding.ForEach(c => c.Init(shop.Corp));
         Clear();
         var isPolyCorp = shop.Corp == allCorps.PolyCorp;
         var priceFactor = isPolyCorp
