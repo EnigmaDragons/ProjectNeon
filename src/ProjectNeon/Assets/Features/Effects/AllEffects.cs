@@ -68,8 +68,12 @@ public static class AllEffects
             }, e.DurationFormula)},
         { EffectType.DrawCards, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(
             BattleLoggedItem(v => $"Drew {v} cards", Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt())), e.DurationFormula)},
-        { EffectType.DrawCardOfOwner, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(
-            BattleLoggedItem(v => $"Drew {v} cards for {ctx.Source.Name}", Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt()), card => card.Owner.Id == ctx.Source.Id), e.DurationFormula)},
+        { EffectType.DrawCardsOfOwner, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(
+            BattleLoggedItem(v => $"Drew {v} cards for {ctx.Source.Name}", Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt()), 
+                card => card.Owner.Id == ctx.Source.Id), e.DurationFormula)},
+        { EffectType.DrawCardsOfArchetype, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(BattleLoggedItem(v => $"Drew {v} {e.EffectScope} cards", 
+                Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt()), 
+                    card => card.Archetypes.Contains(e.EffectScope.Value)), e.DurationFormula)},
         { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope, cards => cards) },
         { EffectType.LeaveBattle, e => new SimpleEffect(m => Message.Publish(new DespawnEnemy(m))) },
         { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))},
@@ -83,14 +87,20 @@ public static class AllEffects
         { EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, e => new AdjustAllCardsCostUntilPlayed(e.BaseAmount) },
         { EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, e => new AdjustPrimaryStatForEveryCardCycledAndInHand(e) },
         { EffectType.FillHandWithOwnersCards, e => new FillHandWithOwnersCards() },
-        { EffectType.DrawSelectedCard, e => new DrawSelectedCard(e.EffectScope) },
+        { EffectType.ChooseAndDrawCard, e => new ChooseAndDrawSelectedCard(e.EffectScope) },
         { EffectType.ChooseCardToCreate, e => new ChooseCardToCreate(e.EffectScope, e.Formula) },
-        { EffectType.DrawCardOfArchetype, e => new DrawCardOfArchetype(e.EffectScope) },
+        { EffectType.ChooseAndDrawCardOfArchetype, e => new ChooseAndDrawCardOfArchetype(e.EffectScope) },
         { EffectType.ChooseBuyoutCardsOrDefault, e => new ChooseBuyoutCardOrDefaultToCreate(e.EffectScope) },
         { EffectType.BuyoutEnemyById, e => new BuyoutEnemyById(e.EffectScope) },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
+
+    private static int Logged(int value)
+    {
+        Log.Info(value.ToString());
+        return value;
+    }
 
     private static T BattleLoggedItem<T>(Func<T, string> createMessage, T value)
     {

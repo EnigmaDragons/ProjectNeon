@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
+  m_Name: FireChannelingImplant
+  m_EditorClassIdentifier: 
+  id: 50
+  displayName: Fire Channelling Implant
+  description: 'Start of Turn: Draw a fire card if you have none in hand'
+  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
+  archetypes:
+  - {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
+  rarity: 2
+  slot: 2
+  priceFactor: 1
+  modifiers: []
+  resourceModifiers: []
+  turnStartEffects:
+  - EffectType: 89
+    Conditions:
+    - {fileID: 11400000, guid: 4b806565a3aa0e743aeb6efacad1d4c5, type: 2}
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    DurationFormula: 
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
+    StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 1
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  turnEndEffects: []
+  battleStartEffects: []
+  isWIP: 0

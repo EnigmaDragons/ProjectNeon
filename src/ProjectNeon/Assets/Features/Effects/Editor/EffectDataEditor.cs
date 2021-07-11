@@ -8,7 +8,7 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(EffectData))]
 public class EffectDataEditor : PropertyDrawer
 {
-    private List<string> _globalProperties = new List<string> { "Conditions", "TurnDelay", "TargetsSource" };
+    private List<string> _globalProperties = new List<string> { "Conditions", "TurnDelay", "TargetsSource", "ReTargetScope" };
     
     private DictionaryWithDefault<EffectType, string[]> _relevantProperties = 
         new DictionaryWithDefault<EffectType, string[]>(new string[] { "BaseAmount", "FloatAmount", "DurationFormula", "HitsRandomTargetMember" })
@@ -51,15 +51,16 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustCardTagPrevention, new []{ "BaseAmount", "EffectScope" }},
         {EffectType.Reload, new string[0]},
         {EffectType.DamageOverTimeFormula, new [] { "Formula", "InterpolatePartialFormula", "DurationFormula" }},
-        {EffectType.ResolveInnerEffect, new [] { "ReTargetScope", "ReferencedSequence" }},
+        {EffectType.ResolveInnerEffect, new [] { "ReferencedSequence" }},
         {EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, new [] { "BaseAmount" }},
         {EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, new [] { "FloatAmount", "DurationFormula" }},
         {EffectType.FillHandWithOwnersCards, new string[0]},
-        {EffectType.DrawSelectedCard, new [] { "EffectScope" }},
+        {EffectType.ChooseAndDrawCard, new [] { "EffectScope" }},
         {EffectType.ChooseCardToCreate, new [] { "EffectScope", "Formula", "InterpolatePartialFormula" }},
-        {EffectType.DrawCardOfArchetype, new [] { "EffectScope" }},
+        {EffectType.ChooseAndDrawCardOfArchetype, new [] { "EffectScope" }},
         {EffectType.ChooseBuyoutCardsOrDefault, new [] { "EffectScope" }},
-        {EffectType.DrawCardOfOwner, new [] { "Formula", "InterpolatePartialFormula" } },
+        {EffectType.DrawCardsOfOwner, new [] { "Formula", "InterpolatePartialFormula" } },
+        {EffectType.DrawCardsOfArchetype, new [] { "Formula", "EffectScope" } },
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

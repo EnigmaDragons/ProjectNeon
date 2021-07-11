@@ -181,7 +181,7 @@ public static class InterpolatedCardDescriptions
                        + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
         if (data.EffectType == EffectType.GainCredits)
             coreDesc = $"gives {Bold($"{data.BaseAmount} Creds")}";
-        if (data.EffectType == EffectType.DrawCardOfArchetype)
+        if (data.EffectType == EffectType.ChooseAndDrawCardOfArchetype)
             coreDesc = $"choose and draw {AOrAn(data.EffectScope)} {Bold(data.EffectScope.ToString().WithSpaceBetweenWords())} card";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
