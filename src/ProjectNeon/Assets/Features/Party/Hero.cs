@@ -49,6 +49,14 @@ public class Hero
         .Times(Equipment.All.Select(e => e.MultiplierStats()))
         .Times(health.MultiplicativeStats);
 
+    public IStats PermanentStats => Character.Stats
+        .Plus(_statAdditions)
+        .Plus(new StatAddends().With(Equipment.Permanents.SelectMany(e => e.ResourceModifiers).ToArray()))
+        .Plus(Equipment.Permanents.Select(e => e.AdditiveStats()))
+        .Times(Equipment.Permanents.Select(e => e.MultiplierStats()));
+
+    public IStats LevelUpsAndImplants => _statAdditions;
+
     public void HealToFull() => UpdateState(() => health.HealToFull());
     public void SetHp(int hp) => UpdateState(() => health.SetHp(hp));
     public void AdjustHp(int amount) => UpdateState(() => health.AdjustHp(amount));

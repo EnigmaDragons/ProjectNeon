@@ -24,6 +24,7 @@ public class HeroEquipment
     public Maybe<Equipment> Weapon => new Maybe<Equipment>(_weapon);
     public Maybe<Equipment> Armor => new Maybe<Equipment>(_armor);
     public Equipment[] Augments => _augments.Where(a => a?.Archetypes != null).ToArray();
+    public Equipment[] Permanents => _permanents.ToArray();
     public int OpenSlots => (Weapon.IsMissing ? 1 : 0) + (Armor.IsMissing ? 1 : 0) + _augments.Count(a => a != null); 
     
     public Equipment[] All => new []{ _weapon, _armor }

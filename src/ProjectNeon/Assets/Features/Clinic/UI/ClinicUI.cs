@@ -1,18 +1,34 @@
 using TMPro;
 using UnityEngine;
 
-public class ClinicUI : MonoBehaviour
+public class ClinicUI : OnMessage<UpdateClinic>
 {
     [SerializeField] private GameObject patientParent;
     [SerializeField] private ClinicPatientUI patientPrototype;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private ClinicState clinic;
-    [SerializeField] private CorpClinicCostCalculators clinics;
+    [SerializeField] private CorpClinicProvider clinics;
+    [SerializeField] private TextMeshProUGUI serviceTitle;
+    [SerializeField] private GameObject servicesParent;
+    [SerializeField] private ClinicServiceButton serviceButtonPrototype;
 
-    private void OnDisable() => Message.Publish(new AutoSaveRequested());
-    private void OnEnable()
+    private ClinicServiceProvider _serviceProvider;
+    
+    protected override void Execute(UpdateClinic msg) => UpdateServices();
+    protected override void AfterDisable() => Message.Publish(new AutoSaveRequested());
+    protected override void AfterEnable()
     {
         patientParent.DestroyAllChildren();
-        party.Heroes.ForEach(h => Instantiate(patientPrototype, patientParent.transform).Initialized(h, clinics.Get(clinic.Corp)));
+        var costCalculator = clinics.GetCostCalculator(clinic.Corp);
+        party.Heroes.ForEach(h => Instantiate(patientPrototype, patientParent.transform).Initialized(h, costCalculator));
+        _serviceProvider = clinics.GetServices(clinic.Corp);
+        UpdateServices();
+    }
+
+    private void UpdateServices()
+    {
+        serviceTitle.text = _serviceProvider.GetTitle();
+        servicesParent.DestroyAllChildren();
+        _serviceProvider.GetOptions().ForEach(x => Instantiate(serviceButtonPrototype, servicesParent.transform).Init(x, party));
     }
 }
