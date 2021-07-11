@@ -43,6 +43,7 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
     };
     private readonly PartyAdventureState _party;
     private bool _hasProvidedService = false;
+    private ClinicServiceButtonData[] _generatedOptions;
 
     public ImplantClinicServiceProvider(PartyAdventureState party)
         => _party = party;
@@ -51,7 +52,10 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
 
     public ClinicServiceButtonData[] GetOptions()
     {
-        return _party.Heroes.Select(GetOption).ToArray();
+        if (_generatedOptions == null)
+            _generatedOptions = _party.Heroes.Select(GetOption).ToArray();
+        _generatedOptions.ForEach(x => x.Enabled = !_hasProvidedService);
+        return _generatedOptions;
     }
 
     private ClinicServiceButtonData GetOption(Hero hero)
@@ -70,16 +74,15 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
             $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}",
             $"Lose {lossAmount} {lossStat} to gain {gainAmount} {gainStat} on {hero.Name}",
             CalculateCost(hero, lossStat, lossAmount, gainStat, gainAmount),
-            () => AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount),
-            !_hasProvidedService);
+            () => AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount));
     }
 
     public int CalculateCost(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount) 
-        => 10 + CalculateLoseCost(hero, lossStat, lossAmount) + CalculateGainCost(hero, gainStat, gainAmount);
+        => 30 + CalculateLoseCost(hero, lossStat, lossAmount) + CalculateGainCost(hero, gainStat, gainAmount);
     private int CalculateLoseCost(Hero hero, StatType stat, int amount) 
-        => 10 - (int)Mathf.Clamp((hero.LevelUpsAndImplants[stat] / amount) * 3f, -10f, 10f);
+        => - (int)Mathf.Clamp((hero.LevelUpsAndImplants[stat] / amount) * 3f, -10f, 10f);
     private int CalculateGainCost(Hero hero, StatType stat, int amount) 
-        => 10 + (int)Mathf.Clamp((hero.LevelUpsAndImplants[stat] / amount) * 3f, -10f, 10f);
+        => (int)Mathf.Clamp((hero.LevelUpsAndImplants[stat] / amount) * 3f, -10f, 10f);
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)
     {

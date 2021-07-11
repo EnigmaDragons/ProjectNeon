@@ -12,14 +12,13 @@ public class ClinicServiceButtonData
     public string Description { get; }
     public int Cost { get; }
     public Action Action { get; }
-    public bool Enabled { get; }
+    public bool Enabled { get; set; }
 
-    public ClinicServiceButtonData(string name, string description, int cost, Action action, bool enabled)
+    public ClinicServiceButtonData(string name, string description, int cost, Action action)
     {
         Name = name;
         Description = description;
         Cost = cost;
         Action = action;
-        Enabled = enabled;
     }
 }
