@@ -3,6 +3,7 @@ using UnityEngine;
 public class InMemoryCorp : Corp
 {
     public string Name { get; set; } = "None";
+    public string GearShopName { get; set; } = "None"; 
     public Sprite Logo { get; }
     public Color Color1 { get; } = Color.white;
     public Color Color2 { get; } = Color.black;

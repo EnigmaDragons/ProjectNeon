@@ -22,6 +22,9 @@ public class MapSpawner3 : OnMessage<NodeFinished>
     [SerializeField] private MapNodeGameObject3 storyEventNode;
     [SerializeField] private MapNodeGameObject3 bossNode;
     [SerializeField] private MapNodeGameObject3 clinicNode;
+    
+    // Gear Shops Nodes
+    [SerializeField] private CorpTypedNode[] corpGearNodes;
 
     private MapNodeGameObject3[] _activeNodes;
     private MapGenerationRule3[] _rules;
@@ -85,7 +88,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         var ctx = new AdventureGenerationContext(progress, allEnemies);
         _activeNodes = gameMap.CurrentChoices.Select(x =>
         {
-            var obj = Instantiate(GetNodePrefab(x.Type), _map.transform);
+            var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), _map.transform);
             Action midPoint = x.HasEventEnroute ? () => storyEventSegment.Start() : (Action)(() => travelReactiveSystem.Continue());
             obj.Init(x, ctx, () =>
             {
@@ -101,7 +104,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         Message.Publish(new AutoSaveRequested());
     }
     
-    private MapNodeGameObject3 GetNodePrefab(MapNodeType type)
+    private MapNodeGameObject3 GetNodePrefab(MapNodeType type, string corpName)
     {
         MapNodeGameObject3 nodePrefab = null;
         if (type == MapNodeType.Combat)
@@ -111,7 +114,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         else if (type == MapNodeType.CardShop)
             nodePrefab = cardShopNode;
         else if (type == MapNodeType.GearShop)
-            nodePrefab = gearShopNode;
+            nodePrefab = GetCorpGearShop(corpName);
         else if (type == MapNodeType.StoryEvent)
             nodePrefab = storyEventNode;
         else if (type == MapNodeType.Boss)
@@ -120,7 +123,18 @@ public class MapSpawner3 : OnMessage<NodeFinished>
             nodePrefab = clinicNode;
         return nodePrefab;
     }
-    
+
+    private MapNodeGameObject3 GetCorpGearShop(string corpName)
+    {
+        var nodePrefab = gearShopNode;
+        var matchingCorpGearNodes = !string.IsNullOrWhiteSpace(corpName)
+            ? corpGearNodes.Where(x => x.Corp.Name.Equals(corpName)).ToArray()
+            : Array.Empty<CorpTypedNode>();
+        if (matchingCorpGearNodes.Length > 0)
+            nodePrefab = matchingCorpGearNodes[0].Object;
+        return nodePrefab;
+    }
+
     private void SpawnToken(GameObject map)
     {
         progress.InitIfNeeded();

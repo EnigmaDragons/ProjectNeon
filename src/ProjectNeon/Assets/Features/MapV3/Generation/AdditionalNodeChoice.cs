@@ -6,10 +6,13 @@ public class AdditionalNodeChoice : MapGenerationRule3
 {
     private readonly MapNodeType _mapNodeType;
     private readonly float[] _odds;
-    private int _requiredExistingNodes;
+    private readonly int _requiredExistingNodes;
 
     public AdditionalNodeChoice(MapNodeType mapNodeType, float[] odds, int requiredExistingNodes)
     {
+        if (odds.Length == 0)
+            throw new ArgumentException($"Node Odds for {mapNodeType} are missing. This is a development bug.");
+
         _mapNodeType = mapNodeType;
         _odds = odds;
         _requiredExistingNodes = requiredExistingNodes;

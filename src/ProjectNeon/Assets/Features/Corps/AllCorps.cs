@@ -13,7 +13,7 @@ public class AllCorps : ScriptableObject
     [SerializeField] private StaticCorp[] clinicCorps;
     
     public Dictionary<string, Corp> GetMap() => _map ??= Corps.ToDictionary(x => x.Name, x => (Corp)x);
-    public Maybe<Corp> GetCorpByName(string corpName) => GetMap().ValueOrMaybe(corpName);
+    public Maybe<Corp> GetCorpByName(string corpName) => string.IsNullOrWhiteSpace(corpName) ? none : GetMap().ValueOrMaybe(corpName);
     public Corp GetCorpByNameOrNone(string corpName) => GetCorpByName(corpName).OrDefault(none);
     public Corp[] GetCorps() => GetMap().Values.ToArray();
     public Corp PolyCorp => polyCorp;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class StaticCorp : ScriptableObject, Corp
 {
     [SerializeField] private StringVariable corpName;
+    [SerializeField] private string gearShopName;
     [SerializeField] private Sprite logo;
     [SerializeField] private Color color;
     [SerializeField] private Color color2;
@@ -18,5 +19,6 @@ public class StaticCorp : ScriptableObject, Corp
     public Color Color1 => color;
     public Color Color2 => color2;
     public string[] RivalCorpNames => rivalCorps.Select(r => r.Name).ToArray();
-    public StatType[] GeneratedEquipmentPrimaryStatPreference => generatedEquipmentPrimaryStatPreference;
+    public string GearShopName => gearShopName;
+    public StatType[] GeneratedEquipmentPrimaryStatPreference => generatedEquipmentPrimaryStatPreference ?? new StatType[0];
 }
