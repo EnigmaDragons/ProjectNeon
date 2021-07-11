@@ -7,6 +7,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     [SerializeField] private ShopEquipmentPurchaseSlot equipmentPurchasePrototype;
     [SerializeField] private GameObject equipmentParent;
     [SerializeField] private AdventureProgress2 adventure;
+    [SerializeField] private ShopState shop;
     [SerializeField] private StringVariable retailerCorp;
 
     private ShopSelection _selection;
@@ -33,7 +34,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
     {
         Clear();
         _selection = new ShopSelectionPicker(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party)
-            .GenerateEquipmentSelection(equipment, _numEquips, adventure.CorpShop == retailerCorp.Value ? "" : adventure.CorpShop);
+            .GenerateEquipmentSelection(equipment, _numEquips, shop.Corp == retailerCorp.Value ? "" : shop.Corp);
         _selection.Equipment.ForEach(c => 
             Instantiate(equipmentPurchasePrototype, equipmentParent.transform)
                 .Initialized(c));

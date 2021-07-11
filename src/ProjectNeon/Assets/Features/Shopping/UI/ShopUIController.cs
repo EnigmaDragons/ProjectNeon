@@ -4,12 +4,12 @@ public class ShopUIController : OnMessage<ToggleCardShop, ToggleEquipmentShop>
 {
     [SerializeField] private GameObject cardShop;
     [SerializeField] private GameObject equipShop;
-    [SerializeField] private AdventureProgress2 adventure;
+    [SerializeField] private ShopState shop;
 
     protected override void Execute(ToggleCardShop msg) => cardShop.SetActive(!cardShop.activeSelf);
     protected override void Execute(ToggleEquipmentShop msg)
     {
-        adventure.CorpShop = msg.Corp;
+        shop.Corp = msg.Corp;
         equipShop.SetActive(!equipShop.activeSelf);
     }
 }
