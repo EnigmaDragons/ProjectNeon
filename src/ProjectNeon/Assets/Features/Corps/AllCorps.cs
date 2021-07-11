@@ -12,4 +12,5 @@ public class AllCorps : ScriptableObject
     public Dictionary<string, Corp> GetMap() => _map ??= Corps.ToDictionary(x => x.Name, x => (Corp)x);
     public Maybe<Corp> GetCorpByName(string corpName) => GetMap().ValueOrMaybe(corpName);
     public Corp GetCorpByNameOrNone(string corpName) => GetCorpByName(corpName).OrDefault(none);
+    public Corp[] GetCorps() => _map.Values.ToArray();
 }

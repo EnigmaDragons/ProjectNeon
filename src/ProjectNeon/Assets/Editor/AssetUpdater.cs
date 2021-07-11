@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class AssetUpdater
@@ -112,6 +113,7 @@ public class AssetUpdater
     [MenuItem("Neon/Update/Update Equipment Pools")]
     private static void UpdateEquipmentPools()
     {
+        var corps = ScriptableExtensions.GetAllInstances<AllCorps>().First();
         var equipments = ScriptableExtensions.GetAllInstances<StaticEquipment>();
         var equipmentPools = ScriptableExtensions.GetAllInstances<EquipmentPool>();
         foreach (var pool in equipmentPools)
@@ -125,6 +127,11 @@ public class AssetUpdater
                 || validEquipments.Any(validEquipment => !pool.all.Contains(validEquipment)))
             {
                 pool.all = validEquipments;
+                EditorUtility.SetDirty(pool);
+            }
+            if (pool.corps == null)
+            {
+                pool.corps = corps;
                 EditorUtility.SetDirty(pool);
             }
         }

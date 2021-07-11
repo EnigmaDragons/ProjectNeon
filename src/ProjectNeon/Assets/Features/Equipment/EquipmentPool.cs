@@ -10,6 +10,7 @@ public class EquipmentPool : ScriptableObject
     public StringVariable[] archetypes;
     public Rarity[] includedRarities = new Rarity[] {Rarity.Starter, Rarity.Basic, Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic};
     [UnityEngine.UI.Extensions.ReadOnly] public List<StaticEquipment> all;
+    public AllCorps corps;
     [SerializeField] private EquipmentPool[] subPools = new EquipmentPool[0];
     [SerializeField] private int numRandomCommons = 32;
     [SerializeField] private int numRandomUncommons = 16;
@@ -19,8 +20,9 @@ public class EquipmentPool : ScriptableObject
     [SerializeField] private int armorOdds = 1;
     [SerializeField] private int augmentOdds = 3;
 
-    private readonly EquipmentGenerator _generator = new EquipmentGenerator();
-
+    private EquipmentGenerator _generator;
+    private EquipmentGenerator Generator => _generator ??= new EquipmentGenerator(corps);
+    
     private Dictionary<EquipmentSlot, int> Odds => new Dictionary<EquipmentSlot, int>
     {
         { EquipmentSlot.Weapon, weaponOdds },
@@ -30,10 +32,10 @@ public class EquipmentPool : ScriptableObject
 
     public IEnumerable<Equipment> All => all
         .Concat(subPools.SelectMany(s => s.All))
-        .Concat(Enumerable.Range(0, numRandomCommons).Select(_ => _generator.GenerateRandomCommon()))
-        .Concat(Enumerable.Range(0, numRandomUncommons).Select(_ => _generator.GenerateRandomUncommon()))
-        .Concat(Enumerable.Range(0, numRandomRares).Select(_ => _generator.GenerateRandomRare()))
-        .Concat(Enumerable.Range(0, numRandomEpics).Select(_ => _generator.GenerateRandomEpic()));
+        .Concat(Enumerable.Range(0, numRandomCommons).Select(_ => Generator.GenerateRandomCommon()))
+        .Concat(Enumerable.Range(0, numRandomUncommons).Select(_ => Generator.GenerateRandomUncommon()))
+        .Concat(Enumerable.Range(0, numRandomRares).Select(_ => Generator.GenerateRandomRare()))
+        .Concat(Enumerable.Range(0, numRandomEpics).Select(_ => Generator.GenerateRandomEpic()));
 
     public IEnumerable<EquipmentSlot> Random(int n)
     {

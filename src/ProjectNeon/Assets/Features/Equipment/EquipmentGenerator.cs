@@ -40,18 +40,14 @@ public class EquipmentGenerator
         StatType.Leadership
     };
 
-    private static readonly Dictionary<StatType, string> CorpStats = new Dictionary<StatType, string>
+    private readonly Dictionary<StatType, string> CorpStats = new Dictionary<StatType, string>();
+
+    public EquipmentGenerator(AllCorps corps)
     {
-        { StatType.Attack, "Plasmigarchy" },
-        { StatType.Magic, "Ritehastery" },
-        { StatType.Leadership, "Novoline" },
-        { StatType.Toughness, "Medigeneix" },
-        { StatType.StartingShield, "Plasmigarchy" },
-        { StatType.Armor, "Novoline" },
-        { StatType.Resistance, "Ritehastery" },
-        { StatType.MaxHP, "Medigeneix" },
-        { StatType.MaxShield, "Novoline" },
-    };
+        foreach (var corp in corps.Corps)
+            foreach (var stat in corp.GeneratedEquipmentPrimaryStatPreference)
+                CorpStats[stat] = corp.Name;
+    }
 
     public Equipment GenerateRandomCommon()
         => Generate(RarityPowers[Rarity.Common].Random(), Rarity.Common);

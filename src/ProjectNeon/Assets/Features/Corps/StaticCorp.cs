@@ -9,6 +9,7 @@ public class StaticCorp : ScriptableObject, Corp
     [SerializeField] private Color color;
     [SerializeField] private Color color2;
     [SerializeField] private StaticCorp[] rivalCorps;
+    [SerializeField] private StatType[] generatedEquipmentPrimaryStatPreference;
     [SerializeField, TextArea(4, 10)] private string description;
     [SerializeField] private string[] slogans;
     
@@ -17,4 +18,5 @@ public class StaticCorp : ScriptableObject, Corp
     public Color Color1 => color;
     public Color Color2 => color2;
     public string[] RivalCorpNames => rivalCorps.Select(r => r.Name).ToArray();
+    public StatType[] GeneratedEquipmentPrimaryStatPreference => generatedEquipmentPrimaryStatPreference;
 }

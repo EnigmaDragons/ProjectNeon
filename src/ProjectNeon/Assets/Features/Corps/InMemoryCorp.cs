@@ -7,6 +7,7 @@ public class InMemoryCorp : Corp
     public Color Color1 { get; } = Color.white;
     public Color Color2 { get; } = Color.black;
     public string[] RivalCorpNames { get; set; } = new string[0];
+    public StatType[] GeneratedEquipmentPrimaryStatPreference { get; } = new StatType[0];
 
     public static implicit operator string(InMemoryCorp c) => c.Name;
 }
