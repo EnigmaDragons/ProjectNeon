@@ -167,4 +167,15 @@ public static class CollectionExtensions
  
         return changed;
     }
+
+    public static int LastIndexOf<T>(this T[] array, Func<T, bool> condition)
+    {
+        var index = -1;
+        for (var i = 0; i < array.Length; i++)
+        {
+            if (condition(array[i]))
+                index = i;
+        }
+        return index;
+    }
 }

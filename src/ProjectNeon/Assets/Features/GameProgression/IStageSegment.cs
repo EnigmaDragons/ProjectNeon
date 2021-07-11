@@ -44,3 +44,15 @@ public sealed class GeneratedBattleStageSegment : IStageSegment
         Detail = new Maybe<string>(string.Join("\n", enemies.Select(x => x.Name)));;
     }
 }
+
+public sealed class GeneratedEquipmentShopSegment : IStageSegment
+{
+    private readonly string _corp;
+
+    public string Name => $"{_corp} Equipment Shop";
+    public void Start() => Message.Publish(new ToggleEquipmentShop { Corp = _corp });
+    public Maybe<string> Detail => Maybe<string>.Missing();
+    public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
+
+    public GeneratedEquipmentShopSegment(string corp) => _corp = corp;
+}

@@ -30,10 +30,10 @@ public class BattleConclusion : OnMessage<BattleFinished>
     {
         // Tuned Reward Set
         var rewardEquips = rewardPicker
-            .PickEquipments(equipmentPrizePool, 1, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
+            .PickEquipments(equipmentPrizePool, 1, "", Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
             .ToList();
 
-        var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20));
+        var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20, ""));
         while (rewardEquips.Count < 3)
         {
             var nextEquipment = possibleEquips.Dequeue();

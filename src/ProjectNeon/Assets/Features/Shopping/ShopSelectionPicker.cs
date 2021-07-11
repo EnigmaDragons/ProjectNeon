@@ -30,7 +30,7 @@ public class ShopSelectionPicker
         return selectedCards.ToArray();
     }
 
-    public Equipment[] PickEquipments(EquipmentPool equipmentPool, int numEquipment,
+    public Equipment[] PickEquipments(EquipmentPool equipmentPool, int numEquipment, string corp,
         params Rarity[] rarities)
     {
         rarities = rarities.None() ? new[] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic} : rarities;
@@ -47,7 +47,7 @@ public class ShopSelectionPicker
                 groups[rarity][slot] = 0;
             groups[rarity][slot]++;
         });
-        return groups.SelectMany(r => r.Value.SelectMany(s => equipmentPool.Random(s.Key, r.Key, party.BaseHeroes, s.Value))).ToArray();
+        return groups.SelectMany(r => r.Value.SelectMany(s => equipmentPool.Random(s.Key, r.Key, party.BaseHeroes, s.Value, corp))).ToArray();
     }
 
     public ShopSelection GenerateCardSelection(ShopCardPool cards, int numCards)
@@ -73,22 +73,22 @@ public class ShopSelectionPicker
         return new ShopSelection(new List<Equipment>(), selectedCards.ToList());
     }
     
-    public ShopSelection GenerateEquipmentSelection(EquipmentPool equipment, int numEquips)
+    public ShopSelection GenerateEquipmentSelection(EquipmentPool equipment, int numEquips, string corp)
     {
         Equipment[] selectedEquipment;
         if (stage > 1)
         {
-            selectedEquipment = PickEquipments(equipment, 2, Rarity.Rare, Rarity.Epic)
-                .Concat(PickEquipments(equipment, 3, Rarity.Uncommon))
-                .Concat(PickEquipments(equipment, numEquips - 5, Rarity.Common))
+            selectedEquipment = PickEquipments(equipment, 2, corp, Rarity.Rare, Rarity.Epic)
+                .Concat(PickEquipments(equipment, 3, corp, Rarity.Uncommon))
+                .Concat(PickEquipments(equipment, numEquips - 5, corp, Rarity.Common))
                 .ToArray()
                 .Shuffled();
         }
         else
         {
-            selectedEquipment = PickEquipments(equipment, 1, Rarity.Rare, Rarity.Epic)
-                .Concat(PickEquipments(equipment, 2, Rarity.Uncommon))
-                .Concat(PickEquipments(equipment, numEquips - 3, Rarity.Common))
+            selectedEquipment = PickEquipments(equipment, 1, corp, Rarity.Rare, Rarity.Epic)
+                .Concat(PickEquipments(equipment, 2, corp, Rarity.Uncommon))
+                .Concat(PickEquipments(equipment, numEquips - 3, corp, Rarity.Common))
                 .ToArray()
                 .Shuffled();
         }
@@ -100,7 +100,7 @@ public class ShopSelectionPicker
     public ShopSelection GenerateV1MixedShopSelection(ShopCardPool cards, EquipmentPool equipment)
     {
         var selectedCards = PickCards(cards, 4, RarityExtensions.AllExceptStarters);
-        var selectedEquipment = PickEquipments(equipment, 4);
+        var selectedEquipment = PickEquipments(equipment, 4, "");
         
         return new ShopSelection(selectedEquipment.ToList(), selectedCards.ToList());
     }

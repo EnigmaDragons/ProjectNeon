@@ -8,4 +8,5 @@ public class MapNode3
     public Vector2 Position;
     public bool HasEventEnroute;
     public int[] EnemyIds;
+    public string Corp;
 }

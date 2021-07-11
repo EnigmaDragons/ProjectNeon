@@ -72,7 +72,7 @@ public class GameEquipmentData
 public class GameMapData
 {
     public int GameMapId;
-    public MapNodeType[] CompletedNodes;
+    public MapNode3[] CompletedNodes;
     public Vector2 CurrentPosition;
     public MapNode3[] CurrentChoices;
 }

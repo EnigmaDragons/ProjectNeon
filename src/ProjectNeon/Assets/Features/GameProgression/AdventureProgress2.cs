@@ -10,7 +10,8 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
-
+    [SerializeField] private string corpShop;
+    
     public Adventure CurrentAdventure => currentAdventure.Adventure;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentChapterNumber => currentChapterIndex + 1;
@@ -18,10 +19,11 @@ public class AdventureProgress2 : ScriptableObject
     public int CurrentStageSegmentIndex => currentMap3.Progress;
     public float ProgressToUnlockChapterBoss => CurrentStageSegmentIndex == 0 ? 0f : (float)CurrentStageSegmentIndex / CurrentChapter.SegmentCount;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
-    public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1] == MapNodeType.Boss;
+    public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
-
+    public string CorpShop { get => corpShop; set => corpShop = value; }
+    
     public DynamicStage CurrentChapter
     {
         get { 

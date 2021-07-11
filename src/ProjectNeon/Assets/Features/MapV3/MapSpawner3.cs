@@ -40,6 +40,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
             new NoShopsIfYouAreLowOnMoney(),
             new EnsureAtLeastTwoChoices(),
             new OnlyBossOnFinalNode(),
+            new EnsureGearShopsHaveCorps(progress.CurrentChapter.NodeTypeOdds2.GearCorps)
         }).ToArray();
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();
@@ -63,13 +64,17 @@ public class MapSpawner3 : OnMessage<NodeFinished>
     private void GenerateNewNodes()
     {
         _activeNodes.ForEach(x => Destroy(x.gameObject));
-        var nodes = Enum.GetValues(typeof(MapNodeType)).Cast<MapNodeType>().ToList();
+        var nodes = Enum.GetValues(typeof(MapNodeType)).Cast<MapNodeType>().Select(x => new MapNode3 { Type = x }).ToList();
         foreach (var rule in _rules)
             nodes = rule.FilterNodeTypes(nodes, gameMap, partyState, progress);
         var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.CurrentPosition).ToArray().Shuffled();
         gameMap.CurrentChoices = new List<MapNode3>();
         for (var i = 0; i < nodes.Count; i++)
-            gameMap.CurrentChoices.Add(new MapNode3 { Type = nodes[i], Position = locations[i], HasEventEnroute = progress.CurrentChapter.NodeTypeOdds2.IsThereTravelEvent(gameMap) });
+        {
+            nodes[i].Position = locations[i];
+            nodes[i].HasEventEnroute = progress.CurrentChapter.NodeTypeOdds2.IsThereTravelEvent(gameMap);
+            gameMap.CurrentChoices.Add(nodes[i]);
+        }
         SpawnNodes();
     }
 
@@ -82,7 +87,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
             Action midPoint = x.HasEventEnroute ? () => storyEventSegment.Start() : (Action)(() => travelReactiveSystem.Continue());
             obj.Init(x, ctx, () =>
             {
-                gameMap.CompletedNodes.Add(x.Type);
+                gameMap.CompletedNodes.Add(x);
                 gameMap.CurrentChoices = new List<MapNode3>();
             }, midPoint);
             var rect = (RectTransform) obj.transform;

@@ -2,5 +2,5 @@
 
 public interface MapGenerationRule3
 {
-    public abstract List<MapNodeType> FilterNodeTypes(List<MapNodeType> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress);
+    public abstract List<MapNode3> FilterNodeTypes(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress);
 }

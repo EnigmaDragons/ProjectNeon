@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/NodeOdds2")]
@@ -11,12 +12,16 @@ public class NodeTypeOdds2 : ScriptableObject
     [SerializeField] private float[] eliteCombatChances;
     [SerializeField] private float[] cardShopChances;
     [SerializeField] private float[] gearShopChances;
+    [SerializeField] private float[] gearShop2Chances;
+    [SerializeField] private float[] gearShop3Chances;
     [SerializeField] private float[] storyEventChances;
     [SerializeField] private float[] clinicChances;
+    [SerializeField] private StringVariable retailerCorp;
+    [SerializeField] private StringVariable[] gearCorps;
 
     public bool IsThereTravelEvent(CurrentGameMap3 map)
     {
-        var lastIndexOf = map.CompletedNodes.LastIndexOf(MapNodeType.StoryEvent);
+        var lastIndexOf = map.CompletedNodes.ToArray().LastIndexOf(x => x.Type == MapNodeType.StoryEvent);
         var turnsSinceLastTimeYouDidThisNode = lastIndexOf == -1
             ? storyEventChances.Length - 1
             : Math.Min(storyEventChances.Length - 1, map.CompletedNodes.Count - lastIndexOf - 1);
@@ -35,6 +40,11 @@ public class NodeTypeOdds2 : ScriptableObject
             new PercentChanceBasedOnHowLongItsBeenSinceLastTimeYouHaveDoneIt(MapNodeType.Elite, eliteCombatChances),
             new PercentChanceBasedOnHowLongItsBeenSinceLastTimeYouHaveDoneIt(MapNodeType.CardShop, cardShopChances),
             new PercentChanceBasedOnHowLongItsBeenSinceLastTimeYouHaveDoneIt(MapNodeType.GearShop, gearShopChances),
+            new AdditionalNodeChoice(MapNodeType.GearShop, gearShop2Chances, 1),
+            new AdditionalNodeChoice(MapNodeType.GearShop, gearShop3Chances, 2),
             new PercentChanceBasedOnHowLongItsBeenSinceLastTimeYouHaveDoneIt(MapNodeType.Clinic, clinicChances),
         };
+
+    public string RetailerCorp => retailerCorp.Value;
+    public string[] GearCorps => gearCorps.Select(x => x.Value).ToArray();
 }

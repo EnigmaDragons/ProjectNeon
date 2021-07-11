@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PercentChanceBasedOnHowLongItsBeenSinceLastTimeYouHaveDoneIt : MapGenerationRule3
 {
@@ -12,14 +13,14 @@ public class PercentChanceBasedOnHowLongItsBeenSinceLastTimeYouHaveDoneIt : MapG
         _odds = odds;
     }
     
-    public List<MapNodeType> FilterNodeTypes(List<MapNodeType> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
+    public List<MapNode3> FilterNodeTypes(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
     {
-        var lastIndexOf = map.CompletedNodes.LastIndexOf(_mapNodeType);
+        var lastIndexOf = map.CompletedNodes.ToArray().LastIndexOf(x => x.Type == _mapNodeType);
         var turnsSinceLastTimeYouDidThisNode = lastIndexOf == -1
             ? _odds.Length - 1
             : Math.Min(_odds.Length - 1, map.CompletedNodes.Count - lastIndexOf - 1);
         if (!Rng.Chance(_odds[turnsSinceLastTimeYouDidThisNode]))
-            list.Remove(_mapNodeType);
+            list.Remove(list.First(x => x.Type == _mapNodeType));
         return list;
     }
 }
