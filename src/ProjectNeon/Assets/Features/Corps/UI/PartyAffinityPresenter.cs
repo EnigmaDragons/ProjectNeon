@@ -14,7 +14,7 @@ public class PartyAffinityPresenter : OnMessage<PartyAdventureStateChanged>
     [SerializeField] private TextMeshProUGUI corp2AffinityLabel;
     [SerializeField] private Image corp2Logo;
 
-    private void Awake() => Init();
+    protected override void AfterEnable() => Init();
     protected override void Execute(PartyAdventureStateChanged msg) => Init();
     
     private void Init() => Init(party.GetCorpAffinity(corps.GetMap()));
