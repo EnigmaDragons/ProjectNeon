@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates, HeroStateChanged, PartyAdventureStateChanged>
+public class ClinicPatientUI : OnMessage<UpdateClinic, HeroStateChanged, PartyAdventureStateChanged>
 {
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private HeroHpPresenter hpPresenter;
@@ -35,7 +35,7 @@ public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates, HeroStateChan
         return this;
     }
     
-    protected override void Execute(UpdateClinicServiceRates msg)
+    protected override void Execute(UpdateClinic msg)
     {
         UpdateCosts();
         UpdateButtons();
@@ -69,6 +69,7 @@ public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates, HeroStateChan
         party.HealHeroToFull(_hero.Character);
         party.UpdateCreditsBy(-_fullHealCost);
         _cost.RequestClinicHealService();
+        Message.Publish(new UpdateClinic());
     }
 
     private void HealInjury(string injuryName)
@@ -76,5 +77,6 @@ public class ClinicPatientUI : OnMessage<UpdateClinicServiceRates, HeroStateChan
         _hero.HealInjuryByName(injuryName);
         party.UpdateCreditsBy(-_injuryHealCost);
         _cost.RequestClinicHealService();
+        Message.Publish(new UpdateClinic());
     }
 }
