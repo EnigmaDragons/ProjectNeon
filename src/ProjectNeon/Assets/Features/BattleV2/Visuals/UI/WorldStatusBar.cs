@@ -23,9 +23,9 @@ public sealed class WorldStatusBar : StatusBar
     {
         for (var i = 0; i < Math.Max(statuses.Count, _icons.Count); i++)
         {
-            if (i < statuses.Count)
+            if (i < statuses.Count && i < _icons.Count)
                 _icons[i].Show(statuses[i]);
-            else
+            else if (i < _icons.Count)
                 _icons[i].gameObject.SetActive(false);
         }
     }

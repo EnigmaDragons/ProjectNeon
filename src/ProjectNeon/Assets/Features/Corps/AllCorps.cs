@@ -19,4 +19,5 @@ public class AllCorps : ScriptableObject
     public Corp PolyCorp => polyCorp;
     public Corp[] GearSellingCorps => gearSellingCorps;
     public Corp[] ClinicCorps => clinicCorps;
+    public Corp Unaffiliated => none;
 }

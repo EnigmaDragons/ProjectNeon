@@ -11,6 +11,7 @@ public class ClinicUI : OnMessage<UpdateClinic>
     [SerializeField] private TextMeshProUGUI serviceTitle;
     [SerializeField] private GameObject servicesParent;
     [SerializeField] private ClinicServiceButton serviceButtonPrototype;
+    [SerializeField] private CorpUiBase[] corpUi;
 
     private ClinicServiceProvider _serviceProvider;
     
@@ -27,6 +28,7 @@ public class ClinicUI : OnMessage<UpdateClinic>
 
     private void UpdateServices()
     {
+        corpUi.ForEach(c => c.Init(clinic.Corp));
         serviceTitle.text = _serviceProvider.GetTitle();
         servicesParent.DestroyAllChildren();
         _serviceProvider.GetOptions().ForEach(x => Instantiate(serviceButtonPrototype, servicesParent.transform).Init(x, party));

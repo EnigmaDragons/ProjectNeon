@@ -7,6 +7,7 @@ public class StaticCorp : ScriptableObject, Corp
     [SerializeField] private StringVariable corpName;
     [SerializeField] private string gearShopName;
     [SerializeField] private CorpAffinityLines gearAffinityLines = new CorpAffinityLines();
+    [SerializeField] private string clinicName;
     [SerializeField] private Sprite logo;
     [SerializeField] private Color color;
     [SerializeField] private Color color2;
@@ -17,6 +18,7 @@ public class StaticCorp : ScriptableObject, Corp
     
     public string Name => corpName.Value;
     public CorpGearShopData GearShopData => new CorpGearShopData(gearShopName, gearAffinityLines ?? new CorpAffinityLines());
+    public string ClinicName => clinicName;
     public Sprite Logo => logo;
     public Color Color1 => color;
     public Color Color2 => color2;

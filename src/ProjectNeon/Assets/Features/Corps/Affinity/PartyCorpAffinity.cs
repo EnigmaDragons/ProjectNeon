@@ -1,12 +1,19 @@
 using System.Collections.Generic;
+using System.Linq;
 
-public class PartyCorpAffinity : DictionaryWithDefault<string, CorpAffinityStrength>
+public class PartyCorpAffinity : DictionaryWithDefault<Corp, CorpAffinityStrength>
 {
     public PartyCorpAffinity() 
         : base(CorpAffinityStrength.None) { }
 
-    public PartyCorpAffinity(IDictionary<string, CorpAffinityStrength> values) 
+    public PartyCorpAffinity(IDictionary<Corp, CorpAffinityStrength> values) 
         : base(CorpAffinityStrength.None, values) { }
 
-    public CorpAffinityStrength this[Corp corp] => this[corp.Name];
+    public CorpAffinityStrength this[string corpName] => this
+        .Where(x => x.Key.Name.Equals(corpName))
+        .FirstAsMaybe()
+        .Select(x => x.Value, () => CorpAffinityStrength.None);
+    
+    public void DevLogInfo() 
+        => DevLog.Info(string.Join(", ", this.Select(x => $"{x.Key.Name} - {x.Value}")));
 }

@@ -22,7 +22,7 @@ public static class PartyCorpAffinityCalculator
             c => AffinityStrength(c.Value, exclusiveHighestCorp.Equals(c.Key), allCorpGearTiers));
 
         var adjustedAffinitiesForRivalries = baseAffinities.ToDictionary(
-            e => e.Key,
+            e => allCorps[e.Key],
             e => AdjustedBasedOnRivalAffinity(e.Value,
                 allCorps[e.Key].RivalCorpNames
                     .Select(r => baseAffinities.ValueOrDefault(r, CorpAffinityStrength.None))));
