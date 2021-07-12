@@ -35,7 +35,7 @@ public class CardInLibraryButton : MonoBehaviour
 
     private Action CreateCardAction(CardTypeData c, int numAvailable) =>
         numAvailable > 0 
-        && state.SelectedHeroesDeck.Deck.Count(x => x == c) < 4 
+        && state.SelectedHeroesDeck.Deck.Count(x => x.Id == c.Id) < 4
         && (state.SelectedHeroesDeck.Deck.GroupBy(x => x.Name).Count() < 12 || state.SelectedHeroesDeck.Deck.Any(x => x.Name == c.Name))
             ? (Action)(() => AddCard(c))
             : () => { };
