@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Pyromancer_BodyAflame
+  m_Name: Lockdown_EnergyPack
   m_EditorClassIdentifier: 
-  id: 43
-  displayName: Body Aflame
-  description: Max HP is halved. Magic power increased by 50%.
+  id: 33
+  displayName: Energy Pack V1
+  description: +2 Starting Energy
+  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
-  - {fileID: 11400000, guid: 4d0a0c42368d68b4593cdbbff300f064, type: 2}
+  - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
   rarity: 3
   slot: 2
   priceFactor: 1
   modifiers:
-  - ModifierType: 1
-    Amount: 0.5
-    StatType: MaxHP
-  - ModifierType: 1
-    Amount: 1.5
-    StatType: Magic
-  resourceModifiers: []
+  - ModifierType: 0
+    Amount: 0
+    StatType: 
+  resourceModifiers:
+  - baseResource: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+    maxAdjustment: 0
+    startingAdjustment: 2
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects: []
   isWIP: 0
-  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
