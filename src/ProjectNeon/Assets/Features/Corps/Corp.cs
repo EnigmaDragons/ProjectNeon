@@ -10,4 +10,5 @@ public interface Corp
     Color Color2 { get; }
     string[] RivalCorpNames { get; }
     StatType[] GeneratedEquipmentPrimaryStatPreference { get; }
+    string ShortDescription { get; }
 }
