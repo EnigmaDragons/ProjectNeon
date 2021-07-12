@@ -4,6 +4,7 @@ public class InMemoryCorp : Corp
 {
     public string Name { get; set; } = "None";
     public CorpGearShopData GearShopData { get; set; } = new CorpGearShopData("None", new CorpAffinityLines());
+    public string ClinicName { get; set; } = "None";
     public Sprite Logo { get; }
     public Color Color1 { get; } = Color.white;
     public Color Color2 { get; } = Color.black;
