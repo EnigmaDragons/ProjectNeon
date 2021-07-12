@@ -167,6 +167,7 @@ public class BattleState : ScriptableObject
         _playedCardHistory = new List<List<PlayedCardSnapshot>> { new List<PlayedCardSnapshot>() };
         turnNumber = 1;
         CreditsAtStartOfBattle = party.Credits;
+        party.ApplyBlessings(this);
         
         DevLog.Write("Finished Battle State Init");
         return result;

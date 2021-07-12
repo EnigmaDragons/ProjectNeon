@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Electroblade_DisruptingField
+  m_Name: Lockdown_StaticDischarge
   m_EditorClassIdentifier: 
-  id: 32
-  displayName: 
-  description: When you stun an enemy, that enemy loses 2 Resources
+  id: 34
+  displayName: Static Discharge
+  description: When attacked, if you have 3+ energy expend 3 energy to stun the attacker
+  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
-  - {fileID: 11400000, guid: d011885136321df4b966a5c7ca08126e, type: 2}
-  rarity: 2
-  slot: 0
+  - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
+  rarity: 3
+  slot: 2
   priceFactor: 1
   modifiers:
   - ModifierType: 0
@@ -28,7 +29,7 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - EffectType: 75
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,12 +43,13 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
+      Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
     StatusTag: 12
-    StatusDetailText: When you stun an enemy, that enemy loses 2 resources
+    StatusDetailText: When attacked, if you have 3+ energy expend 3 energy to stun
+      the attacker
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -59,16 +61,15 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 20
+    ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-    ReactionSequence: {fileID: 0}
+    ReactionSequence: {fileID: 11400000, guid: 6e32df67da65b6e40a4cedbf07ca525e, type: 2}
     ReactionEffect:
-      reactor: 1
-      scope: 3
-      cardActions: {fileID: 11400000, guid: 2fec85c9a7e43c14f9b7887a19cbf5fe, type: 2}
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
   isWIP: 0
-  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}

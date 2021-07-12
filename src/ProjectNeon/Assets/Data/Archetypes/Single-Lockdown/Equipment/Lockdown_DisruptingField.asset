@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Pyromancer_BloodSweatAndFlames
+  m_Name: Lockdown_DisruptingField
   m_EditorClassIdentifier: 
-  id: 42
-  displayName: Blood, Sweat & Flames
-  description: 'When Bloodied: Gain 5 Flames'
+  id: 32
+  displayName: 
+  description: When you stun an enemy, that enemy loses 2 Resources
+  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
-  - {fileID: 11400000, guid: 4d0a0c42368d68b4593cdbbff300f064, type: 2}
-  rarity: 3
-  slot: 2
+  - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
+  rarity: 2
+  slot: 0
   priceFactor: 1
   modifiers:
   - ModifierType: 0
@@ -42,12 +43,12 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
+      Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
     StatusTag: 12
-    StatusDetailText: 'When Bloodied: Gain 5 Flames'
+    StatusDetailText: When you stun an enemy, that enemy loses 2 resources
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -59,7 +60,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 10
+    ReactionConditionType: 20
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
@@ -67,8 +68,7 @@ MonoBehaviour:
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
-      scope: 1
-      cardActions: {fileID: 11400000, guid: b683abeee24548641a964f109c7bfceb, type: 2}
+      scope: 3
+      cardActions: {fileID: 11400000, guid: 2fec85c9a7e43c14f9b7887a19cbf5fe, type: 2}
     BonusCardType: {fileID: 0}
   isWIP: 0
-  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}

@@ -10,36 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Electroblade_WitheringShockStrike_R_E
+  m_Name: Arcana_BloodSweatAndMana_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 10
+      EffectType: 82
       Conditions: []
       BaseAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 5
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 2
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 2
-        Variable: {fileID: 0}
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 5
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 

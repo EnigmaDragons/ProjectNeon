@@ -14,6 +14,8 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private PartyEquipmentCollection equipment;
     [SerializeField] private Hero[] heroes = new Hero[0];
     [SerializeField] private ShopCardPool allCards;
+    
+    private Queue<Blessing> _blessings = new Queue<Blessing>(); 
 
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
@@ -169,5 +171,12 @@ public sealed class PartyAdventureState : ScriptableObject
                 _archKeyHeroes[a].Add(h);
             };
         }
+    }
+
+    public void AddBlessing(Blessing blessing) => _blessings.Enqueue(blessing);
+    public void ApplyBlessings(BattleState state)
+    {
+        while (_blessings.Count > 1)
+            _blessings.Dequeue().Apply(state);
     }
 }
