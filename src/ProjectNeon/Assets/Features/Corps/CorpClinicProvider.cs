@@ -9,6 +9,7 @@ public class CorpClinicProvider : ScriptableObject
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private StaticCorp[] procedureCorps;
     [SerializeField] private StaticCorp[] blessingCorps;
+    [SerializeField] private BlessingData[] blessings;
 
     public ClinicCostCalculator GetCostCalculator(Corp corp)
     {
@@ -23,6 +24,8 @@ public class CorpClinicProvider : ScriptableObject
     {
         if (procedureCorps.Contains(corp))
             return new ImplantClinicServiceProvider(party);
+        if (blessingCorps.Contains(corp))
+            return new BlessingClinicServiceProvider(party, blessings);
         return new NoClinicServiceProvider();
     }
 }
