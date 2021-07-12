@@ -11,7 +11,8 @@ public class CorpLightDetailPanelWithRival : CorpUiBase
     [SerializeField] private TextMeshProUGUI shortDescriptionLabel;
     [SerializeField] private GameObject rivalParent;
     [SerializeField] private Image rivalLogo;
-    
+    [SerializeField] private TextMeshProUGUI rivalTextLabel;
+
     public override void Init(Corp c)
     {
         nameLabel.text = c.Name;
@@ -20,10 +21,17 @@ public class CorpLightDetailPanelWithRival : CorpUiBase
         shortDescriptionLabel.text = c.ShortDescription;
 
         var rival = c.RivalCorpNames.FirstAsMaybe().Map(r => corps.GetCorpByName(r));
-        rivalParent.SetActive(true);
         if (rival.IsPresent && rival.Value.IsPresent)
+        {
             rivalLogo.sprite = rival.Value.Value.Logo;
+            rivalLogo.color = Color.white;
+            rivalTextLabel.text = "Rival";
+        }
         else
-            rivalParent.SetActive(false);
+        {
+            rivalLogo.sprite = null;
+            rivalLogo.color = new Color(0, 0, 0, 0);
+            rivalTextLabel.text = "No Rival";
+        }
     }
 }
