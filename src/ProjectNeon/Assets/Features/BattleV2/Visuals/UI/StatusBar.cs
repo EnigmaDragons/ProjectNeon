@@ -30,6 +30,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
 
     private void AddCustomTextStatusIcons(List<CurrentStatusValue> statuses, StatusTag statusTag, string defaultText = "Unknown") 
         => _member.State.StatusesOfType(statusTag)
+            .DistinctBy((x, i) => x.Status.CustomText.OrDefault(i.ToString))
             .ForEach(s => statuses.Add(new CurrentStatusValue { 
                 Type = statusTag.ToString(), 
                 Icon = icons[statusTag].Icon, 
