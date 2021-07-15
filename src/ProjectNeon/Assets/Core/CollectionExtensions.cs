@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public static class CollectionExtensions
 {    
@@ -94,6 +95,23 @@ public static class CollectionExtensions
         foreach(var item in source)
             if (set.Add(selector(item)))
                 yield return item;
+    }
+    
+    public static IEnumerable<TSource> DistinctBy<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, int, TResult> selectorWithIndex)
+    {
+        var set = new HashSet<TResult>();
+        var index = 0;
+        foreach (var item in source.ToArray())
+        {
+            var compareKey = selectorWithIndex(item, index);
+            if (set.Add(compareKey))
+            {
+                Debug.Log(compareKey);
+                yield return item;
+            }
+
+            index++;
+        }
     }
 
     public static void AddIf<T>(this List<T> items, T item, bool condition)
