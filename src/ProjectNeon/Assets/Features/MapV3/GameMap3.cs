@@ -5,11 +5,9 @@ using Vector2 = UnityEngine.Vector2;
 public class GameMap3 : ScriptableObject
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
-    [SerializeField] private GameObject background;
-    [SerializeField] private int startingPoint;
-    [SerializeField] private Vector2[] points;
+    [SerializeField] private MapPoints background;
 
-    public GameObject Background => background;
-    public Vector2 StartingPoint => points[startingPoint];
-    public Vector2[] Points => points;
+    public GameObject Background => background.gameObject;
+    public Vector2 StartingPoint => background.StartingPoint;
+    public Vector2[] Points => background.AllPoints;
 }
