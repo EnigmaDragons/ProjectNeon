@@ -11,7 +11,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     private bool _isConfirming = false;
     private bool _confirmRequested;
     
-    public bool CanConfirm => _confirmRequested || battleState.NumberOfCardPlaysRemainingThisTurn == 0;
+    public bool CanConfirm => _confirmRequested || battleState.NumberOfCardPlaysRemainingThisTurn == 0 || battleState.PlayerCardZones.HandZone.Count == 0;
 
     private void Awake()
     {
@@ -24,6 +24,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         Message.Subscribe<BattleStateChanged>(msg => UpdateState(msg), this);
         Message.Subscribe<BeginPlayerTurnConfirmation>(_ => OnConfirmationRequested(), this);
         playArea.OnZoneCardsChanged.Subscribe(UpdateState, this);
+        playerHand.OnZoneCardsChanged.Subscribe(UpdateState, this);
     }
     
     private void OnDisable()
