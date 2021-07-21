@@ -59,11 +59,12 @@ public sealed class Card : CardTypeData
         this.tint = tint;
         this.ownerBust = ownerBust;
     }
-    
+
     public Card RevertedToStandard()
     {
-        TransitionTo(CardMode.Normal);
+        Mode = CardMode.Normal;
         ClearXValue();
+        DevLog.Info($"Reverted {Name} {CardId} To {Mode}");
         return this;
     }
 
@@ -77,6 +78,7 @@ public sealed class Card : CardTypeData
             Mode = mode;
         else if (Mode == CardMode.Dead && (mode == CardMode.Normal || mode == CardMode.Glitched))
             Mode = mode;
+        DevLog.Info($"Transitioned {Name} {CardId} To {Mode}");
     }
     
     public void AddState(ITemporalCardState state) => _temporalStates.Add(state);
