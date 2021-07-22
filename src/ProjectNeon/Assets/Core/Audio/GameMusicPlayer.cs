@@ -25,14 +25,21 @@ public sealed class GameMusicPlayer : ScriptableObject
 
     private void Play(AudioClip c, bool shouldLoop)
     {
+        if (c == null)
+        {
+            Log.Warn("Asked to play null AudioClip");
+            return;
+        }
+        
         if (musicSource == null)
         {
             Log.Error($"nameof(musicSource) has not been initialized");
             return;
         }
 
-        DebugLog($"Playing Clip: {musicSource.clip?.name ?? "None"} | New Clip: {c.name}");
-        if (musicSource.isPlaying && musicSource.clip.name.Equals(c.name))
+        var currentClipName = musicSource.clip?.name ?? "None";
+        DebugLog($"Playing Clip: {currentClipName} | New Clip: {c.name}");
+        if (musicSource.isPlaying && currentClipName.Equals(c.name))
             return;
         
         StopMusicIfPlaying();
