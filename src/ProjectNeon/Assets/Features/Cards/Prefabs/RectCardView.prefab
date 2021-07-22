@@ -2035,6 +2035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2377606831301104038}
   - component: {fileID: 2479883059499012630}
+  - component: {fileID: 2885630115132167066}
   m_Layer: 5
   m_Name: RulesPresenter
   m_TagString: Untagged
@@ -2076,6 +2077,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rulesParent: {fileID: 6827386851173660588}
   rulePresenterPrototype: {fileID: 5578452547109090204, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
+--- !u!114 &2885630115132167066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5553361143593554394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7307aa93f9e5e44bed96c86627fdca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 6827386851173660588}
 --- !u!1 &5561788115209992677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2866,7 +2880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4978335795249193904
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4563,6 +4577,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeywordRulePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 6741264942208778873, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
 --- !u!224 &4677965285254962896 stripped
@@ -4697,6 +4715,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeywordRulePanel (1)_1
       objectReference: {fileID: 0}
+    - target: {fileID: 6741264942208778873, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
 --- !u!224 &8695906838618598822 stripped
@@ -4830,6 +4852,10 @@ PrefabInstance:
     - target: {fileID: 6741264942208778873, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
       propertyPath: m_Name
       value: KeywordRulePanel (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6741264942208778873, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
