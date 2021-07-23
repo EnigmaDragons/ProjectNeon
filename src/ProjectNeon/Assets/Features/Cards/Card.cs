@@ -47,6 +47,7 @@ public sealed class Card : CardTypeData
     public Maybe<CardCondition> HighlightCondition => _type.HighlightCondition;
     public Maybe<CardCondition> UnhighlightCondition => _type.UnhighlightCondition;
     public bool IsSinglePlay => _type.IsSinglePlay;
+    public bool IsQuick => Speed == CardSpeed.Quick;
 
     public Card(int id, Member owner, CardTypeData type)
         : this(id, owner, type, Maybe<Color>.Missing(), Maybe<Sprite>.Missing()) {}
