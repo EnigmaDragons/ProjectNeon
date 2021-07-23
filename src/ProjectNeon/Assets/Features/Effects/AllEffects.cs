@@ -28,8 +28,8 @@ public static class AllEffects
         { EffectType.ApplyVulnerable, e => new AegisPreventable(new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} has become vulnerable",
             () => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), 
                 TemporalStateMetadata.DebuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Vulnerable))))), e.DurationFormula), "Vulernable") },
-        { EffectType.DisableForTurns, e => new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} is disabled for {duration} turns.", 
-            () => m.ApplyTemporaryAdditive(new DisableForTurns(ctx.Source.Id, duration))), e.DurationFormula)},
+        { EffectType.DisableForTurns, e => new AegisPreventable(new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} is disabled for {duration} turns.", 
+            () => m.ApplyTemporaryAdditive(new DisableForTurns(ctx.Source.Id, duration))), e.DurationFormula), "Disable")},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.DurationFormula) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect((p, duration, amount) => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With(e.EffectScope.Value.EnumVal<PlayerStatType>(), amount), duration, amount < 0)), e.DurationFormula, e.IntAmount.ToString()) },
