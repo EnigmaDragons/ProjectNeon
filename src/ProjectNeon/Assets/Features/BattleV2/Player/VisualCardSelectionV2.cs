@@ -64,7 +64,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
                 _indexSelector.MovePrevious();
         _lastIndex = _indexSelector.Index;
         if (_shouldHighlight)
-            EnableHighlight();
+            ClearAllHighlights();
         else
             DisableHighlight();
     }
@@ -76,7 +76,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         while(!_indexSelector.Current.HasCard)
             _indexSelector.MoveNext();
         _lastIndex = _indexSelector.Index;
-        EnableHighlight();
+        ClearAllHighlights();
+        _indexSelector.Current.SetHandHighlight(true);
     }
     
     public void MovePrevious()
@@ -86,7 +87,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         while(!_indexSelector.Current.HasCard)
             _indexSelector.MovePrevious();
         _lastIndex = _indexSelector.Index;
-        EnableHighlight();
+        ClearAllHighlights();
+        _indexSelector.Current.SetHandHighlight(true);
     }
 
     public void MoveTo(CardPresenter c)
@@ -95,7 +97,8 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         while(_indexSelector.Current != c)
             _indexSelector.MoveNext();
         _lastIndex = _indexSelector.Index;
-        EnableHighlight();
+        ClearAllHighlights();
+        c.SetHandHighlight(true);
     }
 
     public void LostFocus()
@@ -125,10 +128,9 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _isDirty = true;
     }
 
-    private void EnableHighlight()
+    private void ClearAllHighlights()
     {
         cards.ShownCards.ForEach(c => c.SetHandHighlight(false));
-        _indexSelector.Current.SetHandHighlight(true);
     }
     
     private void DisableHighlight()

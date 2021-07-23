@@ -29,22 +29,8 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     public void EndCommandPhase()
     {
         HideCommandPhaseUI();
-        hand.SetActive(false);
     }
-
-    public IEnumerator BeginResolutionPhase()
-    {
-        resolutionPhaseUi.gameObject.SetActive(true);
-        yield return resolutionPhaseUi.BeginResolutionPhase();
-    }
-
-    public void EndResolutionPhase()
-    {
-        resolutionPhaseUi.EndResolutionPhase();
-        HideResolutionPhaseUI();
-        hand.SetActive(false);
-    }
-
+    
     private void HideResolutionPhaseUI() => resolutionPhaseUi.gameObject.SetActive(false);
     
     protected override void Execute(BattleFinished msg)
@@ -63,6 +49,6 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
 
     private void RefreshHandVisibility()
     {
-        hand.SetActive(battleState.Phase == BattleV2Phase.PlayCards && battleState.HasMorePlaysAvailableThisTurn);
+        hand.SetActive(true);
     }
 }

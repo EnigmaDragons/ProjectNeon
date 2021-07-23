@@ -20,7 +20,6 @@ public sealed class HandVisualizer : MonoBehaviour
     private Action _onShownCardsChanged = () => { };
     private Vector3 _defaultPosition;
     private Vector3 _unfocusedPosition;
-    private bool _isFocused = true;
     private bool _useRecycle = false;
     private bool _cardPlayingAllowed = true;
 
@@ -39,9 +38,8 @@ public sealed class HandVisualizer : MonoBehaviour
     
     void OnEnable()
     {
-        _isFocused = true;
         _isDirty = true;
-        Log.Info($"UI - Hand Enabled - Focused {_isFocused}");
+        Log.Info($"UI - Hand Enabled");
         Hand.OnZoneCardsChanged.Subscribe(new GameEventSubscription(Hand.OnZoneCardsChanged.name, x => _isDirty = true, this));
         Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
         Message.Subscribe<PlayerCardCanceled>(_ => _isDirty = true, this);
@@ -50,7 +48,7 @@ public sealed class HandVisualizer : MonoBehaviour
 
     void OnDisable()
     {
-        Log.Info($"UI - Hand Disabled - Focused {_isFocused}");
+        Log.Info($"UI - Hand Disabled");
         Hand.OnZoneCardsChanged.Unsubscribe(this);
         Message.Unsubscribe(this);
     }
@@ -116,7 +114,7 @@ public sealed class HandVisualizer : MonoBehaviour
         var highlightedCardIndex = -1;
         for (var i = 0; i < cards.Length; i++)
         {
-            var effectivePosition = _isFocused ? _defaultPosition : _unfocusedPosition;
+            var effectivePosition = _defaultPosition;
             var cardIndex = i;
             var card = cards[cardIndex];
             var (presenterIndex, presenter) = _cardPool.GetCardPresenter(cardIndex, card);
@@ -136,7 +134,7 @@ public sealed class HandVisualizer : MonoBehaviour
                 (battleState, c2) => allowInteractions && c2.IsPlayable(battleState.Party) && battleState.NumberOfCardPlaysRemainingThisTurn > 0,
                 () => allowInteractions);
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
-            c.SetDisabled(!card.Owner.CanPlayCards() || !_isFocused);
+            c.SetDisabled(!card.Owner.CanPlayCards());
             c.SetHandHighlight(isHighlighted);
             
             _cardPool.SwapItems(cardIndex, presenterIndex);
@@ -175,6 +173,9 @@ public sealed class HandVisualizer : MonoBehaviour
 
     public void BeginDragCard(Card card, int cardIndex)
     {
+        if (state.Phase != BattleV2Phase.PlayCards)
+            return;
+        
         if (card.Type.RequiresPlayerTargeting() && _cardPool[cardIndex].IsPlayable)
         {
             var targetPosition = new Vector3(Screen.width / 2f, _defaultPosition.y, _defaultPosition.z);
@@ -190,23 +191,5 @@ public sealed class HandVisualizer : MonoBehaviour
         state.UseRecycle();
         zones.DiscardZone.PutOnBottom(Hand.Take(cardIndex).RevertedToStandard());
         zones.DrawOneCard();
-    }
-
-    public void SetFocus(bool isFocused)
-    {
-        if (_isFocused == isFocused)
-            return;
-
-        Log.Info($"UI - Setting hand focus {isFocused}");
-        
-        _isFocused = isFocused;
-        _isDirty = true;
-    }
-
-    public void RefreshPositions()
-    {
-        _defaultPosition = transform.position;
-        _unfocusedPosition = _defaultPosition - unfocusedOffset;
-        UpdateCurrentCards(_oldCards);
     }
 }
