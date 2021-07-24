@@ -111,7 +111,6 @@ public sealed class HandVisualizer : MonoBehaviour
         var totalSpaceNeeded = screenWidth * (cardSpacingScreenPercent * cards.Length);
         var startX = (screenWidth - totalSpaceNeeded) / 2f;
 
-        var highlightedCardIndex = -1;
         for (var i = 0; i < cards.Length; i++)
         {
             var effectivePosition = _defaultPosition;
@@ -126,19 +125,23 @@ public sealed class HandVisualizer : MonoBehaviour
             
             var targetX = startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
+            _cardPool.SwapItems(cardIndex, presenterIndex);
 
-            c.Set("Hand", card, 
-                () => SelectCard(cardIndex), 
+            if (c.IsDragging) 
+                continue;
+            
+            c.Set("Hand", card,
+                () => SelectCard(cardIndex),
                 () => BeginDragCard(card, cardIndex),
                 () => DiscardCard(cardIndex),
-                (battleState, c2) => allowInteractions && c2.IsPlayable(battleState.Party) && (battleState.NumberOfCardPlaysRemainingThisTurn > 0 || c2.IsQuick),
+                (battleState, c2) => allowInteractions && c2.IsPlayable(battleState.Party) &&
+                                     (battleState.NumberOfCardPlaysRemainingThisTurn > 0 || c2.IsQuick),
                 () => allowInteractions);
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.SetDisabled(!card.Owner.CanPlayCards());
             c.SetHandHighlight(isHighlighted);
-            
-            _cardPool.SwapItems(cardIndex, presenterIndex);
             c.SetTargetPosition(targetPosition);
+                
             c.transform.SetAsLastSibling();
         }
 

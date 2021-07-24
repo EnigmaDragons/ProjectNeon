@@ -33,7 +33,7 @@ public class BattlePlayerCardsPhase : OnMessage<TargetSelectionBegun, TargetSele
 
     private void UpdateConfirmationState()
     {
-        var readyForTurnConfirm = turnConfirmation.CanConfirm;
+        var readyForTurnConfirm = turnConfirmation.ReadyForTurnEnd;
         if (readyForTurnConfirm)
         {
             directionBinding.Clear();

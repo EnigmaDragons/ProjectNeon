@@ -11,7 +11,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     private bool _isConfirming = false;
     private bool _confirmRequested;
     
-    public bool CanConfirm => _confirmRequested || battleState.NumberOfCardPlaysRemainingThisTurn == 0 || battleState.PlayerCardZones.HandZone.Count == 0;
+    public bool ReadyForTurnEnd => _confirmRequested || battleState.NumberOfCardPlaysRemainingThisTurn == 0 || battleState.PlayerCardZones.HandZone.Count == 0;
 
     private void Awake()
     {
@@ -51,10 +51,10 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     
     private void UpdateState()
     {
-        if (_isConfirming == CanConfirm)
+        if (_isConfirming == ReadyForTurnEnd)
             return;
         
-        _isConfirming = CanConfirm;
+        _isConfirming = ReadyForTurnEnd;
         if (_isConfirming)
             Message.Publish(new PlayerTurnConfirmationStarted());
         else
@@ -72,7 +72,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     
     public void Confirm()
     {
-        if (!CanConfirm) return;
+        if (!ReadyForTurnEnd) return;
 
         var reasonWord = _confirmRequested ? "manually" : "automatically";
         _confirmRequested = false;

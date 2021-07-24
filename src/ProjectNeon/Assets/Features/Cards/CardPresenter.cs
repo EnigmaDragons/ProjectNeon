@@ -67,6 +67,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public bool HasCard => _cardType != null;
     public bool IsHighlighted => highlight.activeSelf;
     public bool IsPlayable { get; private set; }
+    public bool IsDragging { get; private set; } = false;
 
     public void Clear()
     {
@@ -81,6 +82,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Action onDiscard, Func<BattleState, Card, bool> getCanPlay, Func<bool> getCanActivate)
     {
+        Log.Info($"Card Set - {card.Name}");
         InitFreshCard(onClick);
 
         _onDiscard = onDiscard;
@@ -399,15 +401,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!_isDragging && _isHand)
+        if (!IsDragging && _isHand)
             SetHandHighlight(false);
     }
 
-    private bool _isDragging = false;
-    
     public void OnDrag(PointerEventData eventData)
     {
-        if (!_isDragging)
+        if (!IsDragging)
             eventData.pointerDrag = null;
         else
             WhenActivatableHand(() =>
@@ -421,7 +421,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnBeginDrag(PointerEventData eventData)
         => WhenActivatableHand(() =>
         {
-            _isDragging = true;
+            IsDragging = true;
             controls.SetActive(false);
             canvasGroup.blocksRaycasts = false;
 
@@ -455,7 +455,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     private void ReturnHandToNormal()
     {
-        _isDragging = false;
+        IsDragging = false;
         canvasGroup.blocksRaycasts = true;
         Message.Publish(new HideMouseTargetArrow());
     }
@@ -464,14 +464,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void Discard()
     {
-        Debug.Log("Discard");
+        DebugLog($"Discard");
         ReturnHandToNormal();
         _onDiscard();
     }
     
     public void Activate()
     {
-        Debug.Log("Activate");
+        DebugLog($"Activate");
         ReturnHandToNormal();
         _onClick();
     }
