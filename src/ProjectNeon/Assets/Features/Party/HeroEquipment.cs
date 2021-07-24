@@ -46,7 +46,7 @@ public class HeroEquipment
         if (e.Slot == EquipmentSlot.Weapon)
             return Weapon.IsMissing;
         if (e.Slot == EquipmentSlot.Armor)
-            return Armor.IsPresent;
+            return Armor.IsMissing;
         if (e.Slot == EquipmentSlot.Augmentation)
             return Augments.Length < 3;
         return true;

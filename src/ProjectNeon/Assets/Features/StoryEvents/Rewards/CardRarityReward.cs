@@ -10,7 +10,7 @@ public class CardRarityReward : StoryResult
 
     public override void Apply(StoryEventContext ctx)
     {
-        var card = new ShopSelectionPicker(ctx.CurrentStage, ctx.RarityFactors, ctx.Party).PickCards(cardPool, 1, rarity);
+        var card = new LootPicker(ctx.CurrentStage, ctx.RarityFactors, ctx.Party).PickCards(cardPool, 1, rarity);
         ctx.Party.Add(card);
         Message.Publish(new ShowCardReward(card[0]));
     }

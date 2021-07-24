@@ -30,7 +30,7 @@ public class CardShopPresenter : MonoBehaviour
     public void GetMoreInventory()
     {
         Clear();
-        var selection = new ShopSelectionPicker(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party)
+        var selection = adventure.CreateLootPicker(party)
             .GenerateCardSelection(cards, _numCards);
         var cardsWithOwners = selection.Cards.Select(c => c.ToNonBattleCard(party));
         cardsWithOwners.ForEach(c => 

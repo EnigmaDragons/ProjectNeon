@@ -15,25 +15,21 @@ public class BattleConclusion : OnMessage<BattleFinished>
     
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
-        var rewardFactors = adventure2.CurrentChapterNumber > 0
-            ? adventure2.CurrentChapter.RewardRarityFactors
-            : new DefaultRarityFactors();
-        
-        var rewardPicker = new ShopSelectionPicker(adventure2.CurrentChapterNumber, rewardFactors, state.Party);
+        var rewardPicker = adventure2.CreateLootPicker(state.Party);
         if (state.IsEliteBattle)
             GetUserSelectedEquipment(onFinished, rewardPicker);
         else
             GetUserSelectedRewardCard(onFinished, rewardPicker);
     }
 
-    private void GetUserSelectedEquipment(Action onFinished, ShopSelectionPicker rewardPicker)
+    private void GetUserSelectedEquipment(Action onFinished, LootPicker rewardPicker)
     {
         // Tuned Reward Set
         var rewardEquips = rewardPicker
-            .PickEquipments(equipmentPrizePool, 1, "", Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
+            .PickEquipments(equipmentPrizePool, 1, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
             .ToList();
 
-        var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20, ""));
+        var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20));
         while (rewardEquips.Count < 3)
         {
             var nextEquipment = possibleEquips.Dequeue();
@@ -48,7 +44,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         }));
     }
 
-    private void GetUserSelectedRewardCard(Action onFinished, ShopSelectionPicker rewardPicker)
+    private void GetUserSelectedRewardCard(Action onFinished, LootPicker rewardPicker)
     {
         var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, RarityExtensions.AllExceptStarters);
         var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party));
