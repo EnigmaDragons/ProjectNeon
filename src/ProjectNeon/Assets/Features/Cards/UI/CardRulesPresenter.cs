@@ -36,6 +36,7 @@ public class CardRulesPresenter : MonoBehaviour
         TemporalStatType.Lifesteal.ToString(),
         TemporalStatType.Confused.ToString(),
         ReactionConditionType.OnSlay.ToString(),
+        "Glitch",
         "TagPlayed",
         "Vulnerable",
         "Critical",
@@ -69,8 +70,11 @@ public class CardRulesPresenter : MonoBehaviour
             RulesByImportanceArr.ForEachIndex((r, i) => RulesByImportance[r] = i);
         }
     }
+
+    public void Show(Card c, int maxRulesToShow = 999)
+        => Show(c.Type, maxRulesToShow, c.Mode == CardMode.Glitched);
     
-    public void Show(CardTypeData d, int maxRulesToShow = 999)
+    public void Show(CardTypeData d, int maxRulesToShow = 999, bool isGlitched = false)
     {
         if (d == null)
         {
@@ -107,6 +111,7 @@ public class CardRulesPresenter : MonoBehaviour
                 rulesToShow.AddIf("Drain", b.EffectType == EffectType.TransferPrimaryResourceFormula);
                 rulesToShow.AddIf("Igniting", "Igniting".Equals(b.ReactionEffectScope.Value));
                 rulesToShow.AddIf(ReactionConditionType.OnSlay.ToString(), ReactionConditionType.OnSlay == b.ReactionConditionType);
+                rulesToShow.AddIf("Glitch", b.EffectType == EffectType.GlitchRandomCards);
 
                 AddAllMatchingEffectScopeRules(rulesToShow, b,
                     TemporalStatType.Dodge.ToString(),
@@ -125,6 +130,10 @@ public class CardRulesPresenter : MonoBehaviour
                     "PrimaryStat");
             });
 
+            // Overwhelming Card State Rules
+            if (isGlitched)
+                rulesToShow = new List<string> { "Glitch" };
+            
             rulesToShow
                 .Distinct()
                 .OrderBy(r => RulesByImportance[r])

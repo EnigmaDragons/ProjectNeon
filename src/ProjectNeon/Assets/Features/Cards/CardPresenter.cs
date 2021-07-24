@@ -263,7 +263,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         DebugLog("Show Comprehensive Info");
         Message.Publish(new HideReferencedCard());
-        rules.Show(_cardType, _isHand ? 2 : 999);
+        if (_card != null)
+            rules.Show(_card,  _isHand ? 2 : 999);
+        else
+            rules.Show(_cardType, _isHand ? 2 : 999);
         targetRule.Show(_cardType.ActionSequences.First());
         if (!_isHand)
             scalingRule.Show(_cardType);
