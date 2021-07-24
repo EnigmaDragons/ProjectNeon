@@ -16,7 +16,7 @@ public class LootPicker
     
     public CardTypeData[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
     {
-        var weightedCards = party.BaseHeroes.SelectMany(h => cards.Get(h.Archetypes, rarities))
+        var weightedCards = party.BaseHeroes.SelectMany(h => cards.Get(h.Archetypes, party.CardsYouCantHaveMoreOf(), rarities))
             .Distinct()
             .FactoredByRarity(factors, x => x.Rarity)
             .ToArray()

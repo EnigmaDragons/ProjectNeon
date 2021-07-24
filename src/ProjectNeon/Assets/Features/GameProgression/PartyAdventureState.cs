@@ -62,7 +62,7 @@ public sealed class PartyAdventureState : ScriptableObject
         });
 
 
-        var allStartingCards = party.Heroes.SelectMany(h => allCards.Get(h.Archetypes, Rarity.Starter).NumCopies(4)).ToArray();
+        var allStartingCards = party.Heroes.SelectMany(h => allCards.Get(h.Archetypes, new HashSet<int>(), Rarity.Starter).NumCopies(4)).ToArray();
         cards.Initialized(allStartingCards); 
         
         equipment = new PartyEquipmentCollection();
@@ -182,5 +182,16 @@ public sealed class PartyAdventureState : ScriptableObject
     {
         while (_blessings.Count > 1)
             _blessings.Dequeue().Apply(state);
+    }
+
+    public HashSet<int> CardsYouCantHaveMoreOf()
+    {
+        return new HashSet<int>(cards.AllCards
+            .Where(card =>
+            {
+                var heroesThatCanUseThisCard = heroes.Where(hero => card.Key.Archetypes.All(archetype => hero.Character.Archetypes.Contains(archetype)));
+                return card.Value >= heroesThatCanUseThisCard.Count() * 4;
+            })
+            .Select(card => card.Key.Id));
     }
 }

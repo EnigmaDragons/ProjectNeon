@@ -7,12 +7,12 @@ public class ShopCardPoolTests
     private const string _archetype1 = "archetype1";
     private const string _archetype2 = "archetype2";
     private const string _archetype3 = "archetype3";
-    private readonly CardType _starterArchetype1 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Starter);
-    private readonly CardType _commonArchetype2 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Common);
-    private readonly CardType _uncommonArchetype2 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Uncommon);
-    private readonly CardType _rareNeutral = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Rare);
-    private readonly CardType _epicArchetype1And2 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Epic);
-    private readonly CardType _rareArchetype3 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Rare);
+    private readonly CardType _starterArchetype1 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Starter, 1);
+    private readonly CardType _commonArchetype2 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Common, 2);
+    private readonly CardType _uncommonArchetype2 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Uncommon, 3);
+    private readonly CardType _rareNeutral = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Rare, 4);
+    private readonly CardType _epicArchetype1And2 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Epic, 5);
+    private readonly CardType _rareArchetype3 = TestableObjectFactory.Create<CardType>().Initialized(Rarity.Rare, 6);
     private ShopCardPool _cardPool;
 
     [SetUp]
@@ -35,7 +35,7 @@ public class ShopCardPoolTests
     [Test]
     public void NoSpecifiedArgs_ReturnsAllCards()
     {
-        var cards = _cardPool.Get(new HashSet<string>()).ToArray();
+        var cards = _cardPool.Get(new HashSet<string>(), new HashSet<int>()).ToArray();
         Assert.AreEqual(6, cards.Length);
         AssertSafeContains(_starterArchetype1, cards);
         AssertSafeContains(_commonArchetype2, cards);
@@ -48,7 +48,7 @@ public class ShopCardPoolTests
     [Test]
     public void SpecifiedArchetype_ReturnsListWithThatArchetypeAndNeutralCard()
     {
-        var cards = _cardPool.Get(new HashSet<string> {_archetype1}).ToArray();
+        var cards = _cardPool.Get(new HashSet<string> {_archetype1}, new HashSet<int>()).ToArray();
         Assert.AreEqual(2, cards.Length);
         AssertSafeContains(_starterArchetype1, cards);
         AssertSafeContains(_rareNeutral, cards);
@@ -57,7 +57,7 @@ public class ShopCardPoolTests
     [Test]
     public void SpecifiedRarity_ReturnsListWithThatRarity()
     {
-        var cards = _cardPool.Get(new HashSet<string>(), Rarity.Starter).ToArray();
+        var cards = _cardPool.Get(new HashSet<string>(), new HashSet<int>(), Rarity.Starter).ToArray();
         Assert.AreEqual(1, cards.Length);
         AssertSafeContains(_starterArchetype1, cards);
     }
@@ -65,7 +65,7 @@ public class ShopCardPoolTests
     [Test]
     public void SpecifiedRarity_ReturnsPartialListFromListWithThatAsOneOfTheRarities()
     {
-        var cards = _cardPool.Get(new HashSet<string>(), Rarity.Common).ToArray();
+        var cards = _cardPool.Get(new HashSet<string>(), new HashSet<int>(), Rarity.Common).ToArray();
         Assert.AreEqual(1, cards.Length);
         AssertSafeContains(_commonArchetype2, cards);
     }
@@ -73,13 +73,25 @@ public class ShopCardPoolTests
     [Test]
     public void SpecifiedMultipleArchetypes_ReturnsAllApplicableLists()
     {
-        var cards = _cardPool.Get(new HashSet<string> {_archetype1, _archetype2}).ToArray();
+        var cards = _cardPool.Get(new HashSet<string> {_archetype1, _archetype2}, new HashSet<int>()).ToArray();
         Assert.AreEqual(5, cards.Length);
         AssertSafeContains(_starterArchetype1, cards);
         AssertSafeContains(_commonArchetype2, cards);
         AssertSafeContains(_uncommonArchetype2, cards);
         AssertSafeContains(_rareNeutral, cards);
         AssertSafeContains(_epicArchetype1And2, cards);
+    }
+
+    [Test]
+    public void SpecifiedUnobtainableCards_UnobtainableCardsNotIncluded()
+    {
+        var cards = _cardPool.Get(new HashSet<string>(), new HashSet<int> { _starterArchetype1.Id }).ToArray();
+        Assert.AreEqual(5, cards.Length);
+        AssertSafeContains(_commonArchetype2, cards);
+        AssertSafeContains(_uncommonArchetype2, cards);
+        AssertSafeContains(_rareNeutral, cards);
+        AssertSafeContains(_epicArchetype1And2, cards);
+        AssertSafeContains(_rareArchetype3, cards);
     }
     
     private void AssertSafeContains<T>(T item, ICollection<T> collection)

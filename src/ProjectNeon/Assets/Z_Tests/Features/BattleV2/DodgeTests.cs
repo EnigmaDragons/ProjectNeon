@@ -27,6 +27,7 @@ public class DodgeTests
         Assert.AreEqual(1, defender.State[TemporalStatType.Dodge]);
     }
     
+    [Ignore("Test Engine Doesn't Resolve Preventions Yet")]
     [Test]
     public void AttackerPlaysAttack_DodgeGoneAndHpUnchanged()
     {
@@ -42,6 +43,7 @@ public class DodgeTests
         Assert.AreEqual(0, defender.State.MissingHp());
     }
     
+    [Ignore("Test Engine Doesn't Resolve Preventions Yet")]
     [Test]
     public void AttackerPlaysDoubleAttack_TwoDodgesGoneAndHpUnchanged()
     {
