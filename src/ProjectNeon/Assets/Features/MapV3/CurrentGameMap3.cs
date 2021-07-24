@@ -6,7 +6,9 @@ using UnityEngine;
 public class CurrentGameMap3 : ScriptableObject
 {
     public GameMap3 CurrentMap { get; set; }
+    public Maybe<MapNode3> CurrentNode { get; set; } = Maybe<MapNode3>.Missing();
     public List<MapNode3> CompletedNodes { get; set; } = new List<MapNode3>();
+    public Vector2 PreviousPosition { get; set; } = Vector2.zero;
     public Vector2 CurrentPosition { get; set; } = Vector2.zero;
     public List<MapNode3> CurrentChoices { get; set; } = new List<MapNode3>();
 
@@ -19,4 +21,14 @@ public class CurrentGameMap3 : ScriptableObject
     }
 
     public int Progress => CompletedNodes?.Count(x => x.Type != MapNodeType.StoryEvent) ?? 0;
+
+    public void CompleteCurrentNode()
+    {
+        if (CurrentNode.IsMissing)
+            return;
+        CompletedNodes.Add(CurrentNode.Value);
+        CurrentChoices = new List<MapNode3>();
+        PreviousPosition = CurrentPosition;
+        CurrentNode = Maybe<MapNode3>.Missing();
+    }
 }

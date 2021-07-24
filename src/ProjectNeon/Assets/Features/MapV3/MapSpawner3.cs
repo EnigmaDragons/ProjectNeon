@@ -36,6 +36,8 @@ public class MapSpawner3 : OnMessage<NodeFinished>
     
     private void Awake()
     {
+        gameMap.CurrentNode = Maybe<MapNode3>.Missing();
+        gameMap.CurrentPosition = gameMap.PreviousPosition;
         _activeNodes = new MapNodeGameObject3[0];
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         _rules = progress.CurrentChapter.NodeTypeOdds2.GenerateMapRules().Concat(new MapGenerationRule3[]
@@ -69,6 +71,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
 
     private void GenerateNewNodes()
     {
+        gameMap.CompleteCurrentNode();
         _activeNodes.ForEach(x => Destroy(x.gameObject));
         var nodes = Enum.GetValues(typeof(MapNodeType)).Cast<MapNodeType>().Select(x => new MapNode3 { Type = x }).ToList();
         foreach (var rule in _rules)
@@ -93,8 +96,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
             Action midPoint = x.HasEventEnroute ? () => storyEventSegment.Start() : (Action)(() => travelReactiveSystem.Continue());
             obj.Init(x, ctx, () =>
             {
-                gameMap.CompletedNodes.Add(x);
-                gameMap.CurrentChoices = new List<MapNode3>();
+                gameMap.CurrentNode = x;
             }, midPoint);
             var rect = (RectTransform) obj.transform;
             rect.pivot = new Vector2(0.5f, 0.5f);
@@ -104,7 +106,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         _playerToken.transform.SetAsLastSibling();
         Message.Publish(new AutoSaveRequested());
     }
-    
+
     private MapNodeGameObject3 GetNodePrefab(MapNodeType type, string corpName)
     {
         MapNodeGameObject3 nodePrefab = null;

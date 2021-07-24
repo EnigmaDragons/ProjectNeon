@@ -117,6 +117,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             return LoadFailedReason($"Unknown Map {mapData.GameMapId}");
         map.CurrentMap = selectedMap.Value;
         map.CompletedNodes = mapData.CompletedNodes.ToList();
+        map.PreviousPosition = mapData.CurrentPosition;
         map.CurrentPosition = mapData.CurrentPosition;
         map.CurrentChoices = mapData.CurrentChoices.ToList();
         return true;
