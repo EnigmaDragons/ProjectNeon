@@ -56,25 +56,42 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Action _onBeginDrag;
     private Vector3 _position;
     
+    // Drag Area
+    private readonly Vector2 _dragPaddingFactor = new Vector2(0.05f, 0.05f);
+    private readonly Vector2 _dragOffset = new Vector2(0, -40);
+    private Vector2 _minDragPoint = new Vector2(0, 0);
+    private Vector2 _maxDragPoint = new Vector2(1920, 1280);
+    
     // Hand 
     private string _zone;
     private bool _isHand;
     
     private bool _requiresPlayerTargeting;
 
-    private string CardName => _cardType?.Name ?? "";
     public bool Contains(Card c) => HasCard && c.CardId == _card.CardId;
     public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
     public bool IsHighlighted => highlight.activeSelf;
     public bool IsPlayable { get; private set; }
     public bool IsDragging { get; private set; } = false;
+    private string CardName => _cardType?.Name ?? "";
 
     public void Clear()
     {
         gameObject.SetActive(false);
         _card = null;
         _cardType = null;
+        UpdateDragArea();
+    }
+
+    private void UpdateDragArea()
+    {
+        var screenWidth = Screen.width;
+        var screenHeight = Screen.height;
+        var xPadding = screenWidth * _dragPaddingFactor.x;
+        var yPadding = screenHeight * _dragPaddingFactor.y;
+        _minDragPoint = new Vector2(0 + _dragOffset.x + xPadding, 0 + _dragOffset.y + yPadding);
+        _maxDragPoint = new Vector2(screenWidth + _dragOffset.x - xPadding, screenHeight + _dragOffset.y - yPadding);
     }
 
     public void Set(Card card) => Set("Library", card, () => { }, () => {}, () => { }, (_, __) => false, () => false);
@@ -413,8 +430,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             WhenActivatableHand(() =>
             {
                 if (!_requiresPlayerTargeting || !IsPlayable)
-                    transform.localPosition = transform.localPosition + new Vector3(eventData.delta.x * dragScaleFactor,
+                {
+                    var targetPoint = transform.position + new Vector3(eventData.delta.x * dragScaleFactor,
                         eventData.delta.y * dragScaleFactor, 0);
+                    var clampedDragPoint = new Vector3(
+                        Mathf.Clamp(targetPoint.x, _minDragPoint.x, _maxDragPoint.x),
+                        Mathf.Clamp(targetPoint.y, _minDragPoint.y, _maxDragPoint.y),
+                        targetPoint.z);
+                    Log.Info($"Min: {_minDragPoint.ToString()} Max: {_maxDragPoint.ToString()} Drag Target: {targetPoint.ToString()} Clamped: {clampedDragPoint.ToString()}");
+                    transform.position = clampedDragPoint;
+                    eventData.position = clampedDragPoint;
+                }
             }, () => { });
     }
 
@@ -424,6 +450,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             IsDragging = true;
             controls.SetActive(false);
             canvasGroup.blocksRaycasts = false;
+            HideComprehensiveCardInfo();
 
             // Targeting Card Selection Process can run the arrow
             if (_requiresPlayerTargeting && IsPlayable) 
