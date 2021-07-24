@@ -37,10 +37,20 @@ public static class BattleStateExtensions
 
     public static bool HasAnyValidTargets(this CardType c, Member m, BattleState state)
         => c.ActionSequences.All(action
-            => action.Scope == Scope.All
-            || action.Scope == Scope.AllExceptSelf
-            || action.Group == Group.Self
-            || action.Group == Group.Ally
-            || action.Group == Group.All
-            || state.MembersWithoutIds.Any(x => x.TeamType != m.TeamType && !x.IsStealthed() && x.IsConscious()));
+            => (action.Group == Group.Self && action.Scope == Scope.One)
+            || (action.Group == Group.Self && action.Scope == Scope.All)
+            || (action.Group == Group.Self && action.Scope == Scope.AllExcept)
+            || (action.Group == Group.Opponent && action.Scope == Scope.One && state.MembersWithoutIds.Any(x => x.TeamType != m.TeamType && !x.IsStealthed() && x.IsConscious()))
+            || (action.Group == Group.Opponent && action.Scope == Scope.All)
+            || (action.Group == Group.Opponent && action.Scope == Scope.AllExcept && state.MembersWithoutIds.Count(x => x.TeamType != m.TeamType && x.IsConscious()) >= 2 && state.MembersWithoutIds.Any(x => x.TeamType != m.TeamType && !x.IsStealthed() && x.IsConscious()))
+            || (action.Group == Group.Ally && action.Scope == Scope.One)
+            || (action.Group == Group.Ally && action.Scope == Scope.All)
+            || (action.Group == Group.Ally && action.Scope == Scope.AllExcept && state.MembersWithoutIds.Count(x => x.TeamType == m.TeamType && x.IsConscious()) >= 2)
+            || (action.Group == Group.Ally && action.Scope == Scope.OneExceptSelf && state.MembersWithoutIds.Count(x => x.TeamType == m.TeamType && x.IsConscious()) >= 2)
+            || (action.Group == Group.Ally && action.Scope == Scope.AllExceptSelf && state.MembersWithoutIds.Count(x => x.TeamType == m.TeamType && x.IsConscious()) >= 2)
+            || (action.Group == Group.All && action.Scope == Scope.One)
+            || (action.Group == Group.All && action.Scope == Scope.All)
+            || (action.Group == Group.All && action.Scope == Scope.AllExcept)
+            || (action.Group == Group.All && action.Scope == Scope.OneExceptSelf && state.MembersWithoutIds.Any(x => x.IsConscious() && x.Id != m.Id && (x.TeamType == m.TeamType || !x.IsStealthed())))
+            || (action.Group == Group.All && action.Scope == Scope.AllExceptSelf));
 }
