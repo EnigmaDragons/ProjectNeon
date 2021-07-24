@@ -43,7 +43,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
             new EnsureHelpfulOptionsBeforeBoss(),
             new NoClinicsIfYouAreHighHealth(),
             new NoShopsIfYouAreLowOnMoney(),
-            new EnsureAtLeastTwoChoices(),
+            new EnsureAtLeastThreeChoices(),
             new OnlyBossOnFinalNode(),
             new EnsureNodeTypeHasCorp(MapNodeType.GearShop, allCorps.GearSellingCorps),
             new EnsureNodeTypeHasCorp(MapNodeType.Clinic, allCorps.ClinicCorps),

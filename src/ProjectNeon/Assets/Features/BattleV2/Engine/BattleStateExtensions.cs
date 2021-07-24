@@ -1,4 +1,6 @@
 
+using System.Linq;
+
 public static class BattleStateExtensions
 {
     public static bool IsPlayableBy(this CardTypeData c, Member member, PartyAdventureState partyState)
@@ -30,4 +32,13 @@ public static class BattleStateExtensions
 
     public static bool IsAnyFormPlayableByHero(this Card c, PartyAdventureState partyState)
         => c.IsActive && c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner, partyState) || IsPlayableBy(c.Owner.BasicCard.Value, c.Owner, partyState);
+
+    public static bool HasAnyValidTargets(this CardType c, Member m, BattleState state)
+        => c.ActionSequences.All(action
+            => action.Scope == Scope.All
+            || action.Scope == Scope.AllExceptSelf
+            || action.Group == Group.Self
+            || action.Group == Group.Ally
+            || action.Group == Group.All
+            || state.MembersWithoutIds.Any(x => x.TeamType != m.TeamType && !x.IsStealthed() && x.IsConscious()));
 }
