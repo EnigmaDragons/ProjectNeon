@@ -22,4 +22,29 @@ public sealed class MemberStateTests
 
         Assert.AreEqual(8, member[resource]);
     }
+
+    [Test]
+    public void MemberState_WhenHasTauntAndGainsStealth_LosesAllTaunt()
+    {
+        var m = TestMembers.Any().State;
+        m.Adjust(TemporalStatType.Taunt, 1);
+
+        m.Adjust(TemporalStatType.Stealth, 1);
+        
+        Assert.AreEqual(1, m[TemporalStatType.Stealth], "Didn't Have Expected Stealth");
+        Assert.AreEqual(0, m[TemporalStatType.Taunt], "Had Taunt After Stealthing");
+    }
+    
+    [Test]
+    public void MemberState_WhenHasStealthAndGainsTaunt_LosesAllStealthAndGainsProminent()
+    {
+        var m = TestMembers.Any().State;
+        m.Adjust(TemporalStatType.Stealth, 1);
+        
+        m.Adjust(TemporalStatType.Taunt, 1);
+
+        Assert.AreEqual(1, m[TemporalStatType.Taunt], "Didn't Have Expected Taunt");
+        Assert.AreEqual(1, m[TemporalStatType.Prominent], "Didn't Have Expected Taunt");
+        Assert.AreEqual(0, m[TemporalStatType.Stealth], "Had Stealth after Taunting");
+    }
 }
