@@ -24,6 +24,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     
     private void Awake()
     {
+        state.SetPhase(BattleV2Phase.NotBegun);
         cards.ClearAll();
     }
     
@@ -46,8 +47,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
 
     private void BeginStartOfTurn()
     {
-        BattleLog.Write($"---------------------------------------------");
-        BattleLog.Write($"Starting Turn {state.TurnNumber}");
+        BattleLog.Write($"--------------  Turn {state.TurnNumber}  --------------");
         BeginPhase(BattleV2Phase.StartOfTurnEffects);
         state.StartTurn();
         Message.Publish(new TurnStarted());

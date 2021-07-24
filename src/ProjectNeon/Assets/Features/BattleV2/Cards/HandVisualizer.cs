@@ -147,7 +147,7 @@ public sealed class HandVisualizer : MonoBehaviour
             && state.NumberOfRecyclesRemainingThisTurn <= 0 
             && cards.All(c => !c.IsAnyFormPlayableByHero(state.Party, state.NumberOfCardPlaysRemainingThisTurn) || !c.Owner.CanPlayCards()))
         {
-            DevLog.Write("No playable cards. Requesting early turn Confirmation.");
+            DevLog.Write($"No playable cards. Requesting early turn Confirmation. Hand Size {cards.Length}. Num Cycles {state.NumberOfRecyclesRemainingThisTurn}");
             Message.Publish(new BeginPlayerTurnConfirmation());
         }
     }

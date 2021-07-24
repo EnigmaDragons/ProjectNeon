@@ -72,13 +72,15 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     
     public void Confirm()
     {
-        if (!ReadyForTurnEnd) return;
+        if (!ReadyForTurnEnd) 
+            return;
 
         var reasonWord = _confirmRequested ? "manually" : "automatically";
         _confirmRequested = false;
         confirmUi.gameObject.SetActive(false);
         playArea.Clear();
-        BattleLog.Write($"Player turn ended {reasonWord}");
+        if (battleState.Phase != BattleV2Phase.NotBegun)
+            BattleLog.Write($"Turn {battleState.TurnNumber} {battleState.Phase} - Player turn ended {reasonWord}");
         Message.Publish(new PlayerTurnConfirmed());
     }
 
