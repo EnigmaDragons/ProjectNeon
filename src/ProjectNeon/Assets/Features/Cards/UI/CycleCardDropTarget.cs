@@ -18,6 +18,7 @@ public class CycleCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterHan
             else
                 cardComponent.SetHandHighlight(false);
         _shouldRotate = false;
+        MouseDragState.Set(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
