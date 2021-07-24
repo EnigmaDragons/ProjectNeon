@@ -51,11 +51,13 @@ public class MouseHoverProcessor3D : MonoBehaviour
                 }
         }
 
+        var isMouseDragging = MouseDragState.IsDragging;
         if (_lastHover == null || !_lastHover.Map(v => v.Member.Id).Equals(hoverCharacter.Map(v => v.Member.Id)))
         {
-            Message.Publish(new CharacterHoverChanged { HoverCharacter = hoverCharacter.As<HoverCharacter>() });
+            Message.Publish(new CharacterHoverChanged { HoverCharacter = hoverCharacter.As<HoverCharacter>(), IsDragging = MouseDragState.IsDragging});
             _lastHover = hoverCharacter;
         }
-        _statusIcon.Update(hoverStatusIcon);
+        if (!isMouseDragging)
+            _statusIcon.Update(hoverStatusIcon);
     }
 }

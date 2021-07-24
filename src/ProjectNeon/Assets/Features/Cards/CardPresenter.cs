@@ -448,6 +448,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         => WhenActivatableHand(() =>
         {
             IsDragging = true;
+            MouseDragState.IsDragging = true;
             controls.SetActive(false);
             canvasGroup.blocksRaycasts = false;
             HideComprehensiveCardInfo();
@@ -463,6 +464,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnEndDrag(PointerEventData eventData) 
         => WhenActivatableHand(() =>
         {
+            MouseDragState.IsDragging = false;
             Message.Publish(new CancelTargetSelectionRequested());
             ReturnHandToNormal();
         }, UndoDragMovement);
@@ -478,6 +480,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private void UndoDragMovement()
     {
         Cursor.visible = true;
+        MouseDragState.IsDragging = false;
     }
     
     private void ReturnHandToNormal()

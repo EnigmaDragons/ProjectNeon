@@ -3,6 +3,7 @@ using UnityEngine;
 public class OnlyShowWhenHovered : OnMessage<CharacterHoverChanged>
 {
     [SerializeField] private GameObject[] targets;
+    [SerializeField] private bool showWhenMouseIsDragging = false;
 
     private Member _member;
 
@@ -18,7 +19,9 @@ public class OnlyShowWhenHovered : OnMessage<CharacterHoverChanged>
     {
         if (_member == null)
             return;
-
+        if (!showWhenMouseIsDragging && msg.IsDragging)
+            return;
+        
         var active = msg.HoverCharacter.IsPresentAnd(h => h.Member.Equals(_member));
         targets.ForEach(t => t.SetActive(active));
     }

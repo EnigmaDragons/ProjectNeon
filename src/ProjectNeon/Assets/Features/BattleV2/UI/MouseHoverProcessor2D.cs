@@ -49,14 +49,13 @@ public class MouseHoverProcessor2D : MonoBehaviour
                 }
         }
 
-        if ((_lastHover.IsMissing && hoverCharacter.IsPresent)
-            || (_lastHover.IsPresent && hoverCharacter.IsMissing)
-            || (_lastHover.IsPresent && hoverCharacter.IsPresent &&
-                _lastHover.Value.Member.Id != hoverCharacter.Value.Member.Id))
+        var isMouseDragging = MouseDragState.IsDragging;
+        if (_lastHover == null || !_lastHover.Map(v => v.Member.Id).Equals(hoverCharacter.Map(v => v.Member.Id)))
         {
-            Message.Publish(new CharacterHoverChanged { HoverCharacter = hoverCharacter.As<HoverCharacter>() });
+            Message.Publish(new CharacterHoverChanged { HoverCharacter = hoverCharacter.As<HoverCharacter>(), IsDragging = isMouseDragging});
             _lastHover = hoverCharacter;
         }
-        _statusIcon.Update(hoverStatusIcon);
+        if (!isMouseDragging)
+            _statusIcon.Update(hoverStatusIcon);
     }
 }
