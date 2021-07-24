@@ -214,7 +214,7 @@ public class CardResolutionZone : ScriptableObject
             Log.Info($"Num Bonus Cards {member.Name}: {bonusCards.Length}");
             foreach (var card in bonusCards)
             {
-                if (!card.IsPlayableBy(member, battleState.Party)) 
+                if (!card.IsPlayableBy(member, battleState.Party, 1)) 
                     continue;
                 
                 var targets = GetTargets(member, card, Maybe<Target[]>.Missing());

@@ -464,6 +464,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void Discard()
     {
+        if (battleState.NumberOfCardPlaysRemainingThisTurn <= 0)
+            return;
         DebugLog($"Discard");
         ReturnHandToNormal();
         _onDiscard();

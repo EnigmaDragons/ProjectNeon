@@ -187,7 +187,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         }
 
         var reactionCard = r.ReactionCard.Value;
-        if (reactionCard.IsPlayableBy(r.Source, state.Party))
+        if (reactionCard.IsPlayableBy(r.Source, state.Party, 1))
         {
             BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
             Message.Publish(new DisplayCharacterWordRequested(r.Source, "Reaction!"));

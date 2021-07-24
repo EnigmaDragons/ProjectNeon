@@ -3,7 +3,7 @@ using System.Linq;
 
 public static class BattleStateExtensions
 {
-    public static bool IsPlayableBy(this CardTypeData c, Member member, PartyAdventureState partyState)
+    public static bool IsPlayableBy(this CardTypeData c, Member member, PartyAdventureState partyState, int numberOfCardPlaysRemainingThisTurn)
     {
         if (c == null)
         {
@@ -22,16 +22,18 @@ public static class BattleStateExtensions
             return false;
         if (member.State.IsPrevented(c.Tags))
             return false;
+        if (numberOfCardPlaysRemainingThisTurn <= 0 && c.Speed == CardSpeed.Standard)
+            return false;
         return member.CanAfford(c, partyState);
     }
     
-    public static bool IsPlayable(this Card c, PartyAdventureState partyState)
+    public static bool IsPlayable(this Card c, PartyAdventureState partyState, int numberOfCardPlaysRemainingThisTurn)
     {
-        return c.IsActive && IsPlayableBy(c.Type, c.Owner, partyState);
+        return c.IsActive && IsPlayableBy(c.Type, c.Owner, partyState, numberOfCardPlaysRemainingThisTurn);
     }
 
-    public static bool IsAnyFormPlayableByHero(this Card c, PartyAdventureState partyState)
-        => c.IsActive && c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner, partyState) || IsPlayableBy(c.Owner.BasicCard.Value, c.Owner, partyState);
+    public static bool IsAnyFormPlayableByHero(this Card c, PartyAdventureState partyState, int numberOfCardPlaysRemainingThisTurn)
+        => c.IsActive && c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner, partyState, numberOfCardPlaysRemainingThisTurn) || IsPlayableBy(c.Owner.BasicCard.Value, c.Owner, partyState, numberOfCardPlaysRemainingThisTurn);
 
     public static bool HasAnyValidTargets(this CardType c, Member m, BattleState state)
         => c.ActionSequences.All(action
