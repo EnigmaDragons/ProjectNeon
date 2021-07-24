@@ -101,12 +101,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         c.SetHandHighlight(true);
     }
 
-    public void LostFocus()
-    {
-        Debug.Log("Hand Lost Focus");
-        _shouldHighlight = false;
-        DisableHighlight();
-    }
+    public void LostFocus() { } // No-Op Until we need to add back in Keyboard/Controller Support
     
     public void Cancel() {}
     public void Confirm() {}

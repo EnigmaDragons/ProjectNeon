@@ -42,12 +42,13 @@ public static class InterpolatedCardDescriptions
         }
         catch (Exception e)
         {
-            Log.Error($"Unable to Generate Interpolated Description for {card.Name}");
-            Log.Error(e);
             #if UNITY_EDITOR
             throw;
-            #endif
+            #else
+            Log.Error($"Unable to Generate Interpolated Description for {card.Name}");
+            Log.Error(e);
             return desc;
+            #endif
         }
     }
 
@@ -104,8 +105,8 @@ public static class InterpolatedCardDescriptions
                 result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex], owner, xCost));
         }
 
-        if (owner.IsPresent)
-            result = result.Replace("Owner[PrimaryResource]", Sprite(_resourceIcons[owner.Value.PrimaryResource().ResourceType]));
+        if (owner.IsPresent && _resourceIcons.TryGetValue(owner.Value.PrimaryResource().ResourceType, out var icon))
+            result = result.Replace("Owner[PrimaryResource]", Sprite(icon));
         
         foreach (var r in _resourceIcons)
             result = result.Replace(r.Key, Sprite(r.Value));

@@ -34,16 +34,15 @@ public class ResolutionZoneVisualizer : MonoBehaviour
     
     void UpdateZone()
     {
-        Log.Info("Resolution Zone Update.");
         if (zone.Cards.None())
         {
-            Log.Info("No Resolution Zone cards.");
+            Log.Info("Resolution Zone Update. No Resolution Zone cards.");
             _card = Maybe<Card>.Missing();
             Clear();
         }
         else if (_card.Select(c => c.CardId, -1) != zone.Cards.First().CardId)
         {
-            Log.Info("Show new Resolution Zone card.");
+            Log.Info("Resolution Zone Update. Show new Resolution Zone card.");
             Show(zone.Cards.First());
         }
     }

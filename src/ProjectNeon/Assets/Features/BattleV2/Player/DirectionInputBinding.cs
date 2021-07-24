@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -19,5 +20,11 @@ public class DirectionInputBinding : ScriptableObject, IDirectionControllable
 
     public void MoveNext() => _inner?.MoveNext();
     public void MovePrevious() => _inner?.MovePrevious();
-    public void LostFocus() => _inner?.LostFocus();
+    public void LostFocus() => Logged(() => _inner?.LostFocus(), "Direction Input Binding - Lost Focus");
+
+    private void Logged(Action a, string msg)
+    {
+        Log.Info(msg);
+        a();
+    }
 }
