@@ -10,6 +10,7 @@ public class HoverSpriteCharacter3D : MonoBehaviour, HoverSpriteCharacter
 
     public bool IsInitialized => _member != null;
     public Member Member => _member;
+    public int MemberId => IsInitialized ? Member.Id : -1;
     
     private bool _hovered;
     private Action _confirmAction;

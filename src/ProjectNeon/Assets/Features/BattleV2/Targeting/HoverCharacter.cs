@@ -9,4 +9,5 @@ public interface HoverCharacter
 
     bool IsInitialized { get; }
     Member Member { get; }
+    int MemberId { get; }
 }

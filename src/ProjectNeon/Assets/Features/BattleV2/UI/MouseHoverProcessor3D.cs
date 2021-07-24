@@ -52,9 +52,9 @@ public class MouseHoverProcessor3D : MonoBehaviour
         }
 
         var isMouseDragging = MouseDragState.IsDragging;
-        if (_lastHover == null || !_lastHover.Map(v => v.Member.Id).Equals(hoverCharacter.Map(v => v.Member.Id)))
+        if (_lastHover == null || !_lastHover.Map(v => v.MemberId).Equals(hoverCharacter.Map(v => v.MemberId)))
         {
-            Message.Publish(new CharacterHoverChanged { HoverCharacter = hoverCharacter.As<HoverCharacter>(), IsDragging = MouseDragState.IsDragging});
+            Message.Publish(new CharacterHoverChanged {HoverCharacter = hoverCharacter.As<HoverCharacter>(), IsDragging = MouseDragState.IsDragging});
             _lastHover = hoverCharacter;
         }
         if (!isMouseDragging)

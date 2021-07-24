@@ -41,11 +41,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Sprite standardCard;
     [SerializeField] private Sprite transientCard;
 
-    private bool _debug = false;
+    private bool _debug = true;
     
     private Card _card;
     private CardTypeData _cardType;
-    private int _preHighlightSiblingIndex;
 
     private Func<BattleState, Card, bool> _getCanPlay;
     private Func<bool> _getCanActivate;
@@ -65,15 +64,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     // Hand 
     private string _zone;
     private bool _isHand;
+    private int _siblingIndex = -1;
     
     private bool _requiresPlayerTargeting;
 
     public bool Contains(Card c) => HasCard && c.CardId == _card.CardId;
     public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
-    public bool IsHighlighted => highlight.activeSelf;
+    public bool IsFocused { get; private set; }
     public bool IsPlayable { get; private set; }
     public bool IsDragging { get; private set; } = false;
+    
     private string CardName => _cardType?.Name ?? "";
 
     public void Clear()
@@ -82,6 +83,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _card = null;
         _cardType = null;
         UpdateDragArea();
+        _siblingIndex = -1;
     }
 
     private void UpdateDragArea()
@@ -131,6 +133,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         RenderCardType();
     }
 
+    private void LateUpdate()
+    {
+        if (!_isHand || _siblingIndex <= -1) 
+            return;
+        
+        if (IsFocused)
+            transform.SetAsLastSibling();
+        else
+            transform.SetSiblingIndex(_siblingIndex);
+    }
+    
     private void InitFreshCard(Action onClick)
     {
         gameObject.SetActive(true);
@@ -203,7 +216,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (!conditionMetHighlight && !conditionNotMetHighlight && highlightShouldBeActive)
             highlight.SetActive(true);
     }
-    
+
+    public void SetSiblingIndex(int index) => _siblingIndex = index;
+
     public void SetHandHighlight(bool active)
     {
         if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
@@ -211,8 +226,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         DebugLog($"Setting Selected Highlight {active}");
         SetSelectedHighlight(IsPlayable && active);
+        IsFocused = active;
         controls.SetActive(active);
-        SetSiblingIndex(active);
+        //SetSiblingIndex(active);
         
         if (active)
             ShowComprehensiveCardInfo();
@@ -243,19 +259,19 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
 
-    private void SetSiblingIndex(bool active)
-    {
-        if (active && _preHighlightSiblingIndex == -1)
-        {
-            _preHighlightSiblingIndex = transform.GetSiblingIndex();
-            transform.SetAsLastSibling();
-        }
-        else if (!active && _preHighlightSiblingIndex != -1)
-        {
-            transform.SetSiblingIndex(_preHighlightSiblingIndex);
-            _preHighlightSiblingIndex = -1;
-        }
-    }
+    // private void SetSiblingIndex(bool active)
+    // {
+    //     if (active && _preHighlightSiblingIndex == -1)
+    //     {
+    //         _preHighlightSiblingIndex = transform.GetSiblingIndex();
+    //         transform.SetAsLastSibling();
+    //     }
+    //     else if (!active && _preHighlightSiblingIndex != -1)
+    //     {
+    //         transform.SetSiblingIndex(_preHighlightSiblingIndex);
+    //         _preHighlightSiblingIndex = -1;
+    //     }
+    // }
 
     public void ShowComprehensiveCardInfo()
     {

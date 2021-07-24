@@ -97,7 +97,7 @@ public class CardsVisualizer : MonoBehaviour
             var card = cards[cardIndex];
             var (presenterIndex, presenter) = GetCardPresenter(cardIndex, card);
             var c = presenter;
-            var isHighlighted = c.IsHighlighted;
+            var isFocused = c.IsFocused;
             
             if (!c.HasCard)
                 c.TeleportTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
@@ -108,7 +108,7 @@ public class CardsVisualizer : MonoBehaviour
             c.Set(card);
             c.SetDisabled(!card.Owner.IsConscious() || card.Owner.IsDisabled() || !_isFocused || !card.IsActive);
             SwapCardPoolSpots(cardIndex, presenterIndex);
-            c.SetHandHighlight(isHighlighted);
+            c.SetHandHighlight(isFocused);
             c.SetTargetPosition(targetPosition);
         }
     }

@@ -12,4 +12,5 @@ public class NoHoverCharacter : HoverCharacter
 
     public bool IsInitialized => _member.IsPresent;
     public Member Member => _member.Value;
+    public int MemberId => -1;
 }

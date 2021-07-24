@@ -118,7 +118,7 @@ public sealed class HandVisualizer : MonoBehaviour
             var card = cards[cardIndex];
             var (presenterIndex, presenter) = _cardPool.GetCardPresenter(cardIndex, card);
             var c = presenter;
-            var isHighlighted = c.IsHighlighted;
+            var isFocused = c.IsFocused;
             
             if (!c.HasCard)
                 c.TeleportTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
@@ -136,12 +136,11 @@ public sealed class HandVisualizer : MonoBehaviour
                 () => DiscardCard(cardIndex),
                 (battleState, c2) => allowInteractions && c2.IsPlayable(battleState.Party, battleState.NumberOfCardPlaysRemainingThisTurn),
                 () => allowInteractions);
+            c.SetSiblingIndex(cardIndex);
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.SetDisabled(!card.Owner.IsConscious());
-            c.SetHandHighlight(isHighlighted);
+            c.SetHandHighlight(isFocused);
             c.SetTargetPosition(targetPosition);
-                
-            c.transform.SetAsLastSibling();
         }
 
         if (cards.Any() 
