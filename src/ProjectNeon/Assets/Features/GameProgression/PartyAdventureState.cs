@@ -39,7 +39,11 @@ public sealed class PartyAdventureState : ScriptableObject
         foreach (var gear in availableGear)
             foreach (var h in heroes)
                 if (h.Equipment.HasSpareRoomFor(gear))
+                {
+                    Log.Info($"{h.Name} has room for {gear.Name}");
                     return true;
+                }
+
         return false;
     }
 

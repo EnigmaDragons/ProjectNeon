@@ -45,7 +45,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
             ? 1f
             : AffinityPricingAdjustment.PriceFactor(corpAffinity, shop.Corp.Name);
         
-        _selection = new ShopSelectionPicker(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party)
+        _selection = adventure.CreateLootPicker(party)
             .GenerateEquipmentSelection(equipment, _numEquips, isPolyCorp ? "" : shop.Corp.Name);
         
         _selection.Equipment.ForEach(c => 

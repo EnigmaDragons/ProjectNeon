@@ -1,14 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class ShopSelectionPicker
+public class LootPicker
 {
     private readonly int stage;
     private readonly RarityFactors factors;
     private readonly PartyAdventureState party;
 
-    public ShopSelectionPicker(int stage, RarityFactors factors, PartyAdventureState party)
+    public LootPicker(int stage, RarityFactors factors, PartyAdventureState party)
     {
         this.stage = stage;
         this.factors = factors;
@@ -30,6 +29,9 @@ public class ShopSelectionPicker
         return selectedCards.ToArray();
     }
 
+    public Equipment[] PickEquipments(EquipmentPool equipmentPool, int numEquipment, params Rarity[] rarities)
+        => PickEquipments(equipmentPool, numEquipment, "", rarities);
+    
     public Equipment[] PickEquipments(EquipmentPool equipmentPool, int numEquipment, string corpName,
         params Rarity[] rarities)
     {
@@ -99,14 +101,5 @@ public class ShopSelectionPicker
             selectedEquipment = selectedEquipment.Concat(PickEquipments(equipment, 1, corpNameFilter, Rarity.Common)).ToArray();
         }
         return new ShopSelection(selectedEquipment.ToList(), new List<CardTypeData>());
-    }
-
-    [Obsolete("V1 Shops")]
-    public ShopSelection GenerateV1MixedShopSelection(ShopCardPool cards, EquipmentPool equipment)
-    {
-        var selectedCards = PickCards(cards, 4, RarityExtensions.AllExceptStarters);
-        var selectedEquipment = PickEquipments(equipment, 4, "");
-        
-        return new ShopSelection(selectedEquipment.ToList(), selectedCards.ToList());
     }
 }

@@ -15,6 +15,7 @@ public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterH
         if (cardComponent != null)
             cardComponent.Discard();
         _shouldShake = false;
+        MouseDragState.Set(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

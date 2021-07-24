@@ -37,4 +37,5 @@ public class EventPublisher : ScriptableObject
     public void CancelTargetSelection() => Message.Publish(new CancelTargetSelectionRequested());
     public void FinishNode() => Message.Publish(new NodeFinished());
     public void ToggleBestiary() => Message.Publish(new ToggleBestiary());
+    public void GainRandomEquipment() => Message.Publish(new GainRandomEquipment());
 }

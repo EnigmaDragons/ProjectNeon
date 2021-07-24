@@ -10,6 +10,7 @@ public sealed class CardPlayDropTarget : MonoBehaviour, IDropHandler
         {
             cardComponent.Activate();
             eventData.pointerDrag = null;
+            MouseDragState.Set(false);
         }
     }
 }

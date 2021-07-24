@@ -21,7 +21,7 @@ public class AdventureProgress2 : ScriptableObject
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
-
+    
     public DynamicStage CurrentChapter
     {
         get { 
@@ -91,4 +91,7 @@ public class AdventureProgress2 : ScriptableObject
     }
 
     public void RecordEncounteredStoryEvent(StoryEvent e) => finishedStoryEvents.Add(e.name);
+    
+    public LootPicker CreateLootPicker(PartyAdventureState party) 
+        => new LootPicker(CurrentChapterNumber, CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), party);
 }
