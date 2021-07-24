@@ -11,7 +11,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private BattleState state;
     [SerializeField] private ShopCardPool cardPrizePool;
     [SerializeField] private EquipmentPool equipmentPrizePool;
-    [SerializeField] private CurrentGameMap2 gameMap;
+    [SerializeField] private CurrentGameMap3 gameMap;
     
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
@@ -60,17 +60,19 @@ public class BattleConclusion : OnMessage<BattleFinished>
         if (adventure2.IsFinalStageSegment)
         {
             Log.Info("Navigating to victory screen");
+            gameMap.CompleteCurrentNode();
             Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToVictoryScene(), secondsBeforeReturnToAdventure);
         }
         else
         {
             Log.Info("Advancing to next Stage Segment.");
+            gameMap.CompleteCurrentNode();
             Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }
     }
-    
+
     protected override void Execute(BattleFinished msg)
     {
         if (msg.Winner == TeamType.Party)

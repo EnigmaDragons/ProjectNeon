@@ -31,6 +31,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling>
         
         _isTraveling = true;
         _travelingToMidpoint = true;
+        gameMap.PreviousPosition = gameMap.CurrentPosition;
         gameMap.CurrentPosition = msg.Position;
         _travelTo = msg.Position;
         _midPoint = (new Vector2(PlayerToken.transform.localPosition.x, PlayerToken.transform.localPosition.y) + _travelTo) / 2;
