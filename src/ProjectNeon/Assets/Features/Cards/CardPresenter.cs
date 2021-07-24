@@ -77,6 +77,22 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     private string CardName => _cardType?.Name ?? "";
 
+    private void OnEnable()
+    {
+        Message.Subscribe<CardHighlighted>(OnCardHighlighted, this);
+    }
+
+    private void OnDisable()
+    {
+        Message.Unsubscribe(this);
+    }
+
+    private void OnCardHighlighted(CardHighlighted e)
+    {
+        if (IsFocused && e.CardPresenter != this)
+            SetHandHighlight(false);
+    }
+
     public void Clear()
     {
         gameObject.SetActive(false);
@@ -221,14 +237,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void SetHandHighlight(bool active)
     {
-        if (!highlight.activeSelf && !active && AreCloseEnough(transform.localScale.x, 1.0f))
+        if (!IsFocused && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
 
         DebugLog($"Setting Selected Highlight {active}");
         SetSelectedHighlight(IsPlayable && active);
         IsFocused = active;
         controls.SetActive(active);
-        //SetSiblingIndex(active);
         
         if (active)
             ShowComprehensiveCardInfo();
@@ -252,11 +267,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             Message.Publish(new SnapBackTweenRequested(transform, "Highlight"));  
             Message.Publish(new SnapBackTweenRequested(transform, "HighlightScale"));  
         }
+        
         if (_card != null)
             if (active)
                 Message.Publish(new HighlightCardOwner(_card.Owner));
             else
                 Message.Publish(new UnhighlightCardOwner(_card.Owner));
+        
+        if (active)
+            Message.Publish(new CardHighlighted(this));
     }
     
     public void ShowComprehensiveCardInfo()
