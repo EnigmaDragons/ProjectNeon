@@ -67,4 +67,13 @@ public sealed class Maybe<T>
         => IsPresent 
             ? new Maybe<T2>(convert(Value)) 
             : Maybe<T2>.Missing();
+
+    public bool Equals(Maybe<T> other)
+    {
+        if (other.IsMissing && IsMissing)
+            return true;
+        if (other.IsPresent && IsPresent)
+            return other.Value.Equals(Value);
+        return false;
+    }
 }
