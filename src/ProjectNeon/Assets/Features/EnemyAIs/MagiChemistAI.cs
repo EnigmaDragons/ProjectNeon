@@ -22,8 +22,12 @@ public class MagiChemistAI : TurnAI
 
     private IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
     {
+        var ultimateTarget = battleState.GetPossibleConsciousTargets(battleState.Members[memberId], Group.Opponent, Scope.One)
+            .Shuffled()
+            .OrderByDescending(x => x.Members[0].CurrentHp())
+            .FirstOrDefault();
         var card = new CardSelectionContext(memberId, battleState, strategy)
-            .IfTrueDontPlayType(ctx => ctx.Member.CurrentHp() == ctx.Member.MaxHp() || ctx.Enemies.Any(e => e.CurrentHp() >= (ctx.Member.CurrentHp() + 15)), CardTag.Ultimate)
+            .IfTrueDontPlayType(ctx => ctx.Member.CurrentHp() == ctx.Member.MaxHp() || ultimateTarget == null || ultimateTarget.Members[0].CurrentHp() + 15 < ctx.Member.CurrentHp(), CardTag.Ultimate)
             .WithSelectedUltimateIfAvailable()
             .WithSelectedDesignatedAttackerCardIfApplicable()
             .IfTrueDontPlayType(ctx => _hasAttackedLastTurn[memberId] && ctx.Member.State.PrimaryResourceAmount > 0, CardTag.Attack)
@@ -34,7 +38,7 @@ public class MagiChemistAI : TurnAI
         if (card.SelectedCard.Value.Is(CardTag.Ultimate))
             return new PlayedCardV2(
                 battleState.Members[memberId], 
-                new Target[] { new Single(battleState.Heroes.Shuffled().OrderByDescending(x => x.CurrentHp()).First()) }, 
+                new Target[] { ultimateTarget }, 
                 card.SelectedCard.Value.CreateInstance(battleState.GetNextCardId(), battleState.Members[memberId]));
         return card.WithSelectedTargetsPlayedCard();
     }

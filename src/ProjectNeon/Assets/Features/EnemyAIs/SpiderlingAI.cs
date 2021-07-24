@@ -15,7 +15,10 @@ public class SpiderlingAI : StatefulTurnAI
 
     protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
     {        
-        if (!_targetMap.ContainsKey(memberId) || !battleState.Members[_targetMap[memberId]].IsConscious())
+        if (!_targetMap.ContainsKey(memberId) 
+            || !battleState.Members[_targetMap[memberId]].IsConscious() 
+            || battleState.Members[_targetMap[memberId]].IsStealthed()
+            || (!battleState.Members[_targetMap[memberId]].HasTaunt() && battleState.MembersWithoutIds.Any(x => x.TeamType == TeamType.Party && x.Id != _targetMap[memberId] && x.HasTaunt() && x.IsConscious())))
         {
             var card = battleState.GetPlayableCards(memberId, battleState.Party).FirstOrDefault(x => x.Name == "Leaping Strike");
             if (card == null)
