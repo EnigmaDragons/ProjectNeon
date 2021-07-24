@@ -157,8 +157,12 @@ public static class AllEffects
                 AutoReTargetScope.Everyone => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious())),
                 AutoReTargetScope.AllAllies => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType)),
                 AutoReTargetScope.RandomAlly => new Single(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType).Random()),
+                AutoReTargetScope.RandomAllyExceptSelf => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType && ctx.Source.Id != m.Id).ToArray().Shuffled().Take(1)),
+                AutoReTargetScope.AllAlliesExcept => AllAlliesExcept(ctx),
+                AutoReTargetScope.AllAlliesExceptSelf => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType && m.Id != ctx.Source.Id)),
                 AutoReTargetScope.AllEnemies => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType)),
-                AutoReTargetScope.RandomEnemy => new Single(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType).Random()),
+                AutoReTargetScope.RandomEnemy => RandomEnemy(ctx),
+                AutoReTargetScope.AllEnemiesExcept => AllEnemiesExcept(ctx)
             };
 
         var targetsDesc = retargetScope == AutoReTargetScope.Source ? ctx.Source.Name : ctx.Target.MembersDescriptions();
@@ -200,4 +204,45 @@ public static class AllEffects
             .Initialized(new CardActionV2(effectData));
     
     private static int RoundUp(float v) => Mathf.CeilToInt(v);
+    
+    private static Target AllAlliesExcept(EffectContext ctx)
+    {
+        var targets = ctx.BattleMembers.Values
+            .Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType)
+            .ToArray()
+            .Shuffled();
+        return targets.Any() ? new Multiple(targets.Take(targets.Length - 1)) : new Multiple(new Member[0]);
+    }
+
+    private static Target RandomEnemy(EffectContext ctx)
+    {
+        var tauntEnemies = ctx.BattleMembers.Values
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt())
+            .ToArray()
+            .Shuffled();
+        if (tauntEnemies.Any())
+            return new Single(tauntEnemies.First());
+        return new Multiple(ctx.BattleMembers.Values
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
+            .ToArray()
+            .Shuffled()
+            .Take(1));
+    }
+
+    private static Target AllEnemiesExcept(EffectContext ctx)
+    {
+        var tauntEnemies = ctx.BattleMembers.Values
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt())
+            .ToArray()
+            .Shuffled();
+        if (tauntEnemies.Any())
+            return new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.Id != tauntEnemies[0].Id));
+        var enemiesToIgnore = ctx.BattleMembers.Values
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
+            .ToArray()
+            .Shuffled();
+        if (enemiesToIgnore.Any())
+            return new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.Id != enemiesToIgnore[0].Id));
+        return new Multiple(new Member[0]);
+    }
 }
