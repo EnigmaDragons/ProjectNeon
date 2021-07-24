@@ -9,11 +9,11 @@ public static class CardShopPricing
         if (rarity == Rarity.Common)
             return 40;
         if (rarity == Rarity.Uncommon)
-            return 80;
+            return 70;
         if (rarity == Rarity.Rare)
-            return 160;
+            return 140;
         if (rarity == Rarity.Epic)
-            return 320;
+            return 250;
         return 25;
     }
 
@@ -22,11 +22,11 @@ public static class CardShopPricing
         if (rarity == Rarity.Common)
             return Int(80 * priceFactor);
         if (rarity == Rarity.Uncommon)
-            return Int(200 * priceFactor);
+            return Int(180 * priceFactor);
         if (rarity == Rarity.Rare)
-            return Int(400 * priceFactor);
+            return Int(280 * priceFactor);
         if (rarity == Rarity.Epic)
-            return Int(600 * priceFactor);
+            return Int(400 * priceFactor);
         return 50;
     }
 
