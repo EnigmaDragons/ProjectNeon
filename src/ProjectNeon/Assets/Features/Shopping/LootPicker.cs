@@ -95,7 +95,7 @@ public class LootPicker
                 .Shuffled();
         }
         if (selectedEquipment.Length < numEquips)
-            Log.Error($"{corpNameFilter} doesn't have enough augments");
+            Log.Warn($"{corpNameFilter} doesn't have enough augments");
         while (selectedEquipment.Length < numEquips)
         {
             selectedEquipment = selectedEquipment.Concat(PickEquipments(equipment, 1, corpNameFilter, Rarity.Common)).ToArray();

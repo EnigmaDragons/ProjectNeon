@@ -28,8 +28,15 @@ public class PageViewer : MonoBehaviour
         
         for (var i = 0; i < (initElement.Count + (shouldHaveAtLeastOneDefault || initElement.Count == 0 ? 1 : 0)); i += _elementPositions.Count)
             AddPage(elementTemplate, defaultElementTemplate, initElement.Skip(i).Take(_elementPositions.Count).ToList(), initDefaultElement);
-        _pageIndex = keepPageIndex ? _pageIndex : 0;
-        _pages[_pageIndex].SetActive(true);
+
+        if (_pages.Count > 0)
+        {
+            _pageIndex = keepPageIndex && _pages.Count > _pageIndex 
+                ? _pageIndex 
+                : 0;
+            _pages[_pageIndex].SetActive(true);
+        }
+        
         UpdatePageControls();
     }
 
@@ -86,9 +93,9 @@ public class PageViewer : MonoBehaviour
 
     private void UpdatePageControls()
     {
-        previousPageButton.SetActive(_pageIndex != 0);
+        previousPageButton.SetActive(_pages.Count > 0 && _pageIndex != 0);
         nextPageButton.SetActive(_pageIndex != _pages.Count - 1);
-        pageNumText.gameObject.SetActive(_pages.Count != 1);
+        pageNumText.gameObject.SetActive(_pages.Count > 1);
         pageNumText.text = $"{(_pageIndex + 1)} / {_pages.Count}";
     }
 }
