@@ -15,7 +15,7 @@ public static class AIHelpers
         if (!enemy.DeckIsValid) 
             Log.Error($"{enemy.Name} has a deck with null cards");
 
-        var playableCards = cards.Where(c => c.IsPlayableBy(me, partyState) && c.HasAnyValidTargets(me, s)).Cast<CardTypeData>().ToArray();
+        var playableCards = cards.Where(c => c.IsPlayableBy(me, partyState, 1) && c.HasAnyValidTargets(me, s)).Cast<CardTypeData>().ToArray();
         if (!playableCards.Any())
             Log.Info($"{me} has no playable cards in hand");
         return playableCards;
