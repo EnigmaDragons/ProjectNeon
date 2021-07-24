@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class EquipmentInLibraryButton : MonoBehaviour
 {
@@ -6,19 +7,23 @@ public class EquipmentInLibraryButton : MonoBehaviour
     [SerializeField] private DeckBuilderState deckBuilderState;
     [SerializeField] private PartyAdventureState partyAdventureState;
     [SerializeField] private GameObject darken;
+    [SerializeField] private TextMeshProUGUI countLabel;
     
     public void InitInfoOnly(Equipment e) => presenter.Set(e, () => { });
 
-    public void Init(Equipment e, bool canAdd)
+    public void Init(Equipment e, int totalCount, int availableCount, bool canAdd)
     {
+        var countLabelText = totalCount > 1 ? $"{availableCount}/{totalCount}" : "";
         if (canAdd)
         {
             presenter.Set(e, () => Equip(e));
+            countLabel.text = countLabelText;
             darken.SetActive(false);
         }
         else
         {
             presenter.Set(e, () => {});
+            countLabel.text = countLabelText;
             darken.SetActive(true);
         }
     }
