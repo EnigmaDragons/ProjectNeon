@@ -103,6 +103,9 @@ public static class InterpolatedCardDescriptions
             if (token.Value.StartsWith("{ID"))
                 result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex], owner, xCost));
         }
+
+        if (owner.IsPresent)
+            result = result.Replace("Owner[PrimaryResource]", Sprite(_resourceIcons[owner.Value.PrimaryResource().ResourceType]));
         
         foreach (var r in _resourceIcons)
             result = result.Replace(r.Key, Sprite(r.Value));
@@ -320,7 +323,8 @@ public static class InterpolatedCardDescriptions
                 : "";
             formulaResult = formulaResult.Equals("0") ? "" : formulaResult;
             return FormattedFormula($"{ipf.Prefix} {formulaResult} {ipf.Suffix}".Trim())
-                .Replace("PrimaryResource", owner.PrimaryResource().ResourceType);
+                    .Replace("Owner[PrimaryResource]", owner.PrimaryResource().ResourceType)
+                    .Replace("PrimaryResource", owner.PrimaryResource().ResourceType);
         }
 
         return RoundUp(FormulaResult(f.FullFormula, owner, xCost)).ToString();
