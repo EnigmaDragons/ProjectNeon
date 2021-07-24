@@ -10,13 +10,67 @@ public class CardRulesPresenter : MonoBehaviour
 
     private bool _isInitialized;
     
+    // Rule Importance
+    private static readonly DictionaryWithDefault<string, int> RulesByImportance = new DictionaryWithDefault<string, int>(0);
+    
+    private static readonly string[] RulesByImportanceArr = {
+        
+        "Drain",
+        "Buyout",
+        "Afflicted",
+        "Igniting",
+        "Bloodied",
+        "Sneaky",
+        "Profitable",
+        TemporalStatType.Marked.ToString(),
+        TemporalStatType.DoubleDamage.ToString(),
+        TemporalStatType.CardStun.ToString(),
+        TemporalStatType.Aegis.ToString(),
+        TemporalStatType.Blind.ToString(),
+        TemporalStatType.Inhibit.ToString(),
+        TemporalStatType.Marked.ToString(),
+        TemporalStatType.Dodge.ToString(),
+        TemporalStatType.Taunt.ToString(),
+        TemporalStatType.Disabled.ToString(),
+        TemporalStatType.Stealth.ToString(),
+        TemporalStatType.Lifesteal.ToString(),
+        TemporalStatType.Confused.ToString(),
+        ReactionConditionType.OnSlay.ToString(),
+        "TagPlayed",
+        "Vulnerable",
+        "Critical",
+        "PrimaryStat",
+        PlayerStatType.CardCycles.ToString(),
+        "Swap",
+        "SingleUse",
+        "X-Cost",
+        "Chain",
+        "Quick"
+    };
+
     private void Awake()
     {
-        if (!_isInitialized)
-            Hide();
+        if (_isInitialized) 
+            return;
+        
+        InitIfNeeded();
+        Hide();
     }
 
-    public void Show(CardTypeData d)
+    private void InitIfNeeded()
+    {
+        if (_isInitialized)
+            return;
+        
+        _isInitialized = true;
+        if (RulesByImportance.Count != RulesByImportanceArr.Length)
+        {
+            RulesByImportance.Clear();
+            RulesByImportanceArr.ForEachIndex((r, i) => RulesByImportance[r] = i);
+        }
+    }
+    
+    public void Show(CardTypeData d, int maxRulesToShow = 999)
     {
         if (d == null)
         {
@@ -49,7 +103,7 @@ public class CardRulesPresenter : MonoBehaviour
                 rulesToShow.AddIf("TagPlayed", b.Formula.Contains("Tag["));
                 rulesToShow.AddIf("Vulnerable", b.EffectType == EffectType.ApplyVulnerable);
                 rulesToShow.AddIf(TemporalStatType.Disabled.ToString(), b.EffectType == EffectType.DisableForTurns);
-                rulesToShow.AddIf("Stealth", b.EffectType == EffectType.EnterStealth);
+                rulesToShow.AddIf(TemporalStatType.Stealth.ToString(), b.EffectType == EffectType.EnterStealth);
                 rulesToShow.AddIf("Drain", b.EffectType == EffectType.TransferPrimaryResourceFormula);
                 rulesToShow.AddIf("Igniting", "Igniting".Equals(b.ReactionEffectScope.Value));
                 rulesToShow.AddIf(ReactionConditionType.OnSlay.ToString(), ReactionConditionType.OnSlay == b.ReactionConditionType);
@@ -73,6 +127,8 @@ public class CardRulesPresenter : MonoBehaviour
 
             rulesToShow
                 .Distinct()
+                .OrderBy(r => RulesByImportance[r])
+                .Take(maxRulesToShow)
                 .ForEach(r => Instantiate(rulePresenterPrototype, rulesParent.transform).Initialized(r));
         }
         catch (Exception e)
@@ -80,13 +136,13 @@ public class CardRulesPresenter : MonoBehaviour
             throw new Exception($"Card Rules Error for {d.Name}", e);
         }
     }
-
+    
     private void AddAllMatchingEffectScopeRules(List<string> rulesToShow, EffectData e, params string[] scopes) 
         => scopes.ForEach(s => rulesToShow.AddIf(s, e.EffectScope != null && s.Equals(e.EffectScope.Value)));
     
     public void Hide()
     {
-        _isInitialized = true;
+        InitIfNeeded();
         rulesParent.DestroyAllChildren();
     }
 }

@@ -41,7 +41,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Sprite standardCard;
     [SerializeField] private Sprite transientCard;
 
-    private bool _debug = true;
+    private bool _debug = false;
     
     private Card _card;
     private CardTypeData _cardType;
@@ -102,7 +102,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Action onDiscard, Func<BattleState, Card, bool> getCanPlay, Func<bool> getCanActivate)
     {
-        Log.Info($"Card Set - {card.Name}");
+        DebugLog($"Card Set - {card.Name}");
         InitFreshCard(onClick);
 
         _onDiscard = onDiscard;
@@ -258,26 +258,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             else
                 Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
-
-    // private void SetSiblingIndex(bool active)
-    // {
-    //     if (active && _preHighlightSiblingIndex == -1)
-    //     {
-    //         _preHighlightSiblingIndex = transform.GetSiblingIndex();
-    //         transform.SetAsLastSibling();
-    //     }
-    //     else if (!active && _preHighlightSiblingIndex != -1)
-    //     {
-    //         transform.SetSiblingIndex(_preHighlightSiblingIndex);
-    //         _preHighlightSiblingIndex = -1;
-    //     }
-    // }
-
+    
     public void ShowComprehensiveCardInfo()
     {
         DebugLog("Show Comprehensive Info");
         Message.Publish(new HideReferencedCard());
-        rules.Show(_cardType);
+        rules.Show(_cardType, _isHand ? 2 : 999);
         targetRule.Show(_cardType.ActionSequences.First());
         if (!_isHand)
             scalingRule.Show(_cardType);

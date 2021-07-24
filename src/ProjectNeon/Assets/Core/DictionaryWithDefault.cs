@@ -14,7 +14,7 @@ public class DictionaryWithDefault<TKey, TValue> : Dictionary<TKey, TValue>
 
     public new TValue this[TKey key]
     {
-        get => ContainsKey(key) ? base[key] : _defaultValue;
+        get => TryGetValue(key, out var val) ? val : _defaultValue;
         set => base[key] = value;
     }
 }
