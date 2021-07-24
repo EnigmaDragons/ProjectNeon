@@ -42,8 +42,9 @@ public class ResolutionZoneVisualizer : MonoBehaviour
         }
         else if (_card.Select(c => c.CardId, -1) != zone.Cards.First().CardId)
         {
-            Log.Info("Resolution Zone Update. Show new Resolution Zone card.");
-            Show(zone.Cards.First());
+            var c = zone.Cards.First();
+            Log.Info($"Resolution Zone Update. Show new Resolution Zone card. {c.Name}");
+            Show(c);
         }
     }
     
