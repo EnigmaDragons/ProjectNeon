@@ -63,9 +63,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
             while (!_indexSelector.Current.HasCard)
                 _indexSelector.MovePrevious();
         _lastIndex = _indexSelector.Index;
-        if (_shouldHighlight)
-            ClearAllHighlights();
-        else
+        if (!_shouldHighlight)
             DisableHighlight();
     }
 
@@ -125,6 +123,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
 
     private void ClearAllHighlights()
     {
+        Debug.Log("Clear All Highlights");
         cards.ShownCards.ForEach(c => c.SetHandHighlight(false));
     }
     

@@ -41,9 +41,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Sprite standardCard;
     [SerializeField] private Sprite transientCard;
 
+    private bool _debug = false;
+    
     private Card _card;
     private CardTypeData _cardType;
-    private bool _debug = false;
     private int _preHighlightSiblingIndex;
 
     private Func<BattleState, Card, bool> _getCanPlay;
@@ -61,7 +62,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     private bool _requiresPlayerTargeting;
 
-    public string CardName => _cardType.Name;
+    private string CardName => _cardType?.Name ?? "";
     public bool Contains(Card c) => HasCard && c.CardId == _card.CardId;
     public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
@@ -208,7 +209,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
 
         var tweenDuration = 0.08f;
-        DebugLog($"Tweening Highlight {active}");
         if (active)
         {
             Message.Publish(new TweenMovementRequested(transform, new Vector3(0, sign * 180f, sign * 2f), tweenDuration, MovementDimension.Spatial, TweenMovementType.RubberBand, "Highlight"));
@@ -242,6 +242,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void ShowComprehensiveCardInfo()
     {
+        DebugLog("Show Comprehensive Info");
         Message.Publish(new HideReferencedCard());
         rules.Show(_cardType);
         targetRule.Show(_cardType.ActionSequences.First());
@@ -271,8 +272,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Message.Publish(new HideReferencedCard());
     }
     
-    public void SetHighlightGraphicState(bool active) => highlight.SetActive(active);
-
     public void TeleportTo(Vector3 targetPosition)
     {
         Message.Publish(new StopMovementTweeningRequested(transform, MovementDimension.Spatial));
@@ -369,7 +368,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (eventData.dragging)
             return;
-        DebugLog($"UI - Pointer Down - {CardName}");
+        
+        DebugLog($"UI - Pointer Down");
         if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
         {
             Cursor.visible = false;
