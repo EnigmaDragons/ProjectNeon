@@ -34,6 +34,8 @@ public static class AICardSelectionLogic
             .DontPlayXCostWithZeroResources()
             .DontPlayHealsIfAlliesDontNeedHealing()
             .DontPlayShieldsIfAlliesDontNeedShielding()
+            .DontPlayResistanceIfEnemiesDontHaveMagic()
+            .DontPlayArmorIfEnemiesDontHaveAttack()
             .DontGiveAlliesDodgeIfTheyAlreadyHaveEnough()
             .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
             .DontStealCreditsIfOpponentDoesntHaveAny();
@@ -74,6 +76,12 @@ public static class AICardSelectionLogic
     private static CardSelectionContext DontPlayShieldsIfAlliesDontNeedShielding(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentShield() > a.MaxShield() * 0.7), CardTag.Defense, CardTag.Shield);
 
+    private static CardSelectionContext DontPlayResistanceIfEnemiesDontHaveMagic(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Magic] < 5), CardTag.Defense, CardTag.Resistance);
+    
+    private static CardSelectionContext DontPlayArmorIfEnemiesDontHaveAttack(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Attack] < 5), CardTag.Defense, CardTag.Armor);
+    
     private static CardSelectionContext DontRemoveResourcesIfOpponentsDontHaveMany(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State.PrimaryResourceValue < 1f), CardTag.RemoveResources);
 

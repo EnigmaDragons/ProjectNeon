@@ -18,9 +18,15 @@ public class SeekerDroneAI : StatefulTurnAI
             return new CardSelectionContext(memberId, battleState, strategy)
                 .WithSelectedUltimateIfAvailable()
                 .WithSelectedTargetsPlayedCard();
-        if (!_targetMap.ContainsKey(memberId) || !battleState.Members[_targetMap[memberId]].IsConscious())
+        if (!_targetMap.ContainsKey(memberId) 
+            || !battleState.Members[_targetMap[memberId]].IsConscious() 
+            || battleState.Members[_targetMap[memberId]].IsStealthed()
+            || (!battleState.Members[_targetMap[memberId]].HasTaunt() && battleState.MembersWithoutIds.Any(x => x.TeamType == TeamType.Party && x.Id != _targetMap[memberId] && x.HasTaunt() && x.IsConscious())))
         {
-            var card = battleState.GetPlayableCards(memberId, battleState.Party).First(x => x.Name == "Target Locked");
+            var card = battleState.GetPlayableCards(memberId, battleState.Party).FirstOrDefault(x => x.Name == "Target Locked");
+            if (card == null)
+                return new CardSelectionContext(memberId, battleState, strategy)
+                    .WithSelectedTargetsPlayedCard();
             var target = strategy.AttackTargetFor(card.ActionSequences[0]);
             return new PlayedCardV2(battleState.Members[memberId], new [] { target }, card.CreateInstance(battleState.GetNextCardId(), battleState.Members[memberId]));
         }
