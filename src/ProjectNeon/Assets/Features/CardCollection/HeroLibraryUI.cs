@@ -11,6 +11,8 @@ public class HeroLibraryUI : MonoBehaviour
     [SerializeField] private Library library;
     [SerializeField] private HeroFaceSelector heroSelector;
     [SerializeField] private ArchetypeTints archetypeTints;
+    [SerializeField] private PartyAdventureState party;
+    [SerializeField] private bool cheatGainCard;
 
     private void Awake()
     {
@@ -51,7 +53,15 @@ public class HeroLibraryUI : MonoBehaviour
     
     private Action<GameObject> InitCardInLibraryButton(Card card)
     {
-        void Init(GameObject gameObj) => gameObj.GetComponent<CardInLibraryButton>().InitInfoOnly(card);
+        void Init(GameObject gameObj) => gameObj.GetComponent<CardInLibraryButton>().InitInfoOnly(card, cheatGainCard ? () =>
+            {
+                party.Add(card.BaseType);
+                party.Add(card.BaseType);
+                party.Add(card.BaseType);
+                party.Add(card.BaseType);
+                Message.Publish(new ToggleCardLibrary());
+            }
+            : (Action)(() => {}));
         return Init;
     }
 }
