@@ -39,7 +39,11 @@ public class BattleConclusion : OnMessage<BattleFinished>
 
         Message.Publish(new GetUserSelectedEquipment(rewardEquips.ToArray().Shuffled(), equipment =>
         {
-            equipment.IfPresent(e => state.SetRewardEquipment(e));
+            equipment.IfPresent(e =>
+            {
+                AllMetrics.PublishGearRewardSelection(e.GetMetricNameOrDescription(), rewardEquips.Select(r => r.GetMetricNameOrDescription()).ToArray());
+                state.SetRewardEquipment(e);
+            });
             onFinished();
         }));
     }
@@ -47,7 +51,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
     private void GetUserSelectedRewardCard(Action onFinished, LootPicker rewardPicker)
     {
         var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, RarityExtensions.AllExceptStarters);
-        var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party));
+        var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party)).ToArray().Shuffled();
         Message.Publish(new GetUserSelectedCard(rewardCards, card =>
         {
             card.IfPresent(c =>

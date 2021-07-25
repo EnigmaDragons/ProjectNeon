@@ -28,8 +28,11 @@ public static class AllMetrics
         => Send("selectedSquad", new SquadSelectedData {adventureName = adventureName, heroNames = selectedHeroes});
 
     public static void PublishCardRewardSelection(string selectedCardName, string[] optionNames)
-        => Send("rewardCardSelected", new CardRewardSelectionData {selected = selectedCardName, options = optionNames});
+        => Send("rewardCardSelected", new OptionSelectionData {selected = selectedCardName, options = optionNames});
 
+    public static void PublishGearRewardSelection(string selectedGearNameOrDescription, string[] optionNameOrDescriptions)
+        => Send("rewardGearSelected", new OptionSelectionData {selected = selectedGearNameOrDescription, options = optionNameOrDescriptions});
+    
     private static void Send(string eventName, object payload)
         => Send(new GeneralMetric(eventName, JsonUtility.ToJson(payload)));
     
@@ -37,11 +40,21 @@ public static class AllMetrics
         => Client.Post(
             new Uri(_securedUrl.FromBase64(), UriKind.Absolute),
             new StringContent(
-                JsonUtility.ToJson(new GeneralMetricData { gameVersion = _version, installId = _installId, runId = _runId, eventType = m.EventType, @event = m.Event }),
+                JsonUtility.ToJson(new GeneralMetricData
+                {
+                    gameVersion = WithEditorInfoAppended(_version), 
+                    installId = _installId, 
+                    runId = _runId, 
+                    eventType = m.EventType, 
+                    @event = m.Event
+                }),
                 Encoding.UTF8,
                 "application/json"),
             HttpCompletionOption.AllResponseContent,
             OnResponse);
+    
+    
+    private static string WithEditorInfoAppended(string version) => _isEditor ? $"{version} Editor" : version;
 
     private static void OnResponse(HttpResponseMessage resp)
     {
@@ -67,7 +80,7 @@ public static class AllMetrics
     }
 
     [Serializable]
-    private class CardRewardSelectionData
+    private class OptionSelectionData
     {
         public string selected;
         public string[] options;
