@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class OnlyShowWhenHovered : OnMessage<CharacterHoverChanged>
@@ -22,7 +23,7 @@ public class OnlyShowWhenHovered : OnMessage<CharacterHoverChanged>
         if (!showWhenMouseIsDragging && msg.IsDragging)
             return;
         
-        var active = msg.HoverCharacter.IsPresentAnd(h => h.Member.Equals(_member));
-        targets.ForEach(t => t.SetActive(active));
+        var active = msg.HoverCharacter.IsPresentAnd(h => h != null && h.Member.Equals(_member));
+        targets.Where(t => t != null).ForEach(t => t.SetActive(active));
     }
 }

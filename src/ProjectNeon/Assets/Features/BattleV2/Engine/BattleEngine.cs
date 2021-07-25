@@ -57,6 +57,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     private void BeginHastyEnemiesPhase() =>
         ResolveBattleFinishedOrExecute(() =>
         {
+            Message.Publish(new GenerateAIStrategy());
             BeginPhase(BattleV2Phase.HastyEnemyCards);
             enemyCardsPhases.BeginPlayingAllHastyEnemyCards();
         });

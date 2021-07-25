@@ -44,11 +44,11 @@ public class MainframeAI : TurnAI
             else if (_currentPlan == MainframePlan.Attack && _stage >= 2)
                 return new CardSelectionContext(memberId, battleState, strategy)
                     .WithSelectedCardByNameIfPresent("Eliminate 2.0")
-                    .WithSelectedTargetsPlayedCard(m => m.Members[0].Id == memberId);
+                    .WithSelectedTargetsPlayedCard();
             else if (_currentPlan == MainframePlan.Attack)
                 return new CardSelectionContext(memberId, battleState, strategy)
                     .WithSelectedCardByNameIfPresent("Eliminate 1.0")
-                    .WithSelectedTargetsPlayedCard(m => m.Members[0].Id == memberId);
+                    .WithSelectedTargetsPlayedCard();
             else
                 return new CardSelectionContext(memberId, battleState, strategy)
                     .WithSelectedCardByNameIfPresent("Eliminate 1.0")

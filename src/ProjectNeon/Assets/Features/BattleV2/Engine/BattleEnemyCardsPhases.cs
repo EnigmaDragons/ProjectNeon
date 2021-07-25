@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted, CardResolutionFinished>
+public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAIStrategy, CardResolutionFinished>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private BattleResolutions resolutions;
@@ -72,7 +72,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, TurnStarted,
 
     protected override void Execute(BattleStateChanged msg) => _phase = state.Phase;
     protected override void Execute(CardResolutionFinished msg) => PlayNextCardInPhase();
-    protected override void Execute(TurnStarted msg)
+    protected override void Execute(GenerateAIStrategy msg)
     {
         _currentTurnStrategy = _enemyStrategy.Generate(state, disabledCard);
         _enemiesToActThisTurn = state.Enemies
