@@ -15,6 +15,7 @@ public sealed class Navigator : ScriptableObject
     public void NavigateToDefeatScene() => NavigateTo("DefeatScene");
     public void NavigateToShopScene() => NavigateTo("ShopScene");
     public void NavigateToRewardScene() => NavigateTo("RewardScene");
+    public void NavigateToDiscordServer() => Application.OpenURL("https://discord.gg/V3yKWAwknC");
 
     private void NavigateTo(string sceneName)
     {
