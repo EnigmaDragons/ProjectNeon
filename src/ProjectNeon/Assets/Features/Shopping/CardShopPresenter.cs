@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class CardShopPresenter : MonoBehaviour
+public class CardShopPresenter : OnMessage<RefreshShop>
 {
     [SerializeField] private ShopCardPool cards;
     [SerializeField] private PartyAdventureState party;
@@ -24,8 +24,9 @@ public class CardShopPresenter : MonoBehaviour
                 Destroy(c.gameObject);
     }
 
-    private void OnEnable() => GetMoreInventory();
-    private void OnDisable() => Message.Publish(new AutoSaveRequested());
+    protected override void Execute(RefreshShop msg) => GetMoreInventory();
+    protected override void AfterEnable() => GetMoreInventory();
+    protected override void AfterDisable() => Message.Publish(new AutoSaveRequested());
 
     public void GetMoreInventory()
     {

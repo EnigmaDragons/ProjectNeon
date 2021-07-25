@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
+public class EquipmentShopPresenter : OnMessage<RefreshShop>
 {
     [SerializeField] private EquipmentPool equipment;
     [SerializeField] private PartyAdventureState party;
@@ -30,7 +30,7 @@ public class EquipmentShopPresenter : OnMessage<GetFreshEquipmentSet>
 
     protected override void AfterEnable() => GetMoreInventory();
     protected override void AfterDisable() => Message.Publish(new AutoSaveRequested());
-    protected override void Execute(GetFreshEquipmentSet msg) => GetMoreInventory();
+    protected override void Execute(RefreshShop msg) => GetMoreInventory();
 
     public void GetMoreInventory()
     {
