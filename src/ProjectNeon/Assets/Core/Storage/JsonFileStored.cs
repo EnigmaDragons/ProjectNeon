@@ -13,7 +13,9 @@ public sealed class JsonFileStored<T> : Stored<T>
         _filename = filename;
         _getDefaultValue = getDefaultValue;
     }
-    
+
+    public bool FileExists() => File.Exists(_filename);
+
     public T Get()
     {
         if (_item == null)
