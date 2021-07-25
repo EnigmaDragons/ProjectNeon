@@ -109,12 +109,18 @@ public sealed class SaveLoadSystem : ScriptableObject
 
             foreach (var equipmentIdName in heroSaveData.EquipmentIdNames)
             {
+                if (equipmentIdName.Name.Equals("Implant"))
+                    continue;
+                
                 var maybeEquipment = party.Equipment.Available.Where(x => x.Id == equipmentIdName.Id && x.Name.Equals(equipmentIdName.Name)).FirstAsMaybe();
                 if (!maybeEquipment.IsPresent)
                     return LoadFailedReason($"Cannot find Hero's Equipped {equipmentIdName.Name} in party equipment");
                 if (maybeEquipment.Value.Slot != EquipmentSlot.Permanent)
                     party.EquipTo(maybeEquipment.Value, hero);
             }
+
+            foreach (var implant in heroSaveData.Implants)
+                hero.ApplyPermanent(implant.GeneratedEquipment);
 
             foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds)
             {
