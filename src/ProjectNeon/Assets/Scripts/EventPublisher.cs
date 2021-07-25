@@ -28,7 +28,6 @@ public class EventPublisher : ScriptableObject
     public void ToggleCardLibrary() => Message.Publish(new ToggleCardLibrary());
     public void ToggleEnemyCardLibrary() => Message.Publish(new ToggleEnemyCardLibrary());
     public void ToggleGearLibrary() => Message.Publish(new ToggleGearLibrary());
-    public void GenerateFreshEquipmentSet() => Message.Publish(new GetFreshEquipmentSet());
     public void HideDetailedCardView() => Message.Publish(new HideDetailedCardView());
     public void HideDetailedEnemyView() => Message.Publish(new HideEnemyDetails());
     public void GiveAnInjury() => Message.Publish(new UpdatePartyAdventureState(p => p.Heroes[0].Apply(new AdditiveStatInjury { Stat = new StringReference("MaxHp"), Amount = -3 })));
@@ -38,4 +37,5 @@ public class EventPublisher : ScriptableObject
     public void FinishNode() => Message.Publish(new NodeFinished());
     public void ToggleBestiary() => Message.Publish(new ToggleBestiary());
     public void GainRandomEquipment() => Message.Publish(new GainRandomEquipment());
+    public void RefreshShop() => Message.Publish(new RefreshShop());
 }

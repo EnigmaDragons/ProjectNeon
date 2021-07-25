@@ -59,7 +59,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
 
     private void Start()
     {
-        if (gameMap.CurrentNode.IsPresent)
+        if (gameMap.CurrentNode.IsPresent && gameMap.CurrentNode.Value.Type == MapNodeType.Start)
         {
             var activeNode = _activeNodes.First(x => x.MapData.Position.x == gameMap.CurrentNode.Value.Position.x && x.MapData.Position.y == gameMap.CurrentNode.Value.Position.y);
             Message.Publish(new TravelToNode

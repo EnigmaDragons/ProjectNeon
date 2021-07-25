@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ClinicUI : OnMessage<UpdateClinic>
+public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
 {
     [SerializeField] private GameObject patientParent;
     [SerializeField] private ClinicPatientUI patientPrototype;
@@ -16,6 +16,12 @@ public class ClinicUI : OnMessage<UpdateClinic>
     private ClinicServiceProvider _serviceProvider;
     
     protected override void Execute(UpdateClinic msg) => UpdateServices();
+    protected override void Execute(RefreshShop msg)
+    {
+        _serviceProvider = clinics.GetServices(clinic.Corp);
+        UpdateServices();
+    }
+
     protected override void AfterDisable() => Message.Publish(new AutoSaveRequested());
     protected override void AfterEnable()
     {

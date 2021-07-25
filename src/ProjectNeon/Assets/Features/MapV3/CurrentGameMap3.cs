@@ -28,7 +28,7 @@ public class CurrentGameMap3 : ScriptableObject
 
     public void CompleteCurrentNode()
     {
-        if (CurrentNode.IsMissing)
+        if (CurrentNode.IsMissing || CurrentNode.Value.Type == MapNodeType.Start)
             return;
         CompletedNodes.Add(CurrentNode.Value);
         CurrentChoices = new List<MapNode3>();
