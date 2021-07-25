@@ -10,6 +10,7 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private Library library;
     [SerializeField] private CurrentGameMap3 map;
     [SerializeField] private AllMaps maps;
+    [SerializeField] private CorpClinicProvider clinics;
 
     public bool HasSavedGame => CurrentGameData.HasActiveGame;
     public void SaveCheckpoint() => SaveCurrentGame();
@@ -75,7 +76,24 @@ public sealed class SaveLoadSystem : ScriptableObject
         if (deckMaybeCards.Any(d => d.Any(c => c.IsMissing)))
             return LoadFailedReason("Missing Cards From Decks");
         party.UpdateDecks(deckMaybeCards.Select(d => d.Select(c => c.Value).ToList()).ToArray());
-        
+
+        // Don't blow up the load over a missing blessing. Just don't grant it.
+        var heroesById = partyData.Blessings
+            .SelectMany(b => b.TargetHeroIds)
+            .Distinct()
+            .Select(h => library.HeroById(h))
+            .ToDictionary(h => h.Id, h => h);
+        foreach (var blessingSaveData in partyData.Blessings)
+        {
+            var maybeBlessingData = clinics.GetBlessingByName(blessingSaveData.Name);
+            var data = blessingSaveData;
+            maybeBlessingData.IfPresent(b =>
+            {
+                var targetHeroes = data.TargetHeroIds.Select(id => heroesById[id]).Cast<HeroCharacter>().ToArray();
+                party.AddBlessing(new Blessing { Name = b.Name, Effect = b.Effect, Targets = targetHeroes });
+            });
+        }
+
         for (var i = 0; i < numHeroes; i++)
         {
             var hero = party.Heroes[i];

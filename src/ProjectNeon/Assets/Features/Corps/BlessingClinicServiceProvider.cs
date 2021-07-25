@@ -26,11 +26,12 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
                     Targets = blessingData.IsSingleTarget 
                         ? _party.Heroes
                             .Where(x => x.Stats[blessingData.StatRequirement] >= blessingData.RequirementThreshold)
+                            .Select(h => h.Character)
                             .ToArray()
                             .Shuffled()
                             .Take(1)
-                            .ToArray() 
-                        : _party.Heroes
+                            .ToArray()
+                        : _party.Heroes.Select(h => h.Character).ToArray()
                 }})
                 .Where(x => x.blessing.Targets.Length > 0)
                 .ToArray()
@@ -38,7 +39,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
                 .Take(3)
                 .Select(x => new ClinicServiceButtonData(
                     x.blessingData.Name, 
-                    x.blessingData.IsSingleTarget ? string.Format(x.blessingData.Description, x.blessing.Targets[0].Character.Name) : x.blessingData.Description, 
+                    x.blessingData.IsSingleTarget ? string.Format(x.blessingData.Description, x.blessing.Targets[0].Name) : x.blessingData.Description, 
                     0,
                     () =>
                     {

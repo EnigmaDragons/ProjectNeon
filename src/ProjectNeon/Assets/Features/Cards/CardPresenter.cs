@@ -461,7 +461,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                         Mathf.Clamp(targetPoint.x, _minDragPoint.x, _maxDragPoint.x),
                         Mathf.Clamp(targetPoint.y, _minDragPoint.y, _maxDragPoint.y),
                         targetPoint.z);
-                    Log.Info($"Min: {_minDragPoint.ToString()} Max: {_maxDragPoint.ToString()} Drag Target: {targetPoint.ToString()} Clamped: {clampedDragPoint.ToString()}");
                     transform.position = clampedDragPoint;
                     eventData.position = clampedDragPoint;
                 }

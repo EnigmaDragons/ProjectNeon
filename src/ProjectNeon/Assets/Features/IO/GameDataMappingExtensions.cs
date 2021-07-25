@@ -19,7 +19,14 @@ public static class GameDataMappingExtensions
             CardIds = s.Cards.AllCards
                 .SelectMany(cSlot => Enumerable.Range(0, cSlot.Value).Select(_ => cSlot.Key.Id))
                 .ToArray(),
-            Equipment = s.Equipment.All.Select(x => x.GetData()).ToArray()
+            Equipment = s.Equipment.All.Select(x => x.GetData()).ToArray(),
+            Blessings = s.Blessings
+                .Select(b => new BlessingSaveData
+                {
+                    Name = b.Name, 
+                    TargetHeroIds = b.Targets.Select(t => t.Id).ToArray()
+                })
+                .ToArray()
         };
 
     public static GameAdventureProgressData GetData(this AdventureProgress2 p)
