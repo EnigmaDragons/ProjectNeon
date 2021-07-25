@@ -50,6 +50,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         if (selectedAdventure.IsMissing)
             return LoadFailedReason($"Unknown Adventure {adventureProgress.AdventureId}");
         adventure.Init(selectedAdventure.Value, adventureProgress.CurrentChapterIndex);
+        adventure.SetFinishedStoryEvents(adventureProgress.FinishedStoryEvents);
         return true;
     }
 

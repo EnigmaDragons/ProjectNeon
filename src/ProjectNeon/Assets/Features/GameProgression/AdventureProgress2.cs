@@ -90,6 +90,7 @@ public class AdventureProgress2 : ScriptableObject
     }
 
     public void RecordEncounteredStoryEvent(StoryEvent e) => finishedStoryEvents.Add(e.name);
+    public void SetFinishedStoryEvents(string[] storyEvents) => finishedStoryEvents = storyEvents.ToList();
     
     public LootPicker CreateLootPicker(PartyAdventureState party) 
         => new LootPicker(CurrentChapterNumber, CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), party);
