@@ -22,6 +22,15 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                 _navigator.NavigateToSquadSelection();
             else if (phase == CurrentGamePhase.SelectedSquad)
                 _navigator.NavigateToGameScene();
+            else if (phase == CurrentGamePhase.LoadError)
+            {
+                io.ClearCurrentSlot();
+                CurrentGameData.Clear();
+                Message.Publish(new RefreshMainMenu());
+                Message.Publish(new ShowInfoDialog(
+                    "Unfortunately, your Save Game was unable to be loaded. A bug report has been automatically filed.",
+                    "Drek!"));
+            }
         }
     }
 

@@ -38,8 +38,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             loadedSuccessfully = InitParty(saveData.PartyData);
         if (loadedSuccessfully && (int) saveData.Phase >= (int) CurrentGamePhase.SelectedAdventure)
             loadedSuccessfully = InitMap(saveData.GameMap);
-        if (!loadedSuccessfully) 
-            Log.Info("Unable to Load Game");
+        if (!loadedSuccessfully)
+            return CurrentGamePhase.LoadError;
 
         return saveData.Phase;
     }
