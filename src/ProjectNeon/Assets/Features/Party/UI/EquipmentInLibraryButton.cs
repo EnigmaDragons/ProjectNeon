@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class EquipmentInLibraryButton : MonoBehaviour
@@ -9,7 +10,7 @@ public class EquipmentInLibraryButton : MonoBehaviour
     [SerializeField] private GameObject darken;
     [SerializeField] private TextMeshProUGUI countLabel;
     
-    public void InitInfoOnly(Equipment e) => presenter.Set(e, () => { });
+    public void InitInfoOnly(Equipment e, Action action) => presenter.Set(e, action);
 
     public void Init(Equipment e, int totalCount, int availableCount, bool canAdd)
     {

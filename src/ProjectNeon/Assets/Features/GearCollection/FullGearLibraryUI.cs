@@ -8,6 +8,8 @@ public class FullGearLibraryUI : MonoBehaviour
     [SerializeField] private EquipmentInLibraryButton equipmentInLibraryButtonTemplate;
     [SerializeField] private EquipmentPool gearPool;
     [SerializeField] private GameObject emptyObj;
+    [SerializeField] private PartyAdventureState party;
+    [SerializeField] private bool cheatGainEquipment;
     
     private void Awake() => GenerateLibrary();
 
@@ -32,5 +34,10 @@ public class FullGearLibraryUI : MonoBehaviour
     }
     
     private Action<GameObject> InitEquipmentInLibraryButton(Equipment equipment) 
-        => gameObj => gameObj.GetComponent<EquipmentInLibraryButton>().InitInfoOnly(equipment);
+        => gameObj => gameObj.GetComponent<EquipmentInLibraryButton>().InitInfoOnly(equipment, cheatGainEquipment ? () =>
+            {
+                party.Add(equipment);
+                Message.Publish(new ToggleGearLibrary());
+            }
+            : (Action)(() => {}));
 }
