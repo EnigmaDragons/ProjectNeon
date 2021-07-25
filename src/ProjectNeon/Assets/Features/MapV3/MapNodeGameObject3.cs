@@ -9,19 +9,27 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private StageSegment segment;
     [SerializeField] private GameObject hoverRulesPanel;
     
-    private IStageSegment _arrivalSegment;
+    public IStageSegment ArrivalSegment { get; private set; }
+    public MapNode3 MapData { get; private set; }
     private Maybe<GameObject> _rulesPanel;
     
-    public void Init(MapNode3 mapData, AdventureGenerationContext ctx, Action onArrive, Action onMidPointArrive)
+
+    public void Init(MapNode3 mapData, CurrentGameMap3 gameMap, AdventureGenerationContext ctx, Action onMidPointArrive)
     {
-        _arrivalSegment = segment;
-        button.onClick.AddListener(() => Message.Publish(new TravelToNode { Position = mapData.Position, OnMidPointArrive = onMidPointArrive, OnArrive = () =>
-            {
-                onArrive();
-                _arrivalSegment.Start();
-            },
-        }));
-        _arrivalSegment = _arrivalSegment.GenerateDeterministic(ctx, mapData);
+        MapData = mapData;
+        ArrivalSegment = segment;
+        button.onClick.AddListener(() =>
+        {
+            gameMap.CurrentNode = mapData;
+            Message.Publish(new TravelToNode
+                {
+                    Position = mapData.Position, 
+                    OnMidPointArrive = onMidPointArrive,
+                    OnArrive = () => ArrivalSegment.Start()
+                });
+            Message.Publish(new AutoSaveRequested());
+        });
+        ArrivalSegment = ArrivalSegment.GenerateDeterministic(ctx, mapData);
     }
     
     private void Awake()
@@ -32,7 +40,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _arrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(detail, true)));
+        ArrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(detail, true)));
         _rulesPanel.IfPresent(r => r.SetActive(true));
         transform.SetSiblingIndex(transform.parent.childCount - 2);
     }

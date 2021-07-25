@@ -72,9 +72,11 @@ public class GameEquipmentData
 public class GameMapData
 {
     public int GameMapId;
+    public Maybe<MapNode3> CurrentNode;
     public MapNode3[] CompletedNodes;
     public Vector2 CurrentPosition;
     public MapNode3[] CurrentChoices;
+    public bool HasCompletedEventEnRoute;
 }
 
 public enum GameEquipmentDataType

@@ -19,7 +19,7 @@ public class NodeTypeOdds2 : ScriptableObject
 
     public bool IsThereTravelEvent(CurrentGameMap3 map)
     {
-        var lastIndexOf = map.CompletedNodes.ToArray().LastIndexOf(x => x.Type == MapNodeType.StoryEvent);
+        var lastIndexOf = map.CompletedNodes.ToArray().LastIndexOf(x => x.HasEventEnroute);
         var turnsSinceLastTimeYouDidThisNode = lastIndexOf == -1
             ? storyEventChances.Length - 1
             : Math.Min(storyEventChances.Length - 1, map.CompletedNodes.Count - lastIndexOf - 1);

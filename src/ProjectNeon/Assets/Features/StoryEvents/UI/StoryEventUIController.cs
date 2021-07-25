@@ -4,7 +4,7 @@ public class StoryEventUIController : OnMessage<BeginStoryEvent, MarkStoryEventC
 {
     [SerializeField] private GameObject ui;
     [SerializeField] private StoryEventPresenter presenter;
-    
+
     protected override void Execute(BeginStoryEvent msg)
     {
         presenter.Present(msg.StoryEvent);
@@ -13,8 +13,8 @@ public class StoryEventUIController : OnMessage<BeginStoryEvent, MarkStoryEventC
 
     protected override void Execute(MarkStoryEventCompleted msg)
     {
+        Message.Publish(new FinishedStoryEvent());
         Message.Publish(new AutoSaveRequested());
-        Message.Publish(new ContinueTraveling());
         ui.SetActive(false);
     }
 }

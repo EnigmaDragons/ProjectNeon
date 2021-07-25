@@ -34,8 +34,10 @@ public static class GameDataMappingExtensions
         => new GameMapData
         {
             GameMapId = map.CurrentMap.id,
+            CurrentNode =  map.CurrentNode.Value,
             CompletedNodes = map.CompletedNodes.ToArray(),
             CurrentPosition = map.PreviousPosition,
             CurrentChoices = map.CurrentChoices.ToArray(),
+            HasCompletedEventEnRoute = map.HasCompletedEventEnRoute
         };
 }

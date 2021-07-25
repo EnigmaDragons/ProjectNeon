@@ -14,15 +14,16 @@ public class ShopCardPool : ScriptableObject
     
     public IEnumerable<CardTypeData> All => subPools.SelectMany(s => s.All).Concat(allCards).Distinct();
 
-    public IEnumerable<CardTypeData> Get(HashSet<string> archetypesToGet, params Rarity[] raritiesToGet)
+    public IEnumerable<CardTypeData> Get(HashSet<string> archetypesToGet, HashSet<int> unobtainableCards, params Rarity[] raritiesToGet)
     {
         var isSelectedPool = archetypesToGet.None() || Archetypes().All(archetypesToGet.Contains);
         if (isSelectedPool && (includedRarities.All(raritiesToGet.Contains) || raritiesToGet.None()))
-            return subPools.SelectMany(x => x.Get(archetypesToGet, raritiesToGet)).Concat(allCards);
+            return subPools.SelectMany(subPool => subPool.Get(archetypesToGet, unobtainableCards, raritiesToGet))
+                .Concat(allCards.Where(card => !unobtainableCards.Contains(card.Id)));
         if (isSelectedPool && includedRarities.Any(raritiesToGet.Contains))
-            return subPools.SelectMany(x => x.Get(archetypesToGet, raritiesToGet))
-                .Concat(allCards.Where(x => raritiesToGet.Contains(x.Rarity)));
-        return subPools.SelectMany(x => x.Get(archetypesToGet, raritiesToGet));
+            return subPools.SelectMany(subPool => subPool.Get(archetypesToGet, unobtainableCards, raritiesToGet))
+                .Concat(allCards.Where(card => raritiesToGet.Contains(card.Rarity) && !unobtainableCards.Contains(card.Id)));
+        return subPools.SelectMany(subPool => subPool.Get(archetypesToGet, unobtainableCards, raritiesToGet));
     }
 
     public ShopCardPool Initialized(string[] archetypesToSet, Rarity[] rarities, IEnumerable<ShopCardPool> subPoolsToSet, IEnumerable<CardType> cards)
