@@ -25,10 +25,15 @@ public static class AllMetrics
     public static void SetRunId(string runId) => _runId = runId;
 
     public static void PublishSelectedParty(string adventureName, string[] selectedHeroes)
-        => Send(new GeneralMetric("selectedSquad",
-            JsonUtility.ToJson(new SquadSelectedData {adventureName = adventureName, heroNames = selectedHeroes})));
+        => Send("selectedSquad", new SquadSelectedData {adventureName = adventureName, heroNames = selectedHeroes});
+
+    public static void PublishCardRewardSelection(string selectedCardName, string[] optionNames)
+        => Send("rewardCardSelected", new CardRewardSelectionData {selected = selectedCardName, options = optionNames});
+
+    private static void Send(string eventName, object payload)
+        => Send(new GeneralMetric(eventName, JsonUtility.ToJson(payload)));
     
-    public static void Send(GeneralMetric m) 
+    private static void Send(GeneralMetric m) 
         => Client.Post(
             new Uri(_securedUrl.FromBase64(), UriKind.Absolute),
             new StringContent(
@@ -59,5 +64,12 @@ public static class AllMetrics
     {
         public string adventureName;
         public string[] heroNames;
+    }
+
+    [Serializable]
+    private class CardRewardSelectionData
+    {
+        public string selected;
+        public string[] options;
     }
 }
