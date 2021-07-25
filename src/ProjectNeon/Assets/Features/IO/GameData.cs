@@ -46,6 +46,7 @@ public class GameHeroData
     public HeroHealth Health = new HeroHealth();
     public GameDeckData Deck = new GameDeckData();
     public GameEquipmentIdName[] EquipmentIdNames = Array.Empty<GameEquipmentIdName>();
+    public GameEquipmentData[] Implants = Array.Empty<GameEquipmentData>();
 }
 
 [Serializable]

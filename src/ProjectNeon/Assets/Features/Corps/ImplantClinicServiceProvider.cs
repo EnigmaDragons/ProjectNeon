@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -62,10 +61,7 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
     {
         var statsToAdjust = _statAmounts
             .Where(x => hero.PermanentStats[x.Key] >= x.Value)
-            .ToArray()
-            .Shuffled()
-            .Take(2)
-            .ToArray();
+            .TakeRandom(2);
         var lossStat = statsToAdjust[0].Key;
         var lossAmount = statsToAdjust[0].Value;
         var gainStat = statsToAdjust[1].Key;
@@ -86,7 +82,16 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)
     {
-        hero.AddToStats(new StatAddends(new Dictionary<string, float> { { lossStat.ToString(), -lossAmount }, { gainStat.ToString(), gainAmount } }));
+        hero.ApplyPermanent(new InMemoryEquipment
+        {
+            Name = "Implant",
+            Slot = EquipmentSlot.Permanent,
+            Modifiers = new[]
+            {
+                new EquipmentStatModifier { Amount = -lossAmount, StatType = lossStat.ToString(), ModifierType = StatMathOperator.Additive },
+                new EquipmentStatModifier { Amount = gainAmount, StatType = gainStat.ToString(), ModifierType = StatMathOperator.Additive }
+            }
+        });
         _hasProvidedService = true;
     }
 }

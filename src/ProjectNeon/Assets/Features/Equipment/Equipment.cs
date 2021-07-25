@@ -32,4 +32,5 @@ public static class EquipmentExtensions
     public static string GetArchetypeKey(this Equipment e) => string.Join(" + ", e.Archetypes.OrderBy(a => a));
 
     public static bool IsRandomlyGenerated(this Equipment e) => e is InMemoryEquipment;
+    public static bool IsImplant(this Equipment e) => e.Slot == EquipmentSlot.Permanent && e.Name.Equals("Implant");
 }

@@ -53,4 +53,11 @@ public static class Rng
         }
         return shuffled;
     }
+
+    public static T[] TakeRandom<T>(this IEnumerable<T> items, int number)
+        => items
+            .ToArray()
+            .Shuffled()
+            .Take(number)
+            .ToArray();
 }
