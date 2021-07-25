@@ -24,6 +24,10 @@ public static class AllMetrics
 
     public static void SetRunId(string runId) => _runId = runId;
 
+    public static void PublishSelectedParty(string adventureName, string[] selectedHeroes)
+        => Send(new GeneralMetric("selectedSquad",
+            JsonUtility.ToJson(new SquadSelectedData {adventureName = adventureName, heroNames = selectedHeroes})));
+    
     public static void Send(GeneralMetric m) 
         => Client.Post(
             new Uri(_securedUrl.FromBase64(), UriKind.Absolute),
@@ -40,7 +44,6 @@ public static class AllMetrics
             Log.Error($"Failed to submit Error Message: {resp.StatusCode}");
     }
 
-
     [Serializable]
     private class GeneralMetricData
     {
@@ -49,5 +52,12 @@ public static class AllMetrics
         public string runId;
         public string eventType;
         public string @event;
+    }
+
+    [Serializable]
+    private class SquadSelectedData
+    {
+        public string adventureName;
+        public string[] heroNames;
     }
 }
