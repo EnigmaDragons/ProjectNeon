@@ -6,12 +6,12 @@ using System.Linq;
 public class Blessing
 {
     public string Name;
-    public Hero[] Targets;
+    public HeroCharacter[] Targets;
     public EffectData Effect;
     
     public void Apply(BattleState state)
     {
-        var target = new Multiple(Targets.Select(x => state.GetMemberByHero(x.Character)));
+        var target = new Multiple(Targets.Select(state.GetMemberByHero));
         BattleLog.Write($"Applying {Name} Blessing to {target.ToFriendlyString()}");
         var ctx = new EffectContext(
             target.Members[0], 

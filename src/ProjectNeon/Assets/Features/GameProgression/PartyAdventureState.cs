@@ -24,6 +24,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public Hero[] Heroes => heroes;
     public int[] Hp =>  heroes.Select(h => h.CurrentHp).ToArray();
     public RuntimeDeck[] Decks => heroes.Select(h => h.Deck).ToArray();
+    public Blessing[] Blessings => _blessings.ToArray();
     public PartyCardCollection Cards => cards;
     public PartyEquipmentCollection Equipment => equipment;
     private Dictionary<string, List<Hero>> _archKeyHeroes;

@@ -34,6 +34,7 @@ public class GamePartyData
     public GameHeroData[] Heroes = Array.Empty<GameHeroData>();
     public int[] CardIds = Array.Empty<int>();
     public GameEquipmentData[] Equipment = Array.Empty<GameEquipmentData>();
+    public BlessingSaveData[] Blessings = Array.Empty<BlessingSaveData>();
 }
 
 [Serializable]
@@ -45,6 +46,13 @@ public class GameHeroData
     public HeroHealth Health = new HeroHealth();
     public GameDeckData Deck = new GameDeckData();
     public GameEquipmentIdName[] EquipmentIdNames = Array.Empty<GameEquipmentIdName>();
+}
+
+[Serializable]
+public class BlessingSaveData
+{
+    public string Name = "";
+    public int[] TargetHeroIds = Array.Empty<int>();
 }
 
 [Serializable]

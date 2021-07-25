@@ -28,4 +28,7 @@ public class CorpClinicProvider : ScriptableObject
             return new BlessingClinicServiceProvider(party, blessings);
         return new NoClinicServiceProvider();
     }
+
+    public Maybe<BlessingData> GetBlessingByName(string blessingName)
+        => blessings.FirstOrMaybe(b => b.Name.Equals(blessingName));
 }
