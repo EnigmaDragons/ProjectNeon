@@ -38,7 +38,7 @@ public class CardRulesPresenter : MonoBehaviour
         ReactionConditionType.OnSlay.ToString(),
         "Glitch",
         "TagPlayed",
-        "Vulnerable",
+        TemporalStatType.Vulnerable.ToString(),
         "Critical",
         "PrimaryStat",
         PlayerStatType.CardCycles.ToString(),
@@ -105,7 +105,6 @@ public class CardRulesPresenter : MonoBehaviour
             battleEffects.ForEach(b =>
             {
                 rulesToShow.AddIf("TagPlayed", b.Formula.Contains("Tag["));
-                rulesToShow.AddIf("Vulnerable", b.EffectType == EffectType.ApplyVulnerable);
                 rulesToShow.AddIf(TemporalStatType.Disabled.ToString(), b.EffectType == EffectType.DisableForTurns);
                 rulesToShow.AddIf(TemporalStatType.Stealth.ToString(), b.EffectType == EffectType.EnterStealth);
                 rulesToShow.AddIf("Drain", b.EffectType == EffectType.TransferPrimaryResourceFormula);
@@ -127,6 +126,7 @@ public class CardRulesPresenter : MonoBehaviour
                     TemporalStatType.Lifesteal.ToString(),
                     TemporalStatType.Confused.ToString(),
                     TemporalStatType.Marked.ToString(),
+                    TemporalStatType.Vulnerable.ToString(),
                     "PrimaryStat");
             });
 

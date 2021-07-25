@@ -70,7 +70,7 @@ public static class MemberExtensions
     public static bool CanPlayCards(this Member m) => m.IsConscious() && !m.IsDisabled();
     public static bool IsConscious(this Member m) => m.State.IsConscious;
     public static bool IsUnconscious(this Member m) => m.State.IsUnconscious;
-    public static bool IsVulnerable(this Member m) => m.State.Damagability() > 1;
+    public static bool IsVulnerable(this Member m) => m.State[TemporalStatType.Vulnerable] > 1;
     public static bool IsDisabled(this Member m) => m.State[TemporalStatType.Disabled] > 0;
     public static bool IsStunnedForCard(this Member m) => m.State[TemporalStatType.CardStun] > 0;
     public static bool IsBlinded(this Member m) => m.State[TemporalStatType.Blind] > 0;

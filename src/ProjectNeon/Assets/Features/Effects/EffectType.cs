@@ -59,7 +59,6 @@ public enum EffectType
 
     // Statuses
     DisableForTurns = 13,
-    ApplyVulnerable = 10,
     EnterStealth = 58,
     GainDoubleDamage = 57,
     DuplicateStatesOfType = 65,
@@ -69,8 +68,7 @@ public enum EffectType
     HealFormula = 29,
     HealOverTime = 20,
     FullyReviveAllAllies = 61,
-    AntiHeal = 60,
-    
+
     // Party Effects
     AdjustPlayerStats = 49,
     AdjustPlayerStatsFormula = 28,

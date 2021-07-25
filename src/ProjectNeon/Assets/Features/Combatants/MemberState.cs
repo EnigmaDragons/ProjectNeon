@@ -83,7 +83,14 @@ public sealed class MemberState : IStats
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
     public int ResourceAmount(string resourceType) => _counters[resourceType].Amount;
-    public float this[StatType statType] => CurrentStats[statType];
+    public float this[StatType statType] => statType switch
+    {
+        StatType.Damagability => CurrentStats.Damagability() + (IsVulnerable() ? 0.33f : 0),
+        StatType.Healability => CurrentStats.Healability() + (IsAntiHeal() ? -0.5f : 0),
+        _ => CurrentStats[statType]
+    };
+    private bool IsVulnerable() => Counter(TemporalStatType.Vulnerable).Amount > 0;
+    private bool IsAntiHeal() => Counter(TemporalStatType.AntiHeal).Amount > 0;
     public float this[TemporalStatType statType] => _counters[statType.ToString()].Amount + CurrentStats[statType];
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
     public float Max(string name) => _counters[name].Max;
@@ -183,10 +190,6 @@ public sealed class MemberState : IStats
             _tagsPlayedCount[tag]++;
     }
 
-    // Modifier Commands
-    private static readonly HashSet<StatusTag> NonStackingStatuses = new HashSet<StatusTag>
-        {StatusTag.Vulnerable, StatusTag.AntiHeal};
-
     public void DuplicateStatesOfType(StatusTag tag)
     {
         _additiveMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
@@ -223,8 +226,6 @@ public sealed class MemberState : IStats
 
     public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() =>
     {
-        if (NonStackingStatuses.Contains(mods.Status.Tag))
-            _additiveMods.RemoveAll(m => m.Status.Tag == mods.Status.Tag);
         _additiveMods.Add(mods);
         if (CurrentStats.MaxHp() < CurrentStats.Hp())
             SetHp(CurrentStats.MaxHp());
@@ -232,8 +233,6 @@ public sealed class MemberState : IStats
 
     public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() =>
     {
-        if (NonStackingStatuses.Contains(mods.Status.Tag))
-            _multiplierMods.RemoveAll(m => m.Status.Tag == mods.Status.Tag);
         _multiplierMods.Add(mods);
     });
 
@@ -272,8 +271,8 @@ public sealed class MemberState : IStats
     public void AddCustomStatus(CustomStatusIcon icon) => PublishAfter(() => _customStatusIcons.Add(icon));
 
     // HP Commands
-    public void GainHp(float amount) => ChangeHp(amount * CurrentStats.Healability());
-    public void TakeRawDamage(int amount) => ChangeHp(-amount * CurrentStats.Damagability());
+    public void GainHp(float amount) => ChangeHp(amount * this[StatType.Healability]);
+    public void TakeRawDamage(int amount) => ChangeHp(-amount * this[StatType.Damagability]);
     public void SetHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).Set(amount));
     public void TakeDamage(int amount)
     {
@@ -372,7 +371,9 @@ public sealed class MemberState : IStats
         TemporalStatType.Stealth, // Should this be reduced?
         TemporalStatType.Confused,
         TemporalStatType.Prominent,
-        TemporalStatType.PreventResourceGains
+        TemporalStatType.PreventResourceGains,
+        TemporalStatType.Vulnerable,
+        TemporalStatType.AntiHeal
     };
 
     private void WithOtherAdjustmentRulesApplied(MemberStateSnapshot before)

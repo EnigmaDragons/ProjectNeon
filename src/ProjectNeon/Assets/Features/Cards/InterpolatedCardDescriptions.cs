@@ -147,8 +147,6 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data, owner, xCost)}";
-        if (data.EffectType == EffectType.ApplyVulnerable)
-            coreDesc = $"gives {Bold("Vulnerable")} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustResourceFlat)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
@@ -175,8 +173,6 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" 
                        + $"gives {Bold(EffectDescription(data, owner, xCost))} " 
                        + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
-        if (data.EffectType == EffectType.AntiHeal)
-            coreDesc = $"halves healing {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.RemoveDebuffs)
             coreDesc = "removes all debuffs";
         if (data.EffectType == EffectType.AdjustPlayerStatsFormula)

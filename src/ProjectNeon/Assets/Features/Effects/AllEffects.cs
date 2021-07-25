@@ -25,9 +25,6 @@ public static class AllEffects
         { EffectType.AdjustPrimaryResourceFormula, e => new AegisIfFormulaResult((ctx, amount, m) => 
             m.AdjustPrimaryResource(BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.PrimaryResource.Name}", amount.CeilingInt())), e.Formula, true, amount => amount < 0) },
         { EffectType.DamageOverTimeFormula, e => new AegisPreventable(new DamageOverTimeFormula(e), "Damage Over Time") },
-        { EffectType.ApplyVulnerable, e => new AegisPreventable(new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} has become vulnerable",
-            () => m.ApplyTemporaryMultiplier(new AdjustedStats(new StatMultipliers().With(StatType.Damagability, 1.33f), 
-                TemporalStateMetadata.DebuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Vulnerable))))), e.DurationFormula), "Vulernable") },
         { EffectType.DisableForTurns, e => new AegisPreventable(new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} is disabled for {duration} turns.", 
             () => m.ApplyTemporaryAdditive(new DisableForTurns(ctx.Source.Id, duration))), e.DurationFormula), "Disable")},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.DurationFormula) },
@@ -42,8 +39,6 @@ public static class AllEffects
         { EffectType.EnterStealth, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(TemporalStatType.Stealth, 1), 
             TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Stealth)))), e.DurationFormula) },
         { EffectType.GainDoubleDamage, e => new SimpleEffect(m => m.Adjust(TemporalStatType.DoubleDamage, e.IntAmount))},
-        { EffectType.AntiHeal, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryMultiplier(
-            new AdjustedStats(new StatMultipliers().With(StatType.Healability, 0.5f),  TemporalStateMetadata.DebuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.AntiHeal)))), e.DurationFormula)},
         { EffectType.FullyReviveAllAllies, e => new FullyReviveAllAllies() },
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},

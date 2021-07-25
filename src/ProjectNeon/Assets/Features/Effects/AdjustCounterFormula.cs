@@ -14,7 +14,9 @@ public class AdjustCounterFormula : Effect
         TemporalStatType.Blind.ToString(),
         TemporalStatType.Confused.ToString(),
         TemporalStatType.Inhibit.ToString(),
-        TemporalStatType.CardStun.ToString()
+        TemporalStatType.CardStun.ToString(),
+        TemporalStatType.Vulnerable.ToString(),
+        TemporalStatType.AntiHeal.ToString()
     };
 
     public void Apply(EffectContext ctx)
