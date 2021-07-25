@@ -21,7 +21,6 @@ public sealed class Navigator : ScriptableObject
         if (loggingEnabled)
             Log.Info($"Navigating to {sceneName}");
         Message.Publish(new NavigateToSceneRequested(sceneName));
-        //SceneManager.LoadScene(name);
     }
     
     public void ExitGame()

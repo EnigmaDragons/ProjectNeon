@@ -299,7 +299,6 @@ public sealed class MemberState : IStats
     public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter(() => Counter(t.ToString()).ChangeBy(amount), () => this[t].CeilingInt()));
     public int AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
     private void AdjustShieldNoPublish(float amount) => Counter(TemporalStatType.Shield.ToString()).ChangeBy(amount);
-    public void AdjustDoubleDamage(float amount) => Adjust(TemporalStatType.DoubleDamage, amount);
 
     private int Diff(int[] beforeAndAfter) => beforeAndAfter.Last() - beforeAndAfter.First();
 

@@ -18,6 +18,9 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     
     protected override void Execute(NavigateToSceneRequested msg)
     {
+        if (Time.timeScale < 0.01)
+            Time.timeScale = 1;
+        
         _isLoading = true;
         onStartedLoading.Invoke();
         _startedTransitionAt = Time.timeSinceLevelLoad;

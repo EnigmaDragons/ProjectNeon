@@ -11,7 +11,7 @@ public sealed class PhysicalDamage : DamageCalculation
         _damageCalc = damageCalc;
     }
     
-    public PhysicalDamage WithFactor(float factor) => new PhysicalDamage((ctx, m) => _damageCalc(ctx, m) * factor);
+    public DamageCalculation WithFactor(float factor) => new PhysicalDamage((ctx, m) => Mathf.CeilToInt(_damageCalc(ctx, m)) * factor);
 
     public int Calculate(EffectContext ctx, Member target)
     {
