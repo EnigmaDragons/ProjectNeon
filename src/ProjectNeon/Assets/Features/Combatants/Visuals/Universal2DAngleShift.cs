@@ -9,5 +9,7 @@ public class Universal2DAngleShift : MonoBehaviour
         transform.rotation = Quaternion.Euler(angle, 0, 0);
     }
 
+    public static Quaternion Euler => Quaternion.Euler(angle, 0, 0);
+    
     public void Revert() => transform.rotation = Quaternion.identity;
 }
