@@ -16,7 +16,7 @@ public class CorpClinicProvider : ScriptableObject
         if (healthPercentCorp.Contains(corp))
             return new HealthDependantClinicCostCalculator();
         if (credDependentCorp.Contains(corp))
-            return new CredDepnedantClinicCostCalculator(party);
+            return new CredDependentClinicCostCalculator(party);
         return new ClinicCostCalculatorV1();
     }
 

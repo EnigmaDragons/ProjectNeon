@@ -1,10 +1,10 @@
 ﻿using System;
 
-public class CredDepnedantClinicCostCalculator : HealthDependantClinicCostCalculator
+public class CredDependentClinicCostCalculator : HealthDependantClinicCostCalculator
 {
     private readonly float _multiplier;
     
-    public CredDepnedantClinicCostCalculator(PartyAdventureState party)
+    public CredDependentClinicCostCalculator(PartyAdventureState party)
     {
         if (party.Credits <= 30)
             _multiplier = 0.0f;

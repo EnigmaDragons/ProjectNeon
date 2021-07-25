@@ -21,6 +21,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
             _generatedOptions = _blessings
                 .Select(blessingData => new { blessingData, blessing = new Blessing
                 {
+                    Name = blessingData.Name,
                     Effect = blessingData.Effect, 
                     Targets = blessingData.IsSingleTarget 
                         ? _party.Heroes

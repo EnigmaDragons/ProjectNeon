@@ -57,7 +57,7 @@ public class MouseHoverProcessor3D : MonoBehaviour
             Message.Publish(new CharacterHoverChanged {HoverCharacter = hoverCharacter.As<HoverCharacter>(), IsDragging = MouseDragState.IsDragging});
             _lastHover = hoverCharacter;
         }
-        if (!isMouseDragging)
+        if (!isMouseDragging && _statusIcon != null)
             _statusIcon.Update(hoverStatusIcon);
     }
 }

@@ -16,4 +16,5 @@ public class Multiple : Target
     public override bool Equals(object obj) => obj is Multiple && obj.ToString() == Members.ToString();
     public override int GetHashCode() => ToString().GetHashCode();
     public override string ToString() => string.Join(",", Members.Select(m => m.Id.ToString()));
+    public string ToFriendlyString() => string.Join(", ", Members.Select(m => m.Name));
 }
