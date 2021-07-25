@@ -17,6 +17,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private BattleV2Phase phase;
     [SerializeField] private AdventureProgress2 adventureProgress;
     [SerializeField] private CurrentGameMap3 map;
+    [SerializeField] private AllCards allCards;
     
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
@@ -31,7 +32,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private int rewardXp = 0;
     [SerializeField, ReadOnly] private int turnNumber;
     [SerializeField, ReadOnly] private PlayerState playerState = new PlayerState();
-    
+
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
     public Effect[] QueuedEffects => _queuedEffects.ToArray();
@@ -77,6 +78,7 @@ public class BattleState : ScriptableObject
     public (Member Member, EnemyInstance Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
     public PlayerState PlayerState => playerState;
     public int MapNodeRngSeed => map.CurrentNodeRngSeed;
+    public AllCards AllCards => allCards;
     private Dictionary<int, EnemyInstance> _enemiesById = new Dictionary<int, EnemyInstance>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();

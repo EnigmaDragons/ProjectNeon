@@ -14,6 +14,14 @@ public class ChooseCardToCreate : Effect
     
     public void Apply(EffectContext ctx)
     {
+        if (_choiceCardIds.Length == 1)
+        {
+            ctx.PlayerCardZones.HandZone.PutOnBottom(new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[_choiceCardIds[0]], 
+                ctx.OwnerTints.ContainsKey(ctx.Source.Id) ? ctx.OwnerTints[ctx.Source.Id] : Maybe<Color>.Missing(), 
+                ctx.OwnerBusts.ContainsKey(ctx.Source.Id) ? ctx.OwnerBusts[ctx.Source.Id] : Maybe<Sprite>.Missing()));
+            return;
+        }
+
         var cardsToChoose = Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount));
         
         ctx.Selections.CardSelectionOptions = cardsToChoose >= _choiceCardIds.Length 
