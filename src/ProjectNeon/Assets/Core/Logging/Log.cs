@@ -12,6 +12,12 @@ public static class Log
     public static void Error(string msg, Object context) => IgnoreExceptions(() => Debug.LogError(msg, context));
     public static void Error(Exception e) => IgnoreExceptions(() => Debug.LogException(e));
 
+    public static T InfoLogged<T>(this T value)
+    {
+        Info(value.ToString());
+        return value;
+    }
+
     private static void IgnoreExceptions(Action a)
     {
         try

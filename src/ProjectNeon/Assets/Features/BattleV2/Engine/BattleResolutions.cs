@@ -18,6 +18,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     private readonly Queue<ProposedReaction> _instantReactions = new Queue<ProposedReaction>();
     private readonly Queue<ProposedReaction> _reactionCards = new Queue<ProposedReaction>();
     private bool _resolvingEffect;
+    private float _playerDelayFactor = 0.2f;
     
     private void ResolveNext()
     {
@@ -155,7 +156,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         }
         else
         {
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(DelaySeconds(resolutionZone.CurrentTeamType.OrDefault(TeamType.Enemies)));
             _resolvingEffect = false;
             resolutionZone.OnCardResolutionFinished();
             ResolveNext();
@@ -196,7 +197,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
                 card = new Card(state.GetNextCardId(), r.Source, reactionCard, state.GetHeroById(r.Source.Id).Tint, state.GetHeroById(r.Source.Id).Bust);
             reactionZone.PutOnBottom(card);
             currentResolvingCardZone.Set(card);
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(DelaySeconds(card.Owner.TeamType));
             
             var resourceCalculations = r.Source.CalculateResources(reactionCard);
             var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, resourceCalculations);
@@ -211,4 +212,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             this.ExecuteAfterDelay(() => StartCoroutine(FinishEffect()), 0.1f);
         }
     }
+
+    private float DelaySeconds(TeamType team) 
+        => delay.Value * (team == TeamType.Party ? _playerDelayFactor : 1f);
 }

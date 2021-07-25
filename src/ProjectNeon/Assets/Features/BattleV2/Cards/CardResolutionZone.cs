@@ -18,7 +18,9 @@ public class CardResolutionZone : ScriptableObject
     private List<IPlayedCard> _movesThisTurn = new List<IPlayedCard>();
     private List<IPlayedCard> _pendingMoves = new List<IPlayedCard>();
     private Maybe<IPlayedCard> _current = Maybe<IPlayedCard>.Missing();
-   
+
+    public Maybe<TeamType> CurrentTeamType => _current.Map(c => c.Member.TeamType);
+    
     public void Init()
     {
         physicalZone.Clear();
