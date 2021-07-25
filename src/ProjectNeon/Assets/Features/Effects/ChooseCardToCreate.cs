@@ -17,11 +17,15 @@ public class ChooseCardToCreate : Effect
         var cardsToChoose = Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount));
         
         ctx.Selections.CardSelectionOptions = cardsToChoose >= _choiceCardIds.Length 
-            ? _choiceCardIds.Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x])).ToArray()
+            ? _choiceCardIds.Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x], 
+                ctx.OwnerTints.ContainsKey(ctx.Source.Id) ? ctx.OwnerTints[ctx.Source.Id] : Maybe<Color>.Missing(), 
+                ctx.OwnerBusts.ContainsKey(ctx.Source.Id) ? ctx.OwnerBusts[ctx.Source.Id] : Maybe<Sprite>.Missing())).ToArray()
             : _choiceCardIds
                 .Shuffled()
                 .Take(cardsToChoose)
-                .Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x]))
+                .Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x],
+                    ctx.OwnerTints.ContainsKey(ctx.Source.Id) ? ctx.OwnerTints[ctx.Source.Id] : Maybe<Color>.Missing(), 
+                    ctx.OwnerBusts.ContainsKey(ctx.Source.Id) ? ctx.OwnerBusts[ctx.Source.Id] : Maybe<Sprite>.Missing()))
                 .ToArray();
         ctx.Selections.OnCardSelected = card => ctx.PlayerCardZones.HandZone.PutOnBottom(card);
     }

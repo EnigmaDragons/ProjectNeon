@@ -283,6 +283,8 @@ public class BattleState : ScriptableObject
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
     public bool IsEnemy(int memberId) => _enemiesById.ContainsKey(memberId);
     public HeroCharacter GetHeroById(int memberId) => _heroesById[memberId].Character;
+    public Dictionary<int, Color> OwnerTints => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Tint);
+    public Dictionary<int, Sprite> OwnerBusts => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Bust);
     public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
     public Transform GetTransform(int memberId) => _uiTransformsById[memberId];
 

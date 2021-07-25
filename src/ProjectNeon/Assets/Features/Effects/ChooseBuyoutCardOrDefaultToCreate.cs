@@ -38,8 +38,12 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
                     Description = $"{ctx.EnemyTypes[x.Key].Name} is paid off to leave the battle.",
                     Tags = cardTemplate.Tags,
                     TypeDescription = cardTemplate.TypeDescription
-                }))
-            .Concat(_otherOptions.Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x])))
+                }, 
+                ctx.OwnerTints.ContainsKey(ctx.Source.Id) ? ctx.OwnerTints[ctx.Source.Id] : Maybe<Color>.Missing(), 
+                ctx.OwnerBusts.ContainsKey(ctx.Source.Id) ? ctx.OwnerBusts[ctx.Source.Id] : Maybe<Sprite>.Missing()))
+            .Concat(_otherOptions.Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x],
+                ctx.OwnerTints.ContainsKey(ctx.Source.Id) ? ctx.OwnerTints[ctx.Source.Id] : Maybe<Color>.Missing(), 
+                ctx.OwnerBusts.ContainsKey(ctx.Source.Id) ? ctx.OwnerBusts[ctx.Source.Id] : Maybe<Sprite>.Missing())))
             .ToArray();
         ctx.Selections.OnCardSelected = card => ctx.PlayerCardZones.HandZone.PutOnBottom(card);
     }

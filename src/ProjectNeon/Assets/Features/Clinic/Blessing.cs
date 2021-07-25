@@ -29,7 +29,9 @@ public class Blessing
             state.Party.Credits, 
             new Dictionary<int, EnemyType>(), 
             state.GetNextCardId, 
-            new PlayedCardSnapshot[0]);
+            new PlayedCardSnapshot[0],
+            state.OwnerTints,
+            state.OwnerBusts);
         AllEffects.Apply(Effect, ctx);
     }
 }
