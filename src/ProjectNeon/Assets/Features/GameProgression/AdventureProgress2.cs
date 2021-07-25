@@ -33,7 +33,7 @@ public class AdventureProgress2 : ScriptableObject
     public int CurrentPowerLevel => CurrentChapter.GetPowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount);
     public int CurrentElitePowerLevel => CurrentChapter.GetElitePowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount);
     private bool HasBegun => currentChapterIndex > -1;
-    private bool CurrentStageIsFinished => HasBegun && currentMap3.Progress == CurrentChapter.SegmentCount;
+    private bool CurrentStageIsFinished => HasBegun && currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes.Last().Type == MapNodeType.Boss;
 
     public void Init()
     {

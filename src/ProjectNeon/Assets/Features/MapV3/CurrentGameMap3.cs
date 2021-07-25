@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Maps/Current Game Map 3")]
 public class CurrentGameMap3 : ScriptableObject
 {
+    [SerializeField] private NodeHeat heat;
     public GameMap3 CurrentMap { get; set; }
     public Maybe<MapNode3> CurrentNode { get; set; } = Maybe<MapNode3>.Missing();
     public List<MapNode3> CompletedNodes { get; set; } = new List<MapNode3>();
@@ -26,7 +28,7 @@ public class CurrentGameMap3 : ScriptableObject
         UpdateSeed();
     }
 
-    public int Progress => CompletedNodes?.Count ?? 0;
+    public int Progress => CompletedNodes?.Sum(x => heat.Heat(x.Type)) ?? 0;
 
     public void CompleteCurrentNode()
     {
@@ -37,6 +39,7 @@ public class CurrentGameMap3 : ScriptableObject
         PreviousPosition = DestinationPosition;
         CurrentNode = Maybe<MapNode3>.Missing();
         UpdateSeed();
+        Message.Publish(new AdventureProgressChanged());
     }
     
     private void UpdateSeed() => CurrentNodeRngSeed = Guid.NewGuid().GetHashCode();
