@@ -21,6 +21,7 @@ public class CardPlayZones : ScriptableObject
     public CardPlayZone PlayZone => playZone;
     public CardPlayZone DiscardZone => discardZone;
     public CardPlayZone SelectionZone => selectionZone;
+    public CardPlayZone ResolutionZone => resolutionZone;
     public Card[] AllCards => DrawZone.Cards.Concat(HandZone.Cards).Concat(DiscardZone.Cards).ToArray();
     
     public void ClearAll()

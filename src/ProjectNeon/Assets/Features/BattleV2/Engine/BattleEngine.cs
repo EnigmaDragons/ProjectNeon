@@ -57,7 +57,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     private void BeginHastyEnemiesPhase() =>
         ResolveBattleFinishedOrExecute(() =>
         {
-            Message.Publish(new GenerateAIStrategy());
+            Message.Publish(new GenerateAIStrategy()); 
             BeginPhase(BattleV2Phase.HastyEnemyCards);
             enemyCardsPhases.BeginPlayingAllHastyEnemyCards();
         });
@@ -100,7 +100,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayerCardsToFinishResolving());
     protected override void Execute(StartOfTurnEffectsStatusResolved msg) => BeginHastyEnemiesPhase();
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
-    protected override void Execute(CardResolutionFinished msg) => ResolveBattleFinishedOrExecute(() => { });
+    protected override void Execute(CardResolutionFinished msg) => ResolveBattleFinishedOrExecute(() => Message.Publish(new CheckForAutomaticTurnEnd()));
 
     protected override void Execute(ResolutionsFinished msg)
     {
