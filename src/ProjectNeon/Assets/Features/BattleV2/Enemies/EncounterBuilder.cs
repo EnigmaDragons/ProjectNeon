@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class EncounterBuilder : ScriptableObject
 {
+    [SerializeField] private bool allowElites = true;
     [SerializeField] private Enemy[] possible;
     [SerializeField] private Enemy[] mustIncludePossibilities;
     [SerializeField] private int numMustIncludes;
@@ -34,7 +35,7 @@ public class EncounterBuilder : ScriptableObject
     
     public List<EnemyInstance> Generate(int difficulty)
     {
-        Log($"Started generating encounter of difficulty {difficulty}");
+        DebugLog($"Started generating encounter of difficulty {difficulty}");
 
         var currentDifficulty = 0;
         var numRemainingMustIncludes = numMustIncludes;
@@ -45,24 +46,29 @@ public class EncounterBuilder : ScriptableObject
             var nextEnemy = mustIncludePossibilities.Random();
             var nextEnemyInstance = nextEnemy.ForStage(currentAdventureProgress.CurrentChapterNumber);
             enemies.Add(nextEnemyInstance);
-            Log($"Added \"Must Include\" {nextEnemyInstance.Name} to Encounter");
+            DebugLog($"Added \"Must Include\" {nextEnemyInstance.Name} to Encounter");
             numRemainingMustIncludes--;
             currentDifficulty = currentDifficulty + Math.Max(nextEnemyInstance.PowerLevel, 1);
         }
 
-        while (_selector.TryGetEnemy(
-            new EncounterBuildingContext(enemies.ToArray(), possible.Select(x => x.ForStage(currentAdventureProgress.CurrentChapterNumber)).ToArray(), currentDifficulty, difficulty), out EnemyInstance enemy))
+        if (!allowElites && possible.Any(p => p.Tier == EnemyTier.Elite))
+            Log.Error($"{name} has Elite Enemies but isn't an Elite pool.");
+        var possibleEnemies = possible
+            .Where(x => allowElites || x.Tier != EnemyTier.Elite)
+            .Select(x => x.ForStage(currentAdventureProgress.CurrentChapterNumber))
+            .ToArray();
+        while (_selector.TryGetEnemy(new EncounterBuildingContext(enemies.ToArray(), possibleEnemies, currentDifficulty, difficulty), out EnemyInstance enemy))
         {
             enemies.Add(enemy);
-            Log($"Added {enemy.Name} to Encounter");
+            DebugLog($"Added {enemy.Name} to Encounter");
             currentDifficulty += enemy.PowerLevel;
         }
 
-        Log("Finished generating encounter");
+        DebugLog("Finished generating encounter");
         return enemies.Select(x => x).ToList().Shuffled();
     }
 
-    private void Log(string msg)
+    private void DebugLog(string msg)
     {
         if (_debugLog)
             DevLog.Write(msg);

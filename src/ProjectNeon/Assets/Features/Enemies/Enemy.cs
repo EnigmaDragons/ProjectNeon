@@ -24,6 +24,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
     public Corp Corp => corp;
+    public EnemyTier Tier => tier;
     public bool ExcludeFromBestiary => excludeFromBestiary;
     public int[] Stages => stageDetails.OrderBy(x => x.stage).Select(x => x.stage).ToArray();
     public EnemyInstance ForStage(int stage)
