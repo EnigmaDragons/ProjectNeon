@@ -12,13 +12,15 @@ public sealed class LevelUpOptionPresenter : MonoBehaviour, IPointerDownHandler,
 
     private Sprite _defaultImg;
     private HeroLevelUpOption _option;
+    private HeroLevelUpOption[] _allOptions;
 
     private void Awake() => _defaultImg = button.sprite;
     private void OnEnable() => button.sprite = _defaultImg;
 
-    public LevelUpOptionPresenter Initialized(HeroLevelUpOption o)
+    public LevelUpOptionPresenter Initialized(HeroLevelUpOption o, HeroLevelUpOption[] allOptions)
     {
         _option = o;
+        _allOptions = allOptions;
         text.text = o.Description.Replace("\\n", "\n");
         hasDetailPrompt.SetActive(o.HasDetail);
         return this;
@@ -27,7 +29,7 @@ public sealed class LevelUpOptionPresenter : MonoBehaviour, IPointerDownHandler,
     private void SelectLevelUpOption()
     {
         if (_option != null)
-            Message.Publish(new LevelUpOptionSelected(_option));
+            Message.Publish(new LevelUpOptionSelected(_option, _allOptions));
     }
     
     public void OnPointerDown(PointerEventData eventData)

@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +32,7 @@ public class HeroLevelUpSelectionPresenter : OnMessage<LevelUpOptionSelected, He
 
     protected override void Execute(LevelUpOptionSelected msg)
     {
+        AllMetrics.PublishLevelUpOptionSelected(_hero.Name, _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
         msg.Selected.SelectAsLevelUp(_hero);
         gameObject.SetActive(false);
         Message.Publish(new HeroLevelledUp());

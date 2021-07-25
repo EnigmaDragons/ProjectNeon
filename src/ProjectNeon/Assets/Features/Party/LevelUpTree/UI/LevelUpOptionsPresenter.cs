@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +23,6 @@ public sealed class LevelUpOptionsPresenter : MonoBehaviour
         _options.Clear();
         if (levelLabel != null)
             levelLabel.text = level.ToString();
-        options.ForEach(o => _options.Add(Instantiate(optionPrototype, optionParent.transform).Initialized(o).gameObject));
+        options.ForEach(o => _options.Add(Instantiate(optionPrototype, optionParent.transform).Initialized(o, options).gameObject));
     }
 }
