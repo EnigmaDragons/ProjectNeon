@@ -11,7 +11,7 @@ public class SpellDamage : DamageCalculation
         _damageCalc = damageCalc;
     }
     
-    public SpellDamage WithFactor(float factor) => new SpellDamage((ctx, m) => _damageCalc(ctx, m) * factor);
+    public DamageCalculation WithFactor(float factor) => new SpellDamage((ctx, m) => _damageCalc(ctx, m) * factor);
 
     public int Calculate(EffectContext ctx, Member target)
     {        
