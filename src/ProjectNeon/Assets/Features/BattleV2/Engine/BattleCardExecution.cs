@@ -31,7 +31,7 @@ public static class BattleCardExecution
         if (!cardHasAnimations)
         {
             Log.Warn($"{card.Name} has no animations. Adding wait time where animation would be.");
-            payloads.Add(new SinglePayload(new WaitDuringResolution(1.2f)));
+            payloads.Add(new SinglePayload(new WaitDuringResolution(1f)));
         }
         for (var i = 0; i < sequences.Count; i++)
         {
