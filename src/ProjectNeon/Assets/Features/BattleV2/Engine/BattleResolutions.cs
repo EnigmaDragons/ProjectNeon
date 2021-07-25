@@ -192,6 +192,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
             Message.Publish(new DisplayCharacterWordRequested(r.Source, "Reaction!"));
             var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
+            if (r.Source.TeamType == TeamType.Party)
+                card = new Card(state.GetNextCardId(), r.Source, reactionCard, state.GetHeroById(r.Source.Id).Tint, state.GetHeroById(r.Source.Id).Bust);
             reactionZone.PutOnBottom(card);
             currentResolvingCardZone.Set(card);
             yield return new WaitForSeconds(delay);

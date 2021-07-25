@@ -192,7 +192,12 @@ public class CardResolutionZone : ScriptableObject
         {
             if (physicalCard.Type.SwappedCard.IsPresent)
             {
-                playedDiscardZone.PutOnBottom(new Card(battleState.GetNextCardId(), physicalCard.Owner, physicalCard.Type.SwappedCard.Value));
+                playedDiscardZone.PutOnBottom(new Card(
+                    battleState.GetNextCardId(), 
+                    physicalCard.Owner, 
+                    physicalCard.Type.SwappedCard.Value, 
+                    physicalCard.OwnerTint, 
+                    physicalCard.OwnerBust));
             }
             else
             {
@@ -218,7 +223,10 @@ public class CardResolutionZone : ScriptableObject
                     continue;
                 
                 var targets = GetTargets(member, card, Maybe<Target[]>.Missing());
-                PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
+                if (member.TeamType == TeamType.Party)
+                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true));
+                else
+                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
                 Message.Publish(new DisplayCharacterWordRequested(member, "Bonus Card"));
             }
         }
