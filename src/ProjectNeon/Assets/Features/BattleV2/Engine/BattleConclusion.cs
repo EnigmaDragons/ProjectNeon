@@ -50,7 +50,11 @@ public class BattleConclusion : OnMessage<BattleFinished>
         var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party));
         Message.Publish(new GetUserSelectedCard(rewardCards, card =>
         {
-            card.IfPresent(c => state.SetRewardCards(c.BaseType));
+            card.IfPresent(c =>
+            {
+                AllMetrics.PublishCardRewardSelection(c.Name, rewardCards.Select(r => r.Name).ToArray());
+                state.SetRewardCards(c.BaseType);
+            });
             onFinished();
         }));
     }
