@@ -33,8 +33,11 @@ public static class AllMetrics
     public static void PublishGearRewardSelection(string selectedGearNameOrDescription, string[] optionNameOrDescriptions)
         => Send("rewardGearSelected", new OptionSelectionData {selected = selectedGearNameOrDescription, options = optionNameOrDescriptions});
 
-    public static void PublishLevelUpOptionSelected(string heroName, int level, string selectedDescription, string[] optionsDescription)
+    public static void PublishLevelUpOptionSelection(string heroName, int level, string selectedDescription, string[] optionsDescription)
         => Send("heroLevelUp", new HeroLevelUpSelectionData {heroName = heroName, level = level, selection = selectedDescription, options = optionsDescription});
+    
+    public static void PublishMapNodeSelection(int mapProgress, string selectedMapNodeName, string[] mapNodeOptions)
+        => Send("mapNodeSelected", new MapNodeSelectionData { progress = mapProgress, selected = selectedMapNodeName, options = mapNodeOptions});
     
     private static void Send(string eventName, object payload)
         => Send(new GeneralMetric(eventName, JsonUtility.ToJson(payload)));
@@ -95,6 +98,14 @@ public static class AllMetrics
         public string heroName;
         public int level;
         public string selection;
+        public string[] options;
+    }
+
+    [Serializable]
+    private class MapNodeSelectionData
+    {
+        public int progress;
+        public string selected;
         public string[] options;
     }
 }

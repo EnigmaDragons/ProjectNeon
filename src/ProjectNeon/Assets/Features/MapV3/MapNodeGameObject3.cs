@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,7 +13,6 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     public IStageSegment ArrivalSegment { get; private set; }
     public MapNode3 MapData { get; private set; }
     private Maybe<GameObject> _rulesPanel;
-    
 
     public void Init(MapNode3 mapData, CurrentGameMap3 gameMap, AdventureGenerationContext ctx, Action onMidPointArrive)
     {
@@ -21,6 +21,9 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         button.onClick.AddListener(() =>
         {
             gameMap.CurrentNode = mapData;
+            AllMetrics.PublishMapNodeSelection(gameMap.Progress, 
+                mapData.GetMetricDescription(), 
+                gameMap.CurrentChoices.Select(m => m.GetMetricDescription()).ToArray());
             Message.Publish(new TravelToNode
                 {
                     Position = mapData.Position, 
