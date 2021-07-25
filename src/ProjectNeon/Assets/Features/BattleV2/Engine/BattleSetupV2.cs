@@ -54,6 +54,7 @@ public class BattleSetupV2 : MonoBehaviour
         yield return visuals.Setup(); // Could Animate
         Message.Publish(new PlayerDeckShuffled()); // Play sound early for flow
         
+        playerCardPlayZones.ClearAll();
         var enemies = state.FinishSetup();
         visuals.Setup2(enemies);
         visuals.AfterBattleStateInitialized();
@@ -101,8 +102,7 @@ public class BattleSetupV2 : MonoBehaviour
     {
         if (!party.IsInitialized)
             throw new Exception("Cannot Setup Player Cards, Party Is Not Initialized");
-
-        playerCardPlayZones.ClearAll();
+        
         var cards = new List<Card>();
         for (var i = 0; i < party.BaseHeroes.Length; i++)
         {

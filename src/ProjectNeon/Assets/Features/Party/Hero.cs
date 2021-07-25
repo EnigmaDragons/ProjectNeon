@@ -98,7 +98,7 @@ public class Hero
     public Member InitEquipmentState(Member m, BattleState state)
     {
         return WithEquipmentState(m,new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, 
-            state.PlayerState, state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), 
+            state.PlayerState, state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), state.AllCards.GetMap(), 
             state.Party.Credits, state.Party.Credits, new Dictionary<int, EnemyType>(), () => state.GetNextCardId(), new PlayedCardSnapshot[0],
             state.OwnerTints, state.OwnerBusts));
     }

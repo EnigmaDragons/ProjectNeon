@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: StartingStealth
+  m_Name: CorpFixer_LethalTempo
   m_EditorClassIdentifier: 
-  id: 41
-  displayName: 
-  description: 
+  id: 54
+  displayName: Lethal Tempo
+  description: 'On Slay: Gain 1 Card Play'
   corp: {fileID: 11400000, guid: 33641feb13cddf64da66a37831d9c198, type: 2}
-  archetypes: []
-  rarity: 0
+  archetypes:
+  - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
+  rarity: 4
   slot: 3
   priceFactor: 1
   modifiers: []
@@ -25,26 +26,26 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 58
+  - EffectType: 74
     Conditions: []
     BaseAmount:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
       UseConstant: 1
-      ConstantValue: 0
+      ConstantValue: -1
       FloatVariable: {fileID: 0}
     DurationFormula: -1
     EffectScope:
-      UseConstant: 0
+      UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
-    StatusTag: 0
-    StatusDetailText: 
+    StatusTag: 12
+    StatusDetailText: 'On Slay: Gain 1 Card Play'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -56,15 +57,15 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 0
+    ReactionConditionType: 21
     ReactionEffectScope:
-      UseConstant: 0
+      UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
-      cardActions: {fileID: 0}
+      cardActions: {fileID: 11400000, guid: 53b58f89119950e409ccc20f0562f984, type: 2}
     BonusCardType: {fileID: 0}
-  isWIP: 0
+  isWIP: 1

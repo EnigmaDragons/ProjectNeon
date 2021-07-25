@@ -19,7 +19,7 @@ public sealed class PartyAdventureState : ScriptableObject
 
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
-    
+
     public HeroCharacter[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
     public Hero[] Heroes => heroes;
     public int[] Hp =>  heroes.Select(h => h.CurrentHp).ToArray();
