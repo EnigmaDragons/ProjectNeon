@@ -9,7 +9,7 @@ public class AssassinDroneAI : TurnAI
     
     public override void InitForBattle()
     {
-        _hasAttackedLastTurn = new DictionaryWithDefault<int, bool>(Rng.Bool());
+        _hasAttackedLastTurn = new DictionaryWithDefault<int, bool>(false);
         _hasStealthedLastTurn = new DictionaryWithDefault<int, bool>(false);
     }
 
@@ -19,12 +19,11 @@ public class AssassinDroneAI : TurnAI
     public override IPlayedCard Anticipate(int memberId, BattleState battleState, AIStrategy strategy)
     {
         var card = new CardSelectionContext(memberId, battleState, strategy)
+            .WithSelectedDesignatedAttackerCardIfApplicable()
             .IfTrueDontPlayType(c => _hasAttackedLastTurn[memberId], CardTag.Attack)
-            .IfTruePlayType(c => !_hasAttackedLastTurn[memberId], CardTag.Attack)
             .IfTrueDontPlayType(c => _hasStealthedLastTurn[memberId], CardTag.Stealth)
-            .IfTrueDontPlayType(c => c.Enemies.All(x => x.BattleRole != BattleRole.Healer), CardTag.AntiHeal)
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields(9)
-            .WithFinalizedCardSelection();
+            .WithFinalizedCardSelection(x => x.Name == "Heat Up Mode" ? 1 : 0);
         return card.WithSelectedTargetsPlayedCard();
     }
     
