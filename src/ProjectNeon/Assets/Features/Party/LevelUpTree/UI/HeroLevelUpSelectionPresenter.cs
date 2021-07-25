@@ -33,6 +33,7 @@ public class HeroLevelUpSelectionPresenter : OnMessage<LevelUpOptionSelected, He
     {
         msg.Selected.SelectAsLevelUp(_hero);
         gameObject.SetActive(false);
+        Message.Publish(new HeroLevelledUp());
     }
 
     protected override void Execute(HeroStateChanged msg) => Initialized(_hero);

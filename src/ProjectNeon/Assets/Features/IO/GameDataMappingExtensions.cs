@@ -14,7 +14,8 @@ public static class GameDataMappingExtensions
                     Health = h.Health,
                     Levels = h.Levels,
                     Deck = new GameDeckData { CardIds = h.Deck.Cards.Select(c => c.Id).ToArray() },
-                    EquipmentIdNames = h.Equipment.All.Where(e => !e.IsImplant()).Select(x => new GameEquipmentIdName { Id = x.Id, Name = x.Name }).ToArray(),
+                    EquipmentIdNames = h.Equipment.All.Where(e => e.Slot != EquipmentSlot.Permanent)
+                        .Select(x => new GameEquipmentIdName { Id = x.Id, Name = x.Name }).ToArray(),
                     Implants = h.Equipment.Implants.Select(x => x.GetData()).ToArray()
                 }).ToArray(),
             CardIds = s.Cards.AllCards
