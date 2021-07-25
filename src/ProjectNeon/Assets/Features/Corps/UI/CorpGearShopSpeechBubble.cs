@@ -11,7 +11,7 @@ public class CorpGearShopSpeechBubble : CorpAffinityUiBase
     {
         parent.SetActive(false);
         var corpLine = corp.GearShopData.AffinityLines.RandomLine(affinity[corp]);
-        if (corpLine.IsPresent)
+        if (corpLine.IsPresent && !string.IsNullOrWhiteSpace(corpLine.Value))
         {
             parent.SetActive(true);
             speechLabel.text = corpLine.Value;
