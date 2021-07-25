@@ -14,7 +14,7 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnBloodied, ctx => effect => 
             ctx.Actor.IsConscious() && !effect.BattleBefore.Members[ctx.Possessor.Id].IsBloodied() && effect.BattleAfter.Members[ctx.Possessor.Id].IsBloodied() },
         {ReactionConditionType.OnVulnerable, ctx => effect 
-            => ctx.Actor.IsConscious() && (effect.EffectData.EffectType == EffectType.ApplyVulnerable || effect.EffectData.EffectScope.Value == "Vulnerable") && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
+            => ctx.Actor.IsConscious() && effect.EffectData.EffectScope.Value == "Vulnerable" && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
         { ReactionConditionType.OnShieldBroken, ctx => effect => ctx.Actor.IsConscious() && WentToZero(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
         { ReactionConditionType.OnDamagedHp, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp))},
         { ReactionConditionType.OnDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp + m.State.Shield))},

@@ -222,22 +222,6 @@ public class AegisTests
     }
 
     [Test]
-    public void Aegis_ApplyVulnerable_Prevented()
-    {
-        var defender = DefenderWithAegis();
-        var attacker = TestMembers.Any();
-        
-        TestEffects.Apply(new EffectData
-        {
-            EffectType = EffectType.ApplyVulnerable,
-            DurationFormula = "1"
-        }, attacker, defender);
-        
-        Assert.AreEqual(1, defender.State.Damagability());
-        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
-    }
-
-    [Test]
     public void Aegis_ApplyAdditiveInjury_Prevented()
     {        
         var defender = TestMembers.Create(s => s.With(StatType.Attack, 2));

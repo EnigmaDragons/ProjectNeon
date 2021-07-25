@@ -77,13 +77,6 @@ public sealed class InterpolatedCardDescriptionsTests
         => AssertMatchesIgnoreStyling("Deal 8 raw damage",
             Description("Deal {E[0]} raw damage", new EffectData {EffectType = EffectType.DealRawDamageFormula, Formula = "Shield * 2"},
                 OwnerWith(m => m.State.AdjustShield(4))));
-    
-    [Test]
-    public void Interpolated_Auto_GivesVulnerableNextTurn_IsCorrect()
-        => AssertMatchesIgnoreStyling("Next turn, gives Vulnerable for the turn",
-            Description("{Auto}", 
-                new EffectData {EffectType = EffectType.ApplyVulnerable, TurnDelay = 1, DurationFormula = "1"},
-                Owner));
 
     [Test]
     public void Interpolated_Auto_RepeatedText_IsCorrect()

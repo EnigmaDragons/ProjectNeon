@@ -53,6 +53,8 @@ public static class StatExtensions
         {TemporalStatType.Prominent.ToString(), false},
         {TemporalStatType.Marked.ToString(), false},
         {TemporalStatType.PreventResourceGains.ToString(), false},
+        {TemporalStatType.Vulnerable.ToString(), false},
+        {TemporalStatType.AntiHeal.ToString(), false},
     };
 
     public static bool IsPositive(string stat) => _map[stat];

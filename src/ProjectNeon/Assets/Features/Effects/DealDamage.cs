@@ -16,12 +16,12 @@ public sealed class DealDamage : Effect
         var preventingMembers = ctx.Preventions.GetPreventingMembers(PreventionType.Dodge).Select(m => m.Id);
         ctx.Target.Members.ForEach(m =>
         {
-            var amount = Mathf.CeilToInt(_damage.Calculate(ctx, m) * m.State.Damagability());
+            var amount = Mathf.CeilToInt(_damage.Calculate(ctx, m) * m.State[StatType.Damagability]);
             var wasVulnerableString = m.IsVulnerable() ? " (Vulnerable) " : " ";
             if (preventingMembers.Any(id => m.Id == id))
                 return;
             //BattleLog.Write($"{m.Name} prevented damage with a {TemporalStatType.Dodge}");
-            else if (m.State.Damagability() < 0.01)
+            else if (m.State[StatType.Damagability] < 0.01)
                 BattleLog.Write($"0 damage was dealt to Invincible {m.Name}");
             else
             {

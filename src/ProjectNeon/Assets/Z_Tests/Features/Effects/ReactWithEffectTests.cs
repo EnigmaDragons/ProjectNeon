@@ -37,24 +37,6 @@ public class ReactWithEffectTests
     }
 
     [Test]
-    public void ReactWithEffect_OnVulnerable_Works()
-    {
-        var attacker = TestMembers.Named("Robot");
-        var possessor = TestMembers.Create(s => s.With(StatType.Toughness, 5).With(StatType.MaxShield, 10));
-        
-        TestEffects.Apply(Gain5ShieldOnReactionCondition(ReactionConditionType.OnVulnerable), possessor, possessor);
-        
-        TestEffects.Apply(new EffectData
-        {
-            EffectType = EffectType.ApplyVulnerable,
-            FloatAmount = new FloatReference(1),
-            DurationFormula = "0"
-        }, attacker, possessor);
-        
-        Assert.AreEqual(5, possessor.CurrentShield());
-    }
-    
-    [Test]
     public void ReactWithEffect_OnDodged_Works()
     {
         var attacker = TestMembers.Any();
@@ -77,8 +59,9 @@ public class ReactWithEffectTests
 
         TestEffects.Apply(new EffectData
         {
-            EffectType = EffectType.ApplyVulnerable,
-            DurationFormula = "1"
+            EffectType = EffectType.AdjustCounterFormula,
+            Formula = "1",
+            EffectScope = new StringReference(TemporalStatType.Vulnerable.ToString())
         }, attacker, possessor);
         
         Assert.AreEqual(5, possessor.CurrentShield());

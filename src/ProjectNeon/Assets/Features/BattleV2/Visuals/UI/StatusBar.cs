@@ -72,6 +72,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => $"Confused for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Aegis, true, v => $"Prevents next {v} harmful effects");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Lifesteal, true, v => "Gain HP from your next attack");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Vulnerable, true, v => "Vulnerable (Takes 33% more damage)");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.AntiHeal, true, v => "Anti Heal (Only get 50% healing)");
         AddCustomTextStatusIcons(statuses, StatusTag.OnClipUsed, "Unknown On Clip Used Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnBloodied, "Unknown On Bloodied Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnShieldBroken, "Unknown On Shield Broken Effect");
@@ -86,13 +88,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         var extraCardBuffAmount = CeilingInt(_member.State[StatType.ExtraCardPlays] - _member.State.BaseStats.ExtraCardPlays());
         if (extraCardBuffAmount != 0)
             statuses.Add(new CurrentStatusValue { Type = StatType.ExtraCardPlays.ToString(), Icon = icons[StatType.ExtraCardPlays].Icon, Text = extraCardBuffAmount.ToString(), Tooltip = $"Play {extraCardBuffAmount} Extra Cards"});
-        
-        if (_member.State.Damagability() > 1)
-            statuses.Add(new CurrentStatusValue { Type = StatType.Damagability.ToString(), Icon = icons[StatType.Damagability].Icon, Tooltip = "Vulnerable (Takes 33% more damage)"});
-        
-        if (_member.State.Healability() < 1)
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.AntiHeal.ToString(), Icon = icons[StatusTag.AntiHeal].Icon, Tooltip = "Anti Heal (Only get 50% healing)"});
-        
+
         statuses.AddRange(_member.State.StatusesOfType(StatusTag.DamageOverTime)
             .Select(s => new CurrentStatusValue { Type = StatusTag.DamageOverTime.ToString(), Icon = icons[StatusTag.DamageOverTime].Icon, Text = s.RemainingTurns.Select(r => r.ToString(), () => ""), 
                 Tooltip = s.Status.CustomText.Select(t => t, $"Takes {s.Amount.Value} at the Start of the next {s.RemainingTurns.Value} turns"), OriginatorId = s.OriginatorId }));

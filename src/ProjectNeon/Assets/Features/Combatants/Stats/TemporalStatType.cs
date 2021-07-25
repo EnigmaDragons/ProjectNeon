@@ -19,4 +19,6 @@ public enum TemporalStatType
     Prominent = 18,
     Marked = 19,
     PreventResourceGains = 20,
+    Vulnerable = 21,
+    AntiHeal = 22,
 }
