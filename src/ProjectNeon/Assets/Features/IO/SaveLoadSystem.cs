@@ -116,10 +116,12 @@ public sealed class SaveLoadSystem : ScriptableObject
         if (selectedMap.IsMissing)
             return LoadFailedReason($"Unknown Map {mapData.GameMapId}");
         map.CurrentMap = selectedMap.Value;
+        map.CurrentNode = mapData.CurrentNode;
         map.CompletedNodes = mapData.CompletedNodes.ToList();
         map.PreviousPosition = mapData.CurrentPosition;
-        map.CurrentPosition = mapData.CurrentPosition;
+        map.DestinationPosition = mapData.CurrentPosition;
         map.CurrentChoices = mapData.CurrentChoices.ToList();
+        map.HasCompletedEventEnRoute = mapData.HasCompletedEventEnRoute;
         return true;
     }
     

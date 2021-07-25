@@ -9,18 +9,22 @@ public class CurrentGameMap3 : ScriptableObject
     public Maybe<MapNode3> CurrentNode { get; set; } = Maybe<MapNode3>.Missing();
     public List<MapNode3> CompletedNodes { get; set; } = new List<MapNode3>();
     public Vector2 PreviousPosition { get; set; } = Vector2.zero;
-    public Vector2 CurrentPosition { get; set; } = Vector2.zero;
+    public Vector2 DestinationPosition { get; set; } = Vector2.zero;
     public List<MapNode3> CurrentChoices { get; set; } = new List<MapNode3>();
+    public bool HasCompletedEventEnRoute { get; set; }
 
     public void SetMap(GameMap3 map)
     {
         CurrentMap = map;
+        CurrentNode = Maybe<MapNode3>.Missing();
         CompletedNodes = new List<MapNode3>();
-        CurrentPosition = map.StartingPoint;
+        PreviousPosition = map.StartingPoint;
+        DestinationPosition = map.StartingPoint;
         CurrentChoices = new List<MapNode3>();
+        HasCompletedEventEnRoute = false;
     }
 
-    public int Progress => CompletedNodes?.Count(x => x.Type != MapNodeType.StoryEvent) ?? 0;
+    public int Progress => CompletedNodes?.Count ?? 0;
 
     public void CompleteCurrentNode()
     {
@@ -28,7 +32,7 @@ public class CurrentGameMap3 : ScriptableObject
             return;
         CompletedNodes.Add(CurrentNode.Value);
         CurrentChoices = new List<MapNode3>();
-        PreviousPosition = CurrentPosition;
+        PreviousPosition = DestinationPosition;
         CurrentNode = Maybe<MapNode3>.Missing();
     }
 }

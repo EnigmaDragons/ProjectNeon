@@ -36,8 +36,6 @@ public class MapSpawner3 : OnMessage<NodeFinished>
     
     private void Awake()
     {
-        gameMap.CurrentNode = Maybe<MapNode3>.Missing();
-        gameMap.CurrentPosition = gameMap.PreviousPosition;
         _activeNodes = new MapNodeGameObject3[0];
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         _rules = progress.CurrentChapter.NodeTypeOdds2.GenerateMapRules().Concat(new MapGenerationRule3[]
@@ -59,6 +57,23 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         ShowMapPromptIfJustStarted();
     }
 
+    private void Start()
+    {
+        if (gameMap.CurrentNode.IsPresent)
+        {
+            var activeNode = _activeNodes.First(x => x.MapData.Position.x == gameMap.CurrentNode.Value.Position.x && x.MapData.Position.y == gameMap.CurrentNode.Value.Position.y);
+            Message.Publish(new TravelToNode
+            {
+                OnMidPointArrive = gameMap.CurrentNode.Value.HasEventEnroute 
+                    ? (Action)(() => storyEventSegment.Start()) 
+                    : (Action)(() => Message.Publish(new ContinueTraveling())),
+                OnArrive = () => activeNode.ArrivalSegment.Start(),
+                Position = gameMap.CurrentNode.Value.Position,
+                TravelInstantly = false
+            });
+        }
+    }
+
     private void ShowMapPromptIfJustStarted()
     {
         if (progress.CurrentStageSegmentIndex == 0)
@@ -76,7 +91,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         var nodes = Enum.GetValues(typeof(MapNodeType)).Cast<MapNodeType>().Select(x => new MapNode3 { Type = x }).ToList();
         foreach (var rule in _rules)
             nodes = rule.FilterNodeTypes(nodes, gameMap, partyState, progress);
-        var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.CurrentPosition).ToArray().Shuffled();
+        var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition).ToArray().Shuffled();
         gameMap.CurrentChoices = new List<MapNode3>();
         for (var i = 0; i < nodes.Count; i++)
         {
@@ -93,11 +108,8 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         _activeNodes = gameMap.CurrentChoices.Select(x =>
         {
             var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), _map.transform);
-            Action midPoint = x.HasEventEnroute ? () => storyEventSegment.Start() : (Action)(() => travelReactiveSystem.Continue());
-            obj.Init(x, ctx, () =>
-            {
-                gameMap.CurrentNode = x;
-            }, midPoint);
+            var midPoint = x.HasEventEnroute ? (Action)(() => storyEventSegment.Start()) : (Action)(() => Message.Publish(new ContinueTraveling()));
+            obj.Init(x, gameMap, ctx, midPoint);
             var rect = (RectTransform) obj.transform;
             rect.pivot = new Vector2(0.5f, 0.5f);
             rect.anchoredPosition = x.Position;
@@ -149,7 +161,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         _playerToken = Instantiate(playerToken, map.transform);
         var rect = (RectTransform)_playerToken.transform;
         rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = gameMap.CurrentPosition;
+        rect.anchoredPosition = gameMap.DestinationPosition;
         travelReactiveSystem.PlayerToken = _playerToken;
     }
 
