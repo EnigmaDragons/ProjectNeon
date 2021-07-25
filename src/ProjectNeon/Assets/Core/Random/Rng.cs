@@ -4,7 +4,9 @@ using System.Linq;
 
 public static class Rng
 {
-    private static readonly Random Instance = new Random(Guid.NewGuid().GetHashCode());
+    public static readonly int Seed = Guid.NewGuid().GetHashCode();
+    
+    private static readonly Random Instance = new Random(Seed);
 
     public static bool Bool() => Int(2) == 1;
     public static bool Chance(double percent) => Instance.NextDouble() < percent;

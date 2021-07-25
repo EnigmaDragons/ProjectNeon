@@ -114,7 +114,7 @@ public class BattleSetupV2 : MonoBehaviour
         }
 
         DevLog.Write("Setting Up Player Hand");
-        Deck.InitShuffled(cards);
+        Deck.InitShuffled(cards, new DeterministicRng(state.MapNodeRngSeed));
         yield return playerCardPlayZones.DrawHandAsync(state.PlayerState.CardDraws);
     }
 }

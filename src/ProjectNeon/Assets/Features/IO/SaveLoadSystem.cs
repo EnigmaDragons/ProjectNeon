@@ -146,6 +146,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         map.DestinationPosition = mapData.CurrentPosition;
         map.CurrentChoices = mapData.CurrentChoices.ToList();
         map.HasCompletedEventEnRoute = mapData.HasCompletedEventEnRoute;
+        map.CurrentNodeRngSeed = mapData.CurrentNodeRngSeed;
         return true;
     }
     

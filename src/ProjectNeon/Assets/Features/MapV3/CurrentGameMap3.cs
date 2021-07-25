@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Maps/Current Game Map 3")]
@@ -12,6 +12,7 @@ public class CurrentGameMap3 : ScriptableObject
     public Vector2 DestinationPosition { get; set; } = Vector2.zero;
     public List<MapNode3> CurrentChoices { get; set; } = new List<MapNode3>();
     public bool HasCompletedEventEnRoute { get; set; }
+    public int CurrentNodeRngSeed { get; set; } = Guid.NewGuid().GetHashCode();
 
     public void SetMap(GameMap3 map)
     {
@@ -22,6 +23,7 @@ public class CurrentGameMap3 : ScriptableObject
         DestinationPosition = map.StartingPoint;
         CurrentChoices = new List<MapNode3>();
         HasCompletedEventEnRoute = false;
+        UpdateSeed();
     }
 
     public int Progress => CompletedNodes?.Count ?? 0;
@@ -34,5 +36,8 @@ public class CurrentGameMap3 : ScriptableObject
         CurrentChoices = new List<MapNode3>();
         PreviousPosition = DestinationPosition;
         CurrentNode = Maybe<MapNode3>.Missing();
+        UpdateSeed();
     }
+    
+    private void UpdateSeed() => CurrentNodeRngSeed = Guid.NewGuid().GetHashCode();
 }

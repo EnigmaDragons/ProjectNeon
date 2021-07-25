@@ -11,6 +11,18 @@ public class CardPlayZone : ScriptableObject
     [SerializeField] private Card[] cards;
     [SerializeField] private GameEvent onZoneCardsChanged;
 
+    private DeterministicRng _rng;
+
+    private DeterministicRng Rng
+    {
+        get
+        {
+            if (_rng == null)
+                _rng = new DeterministicRng(Rng.Seed);
+            return _rng;
+        }
+    }
+
     public int Count => cards.Length;
     public int Max => maxCards.Value;
     public Card[] Cards => cards.ToArray();
@@ -19,14 +31,25 @@ public class CardPlayZone : ScriptableObject
     public bool IsEmpty => cards.Length == 0;
     public bool HasCards => cards.Length > 0;
 
-    public void Init(IEnumerable<Card> newCards) => cards = newCards.ToArray();
-
-    public void InitShuffled(IEnumerable<Card> cards)
+    public void Init(IEnumerable<Card> newCards)
     {
-        Init(cards);
+        cards = newCards.ToArray();
+    }
+
+    public void InitShuffled(IEnumerable<Card> newCards)
+    {
+        Init(newCards);
+        _rng = new DeterministicRng(Rng.Seed);
         Shuffle();
     }
 
+    public void InitShuffled(IEnumerable<Card> newCards, DeterministicRng rng)
+    {
+        Init(newCards);
+        _rng = rng;
+        Shuffle(rng);
+    }
+    
     public Card DrawOneCard()
     {
         if (cards.Length == 0)
@@ -62,7 +85,8 @@ public class CardPlayZone : ScriptableObject
     public void Clear() => Mutate(c => Array.Empty<Card>());
     public void PutOnTop(Card card) => Mutate(c => card.Concat(c));
     public void PutOnBottom(Card card) => Mutate(c => c.Concat(card));
-    public void Shuffle() => Mutate(c => c.Shuffled());
+    public void Shuffle() => Shuffle(Rng);
+    private void Shuffle(DeterministicRng rng) => Mutate(c => rng.Shuffled(c.OrderBy(x => x.Name).ToArray()));
     public void Set(params Card[] val) => Mutate(c => val);
     
     public void Mutate(Func<Card[], IEnumerable<Card>> update)
