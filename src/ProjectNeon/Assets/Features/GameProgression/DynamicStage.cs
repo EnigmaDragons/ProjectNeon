@@ -12,7 +12,7 @@ public class DynamicStage : ScriptableObject
     [SerializeField] private ParticleSystem.MinMaxCurve powerCurve;
     [SerializeField] private ParticleSystem.MinMaxCurve elitePowerCurve;
     [SerializeField] private GameObject[] possibleBattlegrounds;
-    [SerializeField][Range(0,99)] private int segmentCount;
+    [SerializeField][Range(0,999)] private int segmentCount;
     [SerializeField] private GameObject bossBattlefield;
     [SerializeField] private Enemy[] bossEnemies;
     [SerializeField] private NodeTypeOdds nodeTypeOdds;

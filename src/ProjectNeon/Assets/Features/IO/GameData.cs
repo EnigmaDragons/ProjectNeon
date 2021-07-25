@@ -19,6 +19,7 @@ public class GameAdventureProgressData
     public GameAdventureProgressType Type = GameAdventureProgressType.Unknown;
     public int CurrentChapterIndex = -1;
     public int CurrentStageSegmentIndex = -1;
+    public string[] FinishedStoryEvents = new string[0];
 }
 
 public enum GameAdventureProgressType

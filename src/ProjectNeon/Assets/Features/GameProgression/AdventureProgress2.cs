@@ -33,7 +33,7 @@ public class AdventureProgress2 : ScriptableObject
     public int CurrentPowerLevel => CurrentChapter.GetPowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount);
     public int CurrentElitePowerLevel => CurrentChapter.GetElitePowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount);
     private bool HasBegun => currentChapterIndex > -1;
-    private bool CurrentStageIsFinished => HasBegun && currentMap3.Progress == CurrentChapter.SegmentCount;
+    private bool CurrentStageIsFinished => HasBegun && currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes.Last().Type == MapNodeType.Boss;
 
     public void Init()
     {
@@ -90,6 +90,7 @@ public class AdventureProgress2 : ScriptableObject
     }
 
     public void RecordEncounteredStoryEvent(StoryEvent e) => finishedStoryEvents.Add(e.name);
+    public void SetFinishedStoryEvents(string[] storyEvents) => finishedStoryEvents = storyEvents.ToList();
     
     public LootPicker CreateLootPicker(PartyAdventureState party) 
         => new LootPicker(CurrentChapterNumber, CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), party);
