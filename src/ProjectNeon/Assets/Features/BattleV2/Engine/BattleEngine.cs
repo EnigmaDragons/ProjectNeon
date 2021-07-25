@@ -150,8 +150,11 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     private void BeginPhase(BattleV2Phase newPhase)
     {
         if (newPhase == state.Phase)
-            Log.Error($"Phase - Should not attempt to transition to {newPhase} when that's already the active phase.");
-        
+        {
+            Log.Info($"Battle Phase {newPhase} already begun");
+            return;
+        }
+
         var finishedMessage = state.Phase != BattleV2Phase.NotBegun ? $"Finished {state.Phase} Phase -> " : "";
         var message = $"Phase - {finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);

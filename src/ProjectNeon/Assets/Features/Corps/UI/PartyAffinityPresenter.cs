@@ -25,7 +25,6 @@ public class PartyAffinityPresenter : OnMessage<PartyAdventureStateChanged>
         var topAffinities = affinity.Where(a => ((int)a.Value) > 0)
             .OrderByDescending(a => (int)a.Value)
             .Take(2).ToArray();
-        affinity.DevLogInfo();
         
         corp1Parent.SetActive(true);
         if (topAffinities.Length > 0)

@@ -23,7 +23,7 @@ public sealed class HandVisualizer : MonoBehaviour
     private bool _useRecycle = false;
     private bool _cardPlayingAllowed = true;
 
-    public CardPresenter[] ShownCards => _cardPool.ShownCards;
+    public CardPresenter[] ShownCards => _cardPool == null ? new CardPresenter[0] : _cardPool?.ShownCards;
 
     public void SetOnShownCardsChanged(Action action) => _onShownCardsChanged = action;
 
@@ -84,6 +84,11 @@ public sealed class HandVisualizer : MonoBehaviour
 
     private void CleanRemovedCards(Card[] newCards)
     {
+        #if UNITY_EDITOR
+        if (_cardPool == null)
+            return;
+        #endif
+        
         var newCopy = newCards.ToList();
         foreach (var old in _oldCards)
         {
