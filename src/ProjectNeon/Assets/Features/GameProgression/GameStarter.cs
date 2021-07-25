@@ -8,6 +8,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     protected override void Execute(StartNewGame msg)
     {
         io.ClearCurrentSlot();
+        AllMetrics.SetRunId(CurrentGameData.Data.RunId);
         _navigator.NavigateToAdventureSelection();
     }
 

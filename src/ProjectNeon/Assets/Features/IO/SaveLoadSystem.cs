@@ -32,6 +32,8 @@ public sealed class SaveLoadSystem : ScriptableObject
     {
         var saveData = CurrentGameData.Data;
         var loadedSuccessfully = true;
+        if (!string.IsNullOrWhiteSpace(saveData.RunId))
+            AllMetrics.SetRunId(saveData.RunId);
         if (loadedSuccessfully && (int) saveData.Phase >= (int) CurrentGamePhase.SelectedAdventure)
             loadedSuccessfully = InitAdventure(saveData.AdventureProgress);
         if (loadedSuccessfully && (int) saveData.Phase >= (int) CurrentGamePhase.SelectedSquad)

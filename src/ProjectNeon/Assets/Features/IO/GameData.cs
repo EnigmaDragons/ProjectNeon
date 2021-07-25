@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameData
 {
     public string VersionNumber = "Not Initialized";
+    public string RunId = Guid.NewGuid().ToString();
     public bool IsInitialized = false;
     public CurrentGamePhase Phase = CurrentGamePhase.NotStarted;
     public GameAdventureProgressData AdventureProgress = new GameAdventureProgressData();
