@@ -16,6 +16,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private bool isEliteBattle;
     [SerializeField] private BattleV2Phase phase;
     [SerializeField] private AdventureProgress2 adventureProgress;
+    [SerializeField] private CurrentGameMap3 map;
     
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
@@ -75,6 +76,7 @@ public class BattleState : ScriptableObject
     public Member[] EnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
     public (Member Member, EnemyInstance Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
     public PlayerState PlayerState => playerState;
+    public int MapNodeRngSeed => map.CurrentNodeRngSeed;
     private Dictionary<int, EnemyInstance> _enemiesById = new Dictionary<int, EnemyInstance>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
@@ -88,7 +90,7 @@ public class BattleState : ScriptableObject
     {
         nextEnemies = e.ToArray();
         nextIsEliteBattle = isElite;
-        DevLog.Write($"Next Encounter has {string.Join(", ", e.Select(x => x.Name))}");
+        DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.Name))}");
     }
 
     public void SetupEnemyEncounter()
