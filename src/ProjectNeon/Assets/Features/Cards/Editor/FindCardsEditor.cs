@@ -44,6 +44,9 @@ public class FindCardsEditor : EditorWindow
     // By Hero
     private string _heroString;
     
+    //By ID
+    private int _id;
+    
     void OnGUI()
     {
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
@@ -215,6 +218,17 @@ public class FindCardsEditor : EditorWindow
             GUIUtility.ExitGUI();
         }
         DrawUILine();
+
+        int.TryParse(GUILayout.TextField(_id.ToString()), out _id);
+        if (GUILayout.Button("Find By ID"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(c => c.id == _id)
+                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .ToArray();
+            ShowCards($"Archetype {_archetype}", cards);
+            GUIUtility.ExitGUI();
+        }
     }
     
     private void ShowCards(string description, string[] cards) 

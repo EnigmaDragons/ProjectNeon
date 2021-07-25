@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,6 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private bool _isConfirming = false;
     private bool _confirmRequested;
-    
-    public bool ReadyForTurnEnd => _confirmRequested || battleState.NumberOfCardPlaysRemainingThisTurn <= 0 || battleState.PlayerCardZones.HandZone.Count == 0;
 
     private void Awake()
     {
@@ -23,8 +22,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     {
         Message.Subscribe<BattleStateChanged>(msg => UpdateState(msg), this);
         Message.Subscribe<BeginPlayerTurnConfirmation>(_ => OnConfirmationRequested(), this);
-        playArea.OnZoneCardsChanged.Subscribe(UpdateState, this);
-        playerHand.OnZoneCardsChanged.Subscribe(UpdateState, this);
+        Message.Subscribe<CheckForAutomaticTurnEnd>(msg => CheckForAutomaticTurnEnd(), this);
     }
     
     private void OnDisable()
@@ -35,9 +33,27 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private void OnConfirmationRequested()
     {
-        if (battleState.Phase != BattleV2Phase.PlayCards || battleState.IsSelectingTargets || playArea.Cards.Length != battleState.PlayerState.CurrentStats.CardPlays())
+        if (battleState.Phase != BattleV2Phase.PlayCards || battleState.IsSelectingTargets)
             return;
         ConfirmEarly();
+    }
+
+    private void CheckForAutomaticTurnEnd()
+    {
+        if (battleState.Phase == BattleV2Phase.PlayCards && 
+            (!battleState.PlayerCardZones.HandZone.HasCards 
+                || (battleState.NumberOfRecyclesRemainingThisTurn <= 0 
+                    && battleState.NumberOfCardPlaysRemainingThisTurn <= 0
+                    && battleState.PlayerCardZones.PlayZone.IsEmpty
+                    && battleState.PlayerCardZones.ResolutionZone.IsEmpty
+                    && battleState.PlayerCardZones.HandZone.Cards.All(c => 
+                        !c.IsAnyFormPlayableByHero(battleState.Party, battleState.NumberOfCardPlaysRemainingThisTurn) 
+                        || !c.Owner.CanPlayCards()))))
+        {
+            DevLog.Write($"No playable cards. Requesting early turn Confirmation. Hand Size {battleState.PlayerCardZones.HandZone.Cards.Length}. Num Cycles {battleState.NumberOfRecyclesRemainingThisTurn}");
+            _confirmRequested = true;
+            Confirm();
+        }
     }
 
     private void UpdateState(BattleStateChanged msg)
@@ -46,22 +62,6 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
             confirmUi.gameObject.SetActive(true);
         if (battleState.Phase != BattleV2Phase.PlayCards)
             confirmUi.gameObject.SetActive(false);
-        UpdateState();
-    }
-    
-    private void UpdateState()
-    {
-        if (_isConfirming == ReadyForTurnEnd)
-            return;
-        
-        _isConfirming = ReadyForTurnEnd;
-        if (_isConfirming)
-            Message.Publish(new PlayerTurnConfirmationStarted());
-        else
-            Message.Publish(new PlayerTurnConfirmationAborted());
-        
-        if (!battleState.HasMorePlaysAvailableThisTurn)
-            Confirm();
     }
 
     private void ConfirmEarly()
@@ -72,9 +72,6 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     
     public void Confirm()
     {
-        if (!ReadyForTurnEnd) 
-            return;
-
         var reasonWord = _confirmRequested ? "manually" : "automatically";
         _confirmRequested = false;
         if (confirmUi != null)
@@ -88,6 +85,5 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     public void Cancel()
     {
         _confirmRequested = false;
-        UpdateState();
     }
 }

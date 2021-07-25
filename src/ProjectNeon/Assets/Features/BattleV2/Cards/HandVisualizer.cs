@@ -147,14 +147,6 @@ public sealed class HandVisualizer : MonoBehaviour
             c.SetHandHighlight(isFocused);
             c.SetTargetPosition(targetPosition);
         }
-
-        if (cards.Any() 
-            && state.NumberOfRecyclesRemainingThisTurn <= 0 
-            && cards.All(c => !c.IsAnyFormPlayableByHero(state.Party, state.NumberOfCardPlaysRemainingThisTurn) || !c.Owner.CanPlayCards()))
-        {
-            DevLog.Write($"No playable cards. Requesting early turn Confirmation. Hand Size {cards.Length}. Num Cycles {state.NumberOfRecyclesRemainingThisTurn}");
-            Message.Publish(new BeginPlayerTurnConfirmation());
-        }
     }
 
     private void DiscardCard(int cardIndex)
@@ -199,5 +191,6 @@ public sealed class HandVisualizer : MonoBehaviour
         state.UseRecycle();
         zones.DiscardZone.PutOnBottom(Hand.Take(cardIndex).RevertedToStandard());
         zones.DrawOneCard();
+        Message.Publish(new CheckForAutomaticTurnEnd());
     }
 }
