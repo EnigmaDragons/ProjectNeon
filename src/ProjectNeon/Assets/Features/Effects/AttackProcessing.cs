@@ -22,7 +22,7 @@ public static class AttackProcessing
             effect.Apply(ctx.Retargeted(attacker, new Single(member)));
             var amountDealt = beforeHp - member.CurrentHp();
             totalHpDamageDealt += amountDealt;
-            if (amountDealt > 0)
+            if (usesDoubleDamage && amountDealt > 0)
                 Message.Publish(new DisplayCharacterWordRequested(member, "Double Damage!"));
         }
         

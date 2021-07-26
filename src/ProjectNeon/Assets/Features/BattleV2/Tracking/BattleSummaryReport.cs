@@ -1,16 +1,18 @@
+using System;
 
+[Serializable]
 public class BattleSummaryReport
 {
-    public string[] Enemies { get; set; }
-    public int TotalEnemyPowerLevel { get; set; }
-    public EnemyTier FightTier { get; set; }
+    public string[] enemies;
+    public int totalEnemyPowerLevel;
+    public string fightTier;
     
-    public int AttritionHpChange { get; set; }
-    public int AttritionInjuriesChange { get; set; }
-    public int AttritionCreditsChange { get; set; }
+    public int attritionHpChange;
+    public int attritionInjuriesChange;
+    public int attritionCreditsChange;
     
-    public string[] RewardCards { get; set; }
-    public string[] RewardGear { get; set; }
-    public int RewardXp { get; set; }
-    public int RewardCredits { get; set; }
+    public string[] rewardCards;
+    public string[] rewardGear;
+    public int rewardXp;
+    public int rewardCredits;
 }

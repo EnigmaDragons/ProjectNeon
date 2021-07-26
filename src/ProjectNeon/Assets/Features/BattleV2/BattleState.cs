@@ -267,25 +267,26 @@ public class BattleState : ScriptableObject
     // Battle Wrapup
     public void Wrapup()
     {
-        var battleAttritionReport = _tracker.Finalize(party);
         RecordPartyAdventureHp();
+        var battleAttritionReport = _tracker.Finalize(party);
         GrantRewardCredits();
         GrantRewardCards();
         GrantRewardEquipment();
         GrantRewardXp();
         var battleSummaryReport = new BattleSummaryReport
         {
-            Enemies = _battleStartingEnemies.Select(e => e.Name).ToArray(),
-            FightTier = isEliteBattle ? EnemyTier.Elite : EnemyTier.Normal,
-            TotalEnemyPowerLevel = _battleStartingEnemies.Sum(e => e.PowerLevel),
-            AttritionCreditsChange = battleAttritionReport.TotalCreditsChange,
-            AttritionHpChange = battleAttritionReport.TotalHpChange,
-            AttritionInjuriesChange = battleAttritionReport.TotalInjuriesChange,
-            RewardXp = rewardXp,
-            RewardCredits = rewardCredits,
-            RewardCards = rewardCards.Select(c => c.Name).ToArray(),
-            RewardGear = rewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
+            enemies = _battleStartingEnemies.Select(e => e.Name).ToArray(),
+            fightTier = (isEliteBattle ? EnemyTier.Elite : EnemyTier.Normal).ToString(),
+            totalEnemyPowerLevel = _battleStartingEnemies.Sum(e => e.PowerLevel),
+            attritionCreditsChange = battleAttritionReport.TotalCreditsChange,
+            attritionHpChange = battleAttritionReport.TotalHpChange,
+            attritionInjuriesChange = battleAttritionReport.TotalInjuriesChange,
+            rewardXp = rewardXp,
+            rewardCredits = rewardCredits,
+            rewardCards = rewardCards.Select(c => c.Name).ToArray(),
+            rewardGear = rewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
         };
+        AllMetrics.PublishBattleSummary(battleSummaryReport);
         EnemyArea.Clear();
     }
     

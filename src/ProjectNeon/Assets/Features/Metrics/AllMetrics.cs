@@ -38,6 +38,9 @@ public static class AllMetrics
     
     public static void PublishMapNodeSelection(int mapProgress, string selectedMapNodeName, string[] mapNodeOptions)
         => Send("mapNodeSelected", new MapNodeSelectionData { progress = mapProgress, selected = selectedMapNodeName, options = mapNodeOptions});
+
+    public static void PublishBattleSummary(BattleSummaryReport report)
+        => Send("battleSummary", report);
     
     private static void Send(string eventName, object payload)
         => Send(new GeneralMetric(eventName, JsonUtility.ToJson(payload)));

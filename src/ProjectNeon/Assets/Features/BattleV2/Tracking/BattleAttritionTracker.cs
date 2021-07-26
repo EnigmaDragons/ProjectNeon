@@ -1,9 +1,9 @@
 
 public class BattleAttritionTracker
 {
-    private int _startingNumInjuries;
-    private int _startingCredits;
-    private int _startingMissingHp;
+    private readonly int _startingNumInjuries;
+    private readonly int _startingCredits;
+    private readonly int _startingMissingHp;
 
     private BattleAttritionTracker(int startingMissingHp, int startingCredits, int startingNumInjuries)
     {
@@ -16,6 +16,6 @@ public class BattleAttritionTracker
         => new BattleAttritionTracker(party.TotalMissingHp, party.Credits, party.TotalNumInjuries);
 
     public BattleAttritionReport Finalize(PartyAdventureState party)
-        => new BattleAttritionReport(party.TotalMissingHp - _startingMissingHp,
+        => new BattleAttritionReport(_startingMissingHp - party.TotalMissingHp,
             party.TotalNumInjuries - _startingNumInjuries, party.Credits - _startingCredits);
 }
