@@ -45,24 +45,27 @@ public static class AllMetrics
     private static void Send(string eventName, object payload)
         => Send(new GeneralMetric(eventName, JsonUtility.ToJson(payload)));
     
-    private static void Send(GeneralMetric m) 
-        => Client.Post(
-            new Uri(_securedUrl.FromBase64(), UriKind.Absolute),
-            new StringContent(
-                JsonUtility.ToJson(new GeneralMetricData
-                {
-                    gameVersion = WithEditorInfoAppended(_version), 
-                    installId = _installId, 
-                    runId = _runId, 
-                    eventType = m.EventType, 
-                    @event = m.Event
-                }),
-                Encoding.UTF8,
-                "application/json"),
-            HttpCompletionOption.AllResponseContent,
-            OnResponse);
-    
-    
+    private static void Send(GeneralMetric m)
+    {
+        if (!_isEditor)
+            Client.Post(
+                new Uri(_securedUrl.FromBase64(), UriKind.Absolute),
+                new StringContent(
+                    JsonUtility.ToJson(new GeneralMetricData
+                    {
+                        gameVersion = WithEditorInfoAppended(_version),
+                        installId = _installId,
+                        runId = _runId,
+                        eventType = m.EventType,
+                        @event = m.Event
+                    }),
+                    Encoding.UTF8,
+                    "application/json"),
+                HttpCompletionOption.AllResponseContent,
+                OnResponse);
+    }
+
+
     private static string WithEditorInfoAppended(string version) => _isEditor ? $"{version} Editor" : version;
 
     private static void OnResponse(HttpResponseMessage resp)
