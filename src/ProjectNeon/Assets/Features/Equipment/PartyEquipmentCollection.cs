@@ -10,8 +10,8 @@ public class PartyEquipmentCollection
     private List<Equipment> _equipped = new List<Equipment>();
     
     public List<Equipment> All => (_all ?? new List<Equipment>()).ToList();
-    public List<Equipment> Available => _available.ToList();
-    public List<Equipment> Equipped => _equipped.ToList();
+    public List<Equipment> Available => (_available ?? new List<Equipment>()).ToList();
+    public List<Equipment> Equipped => (_equipped ?? new List<Equipment>()).ToList();
 
     public IEnumerable<Equipment> AvailableFor(HeroCharacter c) =>
         Available.Where(e => e.Archetypes.All(c.Archetypes.Contains)).ToList();

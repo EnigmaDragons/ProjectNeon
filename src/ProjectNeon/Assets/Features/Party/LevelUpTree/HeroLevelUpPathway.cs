@@ -11,7 +11,7 @@ public class HeroLevelUpPathway : ScriptableObject
     {
         var index = level - 2; // First Level Up happens when you hit level 2. So, the 0 index corresponds to Level 2.
         return options.Length > index && options[index].options.Any()
-            ? options[index].options.ToArray()
-            : defaultLevelUp.options.ToArray();
+            ? options[index].options.ToArray().Shuffled()
+            : defaultLevelUp.options.ToArray().Shuffled();
     }
 }

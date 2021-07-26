@@ -9,4 +9,7 @@ public class MapNode3
     public bool HasEventEnroute;
     public int[] EnemyIds;
     public string Corp;
+
+    public string GetMetricDescription() 
+        => ($"{Type} " + (string.IsNullOrWhiteSpace(Corp) ? "" : Corp)).Trim();
 }
