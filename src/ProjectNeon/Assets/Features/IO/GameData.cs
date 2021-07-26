@@ -49,6 +49,7 @@ public class GameHeroData
     public GameDeckData Deck = new GameDeckData();
     public GameEquipmentIdName[] EquipmentIdNames = Array.Empty<GameEquipmentIdName>();
     public GameEquipmentData[] Implants = Array.Empty<GameEquipmentData>();
+    public Maybe<StatType> PrimaryStat = Maybe<StatType>.Missing();
 }
 
 [Serializable]

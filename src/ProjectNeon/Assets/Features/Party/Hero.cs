@@ -38,6 +38,7 @@ public class Hero
     public int Level => levels.CurrentLevel;
     public CardTypeData BasicCard => basicCard;
     public StatType PrimaryStat => _primaryStat.OrDefault(Stats.DefaultPrimaryStat(Character.Stats));
+    public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
 
     public IStats BaseStats => 
         Character.Stats.Plus(_statAdditions);
@@ -120,6 +121,7 @@ public class Hero
     public void HealInjuryByName(string name) => UpdateState(() => health.HealInjuryByName(name));
 
     public void SetPrimaryStat(StatType stat) => UpdateState(() => _primaryStat = stat);
+    public void SetPrimaryStat(Maybe<StatType> stat) => UpdateState(() => _primaryStat = stat);
     
     private void UpdateState(Action a)
     {

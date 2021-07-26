@@ -104,6 +104,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             
             hero.SetLevels(heroSaveData.Levels);
             hero.SetHealth(heroSaveData.Health);
+            hero.SetPrimaryStat(heroSaveData.PrimaryStat);
             
             var maybeBasicCard = library.GetCardById(heroSaveData.BasicCardId);
             if (!maybeBasicCard.IsPresent)

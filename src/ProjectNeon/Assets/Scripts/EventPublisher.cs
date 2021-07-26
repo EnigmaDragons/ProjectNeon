@@ -38,4 +38,5 @@ public class EventPublisher : ScriptableObject
     public void ToggleBestiary() => Message.Publish(new ToggleBestiary());
     public void GainRandomEquipment() => Message.Publish(new GainRandomEquipment());
     public void RefreshShop() => Message.Publish(new RefreshShop());
+    public void ToggleGameMenu() => Message.Publish(new ToggleGameMenu());
 }
