@@ -85,7 +85,7 @@ public class EnemyInstance : EnemyType
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Name, "Enemy", TeamType.Enemies, stats, Role, stats.PrimaryStat(stats));
+        var m = new Member(id, Name, "Enemy", TeamType.Enemies, stats, Role, stats.DefaultPrimaryStat(stats));
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;

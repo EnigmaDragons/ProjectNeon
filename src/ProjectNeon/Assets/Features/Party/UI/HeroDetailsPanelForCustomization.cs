@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,25 +14,38 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private HeroEquipmentPanelV2 equipment;
     [SerializeField] private HeroInjuryPanel injuries;
-    [SerializeField] private TextCommandButton levelUpButton;
     [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField] private TMP_Dropdown primaryStat;
 
+    private bool _ignoreChanges;
+    private Hero _hero;
+    private Dictionary<int, StatType> _optionToStat;
+
+    private void Awake() => primaryStat.onValueChanged.AddListener(x =>
+    {
+        if (!_ignoreChanges)
+            _hero.SetPrimaryStat(_optionToStat[x]);
+    }); 
+    
     public HeroDetailsPanelForCustomization Initialized()
     {
-        var hero = deckBuilderState.SelectedHeroesDeck.Hero;
-        nameLabel.text = hero.Name;
-        classLabel.text = hero.Class;
-        levelLabel.text = hero.Level.ToString();
-        heroBust.sprite = hero.Character.Bust;
-        resources.Initialized(hero);
-        stats.Initialized(hero);
-        injuries.Init(hero);
+        _ignoreChanges = true;
+        _hero = deckBuilderState.SelectedHeroesDeck.Hero;
+        nameLabel.text = _hero.Name;
+        classLabel.text = _hero.Class;
+        levelLabel.text = _hero.Level.ToString();
+        heroBust.sprite = _hero.Character.Bust;
+        _optionToStat = new Dictionary<int, StatType>();
+        var options = StatsExtensions.PrimaryStatOptions.Where(x => _hero.PrimaryStat == x || _hero.Character.Stats[x] > 0).ToArray();
+        for (var i = 0; i < options.Length; i++)
+            _optionToStat[i] = options[i];
+        primaryStat.options = options.Select(x => new TMP_Dropdown.OptionData(x.ToString())).ToList();
+        primaryStat.value = _optionToStat.First(x => x.Value == _hero.PrimaryStat).Key;
+        resources.Initialized(_hero);
+        stats.Initialized(_hero);
+        injuries.Init(_hero);
         equipment.Initialized();
-        
-        levelUpButton?.gameObject.SetActive(false);
-        if (levelUpButton != null && hero.Levels.UnspentLevelUpPoints > 0)
-            levelUpButton.Init("Level Up", () => Message.Publish(new LevelUpHero(hero)));
-        
+        _ignoreChanges = false;
         return this;
     }
 
