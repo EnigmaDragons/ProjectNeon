@@ -30,6 +30,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AtStartOfTurn, new [] { "DurationFormula", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
         {EffectType.AtEndOfTurn, new [] { "DurationFormula", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
         {EffectType.DuplicateStatesOfType, new [] { "StatusTag" }},
+        {EffectType.DuplicateStatesOfTypeToRandomEnemy, new [] { "StatusTag" }},
         {EffectType.DealRawDamageFormula, new [] { "Formula", "InterpolatePartialFormula" }},
         {EffectType.HealFormula, new [] { "Formula", "InterpolatePartialFormula" }},
         {EffectType.ApplyAdditiveStatInjury, new [] { "FlavorText", "FloatAmount", "EffectScope" }},
