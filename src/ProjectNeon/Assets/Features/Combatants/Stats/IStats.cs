@@ -28,16 +28,19 @@ public static class StatsExtensions
     public static int ExtraCardPlays(this IStats stats) => stats[StatType.ExtraCardPlays].RoundUp();
     public static float Damagability(this IStats stats) => stats[StatType.Damagability];
     public static float Healability(this IStats stats) => stats[StatType.Healability];
+
+    public static StatType[] PrimaryStatOptions => new[]
+    {
+        StatType.Attack,
+        StatType.Magic,
+        StatType.Toughness,
+        StatType.Leadership,
+        StatType.Economy
+    };
     
-    public static StatType PrimaryStat(this IStats stats, IStats baseStats) => new StatType[]
-        {
-            StatType.Attack, 
-            StatType.Magic, 
-            StatType.Toughness,
-            StatType.Leadership,
-            StatType.Economy
-        }
-        .OrderByDescending(x => stats[x])
-        .ThenByDescending(x => baseStats[x])
-        .First();
+    public static StatType DefaultPrimaryStat(this IStats stats, IStats baseStats) 
+        => PrimaryStatOptions
+            .OrderByDescending(x => stats[x])
+            .ThenByDescending(x => baseStats[x])
+            .First();
 }

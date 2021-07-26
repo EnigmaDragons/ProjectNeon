@@ -85,7 +85,7 @@ public class EnemyInstance : EnemyType
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Name, "Enemy", TeamType.Enemies, stats, Role, stats.PrimaryStat(stats));
+        var m = new Member(id, Name, "Enemy", TeamType.Enemies, stats, Role, stats.DefaultPrimaryStat(stats));
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;
@@ -100,7 +100,6 @@ public class EnemyInstance : EnemyType
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = _resourceType.Name, Amount = _resourceGainPerTurn}, m, state.Party));
-        _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         _startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx));
         return m;
     }

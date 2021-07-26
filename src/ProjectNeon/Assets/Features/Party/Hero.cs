@@ -13,7 +13,8 @@ public class Hero
     [SerializeField] private HeroLevels levels;
     [SerializeField] private CardTypeData basicCard;
 
-    private IStats _statAdditions = new StatAddends(); 
+    private IStats _statAdditions = new StatAddends();
+    private Maybe<StatType> _primaryStat = Maybe<StatType>.Missing();
 
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
@@ -36,6 +37,7 @@ public class Hero
     public HeroLevels Levels => levels;
     public int Level => levels.CurrentLevel;
     public CardTypeData BasicCard => basicCard;
+    public StatType PrimaryStat => _primaryStat.OrDefault(Stats.DefaultPrimaryStat(Character.Stats));
 
     public IStats BaseStats => 
         Character.Stats.Plus(_statAdditions);
@@ -84,14 +86,14 @@ public class Hero
     public Member AsMemberForTests(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), CurrentHp, new Maybe<CardTypeData>(basicCard));
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, PrimaryStat, CurrentHp, new Maybe<CardTypeData>(basicCard));
         return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext()));
     }
 
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, stats.PrimaryStat(Character.Stats), CurrentHp, new Maybe<CardTypeData>(basicCard));
+        var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, PrimaryStat, CurrentHp, new Maybe<CardTypeData>(basicCard));
         return m;
     }
 
@@ -117,6 +119,8 @@ public class Hero
     public void Apply(MultiplicativeStatInjury injury) => UpdateState(() => health.Apply(injury));
     public void HealInjuryByName(string name) => UpdateState(() => health.HealInjuryByName(name));
 
+    public void SetPrimaryStat(StatType stat) => UpdateState(() => _primaryStat = stat);
+    
     private void UpdateState(Action a)
     {
         a();

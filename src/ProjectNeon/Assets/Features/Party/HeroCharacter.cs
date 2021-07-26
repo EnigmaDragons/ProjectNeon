@@ -64,7 +64,7 @@ public static class HeroCharacterExtensions
     public static Member AsMemberForLibrary(this HeroCharacter h)
     {
         var stats = h.Stats;
-        var m = new Member(-1, h.Name, h.Class, TeamType.Party, stats, h.BattleRole, stats.PrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.ClassCard));
+        var m = new Member(-1, h.Name, h.Class, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.ClassCard));
         return m;
     }
 }
