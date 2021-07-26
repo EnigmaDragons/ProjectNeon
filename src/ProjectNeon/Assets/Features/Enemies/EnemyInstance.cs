@@ -100,7 +100,6 @@ public class EnemyInstance : EnemyType
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = _resourceType.Name, Amount = _resourceGainPerTurn}, m, state.Party));
-        _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         _startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx));
         return m;
     }
