@@ -19,6 +19,8 @@ public sealed class PartyAdventureState : ScriptableObject
 
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
+    public int TotalMissingHp => Heroes.Sum(h => h.Health.MissingHp);
+    public int TotalNumInjuries => Heroes.Sum(h => h.Health.InjuryNames.Count());
 
     public HeroCharacter[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
     public Hero[] Heroes => heroes;

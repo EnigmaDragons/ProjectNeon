@@ -84,6 +84,8 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
     private Dictionary<int, Transform> _uiTransformsById = new Dictionary<int, Transform>();
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
+    private EnemyInstance[] _battleStartingEnemies;
+    private BattleAttritionTracker _tracker;
 
     // Setup
 
@@ -97,6 +99,7 @@ public class BattleState : ScriptableObject
 
     public void SetupEnemyEncounter()
     {
+        _battleStartingEnemies = nextEnemies.ToArray();
         EnemyArea.Initialized(nextEnemies);
         isEliteBattle = nextIsEliteBattle;
         nextEnemies = new EnemyInstance[0];
@@ -107,6 +110,7 @@ public class BattleState : ScriptableObject
     {
         SetPhase(BattleV2Phase.NotBegun);
         NextCardId.Reset();
+        _tracker = BattleAttritionTracker.Start(party);
         IsSelectingTargets = false;
         turnNumber = 0;
     }
@@ -263,11 +267,25 @@ public class BattleState : ScriptableObject
     // Battle Wrapup
     public void Wrapup()
     {
+        var battleAttritionReport = _tracker.Finalize(party);
         RecordPartyAdventureHp();
         GrantRewardCredits();
         GrantRewardCards();
         GrantRewardEquipment();
         GrantRewardXp();
+        var battleSummaryReport = new BattleSummaryReport
+        {
+            Enemies = _battleStartingEnemies.Select(e => e.Name).ToArray(),
+            FightTier = isEliteBattle ? EnemyTier.Elite : EnemyTier.Normal,
+            TotalEnemyPowerLevel = _battleStartingEnemies.Sum(e => e.PowerLevel),
+            AttritionCreditsChange = battleAttritionReport.TotalCreditsChange,
+            AttritionHpChange = battleAttritionReport.TotalHpChange,
+            AttritionInjuriesChange = battleAttritionReport.TotalInjuriesChange,
+            RewardXp = rewardXp,
+            RewardCredits = rewardCredits,
+            RewardCards = rewardCards.Select(c => c.Name).ToArray(),
+            RewardGear = rewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
+        };
         EnemyArea.Clear();
     }
     
