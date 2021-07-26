@@ -206,6 +206,22 @@ public sealed class MemberState : IStats
             .ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator) s));
     }
 
+    public void DuplicateStatesOfTypeFrom(StatusTag tag, MemberState member)
+    {
+        member._additiveMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(ApplyTemporaryAdditive);
+        member._multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(ApplyTemporaryMultiplier);
+        member._reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(s => AddReactiveState((ReactiveStateV2) s));
+        member._transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(s => AddEffectTransformer((EffectTransformer) s));
+        member._additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator) s));
+        member._multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator) s));
+    }
+
     public void ResetStatToBase(string statType) => PublishAfter(() =>
     {
         _counters[statType].Set(0);

@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE:
-// LAST NUMBER USED: 89
+// LAST NUMBER USED: 90
 
 public enum EffectType
 {
@@ -62,6 +62,7 @@ public enum EffectType
     EnterStealth = 58,
     GainDoubleDamage = 57,
     DuplicateStatesOfType = 65,
+    DuplicateStatesOfTypeToRandomEnemy = 90,
     PreventResourceGains = 53,
     
     // Healing
