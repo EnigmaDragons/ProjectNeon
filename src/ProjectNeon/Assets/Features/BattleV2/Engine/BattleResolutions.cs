@@ -121,12 +121,15 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
             state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts);
-        AllEffects.Apply(msg.Effect, ctx);
+        var effectWasApplied = AllEffects.Apply(msg.Effect, ctx);
 
         // Stealth Processing
-        if (msg.Source.IsStealthed() && StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
+        if (effectWasApplied && msg.Source.IsStealthed() && StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
+        {
             msg.Source.State.BreakStealth();
-        
+            BattleLog.Write($"{msg.Source.Name} emerged from the shadows.");
+        }
+
         return ctx;
     }
 

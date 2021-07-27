@@ -110,12 +110,12 @@ public static class AllEffects
         BattleLog.Write(msg);
     }
     
-    public static void Apply(EffectData effectData, EffectContext ctx)
+    public static bool Apply(EffectData effectData, EffectContext ctx)
     {
         try
         {
             if (ctx.Target.Members.Length == 0)
-                return;
+                return false;
             
             effectData = ctx.Source.State.Transform(effectData, ctx);
             var effect = Create(effectData);
@@ -130,9 +130,13 @@ public static class AllEffects
                 BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
             var shouldNotApplyReason = effectData.Condition().GetShouldNotApplyReason(updatedContext);
             if (shouldNotApplyReason.IsPresent)
+            {
                 DevLog.Write($"Did not apply {effectData.EffectType} because {shouldNotApplyReason.Value}");
-            else
-                effect.Apply(updatedContext);
+                return false;
+            }
+            
+            effect.Apply(updatedContext);
+            return true;
         }
         catch (Exception e)
         {
