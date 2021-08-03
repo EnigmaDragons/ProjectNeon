@@ -100,6 +100,7 @@ public class CardRulesPresenter : MonoBehaviour
             rulesToShow.AddIf("Buyout", d.Description.IndexOf("Buyout", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("Critical", d.Description.IndexOf("Crit", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf(TemporalStatType.Marked.ToString(), d.Description.IndexOf("Mark", StringComparison.OrdinalIgnoreCase) >= 0);
+            rulesToShow.AddIf(TemporalStatType.Lifesteal.ToString(), d.Description.IndexOf(TemporalStatType.Lifesteal.ToString(), StringComparison.OrdinalIgnoreCase) >= 0);
 
             var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());
             battleEffects.ForEach(b =>

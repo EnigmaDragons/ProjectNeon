@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
@@ -11,6 +12,10 @@ public class CardActionsData : ScriptableObject
     public IEnumerable<EffectData> BattleEffects => Actions
         .Where(x => x.Type == CardBattleActionType.Battle)
         .Select(a => a.BattleEffect);
+    
+    public IEnumerable<EffectData> ConditionalBattleEffects => Actions
+        .Where(x => x.Type == CardBattleActionType.Condition)
+        .SelectMany(a => a.ConditionData.ReferencedEffect.BattleEffects);
 
     public int NumAnimations => Actions.Count(
         x => x.Type == CardBattleActionType.AnimateCharacter 
