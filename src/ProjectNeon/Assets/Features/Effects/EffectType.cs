@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE:
-// LAST NUMBER USED: 90
+// LAST NUMBER USED: 91
 
 public enum EffectType
 {
@@ -87,4 +87,5 @@ public enum EffectType
     AdjustPrimaryStatForEveryCardCycledAndInHand = 40,
     BuyoutEnemyById = 47,
     ChooseBuyoutCardsOrDefault = 48,
+    //AdjustBattleReward = 91 
 }

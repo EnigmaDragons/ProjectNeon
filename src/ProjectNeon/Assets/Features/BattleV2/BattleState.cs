@@ -18,6 +18,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private AdventureProgress2 adventureProgress;
     [SerializeField] private CurrentGameMap3 map;
     [SerializeField] private AllCards allCards;
+    [SerializeField] private BattleRewardState rewards;
     
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
@@ -26,10 +27,6 @@ public class BattleState : ScriptableObject
     
     [Header("ReadOnly")]
     [SerializeField, ReadOnly] private List<string> memberNames;
-    [SerializeField, ReadOnly] private int rewardCredits;
-    [SerializeField, ReadOnly] private CardTypeData[] rewardCards;
-    [SerializeField, ReadOnly] private Equipment[] rewardEquipments;
-    [SerializeField, ReadOnly] private int rewardXp = 0;
     [SerializeField, ReadOnly] private int turnNumber;
     [SerializeField, ReadOnly] private PlayerState playerState = new PlayerState();
 
@@ -51,9 +48,11 @@ public class BattleState : ScriptableObject
         ? _playedCardHistory.Last().ToArray()
         : Array.Empty<PlayedCardSnapshot>();
     
-    public int RewardCredits => rewardCredits;
-    public int RewardXp => rewardXp;
-    public CardTypeData[] RewardCards => rewardCards; 
+    public int RewardCredits => rewards.RewardCredits;
+    public int RewardXp => rewards.RewardXp;
+    public CardTypeData[] RewardCards => rewards.RewardCards;
+    public Equipment[] RewardEquipments => rewards.RewardEquipments;
+    
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
     public EnemyInstance[] NextEncounterEnemies => nextEnemies.ToArray();
     public int Stage => adventureProgress.CurrentChapterNumber;
@@ -161,10 +160,7 @@ public class BattleState : ScriptableObject
 
         PlayerState.NumberOfCyclesUsedThisTurn = 0;
         _numPlayerDiscardsUsedThisTurn = 0;
-        rewardCredits = 0;
-        rewardCards = new CardType[0];
-        rewardEquipments = new Equipment[0];
-        rewardXp = 0;
+        rewards.Init();
         needsCleanup = true;
         _queuedEffects = new Queue<Effect>();
         _unconsciousMembers = new Dictionary<int, Member>();
@@ -225,10 +221,10 @@ public class BattleState : ScriptableObject
         });
 
     public void UseRecycle() => UpdateState(() => PlayerState.NumberOfCyclesUsedThisTurn++);
-    public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
-    public void AddRewardXp(int xp) => UpdateState(() => rewardXp += xp); 
-    public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewardCards = cards);
-    public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewardEquipments = equipments);
+    public void AddRewardCredits(int amount) => UpdateState(() => rewards.AddRewardCredits(amount));
+    public void AddRewardXp(int xp) => UpdateState(() => rewards.AddRewardXp(xp)); 
+    public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewards.SetRewardCards(cards));
+    public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewards.SetRewardEquipment(equipments));
 
     public void AddEnemy(EnemyInstance e, GameObject gameObject, Member member) 
         => UpdateState(() =>
@@ -276,20 +272,20 @@ public class BattleState : ScriptableObject
             attritionCreditsChange = battleAttritionReport.TotalCreditsChange,
             attritionHpChange = battleAttritionReport.TotalHpChange,
             attritionInjuriesChange = battleAttritionReport.TotalInjuriesChange,
-            rewardXp = rewardXp,
-            rewardCredits = rewardCredits,
-            rewardCards = rewardCards.Select(c => c.Name).ToArray(),
-            rewardGear = rewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
+            rewardXp = RewardXp,
+            rewardCredits = RewardCredits,
+            rewardCards = RewardCards.Select(c => c.Name).ToArray(),
+            rewardGear = RewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
         };
         AllMetrics.PublishBattleSummary(battleSummaryReport);
         EnemyArea.Clear();
     }
     
     private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => Math.Min(h.CurrentHp(), h.State.BaseStats.MaxHp())).ToArray());
-    private void GrantRewardCredits() => Party.UpdateCreditsBy(rewardCredits + playerState.BonusCredits);
-    private void GrantRewardCards() => Party.Add(rewardCards);
-    private void GrantRewardEquipment() => Party.Add(rewardEquipments);
-    private void GrantRewardXp() => Party.AwardXp(rewardXp);
+    private void GrantRewardCredits() => Party.UpdateCreditsBy(RewardCredits + playerState.BonusCredits);
+    private void GrantRewardCards() => Party.Add(RewardCards);
+    private void GrantRewardEquipment() => Party.Add(RewardEquipments);
+    private void GrantRewardXp() => Party.AwardXp(RewardXp);
     
     // Queries
     public bool PlayerWins() =>  EnemyMembers.All(m => m.State.IsUnconscious);
