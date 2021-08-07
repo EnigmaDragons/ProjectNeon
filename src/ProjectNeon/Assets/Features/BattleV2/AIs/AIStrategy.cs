@@ -1,16 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 public sealed class AIStrategy
 {
-    private Member SingleMemberAttackTarget { get; }
-    private Target GroupAttackTarget { get; }
+    public Maybe<Member> SingleMemberAttackTarget { get; }
+    public Target GroupAttackTarget { get; }
     public Member DesignatedAttacker { get; }
     public Dictionary<CardTag, HashSet<Target>> SelectedNonStackingTargets { get; }
     public CardTypeData DisabledCard { get; }
 
-    public AIStrategy(Member singleMemberAttackTarget, Target groupAttackTarget, Member designatedAttacker, CardTypeData disabledCard)
+    public AIStrategy(Maybe<Member> singleMemberAttackTarget, Target groupAttackTarget, Member designatedAttacker, CardTypeData disabledCard)
     {
         SingleMemberAttackTarget = singleMemberAttackTarget;
         GroupAttackTarget = groupAttackTarget;
@@ -27,14 +26,20 @@ public sealed class AIStrategy
     }
 
     public Target AttackTargetFor(CardActionSequence a) 
-        => a.Scope == Scope.All ? GroupAttackTarget : new Single(SingleMemberAttackTarget);
+        => a.Scope == Scope.All 
+            ? GroupAttackTarget 
+            : SingleMemberAttackTarget.IsPresent
+                ? (Target)new Single(SingleMemberAttackTarget.Value)
+                : (Target)new Multiple(new Member[0]);
     
     public Target AttackTargetFor(CardActionSequence a, IEnumerable<Target> preferredTargets) 
         => a.Scope == Scope.All 
             ? GroupAttackTarget 
-            : preferredTargets.Any(target => target.Members[0].Id == SingleMemberAttackTarget.Id) 
-                ? new Single(SingleMemberAttackTarget)
-                : preferredTargets.Random();
+            : preferredTargets.Any(target => SingleMemberAttackTarget.IsPresent && target.Members[0].Id == SingleMemberAttackTarget.Value.Id) 
+                ? new Single(SingleMemberAttackTarget.Value)
+                : preferredTargets.Any()
+                    ? preferredTargets.Random()
+                    : new Multiple(new Member[0]);
     
     public AIStrategy AnticipationCopy => new AIStrategy(SingleMemberAttackTarget, GroupAttackTarget, DesignatedAttacker, DisabledCard);
 }

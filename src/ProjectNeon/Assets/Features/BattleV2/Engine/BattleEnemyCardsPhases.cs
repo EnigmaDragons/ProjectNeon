@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAIStrategy, CardResolutionFinished>
+public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAIStrategy, CardResolutionFinished, UpdateAIStrategy>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private BattleResolutions resolutions;
@@ -22,6 +22,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAISt
     {
         DevLog.Info("Enemies - Began Playing Next Hasty Card.");
         RemoveUnconsciousEnemiesFromActPool();
+        Message.Publish(new UpdateAIStrategy());
         _enemiesToActThisTurn
             .Where(x => x.Enemy.IsHasty)
             .FirstAsMaybe()
@@ -36,6 +37,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAISt
     {
         DevLog.Info("Enemies - Began Playing Next Standard Card.");
         RemoveUnconsciousEnemiesFromActPool();
+        Message.Publish(new UpdateAIStrategy());
         _enemiesToActThisTurn
             .Where(x => !x.Enemy.IsHasty)
             .FirstAsMaybe()
@@ -80,5 +82,10 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAISt
             .OrderBy(e => e.Enemy.PreferredTurnOrder)
             .ToList();
         _numberOfCardsPlayedThisTurn = new DictionaryWithDefault<int, int>(0);
+    }
+
+    protected override void Execute(UpdateAIStrategy msg)
+    {
+        _currentTurnStrategy = _enemyStrategy.Update(_currentTurnStrategy, state);
     }
 }
