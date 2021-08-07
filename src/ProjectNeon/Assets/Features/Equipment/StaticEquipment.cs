@@ -37,7 +37,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     public EffectData[] TurnStartEffects => turnStartEffects;
     public EffectData[] TurnEndEffects => turnEndEffects;
     public EffectData[] BattleStartEffects => battleStartEffects;
-    public string Corp => corp.Value;
+    public string Corp => corp == null ? "No Corp" : corp.Value;
     
     public GameEquipmentData GetData() 
         => new GameEquipmentData { Type = GameEquipmentDataType.StaticEquipmentId, StaticEquipmentId = id };

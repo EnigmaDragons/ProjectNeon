@@ -80,9 +80,6 @@ public class CardActionsDataEditor : Editor
     
     private void PresentUnchanged(SerializedProperty serializedProperty)
     {
-        if (serializedProperty == null)
-            return;
-        
         serializedObject.Update();
         try
         {
