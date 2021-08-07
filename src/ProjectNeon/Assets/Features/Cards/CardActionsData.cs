@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Effect")]
+[CreateAssetMenu(menuName = "Effect", order = -99)]
 public class CardActionsData : ScriptableObject
 {
     public CardActionV2[] Actions = new CardActionV2[0];

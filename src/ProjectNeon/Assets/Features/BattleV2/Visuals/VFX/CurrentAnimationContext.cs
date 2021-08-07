@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Only Once/Current Animation")]
+[CreateAssetMenu(menuName = "OnlyOnce/Current Animation")]
 public class CurrentAnimationContext : ScriptableObject
 {
     public int MemberId;

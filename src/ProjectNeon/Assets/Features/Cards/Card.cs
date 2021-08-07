@@ -63,9 +63,10 @@ public sealed class Card : CardTypeData
 
     public Card RevertedToStandard()
     {
+        if (Mode != CardMode.Normal)
+            DevLog.Info($"Reverted {Name} {CardId} To {Mode}");
         Mode = CardMode.Normal;
         ClearXValue();
-        DevLog.Info($"Reverted {Name} {CardId} To {Mode}");
         return this;
     }
 

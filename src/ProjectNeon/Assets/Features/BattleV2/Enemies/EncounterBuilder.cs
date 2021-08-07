@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Adventure/EncounterBuilder")]
 public class EncounterBuilder : ScriptableObject
 {
     [SerializeField] private bool allowElites = true;

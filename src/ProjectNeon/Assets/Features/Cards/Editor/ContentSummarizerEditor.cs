@@ -129,14 +129,14 @@ public sealed class ContentSummarizerEditor : EditorWindow
             foreach (var arch in archetypeKeys.Where(a => !a.Contains("+")))
             {
                 var hasValue = equipments.TryGetValue(arch, out var e);
-                var numEquips = hasValue ? e.Sum(v => v.Value) : 0;
-                var archExpected = 4;
-                expectedEquipCounter += archExpected;
+                var numEquips = hasValue ? e.Count(v => v.Value > 0) : 0;
+                var archRaritiesExpected = 4;
+                expectedEquipCounter += archRaritiesExpected;
                 presentEquipCounter += numEquips;
-                var checkChar = numEquips >= archExpected ? "✓" : "✗";
+                var checkChar = numEquips >= archRaritiesExpected ? "✓" : "✗";
                 result.Add(hasValue
                     ? $"{checkChar} - {arch} Equips - Total {numEquips} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
-                    : $"{checkChar} - {arch} Equips - All 4 Missing");
+                    : $"{checkChar} - {arch} Equips - All 4 Rarities Missing");
             }
 
             var expectedAllCounter = expectedCardsCounter + expectedEquipCounter;

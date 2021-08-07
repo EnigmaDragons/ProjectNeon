@@ -30,6 +30,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             StartCoroutine(ResolveNextReactionCard());
         else if (resolutionZone.HasMore)
             resolutionZone.BeginResolvingNext();
+        else
+            Message.Publish(new CardAndEffectsResolutionFinished());
     }
 
     public void PerformConsciousnessUpdate()

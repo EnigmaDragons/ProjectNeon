@@ -47,11 +47,6 @@ public class BattleState : ScriptableObject
     private int CurrentTurnPartyNonBonusStandardCardPlays => CurrentTurnCardPlays()
         .Count(x => x.Member.TeamType == TeamType.Party && !x.WasTransient && x.Card.Speed == CardSpeed.Standard);
     public int NumberOfCardPlaysRemainingThisTurn => playerState.CurrentStats.CardPlays() - CurrentTurnPartyNonBonusStandardCardPlays - _numPlayerDiscardsUsedThisTurn;
-    public bool HasMorePlaysAvailableThisTurn =>
-        PlayerCardZones.HandZone.Count > 0 &&
-        NumberOfCardPlaysRemainingThisTurn > 0 || 
-        NumberOfRecyclesRemainingThisTurn > 0 ||
-        cardPlayZones.HandZone.Cards.Any(x => x.IsActive && x.Speed == CardSpeed.Quick);
     public PlayedCardSnapshot[] CurrentTurnCardPlays() => _playedCardHistory.Any()
         ? _playedCardHistory.Last().ToArray()
         : Array.Empty<PlayedCardSnapshot>();

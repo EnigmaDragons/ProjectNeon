@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Maps/GameMap2")]
 public class GameMap2 : ScriptableObject
 {
     [SerializeField] private MovableMap artPrototype;

@@ -24,5 +24,6 @@ public enum ReactionConditionType
     OnAfflicted = 34,
     OnArchetypePlayed = 35,
     OnCardPlayed = 36,
+    OnTeamCardCycled = 61,
     OnDeath = 99,
 }

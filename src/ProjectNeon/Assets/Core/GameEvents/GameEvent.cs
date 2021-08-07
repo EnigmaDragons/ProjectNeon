@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Linq;
 using System.Runtime.Serialization;
 
-[CreateAssetMenu(fileName = "New Game Event", menuName = "Game Event")]
 [Obsolete] 
 public class GameEvent : ScriptableObject
 {

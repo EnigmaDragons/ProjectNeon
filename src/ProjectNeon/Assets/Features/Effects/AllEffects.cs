@@ -144,6 +144,7 @@ public static class AllEffects
             #if UNITY_EDITOR
             throw;
             #endif
+            return true;
         }
     }
 

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Card")]
+[CreateAssetMenu(menuName = "Card", order = -100)]
 public class CardType : ScriptableObject, CardTypeData
 {
     [SerializeField, ReadOnly] public int id;

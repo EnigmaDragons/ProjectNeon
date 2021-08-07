@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Only Once/UiEmphasisState")]
+[CreateAssetMenu(menuName = "OnlyOnce/UiEmphasisState")]
 public class UiEmphasisState : ScriptableObject
 {
     [SerializeField] private List<string> elements = new List<string>();

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Equipment/EquipmentSlotIcons")]
+[CreateAssetMenu(menuName = "OnlyOnce/EquipmentSlotIcons")]
 public class EquipmentSlotIcons : ScriptableObject
 {
     [SerializeField] private EquipmentSlotIcon[] icons;

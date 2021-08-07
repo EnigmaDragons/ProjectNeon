@@ -10,23 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: VitalityTransference
+  m_Name: Novoline_FightersReflexers
   m_EditorClassIdentifier: 
-  id: 52
-  displayName: Vitality Transference
-  description: Whenever you Afflict, heal 3% of your HP
-  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
-  archetypes:
-  - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
-  rarity: 1
+  id: 60
+  displayName: Fighter's Reflexers
+  description: "Once Per Turn: Counterattack for 1 \xD7 Attack damage"
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  archetypes: []
+  rarity: 3
   slot: 2
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
-  turnStartEffects: []
-  turnEndEffects: []
-  battleStartEffects:
-  - EffectType: 74
+  turnStartEffects:
+  - EffectType: 75
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -34,9 +31,9 @@ MonoBehaviour:
       Variable: {fileID: 0}
     FloatAmount:
       UseConstant: 1
-      ConstantValue: -1
+      ConstantValue: 1
       FloatVariable: {fileID: 0}
-    DurationFormula: -1
+    DurationFormula: 1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
@@ -44,8 +41,8 @@ MonoBehaviour:
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
-    StatusTag: 12
-    StatusDetailText: Whenever you Afflict, heal 3% of your HP
+    StatusTag: 1
+    StatusDetailText: "Counterattack for 1 \xD7 Attack damage"
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -57,15 +54,17 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 14
+    ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    ReactionSequence: {fileID: 0}
+    ReactionSequence: {fileID: 11400000, guid: 1cb65337ae8e5f345a10404187ee3b0f, type: 2}
     ReactionEffect:
       reactor: 0
       scope: 0
-      cardActions: {fileID: 11400000, guid: e275173990bfad148b803c4e5b07891a, type: 2}
+      cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  turnEndEffects: []
+  battleStartEffects: []
   isWIP: 0

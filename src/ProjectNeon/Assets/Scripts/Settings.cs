@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "New Saver", menuName = "Saver")]
+[CreateAssetMenu(fileName = "New Saver", menuName = "OnlyOnce/Saver")]
 public class Settings : ScriptableObject
 {
     public void SetSound(int soundVolume)

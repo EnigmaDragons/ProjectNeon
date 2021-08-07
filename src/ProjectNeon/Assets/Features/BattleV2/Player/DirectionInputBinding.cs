@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "UI/DirectionInputBinding")]
 public class DirectionInputBinding : ScriptableObject, IDirectionControllable
 {
     private IDirectionControllable _inner;

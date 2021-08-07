@@ -9,7 +9,8 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
-
+    [SerializeField] private bool playerReadMapPrompt = false;
+    
     public Adventure CurrentAdventure => currentAdventure.Adventure;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentChapterNumber => currentChapterIndex + 1;
@@ -20,6 +21,7 @@ public class AdventureProgress2 : ScriptableObject
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
+    public bool PlayerReadMapPrompt => playerReadMapPrompt;
     
     public DynamicStage CurrentChapter
     {
@@ -58,6 +60,12 @@ public class AdventureProgress2 : ScriptableObject
         
         Log.Info($"Is advancing the adventure. {this}");
         Advance();
+    }
+
+    public void MarkMapPromptComplete()
+    {
+        playerReadMapPrompt = true;
+        Message.Publish(new AutoSaveRequested());
     }
     
     public void Reset()

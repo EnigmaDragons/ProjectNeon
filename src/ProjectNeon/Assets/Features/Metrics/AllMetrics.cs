@@ -41,6 +41,12 @@ public static class AllMetrics
 
     public static void PublishBattleSummary(BattleSummaryReport report)
         => Send("battleSummary", report);
+
+    public static void PublishGameLost()
+        => Send("gameLost", new NoEventData());
+
+    public static void PublishGameWon()
+        => Send("gameWon", new NoEventData());
     
     private static void Send(string eventName, object payload)
         => Send(new GeneralMetric(eventName, JsonUtility.ToJson(payload)));
@@ -64,7 +70,6 @@ public static class AllMetrics
                 HttpCompletionOption.AllResponseContent,
                 OnResponse);
     }
-
 
     private static string WithEditorInfoAppended(string version) => _isEditor ? $"{version} Editor" : version;
 
@@ -114,4 +119,7 @@ public static class AllMetrics
         public string selected;
         public string[] options;
     }
+    
+    [Serializable]
+    private class NoEventData {}
 }

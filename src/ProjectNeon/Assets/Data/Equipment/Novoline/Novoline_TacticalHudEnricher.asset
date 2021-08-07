@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: MagicAreaDampener
+  m_Name: Novoline_TacticalHudEnricher
   m_EditorClassIdentifier: 
-  id: 49
-  displayName: Magic Area Dampener
-  description: 'Start of Battle: Reduce everyone''s Magic by 1 '
-  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
+  id: 63
+  displayName: 
+  description: 'Team: +1 Card Draw'
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
-  rarity: 1
+  rarity: 2
   slot: 2
   priceFactor: 1
   modifiers: []
@@ -25,7 +25,7 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 68
+  - EffectType: 28
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -39,14 +39,14 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e04cb353987dbad4094394cb66ac1c6a, type: 2}
+      Variable: {fileID: 11400000, guid: ef7ba5441846d524fa6fb12b39098a0a, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
-    ReTargetScope: 60
+    ReTargetScope: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: -1
+    Formula: 1
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 

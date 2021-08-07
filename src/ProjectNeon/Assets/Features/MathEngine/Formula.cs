@@ -23,7 +23,10 @@ public static class Formula
         newExp = ReplaceXCost(newExp, ctx);
         var dataTable = new DataTable();
         newExp = ResolveConditionals(newExp, dataTable);
-        return Convert.ToSingle(dataTable.Compute(newExp, null));
+        var result = Convert.ToSingle(dataTable.Compute(newExp, null));
+        if (result == 0)
+            Log.Info("Formula Amount is 0");
+        return result;
     }
     
     private static string ReplaceTags(string expression, FormulaContext ctx)

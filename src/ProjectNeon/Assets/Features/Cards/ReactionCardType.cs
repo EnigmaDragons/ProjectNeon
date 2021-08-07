@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(order = -98)]
 public sealed class ReactionCardType : ScriptableObject, CardTypeData
 {
     [SerializeField] private string displayName;

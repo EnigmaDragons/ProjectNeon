@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Audio/GameMusicPlayer")]
 public sealed class GameMusicPlayer : ScriptableObject
 {
     [SerializeField] private AudioSource musicSource;

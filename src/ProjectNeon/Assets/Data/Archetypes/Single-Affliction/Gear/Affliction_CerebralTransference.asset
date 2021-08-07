@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: FaintManaPendant
+  m_Name: Affliction_CerebralTransference
   m_EditorClassIdentifier: 
-  id: 47
-  displayName: Minor Mana Pendant
-  description: 'Start of turn: if you have no Mana, gain 1.'
+  id: 59
+  displayName: 
+  description: 'On Afflict: Draw 1 Card, Gain 1 Card Play'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
-  - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
-  rarity: 1
+  - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
+  rarity: 4
   slot: 2
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
-  turnStartEffects:
-  - EffectType: 82
-    Conditions:
-    - {fileID: 11400000, guid: 24a4a21e0cb7fe4478da06562ab881c4, type: 2}
+  turnStartEffects: []
+  turnEndEffects: []
+  battleStartEffects:
+  - EffectType: 74
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -34,8 +35,8 @@ MonoBehaviour:
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    DurationFormula: 
+      FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
+    DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
@@ -43,10 +44,10 @@ MonoBehaviour:
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
-    StatusTag: 0
-    StatusDetailText: 
+    StatusTag: 12
+    StatusDetailText: 'On Afflict: Draw 1 Card, Gain 1 Card Play'
     TurnDelay: 0
-    Formula: 1
+    Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
@@ -56,7 +57,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 0
+    ReactionConditionType: 14
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
@@ -65,8 +66,6 @@ MonoBehaviour:
     ReactionEffect:
       reactor: 0
       scope: 0
-      cardActions: {fileID: 0}
+      cardActions: {fileID: 11400000, guid: 07e4a67103adc1940957d19b384fdf6b, type: 2}
     BonusCardType: {fileID: 0}
-  turnEndEffects: []
-  battleStartEffects: []
   isWIP: 0

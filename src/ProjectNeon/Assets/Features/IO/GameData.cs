@@ -21,6 +21,7 @@ public class GameAdventureProgressData
     public int CurrentChapterIndex = -1;
     public int CurrentStageSegmentIndex = -1;
     public string[] FinishedStoryEvents = new string[0];
+    public bool PlayerReadMapPrompt = false;
 }
 
 public enum GameAdventureProgressType

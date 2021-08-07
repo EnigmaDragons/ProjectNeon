@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Obsolete("MapView1")]
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Maps/GameMap")]
 public sealed class GameMap : ScriptableObject
 {
     [SerializeField] private GameObject artPrototype;

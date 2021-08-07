@@ -1,9 +1,8 @@
-
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(order = -19)]
 public class StringKeyValueCollection : ScriptableObject
 {
     [SerializeField] private List<StringKeyValuePair> items;

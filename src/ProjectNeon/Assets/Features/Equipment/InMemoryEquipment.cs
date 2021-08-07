@@ -17,6 +17,7 @@ public class InMemoryEquipment : Equipment
     [SerializeField] private EffectData[] turnStartEffects = new EffectData[0];
     [SerializeField] private EffectData[] turnEndEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
+    [SerializeField] private EffectData[] battleEndEffects = new EffectData[0];
     [SerializeField] private string corp = "None";
     
     // Necessary for Save Load System
@@ -90,6 +91,12 @@ public class InMemoryEquipment : Equipment
     {
         get => battleStartEffects;
         set => battleStartEffects = value;
+    }
+
+    public EffectData[] BattleEndEffects
+    {
+        get => battleEndEffects;
+        set => battleEndEffects = value;
     }
 
     public string Corp

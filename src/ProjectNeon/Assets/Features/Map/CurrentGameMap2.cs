@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Maps/CurrentGameMap2")]
 public class CurrentGameMap2 : ScriptableObject
 {
     private Dictionary<string, MapNode> _map;

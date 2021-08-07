@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Equipment/Equipment")]
+[CreateAssetMenu(menuName = "Equipment", order = -80)]
 public class StaticEquipment : ScriptableObject, Equipment
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
@@ -18,6 +19,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     [SerializeField] private EffectData[] turnStartEffects = new EffectData[0];
     [SerializeField] private EffectData[] turnEndEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
+    [SerializeField] private EffectData[] battleEndEffects = new EffectData[0];
     [SerializeField] private bool isWIP;
     
     public string Name => !string.IsNullOrWhiteSpace(displayName) 
@@ -29,7 +31,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     public bool IsWip => isWIP;
     public int Price => CardShopPricing.EquipmentShopPrice(rarity, priceFactor);
     public Rarity Rarity => rarity;
-    public string[] Archetypes => archetypes.Select(a => a.Value).ToArray();
+    public string[] Archetypes => archetypes == null ? Array.Empty<string>() : archetypes.Where(a => a != null).Select(a => a.Value).ToArray();
     public string ArchetypeKey => string.Join(" + ", Archetypes.OrderBy(a => a));
     public EquipmentSlot Slot => slot;
     public EquipmentStatModifier[] Modifiers => modifiers.ToArray();
@@ -37,12 +39,13 @@ public class StaticEquipment : ScriptableObject, Equipment
     public EffectData[] TurnStartEffects => turnStartEffects;
     public EffectData[] TurnEndEffects => turnEndEffects;
     public EffectData[] BattleStartEffects => battleStartEffects;
-    public string Corp => corp.Value;
+    public EffectData[] BattleEndEffects => battleEndEffects;
+    public string Corp => corp == null ? "No Corp" : corp.Value;
     
     public GameEquipmentData GetData() 
         => new GameEquipmentData { Type = GameEquipmentDataType.StaticEquipmentId, StaticEquipmentId = id };
 
-    public IEnumerable<EffectData> AllEffects => TurnStartEffects.Concat(TurnEndEffects).Concat(BattleStartEffects);
+    public IEnumerable<EffectData> AllEffects => TurnStartEffects.Concat(TurnEndEffects).Concat(BattleStartEffects).Concat(BattleEndEffects);
 
     public IStats AdditiveStats()
     {

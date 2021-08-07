@@ -38,7 +38,8 @@ public static class GameDataMappingExtensions
             AdventureId = p.CurrentAdventureId,
             Type = GameAdventureProgressType.V2,
             CurrentChapterIndex = p.CurrentChapterIndex,
-            FinishedStoryEvents = p.FinishedStoryEvents
+            FinishedStoryEvents = p.FinishedStoryEvents,
+            PlayerReadMapPrompt = p.PlayerReadMapPrompt
         };
 
     public static GameMapData GetData(this CurrentGameMap3 map)
