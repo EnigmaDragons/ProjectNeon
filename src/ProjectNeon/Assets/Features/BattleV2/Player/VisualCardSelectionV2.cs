@@ -123,7 +123,6 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
 
     private void ClearAllHighlights()
     {
-        Debug.Log("Clear All Highlights");
         cards.ShownCards.ForEach(c => c.SetHandHighlight(false));
     }
     

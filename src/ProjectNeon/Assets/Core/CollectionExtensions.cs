@@ -106,7 +106,6 @@ public static class CollectionExtensions
             var compareKey = selectorWithIndex(item, index);
             if (set.Add(compareKey))
             {
-                Debug.Log(compareKey);
                 yield return item;
             }
 

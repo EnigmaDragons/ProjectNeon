@@ -25,7 +25,7 @@ public static class Formula
         newExp = ResolveConditionals(newExp, dataTable);
         var result = Convert.ToSingle(dataTable.Compute(newExp, null));
         if (result == 0)
-            Log.Error("Formula Amount is 0");
+            Log.Info("Formula Amount is 0");
         return result;
     }
     
