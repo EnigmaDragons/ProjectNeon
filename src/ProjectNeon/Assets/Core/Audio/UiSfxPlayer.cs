@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Audio/UiSfxPlayer")]
 public sealed class UiSfxPlayer : ScriptableObject
 {
     [SerializeField] private AudioSource source;

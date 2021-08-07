@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "UI/ConfirmCancelBinding")]
 public class ConfirmCancelBinding : ScriptableObject, IConfirmCancellable
 {
     private IConfirmCancellable _inner;

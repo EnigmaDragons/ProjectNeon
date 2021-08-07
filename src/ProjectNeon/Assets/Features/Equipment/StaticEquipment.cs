@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Equipment/Equipment")]
+[CreateAssetMenu(menuName = "Equipment", order = -80)]
 public class StaticEquipment : ScriptableObject, Equipment
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;

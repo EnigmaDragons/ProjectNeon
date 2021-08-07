@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[CreateAssetMenu(menuName = "String Variable", fileName = "NewStringVariable", order = -20)]
 public class StringVariable : ScriptableObject
 {
     [SerializeField]
