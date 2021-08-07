@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
+  m_Name: EssenceTransference
+  m_EditorClassIdentifier: 
+  id: 0
+  displayName: 
+  description: 'On Afflict: Gain 1 Primary Resource'
+  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
+  archetypes:
+  - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
+  rarity: 2
+  slot: 2
+  priceFactor: 1
+  modifiers: []
+  resourceModifiers: []
+  turnStartEffects: []
+  turnEndEffects: []
+  battleStartEffects:
+  - EffectType: 74
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
+    DurationFormula: -1
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
+    StatusTag: 12
+    StatusDetailText: 'On Afflict: Gain 1 Primary Resource'
+    TurnDelay: 0
+    Formula: 
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 14
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 11400000, guid: 40da3c26a8fab584fb31137a7a4c7e63, type: 2}
+    BonusCardType: {fileID: 0}
+  isWIP: 0
