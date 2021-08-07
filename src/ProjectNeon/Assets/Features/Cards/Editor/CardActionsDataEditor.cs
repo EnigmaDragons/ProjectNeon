@@ -80,8 +80,18 @@ public class CardActionsDataEditor : Editor
     
     private void PresentUnchanged(SerializedProperty serializedProperty)
     {
+        if (serializedProperty == null)
+            return;
+        
         serializedObject.Update();
-        EditorGUILayout.PropertyField(serializedProperty, includeChildren: true);
+        try
+        {
+            EditorGUILayout.PropertyField(serializedProperty, includeChildren: true);
+        }
+        catch (Exception e)
+        {
+            Log.Warn(e.Message);
+        }
         serializedObject.ApplyModifiedProperties();
     }
     
