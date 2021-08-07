@@ -288,8 +288,8 @@ public sealed class MemberState : IStats
 
     // HP Commands
     public void GainHp(float amount) => ChangeHp(amount * this[StatType.Healability]);
-    public void TakeRawDamage(int amount) => ChangeHp(-amount * this[StatType.Damagability]);
     public void SetHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).Set(amount));
+    public int TakeRawDamage(int amount) => -ChangeHp(-amount * this[StatType.Damagability]);
     public void TakeDamage(int amount)
     {
         var clampedAmount = Math.Max(amount, 0);
@@ -299,12 +299,12 @@ public sealed class MemberState : IStats
         if (clampedAmount > 0)
             ChangeHp(-clampedAmount);
     }
-    private void ChangeHp(float amount) => PublishAfter(() =>
+    private int ChangeHp(float amount) => Diff(PublishAfter(() =>
     {
         if (this[TemporalStatType.PreventDeath] > 0)
             amount = Math.Max(amount, 1 - this[TemporalStatType.HP]);
         Counter(TemporalStatType.HP).ChangeBy(amount);
-    });
+    }, () => Counter(TemporalStatType.HP).Amount));
 
     // Status Counters Commands
     public void Adjust(string counterName, float amount) 
