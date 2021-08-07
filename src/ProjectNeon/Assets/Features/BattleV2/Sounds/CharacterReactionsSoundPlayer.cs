@@ -26,7 +26,7 @@ public class CharacterReactionsSoundPlayer : OnMessage<DisplayCharacterWordReque
             return;
 
         var sfx = getSfx();
-        var charTransform = state.GetTransform(msg.Member.Id);
+        var charTransform = state.GetTransform(msg.MemberId);
         source.transform.position = charTransform.position;
         source.PlayOneShot(sfx.clip, sfx.volume);
     }

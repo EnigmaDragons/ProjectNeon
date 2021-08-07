@@ -2,7 +2,6 @@ using System.Linq;
 
 public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusCardPlayer
 {
-    private readonly int _originatorId;
     private readonly int _memberId;
     private readonly CardType _bonusCard;
     private readonly int _numTurns;

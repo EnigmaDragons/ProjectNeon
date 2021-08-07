@@ -39,6 +39,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ShowCustomTooltip, new [] { "FlavorText", "FloatAmount", "EffectScope", "DurationFormula" }},
         {EffectType.OnDeath, new []{ "FloatAmount", "DurationFormula", "ReactionSequence",  }},
         {EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, new[]{"BaseAmount", "EffectScope", "StatusTag", "StatusDetailText", "BonusCardType"}},
+        {EffectType.PlayBonusChainCard, new[]{ "StatusTag", "StatusDetailText", "BonusCardType"}},
         {EffectType.AttackFormula, new [] { "Formula", "InterpolatePartialFormula", "HitsRandomTargetMember" }},
         {EffectType.MagicAttackFormula, new [] { "Formula", "InterpolatePartialFormula", "HitsRandomTargetMember" }},
         {EffectType.AddToXCostTransformer, new [] { "FloatAmount", "DurationFormula", "StatusTag", "StatusDetailText" }},

@@ -31,7 +31,7 @@ public class CharacterWordsController : OnMessage<DisplayCharacterWordRequested>
 
     protected override void Execute(DisplayCharacterWordRequested msg)
     {
-        if (_member == null || msg.Member.Id != _member.Id)
+        if (_member == null || msg.MemberId != _member.Id)
             return;
 
         Instantiate(prototype, transform.position + offset, Quaternion.identity, transform).Initialized(msg.Word);
