@@ -125,7 +125,7 @@ public class EffectReactWith : Effect
             && Increased(Select(effect, b => b.TargetMembers(effect.Target).Sum(x => x.State[TemporalStatType.Marked]))) },
         { ReactionConditionType.OnStealthed, ctx => effect => ctx.Actor.IsConscious() 
             && !effect.BattleBefore.Members[ctx.Possessor.Id].IsStealthed()
-            && Increased(Select(effect, ctx.Actor, m => m.State[TemporalStatType.Stealth])) }
+            && Increased(Select(effect, ctx.Actor, m => m.State[TemporalStatType.Stealth])) },
     };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
