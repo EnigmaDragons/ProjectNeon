@@ -10,7 +10,11 @@ public class EquipmentInLibraryButton : MonoBehaviour
     [SerializeField] private GameObject darken;
     [SerializeField] private TextMeshProUGUI countLabel;
     
-    public void InitInfoOnly(Equipment e, Action action) => presenter.Set(e, action);
+    public void InitInfoOnly(Equipment e, Action action)
+    {
+        presenter.Set(e, action);
+        countLabel.text = "";
+    }
 
     public void Init(Equipment e, int totalCount, int availableCount, bool canAdd)
     {
