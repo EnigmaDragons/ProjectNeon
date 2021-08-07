@@ -25,7 +25,7 @@ public sealed class InterpolatedCardDescriptionsTests
 
     [Test]
     public void Interpolated_AttackWithoutOwner_IsCorrect() 
-        => AssertMatchesIgnoreStyling("1x ATK", ForEffect(BasicAttack, Maybe<Member>.Missing(), ResourceQuantity.None));
+        => AssertMatchesIgnoreStyling("1 × ATK", ForEffect(BasicAttack, Maybe<Member>.Missing(), ResourceQuantity.None));
 
     [Test]
     public void Interpolated_AttackWithOwner_IsCorrect() 

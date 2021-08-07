@@ -63,7 +63,6 @@ public enum EffectType
     GainDoubleDamage = 57,
     DuplicateStatesOfType = 65,
     DuplicateStatesOfTypeToRandomEnemy = 90,
-    PreventResourceGains = 53,
     
     // Healing
     HealFormula = 29,
@@ -87,5 +86,5 @@ public enum EffectType
     AdjustPrimaryStatForEveryCardCycledAndInHand = 40,
     BuyoutEnemyById = 47,
     ChooseBuyoutCardsOrDefault = 48,
-    //AdjustBattleReward = 91 
+    AdjustBattleRewardFormula = 91 
 }

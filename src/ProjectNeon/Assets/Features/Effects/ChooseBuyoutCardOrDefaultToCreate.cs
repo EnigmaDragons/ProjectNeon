@@ -8,8 +8,12 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
 
     public ChooseBuyoutCardOrDefaultToCreate(string effectContext)
     {
-        _otherOptions = effectContext.Split(',').Select(x => int.Parse(x)).ToArray();
-        _template = _otherOptions[0];
+        _otherOptions = string.IsNullOrWhiteSpace(effectContext) 
+            ? new int[0] 
+            : effectContext.Split(',').Select(x => int.Parse(x)).ToArray();
+        _template = _otherOptions.Any() 
+            ? _otherOptions[0] 
+            : -1;
         _otherOptions = _otherOptions.Skip(1).ToArray();
     }
     

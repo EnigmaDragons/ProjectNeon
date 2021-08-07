@@ -20,6 +20,7 @@ public class Blessing
             ResourceQuantity.None, 
             state.Party, 
             state.PlayerState, 
+            state.RewardState,
             state.Members,
             state.PlayerCardZones,
             new UnpreventableContext(), 

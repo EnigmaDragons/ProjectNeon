@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Economy_VNetCryptoMiner
+  m_Name: Plasmigarchy_VNetCryptoMiner
   m_EditorClassIdentifier: 
-  id: 0
+  id: 67
   displayName: V-Net Crypto Miner
-  description: 'End of Battle: Gain 4 Credits'
+  description: 'Battle Rewards: Gain +4 Credits'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes: []
   rarity: 1
@@ -24,13 +24,12 @@ MonoBehaviour:
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
-  battleStartEffects: []
-  battleEndEffects:
-  - EffectType: 52
+  battleStartEffects:
+  - EffectType: 91
     Conditions: []
     BaseAmount:
-      UseConstant: 1
-      ConstantValue: 4
+      UseConstant: 0
+      ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
       UseConstant: 0
@@ -40,14 +39,14 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 0}
+      Variable: {fileID: 11400000, guid: afe054fcf07ddbb479ed0629a53b74d8, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 
+    Formula: 4
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
@@ -68,4 +67,5 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
   isWIP: 0

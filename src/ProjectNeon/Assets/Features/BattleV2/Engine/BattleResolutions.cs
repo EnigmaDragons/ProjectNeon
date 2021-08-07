@@ -119,7 +119,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         }
         
         // Core Execution
-        var ctx = new EffectContext(msg.Source, target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, 
+        var ctx = new EffectContext(msg.Source, target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
             state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts);

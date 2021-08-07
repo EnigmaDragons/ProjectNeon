@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Battle/BattleRewardState")]
@@ -39,4 +40,7 @@ public class BattleRewardState : ScriptableObject
     {
         a();
     }
+    
+    
+    public static BattleRewardState InMemory() => (BattleRewardState)FormatterServices.GetUninitializedObject(typeof(BattleRewardState));
 }

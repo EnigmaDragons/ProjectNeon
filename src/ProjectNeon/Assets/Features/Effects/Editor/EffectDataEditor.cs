@@ -61,6 +61,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ChooseBuyoutCardsOrDefault, new [] { "EffectScope" }},
         {EffectType.DrawCardsOfOwner, new [] { "Formula", "InterpolatePartialFormula" } },
         {EffectType.DrawCardsOfArchetype, new [] { "Formula", "EffectScope" } },
+        {EffectType.AdjustBattleRewardFormula, new[] { "Formula", "EffectScope" } },
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

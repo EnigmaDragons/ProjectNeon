@@ -8,7 +8,9 @@ public class ChooseCardToCreate : Effect
 
     public ChooseCardToCreate(string choiceCardIds, string choicesFormula)
     {
-        _choiceCardIds = choiceCardIds.Split(',').Select(int.Parse).ToArray();
+        _choiceCardIds = string.IsNullOrWhiteSpace(choiceCardIds) 
+            ? new int[0] 
+            : choiceCardIds.Split(',').Select(int.Parse).ToArray();
         _choicesFormula = choicesFormula;
     }
     
