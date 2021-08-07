@@ -69,6 +69,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         {
             Log.Info("Navigating to victory screen");
             gameMap.CompleteCurrentNode();
+            AllMetrics.PublishGameWon();
             Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToVictoryScene(), secondsBeforeReturnToAdventure);
         }
@@ -88,6 +89,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else
         {
             Log.Info("Navigating to defeat screen");
+            AllMetrics.PublishGameLost();
             CurrentGameData.Clear();
             this.ExecuteAfterDelay(() => navigator.NavigateToDefeatScene(), secondsBeforeReturnToAdventure);
         }
