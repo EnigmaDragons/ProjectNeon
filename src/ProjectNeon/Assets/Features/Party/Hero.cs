@@ -88,7 +88,7 @@ public class Hero
     {
         var stats = Stats;
         var m = new Member(id, Character.Name, Character.Class, TeamType.Party, stats, Character.BattleRole, PrimaryStat, CurrentHp, new Maybe<CardTypeData>(basicCard));
-        return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext()));
+        return WithEquipmentState(m, global::EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext()));
     }
 
     public Member AsMember(int id)
@@ -98,13 +98,20 @@ public class Hero
         return m;
     }
 
-    public Member InitEquipmentState(Member m, BattleState state)
-    {
-        return WithEquipmentState(m,new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, 
-            state.PlayerState, state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), state.AllCards.GetMap(), 
-            state.Party.Credits, state.Party.Credits, new Dictionary<int, EnemyType>(), () => state.GetNextCardId(), new PlayedCardSnapshot[0],
-            state.OwnerTints, state.OwnerBusts));
-    }
+    public Member InitEquipmentState(Member m, BattleState state) 
+        => WithEquipmentState(m, EffectContext(m, state));
+
+    public void ApplyBattleEndEquipmentEffects(Member m, BattleState state) 
+        => Equipment.All.SelectMany(e => e.BattleEndEffects)
+            .ForEach(x => AllEffects.Apply(x, EffectContext(m, state)));
+
+    private EffectContext EffectContext(Member m, BattleState state) => new EffectContext(m, new Single(m),
+        Maybe<Card>.Missing(), ResourceQuantity.None, state.Party,
+        state.PlayerState, state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(),
+        state.AllCards.GetMap(),
+        state.Party.Credits, state.Party.Credits, new Dictionary<int, EnemyType>(), () => state.GetNextCardId(),
+        new PlayedCardSnapshot[0],
+        state.OwnerTints, state.OwnerBusts);
 
     private Member WithEquipmentState(Member m, EffectContext ctx)
     {

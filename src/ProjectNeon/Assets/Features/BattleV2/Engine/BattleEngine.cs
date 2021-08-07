@@ -141,6 +141,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             conclusion.GrantVictoryRewardsAndThen(() =>
             {
                 state.Heroes.Where(h => h.CurrentHp() < 1).ForEach(h => h.State.SetHp(1));
+                state.Party.Heroes.ForEach(h => h.ApplyBattleEndEquipmentEffects(state.GetMemberByHero(h.Character), state));
                 Message.Publish(new BattleFinished(TeamType.Party));
                 state.Wrapup();
                 BeginPhase(BattleV2Phase.Finished);
