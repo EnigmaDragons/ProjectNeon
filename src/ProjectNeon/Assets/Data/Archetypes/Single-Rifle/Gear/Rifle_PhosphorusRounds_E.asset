@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Rifle_ArmorShreddingRounds_E
+  m_Name: Rifle_PhosphorusRounds_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 68
+      EffectType: 84
       Conditions:
       - {fileID: 11400000, guid: 7da2d75d75b33d348a3466c40260d0ad, type: 2}
       BaseAmount:
@@ -26,18 +26,18 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: -1
+      DurationFormula: 3
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 17c8fbf9e2b5f79459e077374380ae85, type: 2}
+        Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: -3
+      Formula: 4
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
