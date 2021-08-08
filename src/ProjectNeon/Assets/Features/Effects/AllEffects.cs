@@ -91,7 +91,8 @@ public static class AllEffects
         { EffectType.ChooseAndDrawCardOfArchetype, e => new ChooseAndDrawCardOfArchetype(e.EffectScope) },
         { EffectType.ChooseBuyoutCardsOrDefault, e => new ChooseBuyoutCardOrDefaultToCreate(e.EffectScope) },
         { EffectType.BuyoutEnemyById, e => new BuyoutEnemyById(e.EffectScope) },
-        { EffectType.AdjustBattleRewardFormula, e => new AdjustBattleReward(e.EffectScope, e.Formula)}
+        { EffectType.AdjustBattleRewardFormula, e => new AdjustBattleReward(e.EffectScope, e.Formula)},
+        { EffectType.TransformCardsIntoCard, e => new TransformOwnersCardsIntoCard(e.EffectScope)}
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
