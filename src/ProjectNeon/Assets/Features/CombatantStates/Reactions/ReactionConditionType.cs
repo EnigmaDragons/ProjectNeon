@@ -7,6 +7,7 @@ public enum ReactionConditionType
     WhenVulnerabled = 5,
     WhenShieldBroken = 6,
     WhenBloodied = 10,
+    WhenGainedPrimaryResource = 11,
     OnCausedAffliction = 14,
     OnCausedBloodied = 16,
     OnCausedHeal = 15,

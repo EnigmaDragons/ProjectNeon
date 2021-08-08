@@ -10,21 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Lockdown_WitheringShockStrike
+  m_Name: Combo_EnergyAmplification
   m_EditorClassIdentifier: 
-  id: 35
+  id: 84
   displayName: 
-  description: 'On Stun: Also apply 2 Vulnerable'
+  description: When you gain energy, gain an additional +1 energy
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
-  - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
-  rarity: 3
+  - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
+  rarity: 1
   slot: 2
   priceFactor: 1
-  modifiers:
-  - ModifierType: 0
-    Amount: 0
-    StatType: 
+  modifiers: []
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
@@ -36,19 +33,19 @@ MonoBehaviour:
       ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 1
-      ConstantValue: -1
-      FloatVariable: {fileID: 0}
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
     DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
+      Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
     StatusTag: 12
-    StatusDetailText: 'On Stun: Also apply 2 Vulnerable'
+    StatusDetailText: When you gain energy, gain an additional +1 energy
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -60,16 +57,16 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 20
+    ReactionConditionType: 11
     ReactionEffectScope:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
-      reactor: 1
-      scope: 3
-      cardActions: {fileID: 11400000, guid: 0dd71162ba6ddc0428e342ca6fc172c9, type: 2}
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 11400000, guid: 80e0d6cb08c8a6045ae850e34e7611cd, type: 2}
     BonusCardType: {fileID: 0}
   battleEndEffects: []
   isWIP: 0
