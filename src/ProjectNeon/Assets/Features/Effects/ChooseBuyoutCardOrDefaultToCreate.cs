@@ -27,7 +27,6 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
                     Name = cardTemplate.Name,
                     Rarity = cardTemplate.Rarity,
                     Cost = new InMemoryResourceAmount(CalculatePrice(x.Value, ctx.EnemyTypes[x.Key]), "Creds"),
-                    Gain = cardTemplate.Gain,
                     Speed = cardTemplate.Speed,
                     ActionSequences = new CardActionSequence[]
                     {

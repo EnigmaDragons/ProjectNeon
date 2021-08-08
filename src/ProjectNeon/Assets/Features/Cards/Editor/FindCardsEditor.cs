@@ -226,7 +226,7 @@ public class FindCardsEditor : EditorWindow
                 .Where(c => c.id == _id)
                 .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
                 .ToArray();
-            ShowCards($"Archetype {_archetype}", cards);
+            ShowCards($"ID {_id}", cards);
             GUIUtility.ExitGUI();
         }
     }

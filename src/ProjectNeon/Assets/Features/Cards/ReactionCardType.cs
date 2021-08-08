@@ -10,7 +10,6 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     [SerializeField] [TextArea(1, 12)] private string description;
     [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private ResourceCost cost;
-    [SerializeField] private ResourceCost onPlayGain;
     [SerializeField] private CardReactionSequence actionSequence;
 
     public string Name => string.IsNullOrWhiteSpace(displayName) 
@@ -22,7 +21,6 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     public string Description => description;
     public string TypeDescription => "Reaction";
     public IResourceAmount Cost => cost;
-    public IResourceAmount Gain => onPlayGain;
     public CardSpeed Speed => CardSpeed.Standard;
     public CardReactionSequence ActionSequence => actionSequence;
     public HashSet<CardTag> Tags => new HashSet<CardTag>();
@@ -41,10 +39,9 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
         return this;
     }
     
-    public ReactionCardType Initialized(ResourceCost cost, ResourceCost gain, CardReactionSequence action)
+    public ReactionCardType Initialized(ResourceCost cost, CardReactionSequence action)
     {
         this.cost = cost;
-        this.onPlayGain = gain;
         actionSequence = action;
         return this;
     }
