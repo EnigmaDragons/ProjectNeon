@@ -21,6 +21,7 @@ public sealed class EffectData
     public bool HitsRandomTargetMember;
     public bool TargetsSource;
     public AutoReTargetScope ReTargetScope = AutoReTargetScope.None;
+    public bool ApplyToEachMemberIndividually = false;
     
     public StatusDetail StatusDetail => new StatusDetail(StatusTag, string.IsNullOrWhiteSpace(StatusDetailText) ? Maybe<string>.Missing() : StatusDetailText);
     public StatusTag StatusTag;
@@ -32,7 +33,6 @@ public sealed class EffectData
     public InterpolatePartialFormula InterpolatePartialFormula = new InterpolatePartialFormula();
     public StringReference FlavorText = new StringReference();
     public CardActionsData ReferencedSequence;
-    public bool ApplyToEachMemberIndividually = false;
     
     public bool IsReactionCard => ReactionSequence != null;
     public bool IsReactionEffect => ReactionEffect != null;
@@ -46,22 +46,53 @@ public sealed class EffectData
 
 public static class EffectDataExtensions
 {
-    public static EffectData Immediately(this EffectData e)
+    private static EffectData Clone(EffectData e)
         => new EffectData
         {
             EffectType = e.EffectType,
-            FloatAmount = e.FloatAmount,
+            Conditions = e.Conditions,
             BaseAmount = e.BaseAmount,
+            FloatAmount = e.FloatAmount,
+            
             DurationFormula = e.DurationFormula,
             EffectScope = e.EffectScope,
             HitsRandomTargetMember = e.HitsRandomTargetMember,
-            ReferencedSequence = e.ReferencedSequence,
-            ReactionSequence = e.ReactionSequence,
+            TargetsSource = e.TargetsSource,
+            ReTargetScope = e.ReTargetScope,
+            ApplyToEachMemberIndividually = e.ApplyToEachMemberIndividually,
+            
             StatusTag = e.StatusTag,
-            TurnDelay = 0,
+            StatusDetailText = e.StatusDetailText,
+            
+            TurnDelay = e.TurnDelay,
+            
             Formula = e.Formula,
-            FlavorText = e.FlavorText
+            InterpolatePartialFormula = e.InterpolatePartialFormula,
+            FlavorText = e.FlavorText,
+            ReferencedSequence = e.ReferencedSequence,
+            
+            ReactionConditionType = e.ReactionConditionType,
+            ReactionEffectScope = e.ReactionEffectScope,
+            ReactionSequence = e.ReactionSequence,
+            ReactionEffect = e.ReactionEffect,
+            
+            BonusCardType = e.BonusCardType
         };
+
+    public static EffectData Immediately(this EffectData e)
+    {
+        var newData = Clone(e);
+        newData.TurnDelay = 0;
+        return newData;
+    }
+    
+    public static EffectData WithoutAutoRetargeting(this EffectData e)
+    {
+        var newData = Clone(e);
+        newData.ReTargetScope = AutoReTargetScope.None;
+        newData.TargetsSource = false;
+        return newData;
+    }
 
     public static EffectCondition Condition(this EffectData e) =>
         e.Conditions != null && e.Conditions.Length > 0 

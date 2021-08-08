@@ -24,8 +24,9 @@ MonoBehaviour:
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 86
-    Conditions: []
+  - EffectType: 79
+    Conditions:
+    - {fileID: 11400000, guid: a1323df62032feb4d8b5ac55fee032c2, type: 2}
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -38,14 +39,15 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 0}
+      Variable: {fileID: 11400000, guid: a44ad20938ad98d4ba2a05ebec66e947, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 21
+    ApplyToEachMemberIndividually: 1
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 
+    Formula: 1
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
@@ -55,7 +57,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 11400000, guid: a7b49f8d20b2ded46911ac662e0063af, type: 2}
-    ApplyToEachMemberIndividually: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -87,6 +88,7 @@ MonoBehaviour:
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -100,7 +102,6 @@ MonoBehaviour:
       ConstantValue: 'Start of Turn: Apply Vulnerable 1 to all Defenseless enemies'
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ApplyToEachMemberIndividually: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0

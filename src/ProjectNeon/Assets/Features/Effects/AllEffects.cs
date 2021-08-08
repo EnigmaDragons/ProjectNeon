@@ -127,10 +127,11 @@ public static class AllEffects
             var updatedContext = AutoRetargeted(effectData, ctx);
             if (effectData.ApplyToEachMemberIndividually && updatedContext.Target.Members.Length > 1)
             {
+                var withoutAutoRetargeting = effectData.WithoutAutoRetargeting();
                 DevLog.Info("Splitting Effect Targets");
                 var applied = false;
                 foreach (var targetMember in updatedContext.Target.Members)
-                    if (Apply(effectData, updatedContext.Retargeted(ctx.Source, new Single(targetMember))))
+                    if (Apply(withoutAutoRetargeting, updatedContext.Retargeted(ctx.Source, new Single(targetMember))))
                         applied = true;
                 return applied;
             }

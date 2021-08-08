@@ -8,7 +8,7 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(EffectData))]
 public class EffectDataEditor : PropertyDrawer
 {
-    private List<string> _globalProperties = new List<string> { "Conditions", "ApplyToEachMemberIndividually", "TurnDelay", "TargetsSource", "ReTargetScope", };
+    private List<string> _globalProperties = new List<string> { "Conditions", "TurnDelay", "TargetsSource", "ReTargetScope", "ApplyToEachMemberIndividually" };
     
     private DictionaryWithDefault<EffectType, string[]> _relevantProperties = 
         new DictionaryWithDefault<EffectType, string[]>(new string[] { "BaseAmount", "FloatAmount", "DurationFormula", "HitsRandomTargetMember" })
