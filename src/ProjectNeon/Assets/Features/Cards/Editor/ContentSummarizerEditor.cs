@@ -101,7 +101,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
                             r => r.Count()));
             
             var equipments = GetAllInstances<StaticEquipment>()
-                .Where(e => archetypeKeys.Contains(e.ArchetypeKey))
+                .Where(e => !e.IsWip && archetypeKeys.Contains(e.ArchetypeKey))
                 .GroupBy(c => c.ArchetypeKey)
                 .ToDictionary(
                     x => x.Key, // By Archetype 
