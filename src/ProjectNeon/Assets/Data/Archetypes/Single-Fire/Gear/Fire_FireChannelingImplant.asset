@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: FirebugFlamespewer
+  m_Name: Fire_FireChannelingImplant
   m_EditorClassIdentifier: 
-  id: 51
-  displayName: Firebug Flamespewer
-  description: 'Start of Turn: Deal 0.5x Magic fire damage to a random enemy'
+  id: 50
+  displayName: Fire Channelling Implant
+  description: 'Start of Turn: Draw a fire card if you have none in hand'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
-  rarity: 4
+  rarity: 2
   slot: 2
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 86
-    Conditions: []
+  - EffectType: 89
+    Conditions:
+    - {fileID: 11400000, guid: 4b806565a3aa0e743aeb6efacad1d4c5, type: 2}
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -38,14 +39,14 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 0}
+      Variable: {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
-    ReTargetScope: 20
+    ReTargetScope: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 0.5 * Magic
+    Formula: 1
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
@@ -54,7 +55,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 11400000, guid: 53aedcbb3ed65834688efd5335363676, type: 2}
+    ReferencedSequence: {fileID: 0}
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -68,4 +69,5 @@ MonoBehaviour:
     BonusCardType: {fileID: 0}
   turnEndEffects: []
   battleStartEffects: []
+  battleEndEffects: []
   isWIP: 0

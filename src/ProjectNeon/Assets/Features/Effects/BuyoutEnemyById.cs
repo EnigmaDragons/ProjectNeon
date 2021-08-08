@@ -4,7 +4,9 @@
 
     public BuyoutEnemyById(string effectContext)
     {
-        _enemyId = int.Parse(effectContext);
+        _enemyId = int.TryParse(effectContext, out var val) 
+            ? val 
+            : -1;
     }
     
     public void Apply(EffectContext ctx)

@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: FireChannelingImplant
+  m_Name: Fire_OilSprayer
   m_EditorClassIdentifier: 
-  id: 50
-  displayName: Fire Channelling Implant
-  description: 'Start of Turn: Draw a fire card if you have none in hand'
-  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
+  id: 68
+  displayName: 
+  description: 'Chain: Searing Oil'
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
-  rarity: 2
+  rarity: 1
   slot: 2
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
-  turnStartEffects:
-  - EffectType: 89
-    Conditions:
-    - {fileID: 11400000, guid: 4b806565a3aa0e743aeb6efacad1d4c5, type: 2}
+  turnStartEffects: []
+  turnEndEffects: []
+  battleStartEffects:
+  - EffectType: 92
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -39,14 +40,14 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
+      Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
-    StatusTag: 0
-    StatusDetailText: 
+    StatusTag: 12
+    StatusDetailText: 'Chain: Searing Oil'
     TurnDelay: 0
-    Formula: 1
+    Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
@@ -66,7 +67,6 @@ MonoBehaviour:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
-    BonusCardType: {fileID: 0}
-  turnEndEffects: []
-  battleStartEffects: []
+    BonusCardType: {fileID: 11400000, guid: 7046f3b96d10c4343907b810b8464041, type: 2}
+  battleEndEffects: []
   isWIP: 0

@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE:
-// LAST NUMBER USED: 91
+// LAST NUMBER USED: 92
 
 public enum EffectType
 {
@@ -47,6 +47,7 @@ public enum EffectType
     
     // Cards Effects
     PlayBonusCardAfterNoCardPlayedInXTurns = 76,
+    PlayBonusChainCard = 92,
     CycleAllCardsInHand = 77,
     DrawCards = 81,
     DrawCardsOfOwner = 88,
@@ -63,7 +64,6 @@ public enum EffectType
     GainDoubleDamage = 57,
     DuplicateStatesOfType = 65,
     DuplicateStatesOfTypeToRandomEnemy = 90,
-    PreventResourceGains = 53,
     
     // Healing
     HealFormula = 29,
@@ -87,5 +87,5 @@ public enum EffectType
     AdjustPrimaryStatForEveryCardCycledAndInHand = 40,
     BuyoutEnemyById = 47,
     ChooseBuyoutCardsOrDefault = 48,
-    //AdjustBattleReward = 91 
+    AdjustBattleRewardFormula = 91 
 }

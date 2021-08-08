@@ -47,7 +47,8 @@ public class BattleState : ScriptableObject
     public PlayedCardSnapshot[] CurrentTurnCardPlays() => _playedCardHistory.Any()
         ? _playedCardHistory.Last().ToArray()
         : Array.Empty<PlayedCardSnapshot>();
-    
+
+    public BattleRewardState RewardState => rewards;
     public int RewardCredits => rewards.RewardCredits;
     public int RewardXp => rewards.RewardXp;
     public CardTypeData[] RewardCards => rewards.RewardCards;
