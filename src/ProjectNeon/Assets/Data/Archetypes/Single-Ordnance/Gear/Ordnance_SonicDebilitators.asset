@@ -10,20 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Any-ReflexBoosters
+  m_Name: Ordnance_SonicDebilitators
   m_EditorClassIdentifier: 
-  id: 25
-  displayName: Reflex Boosters
-  description: 'Start of Turn: Gain 1 Dodge if you don''t have any'
-  corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
-  archetypes: []
-  rarity: 4
+  id: 80
+  displayName: 
+  description: Grenades apply -2 Primary Stat for 2 turns
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  archetypes:
+  - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
+  rarity: 2
   slot: 2
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
-  turnStartEffects:
-  - EffectType: 79
+  turnStartEffects: []
+  turnEndEffects: []
+  battleStartEffects:
+  - EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -32,19 +35,19 @@ MonoBehaviour:
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    DurationFormula: 0
+      FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
+    DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
+      Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
-    StatusTag: 0
-    StatusDetailText: 
+    StatusTag: 12
+    StatusDetailText: Grenades apply -2 Primary Stat for 2 turns
     TurnDelay: 0
-    Formula: '1 {Dodge > 0: * 0}'
+    Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
@@ -54,18 +57,16 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 0
+    ReactionConditionType: 29
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 0}
+      Variable: {fileID: 11400000, guid: 0bd6c4bf422f6f747b50b4d25e38ed72, type: 2}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
-      scope: 0
-      cardActions: {fileID: 0}
+      scope: 3
+      cardActions: {fileID: 11400000, guid: 5ff63a5b290aae64eab45e88f290dc49, type: 2}
     BonusCardType: {fileID: 0}
-  turnEndEffects: []
-  battleStartEffects: []
   battleEndEffects: []
   isWIP: 0

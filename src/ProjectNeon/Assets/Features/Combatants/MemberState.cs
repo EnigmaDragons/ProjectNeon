@@ -203,7 +203,7 @@ public sealed class MemberState : IStats
         _additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
             .ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator) s));
         _multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator) s));
+            .ForEach(s => AddMultiplicativeResourceCalculator((ResourceCalculator) s));
     }
 
     public void DuplicateStatesOfTypeFrom(StatusTag tag, MemberState member)
@@ -219,7 +219,7 @@ public sealed class MemberState : IStats
         member._additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
             .ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator) s));
         member._multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator) s));
+            .ForEach(s => AddMultiplicativeResourceCalculator((ResourceCalculator) s));
     }
 
     public void ResetStatToBase(string statType) => PublishAfter(() =>
@@ -283,7 +283,7 @@ public sealed class MemberState : IStats
     public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
     public void AddEffectTransformer(EffectTransformer transformer) => PublishAfter(() => _transformers.Add(transformer));
     public void AddAdditiveResourceCalculator(ResourceCalculator calculator) => PublishAfter(() => _additiveResourceCalculators.Add(calculator));
-    public void AddMutliplicativeResourceCalculator(ResourceCalculator calculator) => PublishAfter(() => _multiplicativeResourceCalculators.Add(calculator));
+    public void AddMultiplicativeResourceCalculator(ResourceCalculator calculator) => PublishAfter(() => _multiplicativeResourceCalculators.Add(calculator));
     public void AddCustomStatus(CustomStatusIcon icon) => PublishAfter(() => _customStatusIcons.Add(icon));
 
     // HP Commands

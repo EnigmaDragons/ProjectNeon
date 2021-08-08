@@ -43,7 +43,9 @@ public static class AllEffects
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.DuplicateStatesOfTypeToRandomEnemy, e => new DuplicateStatesOfTypeToRandomEnemy(e.StatusTag)},
-        { EffectType.DealRawDamageFormula, e => new FullContextEffect((ctx, _, m) => m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount))), e.DurationFormula)},
+        { EffectType.DealRawDamageFormula, e => new FullContextEffect((ctx, _, m) => 
+            BattleLoggedItem(amount => $"{amount} raw damage dealt to {m.Name}", 
+                m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)))), e.DurationFormula)},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
