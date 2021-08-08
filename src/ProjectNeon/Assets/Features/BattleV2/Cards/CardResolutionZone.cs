@@ -157,28 +157,28 @@ public class CardResolutionZone : ScriptableObject
             if (!card.IsActive)
             {
                 BattleLog.Write($"{card.Name} is {card.Mode}, so it does not resolve.");
-                Message.Publish(new CardResolutionFinished(played.Member.Id));
+                Message.Publish(new CardResolutionFinished(played));
             }
             else if (card.Owner.IsStunnedForCard())
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Stun, -1);
                 Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Stunned"));
-                Message.Publish(new CardResolutionFinished(played.Member.Id));
+                Message.Publish(new CardResolutionFinished(played));
             }
             else if (card.IsAttack && card.Owner.IsBlinded())
             {
                 BattleLog.Write($"{card.Owner.Name} was blinded, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Blind, -1);
                 Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Blinded"));
-                Message.Publish(new CardResolutionFinished(played.Member.Id));
+                Message.Publish(new CardResolutionFinished(played));
             }
             else if (!card.IsAttack && card.Owner.IsInhibited())
             {
                 BattleLog.Write($"{card.Owner.Name} was inhibited, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Inhibit, -1);
                 Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Inhibited"));
-                Message.Publish(new CardResolutionFinished(played.Member.Id));
+                Message.Publish(new CardResolutionFinished(played));
             }
             else
             {

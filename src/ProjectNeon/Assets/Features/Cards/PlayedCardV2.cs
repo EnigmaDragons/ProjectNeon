@@ -2,6 +2,7 @@
 
 public class PlayedCardV2 : IPlayedCard
 {
+    private readonly int _playedCardId;
     private readonly Card _card;
     private readonly Member _performer;
     private readonly Target[] _targets;
@@ -21,6 +22,7 @@ public class PlayedCardV2 : IPlayedCard
         if (card.IsActive && targets.Length < card.ActionSequences.Length)
             throw new InvalidDataException($"Cannot play {card.Name} with only {targets.Length}");
         
+        _playedCardId = NextPlayedCardId.Get();
         _performer = performer;
         _targets = targets;
         _card = card;
@@ -31,6 +33,7 @@ public class PlayedCardV2 : IPlayedCard
         _lockedXValue = _card.LockedXValue.Value;
     }
 
+    public int PlayedCardId => _playedCardId;
     public Member Member => _performer;
     public Card Card => _card;
     public Target[] Targets => _targets;
@@ -41,6 +44,7 @@ public class PlayedCardV2 : IPlayedCard
 
     public void Perform(BattleStateSnapshot beforeCard)
     {
-        Card.Play(_targets, beforeCard, _lockedXValue, () => Message.Publish(new CardResolutionFinished(Member.Id)));
+        Log.Info($"Perform {PlayedCardId}");
+        Card.Play(_targets, beforeCard, _lockedXValue, () => Message.Publish(new CardResolutionFinished(this)));
     }
 }

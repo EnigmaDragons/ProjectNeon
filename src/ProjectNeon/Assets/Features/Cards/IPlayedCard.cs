@@ -1,5 +1,6 @@
 ﻿public interface IPlayedCard
 {
+    int PlayedCardId { get; }
     Member Member { get; }
     Card Card { get; }
     Target[] Targets { get; }

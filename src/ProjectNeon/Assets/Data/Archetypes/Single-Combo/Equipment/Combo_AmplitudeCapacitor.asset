@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
+  m_Name: Combo_AmplitudeCapacitor
+  m_EditorClassIdentifier: 
+  id: 86
+  displayName: 
+  description: 'On Combo Card: +2 Attack this turn<br>Chain: Gain Double Damage'
+  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
+  archetypes:
+  - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
+  rarity: 4
+  slot: 2
+  priceFactor: 1
+  modifiers: []
+  resourceModifiers: []
+  turnStartEffects: []
+  turnEndEffects: []
+  battleStartEffects:
+  - EffectType: 74
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
+    DurationFormula: -1
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
+    StatusTag: 12
+    StatusDetailText: 'On Combo Card: +2 Attack this turn'
+    TurnDelay: 0
+    Formula: 
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 35
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 11400000, guid: 2983f8c062ccf3240a3abe87f0199133, type: 2}
+    BonusCardType: {fileID: 0}
+  - EffectType: 92
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
+    DurationFormula: -1
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
+    StatusTag: 12
+    StatusDetailText: 'Chain: Gain Double Damage'
+    TurnDelay: 0
+    Formula: 
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 35
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 11400000, guid: 2983f8c062ccf3240a3abe87f0199133, type: 2}
+    BonusCardType: {fileID: 11400000, guid: d02b2bdcc7f6e53469dbdd8900553645, type: 2}
+  battleEndEffects: []
+  isWIP: 0

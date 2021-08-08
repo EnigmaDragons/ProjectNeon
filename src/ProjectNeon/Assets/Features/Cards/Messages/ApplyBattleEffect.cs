@@ -1,5 +1,6 @@
 ﻿public class ApplyBattleEffect
 {
+    public bool IsFirstBattleEffect { get; }
     public EffectData Effect { get; }
     public Member Source { get; }
     public Target Target { get; }
@@ -11,8 +12,9 @@
     public ResourceQuantity XPaidAmount { get; }
     public PreventionContext Preventions { get; }
 
-    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)
+    public ApplyBattleEffect(bool isFirstBattleEffect, EffectData effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)
     {
+        IsFirstBattleEffect = isFirstBattleEffect;
         Effect = effect;
         Source = source;
         Target = target;
@@ -22,8 +24,9 @@
         Preventions = preventions;
     }
         
-    public ApplyBattleEffect(EffectData effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions, Group targetGroup, Scope scope, bool isReaction)
+    public ApplyBattleEffect(bool isFirstBattleEffect, EffectData effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions, Group targetGroup, Scope scope, bool isReaction)
     {
+        IsFirstBattleEffect = isFirstBattleEffect;
         Effect = effect;
         Source = source;
         Target = target;

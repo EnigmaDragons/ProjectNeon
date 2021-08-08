@@ -66,7 +66,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         var (msg, battleSnapshotBefore) = _currentBattleEffectContext.Value;
         var battleSnapshotAfter = state.GetSnapshot();
         
-        var effectResolved = new EffectResolved(msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction, msg.Card, msg.Preventions);
+        var effectResolved = new EffectResolved(msg.IsFirstBattleEffect, msg.Effect, msg.Source, msg.Target, battleSnapshotBefore, battleSnapshotAfter, msg.IsReaction, msg.Card, msg.Preventions);
         var reactions = state.Members
             .Select(x => x.Value)
             .SelectMany(v => v.State.GetReactions(effectResolved)).ToList();

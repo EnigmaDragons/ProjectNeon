@@ -51,7 +51,7 @@ public class FormulaTests
         => AssertResultsIs(1, "X", new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any(), new ResourceQuantity { Amount = 1 }));
     
     [Test] public void Formula_DoubleDamageIfStunned()
-        => AssertResultsIs(2, "1 {Target[CardStun] > 0:* 2}", 
+        => AssertResultsIs(2, "1 {Target[Stun] > 0:* 2}", 
             new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.Stun, 1)), ResourceQuantity.None));
     
     [Test] public void Formula_PrimaryResource()

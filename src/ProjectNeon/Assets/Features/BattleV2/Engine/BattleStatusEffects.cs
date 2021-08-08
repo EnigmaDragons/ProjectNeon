@@ -11,6 +11,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
     private Maybe<Member> _currentMember;
     private readonly Queue<IPayloadProvider> _currentMemberEffects = new Queue<IPayloadProvider>();
     private readonly Queue<ProposedReaction> _instantReactions = new Queue<ProposedReaction>();
+    private readonly HashSet<int> _processedCardIds = new HashSet<int>();
 
     private bool _isProcessing;
     private bool _isProcessingStartOfTurn;
@@ -85,7 +86,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             MessageGroup.Start(e, () => 
             {
                 var battleSnapshotAfter = state.GetSnapshot();
-                var effectResolved = new EffectResolved(EffectData.Nothing, 
+                var effectResolved = new EffectResolved(true, EffectData.Nothing, 
                     member, // Replace with Status Originator
                     new Single(member), 
                     battleSnapshotBefore,
@@ -148,7 +149,11 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
 
     protected override void Execute(CardResolutionFinished msg)
     {
-        DevLog.Write("Card Resolution Finished");
+        if (_processedCardIds.Contains(msg.PlayedCardId))
+            return;
+
+        DevLog.Write($"Card Resolution Finished {msg.CardName} {msg.CardId} {msg.PlayedCardId}");
+        _processedCardIds.Add(msg.PlayedCardId);
         if (_isProcessing)
             ResolveNext();
     }
