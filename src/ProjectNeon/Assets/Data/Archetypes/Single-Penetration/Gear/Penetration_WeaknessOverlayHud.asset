@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
+  m_Name: Penetration_WeaknessOverlayHud
+  m_EditorClassIdentifier: 
+  id: 87
+  displayName: 
+  description: 'Start of Turn: Apply Vulnerable 1 to all Defenseless enemies'
+  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
+  archetypes:
+  - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
+  rarity: 4
+  slot: 2
+  priceFactor: 1
+  modifiers: []
+  resourceModifiers: []
+  turnStartEffects:
+  - EffectType: 86
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    DurationFormula: 
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 21
+    StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 11400000, guid: a7b49f8d20b2ded46911ac662e0063af, type: 2}
+    ApplyToEachMemberIndividually: 0
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  turnEndEffects: []
+  battleStartEffects:
+  - EffectType: 73
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    DurationFormula: -1
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: Augment
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
+    StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 1
+      ConstantValue: 'Start of Turn: Apply Vulnerable 1 to all Defenseless enemies'
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ApplyToEachMemberIndividually: 0
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  isWIP: 0

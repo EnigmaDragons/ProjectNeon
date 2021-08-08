@@ -32,6 +32,7 @@ public sealed class EffectData
     public InterpolatePartialFormula InterpolatePartialFormula = new InterpolatePartialFormula();
     public StringReference FlavorText = new StringReference();
     public CardActionsData ReferencedSequence;
+    public bool ApplyToEachMemberIndividually = false;
     
     public bool IsReactionCard => ReactionSequence != null;
     public bool IsReactionEffect => ReactionEffect != null;

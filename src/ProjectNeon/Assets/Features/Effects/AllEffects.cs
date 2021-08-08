@@ -119,20 +119,36 @@ public static class AllEffects
     {
         try
         {
+            // No Targets
             if (ctx.Target.Members.Length == 0)
                 return false;
+
+            // Retargeting and Splitting
+            var updatedContext = AutoRetargeted(effectData, ctx);
+            if (effectData.ApplyToEachMemberIndividually && ctx.Target.Members.Length > 1)
+            {
+                DevLog.Info("Splitting Effect Targets");
+                var applied = false;
+                foreach (var targetMember in ctx.Target.Members)
+                    if (Apply(effectData, updatedContext.Retargeted(ctx.Source, new Single(targetMember))))
+                        applied = true;
+                return applied;
+            }
             
-            effectData = ctx.Source.State.Transform(effectData, ctx);
-            var effect = Create(effectData);
+            // Transform Effect
+            var updatedEffectData = ctx.Source.State.Transform(effectData, ctx);
+            
+            // Calculate Effect Timing
             var whenClause = effectData.TurnDelay == 0
-                             ? "" 
-                             : effectData.TurnDelay == 1
-                                ? " at the start of next turn" 
-                                : $" in {effectData.TurnDelay} turns";
-            
-            var updatedContext = AutoRetargeted(effectData, ctx, whenClause);
+                ? "" 
+                : effectData.TurnDelay == 1
+                    ? " at the start of next turn" 
+                    : $" in {effectData.TurnDelay} turns";
+            DevLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
             if (effectData.TurnDelay > 0)
                 BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
+            
+            // Check Conditions
             var shouldNotApplyReason = effectData.Condition().GetShouldNotApplyReason(updatedContext);
             if (shouldNotApplyReason.IsPresent)
             {
@@ -140,6 +156,8 @@ public static class AllEffects
                 return false;
             }
             
+            // Apply Effect
+            var effect = Create(updatedEffectData);
             effect.Apply(updatedContext);
             return true;
         }
@@ -153,7 +171,7 @@ public static class AllEffects
         }
     }
 
-    private static EffectContext AutoRetargeted(EffectData effectData, EffectContext ctx, string whenClause)
+    private static EffectContext AutoRetargeted(EffectData effectData, EffectContext ctx)
     {
         var retargetScope = effectData.TargetsSource ? AutoReTargetScope.Source : effectData.ReTargetScope;
         var updateTarget = retargetScope switch
@@ -170,9 +188,7 @@ public static class AllEffects
                 AutoReTargetScope.RandomEnemy => RandomEnemy(ctx),
                 AutoReTargetScope.AllEnemiesExcept => AllEnemiesExcept(ctx)
             };
-
-        var targetsDesc = retargetScope == AutoReTargetScope.Source ? ctx.Source.Name : ctx.Target.MembersDescriptions();
-        DevLog.Write($"Applying Effect of {effectData.EffectType} to {targetsDesc}{whenClause}");
+        
         return ctx.Retargeted(ctx.Source, updateTarget);
     }
 
