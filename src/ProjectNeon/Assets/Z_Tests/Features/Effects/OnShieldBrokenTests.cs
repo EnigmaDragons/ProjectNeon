@@ -16,7 +16,7 @@ public class OnShieldBrokenTests
             EffectType = EffectType.ReactWithCard,
             DurationFormula = "3",
             FloatAmount = new FloatReference(-1),
-            ReactionConditionType = ReactionConditionType.OnShieldBroken,
+            ReactionConditionType = ReactionConditionType.WhenShieldBroken,
             ReactionSequence = TestCards.ReactionCard(
                 ReactiveMember.Possessor,
                 ReactiveTargetScope.Self,

@@ -8,17 +8,17 @@ public class EffectReactWith : Effect
     private static Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>> Conditions = new Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>>
     {
         { ReactionConditionType.OnCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(c => c.Owner.Id == ctx.Possessor.Id) },
-        { ReactionConditionType.OnAttacked, ctx => effect => 
+        { ReactionConditionType.WhenAttacked, ctx => effect => 
             ctx.Actor.IsConscious() && (effect.EffectData.EffectType == EffectType.AttackFormula || effect.EffectData.EffectType == EffectType.MagicAttackFormula) 
                                     && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
-        { ReactionConditionType.OnBloodied, ctx => effect => 
+        { ReactionConditionType.WhenBloodied, ctx => effect => 
             ctx.Actor.IsConscious() && !effect.BattleBefore.Members[ctx.Possessor.Id].IsBloodied() && effect.BattleAfter.Members[ctx.Possessor.Id].IsBloodied() },
-        {ReactionConditionType.OnVulnerable, ctx => effect 
+        {ReactionConditionType.WhenVulnerabled, ctx => effect 
             => ctx.Actor.IsConscious() && effect.EffectData.EffectScope.Value == "Vulnerable" && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
-        { ReactionConditionType.OnShieldBroken, ctx => effect => ctx.Actor.IsConscious() && WentToZero(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
-        { ReactionConditionType.OnDamagedHp, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp))},
-        { ReactionConditionType.OnDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp + m.State.Shield))},
-        { ReactionConditionType.OnBlinded, ctx => effect => ctx.Actor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
+        { ReactionConditionType.WhenShieldBroken, ctx => effect => ctx.Actor.IsConscious() && WentToZero(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
+        { ReactionConditionType.WhenDamagedHp, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp))},
+        { ReactionConditionType.WhenDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp + m.State.Shield))},
+        { ReactionConditionType.WhenBlinded, ctx => effect => ctx.Actor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
         { ReactionConditionType.OnCausedStun, ctx => effect =>
             {
                 if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
@@ -71,7 +71,7 @@ public class EffectReactWith : Effect
                 return hpAfter > hpBefore;
             }
         },
-        { ReactionConditionType.OnDeath, ctx => effect => ctx.Possessor.IsUnconscious() && (ctx.Possessor.Id == ctx.Actor.Id || ctx.Actor.IsConscious()) },
+        { ReactionConditionType.WhenKilled, ctx => effect => ctx.Possessor.IsUnconscious() && (ctx.Possessor.Id == ctx.Actor.Id || ctx.Actor.IsConscious()) },
         { ReactionConditionType.OnDamageDealt, ctx => effect
                 =>
                 {
@@ -115,11 +115,11 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnAegised, ctx => effect => ctx.Possessor.IsConscious() 
            && effect.Preventions.IsAegising(ctx.Possessor) 
            && Decreased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Aegis]))},
-        { ReactionConditionType.OnNearDeath, ctx => effect => ctx.Actor.IsConscious() && ctx.Possessor.CurrentHp() == 1 },
-        { ReactionConditionType.OnAllyDeath, ctx => effect => ctx.Actor.IsConscious() 
+        { ReactionConditionType.WhenNearDeath, ctx => effect => ctx.Actor.IsConscious() && ctx.Possessor.CurrentHp() == 1 },
+        { ReactionConditionType.WhenAllyDeath, ctx => effect => ctx.Actor.IsConscious() 
             && effect.BattleBefore.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) 
               > effect.BattleAfter.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) },
-        { ReactionConditionType.OnAfflicted, ctx => effect => ctx.Actor.IsConscious() 
+        { ReactionConditionType.WhenAfflicted, ctx => effect => ctx.Actor.IsConscious() 
             && Increased(Select(effect, ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) },
         { ReactionConditionType.OnAppliedMark, ctx => effect => ctx.Actor.IsConscious() 
             && Increased(Select(effect, b => b.TargetMembers(effect.Target).Sum(x => x.State[TemporalStatType.Marked]))) },

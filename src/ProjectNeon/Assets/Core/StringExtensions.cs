@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 
 public static class StringExtensions
@@ -34,4 +33,5 @@ public static class StringExtensions
     public static string SkipThroughFirstUnderscore(this string s) => s.Substring(s.IndexOf('_') + 1);
     public static bool ContainsAnyCase(this string s, string term) => s.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
     public static T EnumVal<T>(this string s) => (T)Enum.Parse(typeof(T), s);
+    public static string ToTitleCase(this string s) => System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(s);
 }
