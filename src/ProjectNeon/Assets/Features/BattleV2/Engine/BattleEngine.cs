@@ -19,7 +19,8 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private bool setupOnStart;
 
     private bool _triggeredBattleFinish;
-
+    private bool _playerTurnConfirmed = false;
+    
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
     
     private void Awake()
@@ -50,6 +51,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         BattleLog.Write($"--------------  Turn {state.TurnNumber}  --------------");
         BeginPhase(BattleV2Phase.StartOfTurnEffects);
         state.StartTurn();
+        _playerTurnConfirmed = false;
         Message.Publish(new TurnStarted());
         statusPhase.ProcessStartOfTurnEffects();
     }
@@ -91,6 +93,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
 
     private IEnumerator WaitForAllPlayerCardsToFinishResolving()
     {
+        if (_playerTurnConfirmed)
+            yield break;
+        
+        _playerTurnConfirmed = true;
         resolutionZone.NotifyPlayerTurnEnded();
         while (!resolutions.IsDoneResolving)
             yield return new WaitForSeconds(0.1f);

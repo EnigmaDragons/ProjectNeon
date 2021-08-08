@@ -10,65 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Tactical_StrengthFinder
+  m_Name: Tactical_DefensiveSignals
   m_EditorClassIdentifier: 
-  id: 75
+  id: 77
   displayName: 
-  description: 'Start of Turn: Give a random ally +1 Primary Stat for the turn'
+  description: 'Chain: Use Cover'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: e97bda47e14bfeb49b6a38e814d38a6d, type: 2}
-  rarity: 1
+  rarity: 2
   slot: 2
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
-  turnStartEffects:
-  - EffectType: 68
-    Conditions: []
-    BaseAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
-    FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    DurationFormula: 1
-    EffectScope:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: a961f902c2ecfd54ebfbfe875405e991, type: 2}
-    HitsRandomTargetMember: 0
-    TargetsSource: 0
-    ReTargetScope: 40
-    StatusTag: 0
-    StatusDetailText: 
-    TurnDelay: 0
-    Formula: 3
-    InterpolatePartialFormula:
-      EvaluationPartialFormula: 
-      Prefix: 
-      Suffix: 
-    FlavorText:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 0
-    ReactionEffectScope:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReactionSequence: {fileID: 0}
-    ReactionEffect:
-      reactor: 0
-      scope: 0
-      cardActions: {fileID: 0}
-    BonusCardType: {fileID: 0}
+  turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 73
+  - EffectType: 92
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -78,16 +36,16 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
-    DurationFormula: -1
+    DurationFormula: 
     EffectScope:
-      UseConstant: 1
-      ConstantValue: Augment
+      UseConstant: 0
+      ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
-    StatusTag: 0
-    StatusDetailText: 
+    StatusTag: 12
+    StatusDetailText: 'Chain: Use Cover'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -95,8 +53,8 @@ MonoBehaviour:
       Prefix: 
       Suffix: 
     FlavorText:
-      UseConstant: 1
-      ConstantValue: 'Start of Turn: Give a random ally +1 Primary Stat for the turn'
+      UseConstant: 0
+      ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReactionConditionType: 0
@@ -109,6 +67,6 @@ MonoBehaviour:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
-    BonusCardType: {fileID: 0}
+    BonusCardType: {fileID: 11400000, guid: c28809a0aa557b742a4492e6becc77ca, type: 2}
   battleEndEffects: []
   isWIP: 0
