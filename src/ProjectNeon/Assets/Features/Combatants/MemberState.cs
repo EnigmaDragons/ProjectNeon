@@ -105,13 +105,13 @@ public sealed class MemberState : IStats
         get
         {
             if (PrimaryResource.Name == "Ammo")
-                return PrimaryResourceAmount * (1f / 6f);
+                return PrimaryResourceAmount * (1f / 4f);
             if (PrimaryResource.Name == "Chems")
-                return PrimaryResourceAmount * (1f / 5f);
+                return PrimaryResourceAmount * (1f / 4f);
             if (PrimaryResource.Name == "Energy")
-                return PrimaryResourceAmount * (1f / 3f);
+                return PrimaryResourceAmount * (1f / 4f);
             if (PrimaryResource.Name == "Flames")
-                return PrimaryResourceAmount * (1f / 3f);
+                return PrimaryResourceAmount * (1f / 4f);
             if (PrimaryResource.Name == "Ambition")
                 return PrimaryResourceAmount * (1f / 4f);
             return 0f;
