@@ -10,34 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Penetration_NoWhereToHide
+  m_Name: ComboLock_Hypervibration
   m_EditorClassIdentifier: 
-  id: 365
+  id: 286
   customName: 
-  art: {fileID: 21300000, guid: 041ac75153d50ff4a8d146600de60231, type: 3}
-  description: <b>Defenseless:</b> Gives <b>Taunt, Prominent,</b> and <b>Vulnerable</b>
-    for 3 turns
-  typeDescription: {fileID: 11400000, guid: 9899a7b68bc22484e927e10f3ea183b5, type: 2}
+  art: {fileID: 21300000, guid: 5bea98ebd6113434fb22386c7c446cb9, type: 3}
+  description: 'Deal {E[0]}. <b>Chain</b>: Zap'
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
+    cost: 1
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
   rarity: 3
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: d53421fd26374014b83e98d3f1e5c57c, type: 2}
+    cardActions: {fileID: 11400000, guid: 2abb37a86a87af640b97c079a120a50e, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 0}
+  chainedCard: {fileID: 11400000, guid: 1cc8b61d2d7aa9e4d9f7ce3431a643a8, type: 2}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
-  highlightCondition: []
+  - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
+  - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
+  highlightCondition:
+  - {fileID: 11400000, guid: 2eeb2268469a74b4a9d34016563badca, type: 2}
   unhighlightCondition: []
   isWIP: 0

@@ -10,29 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_DuelingSlash
+  m_Name: ComboLock_OutOfTricks
   m_EditorClassIdentifier: 
-  id: 279
+  id: 379
   customName: 
-  art: {fileID: 21300000, guid: 472583c835ff5a8499f6028f3a5908ee, type: 3}
-  description: Deal {E[0]} <b>| Crit:</b> You have more resources than the target
+  art: {fileID: 21300000, guid: e64688e751d24e044a4aae752bfa4771, type: 3}
+  description: Deal {E[1]} <b>Crit:</b> Target has 0 resources
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 4
+    cost: 1
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  onPlayGain:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-    plusXCost: 0
-  rarity: 1
+  rarity: 3
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 90bef7856e9cfcf46bac28c95a46d143, type: 2}
+    cardActions: {fileID: 11400000, guid: 45c163b12e0b88540857279dd5568403, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}

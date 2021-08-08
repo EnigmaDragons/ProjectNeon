@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_Hypervibration
+  m_Name: ComboLock_Lock&Shock
   m_EditorClassIdentifier: 
-  id: 286
+  id: 378
   customName: 
-  art: {fileID: 21300000, guid: 5bea98ebd6113434fb22386c7c446cb9, type: 3}
-  description: 'Deal {E[0]}. <b>Chain</b>: Zap'
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  art: {fileID: 21300000, guid: 54852b01d5f666c48bd9f36461f49e6c, type: 3}
+  description: "<b>Stunned:</b> Deal {E[0]} \n\n<b>Not Stunned:</b> Gives <b>1 Stun</b>"
+  typeDescription: {fileID: 0}
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -24,21 +24,18 @@ MonoBehaviour:
     cost: 1
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 4
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 2abb37a86a87af640b97c079a120a50e, type: 2}
+    cardActions: {fileID: 11400000, guid: 588b700c172e7634a8cfa256dd3f2351, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 11400000, guid: 1cc8b61d2d7aa9e4d9f7ce3431a643a8, type: 2}
+  chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  archetypes:
-  - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
-  - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
-  highlightCondition:
-  - {fileID: 11400000, guid: 2eeb2268469a74b4a9d34016563badca, type: 2}
+  archetypes: []
+  highlightCondition: []
   unhighlightCondition: []
   isWIP: 0

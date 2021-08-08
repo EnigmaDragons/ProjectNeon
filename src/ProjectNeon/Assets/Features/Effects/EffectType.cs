@@ -1,6 +1,6 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
 // NUMBERS AVAILABLE:
-// LAST NUMBER USED: 93
+// LAST NUMBER USED: 94
 
 public enum EffectType
 {
@@ -36,6 +36,7 @@ public enum EffectType
     TransferPrimaryResourceFormula = 35,
     Reload = 38,
     AdjustCostOfAllCardsInHandAtEndOfTurn = 39, //once we have more cost modifying cards we can build a more generic type
+    AdjustCardCosts = 94,
     
     // Reactions
     ReactWithEffect = 74,

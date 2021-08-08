@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Penetration_NoWhereToHide_E
+  m_Name: ComboLock_Hypervibration_E
   m_EditorClassIdentifier: 
   Actions:
-  - type: 1
+  - type: 31
     battleEffect:
-      EffectType: 79
-      Conditions:
-      - {fileID: 11400000, guid: a1323df62032feb4d8b5ac55fee032c2, type: 2}
+      EffectType: 0
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -26,11 +25,11 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 0
+      DurationFormula: 
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 5e53e1eb700232049a0c1d2017a544d1, type: 2}
+        Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
@@ -38,7 +37,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 3
+      Formula: 
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -73,9 +72,9 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     atTargetAnimation:
       animation:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: bb526f4ffd0e9044b9af0ec49bc72b02, type: 2}
       size: 1
       speed: 1
       color:
@@ -86,22 +85,21 @@ MonoBehaviour:
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 79
-      Conditions:
-      - {fileID: 11400000, guid: a1323df62032feb4d8b5ac55fee032c2, type: 2}
+      EffectType: 30
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 0.8
         FloatVariable: {fileID: 0}
       DurationFormula: 0
       EffectScope:
-        UseConstant: 0
+        UseConstant: 1
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 3e00baa40a83c3e42b339912ddcc1360, type: 2}
+        Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
@@ -109,78 +107,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 3
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
-    conditionData:
-      ConditionType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedEffect: {fileID: 0}
-    characterAnimation: {fileID: 0}
-    atTargetAnimation:
-      animation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      size: 1
-      speed: 1
-      color:
-        UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
-        Variable: {fileID: 0}
-    enemyToSpawn: {fileID: 0}
-    enemySpawnOffset: {x: 0, y: 0, z: 0}
-  - type: 1
-    battleEffect:
-      EffectType: 79
-      Conditions:
-      - {fileID: 11400000, guid: a1323df62032feb4d8b5ac55fee032c2, type: 2}
-      BaseAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      DurationFormula: 3
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 11400000, guid: a44ad20938ad98d4ba2a05ebec66e947, type: 2}
-      HitsRandomTargetMember: 0
-      TargetsSource: 0
-      ReTargetScope: 0
-      ApplyToEachMemberIndividually: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 0
-      Formula: 3
+      Formula: 1.05 * Attack
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 

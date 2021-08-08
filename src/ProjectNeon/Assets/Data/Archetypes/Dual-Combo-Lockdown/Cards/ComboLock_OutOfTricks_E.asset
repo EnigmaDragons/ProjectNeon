@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Electroblade_DuelingSlash_E
+  m_Name: ComboLock_OutOfTricks_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -25,7 +25,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
@@ -33,6 +33,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -73,12 +74,12 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: bb526f4ffd0e9044b9af0ec49bc72b02, type: 2}
-      size: 0.6
+        Variable: {fileID: 11400000, guid: a75a894b0547d96439a8d9475e6adfea, type: 2}
+      size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        ConstantValue: {r: 0.28315356, g: 0.121395506, b: 0.8301887, a: 1}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
@@ -86,7 +87,7 @@ MonoBehaviour:
     battleEffect:
       EffectType: 30
       Conditions:
-      - {fileID: 11400000, guid: c00249086dc15be4688faeb22fded2b4, type: 2}
+      - {fileID: 11400000, guid: 92fb827da088e174f85575d85c854f56, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -103,10 +104,11 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1.1 * Attack
+      Formula: 1.37 * Attack * 2
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -155,7 +157,8 @@ MonoBehaviour:
   - type: 1
     battleEffect:
       EffectType: 30
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: b3434578794e8344f9cd21e082852c6b, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -172,10 +175,11 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1.25 * Attack {PrimaryResource > Target[PrimaryResource]:* 2}
+      Formula: 1.37 * Attack
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
