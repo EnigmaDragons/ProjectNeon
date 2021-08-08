@@ -12,7 +12,6 @@ public static class TestCards
         var reactionCardType = TestableObjectFactory.Create<ReactionCardType>()
             .Initialized(
                 new ResourceCost(0, resourceType),
-                new ResourceCost(0, resourceType),
                 new CardReactionSequence(src, target,
                     TestableObjectFactory.Create<CardActionsData>()
                         .Initialized(new CardActionV2(e))));

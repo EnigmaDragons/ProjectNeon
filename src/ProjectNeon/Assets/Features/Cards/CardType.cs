@@ -14,7 +14,6 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private CardSpeed speed;
     [SerializeField] private bool isSinglePlay;
     [SerializeField] private ResourceCost cost;
-    [SerializeField] private ResourceCost onPlayGain;
     [SerializeField] private Rarity rarity;
     [SerializeField] public CardActionSequence[] actionSequences = new CardActionSequence[0];
     [SerializeField] private CardType chainedCard;
@@ -32,7 +31,6 @@ public class CardType : ScriptableObject, CardTypeData
 
     public int Id => id;
     public IResourceAmount Cost => cost;
-    public IResourceAmount Gain => onPlayGain;
     public CardSpeed Speed => speed;
     public Sprite Art => art;
     public string Description => description;

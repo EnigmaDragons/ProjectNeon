@@ -7,7 +7,6 @@ public interface CardTypeData
     int Id { get; }
     string Name { get; }
     IResourceAmount Cost { get; }
-    IResourceAmount Gain  { get; }
     CardSpeed Speed { get; }
     Sprite Art  { get; }
     string Description  { get; }

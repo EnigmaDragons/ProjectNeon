@@ -85,9 +85,8 @@ public class BalanceEngine
     public static BalanceAssessment Assess(CardTypeData c)
     {
         var targetPower = RarityWorthFactor.VerboseGetValue(c.Rarity, "Rarity") + ResourceValue(c.Cost);
-        var resourceGainValue = ResourceValue(c.Gain);
         var effectPowerLevel = c.ActionSequences.Sum(a => PowerLevel(c.Rarity, a));
-        var actualPower = resourceGainValue + effectPowerLevel;
+        var actualPower = effectPowerLevel;
         return new BalanceAssessment(c.Name, targetPower, actualPower);
     }
 

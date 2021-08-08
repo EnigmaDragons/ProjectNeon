@@ -4,7 +4,7 @@ using UnityEngine;
 public static class TimelessResourceCalculator
 {
     public static ResourceCalculations CalculateResources(this CardTypeData card, MemberState member) 
-        => CalculateResources(card.Cost, card.Gain, member);
+        => CalculateResources(card.Cost, new InMemoryResourceAmount(0), member);
     public static ResourceCalculations CalculateResources(IResourceAmount cost, IResourceAmount gain, MemberState member)
         => new ResourceCalculations(cost.ResourceType.Name.Equals("PrimaryResource") ? member.PrimaryResource : cost.ResourceType, 
             ResourcesPaid(cost, member), gain.ResourceType, ResourcesGained(gain, member), XAmountPaid(cost, member), XAmountPaid(cost, member));
