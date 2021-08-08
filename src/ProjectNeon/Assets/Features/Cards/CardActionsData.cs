@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
@@ -9,8 +8,8 @@ public class CardActionsData : ScriptableObject
 {
     public CardActionV2[] Actions = new CardActionV2[0];
 
-    public IEnumerable<EffectData> BattleEffects => Actions
-        .Where(x => x.Type == CardBattleActionType.Battle)
+    public IEnumerable<EffectData> BattleEffects => (Actions ?? new CardActionV2[0])
+        .Where(x => x.Type == CardBattleActionType.Battle && x.BattleEffect != null)
         .Select(a => a.BattleEffect);
     
     public IEnumerable<EffectData> ConditionalBattleEffects => Actions

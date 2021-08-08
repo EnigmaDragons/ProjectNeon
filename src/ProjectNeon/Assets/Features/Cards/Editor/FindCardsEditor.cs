@@ -47,6 +47,9 @@ public class FindCardsEditor : EditorWindow
     //By ID
     private int _id;
     
+    // By Formula Text
+    private string _formulaText;
+    
     void OnGUI()
     {
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
@@ -227,6 +230,20 @@ public class FindCardsEditor : EditorWindow
                 .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
                 .ToArray();
             ShowCards($"ID {_id}", cards);
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        _formulaText = GUILayout.TextField(_formulaText);
+        if (GUILayout.Button("Find In Formula"))
+        {
+            var items = GetAllInstances<CardType>()
+                .Where(c => !c.IsWip)
+                .Where(c => c.BattleEffects()
+                    .Any(b => (b.Formula ?? "").ContainsAnyCase(_formulaText)))
+                .Select(e => $"{e.Name}")
+                .ToArray();
+            ShowCards($"Total Items: {items.Length}", items);
             GUIUtility.ExitGUI();
         }
     }
