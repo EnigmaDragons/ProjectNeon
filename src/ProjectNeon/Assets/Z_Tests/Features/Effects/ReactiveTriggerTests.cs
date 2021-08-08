@@ -11,7 +11,7 @@ public sealed class ReactiveTriggerTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.ReactWithCard,
-            ReactionConditionType = ReactionConditionType.OnAttacked,
+            ReactionConditionType = ReactionConditionType.WhenAttacked,
             DurationFormula = "3",
             FloatAmount = new FloatReference(-1),
             ReactionSequence = TestCards.ReactionCard(
@@ -52,7 +52,7 @@ public sealed class ReactiveTriggerTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.ReactWithCard,
-            ReactionConditionType = ReactionConditionType.OnAttacked,
+            ReactionConditionType = ReactionConditionType.WhenAttacked,
             DurationFormula = "3",
             FloatAmount = new FloatReference(-1),
             ReactionSequence = reactionCardType

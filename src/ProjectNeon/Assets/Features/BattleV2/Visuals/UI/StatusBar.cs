@@ -75,12 +75,12 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Vulnerable, true, v => "Vulnerable (Takes 33% more damage)");
         AddStatusIconIfApplicable(statuses, TemporalStatType.AntiHeal, true, v => "Anti Heal (Only get 50% healing)");
         AddCustomTextStatusIcons(statuses, StatusTag.OnClipUsed, "Unknown On Clip Used Effect");
-        AddCustomTextStatusIcons(statuses, StatusTag.OnBloodied, "Unknown On Bloodied Effect");
-        AddCustomTextStatusIcons(statuses, StatusTag.OnShieldBroken, "Unknown On Shield Broken Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.WhenBloodied, "Unknown When Bloodied Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.WhenShieldBroken, "Unknown When Shield Broken Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnHpDamageDealt, "Unknown On Hp Damage Dealt Effect");
-        AddCustomTextStatusIcons(statuses, StatusTag.OnAllyDeath, "Unknown On Ally Death Effect");
-        AddCustomTextStatusIcons(statuses, StatusTag.OnAfflicted, "Unknown On Afflicted Effect");
-        AddCustomTextStatusIcons(statuses, StatusTag.OnIgnited, "Unknown On Ignited Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.WhenAllyKilled, "Unknown When Ally Killed Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.WhenAfflicted, "Unknown When Afflicted Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.WhenIgnited, "Unknown When Ignited Effect");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => $"Received {v} Injuries, applied at end of battle");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Marked, true, v => $"Marked. Subject to Assassination Effects.");
         AddStatusIconIfApplicable(statuses, TemporalStatType.PreventResourceGains, true, v => $"Cannot gain resources for {v} Turns");
@@ -100,8 +100,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Prominent.ToString(), Icon = icons[TemporalStatType.Prominent].Icon, Tooltip = "Heroes cannot stealth while prominent." });
 
         AddCustomTextStatusIcons(statuses, StatusTag.OnHit, "Secret On Hit Effect");
-        AddCustomTextStatusIcons(statuses, StatusTag.OnDeath, "Secret On Death Effect");
-        AddCustomTextStatusIcons(statuses, StatusTag.OnDamaged, "Secret On Damaged Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.WhenKilled, "Secret When Killed Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.WhenDamaged, "Secret When Damaged Effect");
         
         foreach (var s in _member.State.CustomStatuses())
             statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip, OriginatorId = s.OriginatorId });;

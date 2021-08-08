@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -82,7 +83,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         HeroName = GUILayout.TextField(HeroName);
         if (GUILayout.Button("Hero Content Summary"))
         {
-            var hero = GetAllInstances<BaseHero>().FirstOrDefault(x => x.Name.Equals(HeroName));
+            var hero = GetAllInstances<BaseHero>().FirstOrDefault(x => x.Name.Equals(HeroName, StringComparison.InvariantCultureIgnoreCase));
             if (hero == null)
                 GUIUtility.ExitGUI();
             
@@ -124,28 +125,37 @@ public sealed class ContentSummarizerEditor : EditorWindow
                     : $"{checkChar} - {arch} Cards - All {ArchCardsExpectedStr(arch)} Missing");
             }
 
-            var expectedEquipCounter = 0;
+            var expectedEquipCount = 0;
+            var expectedEquipRaritiesCounter = 0;
+            var presentEquipRaritiesCounter = 0;
             var presentEquipCounter = 0;
             foreach (var arch in archetypeKeys.Where(a => !a.Contains("+")))
             {
                 var hasValue = equipments.TryGetValue(arch, out var e);
-                var numEquips = hasValue ? e.Count(v => v.Value > 0) : 0;
+                var numEquipRarities = hasValue ? e.Count(v => v.Value > 0) : 0;
+                var numEquip = hasValue ? e.Sum(v => v.Value) : 0;
+                var equipExpected = 4;
                 var archRaritiesExpected = 4;
-                expectedEquipCounter += archRaritiesExpected;
-                presentEquipCounter += numEquips;
-                var checkChar = numEquips >= archRaritiesExpected ? "✓" : "✗";
+                expectedEquipCount += equipExpected;
+                presentEquipCounter += numEquip;
+                expectedEquipRaritiesCounter += archRaritiesExpected;
+                presentEquipRaritiesCounter += numEquipRarities;
+                var checkChar = numEquipRarities >= archRaritiesExpected ? "✓" : "✗";
                 result.Add(hasValue
-                    ? $"{checkChar} - {arch} Equips - Total {numEquips} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
+                    ? $"{checkChar} - {arch} Equips - Total {numEquip} - Rarities {numEquipRarities} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
                     : $"{checkChar} - {arch} Equips - All 4 Rarities Missing");
             }
 
-            var expectedAllCounter = expectedCardsCounter + expectedEquipCounter;
-            var presentAllCounter = presentCardsCounter + presentEquipCounter;
+            var expectedAllCounter = expectedCardsCounter + expectedEquipCount;
+            var presentAllCounter = Math.Min(presentCardsCounter, expectedCardsCounter) + Math.Min(presentEquipCounter, expectedEquipCount);
             var percentage = expectedAllCounter > 0 
                 ? presentAllCounter/(float)expectedAllCounter
                 : 0;
             var finalCheckChar = presentAllCounter >= expectedAllCounter ? "✓" : "✗";
-            result.Add($"{finalCheckChar} - {HeroName} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} Cards {presentCardsCounter}/{expectedCardsCounter} Equips {presentEquipCounter}/{expectedEquipCounter}");
+            result.Add($"{finalCheckChar} - {HeroName.ToTitleCase()} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} " +
+                       $"Cards {presentCardsCounter}/{expectedCardsCounter} " +
+                       $"Equip {presentEquipCounter}/{expectedEquipCount} " +
+                       $"Equip Rarities {presentEquipRaritiesCounter}/{expectedEquipRaritiesCounter}");
             result = result.OrderBy(r => r.Contains("%") ? -1 : 0).ToList();
             
             GetWindow<ListDisplayWindow>()
