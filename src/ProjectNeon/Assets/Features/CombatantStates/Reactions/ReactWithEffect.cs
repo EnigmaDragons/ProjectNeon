@@ -71,6 +71,21 @@ public class EffectReactWith : Effect
                 return hpAfter > hpBefore;
             }
         },
+        { ReactionConditionType.OnCausedBloodied, ctx => effect =>
+            {
+                if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
+                    return false;
+
+                var targetMembers = effect.Target.Members;
+                foreach (var m in targetMembers)
+                {
+                    var becameBloodied = !effect.BattleBefore.Members[m.Id].IsBloodied() && effect.BattleAfter.Members[m.Id].IsBloodied();
+                    if (becameBloodied)
+                        return true;
+                }
+                return false;
+            }
+        },
         { ReactionConditionType.WhenKilled, ctx => effect => ctx.Possessor.IsUnconscious() && (ctx.Possessor.Id == ctx.Actor.Id || ctx.Actor.IsConscious()) },
         { ReactionConditionType.OnDamageDealt, ctx => effect
                 =>

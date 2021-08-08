@@ -8,6 +8,7 @@ public enum ReactionConditionType
     WhenShieldBroken = 6,
     WhenBloodied = 10,
     OnCausedAffliction = 14,
+    OnCausedBloodied = 16,
     OnCausedHeal = 15,
     OnCausedStun = 20,
     OnSlay = 21,
@@ -24,6 +25,6 @@ public enum ReactionConditionType
     WhenAfflicted = 34,
     OnArchetypePlayed = 35,
     OnCardPlayed = 36,
-    OnTeamCardCycled = 61,
+    //OnTeamCardCycled = 61, // Need To Implement in #3522 
     WhenKilled = 99,
 }
