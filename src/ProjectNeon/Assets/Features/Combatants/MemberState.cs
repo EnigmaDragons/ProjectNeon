@@ -17,6 +17,7 @@ public sealed class MemberState : IStats
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
     private readonly List<ReactiveStateV2> _reactiveStates = new List<ReactiveStateV2>();
+    private readonly List<PreactionState> _preactionStates = new List<PreactionState>();
     private readonly List<EffectTransformer> _transformers = new List<EffectTransformer>();
     private readonly List<IBonusCardPlayer> _bonusCardPlayers = new List<IBonusCardPlayer>();
     private readonly List<ResourceCalculator> _additiveResourceCalculators = new List<ResourceCalculator>();
@@ -119,9 +120,9 @@ public sealed class MemberState : IStats
     }
 
     public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
-    public ReactiveStateV2[] ReactiveStates => _reactiveStates.ToArray();
 
     public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Status.Tag == tag)
+                                            || _preactionStates.Any(r => r.Status.Tag == tag)
                                             || _additiveMods.Any(r => r.Status.Tag == tag)
                                             || _multiplierMods.Any(r => r.Status.Tag == tag);
 
@@ -129,6 +130,7 @@ public sealed class MemberState : IStats
         => OfType(_additiveMods, tag)
             .Concat(OfType(_multiplierMods, tag))
             .Concat(OfType(_reactiveStates, tag))
+            .Concat(OfType(_preactionStates, tag))
             .Concat(OfType(_bonusCardPlayers, tag))
             .ToArray();
 
@@ -147,6 +149,13 @@ public sealed class MemberState : IStats
             .ToArray();
 
     // Reaction Commands
+    public ProposedReaction[] GetPreactions(EffectData e, EffectContext ctx)
+        => _preactionStates
+            .Select(x => x.OnEffectQueued(e, ctx))
+            .Where(x => x.IsPresent)
+            .Select(x => x.Value)
+            .ToArray();
+    
     public ProposedReaction[] GetReactions(EffectResolved e) =>
         ApplicableReactiveStates
             .Select(x => x.OnEffectResolved(e))
@@ -191,20 +200,7 @@ public sealed class MemberState : IStats
     }
 
     public void DuplicateStatesOfType(StatusTag tag)
-    {
-        _additiveMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(ApplyTemporaryAdditive);
-        _multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(ApplyTemporaryMultiplier);
-        _reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddReactiveState((ReactiveStateV2) s));
-        _transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddEffectTransformer((EffectTransformer) s));
-        _additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator) s));
-        _multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator) s));
-    }
+        => DuplicateStatesOfTypeFrom(tag, this);
 
     public void DuplicateStatesOfTypeFrom(StatusTag tag, MemberState member)
     {
@@ -213,13 +209,15 @@ public sealed class MemberState : IStats
         member._multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
             .ForEach(ApplyTemporaryMultiplier);
         member._reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddReactiveState((ReactiveStateV2) s));
+            .ForEach(s => AddReactiveState((ReactiveStateV2)s));
+        member._preactionStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
+            .ForEach(s => AddPreactionState((PreactionState)s));
         member._transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddEffectTransformer((EffectTransformer) s));
+            .ForEach(s => AddEffectTransformer((EffectTransformer)s));
         member._additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator) s));
+            .ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator)s));
         member._multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator) s));
+            .ForEach(s => AddMutliplicativeResourceCalculator((ResourceCalculator)s));
     }
 
     public void ResetStatToBase(string statType) => PublishAfter(() =>
@@ -275,12 +273,14 @@ public sealed class MemberState : IStats
         _additiveMods.RemoveAll(condition);
         _multiplierMods.RemoveAll(condition);
         _reactiveStates.RemoveAll(condition);
+        _preactionStates.RemoveAll(condition);
         _transformers.RemoveAll(condition);
         _multiplicativeResourceCalculators.RemoveAll(condition);
     });
     
     public void AddReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Add(state));
     public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
+    public void AddPreactionState(PreactionState state) => PublishAfter(() => _preactionStates.Add(state));
     public void AddEffectTransformer(EffectTransformer transformer) => PublishAfter(() => _transformers.Add(transformer));
     public void AddAdditiveResourceCalculator(ResourceCalculator calculator) => PublishAfter(() => _additiveResourceCalculators.Add(calculator));
     public void AddMutliplicativeResourceCalculator(ResourceCalculator calculator) => PublishAfter(() => _multiplicativeResourceCalculators.Add(calculator));
@@ -354,13 +354,14 @@ public sealed class MemberState : IStats
     });
     public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
-    public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any() || _temporalStatsToReduceAtEndOfTurn.Any(x => this[x] > 0); 
+    public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _preactionStates.Any() || _persistentStates.Any() || _temporalStatsToReduceAtEndOfTurn.Any(x => this[x] > 0); 
     public IPayloadProvider[] GetTurnStartEffects()
     {
         _persistentStates.ForEach(m => m.OnTurnStart());
         return _additiveMods.Select(m => m.OnTurnStart())
             .Concat(_multiplierMods.Select(m => m.OnTurnStart()))
             .Concat(_reactiveStates.Select(m => m.OnTurnStart()))
+            .Concat(_preactionStates.Select(m => m.OnTurnStart()))
             .Concat(_transformers.Select(m => m.OnTurnStart()))
             .Concat(_additiveResourceCalculators.Select(m => m.OnTurnStart()))
             .Concat(_multiplicativeResourceCalculators.Select(m => m.OnTurnStart()))
@@ -373,6 +374,7 @@ public sealed class MemberState : IStats
             var count = _additiveMods.RemoveAll(m => !m.IsActive)
                 + _multiplierMods.RemoveAll(m => !m.IsActive)
                 + _reactiveStates.RemoveAll(m => !m.IsActive)
+                + _preactionStates.RemoveAll(m => !m.IsActive)
                 + _transformers.RemoveAll(m => !m.IsActive)
                 + _additiveResourceCalculators.RemoveAll(m => !m.IsActive)
                 + _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive);
@@ -413,6 +415,7 @@ public sealed class MemberState : IStats
         return _additiveMods.Select(m => m.OnTurnEnd())
             .Concat(_multiplierMods.Select(m => m.OnTurnEnd()))
             .Concat(_reactiveStates.Select(m => m.OnTurnEnd()))
+            .Concat(_preactionStates.Select(m => m.OnTurnEnd()))
             .Concat(_transformers.Select(m => m.OnTurnEnd()))
             .Concat(_additiveResourceCalculators.Select(m => m.OnTurnEnd()))
             .Concat(_multiplicativeResourceCalculators.Select(m => m.OnTurnEnd()))
