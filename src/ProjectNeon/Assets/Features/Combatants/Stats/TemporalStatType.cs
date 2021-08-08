@@ -3,7 +3,7 @@ public enum TemporalStatType
     HP = 0,
     Shield = 1,
     Disabled = 2,
-    CardStun = 3,
+    Stun = 3,
     Taunt = 6,
     DoubleDamage = 7,
     Stealth = 8,

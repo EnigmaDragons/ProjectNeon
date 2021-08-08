@@ -155,7 +155,7 @@ public sealed class MemberState : IStats
             .ToArray();
 
     private IEnumerable<ReactiveStateV2> ApplicableReactiveStates =>
-        this[TemporalStatType.Disabled] > 0 || this[TemporalStatType.CardStun] > 0
+        this[TemporalStatType.Disabled] > 0 || this[TemporalStatType.Stun] > 0
             ? _reactiveStates.Where(x => x.Status.Tag != StatusTag.CounterAttack)
             : _reactiveStates;
     
@@ -255,7 +255,7 @@ public sealed class MemberState : IStats
     public void CleanseDebuffs() => PublishAfter(() =>
     {
         _counters[TemporalStatType.Disabled.ToString()].Set(0);
-        _counters[TemporalStatType.CardStun.ToString()].Set(0);
+        _counters[TemporalStatType.Stun.ToString()].Set(0);
         _counters[TemporalStatType.Confused.ToString()].Set(0);
         _counters[TemporalStatType.Blind.ToString()].Set(0);
         _counters[TemporalStatType.Inhibit.ToString()].Set(0);

@@ -162,7 +162,7 @@ public class CardResolutionZone : ScriptableObject
             else if (card.Owner.IsStunnedForCard())
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
-                card.Owner.State.Adjust(TemporalStatType.CardStun, -1);
+                card.Owner.State.Adjust(TemporalStatType.Stun, -1);
                 Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Stunned"));
                 Message.Publish(new CardResolutionFinished(played.Member.Id));
             }

@@ -150,7 +150,9 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustResourceFlat)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}"; ;
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.DisableForTurns)
+            coreDesc = $"gives {Bold((EffectDescription(data, owner, xCost)))}";
         if (data.EffectType == EffectType.ReactWithEffect)
             coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" +
                        $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
@@ -289,6 +291,8 @@ public static class InterpolatedCardDescriptions
             return $"{FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.GainCredits)
             return $"{data.BaseAmount}";
+        if (data.EffectType == EffectType.DisableForTurns)
+            return $"{Bold("Disabled")}";
 
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";

@@ -28,11 +28,11 @@ public class ReactWithEffectTests
         TestEffects.Apply(new EffectData
         {
             EffectType = EffectType.AdjustCounterFormula,
-            EffectScope = new StringReference(TemporalStatType.CardStun.ToString()),
+            EffectScope = new StringReference(TemporalStatType.Stun.ToString()),
             Formula = "1"
         }, attacker, target);
         
-        Assert.AreEqual(1, target.State[TemporalStatType.CardStun], "Card Stun wasn't applied");
+        Assert.AreEqual(1, target.State[TemporalStatType.Stun], "Card Stun wasn't applied");
         Assert.AreEqual(1, target.State[TemporalStatType.Aegis], "Reaction didn't trigger");
     }
 

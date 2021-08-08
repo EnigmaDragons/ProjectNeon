@@ -37,7 +37,7 @@ public static class StatExtensions
         {TemporalStatType.HP.ToString(), true},
         {TemporalStatType.Shield.ToString(), true},
         {TemporalStatType.Disabled.ToString(), false},
-        {TemporalStatType.CardStun.ToString(), false},
+        {TemporalStatType.Stun.ToString(), false},
         {TemporalStatType.Taunt.ToString(), true},
         {TemporalStatType.DoubleDamage.ToString(), true},
         {TemporalStatType.Stealth.ToString(), true},

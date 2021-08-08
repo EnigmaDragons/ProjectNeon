@@ -128,6 +128,7 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
     
     private void DisableHighlight()
     {
-        _indexSelector.Current.SetHandHighlight(false);
+        if (_indexSelector != null && _indexSelector.Current != null)
+            _indexSelector.Current.SetHandHighlight(false);
     }
 }

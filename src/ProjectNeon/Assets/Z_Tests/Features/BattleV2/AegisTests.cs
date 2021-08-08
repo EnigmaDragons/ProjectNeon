@@ -5,7 +5,7 @@ public class AegisTests
 {
     [TestCase(TemporalStatType.Disabled)]
     [TestCase(TemporalStatType.Blind)]
-    [TestCase(TemporalStatType.CardStun)]
+    [TestCase(TemporalStatType.Stun)]
     [TestCase(TemporalStatType.Inhibit)]
     [TestCase(TemporalStatType.Confused)]
     public void Aegis_GiveNegativeCounters_Prevented(TemporalStatType statType)
@@ -21,7 +21,7 @@ public class AegisTests
     
     [TestCase(TemporalStatType.Disabled)]
     [TestCase(TemporalStatType.Blind)]
-    [TestCase(TemporalStatType.CardStun)]
+    [TestCase(TemporalStatType.Stun)]
     [TestCase(TemporalStatType.Inhibit)]
     [TestCase(TemporalStatType.Confused)]
     public void Aegis_RemoveNegativeCounters_NotApplied(TemporalStatType statType)
