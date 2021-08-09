@@ -188,7 +188,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
     }
 
     private string ArchCardsExpectedStr(string arch) => ArchCardsExpected(arch).ToString();
-    private int ArchCardsExpected(string arch) => arch.Contains("+") ? 5 : 12;
+    private int ArchCardsExpected(string arch) => arch.Contains("+") ? 6 : 12;
     
     private string TargetEquipmentNumbers(string arch, Rarity r)
     {
@@ -211,6 +211,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         {
             return r switch
             {
+                Rarity.Common => "/1",
                 Rarity.Uncommon => "/2",
                 Rarity.Rare => "/2",
                 Rarity.Epic => "/1",
