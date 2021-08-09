@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Affliction_MiseryLovesCompany
+  m_Name: Affliction_DeathTouch
   m_EditorClassIdentifier: 
-  id: 384
+  id: 0
   customName: 
-  art: {fileID: 21300000, guid: 1a768562320176640bd941ee60670c9d, type: 3}
-  description: <b>Not Afflicted:</b> Deal {E[0]} {D[0]}
-  typeDescription: {fileID: 11400000, guid: 9899a7b68bc22484e927e10f3ea183b5, type: 2}
+  art: {fileID: 21300000, guid: bfc9b34dbb1761e4aaa7ba53e5b25863, type: 3}
+  description: If the target would die from Damage Over Time, reduce their heath
+    to 0 (doesn't count Soul Burn)
+  typeDescription: {fileID: 0}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 3
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 83b8d55a742f6c14095fc54b8785ad2a, type: 2}
+    cardActions: {fileID: 11400000, guid: aa9a0bb74f2f2624e87fbd20debe974b, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -36,7 +37,7 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: 9899a7b68bc22484e927e10f3ea183b5, type: 2}
+  - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0

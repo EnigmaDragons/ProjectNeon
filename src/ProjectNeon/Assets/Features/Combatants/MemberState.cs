@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -78,7 +79,7 @@ public sealed class MemberState : IStats
             _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount,
                 new DictionaryWithDefault<StatusTag, int>(0, Enum.GetValues(typeof(StatusTag)).Cast<StatusTag>()
                     .SafeToDictionary(s => s, s => StatusesOfType(s).Length)));
-
+    
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
@@ -246,6 +247,8 @@ public sealed class MemberState : IStats
         if (CurrentStats.MaxHp() < CurrentStats.Hp())
             SetHp(CurrentStats.MaxHp());
     });
+
+    public IEnumerable<ITemporalState> DamageOverTimes() => _additiveMods.Where(x => x.Status.Tag == StatusTag.DamageOverTime);
 
     public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() =>
     {
