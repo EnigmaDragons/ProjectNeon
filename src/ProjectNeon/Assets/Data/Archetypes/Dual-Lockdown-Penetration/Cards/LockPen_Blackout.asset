@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Electroblade_TaserShurikens
+  m_Name: LockPen_Blackout
   m_EditorClassIdentifier: 
-  id: 301
+  id: 380
   customName: 
-  art: {fileID: 21300000, guid: 0f8aa95e8a1e21442a8b0dbbb43a5efe, type: 3}
-  description: Gives {E[0]} if target has no Armor & Resistance
-  typeDescription: {fileID: 11400000, guid: 9899a7b68bc22484e927e10f3ea183b5, type: 2}
+  art: {fileID: 21300000, guid: 97a692d75c2985b4591be21df8294c49, type: 3}
+  description: 'Gives <b>1 Stun</b> for each: <b>Defenseless,</b> <b>Resourceless,</b>
+    or <b>Unshielded</b>'
+  typeDescription: {fileID: 0}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 1
+    cost: 5
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 2
+  rarity: 4
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: d33d6928866369f4590fc97af835390f, type: 2}
+    cardActions: {fileID: 11400000, guid: f502ab4acfd4e1346a73a28ac2b86d8f, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
