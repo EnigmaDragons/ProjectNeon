@@ -11,6 +11,7 @@ public class CardZoneCountPresenter : MonoBehaviour
     private void OnEnable()
     {
         zone.OnZoneCardsChanged.Subscribe(UpdateCardCount, this);
+        UpdateCardCount();
     }
 
     private void OnDisable()
