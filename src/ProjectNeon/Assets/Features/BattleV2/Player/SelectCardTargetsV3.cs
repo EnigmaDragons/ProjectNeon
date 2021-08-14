@@ -39,6 +39,9 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     public void Cancel() => OnCancelled();
     public void OnCancelled()
     {
+        if (card == null)
+            return;
+        
         Log.Info($"UI - Canceled Card {card?.Name ?? "None"}");
         Message.Publish(new PlayerCardCanceled());
         OnSelectionComplete();
@@ -70,6 +73,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         battleState.IsSelectingTargets = false;
         Log.Info("UI - Target Selection Finished");
         Message.Publish(new TargetSelectionFinished());
+        Message.Publish(new CheckForAutomaticTurnEnd());
     }
 
     private void InitCardForSelection()

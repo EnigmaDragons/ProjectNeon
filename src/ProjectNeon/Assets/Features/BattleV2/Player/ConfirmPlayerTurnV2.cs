@@ -10,7 +10,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     [SerializeField] private Button confirmUi;
 
     private bool _isConfirming = false;
-    private bool _confirmRequested;
+    private bool _confirmRequestedManually;
 
     private void Awake()
     {
@@ -51,7 +51,6 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
                         || !c.Owner.CanPlayCards()))))
         {
             DevLog.Write($"No playable cards. Requesting early turn Confirmation. Hand Size {battleState.PlayerCardZones.HandZone.Cards.Length}. Num Cycles {battleState.NumberOfRecyclesRemainingThisTurn}");
-            _confirmRequested = true;
             Confirm();
         }
     }
@@ -66,14 +65,14 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private void ConfirmEarly()
     {
-        _confirmRequested = true;
+        _confirmRequestedManually = true;
         Confirm();
     }
     
     public void Confirm()
     {
-        var reasonWord = _confirmRequested ? "manually" : "automatically";
-        _confirmRequested = false;
+        var reasonWord = _confirmRequestedManually ? "manually" : "automatically";
+        _confirmRequestedManually = false;
         if (confirmUi != null)
             confirmUi.gameObject.SetActive(false);
         playArea.Clear();
@@ -84,6 +83,6 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     public void Cancel()
     {
-        _confirmRequested = false;
+        _confirmRequestedManually = false;
     }
 }
