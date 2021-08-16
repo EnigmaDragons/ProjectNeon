@@ -25,7 +25,7 @@ public class PlayBonusChainCard : TemporalStateBase, IBonusCardPlayer
 
         var member = snapshot.Members[_memberId];
         var teamType = member.TeamType;
-        var teamCurrentTurnCards = snapshot.PlayedCardHistory.First().Where(x => x.Member.TeamType == teamType).Select(x => x.Member.Id);
+        var teamCurrentTurnCards = snapshot.PlayedCardHistory.Last().Where(x => x.Member.TeamType == teamType).Select(x => x.Member.Id);
         var result = teamCurrentTurnCards.All(id => id == _memberId)
             ? _bonusCard
             : Maybe<CardType>.Missing();
