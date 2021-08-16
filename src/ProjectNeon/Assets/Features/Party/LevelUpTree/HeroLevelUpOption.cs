@@ -18,4 +18,5 @@ public abstract class HeroLevelUpOption : ScriptableObject
     public abstract void Apply(Hero h);
     public abstract void ShowDetail();
     public abstract bool HasDetail { get; }
+    public abstract bool IsFunctional { get; }
 }

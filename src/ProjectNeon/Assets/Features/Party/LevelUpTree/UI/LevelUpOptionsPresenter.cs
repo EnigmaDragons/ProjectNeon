@@ -23,6 +23,7 @@ public sealed class LevelUpOptionsPresenter : MonoBehaviour
         _options.Clear();
         if (levelLabel != null)
             levelLabel.text = level.ToString();
-        options.ForEach(o => _options.Add(Instantiate(optionPrototype, optionParent.transform).Initialized(o, options).gameObject));
+        options.Where(x => x.IsFunctional)
+            .ForEach(o => _options.Add(Instantiate(optionPrototype, optionParent.transform).Initialized(o, options).gameObject));
     }
 }

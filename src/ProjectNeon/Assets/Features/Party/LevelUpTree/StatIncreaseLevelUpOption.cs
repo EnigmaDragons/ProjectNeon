@@ -13,4 +13,5 @@ public class StatIncreaseLevelUpOption : HeroLevelUpOption
 
     public override void ShowDetail() {}
     public override bool HasDetail => false;
+    public override bool IsFunctional => stat != null && amount > 0;
 }

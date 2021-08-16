@@ -11,4 +11,5 @@ public class CredMultiplierLevelUpOption : HeroLevelUpOption
     public override void Apply(Hero h) => party.UpdateCreditsBy(Mathf.CeilToInt(party.Credits * multiplier));
     public override void ShowDetail() { }
     public override bool HasDetail => false;
+    public override bool IsFunctional => party != null && multiplier > 0;
 }
