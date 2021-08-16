@@ -48,9 +48,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State.HasStatus(StatusTag.Invulnerable))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.Invulnerable.ToString(), Icon = icons[StatusTag.Invulnerable].Icon, Tooltip = "Invincible to all Damage" });
         
-        if (_member.State.HasStatus(StatusTag.CounterAttack))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.CounterAttack.ToString(), Icon = icons[StatusTag.CounterAttack].Icon, Tooltip = "Counterattack"});
-        
+        AddCustomTextStatusIcons(statuses, StatusTag.CounterAttack, "Counterattack");
         AddCustomTextStatusIcons(statuses, StatusTag.Trap, "Secret Trap Power");
         AddCustomTextStatusIcons(statuses, StatusTag.Augment, "Unknown Augment Power");
         
