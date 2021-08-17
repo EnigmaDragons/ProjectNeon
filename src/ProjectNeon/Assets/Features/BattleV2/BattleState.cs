@@ -324,7 +324,7 @@ public class BattleState : ScriptableObject
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
     public BattleStateSnapshot GetSnapshot() => 
-        new BattleStateSnapshot(Phase, _playedCardHistory.Select(x => x.ToArray()).ToList(), 
+        new BattleStateSnapshot(Phase, _playedCardHistory.Select(x => x.ToArray()).ToList(), NumberOfCardPlaysRemainingThisTurn, 
             _membersById.ToDictionary(m => m.Key, m => m.Value.GetSnapshot()));
 
     private void UpdateState(Action update)

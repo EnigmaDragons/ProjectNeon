@@ -20,7 +20,7 @@ public class PlayBonusChainCard : TemporalStateBase, IBonusCardPlayer
 
     public Maybe<CardType> GetBonusCardOnResolutionPhaseBegun(BattleStateSnapshot snapshot)
     {
-        if (snapshot.PlayedCardHistory.None())
+        if (snapshot.PlayedCardHistory.None() || snapshot.NumCardPlaysRemaining > 0)
             return Maybe<CardType>.Missing();
 
         var member = snapshot.Members[_memberId];
