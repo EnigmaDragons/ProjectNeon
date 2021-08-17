@@ -143,7 +143,7 @@ public sealed class HandVisualizer : MonoBehaviour
                 () => allowInteractions);
             c.SetSiblingIndex(cardIndex);
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
-            c.SetDisabled(!card.Owner.IsConscious());
+            c.SetDisabled(card.Owner.IsUnconscious() || card.Owner.IsDisabled());
             c.SetHandHighlight(isFocused);
             c.SetTargetPosition(targetPosition);
         }

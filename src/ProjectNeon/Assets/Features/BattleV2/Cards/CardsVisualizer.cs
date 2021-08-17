@@ -106,7 +106,7 @@ public class CardsVisualizer : MonoBehaviour
             var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
 
             c.Set(card);
-            c.SetDisabled(!card.Owner.IsConscious() || card.Owner.IsDisabled() || !_isFocused || !card.IsActive);
+            c.SetDisabled(card.Owner.IsUnconscious() || card.Owner.IsDisabled() || !_isFocused || !card.IsActive);
             SwapCardPoolSpots(cardIndex, presenterIndex);
             c.SetHandHighlight(isFocused);
             c.SetTargetPosition(targetPosition);
