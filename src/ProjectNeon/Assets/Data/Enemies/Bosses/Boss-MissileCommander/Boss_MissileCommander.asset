@@ -34,7 +34,7 @@ MonoBehaviour:
   stageDetails:
   - stage: 1
     powerLevel: 500
-    maxHp: 110
+    maxHp: 120
     maxShield: 90
     startingShield: 0
     startingAegis: 0
@@ -42,15 +42,15 @@ MonoBehaviour:
     startingDodge: 0
     startingTaunt: 0
     toughness: 160
-    attack: 12
+    attack: 13
     magic: 0
     leadership: 1
-    armor: 0
-    resistance: 0
+    armor: 2
+    resistance: 2
     nonStatCardValueFactor: 20
     startingResourceAmount: 1
     maxResourceAmount: 0
-    resourceGainPerTurn: 0
+    resourceGainPerTurn: 1
     cardsPerTurn: 2
     startOfBattleEffects:
     - EffectType: 74
@@ -71,6 +71,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 14
       StatusDetailText: 'On Bloodied: Secret Effect'
       TurnDelay: 0
@@ -113,6 +114,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 14
       StatusDetailText: 'On Bloodied: Secret Effect'
       TurnDelay: 0
