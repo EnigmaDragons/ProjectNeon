@@ -115,6 +115,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var enemyObject = AddEnemy(enemy, member, offset);
         state.AddEnemy(enemy, enemyObject, member);
         SetupEnemyUi(member, enemyObject.transform);
+        SetupVisualComponents(enemyObject, member);
         return member;
     }
     

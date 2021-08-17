@@ -23,7 +23,7 @@ public class OnlyShowWhenHovered : OnMessage<CharacterHoverChanged>
         if (!showWhenMouseIsDragging && msg.IsDragging)
             return;
         
-        var active = msg.HoverCharacter.IsPresentAnd(h => h != null && h.Member.Equals(_member));
+        var active = msg.HoverCharacter.IsPresentAnd(h => h != null && h.IsInitialized && h.Member.Equals(_member));
         targets.Where(t => t != null).ForEach(t => t.SetActive(active));
     }
 }
