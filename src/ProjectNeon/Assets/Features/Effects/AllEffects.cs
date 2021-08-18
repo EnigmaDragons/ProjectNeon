@@ -58,6 +58,7 @@ public static class AllEffects
         { EffectType.HealFormula, e => new FullContextEffect((ctx, _, m) => m.GainHp(Formula.Evaluate(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)), e.DurationFormula) },
         { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.Evaluate(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.RawDamageAttackFormula, e => new RawDamageAttack(new RawDamageCalculation((ctx, m) => Formula.Evaluate(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.CycleAllCardsInHand, e => new FullContextEffect((ctx, _) =>
             {
@@ -219,6 +220,9 @@ public static class AllEffects
         catch (Exception e)
         {
             Log.Error($"EffectType {effectData.EffectType} is broken {e}");
+            #if UNITY_EDITOR
+            throw;
+            #endif
             return CreateEffectOfType[EffectType.Nothing](effectData);
         }
     }

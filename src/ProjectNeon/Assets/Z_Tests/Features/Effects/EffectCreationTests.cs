@@ -15,9 +15,9 @@ public sealed class EffectCreationTests
             {
                 Assert.IsNotNull(AllEffects.Create(effectData), $"Could not create Effect of Type '{effectData.EffectType.ToString()}'");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Assert.Fail($"Could not create Effect of Type '{effectData.EffectType.ToString()}'");
+                Assert.Fail($"Could not create Effect of Type '{effectData.EffectType.ToString()}' - {e.Message}");
             }
         }
     }

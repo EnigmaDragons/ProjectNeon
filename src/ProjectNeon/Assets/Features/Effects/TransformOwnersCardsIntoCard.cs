@@ -8,7 +8,7 @@ public class TransformOwnersCardsIntoCard : Effect
     public TransformOwnersCardsIntoCard(string effectScope)
     {
         var split = effectScope.Split(',');
-        _cardId = int.Parse(split[0]);
+        _cardId = int.TryParse(split[0], out var cardId) ? cardId : -1;
         _cards = split.Skip(1).Select(int.Parse).ToArray();
     }
 

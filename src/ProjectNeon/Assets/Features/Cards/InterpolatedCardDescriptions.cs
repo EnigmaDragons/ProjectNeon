@@ -133,6 +133,8 @@ public static class InterpolatedCardDescriptions
         var coreDesc = "";
         if (data.EffectType == EffectType.AttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.RawDamageAttackFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.HealFormula)
             coreDesc = $"heal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.DealRawDamageFormula)
@@ -254,6 +256,8 @@ public static class InterpolatedCardDescriptions
             return WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.MagicAttackFormula)
             return WithMagicDamageIcon(FormulaAmount(data, owner, xCost));
+        if (data.EffectType == EffectType.RawDamageAttackFormula)
+            return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.DamageOverTimeFormula)
             return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.DealRawDamageFormula)

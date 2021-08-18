@@ -5,11 +5,9 @@ public sealed class PhysicalDamage : DamageCalculation
 {
     private readonly Func<EffectContext, Member, float> _damageCalc;
 
-    public PhysicalDamage(int baseAmount, float multiplier) : this((ctx, m) => baseAmount + ctx.Source.State.Attack() * multiplier) {}
-    public PhysicalDamage(Func<EffectContext, Member, float> damageCalc)
-    {
-        _damageCalc = damageCalc;
-    }
+    public PhysicalDamage(Func<EffectContext, Member, float> damageCalc) => _damageCalc = damageCalc;
+
+    public bool DealRawDamage => false;
     
     public DamageCalculation WithFactor(float factor) => new PhysicalDamage((ctx, m) => Mathf.CeilToInt(_damageCalc(ctx, m)) * factor);
 

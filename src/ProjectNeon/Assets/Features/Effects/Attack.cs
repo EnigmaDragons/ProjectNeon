@@ -13,6 +13,6 @@ public sealed class Attack : Effect
     public void Apply(EffectContext ctx)
     {
         AttackProcessing.Apply(_damage, _hitsRandomTarget, ctx);
-        Message.Publish(new Finished<Attack> { Message = this });
+        Message.Publish(new Finished<Attack> { Message = this }); // Is this needed?
     }
 }

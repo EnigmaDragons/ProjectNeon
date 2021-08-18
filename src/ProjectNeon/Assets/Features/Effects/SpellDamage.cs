@@ -5,13 +5,11 @@ public class SpellDamage : DamageCalculation
 {
     private readonly Func<EffectContext, Member, float> _damageCalc;
 
-    public SpellDamage(int baseAmount, float multiplier) : this((ctx, m) => baseAmount + ctx.Source.State.Magic() * multiplier) {}
-    public SpellDamage(Func<EffectContext, Member, float> damageCalc)
-    {
-        _damageCalc = damageCalc;
-    }
-    
+    public SpellDamage(Func<EffectContext, Member, float> damageCalc) => _damageCalc = damageCalc;
+
     public DamageCalculation WithFactor(float factor) => new SpellDamage((ctx, m) => _damageCalc(ctx, m) * factor);
+
+    public bool DealRawDamage => false;
 
     public int Calculate(EffectContext ctx, Member target)
     {        

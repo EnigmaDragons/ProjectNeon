@@ -1,6 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// NUMBERS AVAILABLE:
-// LAST NUMBER USED: 94
+// LAST NUMBER USED: 95
 
 public enum EffectType
 {
@@ -9,6 +8,7 @@ public enum EffectType
     // Most Common Effects
     AttackFormula = 30,
     MagicAttackFormula = 31,
+    RawDamageAttackFormula = 95,
     DealRawDamageFormula = 70,
     DamageOverTimeFormula = 84,
 

@@ -33,4 +33,22 @@ public class DoubleDamageTests
         Assert.AreEqual(0, attacker.State[TemporalStatType.DoubleDamage]);
         Assert.AreEqual(6, target.CurrentHp());
     }
+    
+    [Test]
+    public void DoubleDamage_RawDamageAttackIsDoubled()
+    {
+        var attacker = TestMembers.With(StatType.Attack, 2);
+        var target = TestMembers.With(StatType.MaxHP, 10);
+        
+        attacker.State.Adjust(TemporalStatType.DoubleDamage, 1);
+
+        TestEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.RawDamageAttackFormula,
+            Formula = "1 * Attack"
+        }, attacker, target);
+        
+        Assert.AreEqual(0, attacker.State[TemporalStatType.DoubleDamage]);
+        Assert.AreEqual(6, target.CurrentHp());
+    }
 }
