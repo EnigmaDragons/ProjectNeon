@@ -108,18 +108,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     private EffectContext ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
     {
-        // Retargeting
-        var target = msg.Target;
-        if (msg.CanRetarget && msg.Target.Members.All(m => !m.IsConscious()))
-        {
-            DevLog.Write("Retargeting Battle Effect");
-            var newTargets = state.GetPossibleConsciousTargets(msg.Source, msg.Group, msg.Scope);
-            if (newTargets.Any())
-                target = newTargets.Random();
-        }
-        
         // Core Execution
-        var ctx = new EffectContext(msg.Source, target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
+        var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
             state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts);
