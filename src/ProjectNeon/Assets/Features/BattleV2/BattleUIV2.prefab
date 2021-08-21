@@ -2405,6 +2405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1242360839447449081}
   - component: {fileID: 1043966018424164273}
+  - component: {fileID: 3652007764884931714}
   m_Layer: 5
   m_Name: BattleSpeedButton
   m_TagString: Untagged
@@ -2440,6 +2441,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4996105904680132862}
   m_CullTransparentMesh: 0
+--- !u!114 &3652007764884931714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4996105904680132862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd0f8a2024a144aaa7d748da2fcaad72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 8471804755952166628}
+  speedLabel: {fileID: 4125236302346434732}
 --- !u!1 &5008551270900841074
 GameObject:
   m_ObjectHideFlags: 0
@@ -3546,6 +3561,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!224 &740270389922617799 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 1012036699233343952}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8398275043657364493 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -3557,11 +3577,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &740270389922617799 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 1012036699233343952}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1637298641582296765
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3643,14 +3658,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4602a44e6d0436f49a13e7dd708c9d78, type: 3}
---- !u!4 &49145705509768548 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1591533953017922521, guid: 4602a44e6d0436f49a13e7dd708c9d78, type: 3}
-  m_PrefabInstance: {fileID: 1637298641582296765}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4866206711467337245 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6138660590041688224, guid: 4602a44e6d0436f49a13e7dd708c9d78, type: 3}
+  m_PrefabInstance: {fileID: 1637298641582296765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &49145705509768548 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1591533953017922521, guid: 4602a44e6d0436f49a13e7dd708c9d78, type: 3}
   m_PrefabInstance: {fileID: 1637298641582296765}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3996004654377816469
