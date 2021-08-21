@@ -5,7 +5,7 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
     [SerializeField] private GameObject target;
     [SerializeField] private HeroLevelUpSelectionPresenter presenter;
 
-    private void Start() => target.SetActive(false);
+    private void Awake() => target.SetActive(false);
 
     protected override void Execute(LevelUpHero msg)
     {
