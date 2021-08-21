@@ -243,7 +243,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         DebugLog($"Setting Selected Highlight {active}");
         SetSelectedHighlight(IsPlayable && active);
         IsFocused = active;
-        controls.SetActive(active);
+        
+        var showShowControls = active && _card.IsActive;
+        controls.SetActive(showShowControls);
         
         if (active)
             ShowComprehensiveCardInfo();
