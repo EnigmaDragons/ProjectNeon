@@ -11,17 +11,17 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
     [SerializeField] private PartyCardCollection partyCards;
     [SerializeField] private DeckBuilderState state;
 
-    private HeroCharacter _selectedHero;
+    private Hero _selectedHero;
     
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => GenerateLibrary();
     protected override void Execute(DeckBuilderFiltersChanged msg) => GenerateLibrary();
 
     private void GenerateLibrary()
     {
-        var heroChanged = state.SelectedHeroesDeck.Hero.Character != _selectedHero;
-        _selectedHero = state.SelectedHeroesDeck.Hero.Character;
+        var heroChanged = state.SelectedHeroesDeck.Hero != _selectedHero;
+        _selectedHero = state.SelectedHeroesDeck.Hero;
         var cardsForHero = partyCards.AllCards
-            .Where(cardWithCount => cardWithCount.Key.Archetypes.All(archetype => _selectedHero.Archetypes.Contains(archetype)) 
+            .Where(cardWithCount => cardWithCount.Key.Archetypes.All(archetype => _selectedHero.Character.Archetypes.Contains(archetype)) 
                 && (state.ShowRarities.None() 
                     || state.ShowRarities.Contains(cardWithCount.Key.Rarity)) 
                 && (state.ShowArchetypes.None() 
@@ -31,8 +31,8 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
             .ThenByDescending(c => (int)c.Key.Rarity)
             .ToList();
         if ((state.ShowRarities.None() || state.ShowRarities.Contains(Rarity.Basic))
-            && (state.ShowArchetypes.None() || state.ShowArchetypes.Contains(_selectedHero.ClassCard.GetArchetypeKey())))
-                cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(_selectedHero.ClassCard, 0));
+            && (state.ShowArchetypes.None() || state.ShowArchetypes.Contains(_selectedHero.BasicCard.GetArchetypeKey())))
+                cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(_selectedHero.BasicCard, 0));
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
             c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card.Id == c.Key.Id))));
 
@@ -58,7 +58,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
         void Init(GameObject gameObj)
         {
             var button = gameObj.GetComponent<CardInLibraryButton>();
-                if (card.Id.Equals(_selectedHero.ClassCard.Id))
+                if (card.Id.Equals(_selectedHero.BasicCard.Id))
                     button.InitBasic(card);
                 else
                     button.Init(card, numTotal, numAvailable);
@@ -72,7 +72,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
         void Init(GameObject gameObj)
         {
             var button = gameObj.GetComponent<CardInLibraryButton>();
-            if (card.Id.Equals(_selectedHero.ClassCard.Id))
+            if (card.Id.Equals(_selectedHero.BasicCard.Id))
                 button.InitBasic(card);
             else
                 button.Init(card, numTotal, numAvailable);
