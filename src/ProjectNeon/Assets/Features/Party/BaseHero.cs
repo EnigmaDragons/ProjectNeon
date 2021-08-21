@@ -90,4 +90,10 @@ public class BaseHero : ScriptableObject, HeroCharacter
             return archetypeKeys;
         }
     }
+
+    public CardTypeData[] ParagonCards => levelUpTree
+        .ForLevel(5)
+        .OfType<NewBasicLevelUpOption>()
+        .Select(o => o.Card)
+        .ToArray();
 }

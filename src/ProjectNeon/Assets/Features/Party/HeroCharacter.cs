@@ -13,6 +13,7 @@ public interface HeroCharacter
     BattleRole BattleRole { get; }
     Deck Deck { get; }
     CardTypeData BasicCard { get; }
+    CardTypeData[] ParagonCards { get; }
     IStats Stats { get; }
     int StartingCredits { get; }
     HeroFlavorDetails Flavor { get; }
@@ -32,6 +33,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public BattleRole BattleRole { get; set; }
     public Deck Deck { get; set; }
     public CardTypeData BasicCard { get; set; }
+    public CardTypeData[] ParagonCards { get; set; } = new CardTypeData[0];
     public IStats Stats { get; set; } = new StatAddends();
     public int StartingCredits { get; set; } = 100;
     public HeroFlavorDetails Flavor { get; set; } 
