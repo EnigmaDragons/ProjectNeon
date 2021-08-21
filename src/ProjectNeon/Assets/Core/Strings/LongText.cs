@@ -10,4 +10,5 @@ public class LongText : ScriptableObject
     
     public static implicit operator string(LongText txt) => txt.ToString();
     public override string ToString() => value;
+    public void Init(string val) => value = val;
 }
