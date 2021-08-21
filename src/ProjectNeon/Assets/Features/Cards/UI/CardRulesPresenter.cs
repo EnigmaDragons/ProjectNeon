@@ -14,7 +14,6 @@ public class CardRulesPresenter : MonoBehaviour
     private static readonly DictionaryWithDefault<string, int> RulesByImportance = new DictionaryWithDefault<string, int>(0);
     
     private static readonly string[] RulesByImportanceArr = {
-        
         "Drain",
         "Buyout",
         "Afflicted",
@@ -22,6 +21,7 @@ public class CardRulesPresenter : MonoBehaviour
         "Bloodied",
         "Sneaky",
         "Profitable",
+        "Defenseless",
         TemporalStatType.Marked.ToString(),
         TemporalStatType.DoubleDamage.ToString(),
         TemporalStatType.Stun.ToString(),
@@ -96,6 +96,7 @@ public class CardRulesPresenter : MonoBehaviour
             rulesToShow.AddIf("Bloodied", d.Description.IndexOf("Bloody", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("Sneaky", d.Description.IndexOf("Sneaky", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("Profitable", d.Description.IndexOf("profitable", StringComparison.OrdinalIgnoreCase) >= 0);
+            rulesToShow.AddIf("Defenseless", d.Description.IndexOf("Defenseless", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("SingleUse", d.IsSinglePlay);
             rulesToShow.AddIf("Buyout", d.Description.IndexOf("Buyout", StringComparison.OrdinalIgnoreCase) >= 0);
             rulesToShow.AddIf("Critical", d.Description.IndexOf("Crit", StringComparison.OrdinalIgnoreCase) >= 0);
