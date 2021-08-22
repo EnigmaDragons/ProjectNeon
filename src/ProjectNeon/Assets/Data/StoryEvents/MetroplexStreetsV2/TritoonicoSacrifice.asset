@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7dab33deee9460b8aab4769accdd7a5, type: 3}
   m_Name: TritoonicoSacrifice
   m_EditorClassIdentifier: 
-  displayName: The Sacrifice
+  displayName: Tritoonica Sacrifice
   settingType: 0
   corp: {fileID: 11400000, guid: 8eee292fbfbac134b966e2efaca2a532, type: 2}
   storyText: "You spot a group of robed figures slipping into an abandonded warehouse
@@ -29,8 +29,6 @@ MonoBehaviour:
     in.\""
   choices:
   - Text: Attempt to kill the Tritoonica employees to stop the ritual
-    Reward: {fileID: 11400000, guid: 673eaffc5909c45469d34f0686f45309, type: 2}
-    Penalty: {fileID: 11400000, guid: 28c8129514394a54aa6c0e7a031f7347, type: 2}
     Resolution:
     - Chance: 0.5
       ContinueWith: {fileID: 0}
@@ -42,8 +40,6 @@ MonoBehaviour:
       Result: {fileID: 11400000, guid: 673eaffc5909c45469d34f0686f45309, type: 2}
       StoryText: You take your time to get in position to take them by surprise.
   - Text: Film the whole thing to use as blackmail against Tritoonica
-    Reward: {fileID: 11400000, guid: 818aa2cfd0e6fef42b2bd3502fe18672, type: 2}
-    Penalty: {fileID: 11400000, guid: 33cc7bb0ae2c3b34c83c76d67b0dc01b, type: 2}
     Resolution:
     - Chance: 0
       ContinueWith: {fileID: 0}
@@ -63,8 +59,6 @@ MonoBehaviour:
       StoryText: As soon as the ritual is finished you send it off to Tritoonica
         and negotiate your silence fee successfully.
   - Text: Disrupt the edges of the circle to try and sabotage the ritual
-    Reward: {fileID: 11400000, guid: 81bc8a8f09243fc4e96c13115399ba69, type: 2}
-    Penalty: {fileID: 11400000, guid: d6bc70be62d27a847ae73431859deb18, type: 2}
     Resolution:
     - Chance: 0
       ContinueWith: {fileID: 0}
