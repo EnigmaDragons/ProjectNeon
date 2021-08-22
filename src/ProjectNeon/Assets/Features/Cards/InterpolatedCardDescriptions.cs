@@ -35,8 +35,8 @@ public static class InterpolatedCardDescriptions
                 .SelectMany(b => b.ConditionData.ReferencedEffect.BattleEffects);
 
             var innerBattleEffects = battleEffects.Concat(conditionalBattleEffects)
-                .Where(a => a.ReferencedSequence != null)
-                .SelectMany(c => c.ReferencedSequence.BattleEffects);
+                .Where(x => x.ReferencedSequence != null)
+                .SelectMany(c => c.ReferencedSequence.InnerBattleEffects);
 
             return InterpolatedDescription(desc, card.Speed == CardSpeed.Quick, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard, card.SwappedCard);
         }

@@ -140,19 +140,21 @@ public sealed class ContentSummarizerEditor : EditorWindow
                 presentEquipCounter += numEquip;
                 expectedEquipRaritiesCounter += archRaritiesExpected;
                 presentEquipRaritiesCounter += numEquipRarities;
-                var checkChar = numEquipRarities >= archRaritiesExpected ? "✓" : "✗";
+                var checkChar = numEquipRarities >= archRaritiesExpected && numEquip >= equipExpected ? "✓" : "✗";
                 result.Add(hasValue
                     ? $"{checkChar} - {arch} Equips - Total {numEquip} - Rarities {numEquipRarities} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
                     : $"{checkChar} - {arch} Equips - All 4 Rarities Missing");
             }
 
             var expectedAllCounter = expectedCardsCounter + expectedEquipCount;
-            var presentAllCounter = Math.Min(presentCardsCounter, expectedCardsCounter) + Math.Min(presentEquipCounter, expectedEquipCount);
+            var presentAllCounter = Math.Min(presentCardsCounter, expectedCardsCounter) 
+                + Math.Min(presentEquipCounter, expectedEquipCount) 
+                - (expectedEquipRaritiesCounter - Math.Min(presentEquipRaritiesCounter, expectedEquipRaritiesCounter));
             var percentage = expectedAllCounter > 0 
                 ? presentAllCounter/(float)expectedAllCounter
                 : 0;
             var finalCheckChar = presentAllCounter >= expectedAllCounter ? "✓" : "✗";
-            result.Add($"{finalCheckChar} - {HeroName.ToTitleCase()} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} " +
+            result.Add($"{finalCheckChar} - {HeroName.ToTitleCase()} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} - Missing {expectedAllCounter - presentAllCounter} - " +
                        $"Cards {presentCardsCounter}/{expectedCardsCounter} " +
                        $"Equip {presentEquipCounter}/{expectedEquipCount} " +
                        $"Equip Rarities {presentEquipRaritiesCounter}/{expectedEquipRaritiesCounter}");

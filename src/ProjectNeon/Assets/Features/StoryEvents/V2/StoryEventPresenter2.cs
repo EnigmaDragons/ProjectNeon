@@ -1,10 +1,9 @@
+using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class StoryEventPresenter2 : OnMessage<ShowStoryEventResolution, ShowCreditChange, 
-    ShowGainedEquipment, ShowCardReward, ShowStoryEventResultMessage, 
-    ShowTextResultPreview, ShowCredResultPreview, ShowEquipmentResultPreview>
+public class StoryEventPresenter2 : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI storyTextArea;
     [SerializeField] private GameObject optionsParent;
@@ -24,8 +23,31 @@ public class StoryEventPresenter2 : OnMessage<ShowStoryEventResolution, ShowCred
     [SerializeField] private StoryEventResultTextPresenter textPreviewPrototype;
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private CurrentGameMap3 map;
+    [SerializeField] private FloatReference outcomeDelay;
+    [SerializeField] private GameObject rewardPreviewLabel;
+    [SerializeField] private GameObject penaltyPreviewLabel;
     
     private OptionButton[] _buttons;
+
+    private void Awake()
+    {
+        HideOutcomesAndPreviews();
+    }
+
+    private void OnEnable()
+    {
+        Message.Subscribe<ShowStoryEventResolution>(Execute, this);
+        Message.Subscribe<ShowCreditChange>(Execute, this);
+        Message.Subscribe<ShowGainedEquipment>(Execute, this);
+        Message.Subscribe<ShowCardReward>(Execute, this);
+        Message.Subscribe<ShowStoryEventResultMessage>(Execute, this);
+        Message.Subscribe<ShowTextResultPreview>(Execute, this);
+        Message.Subscribe<ShowCredResultPreview>(Execute, this);
+        Message.Subscribe<ShowEquipmentResultPreview>(Execute, this);
+        Message.Subscribe<HideStoryEventPreviews>(Execute, this);
+    }
+
+    private void OnDisable() => Message.Unsubscribe(this);
 
     public void Present(StoryEvent2 s)
     {
@@ -49,80 +71,105 @@ public class StoryEventPresenter2 : OnMessage<ShowStoryEventResolution, ShowCred
     private void InitFreshOptionsButtons()
     {
         ClearOptions();
-        // Necessary due to TextMeshProUGIU Vertex Color
+        // Necessary due to TextMeshProUGUI Vertex Color
         _buttons = Enumerable.Range(0, 4)
             .Select(x => Instantiate(optionButtonPrototype, optionsParent.transform))
             .ToArray();
     }
     
-    protected override void Execute(ShowStoryEventResolution msg)
-    {        
-        InitFreshOptionsButtons();
-        storyTextArea.text = msg.Story;
-        for (var i = _buttons.Length - 1; i > -1; i--)
+    protected void Execute(ShowStoryEventResolution msg)
+    {
+        ClearStoryElements();
+        this.ExecuteAfterDelay(outcomeDelay, () =>
         {
-            if (i == 1)
-                _buttons[i].Init("Done", () => Message.Publish(new MarkStoryEventCompleted()));
-            else
-                _buttons[i].Hide();
-        }
+            InitFreshOptionsButtons();
+            storyTextArea.text = msg.Story;
+            for (var i = _buttons.Length - 1; i > -1; i--)
+            {
+                if (i == 1)
+                    _buttons[i].Init("Done", () => Message.Publish(new MarkStoryEventCompleted()));
+                else
+                    _buttons[i].Hide();
+            }
+        });
     }
 
-    protected override void Execute(ShowCreditChange msg)
+    private void ClearStoryElements()
     {
-        rewardPreviewParent.SetActive(false);
-        penaltyPreviewParent.SetActive(false);
+        ClearOptions();
+        storyTextArea.text = String.Empty;
+    }
+
+    private void HideOutcomesAndPreviews()
+    {
         rewardParent.DestroyAllChildren();
-        Instantiate(creditsPrototype, rewardParent.transform).Init(msg.Amount);
+        HidePreviews();
     }
 
-    protected override void Execute(ShowGainedEquipment msg)
+    private void HidePreviews()
     {
+        rewardPreviewLabel.SetActive(false);
         rewardPreviewParent.SetActive(false);
+        rewardPreviewParent.DestroyAllChildren();
+        penaltyPreviewLabel.SetActive(false);
         penaltyPreviewParent.SetActive(false);
-        rewardParent.DestroyAllChildren();
-        Instantiate(equipmentPrototype, rewardParent.transform).Init(msg.Equipment);
+        penaltyPreviewParent.DestroyAllChildren();
     }
 
-    protected override void Execute(ShowCardReward msg)
+    protected void Execute(ShowCreditChange msg)
     {
-        rewardPreviewParent.SetActive(false);
-        penaltyPreviewParent.SetActive(false);
-        rewardParent.DestroyAllChildren();
-        Instantiate(cardPrototype, rewardParent.transform).Init(msg.Card);
+        HideOutcomesAndPreviews();
+        this.ExecuteAfterDelay(outcomeDelay, () => Instantiate(creditsPrototype, rewardParent.transform).Init(msg.Amount));
     }
 
-    protected override void Execute(ShowStoryEventResultMessage msg)
+    protected void Execute(ShowGainedEquipment msg)
     {
-        rewardPreviewParent.SetActive(false);
-        penaltyPreviewParent.SetActive(false);
-        rewardParent.DestroyAllChildren();
-        Instantiate(textPrototype, rewardParent.transform).Init(msg.Text);
+        HideOutcomesAndPreviews();
+        this.ExecuteAfterDelay(outcomeDelay, () => Instantiate(equipmentPrototype, rewardParent.transform).Init(msg.Equipment));
     }
 
-    protected override void Execute(ShowTextResultPreview msg)
+    protected void Execute(ShowCardReward msg)
     {
-        rewardPreviewParent.SetActive(true);
-        penaltyPreviewParent.SetActive(true);
+        HideOutcomesAndPreviews();
+        this.ExecuteAfterDelay(outcomeDelay, () => Instantiate(cardPrototype, rewardParent.transform).Init(msg.Card));
+    }
+
+    protected void Execute(ShowStoryEventResultMessage msg)
+    {
+        HideOutcomesAndPreviews();
+        this.ExecuteAfterDelay(outcomeDelay, () => Instantiate(textPrototype, rewardParent.transform).Init(msg.Text));
+    }
+
+    protected void Execute(ShowTextResultPreview msg)
+    {
+        EnablePreviews();
         var parent = msg.IsReward ? rewardPreviewParent : penaltyPreviewParent;
         parent.DestroyAllChildren();
         Instantiate(textPreviewPrototype, parent.transform).Init(msg.Text);
     }
 
-    protected override void Execute(ShowCredResultPreview msg)
+    protected void Execute(ShowCredResultPreview msg)
     {
-        rewardPreviewParent.SetActive(true);
-        penaltyPreviewParent.SetActive(true);
+        EnablePreviews();
         var parent = msg.IsReward ? rewardPreviewParent : penaltyPreviewParent;
         parent.DestroyAllChildren();
         Instantiate(creditsPreviewPrototype, parent.transform).Init(msg.Creds);
     }
 
-    protected override void Execute(ShowEquipmentResultPreview msg)
+    protected void Execute(ShowEquipmentResultPreview msg)
     {
-        rewardPreviewParent.SetActive(true);
-        penaltyPreviewParent.SetActive(true);
+        EnablePreviews();
         rewardPreviewParent.DestroyAllChildren();
         Instantiate(equipmentPreviewPrototype, rewardPreviewParent.transform).Init(msg.Equipment);
+    }
+    
+    private void Execute(HideStoryEventPreviews obj) => HidePreviews();
+
+    private void EnablePreviews()
+    {
+        rewardPreviewLabel.SetActive(true);
+        rewardPreviewParent.SetActive(true);
+        penaltyPreviewLabel.SetActive(true);
+        penaltyPreviewParent.SetActive(true);
     }
 }

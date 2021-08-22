@@ -12,6 +12,10 @@ public class CardActionsData : ScriptableObject
         .Where(x => x.Type == CardBattleActionType.Battle && x.BattleEffect != null)
         .Select(a => a.BattleEffect);
     
+    public IEnumerable<EffectData> InnerBattleEffects => (Actions ?? new CardActionV2[0])
+        .Where(x => x.Type == CardBattleActionType.Battle && x.BattleEffect != null && x.BattleEffect.ReferencedSequence != null)
+        .SelectMany(a => a.BattleEffect.ReferencedSequence.BattleEffects.Concat(a.BattleEffect.ReferencedSequence.InnerBattleEffects));
+    
     public IEnumerable<EffectData> ConditionalBattleEffects => Actions
         .Where(x => x.Type == CardBattleActionType.Condition)
         .SelectMany(a => a.ConditionData.ReferencedEffect.BattleEffects);

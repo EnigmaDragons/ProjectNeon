@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OptionButton : MonoBehaviour, IPointerEnterHandler
+public class OptionButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Button button;
     [SerializeField] private TextMeshProUGUI text;
@@ -34,4 +34,7 @@ public class OptionButton : MonoBehaviour, IPointerEnterHandler
         _choice?.Reward?.Preview();
         _choice?.Penalty?.Preview();
     }
+
+    public void OnPointerExit(PointerEventData eventData) 
+        => Message.Publish(new HideStoryEventPreviews());
 }
