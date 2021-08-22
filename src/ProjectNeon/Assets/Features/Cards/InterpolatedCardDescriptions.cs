@@ -34,9 +34,13 @@ public static class InterpolatedCardDescriptions
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
                 .SelectMany(b => b.ConditionData.ReferencedEffect.BattleEffects);
 
-            var innerBattleEffects = battleEffects.Concat(conditionalBattleEffects)
-                .Where(x => x.ReferencedSequence != null)
-                .SelectMany(c => c.ReferencedSequence.InnerBattleEffects);
+            var innerBattleEffects = battleEffects
+                    .Where(x => x.ReferencedSequence != null)
+                    .SelectMany(c => c.ReferencedSequence.InnerBattleEffects)
+                .Concat(
+                    conditionalBattleEffects
+                        .Where(x => x.ReferencedSequence != null)
+                        .SelectMany(c => c.ReferencedSequence.BattleEffects.Concat(c.ReferencedSequence.InnerBattleEffects)));
 
             return InterpolatedDescription(desc, card.Speed == CardSpeed.Quick, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard, card.SwappedCard);
         }
@@ -83,6 +87,7 @@ public static class InterpolatedCardDescriptions
         foreach (Match token in tokens)
         {
             var forReaction = token.Value.StartsWith("{RE[");
+            var forInnerEffect = token.Value.StartsWith("{I");
             var prefixes = new[] {"{E", "{D", "{RE", "{IE", "{ID" };
             if (prefixes.None(p => token.Value.StartsWith(p)))
                 throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects, Durations, and Reaction Effects");
@@ -92,6 +97,8 @@ public static class InterpolatedCardDescriptions
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {effects.Length} Battle Effects");
             if (forReaction && effectIndex >= reactionEffects.Length)
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {reactionEffects.Length} Reaction Battle Effects");
+            if (forInnerEffect && effectIndex >= innerEffects.Length)
+                throw new InvalidDataException($"Requested Interpolating Inner Effect {effectIndex}, but only found {innerEffects.Length} Inner Effects");
 
             if (token.Value.StartsWith("{E["))
                 result = result.Replace("{E[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner, xCost)));
