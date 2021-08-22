@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_FugitiveChase
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: "As you pass an intersection, a law enforcement officer rolls up behind
+    you on a hoverboard. \n\n\"Hey!\" she barks. \"We're trying to catch a fugitive
+    on the run. The fugitive just came through here. Do you know which way they went?\""
+  choices:
+  - Text: '"They headed over that wall."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 11400000, guid: cf13ba56b72911f4e9d840d2910ea50d,
+      type: 2}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: 141ebb2558b102d4db7d9d2a8b69fd89, type: 2}
+      StoryText: After the officer hover-dashes over the wall, you notice a weapon
+        on the ground, presumably dropped by the fugitive.
+  - Text: '"I think they headed down the alley on the right."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
+      StoryText: '"Thank you citizen", says the officer, zipping after them in hot
+        pursuit.
+
+
+        A few minutes later, you receive a standard informant
+        fee.'
+    - Chance: 0.7
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: "The officer zips  off down the alley. \n\nYou hope your information
+        was correct."
+  - Text: '"I think they went straight ahead."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
+      StoryText: '"Thank you citizen", says the officer, zipping after them in hot
+        pursuit.
+
+
+        A few minutes later, you receive a standard informant
+        fee.'
+    - Chance: 0.7
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: "The officer zips down the street. \n\nYou hope your information
+        was correct."
+  - Text: '"I don''t know."'
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: The officer zips straight ahead down the street, muttering under
+        her breath.

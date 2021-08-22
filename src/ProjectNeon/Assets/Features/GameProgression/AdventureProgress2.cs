@@ -97,7 +97,7 @@ public class AdventureProgress2 : ScriptableObject
         } 
     }
 
-    public void RecordEncounteredStoryEvent(StoryEvent e) => finishedStoryEvents.Add(e.name);
+    public void RecordEncounteredStoryEvent(StoryEvent2 e) => finishedStoryEvents.Add(e.name);
     public void SetFinishedStoryEvents(string[] storyEvents) => finishedStoryEvents = storyEvents.ToList();
     
     public LootPicker CreateLootPicker(PartyAdventureState party) 

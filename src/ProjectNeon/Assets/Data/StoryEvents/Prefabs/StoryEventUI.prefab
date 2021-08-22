@@ -325,7 +325,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1834516232258723485
 GameObject:
@@ -681,6 +681,8 @@ RectTransform:
   m_Children:
   - {fileID: 2060607585699501381}
   - {fileID: 1950645673886425376}
+  - {fileID: 3915948786595282023}
+  - {fileID: 8638756834306182157}
   - {fileID: 3176613889797434492}
   m_Father: {fileID: 1939478061706624069}
   m_RootOrder: 0
@@ -765,15 +767,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyTextArea: {fileID: 3520689697056037159}
   optionsParent: {fileID: 2506595095053233724}
-  optionButtonPrototype: {fileID: 4768584713588539277, guid: 29f774125fe581843a246c3c8376af49, type: 3}
+  optionButtonPrototype: {fileID: 1186675293293318139, guid: 29f774125fe581843a246c3c8376af49, type: 3}
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   allEquipmentPool: {fileID: 11400000, guid: fb7b57e6c0ff8b144bf95e6d06ff8be4, type: 2}
   rewardParent: {fileID: 1436856995081382615}
+  rewardPreviewParent: {fileID: 7168737536032476405}
+  penaltyPreviewParent: {fileID: 9194240843508737143}
   creditsPrototype: {fileID: 9183717469386025360, guid: c85f154e80098a3488352fc2865fcd6c, type: 3}
   equipmentPrototype: {fileID: 6469708192931097155, guid: 7ecb93b277e646748bfd2ed4b53e99b0, type: 3}
   cardPrototype: {fileID: 7624593056198050740, guid: 2899e0dbff98e81409bbce60d36f39e5, type: 3}
   textPrototype: {fileID: 6543836446871889320, guid: d5f751cdc33999d4092c23664481b785, type: 3}
+  creditsPreviewPrototype: {fileID: 6016681152899571698, guid: b531988479b159d47ac0637f837bda1e, type: 3}
+  equipmentPreviewPrototype: {fileID: 7941945723071747290, guid: 42e70350e89fb6b4a9595359ea94f486, type: 3}
+  cardPreviewPrototype: {fileID: 4546203519294163323, guid: e5a92d06f9a9e7f42b99232328edd9a0, type: 3}
+  textPreviewPrototype: {fileID: 7747450659915790455, guid: 26c3c23e40159264ea3f4237afd6ad09, type: 3}
   adventure: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
+  map: {fileID: 11400000, guid: 5064fe74d4176254a9e1729682f69c71, type: 2}
 --- !u!114 &1802301628497123647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1007,7 +1016,7 @@ RectTransform:
   - {fileID: 4625736410340482474}
   - {fileID: 5467080942586576872}
   m_Father: {fileID: 5377738873250267526}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1311,6 +1320,41 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &7168737536032476405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3915948786595282023}
+  m_Layer: 0
+  m_Name: RewardPreviewParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3915948786595282023
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168737536032476405}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5377738873250267526}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 650, y: 200}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7842322343061374516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,6 +1392,41 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 192, y: 192}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &9194240843508737143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8638756834306182157}
+  m_Layer: 0
+  m_Name: PenaltyPreviewParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8638756834306182157
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194240843508737143}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5377738873250267526}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 650, y: -200}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &516797105962686333
 PrefabInstance:

@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_DrinkingBuddies
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: 'You come across two rough-looking fellows in drab gear sitting against
+    the wall on the ground.
+
+
+    They take long sips from bottles wrapped in bright
+    red plastic bags.
+
+
+    You hear slurred speech and occasionally a laugh from
+    one or the other of them.
+
+
+    They seem to be sharing tales from their past.'
+  choices:
+  - Text: Ask them for information about the alley.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: 1bf6a81e1f05113469cbdf8adbf74f48, type: 2}
+      StoryText: 'Both fellows perk up at your question.
+
+
+        "This part of
+        town used to be much nicer. It was great until the corporation started bribing
+        the officials to look the other way on local ordinances," they tell you.
+
+
+        "You
+        need to be ready for anything. Here''s a technique we use to deal with punks."'
+  - Text: Give them some credits.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 25
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.7
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: 'One of the fellows takes your money with a slight nod.
+
+
+        Then
+        he goes back to talking to his buddy, barely paying you any attention.
+
+
+        "Watch
+        out for bandits around here," the other fellow sloppily calls after you as
+        you begin to walk away.'
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: 6308c180436b6b644b13fa9af3decec3, type: 2}
+      StoryText: "One fellow graciously accepts your credits. \n\nHe enthusiastically
+        offers you a swig of his beverage. \"Old Murakin Ale is amazing stuff. It
+        will perk you right up. Have a drink on me.\"\n\nYou drink and give to your
+        companions. The drink packs a punch and restores your vigor."
+  - Text: Leave them alone and walk on.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: 'You keep walking onwards, trying to avoid eye contact with the
+        bums. '

@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_Mugger
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: As you walk through the alley, you encounter a man being threatened
+    by a masked stranger.
+  choices:
+  - Text: Walk the other way
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: No need to get involved. That's definitely not your problem.
+  - Text: Try to talk the mugger down.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 11400000, guid: 8d91c82c1bc8e284eb2bbeffb532db63,
+      type: 2}
+    Resolution:
+    - Chance: 0.1
+      Result: {fileID: 11400000, guid: f72b4f48b064c5c47a57f820abb2e6ad, type: 2}
+      StoryText: 'You try to get the mugger''s attention. "Hey you!"
+
+
+        The
+        mugger, startled, shoots at you and then flees.'
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: 'You slowly approach. "Not sure if you heard, but there''s a crypto
+        atm around the corner giving out free cash. Probably a better score than
+        this guy, am I right?"
+
+
+        The mugger looks between you and his potential
+        victim for a moment and then he takes off without another word.
+
+
+        "Bad
+        part of town to get lost in," you instruct the would-be victim, "Now get
+        outta here.". He thanks you with a small compensation before leaving the
+        alley.'
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: '"Hey," you say, getting the mugger''s attention. "Get on outta
+        here or me and my boys''ll have something to say about it."
+
+
+        The
+        mugger bolts in the other direction without a word. So does his would-be
+        victim.'
+  - Text: Threaten the mugger.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: 17b268ac8fef025499331b1379a60b9b, type: 2}
+      StoryText: 'You draw your weapon and call out to get the mugger''s attention.
+        "Let him go!"
+
+
+        The mugger, spooked, runs off down the alley, dropping
+        his gun in the process.'
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: 'You draw your weapon and call out to get the mugger''s attention.
+        "Let him go!"
+
+
+        The mugger, spooked, runs off down the alley.'

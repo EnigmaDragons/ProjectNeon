@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_DaimoCTM
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: 'You come across a rundown old Daimo cryptocurrency trading machine.
+
+
+    On
+    the screen, there is an error message: "Critical Error: Unable to update firmware
+    in 17 hours. Attempt #43 begins in 2 minutes."
+
+
+    You have access to a listing
+    of current crypto prices, and they seem very different than the current exchange
+    values shown on the CTM.'
+  choices:
+  - Text: Hack the machine and try to gain free crypto.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 11400000, guid: 75ab2d491b80cdd49b9531f057ba8ce6,
+      type: 2}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: 58be128081d31f148b58d2d4de247c3e, type: 2}
+      StoryText: You successfully hack the machine and manage to transfer some credits
+        before the machine gives out and powers off completely.
+  - Text: Attempt to make a crypto trade
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: 58be128081d31f148b58d2d4de247c3e, type: 2}
+      StoryText: "You look up pricing charts and execute a transfer. \n\nYour account
+        grows by a nice bit. "
+    - Chance: 0.7
+      Result: {fileID: 11400000, guid: 68249e398e60b7748924347e7dff4f97, type: 2}
+      StoryText: 'You place a trading order for a favorably currency.
+
+
+        Right
+        at that moment, a loading bar pops up and the machine starts updating, leaving
+        your trade order still open.
+
+
+        By the time the machine finishes updating,
+        the trade is no longer favorable. Your account balance is a little lighter.'
+  - Text: Call Daimo and report the update error
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
+      StoryText: 'You call Daimo and report the issue.
+
+
+        The customer service
+        representative thanks you, and transfer a cursory payment to your account.'
+  - Text: Click "Update Now"
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: 'The CTM displays a progress bar and quickly succeeds at its update.
+
+
+        You
+        walk away feeling happy the the old machine is working as intended again.'
