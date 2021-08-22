@@ -65,7 +65,13 @@ public class BattleConclusion : OnMessage<BattleFinished>
 
     private void Advance()
     {
-        if (adventure2.IsFinalStageSegment)
+        if (state.IsStoryEventCombat)
+        {
+            Log.Info("Returning to map from event combat");
+            Message.Publish(new AutoSaveRequested());
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
+        }
+        else if (adventure2.IsFinalStageSegment)
         {
             Log.Info("Navigating to victory screen");
             gameMap.CompleteCurrentNode();

@@ -81,14 +81,16 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
     private EnemyInstance[] _battleStartingEnemies;
     private BattleAttritionTracker _tracker;
-
+    public bool IsStoryEventCombat { get; private set; }
+    
     // Setup
 
     public void SetNextBattleground(GameObject prototype) => nextBattlegroundPrototype = prototype;
-    public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false)
+    public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false, bool isStoryEventCombat = false)
     {
         nextEnemies = e.ToArray();
         nextIsEliteBattle = isElite;
+        IsStoryEventCombat = isStoryEventCombat;
         DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.Name))}");
     }
 

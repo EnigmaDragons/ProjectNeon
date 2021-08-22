@@ -36,7 +36,7 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     {
         Log.Info("Setting Up Specific Battle");
         battleState.SetNextBattleground(msg.BattleField);
-        battleState.SetNextEncounter(msg.Enemies, msg.IsElite);
+        battleState.SetNextEncounter(msg.Enemies, msg.IsElite, msg.IsStoryEventCombat);
         eventPublisher.ActivatePartyDetailsWizardFlow();
     }
 }
