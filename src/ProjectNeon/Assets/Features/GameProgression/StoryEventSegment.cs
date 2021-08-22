@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Adventure/StoryEvent")]
 public class StoryEventSegment : StageSegment
 {
-    [SerializeField] private StoryEventPool events;
+    [SerializeField] private StoryEventPool2 events;
     [SerializeField] private AdventureProgress2 adventure;
 
     public override string Name => "Story Event";
@@ -23,7 +23,7 @@ public class StoryEventSegment : StageSegment
         {
             var storyEvent = possibleStoryEvents.Random();
             adventure.RecordEncounteredStoryEvent(storyEvent);
-            Message.Publish(new BeginStoryEvent(storyEvent));
+            Message.Publish(new BeginStoryEvent2(storyEvent));
         }
         else
         {

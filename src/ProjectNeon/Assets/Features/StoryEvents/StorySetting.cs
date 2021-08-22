@@ -1,6 +1,6 @@
 
 public enum StorySetting
 {
-    DarkAlley = 0,
+    MetroplexStreets = 0,
     TechFacility = 1,
 }

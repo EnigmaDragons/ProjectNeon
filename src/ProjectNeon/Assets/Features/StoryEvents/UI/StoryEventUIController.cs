@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class StoryEventUIController : OnMessage<BeginStoryEvent, MarkStoryEventCompleted>
+public class StoryEventUIController : OnMessage<BeginStoryEvent2, MarkStoryEventCompleted>
 {
     [SerializeField] private GameObject ui;
-    [SerializeField] private StoryEventPresenter presenter;
+    [SerializeField] private StoryEventPresenter2 presenter;
 
-    protected override void Execute(BeginStoryEvent msg)
+    protected override void Execute(BeginStoryEvent2 msg)
     {
         presenter.Present(msg.StoryEvent);
         ui.SetActive(true);

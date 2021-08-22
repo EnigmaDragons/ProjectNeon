@@ -15,6 +15,7 @@ public class CurrentGameMap3 : ScriptableObject
     public List<MapNode3> CurrentChoices { get; set; } = new List<MapNode3>();
     public bool HasCompletedEventEnRoute { get; set; }
     public int CurrentNodeRngSeed { get; set; } = Guid.NewGuid().GetHashCode();
+    public int HeatAdjustments { get; private set; }
 
     public void SetMap(GameMap3 map)
     {
@@ -25,10 +26,11 @@ public class CurrentGameMap3 : ScriptableObject
         DestinationPosition = map.StartingPoint;
         CurrentChoices = new List<MapNode3>();
         HasCompletedEventEnRoute = false;
+        HeatAdjustments = 0;
         UpdateSeed();
     }
 
-    public int Progress => CompletedNodes?.Sum(x => heat.Heat(x.Type)) ?? 0;
+    public int Progress => (CompletedNodes?.Sum(x => heat.Heat(x.Type)) ?? 0) + HeatAdjustments;
 
     public void CompleteCurrentNode()
     {
@@ -43,4 +45,10 @@ public class CurrentGameMap3 : ScriptableObject
     }
     
     private void UpdateSeed() => CurrentNodeRngSeed = Guid.NewGuid().GetHashCode();
+
+    public void AdjustHeat(int heat)
+    {
+        HeatAdjustments += heat;
+        Message.Publish(new AdventureProgressChanged());
+    }
 }

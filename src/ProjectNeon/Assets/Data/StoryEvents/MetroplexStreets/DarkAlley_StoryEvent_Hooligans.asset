@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c18d06eb2174324b1043f0b7c8935ad, type: 3}
+  m_Name: DarkAlley_StoryEvent_Hooligans
+  m_EditorClassIdentifier: 
+  settingType: 0
+  storyText: You come across two teens who are messing around with a MeVend machine.
+    It looks like they're trying to access the goods inside.
+  choices:
+  - Text: Scare them off.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 11400000, guid: 424e4e8c74603144180db31da73c4846,
+      type: 2}
+    Resolution:
+    - Chance: 1
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: '"Hey, get away from that!" you yell. The kids flee instantly.'
+  - Text: Offer to help them by hacking the vending machine.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 11400000, guid: 75ab2d491b80cdd49b9531f057ba8ce6,
+      type: 2}
+    Resolution:
+    - Chance: 0.4
+      Result: {fileID: 11400000, guid: 818aa2cfd0e6fef42b2bd3502fe18672, type: 2}
+      StoryText: You offer to help the teens out with their theivery. You hack the
+        machine to make it dispense a few unauthorized credit refunds. They gladly
+        split the spoils with you.
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You offer to help the teens out with their theivery. You try to
+        hack the machine but it fails. The teens are disappointed but resume their
+        attempts to break in.
+    - Chance: 0.3
+      Result: {fileID: 11400000, guid: e4b20efc9b83af34f887c056d9ae2b1b, type: 2}
+      StoryText: You offer to help the teens out with their theivery. You hack the
+        machine to make it spit out a few food bars. They give you half the spoils,
+        which you eagerly wolf down.
+  - Text: Offer to buy them some goodies instead.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 14
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You offer to buy them some snackage. They eagerly accept and you
+        drop a few credits on their behalf. They thank you and walk off.
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You offer to buy them some snackage. They eagerly accept and you
+        drop a few credits on their behalf. You hear them resume their barrage on
+        the machine as you walk away.
+  - Text: Walk away.
+    OptionalCost:
+      CostType: 0
+      CostAmount: 0
+    OptionalCondition: {fileID: 0}
+    Resolution:
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You leave the teens to their own devices.
+    - Chance: 0.5
+      Result: {fileID: 11400000, guid: efd91bda5b494e149b8e7f9189e673dd, type: 2}
+      StoryText: You leave the teens to their own devices. Behind you, you hear the
+        sounds of the machine getting smashed open and, presumably, looted.
