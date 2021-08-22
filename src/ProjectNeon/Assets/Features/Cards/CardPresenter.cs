@@ -341,7 +341,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);
-        cardCostPresenter.Render(shouldUseLibraryMode ? Maybe<Card>.Missing() : new Maybe<Card>(_card, _card != null), _cardType);
+        cardCostPresenter.Render(shouldUseLibraryMode ? Maybe<Card>.Missing() : new Maybe<Card>(_card, _card != null), _cardType, 
+            _card != null ? _card.Owner.State.PrimaryResource : _cardType.Cost.ResourceType);
         if (_card != null && _card.OwnerBust.IsPresent)
             bust.Show(_card.OwnerBust.Value);
         else
