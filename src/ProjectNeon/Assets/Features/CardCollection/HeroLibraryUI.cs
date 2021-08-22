@@ -32,7 +32,8 @@ public class HeroLibraryUI : MonoBehaviour
             .ThenBy(c => c.Rarity)
             .ThenBy(c => c.Cost.BaseAmount)
             .ThenBy(c => c.Name)
-            .Concat(hero.ClassCard);
+            .Concat(hero.BasicCard)
+            .Concat(hero.ParagonCards);
         
         pageViewer.Init(
             cardInLibraryButtonTemplate.gameObject, 

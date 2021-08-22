@@ -42,6 +42,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.PlayBonusChainCard, new[]{ "StatusTag", "StatusDetailText", "BonusCardType"}},
         {EffectType.AttackFormula, new [] { "Formula", "InterpolatePartialFormula", "HitsRandomTargetMember" }},
         {EffectType.MagicAttackFormula, new [] { "Formula", "InterpolatePartialFormula", "HitsRandomTargetMember" }},
+        {EffectType.RawDamageAttackFormula, new [] { "Formula", "InterpolatePartialFormula", "HitsRandomTargetMember" }},
         {EffectType.AddToXCostTransformer, new [] { "FloatAmount", "DurationFormula", "StatusTag", "StatusDetailText" }},
         {EffectType.CycleAllCardsInHand, new string[0] },
         {EffectType.DrawCards, new [] { "Formula", "InterpolatePartialFormula" } },

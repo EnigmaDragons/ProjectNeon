@@ -3,16 +3,12 @@ using UnityEngine.Audio;
 
 public class OnVolumeChangedSound : OnMessage<MixerVolumeChanged>
 {
-    [SerializeField] private AudioClip sound;
     [SerializeField] private AudioSource player;
     [SerializeField] private AudioMixer mixer;
-    [SerializeField] private AudioClip[] narratorSounds;
+    [SerializeField] private AudioClipVolume[] sounds;
 
-    private IndexSelector<AudioClip> _narratorSounds;
     private bool _triggered;
     private MixerVolumeChanged _lastChange;
-
-    private void Awake() => _narratorSounds = new IndexSelector<AudioClip>(narratorSounds);
     
     protected override void Execute(MixerVolumeChanged msg)
     {
@@ -29,7 +25,7 @@ public class OnVolumeChangedSound : OnMessage<MixerVolumeChanged>
         if (mixerGroups.Length <= 0) return;
         
         player.outputAudioMixerGroup =  mixerGroups[0];
-        var clip = _lastChange.ChannelName.Equals("NarratorVolume") ? _narratorSounds.MoveNextWithoutLooping() : sound;
-        player.PlayOneShot(clip);
+        var clip = sounds.FirstOrMaybe(s => s.Name.Equals(_lastChange.ChannelName));
+        clip.IfPresent(c => player.PlayOneShot(c.clip));
     }
 }

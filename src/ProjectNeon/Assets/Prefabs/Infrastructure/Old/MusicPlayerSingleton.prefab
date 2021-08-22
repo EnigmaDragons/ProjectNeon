@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4079503141053771537}
   - component: {fileID: 1167173412646489666}
   - component: {fileID: 958768367078533894}
+  - component: {fileID: 6008773558848250750}
   m_Layer: 0
   m_Name: MusicPlayerSingleton
   m_TagString: Music
@@ -156,3 +157,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1167173412646489666}
   musicPlayer: {fileID: 11400000, guid: bb968fa8fe7df6140b8d296d1edd49af, type: 2}
+--- !u!114 &6008773558848250750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678068816973108755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 429f671631269d34f9c200d687c5c1aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: d6eedae8265dd6146907e7ef03b80fb6, type: 2}
+  valueName: MusicVolume
+  reductionDb:
+    UseConstant: 0
+    ConstantValue: 0
+    FloatVariable: {fileID: 11400000, guid: d7ceb1b207f4a0e4598dd22441373ae0, type: 2}
+  player: {fileID: 0}
+  demoSound: {fileID: 0}
+  loggingEnabled: 0

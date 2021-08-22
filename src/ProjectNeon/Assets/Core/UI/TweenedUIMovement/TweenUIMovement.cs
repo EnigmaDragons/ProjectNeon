@@ -136,6 +136,9 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
             var beforeDistance = movement.RelativeDistance * EaseInOutCubic(beforeT);
             var afterDistance = movement.RelativeDistance * EaseInOutCubic(afterT);
             var currentDistance = afterDistance - beforeDistance;
+            if (float.IsNaN(currentDistance.x))
+                continue;
+            
             if (movement.Dimension == MovementDimension.Spatial)
                 movement.Transform.position += currentDistance;
             else if (movement.Dimension == MovementDimension.Scale)

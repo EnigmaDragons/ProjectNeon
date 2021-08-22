@@ -44,7 +44,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
     public CardType[] AdditionalStartingCards => additionalStartingCards ?? new CardType[0];
-    public CardTypeData ClassCard => basic;
+    public CardTypeData BasicCard => basic;
     public int StartingCredits => startingCredits;
     public HeroSkill[] Skills => skills;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;
@@ -90,4 +90,10 @@ public class BaseHero : ScriptableObject, HeroCharacter
             return archetypeKeys;
         }
     }
+
+    public CardTypeData[] ParagonCards => levelUpTree
+        .ForLevel(5)
+        .OfType<NewBasicLevelUpOption>()
+        .Select(o => o.Card)
+        .ToArray();
 }

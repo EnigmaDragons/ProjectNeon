@@ -30,7 +30,7 @@
         Effect = effect;
         Source = source;
         Target = target;
-        CanRetarget = true;
+        CanRetarget = isFirstBattleEffect;
         Group = targetGroup;
         Scope = scope;
         IsReaction = isReaction;

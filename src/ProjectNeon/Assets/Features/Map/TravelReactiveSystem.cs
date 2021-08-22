@@ -32,7 +32,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
         if (_isTraveling)
             return;
         if (!msg.TravelInstantly)
-            adventure.Advance();
+            adventure.AdvanceStageIfNeeded();
         
         _isTraveling = true;
         _travelingToMidpoint = !gameMap.HasCompletedEventEnRoute;

@@ -12,7 +12,8 @@ public interface HeroCharacter
     string Class { get; }
     BattleRole BattleRole { get; }
     Deck Deck { get; }
-    CardTypeData ClassCard { get; }
+    CardTypeData BasicCard { get; }
+    CardTypeData[] ParagonCards { get; }
     IStats Stats { get; }
     int StartingCredits { get; }
     HeroFlavorDetails Flavor { get; }
@@ -31,7 +32,8 @@ public class InMemoryHeroCharacter : HeroCharacter
     public string Class { get; set; }
     public BattleRole BattleRole { get; set; }
     public Deck Deck { get; set; }
-    public CardTypeData ClassCard { get; set; }
+    public CardTypeData BasicCard { get; set; }
+    public CardTypeData[] ParagonCards { get; set; } = new CardTypeData[0];
     public IStats Stats { get; set; } = new StatAddends();
     public int StartingCredits { get; set; } = 100;
     public HeroFlavorDetails Flavor { get; set; } 
@@ -64,7 +66,7 @@ public static class HeroCharacterExtensions
     public static Member AsMemberForLibrary(this HeroCharacter h)
     {
         var stats = h.Stats;
-        var m = new Member(-1, h.Name, h.Class, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.ClassCard));
+        var m = new Member(-1, h.Name, h.Class, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.BasicCard));
         return m;
     }
 }

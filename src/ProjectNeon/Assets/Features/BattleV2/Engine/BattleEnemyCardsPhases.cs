@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAIStrategy, CardResolutionFinished, UpdateAIStrategy>
+public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResolutionFinished, UpdateAIStrategy>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private BattleResolutions resolutions;
@@ -17,10 +17,21 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAISt
     private DictionaryWithDefault<int, int> _numberOfCardsPlayedThisTurn = new DictionaryWithDefault<int, int>(0);
     private List<(Member Member, EnemyInstance Enemy)> _enemiesToActThisTurn = new List<(Member Member, EnemyInstance Enemy)>();
     
+    public void GenerateAiStrategy()
+    {
+        DevLog.Write("Generated AI Strategy");
+        _currentTurnStrategy = _enemyStrategy.Generate(state, disabledCard);
+        _enemiesToActThisTurn = state.Enemies
+            .Where(e => e.Member.IsConscious())
+            .OrderBy(e => e.Enemy.PreferredTurnOrder)
+            .ToList();
+        _numberOfCardsPlayedThisTurn = new DictionaryWithDefault<int, int>(0);
+    }
+    
     public void BeginPlayingAllHastyEnemyCards() => PlayNextHastyCard();
     private void PlayNextHastyCard()
     {
-        DevLog.Info("Enemies - Began Playing Next Hasty Card.");
+        DevLog.Info($"Enemies - Began Playing Next Hasty Card. {_enemiesToActThisTurn.Count(x => x.Enemy.IsHasty)} to act.");
         RemoveUnconsciousEnemiesFromActPool();
         Message.Publish(new UpdateAIStrategy());
         _enemiesToActThisTurn
@@ -35,7 +46,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAISt
 
     private void PlayNextStandardCard()
     {
-        DevLog.Info("Enemies - Began Playing Next Standard Card.");
+        DevLog.Info($"Enemies - Began Playing Next Standard Card. {_enemiesToActThisTurn.Count(x => !x.Enemy.IsHasty)} to act.");
         RemoveUnconsciousEnemiesFromActPool();
         Message.Publish(new UpdateAIStrategy());
         _enemiesToActThisTurn
@@ -74,16 +85,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, GenerateAISt
 
     protected override void Execute(BattleStateChanged msg) => _phase = state.Phase;
     protected override void Execute(CardResolutionFinished msg) => PlayNextCardInPhase();
-    protected override void Execute(GenerateAIStrategy msg)
-    {
-        _currentTurnStrategy = _enemyStrategy.Generate(state, disabledCard);
-        _enemiesToActThisTurn = state.Enemies
-            .Where(e => e.Member.IsConscious())
-            .OrderBy(e => e.Enemy.PreferredTurnOrder)
-            .ToList();
-        _numberOfCardsPlayedThisTurn = new DictionaryWithDefault<int, int>(0);
-    }
-
+    
     protected override void Execute(UpdateAIStrategy msg)
     {
         _currentTurnStrategy = _enemyStrategy.Update(_currentTurnStrategy, state);

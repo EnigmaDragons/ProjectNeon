@@ -13,4 +13,6 @@ public class NewBasicLevelUpOption : HeroLevelUpOption
     public override void ShowDetail() => Message.Publish(new ShowDetailedCardView(card));
     public override bool HasDetail => true;
     public override bool IsFunctional => card != null;
+
+    public CardTypeData Card => card;
 }

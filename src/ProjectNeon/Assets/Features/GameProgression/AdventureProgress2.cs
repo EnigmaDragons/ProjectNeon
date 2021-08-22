@@ -15,8 +15,8 @@ public class AdventureProgress2 : ScriptableObject
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
-    public int CurrentStageSegmentIndex => currentMap3.Progress;
-    public float ProgressToUnlockChapterBoss => CurrentStageSegmentIndex == 0 ? 0f : (float)CurrentStageSegmentIndex / CurrentChapter.SegmentCount;
+    public int CurrentStageProgress => currentMap3.Progress;
+    public float ProgressToUnlockChapterBoss => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
@@ -59,7 +59,7 @@ public class AdventureProgress2 : ScriptableObject
         if (HasBegun) return;
         
         Log.Info($"Is advancing the adventure. {this}");
-        Advance();
+        AdvanceStageIfNeeded();
     }
 
     public void MarkMapPromptComplete()
@@ -75,12 +75,12 @@ public class AdventureProgress2 : ScriptableObject
         Message.Publish(new AdventureProgressChanged());
     }
 
-    public void Advance()
+    public void AdvanceStageIfNeeded()
     {
-        if (!HasBegun || CurrentStageIsFinished)
-        {
-            AdvanceStage();
-        }
+        if (HasBegun && !CurrentStageIsFinished) 
+            return;
+        
+        AdvanceStage();
         Log.Info(ToString());
         Message.Publish(new AdventureProgressChanged());
     }

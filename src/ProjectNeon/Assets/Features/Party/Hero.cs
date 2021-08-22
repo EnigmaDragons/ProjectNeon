@@ -23,7 +23,7 @@ public class Hero
         levels = new HeroLevels();
         equipment = new HeroEquipment(character.Archetypes.ToArray());
         health = new HeroHealth(() => Stats);
-        basicCard = character.ClassCard;
+        basicCard = character.BasicCard;
     }
 
     public string Name => character.Name;

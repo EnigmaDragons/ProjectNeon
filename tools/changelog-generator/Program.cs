@@ -20,6 +20,7 @@ namespace ChangeLogGenerator
 
             patchNotes.ForEach(l => Console.WriteLine(l));
             File.WriteAllLines($"./patchnotes/{nextVersion}.md", patchNotes);
+            File.WriteAllLines($"./patchnotes/latest.md", patchNotes);
         }
 
         private static string NextVersion(string lastVersion)
@@ -128,6 +129,7 @@ namespace ChangeLogGenerator
             { "Wording", "Card Improvements" },
             { "Interpolate", "Card Improvements" },
             { "Card Text", "Card Improvements" },
+            { "Card Function", "Card Improvements" },
             { "Progression", "Balance Changes" },
             { "AI", "Balance Changes" },
             { "New Battle Role", "Balance Changes" },
