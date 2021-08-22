@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: Reward-Blessing-Stun
   m_EditorClassIdentifier: 
   estimatedCreditsValue: 90
-  isReward: 1
   text: 'Start of Next Battle: Stun all enemies'
   previewText: 'Start of Next Battle: Stun all enemies'
-  curse:
+  nextCombatEffect:
     Name: Element of Surprise
     Effect:
       EffectType: 79
@@ -36,7 +35,7 @@ MonoBehaviour:
         Variable: {fileID: 11400000, guid: c05ba6d66feae7c47a741c621c3f426a, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
-      ReTargetScope: 21
+      ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
