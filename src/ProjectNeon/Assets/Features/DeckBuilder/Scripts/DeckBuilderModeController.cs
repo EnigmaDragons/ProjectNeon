@@ -53,6 +53,7 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
 
     private void BeginFight()
     {
+        fightButton.gameObject.SetActive(false);
         party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
         Message.Publish(new AutoSaveRequested());
         navigator.NavigateToBattleScene();
