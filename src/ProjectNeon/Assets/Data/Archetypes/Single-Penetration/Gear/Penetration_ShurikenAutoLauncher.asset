@@ -10,23 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Penetration_WeaknessOverlayHud
+  m_Name: Penetration_ShurikenAutoLauncher
   m_EditorClassIdentifier: 
-  id: 87
-  displayName: 
-  description: 'Start of Turn: Apply Vulnerable 1 to all Defenseless enemies'
-  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
+  id: 93
+  displayName: Shuriken Auto-Launcher
+  description: 'Start of Turn: Deal 2 damage to a random enemy, three times'
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
-  rarity: 4
+  rarity: 3
   slot: 2
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 79
-    Conditions:
-    - {fileID: 11400000, guid: a1323df62032feb4d8b5ac55fee032c2, type: 2}
+  - EffectType: 30
+    Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -39,15 +38,101 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: a44ad20938ad98d4ba2a05ebec66e947, type: 2}
+      Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
-    ReTargetScope: 21
-    ApplyToEachMemberIndividually: 1
+    ReTargetScope: 20
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 1
+    Formula: 2
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  - EffectType: 30
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    DurationFormula: 
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 20
+    ApplyToEachMemberIndividually: 0
+    StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 2
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  - EffectType: 30
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    DurationFormula: 
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 20
+    ApplyToEachMemberIndividually: 0
+    StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 2
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
@@ -99,7 +184,7 @@ MonoBehaviour:
       Suffix: 
     FlavorText:
       UseConstant: 1
-      ConstantValue: 'Start of Turn: Apply Vulnerable 1 to all Defenseless enemies'
+      ConstantValue: 'Start of Turn: Deal 2 damage to a random enemy, three times'
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReactionConditionType: 0

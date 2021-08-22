@@ -3,6 +3,7 @@ using System.Linq;
 
 public interface PreventionContext
 {
+    PreventionContext WithUpdatedTarget(Target target);
     void RecordPreventionTypeEffect(PreventionType type, Member[] members);
     Member[] GetPreventingMembers(PreventionType type);
 }

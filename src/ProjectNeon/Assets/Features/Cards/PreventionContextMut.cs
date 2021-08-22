@@ -4,7 +4,7 @@ using System.Linq;
 
 public sealed class PreventionContextMut : PreventionContext
 {
-    private Member[] TargetMembers { get; }
+    private Member[] TargetMembers { get; set; }
     private Dictionary<PreventionType, HashSet<Member>> PreventingMembers { get; }
 
     public PreventionContextMut(Target target)
@@ -24,7 +24,13 @@ public sealed class PreventionContextMut : PreventionContext
         { PreventionType.Dodge, "Dodged!" },
         { PreventionType.Aegis, "Prevented!" }
     };
-    
+
+    public PreventionContext WithUpdatedTarget(Target target)
+    {
+        TargetMembers = target.Members;
+        return this;
+    }
+
     public void RecordPreventionTypeEffect(PreventionType type, params Member[] members)
     {
         if (!_temporalStatForPrevention.TryGetValue(type, out var temporalStatType))
