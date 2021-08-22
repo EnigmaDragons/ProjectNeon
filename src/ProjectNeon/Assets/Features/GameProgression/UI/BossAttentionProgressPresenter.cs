@@ -7,9 +7,22 @@ public class BossAttentionProgressPresenter : OnMessage<AdventureProgressChanged
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private Image barFill;
 
-    private void Awake() => barFill.fillAmount = adventure.ProgressToUnlockChapterBoss;
+    private readonly float _visualFactor = 0.95f;
+    private readonly float _offsetAmount = 0.05f;
 
-    private void SmoothTransitionTo(float amount) => barFill.DOFillAmount(amount * 0.9f + 0.05f, 1);
+    private void Awake()
+    {
+        Log.Info($"Stage Progress {adventure.ProgressToUnlockChapterBoss}");
+        barFill.fillAmount = FillAmount;
+    }
 
-    protected override void Execute(AdventureProgressChanged msg) => SmoothTransitionTo(adventure.ProgressToUnlockChapterBoss);
+    private void SmoothTransitionTo(float amount) => barFill.DOFillAmount(amount * _visualFactor + _offsetAmount, 1);
+
+    protected override void Execute(AdventureProgressChanged msg)
+    {
+        Log.Info($"Stage Progress {adventure.ProgressToUnlockChapterBoss}");
+        SmoothTransitionTo(FillAmount);
+    }
+
+    private float FillAmount => adventure.ProgressToUnlockChapterBoss * _visualFactor + _offsetAmount;
 }

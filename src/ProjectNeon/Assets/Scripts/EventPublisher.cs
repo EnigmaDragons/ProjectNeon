@@ -41,4 +41,5 @@ public class EventPublisher : ScriptableObject
     public void ToggleGameMenu() => Message.Publish(new ToggleGameMenu());
     public void TogglePatchNotes() => Message.Publish(new TogglePatchNotes());
     public void ToggleOptionsMenu() => Message.Publish(new ToggleNamedTarget("OptionsMenu"));
+    public void CompleteAnyMapNode() => Message.Publish(new CompleteAnyMapNode());
 }

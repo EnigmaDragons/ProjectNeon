@@ -46,6 +46,7 @@ MonoBehaviour:
   adventure: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   equipments: {fileID: 11400000, guid: fb7b57e6c0ff8b144bf95e6d06ff8be4, type: 2}
+  map: {fileID: 11400000, guid: 5064fe74d4176254a9e1729682f69c71, type: 2}
 --- !u!1 &7922492195766671217
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,6 +65,7 @@ GameObject:
   - component: {fileID: 1825080513399744386}
   - component: {fileID: 2147274630251612999}
   - component: {fileID: 4530332275379320088}
+  - component: {fileID: 2338385323762082905}
   m_Layer: 0
   m_Name: GameSceneDevCheats
   m_TagString: Untagged
@@ -329,6 +331,34 @@ MonoBehaviour:
       - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
         m_TargetAssemblyTypeName: EventPublisher, GameAssembly
         m_MethodName: ToggleCardLibrary
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2338385323762082905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7922492195766671217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a58015a0ad344745be8d684218d85943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: 0e0100006e000000
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
+        m_MethodName: CompleteAnyMapNode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

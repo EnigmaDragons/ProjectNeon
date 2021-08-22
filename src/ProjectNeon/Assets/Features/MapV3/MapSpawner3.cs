@@ -76,7 +76,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
 
     private void ShowMapPromptIfJustStarted()
     {
-        if (progress.CurrentStageSegmentIndex == 0 && !progress.PlayerReadMapPrompt)
+        if (progress.CurrentStageProgress == 0 && !progress.PlayerReadMapPrompt)
         {
             var mapPrompt = progress.CurrentAdventure.MapQuestPrompt;
             if (mapPrompt.IsPresent)

@@ -77,6 +77,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         {
             Log.Info("Advancing to next Stage Segment.");
             gameMap.CompleteCurrentNode();
+            adventure2.AdvanceStageIfNeeded();
             Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }

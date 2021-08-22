@@ -183,7 +183,8 @@ public sealed class PartyAdventureState : ScriptableObject
     public void AddBlessing(Blessing blessing) => _blessings.Enqueue(blessing);
     public void ApplyBlessings(BattleState state)
     {
-        Log.Info($"Applying {_blessings.Count} Party Blessings");
+        if (_blessings.Count > 0)
+            Log.Info($"Applying {_blessings.Count} Party Blessings");
         while (_blessings.Count > 0)
             _blessings.Dequeue().Apply(state);
     }
