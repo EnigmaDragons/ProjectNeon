@@ -28,6 +28,7 @@ public class StoryEventSegment : StageSegment
         else
         {
             Log.Warn($"Out of Story Events for {adventure.CurrentAdventure.Title} Chapter {adventure.CurrentChapterIndex}");
+            Message.Publish(new ContinueTraveling());
         }
     }
 
