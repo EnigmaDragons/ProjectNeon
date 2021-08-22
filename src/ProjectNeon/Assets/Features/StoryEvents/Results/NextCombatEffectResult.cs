@@ -1,25 +1,24 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "StoryEvent/Results/Blessing")]
-public class BlessingResult : StoryResult
+public class NextCombatEffectResult : StoryResult
 {
     [SerializeField] private int estimatedCreditsValue;
-    [SerializeField] private bool isReward;
     [SerializeField] private string text;
     [SerializeField] private string previewText;
-    [SerializeField] private Blessing curse;
+    [SerializeField] private Blessing nextCombatEffect;
     
     public override int EstimatedCreditsValue => estimatedCreditsValue;
     
     public override void Apply(StoryEventContext ctx)
     {
-        curse.Targets = ctx.Party.BaseHeroes;
-        ctx.Party.AddBlessing(curse);
+        nextCombatEffect.Targets = ctx.Party.BaseHeroes;
+        ctx.Party.AddBlessing(nextCombatEffect);
         Message.Publish(new ShowStoryEventResultMessage(text));
     }
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { IsReward = isReward, Text = previewText });
+        Message.Publish(new ShowTextResultPreview { IsReward = estimatedCreditsValue > 0, Text = previewText });
     }
 }
