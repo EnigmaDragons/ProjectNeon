@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class StoryEventPresenter2 : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI storyNameLabel;
     [SerializeField] private TextMeshProUGUI storyTextArea;
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private OptionButton optionButtonPrototype;
@@ -55,6 +56,7 @@ public class StoryEventPresenter2 : MonoBehaviour
         rewardParent.DestroyAllChildren();
         InitFreshOptionsButtons();
         var ctx = new StoryEventContext(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party, allEquipmentPool, map, adventure);
+        storyNameLabel.text = s.DisplayName;
         storyTextArea.text = s.StoryText;
         for (var i = _buttons.Length - 1; i > -1; i--)
         {
