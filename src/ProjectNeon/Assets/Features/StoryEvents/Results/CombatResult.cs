@@ -7,9 +7,9 @@ public class CombatResult : StoryResult
     [SerializeField] private GameObject battleField;
     [SerializeField] private bool isElite;
     [SerializeField] private Enemy[] enemies;
-    [SerializeField] private bool isReward;
+    [SerializeField] private int estimatedCreditsValue;
     
-    public override int EstimatedCreditsValue => 0;
+    public override int EstimatedCreditsValue => estimatedCreditsValue;
     
     public override void Apply(StoryEventContext ctx)
     {
@@ -19,6 +19,6 @@ public class CombatResult : StoryResult
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { IsReward = isReward, Text = $"Start a fight" });
+        Message.Publish(new ShowTextResultPreview { IsReward = EstimatedCreditsValue > 0, Text = $"Start a fight" });
     }
 }
