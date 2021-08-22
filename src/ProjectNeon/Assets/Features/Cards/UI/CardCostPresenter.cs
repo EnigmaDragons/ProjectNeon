@@ -8,7 +8,7 @@ public class CardCostPresenter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI costLabel;
     [SerializeField] private Image costResourceTypeIcon;
     
-    public void Render(Maybe<Card> c, CardTypeData ct)
+    public void Render(Maybe<Card> c, CardTypeData ct, IResourceType primaryResourceType)
     {
         var cost = ct.Cost;
         var hasCost = !cost.ResourceType.Name.Equals("None") && cost.BaseAmount > 0 || cost.PlusXCost;
@@ -18,7 +18,9 @@ public class CardCostPresenter : MonoBehaviour
             costLabel.text = CostLabel(c, cost);
             costResourceTypeIcon.sprite = c.IsPresent && cost.ResourceType.Name.Equals("PrimaryResource") 
                 ? c.Value.Owner.State.PrimaryResource.Icon 
-                : cost.ResourceType.Icon;
+                : cost.ResourceType.Name.Equals("PrimaryResource") 
+                    ? primaryResourceType.Icon 
+                    : cost.ResourceType.Icon;
         }
     }
     
