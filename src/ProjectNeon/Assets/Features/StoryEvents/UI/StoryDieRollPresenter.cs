@@ -6,9 +6,18 @@ public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded,
 {
     [SerializeField] private GameObject noDieRollNeededPanel;
     [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject die;
+    [SerializeField] private TextMeshProUGUI actionLabel;
     [SerializeField] private TextMeshProUGUI dieRollLabel;
+    [SerializeField] private FloatReference dieRollDuration;
+    [SerializeField] private AudioClipVolume rollSound;
+    [SerializeField] private AudioClipVolume dieShakeSound;
+    [SerializeField] private UiSfxPlayer player;
 
     private Vector3 initialPos;
+    private string dieResult;
+    private float remainingRollDuration;
+    private bool rollInProgress;
     
     private void Awake()
     {
@@ -18,26 +27,30 @@ public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded,
     
     protected override void Execute(ShowDieRoll msg)
     {
-        dieRollLabel.text = msg.Roll.ToString();
+        dieResult = msg.Roll.ToString();
+        actionLabel.text = "Rolling";
         Hide();
-        FlyIn();
+        FlyIn(0.3f);
+        rollInProgress = true;
+        remainingRollDuration = dieRollDuration.Value;
+        player.Play(dieShakeSound);
         panel.SetActive(true);
     }
 
     protected override void Execute(ShowNoDieRollNeeded msg)
     {
         Hide();
-        FlyIn();
+        FlyIn(0.5f);
         noDieRollNeededPanel.SetActive(true);
     }
 
     protected override void Execute(HideDieRoll msg) => Hide();
 
-    private void FlyIn()
+    private void FlyIn(float duration)
     {
         transform.DOKill();
         transform.position.Set(-3000, transform.position.y, transform.position.z);
-        transform.DOMove(initialPos, 0.5f);
+        transform.DOMove(initialPos, duration);
     }
     
     private void Hide()
@@ -45,5 +58,25 @@ public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded,
         transform.DOKill();
         noDieRollNeededPanel.SetActive(false);
         panel.SetActive(false);
+        rollInProgress = false;
+    }
+
+    private void Update()
+    {
+        if (!rollInProgress)
+            return;
+
+        dieRollLabel.text = Rng.Int(1, 20).ToString();
+        remainingRollDuration -= Time.unscaledDeltaTime;
+        die.transform.rotation = Quaternion.Euler(0, 0, Rng.Int(0, 360));
+
+        if (!(remainingRollDuration <= 0f)) 
+            return;
+
+        actionLabel.text = "You Rolled";
+        dieRollLabel.text = dieResult;
+        rollInProgress = false;
+        die.transform.rotation = Quaternion.identity;
+        player.Play(rollSound);
     }
 }
