@@ -10,23 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Tritoonico-RitualRobe
+  m_Name: Any-OverchargedShieldPrototype
   m_EditorClassIdentifier: 
-  id: 92
-  displayName: Ritual Robe
-  description: +1 Magic +1 Resistance
-  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
+  id: 0
+  displayName: Overcharged Shield Prototype
+  description: Start with max shields
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
-  rarity: 1
-  slot: 1
+  rarity: 4
+  slot: 2
   priceFactor: 1
   modifiers:
   - ModifierType: 0
-    Amount: 1
-    StatType: Magic
-  - ModifierType: 0
-    Amount: 1
-    StatType: Resistance
+    Amount: 999
+    StatType: StartingShields
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
