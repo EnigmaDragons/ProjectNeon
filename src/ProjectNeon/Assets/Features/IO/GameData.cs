@@ -38,6 +38,7 @@ public class GamePartyData
     public int[] CardIds = Array.Empty<int>();
     public GameEquipmentData[] Equipment = Array.Empty<GameEquipmentData>();
     public BlessingSaveData[] Blessings = Array.Empty<BlessingSaveData>();
+    public CorpCostModifier[] CorpCostModifiers;
 }
 
 [Serializable]

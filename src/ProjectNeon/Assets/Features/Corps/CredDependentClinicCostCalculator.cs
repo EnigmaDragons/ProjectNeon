@@ -3,8 +3,8 @@
 public class CredDependentClinicCostCalculator : HealthDependantClinicCostCalculator
 {
     private readonly float _multiplier;
-    
-    public CredDependentClinicCostCalculator(PartyAdventureState party)
+
+    public CredDependentClinicCostCalculator(PartyAdventureState party, string corp) : base(party, corp)
     {
         if (party.Credits <= 30)
             _multiplier = 0.0f;

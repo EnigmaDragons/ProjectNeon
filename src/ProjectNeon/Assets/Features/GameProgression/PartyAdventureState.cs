@@ -14,8 +14,9 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private PartyEquipmentCollection equipment;
     [SerializeField] private Hero[] heroes = new Hero[0];
     [SerializeField] private ShopCardPool allCards;
-    
-    private readonly Queue<Blessing> _blessings = new Queue<Blessing>(); 
+
+    private List<CorpCostModifier> corpCostModifiers = new List<CorpCostModifier>();
+    private Queue<Blessing> _blessings = new Queue<Blessing>(); 
 
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
@@ -26,7 +27,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public Hero[] Heroes => heroes;
     public int[] Hp =>  heroes.Select(h => h.CurrentHp).ToArray();
     public RuntimeDeck[] Decks => heroes.Select(h => h.Deck).ToArray();
-    public Blessing[] Blessings => _blessings.ToArray();
+    public Blessing[] Blessings => _blessings?.ToArray() ?? (_blessings = new Queue<Blessing>()).ToArray();
     public PartyCardCollection Cards => cards;
     public PartyEquipmentCollection Equipment => equipment;
     private Dictionary<string, List<Hero>> _archKeyHeroes;
@@ -199,4 +200,20 @@ public sealed class PartyAdventureState : ScriptableObject
             })
             .Select(card => card.Key.Id));
     }
+
+    public CorpCostModifier[] CorpCostModifiers => corpCostModifiers.ToArray();
+    public void SetCorpCostModifier(CorpCostModifier[] modifiers) => corpCostModifiers = modifiers?.ToList() ?? new List<CorpCostModifier>();
+    public void AddCorpCostModifier(CorpCostModifier modifier) => corpCostModifiers.Add(modifier);
+
+    public float GetCostFactorForEquipment(string corp)
+        => Mathf.Clamp(corpCostModifiers
+            .Where(x => x.AppliesToEquipmentShop && x.Corp.Equals(corp, StringComparison.OrdinalIgnoreCase))
+            .Concat(new[] {new CorpCostModifier {CostPercentageModifier = 1}})
+            .Sum(x => x.CostPercentageModifier), 0, 99);
+    
+    public float GetCostFactorForClinic(string corp)
+        => Mathf.Clamp(corpCostModifiers
+            .Where(x => x.AppliesToClinic && x.Corp.Equals(corp, StringComparison.OrdinalIgnoreCase))
+            .Concat(new[] {new CorpCostModifier {CostPercentageModifier = 1}})
+            .Sum(x => x.CostPercentageModifier), 0, 99);
 }

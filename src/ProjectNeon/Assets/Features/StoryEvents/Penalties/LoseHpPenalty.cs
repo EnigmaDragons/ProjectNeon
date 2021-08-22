@@ -21,6 +21,6 @@ public class LoseHpPenalty : StoryResult
 
     public override void Preview()
     {
-        throw new System.NotImplementedException();
+        Message.Publish(new ShowTextResultPreview { IsReward = false, Text = appliesToAll ? $"Damage all allies by {minLoss} to {maxLoss}" : $"Damage a random ally by {minLoss} to {maxLoss}" });
     }
 }

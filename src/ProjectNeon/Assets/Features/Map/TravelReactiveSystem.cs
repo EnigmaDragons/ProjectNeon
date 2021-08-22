@@ -24,7 +24,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
     {
         gameMap.HasCompletedEventEnRoute = true;
         gameMap.PreviousPosition = _midPoint;
-        _isTraveling = true;
+        _isTraveling = !msg.ShouldNotContinue;
     }
 
     protected override void Execute(TravelToNode msg)

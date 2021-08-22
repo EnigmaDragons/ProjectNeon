@@ -29,7 +29,8 @@ public static class GameDataMappingExtensions
                     Name = b.Name, 
                     TargetHeroIds = b.Targets.Select(t => t.Id).ToArray()
                 })
-                .ToArray()
+                .ToArray(),
+            CorpCostModifiers = s.CorpCostModifiers
         };
 
     public static GameAdventureProgressData GetData(this AdventureProgress2 p)

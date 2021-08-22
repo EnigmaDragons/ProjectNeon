@@ -12,6 +12,7 @@ public class BlessingResult : StoryResult
     public override bool IsReward => isReward;
     public override void Apply(StoryEventContext ctx)
     {
+        curse.Targets = ctx.Party.BaseHeroes;
         ctx.Party.AddBlessing(curse);
         Message.Publish(new ShowStoryEventResultMessage(text));
     }

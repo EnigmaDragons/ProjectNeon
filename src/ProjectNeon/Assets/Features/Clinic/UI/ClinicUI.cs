@@ -25,6 +25,8 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
     protected override void AfterDisable() => Message.Publish(new AutoSaveRequested());
     protected override void AfterEnable()
     {
+        if (clinic.Corp == null)
+            return;
         patientParent.DestroyAllChildren();
         var costCalculator = clinics.GetCostCalculator(clinic.Corp);
         party.Heroes.ForEach(h => Instantiate(patientPrototype, patientParent.transform).Initialized(h, costCalculator));

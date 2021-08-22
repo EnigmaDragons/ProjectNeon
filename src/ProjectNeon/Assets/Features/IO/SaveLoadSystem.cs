@@ -98,6 +98,8 @@ public sealed class SaveLoadSystem : ScriptableObject
                 party.AddBlessing(new Blessing { Name = b.Name, Effect = b.Effect, Targets = targetHeroes });
             });
         }
+        
+        party.SetCorpCostModifier(partyData.CorpCostModifiers);
 
         for (var i = 0; i < numHeroes; i++)
         {

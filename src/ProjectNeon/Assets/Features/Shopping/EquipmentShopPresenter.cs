@@ -44,6 +44,7 @@ public class EquipmentShopPresenter : OnMessage<RefreshShop>
         var priceFactor = isPolyCorp
             ? 1f
             : AffinityPricingAdjustment.PriceFactor(corpAffinity, shop.Corp.Name);
+        priceFactor = priceFactor * party.GetCostFactorForEquipment(shop.Corp.Name);
         
         _selection = adventure.CreateLootPicker(party)
             .GenerateEquipmentSelection(equipment, _numEquips, isPolyCorp ? "" : shop.Corp.Name);
