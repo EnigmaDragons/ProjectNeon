@@ -88,7 +88,7 @@ public static class InterpolatedCardDescriptions
         {
             var forReaction = token.Value.StartsWith("{RE[");
             var forInnerEffect = token.Value.StartsWith("{I");
-            var prefixes = new[] {"{E", "{D", "{RE", "{IE", "{ID" };
+            var prefixes = new[] {"{E", "{D", "{RE", "{RD", "{IE", "{ID" };
             if (prefixes.None(p => token.Value.StartsWith(p)))
                 throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects, Durations, and Reaction Effects");
 
@@ -106,6 +106,8 @@ public static class InterpolatedCardDescriptions
                 result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex], owner, xCost));
             if (forReaction)
                 result = result.Replace("{RE[" + effectIndex + "]}", Bold(EffectDescription(reactionEffects[effectIndex], owner, xCost)));
+            if (token.Value.StartsWith("{RD["))
+                result = result.Replace("{RD[" + effectIndex + "]}", DurationDescription(reactionEffects[effectIndex], owner, xCost));
             if (token.Value.StartsWith("{IE"))
                 result = result.Replace("{IE[" + effectIndex + "]}", Bold(EffectDescription(innerEffects[effectIndex], owner, xCost)));
             if (token.Value.StartsWith("{ID"))
