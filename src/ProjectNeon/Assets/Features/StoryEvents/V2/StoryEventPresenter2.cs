@@ -49,6 +49,7 @@ public class StoryEventPresenter2 : MonoBehaviour
         Message.Subscribe<ShowCredResultPreview>(Execute, this);
         Message.Subscribe<ShowEquipmentResultPreview>(Execute, this);
         Message.Subscribe<HideStoryEventPreviews>(Execute, this);
+        Message.Subscribe<ShowCardResultPreview>(Execute, this);
     }
 
     private void OnDisable() => Message.Unsubscribe(this);
@@ -172,6 +173,13 @@ public class StoryEventPresenter2 : MonoBehaviour
     }
     
     private void Execute(HideStoryEventPreviews obj) => HidePreviews();
+
+    private void Execute(ShowCardResultPreview msg)
+    {
+        EnablePreviews();
+        rewardPreviewParent.DestroyAllChildren();
+        Instantiate(cardPreviewPrototype, rewardPreviewParent.transform).Init(msg.Card);
+    }
 
     private void EnablePreviews()
     {

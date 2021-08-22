@@ -1,4 +1,4 @@
 ﻿public class ShowCardResultPreview
 {
-    public Card Card { get; set; }
+    public CardType Card { get; set; }
 }
