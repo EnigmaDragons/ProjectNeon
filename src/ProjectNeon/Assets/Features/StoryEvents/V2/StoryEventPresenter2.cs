@@ -2,10 +2,14 @@ using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoryEventPresenter2 : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI storyNameLabel;
     [SerializeField] private TextMeshProUGUI storyTextArea;
+    [SerializeField] private Image corpLogo;
+    [SerializeField] private UnityEngine.UI.Extensions.Gradient corpTint;
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private OptionButton optionButtonPrototype;
     [SerializeField] private PartyAdventureState party;
@@ -55,6 +59,10 @@ public class StoryEventPresenter2 : MonoBehaviour
         rewardParent.DestroyAllChildren();
         InitFreshOptionsButtons();
         var ctx = new StoryEventContext(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party, allEquipmentPool, map, adventure);
+        corpLogo.sprite = s.Corp.Logo;
+        corpTint.Vertex1 = s.Corp.Color1;
+        corpTint.Vertex2 = s.Corp.Color2;
+        storyNameLabel.text = s.DisplayName;
         storyTextArea.text = s.StoryText;
         for (var i = _buttons.Length - 1; i > -1; i--)
         {

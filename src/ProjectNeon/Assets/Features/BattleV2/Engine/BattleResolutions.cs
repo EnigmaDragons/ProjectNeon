@@ -48,7 +48,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     protected override void Execute(ApplyBattleEffect msg)
     {
         _currentBattleEffectContext = new Maybe<(ApplyBattleEffect, BattleStateSnapshot)>((msg, state.GetSnapshot()));
-        var ctx = ApplyEffectsWithRetargetingIfAllTargetsUnconscious(msg);
+        var ctx = ApplyEffects(msg);
         if (ctx.Selections.CardSelectionOptions?.Any() ?? false)
         {
             var action = ctx.Selections.OnCardSelected;
@@ -106,7 +106,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         Async.ExecuteAfterDelay(msg.Duration, () => Message.Publish(new Finished<WaitDuringResolution>()));
     }
 
-    private EffectContext ApplyEffectsWithRetargetingIfAllTargetsUnconscious(ApplyBattleEffect msg)
+    private EffectContext ApplyEffects(ApplyBattleEffect msg)
     {
         // Core Execution
         var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,

@@ -14,7 +14,6 @@ public class CorpCostModifierResult : StoryResult
         : appliesToEquipmentShop 
             ? adjustment * -200f
             : adjustment * -100f);
-    public override bool IsReward => adjustment < 0;
     
     public override void Apply(StoryEventContext ctx)
     {

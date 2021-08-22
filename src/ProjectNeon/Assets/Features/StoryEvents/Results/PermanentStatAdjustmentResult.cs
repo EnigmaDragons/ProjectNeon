@@ -7,11 +7,9 @@ public class PermanentStatAdjustmentResult : StoryResult
 {
     [SerializeField] private PermenatStatAdjustmentData[] permanentStatAdjustments;
     [SerializeField] private int estimatedCreditsValue;
-    [SerializeField] private bool isReward;
     [SerializeField] private bool appliesToAll;
 
     public override int EstimatedCreditsValue => estimatedCreditsValue;
-    public override bool IsReward => isReward;
     
     public override void Apply(StoryEventContext ctx)
     {

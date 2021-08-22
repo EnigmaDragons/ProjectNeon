@@ -147,7 +147,7 @@ public static class AllEffects
                 : effectData.TurnDelay == 1
                     ? " at the start of next turn" 
                     : $" in {effectData.TurnDelay} turns";
-            DevLog.Write($"Applying Effect of {effectData.EffectType} to {ctx.Target.MembersDescriptions()}{whenClause}");
+            DevLog.Write($"Applying Effect of {effectData.EffectType} to {updatedContext.Target.MembersDescriptions()}{whenClause}");
             if (effectData.TurnDelay > 0)
                 BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
             

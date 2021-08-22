@@ -10,7 +10,6 @@ public class CombatResult : StoryResult
     [SerializeField] private bool isReward;
     
     public override int EstimatedCreditsValue => 0;
-    public override bool IsReward => isReward;
     
     public override void Apply(StoryEventContext ctx)
     {

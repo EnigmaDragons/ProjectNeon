@@ -68,7 +68,12 @@ public class EffectContext
     
     public EffectContext Retargeted(Member source, Target target) 
         => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, RewardState, BattleMembers, PlayerCardZones, 
-            Preventions, Selections, AllCards, StartingCredits, CurrentCredits, EnemyTypes, GetNextCardId, CardsPlayedThisTurn, 
+            Preventions.WithUpdatedTarget(target), Selections, AllCards, StartingCredits, CurrentCredits, EnemyTypes, GetNextCardId, CardsPlayedThisTurn, 
+            OwnerTints, OwnerBusts);
+    
+    public EffectContext WithFreshPreventionContext() 
+        => new EffectContext(Source, Target, Card, XPaidAmount, AdventureState, PlayerState, RewardState, BattleMembers, PlayerCardZones, 
+            new PreventionContextMut(Target), Selections, AllCards, StartingCredits, CurrentCredits, EnemyTypes, GetNextCardId, CardsPlayedThisTurn, 
             OwnerTints, OwnerBusts);
 
     public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)

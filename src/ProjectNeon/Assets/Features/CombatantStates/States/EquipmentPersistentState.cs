@@ -13,12 +13,12 @@ public sealed class EquipmentPersistentState : IPersistentState
     public void OnTurnStart()
     {
         _equipment.TurnStartEffects
-            .ForEach(e => AllEffects.Apply(e, _ctx));
+            .ForEach(e => AllEffects.Apply(e, _ctx.WithFreshPreventionContext()));
     }
 
     public void OnTurnEnd()
     {
         _equipment.TurnEndEffects
-            .ForEach(e => AllEffects.Apply(e, _ctx));
+            .ForEach(e => AllEffects.Apply(e, _ctx.WithFreshPreventionContext()));
     }
 }
