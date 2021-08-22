@@ -413,6 +413,7 @@ GameObject:
   - component: {fileID: 1939478061706624069}
   - component: {fileID: 6266928383568175632}
   - component: {fileID: 1213848940835254606}
+  - component: {fileID: 8412917923965890731}
   m_Layer: 0
   m_Name: StoryEventUI
   m_TagString: Untagged
@@ -463,6 +464,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui: {fileID: 3307976441270530606}
   presenter: {fileID: 2522127410994930111}
+--- !u!114 &8412917923965890731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427218210560264239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3167cf58ec3a42b2be47feca1f0b1c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 11400000, guid: a3e8aeef9bbd0bd4ba7514ec36cb1758, type: 2}
+  goodOutcome:
+    name: 
+    clip: {fileID: 8300000, guid: 961fdf38e13ca404e939e7dbeca5388b, type: 3}
+    volume: 1
+  badOutcome:
+    name: 
+    clip: {fileID: 8300000, guid: 3bfe649b07bdf1141a4f8689755cb379, type: 3}
+    volume: 1
+  delay:
+    UseConstant: 0
+    ConstantValue: 1
+    FloatVariable: {fileID: 11400000, guid: 2406a4e92fac762409d627509649bf31, type: 2}
 --- !u!1 &2506595095053233724
 GameObject:
   m_ObjectHideFlags: 0

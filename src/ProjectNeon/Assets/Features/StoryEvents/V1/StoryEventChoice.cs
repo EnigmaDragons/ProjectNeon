@@ -34,7 +34,7 @@ public class StoryEventChoice
         if (Resolution.Sum(r => r.Chance) > 1 || Resolution.Sum(r => r.Chance) <= 0)
         {
             Log.Error($"Story Event: Invalid Total Resolution Chance for {Text}");
-            Message.Publish(new ShowStoryEventResolution("Something peculiar occurred, which you can't explain, of which you can never speak (except to the developers)"));
+            Message.Publish(new ShowStoryEventResolution("Something peculiar occurred, which you can't explain, of which you can never speak (except to the developers)", 0));
         }
 
         var roll = Rng.Dbl();
@@ -61,7 +61,7 @@ public class StoryEventChoice
         else
         {
             r.Result.Apply(ctx);
-            Message.Publish(new ShowStoryEventResolution(r.StoryText));   
+            Message.Publish(new ShowStoryEventResolution(r.StoryText, r.EstimatedCreditsValue));   
         }
     }
 }
