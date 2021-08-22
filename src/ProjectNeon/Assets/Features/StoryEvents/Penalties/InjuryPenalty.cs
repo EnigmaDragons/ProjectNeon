@@ -9,7 +9,6 @@ public class InjuryPenalty : StoryResult
     [SerializeField] private int estimatedCreditsValue;
 
     public override int EstimatedCreditsValue => estimatedCreditsValue;
-    public override bool IsReward => false;
     
     public override void Apply(StoryEventContext ctx)
     {

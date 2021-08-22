@@ -6,7 +6,6 @@ public class StaticEquipmentReward : StoryResult
     [SerializeField] private StaticEquipment equipment;
 
     public override int EstimatedCreditsValue => equipment.Price;
-    public override bool IsReward => true;
     
     public override void Apply(StoryEventContext ctx)
     {

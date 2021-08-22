@@ -7,7 +7,6 @@ public class CardRarityReward : StoryResult
     [SerializeField] private ShopCardPool cardPool;
 
     public override int EstimatedCreditsValue => rarity.CardShopPrice();
-    public override bool IsReward => true;
     
     public override void Apply(StoryEventContext ctx)
     {

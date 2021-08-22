@@ -6,9 +6,10 @@ using System.Linq;
 public class StoryEventChoice2
 {
     public string Text;
-    public StoryResult Reward;
-    public StoryResult Penalty;
     public StoryResolution2[] Resolution;
+    
+    public StoryResult Reward => Resolution.OrderByDescending(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
+    public StoryResult Penalty => Resolution.OrderBy(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     
     public string ChoiceFullText(StoryEventContext ctx) => Text.Trim();
     public bool CanSelect(StoryEventContext ctx) => true;

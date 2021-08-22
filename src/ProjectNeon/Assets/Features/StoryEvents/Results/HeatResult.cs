@@ -6,7 +6,6 @@ public class HeatResult : StoryResult
     [SerializeField] private int adjustment;
 
     public override int EstimatedCreditsValue => adjustment * -10;
-    public override bool IsReward => adjustment < 0;
     
     public override void Apply(StoryEventContext ctx)
     {

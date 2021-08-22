@@ -7,7 +7,6 @@ public class CreditsReward : StoryResult
     [SerializeField] private int maxCredits;
 
     public override int EstimatedCreditsValue => maxCredits + minCredits / 2;
-    public override bool IsReward => true;
     
     public override void Apply(StoryEventContext ctx)
     {

@@ -9,7 +9,6 @@ public class GainHpReward : StoryResult
     [SerializeField] private bool appliesToAll;
 
     public override int EstimatedCreditsValue => maxGain + minGain / 2 * (appliesToAll ? 3 : 1);
-    public override bool IsReward => true;
     
     public override void Apply(StoryEventContext ctx)
     {
