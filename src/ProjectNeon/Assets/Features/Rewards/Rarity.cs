@@ -21,6 +21,8 @@ public static class RarityExtensions
 
     public static IEnumerable<Rarity> Random(this Rarity[] rarities, RarityFactors f, int n)
         => Enumerable.Range(0, n).Select(_ => rarities.Random(f));
+
+    public static Rarity Random(this RarityFactors f) => Random(AllExceptStarters, f);
     public static Rarity Random(this Rarity[] rarities, RarityFactors f)
         => rarities.SelectMany(r => Factored(f, r)).Random();
     
