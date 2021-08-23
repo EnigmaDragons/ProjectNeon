@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class StoryEventChoice2
 {
     public string Text;
     public StoryResolution2[] Resolution;
-    
+
+    public float OddsTableTotal => Resolution.Sum(r => r.Chance);
+    public bool OddsTableIsValid => Mathf.Approximately(1f, OddsTableTotal);
     public StoryResult Reward => Resolution.OrderByDescending(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     public StoryResult Penalty => Resolution.OrderBy(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     
