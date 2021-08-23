@@ -15,64 +15,59 @@ MonoBehaviour:
   displayName: Blowing Away The Competition
   settingType: 0
   corp: {fileID: 11400000, guid: f536780fabfce9141933c05122731104, type: 2}
-  storyText: 'You pass a plasmigarchy vehicle leaving in a hurry and upon rounding
-    the corner, you see directional explosives planted all around on an indie micro-battery
-    producing plant.
-
-    It looks like Plasmigarchy doesn''t like the competition,
-    these micro-batteries must be decent.
-
-'
+  storyText: "You pass a Plasmigarchy vehicle leaving in a hurry. \n\nUpon rounding
+    the corner, you see directional explosives planted all around an indie micro-battery
+    factory.\n\nYou think that Plasmigarchy must not like the competition. These
+    micro-batteries must be decent.\n"
   choices:
-  - Text: Run in and tell them to evacute the building now and book it out of the
-      blast radiance.
+  - Text: Run in and warn them to evacute the building.
     Resolution:
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: efffeb8a2af060b44b4fd8f625f8d89e, type: 2}
-      StoryText: The building detonates while one of you was still inside. There
-        wasn't enough time to save anyone.
+      StoryText: "The building detonates while one of you was still inside. \n\nThere
+        wasn't enough time to save anyone."
     - Chance: 0.8
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 68249e398e60b7748924347e7dff4f97, type: 2}
-      StoryText: Everyone gets out of the building safely before it explodes. The
-        people present are incredibly thankful you saved their lives and even insist
-        you take some money.
+      StoryText: "Everyone gets out of the building safely before it explodes. \n\nThe
+        workers present are incredibly thankful you saved their lives and even insist
+        you take some money."
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 58be128081d31f148b58d2d4de247c3e, type: 2}
-      StoryText: The CEO of the company video tapes the destruction of the building
-        and seems positivily elated about the insurance money they are gonna get.
-        He explains that his batteries had a defect that would cause them to explode
-        which was gonna force a massive recall, but now he can get a large payday
-        from this insurance claim and declare bankruptcy before that happens. He
-        gives you a large sum of creds in aprciation.
+      StoryText: "The CEO of the company video tapes the destruction of the building
+        and seems positively elated about the insurance money they are gonna get.
+        \n\nHe explains that the micro-batteries had a defect that would cause them
+        to explode. That defect was gonna force a massive recall, but now he can
+        get a large payday from this insurance claim and declare bankruptcy before
+        that happens. \n\nHe gives you a large sum of creds in appreciation."
   - Text: Split it up and try to remove every single explosive from the building
       before they detonate.
     Resolution:
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: d6bc70be62d27a847ae73431859deb18, type: 2}
-      StoryText: Just as soon as you start removing them they explode and destroy
-        the whole building. The buildings rapidly collapses and ends up scratching
-        up your heroes.
+      StoryText: "Just as soon as you start removing them, they explode and destroy
+        the whole building. \n\nThe building rapidly collapses and ends up scratching
+        up your team."
     - Chance: 0.3
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: f0d804dd1366c934f9bbeba259cf5f02, type: 2}
-      StoryText: Most the way through removing the explosives it detonates damaging
-        the building but leaving it standing. A Handful of security pours from the
-        building and starts blasting you falsely assuming you are the cause of the
-        explosion. You make your quick escape.
+      StoryText: "Partway through removing the explosives they detonate, damaging
+        the building, but leaving it standing. \n\nA handful of security pours from
+        the building and starts blasting you, falsely assuming you are the cause
+        of the explosion. \n\nYou make a quick escape, slightly scathed."
     - Chance: 0.55
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 1797d72e0c782994a9fe50bd3da02eb7, type: 2}
-      StoryText: Most the way through removing the explosives it detonates damaging
-        the building but leaving it standing. An employee comes out and you explain
-        to them what just happens, they thank you vigorously and give you a shield
-        powered by their batteries.
+      StoryText: "Partway through removing the explosives they detonate, damaging
+        the building, but leaving it standing. \n\nAn employee comes out and you
+        explain to them what just happened. \n\nThey thank you vigorously and give
+        you a shield powered by their micro-batteries."
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: a26276bfd7f0e184f8aefd288f23e80b, type: 2}
-      StoryText: You manage to take and disarm every single explosive on the building,
-        and give them to micro-battery plant, they thank you alot and give you a
-        brand new prototype of their shield.
+      StoryText: "You manage to disarm every single explosive on the building, and
+        give them to micro-battery factory workers. \n\nThey thank you profusely
+        and give you a brand new shield prototype."
