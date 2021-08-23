@@ -17,7 +17,7 @@ MonoBehaviour:
   corp: {fileID: 11400000, guid: 4a1f16a350870734782dc204b16ce184, type: 2}
   storyText: "You come accross a handful of corpses in an alley with smoking guns
     strewn about. \n\nLike vultures, Astropoly scavenging drones have already started
-    taking anything of value."
+    taking everything of value."
   choices:
   - Text: Hack one of the drones to scavenge safely for you
     Resolution:
@@ -29,25 +29,26 @@ MonoBehaviour:
     - Chance: 0.3
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 9b1e9500e13c59741ade4587f32fa841, type: 2}
-      StoryText: Your attempts were fruitless and Astropoly automatically fined you
-        for attempting a hack.
+      StoryText: Your attempts were fruitless. Astropoly automatically fined you
+        for attempting the hack.
     - Chance: 0.55
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 072dc168caa46f7458b0d12956819f07, type: 2}
-      StoryText: You tricked its mapping system to think you are the Astropoly Scavenging
-        Processor.
+      StoryText: You tricked the drone's mapping system to think you are the Astropoly
+        Scavenging Processor.
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 0e804f1aec2a37c43b66b89cde86387e, type: 2}
-      StoryText: You hacked it and made it prioritize the most valuable piece of
-        equipment.
+      StoryText: You masterfully hacked the drone and made it prioritize the most
+        valuable piece of equipment.
   - Text: Go for the creds on the closest bodies
     Resolution:
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 8e86a060166bd144fb1a31131627335d, type: 2}
-      StoryText: You found one cred chip and it was magically trapped, fortunately
-        you were still able to get the creds from it.
+      StoryText: "You found a cred chip. \n\nGood news --you were still able to get
+        the creds from it.\n\nBad news -- it was magically trapped and has weakened
+        your whole party. \n"
     - Chance: 0.3
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
@@ -55,27 +56,26 @@ MonoBehaviour:
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 58be128081d31f148b58d2d4de247c3e, type: 2}
-      StoryText: You snag up a whole slew of creds before leaving.
+      StoryText: You snag up a whole slew of creds before jetting.
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: fc1a9de3961300c418bd208dc54e6463, type: 2}
       StoryText: The only cred chip you found had a magical defense mechanism making
         it inoperable and cursing you.
-  - Text: Rush for the Predator X Pro lying on an untouched corpse at the opposite
-      end of the alley
+  - Text: Rush for the Predator X Pro lying on an untouched corpse
     Resolution:
     - Chance: 0.6
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: b8e99f7a3bcd1a649b5eb68b62ccedaf, type: 2}
-      StoryText: You are too slow and you get the sense that one of the Astropoly
-        drones is recording you.
+      StoryText: "You are too slow. \n\nAnd you get the spine-tingling sense that
+        one of the Astropoly drones is recording you."
     - Chance: 0.35
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 464805fa6e89364408967790375fab87, type: 2}
-      StoryText: Upon closer inspection it's the budget version Predator X not the
-        pro version, oh well.
+      StoryText: "The Predator is yours. \n\nUpon closer inspection, you discover
+        that it's the budget version Predator X, not the pro version. \n\nOh well."
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 56e20f5736214d74db6688b31afb60f9, type: 2}
-      StoryText: Just as scavenging drone is picking it up you yank it away from
+      StoryText: Just as a scavenging drone is picking it up you yank it away from
         the drone and book it out of there.

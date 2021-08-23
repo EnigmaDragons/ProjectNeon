@@ -15,11 +15,11 @@ MonoBehaviour:
   displayName: Medigeneix Drug Samples
   settingType: 0
   corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
-  storyText: "Medigeneix is handing out samples of a new contact drug to people,
-    a new addiction that supposedly treats Existential Crisis Syndrome. \r\nYou notice
-    that they are pulling their samples from one larger bin and sometimes a discreet
-    smaller bin. \r\nBeing curious you spy on the pad of the person handing them
-    out, and the smaller bin is labeled \"With additional negative side effects\"."
+  storyText: "Medigeneix is handing out free samples of a new contact drug that supposedly
+    treats Existential Crisis Syndrome. \r\n\nYou notice that they are pulling their
+    samples from one larger bin and sometimes a discreet smaller bin. \n\nBeing curious,
+    you spy on the pad of the technician handing them out. \n\nYou also notice that
+    the smaller bin ihas warning labels detailing additional negative side effects."
   choices:
   - Text: Take some free samples to sell for profit.
     Resolution:
@@ -28,60 +28,61 @@ MonoBehaviour:
       Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
       StoryText: You pocket the handouts and find one of the many willing buyers
         to sell it off to.
-  - Text: Create a diversion and steal the extra harmful drugs and refill it from
-      the bigger bin.
+  - Text: Create a diversion, steal the extra harmful drugs and refill the smaller
+      bin from the larger one.
     Resolution:
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 97a5ee1afcf71bd41942f83741288b5d, type: 2}
-      StoryText: Your diversion pulls their attention, and you steal all of the drug,
-        but then one of the security notices and slams you to the ground. While pinning
-        you he takes back the drugs, and sends a large fine, before telling you to
-        frag off.
+      StoryText: 'Your diversion draws their attention. You steal all of the drug,
+        but then one of the MedSecs notices and slams you to the ground.
+
+
+        While
+        pinning you, he takes back the drugs, and issues a large fine, before telling
+        you to frag off.'
     - Chance: 0.35
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 68249e398e60b7748924347e7dff4f97, type: 2}
-      StoryText: You go into steal the drug and one of the security stop you and
-        mistake you for a desperate druggie, he slaps you with a fine for attempted
-        theft and tells you to frag off.
+      StoryText: "You go to steal the drug and one of the MedSecs stop you and mistake
+        you for a desperate druggie. \n\nHe slaps you with a fine for attempted theft
+        and tells you to frag off."
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 7030d2af5e7f5b74cb6a0e42ffa1dc1a, type: 2}
-      StoryText: One of your team starts a scene with the Medigeneix employee, while
+      StoryText: "One of your team starts a scene with a Medigeneix employee while
         you successfully steal the harmful drugs and replace them, saving people
-        a lot of pain. You think you could use this contact drug to impair enemies
-        in combat.
+        a lot of pain. \n\nYou think you could use this contact drug to impair enemies
+        in combat."
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 92770653945fd4f40b165e3080668a37, type: 2}
-      StoryText: One of your team starts a scene with the Medigeneix employee, while
+      StoryText: "One of your team starts a scene with a Medigeneix employee while
         you successfully steal the harmful drugs and replace them, saving people
-        a lot of pain. The drug uses programmable nano bots to work its magic, possibly
-        a very nice combat tool.
+        a lot of pain. \n\nThe drug uses programmable nano bots to work its magic,
+        possibly a very nice combat tool."
   - Text: Steal the Medigeneix pad and show onlookers what is happening
     Resolution:
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 9a3bacd0d80ead54d903c81687825cc2, type: 2}
-      StoryText: You are shoved to the ground by Medigeneix security and given a
-        good kick, breaking one of your ribs, before he stabs you with a painkiller
-        so you can take yourself to one of their clinics.
+      StoryText: "You are shoved to the ground by a MedSec and given a good kick,
+        breaking one of your ribs. \n\nThen he stabs you with a painkiller to help
+        with the pain so that you can take yourself to one of their clinics."
     - Chance: 0.35
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 2e59545653e68e6449f43f2873e202f5, type: 2}
-      StoryText: One of Medigeneix security stops you comepletely from getting close
-        to the pad with a powerful fist to your face, you think your nose broke.
+      StoryText: "One of the MedSecs violently stops you from getting close to the
+        pad with a powerful fist to your face. \n\nYou think your nose broke."
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: bbe3c809a34fc4e4cb6baca8614f12f9, type: 2}
-      StoryText: You pull the pad from his hands and pass it to the crowd, which
-        begins passing it around. and suddenly there is a small riot. You take this
-        oppertunity to steal the stim system on one of the overwhelmed Medigeneix
-        security.
+      StoryText: "You pull the pad from his hands and pass it to the crowd, who begin
+        passing it around. Suddenly a small riot breaks out. \n\nYou take this opportunity
+        to steal the stim system from one of the overwhelmed MedSecs."
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: be1cd5aace743f740b9106849889a0ca, type: 2}
-      StoryText: You pull the pad from his hands and pass it to the crowd, which
-        begins passing it around. and suddenly there is a small riot. You take this
-        oppertunity to steal the advanced stim systems on one of the overwhelmed
-        Medigeneix security.
+      StoryText: "You pull the pad from his hands and pass it to the crowd, who begin
+        passing it around. Suddenly a small riot breaks out. \n\nYou take this opportunity
+        to steal the advanced stim system from one of the overwhelmed MedSecs."
