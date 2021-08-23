@@ -80,6 +80,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private void OnEnable()
     {
         Message.Subscribe<CardHighlighted>(OnCardHighlighted, this);
+        Message.Subscribe<MemberUnconscious>(_ => UpdateCardHighlight(), this);
     }
 
     private void OnDisable()
@@ -348,13 +349,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         else
             bust.Hide();
         SetCardTint();
-        SetCanPlayHighlight(IsPlayable, 
-            _card != null 
-                ? _cardType.HighlightCondition.Map(condition => condition.ConditionMet(new CardConditionContext(_card, battleState))) 
-                : Maybe<bool>.Missing(),
-            _card != null 
-                ? _cardType.UnhighlightCondition.Map(condition => condition.ConditionMet(new CardConditionContext(_card, battleState))) 
-                : Maybe<bool>.Missing());
+        UpdateCardHighlight();
         if (_card == null || _card.Mode != CardMode.Glitched)
             glitchableComponents.ForEach(x => x.material = null);
         else 
@@ -363,6 +358,19 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         dragRotator.enabled = _isHand;
         onlyEnabledInHand.ForEach(o => o.SetActive(_isHand));
         background.sprite = _card?.IsSinglePlay ?? _cardType.IsSinglePlay ? transientCard : standardCard;
+    }
+
+    private void UpdateCardHighlight()
+    {
+        SetCanPlayHighlight(IsPlayable,
+            _card != null
+                ? _cardType.HighlightCondition.Map(condition =>
+                    condition.ConditionMet(new CardConditionContext(_card, battleState)))
+                : Maybe<bool>.Missing(),
+            _card != null
+                ? _cardType.UnhighlightCondition.Map(condition =>
+                    condition.ConditionMet(new CardConditionContext(_card, battleState)))
+                : Maybe<bool>.Missing());
     }
 
     private void SetCardTint()

@@ -2,14 +2,33 @@ using UnityEngine;
 
 public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNewGameRequested>
 {
-    [SerializeField] private Navigator _navigator;
+    [SerializeField] private Navigator navigator;
     [SerializeField] private SaveLoadSystem io;
+    [SerializeField] private CurrentAdventure currentAdventure;
+    [SerializeField] private AdventureProgress2 adventureProgress2;
+    [SerializeField] private Adventure defaultAdventure;
     
     protected override void Execute(StartNewGame msg)
     {
         io.ClearCurrentSlot();
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
-        _navigator.NavigateToAdventureSelection();
+        SelectDefaultAdventure();
+    }
+
+    private void SelectDefaultAdventure()
+    {
+        var adventure = defaultAdventure;
+        currentAdventure.Adventure = adventure;
+        if (currentAdventure.Adventure.IsV2)
+            adventureProgress2.Init();
+        CurrentGameData.Write(s =>
+        {
+            s.IsInitialized = true;
+            s.Phase = CurrentGamePhase.SelectedAdventure;
+            s.AdventureProgress = adventureProgress2.GetData();
+            return s;
+        });
+        navigator.NavigateToSquadSelection();
     }
 
     protected override void Execute(ContinueCurrentGame msg)
@@ -18,11 +37,11 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         {
             var phase = io.LoadSavedGame();
             if (phase == CurrentGamePhase.NotStarted)
-                _navigator.NavigateToAdventureSelection();
+                navigator.NavigateToAdventureSelection();
             else if (phase == CurrentGamePhase.SelectedAdventure)
-                _navigator.NavigateToSquadSelection();
+                navigator.NavigateToSquadSelection();
             else if (phase == CurrentGamePhase.SelectedSquad)
-                _navigator.NavigateToGameScene();
+                navigator.NavigateToGameScene();
             else if (phase == CurrentGamePhase.LoadError)
             {
                 io.ClearCurrentSlot();

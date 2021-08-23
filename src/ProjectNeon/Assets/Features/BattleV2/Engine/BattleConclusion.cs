@@ -24,12 +24,10 @@ public class BattleConclusion : OnMessage<BattleFinished>
 
     private void GetUserSelectedEquipment(Action onFinished, LootPicker rewardPicker)
     {
-        // Tuned Reward Set
-        var rewardEquips = rewardPicker
-            .PickEquipments(equipmentPrizePool, 1, Rarity.Uncommon, Rarity.Rare, Rarity.Epic)
-            .ToList();
-
-        var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20));
+        var selectedRarity = rewardPicker.RandomRarity();
+        var rewardEquips = new List<Equipment>();
+        
+        var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20, selectedRarity));
         while (rewardEquips.Count < 3)
         {
             var nextEquipment = possibleEquips.Dequeue();
@@ -50,7 +48,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
 
     private void GetUserSelectedRewardCard(Action onFinished, LootPicker rewardPicker)
     {
-        var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, RarityExtensions.AllExceptStarters);
+        var selectedRarity = rewardPicker.RandomRarity();
+        var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, selectedRarity);
         var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party)).ToArray().Shuffled();
         Message.Publish(new GetUserSelectedCard(rewardCards, card =>
         {

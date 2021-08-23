@@ -13,6 +13,8 @@ public class LootPicker
         this.factors = factors;
         this.party = party;
     }
+
+    public Rarity RandomRarity() => factors.Random();
     
     public CardTypeData[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
     {
