@@ -51,11 +51,11 @@ public class EquipmentPool : ScriptableObject
         .Shuffled()
         .Take(n);
 
-    public Equipment Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party)
+    public Equipment Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, string corp)
     {
         try
         {
-            return All.Where(x => x.Slot == slot && x.Rarity == rarity && party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains)))
+            return All.Where(x => x.Slot == slot && x.Rarity == rarity && party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains)) && (string.IsNullOrWhiteSpace(corp) || x.Corp == corp))
                 .Random();
         }
         catch (Exception e)
