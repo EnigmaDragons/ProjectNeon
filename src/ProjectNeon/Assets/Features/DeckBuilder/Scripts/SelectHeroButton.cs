@@ -24,7 +24,7 @@ public class SelectHeroButton : MonoBehaviour
 
     private void Update()
     {
-        if (toTint == null || image == null || selected == null)
+        if (_heroesDeck == null || toTint == null || image == null || selected == null)
             return;
         
         selected.gameObject.SetActive(state.SelectedHeroesDeck == _heroesDeck);
