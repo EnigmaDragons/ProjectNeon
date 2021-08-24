@@ -21,7 +21,7 @@ Setup:
 1. Clone this repository using git
 2. Install any C# IDE of your choice. [Visual Studio 2019](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16) recommended.
 3. Install [Unity Hub](https://unity3d.com/get-unity/download)
-4. Launch Unity Hub and Install Unity Version 2019.2.0f1
+4. Launch Unity Hub and Install Unity Version 2019.3.1f1
 5. In Unity Hub, click Add
 6. Browse and select `../repo/src/ProjectNeon`
 7. Click on `ProjectNeon`
@@ -35,9 +35,10 @@ Setup:
 - Character Art: Herbert Losloso
 - Environment Art: GraphicEdit
 - User Interface:
-- Game Battle Design: Caleb Reinagel
-- Game Progression Design: Caleb Reinagel
-- Sound Effects:
+- Game Design: Silas Reinagel
+- Game Design: Noah Reinagel
+- Game Design: Caleb Reinagel
+- Sound Effects: Jean-Alexander Nevskiy
 - Music: Ian Booms
 - Programming: Silas Reinagel
 - Programming: Paulo Lobo

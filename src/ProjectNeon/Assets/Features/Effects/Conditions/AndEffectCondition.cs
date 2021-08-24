@@ -1,3 +1,4 @@
+using System.Linq;
 
 public class AndEffectCondition : EffectCondition
 {
@@ -5,7 +6,7 @@ public class AndEffectCondition : EffectCondition
 
     public AndEffectCondition(params EffectCondition[] conditions)
     {
-        _conditions = conditions;
+        _conditions = conditions.Where(c => c != null).ToArray();
     }
 
     public Maybe<string> GetShouldNotApplyReason(EffectContext ctx)
