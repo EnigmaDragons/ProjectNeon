@@ -15,18 +15,21 @@ public class MemberResourcePanel : MonoBehaviour
     {
         var resourceTypes = h.Stats.ResourceTypes;
         var baseResourceTypes = h.BaseStats.ResourceTypes;
+        
         resource1Icon.gameObject.SetActive(resourceTypes.Length > 0);
         resource1Text.gameObject.SetActive(resourceTypes.Length > 0);
-        resource2Icon.gameObject.SetActive(resourceTypes.Length > 1);
-        resource2Text.gameObject.SetActive(resourceTypes.Length > 1);
-        if (resourceTypes.Length > 0)
+        if (resourceTypes.Length > 0 && baseResourceTypes.Length > 0)
         {
             
             resource1Icon.sprite = resourceTypes[0].Icon;
             resource1Text.text = $"{resourceTypes[0].StartingAmount}/{resourceTypes[0].MaxAmount}";
             resource1Text.color = ColorFor(((resourceTypes[0].StartingAmount - baseResourceTypes[0].StartingAmount) * 10) + (resourceTypes[0].MaxAmount - baseResourceTypes[0].MaxAmount));
         }
-        if (resourceTypes.Length > 1)
+        
+        var hasSecondResource = resourceTypes.Length > 1 && baseResourceTypes.Length > 1;
+        resource2Icon.gameObject.SetActive(hasSecondResource);
+        resource2Text.gameObject.SetActive(hasSecondResource);
+        if (hasSecondResource)
         {
             resource2Icon.sprite = resourceTypes[1].Icon;
             resource2Text.text = $"{resourceTypes[1].StartingAmount}/{resourceTypes[1].MaxAmount}";
