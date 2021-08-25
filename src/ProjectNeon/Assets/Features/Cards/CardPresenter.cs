@@ -75,7 +75,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public bool IsPlayable { get; private set; }
     public bool IsDragging { get; private set; } = false;
     
-    private string CardName => _cardType?.Name ?? "";
+    public string CardName => _cardType?.Name ?? "";
 
     private void OnEnable()
     {

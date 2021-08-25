@@ -40,6 +40,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     private IEnumerator ExecuteSetupAsync()
     {
         BeginPhase(BattleV2Phase.Setup);
+        BattleLog.Write("Battle Setup Begun");
         _triggeredBattleFinish = false;
         yield return setup.Execute();
         BattleLog.Write("Battle Started");

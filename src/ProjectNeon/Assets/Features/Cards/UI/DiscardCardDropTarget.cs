@@ -13,7 +13,11 @@ public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterH
     {
         var cardComponent = eventData.pointerDrag.GetComponent<CardPresenter>();
         if (cardComponent != null)
+        {
             cardComponent.Discard();
+            BattleLog.Write($"Trashed {cardComponent.CardName}");
+            Message.Publish(new CheckForAutomaticTurnEnd());
+        }
         _shouldShake = false;
         MouseDragState.Set(false);
     }
