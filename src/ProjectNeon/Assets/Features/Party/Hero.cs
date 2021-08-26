@@ -15,6 +15,7 @@ public class Hero
 
     private IStats _statAdditions = new StatAddends();
     private Maybe<StatType> _primaryStat = Maybe<StatType>.Missing();
+    private IResourceType _primaryResourceType;
 
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
@@ -24,6 +25,7 @@ public class Hero
         equipment = new HeroEquipment(character.Archetypes.ToArray());
         health = new HeroHealth(() => Stats);
         basicCard = character.BasicCard;
+        _primaryResourceType = character.Stats.ResourceTypes.FirstAsMaybe().Select(r => r, () => new InMemoryResourceType());
     }
 
     public string Name => character.Name;
@@ -46,7 +48,7 @@ public class Hero
     // TODO: Maybe don't calculate this every time
     public IStats Stats => Character.Stats
         .Plus(_statAdditions)
-        .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers).ToArray()))
+        .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers.Select(r => r.WithPrimaryResourceMappedForOwner(_primaryResourceType))).ToArray()))
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
         .Plus(health.AdditiveStats)
         .Times(Equipment.All.Select(e => e.MultiplierStats()))

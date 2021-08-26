@@ -22,4 +22,17 @@ public static class ResourceTypeExtensions
         StartingAmount =  starting,
         MaxAmount = max
     };
+    
+    public static IResourceType WithName(this IResourceType r, string name) => new InMemoryResourceType
+    {
+        Name = name,
+        Icon = r.Icon,
+        StartingAmount =  r.StartingAmount,
+        MaxAmount = r.MaxAmount
+    };
+
+    public static IResourceType WithPrimaryResourceMappedForOwner(this IResourceType r, IResourceType primaryResourceType) 
+        => r.Name.Equals("PrimaryResource") 
+            ? r.WithName(primaryResourceType.Name) 
+            : r;
 }
