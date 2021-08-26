@@ -38,5 +38,9 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
         return this;
     }
 
-    public void OnPointerDown(PointerEventData eventData) => _onClick();
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+            _onClick();
+    }
 }
