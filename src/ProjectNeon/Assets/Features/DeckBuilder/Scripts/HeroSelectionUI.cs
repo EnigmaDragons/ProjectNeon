@@ -13,6 +13,7 @@ public class HeroSelectionUI : MonoBehaviour
 
     public void Init()
     {
+        Log.Info("Hero Selection UI - Init");
         var buttons = new List<RectTransform>();
         state.HeroesDecks = party.Decks.Select((deck, i) => new HeroesDeck { Deck = deck.Cards.ToList(), Hero = party.Heroes[i]}).ToList();
         state.HeroesDecks.ForEach(x =>

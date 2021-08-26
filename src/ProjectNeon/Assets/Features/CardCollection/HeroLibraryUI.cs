@@ -18,6 +18,7 @@ public class HeroLibraryUI : MonoBehaviour
     {
         heroSelector.Init(library.UnlockedHeroes.Cast<HeroCharacter>().ToArray(), GenerateCardSelection);
         GenerateCardSelection(library.UnlockedHeroes.First());
+        Log.Info("Hero Library UI - Init");
     }
 
     private void GenerateCardSelection(HeroCharacter hero)

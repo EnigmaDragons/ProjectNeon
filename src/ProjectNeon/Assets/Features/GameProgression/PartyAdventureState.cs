@@ -71,6 +71,7 @@ public sealed class PartyAdventureState : ScriptableObject
         
         equipment = new PartyEquipmentCollection();
         InitArchKeyHeroes();
+        Log.Info("Party Adventure State Initialized");
         return this;
     }
 
