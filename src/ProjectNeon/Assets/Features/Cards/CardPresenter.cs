@@ -133,6 +133,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onRightClick = _isHand ? ToggleAsBasic : (Action)card.ShowDetailedCardView;
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
+       
     }
     
     public void Set(CardTypeData cardType, Action onClick)
@@ -172,6 +173,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onClick = onClick;
         _onMiddleMouse = () => { };
         _onRightClick = () => { };
+       
     }
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
@@ -232,6 +234,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         DisableSelectedHighlight();
         if (!conditionMetHighlight && !conditionNotMetHighlight && highlightShouldBeActive)
             highlight.SetActive(true);
+        
     }
 
     public void SetSiblingIndex(int index) => _siblingIndex = index;
