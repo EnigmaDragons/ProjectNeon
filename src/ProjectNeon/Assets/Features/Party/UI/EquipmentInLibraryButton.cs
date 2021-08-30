@@ -24,6 +24,7 @@ public class EquipmentInLibraryButton : MonoBehaviour
             presenter.Set(e, () => Equip(e));
             countLabel.text = countLabelText;
             darken.SetActive(false);
+           
         }
         else
         {
@@ -41,5 +42,6 @@ public class EquipmentInLibraryButton : MonoBehaviour
             partyAdventureState.UnequipFrom(deckBuilderState.SelectedHeroesDeck.Hero.Equipment.Armor.Value, deckBuilderState.SelectedHeroesDeck.Hero);
         partyAdventureState.EquipTo(e, deckBuilderState.SelectedHeroesDeck.Hero);
         Message.Publish(new EquipmentPickerCurrentGearChanged());
+        FMODUnity.RuntimeManager.PlayOneShot("event:/DeckBulder_Scene/Aux_Click", GetComponent<Transform>().position); //this function is playing a sound when you equip a gear in a Deck Builder
     }
 }

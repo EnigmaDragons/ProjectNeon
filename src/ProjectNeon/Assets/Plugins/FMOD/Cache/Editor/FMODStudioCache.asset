@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: ../../PNFmod/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637656789244472550
+  lastModified: 637659576056208172
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -34,11 +34,11 @@ MonoBehaviour:
   Path: ../../PNFmod/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637656789244482816
+  lastModified: 637659576056218414
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 958
+    Value: 1040
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -61,12 +61,14 @@ MonoBehaviour:
   - {fileID: 1901932781133940388}
   - {fileID: 7830045788625380800}
   - {fileID: 754681403006116794}
+  - {fileID: 1943256569342338503}
+  - {fileID: 7766764354328926094}
   EditorParameters: []
   MasterBanks:
   - {fileID: -9072341958693323127}
   StringsBanks:
   - {fileID: -2720303939250424036}
-  stringsBankWriteTime: 637656789244482816
+  stringsBankWriteTime: 637659576056218414
   cacheVersion: 6
 --- !u!114 &754681403006116794
 MonoBehaviour:
@@ -105,6 +107,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/DeckBulder_Scene/Clear
   guid: 5b212999f99be54d9bdad94fba95fa59
+  Banks:
+  - {fileID: -9072341958693323127}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
+--- !u!114 &1943256569342338503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/DeckBulder_Scene/Aux_Click
+  m_EditorClassIdentifier: 
+  Path: event:/DeckBulder_Scene/Aux_Click
+  guid: 9936a3a3a1638648a326fe59d3f37bd1
   Banks:
   - {fileID: -9072341958693323127}
   IsStream: 0
@@ -154,11 +179,34 @@ MonoBehaviour:
   - {fileID: -9072341958693323127}
   IsStream: 1
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
   Length: 141538
+--- !u!114 &7766764354328926094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/DeckBulder_Scene/Press_Card
+  m_EditorClassIdentifier: 
+  Path: event:/DeckBulder_Scene/Press_Card
+  guid: 29dc8475ee419d4784abe2d6ebf08bc9
+  Banks:
+  - {fileID: -9072341958693323127}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &7830045788625380800
 MonoBehaviour:
   m_ObjectHideFlags: 0
