@@ -1550,6 +1550,7 @@ GameObject:
   - component: {fileID: 7535515524484936994}
   - component: {fileID: 6261975727431490257}
   - component: {fileID: 4507050200854661517}
+  - component: {fileID: 5705607091689300253}
   m_Layer: 5
   m_Name: GearButton
   m_TagString: Untagged
@@ -1660,7 +1661,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1336848049248751410}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5705607091689300253}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4507050200854661517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1675,6 +1688,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: {fileID: 6546041559540170376}
   button: {fileID: 6261975727431490257}
+--- !u!114 &5705607091689300253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305372707916314901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &1305705115535606924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2470,6 +2498,7 @@ GameObject:
   - component: {fileID: 2757068666609690866}
   - component: {fileID: 7214733604287985817}
   - component: {fileID: 6079442455720137180}
+  - component: {fileID: 3542445867989404485}
   m_Layer: 5
   m_Name: StarterToggle
   m_TagString: Untagged
@@ -2573,7 +2602,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3542445867989404485}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &7214733604287985817
 CanvasRenderer:
@@ -2602,6 +2643,21 @@ MonoBehaviour:
   texts: []
   on: {r: 1, g: 1, b: 1, a: 1}
   off: {r: 1, g: 1, b: 1, a: 0.49803922}
+--- !u!114 &3542445867989404485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796660755937503948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &1833533740509650436
 GameObject:
   m_ObjectHideFlags: 0
@@ -4197,6 +4253,7 @@ GameObject:
   - component: {fileID: 2135494345300571078}
   - component: {fileID: 8818415445841724096}
   - component: {fileID: 8803058458851005998}
+  - component: {fileID: 5379995212039808084}
   m_Layer: 5
   m_Name: EnemyButton
   m_TagString: Untagged
@@ -4307,7 +4364,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9035270139303701177}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5379995212039808084}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8803058458851005998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4322,6 +4391,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: {fileID: 8134785740027787420}
   button: {fileID: 8818415445841724096}
+--- !u!114 &5379995212039808084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2570686291739165490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &2612957605072957595
 GameObject:
   m_ObjectHideFlags: 0
@@ -4894,6 +4978,7 @@ GameObject:
   - component: {fileID: 940019513312027290}
   - component: {fileID: 7811632337520054549}
   - component: {fileID: 3891230590624884079}
+  - component: {fileID: 4848376086876910264}
   m_Layer: 5
   m_Name: AugmentToggle
   m_TagString: Untagged
@@ -4996,7 +5081,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4848376086876910264}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &7811632337520054549
 CanvasRenderer:
@@ -5024,6 +5121,21 @@ MonoBehaviour:
   texts: []
   on: {r: 1, g: 1, b: 1, a: 1}
   off: {r: 1, g: 1, b: 1, a: 0.49803922}
+--- !u!114 &4848376086876910264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2918902314816332096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &2973623010710711613
 GameObject:
   m_ObjectHideFlags: 0
@@ -5146,7 +5258,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PageViewer, GameAssembly
-        m_MethodName: PreviousPage
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6864,6 +6976,7 @@ GameObject:
   - component: {fileID: 5250730912033720737}
   - component: {fileID: 3449071846691551813}
   - component: {fileID: 998095393653876627}
+  - component: {fileID: 7659709428486939082}
   m_Layer: 5
   m_Name: ArmorToggle
   m_TagString: Untagged
@@ -6966,7 +7079,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7659709428486939082}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &3449071846691551813
 CanvasRenderer:
@@ -6994,6 +7119,21 @@ MonoBehaviour:
   texts: []
   on: {r: 1, g: 1, b: 1, a: 1}
   off: {r: 1, g: 1, b: 1, a: 0.49803922}
+--- !u!114 &7659709428486939082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089089467613221872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &4293669802675751306
 GameObject:
   m_ObjectHideFlags: 0
@@ -7523,6 +7663,7 @@ GameObject:
   - component: {fileID: 8317085732301272853}
   - component: {fileID: 7333382859231501282}
   - component: {fileID: 6824517932210812895}
+  - component: {fileID: 7518179221368879537}
   m_Layer: 5
   m_Name: EpicToggle
   m_TagString: Untagged
@@ -7626,7 +7767,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7518179221368879537}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &7333382859231501282
 CanvasRenderer:
@@ -7655,6 +7808,21 @@ MonoBehaviour:
   texts: []
   on: {r: 1, g: 1, b: 1, a: 1}
   off: {r: 1, g: 1, b: 1, a: 0.49803922}
+--- !u!114 &7518179221368879537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425845195005102505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &4518693809890149358
 GameObject:
   m_ObjectHideFlags: 0
@@ -7932,6 +8100,7 @@ GameObject:
   - component: {fileID: 5114657171660500430}
   - component: {fileID: 1080730816672751551}
   - component: {fileID: 2240820232294339021}
+  - component: {fileID: 1189588874896498300}
   m_Layer: 5
   m_Name: WeaponToggle
   m_TagString: Untagged
@@ -8034,7 +8203,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1189588874896498300}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &1080730816672751551
 CanvasRenderer:
@@ -8062,6 +8243,21 @@ MonoBehaviour:
   texts: []
   on: {r: 1, g: 1, b: 1, a: 1}
   off: {r: 1, g: 1, b: 1, a: 0.49803922}
+--- !u!114 &1189588874896498300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4635530701098799044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &4655726343858411350
 GameObject:
   m_ObjectHideFlags: 0
@@ -8657,6 +8853,7 @@ GameObject:
   - component: {fileID: 3472312835855885106}
   - component: {fileID: 7041863948627074733}
   - component: {fileID: 2625161542785201507}
+  - component: {fileID: 1222631523258360473}
   m_Layer: 5
   m_Name: RareToggle
   m_TagString: Untagged
@@ -8760,7 +8957,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1222631523258360473}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &7041863948627074733
 CanvasRenderer:
@@ -8789,6 +8998,21 @@ MonoBehaviour:
   texts: []
   on: {r: 1, g: 1, b: 1, a: 1}
   off: {r: 1, g: 1, b: 1, a: 0.49803922}
+--- !u!114 &1222631523258360473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4944064112626520533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &5013755339263837302
 GameObject:
   m_ObjectHideFlags: 0
@@ -9433,6 +9657,7 @@ GameObject:
   - component: {fileID: 3023035953528880506}
   - component: {fileID: 4502378687228390281}
   - component: {fileID: 2763353635746622491}
+  - component: {fileID: 2725094444682130841}
   m_Layer: 5
   m_Name: UncommonToggle
   m_TagString: Untagged
@@ -9536,7 +9761,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2725094444682130841}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &4502378687228390281
 CanvasRenderer:
@@ -9565,6 +9802,21 @@ MonoBehaviour:
   texts: []
   on: {r: 1, g: 1, b: 1, a: 1}
   off: {r: 1, g: 1, b: 1, a: 0.49803922}
+--- !u!114 &2725094444682130841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5705889091219097686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &5742435079892512487
 GameObject:
   m_ObjectHideFlags: 0
@@ -9987,6 +10239,7 @@ GameObject:
   - component: {fileID: 3126730091141419100}
   - component: {fileID: 1022990133075696835}
   - component: {fileID: 6199362508733046759}
+  - component: {fileID: 933219034315681812}
   m_Layer: 5
   m_Name: DeckButton
   m_TagString: Untagged
@@ -10097,7 +10350,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1988767275520275910}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 933219034315681812}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6199362508733046759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10112,6 +10377,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: {fileID: 8682662151960952164}
   button: {fileID: 1022990133075696835}
+--- !u!114 &933219034315681812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843816994489764320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &5910829990279009560
 GameObject:
   m_ObjectHideFlags: 0
@@ -13025,6 +13305,7 @@ GameObject:
   - component: {fileID: 2490089293947473429}
   - component: {fileID: 4409441835114519484}
   - component: {fileID: 5296204530081432681}
+  - component: {fileID: 8528332780550768844}
   m_Layer: 5
   m_Name: Clear
   m_TagString: Untagged
@@ -13133,7 +13414,34 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4409441835114519484}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8528332780550768844}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8528332780550768844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7669112430464097098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Clear
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &7734482347569174459
 GameObject:
   m_ObjectHideFlags: 0
@@ -13942,6 +14250,7 @@ GameObject:
   - component: {fileID: 5482778169698155410}
   - component: {fileID: 7167590647071727343}
   - component: {fileID: 3807487440705431597}
+  - component: {fileID: 2317526642469778588}
   m_Layer: 5
   m_Name: CommonToggle
   m_TagString: Untagged
@@ -14045,7 +14354,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2317526642469778588}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &7167590647071727343
 CanvasRenderer:
@@ -14074,6 +14395,21 @@ MonoBehaviour:
   texts: []
   on: {r: 1, g: 1, b: 1, a: 1}
   off: {r: 1, g: 1, b: 1, a: 0.49803922}
+--- !u!114 &2317526642469778588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8299419860075663147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &8457310684021354630
 GameObject:
   m_ObjectHideFlags: 0
@@ -15274,6 +15610,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!114 &7029505872687993812 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 1948373065890594313}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4454142683821522612 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -15301,17 +15648,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 1948373065890594313}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7029505872687993812 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 1948373065890594313}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2753828232921111437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16852,6 +17188,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2705e455513daf84095eba39f4b6d722, type: 3}
+--- !u!224 &3628701572688964248 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 551439228174970086, guid: 2705e455513daf84095eba39f4b6d722, type: 3}
+  m_PrefabInstance: {fileID: 3890168709843732094}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3628701572688964249 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 551439228174970087, guid: 2705e455513daf84095eba39f4b6d722, type: 3}
@@ -16863,11 +17204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e2c0876b6844b3815fc36bd365ab60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &3628701572688964248 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 551439228174970086, guid: 2705e455513daf84095eba39f4b6d722, type: 3}
-  m_PrefabInstance: {fileID: 3890168709843732094}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4754615994345472017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17928,17 +18264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f1c274c540e41cf9fa6c68209bff3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5392055461166115748 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!224 &7512191043591842574 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 7786200425338514201}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1624098157195675332 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -17950,11 +18280,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &7512191043591842574 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!114 &5392055461166115748 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 7786200425338514201}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8048026664756140236
 PrefabInstance:
   m_ObjectHideFlags: 0

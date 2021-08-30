@@ -10,6 +10,7 @@ public class ReferencedCardPresenter : OnMessage<ShowReferencedCard, HideReferen
     {
         var cp = Instantiate(cardPrototype, _parent.transform);
         cp.Set(c);
+        
     }
 
     private void Show(CardTypeData c)

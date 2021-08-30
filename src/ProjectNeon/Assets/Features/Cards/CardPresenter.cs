@@ -133,7 +133,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onRightClick = _isHand ? ToggleAsBasic : (Action)card.ShowDetailedCardView;
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
-       
+        
+
     }
     
     public void Set(CardTypeData cardType, Action onClick)
@@ -149,6 +150,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _isHand = false;
         _requiresPlayerTargeting = false;
         RenderCardType();
+        
     }
 
     private void LateUpdate()
@@ -173,7 +175,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onClick = onClick;
         _onMiddleMouse = () => { };
         _onRightClick = () => { };
-       
+        
+
     }
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;

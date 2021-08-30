@@ -59,5 +59,6 @@ public class CardInLibraryButton : MonoBehaviour
     {
         state.SelectedHeroesDeck.Deck.Add(card);
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
+        FMODUnity.RuntimeManager.PlayOneShot("event:/DeckBulder_Scene/Press_Card", GetComponent<Transform>().position);
     }
 }
