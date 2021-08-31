@@ -2,8 +2,9 @@
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.EventSystems;
 
-public class CardInLibraryButton : MonoBehaviour
+public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private CardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
@@ -60,5 +61,14 @@ public class CardInLibraryButton : MonoBehaviour
         state.SelectedHeroesDeck.Deck.Add(card);
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
         Message.Publish(new CardAddedToDeck(transform));
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Message.Publish(new CardHovered(transform));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
     }
 }
