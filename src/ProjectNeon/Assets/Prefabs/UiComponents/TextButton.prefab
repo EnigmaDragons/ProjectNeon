@@ -150,7 +150,6 @@ GameObject:
   - component: {fileID: 2580615212551995239}
   - component: {fileID: 1362238914015055632}
   - component: {fileID: 1465932525613861321}
-  - component: {fileID: 1244479472613307352}
   m_Layer: 0
   m_Name: TextButton
   m_TagString: Untagged
@@ -259,19 +258,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1323814454254533983}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1244479472613307352}
-        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
-        m_MethodName: PlayOneShot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2799631306169696445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,19 +349,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1465932525613861321}
           m_TargetAssemblyTypeName: ButtonSounds, EnigmaDragons.Core
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1244479472613307352}
-          m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
-          m_MethodName: 
+          m_MethodName: OnClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -397,31 +372,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bigClickSound:
-    name: 
     clip: {fileID: 8300000, guid: f279b0aebb3dde74cbc1da0401e3e505, type: 3}
     volume: 1
   standardClickSound:
-    name: 
     clip: {fileID: 8300000, guid: d08724183a430614cb17c282c702f019, type: 3}
     volume: 1
   useBigClickSound: 0
   hoverSound:
-    name: 
     clip: {fileID: 8300000, guid: e70dd93afbbb31c4eb70d5324ccc1160, type: 3}
     volume: 0.4
   player: {fileID: 11400000, guid: a3e8aeef9bbd0bd4ba7514ec36cb1758, type: 2}
---- !u!114 &1244479472613307352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038136876053344907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/DeckBulder_Scene/Battle_Start
-  PlayOnAwake: 0
-  PlayOnDestroy: 0
