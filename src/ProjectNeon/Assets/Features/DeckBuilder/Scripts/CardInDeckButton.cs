@@ -37,6 +37,7 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
         state.SelectedHeroesDeck.Deck.Remove(state.SelectedHeroesDeck.Deck.First(x => x.Name == _cardType.Name));
         _count--;
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
+        Message.Publish(new CardRemovedFromDeck(transform));
     }
 
     public void OnHover()
