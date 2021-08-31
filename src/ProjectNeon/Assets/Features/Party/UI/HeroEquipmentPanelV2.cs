@@ -18,13 +18,13 @@ public class HeroEquipmentPanelV2 : MonoBehaviour
             () => h.Equipment.Weapon.IfPresent(e =>
             {
                 party.UnequipFrom(e, h);
-                Message.Publish(new EquipmentPickerCurrentGearChanged());
+                Message.Publish(new EquipmentPickerCurrentGearChanged(transform, false));
             }));
         armorSlot.Initialized(EquipmentSlot.Armor, h.Equipment.Armor, 
             () => h.Equipment.Armor.IfPresent(e =>
             {
                 party.UnequipFrom(e, h);
-                Message.Publish(new EquipmentPickerCurrentGearChanged());
+                Message.Publish(new EquipmentPickerCurrentGearChanged(transform, false));
             }));
         InitAugmentSlot(augment1Slot, 1);
         InitAugmentSlot(augment2Slot, 2);
@@ -43,7 +43,7 @@ public class HeroEquipmentPanelV2 : MonoBehaviour
             () => a.IfPresent(e =>
             {
                 party.UnequipFrom(e, h);
-                Message.Publish(new EquipmentPickerCurrentGearChanged());
+                Message.Publish(new EquipmentPickerCurrentGearChanged(transform, false));
             }));
     }
 }
