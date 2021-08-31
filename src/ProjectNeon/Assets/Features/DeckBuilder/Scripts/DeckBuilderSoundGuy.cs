@@ -14,7 +14,7 @@ public class DeckBuilderSoundGuy : MonoBehaviour
         Message.Subscribe<EquipmentPickerCurrentGearChanged>(e => OnEquipped(e), this);
         Message.Subscribe<CardAddedToDeck>(e => PlayOneShot(OnCardAddedToDeck, e.UiSource), this);
         Message.Subscribe<CardRemovedFromDeck>(e => PlayOneShot(OnCardRemovedFromDeck, e.UiSource), this);
-        Message.Subscribe<CardHovered>(e => PlayOneShot(OnCardHovered, e.UiSource), this);
+       //Message.Subscribe<CardHovered>(e => PlayOneShot(OnCardHovered, e.UiSource), this);
     }
 
     private void OnEquipped(EquipmentPickerCurrentGearChanged msg)

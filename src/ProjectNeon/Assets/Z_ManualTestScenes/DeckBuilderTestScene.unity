@@ -641,26 +641,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc3a751049287d1418520f42abd420c1, type: 3}
---- !u!1 &1454220328 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3481146738482792223, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
+--- !u!114 &1454220330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4414136008047576652, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
   m_PrefabInstance: {fileID: 3966946454185095227}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1454220337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1454220328}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: event:/DeckBulder_Scene/Scene_Start
-  PlayOnAwake: 0
-  PlayOnDestroy: 0
 --- !u!1 &1494697345 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3350513129549452697, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
@@ -712,26 +703,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1671858385 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3966946454467384741, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
-  m_PrefabInstance: {fileID: 3966946454185095227}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1671858389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671858385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/DeckBulder_Scene/Scene_Start
-  PlayOnAwake: 0
-  PlayOnDestroy: 1
 --- !u!114 &1847810738 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8378252853363177765, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
@@ -1335,6 +1306,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1473670445315913910, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1476797073625262134, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1442,6 +1417,22 @@ PrefabInstance:
     - target: {fileID: 2266013279010617480, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269432201102729569, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
+      propertyPath: OnCardHovered
+      value: event:/DeckBulder_Scene/Hover
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269432201102729569, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
+      propertyPath: OnEquipmentEquipped
+      value: event:/DeckBulder_Scene/Aux_Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269432201102729569, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
+      propertyPath: OnCardRemovedFromDeck
+      value: event:/DeckBulder_Scene/Aux_Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269432201102729569, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
+      propertyPath: OnEquipmentUnequipped
+      value: event:/DeckBulder_Scene/Aux_Click
       objectReference: {fileID: 0}
     - target: {fileID: 2286192311375084516, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1821,23 +1812,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4530844564970977924, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4530844564970977924, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4530844564970977924, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
+      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1454220330}
+    - target: {fileID: 4530844564970977924, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1454220337}
+      objectReference: {fileID: 0}
     - target: {fileID: 4530844564970977924, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4530844564970977924, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
+      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530844564970977924, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: PlayOneShot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530844564970977924, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
+      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TriggerAudio, GameAssembly
       objectReference: {fileID: 0}
     - target: {fileID: 4530844564970977924, guid: aaed5a5f5c6d7824db4c54534af4e638, type: 3}
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
