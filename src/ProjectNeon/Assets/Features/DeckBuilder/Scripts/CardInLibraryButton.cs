@@ -39,7 +39,7 @@ public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointer
         && state.SelectedHeroesDeck.Deck.Count(x => x.Id == c.Id) < 4
         && (state.SelectedHeroesDeck.Deck.GroupBy(x => x.Name).Count() < 12 || state.SelectedHeroesDeck.Deck.Any(x => x.Name == c.Name))
             ? (Action)(() => AddCard(c))
-            : () => { };
+            : () => Message.Publish(new CardAddToDeckAttemptRejected(transform));
     
     private void UpdateNumberText(int numTotal, int numAvailable) 
         => numCopiesLabel.text = $"{numAvailable}/{numTotal}";
