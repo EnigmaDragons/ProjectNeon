@@ -47,6 +47,7 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
             _hoverCard.GetComponent<HoverCard>().Init(_card.Value);
         else
             _hoverCard.GetComponent<HoverCard>().Init(_cardType);
+        Message.Publish(new CardHoveredOnDeck(transform));
     }
 
     public void OnExit()

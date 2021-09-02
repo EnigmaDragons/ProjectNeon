@@ -8,6 +8,9 @@ public class DeckBuilderSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnCardAddedToDeck;
     [SerializeField, FMODUnity.EventRef] private string OnCardRemovedFromDeck;
     [SerializeField, FMODUnity.EventRef] private string OnCardHovered;
+    [SerializeField, FMODUnity.EventRef] private string OnCardHoveredOnDeck;
+    [SerializeField, FMODUnity.EventRef] private string OnArchetypeToggled;
+    [SerializeField, FMODUnity.EventRef] private string OnBattleStart;
 
     private void OnEnable()
     {
@@ -15,6 +18,9 @@ public class DeckBuilderSoundGuy : MonoBehaviour
         Message.Subscribe<CardAddedToDeck>(e => PlayOneShot(OnCardAddedToDeck, e.UiSource), this);
         Message.Subscribe<CardRemovedFromDeck>(e => PlayOneShot(OnCardRemovedFromDeck, e.UiSource), this);
        //Message.Subscribe<CardHovered>(e => PlayOneShot(OnCardHovered, e.UiSource), this);
+       Message.Subscribe<CardHoveredOnDeck>(e => PlayOneShot(OnCardHoveredOnDeck, e.UiSource), this);
+        //Message.Subscribe<ArchetypeToggled>(e => PlayOneShot(OnArchetypeToggled, e.UiSource), this);
+        Message.Subscribe<StartBattleInitiated>(e => PlayBattleStart (e), this);
     }
 
     private void OnEquipped(EquipmentPickerCurrentGearChanged msg)
@@ -23,6 +29,11 @@ public class DeckBuilderSoundGuy : MonoBehaviour
             PlayOneShot(OnEquipmentEquipped, msg.UiSource);
         else if (!msg.IsEquipped)
             PlayOneShot(OnEquipmentUnequipped, msg.UiSource);
+    }
+    private void PlayBattleStart(StartBattleInitiated msg)
+    {
+        Log.Info("BattleStart");
+            PlayOneShot(OnBattleStart, msg.UiSource);
     }
 
     private void OnDisable()
