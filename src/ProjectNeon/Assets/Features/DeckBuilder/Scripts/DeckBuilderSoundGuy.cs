@@ -11,6 +11,7 @@ public class DeckBuilderSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnCardHoveredOnDeck;
     [SerializeField, FMODUnity.EventRef] private string OnArchetypeToggled;
     [SerializeField, FMODUnity.EventRef] private string OnBattleStart;
+    [SerializeField, FMODUnity.EventRef] private string Error;
 
     private void OnEnable()
     {
@@ -21,6 +22,7 @@ public class DeckBuilderSoundGuy : MonoBehaviour
         Message.Subscribe<CardHoveredOnDeck>(e => PlayOneShot(OnCardHoveredOnDeck, e.UiSource), this);
         Message.Subscribe<ArchetypeToggled>(e => ArchToggled(e), this);
         Message.Subscribe<StartBattleInitiated>(e => PlayBattleStart(e), this);
+        Message.Subscribe<CardAddToDeckAttemptRejected>(e => PlayOneShot(Error, e.UiSource), this);
     }
 
     private void ArchToggled(ArchetypeToggled msg)
