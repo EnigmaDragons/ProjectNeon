@@ -18,9 +18,15 @@ public class DeckBuilderSoundGuy : MonoBehaviour
         Message.Subscribe<CardAddedToDeck>(e => PlayOneShot(OnCardAddedToDeck, e.UiSource), this);
         Message.Subscribe<CardRemovedFromDeck>(e => PlayOneShot(OnCardRemovedFromDeck, e.UiSource), this);
        //Message.Subscribe<CardHovered>(e => PlayOneShot(OnCardHovered, e.UiSource), this);
-       Message.Subscribe<CardHoveredOnDeck>(e => PlayOneShot(OnCardHoveredOnDeck, e.UiSource), this);
-        //Message.Subscribe<ArchetypeToggled>(e => PlayOneShot(OnArchetypeToggled, e.UiSource), this);
-        Message.Subscribe<StartBattleInitiated>(e => PlayBattleStart (e), this);
+        Message.Subscribe<CardHoveredOnDeck>(e => PlayOneShot(OnCardHoveredOnDeck, e.UiSource), this);
+        Message.Subscribe<ArchetypeToggled>(e => ArchToggled(e), this);
+        Message.Subscribe<StartBattleInitiated>(e => PlayBattleStart(e), this);
+    }
+
+    private void ArchToggled(ArchetypeToggled msg)
+    {
+        Log.Info("Sound - ArchToggled");
+        PlayOneShot(OnArchetypeToggled, msg.UiSource);
     }
 
     private void OnEquipped(EquipmentPickerCurrentGearChanged msg)
@@ -30,10 +36,11 @@ public class DeckBuilderSoundGuy : MonoBehaviour
         else if (!msg.IsEquipped)
             PlayOneShot(OnEquipmentUnequipped, msg.UiSource);
     }
+    
     private void PlayBattleStart(StartBattleInitiated msg)
     {
-        Log.Info("BattleStart");
-            PlayOneShot(OnBattleStart, msg.UiSource);
+        Log.Info("Sound - BattleStart");
+        PlayOneShot(OnBattleStart, msg.UiSource);
     }
 
     private void OnDisable()
