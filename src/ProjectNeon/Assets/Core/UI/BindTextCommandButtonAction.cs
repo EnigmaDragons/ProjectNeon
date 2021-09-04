@@ -8,6 +8,7 @@ public class BindTextCommandButtonAction : MonoBehaviour
     [SerializeField] private string text;
     [SerializeField] private UnityEvent action;
     [SerializeField] private ButtonSounds sounds;
+    [SerializeField] private FModButtonSounds fmodSounds;
     [SerializeField] private bool isPrimaryActionButton;
 
     private void Awake()
@@ -15,5 +16,7 @@ public class BindTextCommandButtonAction : MonoBehaviour
         btn.Init(text, () => action.Invoke());
         if (sounds != null && isPrimaryActionButton)
             sounds.SetAsPrimary();
+        if (fmodSounds != null && isPrimaryActionButton)
+            fmodSounds.SetAsPrimary();
     }
 }
