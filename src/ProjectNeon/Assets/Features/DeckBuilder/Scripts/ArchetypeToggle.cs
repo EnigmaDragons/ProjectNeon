@@ -15,6 +15,10 @@ public class ArchetypeToggle : MonoBehaviour
         tintToggle.on = new Color(color.r, color.g, color.b, tintToggle.on.a);;
         tintToggle.off = new Color(color.r, color.g, color.b, tintToggle.off.a);
         tintToggle.UpdateTint(false);
-        toggle.onValueChanged.AddListener(x => action(x));
+        toggle.onValueChanged.AddListener(x =>
+        {
+            Message.Publish(new ArchetypeToggled(transform));
+            action(x);
+        });
     }
 }
