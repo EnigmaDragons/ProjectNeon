@@ -13,6 +13,8 @@ public class DeckBuilderSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnBattleStart;
     [SerializeField, FMODUnity.EventRef] private string Error;
 
+    private bool debuggingLoggingEnabled = false;
+
     private void OnEnable()
     {
         Message.Subscribe<EquipmentPickerCurrentGearChanged>(e => OnEquipped(e), this);
@@ -27,12 +29,14 @@ public class DeckBuilderSoundGuy : MonoBehaviour
 
     private void ArchToggled(ArchetypeToggled msg)
     {
-        Log.Info("Sound - ArchToggled");
+        DebugLog("Sound - ArchToggled");
         PlayOneShot(OnArchetypeToggled, msg.UiSource);
     }
 
     private void OnEquipped(EquipmentPickerCurrentGearChanged msg)
     {
+        var actionStr = msg.IsEquipped ? "equipped" : "unequipped";
+        DebugLog($"Sound - Equipment {actionStr}");
         if (msg.IsEquipped)
             PlayOneShot(OnEquipmentEquipped, msg.UiSource);
         else if (!msg.IsEquipped)
@@ -41,15 +45,21 @@ public class DeckBuilderSoundGuy : MonoBehaviour
     
     private void PlayBattleStart(StartBattleInitiated msg)
     {
-        Log.Info("Sound - BattleStart");
+        DebugLog("Sound - BattleStart");
         PlayOneShot(OnBattleStart, msg.UiSource);
     }
 
     private void OnDisable()
     {
-        Message.Unsubscribe(this);   
+        Message.Unsubscribe(this);
     }
 
     private void PlayOneShot(string eventName, Transform uiSource) 
         => FMODUnity.RuntimeManager.PlayOneShot(eventName, uiSource.position);
+
+    private void DebugLog(string msg)
+    {
+        if (debuggingLoggingEnabled)
+            Log.Info(msg);
+    }
 }
