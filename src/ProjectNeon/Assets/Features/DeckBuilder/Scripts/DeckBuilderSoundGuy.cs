@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DeckBuilderSoundGuy : MonoBehaviour
 {
-    [SerializeField, FMODUnity.EventRef] private string OnEquipmentClicked;
+    //[SerializeField, FMODUnity.EventRef] private string OnEquipmentClicked;
     [SerializeField, FMODUnity.EventRef] private string OnEquipmentEquipped;
     [SerializeField, FMODUnity.EventRef] private string OnEquipmentUnequipped;
     [SerializeField, FMODUnity.EventRef] private string OnCardAddedToDeck;

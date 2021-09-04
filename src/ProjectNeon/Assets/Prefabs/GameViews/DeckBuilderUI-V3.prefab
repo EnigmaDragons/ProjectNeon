@@ -5402,14 +5402,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnEquipmentClicked: event:/DeckBulder_Scene/Aux_Click
-  OnEquipmentEquipped: 
-  OnEquipmentUnequipped: 
+  OnEquipmentEquipped: event:/DeckBulder_Scene/Aux_Click
+  OnEquipmentUnequipped: event:/DeckBulder_Scene/EQRemovedFromDeck
   OnCardAddedToDeck: event:/DeckBulder_Scene/Press_Card
-  OnCardRemovedFromDeck: 
-  OnCardHovered: event:/DeckBulder_Scene/Scene_Start
-  OnCardHoveredOnDeck: 
-  OnArchetypeToggled: 
-  OnBattleStart: 
+  OnCardRemovedFromDeck: event:/DeckBulder_Scene/Card_Removed
+  OnCardHovered: event:/DeckBulder_Scene/Hover
+  OnCardHoveredOnDeck: event:/DeckBulder_Scene/Hover
+  OnArchetypeToggled: event:/DeckBulder_Scene/Main_Click
+  OnBattleStart: event:/DeckBulder_Scene/Battle_Start
+  Error: event:/DeckBulder_Scene/ERROR
 --- !u!1 &2973623010710711613
 GameObject:
   m_ObjectHideFlags: 0
