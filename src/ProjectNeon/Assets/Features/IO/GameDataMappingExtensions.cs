@@ -44,14 +44,16 @@ public static class GameDataMappingExtensions
         };
 
     public static GameMapData GetData(this CurrentGameMap3 map)
-        => new GameMapData
-        {
-            GameMapId = map.CurrentMap.id,
-            CurrentNode =  map.CurrentNode.Value,
-            CompletedNodes = map.CompletedNodes.ToArray(),
-            CurrentPosition = map.PreviousPosition,
-            CurrentChoices = map.CurrentChoices.ToArray(),
-            HasCompletedEventEnRoute = map.HasCompletedEventEnRoute,
-            CurrentNodeRngSeed = map.CurrentNodeRngSeed
-        };
+        => map.CurrentMap == null 
+            ? new GameMapData() 
+            : new GameMapData
+                {
+                    GameMapId = map.CurrentMap.id,
+                    CurrentNode =  map.CurrentNode.Value,
+                    CompletedNodes = map.CompletedNodes.ToArray(),
+                    CurrentPosition = map.PreviousPosition,
+                    CurrentChoices = map.CurrentChoices.ToArray(),
+                    HasCompletedEventEnRoute = map.HasCompletedEventEnRoute,
+                    CurrentNodeRngSeed = map.CurrentNodeRngSeed
+                };
 }
