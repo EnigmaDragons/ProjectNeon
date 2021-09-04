@@ -44,11 +44,14 @@ public sealed class AIStrategyGenerator
         return relevantEnemies;
     }
 
+    private IEnumerable<Member> TeamMembers(BattleState s)
+        => _forTeam == TeamType.Enemies
+                ? s.EnemyMembers.Where(h => h.IsConscious()) 
+                : s.Heroes.Where(e => e.IsConscious());
+
     private Member SelectDesignatedAttacker(BattleState s)
     {
-        var team = _forTeam == TeamType.Enemies
-            ? s.EnemyMembers.Where(h => h.IsConscious()) 
-            : s.Heroes.Where(e => e.IsConscious());
+        var team = TeamMembers(s);
         
         var designatedAttacker = team
             .OrderByDescending(e =>
@@ -69,7 +72,7 @@ public sealed class AIStrategyGenerator
 
     private AIStrategy WithRefinedDesignatedAttacker(BattleState s, AIStrategy strategy)
     {
-        if (!strategy.DesignatedAttacker.IsUnconscious())
+        if (strategy.DesignatedAttacker.IsConscious() || TeamMembers(s).None())
             return strategy;
         return new AIStrategy(strategy.SingleMemberAttackTarget, strategy.GroupAttackTarget, SelectDesignatedAttacker(s), strategy.DisabledCard);
     }
