@@ -6,7 +6,8 @@ public class CardViewSound_Deck : MonoBehaviour
 {
     [FMODUnity.EventRef]
     public string Event;
-
+    [FMODUnity.EventRef]
+    public string Event2;
     public void OnEnable()
     {
 
@@ -15,6 +16,6 @@ public class CardViewSound_Deck : MonoBehaviour
 
     public void OnDisable()
     {
-        FMODUnity.RuntimeManager.PlayOneShotAttached(Event, gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(Event2, gameObject);
     }
 }
