@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +15,7 @@ public class ClinicServiceButton : MonoBehaviour
         title.text = data.Name;
         description.text = data.Description;
         cost.text = data.Cost.ToString();
-        button.interactable = data.Enabled;
+        button.interactable = data.Enabled && party.Credits >= data.Cost;
         if (party.Credits >= data.Cost)
             button.onClick.AddListener(() =>
             {
