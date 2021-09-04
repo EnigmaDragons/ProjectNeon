@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResolutionFinished, UpdateAIStrategy>
+public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResolutionFinished, UpdateAIStrategy, MemberUnconscious>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private BattleResolutions resolutions;
@@ -16,7 +16,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     
     private DictionaryWithDefault<int, int> _numberOfCardsPlayedThisTurn = new DictionaryWithDefault<int, int>(0);
     private List<(Member Member, EnemyInstance Enemy)> _enemiesToActThisTurn = new List<(Member Member, EnemyInstance Enemy)>();
-    
+
     public void GenerateAiStrategy()
     {
         DevLog.Write("Generated AI Strategy");
@@ -89,5 +89,11 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     protected override void Execute(UpdateAIStrategy msg)
     {
         _currentTurnStrategy = _enemyStrategy.Update(_currentTurnStrategy, state);
+    }
+
+    protected override void Execute(MemberUnconscious msg)
+    {
+        if (msg.Member.TeamType == TeamType.Enemies)
+            Execute(new UpdateAIStrategy());
     }
 }
