@@ -47,4 +47,15 @@ public sealed class MemberStateTests
         Assert.AreEqual(1, m[TemporalStatType.Prominent], "Didn't Have Expected Taunt");
         Assert.AreEqual(0, m[TemporalStatType.Stealth], "Had Stealth after Taunting");
     }
+
+    [Test]
+    public void MemberState_ApplyDebuffAndThenCleanseDebuffs_CountCorrect()
+    {
+        var m = TestMembers.Any().State;
+        m.Adjust(TemporalStatType.Disabled, 1);
+
+        var numCleansed = m.CleanseDebuffs();
+        
+        Assert.AreEqual(1, numCleansed);
+    }
 }

@@ -15,7 +15,7 @@ public static class AllEffects
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionEffect)},
         { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, 
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionSequence)},
-        { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLogged($"{m.Name} has been cleansed of all debuffs", m.CleanseDebuffs))},
+        { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.Name} has been cleansed of {n} debuffs", n => n > 0, m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
         { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 
             => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, true, amount => amount < 0)},
@@ -111,12 +111,20 @@ public static class AllEffects
         return value;
     }
     
+    private static T BattleLoggedItemIf<T>(Func<T, string> createMessage, Func<T, bool> messageCondition, Func<T> getValue)
+    {
+        var value = getValue();
+        if (messageCondition(value))
+            BattleLog.Write(createMessage(value));
+        return value;
+    }
+    
     private static void BattleLogged(string msg, Action action)
     {
         action();
         BattleLog.Write(msg);
     }
-    
+
     public static bool Apply(EffectData effectData, EffectContext ctx)
     {
         try

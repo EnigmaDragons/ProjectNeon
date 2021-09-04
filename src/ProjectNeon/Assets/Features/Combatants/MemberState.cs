@@ -120,25 +120,17 @@ public sealed class MemberState : IStats
     }
 
     public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
-    public ReactiveStateV2[] ReactiveStates => _reactiveStates.ToArray();
 
     public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Status.Tag == tag)
                                             || _additiveMods.Any(r => r.Status.Tag == tag)
                                             || _multiplierMods.Any(r => r.Status.Tag == tag);
 
     public ITemporalState[] StatusesOfType(StatusTag tag)
-        => OfType(_additiveMods, tag)
-            .Concat(OfType(_multiplierMods, tag))
-            .Concat(OfType(_reactiveStates, tag))
-            .Concat(OfType(_bonusCardPlayers, tag))
-            .ToArray();
+        => TemporalStates.Where(s => s.Status.Tag == tag).ToArray();
 
     public CustomStatusIcon[] CustomStatuses()
         => _customStatusIcons.ToArray();
-
-    private IEnumerable<ITemporalState> OfType(IEnumerable<ITemporalState> states, StatusTag tag)
-        => states.Where(s => s.Status.Tag == tag);
-
+    
     // Bonus Cards 
     public CardType[] GetBonusCards(BattleStateSnapshot snapshot)
         => _bonusCardPlayers
@@ -170,14 +162,11 @@ public sealed class MemberState : IStats
     public ResourceCalculations CalculateResources(CardTypeData card)
     {
         var calc = card.CalculateResources(this);
-        var additives = _additiveResourceCalculators.Select(x => x.GetModifiers(card, this));
-        var multiplicatives = _multiplicativeResourceCalculators.Select(x => x.GetModifiers(card, this));
+        var additives = _additiveResourceCalculators.Select(x => x.GetModifiers(card, this)).ToArray();
+        var multiplicatives = _multiplicativeResourceCalculators.Select(x => x.GetModifiers(card, this)).ToArray();
         return new ResourceCalculations(
-            calc.ResourcePaidType,
-            (calc.ResourcesPaid + additives.Sum(x => x.ResourcesPaid)) * multiplicatives.Product(x => x.ResourcesPaid),
-            calc.ResourceGainedType,
-            (calc.ResourcesGained + additives.Sum(x => x.ResourcesGained)) *
-            multiplicatives.Product(x => x.ResourcesGained),
+            calc.ResourcePaidType, (calc.ResourcesPaid + additives.Sum(x => x.ResourcesPaid)) * multiplicatives.Product(x => x.ResourcesPaid),
+            calc.ResourceGainedType, (calc.ResourcesGained + additives.Sum(x => x.ResourcesGained)) * multiplicatives.Product(x => x.ResourcesGained),
             (calc.XAmount + additives.Sum(x => x.XAmount)) * multiplicatives.Product(x => x.XAmount),
             (calc.XAmountPriceTag + additives.Sum(x => x.XAmountPriceTag)) *
             multiplicatives.Product(x => x.XAmountPriceTag));
@@ -191,21 +180,8 @@ public sealed class MemberState : IStats
             _tagsPlayedCount[tag]++;
     }
 
-    public void DuplicateStatesOfType(StatusTag tag)
-    {
-        _additiveMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(ApplyTemporaryAdditive);
-        _multiplierMods.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(ApplyTemporaryMultiplier);
-        _reactiveStates.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddReactiveState((ReactiveStateV2) s));
-        _transformers.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddEffectTransformer((EffectTransformer) s));
-        _additiveResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddAdditiveResourceCalculator((ResourceCalculator) s));
-        _multiplicativeResourceCalculators.Where(s => s.Status.Tag == tag).Select(s => s.CloneOriginal()).ToList()
-            .ForEach(s => AddMultiplicativeResourceCalculator((ResourceCalculator) s));
-    }
+    public void DuplicateStatesOfType(StatusTag tag) 
+        => DuplicateStatesOfTypeFrom(tag, this);
 
     public void DuplicateStatesOfTypeFrom(StatusTag tag, MemberState member)
     {
@@ -248,23 +224,41 @@ public sealed class MemberState : IStats
             SetHp(CurrentStats.MaxHp());
     });
 
-    public IEnumerable<ITemporalState> DamageOverTimes() => _additiveMods.Where(x => x.Status.Tag == StatusTag.DamageOverTime);
+    public IEnumerable<ITemporalState> DamageOverTimes() => StatusesOfType(StatusTag.DamageOverTime);
 
     public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() =>
     {
         _multiplierMods.Add(mods);
     });
 
-    public void CleanseDebuffs() => PublishAfter(() =>
+    private static readonly TemporalStatType[] DebuffStatTypes = { 
+        TemporalStatType.Disabled, 
+        TemporalStatType.Confused, 
+        TemporalStatType.Blind, 
+        TemporalStatType.Inhibit,
+        TemporalStatType.Stun
+    };
+
+    private IEnumerable<ITemporalState> TemporalStates => _additiveMods
+        .Concat(_multiplierMods)
+        .Concat(_reactiveStates)
+        .Concat(_transformers)
+        .Concat(_additiveResourceCalculators)
+        .Concat(_multiplicativeResourceCalculators);
+    
+    private int GetNumDebuffs()
     {
-        _counters[TemporalStatType.Disabled.ToString()].Set(0);
-        _counters[TemporalStatType.Stun.ToString()].Set(0);
-        _counters[TemporalStatType.Confused.ToString()].Set(0);
-        _counters[TemporalStatType.Blind.ToString()].Set(0);
-        _counters[TemporalStatType.Inhibit.ToString()].Set(0);
+        return DebuffStatTypes.Sum(t => _counters[t.ToString()].Amount)
+            + _preventedTags.Count 
+            + TemporalStates.Count(x => x.IsDebuff);
+    }
+    
+    public int CleanseDebuffs() => -Diff(PublishAfter(() =>
+    {
+        DebuffStatTypes.ForEach(d => _counters[d.ToString()].Set(0));
         _preventedTags = new Dictionary<CardTag, int>();
         RemoveTemporaryEffects(s => s.IsDebuff);
-    });
+    }, GetNumDebuffs));
 
     public void BreakStealth() => PublishAfter(() =>
     {
@@ -273,14 +267,13 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Prominent.ToString()].Set(1);
     });
     
-    public void RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() =>
-    {
-        _additiveMods.RemoveAll(condition);
-        _multiplierMods.RemoveAll(condition);
-        _reactiveStates.RemoveAll(condition);
-        _transformers.RemoveAll(condition);
-        _multiplicativeResourceCalculators.RemoveAll(condition);
-    });
+    public int RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() => 
+        _additiveMods.RemoveAll(condition)
+        + _multiplierMods.RemoveAll(condition)
+        + _reactiveStates.RemoveAll(condition)
+        + _transformers.RemoveAll(condition)
+        + _additiveResourceCalculators.RemoveAll(condition)
+        + _multiplicativeResourceCalculators.RemoveAll(condition));
     
     public void AddReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Add(state));
     public void RemoveReactiveState(ReactiveStateV2 state) => PublishAfter(() => _reactiveStates.Remove(state));
@@ -355,7 +348,6 @@ public sealed class MemberState : IStats
         else
             Counter(resourceName).ChangeBy(-amount);
     });
-    public void SpendPrimaryResource(int numToGive) => PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(-numToGive));
 
     public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any() || _temporalStatsToReduceAtEndOfTurn.Any(x => this[x] > 0); 
     public IPayloadProvider[] GetTurnStartEffects()
@@ -421,7 +413,26 @@ public sealed class MemberState : IStats
             .Concat(_multiplicativeResourceCalculators.Select(m => m.OnTurnEnd()))
             .ToArray();;
     }
-
+    
+    private void PublishAfter(Action action)
+    {
+        var before = ToSnapshot();
+        _versionNumber++;
+        action();
+        WithOtherAdjustmentRulesApplied(before);
+        Message.Publish(new MemberStateChanged(before, this));
+    }
+    
+    private T PublishAfter<T>(Func<T> getResult)
+    {
+        var before = ToSnapshot();
+        _versionNumber++;
+        var result = getResult();
+        WithOtherAdjustmentRulesApplied(before);
+        Message.Publish(new MemberStateChanged(before, this));
+        return result;
+    }
+    
     private T[] PublishAfter<T>(Action action, Func<T> getVal)
     {
         var before = ToSnapshot();
@@ -432,14 +443,5 @@ public sealed class MemberState : IStats
         var afterVal = getVal();
         Message.Publish(new MemberStateChanged(before, this));
         return new T[] {beforeVal, afterVal};
-    }
-    
-    private void PublishAfter(Action action)
-    {
-        var before = ToSnapshot();
-        _versionNumber++;
-        action();
-        WithOtherAdjustmentRulesApplied(before);
-        Message.Publish(new MemberStateChanged(before, this));
     }
 }
