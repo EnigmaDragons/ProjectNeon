@@ -8,5 +8,6 @@ public class EquipmentPickerCurrentGearChanged
     public EquipmentPickerCurrentGearChanged(Transform uiSource, bool isEquipped)
     {
         UiSource = uiSource;
+        IsEquipped = isEquipped;
     }
 }
