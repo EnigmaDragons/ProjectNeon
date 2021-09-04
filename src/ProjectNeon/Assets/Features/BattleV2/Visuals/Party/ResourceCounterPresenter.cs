@@ -34,7 +34,9 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     
     private void UpdateUi(MemberState state)
     {
-        counter.text = $"{state[_resourceType]}/{state.Max(_resourceType.Name)}";
+        var max = state.Max(_resourceType.Name);
+        var maxString = max < 25 ? $"/{max}" : "";
+        counter.text = $"{state[_resourceType]}{maxString}";
     }
 
     public void OnPointerEnter(PointerEventData eventData)
