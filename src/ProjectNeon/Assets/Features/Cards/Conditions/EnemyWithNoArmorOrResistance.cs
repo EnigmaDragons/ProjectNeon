@@ -5,5 +5,6 @@ using UnityEngine;
 public class EnemyWithNoArmorOrResistance : StaticCardCondition
 {
     public override bool ConditionMet(CardConditionContext ctx)
-        => ctx.BattleState.EnemyMembers.Any(x => x.Armor() <= 0 && x.Resistance() <= 0);
+        => ctx.BattleState.GetConsciousEnemies(ctx.Card.Owner)
+            .Any(x => x.Stealth() < 1 && x.Armor() <= 0 && x.Resistance() <= 0);
 }
