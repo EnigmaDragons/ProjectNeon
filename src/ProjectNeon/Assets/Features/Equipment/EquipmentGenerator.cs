@@ -34,8 +34,7 @@ public class EquipmentGenerator
         StatType.StartingShield, 
         StatType.Attack, 
         StatType.Magic, 
-        StatType.Armor, 
-        StatType.Toughness, 
+        StatType.Armor,
         StatType.Resistance, 
         StatType.Leadership
     };
@@ -82,8 +81,7 @@ public class EquipmentGenerator
             ? new[] { 
                 StatType.Attack, StatType.Attack, 
                 StatType.Magic, StatType.Magic, 
-                StatType.Leadership, StatType.Leadership, 
-                StatType.Toughness 
+                StatType.Leadership, StatType.Leadership
             }.Random()
             : new[]
             {
@@ -153,13 +151,12 @@ public class EquipmentGenerator
     private static readonly Dictionary<StatType, int> AdditiveStatsChartPerPoint = new Dictionary<StatType, int>
     {
         { StatType.MaxHP, 4 },
-        { StatType.MaxShield, 5 },
+        { StatType.MaxShield, 3 },
         { StatType.StartingShield, 3 },
         { StatType.Armor, 1 },
         { StatType.Resistance, 1 },
         { StatType.Attack, 1 },
         { StatType.Magic, 1 },
-        { StatType.Toughness, 1 },
         { StatType.Leadership, 1 }
     };
 }
