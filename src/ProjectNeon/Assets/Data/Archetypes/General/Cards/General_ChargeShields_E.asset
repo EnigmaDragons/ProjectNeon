@@ -32,10 +32,16 @@ MonoBehaviour:
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -96,10 +102,16 @@ MonoBehaviour:
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.9 * Toughness
+      Formula: 0.25 * MaxShield
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
