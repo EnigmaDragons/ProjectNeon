@@ -20,7 +20,7 @@ public static class AllEffects
         { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 
             => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, true, amount => amount < 0)},
         { EffectType.ShieldRemoveAll, e => new AegisPreventable(new SimpleEffect(m => BattleLogged($"{m.Name} lost all their shields", () => m.AdjustShield(-999))), "Losing All Shields") },
-        { EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs, e => new ShieldToughnessBasedOnNumberOfOpponentDoTs(e.FloatAmount) },
+        { EffectType.ShieldBasedOnNumberOfOpponentsDoTs, e => new ShieldBasedOnNumberOfOpponentsDoTs(e.FloatAmount) },
         { EffectType.AdjustResourceFlat, e =>  AegisPreventable.If(new FullContextEffect((ctx, duration, m) => m.GainResource(e.EffectScope.Value, e.TotalIntAmount, ctx.AdventureState), e.DurationFormula), e.TotalIntAmount < 0, "Resource Loss") },
         { EffectType.AdjustPrimaryResourceFormula, e => new AegisIfFormulaResult((ctx, amount, m) => 
             m.AdjustPrimaryResource(BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.PrimaryResource.Name}", amount.CeilingInt())), e.Formula, true, amount => amount < 0) },

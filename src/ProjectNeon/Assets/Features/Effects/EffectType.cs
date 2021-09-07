@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 95
+// LAST NUMBER USED: 96
 
 public enum EffectType
 {
@@ -28,7 +28,7 @@ public enum EffectType
     // Shields
     ShieldFormula = 80,
     ShieldRemoveAll = 22,
-    ShieldToughnessBasedOnNumberOfOpponentDoTs = 69,
+    ShieldBasedOnNumberOfOpponentsDoTs = 96,
     
     // Resources
     AdjustResourceFlat = 7,

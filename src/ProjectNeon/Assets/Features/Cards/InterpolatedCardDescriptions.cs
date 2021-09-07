@@ -288,10 +288,10 @@ public static class InterpolatedCardDescriptions
             return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
             return $"{FormulaAmount(data, owner, xCost)} Resources";
-        if (data.EffectType == EffectType.ShieldToughnessBasedOnNumberOfOpponentDoTs)
+        if (data.EffectType == EffectType.ShieldBasedOnNumberOfOpponentsDoTs)
             return owner.IsPresent
-                ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.Toughness]))).ToString()
-                : $"{data.FloatAmount} × TGH";
+                ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.MaxShield]))).ToString()
+                : $"{data.FloatAmount} × MaxShield";
         if (data.EffectType == EffectType.ApplyAdditiveStatInjury)
             return $"{data.FloatAmount} {data.EffectScope}";
         if (data.EffectType == EffectType.ApplyMultiplicativeStatInjury)
