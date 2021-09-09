@@ -14,8 +14,6 @@ public sealed class MemberStatPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI leaderNameLabel;
     [SerializeField] private TextMeshProUGUI armorLabel;
     [SerializeField] private TextMeshProUGUI resistLabel;
-    [SerializeField] private TextMeshProUGUI toughLabel;
-    [SerializeField] private TextMeshProUGUI toughNameLabel;
     [SerializeField] private TextMeshProUGUI econLabel;
     [SerializeField] private TextMeshProUGUI econNameLabel;
     [SerializeField] private TMP_FontAsset normalFont;
@@ -51,11 +49,6 @@ public sealed class MemberStatPanel : MonoBehaviour
         armorLabel.color = ColorFor(difference.Armor());
         resistLabel.text = $"{m.Resistance()}";
         resistLabel.color = ColorFor(difference.Resistance());
-        toughLabel.text = $"{m.Toughness()}";
-        toughLabel.color = ColorFor(difference.Toughness());
-        toughLabel.gameObject.transform.parent.gameObject.SetActive(m.Toughness() > 0);
-        toughLabel.font = h.PrimaryStat == StatType.Toughness ? primaryStatFont : normalFont;
-        toughNameLabel.font = h.PrimaryStat == StatType.Toughness ? primaryStatFont : normalFont;
         econLabel.text = $"{m.Economy()}";
         econLabel.color = ColorFor(difference.Economy());
         econLabel.gameObject.transform.parent.gameObject.SetActive(m.Economy() > 0);
@@ -77,8 +70,6 @@ public sealed class MemberStatPanel : MonoBehaviour
         leaderLabel.gameObject.transform.parent.gameObject.SetActive(s.Leadership() > 0);
         armorLabel.text = $"{s.Armor()}";
         resistLabel.text = $"{s.Resistance()}";
-        toughLabel.text = $"{s.Toughness()}";
-        toughLabel.gameObject.transform.parent.gameObject.SetActive(s.Toughness() > 0);
         econLabel.text = $"{s.Economy()}";
         econLabel.gameObject.transform.parent.gameObject.SetActive(s.Economy() > 0);
         return this;
