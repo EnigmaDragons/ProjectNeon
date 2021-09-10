@@ -33,7 +33,7 @@ public class Enemy : ScriptableObject
         if (detail == null)
             Log.Error($"Enemy {enemyName} has no stage details and can not be used");
         return new EnemyInstance(id, resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
-            detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield, detail.toughness, 
+            detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
             prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 
             isHasty, unique, detail.CounterAdjustments, corp);

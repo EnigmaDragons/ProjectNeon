@@ -40,7 +40,7 @@ public class ReactWithEffectTests
     public void ReactWithEffect_OnDodged_Works()
     {
         var attacker = TestMembers.Any();
-        var possessor = TestMembers.Create(s => s.With(StatType.Toughness, 5).With(StatType.MaxShield, 10));
+        var possessor = TestMembers.Create(s => s.With(StatType.MaxShield, 10));
         possessor.Apply(m => m.Adjust(TemporalStatType.Dodge, 1));
         TestEffects.Apply(Gain5ShieldOnReactionCondition(ReactionConditionType.OnDodged), possessor, possessor);
 
@@ -53,7 +53,7 @@ public class ReactWithEffectTests
     public void ReactWithEffect_OnAegised_Works()
     {
         var attacker = TestMembers.Any();
-        var possessor = TestMembers.Create(s => s.With(StatType.Toughness, 5).With(StatType.MaxShield, 10));
+        var possessor = TestMembers.Create(s => s.With(StatType.MaxShield, 10));
         possessor.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
         TestEffects.Apply(Gain5ShieldOnReactionCondition(ReactionConditionType.OnAegised), possessor, possessor);
 
@@ -83,6 +83,6 @@ public class ReactWithEffectTests
         new EffectData
         {
             EffectType = EffectType.ShieldFormula,
-            Formula = "1 * Toughness"
+            Formula = "5"
         });
 }

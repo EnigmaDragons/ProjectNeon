@@ -21,7 +21,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private int maxHp = 40;
     [SerializeField] private int maxShield = 12;
     [SerializeField] private int startingShield = 0;
-    [SerializeField] private int toughness = 6;
     [SerializeField] private int attack = 8;
     [SerializeField] private int magic = 0;
     [SerializeField] private float armor = 0;
@@ -63,7 +62,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
         .With(StatType.MaxHP, maxHp)
         .With(StatType.MaxShield, maxShield)
         .With(StatType.StartingShield, startingShield)
-        .With(StatType.Toughness, toughness)
         .With(StatType.Attack, attack)
         .With(StatType.Magic, magic)
         .With(StatType.Armor, armor)

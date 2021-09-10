@@ -15,7 +15,6 @@ public class EnemyInstance : EnemyType
     private readonly int _maxHp;
     private readonly int _maxShield;
     private readonly int _startingShield;
-    private readonly int _toughness;
     private readonly int _attack;
     private readonly int _magic;
     private readonly int _leadership;
@@ -46,7 +45,7 @@ public class EnemyInstance : EnemyType
 
     public EnemyInstance(int enemyId, ResourceType resourceType, EffectData[] startOfBattleEffects, int startingResourceAmount, 
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
-        int toughness, int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
+        int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
         int preferredTurnOrder, string name, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp)
     {
@@ -59,7 +58,6 @@ public class EnemyInstance : EnemyType
         _maxHp = maxHp;
         _maxShield = maxShield;
         _startingShield = startingShield;
-        _toughness = toughness;
         _attack = attack;
         _magic = magic;
         _leadership = leadership;
@@ -113,7 +111,6 @@ public class EnemyInstance : EnemyType
         .With(StatType.MaxHP, _maxHp)
         .With(StatType.MaxShield, _maxShield)
         .With(StatType.StartingShield, _startingShield)
-        .With(StatType.Toughness, _toughness)
         .With(StatType.Attack, _attack)
         .With(StatType.Magic, _magic)
         .With(StatType.Leadership, _leadership)

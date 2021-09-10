@@ -10,7 +10,6 @@ public static class StatTypeAliases
         { "ATK", StatType.Attack.ToString() },
         { "MAG", StatType.Magic.ToString() },
         { "ARM", StatType.Armor.ToString() },
-        { "TGH", StatType.Toughness.ToString() },
         { "ECON", StatType.Economy.ToString() },
         { "EC", StatType.Economy.ToString() },
     };
@@ -21,7 +20,6 @@ public static class StatTypeAliases
         { StatType.Attack.ToString(), "ATK" },
         { StatType.Magic.ToString(), "MAG" },
         { StatType.Armor.ToString(), "ARM" },
-        { StatType.Toughness.ToString(), "TGH" },
         { StatType.Economy.ToString(), "EC" },
     };
 }

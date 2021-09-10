@@ -14,7 +14,6 @@ public class EnemyStageDetails
     public int startingPhase = 0;
     public int startingDodge;
     public int startingTaunt;
-    public int toughness;
     public int attack;
     public int magic;
     public int leadership;

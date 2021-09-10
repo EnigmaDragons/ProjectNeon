@@ -15,7 +15,6 @@ public class WithWholeNumbersWhereExpected : IStats
         StatType.Leadership,
         StatType.Magic,
         StatType.Resistance,
-        StatType.Toughness,
         StatType.ExtraCardPlays,
         StatType.MaxHP,
         StatType.MaxShield,

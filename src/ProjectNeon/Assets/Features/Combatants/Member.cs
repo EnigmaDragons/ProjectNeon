@@ -66,7 +66,6 @@ public static class MemberExtensions
     public static int Taunt(this Member m) => RoundUp(m.State[TemporalStatType.Taunt]);
     public static int Stealth(this Member m) => RoundUp(m.State[TemporalStatType.Stealth]);
     public static int Resistance(this Member m) => m.State.Resistance();
-    public static int Toughness(this Member m) => m.State.Toughness();
     public static bool CanPlayCards(this Member m) => m.IsConscious() && !m.IsDisabled();
     public static bool IsConscious(this Member m) => m.State.IsConscious;
     public static bool IsUnconscious(this Member m) => m.State.IsUnconscious;

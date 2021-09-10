@@ -120,7 +120,6 @@ public sealed class InterpolatedCardDescriptionsTests
             new StatAddends()
                 .With(StatType.Damagability, 1)
                 .With(StatType.Attack, 8)
-                .With(StatType.Toughness, 8)
                 .With(StatType.MaxShield, 16)
                 .With(new InMemoryResourceType("Ammo") {MaxAmount = 6, StartingAmount = 6}),
             BattleRole.Unknown,

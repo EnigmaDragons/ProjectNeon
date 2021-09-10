@@ -3,7 +3,6 @@ using System.Collections.Generic;
 public enum StatType
 {
     MaxHP = 0,
-    Toughness = 1,
     Attack = 2,
     Magic = 3,
     Armor = 4,
@@ -22,7 +21,6 @@ public static class StatExtensions
     public static Dictionary<string, bool> _map = new Dictionary<string, bool>
     {
         {StatType.MaxHP.ToString(), true},
-        {StatType.Toughness.ToString(), true},
         {StatType.Attack.ToString(), true},
         {StatType.Magic.ToString(), true},
         {StatType.Armor.ToString(), true},
