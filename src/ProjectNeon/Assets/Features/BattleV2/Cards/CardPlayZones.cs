@@ -73,6 +73,12 @@ public class CardPlayZones : ScriptableObject
 
     public void DrawOneCard()
     {
+        if (HandZone.IsFull)
+        {
+            BattleLog.Write("Hand Is Full. Not Drawing Any More Cards");
+            return;
+        }
+        
         if (DrawZone.IsEmpty)
             Reshuffle();
         HandZone.PutOnBottom(DrawZone.DrawOneCard());
@@ -81,6 +87,12 @@ public class CardPlayZones : ScriptableObject
 
     public void DrawOneCard(Func<Card, bool> cardCondition)
     {
+        if (HandZone.IsFull)
+        {
+            BattleLog.Write("Hand Is Full. Not Drawing Any More Cards");
+            return;
+        }
+        
         if (!DrawZone.Cards.Any(cardCondition))
             Reshuffle();
         HandZone.PutOnBottom(DrawZone.DrawOneCard(cardCondition));
