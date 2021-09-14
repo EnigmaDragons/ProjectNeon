@@ -25,7 +25,7 @@ public sealed class FmodGameAudioManager : ScriptableObject
 
     void Update()
     {
-        MUSIC.setVolume(MusicVolume);
+        
         UI_SFX.setVolume(UI_SFXVolume);
         MASTER.setVolume(MasterVolume);
         //GameSFX.setVolume(GameSFXVolume);
@@ -39,6 +39,8 @@ public sealed class FmodGameAudioManager : ScriptableObject
     public void MusicVolumeLevel(float newMusicVolume)
     {
         MusicVolume = newMusicVolume;
+        MUSIC.setVolume(MusicVolume);
+        Debug.Log("Music_Vol_Changed");
     }
 
     public void SFXVolumeLevel(float newSFXVolume)
