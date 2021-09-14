@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4640586569677998916}
   - component: {fileID: 9029746549933746403}
   - component: {fileID: 5951492772897042450}
-  - component: {fileID: 5701850718895705885}
+  - component: {fileID: 3803075267047892950}
   m_Layer: 5
   m_Name: PreviousButton
   m_TagString: Untagged
@@ -139,9 +139,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5701850718895705885}
-          m_TargetAssemblyTypeName: ButtonSounds, EnigmaDragons.Core
-          m_MethodName: OnHover
+        - m_Target: {fileID: 3803075267047892950}
+          m_TargetAssemblyTypeName: FModButtonSounds, EnigmaDragons.Core
+          m_MethodName: OnHoverEnter
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -155,8 +155,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5701850718895705885}
-          m_TargetAssemblyTypeName: ButtonSounds, EnigmaDragons.Core
+        - m_Target: {fileID: 3803075267047892950}
+          m_TargetAssemblyTypeName: FModButtonSounds, EnigmaDragons.Core
           m_MethodName: OnClick
           m_Mode: 1
           m_Arguments:
@@ -167,7 +167,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &5701850718895705885
+--- !u!114 &3803075267047892950
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,17 +176,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1437116249067745646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f1c274c540e41cf9fa6c68209bff3ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 61f450f3723f4a8aab133e3ef98e1357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bigClickSound:
-    clip: {fileID: 8300000, guid: 51c3a22e5e8e2214eaf6766e75509f7d, type: 3}
-    volume: 1
-  standardClickSound:
-    clip: {fileID: 8300000, guid: 51c3a22e5e8e2214eaf6766e75509f7d, type: 3}
-    volume: 1
+  bigClickSound: event:/DeckBulder_Scene/Main_Click
+  standardClickSound: event:/DeckBulder_Scene/Main_Click
   useBigClickSound: 0
-  hoverSound:
-    clip: {fileID: 8300000, guid: 882d3bf34c9665c42a47b5e0c0933025, type: 3}
-    volume: 0.6
-  player: {fileID: 11400000, guid: a3e8aeef9bbd0bd4ba7514ec36cb1758, type: 2}
+  hoverEnterSound: event:/DeckBulder_Scene/Hover
+  hoverExitSound: event:/DeckBulder_Scene/Hover
