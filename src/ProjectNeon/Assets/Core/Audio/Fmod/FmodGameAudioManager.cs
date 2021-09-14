@@ -14,7 +14,7 @@ public sealed class FmodGameAudioManager : ScriptableObject
     //float GameSFXVolume = 0.5f;
     float MasterVolume = 1f;
 
-    void Awake()
+    public void Init()
     {
         MUSIC = FMODUnity.RuntimeManager.GetBus("bus:/Master/MUSIC");
         UI_SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/UI_SFX");
@@ -23,29 +23,22 @@ public sealed class FmodGameAudioManager : ScriptableObject
         SFXVolumeTestEvent = FMODUnity.RuntimeManager.CreateInstance("event:/DeckBulder_Scene/Scene_Start");
     }
 
-    void Update()
-    {
-        
-        UI_SFX.setVolume(UI_SFXVolume);
-        MASTER.setVolume(MasterVolume);
-        //GameSFX.setVolume(GameSFXVolume);
-    }
-
     public void MasterVolumeLevel(float newMasterVolume)
     {
         MasterVolume = newMasterVolume;
+        MASTER.setVolume(MasterVolume);
     }
 
     public void MusicVolumeLevel(float newMusicVolume)
     {
         MusicVolume = newMusicVolume;
         MUSIC.setVolume(MusicVolume);
-        Debug.Log("Music_Vol_Changed");
     }
 
     public void SFXVolumeLevel(float newSFXVolume)
     {
         UI_SFXVolume = newSFXVolume;
+        UI_SFX.setVolume(UI_SFXVolume);
 
         FMOD.Studio.PLAYBACK_STATE PbState;
         SFXVolumeTestEvent.getPlaybackState(out PbState);
@@ -54,5 +47,4 @@ public sealed class FmodGameAudioManager : ScriptableObject
             SFXVolumeTestEvent.start();
         }
     }
-
 }
