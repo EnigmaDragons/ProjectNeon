@@ -567,6 +567,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
 --- !u!1 &4158303218382339239
 GameObject:
@@ -708,6 +709,7 @@ GameObject:
   - component: {fileID: 216453659287354048}
   - component: {fileID: 3168624498721730808}
   - component: {fileID: 871171436902424438}
+  - component: {fileID: 3008845100336528983}
   m_Layer: 5
   m_Name: Next (1)
   m_TagString: Untagged
@@ -828,6 +830,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3008845100336528983}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3008845100336528983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176867068139133221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &6327967096921446790
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,6 +869,7 @@ GameObject:
   - component: {fileID: 1452441997945894823}
   - component: {fileID: 227319451694097067}
   - component: {fileID: 1503591542855522553}
+  - component: {fileID: 5847271673684631029}
   m_Layer: 5
   m_Name: Previous (1)
   m_TagString: Untagged
@@ -960,6 +990,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5847271673684631029}
+        m_TargetAssemblyTypeName: TriggerAudio, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5847271673684631029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6327967096921446790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
 --- !u!1 &6332792146266688130
 GameObject:
   m_ObjectHideFlags: 0
