@@ -1252,7 +1252,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8970765954973351655}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42bac3dc46d85a047a49fac3be0c1685, type: 3}
   m_Name: 
@@ -1308,13 +1308,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 8970765953711411776}
   m_HandleRect: {fileID: 8970765954677379674}
   m_Direction: 0
-  m_MinValue: 0.001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.001
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: a65cfc056530c6f4691b8676015e6991, type: 2}
+        m_TargetAssemblyTypeName: FmodGameAudioManager, EnigmaDragons.Core
+        m_MethodName: SFXVolumeLevel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8970765955026379026
 GameObject:
   m_ObjectHideFlags: 0
@@ -1596,7 +1608,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8970765955211690061}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42bac3dc46d85a047a49fac3be0c1685, type: 3}
   m_Name: 
@@ -1652,13 +1664,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 8970765953633042691}
   m_HandleRect: {fileID: 8970765954317796385}
   m_Direction: 0
-  m_MinValue: 0.001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.001
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: a65cfc056530c6f4691b8676015e6991, type: 2}
+        m_TargetAssemblyTypeName: FmodGameAudioManager, EnigmaDragons.Core
+        m_MethodName: GameSFXVolumeLevel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8970765955235841628
 GameObject:
   m_ObjectHideFlags: 0
