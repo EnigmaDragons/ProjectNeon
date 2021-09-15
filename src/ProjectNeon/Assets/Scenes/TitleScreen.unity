@@ -1325,7 +1325,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 433732476318470640, guid: 9a42aa58b6fa16b408a9b127b22776e8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 433732476575470682, guid: 9a42aa58b6fa16b408a9b127b22776e8, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4727,7 +4727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749057452877, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749057452877, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -4736,6 +4736,10 @@ PrefabInstance:
     - target: {fileID: 4775870749057452877, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 11400000, guid: a65cfc056530c6f4691b8676015e6991, type: 2}
+    - target: {fileID: 4775870749057452877, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749057452877, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -4743,7 +4747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749057452877, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: AudioSettings, EnigmaDragons.Core
+      value: FmodGameAudioManager, EnigmaDragons.Core
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749057452877, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4843,7 +4847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749890754023, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749890754023, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -4852,14 +4856,18 @@ PrefabInstance:
     - target: {fileID: 4775870749890754023, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 11400000, guid: a65cfc056530c6f4691b8676015e6991, type: 2}
+    - target: {fileID: 4775870749890754023, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749890754023, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MusicVolumeLevel
+      value: GameSFXVolumeLevel
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749890754023, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: AudioSettings, EnigmaDragons.Core
+      value: FmodGameAudioManager, EnigmaDragons.Core
       objectReference: {fileID: 0}
     - target: {fileID: 4775870749890754023, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4914,6 +4922,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4775870750396675244, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775870750396675244, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -4946,7 +4958,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4775870750783631758, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775870750783631758, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775870750783631758, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4775870750847923988, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
