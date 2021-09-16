@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 107677221}
   - component: {fileID: 107677225}
   - component: {fileID: 107677224}
+  - component: {fileID: 107677226}
   m_Layer: 0
   m_Name: TitleWorldCamera
   m_TagString: MainCamera
@@ -150,7 +151,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107677220}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &107677222
 Camera:
   m_ObjectHideFlags: 0
@@ -285,6 +286,20 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &107677226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107677220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+  ListenerNumber: -1
 --- !u!1 &807856156
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,7 +1340,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 433732476318470640, guid: 9a42aa58b6fa16b408a9b127b22776e8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000061035156
+      value: 25.403027
       objectReference: {fileID: 0}
     - target: {fileID: 433732476575470682, guid: 9a42aa58b6fa16b408a9b127b22776e8, type: 3}
       propertyPath: m_AnchorMax.x
