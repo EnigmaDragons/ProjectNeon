@@ -39,6 +39,14 @@ public sealed class FmodGameAudioManager : ScriptableObject
         GameSFXVolume = newGameSFXVolume;
         GAME_SFX.setVolume(GameSFXVolume);
 
+        FMOD.Studio.PLAYBACK_STATE PbState;
+        SFXVolumeTestEvent.getPlaybackState(out PbState);
+        if (PbState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            SFXVolumeTestEvent.start();
+            Debug.Log("Event_is_playing");
+        }
+
     }
     public void SFXVolumeLevel(float newSFXVolume)
     {
