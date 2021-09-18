@@ -742,7 +742,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8970765954255602363}
-  - component: {fileID: 8970765954255602356}
+  - component: {fileID: 1480337640042625158}
   - component: {fileID: 8970765954255602357}
   m_Layer: 5
   m_Name: MusicVolumeSlider
@@ -773,7 +773,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 240, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8970765954255602356
+--- !u!114 &1480337640042625158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -782,16 +782,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8970765954255602362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42bac3dc46d85a047a49fac3be0c1685, type: 3}
+  m_Script: {fileID: 11500000, guid: de796d2ed41646e8b1fd24afcb2a5792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: d6eedae8265dd6146907e7ef03b80fb6, type: 2}
   slider: {fileID: 8970765954255602357}
   valueName: MusicVolume
-  reductionDb:
-    UseConstant: 0
-    ConstantValue: 6
-    FloatVariable: {fileID: 11400000, guid: d7ceb1b207f4a0e4598dd22441373ae0, type: 2}
 --- !u!114 &8970765954255602357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -836,25 +831,13 @@ MonoBehaviour:
   m_FillRect: {fileID: 8970765953834825952}
   m_HandleRect: {fileID: 8970765953507593010}
   m_Direction: 0
-  m_MinValue: 0.001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.001
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &8970765954317796384
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,7 +1197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8970765954973351648}
-  - component: {fileID: 8970765954973351649}
+  - component: {fileID: 4452301743680203439}
   - component: {fileID: 8970765954973351650}
   m_Layer: 5
   m_Name: UiSoundSlider
@@ -1245,7 +1228,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 240, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8970765954973351649
+--- !u!114 &4452301743680203439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1254,16 +1237,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8970765954973351655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42bac3dc46d85a047a49fac3be0c1685, type: 3}
+  m_Script: {fileID: 11500000, guid: de796d2ed41646e8b1fd24afcb2a5792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: d6eedae8265dd6146907e7ef03b80fb6, type: 2}
   slider: {fileID: 8970765954973351650}
   valueName: UiVolume
-  reductionDb:
-    UseConstant: 0
-    ConstantValue: 6
-    FloatVariable: {fileID: 11400000, guid: fa78fa485d3e7884b9b97ad2b7c6a8a8, type: 2}
 --- !u!114 &8970765954973351650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1308,25 +1286,13 @@ MonoBehaviour:
   m_FillRect: {fileID: 8970765953711411776}
   m_HandleRect: {fileID: 8970765954677379674}
   m_Direction: 0
-  m_MinValue: 0.001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.001
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &8970765955026379026
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,7 +1536,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8970765955211690062}
-  - component: {fileID: 8970765955211690063}
+  - component: {fileID: 6338348287324988204}
   - component: {fileID: 8970765955211690056}
   m_Layer: 5
   m_Name: GameSoundSlider
@@ -1601,7 +1567,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 240, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8970765955211690063
+--- !u!114 &6338348287324988204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1610,16 +1576,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8970765955211690061}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42bac3dc46d85a047a49fac3be0c1685, type: 3}
+  m_Script: {fileID: 11500000, guid: de796d2ed41646e8b1fd24afcb2a5792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: d6eedae8265dd6146907e7ef03b80fb6, type: 2}
   slider: {fileID: 8970765955211690056}
   valueName: SoundVolume
-  reductionDb:
-    UseConstant: 0
-    ConstantValue: 6
-    FloatVariable: {fileID: 11400000, guid: 92b51f2cbfd44a546b310870b3031096, type: 2}
 --- !u!114 &8970765955211690056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1664,25 +1625,13 @@ MonoBehaviour:
   m_FillRect: {fileID: 8970765953633042691}
   m_HandleRect: {fileID: 8970765954317796385}
   m_Direction: 0
-  m_MinValue: 0.001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.001
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &8970765955235841628
 GameObject:
   m_ObjectHideFlags: 0
