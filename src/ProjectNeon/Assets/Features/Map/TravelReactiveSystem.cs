@@ -73,6 +73,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
                 _onArrive();
                 StartFloating();
                 _isTraveling = false;
+                gameMap.HasCompletedEventEnRoute = false;
             }
         }
 

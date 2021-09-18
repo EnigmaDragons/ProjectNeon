@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MapSpawner3 : OnMessage<NodeFinished>
+public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
 {
     [SerializeField] private CurrentGameMap3 gameMap;
     [SerializeField] private AdventureProgress2 progress;
@@ -32,7 +32,8 @@ public class MapSpawner3 : OnMessage<NodeFinished>
     private GameObject _playerToken;
     private GameObject _map;
     
-    protected override void Execute(NodeFinished msg) => GenerateNewNodes();
+    protected override void Execute(NodeFinished msg) => GenerateNewNodes(false);
+    protected override void Execute(GuaranteeStoryEvent msg) => GenerateNewNodes(true);
     
     private void Awake()
     {
@@ -51,7 +52,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();
         if (!gameMap.CurrentChoices.Any())
-            GenerateNewNodes();
+            GenerateNewNodes(false);
         else
             SpawnNodes();
         ShowMapPromptIfJustStarted();
@@ -85,7 +86,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         }
     }
 
-    private void GenerateNewNodes()
+    private void GenerateNewNodes(bool guaranteeEvent)
     {
         gameMap.CompleteCurrentNode();
         _activeNodes.ForEach(x => Destroy(x.gameObject));
@@ -97,7 +98,7 @@ public class MapSpawner3 : OnMessage<NodeFinished>
         for (var i = 0; i < nodes.Count; i++)
         {
             nodes[i].Position = locations[i];
-            nodes[i].HasEventEnroute = progress.CurrentChapter.NodeTypeOdds2.IsThereTravelEvent(gameMap);
+            nodes[i].HasEventEnroute = guaranteeEvent || progress.CurrentChapter.NodeTypeOdds2.IsThereTravelEvent(gameMap);
             gameMap.CurrentChoices.Add(nodes[i]);
         }
         SpawnNodes();
