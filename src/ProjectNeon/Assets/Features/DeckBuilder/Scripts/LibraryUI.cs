@@ -21,9 +21,10 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
         var heroChanged = state.SelectedHeroesDeck.Hero != _selectedHero;
         _selectedHero = state.SelectedHeroesDeck.Hero;
         var cardsForHero = partyCards.AllCards
-            .Where(cardWithCount => cardWithCount.Key.Archetypes.All(archetype => _selectedHero.Character.Archetypes.Contains(archetype)) 
-                && (state.ShowRarities.None() 
-                    || state.ShowRarities.Contains(cardWithCount.Key.Rarity)) 
+            .Where(cardWithCount => 
+                cardWithCount.Key.Archetypes.All(archetype => _selectedHero.Character.Archetypes.Contains(archetype)) 
+                && cardWithCount.Key.Name != _selectedHero.BasicCard.Name
+                && (state.ShowRarities.None() || state.ShowRarities.Contains(cardWithCount.Key.Rarity)) 
                 && (state.ShowArchetypes.None() 
                     || (cardWithCount.Key.Archetypes.None() && state.ShowArchetypes.Contains("")) 
                     || cardWithCount.Key.Archetypes.Any(state.ShowArchetypes.Contains)))
