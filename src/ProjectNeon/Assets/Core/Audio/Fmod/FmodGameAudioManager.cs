@@ -1,64 +1,77 @@
+using FMOD.Studio;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Audio/FmodGameAudioManager")]
 public sealed class FmodGameAudioManager : ScriptableObject
 {
-    FMOD.Studio.EventInstance SFXVolumeTestEvent;
+    [SerializeField, FMODUnity.EventRef] private string SfxVolumeTestEvent;
+    [SerializeField, FMODUnity.EventRef] private string UiVolumeTestEvent;
 
-    FMOD.Studio.Bus MUSIC;
-    FMOD.Studio.Bus UI_SFX;
-    FMOD.Studio.Bus MASTER;
-    FMOD.Studio.Bus GAME_SFX;
-    float MusicVolume = 0.5f;
-    float UI_SFXVolume = 0.5f;
-    float GameSFXVolume = 0.5f;
-    float MasterVolume = 1f;
+    private Bus MUSIC;
+    private Bus UI_SFX;
+    private Bus MASTER;
+    private Bus GAME_SFX;
+    private float MusicVolume = 0.5f;
+    private float UI_SFXVolume = 0.5f;
+    private float GameSFXVolume = 0.5f;
+    private float MasterVolume = 1f;
+    private EventInstance soundTest;
+    private EventInstance uiTest;
+    
+    public bool IsInitialized { get; private set; }
 
     public void Init()
     {
-        MUSIC = FMODUnity.RuntimeManager.GetBus("bus:/Master/MUSIC");
-        UI_SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/UI_SFX");
         MASTER = FMODUnity.RuntimeManager.GetBus("bus:/MASTER");
+        
+        MUSIC = FMODUnity.RuntimeManager.GetBus("bus:/Master/MUSIC");
+        MUSIC.setVolume(PlayerAudioPrefs.GetVolumeLevel(PlayerAudioPrefs.Music));
+        
+        UI_SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/UI_SFX");
+        UI_SFX.setVolume(PlayerAudioPrefs.GetVolumeLevel(PlayerAudioPrefs.Ui));
+        
         GAME_SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/GAME_SFX");
-        SFXVolumeTestEvent = FMODUnity.RuntimeManager.CreateInstance("event:/DeckBulder_Scene/Scene_Start");
+        GAME_SFX.setVolume(PlayerAudioPrefs.GetVolumeLevel(PlayerAudioPrefs.Sfx));
+        
+        soundTest = FMODUnity.RuntimeManager.CreateInstance(SfxVolumeTestEvent);
+        uiTest = FMODUnity.RuntimeManager.CreateInstance(UiVolumeTestEvent);
+        
+        IsInitialized = true;
     }
 
-    public void MasterVolumeLevel(float newMasterVolume)
+    public void SetMasterVolumeLevel(float vol) => MasterVolumeLevel(vol);
+    public void MasterVolumeLevel(float vol)
     {
-        MasterVolume = newMasterVolume;
+        MasterVolume = vol;
         MASTER.setVolume(MasterVolume);
     }
 
-    public void MusicVolumeLevel(float newMusicVolume)
+    public void SetMusicVolumeLevel(float vol) => MusicVolumeLevel(vol);
+    public void MusicVolumeLevel(float vol)
     {
-        MusicVolume = newMusicVolume;
+        MusicVolume = vol;
         MUSIC.setVolume(MusicVolume);
     }
-    public void GameSFXVolumeLevel(float newGameSFXVolume)
+    
+    public void SetGameSfxVolumeLevel(float vol) => GameSFXVolumeLevel(vol);
+    public void GameSFXVolumeLevel(float vol)
     {
-        GameSFXVolume = newGameSFXVolume;
+        GameSFXVolume = vol;
         GAME_SFX.setVolume(GameSFXVolume);
 
-        FMOD.Studio.PLAYBACK_STATE PbState;
-        SFXVolumeTestEvent.getPlaybackState(out PbState);
-        if (PbState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
-        {
-            SFXVolumeTestEvent.start();
-            Debug.Log("Event_is_playing");
-        }
-
+        soundTest.getPlaybackState(out var pbState);
+        //if (pbState != PLAYBACK_STATE.PLAYING)
+            soundTest.start();
     }
-    public void SFXVolumeLevel(float newSFXVolume)
+    
+    public void SetUiSfxVolumeLevel(float vol) => SFXVolumeLevel(vol);
+    public void SFXVolumeLevel(float vol)
     {
-        UI_SFXVolume = newSFXVolume;
+        UI_SFXVolume = vol;
         UI_SFX.setVolume(UI_SFXVolume);
 
-        FMOD.Studio.PLAYBACK_STATE PbState;
-        SFXVolumeTestEvent.getPlaybackState(out PbState);
-        if (PbState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
-        {
-            SFXVolumeTestEvent.start();
-            Debug.Log("Event_is_playing");
-        }
+        uiTest.getPlaybackState(out var pbState);
+        //if (pbState != PLAYBACK_STATE.PLAYING)
+            uiTest.start();
     }
 }

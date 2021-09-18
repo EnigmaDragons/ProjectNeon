@@ -2,7 +2,7 @@
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public sealed class MixerVolumeSlider : MonoBehaviour 
+public sealed class UnityMixerVolumeSlider : MonoBehaviour 
 {
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private Slider slider;
@@ -11,7 +11,7 @@ public sealed class MixerVolumeSlider : MonoBehaviour
 
     void Start()
     {
-        slider.value = PlayerPrefs.GetFloat(valueName, 0.5f);
+        slider.value = PlayerAudioPrefs.GetVolumeLevel(valueName);
         slider.onValueChanged.AddListener(SetLevel);
     }
     
@@ -20,7 +20,7 @@ public sealed class MixerVolumeSlider : MonoBehaviour
         var mixerVolume = (Mathf.Log10(sliderValue) * 20) - reductionDb;
         Log.Info($"Slider - Set Audio Level for {valueName} to {sliderValue} ({mixerVolume}db)");
         mixer.SetFloat(valueName, mixerVolume);
-        PlayerPrefs.SetFloat(valueName, sliderValue);
-        Message.Publish(new MixerVolumeChanged(valueName));
+        PlayerAudioPrefs.SetVolumeLevel(valueName, sliderValue);
+        Message.Publish(new MixerVolumeChanged(valueName, sliderValue));
     }
 }
