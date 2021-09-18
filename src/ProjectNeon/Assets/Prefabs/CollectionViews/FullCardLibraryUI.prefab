@@ -122,6 +122,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
 --- !u!1 &1018620950420144258
 GameObject:
@@ -1664,6 +1665,7 @@ GameObject:
   - component: {fileID: 730782022007780320}
   - component: {fileID: 3713034618322700852}
   - component: {fileID: 4559118286675526934}
+  - component: {fileID: 6956459108738235223}
   m_Layer: 5
   m_Name: Next (1)
   m_TagString: Untagged
@@ -1784,6 +1786,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6956459108738235223}
+        m_TargetAssemblyTypeName: FModButtonSounds, EnigmaDragons.Core
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6956459108738235223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381129145119783751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f450f3723f4a8aab133e3ef98e1357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bigClickSound: event:/DeckBulder_Scene/Main_Click
+  standardClickSound: event:/DeckBulder_Scene/Main_Click
+  useBigClickSound: 0
+  hoverEnterSound: event:/DeckBulder_Scene/Hover
+  hoverExitSound: event:/DeckBulder_Scene/Hover
 --- !u!1 &4419246241798121049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,6 +1962,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
 --- !u!114 &8531130505972265014
 MonoBehaviour:
@@ -2624,6 +2656,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
 --- !u!1 &6717727860175818369
 GameObject:
@@ -3505,6 +3538,7 @@ GameObject:
   - component: {fileID: 3360574332691499334}
   - component: {fileID: 4373554628699074455}
   - component: {fileID: 8543056331270875798}
+  - component: {fileID: 4057556893230300831}
   m_Layer: 5
   m_Name: Previous (1)
   m_TagString: Untagged
@@ -3625,6 +3659,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4057556893230300831}
+        m_TargetAssemblyTypeName: FModButtonSounds, EnigmaDragons.Core
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4057556893230300831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8988656351523992389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f450f3723f4a8aab133e3ef98e1357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bigClickSound: event:/DeckBulder_Scene/Main_Click
+  standardClickSound: event:/DeckBulder_Scene/Main_Click
+  useBigClickSound: 0
+  hoverEnterSound: event:/DeckBulder_Scene/Hover
+  hoverExitSound: event:/DeckBulder_Scene/Hover
 --- !u!1001 &377720300536639930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4226,6 +4289,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!224 &2997570566431058348 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 3303125856166062523}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &796370362850961670 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -4237,11 +4305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &2997570566431058348 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 3303125856166062523}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5140805168551289726
 PrefabInstance:
   m_ObjectHideFlags: 0
