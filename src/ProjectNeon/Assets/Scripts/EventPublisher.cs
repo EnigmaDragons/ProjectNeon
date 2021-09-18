@@ -42,4 +42,5 @@ public class EventPublisher : ScriptableObject
     public void TogglePatchNotes() => Message.Publish(new TogglePatchNotes());
     public void ToggleOptionsMenu() => Message.Publish(new ToggleNamedTarget("OptionsMenu"));
     public void CompleteAnyMapNode() => Message.Publish(new CompleteAnyMapNode());
+    public void GuaranteeStoryEvent() => Message.Publish(new GuaranteeStoryEvent());
 }
