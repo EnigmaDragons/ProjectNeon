@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 [CreateAssetMenu(menuName = "StoryEvent/Penalties/Injury")]
 public class InjuryPenalty : StoryResult
@@ -14,11 +15,11 @@ public class InjuryPenalty : StoryResult
     {
         var hero = ctx.Party.Heroes.Random();
         hero.Apply(new AdditiveStatInjury {Stat = stat, Amount = amount, Name = injuryName});
-        Message.Publish(new ShowStoryEventResultMessage(Localize.GetFormattedEventResult("InjuryPenalty", hero.Name, injuryName.Value, amount, stat.Value)));
+        Message.Publish(new ShowStoryEventResultMessage(Localize.GetFormattedEventResult("InjuryPenalty", hero.Name, injuryName.Value, amount, Localize.GetStat(stat.Value))));
     }
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { IsReward = false, Text = Localize.GetFormattedEventResult("InjuryPenaltyPreview", injuryName.Value, amount, stat.Value)});
+        Message.Publish(new ShowTextResultPreview { IsReward = false, Text = Localize.GetFormattedEventResult("InjuryPenaltyPreview", injuryName.Value, amount, Localize.GetStat(stat.Value))});
     }
 }
