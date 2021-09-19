@@ -4,6 +4,11 @@ public class TutorialSlideshowUiController : OnMessage<ShowTutorialSlideshow, Hi
 {
     [SerializeField] private GameObject view;
     [SerializeField] private TutorialSlideshowPresenter presenter;
+
+    private void Start()
+    {
+        view.SetActive(presenter.IsShowingTutorial);
+    }
     
     protected override void Execute(ShowTutorialSlideshow msg)
     {

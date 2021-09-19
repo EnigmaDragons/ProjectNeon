@@ -12,6 +12,8 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
     
     private Maybe<TutorialSlideshow> _current = Maybe<TutorialSlideshow>.Missing();
     private Maybe<IndexSelector<TutorialSlide>> _maybeSlideWalker = Maybe<IndexSelector<TutorialSlide>>.Missing();
+
+    public bool IsShowingTutorial => HasSlides; 
     
     public void Init(TutorialSlideshow slideshow)
     {
