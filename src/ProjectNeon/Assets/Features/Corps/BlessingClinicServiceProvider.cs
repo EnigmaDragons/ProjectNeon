@@ -50,5 +50,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
         _generatedOptions.ForEach(x => x.Enabled = !_hasProvidedService);
         return _generatedOptions;
     }
+    
+    public bool RequiresSelection() => !_hasProvidedService;
 }
 

@@ -2,4 +2,5 @@
 {
     public string GetTitle() => "";
     public ClinicServiceButtonData[] GetOptions() => new ClinicServiceButtonData[0];
+    public bool RequiresSelection() => false;
 }
