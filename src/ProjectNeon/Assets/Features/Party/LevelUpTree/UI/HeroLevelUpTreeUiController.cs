@@ -18,7 +18,7 @@ public sealed class HeroLevelUpTreeUiController : OnMessage<ShowHeroLevelUpPathw
         presenter.Init(msg.Hero.LevelUpTree);
         bust.sprite = msg.Hero.Bust;
         classLabel.text = msg.Hero.Class;
-        nameLabel.text = msg.Hero.Name;
+        nameLabel.text = msg.Hero.DisplayName();
         stats.Initialized(msg.Hero.Stats);
         target.SetActive(true);
     }

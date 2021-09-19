@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 [Serializable]
 public class Hero
@@ -29,6 +30,7 @@ public class Hero
     }
 
     public string Name => character.Name;
+    public string DisplayName => character.DisplayName();
     public string Class => character.Class;
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
