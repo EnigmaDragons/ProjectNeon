@@ -6,6 +6,9 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
 {
     [SerializeField] private GameObject slideUiParent;
     [SerializeField] private TextMeshProUGUI slideText;
+    [SerializeField] private GameObject nextButtonIndicator;
+    [SerializeField] private GameObject previousButtonIndicator;
+    [SerializeField] private GameObject doneIndicator;
     
     private Maybe<TutorialSlideshow> _current = Maybe<TutorialSlideshow>.Missing();
     private Maybe<IndexSelector<TutorialSlide>> _maybeSlideWalker = Maybe<IndexSelector<TutorialSlide>>.Missing();
@@ -19,7 +22,7 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
 
     protected override void Execute(TutorialNextRequested msg) => IfHasSlides(slides =>
     {
-        if (slides.Index == slides.Index - 1)
+        if (slides.Index == slides.Count - 1)
         {
             Message.Publish(new HideTutorial(_current.Value.TutorialName));
             _current = Maybe<TutorialSlideshow>.Missing();
@@ -41,11 +44,15 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
     private void Render()
     {
         slideUiParent.DestroyAllChildren();
+        nextButtonIndicator.SetActive(HasSlides && _maybeSlideWalker.Value.Index + 1 < _maybeSlideWalker.Value.Count);
         IfHasSlides(slides =>
         {
             var slide = slides.Current;
             Instantiate(slide.UiElementPrototype, slideUiParent.transform);
             slideText.text = slide.Text;
+            previousButtonIndicator.SetActive(!slides.IsFirstItem);
+            nextButtonIndicator.SetActive(!slides.IsLastItem);
+            doneIndicator.SetActive(slides.IsLastItem);
         });
     }
 
