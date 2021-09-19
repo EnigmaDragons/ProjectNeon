@@ -31,6 +31,13 @@ public sealed class IndexSelector<T>
         return Current;
     }
 
+    public T MovePreviousWithoutLooping()
+    {
+        if (_index > 0)
+            _index--;
+        return Current;
+    }
+    
     public T MoveNextWithoutLooping()
     {
         if (_index < _items.Length - 1)
