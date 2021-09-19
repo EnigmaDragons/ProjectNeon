@@ -15,11 +15,15 @@ public class GainHpReward : StoryResult
         var members = appliesToAll ? ctx.Party.Heroes : ctx.Party.Heroes.Random().AsArray();
         var amount = Rng.Int(minGain, maxGain);
         members.ForEach(m => m.AdjustHp(amount));
-        Message.Publish(new ShowStoryEventResultMessage($"{string.Join(", ", members.Select(m => m.Name))} gained {amount} HP"));
+        Message.Publish(new ShowStoryEventResultMessage(appliesToAll
+            ? Localize.GetFormattedEventResult("GainHpReward-All", amount)
+            : Localize.GetFormattedEventResult("GainHpReward-Single", members.First().Name, amount)));
     }
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { IsReward = true, Text = appliesToAll ? $"Heal all allies between {minGain} to {maxGain}" : $"Heal a random ally between {minGain} to {maxGain}" });
+        Message.Publish(new ShowTextResultPreview { IsReward = true, Text = appliesToAll 
+            ? Localize.GetFormattedEventResult("GainHpRewardPreview-All", minGain, maxGain) 
+            : Localize.GetFormattedEventResult("GainHpRewardPreview-Single", minGain, maxGain)  });
     }
 }

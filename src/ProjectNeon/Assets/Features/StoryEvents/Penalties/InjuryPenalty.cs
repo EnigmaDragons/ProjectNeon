@@ -14,11 +14,11 @@ public class InjuryPenalty : StoryResult
     {
         var hero = ctx.Party.Heroes.Random();
         hero.Apply(new AdditiveStatInjury {Stat = stat, Amount = amount, Name = injuryName});
-        Message.Publish(new ShowStoryEventResultMessage($"{hero.Name} gained the injury \"{injuryName.Value}\": {amount} {stat.Value}"));
+        Message.Publish(new ShowStoryEventResultMessage(Localize.GetFormattedEventResult("InjuryPenalty", hero.Name, injuryName.Value, amount, stat.Value)));
     }
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { Text = $"A hero gains the injury \"{injuryName.Value}\": {amount} {stat.Value}", IsReward = false });
+        Message.Publish(new ShowTextResultPreview { IsReward = false, Text = Localize.GetFormattedEventResult("InjuryPenaltyPreview", injuryName.Value, amount, stat.Value)});
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 [CreateAssetMenu(menuName = "StoryEvent/Results/Heat")]
 public class HeatResult : StoryResult
@@ -10,11 +11,15 @@ public class HeatResult : StoryResult
     public override void Apply(StoryEventContext ctx)
     {
         ctx.Map.AdjustHeat(adjustment);
-        Message.Publish(new ShowStoryEventResultMessage(IsReward ? $"The boss's heat bar has lowered by {-adjustment}" : $"The boss's heat bar has raised by {adjustment}"));
+        Message.Publish(new ShowStoryEventResultMessage(IsReward 
+            ? Localize.GetFormattedEventResult("HeatResult-Reward", -adjustment)
+            : Localize.GetFormattedEventResult("HeatResult-Penalty", adjustment)));
     }
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { IsReward = IsReward, Text = IsReward ? $"Lower the boss's heat bar by {-adjustment}" : $"Raises the boss's heat bar by {adjustment}" });
+        Message.Publish(new ShowTextResultPreview { IsReward = IsReward, Text = IsReward
+                ? Localize.GetFormattedEventResult("HeatResultPreview-Reward", -adjustment)
+                : Localize.GetFormattedEventResult("HeatResultPreview-Penalty", adjustment)});
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 [CreateAssetMenu(menuName = "StoryEvent/Results/And")]
 public class AndResult : StoryResult
@@ -17,6 +18,7 @@ public class AndResult : StoryResult
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { Text = previewText, IsReward = IsReward });
+        Message.Publish(new ShowTextResultPreview { IsReward = IsReward, 
+            Text = Localize.GetEventResult(previewText) });
     }
 }

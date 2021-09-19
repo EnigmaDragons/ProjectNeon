@@ -27,11 +27,18 @@ public class PermanentStatAdjustmentResult : StoryResult
                     });
             }
         }
-        Message.Publish(new ShowTextResultPreview { IsReward = IsReward, Text = $"{(string.Join(" & ", members.Select(x => x.Character.Name)))} permanently {string.Join(" & ", permanentStatAdjustments.Select(x => $"{(x.Amount > 0 ? "gained" : "lost")} {Math.Abs(x.Amount)} {x.Stat}"))} if they had any" });
+        var baseMessage = appliesToAll
+            ? Localize.GetEventResult("PermanentStatAdjustmentResult-All")
+            : Localize.GetFormattedEventResult("PermanentStatAdjustmentResult-Single", members.First().Name);
+        Message.Publish(new ShowStoryEventResultMessage($"{baseMessage}\n{string.Join("\n", permanentStatAdjustments.Select(x => $"{x.Amount} {x.Stat}"))}"));
     }
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { IsReward = IsReward, Text = $"{(appliesToAll ? "All heroes" : "A random hero")} permanently {string.Join(" & ", permanentStatAdjustments.Select(x => $"{(x.Amount > 0 ? "gain" : "lose")} {Math.Abs(x.Amount)} {x.Stat}"))} if they have any" });
+        var baseMessage = appliesToAll
+            ? Localize.GetEventResult("PermanentStatAdjustmentResultPreview-All")
+            : Localize.GetEventResult("PermanentStatAdjustmentResultPreview-Single");
+        Message.Publish(new ShowTextResultPreview { IsReward = IsReward, 
+            Text = $"{baseMessage}\n{string.Join("\n", permanentStatAdjustments.Select(x => $"{x.Amount} {x.Stat}"))}" });
     }
 }
