@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
 {
@@ -12,6 +13,7 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
     [SerializeField] private GameObject servicesParent;
     [SerializeField] private ClinicServiceButton serviceButtonPrototype;
     [SerializeField] private CorpUiBase[] corpUi = new CorpUiBase[0];
+    [SerializeField] private Button doneButton;
 
     private ClinicServiceProvider _serviceProvider;
     
@@ -38,7 +40,8 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
     {
         if (clinic.Corp != null && corpUi != null)
             corpUi.ForEach(c => c.Init(clinic.Corp));
-        serviceTitle.text = _serviceProvider.GetTitle();
+        doneButton.interactable = !_serviceProvider.RequiresSelection();
+        serviceTitle.text = $"{_serviceProvider.GetTitle()}{(_serviceProvider.RequiresSelection() ? " (Selection Required To Leave)" : "")}";
         servicesParent.DestroyAllChildren();
         _serviceProvider.GetOptions().ForEach(x => Instantiate(serviceButtonPrototype, servicesParent.transform).Init(x, party));
     }

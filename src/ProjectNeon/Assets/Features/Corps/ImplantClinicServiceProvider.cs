@@ -91,4 +91,6 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
         });
         _hasProvidedService = true;
     }
+
+    public bool RequiresSelection() => false;
 }
