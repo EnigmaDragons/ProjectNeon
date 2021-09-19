@@ -12,6 +12,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     {
         io.ClearCurrentSlot();
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
+        io.SetShouldShowTutorials(msg.ShouldShowTutorials);
         SelectDefaultAdventure();
     }
 
@@ -57,16 +58,29 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     protected override void Execute(StartNewGameRequested msg)
     {
         if (!CurrentGameData.HasActiveGame) 
-            Message.Publish(new StartNewGame());
+            AskPlayerWhetherTutorialsShouldBeEnabled();
         else
             Message.Publish(new ShowTwoChoiceDialog
             {
                 UseDarken = true,
                 Prompt = "Starting a new game will abandon your current run. Are you sure you wish to start to start a new game?",
                 PrimaryButtonText = "Yes",
-                PrimaryAction = () => Message.Publish(new StartNewGame()),
+                PrimaryAction = AskPlayerWhetherTutorialsShouldBeEnabled,
                 SecondaryButtonText = "No",
                 SecondaryAction = () => { }
             });
+    }
+
+    private void AskPlayerWhetherTutorialsShouldBeEnabled()
+    {
+        Message.Publish(new ShowTwoChoiceDialog
+        {
+            UseDarken = true,
+            Prompt = "Is this your first time playing Metroplex Zero?",
+            PrimaryButtonText = "Yes",
+            PrimaryAction = () => Message.Publish(new StartNewGame(true)),
+            SecondaryButtonText = "No",
+            SecondaryAction = () => Message.Publish(new StartNewGame(false)),
+        });
     }
 }
