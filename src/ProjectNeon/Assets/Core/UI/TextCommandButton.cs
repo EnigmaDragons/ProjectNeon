@@ -47,6 +47,15 @@ public sealed class TextCommandButton : MonoBehaviour
         _button.interactable = true;
         gameObject.SetActive(true);
     }
+
+    public void InitRaw(string rawCommand, Action cmd)
+    {
+        InitButton();
+        label.text = rawCommand;
+        _cmd = cmd;
+        _button.interactable = true;
+        gameObject.SetActive(true);
+    }
     
     public void Init(NamedCommand cmd) => Init(cmd.Name, cmd.Action.Invoke);
 

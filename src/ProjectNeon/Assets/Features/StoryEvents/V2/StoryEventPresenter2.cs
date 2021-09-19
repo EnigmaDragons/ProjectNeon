@@ -72,7 +72,7 @@ public class StoryEventPresenter2 : MonoBehaviour
                 _buttons[i].Hide();
                 continue;
             }
-            _buttons[i].Init(s.Choices[i], ctx);
+            _buttons[i].Init(s.Choices[i], ctx, s);
         }
     }
 

@@ -25,6 +25,7 @@ public class AssetUpdater
         UpdateEnemyIDs();
         UpdateAllEnemies();
         UpdateAllCorps();
+        UpdateStoryEventIDs();
         Log.Info("Asset Updates Complete");
     }
 
@@ -219,6 +220,12 @@ public class AssetUpdater
             x.Enemies = enemies;
             EditorUtility.SetDirty(x);
         });
+    }
+    
+    [MenuItem("Neon/Update/Update Story Event IDs")]
+    private static void UpdateStoryEventIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<StoryEvent2>(), c => c.id, (c, id) => c.id = id);
     }
     
     private static void EnsureDurationPresent()

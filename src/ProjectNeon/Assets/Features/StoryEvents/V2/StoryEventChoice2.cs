@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 [Serializable]
 public class StoryEventChoice2
 {
-    public string Text;
+    public int Choice;
     public StoryResolution2[] Resolution;
 
     public float OddsTableTotal => Resolution.Sum(r => r.Chance);
@@ -14,14 +15,14 @@ public class StoryEventChoice2
     public StoryResult Reward => Resolution.OrderByDescending(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     public StoryResult Penalty => Resolution.OrderBy(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     
-    public string ChoiceFullText(StoryEventContext ctx) => Text.Trim();
+    public string ChoiceFullText(StoryEventContext ctx, StoryEvent2 owner) => LocalizationSettings.StringDatabase.GetLocalizedString("Events", $"Event{owner.id} Choice{Choice}").Trim();
     public bool CanSelect(StoryEventContext ctx) => true;
     
-    public void Select(StoryEventContext ctx)
+    public void Select(StoryEventContext ctx, StoryEvent2 owner)
     {
         if (Resolution.Sum(r => r.Chance) > 1 || Resolution.Sum(r => r.Chance) <= 0)
         {
-            Log.Error($"Story Event: Invalid Total Resolution Chance for {Text}");
+            Log.Error($"Story Event: Invalid Total Resolution Chance for {Choice}");
             Message.Publish(new ShowStoryEventResolution("Something peculiar occurred, which you can't explain, of which you can never speak (except to the developers)", 0));
         }
 
@@ -37,10 +38,10 @@ public class StoryEventChoice2
             possibleOutcomes[rangeStart + r.Chance] = r;
             rangeStart += r.Chance;
         }
-        ResolveSelectedResolution(possibleOutcomes.First(x => roll < x.Key).Value, ctx);
+        ResolveSelectedResolution(possibleOutcomes.First(x => roll < x.Key).Value, ctx, owner);
     }
 
-    private void ResolveSelectedResolution(StoryResolution2 r, StoryEventContext ctx)
+    private void ResolveSelectedResolution(StoryResolution2 r, StoryEventContext ctx, StoryEvent2 owner)
     {
         if (r.HasContinuation)
         {
@@ -49,7 +50,7 @@ public class StoryEventChoice2
         else
         {
             r.Result.Apply(ctx);
-            Message.Publish(new ShowStoryEventResolution(r.StoryText, r.EstimatedCreditsValue));   
+            Message.Publish(new ShowStoryEventResolution(LocalizationSettings.StringDatabase.GetLocalizedString("Events", $"Event{owner.id} Choice{Choice} Result{r.ResultNumber}").Trim(), r.EstimatedCreditsValue));   
         }
     }
 }

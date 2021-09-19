@@ -12,70 +12,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7dab33deee9460b8aab4769accdd7a5, type: 3}
   m_Name: AstropolyScavenging
   m_EditorClassIdentifier: 
-  displayName: Astropoly Scavenging
+  id: 1
   settingType: 0
   corp: {fileID: 11400000, guid: 4a1f16a350870734782dc204b16ce184, type: 2}
-  storyText: "You come accross a handful of corpses in an alley with smoking guns
-    strewn about. \n\nLike vultures, Astropoly scavenging drones have already started
-    taking everything of value."
   choices:
-  - Text: Hack one of the drones to scavenge safely for you
+  - Choice: 1
     Resolution:
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 03f47b83e65569c4bbe00ca8fa6a7ed6, type: 2}
+      ResultNumber: 1
       StoryText: Your attempt at hacking sets off the drone's self destruct system,
         blowing up in your hands.
     - Chance: 0.3
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 9b1e9500e13c59741ade4587f32fa841, type: 2}
+      ResultNumber: 2
       StoryText: Your attempts were fruitless. Astropoly automatically fined you
         for attempting the hack.
     - Chance: 0.55
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 072dc168caa46f7458b0d12956819f07, type: 2}
+      ResultNumber: 3
       StoryText: You tricked the drone's mapping system to think you are the Astropoly
         Scavenging Processor.
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 0e804f1aec2a37c43b66b89cde86387e, type: 2}
+      ResultNumber: 4
       StoryText: You masterfully hacked the drone and made it prioritize the most
         valuable piece of equipment.
-  - Text: Go for the creds on the closest bodies
+  - Choice: 2
     Resolution:
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 8e86a060166bd144fb1a31131627335d, type: 2}
+      ResultNumber: 1
       StoryText: "You found a cred chip. \n\nGood news --you were still able to get
         the creds from it.\n\nBad news -- it was magically trapped and has weakened
         your whole party. \n"
     - Chance: 0.3
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
+      ResultNumber: 2
       StoryText: You were only able to find one body with any creds on them.
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 58be128081d31f148b58d2d4de247c3e, type: 2}
+      ResultNumber: 3
       StoryText: You snag up a whole slew of creds before jetting.
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: fc1a9de3961300c418bd208dc54e6463, type: 2}
+      ResultNumber: 4
       StoryText: The only cred chip you found had a magical defense mechanism making
         it inoperable and cursing you.
-  - Text: Rush for the Predator X Pro lying on an untouched corpse
+  - Choice: 3
     Resolution:
     - Chance: 0.6
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: b8e99f7a3bcd1a649b5eb68b62ccedaf, type: 2}
+      ResultNumber: 1
       StoryText: "You are too slow. \n\nAnd you get the spine-tingling sense that
         one of the Astropoly drones is recording you."
     - Chance: 0.35
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 464805fa6e89364408967790375fab87, type: 2}
+      ResultNumber: 2
       StoryText: "The Predator is yours. \n\nUpon closer inspection, you discover
         that it's the budget version Predator X, not the pro version. \n\nOh well."
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 56e20f5736214d74db6688b31afb60f9, type: 2}
+      ResultNumber: 3
       StoryText: Just as a scavenging drone is picking it up you yank it away from
         the drone and book it out of there.

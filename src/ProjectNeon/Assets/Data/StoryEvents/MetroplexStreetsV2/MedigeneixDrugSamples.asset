@@ -12,28 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7dab33deee9460b8aab4769accdd7a5, type: 3}
   m_Name: MedigeneixDrugSamples
   m_EditorClassIdentifier: 
-  displayName: Medigeneix Drug Samples
+  id: 2
   settingType: 0
   corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
-  storyText: "Medigeneix is handing out free samples of a new contact drug that supposedly
-    treats Existential Crisis Syndrome. \r\n\nYou notice that they are pulling their
-    samples from one larger bin and sometimes a discreet smaller bin. \n\nBeing curious,
-    you spy on the pad of the technician handing them out. \n\nYou also notice that
-    the smaller bin ihas warning labels detailing additional negative side effects."
   choices:
-  - Text: Take some free samples to sell for profit.
+  - Choice: 1
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: f6a1300c8c88a48499a702047163306d, type: 2}
+      ResultNumber: 1
       StoryText: You pocket the handouts and find one of the many willing buyers
         to sell it off to.
-  - Text: Create a diversion, steal the extra harmful drugs and refill the smaller
-      bin from the larger one.
+  - Choice: 2
     Resolution:
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 97a5ee1afcf71bd41942f83741288b5d, type: 2}
+      ResultNumber: 1
       StoryText: 'Your diversion draws their attention. You steal all of the drug,
         but then one of the MedSecs notices and slams you to the ground.
 
@@ -44,12 +40,14 @@ MonoBehaviour:
     - Chance: 0.35
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 68249e398e60b7748924347e7dff4f97, type: 2}
+      ResultNumber: 2
       StoryText: "You go to steal the drug and one of the MedSecs stop you and mistake
         you for a desperate druggie. \n\nHe slaps you with a fine for attempted theft
         and tells you to frag off."
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 7030d2af5e7f5b74cb6a0e42ffa1dc1a, type: 2}
+      ResultNumber: 3
       StoryText: "One of your team starts a scene with a Medigeneix employee while
         you successfully steal the harmful drugs and replace them, saving people
         a lot of pain. \n\nYou think you could use this contact drug to impair enemies
@@ -57,32 +55,37 @@ MonoBehaviour:
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 92770653945fd4f40b165e3080668a37, type: 2}
+      ResultNumber: 4
       StoryText: "One of your team starts a scene with a Medigeneix employee while
         you successfully steal the harmful drugs and replace them, saving people
         a lot of pain. \n\nThe drug uses programmable nano bots to work its magic,
         possibly a very nice combat tool."
-  - Text: Steal the Medigeneix pad and show onlookers what is happening
+  - Choice: 3
     Resolution:
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 9a3bacd0d80ead54d903c81687825cc2, type: 2}
+      ResultNumber: 1
       StoryText: "You are shoved to the ground by a MedSec and given a good kick,
         breaking one of your ribs. \n\nThen he stabs you with a painkiller to help
         with the pain so that you can take yourself to one of their clinics."
     - Chance: 0.35
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 2e59545653e68e6449f43f2873e202f5, type: 2}
+      ResultNumber: 2
       StoryText: "One of the MedSecs violently stops you from getting close to the
         pad with a powerful fist to your face. \n\nYou think your nose broke."
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: bbe3c809a34fc4e4cb6baca8614f12f9, type: 2}
+      ResultNumber: 3
       StoryText: "You pull the pad from his hands and pass it to the crowd, who begin
         passing it around. Suddenly a small riot breaks out. \n\nYou take this opportunity
         to steal the stim system from one of the overwhelmed MedSecs."
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: be1cd5aace743f740b9106849889a0ca, type: 2}
+      ResultNumber: 4
       StoryText: "You pull the pad from his hands and pass it to the crowd, who begin
         passing it around. Suddenly a small riot breaks out. \n\nYou take this opportunity
         to steal the advanced stim system from one of the overwhelmed MedSecs."
