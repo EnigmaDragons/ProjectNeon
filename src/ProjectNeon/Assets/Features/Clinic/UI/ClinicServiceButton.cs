@@ -16,6 +16,7 @@ public class ClinicServiceButton : MonoBehaviour
         description.text = data.Description;
         cost.text = data.Cost.ToString();
         button.interactable = data.Enabled && party.Credits >= data.Cost;
+        button.onClick.RemoveAllListeners();
         if (party.Credits >= data.Cost)
             button.onClick.AddListener(() =>
             {
