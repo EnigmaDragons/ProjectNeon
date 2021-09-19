@@ -1,7 +1,7 @@
 
 public class HideTutorial
 {
-    public bool ShouldMarkCompleted { get; }
+    public Maybe<string> CompletedTutorialName { get; }
 
-    public HideTutorial(bool isCompleted) => ShouldMarkCompleted = isCompleted;
+    public HideTutorial(Maybe<string> completedTutorialName) => CompletedTutorialName = completedTutorialName;
 }
