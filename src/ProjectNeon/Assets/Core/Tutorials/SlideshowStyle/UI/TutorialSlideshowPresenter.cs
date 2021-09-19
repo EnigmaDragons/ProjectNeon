@@ -12,6 +12,8 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
     
     private Maybe<TutorialSlideshow> _current = Maybe<TutorialSlideshow>.Missing();
     private Maybe<IndexSelector<TutorialSlide>> _maybeSlideWalker = Maybe<IndexSelector<TutorialSlide>>.Missing();
+
+    public bool IsShowingTutorial => HasSlides; 
     
     public void Init(TutorialSlideshow slideshow)
     {
@@ -22,7 +24,7 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
 
     protected override void Execute(TutorialNextRequested msg) => IfHasSlides(slides =>
     {
-        if (slides.Index == slides.Count - 1)
+        if (slides.IsLastItem)
         {
             Message.Publish(new HideTutorial(_current.Value.TutorialName));
             _current = Maybe<TutorialSlideshow>.Missing();
@@ -48,7 +50,8 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
         IfHasSlides(slides =>
         {
             var slide = slides.Current;
-            Instantiate(slide.UiElementPrototype, slideUiParent.transform);
+            if (slide.UiElementPrototype != null)
+                Instantiate(slide.UiElementPrototype, slideUiParent.transform);
             slideText.text = slide.Text;
             previousButtonIndicator.SetActive(!slides.IsFirstItem);
             nextButtonIndicator.SetActive(!slides.IsLastItem);
