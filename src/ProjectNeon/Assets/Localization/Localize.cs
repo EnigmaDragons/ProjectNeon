@@ -10,8 +10,6 @@ public static class Localize
     public static string GetFormatted(string sheet, string key, params object[] args)
     {
         return LocalizationSettings.StringDatabase.GetLocalizedString(sheet, key, args);
-        var value = Get(sheet, key);
-        return string.Format(value, args);
     }
     public static string Get(string sheet, string key) => LocalizationSettings.StringDatabase.GetLocalizedString(sheet, key);
 }
