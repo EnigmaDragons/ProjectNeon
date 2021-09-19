@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiRequested>
+public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiRequested, ReloadSceneRequested>
 {
     [SerializeField] private CanvasGroup loadUi;
     [SerializeField] private float loadFadeDuration = 0.5f;
@@ -15,8 +15,11 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     private AsyncOperation _loadState;
 
     private void Awake() => Application.targetFrameRate = 60;
-    
-    protected override void Execute(NavigateToSceneRequested msg)
+
+    protected override void Execute(NavigateToSceneRequested msg) => Navigate(msg.SceneName);
+    protected override void Execute(ReloadSceneRequested msg) => Navigate(SceneManager.GetActiveScene().name);
+
+    private void Navigate(string sceneName)
     {
         if (Time.timeScale < 0.01)
             Time.timeScale = 1;
@@ -26,7 +29,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
         _startedTransitionAt = Time.timeSinceLevelLoad;
         this.ExecuteAfterDelay(() =>
         {
-            _loadState = SceneManager.LoadSceneAsync(msg.SceneName);
+            _loadState = SceneManager.LoadSceneAsync(sceneName);
             _loadState.completed += OnLoadFinished;
         }, loadFadeDuration);
     }
