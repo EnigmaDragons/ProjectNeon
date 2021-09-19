@@ -30,7 +30,7 @@ public class PermanentStatAdjustmentResult : StoryResult
         }
         var baseMessage = appliesToAll
             ? Localize.GetEventResult("PermanentStatAdjustmentResult-All")
-            : Localize.GetFormattedEventResult("PermanentStatAdjustmentResult-Single", members.First().Name);
+            : Localize.GetFormattedEventResult("PermanentStatAdjustmentResult-Single", Localize.GetHero(members.First().Name));
         Message.Publish(new ShowStoryEventResultMessage($"{baseMessage}\n{string.Join("\n", permanentStatAdjustments.Select(x => $"{x.Amount} {Localize.GetStat(x.Stat)}"))}"));
     }
 
