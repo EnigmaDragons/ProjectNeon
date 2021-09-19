@@ -31,7 +31,7 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
     {
         _ignoreChanges = true;
         _hero = deckBuilderState.SelectedHeroesDeck.Hero;
-        nameLabel.text = _hero.Name;
+        nameLabel.text = _hero.DisplayName;
         classLabel.text = _hero.Class;
         levelLabel.text = _hero.Level.ToString();
         heroBust.sprite = _hero.Character.Bust;

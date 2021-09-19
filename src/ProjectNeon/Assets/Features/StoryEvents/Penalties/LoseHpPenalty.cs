@@ -18,7 +18,7 @@ public class LoseHpPenalty : StoryResult
         members.ForEach(m => m.AdjustHp(amount));
         Message.Publish(new ShowStoryEventResultMessage(appliesToAll
             ? Localize.GetFormattedEventResult("LoseHpPenalty-All", -amount)
-            : Localize.GetFormattedEventResult("LoseHpPenalty-Single", members.First().Name, -amount)));
+            : Localize.GetFormattedEventResult("LoseHpPenalty-Single", members.First().DisplayName, -amount)));
     }
 
     public override void Preview()

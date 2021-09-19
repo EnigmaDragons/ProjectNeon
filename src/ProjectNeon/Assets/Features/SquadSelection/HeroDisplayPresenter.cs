@@ -23,7 +23,7 @@ public class HeroDisplayPresenter : MonoBehaviour
     {
         currentHero = c;
         heroBust.sprite = c.Bust;
-        heroName.text = c.Name;
+        heroName.text = c.DisplayName();
         heroClassName.text = c.Class;
         heroDescription.text = c.Flavor.HeroDescription;
         roleDescription.text = "Role: " + c.Flavor.RoleDescription;

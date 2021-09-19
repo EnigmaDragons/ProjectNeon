@@ -20,7 +20,7 @@ public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
     {
         _hero = h;
         _canInteractWithEquipment = canInteractWithEquipment;
-        nameLabel.text = h.Name;
+        nameLabel.text = h.DisplayName;
         classLabel.text = h.Class;
         levelLabel.text = h.Level.ToString();
         heroBust.sprite = h.Character.Bust;

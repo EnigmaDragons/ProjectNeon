@@ -17,7 +17,7 @@ public class GainHpReward : StoryResult
         members.ForEach(m => m.AdjustHp(amount));
         Message.Publish(new ShowStoryEventResultMessage(appliesToAll
             ? Localize.GetFormattedEventResult("GainHpReward-All", amount)
-            : Localize.GetFormattedEventResult("GainHpReward-Single", members.First().Name, amount)));
+            : Localize.GetFormattedEventResult("GainHpReward-Single", members.First().DisplayName, amount)));
     }
 
     public override void Preview()

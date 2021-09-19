@@ -28,7 +28,7 @@ public class ClinicPatientUI : OnMessage<UpdateClinic, HeroStateChanged, PartyAd
     {
         _hero = h;
         _cost = cost;
-        nameLabel.text = h.Name;
+        nameLabel.text = h.DisplayName;
         hpPresenter.Init(h);
         UpdateCosts();
         UpdateButtons();

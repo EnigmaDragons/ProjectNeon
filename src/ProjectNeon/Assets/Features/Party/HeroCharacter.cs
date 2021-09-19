@@ -69,4 +69,6 @@ public static class HeroCharacterExtensions
         var m = new Member(-1, h.Name, h.Class, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.BasicCard));
         return m;
     }
+
+    public static string DisplayName(this HeroCharacter character) => Localize.GetHero(character.Name);
 }
