@@ -12,14 +12,14 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, D
     [SerializeField] private DeckBuilderState builderState;
     [SerializeField] private GameObject noEquipmentMessage;
     
-    private HeroCharacter _selectedHero;
+    private Hero _selectedHero;
     
     protected override void Execute(EquipmentPickerCurrentGearChanged msg) => GenerateLibrary();
     protected override void Execute(DeckBuilderFiltersChanged msg) => GenerateLibrary();
     
     public void GenerateLibrary()
     {
-        _selectedHero = builderState.SelectedHeroesDeck.Hero.Character;
+        _selectedHero = builderState.SelectedHero;
         
         var totalCount = new Dictionary<string, int>();
         var availableCount = new Dictionary<string, int>();
@@ -31,7 +31,7 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, D
                 && (builderState.ShowEquipmentSlots.None() || builderState.ShowEquipmentSlots.Contains(e.Slot)))
             .ForEach(x =>
             {
-                equipUsage.Add((x, x.Slot != EquipmentSlot.Augmentation || builderState.SelectedHeroesDeck.Hero.Equipment.Augments.Length != 3));
+                equipUsage.Add((x, x.Slot != EquipmentSlot.Augmentation || _selectedHero.Equipment.Augments.Length != 3));
                 if (!totalCount.ContainsKey(x.Name))
                     totalCount[x.Name] = 0;
                 totalCount[x.Name]++;
