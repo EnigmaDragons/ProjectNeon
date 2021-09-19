@@ -6,6 +6,8 @@ public static class Localize
     public static string GetEvent(string key) => Get("Events", key);
     public static string GetEventResult(string key) => Get("EventResults", key);
     public static string GetFormattedEventResult(string key, params object[] args) => GetFormatted("EventResults", key, args);
+    public static string GetStat(string key) => Get("Stats", key);
+    public static string GetStat(StatType key) => Get("Stats", key.ToString());
 
     public static string GetFormatted(string sheet, string key, params object[] args)
     {

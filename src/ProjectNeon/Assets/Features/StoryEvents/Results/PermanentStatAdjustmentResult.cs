@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 [CreateAssetMenu(menuName = "StoryEvent/Results/Permanent Stat Adjustment")]
 public class PermanentStatAdjustmentResult : StoryResult
@@ -30,7 +31,7 @@ public class PermanentStatAdjustmentResult : StoryResult
         var baseMessage = appliesToAll
             ? Localize.GetEventResult("PermanentStatAdjustmentResult-All")
             : Localize.GetFormattedEventResult("PermanentStatAdjustmentResult-Single", members.First().Name);
-        Message.Publish(new ShowStoryEventResultMessage($"{baseMessage}\n{string.Join("\n", permanentStatAdjustments.Select(x => $"{x.Amount} {x.Stat}"))}"));
+        Message.Publish(new ShowStoryEventResultMessage($"{baseMessage}\n{string.Join("\n", permanentStatAdjustments.Select(x => $"{x.Amount} {Localize.GetStat(x.Stat)}"))}"));
     }
 
     public override void Preview()
