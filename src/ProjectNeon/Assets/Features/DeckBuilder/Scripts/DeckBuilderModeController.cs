@@ -80,6 +80,12 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
         }
 
         var initialTab = party.Equipment.Available.Any() ? "equipment" : "hero";
+        if (initialTab.Equals("equipment"))
+        {
+            var heroes = party.Heroes;
+            var firstHeroWithAvailableEquipment = heroes.Where(h => party.Equipment.AvailableFor(h.Character).Any()).FirstAsMaybe();
+            firstHeroWithAvailableEquipment.IfPresent(h => state.SelectedHeroesDeck = new HeroesDeck {Hero = h, Deck = h.Deck.Cards});
+        }
         Message.Publish(new CustomizationTabSwitched { TabName = initialTab });
     }
 

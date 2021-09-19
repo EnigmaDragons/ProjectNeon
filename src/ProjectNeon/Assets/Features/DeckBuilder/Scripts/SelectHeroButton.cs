@@ -27,7 +27,7 @@ public class SelectHeroButton : MonoBehaviour
         if (_heroesDeck == null || toTint == null || image == null || selected == null)
             return;
         
-        selected.gameObject.SetActive(state.SelectedHeroesDeck == _heroesDeck);
+        selected.gameObject.SetActive(state.SelectedHero == _heroesDeck.Hero);
         toTint.color = _heroesDeck.Deck.Count == DeckSize.Value ? Color.white : Color.red;
     }
     

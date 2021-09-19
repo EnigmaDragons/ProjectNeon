@@ -12,6 +12,8 @@ public class DeckBuilderState : ScriptableObject
     public string[] ShowArchetypes { get; set; }
     public EquipmentSlot[] ShowEquipmentSlots { get; set; }
 
+    public HeroCharacter SelectedHeroCharacter => SelectedHeroesDeck.Hero.Character;
+    public Hero SelectedHero => SelectedHeroesDeck.Hero;
     public HeroesDeck SelectedHeroesDeck
     {
         get => _selectedHeroesDeck;

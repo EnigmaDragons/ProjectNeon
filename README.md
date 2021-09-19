@@ -2,11 +2,9 @@
 
 ----
 
-[Project Kanban Board](https://zube.io/enigmadragons/projectneon/w/neon-all/kanban)
-
-[Work Policy](https://www.enigmadragons.com/policy)
-
-[PR Review Policy](./guides/pr-review-policy.md)
+- [Project Kanban Board](https://zube.io/enigmadragons/projectneon/w/neon-all/kanban)
+- [Work Policy](https://www.enigmadragons.com/policy)
+- [PR Review Policy](./guides/pr-review-policy.md)
 
 ----
 
@@ -15,6 +13,7 @@
 Software Requirements:
 - Git
 - Unity 2020 LTS (Version 2020.3.1f1)
+- Fmod Studio (Version 2.01.x)
 - Any C# IDE
 
 Setup:
@@ -25,6 +24,17 @@ Setup:
 5. In Unity Hub, click Add
 6. Browse and select `../repo/src/ProjectNeon`
 7. Click on `ProjectNeon`
+8. Open Fmod Studio
+9. `File` -> `Open` -> `repo/src/ProjectNeon/PNFmod/PNFmod.fspro`
+10. Press `F7` 
+
+----
+
+### Refresh Sounds
+
+1. Open Fmod Studio
+2. `File` -> `Open` -> `repo/src/ProjectNeon/PNFmod/PNFmod.fspro`
+3. Press `F7` 
 
 ----
 
@@ -43,5 +53,6 @@ Setup:
 - Programming: Silas Reinagel
 - Programming: Paulo Lobo
 - Programming: Talio
+- QA Tester: Mustafa Contractor
 
 ----

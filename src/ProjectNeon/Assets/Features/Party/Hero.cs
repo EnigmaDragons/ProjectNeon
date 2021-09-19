@@ -41,6 +41,7 @@ public class Hero
     public CardTypeData BasicCard => basicCard;
     public StatType PrimaryStat => _primaryStat.OrDefault(Stats.DefaultPrimaryStat(Character.Stats));
     public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
+    public HashSet<string> Archetypes => character.Archetypes;
 
     public IStats BaseStats => 
         Character.Stats.Plus(_statAdditions);
