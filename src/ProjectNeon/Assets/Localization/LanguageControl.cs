@@ -32,6 +32,6 @@ public class LanguageControl : MonoBehaviour
     private void LocaleSelected(int index)
     {
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[index];
-        navigator.NavigateToTitleScreen();
+        navigator.ReloadScene();
     }
 }
