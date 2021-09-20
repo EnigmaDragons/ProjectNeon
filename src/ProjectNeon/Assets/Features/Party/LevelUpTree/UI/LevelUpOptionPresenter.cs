@@ -30,12 +30,14 @@ public sealed class LevelUpOptionPresenter : MonoBehaviour, IPointerDownHandler,
     {
         if (_option != null)
             Message.Publish(new LevelUpOptionSelected(_option, _allOptions));
+            
     }
     
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
             SelectLevelUpOption();
+        Message.Publish(new LevelUpClicked(transform));
         if (eventData.button == PointerEventData.InputButton.Right)
             _option.ShowDetail();
     }
