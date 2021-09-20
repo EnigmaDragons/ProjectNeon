@@ -343,7 +343,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         nameLabel.text = _cardType.Name;
         description.text = !shouldUseLibraryMode
             ? _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity)) 
-            : _cardType.InterpolatedDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
+            : _cardType.InterpolatedDescription(_card.Owner, ResourceQuantity.None);
         type.text = _cardType.ArchetypeDescription();
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);

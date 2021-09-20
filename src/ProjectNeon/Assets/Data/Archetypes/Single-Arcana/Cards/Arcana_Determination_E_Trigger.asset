@@ -15,7 +15,7 @@ MonoBehaviour:
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 7
+      EffectType: 82
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -26,20 +26,22 @@ MonoBehaviour:
         ConstantValue: 1
         FloatVariable: {fileID: 0}
       DurationFormula: 0
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
         ConstantValue: Flames
         Variable: {fileID: 11400000, guid: 0c6bbe1c97723cd43a9e4f1d93fae9c7, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 1
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
