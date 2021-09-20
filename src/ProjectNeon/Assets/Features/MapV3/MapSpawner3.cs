@@ -75,8 +75,10 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
         }
     }
 
+    [Obsolete]
     private void ShowMapPromptIfJustStarted()
     {
+        return;
         if (progress.CurrentStageProgress == 0 && !progress.PlayerReadMapPrompt)
         {
             var mapPrompt = progress.CurrentAdventure.MapQuestPrompt;
