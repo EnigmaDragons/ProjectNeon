@@ -14,6 +14,8 @@ public sealed class IndexSelector<T>
 
     public int Count => _items.Length;
     public int Index => _index;
+    public bool IsFirstItem => Index == 0;
+    public bool IsLastItem => Index + 1 == Count;
     public T Current => _items[_index];
 
     public T MoveNext()
@@ -31,6 +33,13 @@ public sealed class IndexSelector<T>
         return Current;
     }
 
+    public T MovePreviousWithoutLooping()
+    {
+        if (_index > 0)
+            _index--;
+        return Current;
+    }
+    
     public T MoveNextWithoutLooping()
     {
         if (_index < _items.Length - 1)

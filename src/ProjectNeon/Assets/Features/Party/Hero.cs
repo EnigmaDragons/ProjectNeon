@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 [Serializable]
 public class Hero
@@ -29,6 +30,7 @@ public class Hero
     }
 
     public string Name => character.Name;
+    public string DisplayName => character.DisplayName();
     public string Class => character.Class;
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
@@ -41,6 +43,7 @@ public class Hero
     public CardTypeData BasicCard => basicCard;
     public StatType PrimaryStat => _primaryStat.OrDefault(Stats.DefaultPrimaryStat(Character.Stats));
     public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
+    public HashSet<string> Archetypes => character.Archetypes;
 
     public IStats BaseStats => 
         Character.Stats.Plus(_statAdditions);

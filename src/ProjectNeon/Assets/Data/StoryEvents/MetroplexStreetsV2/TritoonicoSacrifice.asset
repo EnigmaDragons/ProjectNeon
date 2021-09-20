@@ -12,62 +12,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7dab33deee9460b8aab4769accdd7a5, type: 3}
   m_Name: TritoonicoSacrifice
   m_EditorClassIdentifier: 
-  displayName: Tritoonica Sacrifice
+  id: 5
   settingType: 0
   corp: {fileID: 11400000, guid: 8eee292fbfbac134b966e2efaca2a532, type: 2}
-  storyText: "You spot a group of robed figures slipping into an abandonded warehouse
-    with a large hovering cage between them. \r\n\nYou sneak inside and see a Tritoonico
-    employee drawing ritual circles accross the floor as the cage is opened dumping
-    out unconcious homeless looking people into the middle of the circles.\r\n\nYou
-    overhear a conversation between the Tritoonico employees:\r\nTritoonico Employee
-    1 \"Why do we always sacrifice the sick homeless, when we could have way more
-    people to sacrifice in the prison system?\"\n\r\nTritoonico Employee 2 \"Because
-    Tritoonico has a deal with the other corps, they are paying us to keep the streets
-    clean of the litter\" speaking nonchalantly, as she motioned to the people lying
-    in the middle of the circle\r.\n\nTritoonico Employee 2 \"Also the prison corps
-    that are using prisoners for cheap labor would be very upset if we tried to cut
-    in.\""
   choices:
-  - Text: Attempt to kill the Tritoonico employees to stop the ritual
+  - Choice: 1
     Resolution:
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 28c8129514394a54aa6c0e7a031f7347, type: 2}
+      ResultNumber: 1
       StoryText: "The ritual's gonna start soon. \n\nNow is not the time for subtlety.
         It's time to fight."
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 673eaffc5909c45469d34f0686f45309, type: 2}
+      ResultNumber: 2
       StoryText: You take your time to get in position before taking them by surprise.
-  - Text: Film the whole thing to use as blackmail against Tritoonico
+  - Choice: 2
     Resolution:
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 33cc7bb0ae2c3b34c83c76d67b0dc01b, type: 2}
+      ResultNumber: 1
       StoryText: "Tritoonico employees notice you. \n\nYou make it out before things
         get bloody, but you have a feeling this incident might negatively impact
         your relationship with Tritoonico's prices."
     - Chance: 0.35
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 9b1e9500e13c59741ade4587f32fa841, type: 2}
+      ResultNumber: 2
       StoryText: A magic energy wave comes out of the ritual circle, killing those
         in the middle and inconvienently destroying the holopad you were recording
         with.
     - Chance: 0.6
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 818aa2cfd0e6fef42b2bd3502fe18672, type: 2}
+      ResultNumber: 3
       StoryText: As soon as the ritual is finished, you send the video off to the
         Tritoonico PR Division and negotiate your silence fee successfully.
-  - Text: Disrupt the edges of the circle in order to sabotage the ritual
+  - Choice: 3
     Resolution:
     - Chance: 0.45
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: d6bc70be62d27a847ae73431859deb18, type: 2}
+      ResultNumber: 1
       StoryText: "The destructive magic is left uncontained attempting to kill everyone.
         \n\nYou escape as fast as you can, trying not to get too hurt."
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: c2a7e1ec3c555c144ab4bedccc5a4c70, type: 2}
+      ResultNumber: 2
       StoryText: "The ritual's effect is changed to wake and empower the people in
         the circle instead of draining them. \n\nThey charge and violently attack
         the Tritoonico employees. Some of the employees escape while others now lie
@@ -76,5 +71,6 @@ MonoBehaviour:
     - Chance: 0.05
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 81bc8a8f09243fc4e96c13115399ba69, type: 2}
+      ResultNumber: 3
       StoryText: The magic ritual escapes into the air, infusing all nearby magically
         gifted individuals.

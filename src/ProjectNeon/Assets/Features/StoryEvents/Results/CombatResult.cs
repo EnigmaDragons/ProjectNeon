@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 [CreateAssetMenu(menuName = "StoryEvent/Results/Combat")]
 public class CombatResult : StoryResult
@@ -19,6 +20,7 @@ public class CombatResult : StoryResult
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { IsReward = EstimatedCreditsValue > 0, Text = $"Start a fight" });
+        Message.Publish(new ShowTextResultPreview { IsReward = EstimatedCreditsValue > 0, 
+            Text = Localize.GetEventResult("CombatResultPreview") });
     }
 }

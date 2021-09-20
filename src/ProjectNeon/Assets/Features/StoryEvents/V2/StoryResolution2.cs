@@ -9,6 +9,8 @@ public class StoryResolution2
     [Header("A. Next Story Event")] public StoryEvent2 ContinueWith;
     [Header("B. Final Resolution")]
     public StoryResult Result;
+
+    public int ResultNumber;
     [FormerlySerializedAs("SuccessText")] [TextArea(2, 7)] public string StoryText;
 
     public bool HasContinuation => ContinueWith != null;

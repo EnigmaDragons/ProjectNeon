@@ -39,7 +39,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
                 .Take(3)
                 .Select(x => new ClinicServiceButtonData(
                     x.blessingData.Name, 
-                    x.blessingData.IsSingleTarget ? string.Format(x.blessingData.Description, x.blessing.Targets[0].Name) : x.blessingData.Description, 
+                    x.blessingData.IsSingleTarget ? string.Format(x.blessingData.Description, x.blessing.Targets[0].DisplayName()) : x.blessingData.Description, 
                     0,
                     () =>
                     {
@@ -50,5 +50,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
         _generatedOptions.ForEach(x => x.Enabled = !_hasProvidedService);
         return _generatedOptions;
     }
+    
+    public bool RequiresSelection() => !_hasProvidedService;
 }
 

@@ -37,7 +37,7 @@ public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCredi
 
             var choice = s.Choices[i];
             var choiceText = choice.ChoiceFullText(ctx);
-            _buttons[i].Init(choiceText, () => choice.Select(ctx));
+            _buttons[i].InitRaw(choiceText, () => choice.Select(ctx));
             if (!choice.CanSelect(ctx))
             {
                 Debug.Log($"Story Event: Cannot choose {choiceText}. Condition not met.");

@@ -20,7 +20,9 @@ public class LoadLatestPatchNotesOnAwake : MonoBehaviour
         if (!resp.IsSuccessStatusCode)
             Log.Warn($"Failed to load Latest Patch Notes: {resp.StatusCode}");
         else
-            text.Init(resp.ReadAsString());
+            text.Init(resp.ReadAsString() 
+                      + Environment.NewLine 
+                      + Environment.NewLine);
         
     }
 }

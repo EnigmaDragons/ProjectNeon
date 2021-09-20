@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2848500371053736978}
   - component: {fileID: 8337265707007760228}
   - component: {fileID: 8691635615988385519}
+  - component: {fileID: 6688880647734485054}
+  - component: {fileID: 7158335331560750384}
   m_Layer: 0
   m_Name: DiscordInvite
   m_TagString: Untagged
@@ -121,7 +123,64 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8337265707007760228}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7158335331560750384}
+        m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6688880647734485054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419571566242984261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7158335331560750384}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &7158335331560750384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419571566242984261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/DeckBulder_Scene/Hover
 --- !u!1 &756493193736032866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,6 +1066,8 @@ GameObject:
   - component: {fileID: 4969475547767528594}
   - component: {fileID: 3015455788648710274}
   - component: {fileID: 5925365513297964691}
+  - component: {fileID: 2754867079952943422}
+  - component: {fileID: 4086560117346197259}
   m_Layer: 0
   m_Name: PatchNotes
   m_TagString: Untagged
@@ -1116,7 +1177,64 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3015455788648710274}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4086560117346197259}
+        m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2754867079952943422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6831954823933844494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4086560117346197259}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &4086560117346197259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6831954823933844494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/DeckBulder_Scene/Hover
 --- !u!1 &7492745598565810345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1793,18 +1911,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 4.2828064
       objectReference: {fileID: 0}
+    - target: {fileID: 8538292115938803570, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!224 &2291349208635126146 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 1982160033243476373}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &561514802610733854 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2038136876053344907, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 1982160033243476373}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4420359842761994536 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -1816,6 +1928,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &2291349208635126146 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 1982160033243476373}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &561514802610733854 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2038136876053344907, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 1982160033243476373}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4098571752561313872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1921,11 +2043,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!224 &4372855258712082503 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 4098571752561313872}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2178410282501589229 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -1937,6 +2054,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &4372855258712082503 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 4098571752561313872}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4251651306003524941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2042,11 +2164,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!224 &4561701865012587866 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 4251651306003524941}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2151224741302939120 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -2058,6 +2175,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &4561701865012587866 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 4251651306003524941}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4796897618327589464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2163,11 +2285,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!224 &5106111122833986127 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 4796897618327589464}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7226106068430721765 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -2179,6 +2296,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &5106111122833986127 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 4796897618327589464}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5412629359399432256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2385,6 +2507,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!224 &7118555552772533934 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 7387237596662967993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4638413649148341764 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -2396,11 +2523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &7118555552772533934 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 7387237596662967993}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7586863683818504111
 PrefabInstance:
   m_ObjectHideFlags: 0

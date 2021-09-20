@@ -12,34 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7dab33deee9460b8aab4769accdd7a5, type: 3}
   m_Name: NovolineIncitingARiot
   m_EditorClassIdentifier: 
-  displayName: Inciting A Riot
+  id: 3
   settingType: 0
   corp: {fileID: 11400000, guid: bd8e5654971a1ef4895e3bf12cf6c8be, type: 2}
-  storyText: 'Your contacts have informed you that a peaceful protest outside of
-    ZantoCorp is about to turn violent.
-
-
-    ZantoCorp has hired Novoline to pretend
-    to be protesters and start violence, in order to give ZantoCorp an excuse to
-    retaliate against the protestors.'
   choices:
-  - Text: Intercept Novoline and fight their team.
+  - Choice: 1
     Resolution:
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 021a604a7c2968b47b67aa22bde0a159, type: 2}
+      ResultNumber: 1
       StoryText: "You engage the Novoline vehicle by hitting it with armor piercing
         rounds. \n\nThe Novoline team pops out of the vehicle in combat formation."
     - Chance: 0.5
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 219785987d56e1f45bf700d1f9fe2df9, type: 2}
+      ResultNumber: 2
       StoryText: You land an explosive directly into Novoline's armored vehicle,
         hurting their squad and forcing an engagement.
-  - Text: Steal from Novoline's transport vehicle after their team leaves it
+  - Choice: 2
     Resolution:
     - Chance: 0.3
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: f0d804dd1366c934f9bbeba259cf5f02, type: 2}
+      ResultNumber: 1
       StoryText: 'Attempting to break in, you trigger the vehicle''s automated turret.
 
 
@@ -48,28 +44,32 @@ MonoBehaviour:
     - Chance: 0.6
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 3373f373f6ec6e24b8d8725db4a0702b, type: 2}
+      ResultNumber: 2
       StoryText: Most of the weapons are locked up too securely, but you find one
         weapon that's easy to take.
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 8a19411517240c148a5eeee3dc71f971, type: 2}
+      ResultNumber: 3
       StoryText: Most of the weapons are locked up too securely, but you find one
         modded weapon that must be special to one of the Novoline's squad members.
-  - Text: Hijack the cameras in the area, to force the media company NGN to pay you
-      for good footage of the violence
+  - Choice: 3
     Resolution:
     - Chance: 0.3
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 97a5ee1afcf71bd41942f83741288b5d, type: 2}
+      ResultNumber: 1
       StoryText: ZantoCorp security traces you attempting to hijack the cameras.
         The SecTeam swarms you and you are charged an attempted hacking fine.
     - Chance: 0.6
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 68249e398e60b7748924347e7dff4f97, type: 2}
+      ResultNumber: 2
       StoryText: "You are only able to get a handful of the cameras under your control.
         \n\nStill, NGN loves the footage, so you sell them live feeds of the violence."
     - Chance: 0.1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 58be128081d31f148b58d2d4de247c3e, type: 2}
+      ResultNumber: 3
       StoryText: "You take control of every static camera feed. \n\nWith all the
         premium live footage, you are able to charge a NGN a very nice price."

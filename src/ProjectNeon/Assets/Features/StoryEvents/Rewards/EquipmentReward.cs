@@ -18,6 +18,8 @@ public class EquipmentReward : StoryResult
     
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { Text = $"You gain a random {rarity} {slot}{(string.IsNullOrWhiteSpace(corp.Value) ? "" : $" from {corp.Value}")}", IsReward = true });
+        Message.Publish(new ShowTextResultPreview { IsReward = true, Text = string.IsNullOrWhiteSpace(corp.Value) 
+            ? Localize.GetFormattedEventResult("EquipmentRewardPreview", rarity, slot)
+            : Localize.GetFormattedEventResult("EquipmentRewardPreview-Corp", rarity, slot, corp.Value)});
     }
 }

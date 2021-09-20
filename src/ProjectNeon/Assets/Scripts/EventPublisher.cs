@@ -43,4 +43,6 @@ public class EventPublisher : ScriptableObject
     public void ToggleOptionsMenu() => Message.Publish(new ToggleNamedTarget("OptionsMenu"));
     public void CompleteAnyMapNode() => Message.Publish(new CompleteAnyMapNode());
     public void GuaranteeStoryEvent() => Message.Publish(new GuaranteeStoryEvent());
+    public void MoveTutorialNext() => Message.Publish(new TutorialNextRequested());
+    public void MoveTutorialPrevious() => Message.Publish(new TutorialPreviousRequested());
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
@@ -41,7 +42,16 @@ public sealed class TextCommandButton : MonoBehaviour
     public void Init(string commandText, Action cmd)
     {
         InitButton();
-        label.text = commandText;
+        label.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", commandText);
+        _cmd = cmd;
+        _button.interactable = true;
+        gameObject.SetActive(true);
+    }
+
+    public void InitRaw(string rawCommand, Action cmd)
+    {
+        InitButton();
+        label.text = rawCommand;
         _cmd = cmd;
         _button.interactable = true;
         gameObject.SetActive(true);

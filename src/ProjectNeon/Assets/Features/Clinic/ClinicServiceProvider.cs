@@ -4,6 +4,7 @@ public interface ClinicServiceProvider
 {
     string GetTitle();
     ClinicServiceButtonData[] GetOptions();
+    bool RequiresSelection();
 }
 
 public class ClinicServiceButtonData

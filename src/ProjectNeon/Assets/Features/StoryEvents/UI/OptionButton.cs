@@ -11,11 +11,11 @@ public class OptionButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private StoryEventChoice2 _choice;
     
-    public void Init(StoryEventChoice2 choice, StoryEventContext ctx)
+    public void Init(StoryEventChoice2 choice, StoryEventContext ctx, StoryEvent2 owner)
     {
         _choice = choice;
-        text.text = choice.ChoiceFullText(ctx);
-        button.onClick.AddListener(() => choice.Select(ctx));
+        text.text = choice.ChoiceFullText(ctx, owner);
+        button.onClick.AddListener(() => choice.Select(ctx, owner));
     }
 
     public void Init(string choice, Action action)

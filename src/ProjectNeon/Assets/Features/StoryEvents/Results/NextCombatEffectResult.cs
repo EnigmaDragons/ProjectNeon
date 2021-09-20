@@ -14,11 +14,11 @@ public class NextCombatEffectResult : StoryResult
     {
         nextCombatEffect.Targets = ctx.Party.BaseHeroes;
         ctx.Party.AddBlessing(nextCombatEffect);
-        Message.Publish(new ShowStoryEventResultMessage(text));
+        Message.Publish(new ShowStoryEventResultMessage(Localize.GetEventResult(text)));
     }
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { IsReward = estimatedCreditsValue > 0, Text = previewText });
+        Message.Publish(new ShowTextResultPreview { IsReward = estimatedCreditsValue > 0, Text = Localize.GetEventResult(previewText) });
     }
 }

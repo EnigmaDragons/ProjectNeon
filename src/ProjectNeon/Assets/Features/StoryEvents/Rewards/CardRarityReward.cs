@@ -17,6 +17,6 @@ public class CardRarityReward : StoryResult
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { Text = $"Gain a random {rarity.ToString()} card", IsReward = true });
+        Message.Publish(new ShowTextResultPreview { Text = Localize.GetFormattedEventResult("CardRarityRewardPreview", rarity.ToString()), IsReward = true });
     }
 }
