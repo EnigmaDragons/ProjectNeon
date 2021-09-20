@@ -9,7 +9,7 @@ public class TutorialSlideshow : ScriptableObject
     [SerializeField] private GameObject backgroundPrototype;
     [SerializeField] private List<TutorialSlide> slides;
 
-    public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? TutorialName : displayName;
+    public string DisplayName => displayName ?? TutorialName;
     public string TutorialName => tutorialName;
     public GameObject BackgroundPrototype => backgroundPrototype;
     public TutorialSlide[] Slides => slides.ToArray();
