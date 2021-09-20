@@ -3,9 +3,12 @@ using UnityEngine;
 public class TutorialTrackerReactiveSystem : OnMessage<ShowTutorialSlideshowIfNeeded, ShowTutorialByNameIfNeeded, HideTutorial>
 {
     [SerializeField] private AllTutorialSlideshows tutorialSlideshows;
+    [SerializeField] private bool loggingEnabled = false;
     
     protected override void Execute(ShowTutorialSlideshowIfNeeded msg)
     {
+        if (loggingEnabled)
+            Log.Info($"Requested Show Tutorial {msg.Tutorial.TutorialName}");
         if (TutorialTracker.ShouldShowTutorial(msg.Tutorial.TutorialName))
             Message.Publish(new ShowTutorialSlideshow(msg.Tutorial));
     }
