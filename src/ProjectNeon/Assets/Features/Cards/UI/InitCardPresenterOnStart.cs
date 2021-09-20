@@ -8,7 +8,6 @@ public class InitCardPresenterOnStart : MonoBehaviour
     
     private void Start()
     {
-        var ownerMember = owner.AsMemberForLibrary();
-        cardPresenter.Set(new Card(-1, ownerMember, card));
+        cardPresenter.Set(new Card(-1, new Hero(owner, new RuntimeDeck()).AsMember(1), card, owner.Tint, owner.Bust));
     }
 }
