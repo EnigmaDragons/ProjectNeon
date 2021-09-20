@@ -311,6 +311,7 @@ GameObject:
   - component: {fileID: 807856158}
   - component: {fileID: 807856157}
   - component: {fileID: 807856159}
+  - component: {fileID: 807856160}
   m_Layer: 0
   m_Name: SceneMusic
   m_TagString: Untagged
@@ -369,6 +370,33 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 0
   OverrideMaxDistance: 0
+--- !u!114 &807856160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807856156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 244fb61b57ecaa8409c2711044349bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: bb968fa8fe7df6140b8d296d1edd49af, type: 2}
+        m_TargetAssemblyTypeName: GameMusicPlayer, EnigmaDragons.Core
+        m_MethodName: StopMusicIfPlaying
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &828106366
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1272,7 +1300,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 433732476318470640, guid: 9a42aa58b6fa16b408a9b127b22776e8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000061035156
+      value: -0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 433732476575470682, guid: 9a42aa58b6fa16b408a9b127b22776e8, type: 3}
       propertyPath: m_AnchorMax.x
