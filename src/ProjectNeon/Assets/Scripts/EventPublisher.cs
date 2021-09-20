@@ -45,4 +45,5 @@ public class EventPublisher : ScriptableObject
     public void GuaranteeStoryEvent() => Message.Publish(new GuaranteeStoryEvent());
     public void MoveTutorialNext() => Message.Publish(new TutorialNextRequested());
     public void MoveTutorialPrevious() => Message.Publish(new TutorialPreviousRequested());
+    public void ShowTutorialIfNeeded(string tutorialName) => Message.Publish(new ShowTutorialByNameIfNeeded(tutorialName));
 }
