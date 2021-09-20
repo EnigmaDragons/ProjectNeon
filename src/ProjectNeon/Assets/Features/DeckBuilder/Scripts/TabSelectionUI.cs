@@ -24,6 +24,8 @@ public class TabSelectionUI : OnMessage<CustomizationTabSwitched>
         var equipmentTabActive = msg.TabName == "equipment";
         var heroTabActive = msg.TabName == "hero";
         var enemyTabActive = msg.TabName == "enemy";
+        if (heroTabActive)
+            Message.Publish(new ShowTutorialByNameIfNeeded(Tutorials.Card));
         equipmentTab.SetSelected(equipmentTabActive);
         equipmentObjects?.ForEach(x => x.SetActive(equipmentTabActive));
         notEquipmentObjects?.ForEach(x => x.SetActive(!equipmentTabActive));
