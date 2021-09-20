@@ -7,6 +7,7 @@ public class UnityVolumeMixerController : OnMessage<MixerVolumeChanged>
     
     protected override void Execute(MixerVolumeChanged msg)
     {
-        mixer.SetFloat(msg.ChannelName, msg.Volume);
+        var mixerVolume = Mathf.Log10(msg.Volume) * 20;
+        mixer.SetFloat(msg.ChannelName, msg.Volume <= 0 ? -80 : mixerVolume);
     }
 }
