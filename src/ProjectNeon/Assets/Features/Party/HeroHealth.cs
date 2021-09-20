@@ -13,8 +13,8 @@ public class HeroHealth
     private Func<IStats> _getCurrentStats;
     
     public int MissingHp => missingHp;
-    public IEnumerable<IStats> AdditiveStats => additiveStatInjuries.Select(i => new StatAddends().WithRaw(i.Stat, i.Amount));
-    public IEnumerable<IStats> MultiplicativeStats => multiplicativeStatInjuries.Select(i => new StatMultipliers().WithRaw(i.Stat, i.Amount));
+    public IEnumerable<IStats> AdditiveStats(StatType primaryStat) => additiveStatInjuries.Select(i => new StatAddends().WithRaw(i.Stat == "PrimaryStat" ? primaryStat.ToString() : i.Stat, i.Amount));
+    public IEnumerable<IStats> MultiplicativeStats(StatType primaryStat) => multiplicativeStatInjuries.Select(i => new StatMultipliers().WithRaw(i.Stat == "PrimaryStat" ? primaryStat.ToString() : i.Stat, i.Amount));
 
     public IEnumerable<string> InjuryNames => AllInjuries
         .Select(x => x.InjuryName)
