@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, TutorialPreviousRequested>
 {
+    [SerializeField] private GameObject backgroundUiParent;
+    [SerializeField] private TextMeshProUGUI titleLabel;
     [SerializeField] private GameObject slideUiParent;
     [SerializeField] private TextMeshProUGUI slideText;
     [SerializeField] private GameObject nextButtonIndicator;
@@ -19,6 +21,10 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
     {
         _current = slideshow;
         _maybeSlideWalker = new Maybe<IndexSelector<TutorialSlide>>(new IndexSelector<TutorialSlide>(slideshow.Slides));
+        titleLabel.text = slideshow.DisplayName;
+        backgroundUiParent.DestroyAllChildren();
+        if (slideshow.BackgroundPrototype != null)
+            Instantiate(slideshow.BackgroundPrototype, backgroundUiParent.transform);
         Render();
     }
 
