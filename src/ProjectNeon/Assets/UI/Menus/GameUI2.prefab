@@ -960,6 +960,7 @@ GameObject:
   - component: {fileID: 5693058022393951201}
   - component: {fileID: 6724836012008580667}
   - component: {fileID: 1375874683532142871}
+  - component: {fileID: 1711576273057366847}
   m_Layer: 5
   m_Name: MapUI3
   m_TagString: Untagged
@@ -1120,6 +1121,33 @@ MonoBehaviour:
     nodeGameObject: {fileID: 5733061901227342423, guid: bfba962baa867d449946a9afca172628, type: 3}
   - corp: {fileID: 11400000, guid: 8eee292fbfbac134b966e2efaca2a532, type: 2}
     nodeGameObject: {fileID: 6908695514287337272, guid: 83199bb0b415f544a845f312e88d2850, type: 3}
+--- !u!114 &1711576273057366847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621118648259081719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0ba50d3488448f5a3fbc1e766961cff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
+        m_MethodName: ShowTutorialIfNeeded
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Map
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4983513931946011019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,6 +1843,38 @@ PrefabInstance:
     - target: {fileID: 147869006703609896, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
       propertyPath: m_Name
       value: PartyBrandAffinityPresenter
+      objectReference: {fileID: 0}
+    - target: {fileID: 804832836614513771, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 804832836614513771, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 804832836614513771, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 804832836614513771, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133921450845953237, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133921450845953237, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133921450845953237, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133921450845953237, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7253639431348232640, guid: 51a7fbb316bcf9348ae747aee01d9ed3, type: 3}
       propertyPath: m_Pivot.x

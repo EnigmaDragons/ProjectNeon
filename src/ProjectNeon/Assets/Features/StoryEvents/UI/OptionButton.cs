@@ -15,7 +15,7 @@ public class OptionButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         _choice = choice;
         text.text = choice.ChoiceFullText(ctx, owner);
-        button.onClick.AddListener(() => choice.Select(ctx, owner));
+        button.onClick.AddListener(() => choice.Select(ctx, owner, Input.GetKey(KeyCode.KeypadPlus) ? 0 : Input.GetKey(KeyCode.KeypadMinus) ? 0.99 : Maybe<double>.Missing()));
     }
 
     public void Init(string choice, Action action)

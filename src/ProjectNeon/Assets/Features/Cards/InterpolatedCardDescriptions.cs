@@ -34,13 +34,10 @@ public static class InterpolatedCardDescriptions
                 .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
                 .SelectMany(b => b.ConditionData.ReferencedEffect.BattleEffects);
 
-            var innerBattleEffects = battleEffects
-                    .Where(x => x.ReferencedSequence != null)
-                    .SelectMany(c => c.ReferencedSequence.InnerBattleEffects)
-                .Concat(
-                    conditionalBattleEffects
-                        .Where(x => x.ReferencedSequence != null)
-                        .SelectMany(c => c.ReferencedSequence.BattleEffects.Concat(c.ReferencedSequence.InnerBattleEffects)));
+            var innerBattleEffects = card.Actions().SelectMany(c => c.InnerBattleEffects)
+                .Concat(card.Actions()
+                    .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
+                    .SelectMany(b => b.ConditionData.ReferencedEffect.InnerBattleEffects));
 
             return InterpolatedDescription(desc, card.Speed == CardSpeed.Quick, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard, card.SwappedCard);
         }
@@ -287,7 +284,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustCounterFormula)
             return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            return $"{FormulaAmount(data, owner, xCost)} Resources";
+            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent ? owner.Value.PrimaryResource().ResourceType : "Resources")}";
         if (data.EffectType == EffectType.ShieldBasedOnNumberOfOpponentsDoTs)
             return owner.IsPresent
                 ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.MaxShield]))).ToString()
@@ -322,7 +319,7 @@ public static class InterpolatedCardDescriptions
     }
 
     private static string FormulaAmount(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
-        => WithImplications(owner.IsPresent
+        => WithImplications(owner.IsPresent && (!data.Formula.Contains('X') || xCost.ResourceType != "None")
             ? EvaluatedFormula(data, owner.Value, xCost)
             : FormattedFormula(data.Formula));
 

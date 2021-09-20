@@ -49,7 +49,7 @@ public sealed class GameMusicPlayer : ScriptableObject
         musicSource.Play();
     }
 
-    private void StopMusicIfPlaying()
+    public void StopMusicIfPlaying()
     {
         if (musicSource != null && musicSource.isPlaying)
             musicSource.Stop();

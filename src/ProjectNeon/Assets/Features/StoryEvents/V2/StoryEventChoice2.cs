@@ -18,7 +18,7 @@ public class StoryEventChoice2
     public string ChoiceFullText(StoryEventContext ctx, StoryEvent2 owner) => Localize.GetEvent($"Event{owner.id} Choice{Choice}").Trim();
     public bool CanSelect(StoryEventContext ctx) => true;
     
-    public void Select(StoryEventContext ctx, StoryEvent2 owner)
+    public void Select(StoryEventContext ctx, StoryEvent2 owner, Maybe<double> predeterminedRoll)
     {
         if (Resolution.Sum(r => r.Chance) > 1 || Resolution.Sum(r => r.Chance) <= 0)
         {
@@ -26,7 +26,7 @@ public class StoryEventChoice2
             Message.Publish(new ShowStoryEventResolution("Something peculiar occurred, which you can't explain, of which you can never speak (except to the developers)", 0));
         }
 
-        var roll = Rng.Dbl();
+        var roll = predeterminedRoll.OrDefault(Rng.Dbl());
         if (Resolution.Length > 1)
             Message.Publish(new ShowDieRoll((int)Math.Ceiling(Math.Abs(1 - roll) * 20)));
         else if (Resolution.Length == 1 && !Resolution.Single().HasContinuation)

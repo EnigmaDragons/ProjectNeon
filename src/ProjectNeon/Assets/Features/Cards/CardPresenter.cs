@@ -133,8 +133,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onRightClick = _isHand ? ToggleAsBasic : (Action)card.ShowDetailedCardView;
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
-        
-
     }
     
     public void Set(CardTypeData cardType, Action onClick)
@@ -150,7 +148,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _isHand = false;
         _requiresPlayerTargeting = false;
         RenderCardType();
-        
     }
 
     private void LateUpdate()
@@ -175,8 +172,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onClick = onClick;
         _onMiddleMouse = () => { };
         _onRightClick = () => { };
-        
-
     }
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
@@ -237,7 +232,6 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         DisableSelectedHighlight();
         if (!conditionMetHighlight && !conditionNotMetHighlight && highlightShouldBeActive)
             highlight.SetActive(true);
-        
     }
 
     public void SetSiblingIndex(int index) => _siblingIndex = index;
@@ -343,7 +337,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         nameLabel.text = _cardType.Name;
         description.text = !shouldUseLibraryMode
             ? _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity)) 
-            : _cardType.InterpolatedDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
+            : _cardType.InterpolatedDescription(_card?.Owner ?? Maybe<Member>.Missing(), ResourceQuantity.None);
         type.text = _cardType.ArchetypeDescription();
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);

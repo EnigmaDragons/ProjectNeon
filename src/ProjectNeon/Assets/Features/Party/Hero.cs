@@ -41,7 +41,7 @@ public class Hero
     public HeroLevels Levels => levels;
     public int Level => levels.CurrentLevel;
     public CardTypeData BasicCard => basicCard;
-    public StatType PrimaryStat => _primaryStat.OrDefault(Stats.DefaultPrimaryStat(Character.Stats));
+    public StatType PrimaryStat => _primaryStat.OrDefault(NonTemporaryStats.DefaultPrimaryStat(Character.Stats));
     public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
     public HashSet<string> Archetypes => character.Archetypes;
 
@@ -49,13 +49,20 @@ public class Hero
         Character.Stats.Plus(_statAdditions);
     
     // TODO: Maybe don't calculate this every time
+    public IStats NonTemporaryStats => Character.Stats
+        .Plus(_statAdditions)
+        .Plus(new StatAddends().With(Equipment.All.SelectMany(e =>
+            e.ResourceModifiers.Select(r => r.WithPrimaryResourceMappedForOwner(_primaryResourceType))).ToArray()))
+        .Plus(Equipment.All.Select(e => e.AdditiveStats()))
+        .Times(Equipment.All.Select(e => e.MultiplierStats()));
+
     public IStats Stats => Character.Stats
         .Plus(_statAdditions)
         .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers.Select(r => r.WithPrimaryResourceMappedForOwner(_primaryResourceType))).ToArray()))
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
-        .Plus(health.AdditiveStats)
+        .Plus(health.AdditiveStats(PrimaryStat))
         .Times(Equipment.All.Select(e => e.MultiplierStats()))
-        .Times(health.MultiplicativeStats);
+        .Times(health.MultiplicativeStats(PrimaryStat));
 
     public IStats PermanentStats => Character.Stats
         .Plus(_statAdditions)

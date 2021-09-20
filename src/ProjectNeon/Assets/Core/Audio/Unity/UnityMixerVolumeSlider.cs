@@ -19,7 +19,7 @@ public sealed class UnityMixerVolumeSlider : MonoBehaviour
     {
         var mixerVolume = (Mathf.Log10(sliderValue) * 20) - reductionDb;
         Log.Info($"Slider - Set Audio Level for {valueName} to {sliderValue} ({mixerVolume}db)");
-        mixer.SetFloat(valueName, mixerVolume);
+        mixer.SetFloat(valueName, sliderValue <= 0 ? -80 : mixerVolume);
         PlayerAudioPrefs.SetVolumeLevel(valueName, sliderValue);
         Message.Publish(new MixerVolumeChanged(valueName, sliderValue));
     }

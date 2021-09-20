@@ -6,7 +6,7 @@ public class AudioVolumeSliderV2 : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private string valueName = "MusicVolume";
 
-    void Start()
+    void OnEnable()
     {
         slider.value = PlayerAudioPrefs.GetVolumeLevel(valueName);
         slider.onValueChanged.AddListener(SetLevel);

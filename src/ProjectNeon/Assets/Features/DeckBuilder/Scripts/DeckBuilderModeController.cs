@@ -31,34 +31,6 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
         });
         fightButton.onClick.AddListener(() => OnFightButtonClicked());
     }
-
-    private void OnFightButtonClicked()
-    {
-        if (state.HeroesDecks.Any(x => x.Deck.Count != deckSize)) 
-            return;
-        
-        if (party.HasAnyUnequippedGear())
-            Message.Publish(new ShowTwoChoiceDialog
-            {
-                Prompt = "You have unequipped gear. Are you sure you're ready to fight?",
-                PrimaryButtonText = "Yes",
-                PrimaryAction = BeginFight,
-                SecondaryButtonText = "Go Back",
-                SecondaryAction = () => { },
-                UseDarken = true
-            });
-        else
-            BeginFight();
-    }
-
-    private void BeginFight()
-    {
-        fightButton.gameObject.SetActive(false);
-        party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
-        Message.Publish(new StartBattleInitiated(fightButton.transform));
-        Message.Publish(new AutoSaveRequested());
-        navigator.NavigateToBattleScene();
-    }
     
     protected override void Execute(TogglePartyDetails msg)
     {
@@ -87,6 +59,34 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
             firstHeroWithAvailableEquipment.IfPresent(h => state.SelectedHeroesDeck = new HeroesDeck {Hero = h, Deck = h.Deck.Cards});
         }
         Message.Publish(new CustomizationTabSwitched { TabName = initialTab });
+    }
+
+    private void OnFightButtonClicked()
+    {
+        if (state.HeroesDecks.Any(x => x.Deck.Count != deckSize)) 
+            return;
+        
+        if (party.HasAnyUnequippedGear())
+            Message.Publish(new ShowTwoChoiceDialog
+            {
+                Prompt = "You have unequipped gear. Are you sure you're ready to fight?",
+                PrimaryButtonText = "Yes",
+                PrimaryAction = BeginFight,
+                SecondaryButtonText = "Go Back",
+                SecondaryAction = () => { },
+                UseDarken = true
+            });
+        else
+            BeginFight();
+    }
+
+    private void BeginFight()
+    {
+        fightButton.gameObject.SetActive(false);
+        party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
+        Message.Publish(new StartBattleInitiated(fightButton.transform));
+        Message.Publish(new AutoSaveRequested());
+        navigator.NavigateToBattleScene();
     }
 
     protected override void Execute(DeckBuilderCurrentDeckChanged msg)
