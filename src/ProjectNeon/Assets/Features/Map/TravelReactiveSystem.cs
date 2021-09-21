@@ -18,6 +18,8 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
     protected override void Execute(ContinueTraveling msg)
     {
         _isTraveling = true;
+        Message.Publish(new TravelingSFX(transform));
+
     }
 
     protected override void Execute(FinishedStoryEvent msg)
@@ -25,6 +27,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
         gameMap.HasCompletedEventEnRoute = true;
         gameMap.PreviousPosition = _midPoint;
         _isTraveling = !msg.ShouldNotContinue;
+        Message.Publish(new TravelingSFX(transform));
     }
 
     protected override void Execute(TravelToNode msg)
@@ -35,6 +38,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
             adventure.AdvanceStageIfNeeded();
         
         _isTraveling = true;
+        Message.Publish(new TravelingSFX(transform));
         _travelingToMidpoint = !gameMap.HasCompletedEventEnRoute;
         gameMap.PreviousPosition = gameMap.DestinationPosition;
         gameMap.DestinationPosition = msg.Position;
@@ -45,6 +49,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
         PlayerToken.GetComponent<Floating>().enabled = false;
         if (msg.TravelInstantly)
             TravelInstantly();
+        
     }
 
     private void TravelInstantly()
@@ -67,6 +72,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
                 _travelingToMidpoint = false;
                 _isTraveling = false;
                 _onMidPointArrive();
+                //Message.Publish(new TravelingSFX(transform));
             }
             else
             {
@@ -74,6 +80,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
                 StartFloating();
                 _isTraveling = false;
                 gameMap.HasCompletedEventEnRoute = false;
+                Message.Publish(new OnArriveSFX(transform));
             }
         }
 

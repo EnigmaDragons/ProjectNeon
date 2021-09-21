@@ -1,0 +1,31 @@
+
+using UnityEngine;
+
+public class MapSceneSoundGuy : MonoBehaviour
+{
+    [SerializeField, FMODUnity.EventRef] private string OnLevelUpClicked;
+    [SerializeField, FMODUnity.EventRef] private string OnTravel;
+    [SerializeField, FMODUnity.EventRef] private string OnEQpurchased;
+    [SerializeField, FMODUnity.EventRef] private string OnCardpurchased;
+
+    private bool debuggingLoggingEnabled = false;
+
+    private void OnEnable()
+    {
+        Message.Subscribe<LevelUpClicked>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
+        Message.Subscribe<TravelingSFX>(e => PlayOneShot(OnTravel, e.UiSource), this);
+        Message.Subscribe<EQpurchased>(e => PlayOneShot(OnEQpurchased, e.UiSource), this);
+        Message.Subscribe<CardPurchased>(e => PlayOneShot(OnCardpurchased, e.UiSource), this);
+    }
+    private void OnDisable()
+    {
+        Message.Unsubscribe(this);
+    }
+    private void PlayOneShot(string eventName, Transform uiSource)
+        => FMODUnity.RuntimeManager.PlayOneShot(eventName, uiSource.position);
+    private void DebugLog(string msg)
+    {
+        if (debuggingLoggingEnabled)
+            Log.Info(msg);
+    }
+}
