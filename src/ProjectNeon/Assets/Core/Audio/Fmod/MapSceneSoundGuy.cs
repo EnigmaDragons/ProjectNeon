@@ -9,7 +9,7 @@ public class MapSceneSoundGuy : MonoBehaviour
 
     private void OnEnable()
     {
-        Message.Subscribe<LevelUpClicked>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
+        //Message.Subscribe<LevelUpClicked>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
         //Message.Subscribe<>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
     }
 
