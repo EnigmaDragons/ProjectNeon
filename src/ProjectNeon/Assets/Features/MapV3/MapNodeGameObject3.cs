@@ -28,7 +28,11 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
                 {
                     Position = mapData.Position, 
                     OnMidPointArrive = onMidPointArrive,
-                    OnArrive = () => ArrivalSegment.Start()
+                    OnArrive = () =>
+                    {
+                        Message.Publish(new ArrivedAtNode(mapData.Type));
+                        ArrivalSegment.Start();
+                    }
                 });
             Message.Publish(new AutoSaveRequested());
         });
