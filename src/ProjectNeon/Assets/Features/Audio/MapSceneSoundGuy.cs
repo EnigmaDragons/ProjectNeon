@@ -7,6 +7,9 @@ public class MapSceneSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnTravel;
     [SerializeField, FMODUnity.EventRef] private string OnEQpurchased;
     [SerializeField, FMODUnity.EventRef] private string OnCardpurchased;
+    [SerializeField, FMODUnity.EventRef] private string OnHeroLevelledUp;
+    [SerializeField, FMODUnity.EventRef] private string OnDieRollShake;
+    [SerializeField, FMODUnity.EventRef] private string OnDieThrown;
 
     private bool debuggingLoggingEnabled = false;
 
@@ -16,6 +19,9 @@ public class MapSceneSoundGuy : MonoBehaviour
         Message.Subscribe<TravelingSFX>(e => PlayOneShot(OnTravel, e.UiSource), this);
         Message.Subscribe<EQpurchased>(e => PlayOneShot(OnEQpurchased, e.UiSource), this);
         Message.Subscribe<CardPurchased>(e => PlayOneShot(OnCardpurchased, e.UiSource), this);
+        Message.Subscribe<HeroLeveledUpSFX>(e => PlayOneShot(OnHeroLevelledUp, e.UiSource), this);
+        Message.Subscribe<DieRollShaking>(e => PlayOneShot(OnDieRollShake, e.UiSource), this);
+        Message.Subscribe<DieThrown>(e => PlayOneShot(OnDieThrown, e.UiSource), this);
     }
     private void OnDisable()
     {

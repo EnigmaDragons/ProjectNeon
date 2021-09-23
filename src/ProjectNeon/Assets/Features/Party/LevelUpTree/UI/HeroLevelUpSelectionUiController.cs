@@ -11,5 +11,6 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
     {
         presenter.Initialized(msg.Hero);
         target.SetActive(true);
+        Message.Publish(new HeroLeveledUpSFX(transform));
     }
 }

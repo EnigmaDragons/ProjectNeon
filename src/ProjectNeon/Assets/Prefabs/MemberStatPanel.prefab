@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5993552963902258412}
   - component: {fileID: 2073357492392515191}
+  - component: {fileID: 3829374630113668746}
+  - component: {fileID: 4374375122437066941}
   m_Layer: 0
   m_Name: Stat2
   m_TagString: Untagged
@@ -52,6 +54,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: e04cb353987dbad4094394cb66ac1c6a, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &3829374630113668746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9812630094839135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4374375122437066941}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &4374375122437066941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9812630094839135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &100572450474906428
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +645,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8863229791383359}
   - component: {fileID: 676300313617144926}
+  - component: {fileID: 8089666049997765926}
+  - component: {fileID: 6037933709644800453}
   m_Layer: 0
   m_Name: Stat4
   m_TagString: Untagged
@@ -640,6 +689,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: e7f3f64674ce4c4429003ce12f699980, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &8089666049997765926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925175423106042843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6037933709644800453}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &6037933709644800453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925175423106042843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &2368696782940291785
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,6 +744,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3071112242236328936}
   - component: {fileID: 5599401582250873703}
+  - component: {fileID: 4960200355585207625}
+  - component: {fileID: 168355148228833624}
   m_Layer: 0
   m_Name: Stat10
   m_TagString: Untagged
@@ -692,6 +788,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 028f444c83a8048468e940a793eeed08, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &4960200355585207625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2368696782940291785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 168355148228833624}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &168355148228833624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2368696782940291785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &2653262731243622876
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,6 +977,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8981628304006756563}
   - component: {fileID: 454574694791265952}
+  - component: {fileID: 4807075352679452133}
+  - component: {fileID: 5521024673386965507}
   m_Layer: 0
   m_Name: Stat7
   m_TagString: Untagged
@@ -878,6 +1021,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: c0430938d364fe34f9f54f7ed73f3392, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &4807075352679452133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2831830594312285105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5521024673386965507}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &5521024673386965507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2831830594312285105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &2927663632910866488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,6 +1746,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2715473253737587338}
   - component: {fileID: 4822782910172131780}
+  - component: {fileID: 5155323738154027361}
+  - component: {fileID: 2595781169707959511}
   m_Layer: 0
   m_Name: Stat8
   m_TagString: Untagged
@@ -1600,6 +1790,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &5155323738154027361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5055506974396799721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2595781169707959511}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &2595781169707959511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5055506974396799721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &5268871417091224461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,6 +1979,8 @@ GameObject:
   m_Component:
   - component: {fileID: 287865236973712104}
   - component: {fileID: 6046996958950569984}
+  - component: {fileID: 2612266805192778097}
+  - component: {fileID: 1985844203388738416}
   m_Layer: 0
   m_Name: Stat9
   m_TagString: Untagged
@@ -1786,6 +2023,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 6d84df3b258b65040a4108a35fc1744b, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &2612266805192778097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5521072206135898311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1985844203388738416}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1985844203388738416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5521072206135898311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &6102826805053566997
 GameObject:
   m_ObjectHideFlags: 0
@@ -2181,12 +2463,17 @@ MonoBehaviour:
   startingShieldLabel: {fileID: 4393189574060959598}
   maxShieldLabel: {fileID: 538885993096595432}
   attackLabel: {fileID: 5951158004657785415}
+  attackNameLabel: {fileID: 0}
   magicLabel: {fileID: 8189750515569204660}
+  magicNameLabel: {fileID: 0}
   leaderLabel: {fileID: 3063202128098650785}
+  leaderNameLabel: {fileID: 0}
   armorLabel: {fileID: 6430553808685384597}
   resistLabel: {fileID: 7567442851576771790}
-  toughLabel: {fileID: 6844744053310089949}
   econLabel: {fileID: 2734991264539609078}
+  econNameLabel: {fileID: 0}
+  normalFont: {fileID: 0}
+  primaryStatFont: {fileID: 0}
   buffColor: {r: 0, g: 1, b: 0, a: 1}
   debuffColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &6410029440942063206
@@ -2199,6 +2486,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7936269085022104768}
   - component: {fileID: 7898952811506784489}
+  - component: {fileID: 7473211784361236298}
+  - component: {fileID: 6572607411243026722}
   m_Layer: 0
   m_Name: HpArea1
   m_TagString: Untagged
@@ -2241,6 +2530,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: c1ee77b2fb754624594092a57fc2c569, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &7473211784361236298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410029440942063206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6572607411243026722}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &6572607411243026722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410029440942063206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &6541256547288738176
 GameObject:
   m_ObjectHideFlags: 0
@@ -2385,6 +2719,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1144875179730094780}
   - component: {fileID: 5342987797197968156}
+  - component: {fileID: 4409494913288839666}
+  - component: {fileID: 2995411182636709350}
   m_Layer: 0
   m_Name: Stat6
   m_TagString: Untagged
@@ -2427,6 +2763,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 1085d0ae716f453429fd9122b0f8227c, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &4409494913288839666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6627907341761853257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2995411182636709350}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &2995411182636709350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6627907341761853257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &6669105524551685451
 GameObject:
   m_ObjectHideFlags: 0
@@ -2571,6 +2952,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3451603453138843182}
   - component: {fileID: 6454107597628151107}
+  - component: {fileID: 8967141975915739702}
+  - component: {fileID: 4612653091913627078}
   m_Layer: 0
   m_Name: Stat5
   m_TagString: Untagged
@@ -2613,6 +2996,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 17c8fbf9e2b5f79459e077374380ae85, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &8967141975915739702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7321728563821737445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4612653091913627078}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &4612653091913627078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7321728563821737445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &7431512334245963955
 GameObject:
   m_ObjectHideFlags: 0
@@ -3025,6 +3453,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8519885277455227899}
   - component: {fileID: 1612043147500876188}
+  - component: {fileID: 6096993917591153133}
+  - component: {fileID: 8925738154353490342}
   m_Layer: 0
   m_Name: Stat1
   m_TagString: Untagged
@@ -3067,6 +3497,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
   rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+--- !u!114 &6096993917591153133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8213065837906349281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8925738154353490342}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &8925738154353490342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8213065837906349281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/MapScene/LevelUpClick
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/MapScene/LevelUpHover
 --- !u!1 &8433678743538457533
 GameObject:
   m_ObjectHideFlags: 0

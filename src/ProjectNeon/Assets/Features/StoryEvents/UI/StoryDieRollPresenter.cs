@@ -33,6 +33,7 @@ public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded,
         FlyIn(0.3f);
         rollInProgress = true;
         remainingRollDuration = dieRollDuration.Value;
+        Message.Publish(new DieRollShaking(transform));
         player.Play(dieShakeSound);
         panel.SetActive(true);
     }
@@ -77,6 +78,7 @@ public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded,
         dieRollLabel.text = dieResult;
         rollInProgress = false;
         die.transform.rotation = Quaternion.identity;
+        Message.Publish(new DieThrown(transform));
         player.Play(rollSound);
     }
 }
