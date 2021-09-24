@@ -25,6 +25,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
         gameMap.HasCompletedEventEnRoute = true;
         gameMap.PreviousPosition = _midPoint;
         _isTraveling = !msg.ShouldNotContinue;
+        Message.Publish(new TravelingSFX(transform));
     }
 
     protected override void Execute(TravelToNode msg)
@@ -39,6 +40,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
         gameMap.PreviousPosition = gameMap.DestinationPosition;
         gameMap.DestinationPosition = msg.Position;
         _travelTo = msg.Position;
+        Message.Publish(new TravelingSFX(transform));
         _midPoint = (new Vector2(PlayerToken.transform.localPosition.x, PlayerToken.transform.localPosition.y) + _travelTo) / 2;
         _onMidPointArrive = msg.OnMidPointArrive;
         _onArrive = msg.OnArrive;
