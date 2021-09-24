@@ -24,7 +24,16 @@ public class MapSceneSoundGuy : MonoBehaviour
         Message.Subscribe<DieRollShaking>(e => PlayOneShot(OnDieRollShake, e.UiSource), this);
         Message.Subscribe<DieThrown>(e => PlayOneShot(OnDieThrown, e.UiSource), this);
         Message.Subscribe<ArrivedAtCombat>(e => PlayOneShot(OnArriveAtCombat, e.UiSource), this);
+        Message.Subscribe<ArrivedAtNode>(OnArrivedAtNode, this);
     }
+
+    private void OnArrivedAtNode(ArrivedAtNode node)
+    {
+        if (node.NodeType == MapNodeType.Combat)
+            PlayOneShot(OnArriveAtCombat, node.UiSource);
+        // etc.
+    }
+    
     private void OnDisable()
     {
         Message.Unsubscribe(this);
