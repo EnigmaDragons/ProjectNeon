@@ -48,7 +48,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ArrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(detail, true)));
+        ArrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(transform, detail, true)));
         _rulesPanel.IfPresent(r => r.SetActive(true));
         transform.SetSiblingIndex(transform.parent.childCount - 2);
     }

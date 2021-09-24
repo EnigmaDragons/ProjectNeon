@@ -48,7 +48,7 @@ public class MapNodeGameObject : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (!button.interactable)
             return;
-        _arrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(detail, true)));
+        _arrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(transform, detail, true)));
         _rulesPanel.IfPresent(r => r.SetActive(true));
         transform.SetAsLastSibling();
     }

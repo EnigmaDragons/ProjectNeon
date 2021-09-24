@@ -42,7 +42,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (IsInitialized)
-            Message.Publish(new ShowTooltip($"{_member.Name} has {_member.State[_resourceType]} {_resourceType.Name} for paying Card Costs"));
+            Message.Publish(new ShowTooltip(transform, $"{_member.Name} has {_member.State[_resourceType]} {_resourceType.Name} for paying Card Costs"));
     }
 
     public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());

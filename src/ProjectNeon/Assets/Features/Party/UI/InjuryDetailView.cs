@@ -16,6 +16,6 @@ public class InjuryDetailView : MonoBehaviour, IPointerEnterHandler, IPointerExi
         _tooltip = tooltip;
     }
     
-    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new ShowTooltip(_tooltip));
+    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new ShowTooltip(transform, _tooltip));
     public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
 }
