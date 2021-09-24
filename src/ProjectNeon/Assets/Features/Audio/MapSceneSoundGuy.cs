@@ -10,6 +10,7 @@ public class MapSceneSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnHeroLevelledUp;
     [SerializeField, FMODUnity.EventRef] private string OnDieRollShake;
     [SerializeField, FMODUnity.EventRef] private string OnDieThrown;
+    [SerializeField, FMODUnity.EventRef] private string OnArriveAtCombat;
 
     private bool debuggingLoggingEnabled = false;
 
@@ -22,6 +23,7 @@ public class MapSceneSoundGuy : MonoBehaviour
         Message.Subscribe<HeroLeveledUpSFX>(e => PlayOneShot(OnHeroLevelledUp, e.UiSource), this);
         Message.Subscribe<DieRollShaking>(e => PlayOneShot(OnDieRollShake, e.UiSource), this);
         Message.Subscribe<DieThrown>(e => PlayOneShot(OnDieThrown, e.UiSource), this);
+        Message.Subscribe<ArrivedAtCombat>(e => PlayOneShot(OnArriveAtCombat, e.UiSource), this);
     }
     private void OnDisable()
     {

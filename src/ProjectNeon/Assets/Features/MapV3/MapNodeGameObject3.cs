@@ -9,7 +9,8 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private Button button;
     [SerializeField] private StageSegment segment;
     [SerializeField] private GameObject hoverRulesPanel;
-    
+   
+
     public IStageSegment ArrivalSegment { get; private set; }
     public MapNode3 MapData { get; private set; }
     private Maybe<GameObject> _rulesPanel;
@@ -31,6 +32,8 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
                     OnArrive = () =>
                     {
                         Message.Publish(new ArrivedAtNode(mapData.Type));
+                        Message.Publish(new ArrivedAtCombat(transform));
+                       
                         ArrivalSegment.Start();
                     }
                 });
