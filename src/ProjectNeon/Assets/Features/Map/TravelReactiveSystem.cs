@@ -11,8 +11,8 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
     private bool _isTraveling;
     private Vector2 _midPoint;
     private Vector2 _travelTo;
-    private Action _onMidPointArrive;
-    private Action _onArrive;
+    private Action<Transform> _onMidPointArrive;
+    private Action<Transform> _onArrive;
     private bool _travelingToMidpoint;
 
     protected override void Execute(ContinueTraveling msg)
@@ -51,7 +51,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
     {
         _isTraveling = false;
         PlayerToken.transform.localPosition = _travelTo;
-        _onArrive();
+        _onArrive(PlayerToken.transform);
         Log.Info($"Travel Instantly Finished");
     }
     
@@ -66,11 +66,11 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
             {
                 _travelingToMidpoint = false;
                 _isTraveling = false;
-                _onMidPointArrive();
+                _onMidPointArrive(PlayerToken.transform);
             }
             else
             {
-                _onArrive();
+                _onArrive(PlayerToken.transform);
                 StartFloating();
                 _isTraveling = false;
                 gameMap.HasCompletedEventEnRoute = false;

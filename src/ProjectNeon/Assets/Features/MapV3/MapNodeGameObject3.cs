@@ -14,7 +14,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     public MapNode3 MapData { get; private set; }
     private Maybe<GameObject> _rulesPanel;
 
-    public void Init(MapNode3 mapData, CurrentGameMap3 gameMap, AdventureGenerationContext ctx, Action onMidPointArrive)
+    public void Init(MapNode3 mapData, CurrentGameMap3 gameMap, AdventureGenerationContext ctx, Action<Transform> onMidPointArrive)
     {
         MapData = mapData;
         ArrivalSegment = segment;
@@ -28,9 +28,10 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
                 {
                     Position = mapData.Position, 
                     OnMidPointArrive = onMidPointArrive,
-                    OnArrive = () =>
+                    OnArrive = t =>
                     {
-                        Message.Publish(new ArrivedAtNode(mapData.Type));
+                        Message.Publish(new TravelMovementStopped(t));
+                        Message.Publish(new ArrivedAtNode(transform, mapData.Type));
                         ArrivalSegment.Start();
                     }
                 });

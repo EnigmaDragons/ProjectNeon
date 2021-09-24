@@ -66,9 +66,9 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
             Message.Publish(new TravelToNode
             {
                 OnMidPointArrive = gameMap.CurrentNode.Value.HasEventEnroute 
-                    ? (Action)(() => storyEventSegment.Start()) 
-                    : (Action)(() => Message.Publish(new ContinueTraveling())),
-                OnArrive = () => activeNode.ArrivalSegment.Start(),
+                    ? StartStoryEvent
+                    : (Action<Transform>)(_ => Message.Publish(new ContinueTraveling())),
+                OnArrive = _ => activeNode.ArrivalSegment.Start(),
                 Position = gameMap.CurrentNode.Value.Position,
                 TravelInstantly = false
             });
@@ -112,7 +112,9 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
         _activeNodes = gameMap.CurrentChoices.Select(x =>
         {
             var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), _map.transform);
-            var midPoint = x.HasEventEnroute ? (Action)(() => storyEventSegment.Start()) : (Action)(() => Message.Publish(new ContinueTraveling()));
+            var midPoint = x.HasEventEnroute 
+                ? StartStoryEvent
+                : (Action<Transform>)(_ => Message.Publish(new ContinueTraveling()));
             obj.Init(x, gameMap, ctx, midPoint);
             var rect = (RectTransform) obj.transform;
             rect.pivot = new Vector2(0.5f, 0.5f);
@@ -121,6 +123,12 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
         }).ToArray();
         _playerToken.transform.SetAsLastSibling();
         Message.Publish(new AutoSaveRequested());
+    }
+
+    private void StartStoryEvent(Transform player)
+    {
+        Message.Publish(new TravelMovementStopped(player));
+        storyEventSegment.Start();
     }
 
     private MapNodeGameObject3 GetNodePrefab(MapNodeType type, string corpName)

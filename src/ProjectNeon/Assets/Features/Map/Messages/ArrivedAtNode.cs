@@ -1,7 +1,13 @@
+using UnityEngine;
 
 public class ArrivedAtNode
 {
+    public Transform UiSource { get; }
     public MapNodeType NodeType { get; }
 
-    public ArrivedAtNode(MapNodeType nodeType) => NodeType = nodeType;
+    public ArrivedAtNode(Transform uiSource, MapNodeType nodeType)
+    {
+        UiSource = uiSource;
+        NodeType = nodeType;
+    }
 }
