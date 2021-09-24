@@ -66,7 +66,7 @@ public class MapSpawner2 : MonoBehaviour
         var destinationNodeId = currentNode.ChildrenIds.Random();
         var destinationNodeGameObject = gameMap.GameObjects[destinationNodeId];
         Message.Publish(new TravelToNode { 
-            OnArrive = () =>
+            OnArrive = t =>
             {
                 Log.Info("Arrived at Location");
                 ConvertAdjacentNodesToDeterministic();

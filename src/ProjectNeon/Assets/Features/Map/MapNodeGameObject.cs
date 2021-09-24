@@ -22,7 +22,7 @@ public class MapNodeGameObject : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         _nodeId = nodeId;
         _arrivalSegment = segment;
-        button.onClick.AddListener(() => Message.Publish(new TravelToNode { Node = gameObject, OnArrive = () => _arrivalSegment.Start(), NodeId = nodeId }));
+        button.onClick.AddListener(() => Message.Publish(new TravelToNode { Node = gameObject, OnArrive = t => _arrivalSegment.Start(), NodeId = nodeId }));
         _revealedSpriteState = button.spriteState;
         _hiddenSpriteState = new SpriteState() { pressedSprite = hiddenNodeGraphic, disabledSprite = hiddenNodeGraphic, highlightedSprite = hiddenNodeGraphic, selectedSprite = hiddenNodeGraphic };
         SetCanTravelTo(canTravelTo);
@@ -48,7 +48,7 @@ public class MapNodeGameObject : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (!button.interactable)
             return;
-        _arrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(detail, true)));
+        _arrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(transform, detail, true)));
         _rulesPanel.IfPresent(r => r.SetActive(true));
         transform.SetAsLastSibling();
     }

@@ -31,7 +31,7 @@ public sealed class WorldStatusIconPresenter : StatusIcon
     
     public void ShowTooltip()
     {
-        Message.Publish(new ShowTooltip(_tooltip, true));
+        Message.Publish(new ShowTooltip(transform, _tooltip, true));
         _originator.IfPresent(id => Message.Publish(new ActivateMemberHighlight(id, MemberHighlightType.StatusOriginator, true)));
     }
 

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class TravelToNode
 {
-    public Action OnMidPointArrive;
-    public Action OnArrive;
+    public Action<Transform> OnMidPointArrive;
+    public Action<Transform> OnArrive;
     public Vector2 Position;
     [Obsolete]
     public GameObject Node;

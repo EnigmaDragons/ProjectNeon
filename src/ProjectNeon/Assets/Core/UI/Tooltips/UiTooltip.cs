@@ -8,7 +8,7 @@ public class UiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!eventData.dragging)
-            Message.Publish(new ShowTooltip(tooltipText));
+            Message.Publish(new ShowTooltip(transform, tooltipText));
     }
 
     public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());

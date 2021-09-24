@@ -11,15 +11,13 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
     private bool _isTraveling;
     private Vector2 _midPoint;
     private Vector2 _travelTo;
-    private Action _onMidPointArrive;
-    private Action _onArrive;
+    private Action<Transform> _onMidPointArrive;
+    private Action<Transform> _onArrive;
     private bool _travelingToMidpoint;
 
     protected override void Execute(ContinueTraveling msg)
     {
         _isTraveling = true;
-        Message.Publish(new TravelingSFX(transform));
-
     }
 
     protected override void Execute(FinishedStoryEvent msg)
@@ -27,7 +25,6 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
         gameMap.HasCompletedEventEnRoute = true;
         gameMap.PreviousPosition = _midPoint;
         _isTraveling = !msg.ShouldNotContinue;
-        Message.Publish(new TravelingSFX(transform));
     }
 
     protected override void Execute(TravelToNode msg)
@@ -38,7 +35,6 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
             adventure.AdvanceStageIfNeeded();
         
         _isTraveling = true;
-        Message.Publish(new TravelingSFX(transform));
         _travelingToMidpoint = !gameMap.HasCompletedEventEnRoute;
         gameMap.PreviousPosition = gameMap.DestinationPosition;
         gameMap.DestinationPosition = msg.Position;
@@ -49,14 +45,13 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
         PlayerToken.GetComponent<Floating>().enabled = false;
         if (msg.TravelInstantly)
             TravelInstantly();
-        
     }
 
     private void TravelInstantly()
     {
         _isTraveling = false;
         PlayerToken.transform.localPosition = _travelTo;
-        _onArrive();
+        _onArrive(PlayerToken.transform);
         Log.Info($"Travel Instantly Finished");
     }
     
@@ -71,16 +66,14 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
             {
                 _travelingToMidpoint = false;
                 _isTraveling = false;
-                _onMidPointArrive();
-                //Message.Publish(new TravelingSFX(transform));
+                _onMidPointArrive(PlayerToken.transform);
             }
             else
             {
-                _onArrive();
+                _onArrive(PlayerToken.transform);
                 StartFloating();
                 _isTraveling = false;
                 gameMap.HasCompletedEventEnRoute = false;
-                Message.Publish(new OnArriveSFX(transform));
             }
         }
 
