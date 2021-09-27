@@ -17,12 +17,14 @@ public class MapSceneSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnClinic;
     [SerializeField, FMODUnity.EventRef] private string OnBoss;
     [SerializeField, FMODUnity.EventRef] private string OnStoryEvent;
+    [SerializeField, FMODUnity.EventRef] private string OnLevelUpHover;
 
     private bool debuggingLoggingEnabled = false;
 
     private void OnEnable()
     {
-        Message.Subscribe<ShowTooltip>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
+        Message.Subscribe<StoryEventBegun>(e => PlayOneShot(OnStoryEvent, e.UiSource), this);
+        Message.Subscribe<ShowTooltip>(e => PlayOneShot(OnLevelUpHover, e.UiSource), this);
         Message.Subscribe<LevelUpClicked>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
         Message.Subscribe<TravelingSFX>(e => PlayOneShot(OnTravel, e.UiSource), this);
         Message.Subscribe<EQpurchased>(e => PlayOneShot(OnEQpurchased, e.UiSource), this);
@@ -47,8 +49,7 @@ public class MapSceneSoundGuy : MonoBehaviour
             PlayOneShot(OnClinic, node.UiSource);
         if (node.NodeType == MapNodeType.Boss)
             PlayOneShot(OnBoss, node.UiSource);
-        if (node.NodeType == MapNodeType.StoryEvent)
-            PlayOneShot(OnStoryEvent, node.UiSource);
+        
 
     }
     
