@@ -22,6 +22,7 @@ public class MapSceneSoundGuy : MonoBehaviour
 
     private void OnEnable()
     {
+        Message.Subscribe<ShowTooltip>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
         Message.Subscribe<LevelUpClicked>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
         Message.Subscribe<TravelingSFX>(e => PlayOneShot(OnTravel, e.UiSource), this);
         Message.Subscribe<EQpurchased>(e => PlayOneShot(OnEQpurchased, e.UiSource), this);
