@@ -63,6 +63,7 @@ MonoBehaviour:
   button: {fileID: 6178966740185896732}
   segment: {fileID: 11400000, guid: d55bf596eb8b7a3419400dc5b895bd98, type: 2}
   hoverRulesPanel: {fileID: 8762951256519931394}
+  CombatSFXEvent: event:/DeckBulder_Scene/Battle_Start
 --- !u!1 &2919456333371881478
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +419,8 @@ GameObject:
   - component: {fileID: 6336313754935460730}
   - component: {fileID: 7188408059838050986}
   - component: {fileID: 6178966740185896732}
+  - component: {fileID: 8804950139419088755}
+  - component: {fileID: 2417804067547636360}
   m_Layer: 5
   m_Name: InnerButton
   m_TagString: Untagged
@@ -525,7 +528,64 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7188408059838050986}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2417804067547636360}
+        m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8804950139419088755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8615735903994527189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2417804067547636360}
+          m_TargetAssemblyTypeName: TriggerAudioWithHover, GameAssembly
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &2417804067547636360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8615735903994527189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d808a8050a8e04c989a6ea7065dcee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/DeckBulder_Scene/Main_Click
+  PlayOnAwake: 0
+  PlayOnDestroy: 0
+  hoverEnterSound: event:/DeckBulder_Scene/Hover
 --- !u!1 &8762951256519931394
 GameObject:
   m_ObjectHideFlags: 0

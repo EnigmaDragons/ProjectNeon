@@ -74,6 +74,7 @@ public class StoryEventPresenter2 : MonoBehaviour
             }
             _buttons[i].Init(s.Choices[i], ctx, s);
         }
+        Message.Publish(new StoryEventBegun(transform));
     }
 
     private void ClearOptions() => optionsParent.DestroyAllChildren();

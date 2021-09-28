@@ -54,6 +54,7 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
         soldVisual.SetActive(true);
         party.UpdateCreditsBy(-_price);
         party.Add(_equipment);
+        Message.Publish(new EQpurchased(transform));
     }
 
     protected override void Execute(PartyAdventureStateChanged msg) => UpdateAffordability();

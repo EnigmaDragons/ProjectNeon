@@ -36,6 +36,7 @@ public sealed class LevelUpOptionPresenter : MonoBehaviour, IPointerDownHandler,
     {
         if (eventData.button == PointerEventData.InputButton.Left)
             SelectLevelUpOption();
+        Message.Publish(new LevelUpClicked(transform));
         if (eventData.button == PointerEventData.InputButton.Right)
             _option.ShowDetail();
     }

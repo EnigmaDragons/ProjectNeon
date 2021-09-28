@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class ShowTooltip
@@ -9,6 +8,7 @@ public class ShowTooltip
 
     public ShowTooltip(Transform uiSource, string text, bool showBackground = true)
     {
+        UiSource = uiSource;
         Text = text;
         ShowBackground = showBackground;
     }
