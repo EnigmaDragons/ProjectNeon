@@ -26,20 +26,22 @@ MonoBehaviour:
         ConstantValue: -1
         FloatVariable: {fileID: 0}
       DurationFormula: -1
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: -1
-        Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 20
       StatusDetailText: 'On Afflicted: Suffer Damage'
       TurnDelay: 0
       Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -53,7 +55,7 @@ MonoBehaviour:
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
-        scope: 0
+        scope: 3
         cardActions: {fileID: 11400000, guid: fa590661563bb25458393076dfc987da, type: 2}
       BonusCardType: {fileID: 0}
     conditionData:

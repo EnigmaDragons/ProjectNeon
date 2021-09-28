@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 28
   displayName: Shield Generator
-  description: 'Start of Turn: Gain <b>0.33x TGH</b> Shields'
+  description: 'Start of Turn: Gain <b>1/6</b> of Max Shield'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
   rarity: 1
@@ -46,8 +46,9 @@ MonoBehaviour:
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'Start of Turn: Gain <b>0.33x TGH</b> Shields'
+    StatusDetailText: 'Start of Turn: Gain <b>1/6</b> of Max Shield'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -70,4 +71,5 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
   isWIP: 0

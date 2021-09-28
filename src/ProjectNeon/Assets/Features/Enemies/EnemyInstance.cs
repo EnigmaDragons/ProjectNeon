@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyInstance : EnemyType
 {
     private readonly int _enemyId;
-    private readonly ResourceType _resourceType;
+    private readonly IResourceType _resourceType;
     private readonly EffectData[] _startOfBattleEffects;
     private readonly int _startingResourceAmount;
     private readonly int _resourceGainPerTurn;
@@ -47,7 +47,7 @@ public class EnemyInstance : EnemyType
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
-        int preferredTurnOrder, string name, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp)
+        int preferredTurnOrder, string enemyName, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp)
     {
         _enemyId = enemyId;
         _resourceType = resourceType;
@@ -74,10 +74,14 @@ public class EnemyInstance : EnemyType
         Tier = tier;
         PowerLevel = powerLevel;
         PreferredTurnOrder = preferredTurnOrder;
-        Name = name;
+        Name = enemyName ?? "Missing Name";
         DeathEffect = deathEffect;
         IsHasty = isHasty;
         IsUnique = isUnique;
+        if (_resourceType == null)
+            Log.Error($"Null Resource Type for {Name} {enemyId}");
+        if (_counterAdjustments == null)
+            Log.Error($"Null Counter Adjustments for {Name} {enemyId}");
     }
         
     public Member AsMember(int id)

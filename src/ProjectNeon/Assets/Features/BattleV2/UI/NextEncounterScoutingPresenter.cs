@@ -31,6 +31,12 @@ public class NextEncounterScoutingPresenter : MonoBehaviour
 
     private void Render()
     {
+        if (state == null)
+        {
+            Debug.LogError("Unassigned Battle State", this);
+            return;
+        }
+
         Debug.Log($"Scouting has Custom Encounter {state.HasCustomEnemyEncounter}");
         if (!state.HasCustomEnemyEncounter)
             return;
