@@ -7,12 +7,20 @@ public class BattleSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnEnemyDetalisShown;
     [SerializeField, FMODUnity.EventRef] private string OnCardPresented;
     [SerializeField, FMODUnity.EventRef] private string OnCardAiming;
+    [SerializeField, FMODUnity.EventRef] private string OnTooltipHover;
 
     private void OnEnable()
     {
         Message.Subscribe<ShowEnemySFX>(e => PlayOneShot(OnEnemyDetalisShown, e.UiSource), this);
         Message.Subscribe<CardHoverSFX>(OnCardPresentedSFX, this);
         Message.Subscribe<TargetChanged>(OnTargetChanged, this);
+        Message.Subscribe<ShowTooltip>(OnTrashHovered, this);
+        Message.Subscribe<RecycleSFX>(e => PlayOneShot(OnEnemyDetalisShown, e.UiSource), this);
+    }
+
+    private void OnTrashHovered(ShowTooltip msg)
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(OnTooltipHover, Vector3.zero);
     }
 
     private void OnTargetChanged(TargetChanged msg)

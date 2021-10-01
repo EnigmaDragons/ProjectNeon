@@ -12,13 +12,14 @@ public class CycleCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterHan
     public void OnDrop(PointerEventData eventData)
     {
         var cardComponent = eventData.pointerDrag.GetComponent<CardPresenter>();
-        if (cardComponent != null)
-            if (state.NumberOfRecyclesRemainingThisTurn > 0)
+        if (cardComponent != null)    
+        if (state.NumberOfRecyclesRemainingThisTurn > 0)
                 cardComponent.MiddleClick();
             else
                 cardComponent.SetHandHighlight(false);
         _shouldRotate = false;
         MouseDragState.Set(false);
+        //Message.Publish(new RecycleSFX(transform));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
