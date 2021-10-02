@@ -42,7 +42,7 @@ public sealed class TextCommandButton : MonoBehaviour
     public void Init(string commandText, Action cmd)
     {
         InitButton();
-        label.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", commandText);
+        label.text = GetLocalizedStringOrDefault(commandText);
         _cmd = cmd;
         _button.interactable = true;
         gameObject.SetActive(true);
@@ -61,4 +61,10 @@ public sealed class TextCommandButton : MonoBehaviour
 
     public void Select() => _button.Select();
     public void Execute() => _button.onClick.Invoke();
+
+    private string GetLocalizedStringOrDefault(string commandText)
+    {
+        var localized = LocalizationSettings.StringDatabase.GetLocalizedString("UI", commandText);
+        return string.IsNullOrWhiteSpace(localized) ? commandText : localized;
+    }
 }
