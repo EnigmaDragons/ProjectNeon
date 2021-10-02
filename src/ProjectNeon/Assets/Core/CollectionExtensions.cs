@@ -58,6 +58,12 @@ public static class CollectionExtensions
     public static Maybe<T> FirstOrMaybe<T>(this IEnumerable<T> items, Func<T, bool> condition) where T : class
         => items.FirstOrDefault(condition);
     
+    public static Maybe<T> LastOrMaybe<T>(this IEnumerable<T> items, Func<T, bool> condition) where T : class
+        => items.LastOrDefault(condition);
+    
+    public static Maybe<T> LastOrMaybe<T>(this IEnumerable<T> items) where T : class
+        => items.LastOrDefault();
+    
     public static T[] SwapItems<T>(this T[] items, int first, int second)
     {
         if (first == second)
