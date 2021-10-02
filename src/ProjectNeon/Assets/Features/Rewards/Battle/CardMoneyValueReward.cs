@@ -15,7 +15,7 @@ public class CardMoneyValueReward : BattleRewards
         var credits = rarity.CardShopPrice();
         Log.Info($"Reward: Card Money Value - Rarity {rarity} - Value {credits}");
         state.AddRewardCredits(credits);
-        Message.Publish(new ShowCreditsGain(state.RewardCredits));
+        Message.Publish(new ShowCreditsGain(rarity, state.RewardCredits));
         Message.Publish(new ExecuteAfterDelayRequested(delayBeforeProceed, onFinished));
     }
 }

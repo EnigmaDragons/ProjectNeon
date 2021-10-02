@@ -15,7 +15,7 @@ public class GearMoneyValueReward : BattleRewards
         var credits = rarity.EquipmentShopPrice(1f);
         Log.Info($"Reward: Gear Money Value - Rarity {rarity} - Value {credits}");
         state.AddRewardCredits(credits);
-        Message.Publish(new ShowCreditsGain(state.RewardCredits));
+        Message.Publish(new ShowCreditsGain(rarity, state.RewardCredits));
         Message.Publish(new ExecuteAfterDelayRequested(delayBeforeProceed, onFinished));
     }
 }

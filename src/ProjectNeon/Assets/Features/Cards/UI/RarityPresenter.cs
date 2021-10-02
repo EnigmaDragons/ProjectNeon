@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardRarityPresenter : MonoBehaviour
+public class RarityPresenter : MonoBehaviour
 {
     [SerializeField] private Image image;
     [SerializeField] private Sprite starter;

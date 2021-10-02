@@ -11,7 +11,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private TextMeshProUGUI slotLabel;
     [SerializeField] private TextMeshProUGUI descriptionLabel;
     [SerializeField] private TextMeshProUGUI classesLabel;
-    [SerializeField] private CardRarityPresenter rarity;
+    [SerializeField] private RarityPresenter rarity;
     [SerializeField] private Image slotIcon;
     [SerializeField] private EquipmentSlotIcons slotIcons;
     [SerializeField] private CorpUiBase corpBranding;
