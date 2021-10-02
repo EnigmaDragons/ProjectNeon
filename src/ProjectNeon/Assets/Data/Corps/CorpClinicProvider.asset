@@ -22,54 +22,6 @@ MonoBehaviour:
   blessingCorps:
   - {fileID: 11400000, guid: 8eee292fbfbac134b966e2efaca2a532, type: 2}
   blessings:
-  - Name: Toughness
-    Description: 'Next Battle: All heroes have +1 Toughness'
-    IsSingleTarget: 0
-    StatRequirement: 0
-    RequirementThreshold: 0
-    Effect:
-      EffectType: 68
-      Conditions: []
-      BaseAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      DurationFormula: -1
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 11400000, guid: c0430938d364fe34f9f54f7ed73f3392, type: 2}
-      HitsRandomTargetMember: 0
-      TargetsSource: 0
-      ReTargetScope: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 0
-      Formula: 1
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
   - Name: Aggression
     Description: 'Next Battle: All heroes have +1 Attack'
     IsSingleTarget: 0
@@ -94,6 +46,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -142,6 +95,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -190,6 +144,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -238,6 +193,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -286,6 +242,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -334,6 +291,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -382,58 +340,11 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 4
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
-  - Name: Focused Toughness
-    Description: 'Next Battle: {0} starts with +2 Toughness'
-    IsSingleTarget: 1
-    StatRequirement: 1
-    RequirementThreshold: 8
-    Effect:
-      EffectType: 68
-      Conditions: []
-      BaseAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      DurationFormula: -1
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 11400000, guid: c0430938d364fe34f9f54f7ed73f3392, type: 2}
-      HitsRandomTargetMember: 0
-      TargetsSource: 0
-      ReTargetScope: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 0
-      Formula: 2
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -478,6 +389,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -526,6 +438,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -574,6 +487,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -622,6 +536,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -670,6 +585,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -718,6 +634,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -766,6 +683,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -814,6 +732,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -862,6 +781,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -910,6 +830,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -935,7 +856,7 @@ MonoBehaviour:
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
   - Name: Preparation
-    Description: 'Next Battle: Start with +2 Cards '
+    Description: 'Next Battle: +2 Cards on first turn'
     IsSingleTarget: 0
     StatRequirement: 0
     RequirementThreshold: 0
@@ -958,6 +879,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -983,7 +905,7 @@ MonoBehaviour:
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
   - Name: Insight
-    Description: 'Next Battle: Start with +3 Card Cycles '
+    Description: 'Next Battle: +3 Card Cycles on first turn'
     IsSingleTarget: 0
     StatRequirement: 0
     RequirementThreshold: 0
@@ -1006,6 +928,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -1031,7 +954,7 @@ MonoBehaviour:
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
   - Name: Speed
-    Description: 'Next Battle: Start with +1 Card Play'
+    Description: 'Next Battle: +1 Card Play on first turn'
     IsSingleTarget: 0
     StatRequirement: 0
     RequirementThreshold: 0
@@ -1054,6 +977,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
