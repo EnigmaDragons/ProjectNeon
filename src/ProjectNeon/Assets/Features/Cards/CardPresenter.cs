@@ -532,6 +532,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
         DebugLog($"Discard");
         ReturnHandToNormal();
+        Message.Publish(new CardDiscarded(transform, _card));
         _onDiscard();
     }
     

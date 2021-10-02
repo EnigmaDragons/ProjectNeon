@@ -189,8 +189,11 @@ public sealed class HandVisualizer : MonoBehaviour
             return;
         
         state.UseRecycle();
-        zones.DiscardZone.PutOnBottom(Hand.Take(cardIndex).RevertedToStandard());
+        var cycledCard = Hand.Take(cardIndex).RevertedToStandard();
+        zones.DiscardZone.PutOnBottom(cycledCard);
         zones.DrawOneCard();
+        
+        Message.Publish(new CardCycled(transform, cycledCard, Hand.Cards.Last()));
         Message.Publish(new CheckForAutomaticTurnEnd());
     }
 }
