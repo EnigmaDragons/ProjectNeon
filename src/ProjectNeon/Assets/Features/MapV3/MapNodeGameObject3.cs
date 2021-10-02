@@ -9,6 +9,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private Button button;
     [SerializeField] private StageSegment segment;
     [SerializeField] private GameObject hoverRulesPanel;
+    [SerializeField] private bool alwaysShowRules = false;
     
     public IStageSegment ArrivalSegment { get; private set; }
     public MapNode3 MapData { get; private set; }
@@ -43,11 +44,14 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     private void Awake()
     {
         _rulesPanel = hoverRulesPanel != null ? new Maybe<GameObject>(hoverRulesPanel) : Maybe<GameObject>.Missing();
-        _rulesPanel.IfPresent(r => r.SetActive(false));
+        _rulesPanel.IfPresent(r => r.SetActive(alwaysShowRules));
     }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (alwaysShowRules)
+            return;
+        
         ArrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(transform, detail, true)));
         _rulesPanel.IfPresent(r => r.SetActive(true));
         transform.SetSiblingIndex(transform.parent.childCount - 2);
@@ -55,6 +59,9 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (alwaysShowRules)
+            return;
+        
         _rulesPanel.IfPresent(r => r.SetActive(false));
         Message.Publish(new HideTooltip());
     }
