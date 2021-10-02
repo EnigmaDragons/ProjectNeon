@@ -24,12 +24,14 @@ public class MouseHoverProcessor2D : MonoBehaviour
 
         var hoverCharacter = Maybe<HoverSpriteCharacter2D>.Missing();
         var hoverStatusIcon = Maybe<WorldStatusIconPresenter>.Missing();
+        var hoverCharacterPosition = Maybe<Vector3>.Missing();
         if (numHits > 0)
         {
             for (var i = 0; i < numHits; i++)
                 if (hoverCharacter.IsMissing && _hits[i].collider.gameObject.layer == characterLayer)
                 {
                     var obj = _hits[i].transform.gameObject;
+                    hoverCharacterPosition = obj.transform.position;
                     var c = obj.GetComponentInChildren<HoverSpriteCharacter2D>();
                     if (c == null)
                         Log.Error($"{obj.name} is missing a {nameof(HoverSpriteCharacter2D)} script");
@@ -52,7 +54,7 @@ public class MouseHoverProcessor2D : MonoBehaviour
         var isMouseDragging = MouseDragState.IsDragging;
         if (_lastHover == null || !_lastHover.Map(v => v.Member.Id).Equals(hoverCharacter.Map(v => v.Member.Id)))
         {
-            Message.Publish(new CharacterHoverChanged { HoverCharacter = hoverCharacter.As<HoverCharacter>(), IsDragging = isMouseDragging});
+            Message.Publish(new CharacterHoverChanged(hoverCharacter.As<HoverCharacter>(), hoverCharacterPosition, isMouseDragging));
             _lastHover = hoverCharacter;
         }
         if (!isMouseDragging && _statusIcon != null)
