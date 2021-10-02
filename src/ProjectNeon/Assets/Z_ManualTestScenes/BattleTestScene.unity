@@ -238,6 +238,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1505705509243088265, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505705509243088265, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505705509243088265, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505705509243088265, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1650630911735923630, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1426,6 +1442,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestFullBattlePackageV2
       objectReference: {fileID: 0}
+    - target: {fileID: 7608176541049942355, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7608176541049942355, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7608176541049942355, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7608176541049942355, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8158397890767780013, guid: 216b81a27285b774d8d6cf4dd5e73c50, type: 3}
       propertyPath: m_textInfo.lineCount
       value: 0
@@ -1604,6 +1636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1588494394}
   - component: {fileID: 1588494393}
+  - component: {fileID: 1588494395}
   m_Layer: 0
   m_Name: DevCheats
   m_TagString: Untagged
@@ -1653,6 +1686,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1588494395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588494392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c0fdeae8a04ce78d21bbf450093a1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: 1c010000
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
+        m_MethodName: LoseBattle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!850595691 &1804409602
 LightingSettings:
   m_ObjectHideFlags: 0
