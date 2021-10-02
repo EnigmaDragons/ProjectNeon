@@ -12,7 +12,10 @@ public class CardMoneyValueReward : BattleRewards
     {
         var rewardPicker = adventure2.CreateLootPicker(state.Party);
         var rarity = rewardPicker.RandomRarity();
-        state.AddRewardCredits(rarity.CardShopPrice());
+        var credits = rarity.CardShopPrice();
+        Log.Info($"Reward: Card Money Value - Rarity {rarity} - Value {credits}");
+        state.AddRewardCredits(credits);
+        Message.Publish(new ShowCreditsGain(state.RewardCredits));
         Message.Publish(new ExecuteAfterDelayRequested(delayBeforeProceed, onFinished));
     }
 }
