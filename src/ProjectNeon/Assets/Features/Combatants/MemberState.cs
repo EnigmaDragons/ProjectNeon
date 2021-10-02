@@ -243,6 +243,7 @@ public sealed class MemberState : IStats
         .Concat(_multiplierMods)
         .Concat(_reactiveStates)
         .Concat(_transformers)
+        .Concat(_bonusCardPlayers)
         .Concat(_additiveResourceCalculators)
         .Concat(_multiplicativeResourceCalculators);
     

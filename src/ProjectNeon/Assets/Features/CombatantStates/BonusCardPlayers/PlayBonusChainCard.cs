@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using UnityEngine;
 
 public class PlayBonusChainCard : TemporalStateBase, IBonusCardPlayer
 {
@@ -25,10 +26,12 @@ public class PlayBonusChainCard : TemporalStateBase, IBonusCardPlayer
 
         var member = snapshot.Members[_memberId];
         var teamType = member.TeamType;
-        var teamCurrentTurnCards = snapshot.PlayedCardHistory.Last().Where(x => x.Member.TeamType == teamType).Select(x => x.Member.Id);
+        var teamCurrentTurnCards = snapshot.PlayedCardHistory.Last().Where(x => x.Member.TeamType == teamType).Select(x => x.Member.Id).ToList();
         var result = teamCurrentTurnCards.Any() && teamCurrentTurnCards.All(id => id == _memberId)
             ? _bonusCard
             : Maybe<CardType>.Missing();
+        if (result.IsPresent)        
+            Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
         return result;
     }
 }
