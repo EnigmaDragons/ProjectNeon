@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Tutorial/Slideshow/TutorialSlideshow")]
+[CreateAssetMenu(menuName = "Tutorial/Slideshow/TutorialSlideshow", fileName = "Tutorial-")]
 public class TutorialSlideshow : ScriptableObject
 {
     [SerializeField] private string tutorialName;
