@@ -30,6 +30,7 @@ public class HeroLibraryUI : MonoBehaviour
             .Where(c => archKeys.Contains(c.GetArchetypeKey()) || c.Archetypes.None())
             .Where(c => c.Rarity != Rarity.Basic)
             .Where(c => !excludedCards.Contains(c))
+            .Where(c => c.Archetypes.Any())
             .OrderBy(c => c.Archetypes.None() ? 99 : c.Archetypes.Count)
             .ThenBy(c => c.GetArchetypeKey())
             .ThenBy(c => c.Rarity)
