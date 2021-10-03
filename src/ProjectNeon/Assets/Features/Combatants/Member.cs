@@ -18,6 +18,8 @@ public class Member
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{Name} {Id}";
     
+    public string UnambiguousName => TeamType == TeamType.Enemies ? ToString() : Name;
+    
     public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
         : this(id, name, characterClass, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
     

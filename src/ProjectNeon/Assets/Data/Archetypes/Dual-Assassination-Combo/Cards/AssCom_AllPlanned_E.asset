@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Combo_StaticStrike_E
+  m_Name: AssCom_AllPlanned_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -25,7 +25,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
@@ -74,40 +74,40 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: bb526f4ffd0e9044b9af0ec49bc72b02, type: 2}
+        Variable: {fileID: 11400000, guid: c280ce9d79081424a93be4b8b7944371, type: 2}
       size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        ConstantValue: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 30
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0.67
-        FloatVariable: {fileID: 0}
-      DurationFormula: 0
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
+      DurationFormula: 1
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 8f022cb97a77e784cbb4e7e63ab09acb, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
-      StatusDetailText: 
+      StatusTag: 5
+      StatusDetailText: When hit by [Originator], [Originator] gains +1 Card Play
       TurnDelay: 0
-      Formula: 0.9 * Attack
+      Formula: 
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -126,7 +126,7 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
-        cardActions: {fileID: 0}
+        cardActions: {fileID: 11400000, guid: 2c54a0195c137504496c035234d55aac, type: 2}
       BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
@@ -156,26 +156,27 @@ MonoBehaviour:
   - type: 1
     battleEffect:
       EffectType: 74
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
-        UseConstant: 1
-        ConstantValue: -1
-        FloatVariable: {fileID: 0}
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
       DurationFormula: 1
       EffectScope:
         UseConstant: 0
-        ConstantValue: Originator
+        ConstantValue: 
         Variable: {fileID: 11400000, guid: 8f022cb97a77e784cbb4e7e63ab09acb, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 5
-      StatusDetailText: When hit by [Originator], [Originator] gains 1 Energy
+      StatusDetailText: When hit by [Originator], [Originator] gains 1 Resource
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -196,7 +197,7 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
-        cardActions: {fileID: 11400000, guid: 7079757832df5354b9fb82702547a28b, type: 2}
+        cardActions: {fileID: 11400000, guid: 9733aac1aaa24644fb9e2c363379668f, type: 2}
       BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
