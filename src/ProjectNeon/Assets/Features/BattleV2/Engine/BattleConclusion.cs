@@ -4,6 +4,7 @@ using UnityEngine;
 public class BattleConclusion : OnMessage<BattleFinished>
 {
     [SerializeField] private AdventureProgress2 adventure2;
+    [SerializeField] private AdventureConclusionState conclusion;
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
     [SerializeField] private BattleState state;
@@ -33,7 +34,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
             gameMap.CompleteCurrentNode();
             AllMetrics.PublishGameWon();
             Message.Publish(new AutoSaveRequested());
-            this.ExecuteAfterDelay(() => navigator.NavigateToVictoryScene(), secondsBeforeReturnToAdventure);
+            conclusion.Set(true, adventure2.CurrentAdventure.VictoryConclusion);
+            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeReturnToAdventure);
         }
         else
         {
@@ -54,7 +56,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
             Log.Info("Navigating to defeat screen");
             AllMetrics.PublishGameLost();
             CurrentGameData.Clear();
-            this.ExecuteAfterDelay(() => navigator.NavigateToDefeatScene(), secondsBeforeReturnToAdventure);
+            conclusion.Set(false, adventure2.CurrentAdventure.DefeatConclusion);
+            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeReturnToAdventure);
         }
     }
 }
