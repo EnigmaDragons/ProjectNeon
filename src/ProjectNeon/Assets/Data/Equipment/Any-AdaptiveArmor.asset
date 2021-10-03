@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13
   displayName: 
-  description: On damaged, gain +1 Armor and +1 Resistance until the end of next
+  description: On damaged, gain +2 Armor and +2 Resistance until the end of next
     turn
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
-  rarity: 2
+  rarity: 1
   slot: 2
   priceFactor: 1
   modifiers:
@@ -46,8 +47,9 @@ MonoBehaviour:
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: On damaged, gain +1 Armor and +1 Resistance until the end of
+    StatusDetailText: On damaged, gain +2 Armor and +2 Resistance until the end of
       next turn
     TurnDelay: 0
     Formula: 
@@ -71,5 +73,5 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: 455be005b5930be41a3d20f54d18c294, type: 2}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
   isWIP: 0
-  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
