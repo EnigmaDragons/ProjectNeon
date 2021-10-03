@@ -14,6 +14,7 @@ public interface HeroCharacter
     Deck Deck { get; }
     CardTypeData BasicCard { get; }
     CardTypeData[] ParagonCards { get; }
+    HashSet<CardTypeData> ExcludedCards { get; }
     IStats Stats { get; }
     int StartingCredits { get; }
     HeroFlavorDetails Flavor { get; }
@@ -33,6 +34,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public Deck Deck { get; set; }
     public CardTypeData BasicCard { get; set; }
     public CardTypeData[] ParagonCards { get; set; } = new CardTypeData[0];
+    public HashSet<CardTypeData> ExcludedCards { get; set; } = new HashSet<CardTypeData>();
     public IStats Stats { get; set; } = new StatAddends();
     public int StartingCredits { get; set; } = 100;
     public HeroFlavorDetails Flavor { get; set; } 
