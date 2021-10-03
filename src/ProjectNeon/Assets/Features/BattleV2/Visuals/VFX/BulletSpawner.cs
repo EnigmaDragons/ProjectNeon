@@ -11,7 +11,7 @@ public class BulletSpawner : MonoBehaviour
 
     private IEnumerator Shoot()
     {
-        for (var i = 0; i < animationContext.AnimationData.IntAmount; i++)
+        for (var i = 0; i < animationContext.AnimationData.NumTimes; i++)
         {
             var position = transform.position;
             var targetPosition = battleState.GetCenterPoint(animationContext.Target);

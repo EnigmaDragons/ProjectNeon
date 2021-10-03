@@ -16,6 +16,7 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
     private bool _isTraveling;
     private bool _isFinishedWithAction = true;
     private float _t;
+    private Target _currentTarget;
 
     public void Init(int memberId, bool isHero)
     {
@@ -31,6 +32,8 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
             _shouldStepForward = true;
             _isTraveling = true;
             _isFinishedWithAction = false;
+            _currentTarget = new Single(msg.Card.Member);
+            Message.Publish(new CharacterAnimationRequested(_memberId, new InMemoryAnimationData("Walk", _travelSeconds.Value), _currentTarget));
         }
     }
 
@@ -49,24 +52,31 @@ public class ActiveMemberIndicator : OnMessage<CardResolutionStarted, CardResolu
         {
             _shouldStepForward = false;
             _isTraveling = true;
+            Message.Publish(new CharacterAnimationRequested(_memberId, new InMemoryAnimationData("Walk Back", _travelSeconds.Value), _currentTarget));
         }
         else if (!_isTraveling)
             return;
-        
+
         InitIfNeeded();
         if (_shouldStepForward)
         {
             _t = Mathf.Min(1, _t + Time.deltaTime / _travelSeconds);
             transform.localPosition = new Vector3(Mathf.SmoothStep(_startX, _endX, _t), transform.localPosition.y, transform.localPosition.z);
             if (Mathf.Abs(transform.localPosition.x - _endX) < 0.05)
+            {
+                Message.Publish(new CharacterAnimationRequested(_memberId, new InMemoryAnimationData("Idle", _travelSeconds.Value), _currentTarget));
                 _isTraveling = false;
+            }
         }
         else
         {
             _t = Mathf.Max(0, _t - Time.deltaTime / _travelSeconds);
             transform.localPosition = new Vector3(Mathf.SmoothStep(_startX, _endX, _t), transform.localPosition.y, transform.localPosition.z);
             if (Mathf.Abs(transform.localPosition.x - _startX) < 0.05)
+            {
+                Message.Publish(new CharacterAnimationRequested(_memberId, new InMemoryAnimationData("Idle", _travelSeconds.Value), _currentTarget));
                 _isTraveling = false;
+            }
         }
     }
 

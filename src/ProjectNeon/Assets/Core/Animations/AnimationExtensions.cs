@@ -15,9 +15,12 @@ public static class AnimationExtensions
 
     public static IEnumerator PlayAnimationUntilFinished(this Animator animator, string animationName, Action<float> onFinished, int layer = 0, float maxTime = 5f)
     {
-        if (animator.parameters.Any(x => x.name == animationName))
+        var isTrigger = animator.parameters.Any(x => x.name == animationName);
+        var isAnimation = animator.runtimeAnimatorController.animationClips.Any(x => x.name.Equals(animationName));
+        
+        if (isTrigger)
         {
-            Log.Info($"Animation: {animationName} found");
+            Log.Info($"Animation: Trigger {animationName} found");
             var elapsed = 0f; 
             animator.SetTrigger(animationName);
             bool hasStartedAnimated = false;
@@ -33,6 +36,13 @@ public static class AnimationExtensions
             }
             if (!hasStartedAnimated)
                 Log.Warn($"Animation: {animationName} never started");
+            onFinished(elapsed);
+        }
+        else if (isAnimation)
+        {
+            Log.Info($"Animation: {animationName} found");
+            var elapsed = 0f; 
+            animator.Play(animationName);
             onFinished(elapsed);
         }
         else
