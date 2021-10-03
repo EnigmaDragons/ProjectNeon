@@ -29,7 +29,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private int economy = 0;
     [SerializeField] private ResourceType resource1;
     [SerializeField] private ResourceType resource2;
-    [SerializeField] private HeroSkill[] skills;
     [SerializeField] private CardType[] additionalStartingCards;
 
     [SerializeField] private HeroFlavorDetails flavorDetails;
@@ -45,7 +44,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public CardType[] AdditionalStartingCards => additionalStartingCards ?? new CardType[0];
     public CardTypeData BasicCard => basic;
     public int StartingCredits => startingCredits;
-    public HeroSkill[] Skills => skills;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;
     public HeroFlavorDetails Flavor => flavorDetails;
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));

@@ -17,7 +17,6 @@ public interface HeroCharacter
     IStats Stats { get; }
     int StartingCredits { get; }
     HeroFlavorDetails Flavor { get; }
-    HeroSkill[] Skills { get; }
     HeroLevelUpPathway LevelUpTree { get; }
     HashSet<string> Archetypes { get; }
     public Color Tint { get; }
@@ -38,7 +37,6 @@ public class InMemoryHeroCharacter : HeroCharacter
     public int StartingCredits { get; set; } = 100;
     public HeroFlavorDetails Flavor { get; set; } 
         = new HeroFlavorDetails { HeroDescription = "Desc", RoleDescription = "Desc", BackStory = "BackStory" };
-    public HeroSkill[] Skills { get; } = new HeroSkill[0];
     public HeroLevelUpPathway LevelUpTree { get; set; }
     public HashSet<string> Archetypes { get; set; } = new HashSet<string>();
     public Color Tint { get; } = Color.white;
