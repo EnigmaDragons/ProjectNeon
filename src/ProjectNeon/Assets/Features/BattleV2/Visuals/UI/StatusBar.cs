@@ -152,7 +152,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     private void AddStatusIconIfApplicable(List<CurrentStatusValue> statuses, TemporalStatType stat, bool showNumber, Func<float, string> makeTooltip)
     {
         var value = _member.State[stat];
-        var text = showNumber ? value.ToString() : "";
+        var text = showNumber && value < 800 // More than 800 is effectively infinite.
+            ? value.ToString() 
+            : "";
         if (value > 0)
             statuses.Add(new CurrentStatusValue { Type = stat.ToString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
     }
