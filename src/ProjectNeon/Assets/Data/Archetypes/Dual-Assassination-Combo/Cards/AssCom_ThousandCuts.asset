@@ -10,29 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: AssCom_AllPlanned
+  m_Name: AssCom_ThousandCuts
   m_EditorClassIdentifier: 
-  id: 404
+  id: 405
   customName: 
-  art: {fileID: 21300000, guid: 6723eaaaa463a724984f95c0269f2557, type: 3}
-  description: <b>Quick.</b> This turn, when you hit, gain <b>+1 Card Play.</b> <b>Sneaky:</b>
-    Also gain 1 PrimaryResource
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  art: {fileID: 21300000, guid: 8b37ea4fd5868d749895e49641d2baff, type: 3}
+  description: "<b>Sneaky:</b> Gives {E[0]}. \n\n<b>Chain:</b> Blade Frenzy"
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
-  speed: 1
+  speed: 0
   isSinglePlay: 0
   cost:
-    cost: 2
+    cost: 1
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 4
+  rarity: 3
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 1100e8da56353c44ea3e3d569fa0f3dd, type: 2}
+    cardActions: {fileID: 11400000, guid: 4d4b33d6b30094d4e91b5662bb19abee, type: 2}
     repeatX: 0
     repeatCount: 0
-  chainedCard: {fileID: 0}
+  chainedCard: {fileID: 11400000, guid: 649b58d8b5c896240a48a5c16b17fcd6, type: 2}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
@@ -41,5 +40,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
   highlightCondition:
   - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
-  unhighlightCondition: []
+  unhighlightCondition:
+  - {fileID: 11400000, guid: f4b925cb22766bd4c8734ed15d347eaf, type: 2}
   isWIP: 0
