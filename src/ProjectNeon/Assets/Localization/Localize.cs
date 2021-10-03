@@ -14,5 +14,15 @@ public static class Localize
     {
         return LocalizationSettings.StringDatabase.GetLocalizedString(sheet, key, args);
     }
-    public static string Get(string sheet, string key) => LocalizationSettings.StringDatabase.GetLocalizedString(sheet, key);
+    
+    public static string Get(string sheet, string key)
+    {
+        return GetLocalizedStringOrDefault(sheet, key);
+    }
+    
+    private static string GetLocalizedStringOrDefault(string sheet, string key)
+    {
+        var localized = LocalizationSettings.StringDatabase.GetLocalizedString(sheet, key);
+        return string.IsNullOrWhiteSpace(localized) ? key : localized;
+    }
 }
