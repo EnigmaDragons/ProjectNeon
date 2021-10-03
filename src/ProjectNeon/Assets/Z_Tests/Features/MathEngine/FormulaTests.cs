@@ -62,6 +62,10 @@ public class FormulaTests
         => AssertResultsIs(1, "Target[PrimaryResource]", 
             new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }), ResourceQuantity.None));
     
+    [Test] public void Formula_TargetMarked()
+        => AssertResultsIs(1, "Target[Marked]", 
+            new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.Marked, 1)), ResourceQuantity.None));
+
     private void AssertResultsIs(float val, string exp) 
         => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None));
     

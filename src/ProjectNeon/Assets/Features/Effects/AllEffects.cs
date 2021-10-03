@@ -68,8 +68,8 @@ public static class AllEffects
             }, e.DurationFormula)},
         { EffectType.DrawCards, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(
             BattleLoggedItem(v => $"Drew {v} cards", Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt())), e.DurationFormula)},
-        { EffectType.DrawCardsOfOwner, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(
-            BattleLoggedItem(v => $"Drew {v} cards for {ctx.Source.Name}", Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt()), 
+        { EffectType.DrawCardsOfOwner, e => new FullContextEffect((ctx, _, m) => ctx.PlayerCardZones.DrawCards(
+            BattleLoggedItem(v => $"Drew {v} cards for {ctx.Source.Name}", Formula.Evaluate(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount).CeilingInt()), 
                 card => card.Owner.Id == ctx.Source.Id), e.DurationFormula)},
         { EffectType.DrawCardsOfArchetype, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(BattleLoggedItem(v => $"Drew {v} {e.EffectScope} cards", 
                 Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt()), 
