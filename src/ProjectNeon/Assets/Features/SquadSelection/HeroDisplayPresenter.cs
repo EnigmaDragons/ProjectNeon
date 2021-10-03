@@ -11,7 +11,6 @@ public class HeroDisplayPresenter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI heroDescription;
     [SerializeField] private TextMeshProUGUI roleDescription;
     [SerializeField] private TextMeshProUGUI backstory;
-    [SerializeField] private TextMeshProUGUI heroSkill;
     
     private void Start()
     {
@@ -28,7 +27,6 @@ public class HeroDisplayPresenter : MonoBehaviour
         heroDescription.text = c.Flavor.HeroDescription;
         roleDescription.text = "Role: " + c.Flavor.RoleDescription;
         backstory.text = c.Flavor.BackStory;
-        heroSkill.text = c.Skills.Length > 0 ? $"Skill: {c.Skills[0].SkillName.Value}" : "";
     }
 
     private void ShowHeroPathway() => Message.Publish(new ShowHeroLevelUpPathway(currentHero));
