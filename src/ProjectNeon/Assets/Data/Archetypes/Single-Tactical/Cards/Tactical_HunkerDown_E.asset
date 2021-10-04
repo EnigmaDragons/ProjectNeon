@@ -39,9 +39,9 @@ MonoBehaviour:
       TurnDelay: 0
       Formula: '0.022 * Leadership * Target[MaxShield] '
       InterpolatePartialFormula:
-        EvaluationPartialFormula: 0.088 * Leadership
+        EvaluationPartialFormula: 0.022 * Leadership
         Prefix: 
-        Suffix: '* Target[Toughness] '
+        Suffix: '* Target[MaxShield] '
       FlavorText:
         UseConstant: 1
         ConstantValue: 

@@ -21,12 +21,20 @@ public static class Formula
         newExp = ReplaceStats(newExp, ctx);
         newExp = ReplaceTemporalStats(newExp, ctx);
         newExp = ReplaceXCost(newExp, ctx);
-        var dataTable = new DataTable();
-        newExp = ResolveConditionals(newExp, dataTable);
-        var result = Convert.ToSingle(dataTable.Compute(newExp, null));
-        if (result == 0)
-            Log.Info("Formula Amount is 0");
-        return result;
+        try
+        {
+            var dataTable = new DataTable();
+            newExp = ResolveConditionals(newExp, dataTable);
+            var result = Convert.ToSingle(dataTable.Compute(newExp, null));
+            if (result == 0)
+                Log.Info("Formula Amount is 0");
+            return result;
+        }
+        catch (Exception e)
+        {
+            Log.Error($"Unable to resolve formula. Original: '{expression}' Interpolated: '{newExp}'");
+            throw;
+        }
     }
     
     private static string ReplaceTags(string expression, FormulaContext ctx)

@@ -223,8 +223,9 @@ public class CardResolutionZone : ScriptableObject
             {
                 if (!card.IsPlayableBy(member, battleState.Party, 1)) 
                     continue;
-                
-                var targets = GetTargets(member, card, Maybe<Target[]>.Missing());
+
+                var lastPlayedMove = _movesThisTurn.LastOrMaybe();
+                var targets = GetTargets(member, card, lastPlayedMove.Map(move => move.Targets));
                 if (member.TeamType == TeamType.Party)
                     PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true));
                 else

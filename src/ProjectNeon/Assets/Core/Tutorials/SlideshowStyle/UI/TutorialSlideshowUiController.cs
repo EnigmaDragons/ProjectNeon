@@ -12,7 +12,7 @@ public class TutorialSlideshowUiController : OnMessage<ShowTutorialSlideshow, Hi
     
     protected override void Execute(ShowTutorialSlideshow msg)
     {
-        presenter.Init(msg.Slideshow);
+        presenter.Enqueue(msg.Slideshow);
         view.SetActive(true);
     }
 

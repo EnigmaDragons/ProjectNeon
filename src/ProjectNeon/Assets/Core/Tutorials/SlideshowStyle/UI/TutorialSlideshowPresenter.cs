@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -7,24 +9,46 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
     [SerializeField] private GameObject backgroundUiParent;
     [SerializeField] private TextMeshProUGUI titleLabel;
     [SerializeField] private GameObject slideUiParent;
-    [SerializeField] private TextMeshProUGUI slideText;
+    [SerializeField] private SlideTextPresenter defaultTextPresenter;
     [SerializeField] private GameObject nextButtonIndicator;
-    [SerializeField] private GameObject previousButtonIndicator;
-    [SerializeField] private GameObject doneIndicator;
-    
+
+    private readonly Queue<TutorialSlideshow> _queue = new Queue<TutorialSlideshow>();
     private Maybe<TutorialSlideshow> _current = Maybe<TutorialSlideshow>.Missing();
+    private SlideTextPresenter _currentSlideTextPresenter;
     private Maybe<IndexSelector<TutorialSlide>> _maybeSlideWalker = Maybe<IndexSelector<TutorialSlide>>.Missing();
 
     public bool IsShowingTutorial => HasSlides; 
     
-    public void Init(TutorialSlideshow slideshow)
+    public void Enqueue(TutorialSlideshow slideshow)
+    {
+        if (_current.IsPresent)
+        {
+            _queue.Enqueue(slideshow);
+            return;
+        }
+
+        StartSlideshow(slideshow);
+    }
+
+    private void StartSlideshow(TutorialSlideshow slideshow)
     {
         _current = slideshow;
-        _maybeSlideWalker = new Maybe<IndexSelector<TutorialSlide>>(new IndexSelector<TutorialSlide>(slideshow.Slides));
+        if (_currentSlideTextPresenter != defaultTextPresenter)
+            Destroy(_currentSlideTextPresenter);
+        _currentSlideTextPresenter = defaultTextPresenter;
+        _currentSlideTextPresenter.gameObject.SetActive(true);
+
+        _maybeSlideWalker = new IndexSelector<TutorialSlide>(slideshow.Slides);
         titleLabel.text = slideshow.DisplayName;
         backgroundUiParent.DestroyAllChildren();
         if (slideshow.BackgroundPrototype != null)
             Instantiate(slideshow.BackgroundPrototype, backgroundUiParent.transform);
+        if (slideshow.SlideTextPresenterPrototype != null)
+        {
+            _currentSlideTextPresenter.gameObject.SetActive(false);
+            _currentSlideTextPresenter = Instantiate(slideshow.SlideTextPresenterPrototype, backgroundUiParent.transform);
+        }
+
         Render();
     }
 
@@ -32,9 +56,10 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
     {
         if (slides.IsLastItem)
         {
-            Message.Publish(new HideTutorial(_current.Value.TutorialName));
+            var completedTutorialName = _current.Value.TutorialName;
             _current = Maybe<TutorialSlideshow>.Missing();
             _maybeSlideWalker = Maybe<IndexSelector<TutorialSlide>>.Missing();
+            MoveNext(completedTutorialName);
         }
         else
         {
@@ -43,6 +68,14 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
         }
     });
 
+    private void MoveNext(string completedTutorialName)
+    {
+        if (_queue.Any())
+            StartSlideshow(_queue.Dequeue());
+        else
+            Message.Publish(new HideTutorial(completedTutorialName));
+    }
+    
     protected override void Execute(TutorialPreviousRequested msg) => IfHasSlides(slides =>
     {
         slides.MovePreviousWithoutLooping();
@@ -58,10 +91,7 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
             var slide = slides.Current;
             if (slide.UiElementPrototype != null)
                 Instantiate(slide.UiElementPrototype, slideUiParent.transform);
-            slideText.text = slide.Text;
-            previousButtonIndicator.SetActive(!slides.IsFirstItem);
-            nextButtonIndicator.SetActive(!slides.IsLastItem);
-            doneIndicator.SetActive(slides.IsLastItem);
+            _currentSlideTextPresenter.Init(slide.Text, slides);
         });
     }
 

@@ -36,7 +36,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
                 Icon = icons[statusTag].Icon, 
                 Tooltip = s.Status.CustomText.OrDefault(() => defaultText)
                     .Replace("[Originator]", battleState.Members.TryGetValue(s.OriginatorId, out var m) 
-                        ? m.ToString() 
+                        ? m.UnambiguousName 
                         : "Originator"),
                 OriginatorId = s.OriginatorId
             }));
@@ -97,7 +97,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (_member.State[TemporalStatType.Prominent] > 0)
             statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Prominent.ToString(), Icon = icons[TemporalStatType.Prominent].Icon, Tooltip = "Heroes cannot stealth while prominent." });
 
-        AddCustomTextStatusIcons(statuses, StatusTag.OnHit, "Secret On Hit Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.WhenHit, "Secret On Hit Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.WhenKilled, "Secret When Killed Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.WhenDamaged, "Secret When Damaged Effect");
         
@@ -152,7 +152,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     private void AddStatusIconIfApplicable(List<CurrentStatusValue> statuses, TemporalStatType stat, bool showNumber, Func<float, string> makeTooltip)
     {
         var value = _member.State[stat];
-        var text = showNumber ? value.ToString() : "";
+        var text = showNumber && value < 800 // More than 800 is effectively infinite.
+            ? value.ToString() 
+            : "";
         if (value > 0)
             statuses.Add(new CurrentStatusValue { Type = stat.ToString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
     }

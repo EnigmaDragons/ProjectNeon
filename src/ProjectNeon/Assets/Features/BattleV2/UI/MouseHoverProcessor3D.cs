@@ -23,19 +23,21 @@ public class MouseHoverProcessor3D : MonoBehaviour
 
         var hoverCharacter = Maybe<HoverCharacter>.Missing();
         var hoverStatusIcon = Maybe<WorldStatusIconPresenter>.Missing();
+        var hoverCharacterPosition = Maybe<Vector3>.Missing();
         if (numHits > 0)
         {
             for (var i = 0; i < numHits; i++)
                 if (hoverCharacter.IsMissing && _hits[i].collider.gameObject.layer == characterLayer)
                 {
                     var obj = _hits[i].transform.gameObject;
+                    hoverCharacterPosition = obj.transform.position;
                     var spriteHover = obj.GetComponentInChildren<HoverSpriteCharacter3D>();
                     var basicHover = obj.GetComponentInChildren<HoverBasicCharacter3D>();
                     if (spriteHover == null && basicHover == null)
                         Log.Error($"{obj.name} is missing a {nameof(HoverCharacter)} script");
                     else
-                        hoverCharacter = new Maybe<HoverCharacter>(spriteHover != null 
-                            ? (HoverCharacter)spriteHover 
+                        hoverCharacter = new Maybe<HoverCharacter>(spriteHover != null
+                            ? (HoverCharacter) spriteHover
                             : basicHover);
                 }
             
@@ -54,7 +56,7 @@ public class MouseHoverProcessor3D : MonoBehaviour
         var isMouseDragging = MouseDragState.IsDragging;
         if (_lastHover == null || !_lastHover.Map(v => v.MemberId).Equals(hoverCharacter.Map(v => v.MemberId)))
         {
-            Message.Publish(new CharacterHoverChanged {HoverCharacter = hoverCharacter.As<HoverCharacter>(), IsDragging = MouseDragState.IsDragging});
+            Message.Publish(new CharacterHoverChanged(hoverCharacter.As<HoverCharacter>(), hoverCharacterPosition, isMouseDragging));
             _lastHover = hoverCharacter;
         }
         if (!isMouseDragging && _statusIcon != null)

@@ -14,10 +14,10 @@ public interface HeroCharacter
     Deck Deck { get; }
     CardTypeData BasicCard { get; }
     CardTypeData[] ParagonCards { get; }
+    HashSet<CardTypeData> ExcludedCards { get; }
     IStats Stats { get; }
     int StartingCredits { get; }
     HeroFlavorDetails Flavor { get; }
-    HeroSkill[] Skills { get; }
     HeroLevelUpPathway LevelUpTree { get; }
     HashSet<string> Archetypes { get; }
     public Color Tint { get; }
@@ -34,11 +34,11 @@ public class InMemoryHeroCharacter : HeroCharacter
     public Deck Deck { get; set; }
     public CardTypeData BasicCard { get; set; }
     public CardTypeData[] ParagonCards { get; set; } = new CardTypeData[0];
+    public HashSet<CardTypeData> ExcludedCards { get; set; } = new HashSet<CardTypeData>();
     public IStats Stats { get; set; } = new StatAddends();
     public int StartingCredits { get; set; } = 100;
     public HeroFlavorDetails Flavor { get; set; } 
         = new HeroFlavorDetails { HeroDescription = "Desc", RoleDescription = "Desc", BackStory = "BackStory" };
-    public HeroSkill[] Skills { get; } = new HeroSkill[0];
     public HeroLevelUpPathway LevelUpTree { get; set; }
     public HashSet<string> Archetypes { get; set; } = new HashSet<string>();
     public Color Tint { get; } = Color.white;

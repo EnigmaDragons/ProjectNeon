@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Tutorial/Slideshow/Slide")]
+[CreateAssetMenu(menuName = "Tutorial/Slideshow/Slide", fileName = "Tutorial-")]
 public class TutorialSlide : ScriptableObject
 {
     [SerializeField, TextArea(4, 6)] private string text;

@@ -4,7 +4,7 @@
 public class CurrentAnimationContext : ScriptableObject
 {
     public int MemberId;
-    public AnimationData AnimationData;
+    public IAnimationData AnimationData;
     public Target Target;
 
     public void SetAnimation(CharacterAnimationRequested animation)

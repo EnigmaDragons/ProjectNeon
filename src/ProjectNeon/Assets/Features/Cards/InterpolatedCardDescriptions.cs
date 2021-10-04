@@ -177,6 +177,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"shield {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.DrawCards)
             coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} Cards";
+        if (data.EffectType == EffectType.DrawCardsOfOwner)
+            coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} of your Cards";
         if (data.EffectType == EffectType.EnterStealth)
             coreDesc = $"enter {Bold(TemporalStatType.Stealth.ToString())}";
         if (data.EffectType == EffectType.AdjustPlayerStats)
@@ -278,6 +280,8 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.HealOverTime)
             return MagicAmount(data, owner);
         if (data.EffectType == EffectType.DrawCards)
+            return FormulaAmount(data, owner, xCost);
+        if (data.EffectType == EffectType.DrawCardsOfOwner)
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.ShieldFormula)
             return FormulaAmount(data, owner, xCost);

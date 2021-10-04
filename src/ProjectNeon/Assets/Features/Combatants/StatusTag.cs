@@ -4,7 +4,7 @@ public enum StatusTag
     CounterAttack = 1,
     DamageOverTime = 2,
     HealOverTime = 3,
-    OnHit = 5,
+    WhenHit = 5,
     StartOfTurnTrigger = 7,
     EndOfTurnTrigger = 8,
     WhenDamaged = 9,

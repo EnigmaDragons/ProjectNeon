@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] private BattleState battleState;
-    [SerializeField] private CardRarityPresenter rarity;
+    [SerializeField] private RarityPresenter rarity;
     [SerializeField] private CardTargetPresenter target;
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private TextMeshProUGUI description;
@@ -536,6 +536,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
         DebugLog($"Discard");
         ReturnHandToNormal();
+        Message.Publish(new CardDiscarded(transform, _card));
         _onDiscard();
     }
     

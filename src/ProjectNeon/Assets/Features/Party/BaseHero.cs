@@ -29,8 +29,8 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private int economy = 0;
     [SerializeField] private ResourceType resource1;
     [SerializeField] private ResourceType resource2;
-    [SerializeField] private HeroSkill[] skills;
     [SerializeField] private CardType[] additionalStartingCards;
+    [SerializeField] private CardType[] excludedStartingCards;
 
     [SerializeField] private HeroFlavorDetails flavorDetails;
     [SerializeField] private HeroLevelUpPathway levelUpTree;
@@ -42,10 +42,12 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public string Class => className;
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
-    public CardType[] AdditionalStartingCards => additionalStartingCards ?? new CardType[0];
+    public CardType[] AdditionalStartingCards => additionalStartingCards ?? new CardType[0];    
+    public HashSet<CardTypeData> ExcludedCards => excludedStartingCards != null 
+        ? new HashSet<CardTypeData>(excludedStartingCards.Concat(BasicCard)) 
+        : new HashSet<CardTypeData>(BasicCard.AsArray());
     public CardTypeData BasicCard => basic;
     public int StartingCredits => startingCredits;
-    public HeroSkill[] Skills => skills;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;
     public HeroFlavorDetails Flavor => flavorDetails;
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
@@ -89,9 +91,11 @@ public class BaseHero : ScriptableObject, HeroCharacter
         }
     }
 
-    public CardTypeData[] ParagonCards => levelUpTree
-        .ForLevel(5)
-        .OfType<NewBasicLevelUpOption>()
-        .Select(o => o.Card)
-        .ToArray();
+    public CardTypeData[] ParagonCards => levelUpTree == null 
+        ? new CardTypeData[0] 
+        : levelUpTree
+            .ForLevel(5)
+            .OfType<NewBasicLevelUpOption>()
+            .Select(o => o.Card)
+            .ToArray();
 }

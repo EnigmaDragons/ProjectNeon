@@ -6,34 +6,34 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
 {
     private static readonly Dictionary<StatType, int> _statAmounts = new Dictionary<StatType, int>
     {
+        { StatType.MaxHP, 6 },
+        { StatType.StartingShield, 3 },
         { StatType.Attack, 1 },
         { StatType.Magic, 1 },
         { StatType.Leadership, 1 },
         { StatType.Economy, 1 },
-        { StatType.MaxHP, 4 },
-        { StatType.StartingShield, 4 },
         { StatType.Armor, 1 },
         { StatType.Resistance, 1 },
     };
     private static readonly Dictionary<StatType, string> _negativePrefix = new Dictionary<StatType, string>
     {
+        { StatType.MaxHP, "Unhealthy" },
+        { StatType.StartingShield, "Powered" },
         { StatType.Attack, "Dulled" },
         { StatType.Magic, "Inhibiting" },
         { StatType.Leadership, "Clouded" },
         { StatType.Economy, "Costly" },
-        { StatType.MaxHP, "Unhealthy" },
-        { StatType.StartingShield, "Powered" },
         { StatType.Armor, "Fragilizing" },
         { StatType.Resistance, "Cursed" },
     };
     private static readonly Dictionary<StatType, string> _positiveSuffix = new Dictionary<StatType, string>
     {
+        { StatType.MaxHP, "Vitality" },
+        { StatType.StartingShield, "Barrier" },
         { StatType.Attack, "Lethality" },
         { StatType.Magic, "Attunement" },
         { StatType.Leadership, "Focus" },
         { StatType.Economy, "Greed" },
-        { StatType.MaxHP, "Vitality" },
-        { StatType.StartingShield, "Barrier" },
         { StatType.Armor, "Protection" },
         { StatType.Resistance, "Ward" },
     };

@@ -1,67 +1,25 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>
 {
     [SerializeField] private AdventureProgress2 adventure2;
+    [SerializeField] private AdventureConclusionState conclusion;
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
     [SerializeField] private BattleState state;
-    [SerializeField] private ShopCardPool cardPrizePool;
-    [SerializeField] private EquipmentPool equipmentPrizePool;
+    [SerializeField] private BattleRewards eliteReward;
+    [SerializeField] private BattleRewards normalReward;
     [SerializeField] private CurrentGameMap3 gameMap;
     
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
-        var rewardPicker = adventure2.CreateLootPicker(state.Party);
         if (state.IsEliteBattle)
-            GetUserSelectedEquipment(onFinished, rewardPicker);
+            eliteReward.GrantVictoryRewardsAndThen(onFinished);
         else
-            GetUserSelectedRewardCard(onFinished, rewardPicker);
+            normalReward.GrantVictoryRewardsAndThen(onFinished);
     }
-
-    private void GetUserSelectedEquipment(Action onFinished, LootPicker rewardPicker)
-    {
-        var selectedRarity = rewardPicker.RandomRarity();
-        var rewardEquips = new List<Equipment>();
-        
-        var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20, selectedRarity));
-        while (rewardEquips.Count < 3)
-        {
-            var nextEquipment = possibleEquips.Dequeue();
-            if (!rewardEquips.Any(x => x.Description.Equals(nextEquipment.Description)))
-                rewardEquips.Add(nextEquipment);
-        }
-
-        Message.Publish(new GetUserSelectedEquipment(rewardEquips.ToArray().Shuffled(), equipment =>
-        {
-            equipment.IfPresent(e =>
-            {
-                AllMetrics.PublishGearRewardSelection(e.GetMetricNameOrDescription(), rewardEquips.Select(r => r.GetMetricNameOrDescription()).ToArray());
-                state.SetRewardEquipment(e);
-            });
-            onFinished();
-        }));
-    }
-
-    private void GetUserSelectedRewardCard(Action onFinished, LootPicker rewardPicker)
-    {
-        var selectedRarity = rewardPicker.RandomRarity();
-        var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, selectedRarity);
-        var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party)).ToArray().Shuffled();
-        Message.Publish(new GetUserSelectedCard(rewardCards, card =>
-        {
-            card.IfPresent(c =>
-            {
-                AllMetrics.PublishCardRewardSelection(c.Name, rewardCards.Select(r => r.Name).ToArray());
-                state.SetRewardCards(c.BaseType);
-            });
-            onFinished();
-        }));
-    }
-
+    
     private void Advance()
     {
         if (state.IsStoryEventCombat)
@@ -76,7 +34,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
             gameMap.CompleteCurrentNode();
             AllMetrics.PublishGameWon();
             Message.Publish(new AutoSaveRequested());
-            this.ExecuteAfterDelay(() => navigator.NavigateToVictoryScene(), secondsBeforeReturnToAdventure);
+            conclusion.Set(true, adventure2.CurrentAdventure.VictoryConclusion);
+            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeReturnToAdventure);
         }
         else
         {
@@ -97,7 +56,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
             Log.Info("Navigating to defeat screen");
             AllMetrics.PublishGameLost();
             CurrentGameData.Clear();
-            this.ExecuteAfterDelay(() => navigator.NavigateToDefeatScene(), secondsBeforeReturnToAdventure);
+            conclusion.Set(false, adventure2.CurrentAdventure.DefeatConclusion);
+            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeReturnToAdventure);
         }
     }
 }

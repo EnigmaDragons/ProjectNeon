@@ -36,7 +36,6 @@ public class Hero
     public RuntimeDeck Deck => deck;
     public int CurrentHp => Stats.MaxHp() - health.MissingHp;
     public HeroEquipment Equipment => equipment;
-    public HeroSkill[] Skills => character.Skills;
     public HeroHealth Health => health;
     public HeroLevels Levels => levels;
     public int Level => levels.CurrentLevel;

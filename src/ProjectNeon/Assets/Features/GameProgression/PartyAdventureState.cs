@@ -66,7 +66,13 @@ public sealed class PartyAdventureState : ScriptableObject
         });
 
 
-        var allStartingCards = party.Heroes.SelectMany(h => allCards.Get(h.Archetypes, new HashSet<int>(), Rarity.Starter).NumCopies(4)).ToArray();
+        var allStartingCards = party.Heroes
+            .SelectMany(h => allCards
+                .Get(h.Archetypes, new HashSet<int>(), Rarity.Starter)
+                .Concat(h.AdditionalStartingCards)
+                .Except(h.ExcludedCards)
+                .NumCopies(4))
+            .ToArray();
         cards.Initialized(allStartingCards); 
         
         equipment = new PartyEquipmentCollection();
@@ -163,6 +169,9 @@ public sealed class PartyAdventureState : ScriptableObject
     
     public Hero BestMatchFor(string archetypeKey)
     {
+        if (archetypeKey.Equals("General"))
+            return Heroes.Random();
+        
         InitArchKeyHeroes();
         return _archKeyHeroes[archetypeKey].First();
     }
