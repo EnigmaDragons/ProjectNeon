@@ -30,7 +30,7 @@ public static class CardTypeDataExtensions
     public static string ArchetypeDescription(this CardTypeData c) => c.Archetypes.None() 
         ? "General" 
         : string.Join(" - ", c.Archetypes.OrderBy(a => a).Select(a => a.WithSpaceBetweenWords()));
-    public static string GetArchetypeKey(this CardTypeData c) => string.Join(" + ", c.Archetypes.OrderBy(a => a));
+    public static string GetArchetypeKey(this CardTypeData c) => c.Archetypes.Any() ? string.Join(" + ", c.Archetypes.OrderBy(a => a)) : "General";
     
     public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c, Maybe<Color>.Missing(), Maybe<Sprite>.Missing());
     public static Card CreateInstance(this CardTypeData c, int id, Member owner, Maybe<Color> tint, Maybe<Sprite> bust) => new Card(id, owner, c, tint, bust);

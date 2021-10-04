@@ -169,6 +169,9 @@ public sealed class PartyAdventureState : ScriptableObject
     
     public Hero BestMatchFor(string archetypeKey)
     {
+        if (archetypeKey.Equals("General"))
+            return Heroes.Random();
+        
         InitArchKeyHeroes();
         return _archKeyHeroes[archetypeKey].First();
     }
