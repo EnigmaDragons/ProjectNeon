@@ -49,11 +49,11 @@ MonoBehaviour:
   OnCardAiming: event:/BattleScene/AIM
   OnTooltipHover: event:/DeckBulder_Scene/Hover
   OnCardDiscarded: event:/BattleScene/RECYCLE_CARD
-  OnCardCanselled: event:/DeckBulder_Scene/Card_Close
-  OnCardSelected: event:/DeckBulder_Scene/Main_Click
+  OnCardCanselled: event:/BattleScene/CARD_DISCARDED
+  OnCardSelected: event:/BattleScene/CARD_CHOSEN
   OnCardDrawn: event:/BattleScene/DRAW_C
   OnCreditsChanged: event:/BattleScene/CREDITS
-  OnCardShuffled: event:/DeckBulder_Scene/Main_Click
+  OnCardShuffled: event:/BattleScene/CARD_SHUFFLE
 --- !u!114 &2608378948485660946
 MonoBehaviour:
   m_ObjectHideFlags: 0
