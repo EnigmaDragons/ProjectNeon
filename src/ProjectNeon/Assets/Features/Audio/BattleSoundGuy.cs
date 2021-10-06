@@ -27,7 +27,8 @@ public class BattleSoundGuy : MonoBehaviour
         Message.Subscribe<PlayerCardDrawn>(OnCardDrawnFNUC, this);
         Message.Subscribe<PartyCreditsChanged>(OnCreditsChangedFUNC, this);
         Message.Subscribe<PlayerDeckShuffled>(OnCardShuffledFUNC, this);
-        //Message.Subscribe<CharacterHoverChanged>(OnEnemyHoverFUNC, this);
+        Message.Subscribe<SwappedCard>(e => PlayOneShot(OnCardDiscarded, e.UiSource), this);
+       //Message.Subscribe<CharacterHoverChanged>(OnEnemyHoverFUNC, this);
     }
 
     /* private void OnEnemyHoverFUNC(CharacterHoverChanged msg)

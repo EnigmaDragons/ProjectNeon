@@ -57,6 +57,12 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{16c74931-760b-4327-8526-f3f845627f85}">
+		<property name="maxVoices">
+			<value>6</value>
+		</property>
+		<property name="voiceStealing">
+			<value>3</value>
+		</property>
 		<property name="triggerCooldown">
 			<value>280</value>
 		</property>
@@ -115,6 +121,9 @@
 			<destination>{5c74229d-dffe-4c49-bfc4-cc56ab1b4944}</destination>
 			<destination>{e0ca48c2-79bd-4adc-96c8-9ebd197244c6}</destination>
 			<destination>{dccb45ad-0d3a-4be4-8b83-1c0a4bc184f7}</destination>
+			<destination>{f71e4802-255b-49eb-b93f-d8c7c7322455}</destination>
+			<destination>{e6710be6-2fdf-4ce7-9719-b45bea22967b}</destination>
+			<destination>{05c049eb-5cc2-4f51-b620-33460f6b724a}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{78235830-ae51-44cb-abf9-dd7280e6fe45}">
@@ -167,6 +176,21 @@
 	<object class="SingleSound" id="{dccb45ad-0d3a-4be4-8b83-1c0a4bc184f7}">
 		<relationship name="audioFile">
 			<destination>{b594db66-b29e-4d73-9470-d271af7704b0}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{f71e4802-255b-49eb-b93f-d8c7c7322455}">
+		<relationship name="audioFile">
+			<destination>{b0501c65-1882-4ef6-878c-3f917dfba4ec}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{e6710be6-2fdf-4ce7-9719-b45bea22967b}">
+		<relationship name="audioFile">
+			<destination>{b594db66-b29e-4d73-9470-d271af7704b0}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{05c049eb-5cc2-4f51-b620-33460f6b724a}">
+		<relationship name="audioFile">
+			<destination>{39bee99f-6784-460a-8ca2-dd46c0d90e51}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{d3810006-8d3f-4c29-a12e-651a9c81b4e9}">
