@@ -7,6 +7,8 @@ public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterH
     [SerializeField] private float shakeSize = 0.15f;
     [SerializeField] private float shakeSpeed = 0.15f;
 
+    public static readonly string UiElementName = "DiscardDropTarget";
+    
     private bool _shouldShake;
     
     public void OnDrop(PointerEventData eventData)
@@ -18,17 +20,26 @@ public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterH
             BattleLog.Write($"Trashed {cardComponent.CardName}");
             Message.Publish(new CheckForAutomaticTurnEnd());
         }
-        _shouldShake = false;
+        Reset();
         MouseDragState.Set(false);
+    }
+
+    private void Reset()
+    {
+        _shouldShake = false;
+        Message.Publish(new HoverExited(transform, UiElementName));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.dragging)
+        {
             _shouldShake = true;
+            Message.Publish(new HoverEntered(transform, UiElementName));
+        }
     }
 
-    public void OnPointerExit(PointerEventData eventData) => _shouldShake = false;
+    public void OnPointerExit(PointerEventData eventData) => Reset();
 
     private void FixedUpdate()
     {
