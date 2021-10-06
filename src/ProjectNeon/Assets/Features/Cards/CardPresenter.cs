@@ -188,6 +188,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         RenderCardType();
         if (IsPlayable)
             SetHandHighlight(true);
+        
+        Message.Publish(new SwappedCard(transform, _card));
     }
     
     public void SetDisabled(bool isDisabled)
