@@ -28,12 +28,19 @@ public class BattleSoundGuy : MonoBehaviour
         Message.Subscribe<PartyCreditsChanged>(OnCreditsChangedFUNC, this);
         Message.Subscribe<PlayerDeckShuffled>(OnCardShuffledFUNC, this);
         Message.Subscribe<SwappedCard>(e => PlayOneShot(OnCardDiscarded, e.UiSource), this);
-       //Message.Subscribe<CharacterHoverChanged>(OnEnemyHoverFUNC, this);
+        Message.Subscribe<HoverEntered>(e => TrashAnimSoundFUNC(e), this);
+        //Message.Subscribe<CharacterHoverChanged>(OnEnemyHoverFUNC, this);
+    }
+
+    private void TrashAnimSoundFUNC(HoverEntered msg)
+    {
+        if(msg.ElementName == "DiscardDropTarget")
+            FMODUnity.RuntimeManager.PlayOneShot(OnCardAiming, Vector3.zero);
     }
 
     /* private void OnEnemyHoverFUNC(CharacterHoverChanged msg)
      {
-         if if(msg.Target.IsPresent)
+         if(msg.Target.IsPresent)
              FMODUnity.RuntimeManager.PlayOneShot(OnCardAiming, Vector3.zero);
      }
     */
