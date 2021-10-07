@@ -29,7 +29,13 @@ public class BattleSoundGuy : MonoBehaviour
         Message.Subscribe<PlayerDeckShuffled>(OnCardShuffledFUNC, this);
         Message.Subscribe<SwappedCard>(e => PlayOneShot(OnCardDiscarded, e.UiSource), this);
         Message.Subscribe<HoverEntered>(e => TrashAnimSoundFUNC(e), this);
-        //Message.Subscribe<CharacterHoverChanged>(OnEnemyHoverFUNC, this);
+        Message.Subscribe<CharacterHoverChanged>(OnEnemyHoverFUNC, this);
+        Message.Subscribe<CardResolutionStarted>(OnCardReFUNC, this);
+    }
+
+    private void OnCardReFUNC(CardResolutionStarted msg)
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(OnTooltipHover, Vector3.zero);
     }
 
     private void TrashAnimSoundFUNC(HoverEntered msg)
@@ -38,12 +44,12 @@ public class BattleSoundGuy : MonoBehaviour
             FMODUnity.RuntimeManager.PlayOneShot(OnCardAiming, Vector3.zero);
     }
 
-    /* private void OnEnemyHoverFUNC(CharacterHoverChanged msg)
+     private void OnEnemyHoverFUNC(CharacterHoverChanged msg)
      {
-         if(msg.Target.IsPresent)
-             FMODUnity.RuntimeManager.PlayOneShot(OnCardAiming, Vector3.zero);
+        if (msg.Equals("Enemy"))
+             FMODUnity.RuntimeManager.PlayOneShot(OnTooltipHover, Vector3.zero);
      }
-    */
+    
 
     private void OnCardShuffledFUNC(PlayerDeckShuffled msg)
     {
