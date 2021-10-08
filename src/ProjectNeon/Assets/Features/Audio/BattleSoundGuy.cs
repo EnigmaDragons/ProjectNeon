@@ -15,6 +15,7 @@ public class BattleSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnCardDrawn;
     [SerializeField, FMODUnity.EventRef] private string OnCreditsChanged; //типа получили бабло
     [SerializeField, FMODUnity.EventRef] private string OnCardShuffled; //?
+    [SerializeField, FMODUnity.EventRef] private string OnCardReZone;
     private void OnEnable()
     {
         Message.Subscribe<ShowEnemySFX>(e => PlayOneShot(OnEnemyDetalisShown, e.UiSource), this);
@@ -35,7 +36,7 @@ public class BattleSoundGuy : MonoBehaviour
 
     private void OnCardReFUNC(CardResolutionStarted msg)
     {
-        FMODUnity.RuntimeManager.PlayOneShot(OnTooltipHover, Vector3.zero);
+        FMODUnity.RuntimeManager.PlayOneShot(OnCardReZone, Vector3.zero);
     }
 
     private void TrashAnimSoundFUNC(HoverEntered msg)
