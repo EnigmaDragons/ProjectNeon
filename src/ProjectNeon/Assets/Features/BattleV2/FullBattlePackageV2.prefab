@@ -45,16 +45,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnEnemyDetalisShown: event:/BattleScene/SHOW_ENEMY_DETALIS
+  OnEnemyDetalisHidden: event:/DeckBulder_Scene/Hover
   OnCardPresented: event:/BattleScene/CARD_BATTLE_HOVER
+  OnCardHoverExit: event:/DeckBulder_Scene/Hover
   OnCardAiming: event:/BattleScene/AIM
   OnTooltipHover: event:/DeckBulder_Scene/Hover
-  OnCardDiscarded: event:/BattleScene/RECYCLE_CARD
-  OnCardCanselled: event:/BattleScene/CARD_DISCARDED
+  OnCardRecycled: event:/BattleScene/RECYCLE_CARD
+  OnCardDiscarded: event:/BattleScene/CARD_DISCARDED
   OnCardSelected: event:/BattleScene/CARD_CHOSEN
   OnCardDrawn: event:/BattleScene/DRAW_C
   OnCreditsChanged: event:/BattleScene/CREDITS
   OnCardShuffled: event:/BattleScene/CARD_SHUFFLE
   OnCardReZone: event:/BattleScene/CARD_RES_ZONE
+  OnCardSwapped: event:/DeckBulder_Scene/Hover
+  OnCardRightClick: event:/DeckBulder_Scene/Main_Click
+  OnCardRightClickBack: event:/DeckBulder_Scene/Hover
 --- !u!114 &2608378948485660946
 MonoBehaviour:
   m_ObjectHideFlags: 0

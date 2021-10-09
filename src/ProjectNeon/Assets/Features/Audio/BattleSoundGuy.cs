@@ -6,32 +6,58 @@ using UnityEngine;
 public class BattleSoundGuy : MonoBehaviour
 {
     [SerializeField, FMODUnity.EventRef] private string OnEnemyDetalisShown;
+    [SerializeField, FMODUnity.EventRef] private string OnEnemyDetalisHidden;
     [SerializeField, FMODUnity.EventRef] private string OnCardPresented;
+    [SerializeField, FMODUnity.EventRef] private string OnCardHoverExit;
     [SerializeField, FMODUnity.EventRef] private string OnCardAiming;
     [SerializeField, FMODUnity.EventRef] private string OnTooltipHover;
+    [SerializeField, FMODUnity.EventRef] private string OnCardRecycled;
     [SerializeField, FMODUnity.EventRef] private string OnCardDiscarded;
-    [SerializeField, FMODUnity.EventRef] private string OnCardCanselled;
     [SerializeField, FMODUnity.EventRef] private string OnCardSelected;
     [SerializeField, FMODUnity.EventRef] private string OnCardDrawn;
     [SerializeField, FMODUnity.EventRef] private string OnCreditsChanged; //типа получили бабло
     [SerializeField, FMODUnity.EventRef] private string OnCardShuffled; //?
     [SerializeField, FMODUnity.EventRef] private string OnCardReZone;
+    [SerializeField, FMODUnity.EventRef] private string OnCardSwapped;
+    [SerializeField, FMODUnity.EventRef] private string OnCardRightClick;
+    [SerializeField, FMODUnity.EventRef] private string OnCardRightClickBack;
     private void OnEnable()
     {
         Message.Subscribe<ShowEnemySFX>(e => PlayOneShot(OnEnemyDetalisShown, e.UiSource), this);
+        Message.Subscribe<HideEnemyDetails>(OnEnemyDetailsHiddenSFX, this);
         Message.Subscribe<CardHoverSFX>(OnCardPresentedSFX, this);
+        Message.Subscribe<CardHoverExitSFX>(e => PlayOneShot(OnCardHoverExit, e.UiSource), this);
         Message.Subscribe<TargetChanged>(OnTargetChanged, this);
         Message.Subscribe<ShowTooltip>(OnTrashHovered, this);
-        Message.Subscribe<CardDiscarded>(e => PlayOneShot(OnCardDiscarded, e.UiSource), this);
+        Message.Subscribe<CardDiscarded>(e => PlayOneShot(OnCardRecycled, e.UiSource), this);
         Message.Subscribe<PlayerCardCanceled>(OnCardCanselledFUNC, this);
         Message.Subscribe<PlayerCardSelected>(OnCardSelectedFUNC, this);
         Message.Subscribe<PlayerCardDrawn>(OnCardDrawnFNUC, this);
         Message.Subscribe<PartyCreditsChanged>(OnCreditsChangedFUNC, this);
         Message.Subscribe<PlayerDeckShuffled>(OnCardShuffledFUNC, this);
-        Message.Subscribe<SwappedCard>(e => PlayOneShot(OnCardDiscarded, e.UiSource), this);
+        Message.Subscribe<SwappedCard>(e => PlayOneShot(OnCardSwapped, e.UiSource), this);
         Message.Subscribe<HoverEntered>(e => TrashAnimSoundFUNC(e), this);
         Message.Subscribe<CharacterHoverChanged>(OnEnemyHoverFUNC, this);
         Message.Subscribe<CardResolutionStarted>(OnCardReFUNC, this);
+        Message.Subscribe<TweenMovementRequested>(OnCardRightClickFUNC, this);
+        Message.Subscribe<SnapBackTweenRequested>(OnCardRightClickBackFUNC, this);
+    }
+
+    private void OnEnemyDetailsHiddenSFX(HideEnemyDetails msg)
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(OnEnemyDetalisHidden, Vector3.zero);
+    }
+
+    private void OnCardRightClickBackFUNC(SnapBackTweenRequested msg)
+    {
+        if (msg.MovementName == "Click")
+            FMODUnity.RuntimeManager.PlayOneShot(OnCardRightClickBack, Vector3.zero);
+    }
+
+    private void OnCardRightClickFUNC(TweenMovementRequested msg)
+    {
+        if (msg.MovementName == "Click")
+            FMODUnity.RuntimeManager.PlayOneShot(OnCardRightClick, Vector3.zero);
     }
 
     private void OnCardReFUNC(CardResolutionStarted msg)
@@ -74,7 +100,7 @@ public class BattleSoundGuy : MonoBehaviour
 
     private void OnCardCanselledFUNC(PlayerCardCanceled msg)
     {
-        FMODUnity.RuntimeManager.PlayOneShot(OnCardCanselled, Vector3.zero);
+        FMODUnity.RuntimeManager.PlayOneShot(OnCardDiscarded, Vector3.zero);
     }
 
     private void OnTrashHovered(ShowTooltip msg)

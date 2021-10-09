@@ -461,6 +461,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (!IsDragging && _isHand)
             SetHandHighlight(false);
+        Message.Publish(new CardHoverExitSFX(transform));
     }
 
     public void OnDrag(PointerEventData eventData)
