@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnEnemyDetalisShown: event:/BattleScene/SHOW_ENEMY_DETALIS
-  OnEnemyDetalisHidden: event:/DeckBulder_Scene/Hover
+  OnEnemyDetalisHidden: event:/BattleScene/ENEMY_DETAILS_HIDE
   OnCardPresented: event:/BattleScene/CARD_BATTLE_HOVER
   OnCardHoverExit: event:/DeckBulder_Scene/Hover
   OnCardAiming: event:/BattleScene/AIM
@@ -57,9 +57,9 @@ MonoBehaviour:
   OnCreditsChanged: event:/BattleScene/CREDITS
   OnCardShuffled: event:/BattleScene/CARD_SHUFFLE
   OnCardReZone: event:/BattleScene/CARD_RES_ZONE
-  OnCardSwapped: event:/DeckBulder_Scene/Hover
-  OnCardRightClick: event:/DeckBulder_Scene/Main_Click
-  OnCardRightClickBack: event:/DeckBulder_Scene/Hover
+  OnCardSwapped: event:/BattleScene/CARD_SWAP
+  OnCardRightClick: event:/BattleScene/CARD_CLICK_H1
+  OnCardRightClickBack: event:/BattleScene/CARD_UNCLICK_H1
 --- !u!114 &2608378948485660946
 MonoBehaviour:
   m_ObjectHideFlags: 0
