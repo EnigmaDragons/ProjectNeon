@@ -10,6 +10,7 @@ public class BattleSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnCardPresented;
     [SerializeField, FMODUnity.EventRef] private string OnCardHoverExit;
     [SerializeField, FMODUnity.EventRef] private string OnCardAiming;
+    [SerializeField, FMODUnity.EventRef] private string OnCardAimingTRASH;
     [SerializeField, FMODUnity.EventRef] private string OnTooltipHover;
     [SerializeField, FMODUnity.EventRef] private string OnCardRecycled;
     [SerializeField, FMODUnity.EventRef] private string OnCardDiscarded;
@@ -68,7 +69,7 @@ public class BattleSoundGuy : MonoBehaviour
     private void TrashAnimSoundFUNC(HoverEntered msg)
     {
         if(msg.ElementName == "DiscardDropTarget")
-            FMODUnity.RuntimeManager.PlayOneShot(OnCardAiming, Vector3.zero);
+            FMODUnity.RuntimeManager.PlayOneShot(OnCardAimingTRASH, Vector3.zero);
     }
 
      private void OnEnemyHoverFUNC(CharacterHoverChanged msg)
