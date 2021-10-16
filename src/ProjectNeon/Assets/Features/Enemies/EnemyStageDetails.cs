@@ -24,11 +24,8 @@ public class EnemyStageDetails
     public int maxResourceAmount = 0;
     public int resourceGainPerTurn = 1;
     public int cardsPerTurn = 1;
-    public int calculatedPowerLevel; //Used only for calculation
-    public float startingDefensiveValueAdjustment; //Used only for calculation
-    public float startingValueAdjustment; //Used only for calculation
-    public float perTurnValueAdjustment; //Used only for calculation
-    public float resourceScaledValueOverride;
+    public EnemyStageCalculationVariables calculationVariables;
+    public EnemyStageCalculationResults calculationResults;
     public EffectData[] startOfBattleEffects = new EffectData[0];
     public List<CardType> Cards = new List<CardType>();
 

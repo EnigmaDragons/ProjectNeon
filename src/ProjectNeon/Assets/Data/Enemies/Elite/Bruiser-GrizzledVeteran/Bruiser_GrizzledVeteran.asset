@@ -52,11 +52,17 @@ MonoBehaviour:
     maxResourceAmount: 6
     resourceGainPerTurn: 0
     cardsPerTurn: 1
-    calculatedPowerLevel: 251
-    startingDefensiveValueAdjustment: 0
-    startingValueAdjustment: 0
-    perTurnValueAdjustment: 0
-    resourceScaledValueOverride: 0
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 61.756847
+      perTurnPower: 22.5
+      maxAndStartingResourcesPower: 50.028584
+      estimatedTurnsAlive: 6.175685
+      calculatedPowerLevel: 251
     startOfBattleEffects:
     - EffectType: 75
       Conditions: []

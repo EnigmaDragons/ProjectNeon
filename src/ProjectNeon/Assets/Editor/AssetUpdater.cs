@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class AssetUpdater
@@ -279,25 +280,29 @@ public class AssetUpdater
                 var tauntValue = WithFallOff(_tauntValue, stage.startingTaunt, 0.8f);
                 var armorValue = WithFallOff(_armorValue, stage.armor, 0.9f);
                 var resistanceValue = WithFallOff(_resistanceValue, stage.resistance, 0.9f);
-                var startingValue = hpValue + shieldValue + aegisValue + dodgeValue + tauntValue + armorValue + resistanceValue + stage.startingValueAdjustment + stage.startingDefensiveValueAdjustment;
+                var startingValue = hpValue + shieldValue + aegisValue + dodgeValue + tauntValue + armorValue + resistanceValue + stage.calculationVariables.startingValueAdjustment + stage.calculationVariables.startingDefensiveValueAdjustment;
 
                 var highestStat = Mathf.Max(stage.attack, stage.leadership, stage.magic);
                 var scalingValuePerTurn = stage.nonStatCardValueFactor == 0
                     ? highestStat
                     : highestStat + stage.nonStatCardValueFactor / 2f;
-                var resourceValue = stage.resourceScaledValueOverride == 0
+                var resourceValue = stage.calculationVariables.resourceScaledValueOverride == 0
                     ? scalingValuePerTurn * _resourceScaledValue
-                    : scalingValuePerTurn * stage.resourceScaledValueOverride;
-                var valuePerTurn = scalingValuePerTurn + resourceValue * stage.resourceGainPerTurn + stage.perTurnValueAdjustment;
-                var defensiveValue = hpValue + shieldValue + aegisValue + dodgeValue + armorValue + resistanceValue + stage.startingDefensiveValueAdjustment;
+                    : scalingValuePerTurn * stage.calculationVariables.resourceScaledValueOverride;
+                var valuePerTurn = scalingValuePerTurn + resourceValue * stage.resourceGainPerTurn + stage.calculationVariables.perTurnValueAdjustment;
+                var defensiveValue = hpValue + shieldValue + aegisValue + dodgeValue + armorValue + resistanceValue + stage.calculationVariables.startingDefensiveValueAdjustment;
                 var averageTurnsAlive = defensiveValue / _stageDefensiveValuePerTurnAliveMap[stage.stage];
                 var activeValue = averageTurnsAlive * valuePerTurn;
                 var startingResourceValue = resourceValue * stage.startingResourceAmount;
                 var resourceMaxValue = WithFallOff(_maxResourceFactor * resourceValue, stage.maxResourceAmount, 0.8f);
                 int totalValue = Mathf.RoundToInt(activeValue + startingValue + resourceMaxValue + startingResourceValue);
-                if (totalValue != stage.calculatedPowerLevel)
+                if (totalValue != stage.calculationResults.calculatedPowerLevel)
                 {
-                    stage.calculatedPowerLevel = totalValue;
+                    stage.calculationResults.startingPower = startingValue;
+                    stage.calculationResults.perTurnPower = valuePerTurn;
+                    stage.calculationResults.maxAndStartingResourcesPower = startingResourceValue + resourceMaxValue;
+                    stage.calculationResults.estimatedTurnsAlive = averageTurnsAlive;
+                    stage.calculationResults.calculatedPowerLevel = totalValue;
                     EditorUtility.SetDirty(enemy);
                 }
             }
