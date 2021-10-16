@@ -19,7 +19,10 @@ public static class AllGlobalEffects
             fx => fx.AdjustEncounterDifficultyFactor(f => f / d.FloatAmount)) },
         { GlobalEffectType.AddStartOfBattleEffect, d => new BasicGlobalEffect(d, 
             fx => fx.AddStartOfBattleEffect(d.BattleEffect),
-            fx => fx.RemoveStartOfBattleEffect(d.BattleEffect))}
+            fx => fx.RemoveStartOfBattleEffect(d.BattleEffect))},
+        { GlobalEffectType.PreventTravelToCorpNodeType, d => new BasicGlobalEffect(d,
+            fx => Enum.TryParse(d.EffectScope, out MapNodeType nodeType).If(() => fx.PreventTravelTo(d.CorpName, nodeType)),
+            fx => Enum.TryParse(d.EffectScope, out MapNodeType nodeType).If(() => fx.AllowTravelTo(d.CorpName, nodeType))) },
     };
 
     public static GlobalEffect Create(GlobalEffectData data)

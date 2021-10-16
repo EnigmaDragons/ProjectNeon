@@ -48,6 +48,7 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
             new OnlyBossOnFinalNode(),
             new AssignCorpToNodeType(MapNodeType.GearShop, allCorps.GearSellingCorps),
             new AssignCorpToNodeType(MapNodeType.Clinic, allCorps.ClinicCorps),
+            new PreventTravelToEffectedNodes(progress.GlobalEffects.TravelPreventedCorpNodeTypes)
         }).ToArray();
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();

@@ -9,9 +9,11 @@ public class CurrentGlobalEffects : ScriptableObject
     [SerializeField] private float cardShopPriceFactor = 1f;
     [SerializeField] private float encounterDifficultyFactor = 1f;
     [SerializeField] private List<TargetedEffectData> startOfBattleEffects = new List<TargetedEffectData>();
+    [SerializeField] private List<Tuple<string, MapNodeType>> travelPreventedCorpNodeTypes = new List<Tuple<string, MapNodeType>>();
     
     public GlobalEffect[] Value => globalEffects.ToArray();
     public TargetedEffectData[] StartOfBattleEffects => startOfBattleEffects.ToArray();
+    public Tuple<string, MapNodeType>[] TravelPreventedCorpNodeTypes => travelPreventedCorpNodeTypes.ToArray();
 
     public void SetCardPriceFactor(float factor) => PublishAfter(() => cardShopPriceFactor = factor);
     public void AdjustCardPriceFactor(Func<float, float> getNewFactor) => PublishAfter(() => cardShopPriceFactor = getNewFactor(CardShopPriceFactor));
@@ -22,12 +24,16 @@ public class CurrentGlobalEffects : ScriptableObject
 
     public void AddStartOfBattleEffect(TargetedEffectData e) => PublishAfter(() => startOfBattleEffects.Add(e));
     public void RemoveStartOfBattleEffect(TargetedEffectData e) => PublishAfter(() => startOfBattleEffects.Remove(e));
+
+    public void PreventTravelTo(string corpName, MapNodeType nodeType) => PublishAfter(() => travelPreventedCorpNodeTypes.Add(new Tuple<string, MapNodeType>(corpName, nodeType)));
+    public void AllowTravelTo(string corpName, MapNodeType nodeType) => PublishAfter(() => travelPreventedCorpNodeTypes.Remove(new Tuple<string, MapNodeType>(corpName, nodeType)));
     
     public void Clear() => PublishAfter(() =>
     {
         cardShopPriceFactor = 1f;
         encounterDifficultyFactor = 1f;
         startOfBattleEffects.Clear();
+        travelPreventedCorpNodeTypes.Clear();
         globalEffects.Clear();
     });
 

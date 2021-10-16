@@ -12,4 +12,7 @@ public class GlobalEffectData
     public int IntAmount => FloatAmount.Value.CeilingInt();
 
     public TargetedEffectData BattleEffect;
+
+    public StringReference CorpName;
+    public StringReference EffectScope;
 }
