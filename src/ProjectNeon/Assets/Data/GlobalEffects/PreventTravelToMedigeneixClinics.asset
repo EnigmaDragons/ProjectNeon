@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1438d37d13fd4457b1574275a4c88bc1, type: 3}
-  m_Name: EnemiesStartBattleWithPlus2Attack
+  m_Name: PreventTravelToMedigeneixClinics
   m_EditorClassIdentifier: 
   id: 0
   data:
-    ShortDescription: Juiced Foes
-    FullDescription: Enemies fight with +2 Attack
-    EffectType: 3
+    ShortDescription: Avoid Medigeneix Surgical Centers
+    FullDescription: For your safety, you don't plan to get any treatments from Medigeneix
+    EffectType: 4
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
     BattleEffect:
       Scope: 1
-      Group: 1
+      Group: 3
       EffectData:
         EffectType: 68
         Conditions: []
@@ -69,10 +69,10 @@ MonoBehaviour:
           cardActions: {fileID: 0}
         BonusCardType: {fileID: 0}
     CorpName:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 0}
+      Variable: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
     EffectScope:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 0}
+      Variable: {fileID: 11400000, guid: 24c3a88f15c10c54ba974aa3c916ff93, type: 2}

@@ -3,7 +3,6 @@ using System;
 [Serializable]
 public class GlobalEffectData
 {
-    public Corp Corp = new InMemoryCorp();
     public string ShortDescription;
     public string FullDescription;
     public GlobalEffectType EffectType = GlobalEffectType.None;
@@ -12,4 +11,7 @@ public class GlobalEffectData
     public int IntAmount => FloatAmount.Value.CeilingInt();
 
     public TargetedEffectData BattleEffect;
+
+    public StringReference CorpName;
+    public StringReference EffectScope;
 }

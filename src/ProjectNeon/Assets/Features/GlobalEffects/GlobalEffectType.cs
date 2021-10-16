@@ -5,4 +5,5 @@ public enum GlobalEffectType
     AdjustCardShopPrices = 1,
     AdjustEncounterPowerLevel = 2,
     AddStartOfBattleEffect = 3,
+    PreventTravelToCorpNodeType = 4,
 }

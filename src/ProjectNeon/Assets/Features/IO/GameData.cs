@@ -20,9 +20,9 @@ public class GameAdventureProgressData
     public int AdventureId = -1;
     public GameAdventureProgressType Type = GameAdventureProgressType.Unknown;
     public int CurrentChapterIndex = -1;
-    public int CurrentStageSegmentIndex = -1;
     public string[] FinishedStoryEvents = new string[0];
     public bool PlayerReadMapPrompt = false;
+    public GlobalEffectData[] ActiveGlobalEffects = new GlobalEffectData[0];
 }
 
 public enum GameAdventureProgressType
