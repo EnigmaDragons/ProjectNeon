@@ -49,8 +49,11 @@ public class CurrentGlobalEffects : ScriptableObject
         Add(e);
     }
     
-    public void Add(GlobalEffect e) => PublishAfter(() => 
-        globalEffects.Add(e));
+    public void Add(GlobalEffect e)
+    {
+        if (e.Data.EffectType != GlobalEffectType.None)
+            PublishAfter(() => globalEffects.Add(e));
+    }
 
     public void Remove(GlobalEffect e) => PublishAfter(() => 
         globalEffects.Remove(e));

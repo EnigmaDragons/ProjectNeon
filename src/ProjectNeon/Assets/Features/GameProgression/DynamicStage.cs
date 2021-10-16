@@ -13,6 +13,7 @@ public class DynamicStage : ScriptableObject
     [SerializeField] private ParticleSystem.MinMaxCurve elitePowerCurve;
     [SerializeField] private GameObject[] possibleBattlegrounds;
     [SerializeField][Range(0,999)] private int segmentCount;
+    [SerializeField] private HeatUpEventV0[] heatUpEvents;
     [SerializeField] private GameObject bossBattlefield;
     [SerializeField] private Enemy[] bossEnemies;
     [SerializeField] private NodeTypeOdds nodeTypeOdds;
@@ -22,6 +23,7 @@ public class DynamicStage : ScriptableObject
 
     public string DisplayName => displayName;
     public GameMap3 Map => gameMap3;
+    public HeatUpEventV0[] HeatUpEvents => heatUpEvents;
     public EncounterBuilder EncounterBuilder => encounterBuilder;
     public EncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
     public StorySetting StorySetting => storySetting;
