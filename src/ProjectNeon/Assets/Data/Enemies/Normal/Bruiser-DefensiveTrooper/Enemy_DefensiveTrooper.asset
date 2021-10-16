@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
-  m_Name: Challenger
+  m_Name: Enemy_DefensiveTrooper
   m_EditorClassIdentifier: 
-  id: 39
-  enemyName: Drug Enhanced Challenger
+  id: 0
+  enemyName: Defensive Novo-Trooper
   excludeFromBestiary: 0
-  lastBalanceDate: 10/15/2021
+  lastBalanceDate: 10/16/2021
   isCurrentlyWorking: 1
-  corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
+  corp: {fileID: 11400000, guid: bd8e5654971a1ef4895e3bf12cf6c8be, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
   preferredTurnOrder: 99
   prefab: {fileID: 1771151275093467103, guid: c50db8efb1027e346b45de5e46b52c43, type: 3}
@@ -26,29 +26,29 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 
     Variable: {fileID: 0}
-  battleRole: 1
+  battleRole: 6
   tier: 0
   unique: 0
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: Anytime your team's has their primary stats buffed, this enemy gains
-    attack
+  description: When attacked, this enemy gains large armor and resistance for the
+    turn, making the first strike critical against them
   stageDetails:
   - stage: 1
-    powerLevel: 136
-    maxHp: 60
-    maxShield: 15
+    powerLevel: 0
+    maxHp: 26
+    maxShield: 13
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 9
+    attack: 8
     magic: 0
     leadership: 0
     armor: 0
-    resistance: 1
-    nonStatCardValueFactor: 9
+    resistance: 0
+    nonStatCardValueFactor: 8
     startingResourceAmount: 0
     maxResourceAmount: 5
     resourceGainPerTurn: 1
@@ -74,7 +74,7 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 12
-      StatusDetailText: 'When any enemy''s primary stat is buffed: Gain +3 Attack'
+      StatusDetailText: 'When Attacked: Gain +10 armor & resistance for the turn'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -86,7 +86,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 40
+      ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
         ConstantValue: 
@@ -95,9 +95,9 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
-        cardActions: {fileID: 11400000, guid: c8f77f6e65d472b4e848a487ed8be99e, type: 2}
+        cardActions: {fileID: 11400000, guid: f645ca8ab3a96db40bdafab0e596f252, type: 2}
       BonusCardType: {fileID: 0}
     Cards:
-    - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
-    - {fileID: 11400000, guid: d34217d9ed683ac46831b0d7bf5cf884, type: 2}
-    - {fileID: 11400000, guid: e3f5706dc1ef656498749ed477680ecb, type: 2}
+    - {fileID: 11400000, guid: 4c5772970902504489199eb6f1c56209, type: 2}
+    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+    - {fileID: 11400000, guid: 60dace38e2d4ebd40b1fbcb312bd6c07, type: 2}

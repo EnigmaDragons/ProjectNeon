@@ -10,30 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Enemy_RegenerativeStrike
+  m_Name: Enemy_ArmorPiercingHail
   m_EditorClassIdentifier: 
-  id: 341
+  id: 0
   customName: 
   art: {fileID: 0}
-  description: "Gain <b>2 Lifesteal</b>.\n\nDeal <b>ATK \xD7 0.66 <sprite index=0></b>"
+  description: "Gives <b>-3</b> Armor \n\nDeal {E[1]}"
   typeDescription: {fileID: 0}
-  tags: 04000000
+  tags: 0300000004000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
+    cost: 3
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 3
   actionSequences:
-  - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: fca6cc6b3765daa4a89bfe5241f06772, type: 2}
-    repeatX: 0
-    repeatCount: 0
-  - scope: 0
+  - scope: 1
     group: 1
-    cardActions: {fileID: 11400000, guid: 4607c60c4d2e226499855ae09a12a21c, type: 2}
+    cardActions: {fileID: 11400000, guid: 2833891896a9a804d8f82c2a86786306, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
