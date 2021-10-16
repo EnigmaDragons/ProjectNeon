@@ -54,6 +54,12 @@ public class AdventureProgress2 : ScriptableObject
         currentChapterIndex = chapterIndex;
         Log.Info($"Init Adventure. {this}");
     }
+
+    public void ApplyGlobalEffects(GlobalEffectData[] effects)
+    {
+        var ctx = new GlobalEffectContext(currentGlobalEffects);
+        effects.ForEach(e => currentGlobalEffects.Apply(AllGlobalEffects.Create(e), ctx));
+    }
     
     public override string ToString() =>
         $"Adventure: {currentAdventure.name}. Stage: {currentChapterIndex}. StageProgress: {currentMap3.Progress}";

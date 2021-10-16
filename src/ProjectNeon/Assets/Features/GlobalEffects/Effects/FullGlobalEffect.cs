@@ -15,6 +15,7 @@ public class FullGlobalEffect : GlobalEffect
 
     public string ShortDescription => _data.ShortDescription;
     public string FullDescription => _data.FullDescription;
+    public GlobalEffectData Data => _data;
     public void Apply(GlobalEffectContext ctx) => _apply(ctx);
     public void Revert(GlobalEffectContext ctx) => _revert(ctx);
 }

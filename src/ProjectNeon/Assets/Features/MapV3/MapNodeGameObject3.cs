@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private GameObject travelPreventedVisual;
     [SerializeField] private Button button;
     [SerializeField] private StageSegment segment;
     [SerializeField] private GameObject hoverRulesPanel;
@@ -18,27 +19,31 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     public void Init(MapNode3 mapData, CurrentGameMap3 gameMap, AdventureGenerationContext ctx, Action<Transform> onMidPointArrive)
     {
         MapData = mapData;
-        ArrivalSegment = segment;
-        button.onClick.AddListener(() =>
-        {
-            gameMap.CurrentNode = mapData;
-            AllMetrics.PublishMapNodeSelection(gameMap.Progress, 
-                mapData.GetMetricDescription(), 
-                gameMap.CurrentChoices.Select(m => m.GetMetricDescription()).ToArray());
-            Message.Publish(new TravelToNode
-                {
-                    Position = mapData.Position, 
-                    OnMidPointArrive = onMidPointArrive,
-                    OnArrive = t =>
+        ArrivalSegment = segment.GenerateDeterministic(ctx, mapData);
+        var canTravel = !mapData.PreventTravel;
+        if (travelPreventedVisual != null)
+            travelPreventedVisual.SetActive(!canTravel);
+        button.enabled = canTravel;
+        if (canTravel)
+            button.onClick.AddListener(() =>
+            {
+                gameMap.CurrentNode = mapData;
+                AllMetrics.PublishMapNodeSelection(gameMap.Progress, 
+                    mapData.GetMetricDescription(), 
+                    gameMap.CurrentChoices.Select(m => m.GetMetricDescription()).ToArray());
+                Message.Publish(new TravelToNode
                     {
-                        Message.Publish(new TravelMovementStopped(t));
-                        Message.Publish(new ArrivedAtNode(transform, mapData.Type));
-                        ArrivalSegment.Start();
-                    }
-                });
-            Message.Publish(new AutoSaveRequested());
-        });
-        ArrivalSegment = ArrivalSegment.GenerateDeterministic(ctx, mapData);
+                        Position = mapData.Position, 
+                        OnMidPointArrive = onMidPointArrive,
+                        OnArrive = t =>
+                        {
+                            Message.Publish(new TravelMovementStopped(t));
+                            Message.Publish(new ArrivedAtNode(transform, mapData.Type));
+                            ArrivalSegment.Start();
+                        }
+                    });
+                Message.Publish(new AutoSaveRequested());
+            });
     }
     
     private void Awake()

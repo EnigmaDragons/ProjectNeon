@@ -18,8 +18,11 @@ public class PreventTravelToEffectedNodes : MapGenerationRule3
             {
                 var corp = p.Item1;
                 var nodeType = p.Item2;
-                if (!l.PreventTravel && l.Type == nodeType && l.Corp.Equals(corp)) 
+                if (!l.PreventTravel && l.Type == nodeType && l.Corp.Equals(corp))
+                {
                     l.PreventTravel = true;
+                    DevLog.Info($"Travel Prevented to {corp} {nodeType}");
+                }
             });
         });
         return list;

@@ -40,7 +40,8 @@ public static class GameDataMappingExtensions
             Type = GameAdventureProgressType.V2,
             CurrentChapterIndex = p.CurrentChapterIndex,
             FinishedStoryEvents = p.FinishedStoryEvents,
-            PlayerReadMapPrompt = p.PlayerReadMapPrompt
+            PlayerReadMapPrompt = p.PlayerReadMapPrompt,
+            ActiveGlobalEffects = p.GlobalEffects.Value.Select(g => g.Data).ToArray()
         };
 
     public static GameMapData GetData(this CurrentGameMap3 map)

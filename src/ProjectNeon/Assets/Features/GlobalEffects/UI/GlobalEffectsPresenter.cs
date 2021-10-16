@@ -3,18 +3,28 @@ using UnityEngine;
 
 public class GlobalEffectsPresenter : OnMessage<GlobalEffectsChanged>
 {
+    [SerializeField] private CurrentGlobalEffects effects;
     [SerializeField] private GameObject[] hideIfNoneActive;
     [SerializeField] private GameObject parent;
     [SerializeField] private GlobalEffectPresenter presenterProtoType;
 
-    protected override void AfterEnable() => parent.DestroyAllChildren();
-    
+    protected override void AfterEnable()
+    {
+        parent.DestroyAllChildren();
+        Render(effects.Value);
+    }
+
     protected override void Execute(GlobalEffectsChanged msg)
     {
-        var effects = msg.Effects;
-        var anyActive = effects.Any();
+        var current = msg.Effects;
+        Render(current);
+    }
+
+    private void Render(GlobalEffect[] current)
+    {
+        var anyActive = current.Any();
         parent.DestroyAllChildren();
         hideIfNoneActive.ForEach(g => g.SetActive(anyActive));
-        effects.ForEach(e => Instantiate(presenterProtoType, parent.transform).Init(e));
+        current.ForEach(e => Instantiate(presenterProtoType, parent.transform).Init(e));
     }
 }

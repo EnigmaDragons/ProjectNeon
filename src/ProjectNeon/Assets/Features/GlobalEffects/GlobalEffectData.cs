@@ -3,7 +3,6 @@ using System;
 [Serializable]
 public class GlobalEffectData
 {
-    public Corp Corp = new InMemoryCorp();
     public string ShortDescription;
     public string FullDescription;
     public GlobalEffectType EffectType = GlobalEffectType.None;

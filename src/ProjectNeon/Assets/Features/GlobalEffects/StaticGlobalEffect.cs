@@ -6,6 +6,7 @@ public abstract class StaticGlobalEffect : ScriptableObject, GlobalEffect
     
     public abstract string ShortDescription { get; }
     public abstract string FullDescription { get; }
+    public abstract GlobalEffectData Data { get; }
     public abstract void Apply(GlobalEffectContext ctx);
     public abstract void Revert(GlobalEffectContext ctx);
     

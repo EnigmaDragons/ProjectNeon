@@ -44,4 +44,10 @@ public static class AllGlobalEffects
         var e = Create(data);
         e.Apply(ctx);
     }
+
+    public static void Revert(GlobalEffectData data, GlobalEffectContext ctx)
+    {
+        var e = Create(data);
+        e.Revert(ctx);
+    }
 }
