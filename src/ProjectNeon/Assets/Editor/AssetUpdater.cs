@@ -227,6 +227,73 @@ public class AssetUpdater
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<StoryEvent2>(), c => c.id, (c, id) => c.id = id);
     }
+
+    private const float _hpValue = 1;
+    private const float _startingShieldValue = 1;
+    private const float _maxShieldValue = 0.2f;
+    private const float _dodgeValue = 5;
+    private const float _aegisValue = 5;
+    private const float _tauntValue = 10;
+    private const float _armorValue = 3;
+    private const float _resistanceValue = 3;
+    private const float _resourceScaledValue = 0.33f;
+    private const float _maxResourceFactor = 0.2f;
+    private static Dictionary<int, float> _stageDefensiveValuePerTurnAliveMap = new Dictionary<int, float>()
+    {
+        { 1, 10f },
+        { 2, 20f },
+        { 3, 40f },
+    };
+
+    [MenuItem("Neon/Calculate Enemy Power Levels")]
+    private static void CalculateEnemyPowerLevels()
+    {
+        var enemies = ScriptableExtensions.GetAllInstances<Enemy>();
+        foreach (var enemy in enemies)
+        {
+            foreach (var stage in enemy.stageDetails)
+            {
+                var hpValue = _hpValue * stage.maxHp;
+                var shieldValue = _startingShieldValue * stage.startingShield + WithFallOff(_maxShieldValue, stage.maxShield, 0.9f);
+                var aegisValue = WithFallOff(_aegisValue, stage.startingAegis, 0.8f);
+                var dodgeValue = _dodgeValue * stage.startingDodge;
+                var tauntValue = WithFallOff(_tauntValue, stage.startingTaunt, 0.8f);
+                var armorValue = WithFallOff(_armorValue, stage.armor, 0.9f);
+                var resistanceValue = WithFallOff(_resistanceValue, stage.resistance, 0.9f);
+                var startingValue = hpValue + shieldValue + aegisValue + dodgeValue + tauntValue + armorValue + resistanceValue + stage.startingValueAdjustment + stage.startingDefensiveValueAdjustment;
+
+                var highestStat = Mathf.Max(stage.attack, stage.leadership, stage.magic);
+                var scalingValuePerTurn = stage.nonStatCardValueFactor == 0
+                    ? highestStat
+                    : highestStat + stage.nonStatCardValueFactor / 2f;
+                var resourceValue = stage.resourceScaledValueOverride == 0
+                    ? scalingValuePerTurn * _resourceScaledValue
+                    : scalingValuePerTurn * stage.resourceScaledValueOverride;
+                var valuePerTurn = scalingValuePerTurn + resourceValue * stage.resourceGainPerTurn + stage.perTurnValueAdjustment;
+                var defensiveValue = hpValue + shieldValue + aegisValue + dodgeValue + armorValue + resistanceValue + stage.startingDefensiveValueAdjustment;
+                var averageTurnsAlive = defensiveValue / _stageDefensiveValuePerTurnAliveMap[stage.stage];
+                var activeValue = averageTurnsAlive * valuePerTurn;
+                var startingResourceValue = resourceValue * stage.startingResourceAmount;
+                var resourceMaxValue = WithFallOff(_maxResourceFactor * resourceValue, stage.maxResourceAmount, 0.8f);
+                int totalValue = Mathf.RoundToInt(activeValue + startingValue + resourceMaxValue + startingResourceValue);
+                if (totalValue != stage.calculatedPowerLevel)
+                {
+                    stage.calculatedPowerLevel = totalValue;
+                    EditorUtility.SetDirty(enemy);
+                }
+            }
+        }
+    }
+
+    private static float WithFallOff(float value, int amount, float fallOff)
+    {
+        if (amount == 0)
+            return 0;
+        var currentValue = value;
+        for (var i = 1; i < amount; i++)
+            currentValue += value * Mathf.Pow(fallOff, i);
+        return currentValue;
+    }
     
     private static void EnsureDurationPresent()
     {
