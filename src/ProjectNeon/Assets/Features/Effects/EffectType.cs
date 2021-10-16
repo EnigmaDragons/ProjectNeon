@@ -83,7 +83,6 @@ public enum EffectType
     Kill = 24,
     ShowCustomTooltip = 73,
     LeaveBattle = 34,
-    AdjustCardTagPrevention = 37,
     ResolveInnerEffect = 86,
     AdjustPrimaryStatForEveryCardCycledAndInHand = 40,
     BuyoutEnemyById = 47,

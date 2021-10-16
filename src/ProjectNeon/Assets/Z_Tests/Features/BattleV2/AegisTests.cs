@@ -259,24 +259,6 @@ public class AegisTests
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
 
-    [Test]
-    public void Aegis_BlockCardTypePlays_Prevented()
-    {
-        var defender = TestMembers.Create(s => s.With(StatType.Attack, 2));
-        defender.Apply(m => m.Adjust(TemporalStatType.Aegis, 1));
-
-        var attacker = TestMembers.Any();
-        
-        TestEffects.Apply(new EffectData
-        {
-            EffectType = EffectType.AdjustCardTagPrevention,
-            BaseAmount = new IntReference(1),
-            EffectScope = new StringReference(StatType.Attack.ToString()) 
-        }, attacker, defender);
-        
-        Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
-    }
-    
     private EffectData AdjustCounterEffect(TemporalStatType statType, string formulaAmount)
         => new EffectData
             {
