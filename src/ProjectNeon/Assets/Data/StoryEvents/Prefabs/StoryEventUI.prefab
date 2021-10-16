@@ -686,6 +686,7 @@ GameObject:
   - component: {fileID: 1802301628497123647}
   - component: {fileID: 6124509769895033500}
   - component: {fileID: 9074140880667562545}
+  - component: {fileID: 6593129814236485391}
   m_Layer: 0
   m_Name: StoryEventCanvas
   m_TagString: Untagged
@@ -853,7 +854,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3307976441270530606}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3167cf58ec3a42b2be47feca1f0b1c78, type: 3}
   m_Name: 
@@ -871,6 +872,24 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 1
     FloatVariable: {fileID: 11400000, guid: 2406a4e92fac762409d627509649bf31, type: 2}
+--- !u!114 &6593129814236485391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3307976441270530606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837ac5e3727e4dc58ef199238816a2ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goodOutcome: event:/StoryEvent/GoodOutcomeStinger
+  badOutcome: event:/StoryEvent/BadOutcomeStinger
+  delay:
+    UseConstant: 1
+    ConstantValue: 1
+    FloatVariable: {fileID: 0}
 --- !u!1 &3582803416990628741
 GameObject:
   m_ObjectHideFlags: 0
