@@ -46,6 +46,6 @@ public class EventPublisher : ScriptableObject
     public void MoveTutorialNext() => Message.Publish(new TutorialNextRequested());
     public void MoveTutorialPrevious() => Message.Publish(new TutorialPreviousRequested());
     public void ShowTutorialIfNeeded(string tutorialName) => Message.Publish(new ShowTutorialByNameIfNeeded(tutorialName));
-    public void ApplyGlobalEffect(GlobalEffect e) => Message.Publish(new ApplyGlobalEffect(e));
+    public void ApplyGlobalEffect(StaticGlobalEffect e) => Message.Publish(new ApplyGlobalEffect(e));
     public void ClearGlobalEffects() => Message.Publish(new ClearGlobalEffects());
 }

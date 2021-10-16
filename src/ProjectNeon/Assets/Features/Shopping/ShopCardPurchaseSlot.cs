@@ -8,21 +8,23 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
     [SerializeField] private CardPresenter cardPresenter;
     [SerializeField] private GameObject soldVisual;
     [SerializeField] private PartyAdventureState party;
+    [SerializeField] private CurrentGlobalEffects globalEffects;
 
     private Card _card;
     private int _price;
     private bool _purchased;
 
-    private void AfterEnable()
+    protected override void AfterEnable()
     {
         UpdateAffordability();
+        Log.ErrorIfNull(globalEffects, nameof(ShopCardPurchaseSlot), nameof(globalEffects));
     }
     
     public ShopCardPurchaseSlot Initialized(Card c)
     {
         soldVisual.SetActive(false);
         _card = c;
-        _price = c.CardShopPrice();
+        _price = c.Rarity.CardShopPrice(globalEffects?.CardShopPriceFactor ?? 1f);
         costLabel.text = _price.ToString();
         UpdateAffordability();
         return this;

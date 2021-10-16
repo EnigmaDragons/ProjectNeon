@@ -41,13 +41,13 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         _rules = progress.CurrentChapter.NodeTypeOdds2.GenerateMapRules().Concat(new MapGenerationRule3[]
         {
-            new EnsureHelpfulOptionsBeforeBoss(),
+            new EnsureHelpfulOptionsBeforeBoss(gameMap.MaxNodeCompletionHeat, allCorps.ClinicCorps),
             new NoClinicsIfYouAreHighHealth(),
             new NoShopsIfYouAreLowOnMoney(),
             new EnsureAtLeastThreeChoices(),
             new OnlyBossOnFinalNode(),
-            new EnsureNodeTypeHasCorp(MapNodeType.GearShop, allCorps.GearSellingCorps),
-            new EnsureNodeTypeHasCorp(MapNodeType.Clinic, allCorps.ClinicCorps),
+            new AssignCorpToNodeType(MapNodeType.GearShop, allCorps.GearSellingCorps),
+            new AssignCorpToNodeType(MapNodeType.Clinic, allCorps.ClinicCorps),
         }).ToArray();
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();
@@ -55,7 +55,6 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
             GenerateNewNodes(false);
         else
             SpawnNodes();
-        ShowMapPromptIfJustStarted();
     }
 
     private void Start()
@@ -74,20 +73,7 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
             });
         }
     }
-
-    [Obsolete]
-    private void ShowMapPromptIfJustStarted()
-    {
-        return;
-        if (progress.CurrentStageProgress == 0 && !progress.PlayerReadMapPrompt)
-        {
-            var mapPrompt = progress.CurrentAdventure.MapQuestPrompt;
-            if (mapPrompt.IsPresent)
-                Message.Publish(new ShowInfoDialog(mapPrompt.Value, "Got it!"));
-            progress.MarkMapPromptComplete();
-        }
-    }
-
+    
     private void GenerateNewNodes(bool guaranteeEvent)
     {
         gameMap.CompleteCurrentNode();

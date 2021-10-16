@@ -13,6 +13,7 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private bool playerReadMapPrompt = false;
     
     public Adventure CurrentAdventure => currentAdventure.Adventure;
+    public CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
@@ -32,9 +33,11 @@ public class AdventureProgress2 : ScriptableObject
             return currentAdventure.Adventure.DynamicStages[currentChapterIndex]; 
         }
     }
-    
-    public int CurrentPowerLevel => CurrentChapter.GetPowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount);
-    public int CurrentElitePowerLevel => CurrentChapter.GetElitePowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount);
+
+    private static int Int(float f) => f.CeilingInt();
+    private float GlobalPowerLevelFactor => currentGlobalEffects.EncounterDifficultyFactor;
+    public int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
+    public int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
     private bool HasBegun => currentChapterIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes.Last().Type == MapNodeType.Boss;
 

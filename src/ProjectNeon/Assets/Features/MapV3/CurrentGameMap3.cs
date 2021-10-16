@@ -17,6 +17,8 @@ public class CurrentGameMap3 : ScriptableObject
     public int CurrentNodeRngSeed { get; set; } = Guid.NewGuid().GetHashCode();
     public int HeatAdjustments { get; private set; }
 
+    public int MaxNodeCompletionHeat => heat.MaxHeatGain;
+    
     public void SetMap(GameMap3 map)
     {
         CurrentMap = map;
@@ -46,9 +48,9 @@ public class CurrentGameMap3 : ScriptableObject
     
     private void UpdateSeed() => CurrentNodeRngSeed = Guid.NewGuid().GetHashCode();
 
-    public void AdjustHeat(int heat)
+    public void AdjustHeat(int newHeat)
     {
-        HeatAdjustments += heat;
+        HeatAdjustments += newHeat;
         Message.Publish(new AdventureProgressChanged());
     }
 }
