@@ -141,7 +141,27 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnStealthed, ctx => effect => ctx.Actor.IsConscious() 
             && !effect.BattleBefore.Members[ctx.Possessor.Id].IsStealthed()
             && Increased(Select(effect, ctx.Actor, m => m.State[TemporalStatType.Stealth])) },
-    };
+        { ReactionConditionType.WhenEnemyPrimaryStatBuffed, ctx => effect =>
+            {
+                if (!ctx.Possessor.IsConscious())
+                    return false;
+                if (effect.Target.Members.All(x => x.TeamType == ctx.Possessor.TeamType))
+                    return false;
+                if ((effect.EffectData.EffectType == EffectType.AdjustStatAdditivelyFormula || effect.EffectData.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
+                    && effect.BattleAfter.Members.Any(after =>
+                    {
+                        var before = effect.BattleBefore.Members.Select(x => x.Value).FirstOrDefault(before => before.Id == after.Key);
+                        return before != null 
+                               && after.Value.TeamType != ctx.Possessor.TeamType 
+                               && after.Value.State.Stats[after.Value.State.PrimaryStat] > before.State.Stats[before.State.PrimaryStat];
+                    }))
+                    return true;
+                if (effect.EffectData.EffectType == EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand
+                    && effect.EffectData.FloatAmount > 0)
+                    return true;
+                return false;
+            }},
+        };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
         => (effect.EffectData.EffectType != EffectType.ReactWithCard || effect.EffectData.ReactionConditionType != type)
