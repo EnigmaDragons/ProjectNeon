@@ -55,5 +55,43 @@ public static class StatExtensions
         {TemporalStatType.AntiHeal.ToString(), false},
     };
 
+    public static Dictionary<string, bool> _isScalingStatMap = new Dictionary<string, bool>
+    {
+        {StatType.MaxHP.ToString(), false},
+        {StatType.Attack.ToString(), true},
+        {StatType.Magic.ToString(), true},
+        {StatType.Armor.ToString(), false},
+        {StatType.Resistance.ToString(), false},
+        {StatType.Damagability.ToString(), false},
+        {StatType.Healability.ToString(), false},
+        {StatType.Leadership.ToString(), true},
+        {StatType.MaxShield.ToString(), false},
+        {StatType.StartingShield.ToString(), false},
+        {StatType.Economy.ToString(), true},
+        {StatType.ExtraCardPlays.ToString(), false},
+        {TemporalStatType.HP.ToString(), false},
+        {TemporalStatType.Shield.ToString(), false},
+        {TemporalStatType.Disabled.ToString(), false},
+        {TemporalStatType.Stun.ToString(), false},
+        {TemporalStatType.Taunt.ToString(), false},
+        {TemporalStatType.DoubleDamage.ToString(), false},
+        {TemporalStatType.Stealth.ToString(), false},
+        {TemporalStatType.Confused.ToString(), false},
+        {TemporalStatType.Blind.ToString(), false},
+        {TemporalStatType.Injury.ToString(), false},
+        {TemporalStatType.Lifesteal.ToString(), false},
+        {TemporalStatType.Phase.ToString(), false},
+        {TemporalStatType.Inhibit.ToString(), false},
+        {TemporalStatType.Dodge.ToString(), false},
+        {TemporalStatType.Aegis.ToString(), false},
+        {TemporalStatType.PreventDeath.ToString(), false},
+        {TemporalStatType.Prominent.ToString(), false},
+        {TemporalStatType.Marked.ToString(), false},
+        {TemporalStatType.PreventResourceGains.ToString(), false},
+        {TemporalStatType.Vulnerable.ToString(), false},
+        {TemporalStatType.AntiHeal.ToString(), false},
+    };
+
+    public static bool IsScalingStat(string stat) => _map[stat];
     public static bool IsPositive(string stat) => _map[stat];
 }

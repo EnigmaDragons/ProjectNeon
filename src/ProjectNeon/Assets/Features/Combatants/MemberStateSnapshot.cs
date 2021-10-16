@@ -10,10 +10,11 @@ public sealed class MemberStateSnapshot
     public IResourceType[] ResourceTypes { get; }
     public DictionaryWithDefault<CardTag, int> TagsPlayed { get; }
     public DictionaryWithDefault<StatusTag, int> StatusesOfType { get; }
+    public StatType PrimaryStat { get; }
     // Maybe we could store Counter Maximums if needed. Could be relevant for MaxHP and MaxShield
 
     public MemberStateSnapshot(int versionNumber, int memberId, IStats stats, Dictionary<string, int> counters, IResourceType[] resourceTypes, 
-        DictionaryWithDefault<CardTag, int> tagsPlayed, DictionaryWithDefault<StatusTag, int> statusesOfType)
+        DictionaryWithDefault<CardTag, int> tagsPlayed, DictionaryWithDefault<StatusTag, int> statusesOfType, StatType primaryStat)
     {
         VersionNumber = versionNumber;
         MemberId = memberId;
@@ -22,6 +23,7 @@ public sealed class MemberStateSnapshot
         ResourceTypes = resourceTypes;
         TagsPlayed = tagsPlayed;
         StatusesOfType = statusesOfType;
+        PrimaryStat = primaryStat;
     }
     
     public int this[IResourceType resourceType] => Counters.ValueOrDefault(resourceType.Name, 0);
