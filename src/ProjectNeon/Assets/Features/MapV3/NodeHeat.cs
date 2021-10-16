@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Maps/Node Heat")]
 public class NodeHeat : ScriptableObject
@@ -24,4 +26,6 @@ public class NodeHeat : ScriptableObject
             MapNodeType.Clinic => clinicHeat,
         };
     }
+
+    public int MaxHeatGain => new[] {combatHeat, eliteHeat, cardShopHeat, gearShopHeat, clinicHeat}.Max();
 }
