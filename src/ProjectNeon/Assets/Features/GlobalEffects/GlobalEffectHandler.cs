@@ -6,7 +6,8 @@ public class GlobalEffectHandler : OnMessage<ApplyGlobalEffect, ClearGlobalEffec
 
     protected override void Execute(ApplyGlobalEffect msg)
     {
-        effects.Apply(msg.Effect);
+        var ctx = new GlobalEffectContext(effects);
+        effects.Apply(msg.Effect, ctx);
     }
 
     protected override void Execute(ClearGlobalEffects msg)

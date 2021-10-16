@@ -13,6 +13,7 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private bool playerReadMapPrompt = false;
     
     public Adventure CurrentAdventure => currentAdventure.Adventure;
+    public CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;

@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+
+public static class AllGlobalEffects
+{
+    private static readonly GlobalEffect NoEffect = new FullGlobalEffect(
+        new GlobalEffectData {ShortDescription = "None", FullDescription = "None", EffectType = GlobalEffectType.None}, 
+        _ => { });
+    
+    private static readonly Dictionary<GlobalEffectType, Func<GlobalEffectData, GlobalEffect>> CreateEffectOfType = new Dictionary<GlobalEffectType, Func<GlobalEffectData, GlobalEffect>>
+    {
+        { GlobalEffectType.None, d => NoEffect },
+        { GlobalEffectType.AdjustCardShopPrices, d => new FullGlobalEffect(d, ctx => ctx.GlobalEffects.AdjustCardPriceFactor(f => f * d.FloatAmount)) }
+    };
+
+    public static GlobalEffect Create(GlobalEffectData data)
+    {
+        if (!CreateEffectOfType.ContainsKey(data.EffectType))
+        {
+            Log.Error($"No EffectType of {data.EffectType} exists in {nameof(AllGlobalEffects)}");
+            return CreateEffectOfType[GlobalEffectType.None](data);
+        }
+
+        return CreateEffectOfType[data.EffectType](data);
+    }
+
+    public static void Apply(GlobalEffectData data, GlobalEffectContext ctx)
+    {
+        var e = Create(data);
+        e.Apply(ctx);
+    }
+}

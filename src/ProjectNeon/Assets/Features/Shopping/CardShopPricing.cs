@@ -4,6 +4,10 @@ public static class CardShopPricing
 {
     public static int CardShopPrice(this CardTypeData c)
         => CardShopPrice(c.Rarity);
+
+    public static int CardShopPrice(this Rarity rarity, float priceFactor)
+        => Int(rarity.CardShopPrice() * priceFactor);
+    
     public static int CardShopPrice(this Rarity rarity)
     {
         if (rarity == Rarity.Common)

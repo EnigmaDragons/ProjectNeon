@@ -7,14 +7,16 @@ public class CurrentGlobalEffects : ScriptableObject
 {
     [SerializeField] private List<GlobalEffect> globalEffects = new List<GlobalEffect>();
 
+    private float _cardShopPriceFactor = 1f;
+    
     public GlobalEffect[] Value => globalEffects.ToArray();
 
     public void Clear() => PublishAfter(() => 
         globalEffects.Clear());
 
-    public void Apply(GlobalEffect e)
+    public void Apply(GlobalEffect e, GlobalEffectContext ctx)
     {
-        e.Apply();
+        e.Apply(ctx);
         Add(e);
     }
     
@@ -29,4 +31,8 @@ public class CurrentGlobalEffects : ScriptableObject
         a();
         Message.Publish(new GlobalEffectsChanged(Value));
     }
+
+    public void SetCardPriceFactor(float factor) => PublishAfter(() => _cardShopPriceFactor = factor);
+    public void AdjustCardPriceFactor(Func<float, float> getNewFactor) => PublishAfter(() => _cardShopPriceFactor = getNewFactor(CardShopPriceFactor));
+    public float CardShopPriceFactor => _cardShopPriceFactor;
 }
