@@ -27,6 +27,6 @@ public class CurrentGlobalEffects : ScriptableObject
     private void PublishAfter(Action a)
     {
         a();
-        Message.Publish(new GlobalEffectsUpdated(Value));
+        Message.Publish(new GlobalEffectsChanged(Value));
     }
 }
