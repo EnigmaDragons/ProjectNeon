@@ -10,7 +10,8 @@ public static class AllGlobalEffects
     private static readonly Dictionary<GlobalEffectType, Func<GlobalEffectData, GlobalEffect>> CreateEffectOfType = new Dictionary<GlobalEffectType, Func<GlobalEffectData, GlobalEffect>>
     {
         { GlobalEffectType.None, d => NoEffect },
-        { GlobalEffectType.AdjustCardShopPrices, d => new FullGlobalEffect(d, ctx => ctx.GlobalEffects.AdjustCardPriceFactor(f => f * d.FloatAmount)) }
+        { GlobalEffectType.AdjustCardShopPrices, d => new FullGlobalEffect(d, ctx => ctx.GlobalEffects.AdjustCardPriceFactor(f => f * d.FloatAmount)) },
+        { GlobalEffectType.AdjustEncounterPowerLevel, d => new FullGlobalEffect(d, ctx => ctx.GlobalEffects.AdjustEncounterDifficultyFactor(f => f * d.FloatAmount)) },
     };
 
     public static GlobalEffect Create(GlobalEffectData data)
@@ -18,6 +19,9 @@ public static class AllGlobalEffects
         if (!CreateEffectOfType.ContainsKey(data.EffectType))
         {
             Log.Error($"No EffectType of {data.EffectType} exists in {nameof(AllGlobalEffects)}");
+            #if UNITY_EDITOR
+            throw new NotImplementedException($"No EffectType of {data.EffectType} exists in {nameof(AllGlobalEffects)}");
+            #endif
             return CreateEffectOfType[GlobalEffectType.None](data);
         }
 

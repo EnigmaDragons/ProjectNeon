@@ -6,10 +6,17 @@ using UnityEngine;
 public class CurrentGlobalEffects : ScriptableObject
 {
     [SerializeField] private List<GlobalEffect> globalEffects = new List<GlobalEffect>();
+    public GlobalEffect[] Value => globalEffects.ToArray();
 
     private float _cardShopPriceFactor = 1f;
     
-    public GlobalEffect[] Value => globalEffects.ToArray();
+    public void SetCardPriceFactor(float factor) => PublishAfter(() => _cardShopPriceFactor = factor);
+    public void AdjustCardPriceFactor(Func<float, float> getNewFactor) => PublishAfter(() => _cardShopPriceFactor = getNewFactor(CardShopPriceFactor));
+    public float CardShopPriceFactor => _cardShopPriceFactor;
+
+    private float _encounterDifficultyFactor = 1f;
+    public void AdjustEncounterDifficultyFactor(Func<float, float> getNewFactor) => PublishAfter(() => _encounterDifficultyFactor = getNewFactor(EncounterDifficultyFactor));
+    public float EncounterDifficultyFactor => _encounterDifficultyFactor;
 
     public void Clear() => PublishAfter(() => 
         globalEffects.Clear());
@@ -32,7 +39,5 @@ public class CurrentGlobalEffects : ScriptableObject
         Message.Publish(new GlobalEffectsChanged(Value));
     }
 
-    public void SetCardPriceFactor(float factor) => PublishAfter(() => _cardShopPriceFactor = factor);
-    public void AdjustCardPriceFactor(Func<float, float> getNewFactor) => PublishAfter(() => _cardShopPriceFactor = getNewFactor(CardShopPriceFactor));
-    public float CardShopPriceFactor => _cardShopPriceFactor;
+
 }
