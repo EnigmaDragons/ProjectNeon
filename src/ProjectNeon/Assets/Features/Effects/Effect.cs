@@ -23,7 +23,7 @@ public class EffectContext
     public PreventionContext Preventions { get; }
     public SelectionContext Selections { get; }
     public IDictionary<int, CardTypeData> AllCards { get; }
-    public int StartingCredits { get; }
+    public int BattleStartingCredits { get; }
     public int CurrentCredits { get; }
     public IDictionary<int, EnemyType> EnemyTypes { get; }
     public Func<int> GetNextCardId { get; }
@@ -33,7 +33,7 @@ public class EffectContext
 
     public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PartyAdventureState adventureState, 
         PlayerState playerState, BattleRewardState rewardState, IDictionary<int, Member> battleMembers, CardPlayZones playerCardZones, PreventionContext preventions, 
-        SelectionContext selections, IDictionary<int, CardTypeData> allCards, int startingCredits, int currentCredits, IDictionary<int, EnemyType> enemyTypes,
+        SelectionContext selections, IDictionary<int, CardTypeData> allCards, int battleStartingCredits, int currentCredits, IDictionary<int, EnemyType> enemyTypes,
         Func<int> getNextCardId, PlayedCardSnapshot[] cardsPlayedThisTurn, Dictionary<int, Color> ownerTints, Dictionary<int, Sprite> ownerBusts)
     {
         Source = source;
@@ -50,7 +50,7 @@ public class EffectContext
         Preventions = preventions;
         Selections = selections;
         AllCards = allCards;
-        StartingCredits = startingCredits;
+        BattleStartingCredits = battleStartingCredits;
         CurrentCredits = currentCredits;
         EnemyTypes = enemyTypes;
         GetNextCardId = getNextCardId;
@@ -66,14 +66,37 @@ public class EffectContext
         }
     }
     
+    public static EffectContext ForEffectFromBattleState(BattleState state, Member src, Target target) 
+        => new EffectContext(
+            src,
+            target,
+            Maybe<Card>.Missing(), 
+            ResourceQuantity.None, 
+            state.Party, 
+            state.PlayerState, 
+            state.RewardState,
+            state.Members,
+            state.PlayerCardZones,
+            new UnpreventableContext(), 
+            new SelectionContext(), 
+            new Dictionary<int, CardTypeData>(), // Weird. This might be needed.
+            state.Party.Credits,
+            state.Party.Credits, 
+            new Dictionary<int, EnemyType>(), // Weird. This might be needed.
+            state.GetNextCardId, 
+            new PlayedCardSnapshot[0],
+            state.OwnerTints,
+            state.OwnerBusts
+        );
+    
     public EffectContext Retargeted(Member source, Target target) 
         => new EffectContext(source, target, Card, XPaidAmount, AdventureState, PlayerState, RewardState, BattleMembers, PlayerCardZones, 
-            Preventions.WithUpdatedTarget(target), Selections, AllCards, StartingCredits, CurrentCredits, EnemyTypes, GetNextCardId, CardsPlayedThisTurn, 
+            Preventions.WithUpdatedTarget(target), Selections, AllCards, BattleStartingCredits, CurrentCredits, EnemyTypes, GetNextCardId, CardsPlayedThisTurn, 
             OwnerTints, OwnerBusts);
     
     public EffectContext WithFreshPreventionContext() 
         => new EffectContext(Source, Target, Card, XPaidAmount, AdventureState, PlayerState, RewardState, BattleMembers, PlayerCardZones, 
-            new PreventionContextMut(Target), Selections, AllCards, StartingCredits, CurrentCredits, EnemyTypes, GetNextCardId, CardsPlayedThisTurn, 
+            new PreventionContextMut(Target), Selections, AllCards, BattleStartingCredits, CurrentCredits, EnemyTypes, GetNextCardId, CardsPlayedThisTurn, 
             OwnerTints, OwnerBusts);
 
     public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)

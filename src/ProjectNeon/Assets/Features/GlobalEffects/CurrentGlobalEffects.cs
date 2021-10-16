@@ -6,20 +6,30 @@ using UnityEngine;
 public class CurrentGlobalEffects : ScriptableObject
 {
     [SerializeField] private List<GlobalEffect> globalEffects = new List<GlobalEffect>();
-    public GlobalEffect[] Value => globalEffects.ToArray();
-
-    private float _cardShopPriceFactor = 1f;
+    [SerializeField] private float cardShopPriceFactor = 1f;
+    [SerializeField] private float encounterDifficultyFactor = 1f;
+    [SerializeField] private List<TargetedEffectData> startOfBattleEffects = new List<TargetedEffectData>();
     
-    public void SetCardPriceFactor(float factor) => PublishAfter(() => _cardShopPriceFactor = factor);
-    public void AdjustCardPriceFactor(Func<float, float> getNewFactor) => PublishAfter(() => _cardShopPriceFactor = getNewFactor(CardShopPriceFactor));
-    public float CardShopPriceFactor => _cardShopPriceFactor;
+    public GlobalEffect[] Value => globalEffects.ToArray();
+    public TargetedEffectData[] StartOfBattleEffects => startOfBattleEffects.ToArray();
 
-    private float _encounterDifficultyFactor = 1f;
-    public void AdjustEncounterDifficultyFactor(Func<float, float> getNewFactor) => PublishAfter(() => _encounterDifficultyFactor = getNewFactor(EncounterDifficultyFactor));
-    public float EncounterDifficultyFactor => _encounterDifficultyFactor;
+    public void SetCardPriceFactor(float factor) => PublishAfter(() => cardShopPriceFactor = factor);
+    public void AdjustCardPriceFactor(Func<float, float> getNewFactor) => PublishAfter(() => cardShopPriceFactor = getNewFactor(CardShopPriceFactor));
+    public float CardShopPriceFactor => cardShopPriceFactor;
 
-    public void Clear() => PublishAfter(() => 
-        globalEffects.Clear());
+    public void AdjustEncounterDifficultyFactor(Func<float, float> getNewFactor) => PublishAfter(() => encounterDifficultyFactor = getNewFactor(EncounterDifficultyFactor));
+    public float EncounterDifficultyFactor => encounterDifficultyFactor;
+
+    public void AddStartOfBattleEffect(TargetedEffectData e) => PublishAfter(() => startOfBattleEffects.Add(e));
+    public void RemoveStartOfBattleEffect(TargetedEffectData e) => PublishAfter(() => startOfBattleEffects.Remove(e));
+    
+    public void Clear() => PublishAfter(() =>
+    {
+        cardShopPriceFactor = 1f;
+        encounterDifficultyFactor = 1f;
+        startOfBattleEffects.Clear();
+        globalEffects.Clear();
+    });
 
     public void Apply(GlobalEffect e, GlobalEffectContext ctx)
     {
@@ -38,6 +48,4 @@ public class CurrentGlobalEffects : ScriptableObject
         a();
         Message.Publish(new GlobalEffectsChanged(Value));
     }
-
-
 }

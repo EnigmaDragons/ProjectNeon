@@ -5,13 +5,21 @@ public static class AllGlobalEffects
 {
     private static readonly GlobalEffect NoEffect = new FullGlobalEffect(
         new GlobalEffectData {ShortDescription = "None", FullDescription = "None", EffectType = GlobalEffectType.None}, 
-        _ => { });
+        _ => {},
+        _ => {});
     
     private static readonly Dictionary<GlobalEffectType, Func<GlobalEffectData, GlobalEffect>> CreateEffectOfType = new Dictionary<GlobalEffectType, Func<GlobalEffectData, GlobalEffect>>
     {
         { GlobalEffectType.None, d => NoEffect },
-        { GlobalEffectType.AdjustCardShopPrices, d => new FullGlobalEffect(d, ctx => ctx.GlobalEffects.AdjustCardPriceFactor(f => f * d.FloatAmount)) },
-        { GlobalEffectType.AdjustEncounterPowerLevel, d => new FullGlobalEffect(d, ctx => ctx.GlobalEffects.AdjustEncounterDifficultyFactor(f => f * d.FloatAmount)) },
+        { GlobalEffectType.AdjustCardShopPrices, d => new BasicGlobalEffect(d, 
+            fx => fx.AdjustCardPriceFactor(f => f * d.FloatAmount), 
+            fx => fx.AdjustCardPriceFactor(f => f / d.FloatAmount)) },
+        { GlobalEffectType.AdjustEncounterPowerLevel, d => new BasicGlobalEffect(d, 
+            fx => fx.AdjustEncounterDifficultyFactor(f => f * d.FloatAmount),
+            fx => fx.AdjustEncounterDifficultyFactor(f => f / d.FloatAmount)) },
+        { GlobalEffectType.AddStartOfBattleEffect, d => new BasicGlobalEffect(d, 
+            fx => fx.AddStartOfBattleEffect(d.BattleEffect),
+            fx => fx.RemoveStartOfBattleEffect(d.BattleEffect))}
     };
 
     public static GlobalEffect Create(GlobalEffectData data)

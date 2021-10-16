@@ -171,9 +171,23 @@ public class BattleState : ScriptableObject
         turnNumber = 1;
         CreditsAtStartOfBattle = party.Credits;
         party.ApplyBlessings(this);
+        ApplyAllGlobalStartOfBattleEffects();
         
         DevLog.Write("Finished Battle State Init");
         return result;
+    }
+
+    private void ApplyAllGlobalStartOfBattleEffects()
+    {
+        adventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
+        {
+            var heroLeader = _membersById.First().Value;
+            var possibleTargets = this.GetPossibleConsciousTargets(heroLeader, e.Group, e.Scope);
+            var target = possibleTargets.First();
+            var src = target.Members.First();
+            var ctx = EffectContext.ForEffectFromBattleState(this, src, target);
+            AllEffects.Apply(e.EffectData, ctx);
+        });
     }
 
     public void CleanupIfNeeded()
