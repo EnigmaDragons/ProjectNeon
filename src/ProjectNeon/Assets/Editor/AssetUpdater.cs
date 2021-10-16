@@ -283,13 +283,13 @@ public class AssetUpdater
                 var startingValue = hpValue + shieldValue + aegisValue + dodgeValue + tauntValue + armorValue + resistanceValue + stage.calculationVariables.startingValueAdjustment + stage.calculationVariables.startingDefensiveValueAdjustment;
 
                 var highestStat = Mathf.Max(stage.attack, stage.leadership, stage.magic);
-                var scalingValuePerTurn = stage.nonStatCardValueFactor == 0
+                var scalingValuePerCard = stage.nonStatCardValueFactor == 0
                     ? highestStat
-                    : highestStat + stage.nonStatCardValueFactor / 2f;
+                    : (highestStat + stage.nonStatCardValueFactor) / 2f;
                 var resourceValue = stage.calculationVariables.resourceScaledValueOverride == 0
-                    ? scalingValuePerTurn * _resourceScaledValue
-                    : scalingValuePerTurn * stage.calculationVariables.resourceScaledValueOverride;
-                var valuePerTurn = scalingValuePerTurn + resourceValue * stage.resourceGainPerTurn + stage.calculationVariables.perTurnValueAdjustment;
+                    ? scalingValuePerCard * _resourceScaledValue
+                    : scalingValuePerCard * stage.calculationVariables.resourceScaledValueOverride;
+                var valuePerTurn = scalingValuePerCard * stage.cardsPerTurn + resourceValue * stage.resourceGainPerTurn + stage.calculationVariables.perTurnValueAdjustment;
                 var defensiveValue = hpValue + shieldValue + aegisValue + dodgeValue + armorValue + resistanceValue + stage.calculationVariables.startingDefensiveValueAdjustment;
                 var averageTurnsAlive = defensiveValue / _stageDefensiveValuePerTurnAliveMap[stage.stage];
                 var activeValue = averageTurnsAlive * valuePerTurn;
@@ -299,6 +299,8 @@ public class AssetUpdater
                 if (totalValue != stage.calculationResults.calculatedPowerLevel)
                 {
                     stage.calculationResults.startingPower = startingValue;
+                    stage.calculationResults.perCardValue = scalingValuePerCard;
+                    stage.calculationResults.resourceValue = resourceValue;
                     stage.calculationResults.perTurnPower = valuePerTurn;
                     stage.calculationResults.maxAndStartingResourcesPower = startingResourceValue + resourceMaxValue;
                     stage.calculationResults.estimatedTurnsAlive = averageTurnsAlive;
