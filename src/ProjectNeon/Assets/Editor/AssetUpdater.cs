@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class AssetUpdater
@@ -26,6 +25,8 @@ public class AssetUpdater
         UpdateAllEnemies();
         UpdateAllCorps();
         UpdateStoryEventIDs();
+        UpdateGlobalEffectIds();
+        UpdateAllGlobalEffectsPool();
         Log.Info("Asset Updates Complete");
     }
 
@@ -192,6 +193,24 @@ public class AssetUpdater
         AssignAllIds(ScriptableExtensions.GetAllInstances<GameMap3>(), c => c.id, (c, id) => c.id = id);
     }
     
+    [MenuItem("Neon/Update/Update Global Effect IDs")]
+    private static void UpdateGlobalEffectIds()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<StaticGlobalEffect>(), c => c.id, (c, id) => c.id = id);
+    }
+
+    [MenuItem("Neon/Update/Update Global Effect Pool")]
+    private static void UpdateAllGlobalEffectsPool()
+    {
+        var effects = ScriptableExtensions.GetAllInstances<StaticGlobalEffect>();
+        var all = ScriptableExtensions.GetAllInstances<AllStaticGlobalEffects>();
+        all.ForEach(x =>
+        {
+            x.Effects = effects;
+            EditorUtility.SetDirty(x);
+        });
+    }
+
     [MenuItem("Neon/Update/UpdateAllMaps")]
     private static void UpdateAllMaps()
     {

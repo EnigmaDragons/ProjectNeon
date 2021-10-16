@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName="GlobalEffects/CurrentGlobalEffects")]
 public class CurrentGlobalEffects : ScriptableObject
 {
+    [SerializeField] private AllStaticGlobalEffects allStaticGlobalEffects;
     [SerializeField] private List<GlobalEffect> globalEffects = new List<GlobalEffect>();
     [SerializeField] private float cardShopPriceFactor = 1f;
     [SerializeField] private float encounterDifficultyFactor = 1f;
@@ -36,6 +37,11 @@ public class CurrentGlobalEffects : ScriptableObject
         travelPreventedCorpNodeTypes.Clear();
         globalEffects.Clear();
     });
+
+    public void ApplyById(int globalEffectId, GlobalEffectContext ctx)
+    {
+        allStaticGlobalEffects.GetEffectById(globalEffectId).IfPresent(e => Apply(e, ctx));
+    }
 
     public void Apply(GlobalEffect e, GlobalEffectContext ctx)
     {

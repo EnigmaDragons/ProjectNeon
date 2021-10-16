@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1438d37d13fd4457b1574275a4c88bc1, type: 3}
   m_Name: IncreaseCardCostsBy5Percent
   m_EditorClassIdentifier: 
-  id: 0
+  id: 2
   data:
     ShortDescription: Brain Fog
     FullDescription: Card prices increased slightly
@@ -21,3 +21,58 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 1.05
       FloatVariable: {fileID: 0}
+    BattleEffect:
+      Scope: 1
+      Group: 3
+      EffectData:
+        EffectType: 68
+        Conditions: []
+        BaseAmount:
+          UseConstant: 1
+          ConstantValue: 0
+          Variable: {fileID: 0}
+        FloatAmount:
+          UseConstant: 1
+          ConstantValue: 0
+          FloatVariable: {fileID: 0}
+        DurationFormula: -1
+        EffectScope:
+          UseConstant: 0
+          ConstantValue: 
+          Variable: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
+        HitsRandomTargetMember: 0
+        TargetsSource: 0
+        ReTargetScope: 0
+        ApplyToEachMemberIndividually: 0
+        StatusTag: 0
+        StatusDetailText: 
+        TurnDelay: 0
+        Formula: 2
+        InterpolatePartialFormula:
+          EvaluationPartialFormula: 
+          Prefix: 
+          Suffix: 
+        FlavorText:
+          UseConstant: 1
+          ConstantValue: 
+          Variable: {fileID: 0}
+        ReferencedSequence: {fileID: 0}
+        ReactionConditionType: 0
+        ReactionEffectScope:
+          UseConstant: 1
+          ConstantValue: 
+          Variable: {fileID: 0}
+        ReactionSequence: {fileID: 0}
+        ReactionEffect:
+          reactor: 0
+          scope: 0
+          cardActions: {fileID: 0}
+        BonusCardType: {fileID: 0}
+    CorpName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
