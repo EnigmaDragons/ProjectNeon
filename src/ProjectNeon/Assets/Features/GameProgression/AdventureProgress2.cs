@@ -7,6 +7,7 @@ public class AdventureProgress2 : ScriptableObject
 {
     [SerializeField] private CurrentGameMap3 currentMap3;
     [SerializeField] private CurrentAdventure currentAdventure;
+    [SerializeField] private CurrentGlobalEffects currentGlobalEffects;
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
     [SerializeField] private bool playerReadMapPrompt = false;
@@ -72,6 +73,7 @@ public class AdventureProgress2 : ScriptableObject
     {
         currentChapterIndex = -1;
         finishedStoryEvents.Clear();
+        currentGlobalEffects.Clear();
         Message.Publish(new AdventureProgressChanged());
     }
 
