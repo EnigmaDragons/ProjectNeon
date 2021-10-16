@@ -21,6 +21,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private bool unique;
     [SerializeField] private bool isHasty;
     [SerializeField] private ResourceType resourceType;
+    [SerializeField] private string description;
     [SerializeField] private EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
     public Corp Corp => corp;
