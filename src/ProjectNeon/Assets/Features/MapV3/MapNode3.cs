@@ -10,6 +10,8 @@ public class MapNode3
     public bool HasEventEnroute;
     public int[] EnemyIds;
     public string Corp;
+    public int VisitedGlobalEffectId = -1;
+    public int UnVisitedGlobalEffectId = -1;
 
     public string GetMetricDescription()
         => ($"{Type} " + (string.IsNullOrWhiteSpace(Corp) ? "" : Corp)).Trim();

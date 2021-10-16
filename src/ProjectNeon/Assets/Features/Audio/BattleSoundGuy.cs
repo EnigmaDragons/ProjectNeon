@@ -10,6 +10,7 @@ public class BattleSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnCardPresented;
     [SerializeField, FMODUnity.EventRef] private string OnCardHoverExit;
     private FMOD.Studio.EventInstance TrashShaking;
+    private FMOD.Studio.EventInstance CardCycle;
     [SerializeField, FMODUnity.EventRef] private string OnCardAiming;
     [SerializeField, FMODUnity.EventRef] private string OnCardAimingLONG;
     //[SerializeField, FMODUnity.EventRef] private string OnCardAimingTRASH;
@@ -46,11 +47,26 @@ public class BattleSoundGuy : MonoBehaviour
         Message.Subscribe<CardResolutionStarted>(OnCardReFUNC, this);
         Message.Subscribe<TweenMovementRequested>(OnCardRightClickFUNC, this);
         Message.Subscribe<SnapBackTweenRequested>(OnCardRightClickBackFUNC, this);
-        
+        Message.Subscribe<HoverEntered>(e => CardCycledFUNC(e), this);
+        Message.Subscribe<HoverExited>(e => CardCycledSTOPFUNC(e), this);
+
     }
 
    
-    
+
+    private void CardCycledFUNC(HoverEntered msg)
+    {
+        if (msg.ElementName == "CycleCardDropTarget")
+            CardCycle = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/CARD_CYCLE");
+        CardCycle.start();
+    }
+    private void CardCycledSTOPFUNC(HoverExited msg)
+    {
+        if (msg.ElementName == "CycleCardDropTarget")
+            CardCycle.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        CardCycle.release();
+            
+    }
     private void TrashSHAKINGSoundFUNC(HoverEntered msg)
     {
         if (msg.ElementName == "DiscardDropTarget")

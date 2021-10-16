@@ -7,6 +7,7 @@ using UnityEngine;
 public class CurrentGameMap3 : ScriptableObject
 {
     [SerializeField] private NodeHeat heat;
+    [SerializeField] private CurrentGlobalEffects globalEffects;
     public GameMap3 CurrentMap { get; set; }
     public Maybe<MapNode3> CurrentNode { get; set; } = Maybe<MapNode3>.Missing();
     public List<MapNode3> CompletedNodes { get; set; } = new List<MapNode3>();
@@ -38,6 +39,9 @@ public class CurrentGameMap3 : ScriptableObject
     {
         if (CurrentNode.IsMissing || CurrentNode.Value.Type == MapNodeType.Start)
             return;
+        
+        ApplyUnvisitedNodeGlobalEffects();
+        globalEffects.ApplyById(CurrentNode.Value.VisitedGlobalEffectId, new GlobalEffectContext(globalEffects));
         CompletedNodes.Add(CurrentNode.Value);
         CurrentChoices = new List<MapNode3>();
         PreviousPosition = DestinationPosition;
@@ -45,7 +49,13 @@ public class CurrentGameMap3 : ScriptableObject
         UpdateSeed();
         Message.Publish(new AdventureProgressChanged());
     }
-    
+
+    private void ApplyUnvisitedNodeGlobalEffects()
+    {
+        CurrentChoices.Without(CurrentNode.Value).ForEach(m =>
+            globalEffects.ApplyById(m.VisitedGlobalEffectId, new GlobalEffectContext(globalEffects)));
+    }
+
     private void UpdateSeed() => CurrentNodeRngSeed = Guid.NewGuid().GetHashCode();
 
     public void AdjustHeat(int newHeat)
