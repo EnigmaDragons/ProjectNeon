@@ -49,8 +49,6 @@ public class MapSceneSoundGuy : MonoBehaviour
             PlayOneShot(OnClinic, node.UiSource);
         if (node.NodeType == MapNodeType.Boss)
             PlayOneShot(OnBoss, node.UiSource);
-        
-
     }
     
     private void OnDisable()

@@ -7,28 +7,38 @@ public class CycleCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterHan
     [SerializeField] private GameObject rotateTarget;
     [SerializeField] private float rotateSpeed = 0.15f;
 
+    public static readonly string UiElementName = "CycleCardDropTarget";
+    
     private bool _shouldRotate;
     
     public void OnDrop(PointerEventData eventData)
     {
         var cardComponent = eventData.pointerDrag.GetComponent<CardPresenter>();
         if (cardComponent != null)    
-        if (state.NumberOfRecyclesRemainingThisTurn > 0)
+            if (state.NumberOfRecyclesRemainingThisTurn > 0)
                 cardComponent.MiddleClick();
             else
                 cardComponent.SetHandHighlight(false);
-        _shouldRotate = false;
+        Reset();
         MouseDragState.Set(false);
-        //Message.Publish(new RecycleSFX(transform));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (state.NumberOfRecyclesRemainingThisTurn > 0 && eventData.dragging)
+        {
             _shouldRotate = true;
+            Message.Publish(new HoverEntered(transform, UiElementName));
+        }
     }
 
-    public void OnPointerExit(PointerEventData eventData) => _shouldRotate = false;
+    private void Reset()
+    {
+        _shouldRotate = false;
+        Message.Publish(new HoverExited(transform, UiElementName));
+    }
+
+    public void OnPointerExit(PointerEventData eventData) => Reset();
 
     private void FixedUpdate()
     {
