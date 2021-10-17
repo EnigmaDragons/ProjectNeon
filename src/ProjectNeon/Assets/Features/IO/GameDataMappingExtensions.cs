@@ -55,6 +55,7 @@ public static class GameDataMappingExtensions
                     CurrentPosition = map.PreviousPosition,
                     CurrentChoices = map.CurrentChoices.ToArray(),
                     HasCompletedEventEnRoute = map.HasCompletedEventEnRoute,
-                    CurrentNodeRngSeed = map.CurrentNodeRngSeed
+                    CurrentNodeRngSeed = map.CurrentNodeRngSeed,
+                    HeatAdjustments = map.HeatAdjustments
                 };
 }

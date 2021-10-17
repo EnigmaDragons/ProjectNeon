@@ -16,7 +16,7 @@ public class CurrentGameMap3 : ScriptableObject
     public List<MapNode3> CurrentChoices { get; set; } = new List<MapNode3>();
     public bool HasCompletedEventEnRoute { get; set; }
     public int CurrentNodeRngSeed { get; set; } = Guid.NewGuid().GetHashCode();
-    public int HeatAdjustments { get; private set; }
+    public int HeatAdjustments { get; set; }
 
     public int MaxNodeCompletionHeat => heat.MaxHeatGain;
     

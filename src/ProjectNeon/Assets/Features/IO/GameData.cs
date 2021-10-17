@@ -100,6 +100,7 @@ public class GameMapData
     public MapNode3[] CurrentChoices;
     public bool HasCompletedEventEnRoute;
     public int CurrentNodeRngSeed;
+    public int HeatAdjustments;
 }
 
 public enum GameEquipmentDataType
