@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Enemy_Siphon_E_Self
+  m_Name: Enemy_CrushLifeForce_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 74
+      EffectType: 70
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -23,9 +23,9 @@ MonoBehaviour:
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: -1
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
@@ -33,10 +33,11 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
-      StatusTag: 10
-      StatusDetailText: 'On Death: Returns stolen credits'
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 0.9 * Magic
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -46,7 +47,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 99
+      ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
         ConstantValue: 
@@ -55,7 +56,7 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
-        cardActions: {fileID: 11400000, guid: b1cf151f2cc7b6744abd67bf57911071, type: 2}
+        cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
