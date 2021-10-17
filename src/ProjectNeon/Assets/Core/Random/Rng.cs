@@ -13,6 +13,7 @@ public static class Rng
     public static int Int() => Int(int.MaxValue);
     public static int Int(int max) => Instance.Next(max);
     public static int Int(int min, int max) => Instance.Next(min, max);
+    public static float Float() => Convert.ToSingle(Dbl());
     public static double Dbl() => Instance.NextDouble();
     public static KeyValuePair<T, T2> Random<T, T2>(this Dictionary<T, T2> dictionary) => dictionary.ElementAt(Int(dictionary.Count));
     public static T Random<T>(this T[] array) => array[Int(array.Length)];

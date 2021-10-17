@@ -11,6 +11,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private StageSegment segment;
     [SerializeField] private GameObject hoverRulesPanel;
     [SerializeField] private GameObject travelPreventedVisual;
+    [SerializeField] private GameObject plotEventVisual;
     [SerializeField] private TextMeshProUGUI unvisitedTextLabel;
     [SerializeField] private TextMeshProUGUI visitedTextLabel;
     [SerializeField] private bool alwaysShowRules = false;
@@ -24,6 +25,8 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         MapData = mapData;
         ArrivalSegment = segment.GenerateDeterministic(ctx, mapData);
         var canTravel = !mapData.PreventTravel;
+        if (plotEventVisual != null)
+            plotEventVisual.SetActive(mapData.IsPlotNode);
         if (travelPreventedVisual != null)
             travelPreventedVisual.SetActive(!canTravel);
         if (unvisitedTextLabel != null)

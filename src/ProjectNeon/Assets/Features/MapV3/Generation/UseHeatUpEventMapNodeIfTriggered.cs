@@ -11,6 +11,7 @@ public class UseHeatUpEventMapNodeIfTriggered : MapGenerationRule3
                 .Select(m => new MapNode3
                 {
                     Type = m.NodeType, 
+                    IsPlotNode = true,
                     VisitedGlobalEffectId = m.VisitedGlobalEffect?.id ?? -1,
                     UnVisitedGlobalEffectId = m.UnvisitedGlobalEffect?.id ?? -1
                 })
