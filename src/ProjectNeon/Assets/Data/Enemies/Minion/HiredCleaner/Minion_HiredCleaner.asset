@@ -31,6 +31,7 @@ MonoBehaviour:
   unique: 0
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
   stageDetails:
   - stage: 2
     powerLevel: 64
@@ -41,7 +42,6 @@ MonoBehaviour:
     startingPhase: 0
     startingDodge: 2
     startingTaunt: 0
-    toughness: 0
     attack: 15
     magic: 0
     leadership: 0
@@ -52,6 +52,19 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 0
     cardsPerTurn: 1
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 35.7
+      perCardValue: 15
+      resourceValue: 4.9500003
+      perTurnPower: 15
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 1.7850001
+      calculatedPowerLevel: 62
     startOfBattleEffects:
     - EffectType: 75
       Conditions: []
@@ -71,6 +84,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 9
       StatusDetailText: 'Flighty: Leaves battle when damaged'
       TurnDelay: 0

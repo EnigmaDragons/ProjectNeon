@@ -31,6 +31,7 @@ MonoBehaviour:
   unique: 1
   isHasty: 1
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
   stageDetails:
   - stage: 2
     powerLevel: 1
@@ -41,7 +42,6 @@ MonoBehaviour:
     startingPhase: 1
     startingDodge: 0
     startingTaunt: 0
-    toughness: 15
     attack: 22
     magic: 22
     leadership: 20
@@ -52,6 +52,19 @@ MonoBehaviour:
     maxResourceAmount: 1
     resourceGainPerTurn: 1
     cardsPerTurn: 1
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 151.20052
+      perCardValue: 20
+      resourceValue: 6.6000004
+      perTurnPower: 26.6
+      maxAndStartingResourcesPower: 7.9200006
+      estimatedTurnsAlive: 7.5600257
+      calculatedPowerLevel: 360
     startOfBattleEffects:
     - EffectType: 79
       Conditions: []
@@ -71,6 +84,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
@@ -113,6 +127,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 10
       StatusDetailText: 'On Reaching 1 HP: Heat Up'
       TurnDelay: 0
@@ -155,6 +170,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 19
       StatusDetailText: 'On Ally Death: Heat Up'
       TurnDelay: 0

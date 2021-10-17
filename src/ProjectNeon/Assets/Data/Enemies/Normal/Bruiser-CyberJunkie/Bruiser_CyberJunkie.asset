@@ -31,6 +31,7 @@ MonoBehaviour:
   unique: 1
   isHasty: 1
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
   stageDetails:
   - stage: 2
     powerLevel: 210
@@ -41,7 +42,6 @@ MonoBehaviour:
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    toughness: 12
     attack: 12
     magic: 12
     leadership: 0
@@ -52,6 +52,17 @@ MonoBehaviour:
     maxResourceAmount: 6
     resourceGainPerTurn: 1
     cardsPerTurn: 1
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 82.87078
+      perTurnPower: 15.96
+      maxAndStartingResourcesPower: 2.92191
+      estimatedTurnsAlive: 4.143539
+      calculatedPowerLevel: 152
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
@@ -71,6 +82,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 9
       StatusDetailText: 'On Damaged: Gains Shields'
       TurnDelay: 0

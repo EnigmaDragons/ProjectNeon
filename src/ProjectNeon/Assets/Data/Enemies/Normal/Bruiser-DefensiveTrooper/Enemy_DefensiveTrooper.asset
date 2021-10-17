@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: Enemy_DefensiveTrooper
   m_EditorClassIdentifier: 
-  id: 0
+  id: 40
   enemyName: Defensive Novo-Trooper
   excludeFromBestiary: 0
   lastBalanceDate: 10/16/2021
@@ -35,7 +35,7 @@ MonoBehaviour:
     turn, making the first strike critical against them
   stageDetails:
   - stage: 1
-    powerLevel: 0
+    powerLevel: 85
     maxHp: 26
     maxShield: 13
     startingShield: 0
@@ -53,6 +53,19 @@ MonoBehaviour:
     maxResourceAmount: 5
     resourceGainPerTurn: 1
     cardsPerTurn: 1
+    calculationVariables:
+      startingDefensiveValueAdjustment: 13
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 40.491627
+      perCardValue: 8
+      resourceValue: 2.64
+      perTurnPower: 10.64
+      maxAndStartingResourcesPower: 1.774925
+      estimatedTurnsAlive: 4.049163
+      calculatedPowerLevel: 85
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
