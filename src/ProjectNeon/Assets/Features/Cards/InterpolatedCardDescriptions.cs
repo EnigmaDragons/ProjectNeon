@@ -195,6 +195,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"gives {Bold($"{data.BaseAmount} Creds")}";
         if (data.EffectType == EffectType.ChooseAndDrawCardOfArchetype)
             coreDesc = $"choose and draw {AOrAn(data.EffectScope)} {Bold(data.EffectScope.ToString().WithSpaceBetweenWords())} card";
+        if (data.EffectType == EffectType.Drain)
+            coreDesc = $"drain {EffectDescription(data, owner, xCost)}";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 
@@ -308,6 +310,8 @@ public static class InterpolatedCardDescriptions
             return $"{data.BaseAmount}";
         if (data.EffectType == EffectType.DisableForTurns)
             return $"{Bold("Disabled")}";
+        if (data.EffectType == EffectType.Drain)
+            return $"{Bold(FormulaAmount(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()}";
 
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";

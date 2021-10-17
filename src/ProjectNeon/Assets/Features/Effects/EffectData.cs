@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 [Serializable]
 public sealed class EffectData
 {
-    public static readonly EffectData Nothing = new EffectData(); 
+    public static EffectData Nothing => new EffectData(); 
     
     public EffectType EffectType;
     public StaticEffectCondition[] Conditions;
