@@ -6,7 +6,6 @@ using UnityEngine;
 public class EnemyStageDetails
 {
     public int stage;
-    public int powerLevel;
     public int maxHp;
     public int maxShield;
     public int startingShield;
@@ -24,6 +23,7 @@ public class EnemyStageDetails
     public int maxResourceAmount = 0;
     public int resourceGainPerTurn = 1;
     public int cardsPerTurn = 1;
+    public int powerLevel;
     public EnemyStageCalculationVariables calculationVariables;
     public EnemyStageCalculationResults calculationResults;
     public EffectData[] startOfBattleEffects = new EffectData[0];

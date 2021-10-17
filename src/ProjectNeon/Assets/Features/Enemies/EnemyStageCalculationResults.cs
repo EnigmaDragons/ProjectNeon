@@ -3,11 +3,11 @@
 [Serializable]
 public class EnemyStageCalculationResults
 {
-    public float startingPower;
-    public float perCardValue;
-    public float resourceValue;
-    public float perTurnPower;
-    public float maxAndStartingResourcesPower;
-    public float estimatedTurnsAlive;
+    [UnityEngine.UI.Extensions.ReadOnly] public float startingPower;
+    [UnityEngine.UI.Extensions.ReadOnly] public float perCardValue;
+    [UnityEngine.UI.Extensions.ReadOnly] public float resourceValue;
+    [UnityEngine.UI.Extensions.ReadOnly] public float perTurnPower;
+    [UnityEngine.UI.Extensions.ReadOnly] public float maxAndStartingResourcesPower;
+    [UnityEngine.UI.Extensions.ReadOnly] public float estimatedTurnsAlive;
     public int calculatedPowerLevel;
 }
