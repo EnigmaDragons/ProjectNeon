@@ -11,7 +11,8 @@ public class CurrentGlobalEffects : ScriptableObject
     [SerializeField] private float encounterDifficultyFactor = 1f;
     [SerializeField] private List<TargetedEffectData> startOfBattleEffects = new List<TargetedEffectData>();
     [SerializeField] private List<Tuple<string, MapNodeType>> travelPreventedCorpNodeTypes = new List<Tuple<string, MapNodeType>>();
-    
+
+    public AllStaticGlobalEffects AllStaticGlobalEffects => allStaticGlobalEffects;
     public GlobalEffect[] Value => globalEffects.ToArray();
     public TargetedEffectData[] StartOfBattleEffects => startOfBattleEffects.ToArray();
     public Tuple<string, MapNodeType>[] TravelPreventedCorpNodeTypes => travelPreventedCorpNodeTypes.ToArray();

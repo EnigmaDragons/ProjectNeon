@@ -11,6 +11,7 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private CurrentGameMap3 map;
     [SerializeField] private AllMaps maps;
     [SerializeField] private CorpClinicProvider clinics;
+    [SerializeField] private AllStaticGlobalEffects globalEffects;
 
     public bool HasSavedGame => CurrentGameData.HasActiveGame;
     public void SaveCheckpoint() => SaveCurrentGame();
@@ -63,7 +64,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             return LoadFailedReason($"Unknown Adventure {adventureProgress.AdventureId}");
         adventure.Init(selectedAdventure.Value, adventureProgress.CurrentChapterIndex);
         adventure.SetFinishedStoryEvents(adventureProgress.FinishedStoryEvents);
-        adventure.ApplyGlobalEffects(adventureProgress.ActiveGlobalEffects);
+        adventure.SetFinishedHeatUpEvents(adventureProgress.CurrentChapterFinishedHeatUpEvents);
+        adventure.ApplyGlobalEffects(adventureProgress.ActiveGlobalEffectIds);
         if (adventureProgress.PlayerReadMapPrompt)
             adventure.MarkMapPromptComplete();
         return true;

@@ -10,6 +10,7 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private CurrentGlobalEffects currentGlobalEffects;
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
+    [SerializeField] private List<int> finishedCurrentStageHeatUpEvents = new List<int>();
     [SerializeField] private bool playerReadMapPrompt = false;
     
     public Adventure CurrentAdventure => currentAdventure.Adventure;
@@ -24,6 +25,17 @@ public class AdventureProgress2 : ScriptableObject
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
+
+    public int[] FinishedCurrentStageHeatUpEvents => finishedCurrentStageHeatUpEvents.ToArray();
+
+    public Indexed<HeatUpEventV0>[] RemainingHeatUpEvents => CurrentChapter.HeatUpEvents
+        .Select((x, i) => new Indexed<HeatUpEventV0> {Index = i, Value = x})
+        .Where(x => !finishedCurrentStageHeatUpEvents.Contains(x.Index))
+        .ToArray();
+    
+    public Maybe<Indexed<HeatUpEventV0>> TriggeredHeatUpEvent => RemainingHeatUpEvents
+        .Where(x => x.Value.ProgressThreshold <= ProgressToUnlockChapterBoss)
+        .FirstOrMaybe();
     
     public DynamicStage CurrentChapter
     {
@@ -55,10 +67,10 @@ public class AdventureProgress2 : ScriptableObject
         Log.Info($"Init Adventure. {this}");
     }
 
-    public void ApplyGlobalEffects(GlobalEffectData[] effects)
+    public void ApplyGlobalEffects(int[] effectIds)
     {
         var ctx = new GlobalEffectContext(currentGlobalEffects);
-        effects.ForEach(e => currentGlobalEffects.Apply(AllGlobalEffects.Create(e), ctx));
+        effectIds.ForEach(id => currentGlobalEffects.ApplyById(id, ctx));
     }
     
     public override string ToString() =>
@@ -83,6 +95,7 @@ public class AdventureProgress2 : ScriptableObject
         currentChapterIndex = -1;
         finishedStoryEvents.Clear();
         currentGlobalEffects.Clear();
+        finishedCurrentStageHeatUpEvents.Clear();
         Message.Publish(new AdventureProgressChanged());
     }
 
@@ -101,6 +114,7 @@ public class AdventureProgress2 : ScriptableObject
         if (!IsFinalStage)
         {
             currentChapterIndex++;
+            finishedCurrentStageHeatUpEvents.Clear();
             currentMap3.SetMap(CurrentChapter.Map);
         } else
         {
@@ -110,6 +124,9 @@ public class AdventureProgress2 : ScriptableObject
 
     public void RecordEncounteredStoryEvent(StoryEvent2 e) => finishedStoryEvents.Add(e.name);
     public void SetFinishedStoryEvents(string[] storyEvents) => finishedStoryEvents = storyEvents.ToList();
+
+    public void RecordFinishedHeatUpEvent(int index) => finishedCurrentStageHeatUpEvents.Add(index);
+    public void SetFinishedHeatUpEvents(int[] indexes) => finishedCurrentStageHeatUpEvents = indexes.ToList();
     
     public LootPicker CreateLootPicker(PartyAdventureState party) 
         => new LootPicker(CurrentChapterNumber, CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), party);

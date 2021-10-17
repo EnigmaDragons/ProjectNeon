@@ -12,7 +12,7 @@ public class EnsureHelpfulOptionsBeforeBoss : MapGenerationRule3
         _clinicCorps = clinicCorps;
     }
 
-    public List<MapNode3> FilterNodeTypes(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
+    public List<MapNode3> Apply(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
     {
         if (map.Progress + _maxHeatGainFromANode >= progress.CurrentChapter.SegmentCount)
             return new List<MapNode3>

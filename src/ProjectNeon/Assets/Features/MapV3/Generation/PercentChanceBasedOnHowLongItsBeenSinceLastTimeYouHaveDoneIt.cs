@@ -13,7 +13,7 @@ public class PercentChanceBasedOnHowLongItsBeenSinceLastTimeYouHaveDoneIt : MapG
         _odds = odds;
     }
     
-    public List<MapNode3> FilterNodeTypes(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
+    public List<MapNode3> Apply(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
     {
         var lastIndexOf = map.CompletedNodes.ToArray().LastIndexOf(x => x.Type == _mapNodeType);
         var turnsSinceLastTimeYouDidThisNode = lastIndexOf == -1
