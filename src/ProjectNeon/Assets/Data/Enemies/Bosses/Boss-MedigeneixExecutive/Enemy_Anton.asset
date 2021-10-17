@@ -1,0 +1,333 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: Enemy_Anton
+  m_EditorClassIdentifier: 
+  id: 41
+  enemyName: Anton
+  excludeFromBestiary: 0
+  lastBalanceDate: 10/16/2021
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
+  ai: {fileID: 11400000, guid: 66a76477419cada43ade2f3ffc5d2943, type: 2}
+  preferredTurnOrder: 50
+  prefab: {fileID: 1771151275093467103, guid: c50db8efb1027e346b45de5e46b52c43, type: 3}
+  libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 5
+  tier: 3
+  unique: 1
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
+  stageDetails:
+  - stage: 2
+    maxHp: 300
+    maxShield: 150
+    startingShield: 150
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 1
+    startingTaunt: 0
+    attack: 13
+    magic: 13
+    leadership: 13
+    armor: 5
+    resistance: 3
+    nonStatCardValueFactor: 15
+    startingResourceAmount: 0
+    maxResourceAmount: 5
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 1683
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 400
+      perTurnValueAdjustment: 15
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 877.4153
+      perCardValue: 14
+      resourceValue: 4.6200004
+      perTurnPower: 33.62
+      maxAndStartingResourcesPower: 3.1061187
+      estimatedTurnsAlive: 23.870764
+      calculatedPowerLevel: 1683
+    startOfBattleEffects:
+    - EffectType: 54
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'Start of turn: If i have no dodge and have an ally gain
+        1 Dodge'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: eb25ce547561ca648ba9565fc9477f38, type: 2}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    - EffectType: 54
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'Start of turn: If i have no allies, gain 1 card play'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 9937dbcdb441671499973c0a5f3e7412, type: 2}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'On Dodge: Gain +1 Attack, Magic, and Leadership'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 9937dbcdb441671499973c0a5f3e7412, type: 2}
+      ReactionConditionType: 30
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 8f3eb9142df936b4fb3b347159ce9f96, type: 2}
+      BonusCardType: {fileID: 0}
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Killed: Win the fight'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 9937dbcdb441671499973c0a5f3e7412, type: 2}
+      ReactionConditionType: 99
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 1
+        scope: 5
+        cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
+      BonusCardType: {fileID: 0}
+    - EffectType: 75
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Shield Broken: Summon Reinforcements'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 9937dbcdb441671499973c0a5f3e7412, type: 2}
+      ReactionConditionType: 6
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 16522ae0fd0d2734daf84035ac55dea7, type: 2}
+      ReactionEffect:
+        reactor: 1
+        scope: 5
+        cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
+      BonusCardType: {fileID: 0}
+    - EffectType: 75
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Bloodied: Summon Reinforcements'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 9937dbcdb441671499973c0a5f3e7412, type: 2}
+      ReactionConditionType: 10
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 16522ae0fd0d2734daf84035ac55dea7, type: 2}
+      ReactionEffect:
+        reactor: 1
+        scope: 5
+        cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 56d296ed36a55284ab5127849b74e3db, type: 2}
+    - {fileID: 11400000, guid: 07f708cabd75982429eb6013e4d79b53, type: 2}
+    - {fileID: 11400000, guid: a4b2a2102f6f4c74db9f5f1832e97892, type: 2}
+    - {fileID: 11400000, guid: ce660aa1a092fac408d8d7f2957491cf, type: 2}
+    - {fileID: 11400000, guid: 3238f3bcbb34fc64e9db2b464bd77138, type: 2}
