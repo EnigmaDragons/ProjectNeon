@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 
-public class PreventTravelToEffectedNodes : MapGenerationRule3
+public class PreventTravelToRelevantNodes : MapGenerationRule3
 {
     private readonly Tuple<string, MapNodeType>[] _prevented;
     
-    public PreventTravelToEffectedNodes(Tuple<string, MapNodeType>[] prevented)
+    public PreventTravelToRelevantNodes(Tuple<string, MapNodeType>[] prevented)
     {
         _prevented = prevented;
     }
 
-    public List<MapNode3> FilterNodeTypes(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
+    public List<MapNode3> Apply(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
     {
         list.ForEach(l =>
         {

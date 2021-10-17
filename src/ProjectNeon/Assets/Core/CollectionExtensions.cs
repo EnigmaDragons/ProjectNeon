@@ -55,6 +55,9 @@ public static class CollectionExtensions
         return value;
     }
 
+    public static Maybe<T> FirstOrMaybe<T>(this IEnumerable<T> items) where T : class
+        => items.FirstOrDefault();
+    
     public static Maybe<T> FirstOrMaybe<T>(this IEnumerable<T> items, Func<T, bool> condition) where T : class
         => items.FirstOrDefault(condition);
     

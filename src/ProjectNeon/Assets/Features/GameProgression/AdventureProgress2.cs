@@ -10,6 +10,7 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private CurrentGlobalEffects currentGlobalEffects;
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
+    [SerializeField] private List<int> finishedCurrentStageHeatUpEvents = new List<int>();
     [SerializeField] private bool playerReadMapPrompt = false;
     
     public Adventure CurrentAdventure => currentAdventure.Adventure;
@@ -24,6 +25,11 @@ public class AdventureProgress2 : ScriptableObject
     public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
+
+    public Maybe<Indexed<HeatUpEventV0>> TriggeredHeatUpEvent => CurrentChapter.HeatUpEvents
+        .Select((x, i) => new Indexed<HeatUpEventV0> { Index = i, Value = x})
+        .Where(x => !finishedCurrentStageHeatUpEvents.Contains(x.Index) && x.Value.ProgressThreshold <= ProgressToUnlockChapterBoss)
+        .FirstOrMaybe();
     
     public DynamicStage CurrentChapter
     {
@@ -83,6 +89,7 @@ public class AdventureProgress2 : ScriptableObject
         currentChapterIndex = -1;
         finishedStoryEvents.Clear();
         currentGlobalEffects.Clear();
+        finishedCurrentStageHeatUpEvents.Clear();
         Message.Publish(new AdventureProgressChanged());
     }
 
@@ -101,6 +108,7 @@ public class AdventureProgress2 : ScriptableObject
         if (!IsFinalStage)
         {
             currentChapterIndex++;
+            finishedCurrentStageHeatUpEvents.Clear();
             currentMap3.SetMap(CurrentChapter.Map);
         } else
         {
@@ -110,6 +118,9 @@ public class AdventureProgress2 : ScriptableObject
 
     public void RecordEncounteredStoryEvent(StoryEvent2 e) => finishedStoryEvents.Add(e.name);
     public void SetFinishedStoryEvents(string[] storyEvents) => finishedStoryEvents = storyEvents.ToList();
+
+    public void RecordFinishedHeatUpEvent(int index) => finishedCurrentStageHeatUpEvents.Add(index);
+    public void SetFinishedHeatUpEvents(int[] indexes) => finishedCurrentStageHeatUpEvents = indexes.ToList();
     
     public LootPicker CreateLootPicker(PartyAdventureState party) 
         => new LootPicker(CurrentChapterNumber, CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), party);

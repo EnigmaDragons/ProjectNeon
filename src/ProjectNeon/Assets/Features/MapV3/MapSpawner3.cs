@@ -39,16 +39,26 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
     {
         _activeNodes = new MapNodeGameObject3[0];
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
+        var maybeHeatUpEvent = progress.TriggeredHeatUpEvent;
+        maybeHeatUpEvent.IfPresent(e =>
+        {
+            Message.Publish(new ShowInfoDialog(e.Value.InfoText, "Ok"));
+            progress.RecordFinishedHeatUpEvent(e.Index);
+        });
         _rules = progress.CurrentChapter.NodeTypeOdds2.GenerateMapRules().Concat(new MapGenerationRule3[]
         {
+            // Node Selection
             new EnsureHelpfulOptionsBeforeBoss(gameMap.MaxNodeCompletionHeat, allCorps.ClinicCorps),
             new NoClinicsIfYouAreHighHealth(),
             new NoShopsIfYouAreLowOnMoney(),
             new EnsureAtLeastThreeChoices(),
+            new UseHeatUpEventMapNodeIfTriggered(maybeHeatUpEvent.Map(e => e.Value)),
             new OnlyBossOnFinalNode(),
+            
+            // Hydration
             new AssignCorpToNodeType(MapNodeType.GearShop, allCorps.GearSellingCorps),
             new AssignCorpToNodeType(MapNodeType.Clinic, allCorps.ClinicCorps),
-            new PreventTravelToEffectedNodes(progress.GlobalEffects.TravelPreventedCorpNodeTypes)
+            new PreventTravelToRelevantNodes(progress.GlobalEffects.TravelPreventedCorpNodeTypes)
         }).ToArray();
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();
@@ -81,7 +91,7 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
         _activeNodes.ForEach(x => Destroy(x.gameObject));
         var nodes = Enum.GetValues(typeof(MapNodeType)).Cast<MapNodeType>().Select(x => new MapNode3 { Type = x }).ToList();
         foreach (var rule in _rules)
-            nodes = rule.FilterNodeTypes(nodes, gameMap, partyState, progress);
+            nodes = rule.Apply(nodes, gameMap, partyState, progress);
         var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition).ToArray().Shuffled();
         gameMap.CurrentChoices = new List<MapNode3>();
         for (var i = 0; i < nodes.Count; i++)

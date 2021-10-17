@@ -12,7 +12,7 @@ public class AssignCorpToNodeType : MapGenerationRule3
         _corps = corps;
     }
     
-    public List<MapNode3> FilterNodeTypes(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
+    public List<MapNode3> Apply(List<MapNode3> list, CurrentGameMap3 map, PartyAdventureState party, AdventureProgress2 progress)
     {
         var nodeCount = list.Count(x => x.Type == _mapNodeType);
         var corps = _corps.Shuffled().Take(nodeCount).ToArray();
