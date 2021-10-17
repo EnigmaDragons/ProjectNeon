@@ -63,6 +63,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             return LoadFailedReason($"Unknown Adventure {adventureProgress.AdventureId}");
         adventure.Init(selectedAdventure.Value, adventureProgress.CurrentChapterIndex);
         adventure.SetFinishedStoryEvents(adventureProgress.FinishedStoryEvents);
+        adventure.SetFinishedHeatUpEvents(adventureProgress.CurrentChapterFinishedHeatUpEvents);
         adventure.ApplyGlobalEffects(adventureProgress.ActiveGlobalEffects);
         if (adventureProgress.PlayerReadMapPrompt)
             adventure.MarkMapPromptComplete();

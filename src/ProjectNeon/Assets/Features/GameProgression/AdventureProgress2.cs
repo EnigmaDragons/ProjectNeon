@@ -26,6 +26,7 @@ public class AdventureProgress2 : ScriptableObject
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
 
+    public int[] FinishedCurrentStageHeatUpEvents => finishedCurrentStageHeatUpEvents.ToArray();
     public Maybe<Indexed<HeatUpEventV0>> TriggeredHeatUpEvent => CurrentChapter.HeatUpEvents
         .Select((x, i) => new Indexed<HeatUpEventV0> { Index = i, Value = x})
         .Where(x => !finishedCurrentStageHeatUpEvents.Contains(x.Index) && x.Value.ProgressThreshold <= ProgressToUnlockChapterBoss)

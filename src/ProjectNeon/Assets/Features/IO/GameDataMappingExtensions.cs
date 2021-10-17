@@ -39,6 +39,7 @@ public static class GameDataMappingExtensions
             AdventureId = p.CurrentAdventureId,
             Type = GameAdventureProgressType.V2,
             CurrentChapterIndex = p.CurrentChapterIndex,
+            CurrentChapterFinishedHeatUpEvents = p.FinishedCurrentStageHeatUpEvents,
             FinishedStoryEvents = p.FinishedStoryEvents,
             PlayerReadMapPrompt = p.PlayerReadMapPrompt,
             ActiveGlobalEffects = p.GlobalEffects.Value.Select(g => g.Data).ToArray()
