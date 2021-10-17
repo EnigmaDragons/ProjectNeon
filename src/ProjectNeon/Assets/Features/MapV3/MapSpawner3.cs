@@ -48,6 +48,7 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
             new EnsureAtLeastThreeChoices(),
             new UseHeatUpEventMapNodeIfTriggered(),
             new OnlyBossOnFinalNode(),
+            new EnsureAtLeastOneTravelableNode(),
             
             // Hydration
             new AssignCorpToNodeType(MapNodeType.GearShop, allCorps.GearSellingCorps),
