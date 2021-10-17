@@ -10,29 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Enemy_OffTheGrid
+  m_Name: Enemy_ForcedCon
   m_EditorClassIdentifier: 
-  id: 223
-  customName: Off The Grid
-  art: {fileID: 21300000, guid: 7ed4fde02868d7f4a97aaffaa8b59575, type: 3}
-  description: '<b>Hasty</b>: Leave the battle'
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
-  tags: 20000000
+  id: 0
+  customName: 
+  art: {fileID: 0}
+  description: '<b>Hasty</b>: Steal 10 Creds. Deal {E[1]}.'
+  typeDescription: {fileID: 0}
+  tags: 04000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 3
-    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-    plusXCost: 0
-  onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
   - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 5fa961f6f8425c94792e979dd0060800, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
     group: 0
-    cardActions: {fileID: 11400000, guid: 85284546cccfa5943a369920d43cdf60, type: 2}
+    cardActions: {fileID: 11400000, guid: 66fb6e712079e08439a3612c9d5d45b1, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
