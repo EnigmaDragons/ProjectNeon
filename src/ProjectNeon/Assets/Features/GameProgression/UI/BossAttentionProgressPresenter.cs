@@ -10,8 +10,8 @@ public class BossAttentionProgressPresenter : OnMessage<AdventureProgressChanged
     [SerializeField] private GameObject heatUpMarketParent;
     [SerializeField] private float heatUpPlacementFactor = 1f;
 
-    private readonly float _visualFactor = 0.95f;
-    private readonly float _offsetAmount = 0.05f;
+    private readonly float _visualFactor = 1f;
+    private readonly float _offsetAmount = 0f;
 
     private void Awake()
     {
