@@ -240,6 +240,7 @@ public static class InterpolatedCardDescriptions
         { "Energy", 6 },
         { "Flames", 7 },
         { "Mana", 20 },
+        { "Insight", 24 },
         { "Tech Points", 23 },
         { "PrimaryResource", 20 },
         { "Primary Resource", 20 },
