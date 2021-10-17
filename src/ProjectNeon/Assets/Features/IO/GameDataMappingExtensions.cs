@@ -42,7 +42,7 @@ public static class GameDataMappingExtensions
             CurrentChapterFinishedHeatUpEvents = p.FinishedCurrentStageHeatUpEvents,
             FinishedStoryEvents = p.FinishedStoryEvents,
             PlayerReadMapPrompt = p.PlayerReadMapPrompt,
-            ActiveGlobalEffects = p.GlobalEffects.Value.Select(g => g.Data).ToArray()
+            ActiveGlobalEffectIds = p.GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray()
         };
 
     public static GameMapData GetData(this CurrentGameMap3 map)

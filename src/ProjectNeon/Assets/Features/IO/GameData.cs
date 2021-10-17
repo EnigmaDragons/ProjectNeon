@@ -23,7 +23,7 @@ public class GameAdventureProgressData
     public int[] CurrentChapterFinishedHeatUpEvents = new int[0];
     public string[] FinishedStoryEvents = new string[0];
     public bool PlayerReadMapPrompt = false;
-    public GlobalEffectData[] ActiveGlobalEffects = new GlobalEffectData[0];
+    public int[] ActiveGlobalEffectIds = new int[0];
 }
 
 public enum GameAdventureProgressType

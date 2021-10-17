@@ -67,10 +67,10 @@ public class AdventureProgress2 : ScriptableObject
         Log.Info($"Init Adventure. {this}");
     }
 
-    public void ApplyGlobalEffects(GlobalEffectData[] effects)
+    public void ApplyGlobalEffects(int[] effectIds)
     {
         var ctx = new GlobalEffectContext(currentGlobalEffects);
-        effects.ForEach(e => currentGlobalEffects.Apply(AllGlobalEffects.Create(e), ctx));
+        effectIds.ForEach(id => currentGlobalEffects.ApplyById(id, ctx));
     }
     
     public override string ToString() =>
