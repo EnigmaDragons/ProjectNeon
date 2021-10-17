@@ -34,7 +34,6 @@ MonoBehaviour:
   description: 
   stageDetails:
   - stage: 1
-    powerLevel: 139
     maxHp: 66
     maxShield: 20
     startingShield: 0
@@ -52,6 +51,7 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
+    powerLevel: 139
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
@@ -59,10 +59,12 @@ MonoBehaviour:
       resourceScaledValueOverride: 0
     calculationResults:
       startingPower: 73.45685
+      perCardValue: 10
+      resourceValue: 3.3000002
       perTurnPower: 13.3
       maxAndStartingResourcesPower: 0
       estimatedTurnsAlive: 7.345685
-      calculatedPowerLevel: 171
+      calculatedPowerLevel: 143
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: aa6abe70df013ec4b8f61bc969e5be54, type: 2}

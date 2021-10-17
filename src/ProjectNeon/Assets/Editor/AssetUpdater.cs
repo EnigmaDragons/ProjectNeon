@@ -292,7 +292,7 @@ public class AssetUpdater
                 var valuePerTurn = scalingValuePerCard * stage.cardsPerTurn + resourceValue * stage.resourceGainPerTurn + stage.calculationVariables.perTurnValueAdjustment;
                 var defensiveValue = hpValue + shieldValue + aegisValue + dodgeValue + armorValue + resistanceValue + stage.calculationVariables.startingDefensiveValueAdjustment;
                 var averageTurnsAlive = defensiveValue / _stageDefensiveValuePerTurnAliveMap[stage.stage];
-                var activeValue = averageTurnsAlive * valuePerTurn;
+                var activeValue = WithFallOff(valuePerTurn, Mathf.RoundToInt(averageTurnsAlive), 0.9f);
                 var startingResourceValue = resourceValue * stage.startingResourceAmount;
                 var resourceMaxValue = WithFallOff(_maxResourceFactor * resourceValue, stage.maxResourceAmount, 0.8f);
                 int totalValue = Mathf.RoundToInt(activeValue + startingValue + resourceMaxValue + startingResourceValue);
