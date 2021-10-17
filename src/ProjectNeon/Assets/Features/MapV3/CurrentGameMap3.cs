@@ -53,7 +53,7 @@ public class CurrentGameMap3 : ScriptableObject
     private void ApplyUnvisitedNodeGlobalEffects()
     {
         CurrentChoices.Without(CurrentNode.Value).ForEach(m =>
-            globalEffects.ApplyById(m.VisitedGlobalEffectId, new GlobalEffectContext(globalEffects)));
+            globalEffects.ApplyById(m.UnVisitedGlobalEffectId, new GlobalEffectContext(globalEffects)));
     }
 
     private void UpdateSeed() => CurrentNodeRngSeed = Guid.NewGuid().GetHashCode();

@@ -9,21 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1438d37d13fd4457b1574275a4c88bc1, type: 3}
-  m_Name: _NoGlobalEffect
+  m_Script: {fileID: 11500000, guid: 0afb03af2a154c7786638821429910f9, type: 3}
+  m_Name: EnemiesStartBattleWithPlus2Primary
   m_EditorClassIdentifier: 
-  id: 6
+  id: 2
   data:
-    ShortDescription: 
-    FullDescription: 
-    EffectType: 0
+    OriginatingId: -1
+    ShortDescription: Juiced Foes
+    FullDescription: Enemies have +2 Primary Stat
+    EffectType: 3
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
     BattleEffect:
       Scope: 1
-      Group: 3
+      Group: 1
       EffectData:
         EffectType: 68
         Conditions: []
@@ -39,7 +40,7 @@ MonoBehaviour:
         EffectScope:
           UseConstant: 0
           ConstantValue: 
-          Variable: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
+          Variable: {fileID: 11400000, guid: a961f902c2ecfd54ebfbfe875405e991, type: 2}
         HitsRandomTargetMember: 0
         TargetsSource: 0
         ReTargetScope: 0
