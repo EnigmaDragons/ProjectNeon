@@ -31,7 +31,6 @@ MonoBehaviour:
   maxHp: 64
   maxShield: 24
   startingShield: 0
-  toughness: 4
   attack: 0
   magic: 10
   armor: 0
@@ -40,9 +39,11 @@ MonoBehaviour:
   economy: 0
   resource1: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
   resource2: {fileID: 0}
-  skills:
-  - SkillName: {fileID: 11400000, guid: e77ea7de58ad0b042842ddd4c69e087a, type: 2}
   additionalStartingCards: []
+  excludedStartingCards:
+  - {fileID: 11400000, guid: 808b9b75c1cc3dc41a81cdf15c5af7cb, type: 2}
+  - {fileID: 11400000, guid: ce63e4619f2dc9b4591f08bd2a3cbe2d, type: 2}
+  - {fileID: 11400000, guid: 94f18529800b56842a04348ebcb9d57a, type: 2}
   flavorDetails:
     RoleDescription: Multi-Target Striker
     HeroDescription: Burns foes with massive fire spells and damage over time effects,
