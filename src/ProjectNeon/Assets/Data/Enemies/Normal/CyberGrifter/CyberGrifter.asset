@@ -51,21 +51,64 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 101
+    powerLevel: 106
     calculationVariables:
-      startingDefensiveValueAdjustment: 0
+      startingDefensiveValueAdjustment: 5
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 49.00078
+      startingPower: 54.00078
       perCardValue: 9.5
       resourceValue: 3.1350002
       perTurnPower: 12.635
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 4.900078
-      calculatedPowerLevel: 101
-    startOfBattleEffects: []
+      estimatedTurnsAlive: 5.400078
+      calculatedPowerLevel: 106
+    startOfBattleEffects:
+    - EffectType: 58
+      Conditions: []
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
     Cards:
     - {fileID: 11400000, guid: 5c79a808f6b1810439b70f8a6d14ce33, type: 2}
     - {fileID: 11400000, guid: a925973019f59c443a49d7109e22952c, type: 2}
