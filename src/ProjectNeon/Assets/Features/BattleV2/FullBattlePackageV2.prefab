@@ -1,90 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1052642685885864350
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1419490940539290049}
-  - component: {fileID: 834742665147047373}
-  - component: {fileID: 2608378948485660946}
-  m_Layer: 0
-  m_Name: FMODBattleSoundGuy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1419490940539290049
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052642685885864350}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1205.9148, y: 649.7754, z: -666.4174}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3691897983731577340}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &834742665147047373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052642685885864350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf8b94f3426eef45b3d01d2f4cd17a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEnemyDetalisShown: event:/BattleScene/SHOW_ENEMY_DETALIS
-  OnEnemyDetalisHidden: event:/BattleScene/ENEMY_DETAILS_HIDE
-  OnCardPresented: event:/BattleScene/CARD_BATTLE_HOVER
-  OnCardHoverExit: event:/BattleScene/CARD_HOVER_EXIT
-  OnCardAiming: event:/BattleScene/AIM
-  OnCardAimingLONG: event:/BattleScene/AIM_LONG
-  OnCardAimingTRASH: event:/BattleScene/CARD_AIMING_TRASH
-  OnTooltipHover: event:/DeckBulder_Scene/Hover
-  OnCardRecycled: event:/BattleScene/RECYCLE_CARD
-  OnCardDiscarded: event:/BattleScene/CARD_DISCARDED
-  OnCardSelected: event:/BattleScene/CARD_CHOSEN
-  OnCardDrawn: event:/BattleScene/DRAW_C
-  OnCreditsChanged: event:/BattleScene/CREDITS
-  OnCardShuffled: event:/BattleScene/CARD_SHUFFLE
-  OnCardReZone: event:/BattleScene/CARD_RES_ZONE
-  OnCardSwapped: event:/BattleScene/CARD_SWAP
-  OnCardRightClick: event:/BattleScene/CARD_CLICK_H1
-  OnCardRightClickBack: event:/BattleScene/CARD_UNCLICK_H1
---- !u!114 &2608378948485660946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052642685885864350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  Event: event:/BattleScene/BATTLE_MUSIC
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!1 &1916250308574757258
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +78,7 @@ Transform:
   - {fileID: 5070223445302619428}
   - {fileID: 4638531453139413557}
   - {fileID: 8122977246993846093}
-  - {fileID: 1419490940539290049}
+  - {fileID: 3352821415250771768}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -826,6 +741,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6633110426883898383, guid: e5db9088f61cf2e40bd5e03f2a387e19, type: 3}
   m_PrefabInstance: {fileID: 3222068311348785986}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3275917137303341154
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3691897983731577340}
+    m_Modifications:
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511220457973149351, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+      propertyPath: m_Name
+      value: FmodBattleSounds
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+--- !u!4 &3352821415250771768 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 284281031480883034, guid: 73d83f69b716e6b40ae1a7bb27bda7a2, type: 3}
+  m_PrefabInstance: {fileID: 3275917137303341154}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3691897983537457058
 PrefabInstance:

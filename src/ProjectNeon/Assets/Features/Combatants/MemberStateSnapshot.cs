@@ -31,7 +31,7 @@ public sealed class MemberStateSnapshot
     public int this[TemporalStatType statType] => Counters.VerboseGetValue(statType.ToString(), n => $"Counter '{n}'") + Stats[statType].CeilingInt();
     public int Hp => Counters[TemporalStatType.HP.ToString()];
     public int MaxHp => Stats[StatType.MaxHP].CeilingInt();
-    public int MissingHp=> MaxHp - Hp;
+    public int MissingHp => MaxHp - Hp;
     public int Shield => Counters[TemporalStatType.Shield.ToString()];
     public IResourceType PrimaryResource => ResourceTypes.Any() ? ResourceTypes[0] : new InMemoryResourceType();
     public int PrimaryResourceAmount => ResourceTypes.Any() ? Counters[PrimaryResource.Name] : 0;
