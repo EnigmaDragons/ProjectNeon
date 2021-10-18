@@ -7,15 +7,19 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private AdventureProgress2 adventureProgress2;
     [SerializeField] private Adventure defaultAdventure;
+    [SerializeField] private bool allowPlayerToSelectAdventure;
     
     protected override void Execute(StartNewGame msg)
     {
         io.ClearCurrentSlot();
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
         io.SetShouldShowTutorials(msg.ShouldShowTutorials);
-        SelectDefaultAdventure();
+        if (allowPlayerToSelectAdventure)
+            navigator.NavigateToAdventureSelection();
+        else
+            SelectDefaultAdventure();
     }
-
+    
     private void SelectDefaultAdventure()
     {
         var adventure = defaultAdventure;
