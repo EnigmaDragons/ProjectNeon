@@ -623,9 +623,16 @@ namespace CharacterCreator2D
                 slot.material.SetTexture("_ColorMask", part.colorMask);
             }
             {
-                foreach (Sprite s in part.sprites)
-                    this.transform.Find(links[s.name]).GetComponent<SpriteRenderer>().sprite = s;
-                ResourcesManager.ReleaseZeroReference();
+                try
+                {
+                    foreach (Sprite s in part.sprites)
+                        this.transform.Find(links[s.name]).GetComponent<SpriteRenderer>().sprite = s;
+                    ResourcesManager.ReleaseZeroReference();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning(e);
+                }
             }
             if (SetupData.colorableSpriteLinks.ContainsKey(slotCategory))
                 SetPartColor(slotCategory, ColorCode.Color1, slot.color1);
