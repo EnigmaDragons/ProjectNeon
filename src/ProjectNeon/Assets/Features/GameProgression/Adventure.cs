@@ -44,7 +44,7 @@ public class Adventure : ScriptableObject
     public bool IsV2 => dynamicStages != null && dynamicStages.Any();
     
     public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation);
-    public string LockConditionExplanation => lockConditionExplanation;
+    public string LockConditionExplanation => lockConditionExplanation ?? "";
 
     public string AllowedHeroesDescription => allowedHeroesDescription;
 }
