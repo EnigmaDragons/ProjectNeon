@@ -15,6 +15,8 @@ public class AdventureDisplayPresenter : MonoBehaviour
     [SerializeField] private GameObject allHeroesText;
     [SerializeField] private TextMeshProUGUI lengthText;
     [SerializeField] private TextMeshProUGUI heroLimitDescriptionLabel;
+    [SerializeField] private GameObject lockVisual;
+    [SerializeField] private TextMeshProUGUI lockReasonLabel;
     
     public void Init(Adventure adventure, Action onSelect)
     {
@@ -24,6 +26,9 @@ public class AdventureDisplayPresenter : MonoBehaviour
         lengthText.text = adventure.DynamicStages.Length + " Chapters";
         DisplayHeroPool(adventure);
         selectButton.onClick.AddListener(() => onSelect());
+        selectButton.enabled = !adventure.IsLocked;
+        lockVisual.SetActive(adventure.IsLocked);
+        lockReasonLabel.text = adventure.LockConditionExplanation;
     }
 
     private void DisplayHeroPool(Adventure adventure)
