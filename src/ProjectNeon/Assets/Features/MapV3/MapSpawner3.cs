@@ -99,7 +99,7 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
         
         progress.TriggeredHeatUpEvent.IfPresent(e =>
         {
-            Message.Publish(new ShowInfoDialog(e.Value.InfoText, "Ok"));
+            Message.Publish(new ShowInfoDialog(e.Value.InfoText, "Got it!"));
             progress.RecordFinishedHeatUpEvent(e.Index);
         });
         SpawnNodes();
