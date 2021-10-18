@@ -70,6 +70,7 @@ public class BattleState : ScriptableObject
     public Member[] MembersWithoutIds => Members.Values.ToArray();
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] EnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
+    public Member[] ConsciousEnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies && x.IsConscious()).ToArray();
     public (Member Member, EnemyInstance Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
     public PlayerState PlayerState => playerState;
     public int MapNodeRngSeed => map.CurrentNodeRngSeed;
