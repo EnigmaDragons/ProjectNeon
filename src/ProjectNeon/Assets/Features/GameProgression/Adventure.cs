@@ -6,11 +6,13 @@ using UnityEngine;
 public class Adventure : ScriptableObject
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
+    [SerializeField] private string lockConditionExplanation = "";
     [SerializeField] private Stage[] stages;
     [SerializeField] private DynamicStage[] dynamicStages;
     [SerializeField] private string adventureTitle;
     [SerializeField] private Sprite adventureImage;
     [SerializeField] private int partySize;
+    [SerializeField] private string allowedHeroesDescription = "";
     [SerializeField] private BaseHero[] requiredHeroes;
     [SerializeField] private BaseHero[] bannedHeroes;
     [SerializeField] private int baseNumberOfCardCycles = 2;
@@ -40,4 +42,9 @@ public class Adventure : ScriptableObject
     public float RewardCreditsPerPowerLevel => rewardCreditsPerPowerLevel;
     public float XpPerPowerLevel => xpPerPowerLevel;
     public bool IsV2 => dynamicStages != null && dynamicStages.Any();
+    
+    public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation);
+    public string LockConditionExplanation => lockConditionExplanation;
+
+    public string AllowedHeroesDescription => allowedHeroesDescription;
 }
