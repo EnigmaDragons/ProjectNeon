@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Xml.Schema;
 
 public class BlessingClinicServiceProvider : ClinicServiceProvider
 {
@@ -33,7 +34,8 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
                             .ToArray()
                         : _party.Heroes.Select(h => h.Character).ToArray()
                 }})
-                .Where(x => x.blessing.Targets.Length > 0)
+                .Where(x => x.blessing.Targets.Length > 0 && (x.blessingData.IsSingleTarget 
+                    || (x.blessing.Targets.Count(target => target.Stats[x.blessingData.StatRequirement] >= x.blessingData.RequirementThreshold) > 1)))
                 .ToArray()
                 .Shuffled()
                 .Take(3)

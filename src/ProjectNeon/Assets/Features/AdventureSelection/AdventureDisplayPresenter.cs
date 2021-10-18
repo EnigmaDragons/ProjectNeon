@@ -14,28 +14,45 @@ public class AdventureDisplayPresenter : MonoBehaviour
     [SerializeField] private GameObject[] heroIcons;
     [SerializeField] private GameObject allHeroesText;
     [SerializeField] private TextMeshProUGUI lengthText;
+    [SerializeField] private TextMeshProUGUI heroLimitDescriptionLabel;
+    [SerializeField] private GameObject lockVisual;
+    [SerializeField] private TextMeshProUGUI lockReasonLabel;
     
     public void Init(Adventure adventure, Action onSelect)
     {
         image.sprite = adventure.AdventureImage;
         nameText.text = adventure.Title;
         storyText.text = adventure.Story;
-        lengthText.text = adventure.IsV2 ? adventure.DynamicStages.Length + " Chapters" : adventure.Stages.Length + " Chapters";
+        lengthText.text = adventure.DynamicStages.Length + " Chapters";
         DisplayHeroPool(adventure);
         selectButton.onClick.AddListener(() => onSelect());
+        selectButton.enabled = !adventure.IsLocked;
+        lockVisual.SetActive(adventure.IsLocked);
+        lockReasonLabel.text = adventure.LockConditionExplanation;
     }
 
     private void DisplayHeroPool(Adventure adventure)
     {
-        allHeroesText.SetActive(adventure.RequiredHeroes.Length == 0);
-        heroIcons[0].SetActive(adventure.RequiredHeroes.Length > 0);
-        heroIcons[1].SetActive(adventure.RequiredHeroes.Length > 1);
-        heroIcons[2].SetActive(adventure.RequiredHeroes.Length > 2);
-        if (adventure.RequiredHeroes.Length > 0)
-            heroBusts[0].sprite = adventure.RequiredHeroes[0].Bust;
-        if (adventure.RequiredHeroes.Length > 1)
-            heroBusts[1].sprite = adventure.RequiredHeroes[1].Bust;
-        if (adventure.RequiredHeroes.Length > 2)
-            heroBusts[2].sprite = adventure.RequiredHeroes[2].Bust;
+        var hasDescription = !string.IsNullOrWhiteSpace(adventure.AllowedHeroesDescription);
+        allHeroesText.SetActive(adventure.RequiredHeroes.Length == 0 && !hasDescription);
+
+        if (hasDescription)
+        {
+            heroLimitDescriptionLabel.text = adventure.AllowedHeroesDescription;
+            heroIcons.ForEach(h => h.SetActive(false));
+        }
+        else
+        {
+            heroLimitDescriptionLabel.text = "";
+            heroIcons[0].SetActive(adventure.RequiredHeroes.Length > 0);
+            heroIcons[1].SetActive(adventure.RequiredHeroes.Length > 1);
+            heroIcons[2].SetActive(adventure.RequiredHeroes.Length > 2);
+            if (adventure.RequiredHeroes.Length > 0)
+                heroBusts[0].sprite = adventure.RequiredHeroes[0].Bust;
+            if (adventure.RequiredHeroes.Length > 1)
+                heroBusts[1].sprite = adventure.RequiredHeroes[1].Bust;
+            if (adventure.RequiredHeroes.Length > 2)
+                heroBusts[2].sprite = adventure.RequiredHeroes[2].Bust;
+        }
     }
 }

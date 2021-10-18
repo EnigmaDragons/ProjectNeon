@@ -34,7 +34,6 @@ MonoBehaviour:
   description: This enemy focuses on disabling your cards
   stageDetails:
   - stage: 1
-    powerLevel: 125
     maxHp: 30
     maxShield: 30
     startingShield: 15
@@ -52,6 +51,20 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
+    powerLevel: 117
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 55.04522
+      perCardValue: 10
+      resourceValue: 3.3000002
+      perTurnPower: 13.3
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 5.504522
+      calculatedPowerLevel: 117
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 519551a77f380c940b568df3acaae9d1, type: 2}

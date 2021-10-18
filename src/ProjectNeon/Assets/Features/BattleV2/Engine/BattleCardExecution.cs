@@ -129,6 +129,8 @@ public static class BattleCardExecution
                 Size = action.AtTargetAnimation.Size, 
                 Color = action.AtTargetAnimation.Color
             });
+        if (type == CardBattleActionType.SpawnEnemy)
+            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset));
         //if (type == CardBattleActionType.Condition)
             // TODO: Implement Conditional Reactive Effects if needed (probably not needed)
         throw new Exception($"Unhandled card battle action type: {type}");

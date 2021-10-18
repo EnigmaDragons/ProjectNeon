@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GlobalEffect/AllStaticGlobalEffects")]
+[CreateAssetMenu(menuName = "GlobalEffects/AllStaticGlobalEffects")]
 public class AllStaticGlobalEffects : ScriptableObject
 {
     private Dictionary<int, GlobalEffect> _map;

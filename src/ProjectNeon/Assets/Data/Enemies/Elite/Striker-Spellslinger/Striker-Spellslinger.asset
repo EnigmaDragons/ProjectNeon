@@ -31,9 +31,9 @@ MonoBehaviour:
   unique: 0
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
   stageDetails:
   - stage: 1
-    powerLevel: 221
     maxHp: 64
     maxShield: 32
     startingShield: 0
@@ -41,7 +41,6 @@ MonoBehaviour:
     startingPhase: 0
     startingDodge: 1
     startingTaunt: 0
-    toughness: 16
     attack: 0
     magic: 19
     leadership: 0
@@ -52,6 +51,20 @@ MonoBehaviour:
     maxResourceAmount: 5
     resourceGainPerTurn: 1
     cardsPerTurn: 2
+    powerLevel: 227
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: -18.5
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 83.21662
+      perCardValue: 18.5
+      resourceValue: 6.105
+      perTurnPower: 24.605
+      maxAndStartingResourcesPower: 4.104514
+      estimatedTurnsAlive: 8.321662
+      calculatedPowerLevel: 227
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: bb6054ca42952b84a8e0fd4459a560ef, type: 2}

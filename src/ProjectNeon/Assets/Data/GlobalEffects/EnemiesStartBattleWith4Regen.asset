@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0afb03af2a154c7786638821429910f9, type: 3}
+  m_Name: EnemiesStartBattleWith4Regen
+  m_EditorClassIdentifier: 
+  id: 1
+  data:
+    OriginatingId: -1
+    ShortDescription: Regenerative Booster
+    FullDescription: Enemies heal 4 every turn
+    EffectType: 3
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    BattleEffect:
+      Scope: 1
+      Group: 1
+      EffectData:
+        EffectType: 20
+        Conditions: []
+        BaseAmount:
+          UseConstant: 1
+          ConstantValue: 4
+          Variable: {fileID: 0}
+        FloatAmount:
+          UseConstant: 1
+          ConstantValue: 0
+          FloatVariable: {fileID: 0}
+        DurationFormula: -1
+        EffectScope:
+          UseConstant: 0
+          ConstantValue: 
+          Variable: {fileID: 11400000, guid: a961f902c2ecfd54ebfbfe875405e991, type: 2}
+        HitsRandomTargetMember: 0
+        TargetsSource: 0
+        ReTargetScope: 0
+        ApplyToEachMemberIndividually: 0
+        StatusTag: 0
+        StatusDetailText: 
+        TurnDelay: 0
+        Formula: 
+        InterpolatePartialFormula:
+          EvaluationPartialFormula: 
+          Prefix: 
+          Suffix: 
+        FlavorText:
+          UseConstant: 1
+          ConstantValue: 
+          Variable: {fileID: 0}
+        ReferencedSequence: {fileID: 0}
+        ReactionConditionType: 0
+        ReactionEffectScope:
+          UseConstant: 1
+          ConstantValue: 
+          Variable: {fileID: 0}
+        ReactionSequence: {fileID: 0}
+        ReactionEffect:
+          reactor: 0
+          scope: 0
+          cardActions: {fileID: 0}
+        BonusCardType: {fileID: 0}
+    CorpName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}

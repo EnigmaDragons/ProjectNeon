@@ -41,14 +41,19 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         _rules = progress.CurrentChapter.NodeTypeOdds2.GenerateMapRules().Concat(new MapGenerationRule3[]
         {
+            // Node Selection
             new EnsureHelpfulOptionsBeforeBoss(gameMap.MaxNodeCompletionHeat, allCorps.ClinicCorps),
             new NoClinicsIfYouAreHighHealth(),
             new NoShopsIfYouAreLowOnMoney(),
             new EnsureAtLeastThreeChoices(),
+            new UseHeatUpEventMapNodeIfTriggered(),
             new OnlyBossOnFinalNode(),
+            new EnsureAtLeastOneTravelableNode(),
+            
+            // Hydration
             new AssignCorpToNodeType(MapNodeType.GearShop, allCorps.GearSellingCorps),
             new AssignCorpToNodeType(MapNodeType.Clinic, allCorps.ClinicCorps),
-            new PreventTravelToEffectedNodes(progress.GlobalEffects.TravelPreventedCorpNodeTypes)
+            new PreventTravelToRelevantNodes(progress.GlobalEffects.TravelPreventedCorpNodeTypes)
         }).ToArray();
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();
@@ -79,9 +84,10 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
     {
         gameMap.CompleteCurrentNode();
         _activeNodes.ForEach(x => Destroy(x.gameObject));
+
         var nodes = Enum.GetValues(typeof(MapNodeType)).Cast<MapNodeType>().Select(x => new MapNode3 { Type = x }).ToList();
         foreach (var rule in _rules)
-            nodes = rule.FilterNodeTypes(nodes, gameMap, partyState, progress);
+            nodes = rule.Apply(nodes, gameMap, partyState, progress);
         var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition).ToArray().Shuffled();
         gameMap.CurrentChoices = new List<MapNode3>();
         for (var i = 0; i < nodes.Count; i++)
@@ -90,19 +96,26 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
             nodes[i].HasEventEnroute = guaranteeEvent || progress.CurrentChapter.NodeTypeOdds2.IsThereTravelEvent(gameMap);
             gameMap.CurrentChoices.Add(nodes[i]);
         }
+        
+        progress.TriggeredHeatUpEvent.IfPresent(e =>
+        {
+            Message.Publish(new ShowInfoDialog(e.Value.InfoText, "Got it!"));
+            progress.RecordFinishedHeatUpEvent(e.Index);
+        });
         SpawnNodes();
     }
 
     private void SpawnNodes()
     {
         var ctx = new AdventureGenerationContext(progress, allEnemies);
+        var fx = progress.GlobalEffects.AllStaticGlobalEffects;
         _activeNodes = gameMap.CurrentChoices.Select(x =>
         {
             var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), _map.transform);
             var midPoint = x.HasEventEnroute 
                 ? StartStoryEvent
                 : (Action<Transform>)(_ => Message.Publish(new ContinueTraveling()));
-            obj.Init(x, gameMap, ctx, midPoint);
+            obj.Init(x, gameMap, ctx, fx, midPoint);
             var rect = (RectTransform) obj.transform;
             rect.pivot = new Vector2(0.5f, 0.5f);
             rect.anchoredPosition = x.Position;

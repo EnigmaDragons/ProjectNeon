@@ -10,3 +10,13 @@ public class MemberStateChanged
         State = after;
     }
 }
+
+public static class MemberStateChangedExtensions
+{
+    public static int MemberId(this MemberStateChanged m) => m.State.MemberId;
+    public static bool GainedHp(this MemberStateChanged m) => m.State.Hp() > m.BeforeState.Hp;
+    public static bool LostHp(this MemberStateChanged m) => m.State.Hp() < m.BeforeState.Hp;
+    public static bool GainedShield(this MemberStateChanged m) => m.State.Shield() > m.BeforeState.Shield;
+    public static bool LostShield(this MemberStateChanged m) => m.State.Shield() < m.BeforeState.Shield;
+    public static bool WasKnockedOut(this MemberStateChanged m) => m.State.IsUnconscious && m.BeforeState.Hp > 0;
+}

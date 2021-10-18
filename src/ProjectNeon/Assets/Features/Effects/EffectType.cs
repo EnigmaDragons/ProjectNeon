@@ -79,6 +79,7 @@ public enum EffectType
     ApplyMultiplicativeStatInjury = 72,
     
     // Miscellaneous
+    Drain = 97,
     SwapLifeForce = 64,
     Kill = 24,
     ShowCustomTooltip = 73,

@@ -8,5 +8,6 @@ public enum ReactiveTargetScope
     OneRandomEnemy = 8,
     AllAllies = 5,
     OneRandomAlly = 7,
+    HealthiestAllyExceptSelf = 9,
     Everyone = 6,
 }
