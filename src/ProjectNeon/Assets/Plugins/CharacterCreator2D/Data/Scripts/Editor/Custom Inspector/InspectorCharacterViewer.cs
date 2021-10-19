@@ -65,10 +65,36 @@ namespace CharacterEditor2D
                 ShowInHierarchy(_character);
             if (GUILayout.Button("Hide Child"))
                 HideInHierarchy(_character);
+            BakeButtons();
             serializedObject.ApplyModifiedProperties();
 
             if (tcolor != _tintcolor.colorValue)
                 _character.RepaintTintColor();
+        }
+
+        private void BakeButtons()
+        {
+            if (Application.isPlaying)
+            {
+                if (_character.IsBaked)
+                {
+                    if (GUILayout.Button("Rebake"))
+                    {
+                        _character.Bake();
+                    }
+                    if (GUILayout.Button("Unbake"))
+                    {
+                        _character.Unbake();
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button("Bake"))
+                    {
+                        _character.Bake();
+                    }
+                }
+            }
         }
 
         void ShowInHierarchy(CharacterViewer character)

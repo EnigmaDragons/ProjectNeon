@@ -123,6 +123,11 @@ namespace CharacterCreator2D
         /// <param name="scale">Scale value ranged from 0 to 1. Different values will be forced to equals if the selected segment is symmetrical.</param>
         public void SetScale(SegmentType segmentType, Vector2 scale)
         {
+            if (!_segmentdatas.ContainsKey(segmentType))
+            {
+                return;
+            }
+
             Vector2 prevscale = GetScale(segmentType);
             //..check symmetrical
             if (_segmentdatas[segmentType].symmetrical)

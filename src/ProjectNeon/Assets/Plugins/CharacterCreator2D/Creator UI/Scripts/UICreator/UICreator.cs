@@ -32,6 +32,9 @@ namespace CharacterCreator2D.UI
         private UIPartColor uipartcolor;
         [HideInInspector]
         public CharacterData defaultCharacter;
+#if UNITY_EDITOR
+        public static System.Action onBakeCharacterAsPrefab; 
+#endif
 
         void Awake()
         {
@@ -227,6 +230,16 @@ namespace CharacterCreator2D.UI
             }
             _processing = false;
         }
+
+        /// <summary>
+        /// Bake character to prefab. Editor only.
+        /// </summary>
+        public void BakeCharacterAsPrefab()
+        {
+#if UNITY_EDITOR
+            onBakeCharacterAsPrefab?.Invoke(); 
+#endif
+        }
     #endregion
         
     // The following code is used for the randomizer in the UI.
@@ -357,13 +370,13 @@ namespace CharacterCreator2D.UI
                             character.EquipPart(c, availparts[c][Random.Range(0, availparts[c].Count)]);
                         break;
                     case SlotCategory.Ear:
-                        if (RollDice() < _RANDSETTINGS[c])
+                        if (RollDice() < _RANDSETTINGS[c] || !excludedcats.Contains(c))
                             character.EquipPart(c, availparts[c][Random.Range(0, availparts[c].Count)]);
                         else
                             character.EquipPart(c, "00", "Base");
                         break;
                     case SlotCategory.BodySkin:
-                        if (RollDice() < _RANDSETTINGS[c])
+                        if (RollDice() < _RANDSETTINGS[c] || !excludedcats.Contains(c))
                             character.EquipPart(c, availparts[c][Random.Range(0, availparts[c].Count)]);
                         else
                             character.EquipPart(c, "Base 00 Male");
@@ -373,7 +386,7 @@ namespace CharacterCreator2D.UI
                         if (RollDice() < pskirt)
                         {
                             character.EquipPart(c, availparts[c][Random.Range(0, availparts[c].Count)]);
-                            if (RollDice() < 50)
+                            if (RollDice() < pskirt)
                                 character.EquipPart(SlotCategory.Pants, "Base 00 Male");
                         }
                         else
