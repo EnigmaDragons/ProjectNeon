@@ -23,7 +23,7 @@ public static class AttackProcessing
             var amountDealt = beforeHp - member.CurrentHp();
             totalHpDamageDealt += amountDealt;
             if (usesDoubleDamage && amountDealt > 0)
-                Message.Publish(new DisplayCharacterWordRequested(member, "Double Damage!"));
+                Message.Publish(new DisplayCharacterWordRequested(member, CharacterReactionType.DoubleDamaged));
         }
         
         // Processing Lifesteal

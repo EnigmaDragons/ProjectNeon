@@ -163,21 +163,21 @@ public class CardResolutionZone : ScriptableObject
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Stun, -1);
-                Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Stunned"));
+                Message.Publish(new DisplayCharacterWordRequested(card.Owner, CharacterReactionType.Stunned));
                 Message.Publish(new CardResolutionFinished(played));
             }
             else if (card.IsAttack && card.Owner.IsBlinded())
             {
                 BattleLog.Write($"{card.Owner.Name} was blinded, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Blind, -1);
-                Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Blinded"));
+                Message.Publish(new DisplayCharacterWordRequested(card.Owner, CharacterReactionType.Blinded));
                 Message.Publish(new CardResolutionFinished(played));
             }
             else if (!card.IsAttack && card.Owner.IsInhibited())
             {
                 BattleLog.Write($"{card.Owner.Name} was inhibited, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Inhibit, -1);
-                Message.Publish(new DisplayCharacterWordRequested(card.Owner, "Inhibited"));
+                Message.Publish(new DisplayCharacterWordRequested(card.Owner, CharacterReactionType.Inhibited));
                 Message.Publish(new CardResolutionFinished(played));
             }
             else
@@ -230,7 +230,7 @@ public class CardResolutionZone : ScriptableObject
                     PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true));
                 else
                     PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
-                Message.Publish(new DisplayCharacterWordRequested(member, "Bonus Card"));
+                Message.Publish(new DisplayCharacterWordRequested(member, CharacterReactionType.BonusCardPlayed));
             }
         }
     }

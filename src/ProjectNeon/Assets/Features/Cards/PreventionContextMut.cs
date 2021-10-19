@@ -19,10 +19,10 @@ public sealed class PreventionContextMut : PreventionContext
         { PreventionType.Aegis, TemporalStatType.Aegis }
     };
     
-    private readonly Dictionary<PreventionType, string> _preventionTypeWords = new Dictionary<PreventionType, string>
+    private readonly Dictionary<PreventionType, CharacterReactionType> _preventionTypeMap = new Dictionary<PreventionType, CharacterReactionType>
     {
-        { PreventionType.Dodge, "Dodged!" },
-        { PreventionType.Aegis, "Prevented!" }
+        { PreventionType.Dodge, CharacterReactionType.Dodged },
+        { PreventionType.Aegis, CharacterReactionType.Aegised }
     };
 
     public PreventionContext WithUpdatedTarget(Target target)
@@ -46,7 +46,7 @@ public sealed class PreventionContextMut : PreventionContext
                 
                 m.Apply(s => s.Adjust(temporalStatType, -1));
                 PreventingMembers[type].Add(m);
-                Message.Publish(new DisplayCharacterWordRequested(m, _preventionTypeWords[type]));
+                Message.Publish(new DisplayCharacterWordRequested(m, _preventionTypeMap[type]));
             });
     }
 
