@@ -3,13 +3,15 @@ public class DisplayCharacterWordRequested
 {
     public int MemberId { get; }
     public string Word { get; }
+    public CharacterReactionType ReactionType { get; }
 
-    public DisplayCharacterWordRequested(Member m, string word)
-        : this(m.Id, word) {}
+    public DisplayCharacterWordRequested(Member m, CharacterReactionType reactionType)
+        : this(m.Id, reactionType) {}
     
-    public DisplayCharacterWordRequested(int memberId, string word)
+    public DisplayCharacterWordRequested(int memberId, CharacterReactionType reactionType)
     {
         MemberId = memberId;
-        Word = word;
+        ReactionType = reactionType;
+        Word = reactionType.DisplayWord();
     }
 }

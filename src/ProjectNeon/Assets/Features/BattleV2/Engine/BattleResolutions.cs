@@ -187,7 +187,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         if (reactionCard.IsPlayableBy(r.Source, state.Party, 1))
         {
             BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
-            Message.Publish(new DisplayCharacterWordRequested(r.Source, "Reaction!"));
+            Message.Publish(new DisplayCharacterWordRequested(r.Source, CharacterReactionType.ReactionCardPlayed));
             var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
             if (r.Source.TeamType == TeamType.Party)
                 card = new Card(state.GetNextCardId(), r.Source, reactionCard, state.GetHeroById(r.Source.Id).Tint, state.GetHeroById(r.Source.Id).Bust);
