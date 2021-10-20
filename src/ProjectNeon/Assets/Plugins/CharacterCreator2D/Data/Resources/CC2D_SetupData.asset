@@ -58,6 +58,7 @@ MonoBehaviour:
   - Mesh_Skirt
   - Armor Body
   - Armor Neck
+  - Ear L
   - Head
   - Eyes B
   - Eyes F
@@ -65,7 +66,7 @@ MonoBehaviour:
   - Mouth F
   - Eyebrow
   - Hair S
-  - Ear
+  - Ear R
   - Facial Hair
   - Nose
   - Hair F
@@ -88,7 +89,8 @@ MonoBehaviour:
   skin:
   - Head
   - Neck
-  - Ear
+  - Ear R
+  - Ear L
   - Nose
   - Body
   - Upper Arm L
@@ -113,46 +115,6 @@ MonoBehaviour:
     packageName: Base
     prefab: {fileID: 4093680032738364, guid: 1bfc7ee1ad844384da24154c27d4caf5, type: 3}
     segmentDatas:
-    - segmentType: 0
-      symmetrical: 1
-      scaledObjects:
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Head
-        defScale: {x: 1, y: 1}
-        minScale: {x: 0.8, y: 0.8}
-        maxScale: {x: 1.2, y: 1.2}
-      positionedObjects:
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Head
-        defaultPos: {x: 0.191, y: -0.215}
-        scaleX: 1
-        minPosX: {x: 0.21, y: -0.1}
-        maxPosX: {x: 0.221, y: -0.22}
-        scaleY: 0
-        minPosY: {x: 0.121, y: -0.216}
-        maxPosY: {x: 0.191, y: -0.215}
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
-        defaultPos: {x: 0.111, y: 0.466}
-        scaleX: 1
-        minPosX: {x: 0.111, y: 0.466}
-        maxPosX: {x: 0.161, y: 0.577}
-        scaleY: 0
-        minPosY: {x: 0.111, y: 0.466}
-        maxPosY: {x: 0.161, y: 0.577}
-    - segmentType: 1
-      symmetrical: 1
-      scaledObjects:
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
-        defScale: {x: 1, y: 1}
-        minScale: {x: 0.8, y: 0.8}
-        maxScale: {x: 1.5, y: 1.5}
-      positionedObjects:
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
-        defaultPos: {x: 0.111, y: 0.466}
-        scaleX: 1
-        minPosX: {x: 0.05, y: 0.445}
-        maxPosX: {x: 0.168, y: 0.495}
-        scaleY: 0
-        minPosY: {x: 0, y: 0}
-        maxPosY: {x: 0, y: 0}
     - segmentType: 2
       symmetrical: 0
       scaledObjects:
@@ -476,13 +438,13 @@ MonoBehaviour:
     - segmentType: 7
       symmetrical: 0
       scaledObjects:
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg R/Bone_Upper Leg R/Upper Leg
-          R
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg R/Bone_Upper Leg R/Upper
+          Leg R
         defScale: {x: 1, y: 1}
         minScale: {x: 0.8, y: 0.7}
         maxScale: {x: 1.2, y: 1.2}
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg L/Bone_Upper Leg L/Upper Leg
-          L
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg L/Bone_Upper Leg L/Upper
+          Leg L
         defScale: {x: 1, y: 1}
         minScale: {x: 0.8, y: 0.7}
         maxScale: {x: 1.2, y: 1.2}
@@ -502,8 +464,8 @@ MonoBehaviour:
         minScale: {x: 1, y: 0.66}
         maxScale: {x: 1, y: 1.26}
       positionedObjects:
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg R/Bone_Upper Leg R/Upper Leg
-          R
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg R/Bone_Upper Leg R/Upper
+          Leg R
         defaultPos: {x: 1.235, y: -0.003}
         scaleX: 0
         minPosX: {x: 0, y: 0}
@@ -520,8 +482,8 @@ MonoBehaviour:
         scaleY: 1
         minPosY: {x: 1.732, y: 0.038}
         maxPosY: {x: 3.19, y: -0.03}
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg L/Bone_Upper Leg L/Upper Leg
-          L
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg L/Bone_Upper Leg L/Upper
+          Leg L
         defaultPos: {x: 1.273, y: -0.061}
         scaleX: 0
         minPosX: {x: 0, y: 0}
@@ -764,10 +726,6 @@ MonoBehaviour:
         scaleY: 1
         minPosY: {x: 0.1, y: 5.55}
         maxPosY: {x: 0.1, y: 5.8}
-  - bodyType: 1
-    packageName: Base
-    prefab: {fileID: 4538193579268088, guid: e84fa334d6fc41b469b4f21a1b2bab22, type: 3}
-    segmentDatas:
     - segmentType: 0
       symmetrical: 1
       scaledObjects:
@@ -776,19 +734,29 @@ MonoBehaviour:
         minScale: {x: 0.8, y: 0.8}
         maxScale: {x: 1.2, y: 1.2}
       positionedObjects:
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Head
-        defaultPos: {x: 0.334, y: -0.174}
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head
+        defaultPos: {x: 0.9, y: 0.032}
         scaleX: 1
-        minPosX: {x: 0.27, y: -0.089}
-        maxPosX: {x: 0.542, y: -0.175}
+        minPosX: {x: 0.73, y: 0.1}
+        maxPosX: {x: 0.99, y: 0.03}
         scaleY: 0
         minPosY: {x: 0, y: 0}
         maxPosY: {x: 0, y: 0}
       - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
-        defaultPos: {x: 0.254, y: 0.507}
+          R
+        defaultPos: {x: 0.111810505, y: 0.4663736}
         scaleX: 1
-        minPosX: {x: 0.179, y: 0.463}
-        maxPosX: {x: 0.27, y: 0.56}
+        minPosX: {x: 0.11, y: 0.33}
+        maxPosX: {x: 0.11, y: 0.56}
+        scaleY: 0
+        minPosY: {x: 0, y: 0}
+        maxPosY: {x: 0, y: 0}
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
+          L
+        defaultPos: {x: 0.082, y: -0.728}
+        scaleX: 1
+        minPosX: {x: 0.08, y: -0.59}
+        maxPosX: {x: 0.09, y: -0.81}
         scaleY: 0
         minPosY: {x: 0, y: 0}
         maxPosY: {x: 0, y: 0}
@@ -796,18 +764,21 @@ MonoBehaviour:
       symmetrical: 1
       scaledObjects:
       - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
+          R
         defScale: {x: 1, y: 1}
         minScale: {x: 0.8, y: 0.8}
-        maxScale: {x: 1.5, y: 1.5}
-      positionedObjects:
+        maxScale: {x: 1.2, y: 1.2}
       - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
-        defaultPos: {x: 0.254, y: 0.507}
-        scaleX: 1
-        minPosX: {x: 0.155, y: 0.471}
-        maxPosX: {x: 0.294, y: 0.553}
-        scaleY: 0
-        minPosY: {x: 0, y: 0}
-        maxPosY: {x: 0, y: 0}
+          L
+        defScale: {x: 1, y: 1}
+        minScale: {x: 0.8, y: 0.8}
+        maxScale: {x: 1.2, y: 1.2}
+      positionedObjects: []
+    manager: {fileID: 11400000, guid: 5c53f9ea1eda5b64c94171dc291e9420, type: 2}
+  - bodyType: 1
+    packageName: Base
+    prefab: {fileID: 4538193579268088, guid: e84fa334d6fc41b469b4f21a1b2bab22, type: 3}
+    segmentDatas:
     - segmentType: 2
       symmetrical: 0
       scaledObjects:
@@ -1139,13 +1110,13 @@ MonoBehaviour:
     - segmentType: 7
       symmetrical: 0
       scaledObjects:
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg R/Bone_Upper Leg R/Upper Leg
-          R
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg R/Bone_Upper Leg R/Upper
+          Leg R
         defScale: {x: 1, y: 1}
         minScale: {x: 0.8, y: 0.7}
         maxScale: {x: 1.2, y: 1.2}
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg L/Bone_Upper Leg L/Upper Leg
-          L
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg L/Bone_Upper Leg L/Upper
+          Leg L
         defScale: {x: 1, y: 1}
         minScale: {x: 0.8, y: 0.7}
         maxScale: {x: 1.2, y: 1.2}
@@ -1170,8 +1141,8 @@ MonoBehaviour:
         minScale: {x: 1, y: 1}
         maxScale: {x: 1.08, y: 1}
       positionedObjects:
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg R/Bone_Upper Leg R/Upper Leg
-          R
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg R/Bone_Upper Leg R/Upper
+          Leg R
         defaultPos: {x: 1.291, y: 0.021}
         scaleX: 0
         minPosX: {x: 0, y: 0}
@@ -1179,8 +1150,8 @@ MonoBehaviour:
         scaleY: 1
         minPosY: {x: 0.8, y: 0.05}
         maxPosY: {x: 1.62, y: 0}
-      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg L/Bone_Upper Leg L/Upper Leg
-          L
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Upper Leg L/Bone_Upper Leg L/Upper
+          Leg L
         defaultPos: {x: 1.271, y: -0.074}
         scaleX: 0
         minPosX: {x: 0, y: 0}
@@ -1432,6 +1403,55 @@ MonoBehaviour:
         scaleY: 0
         minPosY: {x: 0, y: 0}
         maxPosY: {x: 0, y: 0}
+    - segmentType: 1
+      symmetrical: 1
+      scaledObjects:
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
+          R
+        defScale: {x: 1, y: 1}
+        minScale: {x: 0.8, y: 0.8}
+        maxScale: {x: 1.2, y: 1.2}
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
+          L
+        defScale: {x: 1, y: 1}
+        minScale: {x: 0.8, y: 0.8}
+        maxScale: {x: 1.2, y: 1.2}
+      positionedObjects: []
+    - segmentType: 0
+      symmetrical: 1
+      scaledObjects:
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Head
+        defScale: {x: 1, y: 1}
+        minScale: {x: 0.8, y: 0.8}
+        maxScale: {x: 1.2, y: 1.2}
+      positionedObjects:
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head
+        defaultPos: {x: 0.84, y: -0.017}
+        scaleX: 1
+        minPosX: {x: 0.68, y: 0.04}
+        maxPosX: {x: 0.99, y: -0.05}
+        scaleY: 0
+        minPosY: {x: 0, y: 0}
+        maxPosY: {x: 0, y: 0}
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
+          R
+        defaultPos: {x: 0.25439692, y: 0.5079293}
+        scaleX: 1
+        minPosX: {x: 0.25, y: 0.35}
+        maxPosX: {x: 0.25, y: 0.62}
+        scaleY: 0
+        minPosY: {x: 0, y: 0}
+        maxPosY: {x: 0, y: 0}
+      - objectPath: Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear
+          L
+        defaultPos: {x: 0.26300132, y: -0.69700056}
+        scaleX: 1
+        minPosX: {x: 0.25, y: -0.56}
+        maxPosX: {x: 0.27, y: -0.78}
+        scaleY: 0
+        minPosY: {x: 0, y: 0}
+        maxPosY: {x: 0, y: 0}
+    manager: {fileID: 11400000, guid: 5c53f9ea1eda5b64c94171dc291e9420, type: 2}
   defaultMaterials:
   - slotCategory: 0
     material: {fileID: 2100000, guid: 8b5427ac75d9c4d4595e7ce935b3b0bf, type: 2}
@@ -1455,3 +1475,8 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: 365b4eeb3a0288241b81352aae0a02e2, type: 2}
   - slotCategory: 16
     material: {fileID: 2100000, guid: a77542b643bc34943a264da3bfc1952d, type: 2}
+  defaultBakedMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  defaultBakeSkinShader: {fileID: 4800000, guid: 6d18b3157bd4c96489514a44c42a14df,
+    type: 3}
+  defaultBakeArmorShader: {fileID: 4800000, guid: 78cb8e4231619aa4cabea202cc3f2fed,
+    type: 3}

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CharacterCreator2D
@@ -98,6 +96,16 @@ namespace CharacterCreator2D
         /// </summary>
         public PartSlot bodySkin;
 
+        private readonly PartSlot _default = new PartSlot();
+
+        public PartSlot this[SlotCategory slotCategory]
+        {
+            get
+            {
+                return GetSlot(slotCategory);
+            }
+        }
+
         /// <summary>
         /// Returns PartSlot of a given SlotCategory.
         /// </summary>
@@ -108,44 +116,62 @@ namespace CharacterCreator2D
             switch (slotCategory)
             {
                 case SlotCategory.Armor:
-                    return this.armor;
+                    return CheckExistance(ref armor);
                 case SlotCategory.Boots:
-                    return this.boots;
+                    return CheckExistance(ref boots);
                 case SlotCategory.Ear:
-                    return this.ear;
+                    return CheckExistance(ref ear);
                 case SlotCategory.Eyebrow:
-                    return this.eyebrow;
+                    return CheckExistance(ref eyebrow);
                 case SlotCategory.Eyes:
-                    return this.eyes;
+                    return CheckExistance(ref eyes);
                 case SlotCategory.FacialHair:
-                    return this.facialHair;
+                    return CheckExistance(ref facialHair);
                 case SlotCategory.Gloves:
-                    return this.gloves;
+                    return CheckExistance(ref gloves);
                 case SlotCategory.Hair:
-                    return this.hair;
+                    return CheckExistance(ref hair);
                 case SlotCategory.Helmet:
-                    return this.helmet;
+                    return CheckExistance(ref helmet);
                 case SlotCategory.Mouth:
-                    return this.mouth;
+                    return CheckExistance(ref mouth);
                 case SlotCategory.Nose:
-                    return this.nose;
+                    return CheckExistance(ref nose);
                 case SlotCategory.Pants:
-                    return this.pants;
+                    return CheckExistance(ref pants);
                 case SlotCategory.SkinDetails:
-                    return this.skinDetails;
+                    return CheckExistance(ref skinDetails);
                 case SlotCategory.MainHand:
-                    return this.mainHand;
+                    return CheckExistance(ref mainHand);
                 case SlotCategory.OffHand:
-                    return this.offHand;
+                    return CheckExistance(ref offHand);
                 case SlotCategory.Cape:
-                    return this.cape;
+                    return CheckExistance(ref cape);
                 case SlotCategory.Skirt:
-                    return this.skirts;
+                    return CheckExistance(ref skirts);
                 case SlotCategory.BodySkin:
-                    return this.bodySkin;
+                    return CheckExistance(ref bodySkin);
                 default:
-                    return null;
+                    Debug.LogWarning(
+                        nameof(PartSlot) + " of " +
+                        slotCategory + " in " +
+                        nameof(SlotList) + " not found! Resturn empty intead.");
+                    _default.AssignPart(null);
+                    _default.material = null;
+                    _default.color1 = Color.gray;
+                    _default.color2 = Color.gray;
+                    _default.color3 = Color.gray;
+                    return _default;
             }
+        }
+
+        private PartSlot CheckExistance(ref PartSlot partSlot)
+        {
+            if (partSlot == null)
+            {
+                partSlot = new PartSlot();
+            }
+            return partSlot;
         }
     }
 
@@ -176,5 +202,32 @@ namespace CharacterCreator2D
         /// Third color.
         /// </summary>
         public Color color3 = Color.gray;
+
+        [SerializeField]
+        [ReadOnly]
+        private string _partName;
+        [SerializeField]
+        [ReadOnly]
+        private string _packageName;
+
+        public string AssignedPartName => _partName;
+
+        public string AssignedPackageName => _packageName;
+
+        public void AssignPart(Part part)
+        {
+            if (part)
+            {
+                assignedPart = part;
+                _partName = part.name;
+                _packageName = part.packageName;
+            }
+            else
+            {
+                assignedPart = null;
+                _partName = "";
+                _packageName = "";
+            }
+        }
     }
 }

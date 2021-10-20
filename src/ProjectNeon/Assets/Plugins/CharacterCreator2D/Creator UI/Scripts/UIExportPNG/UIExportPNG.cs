@@ -241,18 +241,14 @@ namespace CharacterCreator2D.UI
 
             if (ta.name == "Atlas")
             {
-                string atlasName = "Atlas ";
-                if (characterViewer.bodyType == BodyType.Male)
-                    atlasName += "Male";
-                else
-                    atlasName += "Female";
+                aimAnimation.value = 0;
+                
                 for (int i = baseAnimation.options.Count; i-- > 0;)
-                    if (baseAnimation.options[i].text == atlasName)
+                    if (baseAnimation.options[i].text == "Atlas")
                     {
                         baseAnimation.value = i;
                         break;
                     }
-                aimAnimation.value = 0;
             }
             else if (ta.name == "Animation") 
             {

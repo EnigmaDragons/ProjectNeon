@@ -49,35 +49,38 @@ namespace CharacterEditor2D
 
         private static bool MakeSureAssetFolderExistInternal(string assetPath)
         {
-            if (!AssetDatabase.IsValidFolder(assetPath))
+            AssetDatabase.Refresh();
+            if (AssetDatabase.IsValidFolder(assetPath))
             {
-                int lastSparatorIndex = assetPath.LastIndexOf('/');
-                if (lastSparatorIndex >= 0)
-                {
-                    string parentPath = assetPath.Remove(lastSparatorIndex);
-                    string folderName = assetPath.Substring(lastSparatorIndex + 1);
-                    if (MakeSureAssetFolderExistInternal(parentPath))
-                    {
-                        if (!string.IsNullOrEmpty(folderName))
-                        {
-                            string result = AssetDatabase.CreateFolder(parentPath, folderName);
-                            if (!string.IsNullOrEmpty(result))
-                            {
-                                // success with result of guid folder
-                                return true;
-                            }
-                            // cannot create asset fodler
-                            return false;
-                        }
-                        // folder end with "/", so still valid
-                        return true;
-                    }
-                }
+                // folder is exist already
+                return true;
+            }
+            int lastSparatorIndex = assetPath.LastIndexOf('/');
+            if (lastSparatorIndex < 0)
+            {
                 // it's not in asset folder
                 return false;
             }
-            // folder is exist already
-            return true;
+            string parentPath = assetPath.Remove(lastSparatorIndex);
+            if (!MakeSureAssetFolderExistInternal(parentPath))
+            {
+                // it's not in asset folder
+                return false;
+            }
+            string folderName = assetPath.Substring(lastSparatorIndex + 1);
+            if (string.IsNullOrEmpty(folderName))
+            {
+                // folder end with "/", so still valid
+                return true;
+            }
+            string result = AssetDatabase.CreateFolder(parentPath, folderName);
+            if (!string.IsNullOrEmpty(result))
+            {
+                // success with result of guid folder
+                return true;
+            }
+            // cannot create asset fodler
+            return false;
         }
 
         public static T LoadScriptable<T>(string path) where T : UnityEngine.ScriptableObject

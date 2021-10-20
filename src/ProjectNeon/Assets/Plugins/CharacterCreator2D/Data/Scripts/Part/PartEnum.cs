@@ -31,7 +31,7 @@ namespace CharacterCreator2D
         BodySkin = 17
     }
 
-    public enum SlotCategory
+    public enum SlotCategory : uint
     {
         Armor = 0,
         Boots = 1,
@@ -79,6 +79,10 @@ namespace CharacterCreator2D
         /// Third Color
         /// </summary>
         public const string Color3 = "_Color3";
+
+        public static readonly int Color1Id = Shader.PropertyToID(Color1);
+        public static readonly int Color2Id = Shader.PropertyToID(Color2);
+        public static readonly int Color3Id = Shader.PropertyToID(Color3);
     }
 
     public enum EmotionType

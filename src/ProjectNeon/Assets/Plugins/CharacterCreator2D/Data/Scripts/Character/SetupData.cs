@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using CharacterCreator2D.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +7,7 @@ namespace CharacterCreator2D
     public class SetupData : ScriptableObject
     {
         #region const
+
         /// <summary>
         /// partLinks['slot_category']['sprite_name'] = 'transform_hierarchy'
         /// </summary>
@@ -41,7 +41,8 @@ namespace CharacterCreator2D
                 SlotCategory.Ear,
                 new Dictionary<string, string>()
                 {
-                    { "Ear","Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear" }
+                    { "Ear R","Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear R" },
+                    { "Ear L","Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Neck/Bone_Neck/Pos_Head/Bone_Head/Ear L" }
                 }
             },
             {
@@ -174,7 +175,7 @@ namespace CharacterCreator2D
             { "Shield B","Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Upper Arm L/Bone_Upper Arm L/Pos_Lower Arm L/Bone_Lower Arm L/Shield B" },
             { "Shield F","Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Upper Arm L/Bone_Upper Arm L/Pos_Lower Arm L/Bone_Lower Arm L/Pos_Hand L/Bone_Hand L/Shield F" }
         };
-        
+
         public static readonly Dictionary<SlotCategory, List<string>> colorableSpriteLinks = new Dictionary<SlotCategory, List<string>>()
         {
             {
@@ -228,15 +229,38 @@ namespace CharacterCreator2D
             { SlotCategory.OffHand, "Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Upper Arm L/Bone_Upper Arm L/Pos_Lower Arm L/Bone_Lower Arm L/Pos_Hand L/Bone_Hand L/Pos_Weapon L/Bone_Weapon L/Muzzle L" }
         };
 
-        public const string capeLink = "Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Cape";
-        #endregion
+        public const string arrowLink = "Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Pos_Upper Arm L/Bone_Upper Arm L/Pos_Lower Arm L/Bone_Lower Arm L/Pos_Hand L/Bone_Hand L/Pos_Weapon L/Bone_Weapon L/Arrow";
+
+        public const string capeLink = "Root/Pos_Hip/Bone_Hip/Pos_Body/Bone_Body/Cape/Mesh_Cape";
+
+        public const string skirtLink = "Root/Pos_Hip/Bone_Hip/Skirt/Mesh_Skirt";
+
+        #endregion const
 
         public int dataVersion;
         public List<string> order;
         public List<string> skin;
         public List<BodyTypeData> bodyTypeData;
-		public List<MaterialData> defaultMaterials;
-        
+        public List<MaterialData> defaultMaterials;
+        public Material defaultBakedMaterial;
+
+        private bool m_isBodyTypeDataLoaded;
+        private readonly Dictionary<BodyType, BodyTypeData> m_bodyTypeData = new Dictionary<BodyType, BodyTypeData>();
+
+        private static SetupData m_setupData;
+
+        public static SetupData Static
+        {
+            get
+            {
+                if (!m_setupData)
+                {
+                    m_setupData = Resources.Load<SetupData>("CC2D_SetupData");
+                }
+                return m_setupData;
+            }
+        }
+
         /// <summary>
         /// Returns base object of a given BodyType.
         /// </summary>
@@ -250,6 +274,42 @@ namespace CharacterCreator2D
                     return d.prefab;
             }
             return null;
+        }
+
+        public CharacterManager GetCharacterManager(BodyType bodyType)
+        {
+            LoadBodyTypeData();
+            if (!m_bodyTypeData.TryGetValue(bodyType, out BodyTypeData result))
+            {
+                return CharacterManager.DefaultManager;
+            }
+            if (!result.manager)
+            {
+                return CharacterManager.DefaultManager;
+            }
+            return result.manager;
+        }
+
+        private void LoadBodyTypeData()
+        {
+            if (!m_isBodyTypeDataLoaded)
+            {
+                foreach (var btd in bodyTypeData)
+                {
+                    if (btd == null)
+                    {
+                        continue;
+                    }
+                    m_bodyTypeData[btd.bodyType] = btd;
+                }
+                m_isBodyTypeDataLoaded = true;
+            }
+        }
+
+        private void OnDisable()
+        {
+            m_isBodyTypeDataLoaded = false;
+            m_bodyTypeData.Clear();
         }
     }
 }

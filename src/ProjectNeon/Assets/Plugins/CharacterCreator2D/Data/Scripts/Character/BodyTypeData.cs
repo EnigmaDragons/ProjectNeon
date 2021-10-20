@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CharacterCreator2D.Utilities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,5 +13,6 @@ namespace CharacterCreator2D
         public string packageName;
         public Transform prefab;
         public List<SegmentData> segmentDatas;
+        public CharacterManager manager;
     }
 }
