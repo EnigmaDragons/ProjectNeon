@@ -5,7 +5,8 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     [SerializeField] private BattleState battleState;
     [SerializeField, FMODUnity.EventRef] private string onHpGainedEvent;
     [SerializeField, FMODUnity.EventRef] private string onCardFizzledBecauseStunnedEvent;
-    
+    [SerializeField, FMODUnity.EventRef] private string onChainCardPlayed;
+
     private bool debuggingLoggingEnabled = false;
 
     private void OnEnable()
@@ -19,6 +20,8 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
         var memberTransform = battleState.GetTransform(msg.MemberId);
         if (msg.ReactionType == CharacterReactionType.Stunned)
             PlayOneShot(onCardFizzledBecauseStunnedEvent, memberTransform);
+        if (msg.ReactionType == CharacterReactionType.ChainCardPlayed)
+            PlayOneShot(onChainCardPlayed, memberTransform);
     }
 
     private void OnMemberStateChanged(MemberStateChanged msg)
