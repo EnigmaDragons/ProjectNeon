@@ -7,6 +7,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private AdventureConclusionState conclusion;
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
+    [SerializeField] private float secondsBeforeGameOverScreen = 3f;
     [SerializeField] private BattleState state;
     [SerializeField] private BattleRewards eliteReward;
     [SerializeField] private BattleRewards normalReward;
@@ -57,7 +58,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
             AllMetrics.PublishGameLost();
             CurrentGameData.Clear();
             conclusion.Set(false, adventure2.CurrentAdventure.DefeatConclusion);
-            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeReturnToAdventure);
+            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
         }
     }
 }
