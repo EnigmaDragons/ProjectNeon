@@ -16,22 +16,20 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
 
     private void OnCharacterReaction(DisplayCharacterWordRequested msg)
     {
-        if (msg.MemberId < 0)
-            return;
-        
-        var memberTransform = battleState.GetTransform(msg.MemberId);
-        if (msg.ReactionType == CharacterReactionType.Stunned)
-            PlayOneShot(onCardFizzledBecauseStunnedEvent, memberTransform);
+        battleState.GetMaybeTransform(msg.MemberId).IfPresent(memberTransform =>
+        {
+            if (msg.ReactionType == CharacterReactionType.Stunned)
+                PlayOneShot(onCardFizzledBecauseStunnedEvent, memberTransform);
+        });
     }
 
     private void OnMemberStateChanged(MemberStateChanged msg)
     {
-        if (msg.MemberId() < 0)
-            return;
-        
-        var memberTransform = battleState.GetTransform(msg.MemberId());
-        if (msg.GainedHp())
-            PlayOneShot(onHpGainedEvent, memberTransform);
+        battleState.GetMaybeTransform(msg.MemberId()).IfPresent(memberTransform =>
+        {
+            if (msg.GainedHp())
+                PlayOneShot(onHpGainedEvent, memberTransform);
+        });
     }
 
     private void OnDisable()
