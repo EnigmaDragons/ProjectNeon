@@ -50,6 +50,7 @@ public sealed class Maybe<T>
     public static Maybe<T> Present(T val) => new Maybe<T>(val, true);
     
     public static implicit operator Maybe<T>(T obj) => new Maybe<T>(obj);
+    public static implicit operator bool(Maybe<T> maybe) => maybe.IsPresent;
 
     public T2 Select<T2>(Func<T, T2> ifPresent, T2 def)
         => Select(ifPresent, () => def);
