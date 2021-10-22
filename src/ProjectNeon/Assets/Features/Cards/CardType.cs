@@ -42,7 +42,7 @@ public class CardType : ScriptableObject, CardTypeData
     public CardActionV2[] AllCardEffectSteps => Actions.SelectMany(a => a.Actions).ToArray(); 
     public Maybe<CardTypeData> ChainedCard => chainedCard;
     public Maybe<CardTypeData> SwappedCard => swappedCard;
-    public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
+    public HashSet<string> Archetypes => archetypes != null ? new HashSet<string>(archetypes.Where(x => x != null).Select(x => x.Value)) : new HashSet<string>();
     public bool IsWip => isWIP;
     public Maybe<CardCondition> HighlightCondition => highlightCondition != null && highlightCondition.Length > 0
         ? new Maybe<CardCondition>(new AndCardCondition(highlightCondition.Cast<CardCondition>().ToArray()))
