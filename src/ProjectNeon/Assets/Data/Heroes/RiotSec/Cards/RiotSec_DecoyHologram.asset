@@ -10,25 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Arcana_Meditate
+  m_Name: RiotSec_DecoyHologram
   m_EditorClassIdentifier: 
-  id: 428
+  id: 311
   customName: 
-  art: {fileID: 21300000, guid: d8a936e9e5a0e7d41ba872e1e9b54375, type: 3}
-  description: Gives {E[0]}.<br><br>Shield {E[1]}
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  art: {fileID: 21300000, guid: 04d1bfb81aee83f4890a64dd83e45b75, type: 3}
+  description: '{Auto}'
+  typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
+    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    plusXCost: 0
+  onPlayGain:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
   rarity: 0
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: 31aac9399d7d5eb409e8cbbb6a3cbb62, type: 2}
+    group: 2
+    cardActions: {fileID: 11400000, guid: b79b0d0dcfacefe48a0a734c1b7bede1, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -36,7 +40,7 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
+  - {fileID: 11400000, guid: 7d98e58a5a0c0324cba2d160eb477eab, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
