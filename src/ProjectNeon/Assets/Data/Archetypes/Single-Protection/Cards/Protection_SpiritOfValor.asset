@@ -10,32 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Enemy_PoisonLifeForce
+  m_Name: Protection_SpiritOfValor
   m_EditorClassIdentifier: 
-  id: 423
+  id: 322
   customName: 
-  art: {fileID: 21300000, guid: 32a8a517f49d9844f89fde03c32e5afd, type: 3}
-  description: Deal {E[0]} {D[0]}
-  typeDescription: {fileID: 0}
-  tags: 04000000
+  art: {fileID: 21300000, guid: 4d1526e3689c82842924c43eb8a6607b, type: 3}
+  description: Gives {E[0]}
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  tags: 
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
-  rarity: 2
+  rarity: 1
   actionSequences:
-  - scope: 0
-    group: 1
-    cardActions: {fileID: 11400000, guid: 3c260e5ee84a08a40aacdd1f7d4881d0, type: 2}
+  - scope: 1
+    group: 2
+    cardActions: {fileID: 11400000, guid: 0639fd5298c9b3e4da4a6536e9a3d706, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  archetypes: []
+  archetypes:
+  - {fileID: 11400000, guid: 52367da7d75fe6940897f666b23ea1a5, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 1
