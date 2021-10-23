@@ -13,6 +13,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     private bool _isLoading;
     private float _startedTransitionAt;
     private AsyncOperation _loadState;
+    private string _newSceneName;
 
     private void Awake() => Application.targetFrameRate = 60;
 
@@ -27,6 +28,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
         _isLoading = true;
         onStartedLoading.Invoke();
         _startedTransitionAt = Time.timeSinceLevelLoad;
+        _newSceneName = sceneName;
         this.ExecuteAfterDelay(() =>
         {
             _loadState = SceneManager.LoadSceneAsync(sceneName);
@@ -56,6 +58,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
 
     private void OnLoadFinished(AsyncOperation _)
     {
+        Message.Publish(new SceneChanged(_newSceneName));
         _isLoading = false;
         _startedTransitionAt = Time.timeSinceLevelLoad;
         _loadState.completed -= OnLoadFinished;
