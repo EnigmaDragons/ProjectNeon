@@ -21,8 +21,18 @@ public class FmodMusicPlayer : MonoBehaviour
 
     private void Music_Changer(SceneChanged msg)
     {
-        if(msg.CurrentSceneName == "AdventureSelection")
-            Music.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        if(msg.CurrentSceneName == "TitleScreen")
+            Music.setParameterByName("MUSIC_PROGRESS", 0f);
+        if (msg.CurrentSceneName == "AdventureSelection")
+            Music.setParameterByName("MUSIC_PROGRESS", 0f);
+        if (msg.CurrentSceneName == "SquadSelection")
+            Music.setParameterByName("MUSIC_PROGRESS", 0f);
+        if (msg.CurrentSceneName == "GameScene")
+            Music.setParameterByName("MUSIC_PROGRESS", 1f);
+        if (msg.CurrentSceneName == "DeckBuilderScene")
+            Music.setParameterByName("MUSIC_PROGRESS", 1f);
+        if (msg.CurrentSceneName == "BattleSceneV2")
+            Music.setParameterByName("MUSIC_PROGRESS", 2f);
     }
 
     private void OnDestroy()
