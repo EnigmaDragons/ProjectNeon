@@ -42,10 +42,13 @@ public class FmodMusicPlayer : MonoBehaviour
     }
     private void Conclusion_Music(AdventureConclusionState msg)
     {
+        if (!msg.IsVictorious)
+            Music.setParameterByName("MUSIC_PROGRESS", 3f);
         if (msg.IsVictorious)
             Music.setParameterByName("MUSIC_PROGRESS", 4f);
-        else
-            Music.setParameterByName("MUSIC_PROGRESS", 3f);
+        
+        /* else
+             Music.setParameterByName("MUSIC_PROGRESS", 3f);*/
     }
   
 }
