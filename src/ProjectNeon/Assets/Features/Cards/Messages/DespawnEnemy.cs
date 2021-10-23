@@ -1,7 +1,7 @@
 ﻿public class DespawnEnemy
 {
-    public MemberState Member { get; }
+    public Member Member { get; }
 
-    public DespawnEnemy(MemberState member)
+    public DespawnEnemy(Member member)
         => Member = member;
 }
