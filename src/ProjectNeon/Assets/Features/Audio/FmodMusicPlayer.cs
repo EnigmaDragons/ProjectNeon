@@ -17,7 +17,11 @@ public class FmodMusicPlayer : MonoBehaviour
     private void OnEnable()
     {
         Message.Subscribe<SceneChanged>(Music_Changer, this);
+        Message.Subscribe<AdventureConclusionState>(Conclusion_Music, this);
+       
     }
+
+   
 
     private void Music_Changer(SceneChanged msg)
     {
@@ -33,10 +37,15 @@ public class FmodMusicPlayer : MonoBehaviour
             Music.setParameterByName("MUSIC_PROGRESS", 1f);
         if (msg.CurrentSceneName == "BattleSceneV2")
             Music.setParameterByName("MUSIC_PROGRESS", 2f);
+        if (msg.CurrentSceneName == "ConclusionScene")
+            Music.setParameterByName("MUSIC_PROGRESS", 3f);
     }
-
-    private void OnDestroy()
+    private void Conclusion_Music(AdventureConclusionState msg)
     {
-        Music.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        if (msg.IsVictorious)
+            Music.setParameterByName("MUSIC_PROGRESS", 4f);
+        else
+            Music.setParameterByName("MUSIC_PROGRESS", 3f);
     }
+  
 }
