@@ -8,6 +8,7 @@ public class BattleSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnCardHoverExit;
     private FMOD.Studio.EventInstance TrashShaking;
     private FMOD.Studio.EventInstance CardCycle;
+    private FMOD.Studio.EventInstance BattleWonStinger;
     [SerializeField, FMODUnity.EventRef] private string OnCardAiming;
     [SerializeField, FMODUnity.EventRef] private string OnCardAimingLONG;
     [SerializeField, FMODUnity.EventRef] private string OnTooltipHover;
@@ -43,9 +44,26 @@ public class BattleSoundGuy : MonoBehaviour
         Message.Subscribe<SnapBackTweenRequested>(OnCardRightClickBackFUNC, this);
         Message.Subscribe<HoverEntered>(OnHoverEntered, this);
         Message.Subscribe<HoverExited>(OnHoverExited, this);
-
+        Message.Subscribe<WinBattleWithRewards>(OnBattleWonFUNC, this);
+        Message.Subscribe<NavigateToSceneRequested>(OnBattleWonFadeFUNC, this);
     }
 
+    private void OnBattleWonFUNC(WinBattleWithRewards msg)
+    {
+        BattleWonStinger = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/BATTLE_WON_STINGER");
+        BattleWonStinger.start();
+    }
+    
+    private void OnBattleWonFadeFUNC(NavigateToSceneRequested msg)
+    {
+        if (msg.SceneName == "GameScene")
+            BattleWonStinger.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        BattleWonStinger.release();
+        if(msg.SceneName == "ConclusionScene")
+            BattleWonStinger.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        BattleWonStinger.release();
+    }
+        
     private void OnHoverEntered(HoverEntered msg)
     {
         if (msg.ElementName == "CycleCardDropTarget")
