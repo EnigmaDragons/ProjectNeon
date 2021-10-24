@@ -7,4 +7,5 @@
     TargetTeam = 4,
     SelfBuff = 5,
     Pace = 6,
+    Hit = 7,
 }

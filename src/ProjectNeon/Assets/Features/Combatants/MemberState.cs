@@ -300,6 +300,8 @@ public sealed class MemberState : IStats
     {
         if (this[TemporalStatType.PreventDeath] > 0)
             amount = Math.Max(amount, 1 - this[TemporalStatType.HP]);
+        if (amount < 0)
+            Message.Publish(new CharacterAnimationRequested2(MemberId, CharacterAnimationType.Hit));
         Counter(TemporalStatType.HP).ChangeBy(amount);
     }, () => Counter(TemporalStatType.HP).Amount));
 

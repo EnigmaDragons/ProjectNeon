@@ -84,7 +84,8 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
                 _totalSeconds = step.Seconds;
                 _secondsRemaining = step.Seconds;
             }
-            yield return new WaitForSeconds(step.Seconds);
+            if (step.Seconds != 0f)
+                yield return new WaitForSeconds(step.Seconds);
         }
     }
 
