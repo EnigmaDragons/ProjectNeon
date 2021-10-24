@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1223793201214211022}
   - component: {fileID: 5263372705486022182}
   - component: {fileID: 4526737760694903539}
+  - component: {fileID: 6620686462731396689}
   m_Layer: 0
   m_Name: Enemy_TechCeo
   m_TagString: Untagged
@@ -62,6 +63,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6daf2917ddc48cab7c29b62e2c02525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6620686462731396689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103171326686477172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f20a9c71fed411eaa13696996ffb5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3854763595994758342}
+  character: {fileID: 1223793201214211022}
 --- !u!1 &7400798424770173508
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,5 +614,10 @@ PrefabInstance:
 --- !u!4 &4712632813778842830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4563274831274880835, guid: 54905ca4d06e95b478c872c9c2890d2b, type: 3}
+  m_PrefabInstance: {fileID: 9093507462031317901}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3854763595994758342 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5425852157790414667, guid: 54905ca4d06e95b478c872c9c2890d2b, type: 3}
   m_PrefabInstance: {fileID: 9093507462031317901}
   m_PrefabAsset: {fileID: 0}

@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 320712110558409364}
   - component: {fileID: 204204625564630038}
   - component: {fileID: 5340665914926043965}
+  - component: {fileID: 6035748793328639142}
   m_Layer: 0
   m_Name: VictoriaV2
   m_TagString: Untagged
@@ -106,6 +107,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ed78fa110d4d6b96d7dbe590fc8c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6035748793328639142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234168886585938372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f20a9c71fed411eaa13696996ffb5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 8740803610680985327}
+  character: {fileID: 320712110558409364}
 --- !u!1001 &1550273376949550914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166,6 +181,11 @@ PrefabInstance:
 --- !u!4 &3901143401460472385 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2567060777307186435, guid: b6ce85307dc08994f912d594f79885f8, type: 3}
+  m_PrefabInstance: {fileID: 1550273376949550914}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8740803610680985327 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7840274363797813677, guid: b6ce85307dc08994f912d594f79885f8, type: 3}
   m_PrefabInstance: {fileID: 1550273376949550914}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2003291603543086537

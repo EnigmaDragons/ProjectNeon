@@ -55,16 +55,16 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             if (step.StepType == CharacterAnimationStepType.PublishFinished)
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             if (step.StepType == CharacterAnimationStepType.Aim)
-                animator.SetFloat("Aim", step.Aim);
+                SetAnimatorFloat("Aim", step.Aim);
             if (step.StepType == CharacterAnimationStepType.ChangeState)
             {
                 if (step.Layer == 0)
-                    animator.SetBool(_characterAnimations.Idle, false);
+                    SetAnimatorBool(_characterAnimations.Idle, false);
                 if (step.Layer == 1)
-                    animator.SetBool(_characterAnimations.AimIdle, false);
+                    SetAnimatorBool(_characterAnimations.AimIdle, false);
                 if (_currentStates.ContainsKey(step.Layer))
-                    animator.SetBool(_currentStates[step.Layer], false);
-                animator.SetBool(step.Name, true);
+                    SetAnimatorBool(_currentStates[step.Layer], false);
+                SetAnimatorBool(step.Name, true);
                 _currentStates[step.Layer] = step.Name;
             }
             if (step.StepType == CharacterAnimationStepType.ReturnToDefault)
@@ -91,11 +91,11 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
 
     private void ReturnToDefault()
     {
-        animator.SetFloat("Aim", _characterAnimations.Aim);
-        animator.SetBool(_characterAnimations.Idle, true);
-        animator.SetBool(_characterAnimations.AimIdle, true);
+        SetAnimatorFloat("Aim", _characterAnimations.Aim);
+        SetAnimatorBool(_characterAnimations.Idle, true);
+        SetAnimatorBool(_characterAnimations.AimIdle, true);
         foreach (var state in _currentStates)
-            animator.SetBool(state.Value, false);
+            SetAnimatorBool(state.Value, false);
         _currentStates = new Dictionary<int, string>();
         if (!_initializedPosition)
             return;
@@ -104,5 +104,17 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         _totalSeconds = 0f;
         _secondsRemaining = 0f;
         character.localPosition = _start;
+    }
+
+    private void SetAnimatorFloat(string name, float value)
+    {
+        if (animator != null)
+            animator.SetFloat(name, _characterAnimations.Aim);
+    }
+
+    private void SetAnimatorBool(string name, bool value)
+    {
+        if (animator != null)
+            animator.SetBool(name, value);
     }
 }

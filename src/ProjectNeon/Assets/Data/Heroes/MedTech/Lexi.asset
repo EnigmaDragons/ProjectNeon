@@ -27,11 +27,28 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   startingDeck: {fileID: 11400000, guid: e8bc61bd272730a458611d141d43ea5a, type: 2}
   tint: {r: 1, g: 1, b: 1, a: 1}
+  animations:
+    Idle:
+      UseConstant: 1
+      ConstantValue: Idle
+      Variable: {fileID: 0}
+    AimIdle:
+      UseConstant: 1
+      ConstantValue: None
+      Variable: {fileID: 0}
+    Aim: 0
+    crouch: {fileID: 11400000, guid: 3e2c7f44f803c334aa51ba055807ab98, type: 2}
+    slash: {fileID: 0}
+    stab: {fileID: 0}
+    targetSingleEnemy: {fileID: 0}
+    targetTeam: {fileID: 0}
+    selfBuff: {fileID: 0}
+    pace: {fileID: 11400000, guid: 545b34569ceac42408d12ea6027132b7, type: 2}
+    hit: {fileID: 11400000, guid: 6e7165c13314972468c04fc60ae29beb, type: 2}
   startingCredits: 100
   maxHp: 52
   maxShield: 10
   startingShield: 0
-  toughness: 5
   attack: 0
   magic: 10
   armor: 0
@@ -40,9 +57,8 @@ MonoBehaviour:
   economy: 0
   resource1: {fileID: 11400000, guid: 5f59f3b05e7d8f44386acdc4edce5618, type: 2}
   resource2: {fileID: 0}
-  skills:
-  - SkillName: {fileID: 11400000, guid: 6a607c8332b31d346bfa17398b8d8e49, type: 2}
   additionalStartingCards: []
+  excludedStartingCards: []
   flavorDetails:
     RoleDescription: Healer / Leader
     HeroDescription: Provides healing, treats afflications, and various chemical
