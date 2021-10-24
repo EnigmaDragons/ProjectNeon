@@ -17,6 +17,8 @@ public class CharacterAnimationStepEditor : PropertyDrawer
             DisplayProperties(property, ref position, "Name", "Layer");
         if (stepType == CharacterAnimationStepType.Aim)
             DisplayProperties(property, ref position, "Aim");
+        if (stepType == CharacterAnimationStepType.Move)
+            DisplayProperties(property, ref position, "X", "Y");
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -29,6 +31,8 @@ public class CharacterAnimationStepEditor : PropertyDrawer
             height += GetPropertiesHeight(property, "Name", "Layer");
         if (stepType == CharacterAnimationStepType.Aim)
             height += GetPropertiesHeight(property, "Aim");
+        if (stepType == CharacterAnimationStepType.Move)
+            height += GetPropertiesHeight(property, "X", "Y");
         return height;
     }
     

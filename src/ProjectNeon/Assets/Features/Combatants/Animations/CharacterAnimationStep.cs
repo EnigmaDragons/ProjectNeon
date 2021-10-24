@@ -8,4 +8,6 @@ public class CharacterAnimationStep
     public int Layer;
     public float Aim;
     public float Seconds;
+    public float X;
+    public float Y;
 }

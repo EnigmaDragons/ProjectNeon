@@ -137,7 +137,7 @@ public class BattleState : ScriptableObject
             _heroesById[id] = heroes[i];
             _uiTransformsById[id] = partyArea.UiPositions[i];
             _uiTransformsById[id].GetComponentInChildren<ActiveMemberIndicator>()?.Init(id, true);
-            _uiTransformsById[id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, _heroesById[id].Character.Animations);
+            _uiTransformsById[id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, _heroesById[id].Character.Animations, TeamType.Party);
             SetMemberName(id, heroes[i].Character.Name);
         }
 
@@ -150,7 +150,7 @@ public class BattleState : ScriptableObject
             _enemiesById[id] = enemies.Enemies[i];
             _uiTransformsById[id] = enemies.EnemyUiPositions[i];
             _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, false);
-            _uiTransformsById[id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, _enemiesById[id].Animations);
+            _uiTransformsById[id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, _enemiesById[id].Animations, TeamType.Enemies);
             SetMemberName(id, enemies.Enemies[i].Name);
             result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id)));
         }

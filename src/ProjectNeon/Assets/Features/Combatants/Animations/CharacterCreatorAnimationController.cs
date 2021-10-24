@@ -1,25 +1,40 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using CharacterCreator2D.UI;
 using UnityEngine;
 
 public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationRequested2>
 {
     [SerializeField] private Animator animator;
+    [SerializeField] private Transform character;
     
     private int _memberId;
+    private TeamType _team;
     private CharacterAnimations _characterAnimations;
     private IEnumerator _currentCoroutine;
     private Dictionary<int, string> _currentStates;
+    private bool _initializedPosition;
+    private Vector3 _start;
+    private Vector3 _source;
+    private Vector3 _destination;
+    private float _totalSeconds;
+    private float _secondsRemaining;
 
-    public void Init(int memberId, CharacterAnimations characterAnimations)
+    public void Init(int memberId, CharacterAnimations characterAnimations, TeamType team)
     {
         _memberId = memberId;
+        _team = team;
         _characterAnimations = characterAnimations;
         _currentStates = new Dictionary<int, string>();
         ReturnToDefault();
+    }
+
+    private void Update()
+    {
+        if (_totalSeconds == 0f)
+            return;
+        _secondsRemaining = Math.Max(0, _secondsRemaining - Time.deltaTime);
+        character.localPosition = Vector3.Lerp(_destination, _source, _secondsRemaining / _totalSeconds);
     }
     
     protected override void Execute(CharacterAnimationRequested2 msg)
@@ -54,6 +69,21 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             }
             if (step.StepType == CharacterAnimationStepType.ReturnToDefault)
                 ReturnToDefault();
+            if (step.StepType == CharacterAnimationStepType.Move)
+            {
+                if (!_initializedPosition)
+                {
+                    _start = character.localPosition;
+                    _initializedPosition = true;
+                }
+                _source = character.localPosition;
+                if (_team == TeamType.Party)
+                    _destination = _start + new Vector3(step.X, 0, step.Y);
+                else
+                    _destination = _start - new Vector3(step.X, 0, step.Y);
+                _totalSeconds = step.Seconds;
+                _secondsRemaining = step.Seconds;
+            }
             yield return new WaitForSeconds(step.Seconds);
         }
     }
@@ -66,5 +96,12 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         foreach (var state in _currentStates)
             animator.SetBool(state.Value, false);
         _currentStates = new Dictionary<int, string>();
+        if (!_initializedPosition)
+            return;
+        _source = _start;
+        _destination = _start;
+        _totalSeconds = 0f;
+        _secondsRemaining = 0f;
+        character.localPosition = _start;
     }
 }
