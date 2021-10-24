@@ -45,6 +45,8 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             {
                 if (step.Layer == 0)
                     animator.SetBool(_characterAnimations.Idle, false);
+                if (step.Layer == 1)
+                    animator.SetBool(_characterAnimations.AimIdle, false);
                 if (_currentStates.ContainsKey(step.Layer))
                     animator.SetBool(_currentStates[step.Layer], false);
                 animator.SetBool(step.Name, true);
@@ -60,6 +62,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     {
         animator.SetFloat("Aim", _characterAnimations.Aim);
         animator.SetBool(_characterAnimations.Idle, true);
+        animator.SetBool(_characterAnimations.AimIdle, true);
         foreach (var state in _currentStates)
             animator.SetBool(state.Value, false);
         _currentStates = new Dictionary<int, string>();

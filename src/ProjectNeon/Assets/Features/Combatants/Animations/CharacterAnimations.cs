@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterAnimations
 {
     public StringReference Idle = new StringReference("Idle");
+    public StringReference AimIdle = new StringReference("None");
     public float Aim = 0f;
     [SerializeField] private CharacterAnimation crouch;
     [SerializeField] private CharacterAnimation slash;
