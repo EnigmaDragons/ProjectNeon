@@ -12,9 +12,10 @@ public class ArchetypeTints : ScriptableObject
     public Color ForArchetypes(HashSet<string> archetypes)
     {
         if (_tintMap == null)
-            _tintMap = new DictionaryWithDefault<string, Color>(Color.white, tints.ToDictionary(x => x.Archetypes.Any() 
-                ? string.Join("&", x.Archetypes.Where(a => a != null).Select(a => a.Value).OrderBy(a => a)) 
-                : "", x => x.Tint));
+            _tintMap = new DictionaryWithDefault<string, Color>(Color.white, 
+                tints.Where(x => x.Archetypes.None(a => a == null)).ToDictionary(x => x.Archetypes.Any() 
+                    ? string.Join("&", x.Archetypes.Where(a => a != null).Select(a => a.Value).OrderBy(a => a)) 
+                    : "", x => x.Tint));
         return _tintMap[archetypes.Any() ? string.Join("&", archetypes.OrderBy(a => a)) : ""];
     }
 }

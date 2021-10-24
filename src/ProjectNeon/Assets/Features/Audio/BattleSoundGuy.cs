@@ -1,6 +1,3 @@
-
-
-using System;
 using UnityEngine;
 
 public class BattleSoundGuy : MonoBehaviour
@@ -13,7 +10,6 @@ public class BattleSoundGuy : MonoBehaviour
     private FMOD.Studio.EventInstance CardCycle;
     [SerializeField, FMODUnity.EventRef] private string OnCardAiming;
     [SerializeField, FMODUnity.EventRef] private string OnCardAimingLONG;
-    //[SerializeField, FMODUnity.EventRef] private string OnCardAimingTRASH;
     [SerializeField, FMODUnity.EventRef] private string OnTooltipHover;
     [SerializeField, FMODUnity.EventRef] private string OnCardRecycled;
     [SerializeField, FMODUnity.EventRef] private string OnCardDiscarded;
@@ -25,6 +21,7 @@ public class BattleSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnCardSwapped;
     [SerializeField, FMODUnity.EventRef] private string OnCardRightClick;
     [SerializeField, FMODUnity.EventRef] private string OnCardRightClickBack;
+    
     private void OnEnable()
     {
         Message.Subscribe<ShowEnemySFX>(e => PlayOneShot(OnEnemyDetalisShown, e.UiSource), this);
@@ -34,53 +31,49 @@ public class BattleSoundGuy : MonoBehaviour
         Message.Subscribe<TargetChanged>(OnTargetChanged, this);
         Message.Subscribe<ShowTooltip>(OnTrashHovered, this);
         Message.Subscribe<CardDiscarded>(e => PlayOneShot(OnCardRecycled, e.UiSource), this);
-        Message.Subscribe<PlayerCardCanceled>(OnCardCanselledFUNC, this);
+        Message.Subscribe<PlayerCardCanceled>(OnCardCancelled, this);
         Message.Subscribe<PlayerCardSelected>(OnCardSelectedFUNC, this);
         Message.Subscribe<PlayerCardDrawn>(OnCardDrawnFNUC, this);
         Message.Subscribe<PartyCreditsChanged>(OnCreditsChangedFUNC, this);
         Message.Subscribe<PlayerDeckShuffled>(OnCardShuffledFUNC, this);
         Message.Subscribe<SwappedCard>(e => PlayOneShot(OnCardSwapped, e.UiSource), this);
-        //Message.Subscribe<HoverEntered>(e => TrashAnimSoundFUNC(e), this);
-        Message.Subscribe<HoverEntered>(e => TrashSHAKINGSoundFUNC(e), this);
-       Message.Subscribe<HoverExited>(e => TrashSHAKINGSoundSTOP(e), this);
         Message.Subscribe<CharacterHoverChanged>(OnEnemyHoverFUNC, this);
         Message.Subscribe<CardResolutionStarted>(OnCardReFUNC, this);
         Message.Subscribe<TweenMovementRequested>(OnCardRightClickFUNC, this);
         Message.Subscribe<SnapBackTweenRequested>(OnCardRightClickBackFUNC, this);
-        Message.Subscribe<HoverEntered>(e => CardCycledFUNC(e), this);
-        Message.Subscribe<HoverExited>(e => CardCycledSTOPFUNC(e), this);
+        Message.Subscribe<HoverEntered>(OnHoverEntered, this);
+        Message.Subscribe<HoverExited>(OnHoverExited, this);
 
     }
 
-   
-
-    private void CardCycledFUNC(HoverEntered msg)
+    private void OnHoverEntered(HoverEntered msg)
     {
         if (msg.ElementName == "CycleCardDropTarget")
+        {
             CardCycle = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/CARD_CYCLE");
-        CardCycle.start();
+            CardCycle.start();
+        }
+        if (msg.ElementName == "DiscardDropTarget")
+        {
+            TrashShaking = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/TRASH_SHAKING");
+            TrashShaking.start();   
+        }
     }
-    private void CardCycledSTOPFUNC(HoverExited msg)
+    
+    private void OnHoverExited(HoverExited msg)
     {
         if (msg.ElementName == "CycleCardDropTarget")
+        {
             CardCycle.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        CardCycle.release();
-            
-    }
-    private void TrashSHAKINGSoundFUNC(HoverEntered msg)
-    {
+            CardCycle.release();
+        }
         if (msg.ElementName == "DiscardDropTarget")
-            TrashShaking = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/TRASH_SHAKING");
-        TrashShaking.start();
-        
-    }
-    private void TrashSHAKINGSoundSTOP(HoverExited msg)
-    {
-        if (msg.ElementName == "DiscardDropTarget")
+        {
             TrashShaking.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        TrashShaking.release();
+            TrashShaking.release();
+        }
     }
-
+    
     private void OnEnemyDetailsHiddenSFX(HideEnemyDetails msg)
     {
         FMODUnity.RuntimeManager.PlayOneShot(OnEnemyDetalisHidden, Vector3.zero);
@@ -103,19 +96,12 @@ public class BattleSoundGuy : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShot(OnCardReZone, Vector3.zero);
     }
 
-    /*private void TrashAnimSoundFUNC(HoverEntered msg)
-    {
-        if(msg.ElementName == "DiscardDropTarget")
-            FMODUnity.RuntimeManager.PlayOneShot(OnCardAimingTRASH, Vector3.zero);
-    }*/
-
-     private void OnEnemyHoverFUNC(CharacterHoverChanged msg)
+    private void OnEnemyHoverFUNC(CharacterHoverChanged msg)
      {
-        if (msg.Equals("Enemy"))
+        if (msg.HoverCharacter.IsPresentAnd(m => m.Member.TeamType == TeamType.Enemies))
              FMODUnity.RuntimeManager.PlayOneShot(OnTooltipHover, Vector3.zero);
      }
     
-
     private void OnCardShuffledFUNC(PlayerDeckShuffled msg)
     {
         FMODUnity.RuntimeManager.PlayOneShot(OnCardShuffled, Vector3.zero);
@@ -136,7 +122,7 @@ public class BattleSoundGuy : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShot(OnCardSelected, Vector3.zero);
     }
 
-    private void OnCardCanselledFUNC(PlayerCardCanceled msg)
+    private void OnCardCancelled(PlayerCardCanceled msg)
     {
         FMODUnity.RuntimeManager.PlayOneShot(OnCardDiscarded, Vector3.zero);
     }
@@ -156,8 +142,6 @@ public class BattleSoundGuy : MonoBehaviour
     {
         FMODUnity.RuntimeManager.PlayOneShot(OnCardPresented, Vector3.zero);
     }
-
-    
 
     private bool debuggingLoggingEnabled = false;
     private void OnDisable()

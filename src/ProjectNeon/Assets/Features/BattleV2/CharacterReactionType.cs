@@ -12,6 +12,8 @@ public enum CharacterReactionType
     Dodged = 13,
     Aegised = 14,
     DoubleDamaged = 15,
+    LeftBattle = 16,
+    SpawnedIntoBattle = 17
 }
 
 public static class CharacterReactionTypeDisplayWords
@@ -27,7 +29,9 @@ public static class CharacterReactionTypeDisplayWords
             {CharacterReactionType.Inhibited, "Inhibited"},
             {CharacterReactionType.Dodged, "Dodged!"},
             {CharacterReactionType.Aegised, "Prevented!"},
-            {CharacterReactionType.DoubleDamaged, "Double Damage!"}
+            {CharacterReactionType.DoubleDamaged, "Double Damage!"},
+            {CharacterReactionType.LeftBattle, "Is Fleeing!"},
+            {CharacterReactionType.SpawnedIntoBattle, "Just Appeared!"}
         };
 
     public static string DisplayWord(this CharacterReactionType reactionType) =>

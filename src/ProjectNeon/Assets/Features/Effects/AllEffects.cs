@@ -75,7 +75,11 @@ public static class AllEffects
                 Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt()), 
                     card => card.Archetypes.Contains(e.EffectScope.Value)), e.DurationFormula)},
         { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope, cards => cards) },
-        { EffectType.LeaveBattle, e => new SimpleEffect(m => Message.Publish(new DespawnEnemy(m))) },
+        { EffectType.LeaveBattle, e => new SimpleEffect((m, __) =>
+        {
+            Message.Publish(new DisplayCharacterWordRequested(m, CharacterReactionType.LeftBattle));
+            Message.Publish(new DespawnEnemy(m));
+        }) },
         { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))},
         { EffectType.TransferPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 
             BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
