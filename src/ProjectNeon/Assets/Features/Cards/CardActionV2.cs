@@ -8,6 +8,7 @@ public class CardActionV2
     [SerializeField] private EffectData battleEffect = new EffectData();
     [SerializeField] private ActionConditionData conditionData = new ActionConditionData();
     [SerializeField] private AnimationData characterAnimation;
+    [SerializeField] private AnimationData2 characterAnimation2;
     [SerializeField] private AtTargetAnimationData atTargetAnimation;
     
     // TODO: Collapse these two together into an object with the previous. Create a tool to find all usages.
@@ -20,6 +21,7 @@ public class CardActionV2
     public Vector3 EnemySpawnOffset => enemySpawnOffset;
     public ActionConditionData ConditionData => conditionData;
     public AnimationData CharacterAnimation => characterAnimation;
+    public AnimationData2 CharacterAnimation2 => characterAnimation2;
     public AtTargetAnimationData AtTargetAnimation => atTargetAnimation;
     
     public CardActionV2() {}

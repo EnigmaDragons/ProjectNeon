@@ -92,7 +92,7 @@ public static class BattleCardExecution
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset));
         if (type == CardBattleActionType.AnimateCharacter)
-            return new SinglePayload(new CharacterAnimationRequested(ctx.Source.Id, action.CharacterAnimation, ctx.Target));
+            return new SinglePayload(new CharacterAnimationRequested2(ctx.Source.Id, action.CharacterAnimation2.Type));
         if (type == CardBattleActionType.AnimateAtTarget)
             return new SinglePayload(new BattleEffectAnimationRequested
             {
@@ -116,7 +116,7 @@ public static class BattleCardExecution
         if (type == CardBattleActionType.Battle)
             return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffect, action.BattleEffect, source, target, Maybe<Card>.Missing(), xAmountPaid, new PreventionContextMut(target)));
         if (type == CardBattleActionType.AnimateCharacter)
-            return new SinglePayload(new CharacterAnimationRequested(source.Id, action.CharacterAnimation, target));
+            return new SinglePayload(new CharacterAnimationRequested2(source.Id, action.CharacterAnimation2.Type));
         if (type == CardBattleActionType.AnimateAtTarget)
             return new SinglePayload(new BattleEffectAnimationRequested
             {

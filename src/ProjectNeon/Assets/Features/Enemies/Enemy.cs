@@ -22,6 +22,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private bool isHasty;
     [SerializeField] private ResourceType resourceType;
     [SerializeField] private string description;
+    [SerializeField] private CharacterAnimations animations;
     [SerializeField] public EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
     public Corp Corp => corp;
@@ -39,7 +40,7 @@ public class Enemy : ScriptableObject
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
             prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 
-            isHasty, unique, detail.CounterAdjustments, corp);
+            isHasty, unique, detail.CounterAdjustments, corp, animations);
     } 
     public EffectData[] Effects => stageDetails.SelectMany(x => x.startOfBattleEffects).ToArray();
 }
