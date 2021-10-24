@@ -39,7 +39,8 @@ public class EnemyInstance : EnemyType
     public bool IsHasty { get; }
     public bool IsUnique { get; }
     public int ResourceGainPerTurn => _resourceGainPerTurn;
-    
+    public CharacterAnimations Animations { get; }
+
     public bool DeckIsValid => Cards.None(x => x == null);
     public bool IsReadyForPlay => Cards != null && Prefab != null && AI != null;
 
@@ -47,7 +48,8 @@ public class EnemyInstance : EnemyType
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
-        int preferredTurnOrder, string enemyName, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp)
+        int preferredTurnOrder, string enemyName, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp,
+        CharacterAnimations animations)
     {
         _enemyId = enemyId;
         _resourceType = resourceType;
@@ -78,6 +80,7 @@ public class EnemyInstance : EnemyType
         DeathEffect = deathEffect;
         IsHasty = isHasty;
         IsUnique = isUnique;
+        Animations = animations;
         if (_resourceType == null)
             Log.Error($"Null Resource Type for {Name} {enemyId}");
         if (_counterAdjustments == null)
