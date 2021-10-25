@@ -11,8 +11,10 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     private int _memberId;
     private TeamType _team;
     private CharacterAnimations _characterAnimations;
+    
     private IEnumerator _currentCoroutine;
     private Dictionary<int, string> _currentStates;
+    
     private bool _initializedPosition;
     private Vector3 _start;
     private Vector3 _source;
@@ -53,7 +55,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         foreach (var step in _characterAnimations.AnimationMap[msg.Animation])
         {
             if (step.StepType == CharacterAnimationStepType.PublishFinished)
-                Message.Publish(new Finished<CharacterAnimationRequested>());
+                Message.Publish(new Finished<CharacterAnimationRequested2> { Message = msg });
             if (step.StepType == CharacterAnimationStepType.Aim)
                 SetAnimatorFloat("Aim", step.Aim);
             if (step.StepType == CharacterAnimationStepType.ChangeState)
