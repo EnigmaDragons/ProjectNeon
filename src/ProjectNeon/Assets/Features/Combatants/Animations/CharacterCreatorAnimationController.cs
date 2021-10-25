@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationRequested2>
@@ -52,7 +53,8 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
 
     private IEnumerator FinishAnimationInTime(CharacterAnimationRequested2 msg)
     {
-        foreach (var step in _characterAnimations.AnimationMap[msg.Animation])
+        var currentAnimation = _characterAnimations.AnimationMap[msg.Animation];
+        foreach (var step in currentAnimation)
         {
             if (step.StepType == CharacterAnimationStepType.PublishFinished)
                 Message.Publish(new Finished<CharacterAnimationRequested2> { Message = msg });
@@ -89,6 +91,9 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             if (step.Seconds != 0f)
                 yield return new WaitForSeconds(step.Seconds);
         }
+        if (currentAnimation.None(x => x.StepType == CharacterAnimationStepType.PublishFinished))
+            Message.Publish(new Finished<CharacterAnimationRequested2> { Message = msg });
+        ReturnToDefault();
     }
 
     private void ReturnToDefault()
