@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Enemy_FullAuto_E
+  m_Name: Enemy_FullAuto_Animation
   m_EditorClassIdentifier: 
   Actions:
-  - type: 1
+  - type: 30
     battleEffect:
-      EffectType: 30
+      EffectType: 0
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -37,7 +37,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.33 * Attack
+      Formula: 
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -71,7 +71,7 @@ MonoBehaviour:
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     characterAnimation2:
-      Type: 0
+      Type: 9
     atTargetAnimation:
       animation:
         UseConstant: 1

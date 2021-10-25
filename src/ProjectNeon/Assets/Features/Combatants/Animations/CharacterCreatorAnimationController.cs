@@ -78,7 +78,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
                 }
                 _source = character.localPosition;
                 if (_team == TeamType.Party)
-                    _destination = _start + new Vector3(step.X, 0, step.Y);
+                    _destination = _start + new Vector3(step.X * 5, 0, step.Y * 5);
                 else
                     _destination = _start - new Vector3(step.X, 0, step.Y);
                 _totalSeconds = step.Seconds;

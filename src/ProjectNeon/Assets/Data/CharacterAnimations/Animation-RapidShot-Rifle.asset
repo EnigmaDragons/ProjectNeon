@@ -10,25 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6902b50d40b4a0ead2331a6ad25e6cf, type: 3}
-  m_Name: Animation-Crouch
+  m_Name: Animation-RapidShot-Rifle
   m_EditorClassIdentifier: 
   steps:
   - StepType: 2
     Name:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 895cafa0a8b6c9648a6e34fd626f5265, type: 2}
-    Layer: 0
+      Variable: {fileID: 11400000, guid: 6c01e946bab92fa45b55ef0239b7b686, type: 2}
+    Layer: 1
     Aim: 0
-    Seconds: 1.2
+    Seconds: 0.05
+    X: 0
+    Y: 0
+  - StepType: 2
+    Name:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 87326b81dbfff8d40b946d2e9c4e8ab3, type: 2}
+    Layer: 1
+    Aim: 0
+    Seconds: 0.3
     X: 0
     Y: 0
   - StepType: 1
     Name:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 895cafa0a8b6c9648a6e34fd626f5265, type: 2}
-    Layer: 0
+      Variable: {fileID: 11400000, guid: 87326b81dbfff8d40b946d2e9c4e8ab3, type: 2}
+    Layer: 1
     Aim: 0
     Seconds: 0
     X: 0
@@ -37,9 +47,9 @@ MonoBehaviour:
     Name:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 895cafa0a8b6c9648a6e34fd626f5265, type: 2}
-    Layer: 0
+      Variable: {fileID: 11400000, guid: 87326b81dbfff8d40b946d2e9c4e8ab3, type: 2}
+    Layer: 1
     Aim: 0
-    Seconds: 0.05
+    Seconds: 0
     X: 0
     Y: 0

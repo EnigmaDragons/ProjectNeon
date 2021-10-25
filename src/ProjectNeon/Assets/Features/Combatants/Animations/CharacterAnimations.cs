@@ -15,6 +15,8 @@ public class CharacterAnimations
     [SerializeField] private CharacterAnimation selfBuff;
     [SerializeField] private CharacterAnimation pace;
     [SerializeField] private CharacterAnimation hit;
+    [SerializeField] private CharacterAnimation shot;
+    [SerializeField] private CharacterAnimation rapidShot;
 
     public DictionaryWithDefault<CharacterAnimationType, CharacterAnimationStep[]> AnimationMap 
         => new DictionaryWithDefault<CharacterAnimationType, CharacterAnimationStep[]>(new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } })
@@ -27,5 +29,7 @@ public class CharacterAnimations
             { CharacterAnimationType.SelfBuff, selfBuff?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
             { CharacterAnimationType.Pace, pace?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
             { CharacterAnimationType.Hit, hit?.Steps ?? new CharacterAnimationStep[0] },
+            { CharacterAnimationType.Shot, shot?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
+            { CharacterAnimationType.RapidShot, rapidShot?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
         };
 }
