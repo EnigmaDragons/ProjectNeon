@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable]
-public class CharacterAnimations
+[CreateAssetMenu(menuName = "GameContent/CharacterAnimations")]
+public class CharacterAnimations : ScriptableObject
 {
     public StringReference Idle = new StringReference("Idle");
     public StringReference AimIdle = new StringReference("None");
