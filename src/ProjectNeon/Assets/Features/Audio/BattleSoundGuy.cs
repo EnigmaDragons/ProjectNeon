@@ -65,37 +65,51 @@ public class BattleSoundGuy : MonoBehaviour
     private void OnBattleWonFadeFUNC(NavigateToSceneRequested msg)
     {
         if (msg.SceneName == "GameScene")
+        {
             BattleWonStinger.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        BattleWonStinger.release();
-        if(msg.SceneName == "ConclusionScene")
+            BattleWonStinger.release();
+        }
+
+        if (msg.SceneName == "ConclusionScene")
+        {
             BattleWonStinger.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        BattleWonStinger.release();
+            BattleWonStinger.release();
+        }
+        
     }
     private void CardCycledFUNC(HoverEntered msg)
     {
         if (msg.ElementName == "CycleCardDropTarget")
+        {
             CardCycle = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/CARD_CYCLE");
-        CardCycle.start();
+            CardCycle.start();
+        }
     }
     private void CardCycledSTOPFUNC(HoverExited msg)
     {
         if (msg.ElementName == "CycleCardDropTarget")
+        {
             CardCycle.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        CardCycle.release();
+            CardCycle.release();
+        }
             
     }
     private void TrashSHAKINGSoundFUNC(HoverEntered msg)
     {
         if (msg.ElementName == "DiscardDropTarget")
+        {
             TrashShaking = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/TRASH_SHAKING");
-        TrashShaking.start();
+            TrashShaking.start();
+        }
         
     }
     private void TrashSHAKINGSoundSTOP(HoverExited msg)
     {
         if (msg.ElementName == "DiscardDropTarget")
+        {
             TrashShaking.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        TrashShaking.release();
+            TrashShaking.release();
+        }
     }
 
     private void OnEnemyDetailsHiddenSFX(HideEnemyDetails msg)
