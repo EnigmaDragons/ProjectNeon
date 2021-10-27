@@ -57,11 +57,17 @@ public class BattleSoundGuy : MonoBehaviour
     private void OnBattleWonFadeFUNC(NavigateToSceneRequested msg)
     {
         if (msg.SceneName == "GameScene")
+        {
             BattleWonStinger.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        BattleWonStinger.release();
-        if(msg.SceneName == "ConclusionScene")
+            BattleWonStinger.release();
+        }
+
+        if (msg.SceneName == "ConclusionScene")
+        {
             BattleWonStinger.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        BattleWonStinger.release();
+            BattleWonStinger.release();
+        }
+        
     }
         
     private void OnHoverEntered(HoverEntered msg)
