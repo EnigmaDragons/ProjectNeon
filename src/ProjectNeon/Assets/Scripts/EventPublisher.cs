@@ -48,4 +48,5 @@ public class EventPublisher : ScriptableObject
     public void ShowTutorialIfNeeded(string tutorialName) => Message.Publish(new ShowTutorialByNameIfNeeded(tutorialName));
     public void ApplyGlobalEffect(StaticGlobalEffect e) => Message.Publish(new ApplyGlobalEffect(e));
     public void ClearGlobalEffects() => Message.Publish(new ClearGlobalEffects());
+    public void WinGameImmediately() => Message.Publish(new WinGameRequested());
 }
