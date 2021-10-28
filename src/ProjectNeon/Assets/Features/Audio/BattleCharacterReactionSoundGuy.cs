@@ -32,6 +32,8 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
         });
     }
 
+    private MemberMaterialType MaterialTypeOf(int memberId) => battleState.MaterialTypeOf(memberId);
+
     private void OnDisable()
     {
         Message.Unsubscribe(this);

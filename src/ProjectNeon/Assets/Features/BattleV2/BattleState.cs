@@ -83,6 +83,9 @@ public class BattleState : ScriptableObject
     private EnemyInstance[] _battleStartingEnemies;
     private BattleAttritionTracker _tracker;
     public bool IsStoryEventCombat { get; private set; }
+
+    public MemberMaterialType MaterialTypeOf(int memberId) 
+        => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
     
     // Setup
 
