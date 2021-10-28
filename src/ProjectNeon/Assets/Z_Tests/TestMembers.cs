@@ -23,6 +23,7 @@ public static class TestMembers
             NextId(),
             name,
             "Any Class",
+            MemberMaterialType.Organic,
             team,
             initStats(DefaultStats().With(resources)),
             BattleRole.Unknown,
@@ -31,6 +32,6 @@ public static class TestMembers
 
     public static Member AnyAlly() => Any();
 
-    public static Member AnyEnemy() => new Member(NextId(), "Any Name", "Any Class", TeamType.Enemies, DefaultStats(),
+    public static Member AnyEnemy() => new Member(NextId(), "Any Name", "Any Class", MemberMaterialType.Organic, TeamType.Enemies, DefaultStats(),
         BattleRole.Unknown, StatType.Attack);
 }

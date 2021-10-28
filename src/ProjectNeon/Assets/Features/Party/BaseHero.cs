@@ -10,6 +10,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
     [SerializeField] private StringReference className;
+    [SerializeField] private MemberMaterialType materialType;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private CardType basic;
     [SerializeField] private StringVariable[] archetypes;
@@ -40,6 +41,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public string Name => name;
     public Sprite Bust => bust;
     public GameObject Body => body;
+    public MemberMaterialType MaterialType => materialType;
     public string Class => className;
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
