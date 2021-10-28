@@ -58,6 +58,7 @@ public class FmodMusicPlayer : MonoBehaviour
         }
         if (sceneName == "BattleTestScene")
         {
+            //FindObjectOfType<BattleTestSetup>().
             Music.setParameterByName("MUSIC_PROGRESS", 2f);
         }
         if (sceneName == "ConclusionScene")
