@@ -16,9 +16,16 @@ public class ConclusionPresenter : MonoBehaviour
         storyTextBox.text = storyText;
         HideElements();
         if (won)
+        {
             victoryElements.ForEach(g => g.SetActive(true));
+            Message.Publish(new GameWonStingerMSG(transform));
+        }
         else
+        {
             defeatElements.ForEach(g => g.SetActive(true));
+            Message.Publish(new GameLostStingerMSG(transform));
+
+        }
     }
 
     private void HideElements()
