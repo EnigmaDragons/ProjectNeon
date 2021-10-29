@@ -440,6 +440,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1890,6 +1891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6864005767031342246}
   - component: {fileID: 4974594810098962891}
+  - component: {fileID: 6660287636117098941}
   m_Layer: 0
   m_Name: HERO_Astromancer
   m_TagString: Untagged
@@ -1924,6 +1926,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ed78fa110d4d6b96d7dbe590fc8c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6660287636117098941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7902744863988889955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f20a9c71fed411eaa13696996ffb5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  character: {fileID: 6864005767031342246}
 --- !u!1 &7914507161386918814
 GameObject:
   m_ObjectHideFlags: 0

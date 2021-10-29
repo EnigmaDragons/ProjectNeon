@@ -12,6 +12,6 @@
     public void Apply(EffectContext ctx)
     {
         if (ctx.BattleMembers.ContainsKey(_enemyId) && ctx.BattleMembers[_enemyId].IsConscious())
-            Message.Publish(new DespawnEnemy(ctx.BattleMembers[_enemyId].State));
+            Message.Publish(new DespawnEnemy(ctx.BattleMembers[_enemyId]));
     }
 }

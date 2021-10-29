@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionPrevented, WaitDuringResolution>
 {
@@ -129,13 +130,16 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     {
         var member = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset);
         BattleLog.Write($"Spawned {member.Name}");
+        Message.Publish(new MemberSpawned(member, state.GetTransform(member.Id)));
         Message.Publish(new Finished<SpawnEnemy>());
     }
     
     protected override void Execute(DespawnEnemy msg)
     {
-        enemies.Despawn(msg.Member);
+        var pos = state.GetMaybeTransform(msg.Member.Id).Map(t => t.position).OrDefault(Vector3.zero);
+        enemies.Despawn(msg.Member.State);
         BattleLog.Write($"Despawned {msg.Member.Name}");
+        Message.Publish(new MemberDespawned(msg.Member, pos));
         Message.Publish(new Finished<DespawnEnemy>());
     }
 

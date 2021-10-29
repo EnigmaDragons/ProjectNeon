@@ -43,7 +43,11 @@ public static class MessageGroup
             else
             {
                 var payloadData = _currentPayloadQueue.GetNext();
-                Message.Subscribe(new MessageSubscription(payloadData.Finished, _ => ProcessNext(), this));
+                Message.Subscribe(new MessageSubscription(payloadData.Finished, msg =>
+                {
+                    if (payloadData.FinishedCondition(msg))
+                        ProcessNext();
+                }, this));
                 Message.Publish(payloadData.Payload);
             }
         }

@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 2814089146227206758}
   - component: {fileID: 1293393214647342916}
   - component: {fileID: 6418124198900034168}
+  - component: {fileID: 2795556021264241177}
   m_Layer: 0
   m_Name: Enemy_DefensiveTrooperPrefab
   m_TagString: Untagged
@@ -167,6 +168,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6daf2917ddc48cab7c29b62e2c02525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2795556021264241177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6373005449915045395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f20a9c71fed411eaa13696996ffb5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 6250794300244888624}
+  character: {fileID: 2814089146227206758}
 --- !u!1001 &1296255669844171524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -893,6 +908,11 @@ PrefabInstance:
 --- !u!4 &8676187745572507427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3909638507707266261, guid: 8e43f523cf8725a40b6ddcd081c719f1, type: 3}
+  m_PrefabInstance: {fileID: 5632262931059457014}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6250794300244888624 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1771771759587243974, guid: 8e43f523cf8725a40b6ddcd081c719f1, type: 3}
   m_PrefabInstance: {fileID: 5632262931059457014}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7277007963321415301

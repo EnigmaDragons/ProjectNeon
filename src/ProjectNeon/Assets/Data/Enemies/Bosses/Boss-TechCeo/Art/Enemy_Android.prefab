@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 5214763499335919017}
   - component: {fileID: 6325566856324017685}
   - component: {fileID: 6637023874467284019}
+  - component: {fileID: 7288647063860884481}
   m_Layer: 0
   m_Name: Enemy_Android
   m_TagString: Untagged
@@ -93,6 +94,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ed78fa110d4d6b96d7dbe590fc8c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7288647063860884481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6637338776090707040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f20a9c71fed411eaa13696996ffb5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1989029408962933297}
+  character: {fileID: 5214763499335919017}
 --- !u!1 &6857427082389953349
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +470,11 @@ PrefabInstance:
 --- !u!4 &199917869791011264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6600473533063482020, guid: 5cc56f6997a6f6c40b650a1ceb7479ea, type: 3}
+  m_PrefabInstance: {fileID: 6440102985551358820}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1989029408962933297 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4811432366796101973, guid: 5cc56f6997a6f6c40b650a1ceb7479ea, type: 3}
   m_PrefabInstance: {fileID: 6440102985551358820}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7326759797067978093

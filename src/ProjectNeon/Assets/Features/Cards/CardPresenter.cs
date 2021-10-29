@@ -451,17 +451,19 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (!eventData.dragging && _isHand && battleState.Phase == BattleV2Phase.PlayCards)
         {
-        Message.Publish(new CardHoverEnter(this));
-        Message.Publish(new CardHoverSFX(transform));
+            Message.Publish(new CardHoverEnter(this));
+            Message.Publish(new CardHoverSFX(transform));
         }
             
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!IsDragging && _isHand)
+        if (!eventData.dragging && !IsDragging && _isHand)
+        {
             SetHandHighlight(false);
-        Message.Publish(new CardHoverExitSFX(transform));
+            Message.Publish(new CardHoverExitSFX(transform));
+        }
     }
 
     public void OnDrag(PointerEventData eventData)

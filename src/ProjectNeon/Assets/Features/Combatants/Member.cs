@@ -9,6 +9,7 @@ public class Member
     public int Id { get; }
     public string Name { get; }
     public string Class { get; }
+    public MemberMaterialType MaterialType { get; }
     public TeamType TeamType { get; }
     public BattleRole BattleRole { get; }
     public MemberState State { get; }
@@ -20,10 +21,10 @@ public class Member
     
     public string UnambiguousName => TeamType == TeamType.Enemies ? ToString() : Name;
     
-    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
-        : this(id, name, characterClass, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
+    public Member(int id, string name, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
+        : this(id, name, characterClass, materialType, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
     
-    public Member(int id, string name, string characterClass, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp, Maybe<CardTypeData> basicCard)
+    public Member(int id, string name, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp, Maybe<CardTypeData> basicCard)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {name} is 0");
@@ -31,6 +32,7 @@ public class Member
         Id = id;
         Name = name;
         Class = characterClass;
+        MaterialType = materialType;
         TeamType = team;
         BattleRole = battleRole;
         State = new MemberState(id, name, baseStats, primaryStat, initialHp);

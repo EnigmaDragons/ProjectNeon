@@ -5,7 +5,7 @@ using UnityEngine;
 
 public sealed class InterpolatedCardDescriptionsTests
 {
-    private readonly Member Owner = new Member(0, "", "", TeamType.Enemies, 
+    private readonly Member Owner = new Member(0, "", "", MemberMaterialType.Organic, TeamType.Enemies, 
         new StatAddends()
             .With(StatType.Damagability, 1)
             .With(StatType.Attack, 8)
@@ -116,7 +116,7 @@ public sealed class InterpolatedCardDescriptionsTests
     
     private Member OwnerWith(Action<Member> update)
     {
-        var m = new Member(0, "", "", TeamType.Enemies,
+        var m = new Member(0, "", "", MemberMaterialType.Organic, TeamType.Enemies,
             new StatAddends()
                 .With(StatType.Damagability, 1)
                 .With(StatType.Attack, 8)

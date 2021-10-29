@@ -10,11 +10,13 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
     [SerializeField] private StringReference className;
+    [SerializeField] private MemberMaterialType materialType;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private CardType basic;
     [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private Deck startingDeck;
     [SerializeField] private Color tint;
+    [SerializeField] private CharacterAnimations animations;
     [SerializeField] private int startingCredits = 100;
 
     // Stats
@@ -39,6 +41,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public string Name => name;
     public Sprite Bust => bust;
     public GameObject Body => body;
+    public MemberMaterialType MaterialType => materialType;
     public string Class => className;
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
@@ -52,6 +55,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public HeroFlavorDetails Flavor => flavorDetails;
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
     public Color Tint => tint;
+    public CharacterAnimations Animations => animations;
 
     public IStats Stats => new StatAddends
         {

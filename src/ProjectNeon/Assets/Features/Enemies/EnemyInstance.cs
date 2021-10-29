@@ -8,6 +8,7 @@ public class EnemyInstance : EnemyType
 {
     private readonly int _enemyId;
     private readonly IResourceType _resourceType;
+    private readonly MemberMaterialType _materialType;
     private readonly EffectData[] _startOfBattleEffects;
     private readonly int _startingResourceAmount;
     private readonly int _resourceGainPerTurn;
@@ -39,7 +40,8 @@ public class EnemyInstance : EnemyType
     public bool IsHasty { get; }
     public bool IsUnique { get; }
     public int ResourceGainPerTurn => _resourceGainPerTurn;
-    
+    public CharacterAnimations Animations { get; }
+
     public bool DeckIsValid => Cards.None(x => x == null);
     public bool IsReadyForPlay => Cards != null && Prefab != null && AI != null;
 
@@ -47,7 +49,8 @@ public class EnemyInstance : EnemyType
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
-        int preferredTurnOrder, string enemyName, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp)
+        int preferredTurnOrder, string enemyName, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp,
+        CharacterAnimations animations, MemberMaterialType materialType)
     {
         _enemyId = enemyId;
         _resourceType = resourceType;
@@ -65,6 +68,7 @@ public class EnemyInstance : EnemyType
         _resistance = resistance;
         _cardsPerTurn = cardsPerTurn;
         _counterAdjustments = counterAdjustments;
+        _materialType = materialType;
         _corp = corp != null ? corp : new InMemoryCorp();
         Prefab = prefab;
         LibraryCameraOffset = libraryCameraOffset;
@@ -78,6 +82,7 @@ public class EnemyInstance : EnemyType
         DeathEffect = deathEffect;
         IsHasty = isHasty;
         IsUnique = isUnique;
+        Animations = animations;
         if (_resourceType == null)
             Log.Error($"Null Resource Type for {Name} {enemyId}");
         if (_counterAdjustments == null)
@@ -87,7 +92,7 @@ public class EnemyInstance : EnemyType
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Name, "Enemy", TeamType.Enemies, stats, Role, stats.DefaultPrimaryStat(stats));
+        var m = new Member(id, Name, "Enemy", _materialType, TeamType.Enemies, stats, Role, stats.DefaultPrimaryStat(stats));
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;

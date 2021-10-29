@@ -9,6 +9,7 @@ public interface HeroCharacter
     
     Sprite Bust { get; }
     GameObject Body { get; }
+    MemberMaterialType MaterialType { get; }
     string Class { get; }
     BattleRole BattleRole { get; }
     Deck Deck { get; }
@@ -21,6 +22,7 @@ public interface HeroCharacter
     HeroLevelUpPathway LevelUpTree { get; }
     HashSet<string> Archetypes { get; }
     public Color Tint { get; }
+    public CharacterAnimations Animations { get; }
 }
 
 public class InMemoryHeroCharacter : HeroCharacter
@@ -29,6 +31,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public string Name { get; set; } = "Unknown";
     public Sprite Bust { get; set; }
     public GameObject Body { get; set; }
+    public MemberMaterialType MaterialType { get; } = MemberMaterialType.Unknown;
     public string Class { get; set; }
     public BattleRole BattleRole { get; set; }
     public Deck Deck { get; set; }
@@ -42,6 +45,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public HeroLevelUpPathway LevelUpTree { get; set; }
     public HashSet<string> Archetypes { get; set; } = new HashSet<string>();
     public Color Tint { get; } = Color.white;
+    public CharacterAnimations Animations { get; }
 }
 
 public static class HeroCharacterExtensions
@@ -66,7 +70,7 @@ public static class HeroCharacterExtensions
     public static Member AsMemberForLibrary(this HeroCharacter h)
     {
         var stats = h.Stats;
-        var m = new Member(-1, h.Name, h.Class, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.BasicCard));
+        var m = new Member(-1, h.Name, h.Class, h.MaterialType, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.BasicCard));
         return m;
     }
 
