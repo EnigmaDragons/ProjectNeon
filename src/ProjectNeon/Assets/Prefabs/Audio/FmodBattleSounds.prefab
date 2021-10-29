@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
-  onHpGainedEvent: 
+  onHpGainedEvent: event:/BattleScene/HP_GAINED
   onCardFizzledBecauseStunnedEvent: 
+  onCardChained: event:/BattleScene/CARD_CHAINED
+  onDeath: event:/BattleScene/CHAR_DEATH
+  onHPLost: event:/BattleScene/HP_LOST
 --- !u!1 &2588964735260512764
 GameObject:
   m_ObjectHideFlags: 0
