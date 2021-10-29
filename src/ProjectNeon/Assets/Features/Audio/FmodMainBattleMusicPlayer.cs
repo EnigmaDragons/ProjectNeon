@@ -26,11 +26,11 @@ public class FmodMainBattleMusicPlayer : MonoBehaviour
     {
         if (msg.SceneName == "GameScene")
         {
-            BattleMusic.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
         if (msg.SceneName == "ConclusionScene")
         {
-            BattleMusic.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
 
     }
