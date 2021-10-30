@@ -27,15 +27,19 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
         battleState.GetMaybeTransform(msg.MemberId).IfPresent(memberTransform =>
         {
             if (msg.ReactionType == CharacterReactionType.ChainCardPlayed)
+            {
                 PlayOneShot(onCardChained, memberTransform);
-            Debug.Log("CHAIN_SFX_Playing");
+                Debug.Log("CHAIN_SFX_Playing");
+            }
             if (msg.ReactionType == CharacterReactionType.Stunned)
                  PlayOneShot(onCardFizzledBecauseStunnedEvent, memberTransform);
              if (msg.ReactionType == CharacterReactionType.BonusCardPlayed)
                  PlayOneShot(onBonusCardPlayed, memberTransform);
             if (msg.ReactionType == CharacterReactionType.Aegised)
+            {
                 PlayOneShot(onAegised, memberTransform);
-            Debug.Log("AEGISED_SFX_Playing");
+                Debug.Log("AEGISED_SFX_Playing");
+            }
 
         });
     }
