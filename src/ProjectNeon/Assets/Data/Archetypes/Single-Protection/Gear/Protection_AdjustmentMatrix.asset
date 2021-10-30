@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Protection_EmergencyShieldCharger
+  m_Name: Protection_AdjustmentMatrix
   m_EditorClassIdentifier: 
-  id: 101
+  id: 103
   displayName: 
-  description: The first time each hero becomes bloodied, fully charge their shield
-  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
+  description: The first time each hero becomes bloodied, they gain Dodge 1
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 52367da7d75fe6940897f666b23ea1a5, type: 2}
-  rarity: 4
+  rarity: 2
   slot: 2
   priceFactor: 1
   modifiers: []
@@ -46,7 +46,7 @@ MonoBehaviour:
     ReTargetScope: 41
     ApplyToEachMemberIndividually: 0
     StatusTag: 14
-    StatusDetailText: 'When Bloodied: Gain Max Shield'
+    StatusDetailText: 'When Bloodied: Gain Dodge 1'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -67,7 +67,7 @@ MonoBehaviour:
     ReactionEffect:
       reactor: 0
       scope: 1
-      cardActions: {fileID: 11400000, guid: 4a27fe011d377ce4cb188d5866027d17, type: 2}
+      cardActions: {fileID: 11400000, guid: bad7ea17349c7df43aaefb18d1b0de97, type: 2}
     BonusCardType: {fileID: 0}
   battleEndEffects: []
   isWIP: 0
