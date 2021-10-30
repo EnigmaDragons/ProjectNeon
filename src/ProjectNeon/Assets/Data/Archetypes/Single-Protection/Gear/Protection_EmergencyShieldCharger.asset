@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Protection-FormationVisualizer
+  m_Name: Protection_EmergencyShieldCharger
   m_EditorClassIdentifier: 
-  id: 100
+  id: 101
   displayName: 
-  description: 'Start Battle: Gain 1 Taunt'
-  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  description: The first time each hero becomes bloodied, fully charge their shield
+  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 52367da7d75fe6940897f666b23ea1a5, type: 2}
-  rarity: 1
+  rarity: 4
   slot: 2
   priceFactor: 1
   modifiers: []
@@ -26,29 +26,29 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 79
+  - EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
+      UseConstant: 1
+      ConstantValue: 1
       FloatVariable: {fileID: 0}
-    DurationFormula: 
+    DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 5e53e1eb700232049a0c1d2017a544d1, type: 2}
+      Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
-    ReTargetScope: 0
-    ApplyToEachMemberIndividually: 0
-    StatusTag: 0
-    StatusDetailText: 
+    ReTargetScope: 41
+    ApplyToEachMemberIndividually: 1
+    StatusTag: 14
+    StatusDetailText: 'When Bloodied: Gain Max Shield'
     TurnDelay: 0
-    Formula: 1
+    Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
@@ -58,7 +58,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 0
+    ReactionConditionType: 10
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
@@ -66,8 +66,8 @@ MonoBehaviour:
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
-      scope: 0
-      cardActions: {fileID: 0}
+      scope: 1
+      cardActions: {fileID: 11400000, guid: 4a27fe011d377ce4cb188d5866027d17, type: 2}
     BonusCardType: {fileID: 0}
   battleEndEffects: []
   isWIP: 0
