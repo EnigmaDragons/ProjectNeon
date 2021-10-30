@@ -52,7 +52,7 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
             
             // Hydration
             new AssignCorpToNodeType(MapNodeType.GearShop, allCorps.GearSellingCorps),
-            new AssignCorpToNodeType(MapNodeType.Clinic, allCorps.ClinicCorps),
+            new AssignCorpToNodeType(MapNodeType.Clinic, allCorps.ClinicCorps, c => partyState.Credits > 30 || !c.Name.Equals("Medigeneix")),
             new PreventTravelToRelevantNodes(progress.GlobalEffects.TravelPreventedCorpNodeTypes)
         }).ToArray();
         SpawnToken(_map.gameObject);
