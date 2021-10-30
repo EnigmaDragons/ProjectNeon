@@ -28,4 +28,18 @@
 - Blinding
 - Ignite Triggers
 
+## Protection Mechanics:
+- All Cost 0
+- Gives Shield
+- Gives Taunt
+- Gives Dodge
+- Gives Aegis
+- Debuffs Primary Stat for Current Turn
+- Gives Lifesteal
+
+## DefTech Mechanics:
+- Increase Max Shields
+- Gain Energy
+- Spend Energy for Defenses
+- Use Defenses Offensively
 
