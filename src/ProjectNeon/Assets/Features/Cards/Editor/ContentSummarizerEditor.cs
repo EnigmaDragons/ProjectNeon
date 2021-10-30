@@ -14,9 +14,28 @@ public sealed class ContentSummarizerEditor : EditorWindow
     }
 
     private static string HeroName;
+    private static string Archetype;
     
     void OnGUI()
     {
+        Archetype = GUILayout.TextField(Archetype);
+        if (GUILayout.Button("Archetype Content Summary"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(c => !c.IsWip && c.Archetypes.Contains(Archetype))
+                .Select(c => $"Card - {c.Name}");
+
+            var equipments = GetAllInstances<StaticEquipment>()
+                .Where(c => !c.IsWip && c.Archetypes.Contains(Archetype))
+                .Select(e => $"Gear - {e.Name}");
+
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Content By Archetype", "", cards.Concat(equipments).ToArray())
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
         if (GUILayout.Button("Cards By Archetypes"))
         {
             var result = GetAllInstances<CardType>()
