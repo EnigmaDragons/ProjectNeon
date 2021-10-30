@@ -6,6 +6,12 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string onHpGainedEvent;
     [SerializeField, FMODUnity.EventRef] private string onCardFizzledBecauseStunnedEvent;
     [SerializeField, FMODUnity.EventRef] private string onDeath;
+    [SerializeField, FMODUnity.EventRef] private string onShieldGained;
+    [SerializeField, FMODUnity.EventRef] private string onShieldLost;
+    [SerializeField, FMODUnity.EventRef] private string onStealthGained;
+    [SerializeField, FMODUnity.EventRef] private string onStealthExited;
+    [SerializeField, FMODUnity.EventRef] private string onBonusCardPlayed;
+    [SerializeField, FMODUnity.EventRef] private string onAegised;
 
     private bool debuggingLoggingEnabled = false;
 
@@ -21,6 +27,10 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
         {
             if (msg.ReactionType == CharacterReactionType.Stunned)
                 PlayOneShot(onCardFizzledBecauseStunnedEvent, memberTransform);
+            if (msg.ReactionType == CharacterReactionType.BonusCardPlayed)
+                PlayOneShot(onBonusCardPlayed, memberTransform);
+            if (msg.ReactionType == CharacterReactionType.Aegised)
+                PlayOneShot(onBonusCardPlayed, memberTransform);
         });
     }
 
@@ -32,6 +42,14 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
                 PlayOneShot(onHpGainedEvent, memberTransform);
             if (msg.WasKnockedOut())
                 PlayOneShot(onDeath, memberTransform);
+            if (msg.GainedShield())
+                PlayOneShot(onShieldGained, memberTransform);
+            if (msg.LostShield())
+                PlayOneShot(onShieldLost, memberTransform);
+            if (msg.GainedStealth())
+                PlayOneShot(onStealthGained, memberTransform);
+            if (msg.ExitedStealth())
+                PlayOneShot(onStealthExited, memberTransform);
         });
     }
 
