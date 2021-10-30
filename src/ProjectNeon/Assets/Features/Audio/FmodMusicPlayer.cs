@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,7 +20,6 @@ public class FmodMusicPlayer : MonoBehaviour
     }
     private void Start()
     {
-
         string sceneName = SceneManager.GetActiveScene().name;
         if (sceneName == "TitleScreen")
         {
@@ -59,34 +55,28 @@ public class FmodMusicPlayer : MonoBehaviour
         }
         if (sceneName == "BattleTestScene")
         {
-            //FindObjectOfType<BattleTestSetup>().
             Music.setParameterByName("MUSIC_PROGRESS", 2f);
         }
         if (sceneName == "ConclusionScene")
         {
             Music.setParameterByName("MUSIC_PROGRESS", 3f);
         }
-
     }
 
     private void OnEnable()
     {
-        
         //Message.Subscribe<AdventureConclusionState>(Conclusion_Music, this);
         Message.Subscribe<GameLostStingerMSG>(Battle_Lost_FUNC, this);
         Message.Subscribe<GameWonStingerMSG>(Battle_Won_FUNC, this);
         Message.Subscribe<NavigateToSceneRequested>(Battle_Lost_STOP_FUNC, this);
         Message.Subscribe<NavigateToSceneRequested>(Game_Won_STOP_FUNC, this);
         Message.Subscribe<NavigateToSceneRequested>(MusicChanger, this);
-
     }
-
 
     private void MusicChanger(NavigateToSceneRequested msg)
     {
-        {
-            Music.setParameterByName("MUSIC_PROGRESS", 0f);
-        }
+        Music.setParameterByName("MUSIC_PROGRESS", 0f);
+
         if (msg.SceneName == "SquadSelection")
         {
             Music.setParameterByName("MUSIC_PROGRESS", 0f);
@@ -119,21 +109,24 @@ public class FmodMusicPlayer : MonoBehaviour
 
     private void Battle_Lost_FUNC(GameLostStingerMSG msg)
     {  
-            BattleLostStinger = FMODUnity.RuntimeManager.CreateInstance("event:/GameMusic/Battle_Lost_Stinger");
-            BattleLostStinger.start();
-            BattleLostStinger.release();
+        BattleLostStinger = FMODUnity.RuntimeManager.CreateInstance("event:/GameMusic/Battle_Lost_Stinger");
+        BattleLostStinger.start();
+        BattleLostStinger.release();
     }
+    
     private void Battle_Lost_STOP_FUNC(NavigateToSceneRequested msg)
     {
         if (msg.SceneName == "TitleScreen")
-        BattleLostStinger.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            BattleLostStinger.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
+    
     private void Battle_Won_FUNC(GameWonStingerMSG msg)
     {
         GameWonStinger = FMODUnity.RuntimeManager.CreateInstance("event:/GameMusic/Game_Won_Stinger");
         GameWonStinger.start();
         GameWonStinger.release();
     }
+    
     private void Game_Won_STOP_FUNC(NavigateToSceneRequested msg)
     {
         if (msg.SceneName == "TitleScreen")
@@ -144,5 +137,4 @@ public class FmodMusicPlayer : MonoBehaviour
     {
         Message.Unsubscribe(this);
     }
-
 }

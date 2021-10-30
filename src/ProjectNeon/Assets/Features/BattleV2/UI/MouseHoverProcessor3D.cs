@@ -15,6 +15,9 @@ public class MouseHoverProcessor3D : MonoBehaviour
 
     private void Update()
     {
+        if (UiLock.IsLocked)
+            return;
+        
         const int characterLayer = 10;
         const int statusIconLayer = 11;
         

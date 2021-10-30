@@ -14,7 +14,10 @@ public class MouseHoverProcessor2D : MonoBehaviour
     }
 
     private void Update()
-    {
+    {        
+        if (UiLock.IsLocked) 
+            return;
+        
         const int characterLayer = 10;
         const int statusIconLayer = 11;
         

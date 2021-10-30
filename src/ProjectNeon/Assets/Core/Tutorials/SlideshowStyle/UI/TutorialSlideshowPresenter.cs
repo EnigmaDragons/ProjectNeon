@@ -16,9 +16,21 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
     private Maybe<TutorialSlideshow> _current = Maybe<TutorialSlideshow>.Missing();
     private SlideTextPresenter _currentSlideTextPresenter;
     private Maybe<IndexSelector<TutorialSlide>> _maybeSlideWalker = Maybe<IndexSelector<TutorialSlide>>.Missing();
-
-    public bool IsShowingTutorial => HasSlides; 
+    private int _uiLockId;
     
+    protected override void AfterEnable()
+    {
+        _uiLockId = Rng.Int();
+        UiLock.Add(_uiLockId);
+    }
+
+    protected override void AfterDisable()
+    {
+        UiLock.Remove(_uiLockId);
+    }
+    
+    public bool IsShowingTutorial => HasSlides;
+
     public void Enqueue(TutorialSlideshow slideshow)
     {
         if (_current.IsPresent)
