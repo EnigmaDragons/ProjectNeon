@@ -32,10 +32,6 @@ public class FmodMainBattleMusicPlayer : MonoBehaviour
         {
             BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
-        if (msg.SceneName == "TitleScreen")
-        {
-            BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }
 
     }
 
