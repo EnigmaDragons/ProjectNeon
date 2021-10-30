@@ -166,9 +166,8 @@ public sealed class ContentSummarizerEditor : EditorWindow
             }
 
             var expectedAllCounter = expectedCardsCounter + expectedEquipCount;
-            var presentAllCounter = Math.Min(presentCardsCounter, expectedCardsCounter) 
-                + Math.Min(presentEquipCounter, expectedEquipCount) 
-                - (expectedEquipRaritiesCounter - Math.Min(presentEquipRaritiesCounter, expectedEquipRaritiesCounter));
+            var presentAllCounter = Math.Min(presentCardsCounter, expectedCardsCounter)
+                                    + Math.Min(Math.Min(presentEquipCounter, expectedEquipCount), Math.Min(presentEquipRaritiesCounter, expectedEquipRaritiesCounter));
             var percentage = expectedAllCounter > 0 
                 ? presentAllCounter/(float)expectedAllCounter
                 : 0;
