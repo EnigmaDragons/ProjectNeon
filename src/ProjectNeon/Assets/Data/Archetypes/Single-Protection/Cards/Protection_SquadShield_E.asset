@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Protection_SquadSuperShield_E
+  m_Name: Protection_SquadShield_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -25,7 +25,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
@@ -81,7 +81,7 @@ MonoBehaviour:
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 0.03364185, g: 0.322391, b: 0.7924528, a: 1}
+        ConstantValue: {r: 0, g: 0.5568628, b: 1, a: 1}
         Variable: {fileID: 0}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
@@ -109,7 +109,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1.41 * Leadership
+      Formula: 0.67 * Leadership
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
