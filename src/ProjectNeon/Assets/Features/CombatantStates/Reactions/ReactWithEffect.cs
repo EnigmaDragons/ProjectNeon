@@ -21,59 +21,17 @@ public class EffectReactWith : Effect
         { ReactionConditionType.WhenDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp + m.State.Shield))},
         { ReactionConditionType.WhenBlinded, ctx => effect => ctx.Actor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
         { ReactionConditionType.WhenGainedPrimaryResource, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State.PrimaryResourceAmount)) },
-        { ReactionConditionType.OnCausedShieldGain, ctx => effect => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State[TemporalStatType.Shield]))},
-        { ReactionConditionType.OnCausedStun, ctx => effect =>
-            {
-                if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
-                    return false;
-                
-                var targetMembers = effect.Target.Members;
-                var stunsBefore = targetMembers.Select(t => effect.BattleBefore.Members[t.Id])
-                    .Sum(x => x.State[TemporalStatType.Stun] + x.State[TemporalStatType.Disabled]);
-                var stunsAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
-                    .Sum(x => x.State[TemporalStatType.Stun] + x.State[TemporalStatType.Disabled]);
-                return stunsAfter > stunsBefore;
-            }
-        },
-        {
-            ReactionConditionType.OnCausedAffliction, ctx => effect => 
-            {
-                if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
-                    return false;
-                
-                var targetMembers = effect.Target.Members;
-                var numBefore = targetMembers.Select(t => effect.BattleBefore.Members[t.Id])
-                    .Sum(x => x.State.StatusesOfType[StatusTag.DamageOverTime]);
-                var numAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
-                    .Sum(x => x.State.StatusesOfType[StatusTag.DamageOverTime]);
-                return numAfter > numBefore;
-            }
-        },
-        { ReactionConditionType.OnSlay, ctx => effect =>
-            {
-                if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
-                    return false;
-                
-                var targetMembers = effect.Target.Members;
-                var unconsciousBefore = targetMembers.Select(t => effect.BattleBefore.Members[t.Id])
-                    .Count(x => x.IsUnconscious());
-                var unconsciousAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
-                    .Count(x => x.IsUnconscious());
-                return unconsciousAfter > unconsciousBefore;
-            } },
-        { ReactionConditionType.OnCausedHeal, ctx => effect =>
-            {
-                if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
-                    return false;
-                
-                var targetMembers = effect.Target.Members;
-                var hpBefore = targetMembers.Select(t => effect.BattleBefore.Members[t.Id])
-                    .Sum(x => x.State.Hp);
-                var hpAfter = targetMembers.Select(t => effect.BattleAfter.Members[t.Id])
-                    .Sum(x => x.State.Hp);
-                return hpAfter > hpBefore;
-            }
-        },
+        
+        { ReactionConditionType.OnCausedShieldGain, ctx => effect 
+            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State[TemporalStatType.Shield]))},
+        { ReactionConditionType.OnCausedStun, ctx => effect 
+            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State[TemporalStatType.Stun] + x.State[TemporalStatType.Disabled]))},
+        { ReactionConditionType.OnCausedAffliction, ctx => effect 
+            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State.StatusesOfType[StatusTag.DamageOverTime])) },
+        { ReactionConditionType.OnSlay, ctx => effect
+            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.IsUnconscious() ? 1 : 0)) },
+        { ReactionConditionType.OnCausedHeal, ctx => effect
+            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State.Hp)) },
         { ReactionConditionType.OnCausedBloodied, ctx => effect =>
             {
                 if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
