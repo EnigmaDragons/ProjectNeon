@@ -42,5 +42,4 @@
 - Deal Damage based on Shields
 - Improve Shields
 - On Damaged
-- On Shield Broken
 - Plenty of X-Costers
