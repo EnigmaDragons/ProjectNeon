@@ -79,6 +79,9 @@ public static class InterpolatedCardDescriptions
 
         var xCostReplacementToken = "{X}";
         result = result.Replace(xCostReplacementToken, Bold(XCostDescription(owner, xCost)));
+
+        var ownerReplacementToken = "{Owner}";
+        result = result.Replace(ownerReplacementToken, owner.Select(o => o.Name, () => "Owner"));
         
         var tokens = Regex.Matches(result, "{(.*?)}");
         foreach (Match token in tokens)
@@ -113,7 +116,7 @@ public static class InterpolatedCardDescriptions
 
         if (owner.IsPresent && _resourceIcons.TryGetValue(owner.Value.PrimaryResource().ResourceType, out var icon))
             result = result.Replace("Owner[PrimaryResource]", Sprite(icon));
-        
+
         foreach (var r in _resourceIcons)
             result = result.Replace(r.Key, Sprite(r.Value));
         

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: DefTech_Absorber
+  m_Name: DefTech_AccumulationField
   m_EditorClassIdentifier: 
-  id: 306
+  id: 434
   customName: 
-  art: {fileID: 21300000, guid: 2a876acc0ecd5c34e9062c6d30d6cb0a, type: 3}
-  description: 'Gain {E[0]}.<br><br>For <b>2</b> turns, <b>When Damaged</b>: Gain
-    {RE[0]}'
+  art: {fileID: 21300000, guid: 26eadfc00fc532046b4cb4da02f921b4, type: 3}
+  description: 'For <b>2</b> turns, <b>When Damaged</b>: {Owner} gains {RE[0]}<br>You
+    gain {E[0]}'
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
@@ -25,17 +25,17 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 2
   actionSequences:
-  - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: cb9b54f33cbd522429d30c27d8d1d2c6, type: 2}
+  - scope: 1
+    group: 2
+    cardActions: {fileID: 11400000, guid: 28fcb3c13e6b11142b4b2591454664ee, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
-  presentationIssues: '{D[0]}, on damaged, gain {RE[0]} Energy'
+  presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
   highlightCondition: []
