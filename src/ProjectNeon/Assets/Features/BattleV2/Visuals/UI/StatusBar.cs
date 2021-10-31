@@ -73,6 +73,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Lifesteal, true, v => "Gain HP from your next attack");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Vulnerable, true, v => "Vulnerable (Takes 33% more damage)");
         AddStatusIconIfApplicable(statuses, TemporalStatType.AntiHeal, true, v => "Anti Heal (Only get 50% healing)");
+        AddCustomTextStatusIcons(statuses, StatusTag.AfterShielded, "Unknown After Shielded Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnClipUsed, "Unknown On Clip Used Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.WhenBloodied, "Unknown When Bloodied Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.WhenShieldBroken, "Unknown When Shield Broken Effect");

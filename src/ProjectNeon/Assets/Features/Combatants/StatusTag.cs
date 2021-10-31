@@ -22,4 +22,5 @@ public enum StatusTag
     CurrentCardOnly = 21,
     WhenIgnited = 22,
     ResourceGainsPrevented = 23,
+    AfterShielded = 24
 }
