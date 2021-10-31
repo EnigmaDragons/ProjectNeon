@@ -200,6 +200,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"choose and draw {AOrAn(data.EffectScope)} {Bold(data.EffectScope.ToString().WithSpaceBetweenWords())} card";
         if (data.EffectType == EffectType.Drain)
             coreDesc = $"drain {EffectDescription(data, owner, xCost)}";
+        if (data.EffectType == EffectType.ShieldRemoveAll)
+            coreDesc = $"removes all shields";
         if (coreDesc == "")
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 
@@ -333,7 +335,7 @@ public static class InterpolatedCardDescriptions
     private static string FormulaAmount(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
         => WithImplications(owner.IsPresent && (!data.Formula.Contains('X') || xCost.ResourceType != "None")
             ? EvaluatedFormula(data, owner.Value, xCost)
-            : FormattedFormula(data.Formula));
+            : FormattedFormula(data));
 
     private static string EvaluatedFormula(EffectData data, Member owner, ResourceQuantity xCost)
     {
@@ -411,6 +413,18 @@ public static class InterpolatedCardDescriptions
         return delayString;
     }
 
+    private static string FormattedFormula(EffectData data)
+    {
+        var f = data.InterpolateFriendlyFormula();
+        if (f.ShouldUsePartialFormula)
+        {
+            var ipf = f.InterpolatePartialFormula;
+            return FormattedFormula($"{ipf.Prefix} {FormattedFormula(ipf.EvaluationPartialFormula)} {ipf.Suffix}".Trim());
+        }
+
+        return FormattedFormula(data.Formula);
+    }
+    
     private static string FormattedFormula(string s)
     {
         var newS = s;
