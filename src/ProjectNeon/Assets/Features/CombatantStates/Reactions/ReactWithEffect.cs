@@ -21,7 +21,8 @@ public class EffectReactWith : Effect
         { ReactionConditionType.WhenDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp + m.State.Shield))},
         { ReactionConditionType.WhenBlinded, ctx => effect => ctx.Actor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
         { ReactionConditionType.WhenGainedPrimaryResource, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State.PrimaryResourceAmount)) },
-        
+        { ReactionConditionType.WhenShieldMaxed, ctx => effect 
+            => ctx.Possessor.IsConscious() && BecameTrue(Logged(Select(effect, ctx.Possessor, x => x.State.Shield == x.State.MaxShield )))},
         { ReactionConditionType.OnCausedShieldGain, ctx => effect 
             => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State[TemporalStatType.Shield]))},
         { ReactionConditionType.OnCausedStun, ctx => effect 
@@ -131,18 +132,20 @@ public class EffectReactWith : Effect
     private static bool PossessorCaused(ReactionConditionContext ctx, EffectResolved effect) 
         => Equals(ctx.Possessor, effect.Source) && !ctx.Actor.IsUnconscious();
 
+    private static bool BecameTrue(bool[] values) => !values.First() && values.Last();
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
-    private static bool Decreased(int[] values)
-    {
-        DevLog.Write($"Before: {values.First()}. After: {values.Last()}");
-        return values.Last() < values.First();
-    }
-
+    private static bool Decreased(int[] values) => values.Last() < values.First();
     private static bool Increased(params int[] values) => values.Last() > values.First();
 
-    private static int[] Select(EffectResolved e, Func<BattleStateSnapshot, int> selector)
+    private static T[] Logged<T>(T[] values)
+    {
+        Debug.Log(string.Join(", ", values.Select(v => v.ToString())));
+        return values;
+    }
+
+    private static T[] Select<T>(EffectResolved e, Func<BattleStateSnapshot, T> selector)
         => new[] {selector(e.BattleBefore), selector(e.BattleAfter)};
-    private static int[] Select(EffectResolved e, Member possessor, Func<MemberSnapshot, int> selector)
+    private static T[] Select<T>(EffectResolved e, Member possessor, Func<MemberSnapshot, T> selector)
         => new[] {selector(e.BattleBefore.Members[possessor.Id]), selector(e.BattleAfter.Members[possessor.Id])};
     private static int [] SelectSum(EffectResolved e, Func<MemberSnapshot, int> selector)
     {

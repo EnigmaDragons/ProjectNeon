@@ -28,6 +28,7 @@ public enum ReactionConditionType
     WhenAfflicted = 34,
     OnArchetypeCardPlayed = 35,
     OnCardPlayed = 36,
+    WhenShieldMaxed = 38,
     WhenEnemyPrimaryStatBuffed = 40,
     //OnTeamCardCycled = 61, // Need To Implement in #3522 
     WhenKilled = 99,
