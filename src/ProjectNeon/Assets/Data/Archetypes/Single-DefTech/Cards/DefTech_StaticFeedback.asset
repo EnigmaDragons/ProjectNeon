@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: DefTech_ShockTendrils
+  m_Name: DefTech_StaticFeedback
   m_EditorClassIdentifier: 
   id: 433
   customName: 
   art: {fileID: 21300000, guid: a2747e925b33b304ebf628c9ab28fb74, type: 3}
-  description: 
+  description: "Max Shields \xD7 {E[0]}.<br><b>Whenever Damaged</b>: Deal <b>Shield</b>
+    <sprite index=2> to all enemies"
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 4
+    cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-    plusXCost: 0
-  rarity: 0
+    plusXCost: 1
+  rarity: 4
   actionSequences:
   - scope: 0
     group: 2
-    cardActions: {fileID: 0}
+    cardActions: {fileID: 11400000, guid: 6556f1424b0360c47885221cceaf73fa, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -39,4 +40,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 1
+  isWIP: 0
