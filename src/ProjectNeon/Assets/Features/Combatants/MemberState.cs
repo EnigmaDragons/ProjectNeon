@@ -337,10 +337,14 @@ public sealed class MemberState : IStats
         else if (this[TemporalStatType.PreventResourceGains] == 0)
             Counter(resourceName).ChangeBy(amount);
     });
+    
     public void AdjustPrimaryResource(int numToGive)
     {
         if (this[TemporalStatType.PreventResourceGains] == 0)
+        {
+            BattleLog.Write($"{Name} {BattleLog.GainedOrLostTerm(numToGive)} {numToGive} {PrimaryResource.Name}");
             PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
+        }
     }
 
     public void Lose(ResourceQuantity qty, PartyAdventureState partyState) => LoseResource(qty.ResourceType, qty.Amount, partyState);

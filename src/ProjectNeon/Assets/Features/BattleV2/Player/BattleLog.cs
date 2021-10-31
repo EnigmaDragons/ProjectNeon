@@ -18,4 +18,6 @@ public class BattleLog : OnMessage<WriteBattleLogMessageRequested>
         if (condition(val))
             Message.Publish(new WriteBattleLogMessageRequested(getMessage(val)));
     }
+    
+    public static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
 }

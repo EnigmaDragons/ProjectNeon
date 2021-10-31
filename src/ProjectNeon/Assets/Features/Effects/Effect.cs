@@ -155,7 +155,7 @@ public class FullContextEffect : Effect
         : this((ctx, duration, m) => apply(ctx, duration), durationFormula) {}
     public FullContextEffect(Action<EffectContext, int, MemberState> applyToOne, string durationFormula) 
         : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, Mathf.CeilToInt(Formula.Evaluate(src.SourceSnapshot.State, member, durationFormula, src.XPaidAmount)), member))) { }
-    private FullContextEffect(Action<EffectContext, Target> apply) => _apply = apply;
+    public FullContextEffect(Action<EffectContext, Target> apply) => _apply = apply;
 
     public void Apply(EffectContext ctx) => _apply(ctx, ctx.Target);
 }
