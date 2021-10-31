@@ -109,10 +109,10 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1 * Shield
+      Formula: 1.45 * Shield
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
-        Prefix: 
+        Prefix: 1.45 * Shield
         Suffix: 
       FlavorText:
         UseConstant: 1
@@ -184,7 +184,7 @@ MonoBehaviour:
       Formula: -0.5 * Shield
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
-        Prefix: 
+        Prefix: half
         Suffix: 
       FlavorText:
         UseConstant: 1

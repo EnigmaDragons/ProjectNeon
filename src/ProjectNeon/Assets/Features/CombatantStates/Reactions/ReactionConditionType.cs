@@ -3,6 +3,7 @@ public enum ReactionConditionType
     WhenAttacked = 0,
     WhenDamaged = 4,
     WhenDamagedHp = 1,
+    WhenDamagedShield = 3,
     WhenBlinded = 2,
     WhenVulnerabled = 5,
     WhenShieldBroken = 6,
