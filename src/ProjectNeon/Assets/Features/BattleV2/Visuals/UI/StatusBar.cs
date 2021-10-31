@@ -37,7 +37,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
                 Tooltip = s.Status.CustomText.OrDefault(() => defaultText)
                     .Replace("[Originator]", battleState.Members.TryGetValue(s.OriginatorId, out var m) 
                         ? m.UnambiguousName 
-                        : "Originator"),
+                        : "Originator")
+                    .Replace("[PrimaryStat]", _member.PrimaryStat().ToString()),
                 OriginatorId = s.OriginatorId
             }));
 
@@ -104,12 +105,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         foreach (var s in _member.State.CustomStatuses())
             statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip, OriginatorId = s.OriginatorId });;
         
-        if (_member.State.HasStatus(StatusTag.StartOfTurnTrigger))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.StartOfTurnTrigger.ToString(),  Icon = icons[StatusTag.StartOfTurnTrigger].Icon, Tooltip = "Start of Turn Effect Trigger" });
-        
-        if (_member.State.HasStatus(StatusTag.EndOfTurnTrigger))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.EndOfTurnTrigger.ToString(), Icon = icons[StatusTag.EndOfTurnTrigger].Icon, Tooltip = "End of Turn Effect Trigger" });
-        
+        AddCustomTextStatusIcons(statuses, StatusTag.StartOfTurnTrigger, "Secret Start of Turn Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.EndOfTurnTrigger, "Secret Start of Turn Effect");
+
         UpdateComparisonWithPrevious(statuses);
         UpdateStatuses(statuses);
     }
