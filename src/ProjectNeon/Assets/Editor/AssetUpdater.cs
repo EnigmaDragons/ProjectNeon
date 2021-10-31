@@ -149,7 +149,7 @@ public class AssetUpdater
     [MenuItem("Neon/Update/UpdateAllCards")]
     private static void UpdateAllCards()
     {
-        var cards = ScriptableExtensions.GetAllInstances<CardType>();
+        var cards = ScriptableExtensions.GetAllInstances<CardType>().Where(x => x != null).ToArray();
         var allCards = ScriptableExtensions.GetAllInstances<AllCards>();
         allCards.ForEach(x =>
         {

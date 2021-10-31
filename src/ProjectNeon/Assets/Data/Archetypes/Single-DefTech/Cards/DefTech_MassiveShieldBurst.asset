@@ -10,26 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: DefTech_EnergyCirculator
+  m_Name: DefTech_MassiveShieldBurst
   m_EditorClassIdentifier: 
-  id: 440
+  id: 432
   customName: 
-  art: {fileID: 21300000, guid: 88fe2e82fe5446d45acce4f67dfacd3c, type: 3}
-  description: "Set Primary Stat boost to <b>0.18 \xD7 Target[Shield]</b> now and
-    at the start of each turn."
-  typeDescription: {fileID: 11400000, guid: 54b26ffa8165e3942bf340ce48cb1299, type: 2}
+  art: {fileID: 21300000, guid: fadd17da4456278449d1d7dd936d50f4, type: 3}
+  description: Deal {E[0]}<br><i>(Based on Shield and X)</i>
+  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
-    plusXCost: 0
-  rarity: 1
+    plusXCost: 1
+  rarity: 3
   actionSequences:
-  - scope: 0
-    group: 2
-    cardActions: {fileID: 11400000, guid: 3f4f9dd1fdef99c4e9c99789ad1fb39f, type: 2}
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: dd9acadb5bc10524ba0e953b2bc08fd8, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -38,6 +37,8 @@ MonoBehaviour:
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 2f19dd3eca528bd4aa4d769dcacbd98c, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 9f016a8dee8ff6f498cad11940e849e7, type: 2}
   isWIP: 0
