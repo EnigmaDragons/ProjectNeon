@@ -38,8 +38,9 @@
 - Gives Lifesteal
 
 ## DefTech Mechanics:
-- Increase Max Shields
 - Gain Energy
-- Spend Energy for Defenses
-- Use Defenses Offensively
-
+- Deal Damage based on Shields
+- Improve Shields
+- On Damaged
+- On Shield Broken
+- Plenty of X-Costers
