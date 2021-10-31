@@ -21,6 +21,7 @@ public class EffectReactWith : Effect
         { ReactionConditionType.WhenDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp + m.State.Shield))},
         { ReactionConditionType.WhenBlinded, ctx => effect => ctx.Actor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
         { ReactionConditionType.WhenGainedPrimaryResource, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State.PrimaryResourceAmount)) },
+        { ReactionConditionType.OnCausedShieldGain, ctx => effect => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State[TemporalStatType.Shield]))},
         { ReactionConditionType.OnCausedStun, ctx => effect =>
             {
                 if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
@@ -169,6 +170,9 @@ public class EffectReactWith : Effect
            && (effect.EffectData.EffectType != EffectType.ReactWithEffect || effect.EffectData.ReactionConditionType != type)
            && ctx.Actor.IsConscious();
     
+    private static bool PossessorCaused(ReactionConditionContext ctx, EffectResolved effect) 
+        => Equals(ctx.Possessor, effect.Source) && !ctx.Actor.IsUnconscious();
+
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
     private static bool Decreased(int[] values)
     {
@@ -182,7 +186,16 @@ public class EffectReactWith : Effect
         => new[] {selector(e.BattleBefore), selector(e.BattleAfter)};
     private static int[] Select(EffectResolved e, Member possessor, Func<MemberSnapshot, int> selector)
         => new[] {selector(e.BattleBefore.Members[possessor.Id]), selector(e.BattleAfter.Members[possessor.Id])};
-    
+    private static int [] SelectSum(EffectResolved e, Func<MemberSnapshot, int> selector)
+    {
+        var targetMembers = e.Target.Members;
+        var before = targetMembers.Select(t => e.BattleBefore.Members[t.Id])
+            .Sum(selector);
+        var after = targetMembers.Select(t => e.BattleAfter.Members[t.Id])
+            .Sum(selector);
+        return new[] {before, after};
+    }
+
     private readonly bool _isDebuff;
     private readonly int _numberOfUses;
     private readonly string _maxDurationFormula;

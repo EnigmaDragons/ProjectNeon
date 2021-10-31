@@ -13,6 +13,7 @@ public enum ReactionConditionType
     OnCausedBloodied = 16,
     OnCausedHeal = 15,
     OnCausedStun = 20,
+    OnCausedShieldGain = 37,
     OnSlay = 21,
     OnDamageDealt = 22,
     OnHpDamageDealt = 23,
