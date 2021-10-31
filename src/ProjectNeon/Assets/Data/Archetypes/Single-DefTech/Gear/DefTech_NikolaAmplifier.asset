@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: DefTech_OverchargedShockArcs
+  m_Name: DefTech_NikolaAmplifier
   m_EditorClassIdentifier: 
-  id: 107
+  id: 106
   displayName: 
-  description: When an enemy damages your shield, deal 5 raw damage back
+  description: 'When Shielded: Gain +3 Shield and +3 Max Shield'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
-  rarity: 4
+  rarity: 2
   slot: 2
   priceFactor: 1
   modifiers: []
@@ -40,13 +40,13 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
+      Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: When an enemy damages your shield, deal 5 raw damage back
+    StatusDetailText: 'When Shielded: Gain +3 Shield and +3 Max Shield'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -58,7 +58,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 3
+    ReactionConditionType: 39
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
@@ -66,9 +66,9 @@ MonoBehaviour:
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
-      scope: 2
-      cardActions: {fileID: 11400000, guid: c05456c7644d8d74a94ae7b9c00891bc, type: 2}
+      scope: 0
+      cardActions: {fileID: 11400000, guid: 31c0492d53e04c64d9c8e2793dd86add, type: 2}
     BonusCardType: {fileID: 0}
   battleEndEffects: []
   isWIP: 0
-  designComment: 
+  designComment: This could make a nice General augment

@@ -21,6 +21,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleEndEffects = new EffectData[0];
     [SerializeField] private bool isWIP;
+    [SerializeField] private string designComment;
     
     public string Name => !string.IsNullOrWhiteSpace(displayName) 
         ? displayName 
