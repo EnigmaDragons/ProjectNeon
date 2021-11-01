@@ -44,6 +44,7 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
 
     private void StartSlideshow(TutorialSlideshow slideshow)
     {
+        Debug.Log($"Started Tutorial Slideshow: {slideshow.TutorialName}");
         _current = slideshow;
         if (_currentSlideTextPresenter != defaultTextPresenter)
             Destroy(_currentSlideTextPresenter);
