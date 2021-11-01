@@ -33,7 +33,10 @@ public static class Formula
         catch (Exception e)
         {
             Log.Error($"Unable to resolve formula. Original: '{expression}' Interpolated: '{newExp}'");
+            #if UNITY_EDITOR
             throw;
+            #endif
+            return 0;
         }
     }
     

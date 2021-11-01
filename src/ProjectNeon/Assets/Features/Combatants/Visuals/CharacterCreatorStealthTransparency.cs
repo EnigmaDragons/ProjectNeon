@@ -13,7 +13,7 @@ public class CharacterCreatorStealthTransparency : OnMessage<MemberStateChanged>
         _member = m;
         Render(m);
     }
-
+    
     protected override void Execute(MemberStateChanged msg) 
         => _member.IfPresentAndMatches(m => m.Id == msg.State.MemberId, Render);
 

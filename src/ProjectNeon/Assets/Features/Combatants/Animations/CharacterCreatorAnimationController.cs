@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationRequested2>
 {
@@ -30,6 +31,9 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         _characterAnimations = characterAnimations;
         _currentStates = new Dictionary<int, string>();
         ReturnToDefault();
+        
+        // TODO: Temp Fix for Layering. Doesn't really belong in this class
+        InitCharacterSortingLayer();
     }
 
     private void Update()
@@ -123,5 +127,18 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     {
         if (animator != null)
             animator.SetBool(name, value);
+    }
+    
+    private void InitCharacterSortingLayer()
+    {
+        var obj = animator.gameObject;
+        var sort = obj.GetComponent<SortingGroup>();
+        if (sort != null)
+        {
+            var layerId = SortingLayer.NameToID("Character");
+            sort.sortingLayerID = layerId;
+            //sort.enabled = false;
+            //sort.enabled = true;
+        }
     }
 }

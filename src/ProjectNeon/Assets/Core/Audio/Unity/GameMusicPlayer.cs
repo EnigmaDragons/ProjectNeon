@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(menuName = "Audio/GameMusicPlayer")]
 public sealed class GameMusicPlayer : ScriptableObject
@@ -33,7 +34,7 @@ public sealed class GameMusicPlayer : ScriptableObject
         
         if (musicSource == null)
         {
-            Log.Error($"nameof(musicSource) has not been initialized");
+            Log.Error($"{nameof(musicSource)} has not been initialized. Scene {SceneManager.GetActiveScene().name}");
             return;
         }
 

@@ -8,7 +8,7 @@ public class CharacterHoverChanged
 
     public CharacterHoverChanged(Maybe<HoverCharacter> character, Maybe<Vector3> position, bool isDragging)
     {
-        HoverCharacter = character;
+        HoverCharacter = character?.Value == null ? Maybe<HoverCharacter>.Missing() : character;
         HoverCharacterPosition = position;
         IsDragging = isDragging;
     }
