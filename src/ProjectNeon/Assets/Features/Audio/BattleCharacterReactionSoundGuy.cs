@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class BattleCharacterReactionSoundGuy : MonoBehaviour
 {
     [SerializeField] private BattleState battleState;
     [SerializeField, FMODUnity.EventRef] private string onHpGainedEvent;
+    [SerializeField, FMODUnity.EventRef] private string onHpLostFlesh;
     [SerializeField, FMODUnity.EventRef] private string onCardFizzledBecauseStunnedEvent;
     [SerializeField, FMODUnity.EventRef] private string onDeath;
     [SerializeField, FMODUnity.EventRef] private string onShieldGained;
@@ -13,6 +15,10 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string onBonusCardPlayed;
     [SerializeField, FMODUnity.EventRef] private string onAegised;
     [SerializeField, FMODUnity.EventRef] private string onCardChained;
+    [SerializeField, FMODUnity.EventRef] private string onDodged;
+    [SerializeField, FMODUnity.EventRef] private string onFlee;
+    [SerializeField, FMODUnity.EventRef] private string onBackToBattle;
+    [SerializeField, FMODUnity.EventRef] private string onReactionCardPlayed;
 
     private bool debuggingLoggingEnabled = false;
 
@@ -20,26 +26,39 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     {
         Message.Subscribe<MemberStateChanged>(OnMemberStateChanged, this);
         Message.Subscribe<DisplayCharacterWordRequested>(OnCharacterReaction, this);
+        //Message.Subscribe<MemberStateChanged>(OnHealthLost, this);
     }
+
+   /* private void OnHealthLost(MemberStateChanged msg)
+    {
+        var characterMaterialType = MaterialTypeOf(msg.MemberId);
+        battleState.GetMaybeTransform(msg.MemberId()).IfPresent(memberTransform =>
+        {
+             if(msg.LostHp())
+        });
+    }*/
 
     private void OnCharacterReaction(DisplayCharacterWordRequested msg)
     {
         battleState.GetMaybeTransform(msg.MemberId).IfPresent(memberTransform =>
         {
             if (msg.ReactionType == CharacterReactionType.ChainCardPlayed)
-            {
                 PlayOneShot(onCardChained, memberTransform);
-                Debug.Log("CHAIN_SFX_Playing");
-            }
             if (msg.ReactionType == CharacterReactionType.Stunned)
                  PlayOneShot(onCardFizzledBecauseStunnedEvent, memberTransform);
              if (msg.ReactionType == CharacterReactionType.BonusCardPlayed)
                  PlayOneShot(onBonusCardPlayed, memberTransform);
             if (msg.ReactionType == CharacterReactionType.Aegised)
-            {
-                PlayOneShot(onAegised, memberTransform);
-                Debug.Log("AEGISED_SFX_Playing");
-            }
+                 PlayOneShot(onAegised, memberTransform);
+            if (msg.ReactionType == CharacterReactionType.Dodged)
+                PlayOneShot(onDodged, memberTransform);
+            if (msg.ReactionType == CharacterReactionType.LeftBattle)
+                PlayOneShot(onFlee, memberTransform);
+            if (msg.ReactionType == CharacterReactionType.SpawnedIntoBattle)
+                PlayOneShot(onBackToBattle, memberTransform);
+            if (msg.ReactionType == CharacterReactionType.ReactionCardPlayed)
+                PlayOneShot(onReactionCardPlayed, memberTransform);
+
 
         });
     }
@@ -50,6 +69,8 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
         {
             if (msg.GainedHp())
                 PlayOneShot(onHpGainedEvent, memberTransform);
+            if (msg.LostHp())
+                PlayOneShot(onHpLostFlesh, memberTransform);
             if (msg.WasKnockedOut())
                 PlayOneShot(onDeath, memberTransform);
             if (msg.GainedShield())
