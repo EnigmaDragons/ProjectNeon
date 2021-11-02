@@ -6,6 +6,7 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     [SerializeField] private BattleState battleState;
     [SerializeField, FMODUnity.EventRef] private string onHpGainedEvent;
     [SerializeField, FMODUnity.EventRef] private string onHpLostFlesh;
+    [SerializeField, FMODUnity.EventRef] private string onHpLostMetal;
     [SerializeField, FMODUnity.EventRef] private string onCardFizzledBecauseStunnedEvent;
     [SerializeField, FMODUnity.EventRef] private string onDeath;
     [SerializeField, FMODUnity.EventRef] private string onShieldGained;
@@ -14,11 +15,15 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string onStealthExited;
     [SerializeField, FMODUnity.EventRef] private string onBonusCardPlayed;
     [SerializeField, FMODUnity.EventRef] private string onAegised;
+    [SerializeField, FMODUnity.EventRef] private string onAegisSetUp;
     [SerializeField, FMODUnity.EventRef] private string onCardChained;
     [SerializeField, FMODUnity.EventRef] private string onDodged;
     [SerializeField, FMODUnity.EventRef] private string onFlee;
     [SerializeField, FMODUnity.EventRef] private string onBackToBattle;
     [SerializeField, FMODUnity.EventRef] private string onReactionCardPlayed;
+    [SerializeField, FMODUnity.EventRef] private string onDoubleDMetal;
+    [SerializeField, FMODUnity.EventRef] private string onDoubleDFlesh;
+    [SerializeField, FMODUnity.EventRef] private string onInhibited;
 
     private bool debuggingLoggingEnabled = false;
 
@@ -58,6 +63,8 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
                 PlayOneShot(onBackToBattle, memberTransform);
             if (msg.ReactionType == CharacterReactionType.ReactionCardPlayed)
                 PlayOneShot(onReactionCardPlayed, memberTransform);
+            if (msg.ReactionType == CharacterReactionType.DoubleDamaged)
+                PlayOneShot(onDoubleDMetal, memberTransform);
 
 
         });
