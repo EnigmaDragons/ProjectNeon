@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BattleSoundGuy : MonoBehaviour
@@ -122,8 +123,12 @@ public class BattleSoundGuy : MonoBehaviour
 
     private void OnEnemyHoverFUNC(CharacterHoverChanged msg)
     {
-        if (msg.HoverCharacter.IsPresentAnd(m => m.Member.TeamType == TeamType.Enemies))
-             FMODUnity.RuntimeManager.PlayOneShot(OnTooltipHover, Vector3.zero);
+        try
+        {
+            if (msg.HoverCharacter.IsPresentAnd(m => m.Member.TeamType == TeamType.Enemies))
+                FMODUnity.RuntimeManager.PlayOneShot(OnTooltipHover, Vector3.zero);
+        }
+        catch (Exception e) { }
     }
     
     private void OnCardShuffledFUNC(PlayerDeckShuffled msg)

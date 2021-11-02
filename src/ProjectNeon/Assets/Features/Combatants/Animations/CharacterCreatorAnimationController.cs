@@ -131,14 +131,15 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     
     private void InitCharacterSortingLayer()
     {
+        if (animator == null || animator.gameObject == null)
+            return;
+        
         var obj = animator.gameObject;
         var sort = obj.GetComponent<SortingGroup>();
-        if (sort != null)
-        {
-            var layerId = SortingLayer.NameToID("Character");
-            sort.sortingLayerID = layerId;
-            //sort.enabled = false;
-            //sort.enabled = true;
-        }
+        if (sort == null) 
+            return;
+        
+        var layerId = SortingLayer.NameToID("Character");
+        sort.sortingLayerID = layerId;
     }
 }
