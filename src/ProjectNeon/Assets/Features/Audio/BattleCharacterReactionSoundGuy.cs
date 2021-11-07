@@ -31,17 +31,31 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     {
         Message.Subscribe<MemberStateChanged>(OnMemberStateChanged, this);
         Message.Subscribe<DisplayCharacterWordRequested>(OnCharacterReaction, this);
-        //Message.Subscribe<MemberStateChanged>(OnHealthLost, this);
+        Message.Subscribe<MemberStateChanged>(OnHealthLostMetal, this);
+        Message.Subscribe<MemberStateChanged>(OnHealthLostFlesh, this);
     }
 
-   /* private void OnHealthLost(MemberStateChanged msg)
+    private void OnHealthLostFlesh(MemberStateChanged msg)
     {
-        var characterMaterialType = MaterialTypeOf(msg.MemberId);
+        
         battleState.GetMaybeTransform(msg.MemberId()).IfPresent(memberTransform =>
         {
-             if(msg.LostHp())
+            var characterMaterialType = MaterialTypeOf(1);
+            if (msg.LostHp())
+                PlayOneShot(onHpLostFlesh, memberTransform);
         });
-    }*/
+    }
+
+    private void OnHealthLostMetal(MemberStateChanged msg)
+    {
+        
+        battleState.GetMaybeTransform(msg.MemberId()).IfPresent(memberTransform =>
+        {
+            var characterMaterialType = MaterialTypeOf(2);
+            if (msg.LostHp())
+                PlayOneShot(onHpLostMetal, memberTransform);
+        });
+    }
 
     private void OnCharacterReaction(DisplayCharacterWordRequested msg)
     {
@@ -76,8 +90,8 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
         {
             if (msg.GainedHp())
                 PlayOneShot(onHpGainedEvent, memberTransform);
-            if (msg.LostHp())
-                PlayOneShot(onHpLostFlesh, memberTransform);
+           /* if (msg.LostHp())
+                PlayOneShot(onHpLostFlesh, memberTransform);*/
             if (msg.WasKnockedOut())
                 PlayOneShot(onDeath, memberTransform);
             if (msg.GainedShield())
