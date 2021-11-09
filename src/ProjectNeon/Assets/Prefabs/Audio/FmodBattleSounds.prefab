@@ -44,8 +44,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
-  onHpGainedEvent: 
-  onCardFizzledBecauseStunnedEvent: 
+  onHpGainedEvent: event:/BattleScene/HP_GAINED
+  onHpLostFlesh: event:/BattleScene/HP_LOST
+  onHpLostMetal: event:/BattleScene/HP_LOST_METAL
+  onCardFizzledBecauseStunnedEvent: event:/BattleScene/STUNNED
+  onDeath: event:/BattleScene/CHAR_DEATH
+  onShieldGained: event:/BattleScene/SHIELD_GAINED
+  onShieldLost: event:/BattleScene/SHIELD_LOST
+  onStealthGained: event:/BattleScene/STEALTH_GAINED
+  onStealthExited: event:/BattleScene/STEALTH_LOST
+  onBonusCardPlayed: event:/BattleScene/BONUS_CARD_PLAYED
+  onAegised: event:/BattleScene/AEGISED
+  onAegisSetUp: event:/BattleScene/OnAegisSetUp
+  onCardChained: event:/BattleScene/CARD_CHAINED
+  onDodged: event:/BattleScene/DODGED
+  onFlee: event:/BattleScene/FLEE
+  onBackToBattle: event:/BattleScene/BACK_TO_BATTLE
+  onReactionCardPlayed: event:/BattleScene/REACTION_CARD_TRIGGERED
+  onDoubleDMetal: event:/BattleScene/DOUBLE_D_METAL
+  onDoubleDFlesh: event:/BattleScene/DOUBLE_D_FLESH
+  onInhibited: event:/BattleScene/INHIBITED
 --- !u!1 &2588964735260512764
 GameObject:
   m_ObjectHideFlags: 0

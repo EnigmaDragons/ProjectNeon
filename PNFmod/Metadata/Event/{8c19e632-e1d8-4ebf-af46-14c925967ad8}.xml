@@ -95,6 +95,9 @@
 		<relationship name="modulators">
 			<destination>{8b73a8c7-cb5f-4543-85ae-a5a815e15fa8}</destination>
 		</relationship>
+		<relationship name="fadeInCurve">
+			<destination>{cf9e933d-26d7-4a58-a32f-771d8ebb4251}</destination>
+		</relationship>
 		<relationship name="fadeOutCurve">
 			<destination>{58953a32-3200-4ea2-bd22-140ddff8d2ad}</destination>
 		</relationship>
@@ -104,7 +107,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{ee09df2c-95b8-4c0f-bb10-56ce27843bd6}">
 		<property name="volume">
-			<value>5</value>
+			<value>1.5</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
@@ -134,6 +137,14 @@
 			<value>2.5</value>
 		</property>
 	</object>
+	<object class="FadeCurve" id="{cf9e933d-26d7-4a58-a32f-771d8ebb4251}">
+		<relationship name="startPoint">
+			<destination>{fa096533-2c3c-4e1b-9065-1921523b70c0}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{76b2674b-c2be-4490-b413-f2f5ed3fd1a1}</destination>
+		</relationship>
+	</object>
 	<object class="FadeCurve" id="{58953a32-3200-4ea2-bd22-140ddff8d2ad}">
 		<relationship name="startPoint">
 			<destination>{a331011d-de29-4682-96fc-27c2782355e6}</destination>
@@ -149,9 +160,28 @@
 	</object>
 	<object class="MixerBusPanner" id="{e93382f6-93c1-4d93-82b1-165cf58b990c}" />
 	<object class="MixerBusFader" id="{befd0eca-a10b-409c-9c19-7617c4c47162}" />
+	<object class="AutomationPoint" id="{fa096533-2c3c-4e1b-9065-1921523b70c0}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+		<property name="curveShape">
+			<value>-0.2547189</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{76b2674b-c2be-4490-b413-f2f5ed3fd1a1}">
+		<property name="position">
+			<value>0.15625</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{a331011d-de29-4682-96fc-27c2782355e6}">
 		<property name="position">
-			<value>0.5</value>
+			<value>0.9375</value>
 		</property>
 		<property name="value">
 			<value>1</value>
