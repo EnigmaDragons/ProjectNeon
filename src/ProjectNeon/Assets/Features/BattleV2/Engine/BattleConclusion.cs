@@ -3,22 +3,21 @@ using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>
 {
+    [SerializeField] private CurrentAdventure adventure;
     [SerializeField] private AdventureProgress2 adventure2;
     [SerializeField] private AdventureConclusionState conclusion;
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
     [SerializeField] private float secondsBeforeGameOverScreen = 3f;
     [SerializeField] private BattleState state;
-    [SerializeField] private BattleRewards eliteReward;
-    [SerializeField] private BattleRewards normalReward;
     [SerializeField] private CurrentGameMap3 gameMap;
     
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
         if (state.IsEliteBattle)
-            eliteReward.GrantVictoryRewardsAndThen(onFinished);
+            adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished);
         else
-            normalReward.GrantVictoryRewardsAndThen(onFinished);
+            adventure.Adventure.NormalBattleRewards.GrantVictoryRewardsAndThen(onFinished);
     }
     
     private void Advance()

@@ -116,7 +116,8 @@ public class AdventureProgress2 : ScriptableObject
             currentChapterIndex++;
             finishedCurrentStageHeatUpEvents.Clear();
             currentMap3.SetMap(CurrentChapter.Map);
-        } else
+        } 
+        else
         {
             Log.Info("Can't advance: is final stage");
         } 
