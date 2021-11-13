@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,6 +33,18 @@ public sealed class PartyCardCollection : ScriptableObject
         });
     }
 
+    public void Remove(params CardTypeData[] cards)
+    {
+        cards.ForEach(c =>
+        {
+            allCards.Remove(c);
+            if (cardsWithCounts.ContainsKey(c))
+                cardsWithCounts[c] = Math.Max(0, cardsWithCounts[c] - 1);
+            if (cardsWithCounts[c] == 0)
+                cardsWithCounts.Remove(c);
+        });
+    }
+    
     public void Add(CardTypeData card, int count)
     {
         allCards.Add(card);

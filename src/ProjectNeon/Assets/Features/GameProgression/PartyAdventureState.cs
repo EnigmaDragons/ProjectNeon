@@ -67,17 +67,42 @@ public sealed class PartyAdventureState : ScriptableObject
 
 
         var allStartingCards = party.Heroes
-            .SelectMany(h => allCards
-                .Get(h.Archetypes, new HashSet<int>(), Rarity.Starter)
-                .Concat(h.AdditionalStartingCards)
-                .Except(h.ExcludedCards)
-                .NumCopies(4))
+            .SelectMany(HeroStartingCards)
             .ToArray();
         cards.Initialized(allStartingCards); 
         
         equipment = new PartyEquipmentCollection();
         InitArchKeyHeroes();
         Log.Info("Party Adventure State Initialized");
+        return this;
+    }
+
+    private IEnumerable<CardTypeData> HeroStartingCards(BaseHero hero)
+        => allCards
+            .Get(hero.Archetypes, new HashSet<int>(), Rarity.Starter)
+            .Concat(hero.AdditionalStartingCards)
+            .Except(hero.ExcludedCards)
+            .NumCopies(4);
+
+    public PartyAdventureState WithAddedHero(BaseHero hero)
+    {
+        if (!hero.DeckIsValid())
+            Log.Error($"{hero.Name} doesn't have a legal deck");
+
+        heroes = heroes.Append(new Hero(hero, CreateDeck(hero.Deck))).ToArray();
+        party.Add(hero);
+        credits += hero.StartingCredits;
+        cards.Add(HeroStartingCards(hero).ToArray());
+        InitArchKeyHeroes();
+        return this;
+    }
+
+    public PartyAdventureState WithRemovedHero(BaseHero hero)
+    {
+        heroes = heroes.Where(x => x.Character.Id != hero.Id).ToArray();
+        party.Remove(hero);
+        cards.Remove(HeroStartingCards(hero).ToArray());
+        InitArchKeyHeroes();
         return this;
     }
 
