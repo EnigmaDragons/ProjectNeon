@@ -8,6 +8,7 @@ public class Adventure : ScriptableObject
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private string lockConditionExplanation = "";
     [SerializeField] private DynamicStage[] dynamicStages;
+    [SerializeField] private StaticStageV4[] stages;
     [SerializeField] private string adventureTitle;
     [SerializeField] private Sprite adventureImage;
     [SerializeField] private int partySize;
@@ -29,6 +30,7 @@ public class Adventure : ScriptableObject
     public string VictoryConclusion => victoryConclusion;
 
     public DynamicStage[] DynamicStages => dynamicStages.ToArray();
+    public StaticStageV4[] StagesV4 => stages.ToArray();
     public Sprite AdventureImage => adventureImage;
     public int PartySize => partySize;
     public BaseHero[] RequiredHeroes => requiredHeroes;
@@ -37,6 +39,7 @@ public class Adventure : ScriptableObject
     public float RewardCreditsPerPowerLevel => rewardCreditsPerPowerLevel;
     public float XpPerPowerLevel => xpPerPowerLevel;
     public bool IsV2 => dynamicStages != null && dynamicStages.Any();
+    public bool IsV4 => stages != null && stages.Any();
     
     public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation);
     public string LockConditionExplanation => lockConditionExplanation ?? "";

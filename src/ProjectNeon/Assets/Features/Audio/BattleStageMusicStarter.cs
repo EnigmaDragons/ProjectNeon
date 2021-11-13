@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Obsolete("No Longer Needed Due To FmodMusicPlayer.cs")]
 public class BattleStageMusicStarter : MonoBehaviour
 {
     [SerializeField] private GameMusicPlayer player;

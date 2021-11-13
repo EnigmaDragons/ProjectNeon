@@ -13,7 +13,6 @@ public class EncounterBuilder : ScriptableObject
     [SerializeField] private int maxEnemies = 7;
     [SerializeField][Range(0, 1)] private float flexibility;
     [SerializeField][Range(0, 1)] private float minionTeamChance;
-    [SerializeField] private AdventureProgress2 currentAdventureProgress;
 
     private bool _debugLog = false;
 
@@ -33,7 +32,7 @@ public class EncounterBuilder : ScriptableObject
         possible = possibleEnemies.ToArray();
     }
     
-    public List<EnemyInstance> Generate(int difficulty)
+    public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber)
     {
         DebugLog($"Started generating encounter of difficulty {difficulty}");
 
@@ -44,7 +43,7 @@ public class EncounterBuilder : ScriptableObject
         while (numRemainingMustIncludes > 0)
         {
             var nextEnemy = mustIncludePossibilities.Random();
-            var nextEnemyInstance = nextEnemy.ForStage(currentAdventureProgress.CurrentChapterNumber);
+            var nextEnemyInstance = nextEnemy.ForStage(currentChapterNumber);
             enemies.Add(nextEnemyInstance);
             DebugLog($"Added \"Must Include\" {nextEnemyInstance.Name} to Encounter");
             numRemainingMustIncludes--;
@@ -55,7 +54,7 @@ public class EncounterBuilder : ScriptableObject
             Log.Error($"{name} has Elite Enemies but isn't an Elite pool.");
         var possibleEnemies = possible
             .Where(x => allowElites || x.Tier != EnemyTier.Elite)
-            .Select(x => x.ForStage(currentAdventureProgress.CurrentChapterNumber))
+            .Select(x => x.ForStage(currentChapterNumber))
             .ToArray();
         while (_selector.TryGetEnemy(new EncounterBuildingContext(enemies.ToArray(), possibleEnemies, currentDifficulty, difficulty), out EnemyInstance enemy))
         {

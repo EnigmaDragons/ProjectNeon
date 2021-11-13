@@ -27,7 +27,7 @@ public static class AdventureProgress2MapNode3CombatNodeGeneration
         var enemies = new EnemyInstance[0];
         for (var i = 0; i < MaxGenerationAttempts && !generated; i++)
         {
-            enemies = encounterBuilder.Generate(powerLevel).ToArray();
+            enemies = encounterBuilder.Generate(powerLevel, ctx.Adventure.CurrentChapterNumber).ToArray();
             var def = new EnemyEncounterDefinition(enemies.Select(e => e.EnemyId));
             if (!ctx.Encounters.Contains(def))
                 generated = true;

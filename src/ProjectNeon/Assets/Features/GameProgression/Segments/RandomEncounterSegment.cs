@@ -16,10 +16,10 @@ public class RandomEncounterSegment : StageSegment
     {
         Log.Info("Setting Up Random Encounter");
         battleState.SetNextBattleground(possibleBattlegrounds.Random());
-        battleState.SetNextEncounter(encounterBuilder.Generate(encounterDifficulty));
+        battleState.SetNextEncounter(encounterBuilder.Generate(encounterDifficulty, 1));
         SceneManager.LoadScene("BattleSceneV2");
     }
     
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx , MapNode3 mapData)
-        => new GeneratedBattleStageSegment(Name, possibleBattlegrounds.Random(), false, encounterBuilder.Generate(encounterDifficulty).ToArray());
+        => new GeneratedBattleStageSegment(Name, possibleBattlegrounds.Random(), false, encounterBuilder.Generate(encounterDifficulty, 1).ToArray());
 }

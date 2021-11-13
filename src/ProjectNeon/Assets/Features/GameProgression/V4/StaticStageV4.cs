@@ -1,0 +1,33 @@
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "Adventure/Stage V4")]
+public class StaticStageV4 : ScriptableObject
+{
+    [SerializeField] private string displayName;
+    [SerializeField] private EncounterBuilder encounterBuilder;
+    [SerializeField] private EncounterBuilder eliteEncounterBuilder;
+    [SerializeField] private StorySetting storySetting;
+    [SerializeField] private ParticleSystem.MinMaxCurve powerCurve;
+    [SerializeField] private ParticleSystem.MinMaxCurve elitePowerCurve;
+    [SerializeField] private GameObject[] possibleBattlegrounds;
+    [SerializeField] private StageSegment[] segments;
+    [SerializeField] private GameObject bossBattlefield;
+    [SerializeField] private Enemy[] bossEnemies;
+    [SerializeField] private AudioClipVolume stageBattleTheme;
+    [SerializeField] private StageRarityFactors rewardRarityFactors;
+
+    public string DisplayName => displayName;
+    public EncounterBuilder EncounterBuilder => encounterBuilder;
+    public EncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
+    public StorySetting StorySetting => storySetting;
+    public int GetPowerLevel(float percent) => (int)Mathf.Round(powerCurve.Evaluate(percent));
+    public int GetElitePowerLevel(float percent) => (int)Mathf.Round(elitePowerCurve.Evaluate(percent));
+    public GameObject Battleground => possibleBattlegrounds.Random();
+    public int SegmentCount => segments.Length;
+    public GameObject BossBattlefield => bossBattlefield;
+    public Enemy[] BossEnemies => bossEnemies;
+    public AudioClipVolume StageBattleTheme => stageBattleTheme;
+    public RarityFactors RewardRarityFactors => rewardRarityFactors != null 
+        ? rewardRarityFactors 
+        : (RarityFactors)new DefaultRarityFactors();
+}
