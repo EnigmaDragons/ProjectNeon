@@ -50,7 +50,7 @@ public sealed class PartyAdventureState : ScriptableObject
 
         return false;
     }
-
+    
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
         party.Initialized(one, two, three);

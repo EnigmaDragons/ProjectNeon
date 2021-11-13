@@ -44,6 +44,9 @@ namespace CharacterCreator2D.UI
 
         private void OnDisable()
         {
+            if (animator == null)
+                return;
+            
             animator.runtimeAnimatorController = defaultAnimator;
         }
 
