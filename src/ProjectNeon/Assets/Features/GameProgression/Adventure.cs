@@ -38,7 +38,7 @@ public class Adventure : ScriptableObject
     public int BaseNumberOfCardCycles => baseNumberOfCardCycles;
     public float RewardCreditsPerPowerLevel => rewardCreditsPerPowerLevel;
     public float XpPerPowerLevel => xpPerPowerLevel;
-    public bool IsV2 => dynamicStages != null && dynamicStages.Any();
+    public bool IsV2 => !IsV4 && dynamicStages != null && dynamicStages.Any();
     public bool IsV4 => stages != null && stages.Any();
     
     public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation);
