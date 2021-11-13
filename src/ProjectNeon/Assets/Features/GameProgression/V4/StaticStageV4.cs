@@ -7,8 +7,8 @@ public class StaticStageV4 : ScriptableObject
     [SerializeField] private EncounterBuilder encounterBuilder;
     [SerializeField] private EncounterBuilder eliteEncounterBuilder;
     [SerializeField] private StorySetting storySetting;
-    [SerializeField] private ParticleSystem.MinMaxCurve powerCurve;
-    [SerializeField] private ParticleSystem.MinMaxCurve elitePowerCurve;
+    [SerializeField] private PowerCurve powerCurve;
+    [SerializeField] private PowerCurve elitePowerCurve;
     [SerializeField] private GameObject[] possibleBattlegrounds;
     [SerializeField] private StageSegment[] segments;
     [SerializeField] private GameObject bossBattlefield;
@@ -20,8 +20,8 @@ public class StaticStageV4 : ScriptableObject
     public EncounterBuilder EncounterBuilder => encounterBuilder;
     public EncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
     public StorySetting StorySetting => storySetting;
-    public int GetPowerLevel(float percent) => (int)Mathf.Round(powerCurve.Evaluate(percent));
-    public int GetElitePowerLevel(float percent) => (int)Mathf.Round(elitePowerCurve.Evaluate(percent));
+    public int GetPowerLevel(float percent) => powerCurve.GetValueAsInt(percent);
+    public int GetElitePowerLevel(float percent) => elitePowerCurve.GetValueAsInt(percent);
     public GameObject Battleground => possibleBattlegrounds.Random();
     public int SegmentCount => segments.Length;
     public GameObject BossBattlefield => bossBattlefield;
