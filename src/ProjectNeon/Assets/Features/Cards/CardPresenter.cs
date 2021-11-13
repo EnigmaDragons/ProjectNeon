@@ -131,6 +131,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _zone = zone;
         _isHand = _zone.Contains("Hand");
         _onRightClick = _isHand ? ToggleAsBasic : (Action)card.ShowDetailedCardView;
+        controls.SetCanToggleBasic(_isHand && card.Owner.BasicCard.IsPresent);
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
     }
@@ -167,6 +168,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         targetRule.Hide();
         scalingRule.Hide();
         controls.SetActive(false);
+        controls.SetCanToggleBasic(false);
         DisableCanPlayHighlight();
         DisableSelectedHighlight();
         _onClick = onClick;
@@ -179,7 +181,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void ToggleAsBasic()
     {
         if (_card == null)
-            throw new InvalidOperationException("Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
+        {
+            Log.Error("Developer Error - Only Card Instances can be used as Basics. This Card Presenter does not have a Card instance.");
+            return;
+        }
+        if (_card.Owner.BasicCard.IsMissing)
+            return;
         
         DebugLog($"UI - Toggle as Basic");
         _card.TransitionTo(_card.Mode != CardMode.Basic ? CardMode.Basic : CardMode.Normal);
