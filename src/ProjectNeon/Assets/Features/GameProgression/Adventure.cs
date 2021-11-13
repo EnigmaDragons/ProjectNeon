@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Adventure/Adventure")]
 public class Adventure : ScriptableObject
 {
-    [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
+    [SerializeField] public int id;
     [SerializeField] private string lockConditionExplanation = "";
     [SerializeField] private DynamicStage[] dynamicStages;
     [SerializeField] private StaticStageV4[] stages;
