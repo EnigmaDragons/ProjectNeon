@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Adventure")]
-public class Adventure : ScriptableObject
+public class Adventure : ScriptableObject, CurrentAdventureData
 {
     [SerializeField] public int id;
     [SerializeField] private string lockConditionExplanation = "";
@@ -18,6 +18,8 @@ public class Adventure : ScriptableObject
     [SerializeField] private int baseNumberOfCardCycles = 2;
     [SerializeField] private float rewardCreditsPerPowerLevel = 1f;
     [SerializeField] private float xpPerPowerLevel = 0.2f;
+    [SerializeField] private BattleRewards normalBattleRewards;
+    [SerializeField] private BattleRewards eliteBattleRewards;
     [SerializeField, TextArea(4, 10)] private string story;
     [SerializeField, TextArea(4, 10)] private string defeatConclusion = "";
     [SerializeField, TextArea(4, 10)] private string victoryConclusion = "";
@@ -45,4 +47,6 @@ public class Adventure : ScriptableObject
     public string LockConditionExplanation => lockConditionExplanation ?? "";
 
     public string AllowedHeroesDescription => allowedHeroesDescription;
+    public BattleRewards NormalBattleRewards => normalBattleRewards;
+    public BattleRewards EliteBattleRewards => eliteBattleRewards;
 }
