@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CutscenePresenter : OnMessage<AdvanceCutsceneRequested>
@@ -14,7 +15,7 @@ public class CutscenePresenter : OnMessage<AdvanceCutsceneRequested>
         cutscene.Current.Setting.SpawnTo(settingParent);
         var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
         characters.ForEach(c => _characters.Add(c));
-        Log.Info($"{_characters.Count} Characters in cutscene");
+        Log.Info($"Characters in cutscene: {string.Join(", ", _characters.Select(c => c.PrimaryName))}");
     }
     
     protected override void Execute(AdvanceCutsceneRequested msg)
