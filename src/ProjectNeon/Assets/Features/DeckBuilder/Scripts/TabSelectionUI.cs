@@ -11,10 +11,12 @@ public class TabSelectionUI : OnMessage<CustomizationTabSwitched>
     [SerializeField] private GameObject[] notEquipmentObjects;
     [SerializeField] private GameObject[] notHeroObjects;
     [SerializeField] private GameObject[] notEnemyObjects;
+    [SerializeField] private bool equipmentEnabled = true;
 
     public void Awake()
     {
         equipmentTab.Init(() => Message.Publish(new CustomizationTabSwitched { TabName = "equipment" }), true);
+        equipmentTab.gameObject.SetActive(equipmentEnabled);
         heroTab.Init(() => Message.Publish(new CustomizationTabSwitched { TabName = "hero" }), false);
         enemyTab.Init(() => Message.Publish(new CustomizationTabSwitched { TabName = "enemy" }), false);
     }
