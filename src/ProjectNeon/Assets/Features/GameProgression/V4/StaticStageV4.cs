@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Stage V4")]
-public class StaticStageV4 : ScriptableObject
+public class StaticStageV4 : ScriptableObject, IStage
 {
     [SerializeField] private string displayName;
     [SerializeField] private EncounterBuilder encounterBuilder;

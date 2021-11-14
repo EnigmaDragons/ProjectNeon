@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using Features.GameProgression;
+using UnityEngine;
 
 class InitializeAdventureOnEnable : MonoBehaviour
 {
-    [SerializeField] private AdventureProgress2 adventure2;
+    [SerializeField] private CurrentAdventureProgress adventure;
     
     private void OnEnable()
     {
-        adventure2.Reset();
-        adventure2.InitIfNeeded();
+        adventure.AdventureProgress.Reset();
+        adventure.AdventureProgress.InitIfNeeded();
     }
 }

@@ -5,12 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "BattleRewards/CardOption")]
 public class CardOptionReward : BattleRewards
 {
-    [SerializeField] private AdventureProgress2 adventure2;
     [SerializeField] private BattleState state;
     [SerializeField] private ShopCardPool cardPrizePool;
     
-    public override void GrantVictoryRewardsAndThen(Action onFinished) 
-        => GetUserSelectedRewardCard(onFinished, adventure2.CreateLootPicker(state.Party));
+    public override void GrantVictoryRewardsAndThen(Action onFinished, LootPicker lootPicker) 
+        => GetUserSelectedRewardCard(onFinished, lootPicker);
 
     private void GetUserSelectedRewardCard(Action onFinished, LootPicker rewardPicker)
     {

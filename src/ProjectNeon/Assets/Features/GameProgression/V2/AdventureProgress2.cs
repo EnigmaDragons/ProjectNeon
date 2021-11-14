@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameState/AdventureProgress2")]
-public class AdventureProgress2 : ScriptableObject
+public class AdventureProgress2 : AdventureProgressBase
 {
     [SerializeField] private CurrentGameMap3 currentMap3;
     [SerializeField] private CurrentAdventure currentAdventure;
@@ -14,15 +14,15 @@ public class AdventureProgress2 : ScriptableObject
     [SerializeField] private bool playerReadMapPrompt = false;
     
     public Adventure CurrentAdventure => currentAdventure.Adventure;
-    public CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
+    public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
-    public int CurrentChapterNumber => currentChapterIndex + 1;
+    public override int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
     public int CurrentStageProgress => currentMap3.Progress;
     public float ProgressToUnlockChapterBoss => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
-    public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
+    public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
 
@@ -45,24 +45,27 @@ public class AdventureProgress2 : ScriptableObject
             return currentAdventure.Adventure.DynamicStages[currentChapterIndex]; 
         }
     }
+    
+    public override IStage Stage => CurrentChapter;
+
+    public BossDetails BossDetails => new BossDetails
+    {
+        Battlefield = CurrentChapter.BossBattlefield,
+        Enemies = CurrentChapter.BossEnemies,
+        CurrentChapterNumber = CurrentChapterNumber
+    };
 
     private static int Int(float f) => f.CeilingInt();
     private float GlobalPowerLevelFactor => currentGlobalEffects.EncounterDifficultyFactor;
-    public int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
-    public int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
+    public override int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
+    public override int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(((float)currentMap3.Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
     private bool HasBegun => currentChapterIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes.Last().Type == MapNodeType.Boss;
 
-    public void Init()
-    {
-        Reset();
-        Log.Info($"Init Adventure. {this}");
-    }
-
-    public void Init(Adventure adventure, int chapterIndex)
+    public override void Init(Adventure adventure, int chapterIndex)
     {
         currentAdventure.Adventure = adventure;
-        Init();
+        Reset();
         currentChapterIndex = chapterIndex;
         Log.Info($"Init Adventure. {this}");
     }
@@ -76,7 +79,7 @@ public class AdventureProgress2 : ScriptableObject
     public override string ToString() =>
         $"Adventure: {currentAdventure.name}. Stage: {currentChapterIndex}. StageProgress: {currentMap3.Progress}";
 
-    public void InitIfNeeded()
+    public override void InitIfNeeded()
     {
         if (HasBegun) return;
         
@@ -90,7 +93,7 @@ public class AdventureProgress2 : ScriptableObject
         Message.Publish(new AutoSaveRequested());
     }
     
-    public void Reset()
+    public override void Reset()
     {
         currentChapterIndex = -1;
         finishedStoryEvents.Clear();
@@ -99,7 +102,7 @@ public class AdventureProgress2 : ScriptableObject
         Message.Publish(new AdventureProgressChanged());
     }
 
-    public void AdvanceStageIfNeeded()
+    public override void AdvanceStageIfNeeded()
     {
         if (HasBegun && !CurrentStageIsFinished) 
             return;
@@ -129,6 +132,29 @@ public class AdventureProgress2 : ScriptableObject
     public void RecordFinishedHeatUpEvent(int index) => finishedCurrentStageHeatUpEvents.Add(index);
     public void SetFinishedHeatUpEvents(int[] indexes) => finishedCurrentStageHeatUpEvents = indexes.ToList();
     
-    public LootPicker CreateLootPicker(PartyAdventureState party) 
+    public override LootPicker CreateLootPicker(PartyAdventureState party) 
         => new LootPicker(CurrentChapterNumber, CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), party);
+    
+    public override GameAdventureProgressData GetData()
+        => new GameAdventureProgressData
+        {
+            AdventureId = CurrentAdventureId,
+            Type = GameAdventureProgressType.V2,
+            CurrentChapterIndex = CurrentChapterIndex,
+            CurrentChapterFinishedHeatUpEvents = FinishedCurrentStageHeatUpEvents,
+            FinishedStoryEvents = FinishedStoryEvents,
+            PlayerReadMapPrompt = PlayerReadMapPrompt,
+            ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray()
+        };
+    
+    public bool InitAdventure(GameAdventureProgressData adventureProgress, Adventure adventure)
+    {
+        Init(adventure, adventureProgress.CurrentChapterIndex);
+        SetFinishedStoryEvents(adventureProgress.FinishedStoryEvents);
+        SetFinishedHeatUpEvents(adventureProgress.CurrentChapterFinishedHeatUpEvents);
+        ApplyGlobalEffects(adventureProgress.ActiveGlobalEffectIds);
+        if (adventureProgress.PlayerReadMapPrompt)
+            MarkMapPromptComplete();
+        return true;
+    }
 }

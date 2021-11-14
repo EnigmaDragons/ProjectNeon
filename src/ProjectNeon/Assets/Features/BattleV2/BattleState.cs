@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Features.GameProgression;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameState/BattleState")]
@@ -15,7 +16,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private bool needsCleanup;
     [SerializeField] private bool isEliteBattle;
     [SerializeField] private BattleV2Phase phase;
-    [SerializeField] private AdventureProgress2 adventureProgress;
+    [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private CurrentGameMap3 map;
     [SerializeField] private AllCards allCards;
     [SerializeField] private BattleRewardState rewards;
@@ -56,7 +57,7 @@ public class BattleState : ScriptableObject
     
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
     public EnemyInstance[] NextEncounterEnemies => nextEnemies.ToArray();
-    public int Stage => adventureProgress.CurrentChapterNumber;
+    public int Stage => adventureProgress.AdventureProgress.CurrentChapterNumber;
     public bool NeedsCleanup => needsCleanup;
     public bool IsEliteBattle => isEliteBattle;
     public float CreditPerPowerLevelRewardFactor => adventure.Adventure?.RewardCreditsPerPowerLevel ?? 0;
@@ -185,7 +186,7 @@ public class BattleState : ScriptableObject
 
     private void ApplyAllGlobalStartOfBattleEffects()
     {
-        adventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
+        adventureProgress.AdventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
         {
             var heroLeader = _membersById.First().Value;
             var possibleTargets = this.GetPossibleConsciousTargets(heroLeader, e.Group, e.Scope);

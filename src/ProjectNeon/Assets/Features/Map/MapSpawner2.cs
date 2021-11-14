@@ -110,7 +110,7 @@ public class MapSpawner2 : MonoBehaviour
     private void ConvertAdjacentNodesToDeterministic()
     {
         foreach (var childId in gameMap.GetMapNode(gameMap.CurrentPositionId).ChildrenIds)
-            gameMap.GameObjects[childId].ConvertToDeterministic(new AdventureGenerationContext(progress, enemies));
+            gameMap.GameObjects[childId].ConvertToDeterministic(new AdventureGenerationContext(progress, enemies, progress.BossDetails));
     }
 
     private int ColumnX(float columnSize, int column) 

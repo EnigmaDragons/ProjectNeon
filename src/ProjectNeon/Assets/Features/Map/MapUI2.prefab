@@ -84,6 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1812071376632340686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,28 +117,20 @@ MonoBehaviour:
   gameMap: {fileID: 11400000, guid: 4ac9d5ec60b081f429cd0937e004b0a5, type: 2}
   progress: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
   travelReactiveSystem: {fileID: 1586825789905708743}
-  playerToken: {fileID: 62304065873535587, guid: a4775238501ca3445aad9d5cd06aaa55,
-    type: 3}
+  playerToken: {fileID: 62304065873535587, guid: a4775238501ca3445aad9d5cd06aaa55, type: 3}
   line: {fileID: -7739003461325142601, guid: 59d7e5780a1be25449278a8ea31a7ce7, type: 3}
   empty: {fileID: 1754431370404495701, guid: a9e781827eb53dd4592ba55ffe514f25, type: 3}
+  enemies: {fileID: 11400000, guid: d10371c939a84694b9f41a9963ad8226, type: 2}
   nodeVerticalJitter: 16
   nodeHorizontalJitter: 16
-  startNode: {fileID: 3764843923234972660, guid: e6e516d27e55bb244982ac95a4ce03d0,
-    type: 3}
-  combatNode: {fileID: 4784769788324190547, guid: 780f6a1c5c8fdde418cc3c5a517de3dc,
-    type: 3}
-  eliteCombatNode: {fileID: 1903929561367593861, guid: cb5bf871b6ea62641b89314aa9571111,
-    type: 3}
-  cardShopNode: {fileID: 6770135789918046957, guid: 85afb8bc3ca35fb479bb65ce00a8f379,
-    type: 3}
-  gearShopNode: {fileID: 2292341544691183723, guid: d470e9ed19eb56244843574245ccdd5b,
-    type: 3}
-  storyEventNode: {fileID: 1054363410730567809, guid: 311378c5c446a404eb6ccc165543eeca,
-    type: 3}
-  bossNode: {fileID: 8559243983452667441, guid: fa71a04d961ef814fa953edc0cd37ef6,
-    type: 3}
-  clinicNode: {fileID: 325822775945985573, guid: 9dd3b9b75765c174f9f6eaa6bbd5b265,
-    type: 3}
+  startNode: {fileID: 3764843923234972660, guid: e6e516d27e55bb244982ac95a4ce03d0, type: 3}
+  combatNode: {fileID: 4784769788324190547, guid: 780f6a1c5c8fdde418cc3c5a517de3dc, type: 3}
+  eliteCombatNode: {fileID: 1903929561367593861, guid: cb5bf871b6ea62641b89314aa9571111, type: 3}
+  cardShopNode: {fileID: 6770135789918046957, guid: 85afb8bc3ca35fb479bb65ce00a8f379, type: 3}
+  gearShopNode: {fileID: 2292341544691183723, guid: d470e9ed19eb56244843574245ccdd5b, type: 3}
+  storyEventNode: {fileID: 1054363410730567809, guid: 311378c5c446a404eb6ccc165543eeca, type: 3}
+  bossNode: {fileID: 8559243983452667441, guid: fa71a04d961ef814fa953edc0cd37ef6, type: 3}
+  clinicNode: {fileID: 325822775945985573, guid: 9dd3b9b75765c174f9f6eaa6bbd5b265, type: 3}
   marginRightBottomLeftTop: {x: 32, y: 228, z: 32, w: 140}
   mapMovementSettings:
     VerticalScrollArea: 32
@@ -158,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adventure: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
-  gameMap: {fileID: 11400000, guid: 4ac9d5ec60b081f429cd0937e004b0a5, type: 2}
+  gameMap: {fileID: 11400000, guid: 5064fe74d4176254a9e1729682f69c71, type: 2}
   speed: 200
 --- !u!114 &312768196832539421
 MonoBehaviour:
@@ -172,6 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbbcca46bea4882aafc7fad845460e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
+  progress: {fileID: 0}
   battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   eventPublisher: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}

@@ -1,23 +1,24 @@
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameState/AdventureProgressV4")]
-public class AdventureProgressV4 : ScriptableObject
+public class AdventureProgressV4 : AdventureProgressBase
 {
     [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private CurrentGlobalEffects currentGlobalEffects;
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private int currentSegmentIndex;
-
+    
     public Adventure CurrentAdventure => currentAdventure.Adventure;
-    public CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
+    public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentStageProgress => currentSegmentIndex;
-    private int CurrentChapterNumber => currentChapterIndex + 1;
+    public override int CurrentChapterNumber => currentChapterIndex + 1;
     private float Progress => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public float ProgressToUnlockChapterBoss => Progress;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
     public bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
-    public bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
+    public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     private int CurrentStageLength => CurrentChapter.SegmentCount;
     
     public StaticStageV4 CurrentChapter
@@ -29,23 +30,19 @@ public class AdventureProgressV4 : ScriptableObject
         }
     }
 
+    public override IStage Stage => CurrentChapter;
+
     private static int Int(float f) => f.CeilingInt();
     private float GlobalPowerLevelFactor => currentGlobalEffects.EncounterDifficultyFactor;
-    public int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(((float)Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
-    public int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(((float)Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
+    public override int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(((float)Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
+    public override int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(((float)Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
     private bool HasBegun => currentChapterIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && Progress >= CurrentStageLength;
 
-    public void Init()
-    {
-        Reset();
-        Log.Info($"Init Adventure. {this}");
-    }
-
-    public void Init(Adventure adventure, int chapterIndex)
+    public override void Init(Adventure adventure, int chapterIndex)
     {
         currentAdventure.Adventure = adventure;
-        Init();
+        Reset();
         currentChapterIndex = chapterIndex;
         Log.Info($"Init Adventure. {this}");
     }
@@ -59,7 +56,7 @@ public class AdventureProgressV4 : ScriptableObject
     public override string ToString() =>
         $"Adventure: {currentAdventure.name}. Stage: {currentChapterIndex}. StageProgress: {Progress}";
 
-    public void InitIfNeeded()
+    public override void InitIfNeeded()
     {
         if (HasBegun) return;
         
@@ -67,14 +64,14 @@ public class AdventureProgressV4 : ScriptableObject
         AdvanceStageIfNeeded();
     }
     
-    public void Reset()
+    public override void Reset()
     {
         currentChapterIndex = -1;
         currentGlobalEffects.Clear();
         Message.Publish(new AdventureProgressChanged());
     }
 
-    public void AdvanceStageIfNeeded()
+    public override void AdvanceStageIfNeeded()
     {
         if (HasBegun && !CurrentStageIsFinished) 
             return;
@@ -96,6 +93,25 @@ public class AdventureProgressV4 : ScriptableObject
         } 
     }
 
-    public LootPicker CreateLootPicker(PartyAdventureState party) 
+    public override LootPicker CreateLootPicker(PartyAdventureState party) 
         => new LootPicker(CurrentChapterNumber, CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), party);
+
+    public override GameAdventureProgressData GetData()
+        => new GameAdventureProgressData
+        {
+            AdventureId = CurrentAdventureId,
+            Type = GameAdventureProgressType.V4,
+            CurrentChapterIndex = currentChapterIndex,
+            CurrentChapterFinishedHeatUpEvents = new int[0],
+            FinishedStoryEvents = new string[0],
+            PlayerReadMapPrompt = true,
+            ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray()
+        };
+    
+    public bool InitAdventure(GameAdventureProgressData adventureProgress, Adventure adventure)
+    {
+        Init(adventure, adventureProgress.CurrentChapterIndex);
+        ApplyGlobalEffects(adventureProgress.ActiveGlobalEffectIds);
+        return true;
+    }
 }

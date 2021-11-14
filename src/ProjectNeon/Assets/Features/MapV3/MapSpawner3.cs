@@ -107,7 +107,7 @@ public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
 
     private void SpawnNodes()
     {
-        var ctx = new AdventureGenerationContext(progress, allEnemies);
+        var ctx = new AdventureGenerationContext(progress, allEnemies, progress.BossDetails);
         var fx = progress.GlobalEffects.AllStaticGlobalEffects;
         _activeNodes = gameMap.CurrentChoices.Select(x =>
         {

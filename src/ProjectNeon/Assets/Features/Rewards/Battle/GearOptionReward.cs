@@ -6,12 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "BattleRewards/GearOption")]
 public class GearOptionReward : BattleRewards
 {
-    [SerializeField] private AdventureProgress2 adventure2;
     [SerializeField] private BattleState state;
     [SerializeField] private EquipmentPool equipmentPrizePool;
     
-    public override void GrantVictoryRewardsAndThen(Action onFinished) 
-        => GetUserSelectedEquipment(onFinished, adventure2.CreateLootPicker(state.Party));
+    public override void GrantVictoryRewardsAndThen(Action onFinished, LootPicker lootPicker) 
+        => GetUserSelectedEquipment(onFinished, lootPicker);
     
     private void GetUserSelectedEquipment(Action onFinished, LootPicker rewardPicker)
     {

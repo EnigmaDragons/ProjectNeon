@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Stage Builder")]
-public class DynamicStage : ScriptableObject
+public class DynamicStage : ScriptableObject, IStage
 {
     [SerializeField] private string displayName;
     [SerializeField] private GameMap2 gameMap;

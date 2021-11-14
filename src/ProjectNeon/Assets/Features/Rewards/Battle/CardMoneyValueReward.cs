@@ -4,14 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "BattleRewards/CardMoneyValue")]
 public class CardMoneyValueReward : BattleRewards
 {
-    [SerializeField] private AdventureProgress2 adventure2;
     [SerializeField] private BattleState state;
     [SerializeField] private FloatReference delayBeforeProceed = new FloatReference(3f);
     
-    public override void GrantVictoryRewardsAndThen(Action onFinished)
+    public override void GrantVictoryRewardsAndThen(Action onFinished, LootPicker lootPicker)
     {
-        var rewardPicker = adventure2.CreateLootPicker(state.Party);
-        var rarity = rewardPicker.RandomRarity();
+        var rarity = lootPicker.RandomRarity();
         var credits = rarity.CardShopPrice();
         Log.Info($"Reward: Card Money Value - Rarity {rarity} - Value {credits}");
         state.AddRewardCredits(credits);

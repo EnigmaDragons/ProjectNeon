@@ -1,4 +1,5 @@
 using System.Linq;
+using Features.GameProgression;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "OnlyOnce/SaveLoadSystem")]
@@ -7,6 +8,8 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private StringReference versionNumber;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private AdventureProgress2 adventure;
+    [SerializeField] private AdventureProgressV4 adventurev4;
+    [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private Library library;
     [SerializeField] private CurrentGameMap3 map;
     [SerializeField] private AllMaps maps;
@@ -32,7 +35,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;
-            s.AdventureProgress = adventure.GetData();
+            s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             s.PartyData = party.GetData();
             s.GameMap = map.GetData();
             return s;
@@ -62,13 +65,11 @@ public sealed class SaveLoadSystem : ScriptableObject
         var selectedAdventure = library.GetAdventureById(adventureProgress.AdventureId);
         if (selectedAdventure.IsMissing)
             return LoadFailedReason($"Unknown Adventure {adventureProgress.AdventureId}");
-        adventure.Init(selectedAdventure.Value, adventureProgress.CurrentChapterIndex);
-        adventure.SetFinishedStoryEvents(adventureProgress.FinishedStoryEvents);
-        adventure.SetFinishedHeatUpEvents(adventureProgress.CurrentChapterFinishedHeatUpEvents);
-        adventure.ApplyGlobalEffects(adventureProgress.ActiveGlobalEffectIds);
-        if (adventureProgress.PlayerReadMapPrompt)
-            adventure.MarkMapPromptComplete();
-        return true;
+        if (adventureProgress.Type == GameAdventureProgressType.V2)
+            return adventure.InitAdventure(adventureProgress, selectedAdventure.Value);
+        if (adventureProgress.Type == GameAdventureProgressType.V4)
+            return adventurev4.InitAdventure(adventureProgress, selectedAdventure.Value);
+        return LoadFailedReason($"Unknown Adventure Type {adventureProgress.Type}");
     }
 
     private bool InitParty(GamePartyData partyData)

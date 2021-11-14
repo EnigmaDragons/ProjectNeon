@@ -1,17 +1,18 @@
+using Features.GameProgression;
 using UnityEngine;
 
 public class CheatHandler : OnMessage<GainRandomEquipment, CompleteAnyMapNode, WinGameRequested>
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private AdventureConclusionState conclusion;
-    [SerializeField] private AdventureProgress2 adventure;
+    [SerializeField] private CurrentAdventureProgress adventure;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private EquipmentPool equipments;
     [SerializeField] private CurrentGameMap3 map;
         
     protected override void Execute(GainRandomEquipment msg)
     {
-        var picker = adventure.CreateLootPicker(party);
+        var picker = adventure.AdventureProgress.CreateLootPicker(party);
         party.Add(picker.PickEquipments(equipments, 1));
     }
 

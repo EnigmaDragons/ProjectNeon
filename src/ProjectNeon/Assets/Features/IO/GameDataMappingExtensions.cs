@@ -33,18 +33,6 @@ public static class GameDataMappingExtensions
             CorpCostModifiers = s.CorpCostModifiers
         };
 
-    public static GameAdventureProgressData GetData(this AdventureProgress2 p)
-        => new GameAdventureProgressData
-        {
-            AdventureId = p.CurrentAdventureId,
-            Type = GameAdventureProgressType.V2,
-            CurrentChapterIndex = p.CurrentChapterIndex,
-            CurrentChapterFinishedHeatUpEvents = p.FinishedCurrentStageHeatUpEvents,
-            FinishedStoryEvents = p.FinishedStoryEvents,
-            PlayerReadMapPrompt = p.PlayerReadMapPrompt,
-            ActiveGlobalEffectIds = p.GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray()
-        };
-
     public static GameMapData GetData(this CurrentGameMap3 map)
         => map.CurrentMap == null 
             ? new GameMapData() 

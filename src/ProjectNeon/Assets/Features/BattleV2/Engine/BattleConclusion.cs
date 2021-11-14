@@ -1,23 +1,24 @@
 using System;
+using Features.GameProgression;
 using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>
 {
     [SerializeField] private CurrentAdventure adventure;
-    [SerializeField] private AdventureProgress2 adventure2;
+    [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private AdventureConclusionState conclusion;
     [SerializeField] private Navigator navigator;
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
     [SerializeField] private float secondsBeforeGameOverScreen = 3f;
     [SerializeField] private BattleState state;
     [SerializeField] private CurrentGameMap3 gameMap;
-    
+
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
         if (state.IsEliteBattle)
-            adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished);
+            adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
         else
-            adventure.Adventure.NormalBattleRewards.GrantVictoryRewardsAndThen(onFinished);
+            adventure.Adventure.NormalBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
     }
     
     private void Advance()
@@ -28,20 +29,20 @@ public class BattleConclusion : OnMessage<BattleFinished>
             Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }
-        else if (adventure2.IsFinalStageSegment)
+        else if (adventureProgress.AdventureProgress.IsFinalStageSegment)
         {
             Log.Info("Navigating to victory screen");
             gameMap.CompleteCurrentNode();
             AllMetrics.PublishGameWon();
             Message.Publish(new AutoSaveRequested());
-            conclusion.Set(true, adventure2.CurrentAdventure.VictoryConclusion);
+            conclusion.Set(true, adventure.Adventure.VictoryConclusion);
             this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeReturnToAdventure);
         }
         else
         {
             Log.Info("Advancing to next Stage Segment.");
             gameMap.CompleteCurrentNode();
-            adventure2.AdvanceStageIfNeeded();
+            adventureProgress.AdventureProgress.AdvanceStageIfNeeded();
             Message.Publish(new AutoSaveRequested());
             this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
         }
@@ -56,7 +57,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
             Log.Info("Navigating to defeat screen");
             AllMetrics.PublishGameLost();
             CurrentGameData.Clear();
-            conclusion.Set(false, adventure2.CurrentAdventure.DefeatConclusion);
+            conclusion.Set(false,  adventure.Adventure.DefeatConclusion);
             this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
         }
     }

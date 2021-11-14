@@ -1,17 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
+using Features.GameProgression;
+using UnityEngine;
 
 public class AdventureGenerationContext
 {
     public AdventureProgress2 Adventure { get; }
     public AllEnemies Enemies { get; }
     public HashSet<EnemyEncounterDefinition> Encounters { get; }
+    public  BossDetails BossDetails { get; }
 
-    public AdventureGenerationContext(AdventureProgress2 adventure, AllEnemies enemies)
+    public AdventureGenerationContext(AdventureProgress2 adventure, AllEnemies enemies, BossDetails bossDetails)
     {
         Adventure = adventure;
         Enemies = enemies;
         Encounters = new HashSet<EnemyEncounterDefinition>();
+        BossDetails = bossDetails;
     }
 
     public void RecordGeneratedEncounter(IEnumerable<int> enemyIds) => Encounters.Add(new EnemyEncounterDefinition(enemyIds));

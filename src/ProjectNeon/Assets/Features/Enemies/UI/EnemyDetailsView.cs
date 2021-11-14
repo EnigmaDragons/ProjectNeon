@@ -1,4 +1,5 @@
 using System.Linq;
+using Features.GameProgression;
 using TMPro;
 using UnityEngine;
 
@@ -15,14 +16,14 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private GameObject hasUnshownCardsItem;
     [SerializeField] private CorpUiBase corpUi;
     [SerializeField] private EnemyResourceInfoPresenter resources;
-    [SerializeField] private AdventureProgress2 currentAdventureProgress;
+    [SerializeField] private CurrentAdventureProgress currentAdventureProgress;
 
     private bool _isInitialized;
     
     private void Awake()
     {
         if (!_isInitialized && staringEnemy != null)
-            Show(staringEnemy.ForStage(currentAdventureProgress.CurrentChapterNumber));
+            Show(staringEnemy.ForStage(currentAdventureProgress.AdventureProgress.CurrentChapterNumber));
     }
 
     public void Show(EnemyInstance e)
