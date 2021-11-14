@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using Features.GameProgression;
 using UnityEngine;
 
 public class CutscenePresenter : MonoBehaviour
 {
     [SerializeField] private Navigator navigator;
+    [SerializeField] private CurrentAdventureProgress progress;
     [SerializeField] private FloatReference cutsceneFinishNavigationDelay = new FloatReference(1f);
     [SerializeField] private FloatReference dialogueWaitDelay = new FloatReference(2f);
     [SerializeField] private CurrentCutscene cutscene;
@@ -100,6 +102,7 @@ public class CutscenePresenter : MonoBehaviour
         HidePreviousSegmentStuff();
         DebugLog("Cutscene Finished");
         _finishTriggered = true;
+        progress.AdventureProgress.Advance();
         this.ExecuteAfterDelay(navigator.NavigateToGameSceneV4, cutsceneFinishNavigationDelay);
     }
 
