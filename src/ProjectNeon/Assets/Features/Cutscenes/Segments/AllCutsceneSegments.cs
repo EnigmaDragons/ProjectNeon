@@ -1,20 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-
-public enum CutsceneSegmentType
-{
-    Nothing = 0,
-    DialogueLine = 1,
-}
-
-[Serializable]
-public class CutsceneSegmentData
-{
-    public CutsceneSegmentType SegmentType;
-    public StringReference DialogueCharacterId = new StringReference { UseConstant = false };
-    [TextArea(4, 4)] public string Text = "";
-}
 
 public static class AllCutsceneSegments
 {
@@ -22,9 +7,12 @@ public static class AllCutsceneSegments
         CreateSegmentOfType = new Dictionary<CutsceneSegmentType, Func<CutsceneSegmentData, CutsceneSegment>>
         {
             {CutsceneSegmentType.Nothing, e => new SimpleSegment(() => { })},
-            {CutsceneSegmentType.DialogueLine, e => new SimpleSegment(
-                () => Message.Publish(new ShowCharacterDialogueLine(e.DialogueCharacterId, e.Text)), 
-                () => Message.Publish(new FullyDisplayDialogueLine(e.DialogueCharacterId)))},
+            {CutsceneSegmentType.DialogueLine, e => new MessagePublishSegment(
+                new ShowCharacterDialogueLine(e.DialogueCharacterId, e.Text), 
+                new FullyDisplayDialogueLine(e.DialogueCharacterId))},
+            {CutsceneSegmentType.NarratorLine, e => new MessagePublishSegment(
+                new ShowCharacterDialogueLine(CutsceneCharacterAliases.Narrator, e.Text),
+                new FullyDisplayDialogueLine(CutsceneCharacterAliases.Narrator))}
         };
 
     public static CutsceneSegment Create(CutsceneSegmentData data)

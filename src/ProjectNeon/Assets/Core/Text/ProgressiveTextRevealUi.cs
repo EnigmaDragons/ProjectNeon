@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class ProgressiveTextReveal : MonoBehaviour
+public sealed class ProgressiveTextRevealUi : ProgressiveText
 {
     [SerializeField] private Button chatBox;
     [SerializeField] private Image panelBg;
@@ -31,7 +31,7 @@ public sealed class ProgressiveTextReveal : MonoBehaviour
         chatBox.onClick.AddListener(() => Proceed(isAuto: false));
     }
 
-    public void Hide()
+    public override void Hide()
     {
         if (!chatBox.gameObject.activeSelf || isRevealing)
             return;
@@ -40,13 +40,16 @@ public sealed class ProgressiveTextReveal : MonoBehaviour
         chatBox.gameObject.SetActive(false);
     }
 
-    public void Display(string text) 
-        => Display(text,  false, true, () => { });
-    public void Display(string text, Action onFinished) 
-        => Display(text, false, true, onFinished);
-    public void Display(string text, bool shouldAutoProceed, Action onFinished) 
-        => Display(text, shouldAutoProceed, true, onFinished);
-    public void Display(string text, bool shouldAutoProceed, bool manualInterventionDisablesAuto,  Action onFinished) 
+    public override void ForceHide()
+    {
+        if (!chatBox.gameObject.activeSelf)
+            return;
+        
+        Info($"Text Box - Hide");
+        chatBox.gameObject.SetActive(false);
+    }
+    
+    public override void Display(string text, bool shouldAutoProceed, bool manualInterventionDisablesAuto,  Action onFinished) 
     {
         if (isRevealing)
             return;
@@ -60,8 +63,7 @@ public sealed class ProgressiveTextReveal : MonoBehaviour
         StartCoroutine(BeginReveal());
     }
 
-    public void Proceed() => Proceed(false);
-    public void Proceed(bool isAuto)
+    public override void Proceed(bool isAuto)
     {
         Info($"Text Box - Proceed Auto: {isAuto}");
         if (_finished)
