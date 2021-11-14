@@ -1827,7 +1827,6 @@ GameObject:
   - component: {fileID: 2544300596199482876}
   - component: {fileID: 351397570153240767}
   - component: {fileID: 9042329966324584254}
-  - component: {fileID: 2804414955538409831}
   - component: {fileID: 2804414955538409880}
   m_Layer: 0
   m_Name: DeckBuilderUI-V4
@@ -1938,21 +1937,6 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 1
---- !u!114 &2804414955538409831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2804414955538409830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ab493278111410893e2ab4c4aa24717, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heroSelection: {fileID: 5412065742903248544}
-  cardFilter: {fileID: 2077666442377030623}
-  deckUI: {fileID: 7996597348279745209}
 --- !u!114 &2804414955538409880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3157,13 +3141,14 @@ GameObject:
   - component: {fileID: 5245719228918154226}
   - component: {fileID: 7061144968808351029}
   - component: {fileID: 1544889355885621326}
+  - component: {fileID: 2834276838935908616}
   m_Layer: 5
   m_Name: DeckBuilderCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5337795529833175019
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3274,6 +3259,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8a12293e59425da54a059ae43f5a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2834276838935908616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4260408688587037091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab493278111410893e2ab4c4aa24717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroSelection: {fileID: 5412065742903248544}
+  cardFilter: {fileID: 2077666442377030623}
+  deckUI: {fileID: 7996597348279745209}
 --- !u!1 &4319516164607633850
 GameObject:
   m_ObjectHideFlags: 0
@@ -3314,9 +3314,9 @@ RectTransform:
   m_Father: {fileID: 2226745729015607355}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 272, y: -60}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6072500173813993417
@@ -4015,9 +4015,9 @@ RectTransform:
   m_Father: {fileID: 2226745729015607355}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 128, y: -60}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2236917928360198421
@@ -6983,11 +6983,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!224 &511835441781527702 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 240074395688785025}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8778424729225509212 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -6999,6 +6994,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &511835441781527702 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 240074395688785025}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2706280415575708732 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -8428,11 +8428,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!224 &8078966717935714694 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 8381423858512986513}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5947712770855682348 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -8444,6 +8439,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &8078966717935714694 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 8381423858512986513}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1069354447746460748 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}

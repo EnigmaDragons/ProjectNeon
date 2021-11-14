@@ -47,6 +47,7 @@ public class AdventureProgressV4 : AdventureProgressBase
         currentAdventure.Adventure = adventure;
         Reset();
         currentChapterIndex = chapterIndex;
+        currentSegmentIndex = 0;
         Log.Info($"Init Adventure. {this}");
     }
 

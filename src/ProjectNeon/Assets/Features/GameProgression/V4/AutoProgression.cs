@@ -4,11 +4,10 @@ public class AutoProgression : OnMessage<NodeFinished>
 {
     [SerializeField] private AdventureProgressV4 progress;
 
-    private void Start() => PlayNextSegment();
-    protected override void Execute(NodeFinished msg) => PlayNextSegment();
-
-    private void PlayNextSegment()
+    private void Start() => progress.CurrentStageSegment.Start();
+    protected override void Execute(NodeFinished msg)
     {
+        progress.Advance();
         progress.CurrentStageSegment.Start();
     }
 }
