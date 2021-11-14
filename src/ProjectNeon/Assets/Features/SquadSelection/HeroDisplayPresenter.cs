@@ -15,18 +15,22 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private TextMeshProUGUI roleDescription;
     [SerializeField] private TextMeshProUGUI backstory;
 
-    private Maybe<Action> _onClick = Maybe<Action>.Missing();
+    private bool _isInitialized;
+    private bool _isClickable = false;
+    private Action _onClick = () => { };
     
     private void Start()
     {
-        if (currentHero != null)
+        if (!_isInitialized && currentHero != null)
             Init(currentHero);
     }
 
-    public void Init(HeroCharacter c) => Init(c, Maybe<Action>.Missing());
-    public void Init(HeroCharacter c, Maybe<Action> onClick)
+    public void Init(HeroCharacter c) => Init(c, false, () => {});
+    public void Init(HeroCharacter c, bool isClickable, Action onClick)
     {
+        _isInitialized = true;
         _onClick = onClick;
+        _isClickable = isClickable;
         currentHero = c;
         heroBust.sprite = c.Bust;
         heroName.text = c.DisplayName();
@@ -40,15 +44,15 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_onClick.IsPresent && hoverGraphic != null)
+        if (_isClickable && hoverGraphic != null)
             hoverGraphic.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (_onClick.IsPresent && hoverGraphic != null)
+        if (_isClickable && hoverGraphic != null)
             hoverGraphic.SetActive(false);
     }
 
-    public void OnPointerClick(PointerEventData eventData) => _onClick.IfPresent(a => a());
+    public void OnPointerClick(PointerEventData eventData) => _onClick();
 }

@@ -17,11 +17,11 @@ public class SingleHeroSelectionUiPresenter : MonoBehaviour
             if (hasOption)
             {
                 var option = msg.Options[i];
-                presenters[i].Init(option, Maybe<Action>.Present(() =>
+                presenters[i].Init(option, true, () =>
                 {
                     msg.OnSelected(option);
                     onFinished();
-                }));
+                });
             }
         }
         return this;
