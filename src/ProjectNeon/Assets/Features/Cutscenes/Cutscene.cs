@@ -5,8 +5,8 @@ using UnityEngine;
 public class Cutscene : ScriptableObject
 {
     [SerializeField] private CutsceneSetting setting;
-    [SerializeField] private CutsceneSegment[] segments;
+    [SerializeField] private CutsceneSegmentData[] segments;
 
     public CutsceneSetting Setting => setting;
-    public CutsceneSegment[] Segments => segments.ToArray();
+    public CutsceneSegmentData[] Segments => segments.ToArray();
 }
