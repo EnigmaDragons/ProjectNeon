@@ -31,6 +31,8 @@ public class AdventureProgressV4 : AdventureProgressBase
         }
     }
 
+    public StageSegment CurrentStageSegment => CurrentChapter.Segments[currentSegmentIndex];
+
     public override IStage Stage => CurrentChapter;
 
     private static int Int(float f) => f.CeilingInt();
@@ -45,6 +47,7 @@ public class AdventureProgressV4 : AdventureProgressBase
         currentAdventure.Adventure = adventure;
         Reset();
         currentChapterIndex = chapterIndex;
+        currentSegmentIndex = 0;
         Log.Info($"Init Adventure. {this}");
     }
 
@@ -114,5 +117,11 @@ public class AdventureProgressV4 : AdventureProgressBase
         Init(adventure, adventureProgress.CurrentChapterIndex);
         ApplyGlobalEffects(adventureProgress.ActiveGlobalEffectIds);
         return true;
+    }
+
+    public override void Advance()
+    {
+        currentSegmentIndex++;
+        AdvanceStageIfNeeded();
     }
 }

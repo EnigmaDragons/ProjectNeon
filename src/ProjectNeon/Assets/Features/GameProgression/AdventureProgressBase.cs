@@ -14,4 +14,5 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract void AdvanceStageIfNeeded();
     public abstract LootPicker CreateLootPicker(PartyAdventureState party);
     public abstract GameAdventureProgressData GetData();
+    public abstract void Advance();
 }

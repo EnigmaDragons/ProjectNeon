@@ -157,4 +157,10 @@ public class AdventureProgress2 : AdventureProgressBase
             MarkMapPromptComplete();
         return true;
     }
+
+    public override void Advance()
+    {
+        currentMap3.CompleteCurrentNode();
+        AdvanceStageIfNeeded();
+    } 
 }

@@ -8,6 +8,7 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     [SerializeField] private CurrentAdventureProgress progress;
     [SerializeField] private BattleState battleState;
     [SerializeField] private EventPublisher eventPublisher;
+    [SerializeField] private Navigator navigator;
     
     protected override void Execute(EnterRandomCombat msg)
     {
@@ -38,6 +39,9 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
         Log.Info("Setting Up Specific Battle");
         battleState.SetNextBattleground(msg.BattleField);
         battleState.SetNextEncounter(msg.Enemies, msg.IsElite, msg.IsStoryEventCombat);
-        eventPublisher.ActivatePartyDetailsWizardFlow();
+        if (msg.SkipSetup)
+            navigator.NavigateToBattleScene();
+        else
+            eventPublisher.ActivatePartyDetailsWizardFlow();
     }
 }

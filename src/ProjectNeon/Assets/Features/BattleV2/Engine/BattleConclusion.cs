@@ -27,12 +27,16 @@ public class BattleConclusion : OnMessage<BattleFinished>
         {
             Log.Info("Returning to map from event combat");
             Message.Publish(new AutoSaveRequested());
-            this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
+            var adventureType = CurrentGameData.Data.AdventureProgress.Type;
+            if (adventureType == GameAdventureProgressType.V2)
+                this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
+            if (adventureType == GameAdventureProgressType.V4)
+                this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV4(), secondsBeforeReturnToAdventure);
         }
         else if (adventureProgress.AdventureProgress.IsFinalStageSegment)
         {
             Log.Info("Navigating to victory screen");
-            gameMap.CompleteCurrentNode();
+            adventureProgress.AdventureProgress.Advance();
             AllMetrics.PublishGameWon();
             Message.Publish(new AutoSaveRequested());
             conclusion.Set(true, adventure.Adventure.VictoryConclusion);
@@ -41,10 +45,14 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else
         {
             Log.Info("Advancing to next Stage Segment.");
-            gameMap.CompleteCurrentNode();
-            adventureProgress.AdventureProgress.AdvanceStageIfNeeded();
+            adventureProgress.AdventureProgress.Advance();
             Message.Publish(new AutoSaveRequested());
-            this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
+            var adventureType = CurrentGameData.Data.AdventureProgress.Type;
+            if (adventureType == GameAdventureProgressType.V2)
+                this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
+            if (adventureType == GameAdventureProgressType.V4)
+                this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV4(), secondsBeforeReturnToAdventure);
+            
         }
     }
 

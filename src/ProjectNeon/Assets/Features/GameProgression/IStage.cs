@@ -8,4 +8,5 @@ public interface IStage
     GameObject BossBattlefield { get; }
     Enemy[] BossEnemies { get; }
     AudioClipVolume StageBattleTheme { get; }
+    
 }
