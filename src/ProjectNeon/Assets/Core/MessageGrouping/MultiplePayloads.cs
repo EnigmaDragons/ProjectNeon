@@ -8,6 +8,8 @@ public sealed class MultiplePayloads : IPayloadProvider
 
     public MultiplePayloads() 
         : this(new IPayloadProvider[0]) {}
+    public MultiplePayloads(object[] objects)
+        : this(objects.Select(o => new SinglePayload(o))) {}
     public MultiplePayloads(params IEnumerable<IPayloadProvider>[] payloadProviders) 
         : this(payloadProviders.SelectMany(p => p).ToArray()) {}
     public MultiplePayloads(IEnumerable<IPayloadProvider> payloadProviders) 

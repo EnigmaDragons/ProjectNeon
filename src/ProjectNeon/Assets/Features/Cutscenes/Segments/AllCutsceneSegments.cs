@@ -22,7 +22,7 @@ public static class AllCutsceneSegments
         CreateSegmentOfType = new Dictionary<CutsceneSegmentType, Func<CutsceneSegmentData, CutsceneSegment>>
         {
             {CutsceneSegmentType.Nothing, e => new SimpleSegment(() => { })},
-            {CutsceneSegmentType.DialogueLine, e => new SimpleSegment(() => Message.Publish(new StartCharacterDialogueLine(e.DialogueCharacterId, e.Text)))},
+            {CutsceneSegmentType.DialogueLine, e => new SimpleSegment(() => Message.Publish(new ShowCharacterDialogueLine(e.DialogueCharacterId, e.Text)))},
         };
 
     public static CutsceneSegment Create(CutsceneSegmentData data)
