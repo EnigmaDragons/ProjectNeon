@@ -117,4 +117,10 @@ public class AdventureProgressV4 : AdventureProgressBase
         ApplyGlobalEffects(adventureProgress.ActiveGlobalEffectIds);
         return true;
     }
+
+    public override void Advance()
+    {
+        currentSegmentIndex++;
+        AdvanceStageIfNeeded();
+    }
 }

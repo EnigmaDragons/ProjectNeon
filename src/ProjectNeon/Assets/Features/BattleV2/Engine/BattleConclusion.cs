@@ -36,7 +36,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else if (adventureProgress.AdventureProgress.IsFinalStageSegment)
         {
             Log.Info("Navigating to victory screen");
-            gameMap.CompleteCurrentNode();
+            adventureProgress.AdventureProgress.Advance();
             AllMetrics.PublishGameWon();
             Message.Publish(new AutoSaveRequested());
             conclusion.Set(true, adventure.Adventure.VictoryConclusion);
@@ -45,8 +45,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else
         {
             Log.Info("Advancing to next Stage Segment.");
-            gameMap.CompleteCurrentNode();
-            adventureProgress.AdventureProgress.AdvanceStageIfNeeded();
+            adventureProgress.AdventureProgress.Advance();
             Message.Publish(new AutoSaveRequested());
             var adventureType = CurrentGameData.Data.AdventureProgress.Type;
             if (adventureType == GameAdventureProgressType.V2)
