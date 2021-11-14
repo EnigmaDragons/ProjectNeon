@@ -22,6 +22,7 @@ public class AssetUpdater
         EnsureDurationPresent();
         UpdateMapIDs();
         UpdateAllMaps();
+        UpdateAllHeroes();
         UpdateEnemyIDs();
         UpdateAllEnemies();
         UpdateAllCorps();
@@ -160,6 +161,22 @@ public class AssetUpdater
             }
         });
     }
+    
+    [MenuItem("Neon/Update/UpdateAllHeroes")]
+    private static void UpdateAllHeroes()
+    {
+        var items = ScriptableExtensions.GetAllInstances<BaseHero>().Where(x => x != null).ToArray();
+        var all = ScriptableExtensions.GetAllInstances<AllHeroes>();
+        all.ForEach(x =>
+        {
+            if (x.Heroes.Length != items.Length || items.Any(card => !x.Heroes.Contains(card)))
+            {
+                x.Heroes = items;
+                EditorUtility.SetDirty(x);   
+            }
+        });
+    }
+
 
     [MenuItem("Neon/Update/UpdateAllCorps")]
     private static void UpdateAllCorps()

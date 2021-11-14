@@ -166,6 +166,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public void UpdateDecks(params List<CardTypeData>[] decks) =>
         UpdateState(() =>
         {
+            Log.Info($"Num Heroes {heroes.Length}");
             heroes[0].SetDeck(CreateDeck(decks[0]));
             if (heroes.Length > 1)
                 heroes[1]?.SetDeck(CreateDeck(decks[1]));

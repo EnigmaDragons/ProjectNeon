@@ -13,6 +13,7 @@ public class AdventureProgressV4 : ScriptableObject
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public int CurrentStageProgress => currentSegmentIndex;
     private int CurrentChapterNumber => currentChapterIndex + 1;
+    public int CurrentChapterIndex => currentChapterIndex;
     private float Progress => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public float ProgressToUnlockChapterBoss => Progress;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;

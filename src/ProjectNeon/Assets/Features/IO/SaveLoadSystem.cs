@@ -45,11 +45,12 @@ public sealed class SaveLoadSystem : ScriptableObject
         var loadedSuccessfully = true;
         if (!string.IsNullOrWhiteSpace(saveData.RunId))
             AllMetrics.SetRunId(saveData.RunId);
-        if (loadedSuccessfully && (int) saveData.Phase >= (int) CurrentGamePhase.SelectedAdventure)
+        if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure))
             loadedSuccessfully = InitAdventure(saveData.AdventureProgress);
-        if (loadedSuccessfully && (int) saveData.Phase >= (int) CurrentGamePhase.SelectedSquad)
+        if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedSquad))
             loadedSuccessfully = InitParty(saveData.PartyData);
-        if (loadedSuccessfully && (int) saveData.Phase >= (int) CurrentGamePhase.SelectedAdventure)
+        if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure) 
+                               && saveData.AdventureProgress.Type != GameAdventureProgressType.V4)
             loadedSuccessfully = InitMap(saveData.GameMap);
         if (!loadedSuccessfully)
             return CurrentGamePhase.LoadError;

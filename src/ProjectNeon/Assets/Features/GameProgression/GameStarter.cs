@@ -47,7 +47,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     {
         var adventure = defaultAdventure;
         currentAdventure.Adventure = adventure;
-        adventureProgressV4.Init();
+        adventureProgressV4.InitIfNeeded();
 
         if (adventure.FixedStartingHeroes.Length == 0)
         {
@@ -61,6 +61,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             {
                 s.IsInitialized = true;
                 s.Phase = CurrentGamePhase.SelectedSquad;
+                s.AdventureProgress = adventureProgressV4.GetData();
                 s.PartyData = party.GetData();
                 return s;
             });
@@ -78,7 +79,13 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             else if (phase == CurrentGamePhase.SelectedAdventure)
                 navigator.NavigateToSquadSelection();
             else if (phase == CurrentGamePhase.SelectedSquad)
-                navigator.NavigateToGameScene();
+            {
+                var adventureType = CurrentGameData.Data.AdventureProgress.Type;
+                if (adventureType == GameAdventureProgressType.V2)
+                    navigator.NavigateToGameScene();
+                if (adventureType == GameAdventureProgressType.V4)
+                    navigator.NavigateToGameSceneV4();
+            }
             else if (phase == CurrentGamePhase.LoadError)
             {
                 io.ClearCurrentSlot();
@@ -94,19 +101,27 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     protected override void Execute(StartNewGameRequested msg)
     {
         if (!CurrentGameData.HasActiveGame) 
-            AskPlayerWhetherTutorialsShouldBeEnabled();
+            KickOffGameStartProcess();
         else
             Message.Publish(new ShowTwoChoiceDialog
             {
                 UseDarken = true,
                 Prompt = "Starting a new game will abandon your current run. Are you sure you wish to start to start a new game?",
                 PrimaryButtonText = "Yes",
-                PrimaryAction = AskPlayerWhetherTutorialsShouldBeEnabled,
+                PrimaryAction = KickOffGameStartProcess,
                 SecondaryButtonText = "No",
                 SecondaryAction = () => { }
             });
     }
 
+    private void KickOffGameStartProcess()
+    {
+        if (defaultAdventure.IsV2)
+            AskPlayerWhetherTutorialsShouldBeEnabled();
+        else
+            Message.Publish(new StartNewGame(false));
+    }
+    
     private void AskPlayerWhetherTutorialsShouldBeEnabled()
     {
         Message.Publish(new ShowTwoChoiceDialog

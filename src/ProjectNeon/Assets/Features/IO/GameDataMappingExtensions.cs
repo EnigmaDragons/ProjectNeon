@@ -45,6 +45,14 @@ public static class GameDataMappingExtensions
             ActiveGlobalEffectIds = p.GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray()
         };
 
+    public static GameAdventureProgressData GetData(this AdventureProgressV4 p)
+        => new GameAdventureProgressData
+        {
+            AdventureId = p.CurrentAdventureId,
+            Type = GameAdventureProgressType.V4,
+            CurrentChapterIndex = p.CurrentChapterIndex,
+        };
+
     public static GameMapData GetData(this CurrentGameMap3 map)
         => map.CurrentMap == null 
             ? new GameMapData() 
