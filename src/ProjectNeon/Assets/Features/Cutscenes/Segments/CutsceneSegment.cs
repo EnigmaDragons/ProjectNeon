@@ -1,7 +1,5 @@
-using UnityEngine;
 
-public abstract class CutsceneSegment : ScriptableObject
+public interface CutsceneSegment 
 {
-    public abstract void Start();
-    public abstract void FinishInstantly();
+    public void Start();
 }
