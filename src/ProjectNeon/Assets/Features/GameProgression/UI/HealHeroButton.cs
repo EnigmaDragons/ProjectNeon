@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class HealHeroButton : OnMessage<PartyAdventureStateChanged>
+public sealed class HealHeroButton : MonoBehaviour
 {
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private Button button;
@@ -31,10 +31,5 @@ public sealed class HealHeroButton : OnMessage<PartyAdventureStateChanged>
             party.HealHeroToFull(_hero);
             gameObject.SetActive(false);
         }
-    }
-
-    protected override void Execute(PartyAdventureStateChanged msg)
-    {
-        Init(_hero);
     }
 }
