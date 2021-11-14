@@ -31,6 +31,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private int turnNumber;
     [SerializeField, ReadOnly] private PlayerState playerState = new PlayerState();
 
+    public bool DontShuffleNextBattle { get; set; }
     private Queue<Effect> _queuedEffects = new Queue<Effect>();
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
     public Effect[] QueuedEffects => _queuedEffects.ToArray();

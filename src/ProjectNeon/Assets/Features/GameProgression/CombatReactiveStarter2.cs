@@ -39,8 +39,11 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
         Log.Info("Setting Up Specific Battle");
         battleState.SetNextBattleground(msg.BattleField);
         battleState.SetNextEncounter(msg.Enemies, msg.IsElite, msg.IsStoryEventCombat);
-        if (msg.SkipSetup)
-            navigator.NavigateToBattleScene();
+        if (msg.IsTutorial)
+        {
+            battleState.DontShuffleNextBattle = true;
+            navigator.NavigateToBattleScene();   
+        }
         else
             eventPublisher.ActivatePartyDetailsWizardFlow();
     }
