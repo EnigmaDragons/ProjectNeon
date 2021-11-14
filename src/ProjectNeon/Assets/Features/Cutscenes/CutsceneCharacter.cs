@@ -8,13 +8,15 @@ public class CutsceneCharacter : MonoBehaviour
     
     private HashSet<string> _names = new HashSet<string>();
 
+    public bool IsInitialized => _names.Any();
     public string PrimaryName => _names.Any() ? _names.First() : "Uninitialized";
     public ProgressiveText SpeechBubble => text;
     public bool Matches(string characterName) => _names.Contains(characterName);
 
-    public void Init(string[] names)
+    public void Init(string alias) => Init(new[] {alias});
+    public void Init(string[] aliases)
     {
-        _names = new HashSet<string>(names);
+        _names = new HashSet<string>(aliases);
         text.Hide();
     }
 

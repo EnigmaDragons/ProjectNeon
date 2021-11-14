@@ -10,6 +10,7 @@ public class CutscenePresenter : MonoBehaviour
     [SerializeField] private CurrentCutscene cutscene;
     [SerializeField] private GameObject settingParent;
     [SerializeField] private CutsceneCharacter narrator;
+    [SerializeField] private SpawnPartyToMarkers setupParty;
 
     private CutsceneSegment _currentSegment;
     private bool _debugLoggingEnabled = true;
@@ -56,8 +57,10 @@ public class CutscenePresenter : MonoBehaviour
         _characters.Add(narrator);
         
         cutscene.Current.Setting.SpawnTo(settingParent);
+        setupParty.Execute(settingParent);
+        
         var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
-        characters.ForEach(c => _characters.Add(c));
+        characters.Where(c => c.IsInitialized).ForEach(c => _characters.Add(c));
         
         DebugLog($"Characters in cutscene: {string.Join(", ", _characters.Select(c => c.PrimaryName))}");
         
@@ -74,13 +77,17 @@ public class CutscenePresenter : MonoBehaviour
             .ExecuteIfPresentOrElse(
                 c => c.SpeechBubble.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: false, 
                     () => this.ExecuteAfterDelay(FinishCurrentSegment, dialogueWaitDelay)),
-                FinishCurrentSegment);
+                () =>
+                {
+                    DebugLog($"Character Not Found in Cutscene {msg.CharacterAlias}");
+                    FinishCurrentSegment();
+                });
     }
 
     private void Execute(ShowCutsceneSegment msg)
     {
         DebugLog("Show Cutscene Segment");
-        _characters.ForEach(c => c.SpeechBubble.ForceHide());
+        HidePreviousSegmentStuff();
         _currentSegment = AllCutsceneSegments.Create(msg.SegmentData);
         _currentSegment.Start();
     }
@@ -90,11 +97,17 @@ public class CutscenePresenter : MonoBehaviour
         if (_finishTriggered)
             return;
         
+        HidePreviousSegmentStuff();
         DebugLog("Cutscene Finished");
         _finishTriggered = true;
         this.ExecuteAfterDelay(navigator.NavigateToGameSceneV4, cutsceneFinishNavigationDelay);
     }
 
+    private void HidePreviousSegmentStuff()
+    {
+        _characters.ForEach(c => c.SpeechBubble.ForceHide());
+    }
+    
     private void FinishCurrentSegment()
     {
         DebugLog("Segment Finished");
