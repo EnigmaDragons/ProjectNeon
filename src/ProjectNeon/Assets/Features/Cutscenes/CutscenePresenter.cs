@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CutscenePresenter : OnMessage<AdvanceCutsceneRequested, ShowCharacterDialogueLine, ShowCutsceneSegment, CutsceneFinished>
+public class CutscenePresenter : MonoBehaviour
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private FloatReference cutsceneFinishNavigationDelay = new FloatReference(1f);
@@ -10,10 +10,44 @@ public class CutscenePresenter : OnMessage<AdvanceCutsceneRequested, ShowCharact
     [SerializeField] private CurrentCutscene cutscene;
     [SerializeField] private GameObject settingParent;
 
+    private CutsceneSegment _currentSegment;
     private bool _debugLoggingEnabled = true;
+    private bool _finishTriggered = false;
 
     private readonly List<CutsceneCharacter> _characters = new List<CutsceneCharacter>();
-    
+
+    private void OnEnable()
+    {
+        Message.Subscribe<ShowCutsceneSegment>(Execute, this);
+        Message.Subscribe<ShowCharacterDialogueLine>(Execute, this);
+        Message.Subscribe<FullyDisplayDialogueLine>(Execute, this);
+        Message.Subscribe<CutsceneFinished>(Execute, this);
+        Message.Subscribe<SkipCutsceneRequested>(Execute, this);
+        Message.Subscribe<AdvanceCutsceneRequested>(Execute, this);
+    }
+
+    private void Execute(FullyDisplayDialogueLine msg)
+    {        
+        DebugLog("Fully Display Character Dialogue Line");
+        _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
+            .IfPresent(c => c.SpeechBubble.Proceed());
+    }
+
+    private void Execute(AdvanceCutsceneRequested msg)
+    {
+        if (_currentSegment != null)
+        {
+            DebugLog("Advance Cutscene");
+            _currentSegment.FastForwardToFinishInstantly();
+        }
+    }
+
+    private void Execute(SkipCutsceneRequested msg)
+    {
+        DebugLog("Cutscene Skipped");
+        navigator.NavigateToGameSceneV4();
+    }
+
     private void Start()
     {
         _characters.Clear();
@@ -28,28 +62,26 @@ public class CutscenePresenter : OnMessage<AdvanceCutsceneRequested, ShowCharact
             new MultiplePayloads(cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
             () => Message.Publish(new CutsceneFinished()));
     }
-    
-    protected override void Execute(AdvanceCutsceneRequested msg)
-    {
-    }
 
-    protected override void Execute(ShowCharacterDialogueLine msg)
+    private void Execute(ShowCharacterDialogueLine msg)
     {
         DebugLog("Show Character Dialogue Line");
         _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
             .ExecuteIfPresentOrElse(
-                c => c.SpeechBubble.Display(msg.Text, true, () => this.ExecuteAfterDelay(FinishCurrentSegment, dialogueWaitDelay)),
+                c => c.SpeechBubble.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: false, 
+                    () => this.ExecuteAfterDelay(FinishCurrentSegment, dialogueWaitDelay)),
                 FinishCurrentSegment);
     }
 
-    protected override void Execute(ShowCutsceneSegment msg)
+    private void Execute(ShowCutsceneSegment msg)
     {
         DebugLog("Show Cutscene Segment");
         _characters.ForEach(c => c.SpeechBubble.ForceHide());
-        AllCutsceneSegments.Create(msg.SegmentData).Start();
+        _currentSegment = AllCutsceneSegments.Create(msg.SegmentData);
+        _currentSegment.Start();
     }
 
-    protected override void Execute(CutsceneFinished msg)
+    private void Execute(CutsceneFinished msg)
     {
         DebugLog("Cutscene Finished");
         this.ExecuteAfterDelay(navigator.NavigateToGameSceneV4, cutsceneFinishNavigationDelay);
@@ -57,7 +89,11 @@ public class CutscenePresenter : OnMessage<AdvanceCutsceneRequested, ShowCharact
 
     private void FinishCurrentSegment()
     {
+        if (_finishTriggered)
+            return;
+
         DebugLog("Segment Finished");
+        _finishTriggered = true;
         Message.Publish(new Finished<ShowCutsceneSegment>());
     }
 
