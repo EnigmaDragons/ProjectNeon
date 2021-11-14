@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyAdventureUiSummary : MonoBehaviour
+public class PartyAdventureUiSummary : OnMessage<PartyAdventureStateChanged, PartyStateChanged>
 {
     [SerializeField] private CurrentAdventure current;
     [SerializeField] private PartyAdventureState party;
@@ -9,8 +9,12 @@ public class PartyAdventureUiSummary : MonoBehaviour
     [SerializeField] private GameObject itemParent;
     
     [ReadOnly, SerializeField] private List<AdventureHeroUiSummary> active = new List<AdventureHeroUiSummary>();
-    
-    private void Awake()
+
+    private void Awake() => UpdateUiSummary();
+    protected override void Execute(PartyAdventureStateChanged msg) => UpdateUiSummary();
+    protected override void Execute(PartyStateChanged msg) => UpdateUiSummary();
+
+    private void UpdateUiSummary()
     {
         active.ForEach(Destroy);
         active.Clear();
