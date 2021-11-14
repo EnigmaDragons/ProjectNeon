@@ -34,6 +34,15 @@ public sealed class ProgressiveTextRevealWorld : MonoBehaviour
         chatBox.gameObject.SetActive(false);
     }
 
+    public void ForceHide()
+    {
+        if (!chatBox.gameObject.activeSelf)
+            return;
+        
+        Info($"Text Box - Hide");
+        chatBox.gameObject.SetActive(false);
+    }
+
     public void Display(string text) 
         => Display(text,  false, true, () => { });
     public void Display(string text, Action onFinished) 

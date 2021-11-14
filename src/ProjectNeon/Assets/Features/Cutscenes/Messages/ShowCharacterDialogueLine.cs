@@ -1,10 +1,10 @@
 
-public class StartCharacterDialogueLine
+public class ShowCharacterDialogueLine
 {
     public string CharacterAlias { get; }
     public string Text { get; }
     
-    public StartCharacterDialogueLine(string characterAlias, string text)
+    public ShowCharacterDialogueLine(string characterAlias, string text)
     {
         CharacterAlias = characterAlias;
         Text = text;
