@@ -50,6 +50,14 @@ public sealed class PartyAdventureState : ScriptableObject
 
         return false;
     }
+
+    public PartyAdventureState Initialized(params BaseHero[] startingHeroes)
+    {
+        var one = startingHeroes.Length > 0 ? startingHeroes[0] : null;
+        var two = startingHeroes.Length > 1 ? startingHeroes[1] : null;
+        var three = startingHeroes.Length > 2 ? startingHeroes[2] : null;
+        return Initialized(one, two, three);
+    }
     
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
     {
@@ -63,8 +71,8 @@ public sealed class PartyAdventureState : ScriptableObject
         {
             if(!h.Character.DeckIsValid())
                 Log.Error($"{h.Name} doesn't have a legal deck");
+            Log.Info($"Hero {h.Name}");
         });
-
 
         var allStartingCards = party.Heroes
             .SelectMany(HeroStartingCards)
@@ -158,6 +166,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public void UpdateDecks(params List<CardTypeData>[] decks) =>
         UpdateState(() =>
         {
+            Log.Info($"Num Heroes {heroes.Length}");
             heroes[0].SetDeck(CreateDeck(decks[0]));
             if (heroes.Length > 1)
                 heroes[1]?.SetDeck(CreateDeck(decks[1]));

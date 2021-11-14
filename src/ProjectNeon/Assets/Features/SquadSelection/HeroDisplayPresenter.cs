@@ -1,25 +1,36 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HeroDisplayPresenter : MonoBehaviour
+public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private HeroCharacter currentHero;
+    [SerializeField] private GameObject hoverGraphic;
     [SerializeField] private Image heroBust;
     [SerializeField] private TextMeshProUGUI heroName;
     [SerializeField] private TextMeshProUGUI heroClassName;
     [SerializeField] private TextMeshProUGUI heroDescription;
     [SerializeField] private TextMeshProUGUI roleDescription;
     [SerializeField] private TextMeshProUGUI backstory;
+
+    private bool _isInitialized;
+    private bool _isClickable = false;
+    private Action _onClick = () => { };
     
     private void Start()
     {
-        if (currentHero != null)
-            Select(currentHero);
+        if (!_isInitialized && currentHero != null)
+            Init(currentHero);
     }
 
-    public void Select(HeroCharacter c)
+    public void Init(HeroCharacter c) => Init(c, false, () => {});
+    public void Init(HeroCharacter c, bool isClickable, Action onClick)
     {
+        _isInitialized = true;
+        _onClick = onClick;
+        _isClickable = isClickable;
         currentHero = c;
         heroBust.sprite = c.Bust;
         heroName.text = c.DisplayName();
@@ -30,5 +41,18 @@ public class HeroDisplayPresenter : MonoBehaviour
     }
 
     private void ShowHeroPathway() => Message.Publish(new ShowHeroLevelUpPathway(currentHero));
-    
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_isClickable && hoverGraphic != null)
+            hoverGraphic.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (_isClickable && hoverGraphic != null)
+            hoverGraphic.SetActive(false);
+    }
+
+    public void OnPointerClick(PointerEventData eventData) => _onClick();
 }

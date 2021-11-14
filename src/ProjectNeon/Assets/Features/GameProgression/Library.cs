@@ -5,16 +5,18 @@ using UnityEngine;
 public class Library : ScriptableObject
 {
     [SerializeField] private BaseHero[] unlockedHeroes;
+    [SerializeField] private AllHeroes allHeroes;
     [SerializeField] private AllCards allCards;
     [SerializeField] private AllEquipment allEquipment;
     [SerializeField] private AllLevelUpOptions allLevelUps;
     [SerializeField] private Adventure[] unlockedAdventures;
     [SerializeField] private BaseHero noHero;
 
+    public BaseHero NoHero => noHero;
     public BaseHero[] UnlockedHeroes => unlockedHeroes;
     public Adventure[] UnlockedAdventures => unlockedAdventures;
 
-    public BaseHero HeroById(int id) => unlockedHeroes.Where(h => h.Id == id).FirstAsMaybe().Select(h => h, () => noHero);
+    public BaseHero HeroById(int id) => allHeroes.GetHeroByIdOrDefault(id);
     public Maybe<CardTypeData> GetCardById(int id) => allCards.GetCardById(id);
     
     public Maybe<Equipment> GetEquipment(GameEquipmentData data) => allEquipment.GetFromSaveData(data);

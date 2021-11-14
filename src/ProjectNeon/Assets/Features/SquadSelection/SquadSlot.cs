@@ -49,7 +49,7 @@ public class SquadSlot : MonoBehaviour
     {
         current = c;
         heroPool.Select(index, c);
-        presenter.Select(c);
+        presenter.Init(c);
     }
 
     private IEnumerable<BaseHero> AvailableHeroes => heroPool.AvailableHeroes.Except(_bannedHeroes);

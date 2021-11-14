@@ -15,6 +15,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     [SerializeField] private string allowedHeroesDescription = "";
     [SerializeField] private BaseHero[] requiredHeroes;
     [SerializeField] private BaseHero[] bannedHeroes;
+    [SerializeField] private BaseHero[] fixedStartingHeroes;
     [SerializeField] private int baseNumberOfCardCycles = 2;
     [SerializeField] private float rewardCreditsPerPowerLevel = 1f;
     [SerializeField] private float xpPerPowerLevel = 0.2f;
@@ -37,6 +38,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     public int PartySize => partySize;
     public BaseHero[] RequiredHeroes => requiredHeroes;
     public BaseHero[] BannedHeroes => bannedHeroes ?? Array.Empty<BaseHero>();
+    public BaseHero[] FixedStartingHeroes => fixedStartingHeroes ?? Array.Empty<BaseHero>();
     public int BaseNumberOfCardCycles => baseNumberOfCardCycles;
     public float RewardCreditsPerPowerLevel => rewardCreditsPerPowerLevel;
     public float XpPerPowerLevel => xpPerPowerLevel;

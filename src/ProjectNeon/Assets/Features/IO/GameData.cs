@@ -12,6 +12,8 @@ public class GameData
     public GameAdventureProgressData AdventureProgress = new GameAdventureProgressData();
     public GamePartyData PartyData = new GamePartyData();
     public GameMapData GameMap = new GameMapData();
+
+    public bool FinishedPhase(CurrentGamePhase phase) => (int)Phase >= (int)phase;
 }
 
 [Serializable]
@@ -29,8 +31,8 @@ public class GameAdventureProgressData
 public enum GameAdventureProgressType
 {
     Unknown = 0,
-    V2 = 1,
-    V4 = 2,
+    V2 = 2,
+    V4 = 4
 }
 
 [Serializable]

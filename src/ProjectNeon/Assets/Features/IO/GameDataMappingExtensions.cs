@@ -32,7 +32,7 @@ public static class GameDataMappingExtensions
                 .ToArray(),
             CorpCostModifiers = s.CorpCostModifiers
         };
-
+    
     public static GameMapData GetData(this CurrentGameMap3 map)
         => map.CurrentMap == null 
             ? new GameMapData() 
