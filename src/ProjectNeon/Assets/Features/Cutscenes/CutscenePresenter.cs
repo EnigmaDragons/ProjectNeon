@@ -9,6 +9,7 @@ public class CutscenePresenter : MonoBehaviour
     [SerializeField] private FloatReference dialogueWaitDelay = new FloatReference(2f);
     [SerializeField] private CurrentCutscene cutscene;
     [SerializeField] private GameObject settingParent;
+    [SerializeField] private CutsceneCharacter narrator;
 
     private CutsceneSegment _currentSegment;
     private bool _debugLoggingEnabled = true;
@@ -18,6 +19,7 @@ public class CutscenePresenter : MonoBehaviour
 
     private void OnEnable()
     {
+        narrator.Init(new [] { CutsceneCharacterAliases.Narrator });
         Message.Subscribe<ShowCutsceneSegment>(Execute, this);
         Message.Subscribe<ShowCharacterDialogueLine>(Execute, this);
         Message.Subscribe<FullyDisplayDialogueLine>(Execute, this);
@@ -51,6 +53,8 @@ public class CutscenePresenter : MonoBehaviour
     private void Start()
     {
         _characters.Clear();
+        _characters.Add(narrator);
+        
         cutscene.Current.Setting.SpawnTo(settingParent);
         var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
         characters.ForEach(c => _characters.Add(c));
@@ -65,7 +69,7 @@ public class CutscenePresenter : MonoBehaviour
 
     private void Execute(ShowCharacterDialogueLine msg)
     {
-        DebugLog("Show Character Dialogue Line");
+        DebugLog($"Show Character Dialogue Line {msg.CharacterAlias}");
         _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
             .ExecuteIfPresentOrElse(
                 c => c.SpeechBubble.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: false, 
@@ -83,17 +87,17 @@ public class CutscenePresenter : MonoBehaviour
 
     private void Execute(CutsceneFinished msg)
     {
+        if (_finishTriggered)
+            return;
+        
         DebugLog("Cutscene Finished");
+        _finishTriggered = true;
         this.ExecuteAfterDelay(navigator.NavigateToGameSceneV4, cutsceneFinishNavigationDelay);
     }
 
     private void FinishCurrentSegment()
     {
-        if (_finishTriggered)
-            return;
-
         DebugLog("Segment Finished");
-        _finishTriggered = true;
         Message.Publish(new Finished<ShowCutsceneSegment>());
     }
 
