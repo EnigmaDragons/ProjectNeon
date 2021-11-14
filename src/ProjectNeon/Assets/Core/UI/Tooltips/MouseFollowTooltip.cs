@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
     {
         HideTooltip();
         
-        tooltipLabel.text = msg.Text;
+        tooltipLabel.text = msg.Text.Replace("\\n", Environment.NewLine);
         panel.SetActive(true);
         background.SetActive(msg.ShowBackground);
     }
