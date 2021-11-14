@@ -2,13 +2,12 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public sealed class ProgressiveTextReveal : MonoBehaviour
+public sealed class ProgressiveTextRevealWorld : MonoBehaviour
 {
-    [SerializeField] private Button chatBox;
-    [SerializeField] private Image panelBg;
-    [SerializeField] private TextMeshProUGUI textBox;
+    [SerializeField] private GameObject chatBox;
+    [SerializeField] private GameObject panelBg;
+    [SerializeField] private TextMeshPro textBox;
     [SerializeField] private FloatReference secondsPerCharacter = new FloatReference(0.07f);
     [SerializeField] private FloatReference autoAdvanceDelay = new FloatReference(0.8f);
     [SerializeField] private PlayableUiSound sfx;
@@ -26,11 +25,6 @@ public sealed class ProgressiveTextReveal : MonoBehaviour
 
     private static bool _debugLog = false;
     
-    private void Awake()
-    {
-        chatBox.onClick.AddListener(() => Proceed(isAuto: false));
-    }
-
     public void Hide()
     {
         if (!chatBox.gameObject.activeSelf || isRevealing)
