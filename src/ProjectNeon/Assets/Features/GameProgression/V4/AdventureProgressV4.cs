@@ -31,6 +31,8 @@ public class AdventureProgressV4 : AdventureProgressBase
         }
     }
 
+    public StageSegment CurrentStageSegment => CurrentChapter.Segments[currentSegmentIndex];
+
     public override IStage Stage => CurrentChapter;
 
     private static int Int(float f) => f.CeilingInt();

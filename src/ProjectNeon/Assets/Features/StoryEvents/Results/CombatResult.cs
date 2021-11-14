@@ -15,7 +15,7 @@ public class CombatResult : StoryResult
     public override void Apply(StoryEventContext ctx)
     {
         Message.Publish(new PrepCombatForAfterEvent(new EnterSpecificBattle(battleField, isElite, 
-            enemies.Select(x => x.ForStage(ctx.Adventure.CurrentChapterNumber)).ToArray(), true)));
+            enemies.Select(x => x.ForStage(ctx.Adventure.CurrentChapterNumber)).ToArray(), true, false)));
     }
 
     public override void Preview()

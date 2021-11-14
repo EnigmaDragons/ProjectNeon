@@ -40,7 +40,7 @@ public sealed class GeneratedBattleStageSegment : IStageSegment
     public GeneratedBattleStageSegment(string name, GameObject battleField, bool isElite, EnemyInstance[] enemies)
     {
         Name = name;
-        _start = () => Message.Publish(new EnterSpecificBattle(battleField, isElite, enemies, false));
+        _start = () => Message.Publish(new EnterSpecificBattle(battleField, isElite, enemies, false, false));
         Detail = new Maybe<string>(string.Join("\n", enemies.Select(x => x.Name)));;
     }
 }

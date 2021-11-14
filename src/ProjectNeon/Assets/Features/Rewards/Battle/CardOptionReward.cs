@@ -13,6 +13,11 @@ public class CardOptionReward : BattleRewards
 
     private void GetUserSelectedRewardCard(Action onFinished, LootPicker rewardPicker)
     {
+        if (state.Party.BaseHeroes.All(x => !x.Archetypes.Any()))
+        {
+            Message.Publish(new ExecuteAfterDelayRequested(0.5f, onFinished));
+            return;
+        }
         var selectedRarity = rewardPicker.RandomRarity();
         var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, selectedRarity);
         var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party)).ToArray().Shuffled();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI.Extensions;
 
 [CreateAssetMenu(menuName = "Adventure/Stage V4")]
 public class StaticStageV4 : ScriptableObject, IStage
@@ -24,6 +25,7 @@ public class StaticStageV4 : ScriptableObject, IStage
     public int GetElitePowerLevel(float percent) => elitePowerCurve.GetValueAsInt(percent);
     public GameObject Battleground => possibleBattlegrounds.Random();
     public int SegmentCount => segments.Length;
+    public StageSegment[] Segments => segments;
     public GameObject BossBattlefield => bossBattlefield;
     public Enemy[] BossEnemies => bossEnemies;
     public AudioClipVolume StageBattleTheme => stageBattleTheme;
