@@ -314,8 +314,9 @@ GameObject:
   - component: {fileID: 3610993167916220642}
   - component: {fileID: 4212057928235840160}
   - component: {fileID: 714105316886067550}
+  - component: {fileID: 2158608470831652544}
   m_Layer: 7
-  m_Name: Cutscene_DarkAlley_Sample
+  m_Name: Cutscene_DarkAlley_Sample1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -375,6 +376,27 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 0
   OverrideMaxDistance: 0
+--- !u!114 &2158608470831652544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808003640747993632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205e673223cf4d8380fc55d81132ac52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters:
+  - Character: {fileID: 99475157246814202}
+    Aliases:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: fb35ef11b5c5c68438b01db5a01710a1, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
 --- !u!1 &4199053808234538026
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,6 +2083,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7131005792167691992, guid: 5f8195a253e93de48a44810bf7637442, type: 3}
   m_PrefabInstance: {fileID: 5227234610710130310}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &99475157246814202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5326551155854870908, guid: 5f8195a253e93de48a44810bf7637442, type: 3}
+  m_PrefabInstance: {fileID: 5227234610710130310}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8085cc2fd2924a98839711c67a04f296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5550472390734208224
 PrefabInstance:
   m_ObjectHideFlags: 0
