@@ -10,9 +10,12 @@ public class CorpClinicProvider : ScriptableObject
     [SerializeField] private StaticCorp[] procedureCorps;
     [SerializeField] private StaticCorp[] blessingCorps;
     [SerializeField] private BlessingData[] blessings;
+    [SerializeField] private BlessingData[] blessingsV4;
 
     public ClinicCostCalculator GetCostCalculator(Corp corp)
     {
+        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4)
+            return new StaticClinicCostCalculator(1);
         if (healthPercentCorp.Contains(corp))
             return new HealthDependantClinicCostCalculator(party, corp.Name);
         if (credDependentCorp.Contains(corp))
@@ -22,6 +25,10 @@ public class CorpClinicProvider : ScriptableObject
 
     public ClinicServiceProvider GetServices(Corp corp)
     {
+        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4 && procedureCorps.Contains(corp))
+            return new ImplantClinicServiceProviderV4(party);
+        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4 && blessingCorps.Contains(corp))
+            return new BlessingClinicServiceProviderV4(party, blessingsV4);
         if (procedureCorps.Contains(corp))
             return new ImplantClinicServiceProvider(party);
         if (blessingCorps.Contains(corp))
@@ -30,5 +37,7 @@ public class CorpClinicProvider : ScriptableObject
     }
 
     public Maybe<BlessingData> GetBlessingByName(string blessingName)
-        => blessings.FirstOrMaybe(b => b.Name.Equals(blessingName));
+        => CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4
+            ?  blessingsV4.FirstOrMaybe(b => b.Name.Equals(blessingName))
+            : blessings.FirstOrMaybe(b => b.Name.Equals(blessingName));
 }

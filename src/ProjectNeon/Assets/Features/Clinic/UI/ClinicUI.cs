@@ -18,7 +18,12 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
 
     private ClinicServiceProvider _serviceProvider;
     private ClinicServiceButton[] _serviceButtons;
-    
+
+    private void Awake()
+    {
+        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4)
+            doneButton.onClick.AddListener(() => party.UpdateCreditsBy(-9999, false));
+    }
     protected override void Execute(UpdateClinic msg) => UpdateServices();
     protected override void Execute(RefreshShop msg)
     {
@@ -31,6 +36,11 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
     {
         if (clinic.Corp == null)
             return;
+        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4)
+        {
+            party.UpdateCreditsBy(-9999, false);
+            party.UpdateCreditsBy(party.Heroes.Length);   
+        }
         patientParent.DestroyAllChildren();
         var costCalculator = clinics.GetCostCalculator(clinic.Corp);
         party.Heroes.ForEach(h => Instantiate(patientPrototype, patientParent.transform).Initialized(h, costCalculator));
