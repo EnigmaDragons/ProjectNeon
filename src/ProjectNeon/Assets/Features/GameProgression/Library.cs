@@ -11,6 +11,7 @@ public class Library : ScriptableObject
     [SerializeField] private Adventure[] unlockedAdventures;
     [SerializeField] private BaseHero noHero;
 
+    public BaseHero NoHero => noHero;
     public BaseHero[] UnlockedHeroes => unlockedHeroes;
     public Adventure[] UnlockedAdventures => unlockedAdventures;
 

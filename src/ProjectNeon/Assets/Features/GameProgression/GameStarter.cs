@@ -5,7 +5,10 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     [SerializeField] private Navigator navigator;
     [SerializeField] private SaveLoadSystem io;
     [SerializeField] private CurrentAdventure currentAdventure;
+    [SerializeField] private Library library;
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private AdventureProgress2 adventureProgress2;
+    [SerializeField] private AdventureProgressV4 adventureProgressV4;
     [SerializeField] private Adventure defaultAdventure;
     [SerializeField] private bool allowPlayerToSelectAdventure;
     
@@ -14,18 +17,22 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         io.ClearCurrentSlot();
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
         io.SetShouldShowTutorials(msg.ShouldShowTutorials);
-        if (allowPlayerToSelectAdventure)
-            navigator.NavigateToAdventureSelection();
-        else
-            SelectDefaultAdventure();
+        
+        if (defaultAdventure.IsV2)
+            if (allowPlayerToSelectAdventure)
+                navigator.NavigateToAdventureSelection();
+            else
+                SelectDefaultAdventureV2();
+        
+        if (defaultAdventure.IsV4)
+            StartDefaultAdventureV4();
     }
     
-    private void SelectDefaultAdventure()
+    private void SelectDefaultAdventureV2()
     {
         var adventure = defaultAdventure;
         currentAdventure.Adventure = adventure;
-        if (currentAdventure.Adventure.IsV2)
-            adventureProgress2.Init();
+        adventureProgress2.Init();
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;
@@ -35,6 +42,31 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         });
         navigator.NavigateToSquadSelection();
     }
+
+    private void StartDefaultAdventureV4()
+    {
+        var adventure = defaultAdventure;
+        currentAdventure.Adventure = adventure;
+        adventureProgressV4.Init();
+
+        if (adventure.FixedStartingHeroes.Length == 0)
+        {
+            Log.Error("Developer Data Error - V4 Adventures should start with a fixed party");
+            navigator.NavigateToSquadSelection();
+        }
+        else
+        {
+            party.Initialized(adventure.FixedStartingHeroes);
+            CurrentGameData.Write(s =>
+            {
+                s.IsInitialized = true;
+                s.Phase = CurrentGamePhase.SelectedSquad;
+                s.PartyData = party.GetData();
+                return s;
+            });
+            navigator.NavigateToGameSceneV4();
+        }
+    } 
 
     protected override void Execute(ContinueCurrentGame msg)
     {
