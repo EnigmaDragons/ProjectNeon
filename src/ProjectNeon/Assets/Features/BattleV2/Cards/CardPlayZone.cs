@@ -12,16 +12,7 @@ public class CardPlayZone : ScriptableObject
     [SerializeField] private GameEvent onZoneCardsChanged;
 
     private DeterministicRng _rng;
-
-    private DeterministicRng Rng
-    {
-        get
-        {
-            if (_rng == null)
-                _rng = new DeterministicRng(Rng.Seed);
-            return _rng;
-        }
-    }
+    private DeterministicRng Rng => _rng ??= new DeterministicRng(Guid.NewGuid().GetHashCode());
 
     public int Count => cards.Length;
     public int Max => maxCards.Value;
