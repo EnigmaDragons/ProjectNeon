@@ -116,7 +116,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
 
     private void KickOffGameStartProcess()
     {
-        if (defaultAdventure.IsV2)
+        if (defaultAdventure.IsV2 || defaultAdventure.IsV4)
             AskPlayerWhetherTutorialsShouldBeEnabled();
         else
             Message.Publish(new StartNewGame(false));

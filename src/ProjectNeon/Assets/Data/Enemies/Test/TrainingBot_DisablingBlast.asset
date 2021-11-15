@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: TrainingBot_HackHand
+  m_Name: TrainingBot_DisablingBlast
   m_EditorClassIdentifier: 
   id: 0
   customName: 
-  art: {fileID: 21300000, guid: 8e70cdca74a43f44ca7d0dedb7d6ebbf, type: 3}
-  description: 
+  art: {fileID: 21300000, guid: 4f604c04c2f5b3748ae6733beef59718, type: 3}
+  description: "Deal {E[0]} \nGives <b>Disabled</b> for 1 turn"
   typeDescription: {fileID: 0}
   tags: 0300000004000000
   speed: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 0}
+    cardActions: {fileID: 11400000, guid: fc32dec512f41fc4b97ab75bcfcd78b1, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}

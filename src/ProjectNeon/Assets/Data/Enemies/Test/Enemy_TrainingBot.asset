@@ -37,8 +37,8 @@ MonoBehaviour:
   stageDetails:
   - stage: 1
     maxHp: 90
-    maxShield: 9
-    startingShield: 9
+    maxShield: 10
+    startingShield: 10
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
@@ -67,7 +67,50 @@ MonoBehaviour:
       maxAndStartingResourcesPower: 2.9257083
       estimatedTurnsAlive: 12.160254
       calculatedPowerLevel: 134
-    startOfBattleEffects: []
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Attacked: Glitch all cards in the player''s hand'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 4
+        cardActions: {fileID: 11400000, guid: 4d504fe635365394ea4ae38895da99f4, type: 2}
+      BonusCardType: {fileID: 0}
     Cards:
     - {fileID: 11400000, guid: 94396e787da938f45bed4377dffaee60, type: 2}
     - {fileID: 11400000, guid: 82e7be2602190a74cace76259ac8eb36, type: 2}
