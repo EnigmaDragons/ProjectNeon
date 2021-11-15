@@ -106,6 +106,7 @@ public class AdventureProgressV4 : AdventureProgressBase
             AdventureId = CurrentAdventureId,
             Type = GameAdventureProgressType.V4,
             CurrentChapterIndex = currentChapterIndex,
+            CurrentSegmentIndex = currentSegmentIndex,
             CurrentChapterFinishedHeatUpEvents = new int[0],
             FinishedStoryEvents = new string[0],
             PlayerReadMapPrompt = true,
@@ -115,6 +116,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     public bool InitAdventure(GameAdventureProgressData adventureProgress, Adventure adventure)
     {
         Init(adventure, adventureProgress.CurrentChapterIndex);
+        currentSegmentIndex = adventureProgress.CurrentSegmentIndex;
         ApplyGlobalEffects(adventureProgress.ActiveGlobalEffectIds);
         return true;
     }

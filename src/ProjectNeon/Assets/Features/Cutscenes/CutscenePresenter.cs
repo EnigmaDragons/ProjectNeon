@@ -140,6 +140,7 @@ public class CutscenePresenter : MonoBehaviour
         DebugLog("Cutscene Finished");
         MessageGroup.TerminateAndClear();
         progress.AdventureProgress.Advance();
+        Message.Publish(new AutoSaveRequested());
         if (useDelay)
             this.ExecuteAfterDelay(navigator.NavigateToGameSceneV4, cutsceneFinishNavigationDelay);
         else
