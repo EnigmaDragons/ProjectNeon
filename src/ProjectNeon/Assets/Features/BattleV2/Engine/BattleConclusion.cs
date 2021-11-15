@@ -58,6 +58,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
 
     protected override void Execute(BattleFinished msg)
     {
+        Time.timeScale = 1;
         if (msg.Winner == TeamType.Party)
             Advance();
         else
