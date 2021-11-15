@@ -30,4 +30,10 @@ public static class GameObjectExtensions
         foreach(Transform child in t)
             Object.Destroy(child.gameObject);
     }
+    
+    public static void DestroyAllChildrenImmediate(this Transform t)
+    {
+        foreach(Transform child in t)
+            Object.DestroyImmediate(child.gameObject);
+    }
 }

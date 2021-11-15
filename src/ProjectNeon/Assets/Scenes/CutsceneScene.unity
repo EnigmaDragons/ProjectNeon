@@ -253,6 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 506956601}
   - component: {fileID: 506956600}
+  - component: {fileID: 506956602}
   m_Layer: 0
   m_Name: CutsceneStarter
   m_TagString: Untagged
@@ -273,6 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
+  progress: {fileID: 11400000, guid: 434ca06c911c9fa409030447f7afe341, type: 2}
   cutsceneFinishNavigationDelay:
     UseConstant: 1
     ConstantValue: 1
@@ -284,6 +286,7 @@ MonoBehaviour:
   cutscene: {fileID: 11400000, guid: 20a63148439186645b88b8d51ad2b750, type: 2}
   settingParent: {fileID: 1984705710}
   narrator: {fileID: 1354282348}
+  setupParty: {fileID: 506956602}
 --- !u!4 &506956601
 Transform:
   m_ObjectHideFlags: 0
@@ -300,6 +303,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &506956602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506956599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbf5ca1065a40ac941cfd6b959aa07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1984705710}
+  party: {fileID: 11400000, guid: fe337e58b7b370b4ab1b361b8b493a4c, type: 2}
+  executeOnAwake: 0
 --- !u!1 &640907663
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +452,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_TargetDisplay: 0
 --- !u!114 &640907669
 MonoBehaviour:
@@ -610,7 +628,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 23.05
   m_fontSizeBase: 0
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -622,7 +640,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 16
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0

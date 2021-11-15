@@ -44,6 +44,8 @@ public static class InterpolatedCardDescriptions
         catch (Exception e)
         {
             #if UNITY_EDITOR
+            Log.Error($"Unable to Generate Interpolated Description for {card.Name}");
+            Log.Error(e);
             throw;
             #else
             Log.Error($"Unable to Generate Interpolated Description for {card.Name}");
