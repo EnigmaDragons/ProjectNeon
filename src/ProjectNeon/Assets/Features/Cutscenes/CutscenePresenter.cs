@@ -136,8 +136,9 @@ public class CutscenePresenter : MonoBehaviour
         if (_finishTriggered)
             return;
         
-        DebugLog("Cutscene Finished");
         _finishTriggered = true;
+        DebugLog("Cutscene Finished");
+        MessageGroup.TerminateAndClear();
         progress.AdventureProgress.Advance();
         if (useDelay)
             this.ExecuteAfterDelay(navigator.NavigateToGameSceneV4, cutsceneFinishNavigationDelay);

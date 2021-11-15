@@ -7,6 +7,7 @@ public static class MessageGroup
 
     public static void Start(IPayloadProvider payloadProvider, Action onFinished) => Msgs.Start(payloadProvider, onFinished);
     public static void Add(IPayloadProvider payloadProvider) => Msgs.Add(payloadProvider);
+    public static void TerminateAndClear() => Msgs.TerminateAndClear();
 
     private sealed class MessageGroupQueue
     {
@@ -31,6 +32,14 @@ public static class MessageGroup
         public void Add(IPayloadProvider queueData)
         {
             _enqueuedPayloadQueues.Enqueue(queueData);
+        }
+
+        public void TerminateAndClear()
+        {
+            Message.Unsubscribe(this);
+            _enqueuedPayloadQueues.Clear();
+            _currentPayloadQueue = new NoPayload();
+            _onFinished = () => { };
         }
 
         private void ProcessNext()
