@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
-public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Finished<ShowTooltip>, CardDiscarded, TurnStarted, ToggleUseCardAsBasic, ShowEnemyDetails, ShowDetailedCardView>
+public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Finished<ShowTooltip>, TurnStarted, SwappedCard, ShowEnemyDetails, ShowDetailedCardView>
 {
     [SerializeField] private TutorialSlideshow intro;
     [SerializeField] private TutorialSlideshow afterShieldPlay;
     [SerializeField] private TutorialSlideshow afterStatusLook;
     [SerializeField] private TutorialSlideshow afterAttackPlay;
-    [SerializeField] private TutorialSlideshow afterActionsRunOut;
     [SerializeField] private TutorialSlideshow startOfTurn2;
     [SerializeField] private TutorialSlideshow afterInspectingEnemy;
     [SerializeField] private TutorialSlideshow afterInspectingCard;
@@ -20,7 +19,6 @@ public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Fi
     private bool _hasPlayedTutorialAfterShieldPlay;
     private bool _hasPlayedTutorialAfterStatusLook;
     private bool _hasPlayedTutorialAfterAttackPlay;
-    private bool _hasPlayedTutorialAfterActionsRunOut;
     private int _turnNumber;
     private bool _hasInspectedAnEnemy;
     private bool _hasInspectedACard;
@@ -58,15 +56,6 @@ public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Fi
         }
     }
 
-    protected override void Execute(CardDiscarded msg)
-    {
-        if (!_hasPlayedTutorialAfterActionsRunOut)
-        {
-            _hasPlayedTutorialAfterActionsRunOut = true;
-            Message.Publish(new ShowTutorialSlideshowIfNeeded(afterActionsRunOut));
-        }
-    }
-
     protected override void Execute(TurnStarted msg)
     {
         _turnNumber++;
@@ -80,7 +69,7 @@ public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Fi
             Message.Publish(new ShowTutorialSlideshowIfNeeded(startOfTurn4));
     }
 
-    protected override void Execute(ToggleUseCardAsBasic msg)
+    protected override void Execute(SwappedCard msg)
     {
         if (!_hasToggledCardAsBasic)
         {
