@@ -10,6 +10,7 @@ public class CutscenePresenter : MonoBehaviour
     [SerializeField] private FloatReference cutsceneFinishNavigationDelay = new FloatReference(1f);
     [SerializeField] private FloatReference dialogueWaitDelay = new FloatReference(2f);
     [SerializeField] private CurrentCutscene cutscene;
+    [SerializeField] private GameObject defaultCamera;
     [SerializeField] private GameObject settingParent;
     [SerializeField] private CutsceneCharacter narrator;
     [SerializeField] private SpawnPartyToMarkers setupParty;
@@ -41,6 +42,10 @@ public class CutscenePresenter : MonoBehaviour
         
         cutscene.Current.Setting.SpawnTo(settingParent);
         setupParty.Execute(settingParent);
+
+        var cameras = settingParent.GetComponentsInChildren<Camera>();
+        if (cameras.Any())
+            defaultCamera.SetActive(false);
         
         var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
         characters.Where(c => c.IsInitialized).ForEach(c => _characters.Add(c));
@@ -55,6 +60,9 @@ public class CutscenePresenter : MonoBehaviour
 
     private void Execute(CutsceneWaitRequested msg)
     {
+        if (_finishTriggered)
+            return;
+        
         _waitFinishTriggered = false;
         this.ExecuteAfterDelay(msg.Duration, FinishWait);
     }
@@ -71,29 +79,32 @@ public class CutscenePresenter : MonoBehaviour
     }
     
     private void Execute(FullyDisplayDialogueLine msg)
-    {        
+    {   
+        if (_finishTriggered)
+            return;
+        
         DebugLog("Fully Display Character Dialogue Line");
         _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
             .IfPresent(c => c.SpeechBubble.Proceed());
     }
 
     private void Execute(AdvanceCutsceneRequested msg)
-    {
+    {        
+        if (_finishTriggered)
+            return;
+        
         if (_currentSegment != null)
         {
             DebugLog("Advance Cutscene");
             _currentSegment.FastForwardToFinishInstantly();
         }
     }
-
-    private void Execute(SkipCutsceneRequested msg)
-    {
-        DebugLog("Cutscene Skipped");
-        navigator.NavigateToGameSceneV4();
-    }
     
     private void Execute(ShowCharacterDialogueLine msg)
-    {
+    {        
+        if (_finishTriggered)
+            return;
+        
         DebugLog($"Show Character Dialogue Line {msg.CharacterAlias}");
         _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
             .ExecuteIfPresentOrElse(
@@ -108,22 +119,31 @@ public class CutscenePresenter : MonoBehaviour
 
     private void Execute(ShowCutsceneSegment msg)
     {
+        if (_finishTriggered)
+            return;
+        
         DebugLog("Show Cutscene Segment");
         HidePreviousSegmentStuff();
         _currentSegment = AllCutsceneSegments.Create(msg.SegmentData);
         _currentSegment.Start();
     }
 
-    private void Execute(CutsceneFinished msg)
+    private void Execute(CutsceneFinished msg) => FinishCutscene(true);
+    private void Execute(SkipCutsceneRequested msg) => FinishCutscene(false);
+
+    private void FinishCutscene(bool useDelay)
     {
         if (_finishTriggered)
             return;
         
-        HidePreviousSegmentStuff();
-        DebugLog("Cutscene Finished");
         _finishTriggered = true;
+        DebugLog("Cutscene Finished");
+        MessageGroup.TerminateAndClear();
         progress.AdventureProgress.Advance();
-        this.ExecuteAfterDelay(navigator.NavigateToGameSceneV4, cutsceneFinishNavigationDelay);
+        if (useDelay)
+            this.ExecuteAfterDelay(navigator.NavigateToGameSceneV4, cutsceneFinishNavigationDelay);
+        else
+            navigator.NavigateToGameSceneV4();
     }
 
     private void HidePreviousSegmentStuff()
@@ -133,6 +153,9 @@ public class CutscenePresenter : MonoBehaviour
     
     private void FinishCurrentSegment()
     {
+        if (_finishTriggered)
+            return;
+        
         DebugLog("Segment Finished");
         Message.Publish(new Finished<ShowCutsceneSegment>());
     }
