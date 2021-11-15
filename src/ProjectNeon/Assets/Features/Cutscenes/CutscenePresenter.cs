@@ -108,7 +108,7 @@ public class CutscenePresenter : MonoBehaviour
         DebugLog($"Show Character Dialogue Line {msg.CharacterAlias}");
         _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
             .ExecuteIfPresentOrElse(
-                c => c.SpeechBubble.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: false, 
+                c => c.SpeechBubble.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: true, 
                     () => this.ExecuteAfterDelay(FinishCurrentSegment, dialogueWaitDelay)),
                 () =>
                 {
