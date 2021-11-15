@@ -10,9 +10,13 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
 
     private GameObject _tooltipObj;
     private RectTransform _rect;
+    private Maybe<ShowTooltip> _showTooltipMsg;
+    private Maybe<ShowTooltipObject> _showTooltipObjectMsg;
     
     private void Awake()
     {
+        _showTooltipMsg = Maybe<ShowTooltip>.Missing();
+        _showTooltipObjectMsg = Maybe<ShowTooltipObject>.Missing();
         _rect = background.GetComponent<RectTransform>();
         HideTooltip();
     }
@@ -29,7 +33,8 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
     protected override void Execute(ShowTooltip msg)
     {
         HideTooltip();
-        
+
+        _showTooltipMsg = msg;
         tooltipLabel.text = msg.Text.Replace("\\n", Environment.NewLine);
         panel.SetActive(true);
         background.SetActive(msg.ShowBackground);
@@ -38,7 +43,8 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
     protected override void Execute(ShowTooltipObject msg)
     {
         HideTooltip();
-        
+
+        _showTooltipObjectMsg = msg;
         tooltipLabel.text = "";
         background.SetActive(false);
         _tooltipObj = Instantiate(msg.Prototype, panel.transform);
@@ -49,6 +55,12 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
     private void HideTooltip()
     {
         panel.SetActive(false);
+        if (_showTooltipMsg.IsPresent)
+            Message.Publish(new Finished<ShowTooltip> { Message = _showTooltipMsg.Value });
+        if (_showTooltipObjectMsg.IsPresent)
+            Message.Publish(new Finished<ShowTooltipObject> { Message = _showTooltipObjectMsg.Value });
+        _showTooltipMsg = Maybe<ShowTooltip>.Missing();
+        _showTooltipObjectMsg = Maybe<ShowTooltipObject>.Missing();
         if (_tooltipObj != null)
         {
             Destroy(_tooltipObj);

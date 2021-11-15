@@ -6,14 +6,14 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
 {
     private static readonly Dictionary<StatType, int> _statAmounts = new Dictionary<StatType, int>
     {
-        { StatType.MaxHP, 6 },
-        { StatType.StartingShield, 3 },
+        { StatType.MaxHP, 9 },
+        { StatType.StartingShield, 6 },
         { StatType.Attack, 1 },
         { StatType.Magic, 1 },
         { StatType.Leadership, 1 },
         { StatType.Economy, 1 },
-        { StatType.Armor, 1 },
-        { StatType.Resistance, 1 },
+        { StatType.Armor, 2 },
+        { StatType.Resistance, 2 },
     };
     private static readonly Dictionary<StatType, string> _negativePrefix = new Dictionary<StatType, string>
     {
