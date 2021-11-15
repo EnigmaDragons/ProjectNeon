@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Finished<ShowTooltip>, CardDiscarded, TurnStarted, ToggleUseCardAsBasic, ShowEnemyDetails, ShowDetailedCardView>
+public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Finished<ShowTooltip>, CardDiscarded, TurnStarted, SwappedCard, ShowEnemyDetails, ShowDetailedCardView>
 {
     [SerializeField] private TutorialSlideshow intro;
     [SerializeField] private TutorialSlideshow afterShieldPlay;
@@ -80,7 +80,7 @@ public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Fi
             Message.Publish(new ShowTutorialSlideshowIfNeeded(startOfTurn4));
     }
 
-    protected override void Execute(ToggleUseCardAsBasic msg)
+    protected override void Execute(SwappedCard msg)
     {
         if (!_hasToggledCardAsBasic)
         {
