@@ -86,6 +86,20 @@ public static class CollectionExtensions
             dictionary[keySelector(i)] = valueSelector(i);
         return dictionary;
     }
+    
+    public static Dictionary<TKey, TValue> SafeToDictionaryWithLoggedErrors<T, TKey, TValue>(this IEnumerable<T> items,
+        Func<T, TKey> keySelector, Func<T, TValue> valueSelector)
+    {
+        var dictionary = new Dictionary<TKey, TValue>();
+        foreach (var i in items)
+        {
+            if (dictionary.ContainsKey(keySelector(i)))
+                Log.Error($"Identical Ids added to Dictionary of {typeof(T)}. Id {keySelector(i)}");
+            dictionary[keySelector(i)] = valueSelector(i);
+        }
+
+        return dictionary;
+    }
 
     public static void RemoveLast<T>(this List<T> list) => list.RemoveAt(list.Count - 1);
     public static IEnumerable<T> TakeLast<T>(this List<T> list, int n) => list.Skip(Math.Max(0, list.Count - n));
