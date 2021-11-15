@@ -17,6 +17,7 @@ public class CutscenePresenter : MonoBehaviour
     private CutsceneSegment _currentSegment;
     private bool _debugLoggingEnabled = true;
     private bool _finishTriggered = false;
+    private bool _waitFinishTriggered = false;
 
     private readonly List<CutsceneCharacter> _characters = new List<CutsceneCharacter>();
 
@@ -29,8 +30,46 @@ public class CutscenePresenter : MonoBehaviour
         Message.Subscribe<CutsceneFinished>(Execute, this);
         Message.Subscribe<SkipCutsceneRequested>(Execute, this);
         Message.Subscribe<AdvanceCutsceneRequested>(Execute, this);
+        Message.Subscribe<CutsceneWaitRequested>(Execute, this);
+        Message.Subscribe<FinishCutsceneWaitEarlyRequested>(Execute, this);
+    }
+    
+    private void Start()
+    {
+        _characters.Clear();
+        _characters.Add(narrator);
+        
+        cutscene.Current.Setting.SpawnTo(settingParent);
+        setupParty.Execute(settingParent);
+        
+        var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
+        characters.Where(c => c.IsInitialized).ForEach(c => _characters.Add(c));
+        
+        DebugLog($"Characters in cutscene: {string.Join(", ", _characters.Select(c => c.PrimaryName))}");
+        
+        DebugLog($"Num Cutscene Segments {cutscene.Current.Segments.Length}");
+        MessageGroup.Start(
+            new MultiplePayloads(cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
+            () => Message.Publish(new CutsceneFinished()));
     }
 
+    private void Execute(CutsceneWaitRequested msg)
+    {
+        _waitFinishTriggered = false;
+        this.ExecuteAfterDelay(msg.Duration, FinishWait);
+    }
+    
+    private void Execute(FinishCutsceneWaitEarlyRequested msg) => FinishWait();
+
+    private void FinishWait()
+    {
+        if (_waitFinishTriggered)
+            return;
+
+        _waitFinishTriggered = true;
+        FinishCurrentSegment();
+    }
+    
     private void Execute(FullyDisplayDialogueLine msg)
     {        
         DebugLog("Fully Display Character Dialogue Line");
@@ -52,26 +91,7 @@ public class CutscenePresenter : MonoBehaviour
         DebugLog("Cutscene Skipped");
         navigator.NavigateToGameSceneV4();
     }
-
-    private void Start()
-    {
-        _characters.Clear();
-        _characters.Add(narrator);
-        
-        cutscene.Current.Setting.SpawnTo(settingParent);
-        setupParty.Execute(settingParent);
-        
-        var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
-        characters.Where(c => c.IsInitialized).ForEach(c => _characters.Add(c));
-        
-        DebugLog($"Characters in cutscene: {string.Join(", ", _characters.Select(c => c.PrimaryName))}");
-        
-        DebugLog($"Num Cutscene Segments {cutscene.Current.Segments.Length}");
-        MessageGroup.Start(
-            new MultiplePayloads(cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
-            () => Message.Publish(new CutsceneFinished()));
-    }
-
+    
     private void Execute(ShowCharacterDialogueLine msg)
     {
         DebugLog($"Show Character Dialogue Line {msg.CharacterAlias}");
