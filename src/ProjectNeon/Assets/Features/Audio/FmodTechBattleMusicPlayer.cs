@@ -25,9 +25,11 @@ public class FmodTechBattleMusicPlayer : MonoBehaviour
 
     private void Music_Stopper(NavigateToSceneRequested msg)
     {
-        if(msg.SceneName == "GameScene")
+        BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
+       /* if (msg.SceneName == "GameScene")
         {
-            BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+           
         }
         if (msg.SceneName == "ConclusionScene")
         {
@@ -36,7 +38,7 @@ public class FmodTechBattleMusicPlayer : MonoBehaviour
         if (msg.SceneName == "TitleScreen")
         {
             BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }
+        }*/
 
     }
 
