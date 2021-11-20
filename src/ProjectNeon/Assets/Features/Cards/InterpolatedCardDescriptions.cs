@@ -95,7 +95,7 @@ public static class InterpolatedCardDescriptions
                 throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects, Durations, and Reaction Effects");
 
             var effectIndex = int.Parse(Regex.Match(token.Result("$1"), "\\[(.*?)\\]").Result("$1"));
-            if (!forReaction && effectIndex >= effects.Length)
+            if (!forReaction && !forInnerEffect && effectIndex >= effects.Length)
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {effects.Length} Battle Effects");
             if (forReaction && effectIndex >= reactionEffects.Length)
                 throw new InvalidDataException($"Requested Interpolating {effectIndex}, but only found {reactionEffects.Length} Reaction Battle Effects");
@@ -135,9 +135,11 @@ public static class InterpolatedCardDescriptions
                 () => "X")
             : xCost.Amount.ToString();
 
-    private static string AutoDescription(IEnumerable<EffectData> effects, Maybe<Member> owner, ResourceQuantity xCost)
-        => string.Join(". ", effects.Select(e => AutoDescription(e, owner, xCost)));
-    
+    private static string AutoDescription(IEnumerable<EffectData> effects, Maybe<Member> owner, ResourceQuantity xCost) 
+        => string.Join(". ", effects.Select(e => e.EffectType == EffectType.ResolveInnerEffect 
+            ? AutoDescription(e.ReferencedSequence.BattleEffects, owner, xCost)
+            : AutoDescription(e, owner, xCost)));
+
     private static string AutoDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
         var delay = DelayDescription(data);

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Ordnance_FlashbangGrenade
+  m_Name: Ordnance_Flashbang
   m_EditorClassIdentifier: 
-  id: 95
+  id: 448
   customName: 
-  art: {fileID: 21300000, guid: c594262ed230b7840aa181f4385dcdf7, type: 3}
-  description: Gives {E[0]}
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  art: {fileID: 21300000, guid: f0182d7c44863304d8e1dc9a446c74a9, type: 3}
+  description: "One random target: \nGives <b>1 Blind</b>. \nDeal {IE[1]}"
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 25000000
   speed: 0
   isSinglePlay: 0
@@ -24,15 +24,11 @@ MonoBehaviour:
     cost: 1
     resourceType: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
     plusXCost: 0
-  onPlayGain:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
-    plusXCost: 0
-  rarity: 1
+  rarity: 0
   actionSequences:
   - scope: 1
     group: 1
-    cardActions: {fileID: 11400000, guid: a68dc2124877d214caf267a06633a010, type: 2}
+    cardActions: {fileID: 11400000, guid: 5489d278338c2a449a16a48ca24b42f6, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
