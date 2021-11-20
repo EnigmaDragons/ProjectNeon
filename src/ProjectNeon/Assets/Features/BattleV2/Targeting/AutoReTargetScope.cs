@@ -4,6 +4,7 @@ public enum AutoReTargetScope
     None = 0,
     Source = 1,
     RandomEnemy = 20,
+    RandomEnemyExceptTarget = 23,
     AllEnemies = 21,
     AllEnemiesExcept = 22,
     RandomAlly = 40,

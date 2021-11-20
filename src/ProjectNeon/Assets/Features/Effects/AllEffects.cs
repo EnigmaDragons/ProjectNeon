@@ -205,6 +205,7 @@ public static class AllEffects
                 AutoReTargetScope.AllAlliesExceptSelf => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType && m.Id != ctx.Source.Id)),
                 AutoReTargetScope.AllEnemies => new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType)),
                 AutoReTargetScope.RandomEnemy => RandomEnemy(ctx),
+                AutoReTargetScope.RandomEnemyExceptTarget => RandomEnemyExcludingTarget(ctx),
                 AutoReTargetScope.AllEnemiesExcept => AllEnemiesExcept(ctx)
             };
         
@@ -268,6 +269,16 @@ public static class AllEffects
             return new Single(tauntEnemies.First());
         return new Multiple(ctx.BattleMembers.Values
             .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
+            .ToArray()
+            .Shuffled()
+            .Take(1));
+    }
+    
+    private static Target RandomEnemyExcludingTarget(EffectContext ctx)
+    {
+        return new Multiple(ctx.BattleMembers.Values
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
+            .Except(ctx.Target.Members)
             .ToArray()
             .Shuffled()
             .Take(1));
