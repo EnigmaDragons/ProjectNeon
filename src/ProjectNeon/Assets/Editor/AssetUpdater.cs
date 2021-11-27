@@ -56,7 +56,7 @@ public class AssetUpdater
     [MenuItem("Neon/Update/Update Level Up Options")]
     private static void UpdateLevelUpOptions()
     {
-        var levelUpOptions = ScriptableExtensions.GetAllInstances<HeroLevelUpOption>();
+        var levelUpOptions = ScriptableExtensions.GetAllInstances<StaticHeroLevelUpOption>();
         AssignAllIds(levelUpOptions, x => x.id, (x, id) => x.id = id);
         ScriptableExtensions.GetAllInstances<AllLevelUpOptions>().ForEach(x =>
         {

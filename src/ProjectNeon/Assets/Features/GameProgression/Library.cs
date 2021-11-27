@@ -20,7 +20,7 @@ public class Library : ScriptableObject
     public Maybe<CardTypeData> GetCardById(int id) => allCards.GetCardById(id);
     
     public Maybe<Equipment> GetEquipment(GameEquipmentData data) => allEquipment.GetFromSaveData(data);
-    public Maybe<HeroLevelUpOption> GetLevelUpPerkById(int id) => allLevelUps.GetLevelUpPerkById(id);
+    public Maybe<StaticHeroLevelUpOption> GetLevelUpPerkById(int id) => allLevelUps.GetLevelUpPerkById(id);
 
     public Maybe<Adventure> GetAdventureById(int adventureId) => unlockedAdventures.Where(a => a.id == adventureId).FirstAsMaybe();
 }

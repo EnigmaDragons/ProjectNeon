@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Hero/LevelUps/PermanentEquipment")]
-public class PermanentEquipmentLevelUpOption : HeroLevelUpOption
+public class PermanentEquipmentLevelUpOption : StaticHeroLevelUpOption
 {
     [SerializeField] private StaticEquipment equipment;
     

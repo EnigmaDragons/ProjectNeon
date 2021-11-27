@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Hero/LevelUps/Stat")]
-public class StatIncreaseLevelUpOption : HeroLevelUpOption
+public class StatIncreaseLevelUpOption : StaticHeroLevelUpOption
 {
     [SerializeField] private StringVariable stat;
     [SerializeField] private int amount;

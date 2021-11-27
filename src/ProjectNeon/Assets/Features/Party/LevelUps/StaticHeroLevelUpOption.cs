@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class HeroLevelUpOption : ScriptableObject
+public abstract class StaticHeroLevelUpOption : ScriptableObject, LevelUpOption
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     

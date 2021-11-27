@@ -17,7 +17,7 @@ public sealed class LevelUpOptionsPresenter : MonoBehaviour
     public void Init(Hero hero)
         => Init(hero.Level + 1 - hero.Levels.UnspentLevelUpPoints, hero.Character.LevelUpTree.ForLevel(hero.Level + 1 - hero.Levels.UnspentLevelUpPoints));
     
-    public void Init(int level, HeroLevelUpOption[] options)
+    public void Init(int level, StaticHeroLevelUpOption[] options)
     {
         _options.ForEach(Destroy);
         _options.Clear();

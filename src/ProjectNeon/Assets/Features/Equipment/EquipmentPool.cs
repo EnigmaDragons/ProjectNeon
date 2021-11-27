@@ -44,7 +44,7 @@ public class EquipmentPool : ScriptableObject
         return Enumerable.Range(0, n).Select(_ => factoredList.Random());
     }
     
-    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, int n, string corp) => All
+    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, int n, string corp = null) => All
         .Where(x => x.Slot == slot && x.Rarity == rarity && party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains) && (string.IsNullOrWhiteSpace(corp) || x.Corp == corp)))
         .DistinctBy(x => x.Description)
         .ToArray()

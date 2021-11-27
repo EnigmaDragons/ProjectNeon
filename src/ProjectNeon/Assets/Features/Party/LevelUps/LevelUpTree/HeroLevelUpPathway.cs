@@ -4,10 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Hero/LevelUps/LevelUpTree")]
 public class HeroLevelUpPathway : ScriptableObject
 {
-    [SerializeField] private HeroLevelUpOptions defaultLevelUp;
-    [SerializeField] private HeroLevelUpOptions[] options;
+    [SerializeField] private StaticHeroLevelUpOptions defaultLevelUp;
+    [SerializeField] private StaticHeroLevelUpOptions[] options;
 
-    public HeroLevelUpOption[] ForLevel(int level)
+    public StaticHeroLevelUpOption[] ForLevel(int level)
     {
         var index = level - 2; // First Level Up happens when you hit level 2. So, the 0 index corresponds to Level 2.
         return options.Length > index && options[index].options.Any()

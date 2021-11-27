@@ -11,13 +11,13 @@ public sealed class LevelUpOptionPresenter : MonoBehaviour, IPointerDownHandler,
     [SerializeField] private GameObject hasDetailPrompt;
 
     private Sprite _defaultImg;
-    private HeroLevelUpOption _option;
-    private HeroLevelUpOption[] _allOptions;
+    private StaticHeroLevelUpOption _option;
+    private StaticHeroLevelUpOption[] _allOptions;
 
     private void Awake() => _defaultImg = button.sprite;
     private void OnEnable() => button.sprite = _defaultImg;
 
-    public LevelUpOptionPresenter Initialized(HeroLevelUpOption o, HeroLevelUpOption[] allOptions)
+    public LevelUpOptionPresenter Initialized(StaticHeroLevelUpOption o, StaticHeroLevelUpOption[] allOptions)
     {
         _option = o;
         _allOptions = allOptions;

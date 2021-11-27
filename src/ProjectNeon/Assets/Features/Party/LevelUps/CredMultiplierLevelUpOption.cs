@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Hero/LevelUps/Creds")]
-public class CredMultiplierLevelUpOption : HeroLevelUpOption
+public class CredMultiplierLevelUpOption : StaticHeroLevelUpOption
 {
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private float multiplier;

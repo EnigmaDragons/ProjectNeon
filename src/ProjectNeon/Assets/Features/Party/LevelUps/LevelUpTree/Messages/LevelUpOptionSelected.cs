@@ -1,10 +1,10 @@
 
 public class LevelUpOptionSelected
 {
-    public HeroLevelUpOption Selected { get; }
-    public HeroLevelUpOption[] Options { get; }
+    public StaticHeroLevelUpOption Selected { get; }
+    public StaticHeroLevelUpOption[] Options { get; }
 
-    public LevelUpOptionSelected(HeroLevelUpOption selected, HeroLevelUpOption[] options)
+    public LevelUpOptionSelected(StaticHeroLevelUpOption selected, StaticHeroLevelUpOption[] options)
     {
         Selected = selected;
         Options = options;

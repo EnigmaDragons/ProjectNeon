@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Hero/LevelUps/BasicCard")]
-public class NewBasicLevelUpOption : HeroLevelUpOption
+public class NewBasicLevelUpOption : StaticHeroLevelUpOption
 {
     [SerializeField] private CardType card;
 
