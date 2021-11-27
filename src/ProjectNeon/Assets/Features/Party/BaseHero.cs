@@ -36,6 +36,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
 
     [SerializeField] private HeroFlavorDetails flavorDetails;
     [SerializeField] private HeroLevelUpPathway levelUpTree;
+    [SerializeField] private HeroLevelUpTreeV4 levelUpTreeV4;
 
     public int Id => id;
     public string Name => name;
@@ -52,6 +53,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public CardTypeData BasicCard => basic;
     public int StartingCredits => startingCredits;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;
+    public HeroLevelUpTreeV4 LevelUpTreeV4 => levelUpTreeV4;
     public HeroFlavorDetails Flavor => flavorDetails;
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
     public Color Tint => tint;
