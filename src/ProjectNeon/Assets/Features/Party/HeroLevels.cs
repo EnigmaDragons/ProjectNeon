@@ -18,6 +18,7 @@ public class HeroLevels
     public int CurrentLevel => currentLevel;
     public int Xp => currentXp;
     public int UnspentLevelUpPoints => unspentLevelUpPoints;
+    public int NextLevelUpLevel => CurrentLevel + 1 - UnspentLevelUpPoints;
     public float NextLevelProgress => (float)XpTowardsNextLevelUp / XpRequiredForNextLevel;
     public int[] SelectedLevelUpOptionIds => selectedLevelUpOptionsIds.ToArray();
 

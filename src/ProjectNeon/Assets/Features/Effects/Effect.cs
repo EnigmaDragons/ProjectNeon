@@ -99,6 +99,9 @@ public class EffectContext
             new PreventionContextMut(Target), Selections, AllCards, BattleStartingCredits, CurrentCredits, EnemyTypes, GetNextCardId, CardsPlayedThisTurn, 
             OwnerTints, OwnerBusts);
 
+    public static EffectContext ForTests(Member source, Target target)
+        => ForTests(source, target, Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext());
+    
     public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, PreventionContext preventions)
         => new EffectContext(source, target, card, xPaidAmount, PartyAdventureState.InMemory(), new PlayerState(), BattleRewardState.InMemory(),
             target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions, new SelectionContext(), 

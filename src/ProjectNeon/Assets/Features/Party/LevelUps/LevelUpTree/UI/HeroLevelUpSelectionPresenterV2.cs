@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeroLevelUpSelectionPresenter : OnMessage<LevelUpOptionSelected, HeroStateChanged>
+public class HeroLevelUpSelectionPresenterV2 : OnMessage<LevelUpOptionSelected, HeroStateChanged>
 {
     [SerializeField] private TextMeshProUGUI levelLabel;
     [SerializeField] private Image bust;
@@ -12,7 +12,7 @@ public class HeroLevelUpSelectionPresenter : OnMessage<LevelUpOptionSelected, He
 
     private Hero _hero;
     
-    public HeroLevelUpSelectionPresenter Initialized(Hero hero)
+    public HeroLevelUpSelectionPresenterV2 Initialized(Hero hero)
     {
         _hero = hero;
         Render();
@@ -32,11 +32,20 @@ public class HeroLevelUpSelectionPresenter : OnMessage<LevelUpOptionSelected, He
 
     protected override void Execute(LevelUpOptionSelected msg)
     {
+        if (_hero == null)
+            return;
+        
         AllMetrics.PublishLevelUpOptionSelection(_hero.Name, _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
         msg.Selected.SelectAsLevelUp(_hero);
         gameObject.SetActive(false);
         Message.Publish(new HeroLevelledUp());
     }
 
-    protected override void Execute(HeroStateChanged msg) => Initialized(_hero);
+    protected override void Execute(HeroStateChanged msg)
+    {
+        if (_hero == null)
+            return;
+        
+        Initialized(_hero);
+    }
 }

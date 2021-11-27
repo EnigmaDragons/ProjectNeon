@@ -51,7 +51,7 @@ public class EquipmentPool : ScriptableObject
         .Shuffled()
         .Take(n);
 
-    public Equipment Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, string corp)
+    public Equipment Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, string corp = null)
     {
         try
         {
@@ -64,4 +64,9 @@ public class EquipmentPool : ScriptableObject
             return All.Random();
         }
     }
+
+    public int PossibleCount(EquipmentSlot slot, Rarity rarity, HashSet<string> archs) 
+        => All.Count(x => x.Slot == slot 
+                          && x.Rarity == rarity 
+                          && x.Archetypes.All(archs.Contains));
 }

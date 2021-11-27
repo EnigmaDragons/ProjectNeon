@@ -14,6 +14,7 @@ public class LevelUpAutoTrigger : OnMessage<PartyAdventureStateChanged, HeroLeve
         foreach (var hero in party.Heroes)
             if (hero.Levels.UnspentLevelUpPoints > 0)
             {
+                Log.Info($"{hero.Name} - XP {hero.Levels.Xp} - Unspent Points {hero.Levels.UnspentLevelUpPoints}");
                 Message.Publish(new LevelUpHero(hero));
                 return;
             }
