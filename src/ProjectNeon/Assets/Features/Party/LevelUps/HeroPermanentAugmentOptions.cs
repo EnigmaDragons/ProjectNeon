@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Hero/LevelUps/HeroPermanentAugmentOptions")]
+[CreateAssetMenu(menuName = "Hero/LevelUpsV4/HeroPermanentAugmentOptions")]
 public class HeroPermanentAugmentOptions : LevelUpOptions
 {
     [SerializeField] private EquipmentPool allEquipmentPool;
