@@ -22,6 +22,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private GameObject conditionMetHighlight;
     [SerializeField] private GameObject conditionNotMetHighlight;
     [SerializeField] private GameObject highlight;
+    [SerializeField] private GameObject fullScreenDarken;
     [SerializeField] private GameObject darken;
     [SerializeField] private CardControlsPresenter controls;
     [SerializeField] private CanvasGroup canvasGroup;
@@ -54,6 +55,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Action _onRightClick;
     private Action _onBeginDrag;
     private Vector3 _position;
+    
+    private bool _useCustomHoverActions;
+    private Action _hoverEnterAction;
+    private Action _hoverExitAction;
     
     // Drag Area
     private readonly Vector2 _dragPaddingFactor = new Vector2(0.05f, 0.05f);
@@ -171,12 +176,25 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         controls.SetCanToggleBasic(false);
         DisableCanPlayHighlight();
         DisableSelectedHighlight();
+        fullScreenDarken.SetActive(false);
         _onClick = onClick;
-        _onMiddleMouse = () => { };
-        _onRightClick = () => { };
+        _onMiddleMouse = NoOp;
+        _onRightClick = NoOp;
+        _useCustomHoverActions = false;
+        _hoverEnterAction = NoOp;
+        _hoverExitAction = NoOp;
     }
+    
+    private void NoOp() {}
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
+
+    public void SetHoverAction(Action enter, Action exit)
+    {
+        _hoverEnterAction = enter;
+        _hoverExitAction = exit;
+        _useCustomHoverActions = true;
+    }
 
     public void ToggleAsBasic()
     {
@@ -245,6 +263,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void SetSiblingIndex(int index) => _siblingIndex = index;
 
+    public void SetDetailHighlight(bool active)
+    {
+        if (!IsFocused && !active)
+            return;
+        
+        DebugLog($"Setting Detail Highlight {active}");
+        highlight.SetActive(active);
+        IsFocused = active;
+        SetShowComprehensiveInfo(active);
+        fullScreenDarken.SetActive(active);
+    }
+    
     public void SetHandHighlight(bool active)
     {
         if (!IsFocused && !active && AreCloseEnough(transform.localScale.x, 1.0f))
@@ -257,10 +287,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         var showShowControls = active && _card.IsActive;
         controls.SetActive(showShowControls);
         
-        if (active)
-            ShowComprehensiveCardInfo();
-        else
-            HideComprehensiveCardInfo();
+        SetShowComprehensiveInfo(active);
 
         var sign = active ? 1 : -1;
         var scale = active ? new Vector3(highlightedScale, highlightedScale, highlightedScale) : new Vector3(1f, 1f, 1f);
@@ -289,7 +316,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (active)
             Message.Publish(new CardHighlighted(this));
     }
-    
+
+    private void SetShowComprehensiveInfo(bool active)
+    {
+        if (active)
+            ShowComprehensiveCardInfo();
+        else
+            HideComprehensiveCardInfo();
+    }
+
     public void ShowComprehensiveCardInfo()
     {
         DebugLog("Show Comprehensive Info");
@@ -461,7 +496,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             Message.Publish(new CardHoverEnter(this));
             Message.Publish(new CardHoverSFX(transform));
         }
-            
+        else if (_useCustomHoverActions)
+        {
+            _hoverEnterAction();
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -470,6 +508,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         {
             SetHandHighlight(false);
             Message.Publish(new CardHoverExitSFX(transform));
+        }
+        else if (_useCustomHoverActions)
+        {
+            _hoverExitAction();
         }
     }
 

@@ -1,14 +1,17 @@
 using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected, HeroStateChanged>
 {
+    [SerializeField] private TextMeshProUGUI headerLabel;
     [SerializeField] private TextMeshProUGUI levelLabel;
     [SerializeField] private Image bust;
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private LevelUpOptionsPresenterV4 optionsPresenter;
+    [SerializeField] private GameObject[] toEnableOnRender;
 
     private Hero _hero;
     
@@ -24,10 +27,19 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected, Hero
         if (_hero == null)
             return;
         
+        gameObject.SetActive(true);
+        toEnableOnRender.ForEach(g => g.SetActive(false));
         bust.sprite = _hero.Character.Bust;
         stats.Initialized(_hero.Stats);
         levelLabel.text = $"Level {_hero.Level.ToString()}";
         optionsPresenter.Init(_hero);
+        
+        toEnableOnRender.ForEach(g => g.SetActive(true));
+        headerLabel.transform.localScale = new Vector3(4, 4, 4);
+        headerLabel.transform.DOScale(1, 0.6f);
+        var levelOriginalScale = levelLabel.transform.localScale;
+        levelLabel.transform.localScale = new Vector3(0, 0, 0);
+        this.ExecuteAfterDelay(0.6f, () => levelLabel.transform.DOScale(levelOriginalScale.x, 0.6f));
     }
 
     protected override void Execute(LevelUpOptionSelected msg)

@@ -19,9 +19,9 @@ public class NewBasicLevelUpOption : StaticHeroLevelUpOption
     public override bool UseCustomOptionPresenter => true;
     public override GameObject CreatePresenter(LevelUpCustomPresenterContext ctx)
     {
-        var obj = Instantiate(ctx.Presenters.CardPrototype, ctx.Parent);
-        obj.Set(new Card(-1, ctx.Hero.AsMember(-1), card), 
-            () => Message.Publish(new LevelUpOptionSelected(ctx.Option, ctx.AllOptions)));
-        return obj.gameObject;
+        var presenter = Instantiate(ctx.Presenters.CardPrototype, ctx.Parent);
+        presenter.Set(new Card(-1, ctx.Hero.AsMember(-1), card), () => Message.Publish(new LevelUpOptionSelected(ctx.Option, ctx.AllOptions)));
+        presenter.SetHoverAction(() => presenter.SetDetailHighlight(true), () => presenter.SetDetailHighlight(false));
+        return presenter.gameObject;
     }
 }
