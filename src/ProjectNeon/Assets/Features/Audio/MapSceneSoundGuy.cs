@@ -1,4 +1,5 @@
 
+using FMOD.Studio;
 using UnityEngine;
 
 public class MapSceneSoundGuy : MonoBehaviour
@@ -19,16 +20,18 @@ public class MapSceneSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnStoryEvent;
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpHover;
 
-    private bool debuggingLoggingEnabled = false;
+    private bool _debuggingLoggingEnabled = false;
+    private EventInstance _levelUpStinger;
 
     private void OnEnable()
     {
-        Message.Subscribe<StoryEventBegun>(e => PlayOneShot(OnStoryEvent, e.UiSource), this);
         Message.Subscribe<LevelUpClicked>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
+        Message.Subscribe<HeroLeveledUpSFX>(e => PlayLevelUpStinger(), this);
+        
+        Message.Subscribe<StoryEventBegun>(e => PlayOneShot(OnStoryEvent, e.UiSource), this);
         Message.Subscribe<TravelingSFX>(e => PlayOneShot(OnTravel, e.UiSource), this);
         Message.Subscribe<EQpurchased>(e => PlayOneShot(OnEQpurchased, e.UiSource), this);
         Message.Subscribe<CardPurchased>(e => PlayOneShot(OnCardpurchased, e.UiSource), this);
-        Message.Subscribe<HeroLeveledUpSFX>(e => PlayOneShot(OnHeroLevelledUp, e.UiSource), this);
         Message.Subscribe<DieRollShaking>(e => PlayOneShot(OnDieRollShake, e.UiSource), this);
         Message.Subscribe<DieThrown>(e => PlayOneShot(OnDieThrown, e.UiSource), this);
         Message.Subscribe<ArrivedAtNode>(OnArrivedAtNode, this);
@@ -49,16 +52,31 @@ public class MapSceneSoundGuy : MonoBehaviour
         if (node.NodeType == MapNodeType.Boss)
             PlayOneShot(OnBoss, node.UiSource);
     }
+
+    private void PlayLevelUpStinger()
+    {
+        if (!_levelUpStinger.isValid())
+            _levelUpStinger = FMODUnity.RuntimeManager.CreateInstance(OnHeroLevelledUp);
+
+        _levelUpStinger.stop(STOP_MODE.IMMEDIATE);
+        _levelUpStinger.start();
+    }
     
     private void OnDisable()
     {
+        if (_levelUpStinger.isValid())
+            _levelUpStinger.release();
         Message.Unsubscribe(this);
     }
+    
     private void PlayOneShot(string eventName, Transform uiSource)
-        => FMODUnity.RuntimeManager.PlayOneShot(eventName, uiSource.position);
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(eventName, uiSource.position);
+    }
+
     private void DebugLog(string msg)
     {
-        if (debuggingLoggingEnabled)
+        if (_debuggingLoggingEnabled)
             Log.Info(msg);
     }
 }
