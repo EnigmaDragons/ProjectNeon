@@ -116,13 +116,8 @@ public class CardResolutionZone : ScriptableObject
         if (played.Card.IsActive)
         {
             played.Member.State.RecordUsage(played.Card);
-            played.Member.Apply(m =>
-            {
-                m.Lose(played.Spent, battleState.Party);
-                m.Gain(played.Gained, battleState.Party);
-            });
-            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent} - Gained {played.Gained}");
-            BattleLog.WriteIf(played.Gained, x => $"{played.Member.Name} Gained {x}", x => x.Amount > 0);
+            played.Member.Apply(m => m.Lose(played.Spent, battleState.Party));
+            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent}");
         }
     }
     

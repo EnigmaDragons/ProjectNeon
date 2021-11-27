@@ -120,5 +120,5 @@ public static class MemberExtensions
     
     //Should reaction cards be modified by changers
     public static ResourceCalculations CalculateResourcesForReaction(this Member m, ReactionCardType reaction)
-        => TimelessResourceCalculator.CalculateResources(reaction.Cost, new InMemoryResourceAmount(0), m.State).ClampResources(m);
+        => TimelessResourceCalculator.CalculateResources(reaction.Cost, m.State).ClampResources(m);
 }

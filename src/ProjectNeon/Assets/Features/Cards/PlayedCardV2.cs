@@ -38,7 +38,6 @@ public class PlayedCardV2 : IPlayedCard
     public Card Card => _card;
     public Target[] Targets => _targets;
     public ResourceQuantity Spent => _calculations.PaidQuantity;
-    public ResourceQuantity Gained => _calculations.GainedQuantity;
     public bool IsSingleUse => _isSingleUse;
     public bool IsTransient => _isTransient;
 

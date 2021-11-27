@@ -5,7 +5,6 @@
     Card Card { get; }
     Target[] Targets { get; }
     ResourceQuantity Spent { get; }
-    ResourceQuantity Gained { get; }
     bool IsSingleUse { get; }
     bool IsTransient { get; }
 
@@ -25,7 +24,6 @@ public sealed class PlayedCardSnapshot
     public CardTypeData Card { get; }
     public Target[] Targets { get; }
     public ResourceQuantity Spent { get; }
-    public ResourceQuantity Gained { get; }
     public bool WasTransient { get; }
 
     public PlayedCardSnapshot(IPlayedCard p)
@@ -35,7 +33,6 @@ public sealed class PlayedCardSnapshot
         Card = p.Card.Type;
         Targets = p.Targets;
         Spent = p.Spent;
-        Gained = p.Gained;
         WasTransient = p.IsTransient;
     }
 

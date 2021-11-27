@@ -203,7 +203,6 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, resourceCalculations);
             Message.Publish(new CardResolutionStarted(playedCard));
             r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity, state.Party));
-            r.Source.Apply(s => s.Gain(resourceCalculations.GainedQuantity, state.Party));
             reactionCard.ActionSequence.Perform(r.Name, r.Source, r.Target, resourceCalculations.XAmountQuantity);
         }
         else

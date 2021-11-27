@@ -9,6 +9,7 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
     [SerializeField] private TextMeshProUGUI promptLabel;
     [SerializeField] private GameObject optionParent;
     [SerializeField] private LevelUpOptionPresenterV4 basicOptionPrototype;
+    [SerializeField] private CustomLevelUpPresenters presenters;
     [SerializeField] private GameObject[] toDestroyOnStart;
 
     private readonly List<GameObject> _options = new List<GameObject>();
@@ -31,7 +32,7 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
             promptLabel.text = optionPrompt;
         options.Where(x => x.IsFunctional)
             .ForEach(o => _options.Add(o.UseCustomOptionPresenter
-                ? o.CreatePresenter(new LevelUpCustomPresenterContext(optionParent.transform, hero, o, options))
+                ? o.CreatePresenter(new LevelUpCustomPresenterContext(optionParent.transform, presenters, hero, o, options))
                 : Instantiate(basicOptionPrototype, optionParent.transform).Initialized(o, options).gameObject));
     }
 }

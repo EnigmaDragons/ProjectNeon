@@ -166,7 +166,6 @@ public sealed class MemberState : IStats
         var multiplicatives = _multiplicativeResourceCalculators.Select(x => x.GetModifiers(card, this)).ToArray();
         return new ResourceCalculations(
             calc.ResourcePaidType, (calc.ResourcesPaid + additives.Sum(x => x.ResourcesPaid)) * multiplicatives.Product(x => x.ResourcesPaid),
-            calc.ResourceGainedType, (calc.ResourcesGained + additives.Sum(x => x.ResourcesGained)) * multiplicatives.Product(x => x.ResourcesGained),
             (calc.XAmount + additives.Sum(x => x.XAmount)) * multiplicatives.Product(x => x.XAmount),
             (calc.XAmountPriceTag + additives.Sum(x => x.XAmountPriceTag)) *
             multiplicatives.Product(x => x.XAmountPriceTag));
