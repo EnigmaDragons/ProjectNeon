@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class LevelUpOptionWithHpAndStatGain : LevelUpOption
 {
     private readonly LevelUpOption _baseOption;
@@ -26,4 +28,6 @@ public class LevelUpOptionWithHpAndStatGain : LevelUpOption
     public void ShowDetail() => _baseOption.ShowDetail();
     public bool HasDetail => _baseOption.HasDetail;
     public bool IsFunctional => _baseOption.IsFunctional;
+    public bool UseCustomOptionPresenter => _baseOption.UseCustomOptionPresenter;
+    public GameObject CreatePresenter(LevelUpCustomPresenterContext ctx) => _baseOption.CreatePresenter(ctx);
 }

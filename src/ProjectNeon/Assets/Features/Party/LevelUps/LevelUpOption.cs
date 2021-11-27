@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public interface LevelUpOption
 {
@@ -7,4 +8,7 @@ public interface LevelUpOption
     public void ShowDetail();
     public bool HasDetail { get; }
     public bool IsFunctional { get; }
+    
+    public bool UseCustomOptionPresenter { get; }
+    public GameObject CreatePresenter(LevelUpCustomPresenterContext ctx);
 }

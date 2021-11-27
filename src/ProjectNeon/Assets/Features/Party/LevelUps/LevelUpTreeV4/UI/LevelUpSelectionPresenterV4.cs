@@ -3,16 +3,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeroLevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected, HeroStateChanged>
+public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected, HeroStateChanged>
 {
     [SerializeField] private TextMeshProUGUI levelLabel;
     [SerializeField] private Image bust;
     [SerializeField] private MemberStatPanel stats;
-    [SerializeField] private LevelUpOptionsPresenter optionsPresenter;
+    [SerializeField] private LevelUpOptionsPresenterV4 optionsPresenter;
 
     private Hero _hero;
     
-    public HeroLevelUpSelectionPresenterV4 Initialized(Hero hero)
+    public LevelUpSelectionPresenterV4 Initialized(Hero hero)
     {
         _hero = hero;
         Render();
@@ -27,7 +27,7 @@ public class HeroLevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected, 
         bust.sprite = _hero.Character.Bust;
         stats.Initialized(_hero.Stats);
         levelLabel.text = $"Level {_hero.Level.ToString()}";
-        optionsPresenter.Init(_hero, useV4: true);
+        optionsPresenter.Init(_hero);
     }
 
     protected override void Execute(LevelUpOptionSelected msg)

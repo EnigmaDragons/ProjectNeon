@@ -15,4 +15,7 @@ public class NewBasicLevelUpOption : StaticHeroLevelUpOption
     public override bool IsFunctional => card != null;
 
     public CardTypeData Card => card;
+    
+    public override bool UseCustomOptionPresenter => false;
+    public override GameObject CreatePresenter(LevelUpCustomPresenterContext ctx) => throw new System.NotImplementedException();
 }

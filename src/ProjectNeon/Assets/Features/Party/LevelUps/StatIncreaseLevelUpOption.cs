@@ -14,4 +14,7 @@ public class StatIncreaseLevelUpOption : StaticHeroLevelUpOption
     public override void ShowDetail() {}
     public override bool HasDetail => false;
     public override bool IsFunctional => stat != null && amount > 0;
+
+    public override bool UseCustomOptionPresenter => false;
+    public override GameObject CreatePresenter(LevelUpCustomPresenterContext ctx) => throw new System.NotImplementedException();
 }

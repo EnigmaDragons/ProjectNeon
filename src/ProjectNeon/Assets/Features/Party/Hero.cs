@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 [Serializable]
 public class Hero
@@ -43,6 +42,7 @@ public class Hero
     public StatType PrimaryStat => _primaryStat.OrDefault(NonTemporaryStats.DefaultPrimaryStat(Character.Stats));
     public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
     public HashSet<string> Archetypes => character.Archetypes;
+    public HeroLevelUpRewardV4 NextLevelUpRewardV4 => Character.LevelUpTreeV4.ForLevel(Levels.NextLevelUpLevel);
 
     public IStats BaseStats => 
         Character.Stats.Plus(_statAdditions);

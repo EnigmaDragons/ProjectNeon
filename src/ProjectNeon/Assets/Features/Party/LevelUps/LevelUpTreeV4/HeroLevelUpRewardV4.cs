@@ -12,7 +12,8 @@ public class HeroLevelUpRewardV4
     public LevelUpOptions Options => options;
     public int HpGain => hpGain;
     public StatType BuffStat => buffStat;
-
+    public string OptionsPrompt => options.ChoiceDescription;
+    
     public LevelUpOption[] GenerateOptions(Hero h)
     {
         var baseOptions = Options.Generate(h);

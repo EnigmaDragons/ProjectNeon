@@ -6,7 +6,10 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
 {
     [SerializeField] private EquipmentPool allEquipmentPool;
     [SerializeField] private Rarity rarity;
-    
+    [SerializeField] private EquipmentPresenter customPresenterPrototype;
+
+    public override string ChoiceDescription => "Choose an Augment";
+
     public override LevelUpOption[] Generate(Hero h)
     {
         var archetypes = h.Archetypes;
@@ -30,7 +33,10 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
         
         // Create Options
         var options = finalSet
-            .Select(a => (LevelUpOption)new AugmentLevelUpOption(a))
+            .Select(e => (LevelUpOption)new WithCustomPresenter(
+                    new AugmentLevelUpOption(e), 
+                        ctx => Instantiate(customPresenterPrototype, ctx.Parent)
+                            .Initialized(e, () => Message.Publish(new LevelUpOptionSelected(ctx.Option, ctx.AllOptions))).gameObject))
             .ToArray()
             .Shuffled();
         

@@ -6,7 +6,7 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
     [SerializeField] private GameObject targetV4;
     [SerializeField] private GameObject targetV2;
     [SerializeField] private HeroLevelUpSelectionPresenterV2 presenterV2;
-    [SerializeField] private HeroLevelUpSelectionPresenterV4 presenterV4;
+    [SerializeField] private LevelUpSelectionPresenterV4 presenterV4;
     
     private bool _isTargetV4Null;
     private bool _isPresenterV4Null;

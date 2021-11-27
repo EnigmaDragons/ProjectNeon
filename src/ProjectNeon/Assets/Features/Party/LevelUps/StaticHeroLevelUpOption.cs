@@ -19,4 +19,6 @@ public abstract class StaticHeroLevelUpOption : ScriptableObject, LevelUpOption
     public abstract void ShowDetail();
     public abstract bool HasDetail { get; }
     public abstract bool IsFunctional { get; }
+    public abstract bool UseCustomOptionPresenter { get; }
+    public abstract GameObject CreatePresenter(LevelUpCustomPresenterContext ctx);
 }

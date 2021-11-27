@@ -1,3 +1,5 @@
+using System;
+using UnityEngine;
 
 public class AugmentLevelUpOption : LevelUpOption
 {
@@ -14,11 +16,9 @@ public class AugmentLevelUpOption : LevelUpOption
         Message.Publish(new AutoSaveRequested());
     }
 
-    public void ShowDetail()
-    {
-        throw new System.NotImplementedException();
-    }
-
+    public void ShowDetail() => throw new NotImplementedException();
     public bool HasDetail => false;
     public bool IsFunctional => _e != null;
+    public bool UseCustomOptionPresenter => false;
+    public GameObject CreatePresenter(LevelUpCustomPresenterContext ctx) => throw new System.NotImplementedException();
 }
