@@ -23,38 +23,8 @@ public sealed class MemberStatPanel : MonoBehaviour
 
     public MemberStatPanel Initialized(Hero h)
     {
-        var m = h.Stats;
-        var difference = m.Minus(h.BaseStats);
-        hpLabel.text = $"{h.CurrentHp}/{m.MaxHp()}";
-        startingShieldLabel.text = $"{m.StartingShield()}";
-        startingShieldLabel.color = ColorFor(difference.StartingShield());
-        maxShieldLabel.text = $"{m.MaxShield()}";
-        maxShieldLabel.color = ColorFor(difference.MaxShield());
-        attackLabel.text = $"{m.Attack()}";
-        attackLabel.color = ColorFor(difference.Attack());
-        attackLabel.gameObject.transform.parent.gameObject.SetActive(m.Attack() > 0);
-        attackLabel.font = h.PrimaryStat == StatType.Attack ? primaryStatFont : normalFont;
-        attackNameLabel.font = h.PrimaryStat == StatType.Attack ? primaryStatFont : normalFont;
-        magicLabel.text = $"{m.Magic()}";
-        magicLabel.color = ColorFor(difference.Magic());
-        magicLabel.gameObject.transform.parent.gameObject.SetActive(m.Magic() > 0);
-        magicLabel.font = h.PrimaryStat == StatType.Magic ? primaryStatFont : normalFont;
-        magicNameLabel.font = h.PrimaryStat == StatType.Magic ? primaryStatFont : normalFont;
-        leaderLabel.text = $"{m.Leadership()}";
-        leaderLabel.color = ColorFor(difference.Leadership());
-        leaderLabel.gameObject.transform.parent.gameObject.SetActive(m.Leadership() > 0);
-        leaderLabel.font = h.PrimaryStat == StatType.Leadership ? primaryStatFont : normalFont;
-        leaderNameLabel.font = h.PrimaryStat == StatType.Leadership ? primaryStatFont : normalFont;
-        armorLabel.text = $"{m.Armor()}";
-        armorLabel.color = ColorFor(difference.Armor());
-        resistLabel.text = $"{m.Resistance()}";
-        resistLabel.color = ColorFor(difference.Resistance());
-        econLabel.text = $"{m.Economy()}";
-        econLabel.color = ColorFor(difference.Economy());
-        econLabel.gameObject.transform.parent.gameObject.SetActive(m.Economy() > 0);
-        econLabel.font = h.PrimaryStat == StatType.Economy ? primaryStatFont : normalFont;
-        econNameLabel.font = h.PrimaryStat == StatType.Economy ? primaryStatFont : normalFont;
-        return this;
+        hpLabel.text = $"{h.CurrentHp}/{h.Stats.MaxHp()}";
+        return Initialized(h.Stats, h.BaseStats, h.PrimaryStat);
     }
 
     public MemberStatPanel Initialized(IStats s)
@@ -72,6 +42,41 @@ public sealed class MemberStatPanel : MonoBehaviour
         resistLabel.text = $"{s.Resistance()}";
         econLabel.text = $"{s.Economy()}";
         econLabel.gameObject.transform.parent.gameObject.SetActive(s.Economy() > 0);
+        return this;
+    }
+
+    public MemberStatPanel Initialized(IStats current, IStats baseStats, StatType primaryStat)
+    {
+        var stats = current;
+        var difference = stats.Minus(baseStats);
+        startingShieldLabel.text = $"{stats.StartingShield()}";
+        startingShieldLabel.color = ColorFor(difference.StartingShield());
+        maxShieldLabel.text = $"{stats.MaxShield()}";
+        maxShieldLabel.color = ColorFor(difference.MaxShield());
+        attackLabel.text = $"{stats.Attack()}";
+        attackLabel.color = ColorFor(difference.Attack());
+        attackLabel.gameObject.transform.parent.gameObject.SetActive(stats.Attack() > 0);
+        attackLabel.font = primaryStat == StatType.Attack ? primaryStatFont : normalFont;
+        attackNameLabel.font = primaryStat == StatType.Attack ? primaryStatFont : normalFont;
+        magicLabel.text = $"{stats.Magic()}";
+        magicLabel.color = ColorFor(difference.Magic());
+        magicLabel.gameObject.transform.parent.gameObject.SetActive(stats.Magic() > 0);
+        magicLabel.font = primaryStat == StatType.Magic ? primaryStatFont : normalFont;
+        magicNameLabel.font = primaryStat == StatType.Magic ? primaryStatFont : normalFont;
+        leaderLabel.text = $"{stats.Leadership()}";
+        leaderLabel.color = ColorFor(difference.Leadership());
+        leaderLabel.gameObject.transform.parent.gameObject.SetActive(stats.Leadership() > 0);
+        leaderLabel.font = primaryStat == StatType.Leadership ? primaryStatFont : normalFont;
+        leaderNameLabel.font = primaryStat == StatType.Leadership ? primaryStatFont : normalFont;
+        armorLabel.text = $"{stats.Armor()}";
+        armorLabel.color = ColorFor(difference.Armor());
+        resistLabel.text = $"{stats.Resistance()}";
+        resistLabel.color = ColorFor(difference.Resistance());
+        econLabel.text = $"{stats.Economy()}";
+        econLabel.color = ColorFor(difference.Economy());
+        econLabel.gameObject.transform.parent.gameObject.SetActive(stats.Economy() > 0);
+        econLabel.font = primaryStat == StatType.Economy ? primaryStatFont : normalFont;
+        econNameLabel.font = primaryStat == StatType.Economy ? primaryStatFont : normalFont;
         return this;
     }
 

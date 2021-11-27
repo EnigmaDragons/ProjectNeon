@@ -42,7 +42,7 @@ public class CharacterAnimationStepEditor : PropertyDrawer
         {
             return (CharacterAnimationStepType) Enum.GetValues(typeof(CharacterAnimationStepType)).GetValue(property.enumValueIndex);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return CharacterAnimationStepType.PublishFinished;
         }
