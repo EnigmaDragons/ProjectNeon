@@ -10,9 +10,14 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
     public override string Name => $"Party Change Event";
     public override void Start()
     {
-        var unlockedHeroes = library.UnlockedHeroes.ToList();
-        currentParty.Heroes.ForEach(h => unlockedHeroes.Remove(h));
-        var randomThree = unlockedHeroes.Shuffled().Take(3).ToArray();
+        var allOptions = library.UnlockedHeroes.ToList();
+        currentParty.Heroes.ForEach(h => allOptions.Remove(h));
+        
+        var currentArchs = currentParty.Heroes.SelectMany(h => h.Archetypes).ToHashSet();
+        var preferredSelection = allOptions.Where(h => !h.Archetypes.Any(a => currentArchs.Contains(a))).ToList();
+        var optimizedSelection = preferredSelection.Count() >= 3 ? preferredSelection : allOptions;
+        
+        var randomThree = optimizedSelection.Shuffled().Take(3).ToArray();
         var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Leader" : "Choose A New Squad Member";
         Message.Publish(new GetUserSelectedHero(prompt, randomThree, h => Message.Publish(new AddHeroToPartyRequested(h))));
     }

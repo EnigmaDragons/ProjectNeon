@@ -234,4 +234,12 @@ public static class CollectionExtensions
         }
         return index;
     }
+
+    public static HashSet<T> ToHashSet<T>(this IEnumerable<T> items)
+    {
+        var set = new HashSet<T>();
+        foreach (var i in items) 
+            set.Add(i);
+        return set;
+    }
 }
