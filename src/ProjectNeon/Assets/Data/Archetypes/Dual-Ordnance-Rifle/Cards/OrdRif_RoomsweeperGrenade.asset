@@ -10,32 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Soldier_CoveringFire
+  m_Name: OrdRif_RoomsweeperGrenade
   m_EditorClassIdentifier: 
-  id: 107
+  id: 460
   customName: 
-  art: {fileID: 21300000, guid: c41e287a45242224dafc559c264a5d13, type: 3}
-  description: Deal {E[0]}.<br><br>Reduce <b>Primary Stat</b> by 30% this turn.
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 2a000000
+  art: {fileID: 21300000, guid: 87ad42f8fa055d744a64136e2396c0a5, type: 3}
+  description: Spend all Ammo to deal {E[0]} and give -1 Primary Stat this turn for
+    each Ammo spent
+  typeDescription: {fileID: 0}
+  tags: 250000002a000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 2
-    resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
+    cost: 1
+    resourceType: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
-  - scope: 0
+  - scope: 1
     group: 1
-    cardActions: {fileID: 11400000, guid: d759617ca45a6c244b3f24db0d271671, type: 2}
+    cardActions: {fileID: 11400000, guid: 37fffe36a865e7845938c29eab060d1c, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
-  functionalityIssues: 
+  functionalityIssues: You have to update how many of the function on the effect
+    their are if there is ways to increase your ammo count
   presentationIssues: 
   archetypes:
+  - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   highlightCondition: []
   unhighlightCondition: []

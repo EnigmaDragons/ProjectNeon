@@ -15,7 +15,7 @@ MonoBehaviour:
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 7
+      EffectType: 68
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -23,13 +23,13 @@ MonoBehaviour:
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 1
+        ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 0
+      DurationFormula: -1
       EffectScope:
-        UseConstant: 1
-        ConstantValue: Grenades
-        Variable: {fileID: 0}
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
       ReTargetScope: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: -4
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
