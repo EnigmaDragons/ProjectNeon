@@ -42,4 +42,5 @@ public enum CardTag
     Glitch = 39,
     Igniting = 40,
     CredAdjust = 41,
+    Shot = 42,
 }

@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Soldier_CoveringFire
+  m_Name: OrdRif_SonicGrenade
   m_EditorClassIdentifier: 
-  id: 107
+  id: 463
   customName: 
-  art: {fileID: 21300000, guid: c41e287a45242224dafc559c264a5d13, type: 3}
-  description: Deal {E[0]}.<br><br>Reduce <b>Primary Stat</b> by 30% this turn.
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 2a000000
+  art: {fileID: 21300000, guid: 08d17d47c6578a54faeb4c3d7adce7ad, type: 3}
+  description: 'Deal {E[0]} Crit: Has been shot by you this turn'
+  typeDescription: {fileID: 0}
+  tags: 25000000
   speed: 0
-  isSinglePlay: 0
+  isSinglePlay: 1
   cost:
-    cost: 2
-    resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
+    cost: 1
+    resourceType: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
-  - scope: 0
+  - scope: 1
     group: 1
-    cardActions: {fileID: 11400000, guid: d759617ca45a6c244b3f24db0d271671, type: 2}
+    cardActions: {fileID: 11400000, guid: f158c1dd7a3ad0148b18623249294584, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -36,7 +36,8 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
+  - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 0
+  isWIP: 1
