@@ -288,7 +288,7 @@ public class BattleState : ScriptableObject
         GrantRewardCredits();
         GrantRewardCards();
         GrantRewardEquipment();
-        GrantRewardXp();
+        var xpGranted = GrantXp();
         var battleSummaryReport = new BattleSummaryReport
         {
             enemies = _battleStartingEnemies.Select(e => e.Name).ToArray(),
@@ -297,7 +297,7 @@ public class BattleState : ScriptableObject
             attritionCreditsChange = battleAttritionReport.TotalCreditsChange,
             attritionHpChange = battleAttritionReport.TotalHpChange,
             attritionInjuriesChange = battleAttritionReport.TotalInjuriesChange,
-            rewardXp = RewardXp,
+            rewardXp = xpGranted,
             rewardCredits = RewardCredits,
             rewardCards = RewardCards.Select(c => c.Name).ToArray(),
             rewardGear = RewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
@@ -311,7 +311,18 @@ public class BattleState : ScriptableObject
     private void GrantRewardCards() => Party.Add(RewardCards);
     private void GrantRewardEquipment() => Party.Add(RewardEquipments);
     private void GrantRewardXp() => Party.AwardXp(RewardXp);
-    
+    private void GrantXpProgressToNextLevel(float factor) => Party.Heroes.ForEach(h => h.AddXp((h.Levels.XpRequiredForNextLevel * factor).CeilingInt()));
+    private int GrantXp()
+    {
+        var totalXpBefore = Party.Heroes.Sum(h => h.Levels.Xp);
+        if (adventureProgress.AdventureProgress.UsesRewardXp)
+            GrantRewardXp();
+        if (adventureProgress.AdventureProgress.BonusXpLevelFactor > 0)
+            GrantXpProgressToNextLevel(adventureProgress.AdventureProgress.BonusXpLevelFactor);
+        var totalXpAfter = Party.Heroes.Sum(h => h.Levels.Xp);
+        return totalXpAfter - totalXpBefore;
+    }
+
     // Queries
     public bool PlayerWins() =>  EnemyMembers.All(m => m.State.IsUnconscious);
     public bool PlayerLoses() => Heroes.All(m => m.State.IsUnconscious);

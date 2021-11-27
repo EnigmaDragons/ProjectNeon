@@ -19,6 +19,8 @@ public class AdventureProgressV4 : AdventureProgressBase
     public float ProgressToUnlockChapterBoss => Progress;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
     public bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
+    public override bool UsesRewardXp { get; } = false;
+    public override float BonusXpLevelFactor { get; } = 0.33333f;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     private int CurrentStageLength => CurrentChapter.SegmentCount;
     
