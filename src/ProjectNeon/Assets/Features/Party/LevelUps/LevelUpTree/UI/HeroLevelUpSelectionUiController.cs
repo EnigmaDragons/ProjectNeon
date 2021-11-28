@@ -30,6 +30,9 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
         }
         else
         {
+            if (msg.Hero.IsMaxLevelV4)
+                return;
+            
             presenterV4.Initialized(msg.Hero);
             targetV4.SetActive(true);
         }
