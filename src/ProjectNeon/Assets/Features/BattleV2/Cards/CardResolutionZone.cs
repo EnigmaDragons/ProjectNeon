@@ -241,7 +241,7 @@ public class CardResolutionZone : ScriptableObject
         var targets = GetTargets(owner, card, chainingMove.Targets);
 
         Queue(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner, chainingMove.Card.OwnerTint, chainingMove.Card.OwnerBust), true, ResourceCalculations.Free));
-        Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
+        Message.Publish(new DisplayCharacterWordRequested(owner, CharacterReactionType.ChainCardPlayed));
     }
     
     private Target[] GetTargets(Member m, CardTypeData card, Maybe<Target[]> previousTargets)

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class BattleCharacterReactionSoundGuy : MonoBehaviour
@@ -32,25 +31,6 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
         Message.Subscribe<MemberStateChanged>(OnMemberStateChanged, this);
         Message.Subscribe<DisplayCharacterWordRequested>(OnCharacterReaction, this);
         Message.Subscribe<MemberStateChanged>(OnHealthLost, this);
-        Message.Subscribe<DisplayCharacterWordRequested>(OnDoubleDamage, this);
-    }
-
-    private void OnDoubleDamage(DisplayCharacterWordRequested msg)
-    {
-        battleState.GetMaybeTransform(msg.MemberId).IfPresent(memberTransform =>
-        {
-            var characterMaterialType = MaterialTypeOf(msg.MemberId);
-            if (characterMaterialType == MemberMaterialType.Organic)
-            {
-                if (msg.ReactionType == CharacterReactionType.DoubleDamaged)
-                    PlayOneShot(onDoubleDMetal, memberTransform);
-            }
-            if (characterMaterialType != MemberMaterialType.Organic)
-            {
-                if (msg.ReactionType == CharacterReactionType.DoubleDamaged)
-                    PlayOneShot(onDoubleDFlesh, memberTransform);
-            }
-        });
     }
 
     private void OnHealthLost(MemberStateChanged msg)
@@ -69,8 +49,6 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
                 if (msg.LostHp())
                     PlayOneShot(onHpLostMetal, memberTransform);
             }
-
-
         });
     }
 
@@ -78,11 +56,12 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     {
         battleState.GetMaybeTransform(msg.MemberId).IfPresent(memberTransform =>
         {
-            if (msg.ReactionType == CharacterReactionType.ChainCardPlayed)
+            var characterMaterialType = MaterialTypeOf(msg.MemberId);
+            if (msg.ReactionType == CharacterReactionType.ChainCardPlayed) 
                 PlayOneShot(onCardChained, memberTransform);
             if (msg.ReactionType == CharacterReactionType.Stunned)
                  PlayOneShot(onCardFizzledBecauseStunnedEvent, memberTransform);
-             if (msg.ReactionType == CharacterReactionType.BonusCardPlayed)
+            if (msg.ReactionType == CharacterReactionType.BonusCardPlayed)
                  PlayOneShot(onBonusCardPlayed, memberTransform);
             if (msg.ReactionType == CharacterReactionType.Aegised)
                  PlayOneShot(onAegised, memberTransform);
@@ -94,10 +73,13 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
                 PlayOneShot(onBackToBattle, memberTransform);
             if (msg.ReactionType == CharacterReactionType.ReactionCardPlayed)
                 PlayOneShot(onReactionCardPlayed, memberTransform);
-            /*if (msg.ReactionType == CharacterReactionType.DoubleDamaged)
-                PlayOneShot(onDoubleDMetal, memberTransform);*/
-
-
+            if (msg.ReactionType == CharacterReactionType.DoubleDamaged)
+            {
+                if (characterMaterialType == MemberMaterialType.Metallic)
+                    PlayOneShot(onDoubleDMetal, memberTransform);
+                else if (characterMaterialType == MemberMaterialType.Organic)
+                    PlayOneShot(onDoubleDFlesh, memberTransform);
+            }
         });
     }
 
@@ -117,6 +99,8 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
                 PlayOneShot(onStealthGained, memberTransform);
             if (msg.ExitedStealth())
                 PlayOneShot(onStealthExited, memberTransform);
+            if (msg.GainedAegis())
+                PlayOneShot(onAegisSetUp, memberTransform);
         });
     }
 
@@ -135,5 +119,4 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
         if (debuggingLoggingEnabled)
             Log.Info(msg);
     }
-    
 }
