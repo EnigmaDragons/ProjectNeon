@@ -24,6 +24,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private StaticCardCondition[] highlightCondition;
     [SerializeField] private StaticCardCondition[] unhighlightCondition;
     [SerializeField] private bool isWIP = true;
+    [SerializeField] private bool notAvailableForGeneralDistribution = false;
 
     public string Name => !string.IsNullOrWhiteSpace(customName) 
         ? customName 
@@ -44,6 +45,7 @@ public class CardType : ScriptableObject, CardTypeData
     public Maybe<CardTypeData> SwappedCard => swappedCard;
     public HashSet<string> Archetypes => archetypes != null ? new HashSet<string>(archetypes.Where(x => x != null).Select(x => x.Value)) : new HashSet<string>();
     public bool IsWip => isWIP;
+    public bool IncludeInPools => !isWIP && !notAvailableForGeneralDistribution;
     public Maybe<CardCondition> HighlightCondition => highlightCondition != null && highlightCondition.Length > 0
         ? new Maybe<CardCondition>(new AndCardCondition(highlightCondition.Cast<CardCondition>().ToArray()))
         : Maybe<CardCondition>.Missing();
@@ -51,6 +53,9 @@ public class CardType : ScriptableObject, CardTypeData
         ? new Maybe<CardCondition>(new AndCardCondition(unhighlightCondition.Cast<CardCondition>().ToArray()))
         : Maybe<CardCondition>.Missing();
     public bool IsSinglePlay => isSinglePlay;
+    
+    private static string WipWord(bool isWip) => isWip ? "WIP - " : "";
+    public string EditorName => $"{WipWord(IsWip)}{Rarity} - {Name}";
 
     public override string ToString() => Name;
     public override int GetHashCode() => ToString().GetHashCode();

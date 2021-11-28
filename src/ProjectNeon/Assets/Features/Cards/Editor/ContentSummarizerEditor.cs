@@ -22,11 +22,11 @@ public sealed class ContentSummarizerEditor : EditorWindow
         if (GUILayout.Button("Archetype Content Summary"))
         {
             var cards = GetAllInstances<CardType>()
-                .Where(c => !c.IsWip && c.Archetypes.Contains(Archetype))
+                .Where(c => c.IncludeInPools && c.Archetypes.Contains(Archetype))
                 .Select(c => $"Card - {c.Name}");
 
             var equipments = GetAllInstances<StaticEquipment>()
-                .Where(c => !c.IsWip && c.Archetypes.Contains(Archetype))
+                .Where(c => c.IncludeInPools && c.Archetypes.Contains(Archetype))
                 .Select(e => $"Gear - {e.Name}");
 
             GetWindow<ListDisplayWindow>()
@@ -39,7 +39,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         if (GUILayout.Button("Cards By Archetypes"))
         {
             var result = GetAllInstances<CardType>()
-                .Where(c => !c.IsWip)
+                .Where(c => c.IncludeInPools)
                 .GroupBy(x => x.GetArchetypeKey())
                 .ToDictionary(
                     x => x.Key, // By Archetype 
@@ -60,7 +60,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         if (GUILayout.Button("Cards By Cost"))
         {
             var result = GetAllInstances<CardType>()
-                .Where(c => !c.IsWip)
+                .Where(c => c.IncludeInPools)
                 .GroupBy(x => x.GetArchetypeKey())
                 .ToDictionary(
                     x => x.Key, // By Archetype 
@@ -120,7 +120,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
                             r => r.Count()));
             
             var equipments = GetAllInstances<StaticEquipment>()
-                .Where(e => !e.IsWip && archetypeKeys.Contains(e.ArchetypeKey))
+                .Where(e => e.IncludeInPools && archetypeKeys.Contains(e.ArchetypeKey))
                 .GroupBy(c => c.ArchetypeKey)
                 .ToDictionary(
                     x => x.Key, // By Archetype 

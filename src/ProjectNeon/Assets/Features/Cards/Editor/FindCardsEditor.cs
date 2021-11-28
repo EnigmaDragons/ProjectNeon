@@ -75,7 +75,7 @@ public class FindCardsEditor : EditorWindow
                 .Where(c => c.GetArchetypeKey().Equals(_archetype))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
-                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .Select(e => e.EditorName)
                 .ToArray();
             ShowCards($"Archetype {_archetype}", cards);
             GUIUtility.ExitGUI();
@@ -193,7 +193,7 @@ public class FindCardsEditor : EditorWindow
                 .Where(c => archetypeKeys.Contains(c.GetArchetypeKey()))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
-                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .Select(e => e.EditorName)
                 .ToArray();
             ShowCards($"Archectype Set Is {_archetypesString}. Total Cards: {cards.Length}", cards);
             GUIUtility.ExitGUI();
@@ -215,7 +215,7 @@ public class FindCardsEditor : EditorWindow
                 .Where(c => archetypeKeys.Contains(c.GetArchetypeKey()))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
-                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .Select(e => e.EditorName)
                 .ToArray();
             ShowCards($"Hero {_heroString}. Total Cards: {cards.Length}", cards);
             GUIUtility.ExitGUI();
@@ -227,7 +227,7 @@ public class FindCardsEditor : EditorWindow
         {
             var cards = GetAllInstances<CardType>()
                 .Where(c => c.id == _id)
-                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .Select(e => e.EditorName)
                 .ToArray();
             ShowCards($"ID {_id}", cards);
             GUIUtility.ExitGUI();

@@ -20,7 +20,9 @@ public class StaticEquipment : ScriptableObject, Equipment
     [SerializeField] private EffectData[] turnEndEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleEndEffects = new EffectData[0];
-    [SerializeField] private bool isWIP;
+    [SerializeField] private StatType[] requiresStatType = new StatType[0];
+    [SerializeField] private bool isWIP = true;
+    [SerializeField] private bool notAvailableForGeneralDistribution = false;
     [SerializeField] private string designComment;
     
     public string Name => !string.IsNullOrWhiteSpace(displayName) 
@@ -30,6 +32,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     public int Id => id;
     public string Description => description;
     public bool IsWip => isWIP;
+    public bool IncludeInPools => !isWIP && !notAvailableForGeneralDistribution;
     public int Price => CardShopPricing.EquipmentShopPrice(rarity, priceFactor);
     public Rarity Rarity => rarity;
     public string[] Archetypes => archetypes == null ? Array.Empty<string>() : archetypes.Where(a => a != null).Select(a => a.Value).ToArray();
@@ -42,7 +45,11 @@ public class StaticEquipment : ScriptableObject, Equipment
     public EffectData[] BattleStartEffects => battleStartEffects;
     public EffectData[] BattleEndEffects => battleEndEffects;
     public string Corp => corp == null ? "No Corp" : corp.Value;
+    public StatType[] RequiresStatType => requiresStatType;
     
+    private static string WipWord(bool isWip) => isWip ? "WIP - " : "";
+    public string EditorName => $"{WipWord(IsWip)}{Rarity} - {Name}";
+
     public GameEquipmentData GetData() 
         => new GameEquipmentData { Type = GameEquipmentDataType.StaticEquipmentId, StaticEquipmentId = id };
 

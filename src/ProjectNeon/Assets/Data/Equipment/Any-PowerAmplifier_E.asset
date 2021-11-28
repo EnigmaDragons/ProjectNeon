@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Any-KineticAmplifier_E
+  m_Name: Any-PowerAmplifier_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
@@ -26,20 +26,22 @@ MonoBehaviour:
         ConstantValue: 0
         FloatVariable: {fileID: 0}
       DurationFormula: -1
-      NumberOfTurns:
-        UseConstant: 1
-        ConstantValue: -1
-        Variable: {fileID: 0}
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
+        Variable: {fileID: 11400000, guid: a961f902c2ecfd54ebfbfe875405e991, type: 2}
       HitsRandomTargetMember: 0
       TargetsSource: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
       Formula: 2
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
@@ -68,6 +70,8 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
     atTargetAnimation:
       animation:
         UseConstant: 1

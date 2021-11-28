@@ -63,7 +63,7 @@ public class FindEquipmentEditor : EditorWindow
                 .Where(c => c.GetArchetypeKey().Equals(_archetype))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
-                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .Select(e => e.EditorName)
                 .ToArray();
             Show($"Archetype {_archetype}", items);
             GUIUtility.ExitGUI();
@@ -112,7 +112,7 @@ public class FindEquipmentEditor : EditorWindow
                 .Where(c => archetypeKeys.Contains(c.GetArchetypeKey()))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
-                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .Select(e => e.EditorName)
                 .ToArray();
             Show($"Archetype Set Is {_archetypesString}. Total: {items.Length}", items);
             GUIUtility.ExitGUI();
@@ -134,7 +134,7 @@ public class FindEquipmentEditor : EditorWindow
                 .Where(c => archetypeKeys.Contains(c.GetArchetypeKey()))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
-                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .Select(e => e.EditorName)
                 .ToArray();
             Show($"Hero {_heroString}. Total: {items.Length}", items);
             GUIUtility.ExitGUI();
@@ -146,7 +146,7 @@ public class FindEquipmentEditor : EditorWindow
         {
             var items = GetAllInstances<StaticEquipment>()
                 .Where(c => c.id == _id)
-                .Select(e => $"{WipWord(e.IsWip)}{e.Rarity} - {e.Name}")
+                .Select(e => e.EditorName)
                 .ToArray();
             Show($"Archetype {_archetype}", items);
             GUIUtility.ExitGUI();

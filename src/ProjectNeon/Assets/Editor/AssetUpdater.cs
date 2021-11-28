@@ -39,7 +39,7 @@ public class AssetUpdater
         var cardPools = ScriptableExtensions.GetAllInstances<ShopCardPool>();
         foreach (var pool in cardPools)
         {
-            var validCards =  cards.Where(card => !card.IsWip
+            var validCards =  cards.Where(card => card.IncludeInPools
                                                   && pool.includedRarities.Contains(card.Rarity)
                                                   && pool.archetypes.Length == card.Archetypes.Count
                                                   && card.Archetypes.All(cardArchetype => pool.archetypes.Any(poolArchetype => poolArchetype.Value == cardArchetype)))
@@ -122,7 +122,7 @@ public class AssetUpdater
         var equipmentPools = ScriptableExtensions.GetAllInstances<EquipmentPool>();
         foreach (var pool in equipmentPools)
         {
-            var validEquipments = equipments.Where(equipment => !equipment.IsWip
+            var validEquipments = equipments.Where(equipment => equipment.IncludeInPools
                     && pool.includedRarities.Contains(equipment.Rarity)
                     && pool.archetypes.Length == equipment.Archetypes.Length
                     && equipment.Archetypes.All(equipmentArchetype => pool.archetypes.Any(poolArchetype => poolArchetype.Value == equipmentArchetype)))

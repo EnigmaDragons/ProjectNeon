@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Any-KineticAmplifier
+  m_Name: Any-PowerAmplifier
   m_EditorClassIdentifier: 
   id: 18
   displayName: 
-  description: 'On Slay: Gain +2 ATK for the rest of the battle'
+  description: 'On Slay: Gain +2 Primary Stat for the battle'
+  corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes: []
   rarity: 3
   slot: 2
@@ -45,8 +46,9 @@ MonoBehaviour:
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Slay: Gain +2 ATK for the rest of the battle'
+    StatusDetailText: 'On Slay: Gain +2 Primary Stat for the battle'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -69,5 +71,8 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: 9a955699a1e24b64db5355bf10487718, type: 2}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  requiresStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 
