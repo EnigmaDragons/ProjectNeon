@@ -16,10 +16,20 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
     [SerializeField] private float unfoldInitialDelay = 3f;
     [SerializeField] private float unfoldGapBetweenItems = 0.6f;
 
-    private readonly List<GameObject> _options = new List<GameObject>();
+    private readonly Dictionary<LevelUpOption, GameObject> _options = new Dictionary<LevelUpOption, GameObject>();
     
     private void Start() => toDestroyOnStart.ForEach(Destroy);
 
+    public void ClearUnselectedOptions(LevelUpOption selected)
+    {
+        _options.ForEach(o =>
+        {
+            if (o.Key != selected)
+                o.Value.SetActive(false);
+        });
+        promptLabel.text = "";
+    }
+    
     public void Init(Hero hero)
     {
         var reward = hero.NextLevelUpRewardV4;
@@ -28,7 +38,7 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
 
     public void Init(Hero hero, int level, string optionPrompt, LevelUpOption[] options)
     {
-        _options.ForEach(Destroy);
+        _options.ForEach(o => Destroy(o.Value));
         _options.Clear();
         if (levelLabel != null)
             levelLabel.text = level.ToString();
@@ -46,7 +56,7 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
                 presenter.transform.DORotate(Vector3.zero, unfoldDuration).SetEase(Ease.OutQuint).SetDelay(currentDelay);
                 this.ExecuteAfterDelay(() => Message.Publish(new PlayUiSound("LevelUpOptionReveal", presenter.transform)), unfoldDelay);
                 unfoldDelay += unfoldGapBetweenItems;
-                _options.Add(presenter);
+                _options[o] = presenter;
             });
 
         this.ExecuteAfterDelay(() =>

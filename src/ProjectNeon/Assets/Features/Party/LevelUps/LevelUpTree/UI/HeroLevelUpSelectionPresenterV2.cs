@@ -35,6 +35,7 @@ public class HeroLevelUpSelectionPresenterV2 : OnMessage<LevelUpOptionSelected, 
         if (_hero == null)
             return;
         
+        Log.Info("Level Up Selection Presenter V2 Handling Selection Option");
         AllMetrics.PublishLevelUpOptionSelection(_hero.Name, _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
         msg.Selected.SelectAsLevelUp(_hero);
         gameObject.SetActive(false);
