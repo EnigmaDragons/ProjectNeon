@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 21
   displayName: Portable Synthesizer
-  description: 'Each turn: Lose 1 cred. Gain 1 primary resource'
+  description: 'Start of Turn: Gain 1 Resource'
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
   rarity: 3
   slot: 2
@@ -45,8 +46,9 @@ MonoBehaviour:
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'Each turn: Lose 1 cred. Gain 1 primary resource'
+    StatusDetailText: 'Start of Turn: Gain 1 Resource'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -69,5 +71,8 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  requiresStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 
