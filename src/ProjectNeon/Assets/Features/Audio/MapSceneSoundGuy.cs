@@ -21,13 +21,18 @@ public class MapSceneSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpHover;
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpStat;
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpOptionRevealed;
+    [SerializeField, FMODUnity.EventRef] private string OnLevelUpOptionSelectedWhoosh;
 
     private bool _debuggingLoggingEnabled = false;
     private EventInstance _levelUpStinger;
 
     private void OnEnable()
     {
-        Message.Subscribe<LevelUpClicked>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
+        Message.Subscribe<LevelUpClicked>(e =>
+        {
+            PlayOneShot(OnLevelUpClicked, e.UiSource);
+            PlayOneShot(OnLevelUpOptionSelectedWhoosh, e.UiSource);
+        }, this);
         Message.Subscribe<HeroLeveledUpSFX>(e => PlayLevelUpStinger(), this);
         Message.Subscribe<StatLeveledUp>(e => PlayOneShot(OnLevelUpStat, e.UiSource), this);
         
