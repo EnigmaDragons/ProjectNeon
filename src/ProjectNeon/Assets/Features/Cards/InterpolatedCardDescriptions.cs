@@ -282,11 +282,12 @@ public static class InterpolatedCardDescriptions
             return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
         if (data.EffectType == EffectType.DealRawDamageFormula)
             return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
-        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula
-                || data.EffectType == EffectType.HealFormula 
+        if (data.EffectType == EffectType.HealFormula 
                 || data.EffectType == EffectType.AdjustPlayerStatsFormula
                 || data.EffectType == EffectType.ChooseCardToCreate)
-            return FormulaAmount(data, owner, xCost);
+            return $"{FormulaAmount(data, owner, xCost)}";
+        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
+            return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
             return $"× {FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.HealOverTime)
@@ -325,7 +326,7 @@ public static class InterpolatedCardDescriptions
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }
-
+    
     private static string FriendlyScopeName(string raw)
     {
         var tmp = raw;

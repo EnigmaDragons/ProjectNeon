@@ -42,7 +42,7 @@ public sealed class Card : CardTypeData
     public Maybe<Color> OwnerTint => tint;
     public Maybe<Sprite> OwnerBust => ownerBust;
     public HashSet<string> Archetypes => _type.Archetypes;
-    public bool IsAttack => _type.Tags.Contains(CardTag.Attack) || _type.TypeDescription.Equals("Attack");
+    public bool IsAttack => _type.Tags.Contains(CardTag.Attack) || _type.TypeDescription.Equals("Attack") || _type.Description.Contains("Deal");
     public Maybe<CardCondition> HighlightCondition => _type.HighlightCondition;
     public Maybe<CardCondition> UnhighlightCondition => _type.UnhighlightCondition;
     public bool IsSinglePlay => _type.IsSinglePlay;
