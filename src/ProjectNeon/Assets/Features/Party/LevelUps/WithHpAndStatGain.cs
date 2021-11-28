@@ -6,19 +6,21 @@ public class LevelUpOptionWithHpAndStatGain : LevelUpOption
     private readonly LevelUpOption _baseOption;
     private readonly int _hpGain;
     private readonly StatType _buffStat;
+    private readonly int _buffStatAmount;
 
-    public LevelUpOptionWithHpAndStatGain(LevelUpOption baseOption, int hpGain, StatType buffStat)
+    public LevelUpOptionWithHpAndStatGain(LevelUpOption baseOption, int hpGain, StatType buffStat, int buffStatAmount)
     {
         _baseOption = baseOption;
         _hpGain = hpGain;
         _buffStat = buffStat;
+        _buffStatAmount = buffStatAmount;
     }
     
     public void SelectAsLevelUp(Hero h)
     {
         h.ApplyPermanent(new InMemoryEquipment{ Modifiers = new [] {
             new EquipmentStatModifier { ModifierType = StatMathOperator.Additive, Amount = _hpGain, StatType = StatType.MaxHP.ToString()},
-            new EquipmentStatModifier { ModifierType = StatMathOperator.Additive, Amount = 1, StatType =  _buffStat.ToString() }
+            new EquipmentStatModifier { ModifierType = StatMathOperator.Additive, Amount = _buffStatAmount, StatType =  _buffStat.ToString() }
         }});
         _baseOption.SelectAsLevelUp(h);
     }
