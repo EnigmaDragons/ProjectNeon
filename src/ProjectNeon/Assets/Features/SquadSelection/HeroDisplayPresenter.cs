@@ -14,6 +14,11 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private TextMeshProUGUI heroDescription;
     [SerializeField] private TextMeshProUGUI roleDescription;
     [SerializeField] private TextMeshProUGUI backstory;
+    [SerializeField] private NamedGameObject[] tabTargets;
+    [SerializeField] private MemberSimplifiedVisualStatPanel statPanel;
+    [SerializeField] private Button statButton;
+    [SerializeField] private Button loreButton;
+    [SerializeField] private Button cardsButton;
 
     private bool _isInitialized;
     private bool _isClickable = false;
@@ -21,6 +26,10 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     
     private void Start()
     {
+        statButton.onClick.AddListener(() => ShowTab("Stats"));
+        loreButton.onClick.AddListener(() => ShowTab("Lore"));
+        cardsButton.onClick.AddListener(() => ShowTab("Cards"));
+        loreButton.Select();
         if (!_isInitialized && currentHero != null)
             Init(currentHero);
     }
@@ -38,6 +47,9 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         heroDescription.text = c.Flavor.HeroDescription;
         roleDescription.text = "Role: " + c.Flavor.RoleDescription;
         backstory.text = c.Flavor.BackStory;
+        var member = c.AsMemberForLibrary();
+        if (statPanel != null)
+            statPanel.Init(member);
     }
 
     private void ShowHeroPathway() => Message.Publish(new ShowHeroLevelUpPathway(currentHero));
@@ -55,4 +67,10 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     }
 
     public void OnPointerClick(PointerEventData eventData) => _onClick();
+
+    private void ShowTab(string tabName)
+    {
+        foreach (var tab in tabTargets) 
+            tab.Obj.SetActive(tab.Name.Equals(tabName));
+    }
 }
