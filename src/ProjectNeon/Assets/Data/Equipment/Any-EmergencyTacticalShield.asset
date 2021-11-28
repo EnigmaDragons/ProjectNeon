@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 16
   displayName: Emergency Tactical Shield
-  description: 'On Vulnerable: Shield Toughness'
+  description: 'On Vulnerable: Shield 50%'
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
-  rarity: 2
+  rarity: 1
   slot: 2
   priceFactor: 1
   modifiers:
@@ -45,8 +46,9 @@ MonoBehaviour:
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Vulnerable: Shield Toughness'
+    StatusDetailText: 'On Vulnerable: Shield 50%'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -69,5 +71,8 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: 840ff2540f58e084b85881f7975f98d3, type: 2}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  requiresStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 
