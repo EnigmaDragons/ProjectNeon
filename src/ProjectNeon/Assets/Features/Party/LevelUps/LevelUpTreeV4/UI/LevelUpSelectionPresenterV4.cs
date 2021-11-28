@@ -13,6 +13,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
     [SerializeField] private GameObject heroClassObject;
     [SerializeField] private TextMeshProUGUI heroClassLabel;
     [SerializeField] private Image bust;
+    [SerializeField] private ResourceCounterPresenter primaryResourceCounter;
     
     [SerializeField] private TextMeshProUGUI faintLevelLabel;
     [SerializeField] private Image faintBust;
@@ -51,6 +52,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         fader.color = faderStartColor;
         fader.DOColor(faderStartColor.Transparent(), 1).SetEase(Ease.InOutQuad);
         bust.sprite = _hero.Character.Bust;
+        primaryResourceCounter.Init(_hero.AsMember(-1), _hero.PrimaryResource);
         faintBust.sprite = _hero.Character.Bust;
         faintBust.color = new Color(1, 1, 1, 1 / 255f);
         faintLevelLabel.text = _hero.Level.ToString(); 

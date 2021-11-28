@@ -40,6 +40,7 @@ public class Hero
     public int Level => levels.CurrentLevel;
     public CardTypeData BasicCard => basicCard;
     public StatType PrimaryStat => _primaryStat.OrDefault(NonTemporaryStats.DefaultPrimaryStat(Character.Stats));
+    public IResourceType PrimaryResource => _primaryResourceType;
     public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
     public HashSet<string> Archetypes => character.Archetypes;
     public bool IsMaxLevelV4 => Levels.NextLevelUpLevel > Character.LevelUpTreeV4.MaxLevel;

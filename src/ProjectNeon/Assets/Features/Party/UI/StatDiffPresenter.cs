@@ -48,6 +48,6 @@ public class StatDiffPresenter : MonoBehaviour
     {
         if (statName.Equals(StatType.StartingShield.ToString()))
             return "Shield";
-        return statName;
+        return statName.Replace("Max", "Max ");
     }
 }
