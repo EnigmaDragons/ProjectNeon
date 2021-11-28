@@ -23,8 +23,9 @@ public sealed class MemberStatPanel : MonoBehaviour
 
     public MemberStatPanel Initialized(Hero h)
     {
+        var r = Initialized(h.Stats, h.BaseStats, h.PrimaryStat);
         hpLabel.text = $"{h.CurrentHp}/{h.Stats.MaxHp()}";
-        return Initialized(h.Stats, h.BaseStats, h.PrimaryStat);
+        return r;
     }
 
     public MemberStatPanel Initialized(IStats s)

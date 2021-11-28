@@ -13,7 +13,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected, Hero
     [SerializeField] private GameObject heroClassObject;
     [SerializeField] private TextMeshProUGUI heroClassLabel;
     [SerializeField] private Image bust;
-    [SerializeField] private MemberStatPanel stats;
+    [SerializeField] private MemberStatDiffPanel stats;
     [SerializeField] private LevelUpOptionsPresenterV4 optionsPresenter;
     [SerializeField] private GameObject[] toEnableOnRender;
 
@@ -34,7 +34,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected, Hero
         gameObject.SetActive(true);
         toEnableOnRender.ForEach(g => g.SetActive(false));
         bust.sprite = _hero.Character.Bust;
-        stats.Initialized(_hero.Stats);
+        stats.Initialized(_hero);
         heroNameLabel.text = _hero.DisplayName;
         heroClassLabel.text = _hero.Class;
         levelLabel.text = $"Level {_hero.Level.ToString()}";
