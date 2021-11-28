@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,7 +23,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private GameObject conditionMetHighlight;
     [SerializeField] private GameObject conditionNotMetHighlight;
     [SerializeField] private GameObject highlight;
-    [SerializeField] private GameObject fullScreenDarken;
+    [SerializeField] private Image fullScreenDarken;
+    [SerializeField] private Color fullScreenDarkenFinalColor = new Color(0, 0, 0, 0.25f);
     [SerializeField] private GameObject darken;
     [SerializeField] private CardControlsPresenter controls;
     [SerializeField] private CanvasGroup canvasGroup;
@@ -41,7 +43,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Image background;
     [SerializeField] private Sprite standardCard;
     [SerializeField] private Sprite transientCard;
-
+    
     private bool _debug = false;
     
     private Card _card;
@@ -81,7 +83,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public bool IsDragging { get; private set; } = false;
     
     public string CardName => _cardType?.Name ?? "";
-
+    
     private void OnEnable()
     {
         Message.Subscribe<CardHighlighted>(OnCardHighlighted, this);
@@ -176,7 +178,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         controls.SetCanToggleBasic(false);
         DisableCanPlayHighlight();
         DisableSelectedHighlight();
-        fullScreenDarken.SetActive(false);
+        fullScreenDarken.color = Transparent;
         _onClick = onClick;
         _onMiddleMouse = NoOp;
         _onRightClick = NoOp;
@@ -263,6 +265,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void SetSiblingIndex(int index) => _siblingIndex = index;
 
+    private static readonly Color Transparent = new Color(0, 0, 0, 0);
     public void SetDetailHighlight(bool active)
     {
         if (!IsFocused && !active)
@@ -272,7 +275,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         highlight.SetActive(active);
         IsFocused = active;
         SetShowComprehensiveInfo(active);
-        fullScreenDarken.SetActive(active);
+        fullScreenDarken.color = active ? Transparent : fullScreenDarkenFinalColor;
+        fullScreenDarken.DOColor(active ? fullScreenDarkenFinalColor : Transparent, 0.6f);
     }
     
     public void SetHandHighlight(bool active)

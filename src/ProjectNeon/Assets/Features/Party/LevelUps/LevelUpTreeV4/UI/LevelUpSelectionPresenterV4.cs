@@ -16,6 +16,9 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
     [SerializeField] private TextMeshProUGUI faintLevelLabel;
     [SerializeField] private Image faintBust;
     [SerializeField] private MemberStatDiffPanel stats;
+    [SerializeField] private Image fader;
+    [SerializeField] private Color faderStartColor;
+    [SerializeField] private RawImage arrowsAnim;
     [SerializeField] private LevelUpOptionsPresenterV4 optionsPresenter;
     [SerializeField] private GameObject[] toEnableOnRender;
     [SerializeField] private GameObject[] toEnableOnFinished;
@@ -39,9 +42,15 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         gameObject.SetActive(true);
         toEnableOnRender.ForEach(g => g.SetActive(false));
         toEnableOnFinished.ForEach(g => g.SetActive(false));
+        toDisableOnFinished.ForEach(g => g.SetActive(true));
+        arrowsAnim.color = Color.white.Transparent();
+        fader.color = faderStartColor;
+        fader.DOColor(faderStartColor.Transparent(), 1).SetEase(Ease.InOutQuad);
         bust.sprite = _hero.Character.Bust;
         faintBust.sprite = _hero.Character.Bust;
+        faintBust.color = new Color(1, 1, 1, 1 / 255f);
         faintLevelLabel.text = _hero.Level.ToString(); 
+        faintLevelLabel.color = new Color(1, 1, 1, 1 / 255f);
         stats.Initialized(_hero);
         heroNameLabel.text = _hero.DisplayName;
         heroClassLabel.text = _hero.Class;
@@ -64,6 +73,9 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         Log.Info("Level Up Selection Presenter V4 Handling Selection Option");
         toEnableOnFinished.ForEach(g => g.SetActive(true));
         toDisableOnFinished.ForEach(g => g.SetActive(false));
+        arrowsAnim.DOColor(Color.white.WithAlpha(0.6f), 2).SetEase(Ease.InOutQuad);
+        fader.color = faderStartColor.Transparent();
+        fader.DOColor(faderStartColor, 1).SetEase(Ease.InOutQuad).SetDelay(2);
         faintBust.DOColor(Color.white, 2.4f).SetEase(Ease.InQuad);
         faintLevelLabel.DOColor(Color.white, 2.4f).SetEase(Ease.InQuad);
         optionsPresenter.ClearUnselectedOptions(msg.Selected);
