@@ -42,7 +42,7 @@ public class Hero
     public StatType PrimaryStat => _primaryStat.OrDefault(NonTemporaryStats.DefaultPrimaryStat(Character.Stats));
     public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
     public HashSet<string> Archetypes => character.Archetypes;
-    public bool IsMaxLevelV4 => Levels.NextLevelUpLevel >= Character.LevelUpTreeV4.MaxLevel;
+    public bool IsMaxLevelV4 => Levels.NextLevelUpLevel > Character.LevelUpTreeV4.MaxLevel;
     public HeroLevelUpRewardV4 NextLevelUpRewardV4 => Character.LevelUpTreeV4.ForLevel(Levels.NextLevelUpLevel);
 
     public IStats BaseStats => 

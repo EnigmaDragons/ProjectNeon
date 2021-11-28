@@ -97,11 +97,14 @@ public class BaseHero : ScriptableObject, HeroCharacter
         }
     }
 
-    public CardTypeData[] ParagonCards => levelUpTree == null 
-        ? new CardTypeData[0] 
-        : levelUpTree
-            .ForLevel(5)
-            .OfType<NewBasicLevelUpOption>()
-            .Select(o => o.Card)
-            .ToArray();
+    public CardTypeData[] ParagonCards => 
+        levelUpTreeV4 != null
+            ? levelUpTreeV4.ParagonCards
+            : levelUpTree != null 
+                ? levelUpTree
+                    .ForLevel(5)
+                    .OfType<NewBasicLevelUpOption>()
+                    .Select(o => o.Card)
+                    .ToArray()
+                : new CardTypeData[0];
 }

@@ -10,5 +10,5 @@ public class FixedStaticLevelUpOptions : LevelUpOptions
     public override string ChoiceDescription => string.IsNullOrWhiteSpace(choiceDescription) ? "Choose a New Basic" : choiceDescription;
 
     public override LevelUpOption[] Generate(Hero h) 
-        => options.Cast<LevelUpOption>().ToArray();
+        => options.Cast<LevelUpOption>().ToArray().Shuffled();
 }
