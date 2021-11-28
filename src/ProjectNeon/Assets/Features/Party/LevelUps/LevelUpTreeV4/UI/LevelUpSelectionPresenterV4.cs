@@ -13,9 +13,13 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
     [SerializeField] private GameObject heroClassObject;
     [SerializeField] private TextMeshProUGUI heroClassLabel;
     [SerializeField] private Image bust;
+    
     [SerializeField] private TextMeshProUGUI faintLevelLabel;
     [SerializeField] private Image faintBust;
+    [SerializeField] private TextMeshProUGUI faintClassName;
+    
     [SerializeField] private MemberStatDiffPanel stats;
+    
     [SerializeField] private Image fader;
     [SerializeField] private Color faderStartColor;
     [SerializeField] private RawImage arrowsAnim;
@@ -51,6 +55,8 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         faintBust.color = new Color(1, 1, 1, 1 / 255f);
         faintLevelLabel.text = _hero.Level.ToString(); 
         faintLevelLabel.color = new Color(1, 1, 1, 1 / 255f);
+        faintClassName.text = _hero.Class;
+        faintClassName.color = new Color(1, 1, 1, 1 / 255f);
         stats.Initialized(_hero);
         heroNameLabel.text = _hero.DisplayName;
         heroClassLabel.text = _hero.Class;
@@ -73,11 +79,12 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         Log.Info("Level Up Selection Presenter V4 Handling Selection Option");
         toEnableOnFinished.ForEach(g => g.SetActive(true));
         toDisableOnFinished.ForEach(g => g.SetActive(false));
-        arrowsAnim.DOColor(Color.white.WithAlpha(0.6f), 2).SetEase(Ease.InOutQuad);
+        arrowsAnim.DOColor(Color.white.WithAlpha(0.4f), 2).SetEase(Ease.InOutQuad);
         fader.color = faderStartColor.Transparent();
         fader.DOColor(faderStartColor, 1).SetEase(Ease.InOutQuad).SetDelay(2);
         faintBust.DOColor(Color.white, 2.4f).SetEase(Ease.InQuad);
         faintLevelLabel.DOColor(Color.white, 2.4f).SetEase(Ease.InQuad);
+        faintClassName.DOColor(Color.white, 2.4f).SetEase(Ease.Linear);
         optionsPresenter.ClearUnselectedOptions(msg.Selected);
         AllMetrics.PublishLevelUpOptionSelection(_hero.Name, _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
         msg.Selected.SelectAsLevelUp(_hero);
