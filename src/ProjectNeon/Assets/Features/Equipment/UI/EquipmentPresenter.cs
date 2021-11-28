@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using DG.Tweening.Plugins.Options;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,15 +18,24 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     [SerializeField] private EquipmentSlotIcons slotIcons;
     [SerializeField] private CorpUiBase corpBranding;
     [SerializeField] private AllCorps allCorps;
+    [SerializeField] private GearRulesPresenter rulesPresenter;
 
+    private static void NoOp() {}
+    
     private bool _useHoverHighlight = false;
-    private Action _onClick = () => { };
+    private Action _onClick = NoOp;
+    private Action _onHoverEnter = NoOp;
+    private Action _onHoverExit = NoOp;
+    private Equipment _currentEquipment;
 
     public void Set(Equipment e, Action onClick) => Initialized(e, onClick);
     
     public EquipmentPresenter Initialized(Equipment e, Action onClick, bool useHoverHighlight = false)
     {
+        _currentEquipment = e;
         _onClick = onClick;
+        _onHoverEnter = NoOp;
+        _onHoverExit = NoOp;
         _useHoverHighlight = useHoverHighlight;
         nameLabel.text = e.Name;
         slotLabel.text = $"{e.Slot}";
@@ -38,8 +48,15 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         slotIcon.sprite = slotIcons.All[e.Slot];
         corpBranding.Init(allCorps.GetCorpByNameOrNone(e.Corp));
         highlight.SetActive(false);
+        rulesPresenter.Hide();
         gameObject.SetActive(true);
         return this;
+    }
+
+    public void SetOnHover(Action onHoverEnter, Action onHoverExit)
+    {
+        _onHoverEnter = onHoverEnter;
+        _onHoverExit = onHoverExit;
     }
     
     public void OnPointerDown(PointerEventData eventData)
@@ -52,11 +69,15 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     {
         if (_useHoverHighlight)
             highlight.SetActive(true);
+        _onHoverEnter();
+        rulesPresenter.Show(_currentEquipment);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (_useHoverHighlight)
             highlight.SetActive(false);
+        _onHoverExit();
+        rulesPresenter.Hide();
     }
 }

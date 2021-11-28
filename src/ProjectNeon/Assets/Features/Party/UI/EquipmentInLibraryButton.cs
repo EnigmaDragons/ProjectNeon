@@ -13,6 +13,7 @@ public class EquipmentInLibraryButton : MonoBehaviour
     public void InitInfoOnly(Equipment e, Action action)
     {
         presenter.Set(e, action);
+        presenter.SetOnHover(() => transform.SetAsLastSibling(), () => {});
         countLabel.text = "";
     }
 
@@ -22,12 +23,14 @@ public class EquipmentInLibraryButton : MonoBehaviour
         if (canAdd)
         {
             presenter.Set(e, () => Equip(e));
+            presenter.SetOnHover(() => transform.SetAsLastSibling(), () => {});
             countLabel.text = countLabelText;
             darken.SetActive(false);
         }
         else
         {
             presenter.Set(e, () => {});
+            presenter.SetOnHover(() => transform.SetAsLastSibling(), () => {});
             countLabel.text = countLabelText;
             darken.SetActive(true);
         }
