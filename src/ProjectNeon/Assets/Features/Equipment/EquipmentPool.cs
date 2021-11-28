@@ -65,8 +65,11 @@ public class EquipmentPool : ScriptableObject
         }
     }
 
-    public int PossibleCount(EquipmentSlot slot, Rarity rarity, HashSet<string> archs) 
-        => All.Count(x => x.Slot == slot 
+    public int PossibleCount(EquipmentSlot slot, Rarity rarity, HashSet<string> archs)
+        => Possible(slot, rarity, archs).Count();
+    
+    public IEnumerable<Equipment> Possible(EquipmentSlot slot, Rarity rarity, HashSet<string> archs) 
+        => All.Where(x => x.Slot == slot 
                           && x.Rarity == rarity 
                           && x.Archetypes.All(archs.Contains));
 }

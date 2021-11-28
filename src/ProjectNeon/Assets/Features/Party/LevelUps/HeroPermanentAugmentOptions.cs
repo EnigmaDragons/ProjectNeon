@@ -13,7 +13,8 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
     public override LevelUpOption[] Generate(Hero h)
     {
         var archetypes = h.Archetypes;
-        Log.Info($"Possible Level Up Augment Options - {allEquipmentPool.PossibleCount(EquipmentSlot.Augmentation, rarity, h.Archetypes)}");
+        var possible = allEquipmentPool.Possible(EquipmentSlot.Augmentation, rarity, h.Archetypes).ToList();
+        Log.Info($"{h.Name}: {possible.Count} Possible Level Up Augment Options - {string.Join(", ", possible.Select(e => e.Name))}");
         
         // Pick one augment matching the character's Archetypes
         var archMatchingAugment = allEquipmentPool.All
