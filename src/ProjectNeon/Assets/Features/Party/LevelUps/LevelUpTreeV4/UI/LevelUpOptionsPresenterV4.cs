@@ -44,6 +44,7 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
                     : Instantiate(basicOptionPrototype, optionParent.transform).Initialized(o, options).gameObject;
                 presenter.transform.localRotation = Quaternion.Euler(0, 90, 0);
                 presenter.transform.DORotate(Vector3.zero, unfoldDuration).SetEase(Ease.OutQuint).SetDelay(currentDelay);
+                this.ExecuteAfterDelay(() => Message.Publish(new PlayUiSound("LevelUpOptionReveal", presenter.transform)), unfoldDelay);
                 unfoldDelay += unfoldGapBetweenItems;
                 _options.Add(presenter);
             });

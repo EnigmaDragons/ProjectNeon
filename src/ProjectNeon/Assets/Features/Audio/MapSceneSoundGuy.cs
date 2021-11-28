@@ -20,6 +20,7 @@ public class MapSceneSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnStoryEvent;
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpHover;
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpStat;
+    [SerializeField, FMODUnity.EventRef] private string OnLevelUpOptionRevealed;
 
     private bool _debuggingLoggingEnabled = false;
     private EventInstance _levelUpStinger;
@@ -37,6 +38,13 @@ public class MapSceneSoundGuy : MonoBehaviour
         Message.Subscribe<DieRollShaking>(e => PlayOneShot(OnDieRollShake, e.UiSource), this);
         Message.Subscribe<DieThrown>(e => PlayOneShot(OnDieThrown, e.UiSource), this);
         Message.Subscribe<ArrivedAtNode>(OnArrivedAtNode, this);
+        Message.Subscribe<PlayUiSound>(OnPlayUiSound, this);
+    }
+
+    private void OnPlayUiSound(PlayUiSound msg)
+    {
+        if (msg.Name.Equals("LevelUpOptionReveal"))
+            PlayOneShot(OnLevelUpOptionRevealed, msg.UiSource);
     }
 
     private void OnArrivedAtNode(ArrivedAtNode node)
