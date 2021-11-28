@@ -21,4 +21,6 @@ public static class MemberStateChangedExtensions
     public static bool WasKnockedOut(this MemberStateChanged m) => m.State.IsUnconscious && m.BeforeState.Hp > 0;
     public static bool GainedStealth(this MemberStateChanged m) => m.State[TemporalStatType.Stealth] > 0 && m.BeforeState[TemporalStatType.Stealth] == 0;
     public static bool ExitedStealth(this MemberStateChanged m) => m.State[TemporalStatType.Stealth] == 0 && m.BeforeState[TemporalStatType.Stealth] > 0;
+    public static bool GainedAegis(this MemberStateChanged m) => m.Gained(TemporalStatType.Aegis);
+    public static bool Gained(this MemberStateChanged m, TemporalStatType temporalStatType) => m.State[temporalStatType] > m.BeforeState[temporalStatType];
 }
