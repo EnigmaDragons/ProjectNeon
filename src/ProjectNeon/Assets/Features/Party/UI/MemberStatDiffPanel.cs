@@ -5,6 +5,8 @@ public class MemberStatDiffPanel : MonoBehaviour
 {
     [SerializeField] private GameObject statParent;
     [SerializeField] private StatDiffPresenter diffPresenterPrototype;
+    [SerializeField] private float initialStatUpDelay = 0.6f;
+    [SerializeField] private float delayBetweenStats = 1f;
 
     private static readonly StatType[] ShownStatTypes = {
         StatType.MaxHP,
@@ -40,10 +42,15 @@ public class MemberStatDiffPanel : MonoBehaviour
         var difference = newStats.Minus(baseStats);
         statParent.DestroyAllChildren();
 
+        var delay = initialStatUpDelay;
         ShownStatTypes.ForEach(s =>
         {
+            var originalAmount = baseStats[s].CeilingInt();
+            var diffAmount = difference[s].CeilingInt();
+            var willShow = AlwaysShowStatTypes.Contains(s) || originalAmount > 0 || diffAmount > 0;
             Instantiate(diffPresenterPrototype, statParent.transform)
-                .Initialized(s.ToString(), baseStats[s].CeilingInt(), difference[s].CeilingInt(), AlwaysShowStatTypes.Contains(s));
+                .Initialized(s.ToString(), originalAmount, diffAmount, delay, willShow);
+            delay += willShow && diffAmount > 0 ? delayBetweenStats : 0f;
         });
 
         return this;

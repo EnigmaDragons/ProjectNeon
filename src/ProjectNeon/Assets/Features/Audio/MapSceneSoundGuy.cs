@@ -19,6 +19,7 @@ public class MapSceneSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnBoss;
     [SerializeField, FMODUnity.EventRef] private string OnStoryEvent;
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpHover;
+    [SerializeField, FMODUnity.EventRef] private string OnLevelUpStat;
 
     private bool _debuggingLoggingEnabled = false;
     private EventInstance _levelUpStinger;
@@ -27,6 +28,7 @@ public class MapSceneSoundGuy : MonoBehaviour
     {
         Message.Subscribe<LevelUpClicked>(e => PlayOneShot(OnLevelUpClicked, e.UiSource), this);
         Message.Subscribe<HeroLeveledUpSFX>(e => PlayLevelUpStinger(), this);
+        Message.Subscribe<StatLeveledUp>(e => PlayOneShot(OnLevelUpStat, e.UiSource), this);
         
         Message.Subscribe<StoryEventBegun>(e => PlayOneShot(OnStoryEvent, e.UiSource), this);
         Message.Subscribe<TravelingSFX>(e => PlayOneShot(OnTravel, e.UiSource), this);
