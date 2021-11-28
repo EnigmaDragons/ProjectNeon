@@ -19,6 +19,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     [SerializeField] private CorpUiBase corpBranding;
     [SerializeField] private AllCorps allCorps;
     [SerializeField] private GearRulesPresenter rulesPresenter;
+    [SerializeField] private LabelPresenter corpLabel;
 
     private static void NoOp() {}
     
@@ -46,9 +47,14 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         descriptionLabel.text = e.Description;
         rarity.Set(e.Rarity);
         slotIcon.sprite = slotIcons.All[e.Slot];
-        corpBranding.Init(allCorps.GetCorpByNameOrNone(e.Corp));
+        var corp = allCorps.GetCorpByNameOrNone(e.Corp);
+        corpBranding.Init(corp);
+        corpLabel.Init($"Made By {corp.Name}");
+        
         highlight.SetActive(false);
         rulesPresenter.Hide();
+        corpLabel.Hide();
+        
         gameObject.SetActive(true);
         return this;
     }
@@ -69,18 +75,21 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     {
         if (_useHoverHighlight)
             highlight.SetActive(true);
+        
         _onHoverEnter();
         rulesPresenter.Show(_currentEquipment);
-        if (rulesPresenter.ShownRulesCount > 0)
-            focusDarken.Show();
+        corpLabel.Show();
+        focusDarken.Show();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (_useHoverHighlight)
             highlight.SetActive(false);
+        
         _onHoverExit();
-        focusDarken.Hide();
         rulesPresenter.Hide();
+        corpLabel.Hide();
+        focusDarken.Hide();
     }
 }
