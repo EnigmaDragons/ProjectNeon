@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using DG.Tweening.Plugins.Options;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +7,7 @@ using UnityEngine.UI;
 
 public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private SmoothFocusDarken focusDarken;
     [SerializeField] private GameObject highlight;
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private TextMeshProUGUI slotLabel;
@@ -71,6 +71,8 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
             highlight.SetActive(true);
         _onHoverEnter();
         rulesPresenter.Show(_currentEquipment);
+        if (rulesPresenter.ShownRulesCount > 0)
+            focusDarken.Show();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -78,6 +80,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         if (_useHoverHighlight)
             highlight.SetActive(false);
         _onHoverExit();
+        focusDarken.Hide();
         rulesPresenter.Hide();
     }
 }

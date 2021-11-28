@@ -9,10 +9,13 @@ public class GearRulesPresenter : MonoBehaviour
     [SerializeField] private GameObject rulesParent;
     [SerializeField] private GameObject alternateSideRulesPresenter;
     [SerializeField] private CardKeywordRulePresenter rulePresenterPrototype;
-    
+
+    private int _shownRulesCount;
     private bool _isInitialized;
     private bool _canUsePrimarySide;
 
+    public int ShownRulesCount => _shownRulesCount;
+    
     private void Awake()
     {
         if (_isInitialized) 
@@ -73,7 +76,11 @@ public class GearRulesPresenter : MonoBehaviour
                 .Distinct()
                 .OrderBy(ImportanceOrder)
                 .Take(maxRulesToShow)
-                .ForEach(r => Instantiate(rulePresenterPrototype, parent.transform).Initialized(r));
+                .ForEach(r =>
+                {
+                    _shownRulesCount++;
+                    Instantiate(rulePresenterPrototype, parent.transform).Initialized(r);
+                });
         }
         catch (Exception ex)
         {
@@ -83,6 +90,7 @@ public class GearRulesPresenter : MonoBehaviour
     
     public void Hide()
     {
+        _shownRulesCount = 0;
         _canUsePrimarySide = rulesParent.transform.position.x > 0;
         _isInitialized = true;
         rulesParent.DestroyAllChildren();
