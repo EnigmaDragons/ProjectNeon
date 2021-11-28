@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
+public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private GameObject highlight;
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private TextMeshProUGUI slotLabel;
     [SerializeField] private TextMeshProUGUI descriptionLabel;
@@ -17,13 +18,15 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
     [SerializeField] private CorpUiBase corpBranding;
     [SerializeField] private AllCorps allCorps;
 
+    private bool _useHoverHighlight = false;
     private Action _onClick = () => { };
 
     public void Set(Equipment e, Action onClick) => Initialized(e, onClick);
     
-    public EquipmentPresenter Initialized(Equipment e, Action onClick)
+    public EquipmentPresenter Initialized(Equipment e, Action onClick, bool useHoverHighlight = false)
     {
         _onClick = onClick;
+        _useHoverHighlight = useHoverHighlight;
         nameLabel.text = e.Name;
         slotLabel.text = $"{e.Slot}";
         var archetypeText = e.Archetypes.Any()
@@ -34,13 +37,26 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler
         rarity.Set(e.Rarity);
         slotIcon.sprite = slotIcons.All[e.Slot];
         corpBranding.Init(allCorps.GetCorpByNameOrNone(e.Corp));
+        highlight.SetActive(false);
         gameObject.SetActive(true);
         return this;
     }
-
+    
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
             _onClick();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_useHoverHighlight)
+            highlight.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (_useHoverHighlight)
+            highlight.SetActive(false);
     }
 }

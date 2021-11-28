@@ -36,7 +36,7 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
             .Select(e => (LevelUpOption)new WithCustomPresenter(
                     new AugmentLevelUpOption(e), 
                         ctx => Instantiate(customPresenterPrototype, ctx.Parent)
-                            .Initialized(e, () => Message.Publish(new LevelUpOptionSelected(ctx.Option, ctx.AllOptions))).gameObject))
+                            .Initialized(e, () => Message.Publish(new LevelUpOptionSelected(ctx.Option, ctx.AllOptions)), true).gameObject))
             .ToArray()
             .Shuffled();
         
