@@ -44,19 +44,26 @@ public class EquipmentPool : ScriptableObject
         return Enumerable.Range(0, n).Select(_ => factoredList.Random());
     }
     
-    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, int n, string corp = null) => All
-        .Where(x => x.Slot == slot && x.Rarity == rarity && party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains) && (string.IsNullOrWhiteSpace(corp) || x.Corp == corp)))
-        .DistinctBy(x => x.Description)
-        .ToArray()
-        .Shuffled()
-        .Take(n);
+    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, int n, string corp = null)
+    {
+        var primaryStats = party.Select(h => h.Stats.DefaultPrimaryStat()).ToHashSet();
+        return All
+            .Where(x => x.Slot == slot)
+            .Where(x => x.Rarity == rarity) 
+            .Where(x => party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains)))
+            .Where(x => string.IsNullOrWhiteSpace(corp) || x.Corp == corp)
+            .Where(x => x.RequiresStatType.None() || x.RequiresStatType.All(s => primaryStats.Contains(s)))
+            .DistinctBy(x => x.Description)
+            .ToArray()
+            .Shuffled()
+            .Take(n);
+    }
 
     public Equipment Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, string corp = null)
     {
         try
         {
-            return All.Where(x => x.Slot == slot && x.Rarity == rarity && party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains)) && (string.IsNullOrWhiteSpace(corp) || x.Corp == corp))
-                .Random();
+            return Random(slot, rarity, party, 1, corp).First();
         }
         catch (Exception e)
         {
@@ -64,12 +71,11 @@ public class EquipmentPool : ScriptableObject
             return All.Random();
         }
     }
-
-    public int PossibleCount(EquipmentSlot slot, Rarity rarity, HashSet<string> archs)
-        => Possible(slot, rarity, archs).Count();
     
-    public IEnumerable<Equipment> Possible(EquipmentSlot slot, Rarity rarity, HashSet<string> archs) 
-        => All.Where(x => x.Slot == slot 
-                          && x.Rarity == rarity 
-                          && x.Archetypes.All(archs.Contains));
+    public IEnumerable<Equipment> Possible(EquipmentSlot slot, Rarity rarity, HashSet<string> archs, StatType primaryStat) 
+        => All
+            .Where(x => x.Slot == slot)
+            .Where(x => x.Rarity == rarity) 
+            .Where(x => x.Archetypes.All(archs.Contains))
+            .Where(x => x.RequiresStatType.None() || x.RequiresStatType.Contains(primaryStat));
 }

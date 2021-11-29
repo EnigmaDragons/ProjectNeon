@@ -35,6 +35,10 @@ public static class StatsExtensions
         StatType.Leadership,
         StatType.Economy
     };
+
+
+    public static StatType DefaultPrimaryStat(this IStats stats)
+        => DefaultPrimaryStat(stats, stats);
     
     public static StatType DefaultPrimaryStat(this IStats stats, IStats baseStats) 
         => PrimaryStatOptions

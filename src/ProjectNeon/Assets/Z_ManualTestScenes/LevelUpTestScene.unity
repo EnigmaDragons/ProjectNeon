@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2128020}
+  - component: {fileID: 2128021}
   - component: {fileID: 2128019}
   m_Layer: 0
   m_Name: InitParty
@@ -154,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   heroes:
-  - {fileID: 11400000, guid: f631c8f9b8b19d94c8af22346f2d438c, type: 2}
+  - {fileID: 11400000, guid: 9eeb14c58d1e86a4da85a0c293211014, type: 2}
 --- !u!4 &2128020
 Transform:
   m_ObjectHideFlags: 0
@@ -169,6 +170,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2128021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ecbcbd2b756477ea168edf0cda2d358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current: {fileID: 11400000, guid: 62e84d9ce18ccb747b8d7d0083704709, type: 2}
+  adventure: {fileID: 11400000, guid: 03377f0bc8540344c92c1a1b5a3bf059, type: 2}
 --- !u!1001 &664908740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1372,6 +1387,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4274540395133557229, guid: 960b1cdec16c223429004c7be3740d9d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7518912798920360833, guid: 960b1cdec16c223429004c7be3740d9d, type: 3}
       propertyPath: m_RootOrder
       value: 2
