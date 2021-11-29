@@ -57,7 +57,7 @@ public class CardResolutionZone : ScriptableObject
         if (shouldQueue)
             Enqueue(played);
         else
-            StartResolvingOneCard(played);
+            StartResolvingOneNonReactionCard(played);
         
         if (played.Member.TeamType == TeamType.Party && battleState.NumberOfCardPlaysRemainingThisTurn == 0)
             AddChainedCardIfApplicable(played);
@@ -97,7 +97,7 @@ public class CardResolutionZone : ScriptableObject
         _pendingMoves = _pendingMoves.Skip(1).ToList();
         if (physicalZone.HasCards)
             physicalZone.DrawOneCard();
-        StartResolvingOneCard(move);
+        StartResolvingOneNonReactionCard(move);
     }
     
     private void Enqueue(IPlayedCard card)
@@ -135,10 +135,15 @@ public class CardResolutionZone : ScriptableObject
         return "";
     }
     
-    private void StartResolvingOneCard(IPlayedCard played)
+    private void StartResolvingOneNonReactionCard(IPlayedCard played)
+    {
+        _movesThisTurn.Add(played);
+        StartResolvingOneCard(played, () => played.Perform(battleState.GetSnapshot()));
+    }
+
+    public void StartResolvingOneCard(IPlayedCard played, Action perform)
     {
         isResolving = true;
-        _movesThisTurn.Add(played);
         Message.Publish(new CardResolutionStarted(played));
         BattleLog.Write($"Resolving {played.Member.Name}'s {played.Card.Name}");
 
@@ -177,7 +182,7 @@ public class CardResolutionZone : ScriptableObject
             }
             else
             {
-                played.Perform(battleState.GetSnapshot());
+                perform();
             }
         });
     }

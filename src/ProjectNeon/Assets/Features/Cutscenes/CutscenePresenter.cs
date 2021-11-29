@@ -109,7 +109,7 @@ public class CutscenePresenter : MonoBehaviour
         _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
             .ExecuteIfPresentOrElse(
                 c => c.SpeechBubble.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: true, 
-                    () => this.ExecuteAfterDelay(FinishCurrentSegment, dialogueWaitDelay)),
+                    () => FinishCurrentSegment()),
                 () =>
                 {
                     DebugLog($"Character Not Found in Cutscene {msg.CharacterAlias}");

@@ -201,9 +201,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             
             var resourceCalculations = r.Source.CalculateResources(reactionCard);
             var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, resourceCalculations);
-            Message.Publish(new CardResolutionStarted(playedCard));
             r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity, state.Party));
-            reactionCard.ActionSequence.Perform(r.Name, r.Source, r.Target, resourceCalculations.XAmountQuantity);
+            resolutionZone.StartResolvingOneCard(playedCard, () => reactionCard.ActionSequence.Perform(r.Name, r.Source, r.Target, resourceCalculations.XAmountQuantity));
         }
         else
         {
