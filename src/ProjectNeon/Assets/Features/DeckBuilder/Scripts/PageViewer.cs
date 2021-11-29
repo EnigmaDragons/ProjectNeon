@@ -93,9 +93,14 @@ public class PageViewer : MonoBehaviour
 
     private void UpdatePageControls()
     {
-        previousPageButton.SetActive(_pages.Count > 0 && _pageIndex != 0);
-        nextPageButton.SetActive(_pageIndex != _pages.Count - 1);
-        pageNumText.gameObject.SetActive(_pages.Count > 1);
-        pageNumText.text = $"{(_pageIndex + 1)} / {_pages.Count}";
+        if (previousPageButton != null)
+            previousPageButton.SetActive(_pages.Count > 0 && _pageIndex != 0);
+        if (nextPageButton != null)
+            nextPageButton.SetActive(_pageIndex != _pages.Count - 1);
+        if (pageNumText != null)
+        {
+            pageNumText.gameObject.SetActive(_pages.Count > 1);
+            pageNumText.text = $"{(_pageIndex + 1)} / {_pages.Count}";
+        }
     }
 }

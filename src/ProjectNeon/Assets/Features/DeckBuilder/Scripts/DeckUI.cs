@@ -14,14 +14,23 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
 
     private List<CardInDeckButton> _cardButtons;
 
-    private void Awake() => clearDeckButton.onClick.AddListener(ClearDeck);
+    private void Awake()
+    {
+        if (clearDeckButton != null)
+            clearDeckButton.onClick.AddListener(ClearDeck);
+    }
+
     protected override void Execute(DeckBuilderHeroSelected msg) => GenerateDeck();
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => OnDeckChanged();
 
-    private void OnDeckChanged()
+    private void OnDeckChanged() => GenerateDeck();
+
+    public void Init(HeroCharacter character)
     {
+        var deck = new RuntimeDeck {Cards = character.Deck.CardTypes};
+        state.SelectedHeroesDeck = new HeroesDeck { Hero = new Hero(character, deck), Deck = deck.Cards };
         GenerateDeck();
-    } 
+    }
 
     public void GenerateDeck()
     {

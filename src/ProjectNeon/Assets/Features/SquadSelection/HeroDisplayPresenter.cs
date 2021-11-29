@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,6 +20,8 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private Button statButton;
     [SerializeField] private Button loreButton;
     [SerializeField] private Button cardsButton;
+    [SerializeField] private SimpleDeckUI deckUi;
+    [SerializeField] private SimpleDeckUI basicUi;
 
     private bool _isInitialized;
     private bool _isClickable = false;
@@ -30,6 +33,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         loreButton.onClick.AddListener(() => ShowTab("Lore"));
         cardsButton.onClick.AddListener(() => ShowTab("Cards"));
         loreButton.Select();
+        ShowTab("Lore");
         if (!_isInitialized && currentHero != null)
             Init(currentHero);
     }
@@ -50,6 +54,10 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         var member = c.AsMemberForLibrary();
         if (statPanel != null)
             statPanel.Init(member);
+        if (deckUi != null)
+            deckUi.Init(c.Deck.Cards.Select(card => card.ToNonBattleCard(c)).ToArray());
+        if (basicUi != null)
+            basicUi.Init(c.BasicCard.ToNonBattleCard(c).AsArray(), false);
     }
 
     private void ShowHeroPathway() => Message.Publish(new ShowHeroLevelUpPathway(currentHero));
