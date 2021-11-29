@@ -14,31 +14,46 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
     private CardTypeData _cardType;
     private int _count;
     private GameObject _hoverCard;
-    
-    private void Awake()
-    {
-        var allCanvases = FindObjectsOfType<Canvas>();
-        _canvas = allCanvases.OrderByDescending(c => c.sortingOrder).First();
-    }
 
+    private void Awake() => InitCanvasIfNeeded();
     private void OnDestroy() => OnExit();
+
+    public void SetCanvas(Canvas c)
+    {
+        _canvas = c;
+    }
     
-    public void Init(int count, CardTypeData c)
+    public SimpleDeckCardPresenter Initialized(int count, CardTypeData c)
     {
         _count = count;
         _card = Maybe<Card>.Missing();
         _cardType = c;
         Render();
+        return this;
     }
 
-    public void Init(int count, Card c)
+    public SimpleDeckCardPresenter Initialized(int count, Card c)
     {
         _count = count;
         _card = c;
         _cardType = c.BaseType;
         Render();
+        return this;
     }
 
+    private void InitCanvasIfNeeded()
+    {
+        if (_canvas != null)
+            return;
+        
+        var allCanvases = FindObjectsOfType<Canvas>();
+        _canvas = allCanvases
+            .Where(c => c != null)
+            .Where(c => c.gameObject.activeInHierarchy)
+            .OrderByDescending(c => c.sortingOrder)
+            .First();
+    }
+    
     private void OnExit()
     {
         if (_hoverCard != null)
@@ -53,7 +68,6 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Log.Info("Pointer Enter");
         _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);
         if (_card.IsPresent)
             _hoverCard.GetComponent<HoverCard>().Init(_card.Value);
