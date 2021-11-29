@@ -70,4 +70,9 @@ public static class CardTypeDataExtensions
     {
         return new Card(-1, hero.AsMember(-1), c, hero.Character.Tint, hero.Character.Bust);
     }
+    
+    public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero)
+    {
+        return new Card(-1, hero.AsMemberForLibrary(), c, hero.Tint, hero.Bust);
+    }
 }
