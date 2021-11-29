@@ -1,15 +1,17 @@
-
+using System;
 using UnityEngine;
 
 public class LevelUpOptionWithHpAndStatGain : LevelUpOption
 {
+    private readonly PartyAdventureState _party;
     private readonly LevelUpOption _baseOption;
     private readonly int _hpGain;
     private readonly StatType _buffStat;
     private readonly int _buffStatAmount;
 
-    public LevelUpOptionWithHpAndStatGain(LevelUpOption baseOption, int hpGain, StatType buffStat, int buffStatAmount)
+    public LevelUpOptionWithHpAndStatGain(PartyAdventureState party, LevelUpOption baseOption, int hpGain, StatType buffStat, int buffStatAmount)
     {
+        _party = party;
         _baseOption = baseOption;
         _hpGain = hpGain;
         _buffStat = buffStat;
@@ -18,10 +20,18 @@ public class LevelUpOptionWithHpAndStatGain : LevelUpOption
     
     public void SelectAsLevelUp(Hero h)
     {
-        h.ApplyPermanent(new InMemoryEquipment{ Modifiers = new [] {
-            new EquipmentStatModifier { ModifierType = StatMathOperator.Additive, Amount = _hpGain, StatType = StatType.MaxHP.ToString()},
-            new EquipmentStatModifier { ModifierType = StatMathOperator.Additive, Amount = _buffStatAmount, StatType =  _buffStat.ToString() }
-        }});
+        var perm = new InMemoryEquipment
+        {
+            Id = Rng.Int(Int32.MinValue, -1),
+            Slot = EquipmentSlot.Permanent,
+            Modifiers = new[]
+            {
+                new EquipmentStatModifier {ModifierType = StatMathOperator.Additive, Amount = _hpGain, StatType = StatType.MaxHP.ToString()},
+                new EquipmentStatModifier {ModifierType = StatMathOperator.Additive, Amount = _buffStatAmount, StatType = _buffStat.ToString()}
+            }
+        };
+        _party.Add(perm);
+        h.ApplyPermanent(perm);
         _baseOption.SelectAsLevelUp(h);
     }
     

@@ -11,6 +11,7 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
     [SerializeField] private GameObject optionParent;
     [SerializeField] private LevelUpOptionPresenterV4 basicOptionPrototype;
     [SerializeField] private CustomLevelUpPresenters presenters;
+    [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject[] toDestroyOnStart;
     [SerializeField] private float unfoldDuration = 2f;
     [SerializeField] private float unfoldInitialDelay = 3f;
@@ -18,7 +19,11 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
 
     private readonly Dictionary<LevelUpOption, GameObject> _options = new Dictionary<LevelUpOption, GameObject>();
     
-    private void Start() => toDestroyOnStart.ForEach(Destroy);
+    private void Start()
+    {
+        var toDestroy = toDestroyOnStart.ToList();
+        toDestroy.ForEach(Destroy);
+    }
 
     public void ClearUnselectedOptions(LevelUpOption selected)
     {
@@ -33,7 +38,7 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
     public void Init(Hero hero)
     {
         var reward = hero.NextLevelUpRewardV4;
-        Init(hero, hero.Levels.NextLevelUpLevel, reward.OptionsPrompt, reward.GenerateOptions(hero));
+        Init(hero, hero.Levels.NextLevelUpLevel, reward.OptionsPrompt, reward.GenerateOptions(hero, party));
     }
 
     public void Init(Hero hero, int level, string optionPrompt, LevelUpOption[] options)

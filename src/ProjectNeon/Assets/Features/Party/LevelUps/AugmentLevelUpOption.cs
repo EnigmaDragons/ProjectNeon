@@ -3,14 +3,21 @@ using UnityEngine;
 
 public class AugmentLevelUpOption : LevelUpOption
 {
+    private readonly PartyAdventureState _party;
     private readonly Equipment _e;
 
-    public AugmentLevelUpOption(Equipment e) => _e = e;
+    public AugmentLevelUpOption(PartyAdventureState party, Equipment e)
+    {
+        _party = party;
+        _e = e;
+    }
+
     public string IconName => "Augment";
     public string Description => _e.Name;
     
     public void SelectAsLevelUp(Hero h)
     {
+        _party.Add(_e);
         h.Equipment.EquipPermanent(_e);
         h.RecordLevelUpPointSpent(-2);
         Message.Publish(new AutoSaveRequested());

@@ -17,10 +17,10 @@ public class HeroLevelUpRewardV4
     public string OptionsPrompt => options.ChoiceDescription;
     public IStats StatBoostAmount => new StatAddends().With(StatType.MaxHP, HpGain).With(BuffStat, buffStatAmount);
     
-    public LevelUpOption[] GenerateOptions(Hero h)
+    public LevelUpOption[] GenerateOptions(Hero h, PartyAdventureState party)
     {
         var baseOptions = Options.Generate(h);
-        var composedOptions = baseOptions.Select(o => (LevelUpOption)new LevelUpOptionWithHpAndStatGain(o, hpGain, buffStat, buffStatAmount))
+        var composedOptions = baseOptions.Select(o => (LevelUpOption)new LevelUpOptionWithHpAndStatGain(party, o, hpGain, buffStat, buffStatAmount))
             .ToArray();
         return composedOptions;
     }

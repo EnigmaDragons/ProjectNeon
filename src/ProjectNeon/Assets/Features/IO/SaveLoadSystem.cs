@@ -145,7 +145,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             foreach (var implant in heroSaveData.Implants)
                 hero.ApplyPermanent(implant.GeneratedEquipment);
 
-            foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds)
+            var generatedLevelUpOptionId = -2;
+            foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds.Where(id => id != generatedLevelUpOptionId))
             {
                 var maybePerk = library.GetLevelUpPerkById(optionId);
                 if (!maybePerk.IsPresent)
