@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: spriteGlitchMaterial
   m_Shader: {fileID: 4800000, guid: a34fb7d9c9bdaf14fa080110d1a7fb98, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _COLORGLITCHON_ON _DISPGLITCHON_ON
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _COLORGLITCHON_ON _DISPGLITCHON_ON _WRAPDISPCOORDS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -38,14 +38,14 @@ Material:
     m_Floats:
     - PixelSnap: 0
     - _ColorGlitchOn: 1
-    - _ColorIntensity: 0.1
-    - _ColorProbability: 0.1
+    - _ColorIntensity: 0.01
+    - _ColorProbability: 0.3
     - _DispGlitchOn: 1
-    - _DispIntensity: 0.1
-    - _DispProbability: 0.5
+    - _DispIntensity: 0.01
+    - _DispProbability: 0.3
     - _EnableExternalAlpha: 0
     - _GlitchInterval: 0.1
-    - _WrapDispCoords: 0
+    - _WrapDispCoords: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}

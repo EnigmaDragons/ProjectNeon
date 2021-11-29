@@ -15,7 +15,7 @@ public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Fi
     [SerializeField] private TutorialSlideshow afterGaining6Resources;
 
     [SerializeField] private BattleState state;
-
+    
     private bool _hasPlayedTutorialAfterShieldPlay;
     private bool _hasPlayedTutorialAfterStatusLook;
     private bool _hasPlayedTutorialAfterAttackPlay;
@@ -24,9 +24,6 @@ public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Fi
     private bool _hasInspectedACard;
     private bool _hasToggledCardAsBasic;
     private bool _hasPlayedTutorialAfterGaining6Resources;
-
-    public void Start() => Message.Publish(new ShowTutorialSlideshowIfNeeded(intro));
-
 
     protected override void Execute(CardResolutionFinished msg)
     {
