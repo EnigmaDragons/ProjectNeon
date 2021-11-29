@@ -9,6 +9,7 @@ public sealed class LevelUpOptionsPresenter : MonoBehaviour
     [SerializeField] private GameObject optionParent;
     [SerializeField] private LevelUpOptionPresenter optionPrototype;
     [SerializeField] private GameObject[] toDestroyOnStart;
+    [SerializeField] private PartyAdventureState party;
 
     private readonly List<GameObject> _options = new List<GameObject>();
     
@@ -17,7 +18,7 @@ public sealed class LevelUpOptionsPresenter : MonoBehaviour
     public void Init(Hero hero, bool useV4 = false)
         => Init(hero.Levels.NextLevelUpLevel, 
             useV4 
-                ? hero.Character.LevelUpTreeV4.ForLevel(hero.Levels.NextLevelUpLevel).GenerateOptions(hero)
+                ? hero.Character.LevelUpTreeV4.ForLevel(hero.Levels.NextLevelUpLevel).GenerateOptions(hero, party)
                 : hero.Character.LevelUpTree.ForLevel(hero.Levels.NextLevelUpLevel));
     
     public void Init(int level, LevelUpOption[] options)

@@ -9,7 +9,9 @@ public class SimpleDeckUI : MonoBehaviour
     public void Init(Card[] cards, bool showCount = true)
     {
         deckParent.DestroyAllChildren();
+        var canvas = gameObject.transform.GetComponentInParent<Canvas>();
         foreach (var c in cards.GroupBy(x => x.Id))
-            Instantiate(cardPrototype, deckParent.transform).Init(showCount ? c.Count() : -1, c.First());
+            Instantiate(cardPrototype, deckParent.transform).Initialized(showCount ? c.Count() : -1, c.First())
+                .SetCanvas(canvas);
     }
 }
