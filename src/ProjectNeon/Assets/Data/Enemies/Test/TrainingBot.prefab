@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 7527237784097920195}
   - component: {fileID: 5857798888739169521}
   m_Layer: 0
-  m_Name: Enemy_TrainingBot
+  m_Name: TrainingBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f20a9c71fed411eaa13696996ffb5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 5937203887155512408}
   character: {fileID: 8949746648069829977}
 --- !u!1 &7730170890286648245
 GameObject:
@@ -451,6 +451,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6868178349254368620}
     m_Modifications:
+    - target: {fileID: 2305355439762989597, guid: a79f42a31da66394e855749502079258, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2305355439762989597, guid: a79f42a31da66394e855749502079258, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1875453801
+      objectReference: {fileID: 0}
     - target: {fileID: 3328121636175572394, guid: a79f42a31da66394e855749502079258, type: 3}
       propertyPath: m_Name
       value: TrainingBot
@@ -504,6 +512,11 @@ PrefabInstance:
 --- !u!4 &7128624682016736836 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4038504973282440906, guid: a79f42a31da66394e855749502079258, type: 3}
+  m_PrefabInstance: {fileID: 6550011224121503886}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5937203887155512408 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 613474693695698134, guid: a79f42a31da66394e855749502079258, type: 3}
   m_PrefabInstance: {fileID: 6550011224121503886}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7823658214248199979
