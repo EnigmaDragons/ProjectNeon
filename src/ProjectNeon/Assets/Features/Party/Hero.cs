@@ -119,7 +119,7 @@ public class Hero
         state.AllCards.GetMap(),
         state.Party.Credits, state.Party.Credits, new Dictionary<int, EnemyType>(), () => state.GetNextCardId(),
         new PlayedCardSnapshot[0],
-        state.OwnerTints, state.OwnerBusts);
+        state.OwnerTints, state.OwnerBusts, false);
 
     private Member WithEquipmentState(Member m, EffectContext ctx)
     {
