@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelUpOptionWithHpAndStatGain : LevelUpOption
@@ -20,18 +21,7 @@ public class LevelUpOptionWithHpAndStatGain : LevelUpOption
     
     public void SelectAsLevelUp(Hero h)
     {
-        var perm = new InMemoryEquipment
-        {
-            Id = Rng.Int(Int32.MinValue, -1),
-            Slot = EquipmentSlot.Permanent,
-            Modifiers = new[]
-            {
-                new EquipmentStatModifier {ModifierType = StatMathOperator.Additive, Amount = _hpGain, StatType = StatType.MaxHP.ToString()},
-                new EquipmentStatModifier {ModifierType = StatMathOperator.Additive, Amount = _buffStatAmount, StatType = _buffStat.ToString()}
-            }
-        };
-        _party.Add(perm);
-        h.ApplyPermanent(perm);
+        h.AddToStats(new StatAddends(new Dictionary<string, float> { { StatType.MaxHP.ToString(), _hpGain }, { _buffStat.ToString(), _buffStatAmount } }));
         _baseOption.SelectAsLevelUp(h);
     }
     

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public enum StatType
 {
@@ -18,6 +19,22 @@ public enum StatType
 
 public static class StatExtensions
 {
+    public static StatAddendData[] GetSaveData(this IStats stats) => new StatAddendData[]
+    {
+        new StatAddendData { Stat = StatType.MaxHP.ToString(), Value = stats.MaxHp() },
+        new StatAddendData { Stat = StatType.Attack.ToString(), Value = stats.Attack() },
+        new StatAddendData { Stat = StatType.Magic.ToString(), Value = stats.Magic() },
+        new StatAddendData { Stat = StatType.Armor.ToString(), Value = stats.Armor() },
+        new StatAddendData { Stat = StatType.Resistance.ToString(), Value = stats.Resistance() },
+        new StatAddendData { Stat = StatType.Damagability.ToString(), Value = stats.Damagability() },
+        new StatAddendData { Stat = StatType.Healability.ToString(), Value = stats.Healability() },
+        new StatAddendData { Stat = StatType.Leadership.ToString(), Value = stats.Leadership() },
+        new StatAddendData { Stat = StatType.MaxShield.ToString(), Value = stats.MaxShield() },
+        new StatAddendData { Stat = StatType.StartingShield.ToString(), Value = stats.StartingShield() },
+        new StatAddendData { Stat = StatType.Economy.ToString(), Value = stats.Economy() },
+        new StatAddendData { Stat = StatType.ExtraCardPlays.ToString(), Value = stats.ExtraCardPlays() },
+    }.Where(x => x.Value != 0).ToArray();
+    
     public static Dictionary<string, bool> _map = new Dictionary<string, bool>
     {
         {StatType.MaxHP.ToString(), true},

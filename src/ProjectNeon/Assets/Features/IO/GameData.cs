@@ -61,6 +61,7 @@ public class GameHeroData
     public int BasicCardId = -1;
     public HeroLevels Levels = new HeroLevels();
     public HeroHealth Health = new HeroHealth();
+    public StatAddendData[] Stats = new StatAddendData[0];
     public GameDeckData Deck = new GameDeckData();
     public GameEquipmentIdName[] EquipmentIdNames = Array.Empty<GameEquipmentIdName>();
     public GameEquipmentData[] Implants = Array.Empty<GameEquipmentData>();
@@ -106,6 +107,13 @@ public class GameMapData
     public bool HasCompletedEventEnRoute;
     public int CurrentNodeRngSeed;
     public int HeatAdjustments;
+}
+
+[Serializable]
+public class StatAddendData
+{
+    public string Stat;
+    public float Value;
 }
 
 public enum GameEquipmentDataType

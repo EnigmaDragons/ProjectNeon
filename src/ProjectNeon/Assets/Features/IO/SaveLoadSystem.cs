@@ -124,7 +124,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             hero.SetLevels(heroSaveData.Levels);
             hero.SetHealth(heroSaveData.Health);
             hero.SetPrimaryStat(heroSaveData.PrimaryStat);
-            
+
             var maybeBasicCard = library.GetCardById(heroSaveData.BasicCardId);
             if (!maybeBasicCard.IsPresent)
                 return LoadFailedReason("Unknown Basic Card");
@@ -145,6 +145,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             foreach (var implant in heroSaveData.Implants)
                 hero.ApplyPermanent(implant.GeneratedEquipment);
 
+            hero.AddToStats(new StatAddends(heroSaveData.Stats.ToDictionary(x => x.Stat, x => x.Value)));
+            
             var generatedLevelUpOptionId = -2;
             foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds.Where(id => id != generatedLevelUpOptionId))
             {

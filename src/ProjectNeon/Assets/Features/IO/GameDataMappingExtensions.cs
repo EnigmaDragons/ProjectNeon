@@ -12,6 +12,7 @@ public static class GameDataMappingExtensions
                     BaseHeroId = h.Character.Id,
                     BasicCardId = h.BasicCard.Id,
                     Health = h.Health,
+                    Stats = h.LevelUpsAndImplants.GetSaveData(),
                     Levels = h.Levels,
                     Deck = new GameDeckData { CardIds = h.Deck.Cards.Select(c => c.Id).ToArray() },
                     EquipmentIdNames = h.Equipment.All.Where(e => e.Slot != EquipmentSlot.Permanent)
