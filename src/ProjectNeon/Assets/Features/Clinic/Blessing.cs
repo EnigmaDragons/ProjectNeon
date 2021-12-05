@@ -32,7 +32,8 @@ public class Blessing
             state.GetNextCardId, 
             new PlayedCardSnapshot[0],
             state.OwnerTints,
-            state.OwnerBusts);
+            state.OwnerBusts,
+            true);
         AllEffects.Apply(Effect, ctx);
     }
 }

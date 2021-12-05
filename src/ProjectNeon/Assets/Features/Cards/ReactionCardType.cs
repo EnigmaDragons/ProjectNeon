@@ -11,6 +11,7 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private ResourceCost cost;
     [SerializeField] private CardReactionSequence actionSequence;
+    [SerializeField] private CardTag[] tags;
 
     public string Name => string.IsNullOrWhiteSpace(displayName) 
         ? name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords() 
@@ -23,7 +24,7 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     public IResourceAmount Cost => cost;
     public CardSpeed Speed => CardSpeed.Standard;
     public CardReactionSequence ActionSequence => actionSequence;
-    public HashSet<CardTag> Tags => new HashSet<CardTag>();
+    public HashSet<CardTag> Tags => new HashSet<CardTag>(tags);
     public CardActionSequence[] ActionSequences => new[] { CardActionSequence.ForReaction(ActionSequence.CardActions) };
     public Maybe<CardTypeData> ChainedCard => Maybe<CardTypeData>.Missing();
     public Maybe<CardTypeData> SwappedCard => Maybe<CardTypeData>.Missing();

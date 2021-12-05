@@ -57,7 +57,9 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
                 var action = reaction.ActionSequence;
                 var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
                 var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
-                return new ProposedReaction(reaction, reactor, target);
+                if (target.Members.Any())
+                    return new ProposedReaction(reaction, reactor, target);
+                return Maybe<ProposedReaction>.Missing();
             };
     
     protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(
@@ -72,7 +74,9 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
             var action = reaction;
             var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
             var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
-            return new ProposedReaction(reaction, reactor, target);
+            if (target.Members.Any())
+                return new ProposedReaction(reaction, reactor, target);
+            return Maybe<ProposedReaction>.Missing();
         };
 
     private static Target GetReactionTarget(Member possessor, Member reactor, IDictionary<int, Member> members, CardReactionSequence action, Member effectSource, Target effectTarget)
@@ -93,7 +97,9 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         if (action.Scope == ReactiveTargetScope.OneRandomAlly)
             target = new Single(members.Values.ToArray().GetConsciousAllies(reactor).Random());
         if (action.Scope == ReactiveTargetScope.HealthiestAllyExceptSelf)
-            target = new Single(members.Values.Where(x => x.Id != effectSource.Id).ToArray().GetConsciousAllies(reactor).Shuffled().OrderByDescending(x => x.CurrentHp()).First());
+            target = members.Values.Where(x => x.Id != possessor.Id).ToArray().GetConsciousAllies(reactor).Any() 
+                ? (Target)new Single(members.Values.Where(x => x.Id != possessor.Id).ToArray().GetConsciousAllies(reactor).Shuffled().OrderByDescending(x => x.CurrentHp()).First())
+                : (Target)new NoTarget();
         if (action.Scope == ReactiveTargetScope.OneRandomEnemy)
             target = new Single(members.Values.ToArray().GetConsciousEnemies(reactor).Random());
         return target;
