@@ -39,8 +39,8 @@ public class AdventureProgressV4 : AdventureProgressBase
 
     private static int Int(float f) => f.CeilingInt();
     private float GlobalPowerLevelFactor => currentGlobalEffects.EncounterDifficultyFactor;
-    public override int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(Progress * GlobalPowerLevelFactor));
-    public override int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(((float)Progress + 1) / CurrentChapter.SegmentCount) * GlobalPowerLevelFactor);
+    public override int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(Progress) * GlobalPowerLevelFactor);
+    public override int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(Progress) * GlobalPowerLevelFactor);
     private bool HasBegun => currentChapterIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && Progress >= CurrentStageLength;
 
