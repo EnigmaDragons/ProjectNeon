@@ -118,13 +118,18 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             BeginPlayerCardsPhase();
         else if (msg.Phase == BattleV2Phase.PlayCards)
             StartCoroutine(TransitionToEnemyCardsPhase());
-        else
+        else if (msg.Phase == BattleV2Phase.EnemyCards)
             StartCoroutine(WrapUpTurn());
     }
 
-
     private IEnumerator WrapUpTurn()
     {
+        if (state.Phase == BattleV2Phase.Wrapup || state.Phase == BattleV2Phase.EndOfTurnEffects)
+        {
+            Log.Warn("Tried to Trigger Wrap Up Turn multiple times");
+            yield break;
+        }
+
         BeginPhase(BattleV2Phase.Wrapup);
         yield return turnWrapUp.Execute();
         BeginPhase(BattleV2Phase.EndOfTurnEffects);
