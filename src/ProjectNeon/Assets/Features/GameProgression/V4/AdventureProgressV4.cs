@@ -44,12 +44,12 @@ public class AdventureProgressV4 : AdventureProgressBase
     private bool HasBegun => currentChapterIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && Progress >= CurrentStageLength;
 
-    public override void Init(Adventure adventure, int chapterIndex)
-    {
-        currentAdventure.Adventure = adventure;
+    public override void Init(Adventure adventure, int chapterIndex) => Init(adventure, chapterIndex, 0);
+    public override void Init(Adventure adventure, int chapterIndex, int segmentIndex)
+    {        currentAdventure.Adventure = adventure;
         Reset();
         currentChapterIndex = chapterIndex;
-        currentSegmentIndex = 0;
+        currentSegmentIndex = segmentIndex;
         Log.Info($"Init Adventure. {this}");
     }
 
