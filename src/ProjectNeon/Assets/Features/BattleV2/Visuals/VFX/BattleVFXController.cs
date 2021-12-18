@@ -9,6 +9,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     [SerializeField] private AllBattleVfx fx;
     [SerializeField] private Transform enemyGroupLocation;
     [SerializeField] private Transform heroesGroupLocation;
+    [SerializeField] private Transform effectsParent;
     [SerializeField] private bool loggingEnabled = false;
 
     private Dictionary<string, BattleVFX> _fxByName;
@@ -69,7 +70,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
 
     private void PlayEffect(BattleVFX f, Vector3 target, Transform parent, float size, float speed, Color color, bool shouldFlipHorizontal)
     {
-        var o = Instantiate(f.gameObject, target + f.gameObject.transform.localPosition, f.gameObject.transform.rotation, parent);
+        var o = Instantiate(f.gameObject, target + f.gameObject.transform.localPosition, f.gameObject.transform.rotation, effectsParent);
         var instVFX = o.GetComponent<BattleVFX>();
         SetupEffect(o, instVFX, size, speed, color, shouldFlipHorizontal);
         if (instVFX.WaitForCompletion)
