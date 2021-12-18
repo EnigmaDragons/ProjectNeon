@@ -22,7 +22,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private bool unique;
     [SerializeField] private bool isHasty;
     [SerializeField] private ResourceType resourceType;
-    [SerializeField] private string description;
+    [SerializeField, TextArea(2, 4)] private string description;
     [SerializeField] private CharacterAnimations animations;
     [SerializeField] public EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
