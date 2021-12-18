@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI.Extensions;
 
 [CreateAssetMenu(menuName = "Adventure/Stage V4")]
 public class StaticStageV4 : ScriptableObject, IStage
@@ -11,6 +10,7 @@ public class StaticStageV4 : ScriptableObject, IStage
     [SerializeField] private PowerCurve powerCurve;
     [SerializeField] private PowerCurve elitePowerCurve;
     [SerializeField] private GameObject[] possibleBattlegrounds;
+    [SerializeField] private int repeatPlayStartingSegmentIndex;
     [SerializeField] private StageSegment[] segments;
     [SerializeField] private GameObject bossBattlefield;
     [SerializeField] private Enemy[] bossEnemies;
@@ -25,6 +25,7 @@ public class StaticStageV4 : ScriptableObject, IStage
     public int GetElitePowerLevel(float percent) => elitePowerCurve.GetValueAsInt(percent);
     public GameObject Battleground => possibleBattlegrounds.Random();
     public int SegmentCount => segments.Length;
+    public int RepeatPlayStartingSegmentIndex => repeatPlayStartingSegmentIndex;
     public StageSegment[] Segments => segments;
     public GameObject BossBattlefield => bossBattlefield;
     public Enemy[] BossEnemies => bossEnemies;

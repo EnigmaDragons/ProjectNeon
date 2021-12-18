@@ -13,6 +13,7 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract void Reset();
     public abstract void InitIfNeeded();
     public abstract void Init(Adventure adventure, int chapterIndex);
+    public abstract void Init(Adventure adventure, int chapterIndex, int segmentIndex); // Technically this breaks LSP. V2 Progress doesn't exactly use Segments.
     public abstract void AdvanceStageIfNeeded();
     public abstract LootPicker CreateLootPicker(PartyAdventureState party);
     public abstract GameAdventureProgressData GetData();

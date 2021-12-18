@@ -74,7 +74,11 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
             hoverGraphic.SetActive(false);
     }
 
-    public void OnPointerClick(PointerEventData eventData) => _onClick();
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+            _onClick();
+    }
 
     private void ShowTab(string tabName)
     {

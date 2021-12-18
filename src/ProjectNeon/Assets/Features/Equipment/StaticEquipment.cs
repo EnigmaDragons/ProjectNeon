@@ -21,6 +21,7 @@ public class StaticEquipment : ScriptableObject, Equipment
     [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleEndEffects = new EffectData[0];
     [SerializeField] private StatType[] requiresStatType = new StatType[0];
+    [SerializeField] private StatType[] excludeIfPartyHasStatType = new StatType[0];
     [SerializeField] private bool isWIP = true;
     [SerializeField] private bool notAvailableForGeneralDistribution = false;
     [SerializeField] private string designComment;
@@ -45,8 +46,13 @@ public class StaticEquipment : ScriptableObject, Equipment
     public EffectData[] BattleStartEffects => battleStartEffects;
     public EffectData[] BattleEndEffects => battleEndEffects;
     public string Corp => corp == null ? "No Corp" : corp.Value;
-    public StatType[] RequiresStatType => requiresStatType;
-    
+    public EquipmentDistributionRules DistributionRules => 
+        new EquipmentDistributionRules
+        {
+            RequiresStatType = requiresStatType, 
+            ExcludeIfPartyHasStatType = excludeIfPartyHasStatType
+        };
+
     private static string WipWord(bool isWip) => isWip ? "WIP - " : "";
     public string EditorName => $"{WipWord(IsWip)}{Rarity} - {Name}";
 

@@ -19,6 +19,7 @@ public class InMemoryEquipment : Equipment
     [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleEndEffects = new EffectData[0];
     [SerializeField] private StatType[] requiresStatType = new StatType[0];
+    [SerializeField] private EquipmentDistributionRules distributionRules = new EquipmentDistributionRules();
     [SerializeField] private string corp = "None";
     
     // Necessary for Save Load System
@@ -106,12 +107,12 @@ public class InMemoryEquipment : Equipment
         set => corp = value;
     }
 
-    public StatType[] RequiresStatType
+    public EquipmentDistributionRules DistributionRules
     {
-        get => requiresStatType;
-        set => requiresStatType = value;
+        get => distributionRules;
+        set => distributionRules = value;
     }
-
+    
     public GameEquipmentData GetData() 
         => new GameEquipmentData { Type = GameEquipmentDataType.GeneratedEquipment, GeneratedEquipment = this };
 

@@ -1,3 +1,4 @@
+using System.Linq;
 using Features.GameProgression;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                 SelectDefaultAdventureV2();
         
         if (defaultAdventure.IsV4)
-            StartDefaultAdventureV4();
+            StartDefaultAdventureV4(!msg.ShouldShowTutorials);
     }
     
     private void SelectDefaultAdventureV2()
@@ -44,11 +45,12 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         navigator.NavigateToSquadSelection();
     }
 
-    private void StartDefaultAdventureV4()
+    private void StartDefaultAdventureV4(bool playerIsPro)
     {
         var adventure = defaultAdventure;
+        var startingSegment = playerIsPro ? adventure.StagesV4.First().RepeatPlayStartingSegmentIndex : 0;
         adventureProgress.AdventureProgress = adventureProgress4;
-        adventureProgress.AdventureProgress.Init(adventure, 0);
+        adventureProgress.AdventureProgress.Init(adventure, 0, startingSegment);
         if (adventure.FixedStartingHeroes.Length == 0)
         {
             Log.Error("Developer Data Error - V4 Adventures should start with a fixed party");

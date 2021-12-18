@@ -72,6 +72,8 @@ public class AdventureProgress2 : AdventureProgressBase
         Log.Info($"Init Adventure. {this}");
     }
 
+    public override void Init(Adventure adventure, int chapterIndex, int segmentIndex) => Init(adventure, chapterIndex);
+
     public void ApplyGlobalEffects(int[] effectIds)
     {
         var ctx = new GlobalEffectContext(currentGlobalEffects);
