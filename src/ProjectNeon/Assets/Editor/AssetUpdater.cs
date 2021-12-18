@@ -10,10 +10,10 @@ public class AssetUpdater
     [MenuItem("Neon/Update All Assets")]
     public static void Go()
     {
-        UpdateHeroes();
-        UpdateAdventures();
-        UpdateCardPools();
-        UpdateEquipmentPools();
+        Timed("Heroes", UpdateHeroes);
+        Timed("Adventures", UpdateAdventures);
+        Timed("Card Pools", UpdateCardPools);
+        Timed("Equipment Pools", UpdateEquipmentPools);
         UpdateLevelUpOptions();
         UpdateCardIDs();
         UpdateAllCards();
@@ -29,7 +29,38 @@ public class AssetUpdater
         UpdateStoryEventIDs();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
+        Timed("All Battle VFX", UpdateAllBattleVfx);
         Log.Info("Asset Updates Complete");
+    }
+
+    private static void Timed(string name, Action a)
+    {
+        var start = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        a();
+        var stop = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        Log.Info($"Updated {name} in {stop - start}ms");
+    }
+
+    [MenuItem("Neon/Update/Update All Battle VFX")]
+    private static void UpdateAllBattleVfx()
+    {
+        var guids = AssetDatabase.FindAssets("t:Prefab VFX");
+
+        var battleVfx = new List<BattleVFX>();
+        foreach (var guid in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            var b = (BattleVFX)go.GetComponentInChildren(typeof(BattleVFX));
+            if (b != null)
+                battleVfx.Add(b);
+        }
+        
+        ScriptableExtensions.GetAllInstances<AllBattleVfx>().ForEach(x =>
+        {
+            x.allFx = battleVfx.ToArray();
+            EditorUtility.SetDirty(x);
+        });
     }
 
     [MenuItem("Neon/Update/Update Card Pools")]

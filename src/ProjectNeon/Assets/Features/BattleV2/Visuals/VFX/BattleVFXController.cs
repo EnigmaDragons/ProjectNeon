@@ -1,27 +1,31 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, PlayRawBattleEffect>
 {
     [SerializeField] private BattleState state;
-    [SerializeField] private BattleVFX[] fx;
+    [SerializeField] private AllBattleVfx fx;
     [SerializeField] private Transform enemyGroupLocation;
     [SerializeField] private Transform heroesGroupLocation;
     [SerializeField] private bool loggingEnabled = false;
 
+    private Dictionary<string, BattleVFX> _fxByName;
+    
     private void Awake()
     {
-        foreach (var f in fx)
-            if (f.EffectName.Equals(""))
-                Log.Error($"{f.name} is missing it's EffectName");
+        _fxByName = fx.ByName;
+        foreach (var f in _fxByName)
+            if (f.Value.EffectName.Equals(""))
+                Log.Error($"{f.Value.name} is missing it's EffectName");
     }
     
     protected override void Execute(BattleEffectAnimationRequested e)
     {
         LogInfo($"Requested VFX {e.EffectName}");
-        var f = fx.FirstOrDefault(x => x.EffectName.Equals(e.EffectName));
-        if (f == null)
+        var f = _fxByName.ValueOrMaybe(e.EffectName);
+        if (f.IsMissing)
         {
             LogInfo($"No VFX of type {e.EffectName}");
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
@@ -36,7 +40,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             }
 
             var location = state.GetCenterPoint(member.Id);
-            PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
+            PlayEffect(f.Value, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
         }
         else if (e.Group == Group.All)
         {
@@ -49,18 +53,18 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             var opponentTeam = performerTeam == TeamType.Enemies ? TeamType.Party : TeamType.Enemies;
             var targetTeam = e.Group == Group.Opponent ? opponentTeam : performerTeam;
             var location = targetTeam == TeamType.Enemies ? enemyGroupLocation : heroesGroupLocation;
-            PlayEffect(f, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members.All(x => x.TeamType == TeamType.Enemies));
+            PlayEffect(f.Value, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members.All(x => x.TeamType == TeamType.Enemies));
         }
     }
 
     protected override void Execute(PlayRawBattleEffect e)
     {        
         LogInfo($"Requested VFX {e.EffectName}");
-        var f = fx.FirstOrDefault(x => x.EffectName.Equals(e.EffectName));
-        if (f == null)
+        var f = _fxByName.ValueOrMaybe(e.EffectName);
+        if (f.IsMissing)
             LogInfo($"No VFX of type {e.EffectName}");
         
-        PlayEffect(f, e.Target, gameObject.transform, 1, 1, new Color(0, 0, 0, 0), false);
+        PlayEffect(f.Value, e.Target, gameObject.transform, 1, 1, new Color(0, 0, 0, 0), false);
     }
 
     private void PlayEffect(BattleVFX f, Vector3 target, Transform parent, float size, float speed, Color color, bool shouldFlipHorizontal)
