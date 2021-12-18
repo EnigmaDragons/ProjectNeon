@@ -174,7 +174,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         
         var hero = state.GetHeroById(e.MemberId);
         var s = _speech[hero];
-        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelay(s.Hide, 1.4f)));
+        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelay(s.Hide, 1.8f)));
         s.Proceed(true);
     }
 

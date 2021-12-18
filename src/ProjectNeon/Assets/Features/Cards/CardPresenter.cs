@@ -558,6 +558,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, 
                     Localize.Get("Speech", "I don't have enough resources to play this card right now.")));
 
+            if (conditionNotMetHighlight.activeSelf)
+                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id,
+                    Localize.Get("Speech", "This probably isn't a good time to play that card.")));
+
             _onBeginDrag();
             Message.Publish(new BeginTargetSelectionRequested(_card));
         }, () => { });
