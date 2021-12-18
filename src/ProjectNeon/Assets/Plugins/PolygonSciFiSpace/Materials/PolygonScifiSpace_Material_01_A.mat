@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: PolygonScifiSpace_Material_01_A
   m_Shader: {fileID: 4800000, guid: f7e38193b7f064d7380403618fd8b69e, type: 3}
-  m_ShaderKeywords: _CELPRIMARYMODE_SINGLE _EMISSION _TEXTUREBLENDINGMODE_MULTIPLY
+  m_ShaderKeywords: DR_RIM_ON _CELPRIMARYMODE_SINGLE _EMISSION _TEXTUREBLENDINGMODE_MULTIPLY
     _UNITYSHADOWMODE_NONE
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 1
@@ -75,9 +75,9 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FlatRimEdgeSmoothness: 0.5
+    - _FlatRimEdgeSmoothness: 0.89
     - _FlatRimLightAlign: 0
-    - _FlatRimSize: 0.5
+    - _FlatRimSize: 0.317
     - _FlatSpecularEdgeSmoothness: 0
     - _FlatSpecularSize: 0.1
     - _Flatness: 1
@@ -96,15 +96,15 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineDepthOffset: 0
-    - _OutlineWidth: 1
+    - _OutlineDepthOffset: 0.006
+    - _OutlineWidth: 2
     - _OverrideLightmapDir: 0
     - _Parallax: 0.02
     - _QueueOffset: 0
-    - _RimEnabled: 0
+    - _RimEnabled: 1
     - _SelfShadingSize: 0.5
     - _SelfShadingSizeExtra: 0.6
-    - _ShadowEdgeSize: 0.05
+    - _ShadowEdgeSize: 0.272
     - _ShadowEdgeSizeExtra: 0.05
     - _SmoothnessTextureChannel: 0
     - _SpecularEnabled: 0
@@ -123,13 +123,13 @@ Material:
     - _Color: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 1}
     - _ColorDim: {r: 1, g: 1, b: 1, a: 1}
     - _ColorDimCurve: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
-    - _ColorDimExtra: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
-    - _ColorDimSteps: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
-    - _ColorGradient: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
+    - _ColorDimExtra: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 1}
+    - _ColorDimSteps: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 1}
+    - _ColorGradient: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 1}
     - _EmissionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _FlatRimColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
-    - _FlatSpecularColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
+    - _FlatRimColor: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 1}
+    - _FlatSpecularColor: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 1}
     - _LightmapDirection: {r: 0, g: 1, b: 0, a: 0}
-    - _OutlineColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _UnityShadowColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
   m_BuildTextureStacks: []
