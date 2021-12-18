@@ -97,8 +97,8 @@ public static class AllEffects
         { EffectType.AdjustBattleRewardFormula, e => new AdjustBattleReward(e.EffectScope, e.Formula)},
         { EffectType.TransformCardsIntoCard, e => new TransformOwnersCardsIntoCard(e.EffectScope)},
         { EffectType.AdjustCardCosts, e => new AdjustCardCosts(e.EffectScope, e.Formula)},
-        { EffectType.Drain, e => new Transfer(e.EffectScope.Value.EnumVal<TemporalStatType>(), (ctx, m) => 
-            BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {e.EffectScope.Value}", 
+        { EffectType.Drain, e => new Transfer(e.EffectScope.Value.MaybeEnumVal<TemporalStatType>(), 
+            (ctx, m) => BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {e.EffectScope.Value}", 
                 Formula.Evaluate(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount).CeilingInt())) },
         { EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, 
             e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource((ctx.Target.TotalShields() 
