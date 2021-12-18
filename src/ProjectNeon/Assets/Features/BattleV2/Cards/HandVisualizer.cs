@@ -43,6 +43,7 @@ public sealed class HandVisualizer : MonoBehaviour
         Hand.OnZoneCardsChanged.Subscribe(new GameEventSubscription(Hand.OnZoneCardsChanged.name, x => _isDirty = true, this));
         Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
         Message.Subscribe<PlayerCardCanceled>(_ => _isDirty = true, this);
+        Message.Subscribe<EndTargetSelectionRequested>(_ => _isDirty = true, this);
         Message.Subscribe<CancelTargetSelectionRequested>(_ => CancelCardPlays(), this);
     }
 
