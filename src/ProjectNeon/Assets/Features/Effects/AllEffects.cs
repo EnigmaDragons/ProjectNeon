@@ -133,13 +133,13 @@ public static class AllEffects
         BattleLog.Write(msg);
     }
 
-    public static bool Apply(EffectData effectData, EffectContext ctx)
+    public static ApplyEffectResult Apply(EffectData effectData, EffectContext ctx)
     {
         try
         {
             // No Targets
             if (ctx.Target.Members.Length == 0)
-                return false;
+                return new ApplyEffectResult(false, ctx);
 
             // Retargeting and Splitting
             var updatedContext = AutoRetargeted(effectData, ctx);
@@ -149,9 +149,9 @@ public static class AllEffects
                 DevLog.Info("Splitting Effect Targets");
                 var applied = false;
                 foreach (var targetMember in updatedContext.Target.Members)
-                    if (Apply(withoutAutoRetargeting, updatedContext.Retargeted(ctx.Source, new Single(targetMember))))
+                    if (Apply(withoutAutoRetargeting, updatedContext.Retargeted(ctx.Source, new Single(targetMember))).WasApplied)
                         applied = true;
-                return applied;
+                return new ApplyEffectResult(applied, updatedContext);
             }
             
             // Transform Effect
@@ -172,13 +172,13 @@ public static class AllEffects
             if (shouldNotApplyReason.IsPresent)
             {
                 DevLog.Write($"Did not apply {effectData.EffectType} because {shouldNotApplyReason.Value}");
-                return false;
+                return new ApplyEffectResult(false, updatedContext);
             }
             
             // Apply Effect
             var effect = Create(updatedEffectData);
             effect.Apply(updatedContext);
-            return true;
+            return new ApplyEffectResult(true, updatedContext);
         }
         catch (Exception e)
         {
@@ -186,11 +186,11 @@ public static class AllEffects
             #if UNITY_EDITOR
             throw;
             #endif
-            return true;
+            return new ApplyEffectResult(true, ctx);
         }
     }
-
-    private static EffectContext AutoRetargeted(EffectData effectData, EffectContext ctx)
+    
+    public static EffectContext AutoRetargeted(EffectData effectData, EffectContext ctx)
     {
         var retargetScope = effectData.TargetsSource ? AutoReTargetScope.Source : effectData.ReTargetScope;
         var updateTarget = retargetScope switch
