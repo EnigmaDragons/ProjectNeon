@@ -52,7 +52,7 @@ public class EquipmentPool : ScriptableObject
             .Where(x => x.Rarity == rarity) 
             .Where(x => party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains)))
             .Where(x => string.IsNullOrWhiteSpace(corp) || x.Corp == corp)
-            .Where(x => x.RequiresStatType.None() || x.RequiresStatType.All(s => primaryStats.Contains(s)))
+            .Where(x => x.DistributionRules.ShouldInclude(primaryStats))
             .DistinctBy(x => x.Description)
             .ToArray()
             .Shuffled()
@@ -71,11 +71,11 @@ public class EquipmentPool : ScriptableObject
             return All.Random();
         }
     }
-    
-    public IEnumerable<Equipment> Possible(EquipmentSlot slot, Rarity rarity, HashSet<string> archs, StatType primaryStat) 
+
+    public IEnumerable<Equipment> Possible(EquipmentSlot slot, Rarity rarity, HashSet<string> archs, StatType primaryStat)
         => All
             .Where(x => x.Slot == slot)
-            .Where(x => x.Rarity == rarity) 
+            .Where(x => x.Rarity == rarity)
             .Where(x => x.Archetypes.All(archs.Contains))
-            .Where(x => x.RequiresStatType.None() || x.RequiresStatType.Contains(primaryStat));
+            .Where(x => x.DistributionRules.ShouldInclude(primaryStat));
 }

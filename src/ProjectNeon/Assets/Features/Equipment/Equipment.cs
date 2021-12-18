@@ -16,7 +16,7 @@ public interface Equipment
     EffectData[] BattleStartEffects { get; }
     EffectData[] BattleEndEffects { get; }
     string Corp { get; }
-    StatType[] RequiresStatType { get; }
+    EquipmentDistributionRules DistributionRules { get; }
 
     GameEquipmentData GetData();
 }
