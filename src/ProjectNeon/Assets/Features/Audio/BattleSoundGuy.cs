@@ -1,4 +1,6 @@
 using System;
+using FMOD;
+using FMOD.Studio;
 using UnityEngine;
 
 public class BattleSoundGuy : MonoBehaviour
@@ -45,14 +47,17 @@ public class BattleSoundGuy : MonoBehaviour
         Message.Subscribe<SnapBackTweenRequested>(OnCardRightClickBackFUNC, this);
         Message.Subscribe<HoverEntered>(OnHoverEntered, this);
         Message.Subscribe<HoverExited>(OnHoverExited, this);
-        Message.Subscribe<WinBattleWithRewards>(OnBattleWonFUNC, this);
+        Message.Subscribe<WinBattleWithRewards>(_ => OnBattleWon(), this);
+        Message.Subscribe<BattleRewardsStarted>(_ => OnBattleWon(), this);
         Message.Subscribe<NavigateToSceneRequested>(OnBattleWonFadeFUNC, this);
     }
 
-    private void OnBattleWonFUNC(WinBattleWithRewards msg)
-    {
-        BattleWonStinger = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/BATTLE_WON_STINGER");
-        BattleWonStinger.start();
+    private void OnBattleWon()
+    {        
+        if (!BattleWonStinger.isValid())
+            BattleWonStinger = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/BATTLE_WON_STINGER");
+        if (BattleWonStinger.getPlaybackState(out var pb) != RESULT.OK || pb != PLAYBACK_STATE.PLAYING)
+            BattleWonStinger.start();
     }
     
     private void OnBattleWonFadeFUNC(NavigateToSceneRequested msg)
