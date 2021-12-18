@@ -5,7 +5,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner, UnhighlightCardOwner, DisplaySpriteEffect>
+public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner, UnhighlightCardOwner, DisplaySpriteEffect, ShowHeroBattleThought>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private GameObject hero1;
@@ -27,6 +27,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     private readonly Dictionary<HeroCharacter, CharacterWordsController> _words  = new Dictionary<HeroCharacter, CharacterWordsController>();
     private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
+    private readonly Dictionary<HeroCharacter, ProgressiveTextRevealWorld> _speech = new Dictionary<HeroCharacter, ProgressiveTextRevealWorld>();
     
     public IEnumerator Setup()
     {
@@ -100,6 +101,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
             Debug.LogError($"{hero.Name} is missing a {nameof(CharacterCreatorStealthTransparency)}");
         else
             _stealths[hero] = stealth;
+
+        var speech = character.GetComponentInChildren<ProgressiveTextRevealWorld>();
+        if (speech == null)
+            Debug.LogError($"{hero.Name} is missing a {nameof(ProgressiveTextRevealWorld)}");
+        else
+            _speech[hero] = speech;
         
         character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
     }
@@ -159,6 +166,16 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         }
         else
             Log.Error($"Unknown Sprite Effect Type {msg.EffectType}");
+    }
+
+    protected override void Execute(ShowHeroBattleThought e)
+    {
+        if (!state.IsHero(e.MemberId)) return;
+        
+        var hero = state.GetHeroById(e.MemberId);
+        var s = _speech[hero];
+        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelay(s.Hide, 1.4f)));
+        s.Proceed(true);
     }
 
     private void RevertMaterial(string memberName)

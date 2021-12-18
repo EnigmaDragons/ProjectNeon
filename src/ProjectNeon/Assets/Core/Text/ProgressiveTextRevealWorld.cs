@@ -43,7 +43,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
         chatBox.gameObject.SetActive(false);
     }
     
-    public override void Display(string text, bool shouldAutoProceed, bool manualInterventionDisablesAuto,  Action onFinished) 
+    public override void Display(string text, bool shouldAutoProceed, bool manualInterventionDisablesAuto, Action onFinished) 
     {
         if (isRevealing)
             return;
@@ -126,7 +126,9 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
             while (_cursor < fullText.Length && fullText[_cursor - 1] == '<')
                 _cursor = fullText.IndexOf('>', _cursor) + 2;
             
-            yield return new WaitUntil(() => Time.timeScale > 0.1f);
+            if (Time.timeScale < 0.1f)
+                yield return new WaitUntil(() => Time.timeScale > 0.1f);
+            
             yield return new WaitForSeconds(secondsPerCharacter);
         }
 
