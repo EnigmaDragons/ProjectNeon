@@ -18,7 +18,7 @@ public static class KeywordRules
     public static readonly string Igniting = "Igniting";
     
     public static readonly string PrimaryStat = "PrimaryStat";
-    
+    public static readonly string Quick = "Quick";
     
     private static readonly string[] RulesByImportanceArr = {
         Drain,
@@ -53,7 +53,7 @@ public static class KeywordRules
         "SingleUse",
         "X-Cost",
         Chain,
-        "Quick"
+        Quick
     };
 
     public static int ImportanceOrder(string rule)
@@ -77,6 +77,7 @@ public static class KeywordRules
 
     public static void AddAllDescriptionFoundRules(List<string> rulesToShow, string description)
     {
+        rulesToShow.AddIf(Quick, description.ContainsAnyCase(Quick));
         rulesToShow.AddIf(Chain, description.ContainsAnyCase(Chain));
         rulesToShow.AddIf(Bloodied, description.ContainsAnyCase(Bloodied));
         rulesToShow.AddIf(Bloodied, description.ContainsAnyCase("Bloody"));
