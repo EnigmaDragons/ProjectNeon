@@ -10,8 +10,9 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
     public override string Name => $"Party Change Event";
     public override void Start()
     {
+        var existingHeroes = currentParty.Heroes.ToArray();
         var allOptions = library.UnlockedHeroes.ToList();
-        currentParty.Heroes.ForEach(h => allOptions.Remove(h));
+        existingHeroes.ForEach(h => allOptions.Remove(h));
         
         var currentArchs = currentParty.Heroes.SelectMany(h => h.Archetypes).ToHashSet();
         var preferredSelection = allOptions.Where(h => !h.Archetypes.Any(a => currentArchs.Contains(a))).ToList();
@@ -19,7 +20,11 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
         
         var randomThree = optimizedSelection.Shuffled().Take(3).ToArray();
         var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Leader" : "Choose A New Squad Member";
-        Message.Publish(new GetUserSelectedHero(prompt, randomThree, h => Message.Publish(new AddHeroToPartyRequested(h))));
+        Message.Publish(new GetUserSelectedHero(prompt, randomThree, h =>
+        {
+            AllMetrics.PublishHeroSelected(h.Name, randomThree.Select(x => x.Name).ToArray(), existingHeroes.Select(x => x.Name).ToArray());
+            Message.Publish(new AddHeroToPartyRequested(h));
+        }));
     }
 
     public override Maybe<string> Detail { get; } = Maybe<string>.Missing();

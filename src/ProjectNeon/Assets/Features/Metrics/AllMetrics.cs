@@ -47,6 +47,9 @@ public static class AllMetrics
 
     public static void PublishGameWon()
         => Send("gameWon", new NoEventData());
+
+    public static void PublishHeroSelected(string selectedHero, string[] options, string[] existingPartyHeroes)
+        => Send("heroAdded", new HeroSelectedData {heroName = selectedHero, heroOptions = options, currentPartyHeroes = existingPartyHeroes});
     
     private static void Send(string eventName, object payload)
         => Send(new GeneralMetric(eventName, JsonUtility.ToJson(payload)));
@@ -122,4 +125,12 @@ public static class AllMetrics
     
     [Serializable]
     private class NoEventData {}
+
+    [Serializable]
+    private class HeroSelectedData
+    {
+        public string[] currentPartyHeroes;
+        public string heroName;
+        public string[] heroOptions;
+    }
 }
