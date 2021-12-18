@@ -19,10 +19,10 @@ public sealed class DealDamage : Effect
                 return;
             
             if (m.State[StatType.Damagability] < 0.01)
-                BattleLog.Write($"0 damage was dealt to Invincible {m.Name}");
+                BattleLog.Write($"0 damage was dealt to Invincible {m.UnambiguousName}");
             else
             {
-                BattleLog.Write($"{amount} damage dealt to{wasVulnerableString}{m.Name}");
+                BattleLog.Write($"{amount} damage dealt to{wasVulnerableString}{m.UnambiguousName}");
                 if (_damage.DealRawDamage)
                     m.State.TakeRawDamage(amount);
                 else

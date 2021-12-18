@@ -9,8 +9,9 @@ public class EffectReactWith : Effect
     {
         { ReactionConditionType.OnCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(c => c.Owner.Id == ctx.Possessor.Id) },
         { ReactionConditionType.WhenAttacked, ctx => effect => 
-            ctx.Actor.IsConscious() && (effect.EffectData.EffectType == EffectType.AttackFormula || effect.EffectData.EffectType == EffectType.MagicAttackFormula) 
-                                    && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
+            ctx.Actor.IsConscious() 
+            && new [] {EffectType.AttackFormula, EffectType.MagicAttackFormula, EffectType.RawDamageAttackFormula}.Contains(effect.EffectData.EffectType)
+            && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
         { ReactionConditionType.WhenBloodied, ctx => effect => 
             ctx.Actor.IsConscious() && !effect.BattleBefore.Members[ctx.Possessor.Id].IsBloodied() && effect.BattleAfter.Members[ctx.Possessor.Id].IsBloodied() },
         {ReactionConditionType.WhenVulnerabled, ctx => effect 

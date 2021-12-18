@@ -15,6 +15,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
 
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
+        Message.Publish(new BattleRewardsStarted());
         if (state.IsEliteBattle)
             adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
         else
