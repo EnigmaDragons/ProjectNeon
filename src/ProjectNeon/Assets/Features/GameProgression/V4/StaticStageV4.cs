@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Stage V4")]
@@ -9,7 +10,7 @@ public class StaticStageV4 : ScriptableObject, IStage
     [SerializeField] private StorySetting storySetting;
     [SerializeField] private PowerCurve powerCurve;
     [SerializeField] private PowerCurve elitePowerCurve;
-    [SerializeField] private GameObject[] possibleBattlegrounds;
+    [SerializeField] private SegmentRangeBattlefieldSet[] battlefieldSets; 
     [SerializeField] private int repeatPlayStartingSegmentIndex;
     [SerializeField] private StageSegment[] segments;
     [SerializeField] private GameObject bossBattlefield;
@@ -18,12 +19,22 @@ public class StaticStageV4 : ScriptableObject, IStage
     [SerializeField] private StageRarityFactors rewardRarityFactors;
 
     public string DisplayName => displayName;
+
+    public GameObject BattlegroundForSegment(int segment)
+    {
+        var possibleSets = battlefieldSets
+            .OrderByDescending(b => b.StartsAtSegmentIndex)
+            .Where(s => segment >= s.StartsAtSegmentIndex);
+        var set = possibleSets.First();
+        return set.GetNext();
+    }
+
     public EncounterBuilder EncounterBuilder => encounterBuilder;
     public EncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
     public StorySetting StorySetting => storySetting;
     public int GetPowerLevel(float percent) => powerCurve.GetValueAsInt(percent);
     public int GetElitePowerLevel(float percent) => elitePowerCurve.GetValueAsInt(percent);
-    public GameObject Battleground => possibleBattlegrounds.Random();
+    public GameObject Battleground => BattlegroundForSegment(0);
     public int SegmentCount => segments.Length;
     public int RepeatPlayStartingSegmentIndex => repeatPlayStartingSegmentIndex;
     public StageSegment[] Segments => segments;
