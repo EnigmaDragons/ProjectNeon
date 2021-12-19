@@ -7,6 +7,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
 {
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI counter;
+    [SerializeField] private TextMeshProUGUI resourceNameLabel;
 
     private Member _member;
     private IResourceType _resourceType;
@@ -37,6 +38,8 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
         var max = state.Max(_resourceType.Name);
         var maxString = max < 25 ? $"/{max}" : "";
         counter.text = $"{state[_resourceType]}{maxString}";
+        if (resourceNameLabel != null)
+            resourceNameLabel.text = _resourceType.Name;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
