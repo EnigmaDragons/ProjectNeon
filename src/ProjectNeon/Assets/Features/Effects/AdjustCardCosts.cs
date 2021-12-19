@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-
+﻿
 public class AdjustCardCosts : Effect
 {
     private readonly CardLocation _cardLocation;
@@ -15,10 +13,10 @@ public class AdjustCardCosts : Effect
     public void Apply(EffectContext ctx)
     {
         if (_cardLocation.HasFlag(CardLocation.Hand))
-            ctx.PlayerCardZones.HandZone.Cards.ForEach(x => x.AddState(new AdjustedCardState(-1, 1, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, _formula, ctx.XPaidAmount)))));
+            ctx.PlayerCardZones.HandZone.Cards.ForEach(x => x.AddState(new AdjustedCardState(-1, 1, Formula.EvaluateToInt(ctx.SourceSnapshot.State, _formula, ctx.XPaidAmount))));
         if (_cardLocation.HasFlag(CardLocation.Deck))
-            ctx.PlayerCardZones.DrawZone.Cards.ForEach(x => x.AddState(new AdjustedCardState(-1, 1, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, _formula, ctx.XPaidAmount)))));
+            ctx.PlayerCardZones.DrawZone.Cards.ForEach(x => x.AddState(new AdjustedCardState(-1, 1, Formula.EvaluateToInt(ctx.SourceSnapshot.State, _formula, ctx.XPaidAmount))));
         if (_cardLocation.HasFlag(CardLocation.Discard))
-            ctx.PlayerCardZones.DiscardZone.Cards.ForEach(x => x.AddState(new AdjustedCardState(-1, 1, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, _formula, ctx.XPaidAmount)))));
+            ctx.PlayerCardZones.DiscardZone.Cards.ForEach(x => x.AddState(new AdjustedCardState(-1, 1, Formula.EvaluateToInt(ctx.SourceSnapshot.State, _formula, ctx.XPaidAmount))));
     }
 }

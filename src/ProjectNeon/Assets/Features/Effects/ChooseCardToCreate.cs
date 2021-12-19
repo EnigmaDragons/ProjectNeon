@@ -24,7 +24,7 @@ public class ChooseCardToCreate : Effect
             return;
         }
 
-        var cardsToChoose = Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount));
+        var cardsToChoose = Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount);
         
         ctx.Selections.CardSelectionOptions = cardsToChoose >= _choiceCardIds.Length 
             ? _choiceCardIds.Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x], 

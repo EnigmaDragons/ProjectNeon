@@ -12,7 +12,7 @@ public sealed class EffectAddToXCostTransformer : Effect
     public void Apply(EffectContext ctx)
     {
         ctx.Target.ApplyToAllConscious(m =>
-            m.AddEffectTransformer(new AddToXCostTransformer(ctx.Source.Id, _data, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m, _data.DurationFormula, ctx.XPaidAmount)))));
+            m.AddEffectTransformer(new AddToXCostTransformer(ctx.Source.Id, _data, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _data.DurationFormula, ctx.XPaidAmount))));
     }
 }
 

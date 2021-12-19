@@ -30,7 +30,7 @@ public class AdjustStatsFormula : Effect
                 ? m.PrimaryStat().ToString()
                 : _e.EffectScope;
 
-            var formulaAmount = Formula.Evaluate(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount);
+            var formulaAmount = Formula.EvaluateRaw(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount);
 
             var isDebuff = StatExtensions.IsPositive(stat) ? formulaAmount < 1 : formulaAmount > 0;
             if (isDebuff) 
@@ -42,7 +42,7 @@ public class AdjustStatsFormula : Effect
             {
                 BattleLog.Write($"{m.Name}'s {stat} is adjusted by x{formulaAmount}");
                 var stats = new AdjustedStats(new StatMultipliers().WithRaw(stat, formulaAmount), _e.ForSimpleDurationStatAdjustment(ctx.Source.Id,
-                    Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount))));
+                    Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount)));
                 m.State.ApplyTemporaryMultiplier(stats);
             }
         });
@@ -66,7 +66,7 @@ public class AdjustStatsFormula : Effect
                 ? m.PrimaryStat().ToString()
                 : _e.EffectScope;
 
-            var formulaAmount = Formula.Evaluate(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount).CeilingInt();
+            var formulaAmount = Formula.EvaluateToInt(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount);
             var isDebuff = formulaAmount < 0;
             if (isDebuff)
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
@@ -80,7 +80,7 @@ public class AdjustStatsFormula : Effect
                     : formulaAmount;
                 BattleLog.Write($"{m.Name}'s {stat} is adjusted by {finalAmount}");
                 var stats = new AdjustedStats(new StatAddends().WithRaw(stat, finalAmount),
-                    _e.ForSimpleDurationStatAdjustment(ctx.Source.Id, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount))));
+                    _e.ForSimpleDurationStatAdjustment(ctx.Source.Id, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount)));
                 m.State.ApplyTemporaryAdditive(stats);
             }
         });

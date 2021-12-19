@@ -73,5 +73,5 @@ public class FormulaTests
         => AssertResultsIs(val, exp, new FormulaContext(m.GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None));
     
     private void AssertResultsIs(float val, string exp, FormulaContext ctx) 
-        => Assert.AreEqual(val, Formula.Evaluate(ctx, exp));
+        => Assert.AreEqual(val, Formula.EvaluateRaw(ctx, exp));
 }
