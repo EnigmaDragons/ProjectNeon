@@ -75,6 +75,7 @@ public static class HeroCharacterExtensions
     {
         var stats = h.Stats;
         var m = new Member(-1, h.Name, h.Class, h.MaterialType, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.BasicCard));
+        h.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;
     }
 

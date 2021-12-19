@@ -18,6 +18,7 @@ public class CardOptionReward : BattleRewards
             Message.Publish(new ExecuteAfterDelayRequested(0.5f, onFinished));
             return;
         }
+        
         var selectedRarity = rewardPicker.RandomRarity();
         var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, selectedRarity);
         var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party)).ToArray().Shuffled();
