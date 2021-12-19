@@ -24,6 +24,8 @@ public class DynamicStage : ScriptableObject, IStage
     public string DisplayName => displayName;
     public GameMap3 Map => gameMap3;
     public HeatUpEventV0[] HeatUpEvents => heatUpEvents;
+    public GameObject BattlegroundForSegment(int segment) => Battleground;
+
     public EncounterBuilder EncounterBuilder => encounterBuilder;
     public EncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
     public StorySetting StorySetting => storySetting;

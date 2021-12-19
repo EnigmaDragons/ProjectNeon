@@ -553,6 +553,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             if (_requiresPlayerTargeting && IsPlayable) 
                 Message.Publish(new ShowMouseTargetArrow(transform));
             
+            // This is crude. Reason for not being able to play a card should flow through
+            if (_card.Cost.BaseAmount > _card.Owner.PrimaryResourceAmount())
+                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, 
+                    Localize.Get("Speech", "I don't have enough resources to play this card right now.")));
+
+            if (conditionNotMetHighlight.activeSelf)
+                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id,
+                    Localize.Get("Speech", "This probably isn't a good time to play that card.")));
+
             _onBeginDrag();
             Message.Publish(new BeginTargetSelectionRequested(_card));
         }, () => { });

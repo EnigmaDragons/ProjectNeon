@@ -47,6 +47,7 @@ public class FmodMusicPlayer : MonoBehaviour
         { "AutoLoadGameScene", GameMainMusic },
         { "DeckBuilderTestScene", GameMainMusic },
         { "DeckBuilderScene", GameMainMusic },
+        { "HoverVehicleScene", GameMainMusic },
         { "BattleSceneV2", BattleMusic },
         { "BattleTestScene", BattleMusic },
         { "ConclusionScene", ConclusionMusic }

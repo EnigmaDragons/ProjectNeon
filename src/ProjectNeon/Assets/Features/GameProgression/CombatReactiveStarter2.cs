@@ -13,7 +13,7 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     protected override void Execute(EnterRandomCombat msg)
     {
         Log.Info("Setting Up Random Encounter");
-        battleState.SetNextBattleground(progress.AdventureProgress.Stage.Battleground);
+        battleState.SetNextBattleground(progress.AdventureProgress.Stage.BattlegroundForSegment(progress.AdventureProgress.CurrentStageProgress));
         battleState.SetNextEncounter(progress.AdventureProgress.Stage.EncounterBuilder.Generate(progress.AdventureProgress.CurrentPowerLevel, progress.AdventureProgress.CurrentChapterNumber));
         eventPublisher.ActivatePartyDetailsWizardFlow();
     }
@@ -21,7 +21,7 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     protected override void Execute(EnterRandomEliteCombat msg)
     {
         Log.Info("Setting Up Random Elite Encounter");
-        battleState.SetNextBattleground(progress.AdventureProgress.Stage.Battleground);
+        battleState.SetNextBattleground(progress.AdventureProgress.Stage.BattlegroundForSegment(progress.AdventureProgress.CurrentStageProgress));
         battleState.SetNextEncounter(progress.AdventureProgress.Stage.EliteEncounterBuilder.Generate(progress.AdventureProgress.CurrentElitePowerLevel, progress.AdventureProgress.CurrentChapterNumber), isElite: true);
         eventPublisher.ActivatePartyDetailsWizardFlow();
     }

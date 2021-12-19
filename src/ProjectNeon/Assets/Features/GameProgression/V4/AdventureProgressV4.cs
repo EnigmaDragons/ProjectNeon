@@ -12,7 +12,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     public Adventure CurrentAdventure => currentAdventure.Adventure;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
-    public int CurrentStageProgress => currentSegmentIndex;
+    public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
     private float Progress => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
