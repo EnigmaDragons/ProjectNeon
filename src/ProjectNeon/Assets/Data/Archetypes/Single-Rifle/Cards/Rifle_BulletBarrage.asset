@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Soldier_BulletBarrage
+  m_Name: Rifle_BulletBarrage
   m_EditorClassIdentifier: 
   id: 105
   customName: 
@@ -28,6 +28,11 @@ MonoBehaviour:
   actionSequences:
   - scope: 1
     group: 1
+    cardActions: {fileID: 11400000, guid: d1dbd7cc47651324cae7d0aaf4191e51, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 1
+    group: 1
     cardActions: {fileID: 11400000, guid: 534c28069a3d1544c8c0f740edeff4f5, type: 2}
     repeatX: 1
     repeatCount: 0
@@ -40,3 +45,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
