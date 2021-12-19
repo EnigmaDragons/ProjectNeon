@@ -18,6 +18,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private Color tint;
     [SerializeField] private CharacterAnimations animations;
     [SerializeField] private int startingCredits = 100;
+    [SerializeField, Range(1, 5)] private int complexityRating = 3; 
 
     // Stats
     [SerializeField] private int maxHp = 40;
@@ -29,6 +30,9 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private float resistance = 0;
     [SerializeField] private int leadership = 0;
     [SerializeField] private int economy = 0;
+    [SerializeField] private int startingAegis;
+    [SerializeField] private int startingDodge;
+    [SerializeField] private int startingTaunt;
     [SerializeField] private ResourceType resource1;
     [SerializeField] private ResourceType resource2;
     [SerializeField] private CardType[] additionalStartingCards;
@@ -107,4 +111,11 @@ public class BaseHero : ScriptableObject, HeroCharacter
                     .Select(o => o.Card)
                     .ToArray()
                 : new CardTypeData[0];
+    
+    public Dictionary<string, int> CounterAdjustments => new Dictionary<string, int>
+    {
+        {TemporalStatType.Aegis.ToString(), startingAegis},
+        {TemporalStatType.Dodge.ToString(), startingDodge},
+        {TemporalStatType.Taunt.ToString(), startingTaunt},
+    };
 }

@@ -19,7 +19,7 @@ public sealed class EffectOnDeath : Effect
     public void Apply(EffectContext ctx)
     {
         ctx.Target.ApplyToAllConscious(m => 
-            m.AddReactiveState(new ReactOnDeath(_isDebuff, _numberOfUses, Mathf.CeilToInt(Formula.Evaluate(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount)), ctx.BattleMembers, m.MemberId, ctx.Source, _reaction)));
+            m.AddReactiveState(new ReactOnDeath(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), ctx.BattleMembers, m.MemberId, ctx.Source, _reaction)));
     }
 }
 

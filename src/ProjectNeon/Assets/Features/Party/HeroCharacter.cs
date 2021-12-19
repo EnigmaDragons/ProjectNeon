@@ -24,6 +24,7 @@ public interface HeroCharacter
     HashSet<string> Archetypes { get; }
     public Color Tint { get; }
     public CharacterAnimations Animations { get; }
+    public Dictionary<string, int> CounterAdjustments { get; }
 }
 
 public class InMemoryHeroCharacter : HeroCharacter
@@ -48,6 +49,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public HashSet<string> Archetypes { get; set; } = new HashSet<string>();
     public Color Tint { get; } = Color.white;
     public CharacterAnimations Animations { get; }
+    public Dictionary<string, int> CounterAdjustments { get; } = new Dictionary<string, int>();
 }
 
 public static class HeroCharacterExtensions

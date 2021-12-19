@@ -3,16 +3,29 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 public static class Formula
 {
-    public static float Evaluate(MemberStateSnapshot src, string expression, ResourceQuantity xAmountPaid) 
+    private static int RoundUp(float f) => f > 0 ? Mathf.CeilToInt(f) : Mathf.FloorToInt(f);
+    
+    public static int EvaluateToInt(MemberStateSnapshot src, string expression, ResourceQuantity xAmountPaid) 
+        => EvaluateToInt(new FormulaContext(src, Maybe<MemberState>.Missing(), xAmountPaid), expression);
+    
+    public static int EvaluateToInt(MemberStateSnapshot snapshot, MemberState target, string expression, ResourceQuantity xAmountPaid) 
+        => EvaluateToInt(new FormulaContext(snapshot, target, xAmountPaid), expression);
+
+    public static int EvaluateToInt(FormulaContext ctx, string expression) => RoundUp(Evaluate(ctx, expression));
+
+    public static float EvaluateRaw(FormulaContext ctx, string expression) => Evaluate(ctx, expression);
+    
+    public static float EvaluateRaw(MemberStateSnapshot src, string expression, ResourceQuantity xAmountPaid) 
         => Evaluate(new FormulaContext(src, Maybe<MemberState>.Missing(), xAmountPaid), expression);
     
-    public static float Evaluate(MemberStateSnapshot snapshot, MemberState target, string expression, ResourceQuantity xAmountPaid) 
+    public static float EvaluateRaw(MemberStateSnapshot snapshot, MemberState target, string expression, ResourceQuantity xAmountPaid) 
         => Evaluate(new FormulaContext(snapshot, target, xAmountPaid), expression);
     
-    public static float Evaluate(FormulaContext ctx, string expression)
+    private static float Evaluate(FormulaContext ctx, string expression)
     {
         var newExp = string.IsNullOrWhiteSpace(expression) ? "0" : expression;
         newExp = ReplaceTags(newExp, ctx);

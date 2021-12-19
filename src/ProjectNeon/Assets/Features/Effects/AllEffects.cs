@@ -18,12 +18,12 @@ public static class AllEffects
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.Name} has been cleansed of {n} debuffs", n => n > 0, m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
         { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 
-            => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, true, amount => amount < 0)},
+            => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, amount => amount < 0)},
         { EffectType.ShieldRemoveAll, e => new AegisPreventable(new SimpleEffect(m => BattleLogged($"{m.Name} lost all their shields", () => m.AdjustShield(-999))), "Losing All Shields") },
         { EffectType.ShieldBasedOnNumberOfOpponentsDoTs, e => new ShieldBasedOnNumberOfOpponentsDoTs(e.FloatAmount) },
         { EffectType.AdjustResourceFlat, e =>  AegisPreventable.If(new FullContextEffect((ctx, duration, m) => m.GainResource(e.EffectScope.Value, e.TotalIntAmount, ctx.AdventureState), e.DurationFormula), e.TotalIntAmount < 0, "Resource Loss") },
         { EffectType.AdjustPrimaryResourceFormula, e => new AegisIfFormulaResult((ctx, amount, m) => 
-            m.AdjustPrimaryResource(amount.CeilingInt()), e.Formula, true, amount => amount < 0) },
+            m.AdjustPrimaryResource(amount.CeilingInt()), e.Formula, amount => amount < 0) },
         { EffectType.DamageOverTimeFormula, e => new AegisPreventable(new DamageOverTimeFormula(e), "Damage Over Time") },
         { EffectType.DisableForTurns, e => new AegisPreventable(new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} is disabled for {duration} turns.", 
             () => m.ApplyTemporaryAdditive(new DisableForTurns(ctx.Source.Id, duration))), e.DurationFormula), "Disable")},
@@ -45,7 +45,7 @@ public static class AllEffects
         { EffectType.DuplicateStatesOfTypeToRandomEnemy, e => new DuplicateStatesOfTypeToRandomEnemy(e.StatusTag)},
         { EffectType.DealRawDamageFormula, e => new FullContextEffect((ctx, _, m) => 
             BattleLoggedItem(amount => $"{amount} raw damage dealt to {m.Name}", 
-                m.TakeRawDamage(Mathf.CeilToInt(Formula.Evaluate(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)))), e.DurationFormula)},
+                m.TakeRawDamage(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount))), e.DurationFormula)},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
@@ -55,10 +55,10 @@ public static class AllEffects
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(m.MemberId, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
         { EffectType.PlayBonusChainCard, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(new PlayBonusChainCard(m.MemberId, e.BonusCardType, e.StatusDetail)))},
-        { EffectType.HealFormula, e => new FullContextEffect((ctx, _, m) => m.GainHp(Formula.Evaluate(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)), e.DurationFormula) },
-        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.Evaluate(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
-        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.Evaluate(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
-        { EffectType.RawDamageAttackFormula, e => new RawDamageAttack(new RawDamageCalculation((ctx, m) => Formula.Evaluate(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.HealFormula, e => new FullContextEffect((ctx, _, m) => m.GainHp(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)), e.DurationFormula) },
+        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.RawDamageAttackFormula, e => new RawDamageAttack(new RawDamageCalculation((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.CycleAllCardsInHand, e => new FullContextEffect((ctx, _) =>
             {
@@ -67,12 +67,12 @@ public static class AllEffects
                 ctx.PlayerCardZones.CycleHand();
             }, e.DurationFormula)},
         { EffectType.DrawCards, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(
-            BattleLoggedItem(v => $"Drew {v} cards", Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt())), e.DurationFormula)},
+            BattleLoggedItem(v => $"Drew {v} cards", Formula.EvaluateToInt(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount))), e.DurationFormula)},
         { EffectType.DrawCardsOfOwner, e => new FullContextEffect((ctx, _, m) => ctx.PlayerCardZones.DrawCards(
-            BattleLoggedItem(v => $"Drew {v} cards for {ctx.Source.Name}", Formula.Evaluate(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount).CeilingInt()), 
+            BattleLoggedItem(v => $"Drew {v} cards for {ctx.Source.Name}", Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)), 
                 card => card.Owner.Id == ctx.Source.Id), e.DurationFormula)},
         { EffectType.DrawCardsOfArchetype, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(BattleLoggedItem(v => $"Drew {v} {e.EffectScope} cards", 
-                Formula.Evaluate(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount).CeilingInt()), 
+                Formula.EvaluateToInt(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount)), 
                     card => card.Archetypes.Contains(e.EffectScope.Value)), e.DurationFormula)},
         { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope, cards => cards) },
         { EffectType.LeaveBattle, e => new SimpleEffect((m, __) =>
@@ -83,7 +83,7 @@ public static class AllEffects
         { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))},
         { EffectType.TransferPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 
             BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
-                Formula.Evaluate(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount).CeilingInt())) },
+                Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount))) },
         { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.Name} Reloaded", () => m.AdjustPrimaryResource(99))) },
         { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
         { EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, e => new AdjustAllCardsCostUntilPlayed(e.BaseAmount) },
@@ -99,10 +99,10 @@ public static class AllEffects
         { EffectType.AdjustCardCosts, e => new AdjustCardCosts(e.EffectScope, e.Formula)},
         { EffectType.Drain, e => new Transfer(e.EffectScope.Value.MaybeEnumVal<TemporalStatType>(), 
             (ctx, m) => BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {e.EffectScope.Value}", 
-                Formula.Evaluate(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount).CeilingInt())) },
+                Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount))) },
         { EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, 
-            e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource((ctx.Target.TotalShields() 
-                * Formula.Evaluate(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)).CeilingInt()))}
+            e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource(ctx.Target.TotalShields() 
+                * Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)))}
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

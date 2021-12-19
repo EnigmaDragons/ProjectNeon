@@ -161,7 +161,7 @@ public class FullContextEffect : Effect
     public FullContextEffect(Action<EffectContext, int> apply, string durationFormula) 
         : this((ctx, duration, m) => apply(ctx, duration), durationFormula) {}
     public FullContextEffect(Action<EffectContext, int, MemberState> applyToOne, string durationFormula) 
-        : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, Mathf.CeilToInt(Formula.Evaluate(src.SourceSnapshot.State, member, durationFormula, src.XPaidAmount)), member))) { }
+        : this((src, t) => t.ApplyToAllConscious(member => applyToOne(src, Formula.EvaluateToInt(src.SourceSnapshot.State, member, durationFormula, src.XPaidAmount), member))) { }
     public FullContextEffect(Action<EffectContext, Target> apply) => _apply = apply;
 
     public void Apply(EffectContext ctx) => _apply(ctx, ctx.Target);
@@ -171,15 +171,13 @@ public class AegisIfFormulaResult : Effect
 {
     private readonly Action<EffectContext, float, MemberState> _applyToOne;
     private readonly string _formula;
-    private readonly bool _shouldRoundUp;
     private readonly Func<float, bool> _canAegisPreventForFormulaResult;
 
-    public AegisIfFormulaResult(Action<EffectContext, float, MemberState> applyToOne, string formula, bool shouldRoundUp,
+    public AegisIfFormulaResult(Action<EffectContext, float, MemberState> applyToOne, string formula,
         Func<float, bool> canAegisPreventForFormulaResult)
     {
         _applyToOne = applyToOne;
         _formula = formula;
-        _shouldRoundUp = shouldRoundUp;
         _canAegisPreventForFormulaResult = canAegisPreventForFormulaResult;
     }
 
@@ -187,9 +185,7 @@ public class AegisIfFormulaResult : Effect
     {
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
-            var formulaAmount = Formula.Evaluate(ctx.SourceStateSnapshot, m.State, _formula, ctx.XPaidAmount);
-            if (_shouldRoundUp)
-                formulaAmount = formulaAmount.CeilingInt();
+            var formulaAmount = Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, _formula, ctx.XPaidAmount);
 
             var isDebuff = _canAegisPreventForFormulaResult(formulaAmount);
             if (isDebuff) 

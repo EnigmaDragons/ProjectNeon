@@ -9,7 +9,7 @@ using UnityEngine;
 
 public static class InterpolatedCardDescriptions
 {
-    private static int RoundUp(float f) => Mathf.CeilToInt(f);
+    private static int RoundUp(float f) => f > 0 ? Mathf.CeilToInt(f) : Mathf.FloorToInt(f);
     private static string Bold(this string s) => $"<b>{s}</b>";
 
     public static string InterpolatedDescription(this Card card, ResourceQuantity xCost) 
@@ -291,7 +291,7 @@ public static class InterpolatedCardDescriptions
                 || data.EffectType == EffectType.ChooseCardToCreate)
             return $"{FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
-            return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
+            return $"{FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
             return $"× {FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.HealOverTime)
@@ -364,8 +364,8 @@ public static class InterpolatedCardDescriptions
         return RoundUp(FormulaResult(f.FullFormula, owner, xCost)).ToString();
     }
 
-    private static float FormulaResult(string formula, Member owner, ResourceQuantity xCost)
-        => Formula.Evaluate(owner.State.ToSnapshot(), formula, xCost);
+    private static int FormulaResult(string formula, Member owner, ResourceQuantity xCost)
+        => Formula.EvaluateToInt(owner.State.ToSnapshot(), formula, xCost);
     
     private static string MagicAmount(EffectData data, Maybe<Member> owner) 
         => WithImplications(owner.IsPresent
@@ -401,7 +401,7 @@ public static class InterpolatedCardDescriptions
         }
         else
         {
-            var value = RoundUp(Formula.Evaluate(owner.Value.State.ToSnapshot(), data.DurationFormula, xCost));
+            var value = Formula.EvaluateToInt(owner.Value.State.ToSnapshot(), data.DurationFormula, xCost);
             turnString = value < 0
                 ? "for the battle" 
                 : $"for {Bold(value.ToString())} turns";
