@@ -50,7 +50,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     {
         var beforeState = state.GetSnapshot();
         var ctx = ApplyEffects(msg);
-        _currentBattleEffectContext = new Maybe<(ApplyBattleEffect, BattleStateSnapshot, EffectContext)>((msg, state.GetSnapshot(), ctx));
+        _currentBattleEffectContext = new Maybe<(ApplyBattleEffect, BattleStateSnapshot, EffectContext)>((msg, beforeState, ctx));
         if (ctx.Selections.CardSelectionOptions?.Any() ?? false)
         {
             var action = ctx.Selections.OnCardSelected;
