@@ -4,5 +4,9 @@ public sealed class SaveHandler : OnMessage<AutoSaveRequested>
 {
     [SerializeField] private SaveLoadSystem io;
     
-    protected override void Execute(AutoSaveRequested msg) => io.SaveCheckpoint();
+    protected override void Execute(AutoSaveRequested msg)
+    {
+        io.SaveCheckpoint();
+        CurrentGameOptions.Save();
+    }
 }
