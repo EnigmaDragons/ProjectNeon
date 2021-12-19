@@ -291,7 +291,7 @@ public static class InterpolatedCardDescriptions
                 || data.EffectType == EffectType.ChooseCardToCreate)
             return $"{FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
-            return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
+            return $"{FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
             return $"× {FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.HealOverTime)
