@@ -102,9 +102,13 @@ public class Hero
         return WithEquipmentState(m, EffectContext.ForTests(m, new Single(m)));
     }
 
-    public Member AsMember(int id) =>
-        new Member(id, Character.Name, Character.Class, Character.MaterialType, TeamType.Party, 
+    public Member AsMember(int id)
+    {
+        var m = new Member(id, Character.Name, Character.Class, Character.MaterialType, TeamType.Party,
             Stats, Character.BattleRole, PrimaryStat, CurrentHp, new Maybe<CardTypeData>(basicCard));
+        Character.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
+        return m;
+    }
 
     public Member InitEquipmentState(Member m, BattleState state) 
         => WithEquipmentState(m, CreateEffectContext(m, state));
