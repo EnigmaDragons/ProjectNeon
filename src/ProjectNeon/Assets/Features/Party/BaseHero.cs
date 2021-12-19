@@ -18,6 +18,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private Color tint;
     [SerializeField] private CharacterAnimations animations;
     [SerializeField] private int startingCredits = 100;
+    [SerializeField, Range(1, 5)] private int complexityRating = 3; 
 
     // Stats
     [SerializeField] private int maxHp = 40;
