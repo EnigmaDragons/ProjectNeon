@@ -65,14 +65,16 @@ public static class CardTypeDataExtensions
         var hero = party.BestMatchFor(c.GetArchetypeKey());
         return ToNonBattleCard(c, hero);
     }
-    
+
     public static Card ToNonBattleCard(this CardTypeData c, Hero hero)
-    {
-        return new Card(-1, hero.AsMember(-1), c, hero.Character.Tint, hero.Character.Bust);
-    }
+        => ToNonBattleCard(c, hero.Character);
     
-    public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero)
-    {
-        return new Card(-1, hero.AsMemberForLibrary(), c, hero.Tint, hero.Bust);
-    }
+    public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero) 
+        => new Card(-1, hero.AsMemberForLibrary(), c, c.NonBattleTint(hero), c.NonBattleBust(hero));
+
+    private static Color NonBattleTint(this CardTypeData c, HeroCharacter h)
+        => c.Archetypes.Any() ? h.Tint : Color.white;
+    
+    private static Maybe<Sprite> NonBattleBust(this CardTypeData c, HeroCharacter h)
+        => c.Archetypes.Any() ? new Maybe<Sprite>(h.Bust) : Maybe<Sprite>.Missing();
 }
