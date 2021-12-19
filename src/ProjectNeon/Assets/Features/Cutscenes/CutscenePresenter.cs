@@ -14,6 +14,7 @@ public class CutscenePresenter : MonoBehaviour
     [SerializeField] private GameObject settingParent;
     [SerializeField] private CutsceneCharacter narrator;
     [SerializeField] private SpawnPartyToMarkers setupParty;
+    [SerializeField] private GameObject[] disableOnFinished;
 
     private CutsceneSegment _currentSegment;
     private bool _debugLoggingEnabled = true;
@@ -107,9 +108,17 @@ public class CutscenePresenter : MonoBehaviour
         
         DebugLog($"Show Character Dialogue Line {msg.CharacterAlias}");
         _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
-            .ExecuteIfPresentOrElse(
-                c => c.SpeechBubble.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: true, 
-                    () => FinishCurrentSegment()),
+            .ExecuteIfPresentOrElse(c =>
+                {
+                    var useAutoAdvance = CurrentGameOptions.Data.UseAutoAdvance;
+                    var speech = c.SpeechBubble;
+                    speech.SetAllowManualAdvance(!useAutoAdvance);
+                    if (useAutoAdvance)
+                        speech.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: false,
+                            () => this.ExecuteAfterDelay(FinishCurrentSegment, dialogueWaitDelay));
+                    else
+                        c.SpeechBubble.Display(msg.Text, shouldAutoProceed: false, FinishCurrentSegment);
+                },
                 () =>
                 {
                     DebugLog($"Character Not Found in Cutscene {msg.CharacterAlias}");
@@ -138,6 +147,8 @@ public class CutscenePresenter : MonoBehaviour
         
         _finishTriggered = true;
         DebugLog("Cutscene Finished");
+        narrator.SpeechBubble.ForceHide();
+        disableOnFinished.ForEach(d => d.SetActive(false));
         MessageGroup.TerminateAndClear();
         progress.AdventureProgress.Advance();
         Message.Publish(new AutoSaveRequested());

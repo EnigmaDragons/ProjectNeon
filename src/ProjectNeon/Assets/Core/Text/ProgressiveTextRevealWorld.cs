@@ -18,6 +18,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     [SerializeField, ReadOnly] private string fullText;
     
     private int _cursor;
+    private bool _allowManualAdvance = true;
     private bool _shouldAutoProceed = false;
     private bool _manualInterventionDisablesAuto = true;
     private bool _finished = false;
@@ -58,7 +59,10 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     }
 
     public override void Proceed(bool isAuto)
-    {
+    {        
+        if (!isAuto && !_allowManualAdvance)
+            return;
+        
         Info($"Text Box - Proceed Auto: {isAuto}");
         if (_finished)
             return;
@@ -74,6 +78,11 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
 
         if (_shouldAutoProceed && isAuto)
             this.ExecuteAfterDelay(Finish, autoAdvanceDelay);
+    }
+
+    public override void SetAllowManualAdvance(bool allow)
+    {
+        _allowManualAdvance = allow;
     }
 
     private void Finish()

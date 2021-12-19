@@ -7,6 +7,7 @@ public abstract class ProgressiveText : MonoBehaviour
     public abstract void ForceHide();
     public abstract void Display(string text, bool shouldAutoProceed, bool manualInterventionDisablesAuto, Action onFinished);
     public abstract void Proceed(bool isAuto);
+    public abstract void SetAllowManualAdvance(bool allow);
 
     public void Display(string text) 
         => Display(text,  false, true, () => { });
@@ -14,6 +15,6 @@ public abstract class ProgressiveText : MonoBehaviour
         => Display(text, false, true, onFinished);
     public void Display(string text, bool shouldAutoProceed, Action onFinished) 
         => Display(text, shouldAutoProceed, true, onFinished);
-    
+
     public void Proceed() => Proceed(false);
 }
