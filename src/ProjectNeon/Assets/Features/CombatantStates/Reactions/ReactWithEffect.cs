@@ -18,9 +18,9 @@ public class EffectReactWith : Effect
             => ctx.Actor.IsConscious() && effect.EffectData.EffectScope.Value == "Vulnerable" && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
         { ReactionConditionType.WhenShieldBroken, ctx => effect => ctx.Possessor.IsConscious() && WentToZero(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
         { ReactionConditionType.WhenShielded, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
-        { ReactionConditionType.WhenDamagedHp, ctx => effect => ctx.Possessor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp))},
-        { ReactionConditionType.WhenDamagedShield, ctx => effect => ctx.Possessor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Shield))},
-        { ReactionConditionType.WhenDamaged, ctx => effect => ctx.Possessor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp + m.State.Shield))},
+        { ReactionConditionType.WhenDamagedHp, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp))},
+        { ReactionConditionType.WhenDamagedShield, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Shield))},
+        { ReactionConditionType.WhenDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp + m.State.Shield))},
         { ReactionConditionType.WhenBlinded, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
         { ReactionConditionType.WhenGainedPrimaryResource, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State.PrimaryResourceAmount)) },
         { ReactionConditionType.WhenShieldMaxed, ctx => effect 
@@ -233,7 +233,7 @@ public sealed class ReactWithEffect : ReactiveEffectV2Base
                 {
                     var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                     var conditionMet = condition(effect);
-                    DevLog.Write($"{status.Tag} Reaction - Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
+                    DevLog.Write($"{status.Tag} Reaction - Member {possessingMemberId}- Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
                     return isInTriggerScope && conditionMet;
                 })) {}
 }
@@ -247,7 +247,7 @@ public sealed class ReactWithCard : ReactiveEffectV2Base
             {
                 var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                 var conditionMet = condition(effect);
-                DevLog.Write($"{status.Tag} Reaction - Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
+                DevLog.Write($"{status.Tag} Reaction - Member {possessingMemberId}- Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
                 return isInTriggerScope && conditionMet;
             })) {}
 }
