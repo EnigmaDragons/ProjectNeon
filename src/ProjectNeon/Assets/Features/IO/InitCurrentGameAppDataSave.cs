@@ -13,7 +13,7 @@ public class InitCurrentGameAppDataSave : MonoBehaviour
                 () => new GameData {VersionNumber = versionNumber}));
         
         CurrentGameOptions.Init(versionNumber,             
-            new JsonFileStored<PlayerOptionsData>(Path.Combine(Application.persistentDataPath, saveFileName),
+            new JsonFileStored<PlayerOptionsData>(Path.Combine(Application.persistentDataPath, "options.json"),
                 () => new PlayerOptionsData() {VersionNumber = versionNumber}));
     }
 }
