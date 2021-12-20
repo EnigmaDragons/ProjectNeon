@@ -150,7 +150,11 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
                 Scope = Scope.One, 
                 Target = new Single(m.Member), 
                 Group = Group.Self,
-                PerformerId = m.Member.Id
+                PerformerId = m.Member.Id,
+                Condition = new NoEffectCondition(),
+                Card = Maybe<Card>.Missing(),
+                Source = m.Member,
+                XPaidAmount = ResourceQuantity.None
             });
         }
 

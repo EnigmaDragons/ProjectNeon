@@ -92,7 +92,14 @@ public static class BattleCardExecution
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset));
         if (type == CardBattleActionType.AnimateCharacter)
-            return new SinglePayload(PayloadData.ExactMatch(new CharacterAnimationRequested2(ctx.Source.Id, action.CharacterAnimation2.Type)));
+            return new SinglePayload(PayloadData.ExactMatch(new CharacterAnimationRequested2(ctx.Source.Id, action.CharacterAnimation2.Type)
+            {
+                Condition = new Maybe<EffectCondition>(action.CharacterAnimation2.Condition),
+                Source = ctx.Source,
+                Target = ctx.Target, 
+                Card = ctx.Card,
+                XPaidAmount = ctx.XAmountPaid
+            }));
         if (type == CardBattleActionType.AnimateAtTarget)
             return new SinglePayload(new BattleEffectAnimationRequested
             {
@@ -103,7 +110,11 @@ public static class BattleCardExecution
                 Group = ctx.Group, 
                 Speed = action.AtTargetAnimation.Speed, 
                 Size = action.AtTargetAnimation.Size, 
-                Color = action.AtTargetAnimation.Color
+                Color = action.AtTargetAnimation.Color,
+                Condition = action.AtTargetAnimation.Condition,
+                Source = ctx.Source,
+                Card = ctx.Card,
+                XPaidAmount = ctx.XAmountPaid
             });
         if (type == CardBattleActionType.Condition)
             return new DelayedPayload(() => AllConditions.Resolve(action.ConditionData, ctx));
@@ -116,7 +127,14 @@ public static class BattleCardExecution
         if (type == CardBattleActionType.Battle)
             return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffect, action.BattleEffect, source, target, Maybe<Card>.Missing(), xAmountPaid, new PreventionContextMut(target)));
         if (type == CardBattleActionType.AnimateCharacter)
-            return new SinglePayload(PayloadData.ExactMatch(new CharacterAnimationRequested2(source.Id, action.CharacterAnimation2.Type)));
+            return new SinglePayload(PayloadData.ExactMatch(new CharacterAnimationRequested2(source.Id, action.CharacterAnimation2.Type)
+            {
+                Condition = new Maybe<EffectCondition>(action.CharacterAnimation2.Condition),
+                Source = source,
+                Target = target, 
+                Card = Maybe<Card>.Missing(),
+                XPaidAmount = xAmountPaid
+            }));
         if (type == CardBattleActionType.AnimateAtTarget)
             return new SinglePayload(new BattleEffectAnimationRequested
             {
@@ -127,7 +145,11 @@ public static class BattleCardExecution
                 Group = target.Members.All(x => x.TeamType == source.TeamType) ? Group.Ally : target.Members.All(x => x.TeamType != source.TeamType) ? Group.Opponent : Group.All, 
                 Speed = action.AtTargetAnimation.Speed, 
                 Size = action.AtTargetAnimation.Size, 
-                Color = action.AtTargetAnimation.Color
+                Color = action.AtTargetAnimation.Color,
+                Condition = action.AtTargetAnimation.Condition,
+                Source = source,
+                Card = Maybe<Card>.Missing(),
+                XPaidAmount = xAmountPaid
             });
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset));

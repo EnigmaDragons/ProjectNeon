@@ -11,6 +11,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     [SerializeField] private Transform heroesGroupLocation;
     [SerializeField] private Transform effectsParent;
     [SerializeField] private bool loggingEnabled = false;
+    [SerializeField] private PartyAdventureState partyAdventureState;
 
     private Dictionary<string, BattleVFX> _fxByName;
     
@@ -26,7 +27,17 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     {
         LogInfo($"Requested VFX {e.EffectName}");
         var f = _fxByName.ValueOrMaybe(e.EffectName);
-        if (f.IsMissing)
+        var ctx = new EffectContext(e.Source, e.Target, e.Card, e.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
+            state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), state.CreditsAtStartOfBattle, 
+            state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
+            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false);
+        var conditionResult = e.Condition.GetShouldNotApplyReason(ctx);
+        if (conditionResult.IsPresent)
+        {
+            LogInfo($"Condition Not Meant: {conditionResult.Value}");
+            Message.Publish(new Finished<BattleEffectAnimationRequested>());
+        }
+        else if (f.IsMissing)
         {
             LogInfo($"No VFX of type {e.EffectName}");
             Message.Publish(new Finished<BattleEffectAnimationRequested>());

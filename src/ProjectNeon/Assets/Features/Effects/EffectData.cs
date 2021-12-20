@@ -95,7 +95,8 @@ public static class EffectDataExtensions
     }
 
     public static EffectCondition Condition(this EffectData e) =>
-        e.Conditions != null && e.Conditions.Length > 0 
+        e.Conditions != null 
+        && e.Conditions.Length > 0 
             ? (EffectCondition)new AndEffectCondition(e.Conditions.Cast<EffectCondition>().ToArray()) 
             : new NoEffectCondition();
 

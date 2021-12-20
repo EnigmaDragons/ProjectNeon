@@ -9,6 +9,8 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
 {
     [SerializeField] private Animator animator;
     [SerializeField] private Transform character;
+    [SerializeField] private PartyAdventureState partyAdventureState;
+    [SerializeField] private BattleState state;
     
     private int _memberId;
     private TeamType _team;
@@ -48,6 +50,19 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     {
         if (msg.MemberId != _memberId)
             return;
+        if (msg.Condition.IsPresent)
+        {
+            var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
+                state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), state.CreditsAtStartOfBattle, 
+                state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
+                state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false);
+            var reasonToNotApply = msg.Condition.Value.GetShouldNotApplyReason(ctx);
+            if (reasonToNotApply.IsPresent)
+            {
+                Message.Publish(new Finished<CharacterAnimationRequested2> { Message = msg });
+                return;
+            }
+        }
         if (_currentCoroutine != null)
             StopCoroutine(_currentCoroutine);
         ReturnToDefault();
