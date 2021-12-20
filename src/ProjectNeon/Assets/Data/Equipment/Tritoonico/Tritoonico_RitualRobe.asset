@@ -10,22 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: VitalityBooster-V1
+  m_Name: Tritoonico_RitualRobe
   m_EditorClassIdentifier: 
-  id: 31
-  displayName: Vitality Booster V1
-  description: +5 MaxHP
+  id: 92
+  displayName: Ritual Robe
+  description: +1 Magic +1 Resistance
+  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes: []
   rarity: 1
-  slot: 2
+  slot: 1
   priceFactor: 1
   modifiers:
   - ModifierType: 0
-    Amount: 5
-    StatType: MaxHP
+    Amount: 1
+    StatType: Magic
+  - ModifierType: 0
+    Amount: 1
+    StatType: Resistance
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects: []
-  isWIP: 1
-  corp: {fileID: 11400000, guid: 33641feb13cddf64da66a37831d9c198, type: 2}
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
+  isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 
