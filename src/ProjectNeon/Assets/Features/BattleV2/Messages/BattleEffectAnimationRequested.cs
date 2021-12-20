@@ -11,4 +11,9 @@ public class BattleEffectAnimationRequested
     public float Size { get; set; } = 1;
     public float Speed { get; set; } = 1;
     public Color Color { get; set; } = new Color(0f, 0f, 0f, 0f);
+    
+    public EffectCondition Condition { get; set; }
+    public Member Source { get; set; }
+    public Maybe<Card> Card { get; set; }
+    public ResourceQuantity XPaidAmount { get; set; }
 }
