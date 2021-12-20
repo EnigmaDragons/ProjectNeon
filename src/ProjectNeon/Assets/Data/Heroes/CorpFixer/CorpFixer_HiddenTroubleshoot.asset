@@ -10,16 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: CorpFixer_TroubleshootV2
+  m_Name: CorpFixer_HiddenTroubleshoot
   m_EditorClassIdentifier: 
-  id: 353
+  id: 0
   customName: 
   art: {fileID: 21300000, guid: b8a62d717a9f50e45ab421ba54338a29, type: 3}
-  description: 'Gives {E[0]}
+  description: 'Gives {E[1]}
 
-    Draw a Card
+    Draw {E[2]} <b>Cards</b>
 
-    Gain {E[2]} <b>Card Cycles</b>'
+    Gain {E[3]} <b>Card
+    Cycles</b>
+
+    You enter <b>Stealth</b>'
   typeDescription: {fileID: 0}
   tags: 
   speed: 0
@@ -28,11 +31,16 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
-  rarity: 5
+  rarity: 1
   actionSequences:
   - scope: 0
     group: 2
     cardActions: {fileID: 11400000, guid: 9d2982634161d4441b20094fc88eab82, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -40,8 +48,9 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: f3ce0b551899476478f607da76d55580, type: 2}
+  - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 1
+  notAvailableForGeneralDistribution: 0
