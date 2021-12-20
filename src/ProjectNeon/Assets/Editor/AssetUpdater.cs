@@ -227,7 +227,7 @@ public class AssetUpdater
     [MenuItem("Neon/Update/UpdateAllEquipments")]
     private static void UpdateAllEquipments()
     {
-        var equipments = ScriptableExtensions.GetAllInstances<StaticEquipment>();
+        var equipments = ScriptableExtensions.GetAllInstances<StaticEquipment>().Where(e => e.IncludeInPools).ToArray();
         var allEquipments = ScriptableExtensions.GetAllInstances<AllEquipment>();
         allEquipments.ForEach(x =>
         {

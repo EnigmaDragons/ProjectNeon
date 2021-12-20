@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: FocusCrystal
+  m_Name: Astropoly_SkillCatalog
   m_EditorClassIdentifier: 
-  id: 53
-  displayName: Focus Crystal
-  description: 'On Hero Card Play: Gain +1 Magic for the turn'
-  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
-  archetypes:
-  - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
-  rarity: 1
+  id: 108
+  displayName: Skill Catalog
+  description: 'Team: +2 Card Cycles'
+  corp: {fileID: 11400000, guid: 4da9e8a658cc248438c17122d0269d3f, type: 2}
+  archetypes: []
+  rarity: 2
   slot: 2
   priceFactor: 1
   modifiers: []
@@ -26,7 +25,7 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - EffectType: 49
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -34,18 +33,19 @@ MonoBehaviour:
       Variable: {fileID: 0}
     FloatAmount:
       UseConstant: 1
-      ConstantValue: -1
+      ConstantValue: 2
       FloatVariable: {fileID: 0}
     DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 0}
+      Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
     HitsRandomTargetMember: 0
     TargetsSource: 0
     ReTargetScope: 0
-    StatusTag: 12
-    StatusDetailText: 'On Hero Card Play: Gain +1 Magic for the turn'
+    ApplyToEachMemberIndividually: 0
+    StatusTag: 0
+    StatusDetailText: 
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -57,7 +57,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 36
+    ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
@@ -66,6 +66,11 @@ MonoBehaviour:
     ReactionEffect:
       reactor: 0
       scope: 0
-      cardActions: {fileID: 11400000, guid: 7aaf8ffdd0a674b4eaffff2eda42edc3, type: 2}
+      cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 
