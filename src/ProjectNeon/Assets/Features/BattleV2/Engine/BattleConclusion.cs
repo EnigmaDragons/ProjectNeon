@@ -51,9 +51,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
             var adventureType = CurrentGameData.Data.AdventureProgress.Type;
             if (adventureType == GameAdventureProgressType.V2)
                 this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
-            if (adventureType == GameAdventureProgressType.V4)
+            if (adventureType == GameAdventureProgressType.V4 || adventureType == GameAdventureProgressType.Unknown)
                 this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV4(), secondsBeforeReturnToAdventure);
-            
         }
     }
 
