@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameContent/Deck")]
+[CreateAssetMenu(menuName = "Hero/2 - Starting Deck")]
 public class Deck : ScriptableObject
 {
     public List<CardType> Cards;

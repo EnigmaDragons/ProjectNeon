@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameContent/HeroCharacter")]
+[CreateAssetMenu(menuName = "Hero/1 - HeroCharacter")]
 public class BaseHero : ScriptableObject, HeroCharacter
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
