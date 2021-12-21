@@ -2,7 +2,7 @@
 	export let open = false;
 </script>
 
-<button class="tablet" class:open on:click={() => open = !open}>
+<button class="tablet" alt="Nav Menu Toggle Button" class:open on:click={() => open = !open}>
 	<svg width=32 height=24>
 		<line id="top" x1=0 y1=2  x2=32 y2=2/>
 		<line id="middle" x1=0 y1=12 x2=24 y2=12/>
