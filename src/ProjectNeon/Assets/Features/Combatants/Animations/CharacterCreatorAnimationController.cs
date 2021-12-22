@@ -25,6 +25,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     private Vector3 _destination;
     private float _totalSeconds;
     private float _secondsRemaining;
+    private bool _canAnimate = true;
 
     public void Init(int memberId, CharacterAnimations characterAnimations, TeamType team)
     {
@@ -36,7 +37,15 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         
         // TODO: Temp Fix for Layering. Doesn't really belong in this class
         InitCharacterSortingLayer();
+
+        if (partyAdventureState == null)
+            Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(partyAdventureState)} is null");
+        if (state == null)
+            Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(state)} is null");
+        if (state == null || partyAdventureState == null || animator == null || character == null)
+            _canAnimate = false;
     }
+    
 
     private void Update()
     {
@@ -48,8 +57,12 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     
     protected override void Execute(CharacterAnimationRequested2 msg)
     {
+        if (!_canAnimate)
+            return;
+        
         if (msg.MemberId != _memberId)
             return;
+        
         if (msg.Condition.IsPresent)
         {
             var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
