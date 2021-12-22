@@ -52,7 +52,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             }
 
             var location = state.GetCenterPoint(member.Id);
-            PlayEffect(f.Value, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
+            PlayEffect(f.Value, location.position, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
         }
         else if (e.Group == Group.All)
         {
@@ -65,7 +65,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             var opponentTeam = performerTeam == TeamType.Enemies ? TeamType.Party : TeamType.Enemies;
             var targetTeam = e.Group == Group.Opponent ? opponentTeam : performerTeam;
             var location = targetTeam == TeamType.Enemies ? enemyGroupLocation : heroesGroupLocation;
-            PlayEffect(f.Value, location.position, location, e.Size, e.Speed, e.Color, e.Target.Members.All(x => x.TeamType == TeamType.Enemies));
+            PlayEffect(f.Value, location.position, e.Size, e.Speed, e.Color, e.Target.Members.All(x => x.TeamType == TeamType.Enemies));
         }
     }
 
@@ -75,11 +75,13 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         var f = _fxByName.ValueOrMaybe(e.EffectName);
         if (f.IsMissing)
             LogInfo($"No VFX of type {e.EffectName}");
-        
-        PlayEffect(f.Value, e.Target, gameObject.transform, 1, 1, new Color(0, 0, 0, 0), false);
+        else
+        {
+            PlayEffect(f.Value, e.Target, 1, 1, new Color(0, 0, 0, 0), e.Flip);
+        }
     }
 
-    private void PlayEffect(BattleVFX f, Vector3 target, Transform parent, float size, float speed, Color color, bool shouldFlipHorizontal)
+    private void PlayEffect(BattleVFX f, Vector3 target, float size, float speed, Color color, bool shouldFlipHorizontal)
     {
         var o = Instantiate(f.gameObject, target + f.gameObject.transform.localPosition, f.gameObject.transform.rotation, effectsParent);
         var instVFX = o.GetComponent<BattleVFX>();
@@ -92,7 +94,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
 
     private void SetupEffect(GameObject o, BattleVFX f, float size, float speed, Color color, bool shouldFlipHorizontal)
     {
-        var effectObject = o.transform.GetChild(0);
+        var effectObject = o.transform.childCount > 0 ? o.transform.GetChild(0) : o.transform;
         f.SetSpeed(speed);
         effectObject.localScale = new Vector3(size, size, size);
         effectObject.localPosition = new Vector3(effectObject.localPosition.x * size, effectObject.localPosition.y * size, effectObject.localPosition.z * size);
