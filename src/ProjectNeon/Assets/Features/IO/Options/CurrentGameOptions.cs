@@ -29,4 +29,10 @@ public static class CurrentGameOptions
         o.UseAutoAdvance = shouldUse;
         return o;
     });
+
+    public static void SetBattleSpeed(int factor) => Write(o =>
+    {
+        o.BattleSpeedFactor = factor;
+        return o;
+    });
 }

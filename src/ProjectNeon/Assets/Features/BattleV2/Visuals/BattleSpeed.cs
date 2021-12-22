@@ -2,17 +2,24 @@ using UnityEngine;
 
 public sealed class BattleSpeed : OnMessage<ToggleGameSpeed>
 {
-    [SerializeField] private int currentFactor = 1;
+    private void Awake() => SetFactor(CurrentFactor);
 
-    public float CurrentFactor => currentFactor;
+    public int CurrentFactor => CurrentGameOptions.Data.BattleSpeedFactor;
 
     private void ChangeTimeFactor()
     {
-        currentFactor = currentFactor * 2;
-        if (currentFactor > 4)
-            currentFactor = 1;
-        Time.timeScale = currentFactor;
-        Message.Publish(new BattleSpeedChanged(currentFactor));
+        var newFactor = CurrentFactor * 2;
+        if (newFactor > 4)
+            newFactor = 1;
+        SetFactor(newFactor);
+    }
+
+    private void SetFactor(int factor)
+    {
+        Time.timeScale = factor;
+        if (factor != CurrentFactor)
+            Message.Publish(new BattleSpeedChanged(factor)); 
+        CurrentGameOptions.SetBattleSpeed(factor);
     }
 
     protected override void Execute(ToggleGameSpeed msg) => ChangeTimeFactor();
