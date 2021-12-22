@@ -22,7 +22,7 @@ public sealed class UIStatusBar : StatusBar
         {
             if (i < Math.Min(statuses.Count, _icons.Count))
                 _icons[i].Show(statuses[i]);
-            else
+            else if (i < _icons.Count)
                 _icons[i].gameObject.SetActive(false);
         }
     }
