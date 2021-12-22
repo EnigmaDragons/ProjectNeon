@@ -75,7 +75,7 @@ public class BattleState : ScriptableObject
     public Member[] ConsciousEnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies && x.IsConscious()).ToArray();
     public (Member Member, EnemyInstance Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
     public PlayerState PlayerState => playerState;
-    public int MapNodeRngSeed => map.CurrentNodeRngSeed;
+    public int BattleRngSeed => adventure.Adventure.IsV4 ? map.CurrentNodeRngSeed : adventureProgress.AdventureProgress.RngSeed;
     public AllCards AllCards => allCards;
     private Dictionary<int, EnemyInstance> _enemiesById = new Dictionary<int, EnemyInstance>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();

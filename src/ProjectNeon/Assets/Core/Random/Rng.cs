@@ -4,10 +4,11 @@ using System.Linq;
 
 public static class Rng
 {
-    public static readonly int Seed = Guid.NewGuid().GetHashCode();
+    public static readonly int Seed = NewSeed();
     
     private static readonly Random Instance = new Random(Seed);
 
+    public static int NewSeed() => Guid.NewGuid().GetHashCode();
     public static bool Bool() => Int(2) == 1;
     public static bool Chance(double percent) => Instance.NextDouble() < percent;
     public static int Int() => Int(int.MaxValue);

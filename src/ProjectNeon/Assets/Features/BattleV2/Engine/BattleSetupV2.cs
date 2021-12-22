@@ -120,7 +120,7 @@ public class BattleSetupV2 : MonoBehaviour
             state.DontShuffleNextBattle = false;
         }
         else
-            Deck.InitShuffled(cards, new DeterministicRng(state.MapNodeRngSeed));
+            Deck.InitShuffled(cards, new DeterministicRng(state.BattleRngSeed));
         yield return playerCardPlayZones.DrawHandAsync(state.PlayerState.CardDraws);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameState/AdventureProgress2")]
 public class AdventureProgress2 : AdventureProgressBase
 {
+    [SerializeField] private int rngSeed = Rng.NewSeed();
     [SerializeField] private CurrentGameMap3 currentMap3;
     [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private CurrentGlobalEffects currentGlobalEffects;
@@ -22,6 +23,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public float ProgressToUnlockChapterBoss => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
+    public override int RngSeed { get; }
     public override bool UsesRewardXp { get; } = true;
     public override float BonusXpLevelFactor { get; } = 0;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
@@ -148,16 +150,18 @@ public class AdventureProgress2 : AdventureProgressBase
             CurrentChapterFinishedHeatUpEvents = FinishedCurrentStageHeatUpEvents,
             FinishedStoryEvents = FinishedStoryEvents,
             PlayerReadMapPrompt = PlayerReadMapPrompt,
-            ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray()
+            ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray(),
+            RngSeed = rngSeed
         };
     
-    public bool InitAdventure(GameAdventureProgressData adventureProgress, Adventure adventure)
+    public bool InitAdventure(GameAdventureProgressData d, Adventure adventure)
     {
-        Init(adventure, adventureProgress.CurrentChapterIndex);
-        SetFinishedStoryEvents(adventureProgress.FinishedStoryEvents);
-        SetFinishedHeatUpEvents(adventureProgress.CurrentChapterFinishedHeatUpEvents);
-        ApplyGlobalEffects(adventureProgress.ActiveGlobalEffectIds);
-        if (adventureProgress.PlayerReadMapPrompt)
+        Init(adventure, d.CurrentChapterIndex);
+        SetFinishedStoryEvents(d.FinishedStoryEvents);
+        SetFinishedHeatUpEvents(d.CurrentChapterFinishedHeatUpEvents);
+        ApplyGlobalEffects(d.ActiveGlobalEffectIds);
+        rngSeed = d.RngSeed;
+        if (d.PlayerReadMapPrompt)
             MarkMapPromptComplete();
         return true;
     }
@@ -165,6 +169,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public override void Advance()
     {
         currentMap3.CompleteCurrentNode();
+        rngSeed = Rng.NewSeed();
         AdvanceStageIfNeeded();
     } 
 }

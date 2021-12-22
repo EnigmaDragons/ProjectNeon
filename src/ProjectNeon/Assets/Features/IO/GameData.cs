@@ -27,6 +27,7 @@ public class GameAdventureProgressData
     public string[] FinishedStoryEvents = new string[0];
     public bool PlayerReadMapPrompt = false;
     public int[] ActiveGlobalEffectIds = new int[0];
+    public int RngSeed = Rng.NewSeed();
 }
 
 public enum GameAdventureProgressType

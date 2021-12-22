@@ -6,7 +6,7 @@ public class DeterministicRng
 {
     private readonly Random _instance;
     
-    public int Seed { get; private set; }
+    public int Seed { get; }
     
     public DeterministicRng(int seed)
     {

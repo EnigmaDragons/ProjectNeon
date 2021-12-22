@@ -8,6 +8,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     [SerializeField] private CurrentGlobalEffects currentGlobalEffects;
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private int currentSegmentIndex;
+    [SerializeField] private int rngSeed = Rng.NewSeed();
     
     public Adventure CurrentAdventure => currentAdventure.Adventure;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
@@ -19,6 +20,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     public float ProgressToUnlockChapterBoss => Progress;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
     public bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
+    public override int RngSeed => rngSeed;
     public override bool UsesRewardXp { get; } = false;
     public override float BonusXpLevelFactor { get; } = 0.33333f;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
@@ -112,20 +114,23 @@ public class AdventureProgressV4 : AdventureProgressBase
             CurrentChapterFinishedHeatUpEvents = new int[0],
             FinishedStoryEvents = new string[0],
             PlayerReadMapPrompt = true,
-            ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray()
+            ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray(),
+            RngSeed = rngSeed
         };
     
-    public bool InitAdventure(GameAdventureProgressData adventureProgress, Adventure adventure)
+    public bool InitAdventure(GameAdventureProgressData d, Adventure adventure)
     {
-        Init(adventure, adventureProgress.CurrentChapterIndex);
-        currentSegmentIndex = adventureProgress.CurrentSegmentIndex;
-        ApplyGlobalEffects(adventureProgress.ActiveGlobalEffectIds);
+        Init(adventure, d.CurrentChapterIndex);
+        currentSegmentIndex = d.CurrentSegmentIndex;
+        ApplyGlobalEffects(d.ActiveGlobalEffectIds);
+        rngSeed = d.RngSeed;
         return true;
     }
 
     public override void Advance()
     {
         currentSegmentIndex++;
+        rngSeed = Rng.NewSeed();
         AdvanceStageIfNeeded();
     }
 }

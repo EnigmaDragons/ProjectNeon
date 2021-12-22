@@ -15,7 +15,7 @@ public class CurrentGameMap3 : ScriptableObject
     public Vector2 DestinationPosition { get; set; } = Vector2.zero;
     public List<MapNode3> CurrentChoices { get; set; } = new List<MapNode3>();
     public bool HasCompletedEventEnRoute { get; set; }
-    public int CurrentNodeRngSeed { get; set; } = Guid.NewGuid().GetHashCode();
+    public int CurrentNodeRngSeed { get; set; } = Rng.NewSeed();
     public int HeatAdjustments { get; set; }
 
     public int MaxNodeCompletionHeat => heat.MaxHeatGain;
@@ -56,7 +56,7 @@ public class CurrentGameMap3 : ScriptableObject
             globalEffects.ApplyById(m.UnVisitedGlobalEffectId, new GlobalEffectContext(globalEffects)));
     }
 
-    private void UpdateSeed() => CurrentNodeRngSeed = Guid.NewGuid().GetHashCode();
+    private void UpdateSeed() => CurrentNodeRngSeed = Rng.NewSeed();
 
     public void AdjustHeat(int newHeat)
     {

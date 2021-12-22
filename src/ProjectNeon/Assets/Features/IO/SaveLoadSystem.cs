@@ -61,16 +61,16 @@ public sealed class SaveLoadSystem : ScriptableObject
         return saveData.Phase;
     }
 
-    private bool InitAdventure(GameAdventureProgressData adventureProgress)
+    private bool InitAdventure(GameAdventureProgressData d)
     {
-        var selectedAdventure = library.GetAdventureById(adventureProgress.AdventureId);
+        var selectedAdventure = library.GetAdventureById(d.AdventureId);
         if (selectedAdventure.IsMissing)
-            return LoadFailedReason($"Unknown Adventure {adventureProgress.AdventureId}");
-        if (adventureProgress.Type == GameAdventureProgressType.V2)
-            return adventure.InitAdventure(adventureProgress, selectedAdventure.Value);
-        if (adventureProgress.Type == GameAdventureProgressType.V4)
-            return adventurev4.InitAdventure(adventureProgress, selectedAdventure.Value);
-        return LoadFailedReason($"Unknown Adventure Type {adventureProgress.Type}");
+            return LoadFailedReason($"Unknown Adventure {d.AdventureId}");
+        if (d.Type == GameAdventureProgressType.V2)
+            return adventure.InitAdventure(d, selectedAdventure.Value);
+        if (d.Type == GameAdventureProgressType.V4)
+            return adventurev4.InitAdventure(d, selectedAdventure.Value);
+        return LoadFailedReason($"Unknown Adventure Type {d.Type}");
     }
 
     private bool InitParty(GamePartyData partyData)
