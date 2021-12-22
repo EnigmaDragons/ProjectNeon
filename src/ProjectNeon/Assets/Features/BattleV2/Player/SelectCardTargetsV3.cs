@@ -28,7 +28,9 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     private void EndSelection(bool shouldDiscard)
     {
         Log.Info($"UI - Finished Target Selection. Discard {shouldDiscard}");
-        if (shouldDiscard)
+        if (battleState.Phase != BattleV2Phase.PlayCards)
+            Cancel();
+        else if (shouldDiscard)
             DiscardCard();
         else if (targetingState.HasValidTargets && card != null && card.IsPlayable(battleState.Party, battleState.NumberOfCardPlaysRemainingThisTurn))
             PlayCard(new PlayedCardV2(card.Owner, targetingState.Targets, card));

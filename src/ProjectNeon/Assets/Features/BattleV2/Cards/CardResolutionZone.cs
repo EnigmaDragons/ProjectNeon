@@ -256,11 +256,16 @@ public class CardResolutionZone : ScriptableObject
         {
             var action = card.ActionSequences[i];
             var possibleTargets = battleState.GetPossibleConsciousTargets(m, action.Group, action.Scope);
-            targets[i] = possibleTargets.First();
-            if (previousTargets.IsPresent)
-                foreach(var previousTarget in previousTargets.Value)
-                    if (possibleTargets.Contains(previousTarget))
-                        targets[i] = previousTarget;
+            if (possibleTargets.None())
+                targets[i] = new NoTarget();
+            else
+            {
+                targets[i] = possibleTargets.First();
+                if (previousTargets.IsPresent)
+                    foreach (var previousTarget in previousTargets.Value)
+                        if (possibleTargets.Contains(previousTarget))
+                            targets[i] = previousTarget;
+            }
         }
         return targets;
     }
