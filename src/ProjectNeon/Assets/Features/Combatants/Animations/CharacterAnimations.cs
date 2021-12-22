@@ -28,8 +28,8 @@ public class CharacterAnimations : ScriptableObject
             { CharacterAnimationType.TargetTeam, targetTeam?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
             { CharacterAnimationType.SelfBuff, selfBuff?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
             { CharacterAnimationType.Pace, pace?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
-            { CharacterAnimationType.Hit, hit?.Steps ?? new CharacterAnimationStep[0] },
-            { CharacterAnimationType.Shot, shot?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
-            { CharacterAnimationType.RapidShot, rapidShot?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
+            { CharacterAnimationType.WhenHit, hit?.Steps ?? new CharacterAnimationStep[0] },
+            { CharacterAnimationType.Shoot, shot?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
+            { CharacterAnimationType.RapidShoot, rapidShot?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
         };
 }

@@ -7,7 +7,7 @@
     TargetTeam = 4,
     SelfBuff = 5,
     Pace = 6,
-    Hit = 7,
-    Shot = 8,
-    RapidShot = 9,
+    WhenHit = 7,
+    Shoot = 8,
+    RapidShoot = 9,
 }
