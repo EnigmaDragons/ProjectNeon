@@ -57,12 +57,15 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     
     protected override void Execute(CharacterAnimationRequested2 msg)
     {
-        if (!_canAnimate)
-            return;
-        
         if (msg.MemberId != _memberId)
             return;
-        
+
+        if (!_canAnimate)
+        {
+            Message.Publish(new Finished<CharacterAnimationRequested2> { Message = msg });
+            return;
+        }
+
         if (msg.Condition.IsPresent)
         {
             var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
