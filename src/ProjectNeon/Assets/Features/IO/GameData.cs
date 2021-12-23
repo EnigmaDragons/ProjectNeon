@@ -12,6 +12,7 @@ public class GameData
     public GameAdventureProgressData AdventureProgress = new GameAdventureProgressData();
     public GamePartyData PartyData = new GamePartyData();
     public GameMapData GameMap = new GameMapData();
+    public RunStats Stats = new RunStats();
 
     public bool FinishedPhase(CurrentGamePhase phase) => (int)Phase >= (int)phase;
 }
@@ -115,6 +116,17 @@ public class StatAddendData
 {
     public string Stat;
     public float Value;
+}
+
+[Serializable]
+public class RunStats
+{
+    public int TimeElapsedSeconds;
+    public int TotalDamageDealt;
+    public int TotalDamageReceived;
+    public int TotalHpDamagedReceived;
+    public int TotalCardsPlayed;
+    public int TotalTurnsPlayed;
 }
 
 public enum GameEquipmentDataType
