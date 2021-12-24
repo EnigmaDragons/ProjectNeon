@@ -113,7 +113,7 @@ public class BattleSetupV2 : MonoBehaviour
             cards.AddRange(party.Decks[i].Cards.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero), hero.Tint, hero.Bust)));
         }
 
-        DevLog.Write("Setting Up Player Hand");
+        DevLog.Write($"Setting Up Player Hand - Should Shuffle {!state.DontShuffleNextBattle} - Rng Seed {state.BattleRngSeed}");
         if (state.DontShuffleNextBattle)
         {
             Deck.Init(cards);

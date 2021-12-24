@@ -45,6 +45,9 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
             navigator.NavigateToBattleScene();   
         }
         else
+        {
+            battleState.DontShuffleNextBattle = false;
             eventPublisher.ActivatePartyDetailsWizardFlow();
+        }
     }
 }

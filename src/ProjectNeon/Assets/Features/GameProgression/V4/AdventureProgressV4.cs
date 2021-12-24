@@ -130,7 +130,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     public override void Advance()
     {
         currentSegmentIndex++;
-        rngSeed = Rng.NewSeed();
+        rngSeed = Rng.NewSeed();;
         AdvanceStageIfNeeded();
     }
 }
