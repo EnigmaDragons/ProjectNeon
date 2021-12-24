@@ -42,6 +42,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             return s;
         });
+        Message.Publish(new GameStarted());
         navigator.NavigateToSquadSelection();
     }
 
@@ -54,6 +55,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         if (adventure.FixedStartingHeroes.Length == 0)
         {
             Log.Error("Developer Data Error - V4 Adventures should start with a fixed party");
+            Message.Publish(new GameStarted());
             navigator.NavigateToSquadSelection();
         }
         else
@@ -67,6 +69,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                 s.PartyData = party.GetData();
                 return s;
             });
+            Message.Publish(new GameStarted());
             navigator.NavigateToGameSceneV4();
         }
     } 
@@ -76,6 +79,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         if (io.HasSavedGame)
         {
             var phase = io.LoadSavedGame();
+            Message.Publish(new GameLoaded());
             if (phase == CurrentGamePhase.NotStarted)
                 navigator.NavigateToAdventureSelection();
             else if (phase == CurrentGamePhase.SelectedAdventure)
