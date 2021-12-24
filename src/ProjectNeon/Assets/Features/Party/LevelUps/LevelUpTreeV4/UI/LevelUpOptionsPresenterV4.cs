@@ -21,6 +21,9 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
     
     private void Start()
     {
+        if (toDestroyOnStart == null)
+            return;
+        
         var toDestroy = toDestroyOnStart.ToList();
         toDestroy.ForEach(Destroy);
     }
