@@ -55,6 +55,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
         _shouldAutoProceed = shouldAutoProceed;
         _manualInterventionDisablesAuto = manualInterventionDisablesAuto;
         _finished = false;
+        gameObject.SetActive(true);
         StartCoroutine(BeginReveal());
     }
 

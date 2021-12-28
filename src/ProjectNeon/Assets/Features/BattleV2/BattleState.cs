@@ -102,6 +102,10 @@ public class BattleState : ScriptableObject
 
     public void SetupEnemyEncounter()
     {
+        if (isEliteBattle)
+            DevLog.Write($"Elite Encounter: Target Power Level {adventureProgress.AdventureProgress.CurrentElitePowerLevel}. Actual: {nextEnemies.Sum(e => e.PowerLevel)}");
+        else
+            DevLog.Write($"Encounter: Target Power Level {adventureProgress.AdventureProgress.CurrentPowerLevel}. Actual: {nextEnemies.Sum(e => e.PowerLevel)}");
         _battleStartingEnemies = nextEnemies.ToArray();
         EnemyArea.Initialized(nextEnemies);
         isEliteBattle = nextIsEliteBattle;

@@ -10,7 +10,6 @@ public class SingleHeroSelectionUiController : OnMessage<GetUserSelectedHero>
         target.SetActive(true);
         presenter.Initialized(msg, () =>
         {
-            target.SetActive(false);
             Message.Publish(new NodeFinished());
         });
     }
