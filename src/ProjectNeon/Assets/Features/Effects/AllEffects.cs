@@ -192,8 +192,7 @@ public static class AllEffects
     
     public static EffectContext AutoRetargeted(EffectData effectData, EffectContext ctx)
     {
-        var retargetScope = effectData.TargetsSource ? AutoReTargetScope.Source : effectData.ReTargetScope;
-        var updateTarget = retargetScope switch
+        var updateTarget = effectData.ReTargetScope switch
             {
                 AutoReTargetScope.None => ctx.Target,
                 AutoReTargetScope.Source => new Single(ctx.Source),

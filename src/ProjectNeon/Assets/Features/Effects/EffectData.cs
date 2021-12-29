@@ -19,7 +19,6 @@ public sealed class EffectData
     public string DurationFormula = "0";
     public StringReference EffectScope = new StringReference { UseConstant = false };
     public bool HitsRandomTargetMember;
-    public bool TargetsSource;
     public AutoReTargetScope ReTargetScope = AutoReTargetScope.None;
     public bool ApplyToEachMemberIndividually = false;
     
@@ -57,7 +56,6 @@ public static class EffectDataExtensions
             DurationFormula = e.DurationFormula,
             EffectScope = e.EffectScope,
             HitsRandomTargetMember = e.HitsRandomTargetMember,
-            TargetsSource = e.TargetsSource,
             ReTargetScope = e.ReTargetScope,
             ApplyToEachMemberIndividually = e.ApplyToEachMemberIndividually,
             
@@ -90,7 +88,6 @@ public static class EffectDataExtensions
     {
         var newData = Clone(e);
         newData.ReTargetScope = AutoReTargetScope.None;
-        newData.TargetsSource = false;
         return newData;
     }
 

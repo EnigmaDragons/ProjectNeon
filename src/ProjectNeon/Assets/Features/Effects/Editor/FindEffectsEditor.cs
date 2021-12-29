@@ -49,6 +49,18 @@ public class FindEffectsEditor : EditorWindow
             .Select(e => $"Equipment {e.name}"))
         .ToArray();
     
+    private string[] GetAllContentWithEffect(Func<EffectData, bool> condition)
+        => GetAllInstances<CardActionsData>()
+            .Where(e => e.BattleEffects.Any(condition))
+            .Select(e => $"Card {e.name}")
+            .Concat(GetAllInstances<Enemy>()
+                .Where(e => e.Effects.Any(condition))
+                .Select(e => $"Enemy {e.name}"))
+            .Concat(GetAllInstances<StaticEquipment>()            
+                .Where(e => e.AllEffects.Any(condition))
+                .Select(e => $"Equipment {e.name}"))
+            .ToArray();
+    
     private string[] GetAllEffectsWithFormula(string searchString)
         => GetAllInstances<CardActionsData>()
             .Where(e => e.BattleEffects.Any(x => x.Formula != null && x.Formula.ContainsAnyCase(searchString)))
@@ -132,7 +144,7 @@ public class FindEffectsEditor : EditorWindow
             GUIUtility.ExitGUI();
         }
         DrawUILine();
-        
+
         if (GUILayout.Button("Show All Unused Effects"))
         {
             var zeroUsageResults = Enum.GetValues(typeof(EffectType)).Cast<EffectType>()
