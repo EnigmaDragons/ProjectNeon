@@ -14,6 +14,7 @@ public class SpecificEncounterSegment : StageSegment
     [SerializeField] private CurrentAdventureProgress currentAdventureProgress;
 
     public override string Name => "Specific Encounter";
+    public override bool ShouldCountTowardsEnemyPowerLevel => true;
     public override Maybe<string> Detail => Maybe<string>.Missing();
     
     public override void Start()

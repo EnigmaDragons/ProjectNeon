@@ -10,19 +10,16 @@ public class AdventureProgressV4 : AdventureProgressBase
     [SerializeField] private int currentSegmentIndex;
     [SerializeField] private int rngSeed = Rng.NewSeed();
     
-    public Adventure CurrentAdventure => currentAdventure.Adventure;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
-    public int CurrentChapterIndex => currentChapterIndex;
     private float Progress => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
-    public float ProgressToUnlockChapterBoss => Progress;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
     public bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
     public override int RngSeed => rngSeed;
-    public override bool UsesRewardXp { get; } = false;
-    public override float BonusXpLevelFactor { get; } = 0.33333f;
+    public override bool UsesRewardXp => false;
+    public override float BonusXpLevelFactor => 0.33333f;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     private int CurrentStageLength => CurrentChapter.SegmentCount;
     
@@ -41,8 +38,9 @@ public class AdventureProgressV4 : AdventureProgressBase
 
     private static int Int(float f) => f.CeilingInt();
     private float GlobalPowerLevelFactor => currentGlobalEffects.EncounterDifficultyFactor;
-    public override int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(Progress) * GlobalPowerLevelFactor);
-    public override int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(Progress) * GlobalPowerLevelFactor);
+    private float CombatProgress => CurrentChapter.CombatProgress(CurrentStageProgress);
+    public override int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(CombatProgress) * GlobalPowerLevelFactor);
+    public override int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(CombatProgress) * GlobalPowerLevelFactor);
     private bool HasBegun => currentChapterIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && Progress >= CurrentStageLength;
 

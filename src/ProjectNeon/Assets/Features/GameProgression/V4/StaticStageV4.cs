@@ -34,6 +34,8 @@ public class StaticStageV4 : ScriptableObject, IStage
     public StorySetting StorySetting => storySetting;
     public int GetPowerLevel(float percent) => powerCurve.GetValueAsInt(percent);
     public int GetElitePowerLevel(float percent) => elitePowerCurve.GetValueAsInt(percent);
+    private int CombatSegmentCount => segments.Count(s => s.ShouldCountTowardsEnemyPowerLevel);
+    public float CombatProgress(int completedSegments) => segments.Take(completedSegments).Count(s => s.ShouldCountTowardsEnemyPowerLevel) / (float)CombatSegmentCount;
     public GameObject Battleground => BattlegroundForSegment(0);
     public int SegmentCount => segments.Length;
     public int RepeatPlayStartingSegmentIndex => repeatPlayStartingSegmentIndex;

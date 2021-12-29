@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IStageSegment
 {
     string Name { get; }
+    bool ShouldCountTowardsEnemyPowerLevel { get; }
     void Start();
     Maybe<string> Detail { get; }
 
@@ -16,6 +17,7 @@ public sealed class InMemoryStageSegment : IStageSegment
     private readonly Action _start;
     
     public string Name { get; }
+    public bool ShouldCountTowardsEnemyPowerLevel => true;
     public void Start() => _start();
     public Maybe<string> Detail { get; }
     public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
@@ -33,6 +35,7 @@ public sealed class GeneratedBattleStageSegment : IStageSegment
     private readonly Action _start;
     
     public string Name { get; }
+    public bool ShouldCountTowardsEnemyPowerLevel => true;
     public void Start() => _start();
     public Maybe<string> Detail { get; }
     public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
@@ -50,6 +53,7 @@ public sealed class GeneratedEquipmentShopSegment : IStageSegment
     private readonly string _corpName;
 
     public string Name => $"{_corpName} Equipment Shop";
+    public bool ShouldCountTowardsEnemyPowerLevel => false;
     public void Start() => Message.Publish(new ToggleEquipmentShop { CorpName = _corpName });
     public Maybe<string> Detail => Maybe<string>.Missing();
     public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
@@ -62,6 +66,7 @@ public sealed class GeneratedClinicSegment : IStageSegment
     private readonly string _corpName;
 
     public string Name => $"{_corpName} Clinic";
+    public bool ShouldCountTowardsEnemyPowerLevel => false;
     public void Start() => Message.Publish(new ToggleClinic { CorpName = _corpName });
     public Maybe<string> Detail => Maybe<string>.Missing();
     public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;

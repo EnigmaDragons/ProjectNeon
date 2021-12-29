@@ -6,6 +6,7 @@ public class RemoveHeroFromPartySegment : StageSegment
     [SerializeField] private BaseHero hero;
 
     public override string Name => $"Party Change Event";
+    public override bool ShouldCountTowardsEnemyPowerLevel => false;
 
     public override void Start()
     {
