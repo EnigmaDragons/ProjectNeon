@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 16
   displayName: Emergency Tactical Shield
-  description: 'On Vulnerable: Shield 50%'
+  description: 'On Vulnerable or Bloodied: Shield 50%'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
   rarity: 1
@@ -48,7 +48,7 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Vulnerable: Shield 50%'
+    StatusDetailText: 'On Vulnerable or Bloodied: Shield 50%'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -71,8 +71,52 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: 840ff2540f58e084b85881f7975f98d3, type: 2}
     BonusCardType: {fileID: 0}
+  - EffectType: 74
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: -1
+      FloatVariable: {fileID: 0}
+    DurationFormula: -1
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    TargetsSource: 0
+    ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
+    StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 10
+    ReactionEffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 11400000, guid: 840ff2540f58e084b85881f7975f98d3, type: 2}
+    BonusCardType: {fileID: 0}
   battleEndEffects: []
   requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
   notAvailableForGeneralDistribution: 0
   designComment: 
