@@ -46,7 +46,7 @@ public static class TestEffects
         AllEffects.Apply(e, EffectContext.ForTests(source, target, card, xAmountPaid, preventions));
         var battleSnapshotAfter = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
 
-        var effectResolved = new EffectResolved(isFirstBattleEffect: true, e, source, target, battleSnapshotBefore, battleSnapshotAfter, isReaction: false, Maybe<Card>.Missing(), preventions);
+        var effectResolved = new EffectResolved(wasApplied: true, isFirstBattleEffect: true, e, source, target, battleSnapshotBefore, battleSnapshotAfter, isReaction: false, Maybe<Card>.Missing(), preventions);
 
         var reactions = members.SelectMany(x => x.State.GetReactions(effectResolved));
 

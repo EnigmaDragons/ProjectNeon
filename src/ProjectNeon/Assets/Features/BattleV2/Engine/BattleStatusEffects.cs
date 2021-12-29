@@ -86,7 +86,9 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             MessageGroup.Start(e, () => 
             {
                 var battleSnapshotAfter = state.GetSnapshot();
-                var effectResolved = new EffectResolved(true, EffectData.Nothing, 
+                var effectResolved = new EffectResolved(true, 
+                    true, 
+                    EffectData.Nothing, 
                     member, // Replace with Status Originator
                     new Single(member), 
                     battleSnapshotBefore,

@@ -1,5 +1,6 @@
 public sealed class EffectResolved
 {
+    public bool WasApplied { get; }
     public bool IsFirstBattleEffect { get; }
     public EffectData EffectData { get; }
     public Member Source { get; }
@@ -10,8 +11,9 @@ public sealed class EffectResolved
     public Maybe<Card> Card { get; }
     public PreventionContext Preventions { get; }
 
-    public EffectResolved(bool isFirstBattleEffect, EffectData e, Member src, Target target, BattleStateSnapshot before, BattleStateSnapshot after, bool isReaction, Maybe<Card> card, PreventionContext preventions)
+    public EffectResolved(bool wasApplied, bool isFirstBattleEffect, EffectData e, Member src, Target target, BattleStateSnapshot before, BattleStateSnapshot after, bool isReaction, Maybe<Card> card, PreventionContext preventions)
     {
+        WasApplied = wasApplied;
         IsFirstBattleEffect = isFirstBattleEffect;
         EffectData = e;
         Source = src;

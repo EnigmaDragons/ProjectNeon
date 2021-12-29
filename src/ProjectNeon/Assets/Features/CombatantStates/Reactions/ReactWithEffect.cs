@@ -234,7 +234,7 @@ public sealed class ReactWithEffect : ReactiveEffectV2Base
                     var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                     var conditionMet = condition(effect);
                     DevLog.Write($"{status.Tag} Reaction - Member {possessingMemberId}- Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
-                    return isInTriggerScope && conditionMet;
+                    return effect.WasApplied && isInTriggerScope && conditionMet;
                 })) {}
 }
 
@@ -248,7 +248,7 @@ public sealed class ReactWithCard : ReactiveEffectV2Base
                 var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                 var conditionMet = condition(effect);
                 DevLog.Write($"{status.Tag} Reaction - Member {possessingMemberId}- Is In Trigger Scope: {isInTriggerScope}. Condition Met: {conditionMet}");
-                return isInTriggerScope && conditionMet;
+                return effect.WasApplied && isInTriggerScope && conditionMet;
             })) {}
 }
 

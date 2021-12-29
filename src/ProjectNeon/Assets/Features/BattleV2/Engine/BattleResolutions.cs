@@ -20,6 +20,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     private readonly Queue<ProposedReaction> _reactionCards = new Queue<ProposedReaction>();
     private bool _resolvingEffect;
     private float _playerDelayFactor = 0.2f;
+    private Maybe<(ApplyBattleEffect, BattleStateSnapshot, ApplyEffectResult)> _currentBattleEffectContext;
     
     private void ResolveNext()
     {
@@ -44,13 +45,13 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     public bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && resolutionZone.IsDone && _instantReactions.None() && !_resolvingEffect;
 
-    private Maybe<(ApplyBattleEffect, BattleStateSnapshot, EffectContext)> _currentBattleEffectContext;
 
     protected override void Execute(ApplyBattleEffect msg)
     {
         var beforeState = state.GetSnapshot();
-        var ctx = ApplyEffects(msg);
-        _currentBattleEffectContext = new Maybe<(ApplyBattleEffect, BattleStateSnapshot, EffectContext)>((msg, beforeState, ctx));
+        var result = ApplyEffects(msg);
+        var ctx = result.UpdatedContext;
+        _currentBattleEffectContext = new Maybe<(ApplyBattleEffect, BattleStateSnapshot, ApplyEffectResult)>((msg, beforeState, result));
         if (ctx.Selections.CardSelectionOptions?.Any() ?? false)
         {
             var action = ctx.Selections.OnCardSelected;
@@ -65,10 +66,11 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     private void FinalizeBattleEffect()
     {
-        var (msg, battleSnapshotBefore, ctx) = _currentBattleEffectContext.Value;
+        var (msg, battleSnapshotBefore, res) = _currentBattleEffectContext.Value;
+        var ctx = res.UpdatedContext;
         var battleSnapshotAfter = state.GetSnapshot();
         
-        var effectResolved = new EffectResolved(msg.IsFirstBattleEffect, msg.Effect, ctx.Source, ctx.Target, battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, ctx.Preventions);
+        var effectResolved = new EffectResolved(res.WasApplied, msg.IsFirstBattleEffect, msg.Effect, ctx.Source, ctx.Target, battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, ctx.Preventions);
         var reactions = state.Members
             .Select(x => x.Value)
             .SelectMany(v => v.State.GetReactions(effectResolved)).ToList();
@@ -81,7 +83,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         
         state.CleanupExpiredMemberStates();
         
-        _currentBattleEffectContext = Maybe<(ApplyBattleEffect, BattleStateSnapshot, EffectContext)>.Missing();
+        _currentBattleEffectContext = Maybe<(ApplyBattleEffect, BattleStateSnapshot, ApplyEffectResult)>.Missing();
 
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
@@ -108,7 +110,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         Async.ExecuteAfterDelay(msg.Duration, () => Message.Publish(new Finished<WaitDuringResolution>()));
     }
 
-    private EffectContext ApplyEffects(ApplyBattleEffect msg)
+    private ApplyEffectResult ApplyEffects(ApplyBattleEffect msg)
     {
         // Core Execution
         var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
@@ -124,7 +126,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             BattleLog.Write($"{msg.Source.Name} emerged from the shadows.");
         }
 
-        return effectResult.UpdatedContext;
+        return effectResult;
     }
 
     protected override void Execute(SpawnEnemy msg)
