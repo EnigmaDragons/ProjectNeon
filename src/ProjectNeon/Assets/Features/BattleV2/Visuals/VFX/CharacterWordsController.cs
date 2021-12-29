@@ -34,6 +34,6 @@ public class CharacterWordsController : OnMessage<DisplayCharacterWordRequested>
         if (_member == null || msg.MemberId != _member.Id)
             return;
 
-        Instantiate(prototype, transform.position + offset, Quaternion.identity, transform).Initialized(msg.Word);
+        _actionQueue.Enqueue(() => Instantiate(prototype, transform.position + offset, Quaternion.identity, transform).Initialized(msg.Word));
     }
 }
