@@ -122,11 +122,11 @@ public class StatAddendData
 public class RunStats
 {
     public int TimeElapsedSeconds;
+    public int TotalTurnsPlayed;
     public int TotalDamageDealt;
     public int TotalDamageReceived;
-    public int TotalHpDamagedReceived;
+    public int TotalHpDamageReceived;
     public int TotalCardsPlayed;
-    public int TotalTurnsPlayed;
 }
 
 public enum GameEquipmentDataType

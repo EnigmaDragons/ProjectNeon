@@ -313,6 +313,11 @@ public class BattleState : ScriptableObject
             rewardGear = RewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
         };
         AllMetrics.PublishBattleSummary(battleSummaryReport);
+        CurrentGameData.Write(d =>
+        {
+            d.Stats.TotalTurnsPlayed += TurnNumber;
+            return d;
+        });
         EnemyArea.Clear();
     }
     
