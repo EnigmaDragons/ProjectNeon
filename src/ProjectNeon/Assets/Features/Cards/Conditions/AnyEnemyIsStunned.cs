@@ -5,5 +5,5 @@ using UnityEngine;
 public class AnyEnemyIsStunned : StaticCardCondition
 {
     public override bool ConditionMet(CardConditionContext ctx)
-        => ctx.BattleState.EnemyMembers.Any(x => x.IsStunnedForCard());
+        => ctx.AnyEnemy(x => x.IsStunnedForCard());
 }

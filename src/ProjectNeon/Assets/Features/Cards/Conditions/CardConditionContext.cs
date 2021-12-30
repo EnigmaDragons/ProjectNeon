@@ -1,5 +1,6 @@
-
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class CardConditionContext
 {
@@ -16,4 +17,13 @@ public class CardConditionContext
         BattleState = b;
         PendingCardsToResolve = pendingCardsToResolve;
     }
+
+    public bool AnyEnemy(Func<Member, bool> condition) 
+        => BattleState.GetConsciousEnemies(Card.Owner).Any(condition);
+    
+    public bool AllEnemies(Func<Member, bool> condition) 
+        => BattleState.GetConsciousEnemies(Card.Owner).All(condition);
+
+    public bool NoEnemy(Func<Member, bool> condition)
+        => !AnyEnemy(condition);
 }

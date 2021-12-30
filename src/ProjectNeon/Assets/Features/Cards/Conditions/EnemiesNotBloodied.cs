@@ -4,5 +4,5 @@
 public class EnemiesNotBloodied : StaticCardCondition
 {
     public override bool ConditionMet(CardConditionContext ctx)
-        => ctx.BattleState.EnemyMembers.None(x => x.IsBloodied());
+        => ctx.BattleState.GetConsciousEnemies(ctx.Card.Owner).None(x => x.IsBloodied());
 }

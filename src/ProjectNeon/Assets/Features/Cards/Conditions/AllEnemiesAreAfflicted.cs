@@ -5,5 +5,5 @@ using UnityEngine;
 public class AllEnemiesAreAfflicted : StaticCardCondition
 {
     public override bool ConditionMet(CardConditionContext ctx)
-        => ctx.BattleState.EnemyMembers.All(x => x.State.StatusesOfType(StatusTag.DamageOverTime).Length > 0);
+        => ctx.AllEnemies(x => x.State.StatusesOfType(StatusTag.DamageOverTime).Length > 0);
 }
