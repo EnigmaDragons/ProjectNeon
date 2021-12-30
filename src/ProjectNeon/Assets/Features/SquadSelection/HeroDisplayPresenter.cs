@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
@@ -13,7 +14,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private TextMeshProUGUI heroName;
     [SerializeField] private TextMeshProUGUI heroClassName;
     [SerializeField] private TextMeshProUGUI heroDescription;
-    [SerializeField] private TextMeshProUGUI roleDescription;
+    [FormerlySerializedAs("roleDescription")] [SerializeField] private TextMeshProUGUI complexityLabel;
     [SerializeField] private TextMeshProUGUI backstory;
     [SerializeField] private NamedGameObject[] tabTargets;
     [SerializeField] private MemberSimplifiedVisualStatPanel statPanel;
@@ -51,7 +52,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         heroName.text = c.DisplayName();
         heroClassName.text = c.Class;
         heroDescription.text = c.Flavor.HeroDescription;
-        roleDescription.text = "Role: " + c.Flavor.RoleDescription;
+        complexityLabel.text = $"Complexity: {c.ComplexityRating}/5";
         backstory.text = c.Flavor.BackStory;
         var member = c.AsMemberForLibrary();
         if (statPanel != null)

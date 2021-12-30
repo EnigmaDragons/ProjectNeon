@@ -18,7 +18,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private Color tint;
     [SerializeField] private CharacterAnimations animations;
     [SerializeField] private int startingCredits = 100;
-    [SerializeField, Range(1, 5)] private int complexityRating = 3; 
+    [SerializeField, Range(1, 5)] private int complexityRating = 3;
 
     // Stats
     [SerializeField] private int maxHp = 40;
@@ -44,6 +44,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
 
     public int Id => id;
     public string Name => name;
+    public int ComplexityRating => complexityRating;
     public Sprite Bust => bust;
     public GameObject Body => body;
     public MemberMaterialType MaterialType => materialType;

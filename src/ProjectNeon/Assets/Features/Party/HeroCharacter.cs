@@ -6,6 +6,7 @@ public interface HeroCharacter
 {
     int Id { get; }
     string Name { get; }
+    int ComplexityRating { get; }
     
     Sprite Bust { get; }
     GameObject Body { get; }
@@ -31,6 +32,7 @@ public class InMemoryHeroCharacter : HeroCharacter
 {
     public int Id { get; set; } = Rng.Int();
     public string Name { get; set; } = "Unknown";
+    public int ComplexityRating { get; set; } = 0;
     public Sprite Bust { get; set; }
     public GameObject Body { get; set; }
     public MemberMaterialType MaterialType { get; } = MemberMaterialType.Unknown;
