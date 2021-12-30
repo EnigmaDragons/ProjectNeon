@@ -316,6 +316,7 @@ public class BattleState : ScriptableObject
         CurrentGameData.Write(d =>
         {
             d.Stats.TotalTurnsPlayed += TurnNumber;
+            d.Stats.TotalEnemiesKilled += Enemies.Count(e => e.Member.IsUnconscious());
             return d;
         });
         EnemyArea.Clear();

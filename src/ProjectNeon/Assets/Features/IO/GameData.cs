@@ -127,6 +127,7 @@ public class RunStats
     public int TotalDamageReceived;
     public int TotalHpDamageReceived;
     public int TotalCardsPlayed;
+    public int TotalEnemiesKilled;
 }
 
 public enum GameEquipmentDataType
