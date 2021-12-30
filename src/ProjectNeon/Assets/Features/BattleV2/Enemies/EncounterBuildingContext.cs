@@ -21,4 +21,6 @@ public class EncounterBuildingContext
 
     public EncounterBuildingContext WithPossibilities(EnemyInstance[] possibleEnemies)
         => new EncounterBuildingContext(SelectedEnemies, possibleEnemies, CurrentDifficulty, TargetDifficulty);
+
+    public EncounterBuildingContext DontAddAnyMoreEnemies() => WithPossibilities(Array.Empty<EnemyInstance>());
 }

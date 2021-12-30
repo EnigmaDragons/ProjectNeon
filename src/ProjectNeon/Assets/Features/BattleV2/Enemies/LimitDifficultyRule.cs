@@ -21,7 +21,7 @@ public class LimitDifficultyRule : EncounterBuildingRule
         var minDifficultyExcess = ctx.CurrentDifficulty + ctx.PossibleEnemies.OrderBy(x => x.PowerLevel).First().PowerLevel - ctx.TargetDifficulty;
         if (difficultyDeficit > minDifficultyExcess || ctx.SelectedEnemies.Length == 0)
             return ctx.WithPossibilities(new [] { ctx.PossibleEnemies.OrderBy(x => x.PowerLevel).First() });
-        
-        return ctx.WithPossibilities(new EnemyInstance[0]);
+
+        return ctx.DontAddAnyMoreEnemies();
     }
 }

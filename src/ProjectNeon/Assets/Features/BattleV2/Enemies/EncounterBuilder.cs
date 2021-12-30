@@ -16,7 +16,7 @@ public class EncounterBuilder : ScriptableObject
 
     private bool _debugLog = false;
 
-    private EncounterEnemySelector _selector => new EncounterEnemySelector(
+    private EncounterEnemySelector Selector => new EncounterEnemySelector(
         new NoPowerLevelZeroEnemiesRule(),
         new StopWhenCurrentDifficultyIsEnoughRule(flexibility),
         new StopWhenMaxedOutEnemiesRule(maxEnemies),
@@ -56,7 +56,7 @@ public class EncounterBuilder : ScriptableObject
             .Where(x => allowElites || x.Tier != EnemyTier.Elite)
             .Select(x => x.ForStage(currentChapterNumber))
             .ToArray();
-        while (_selector.TryGetEnemy(new EncounterBuildingContext(enemies.ToArray(), possibleEnemies, currentDifficulty, difficulty), out EnemyInstance enemy))
+        while (Selector.TryGetEnemy(new EncounterBuildingContext(enemies.ToArray(), possibleEnemies, currentDifficulty, difficulty), out EnemyInstance enemy))
         {
             enemies.Add(enemy);
             DebugLog($"Added {enemy.Name} to Encounter");

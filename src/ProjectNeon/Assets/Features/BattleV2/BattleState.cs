@@ -99,13 +99,19 @@ public class BattleState : ScriptableObject
         IsStoryEventCombat = isStoryEventCombat;
         DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.Name))}");
     }
+    
+    private void LogEncounterInfo(bool isElite, int targetPower, int actualPower)
+    {
+        var factor = actualPower / (float) targetPower;
+        DevLog.Write($"{(isElite ? "Elite " : "")}Encounter: Target Power Level {targetPower}. Actual: {actualPower}. Factor: {factor:F2}");
+    }
 
     public void SetupEnemyEncounter()
     {
         if (isEliteBattle)
-            DevLog.Write($"Elite Encounter: Target Power Level {adventureProgress.AdventureProgress.CurrentElitePowerLevel}. Actual: {nextEnemies.Sum(e => e.PowerLevel)}");
+            LogEncounterInfo(true, adventureProgress.AdventureProgress.CurrentElitePowerLevel, nextEnemies.Sum(e => e.PowerLevel));
         else
-            DevLog.Write($"Encounter: Target Power Level {adventureProgress.AdventureProgress.CurrentPowerLevel}. Actual: {nextEnemies.Sum(e => e.PowerLevel)}");
+            LogEncounterInfo(false, adventureProgress.AdventureProgress.CurrentPowerLevel, nextEnemies.Sum(e => e.PowerLevel));
         _battleStartingEnemies = nextEnemies.ToArray();
         EnemyArea.Initialized(nextEnemies);
         isEliteBattle = nextIsEliteBattle;
