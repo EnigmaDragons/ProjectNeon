@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class GameData
@@ -128,6 +129,7 @@ public class RunStats
     public int TotalHpDamageReceived;
     public int TotalCardsPlayed;
     public int TotalEnemiesKilled;
+    [FormerlySerializedAs("TotalHealingGiven")] public int TotalHealingReceived;
 }
 
 public enum GameEquipmentDataType

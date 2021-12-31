@@ -20,7 +20,7 @@ public class BattleState : ScriptableObject
     [SerializeField] private CurrentGameMap3 map;
     [SerializeField] private AllCards allCards;
     [SerializeField] private BattleRewardState rewards;
-    
+
     [Header("Next Encounter")]
     [SerializeField] private GameObject nextBattlegroundPrototype;
     [SerializeField] private EnemyInstance[] nextEnemies;
@@ -32,10 +32,8 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private PlayerState playerState = new PlayerState();
 
     public bool DontShuffleNextBattle { get; set; }
-    private Queue<Effect> _queuedEffects = new Queue<Effect>();
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
-    public Effect[] QueuedEffects => _queuedEffects.ToArray();
-    
+    private readonly CurrentBattleStats _currentBattleStats = new CurrentBattleStats();
     private int _numPlayerDiscardsUsedThisTurn = 0;
 
     public int CreditsAtStartOfBattle { get; private set; }
@@ -50,6 +48,7 @@ public class BattleState : ScriptableObject
         ? _playedCardHistory.Last().ToArray()
         : Array.Empty<PlayedCardSnapshot>();
 
+    public CurrentBattleStats Stats => _currentBattleStats;
     public BattleRewardState RewardState => rewards;
     public int RewardCredits => rewards.RewardCredits;
     public int RewardXp => rewards.RewardXp;
@@ -126,13 +125,10 @@ public class BattleState : ScriptableObject
         _tracker = BattleAttritionTracker.Start(party);
         IsSelectingTargets = false;
         turnNumber = 0;
+        _currentBattleStats.Clear();
     }
 
-    public void SetPhase(BattleV2Phase p)
-    {
-        UpdateState(() => phase = p);
-    }
-
+    public void SetPhase(BattleV2Phase p) => UpdateState(() => phase = p);
     public int GetNextCardId() => NextCardId.Get();
 
     private int EnemyStartingIndex => 4;
@@ -183,7 +179,6 @@ public class BattleState : ScriptableObject
         _numPlayerDiscardsUsedThisTurn = 0;
         rewards.Init();
         needsCleanup = true;
-        _queuedEffects = new Queue<Effect>();
         _unconsciousMembers = new Dictionary<int, Member>();
         _playedCardHistory = new List<List<PlayedCardSnapshot>> { new List<PlayedCardSnapshot>() };
         turnNumber = 1;
@@ -317,6 +312,11 @@ public class BattleState : ScriptableObject
         {
             d.Stats.TotalTurnsPlayed += TurnNumber;
             d.Stats.TotalEnemiesKilled += Enemies.Count(e => e.Member.IsUnconscious());
+            d.Stats.TotalCardsPlayed += Stats.CardsPlayed;
+            d.Stats.TotalDamageDealt += Stats.DamageDealt;
+            d.Stats.TotalDamageReceived += Stats.DamageReceived;
+            d.Stats.TotalHpDamageReceived += Stats.HpDamageReceived;
+            d.Stats.TotalHealingReceived += Stats.HealingReceived;
             return d;
         });
         EnemyArea.Clear();

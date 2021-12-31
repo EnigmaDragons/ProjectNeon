@@ -45,7 +45,6 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     public bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && resolutionZone.IsDone && _instantReactions.None() && !_resolvingEffect;
 
-
     protected override void Execute(ApplyBattleEffect msg)
     {
         var beforeState = state.GetSnapshot();
@@ -85,6 +84,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         
         _currentBattleEffectContext = Maybe<(ApplyBattleEffect, BattleStateSnapshot, ApplyEffectResult)>.Missing();
 
+        Message.Publish(effectResolved);
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 

@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 6806458807943526864}
   - component: {fileID: 2285146240355017327}
   - component: {fileID: 4263563294095853006}
+  - component: {fileID: 4004593652566135423}
   m_Layer: 0
   m_Name: BattleEngine
   m_TagString: Untagged
@@ -171,7 +172,6 @@ MonoBehaviour:
   secondsBeforeReturnToAdventure: 0.4
   secondsBeforeGameOverScreen: 3
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
-  gameMap: {fileID: 11400000, guid: 5064fe74d4176254a9e1729682f69c71, type: 2}
 --- !u!114 &4827819642098112035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4d02b2d3754bc98a227142bcd71f6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentFactor: 1
 --- !u!114 &6078468237105921284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +256,19 @@ MonoBehaviour:
   resolutions: {fileID: 2285146240355017327}
   resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
   disabledCard: {fileID: 11400000, guid: f4def2b72ed4c5a40827e1c910a772ab, type: 2}
+--- !u!114 &4004593652566135423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115684586857430259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a53ebc8cf447458b1133abd952b552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1001 &635715717500593209
 PrefabInstance:
   m_ObjectHideFlags: 0
