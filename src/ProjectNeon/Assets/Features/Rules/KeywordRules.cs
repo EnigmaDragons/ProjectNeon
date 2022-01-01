@@ -77,6 +77,7 @@ public static class KeywordRules
 
     public static void AddAllDescriptionFoundRules(List<string> rulesToShow, string description)
     {
+        rulesToShow.AddIf(Drain, description.ContainsAnyCase(Drain));
         rulesToShow.AddIf(Quick, description.ContainsAnyCase(Quick));
         rulesToShow.AddIf(Chain, description.ContainsAnyCase(Chain));
         rulesToShow.AddIf(Bloodied, description.ContainsAnyCase(Bloodied));
