@@ -24,7 +24,7 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string onDoubleDFlesh;
     [SerializeField, FMODUnity.EventRef] private string onInhibited;
 
-    private bool debuggingLoggingEnabled = false;
+    private bool debuggingLoggingEnabled = true;
 
     private void OnEnable()
     {
@@ -35,7 +35,6 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
 
     private void OnHealthLost(MemberStateChanged msg)
     {
-        
         battleState.GetMaybeTransform(msg.MemberId()).IfPresent(memberTransform =>
         {
             var characterMaterialType = MaterialTypeOf(msg.MemberId());

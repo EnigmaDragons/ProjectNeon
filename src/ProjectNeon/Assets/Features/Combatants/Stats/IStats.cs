@@ -36,7 +36,6 @@ public static class StatsExtensions
         StatType.Economy
     };
 
-
     public static StatType DefaultPrimaryStat(this IStats stats)
         => DefaultPrimaryStat(stats, stats);
     

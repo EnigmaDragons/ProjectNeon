@@ -75,7 +75,7 @@ public sealed class MemberState : IStats
 
     // Queries
     public MemberStateSnapshot ToSnapshot()
-        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats,
+        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats.ToSnapshot(),
             _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount,
                 new DictionaryWithDefault<StatusTag, int>(0, Enum.GetValues(typeof(StatusTag)).Cast<StatusTag>()
                     .SafeToDictionary(s => s, s => StatusesOfType(s).Length)), PrimaryStat);
@@ -101,23 +101,7 @@ public sealed class MemberState : IStats
     public ResourceQuantity CurrentPrimaryResources => new ResourceQuantity
         {Amount = PrimaryResourceAmount, ResourceType = PrimaryResource.Name};
 
-    public float PrimaryResourceValue
-    {
-        get
-        {
-            if (PrimaryResource.Name == "Ammo")
-                return PrimaryResourceAmount * (1f / 4f);
-            if (PrimaryResource.Name == "Chems")
-                return PrimaryResourceAmount * (1f / 4f);
-            if (PrimaryResource.Name == "Energy")
-                return PrimaryResourceAmount * (1f / 4f);
-            if (PrimaryResource.Name == "Flames")
-                return PrimaryResourceAmount * (1f / 4f);
-            if (PrimaryResource.Name == "Ambition")
-                return PrimaryResourceAmount * (1f / 4f);
-            return 0f;
-        }
-    }
+    public float PrimaryResourceValue => 1f / 4f;
 
     public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
 
@@ -291,7 +275,8 @@ public sealed class MemberState : IStats
         var clampedAmount = Math.Max(amount, 0);
         var shieldModificationAmount = Math.Min(clampedAmount, Counter(TemporalStatType.Shield).Amount);
         clampedAmount -= shieldModificationAmount;
-        AdjustShieldNoPublish(-shieldModificationAmount);
+        if (shieldModificationAmount > 0)
+            AdjustShield(-shieldModificationAmount);
         if (clampedAmount > 0)
             ChangeHp(-clampedAmount);
     }

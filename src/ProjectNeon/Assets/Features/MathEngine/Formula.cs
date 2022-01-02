@@ -39,8 +39,6 @@ public static class Formula
             var dataTable = new DataTable();
             newExp = ResolveConditionals(newExp, dataTable);
             var result = Convert.ToSingle(dataTable.Compute(newExp, null));
-            if (result == 0)
-                Log.Info("Formula Amount is 0");
             return result;
         }
         catch (Exception e)
