@@ -14,7 +14,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
-    private float Progress => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
+    private float Progress => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
     public bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
     public override int RngSeed => rngSeed;
@@ -39,7 +39,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     private static int Int(float f) => f.CeilingInt();
     private float GlobalPowerLevelFactor => currentGlobalEffects.EncounterDifficultyFactor;
     private float CombatProgress => CurrentChapter.CombatProgress(CurrentStageProgress);
-    public override int CurrentPowerLevel => Int(CurrentChapter.GetPowerLevel(CombatProgress) * GlobalPowerLevelFactor);
+    public override int CurrentPowerLevel => HasBegun ? Int(CurrentChapter.GetPowerLevel(CombatProgress) * GlobalPowerLevelFactor) : 120;
     public override int CurrentElitePowerLevel => Int(CurrentChapter.GetElitePowerLevel(CombatProgress) * GlobalPowerLevelFactor);
     private bool HasBegun => currentChapterIndex > -1;
     private bool CurrentStageIsFinished => HasBegun && Progress >= CurrentStageLength;
