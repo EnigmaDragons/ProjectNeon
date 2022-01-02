@@ -18,13 +18,13 @@ public class BattleStatTracker : OnMessage<EffectResolved>
 
         var damageReceived = partyAfter.Sum(x => x.Value.State.HpAndShield) - partyBefore.Sum(x => x.Value.State.HpAndShield);
         if (damageReceived < 0)
-            state.Stats.DamageReceived += damageReceived;
+            state.Stats.DamageReceived -= damageReceived;
         
         var hpChange = partyAfter.Sum(x => x.Value.State.Hp) - partyBefore.Sum(x => x.Value.State.Hp);
         if (hpChange < 0)
-            state.Stats.HpDamageReceived += hpChange;
+            state.Stats.HpDamageReceived -= hpChange;
         else
-            state.Stats.HealingReceived += hpChange;
+            state.Stats.HealingReceived -= hpChange;
     }
 
     private void UpdateEnemyChangeStats(EffectResolved e)
@@ -34,6 +34,6 @@ public class BattleStatTracker : OnMessage<EffectResolved>
 
         var damageDealt = enemiesAfter.Sum(x => x.Value.State.HpAndShield) - enemiesBefore.Sum(x => x.Value.State.HpAndShield);
         if (damageDealt < 0)
-            state.Stats.DamageDealt += damageDealt;
+            state.Stats.DamageDealt -= damageDealt;
     }
 }

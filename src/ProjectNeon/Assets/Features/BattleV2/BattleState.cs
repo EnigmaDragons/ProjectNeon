@@ -214,7 +214,12 @@ public class BattleState : ScriptableObject
 
     // During Battle State Tracking
     public void StartTurn() => UpdateState(() => PlayerState.OnTurnStart());
-    public void RecordPlayedCard(IPlayedCard card) => UpdateState(() => _playedCardHistory.Last().Add(new PlayedCardSnapshot(card)));
+    public void RecordPlayedCard(IPlayedCard card) => UpdateState(() =>
+    {
+        _playedCardHistory.Last().Add(new PlayedCardSnapshot(card));
+        if (card.Member.TeamType == TeamType.Party)
+            Stats.CardsPlayed++;
+    });
     public void RecordCardDiscarded() => UpdateState(() => _numPlayerDiscardsUsedThisTurn++);
     public void CleanupExpiredMemberStates() => UpdateState(() => _membersById.ForEach(x => x.Value.State.CleanExpiredStates()));
 
@@ -310,7 +315,7 @@ public class BattleState : ScriptableObject
         CurrentGameData.Write(d =>
         {
             d.Stats.TotalTurnsPlayed += TurnNumber;
-            d.Stats.TotalCardsPlayed += _playedCardHistory.Sum(t => t.Count(c => c.Member.TeamType == TeamType.Party));
+            d.Stats.TotalCardsPlayed += Stats.CardsPlayed;
             d.Stats.TotalEnemiesKilled += Enemies.Count(e => e.Member.IsUnconscious());
             d.Stats.TotalCardsPlayed += Stats.CardsPlayed;
             d.Stats.TotalDamageDealt += Stats.DamageDealt;
