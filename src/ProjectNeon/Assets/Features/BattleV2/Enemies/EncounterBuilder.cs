@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Adventure/EncounterBuilder")]
 public class EncounterBuilder : ScriptableObject
 {
+    [SerializeField] private EncounterBuilderHistory history;
     [SerializeField] private bool allowElites = true;
     [SerializeField] private Enemy[] possible;
     [SerializeField] private Enemy[] mustIncludePossibilities;
@@ -20,6 +21,7 @@ public class EncounterBuilder : ScriptableObject
         new NoPowerLevelZeroEnemiesRule(),
         new StopWhenCurrentDifficultyIsEnoughRule(flexibility),
         new StopWhenMaxedOutEnemiesRule(maxEnemies),
+        new AvoidRepeatingElites(history),
         new OneEliteRule(),
         new MinionTeamRule(minionTeamChance, maxEnemies),
         new UniqueRolesRule(),
@@ -64,7 +66,11 @@ public class EncounterBuilder : ScriptableObject
         }
 
         DebugLog("Finished generating encounter");
-        return enemies.Select(x => x).ToList().Shuffled();
+        var encounter = enemies.ToList().Shuffled();
+        if (history != null)
+            history.AddEncounter(encounter.Select(e => e.EnemyId).ToArray());
+        return encounter;
+
     }
 
     private void DebugLog(string msg)

@@ -13,10 +13,12 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private Adventure defaultAdventure;
     [SerializeField] private bool allowPlayerToSelectAdventure;
+    [SerializeField] private EncounterBuilderHistory encounterHistory;
     
     protected override void Execute(StartNewGame msg)
     {
         io.ClearCurrentSlot();
+        encounterHistory.Clear();
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
         io.SetShouldShowTutorials(msg.ShouldShowTutorials);
         
@@ -78,6 +80,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     {
         if (io.HasSavedGame)
         {
+            encounterHistory.Clear();
             var phase = io.LoadSavedGame();
             Message.Publish(new GameLoaded());
             if (phase == CurrentGamePhase.NotStarted)
