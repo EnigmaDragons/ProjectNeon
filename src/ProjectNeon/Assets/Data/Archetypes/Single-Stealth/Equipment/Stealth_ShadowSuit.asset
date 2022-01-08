@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: Assassination_ShadowFocusImplant
+  m_Name: Stealth_ShadowSuit
   m_EditorClassIdentifier: 
-  id: 3
+  id: 4
   displayName: 
-  description: 'On Stealth: Gain +5 Attack until the end of next turn'
+  description: 'On Slay: <b>ReStealth</b>'
+  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
-  - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
+  - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
   rarity: 4
   slot: 2
   priceFactor: 1
@@ -35,19 +36,19 @@ MonoBehaviour:
       ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 1
-      ConstantValue: -1
-      FloatVariable: {fileID: 0}
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 11400000, guid: 5921ac0d85df4a2409b82c7f5aee6def, type: 2}
     DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Stealth: Gain +5 Attack until the end of next turn'
+    StatusDetailText: 'On Slay: ReStealth'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -59,16 +60,20 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 25
+    ReactionConditionType: 21
     ReactionEffectScope:
-      UseConstant: 0
+      UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
-      cardActions: {fileID: 11400000, guid: 030343d43667b944a908ac60cd41f087, type: 2}
+      cardActions: {fileID: 11400000, guid: 769c8ad9c9ba383408874b157647e938, type: 2}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 
