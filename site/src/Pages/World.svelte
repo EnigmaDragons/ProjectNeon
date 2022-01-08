@@ -10,9 +10,10 @@
 
   <h1>Stories and Lore</h1>
 
-  <div class="story-container">
+  <h2>Coming Soon!</h2>
+  <!-- <div class="story-container">
     <ICC/>
-  </div>
+  </div> -->
 </Container>
 
 <style>

@@ -26,13 +26,13 @@
   </div>
   {/if}
 </div>
+<hr/>
 
 <style>
   .row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-bottom: 2.4em;
   }
 
   .brand {
@@ -55,7 +55,14 @@
 
   .description {
     min-width: 300px;
-    padding-left: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
     width: 36vw;
+  }
+
+  hr {
+    width: 100%;
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
   }
 </style>
