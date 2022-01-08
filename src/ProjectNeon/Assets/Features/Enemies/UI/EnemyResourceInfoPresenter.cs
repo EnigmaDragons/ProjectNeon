@@ -24,7 +24,7 @@ public class EnemyResourceInfoPresenter : MonoBehaviour
             var primaryResource = resources[0];
             startingResourcesParent.SetActive(primaryResource.StartingAmount > 0);
             resourcesPerTurnParent.SetActive(e.ResourceGainPerTurn > 0);
-            startingResourcesLabel.text = primaryResource.StartingAmount.ToString();
+            startingResourcesLabel.text = e.StartingResourceAmount.ToString();
             icon.sprite = primaryResource.Icon;
             resourceIcon2.sprite = primaryResource.Icon;
             resourcesPerTurnLabel.text = e.ResourceGainPerTurn.ToString();

@@ -40,6 +40,8 @@ public class EnemyInstance : EnemyType
     public bool IsHasty { get; }
     public bool IsUnique { get; }
     public int ResourceGainPerTurn => _resourceGainPerTurn;
+    public int StartingResourceAmount => _startingResourceAmount;
+    public int MaxResourceAmount => _maxResourceAmount;
     public CharacterAnimations Animations { get; }
 
     public bool DeckIsValid => Cards.None(x => x == null);
