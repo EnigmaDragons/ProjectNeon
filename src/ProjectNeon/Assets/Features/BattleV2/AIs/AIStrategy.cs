@@ -6,16 +6,16 @@ public sealed class AIStrategy
     public Maybe<Member> SingleMemberAttackTarget { get; }
     public Target GroupAttackTarget { get; }
     public Member DesignatedAttacker { get; }
+    public EnemySpecialCircumstanceCards SpecialCards { get; }
     public Dictionary<CardTag, HashSet<Target>> SelectedNonStackingTargets { get; }
-    public CardTypeData DisabledCard { get; }
 
-    public AIStrategy(Maybe<Member> singleMemberAttackTarget, Target groupAttackTarget, Member designatedAttacker, CardTypeData disabledCard)
+    public AIStrategy(Maybe<Member> singleMemberAttackTarget, Target groupAttackTarget, Member designatedAttacker, EnemySpecialCircumstanceCards specialCards)
     {
         SingleMemberAttackTarget = singleMemberAttackTarget;
         GroupAttackTarget = groupAttackTarget;
         DesignatedAttacker = designatedAttacker;
+        SpecialCards = specialCards;
         SelectedNonStackingTargets = new Dictionary<CardTag, HashSet<Target>>();
-        DisabledCard = disabledCard;
     }
 
     public void RecordNonStackingTarget(CardTag tag, Target target)
@@ -25,21 +25,25 @@ public sealed class AIStrategy
         SelectedNonStackingTargets[tag].Add(target);
     }
 
-    public Target AttackTargetFor(CardActionSequence a) 
-        => a.Scope == Scope.All 
-            ? GroupAttackTarget 
+    public Target AttackTargetFor(Target[] possibleTargets, CardActionSequence a) 
+        => a.Scope == Scope.All
+            ? GroupAttackTarget
             : SingleMemberAttackTarget.IsPresent
-                ? (Target)new Single(SingleMemberAttackTarget.Value)
-                : (Target)new Multiple(new Member[0]);
+                ? new Single(SingleMemberAttackTarget.Value)
+                : possibleTargets.Any() 
+                    ? possibleTargets.Random()
+                    : new NoTarget();
     
-    public Target AttackTargetFor(CardActionSequence a, IEnumerable<Target> preferredTargets) 
+    public Target AttackTargetFor(Target[] possibleTargets, CardActionSequence a, IEnumerable<Target> preferredTargets) 
         => a.Scope == Scope.All 
             ? GroupAttackTarget 
             : preferredTargets.Any(target => SingleMemberAttackTarget.IsPresent && target.Members[0].Id == SingleMemberAttackTarget.Value.Id) 
                 ? new Single(SingleMemberAttackTarget.Value)
                 : preferredTargets.Any()
                     ? preferredTargets.Random()
-                    : new Multiple(new Member[0]);
+                    : possibleTargets.Any() 
+                        ? possibleTargets.Random()
+                        : new NoTarget();
     
-    public AIStrategy AnticipationCopy => new AIStrategy(SingleMemberAttackTarget, GroupAttackTarget, DesignatedAttacker, DisabledCard);
+    public AIStrategy AnticipationCopy => new AIStrategy(SingleMemberAttackTarget, GroupAttackTarget, DesignatedAttacker, SpecialCards);
 }

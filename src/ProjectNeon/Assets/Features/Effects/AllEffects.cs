@@ -102,7 +102,8 @@ public static class AllEffects
                 Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount))) },
         { EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, 
             e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource(ctx.Target.TotalShields() 
-                * Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)))}
+                * Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)))},
+        { EffectType.RemoveTemporalModsMatchingStatusTag, e => new SimpleEffect(m => m.RemoveTemporaryEffects(t => t.Status.Tag.ToString() == e.EffectScope.Value))}
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
