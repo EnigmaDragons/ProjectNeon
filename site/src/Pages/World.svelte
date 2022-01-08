@@ -1,15 +1,19 @@
 <script>
   import Container from '../Elements/Container.svelte';
-  import ICC from '../Stories/ICC.svelte';
+  import ICC from '../Lore/ICC.svelte';
+  import AllMegaCorps from '../Lore/AllMegaCorps.svelte';
 
 </script>
 
 <Container>
+  <AllMegaCorps />
+
   <h1>Stories and Lore</h1>
 
-  <div class="story-container">
+  <h2>Coming Soon!</h2>
+  <!-- <div class="story-container">
     <ICC/>
-  </div>
+  </div> -->
 </Container>
 
 <style>

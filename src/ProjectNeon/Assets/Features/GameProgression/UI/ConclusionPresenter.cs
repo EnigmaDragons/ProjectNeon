@@ -17,20 +17,23 @@ public class ConclusionPresenter : MonoBehaviour
         HideElements();
         if (won)
         {
-            victoryElements.ForEach(g => g.SetActive(true));
+            if (victoryElements != null)
+                victoryElements.ForEach(g => g.SetActive(true));
             Message.Publish(new GameWonStingerMSG(transform));
         }
         else
         {
-            defeatElements.ForEach(g => g.SetActive(true));
+            if (defeatElements != null)
+                defeatElements.ForEach(g => g.SetActive(true));
             Message.Publish(new GameLostStingerMSG(transform));
-
         }
     }
 
     private void HideElements()
     {
-        victoryElements.ForEach(g => g.SetActive(false));
-        defeatElements.ForEach(g => g.SetActive(false));
+        if (victoryElements != null)
+            victoryElements.ForEach(g => g.SetActive(false));
+        if (defeatElements != null)
+            defeatElements.ForEach(g => g.SetActive(false));
     }
 }

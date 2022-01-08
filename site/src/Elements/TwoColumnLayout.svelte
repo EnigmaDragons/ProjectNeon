@@ -3,18 +3,18 @@
 </script>
 
 <Container>
-  <div class="row">
-    <div class="column">
+  <div class="ctn-row">
+    <div class="ctn-column">
       <slot name="first" />
     </div>
-    <div class="column">
+    <div class="ctn-column">
       <slot name="second" />
     </div>
   </div>
 </Container>
 
 <style>
-  .row {
+  .ctn-row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -23,16 +23,16 @@
     padding-bottom: 6em;
   }
 
-  .column {
+  .ctn-column {
     max-width: 80vw;
-    width: 36vw;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     margin: 0px 2em;
   }
 
   @media screen and (max-width: 600px) {
-    .column {
+    .ctn-column {
       width: 100%;
     }
   }
