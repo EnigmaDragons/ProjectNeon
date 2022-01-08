@@ -6,22 +6,22 @@
 
 <div class="row">
   {#if flip}
-  <div class="description center-vh">
+  <div class="description center">
     <p>
-      {corpDescription}
+      {@html corpDescription}
     </p>
   </div>
   {/if}
-  <div class="brand">
-    <h2 class="center">{corpName}</h2>
+  <div class="brand center">
+    <h2>{corpName}</h2>
     <div class="logo center">
       <img src={`/images/corps/${corpName}_Logo1.png`} alt={corpName + " Logo"}/>
     </div>
   </div>
   {#if !flip}
-  <div class="description center-vh">
+  <div class="description center">
     <p>
-      {corpDescription}
+      {@html corpDescription}
     </p>
   </div>
   {/if}
@@ -54,7 +54,7 @@
   }
 
   .description {
-    padding-top: 4em;
+    min-width: 300px;
     padding-left: 1em;
     width: 36vw;
   }
