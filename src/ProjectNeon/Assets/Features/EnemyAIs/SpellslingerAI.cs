@@ -14,6 +14,6 @@ public class SpellslingerAI : RoutineTurnAI
 
     protected override Queue<string> ChooseRoutine(CardSelectionContext ctx)
         => ctx.CardOptions.Any(x => x.Tags.Contains(CardTag.Ultimate))
-            ? UltimateRoutine
-            : NormalRoutines.Random();
+            ? new Queue<string>(UltimateRoutine.ToList())
+            : new Queue<string>(NormalRoutines.Random().ToList());
 }

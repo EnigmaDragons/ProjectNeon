@@ -20,7 +20,7 @@ public abstract class RoutineTurnAI : TurnAI
             return ctx.WithSelectedTargetsPlayedCard();
         
         // Init If Needed
-        if (!_currentRoutineMap.ContainsKey(memberId))
+        if (!_currentRoutineMap.ContainsKey(memberId) || !_currentRoutineMap[memberId].Any())
             _currentRoutineMap[memberId] = ChooseRoutine(ctx);
         var queue = _currentRoutineMap[memberId];
         
@@ -30,7 +30,10 @@ public abstract class RoutineTurnAI : TurnAI
         
         // Choose a New Routine if Needed
         if (!queue.Any())
+        {
             _currentRoutineMap[memberId] = ChooseRoutine(ctx);
+            queue = _currentRoutineMap[memberId];
+        }
         while (queue.Any() && !ctx.CardOptions.Any(x => x.Name.Equals(queue.Peek())))
             queue.Dequeue();
         
