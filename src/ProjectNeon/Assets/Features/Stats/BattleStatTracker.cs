@@ -24,7 +24,7 @@ public class BattleStatTracker : OnMessage<EffectResolved>
         if (hpChange < 0)
             state.Stats.HpDamageReceived -= hpChange;
         else
-            state.Stats.HealingReceived -= hpChange;
+            state.Stats.HealingReceived += hpChange;
     }
 
     private void UpdateEnemyChangeStats(EffectResolved e)
