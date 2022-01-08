@@ -6,14 +6,14 @@ public class EncounterBuilderHistory : ScriptableObject
 {
     [SerializeField] private List<int[]> encounters;
 
-    public List<int[]> Encounters => encounters;
+    public List<int[]> Encounters => encounters ??= new List<int[]>();
     
-    public void Clear() => encounters.Clear();
+    public void Clear() => Encounters.Clear();
 
     public void Init(List<int[]> encounterHistory) => encounters = encounterHistory;
     
     public void AddEncounter(int[] enemyIds)
     {
-        encounters.Add(enemyIds);
+        Encounters.Add(enemyIds);
     }
 }
