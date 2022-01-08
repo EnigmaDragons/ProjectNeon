@@ -15,7 +15,8 @@
 
     {corpName: 'Tritoonico', desc: "Mystical, secretive and arcane. Quasi-religious organization that teaches the fundamentals of magic power."},
     {corpName: 'ZantoCorp', desc: "Biggest employer of human workers. Specialized in advertising, surveillance, and information channels."},
-    {corpName: 'Unaffiliated', desc: "Not affiliated with any MetroCorp, officially."},
+    
+    {corpName: 'Unaffiliated', desc: "Not affiliated with any MetroCorp, officially.<br><br>While there are significant advantages to strong brand loyalty in Metroplex Zero, there are many people who prefer to appear as unaffiliated as possible. Some are unaffiliated since the corporate lifestyle doesn't really fit with their vision and they would rather live life in Metroplex on their own terms. This includes some people who are personally wealthy or powerful and therefore have less need of corporate assistance. It also includes many people who are very poor or outcasts in society. They can't effectively use any of the benefits offered by corporate employment or brand loyalty.<br><br>There are others, such as freelancers, who use their lack of loyalty as a bargaining tool to cut better deals as they provide unconventional private services to their corporate connections via backchannels. And still others remain unaffiliated out of a sense of old-religious or old-moral obligation. They harbor idealistic dreams of revolutionizing Metroplex Zero society and remaking it in a different image.<br><br>Whatever their reasons, everyone who is unaffiliated in Metroplex Zero lives a more challenging and dangerous life."},
   ]
 </script>
 
