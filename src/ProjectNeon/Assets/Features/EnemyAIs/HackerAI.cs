@@ -8,11 +8,9 @@ public class HackerAI : StatelessTurnAI
     {
         return new CardSelectionContext(memberId, battleState, strategy)
             .WithSelectedUltimateIfAvailable()
-            .IfTruePlayType(x => x.Member.MaxHp() > x.Member.CurrentHp() && x.CardOptions.Any(o => o.Is(CardTag.Escape)), CardTag.Escape)
-            .IfTrueDontPlayType(x => x.Member.MaxHp() <= x.Member.CurrentHp(), CardTag.Escape)
             .WithSelectedDesignatedAttackerCardIfApplicable()
             .WithCommonSenseSelections()
-            .WithFinalizedCardSelection(CardTag.StealCredits, CardTag.Attack)
+            .WithFinalizedCardSelection(CardTag.GlitchHand, CardTag.Attack)
             .WithSelectedTargetsPlayedCard();
     }
 }
