@@ -55,7 +55,8 @@
 
   .description {
     min-width: 300px;
-    padding-left: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
     width: 36vw;
   }
 
