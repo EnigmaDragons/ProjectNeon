@@ -43,4 +43,5 @@ public enum CardTag
     Igniting = 40,
     CredAdjust = 41,
     Shot = 42,
+    AntiStealth = 43
 }

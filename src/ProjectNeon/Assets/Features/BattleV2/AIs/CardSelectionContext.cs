@@ -12,16 +12,16 @@ public sealed class CardSelectionContext
     public IEnumerable<CardTypeData> CardOptions { get; }
     public PartyAdventureState PartyAdventureState { get; }
     public CardPlayZones Zones { get; }
-    public CardTypeData DisabledCard { get; }
+    public EnemySpecialCircumstanceCards SpecialCards => Strategy.SpecialCards;
     
     public Maybe<CardTypeData> SelectedCard { get; private set; } = Maybe<CardTypeData>.Missing();
     public string CardOptionsString => $"[{string.Join(", ", CardOptions.Select(x => x.Name))}]";
     
     public CardSelectionContext(int memberId, BattleState state, AIStrategy strategy)
-        : this(state.Members[memberId], state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, state.GetPlayableCards(memberId, state.Party)) {}
+        : this(state.Members[memberId], state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, state.GetPlayableCards(memberId, state.Party, strategy.SpecialCards)) {}
     
     public CardSelectionContext(Member member, BattleState state, AIStrategy strategy)
-        : this(member, state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, state.GetPlayableCards(member.Id, state.Party)) {}
+        : this(member, state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, state.GetPlayableCards(member.Id, state.Party, strategy.SpecialCards)) {}
 
     private CardSelectionContext(Member member, Member[] allMembers, AIStrategy strategy, 
         PartyAdventureState partyAdventureState, CardPlayZones zones, IEnumerable<CardTypeData> options)
@@ -32,7 +32,6 @@ public sealed class CardSelectionContext
         PartyAdventureState = partyAdventureState;
         Zones = zones;
         CardOptions = options;
-        DisabledCard = strategy.DisabledCard;
     }
     
     public CardSelectionContext IfTrueDontPlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] excludedTagsCombination)

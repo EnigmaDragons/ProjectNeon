@@ -66,7 +66,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.TransformCardsIntoCard, new[] { "EffectScope" }},
         {EffectType.AdjustCardCosts, new[] { "EffectScope", "Formula" }},
         {EffectType.Drain, new[] { "EffectScope", "Formula" }},
-        {EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, new[] {"Formula"}}
+        {EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, new[] {"Formula"}},
+        {EffectType.RemoveTemporalModsMatchingStatusTag, new[]{ "EffectScope"}}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

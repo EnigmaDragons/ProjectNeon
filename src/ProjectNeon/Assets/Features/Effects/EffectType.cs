@@ -65,6 +65,7 @@ public enum EffectType
     GainDoubleDamage = 57,
     DuplicateStatesOfType = 65,
     DuplicateStatesOfTypeToRandomEnemy = 90,
+    RemoveTemporalModsMatchingStatusTag = 99,
     
     // Healing
     HealFormula = 29,
