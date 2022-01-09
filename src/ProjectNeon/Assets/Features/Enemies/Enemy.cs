@@ -28,6 +28,7 @@ public class Enemy : ScriptableObject
 
     public Corp Corp => corp;
     public EnemyTier Tier => tier;
+    public BattleRole BattleRole => battleRole;
     public bool ExcludeFromBestiary => excludeFromBestiary;
     public int[] Stages => stageDetails.OrderBy(x => x.stage).Select(x => x.stage).ToArray();
     public EnemyInstance ForStage(int stage)

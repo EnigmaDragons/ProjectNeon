@@ -21,7 +21,7 @@ public static class AdventureProgress2MapNode3CombatNodeGeneration
     }
 
     private static IStageSegment GenerateEncounter(string name, bool isElite, AdventureGenerationContext ctx,
-        MapNode3 mapData, EncounterBuilder encounterBuilder, int powerLevel)
+        MapNode3 mapData, IEncounterBuilder encounterBuilder, int powerLevel)
     {
         var generated = false;
         var enemies = new EnemyInstance[0];

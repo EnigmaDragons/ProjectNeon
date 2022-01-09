@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bb2646876e0439eb4228c8aea5c9ec9, type: 3}
+  m_Name: EncounterBuilderV4-General-Elites
+  m_EditorClassIdentifier: 
+  history: {fileID: 11400000, guid: 344a53d692415e64c9e27d802322353c, type: 2}
+  allowElites: 1
+  possible:
+  - {fileID: 11400000, guid: 7e3cd91c682409444b82c9dced8b7de3, type: 2}
+  - {fileID: 11400000, guid: 99141766f1d01cc418e63f5ba2c6f65f, type: 2}
+  - {fileID: 11400000, guid: 33f0b976eb2602341858e44a04b8ba15, type: 2}
+  - {fileID: 11400000, guid: bbc820d96c6249d44af94d320e26d7e5, type: 2}
+  - {fileID: 11400000, guid: d72cdad6004ae384d948e73ded4b6e6f, type: 2}
+  - {fileID: 11400000, guid: e81944bbccb1b5b4696ac3a97d85b350, type: 2}
+  - {fileID: 11400000, guid: c19fafe82e1e0ce4eb147221b9f812b5, type: 2}
+  - {fileID: 11400000, guid: 454996a10146b114188e5594545b8a0e, type: 2}
+  - {fileID: 11400000, guid: c8a6793f71b2da7468b0b5544b1f8e05, type: 2}
+  - {fileID: 11400000, guid: 15bf2ec14f10307478a49ea6530469cc, type: 2}
+  - {fileID: 11400000, guid: e968b9c72d10d3843bf9d0993754fa5b, type: 2}
+  - {fileID: 11400000, guid: b06d259d44bb9d04787b04b21e881a34, type: 2}
+  - {fileID: 11400000, guid: 0670c8d366a99f447841f3bab471c505, type: 2}
+  - {fileID: 11400000, guid: bdb74a4c8fc306b4f91d0e18c3aa9223, type: 2}
+  - {fileID: 11400000, guid: f3aebb6f265fbef4c82e5bdd3214c366, type: 2}
+  - {fileID: 11400000, guid: 4bbf819b78887d748a8cdb899f02b964, type: 2}
+  - {fileID: 11400000, guid: af8328367b13e1e4e9bf29595ceac88c, type: 2}
+  - {fileID: 11400000, guid: 883be83dd2ff2c74299767e3b515b932, type: 2}
+  - {fileID: 11400000, guid: 325b5e2abb32a494395bf5cee2f5bb98, type: 2}
+  - {fileID: 11400000, guid: 56afac0361c18ff498636bfabc30c31e, type: 2}
+  - {fileID: 11400000, guid: ca2219eed8047664c8767e403015f1f6, type: 2}
+  flexibility: 0.3
+  weightedComps:
+  - ChanceOfThisComp: 1
+    Weights: 0200000001000000
+  - ChanceOfThisComp: 2
+    Weights: 020000000100000001000000
+  - ChanceOfThisComp: 2
+    Weights: 030000000200000001000000
+  - ChanceOfThisComp: 1
+    Weights: 02000000010000000100000001000000
+  chancesBasedOnEnemyNumber:
+  - RollChances: 0100000006000000
+  - RollChances: 01000000060000000400000007000000
+  - RollChances: 0100000006000000020000000300000008000000
+  - RollChances: 0100000006000000
+  - RollChances: 0100000006000000
