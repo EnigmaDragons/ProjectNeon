@@ -13,7 +13,7 @@ public class GeneralAI : StatefulTurnAI
         return new CardSelectionContext(battleState.Members[memberId], battleState, strategy)
             .WithSelectedDesignatedAttackerCardIfApplicable()
             .WithCommonSenseSelections()
-            .WithFinalizedCardSelection(c => _lastPlayedCard.TryGetValue(memberId, out var card) && c.Equals(card.Card.Type) ? -99 : 0)
+            .WithFinalizedSmartCardSelection(_lastPlayedCard.ValueOrMaybe(memberId).Map(c => c.Card.Type))
             .WithSelectedTargetsPlayedCard();
     }
 

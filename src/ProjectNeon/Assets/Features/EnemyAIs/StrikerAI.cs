@@ -9,9 +9,7 @@ public sealed class StrikerAI : StatelessTurnAI
             .WithCommonSenseSelections()
             .WithSelectedUltimateIfAvailable()
             .WithSelectedDesignatedAttackerCardIfApplicable()
-            .IfTrueDontPlayType(ctx => ctx.Member.HasAttackBuff(), CardTag.BuffAttack)
-            .IfTrueDontPlayType(ctx => ctx.Member.HasDoubleDamage(), CardTag.DoubleDamage)
-            .WithFinalizedCardSelection()
+            .WithFinalizedSmartCardSelection()
             .WithSelectedTargetsPlayedCard();
     }
 }
