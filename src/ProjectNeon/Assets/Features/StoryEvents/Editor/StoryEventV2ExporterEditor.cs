@@ -18,6 +18,7 @@ public class StoryEventV2ExporterEditor : EditorWindow
     
     void OnGUI()
     {
+        //Localize.SetDb(LocalizationEditorSettings.StringsDatabase); // Needs ASMDEF Import of Unity.Localization.Editor
         if (GUILayout.Button("Export All"))
         {
             var storyEvents = GetAllInstances<StoryEvent2>();
