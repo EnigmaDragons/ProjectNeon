@@ -15,6 +15,7 @@ public class StoryEventChoice2
     public StoryResult Reward => Resolution.OrderByDescending(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     public StoryResult Penalty => Resolution.OrderBy(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     
+    public string ChoiceText(int parentStoryEventId) => Localize.GetEvent($"Event{parentStoryEventId} Choice{Choice}").Trim();
     public string ChoiceFullText(StoryEventContext ctx, StoryEvent2 owner) => Localize.GetEvent($"Event{owner.id} Choice{Choice}").Trim();
     public bool CanSelect(StoryEventContext ctx) => true;
     
