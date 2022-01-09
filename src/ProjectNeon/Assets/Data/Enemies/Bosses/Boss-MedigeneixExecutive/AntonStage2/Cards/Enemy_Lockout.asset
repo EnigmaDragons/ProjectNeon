@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Basic_AiGlitch
+  m_Name: Enemy_Lockout
   m_EditorClassIdentifier: 
-  id: 506
+  id: 514
   customName: 
-  art: {fileID: 21300000, guid: 2dfb6889bad9b3d489a5dd4200909a86, type: 3}
-  description: The AI for this enemy has glitched. A bug report has already been
-    filed with the game's developers.
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
-  tags: 00000000
+  art: {fileID: 21300000, guid: 9194a9dd262344f4ab1874e58b61c927, type: 3}
+  description: Gives <b>1 Disabled</b> to all heroes that have a glitched card in
+    hand
+  typeDescription: {fileID: 0}
+  tags: 03000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    cost: 2
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 4
   actionSequences:
-  - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: 18bd0ad578c0fd145a5c9930c5829cba, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -41,4 +41,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
-  notAvailableForGeneralDistribution: 1
+  notAvailableForGeneralDistribution: 0

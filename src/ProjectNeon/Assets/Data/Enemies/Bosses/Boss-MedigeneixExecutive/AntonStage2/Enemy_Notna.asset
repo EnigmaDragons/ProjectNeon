@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: Enemy_Notna
+  m_EditorClassIdentifier: 
+  id: 47
+  enemyName: Notna
+  excludeFromBestiary: 0
+  lastBalanceDate: 2022/01/09
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
+  ai: {fileID: 11400000, guid: bd43a568158dcc4418a29a0054efecc5, type: 2}
+  preferredTurnOrder: 99
+  prefab: {fileID: 1771151275093467103, guid: c50db8efb1027e346b45de5e46b52c43, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 3
+  tier: 3
+  unique: 1
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 75
+    maxShield: 75
+    startingShield: 75
+    startingAegis: 1
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 0
+    magic: 16
+    leadership: 0
+    armor: 6
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 348
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 171.05603
+      perCardValue: 16
+      resourceValue: 5.28
+      perTurnPower: 21.28
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 17.105602
+      calculatedPowerLevel: 348
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions:
+      - {fileID: 11400000, guid: ff3d7d861d5f96049a084c2a30cbaa3f, type: 2}
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When alone start of turn: Gain 1 card play'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 9a12758487afab944af9fff4e0af321e, type: 2}
+      ReactionConditionType: 33
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 9a12758487afab944af9fff4e0af321e, type: 2}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 49236647418f23144a3fe886b5164030, type: 2}
+    - {fileID: 11400000, guid: 753a24d87911e5443b4c89d65fbab99f, type: 2}
+    - {fileID: 11400000, guid: 7e6b0cf09e6961b499d6a008e5b62f86, type: 2}
