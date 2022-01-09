@@ -32,14 +32,15 @@ public class EnemyDetailsView : MonoBehaviour
         _isInitialized = true;
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLabel.text = e.Name;
-        var eliteText = e.Tier == EnemyTier.Elite ? "Elite " : "";
+        var eliteText = e.Tier == EnemyTier.Elite ? "Elite" : "";
         if (typeLabel != null)
-            typeLabel.text = eliteText + e.Role;
+            typeLabel.text = eliteText;
         statPanel.Initialized(e.Stats);
         var member = e.AsMember(InfoMemberId.Get());
-        enemyDeckUi.Show(e.Cards, member);
+        var enemyCards = e.Cards.ToArray();
+        enemyDeckUi.Show(enemyCards, member);
         if (cardsView != null)
-            cardsView.Show(e.Cards.Select(c => c.CreateInstance(-1, member)));
+            cardsView.Show(enemyCards.Cast<CardTypeData>().Concat(e.ReactionCards).Select(c => c.CreateInstance(-1, member)));
         if (corpUi != null)
             corpUi.Init(e.Corp);
         if (resources != null)
