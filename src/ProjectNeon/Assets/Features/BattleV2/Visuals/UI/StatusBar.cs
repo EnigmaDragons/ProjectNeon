@@ -52,6 +52,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddCustomTextStatusIcons(statuses, StatusTag.CounterAttack, "Counterattack");
         AddCustomTextStatusIcons(statuses, StatusTag.Trap, "Secret Trap Power");
         AddCustomTextStatusIcons(statuses, StatusTag.Augment, "Unknown Augment Power");
+                
+        foreach (var s in _member.State.CustomStatuses())
+            statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip, OriginatorId = s.OriginatorId });;
         
         AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => $"Dodges the next {v} attacks");
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
@@ -102,9 +105,6 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddCustomTextStatusIcons(statuses, StatusTag.WhenHit, "Secret On Hit Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.WhenKilled, "Secret When Killed Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.WhenDamaged, "Secret When Damaged Effect");
-        
-        foreach (var s in _member.State.CustomStatuses())
-            statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip, OriginatorId = s.OriginatorId });;
         
         AddCustomTextStatusIcons(statuses, StatusTag.StartOfTurnTrigger, "Secret Start of Turn Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.EndOfTurnTrigger, "Secret Start of Turn Effect");
