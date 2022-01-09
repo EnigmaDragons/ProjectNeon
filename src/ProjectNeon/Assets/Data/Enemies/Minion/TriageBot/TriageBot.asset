@@ -1,0 +1,158 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: TriageBot
+  m_EditorClassIdentifier: 
+  id: 45
+  enemyName: Triage Bot
+  excludeFromBestiary: 0
+  lastBalanceDate: 1/9/2022
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: 4de7bcb514c7bb447a3630a83b92c264, type: 2}
+  preferredTurnOrder: 99
+  prefab: {fileID: 1568388209794389976, guid: 143c8235831f1484ab82d9cab59ab870, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 2
+  tier: 1
+  unique: 1
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Quickly helps injured and damaged allies. Selflessly puts itself in
+    harms way.
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 16
+    maxShield: 4
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 0
+    magic: 7
+    leadership: 0
+    armor: 1
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    powerLevel: 39
+    calculationVariables:
+      startingDefensiveValueAdjustment: -5
+      startingValueAdjustment: 16
+      perTurnValueAdjustment: 1
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 30.6878
+      perCardValue: 7
+      resourceValue: 2.3100002
+      perTurnPower: 8
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 1.46878
+      calculatedPowerLevel: 39
+    startOfBattleEffects:
+    - EffectType: 75
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 2
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Ally Damaged: Quick Triage'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 102
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 39b3c8942b9e4c44f9cda28b31144f7b, type: 2}
+      ReactionEffect:
+        reactor: 1
+        scope: 10
+        cardActions: {fileID: 11400000, guid: 0b0a2826a45779245b55098cec1e6216, type: 2}
+      BonusCardType: {fileID: 0}
+    - EffectType: 75
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Ally Bloodied: Interject'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 101
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 91703f321f71a5f4bb2be0d67977a6fc, type: 2}
+      ReactionEffect:
+        reactor: 1
+        scope: 10
+        cardActions: {fileID: 11400000, guid: 0b0a2826a45779245b55098cec1e6216, type: 2}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 829ccd758f1b6c245995da7111bce553, type: 2}
+    - {fileID: 11400000, guid: 4beb2874834b0b14f997b8f17ea60c28, type: 2}

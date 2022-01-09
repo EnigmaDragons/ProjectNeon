@@ -97,9 +97,9 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         if (action.Scope == ReactiveTargetScope.OneRandomAlly)
             target = new Single(members.Values.ToArray().GetConsciousAllies(reactor).Random());
         if (action.Scope == ReactiveTargetScope.HealthiestAllyExceptSelf)
-            target = members.Values.Where(x => x.Id != possessor.Id).ToArray().GetConsciousAllies(reactor).Any() 
-                ? (Target)new Single(members.Values.Where(x => x.Id != possessor.Id).ToArray().GetConsciousAllies(reactor).Shuffled().OrderByDescending(x => x.CurrentHp()).First())
-                : (Target)new NoTarget();
+            target = new Multiple(members.Values.ToArray().GetConsciousNonSelfAllies(reactor).Shuffled().OrderByDescending(x => x.CurrentHp()).Take(1));
+        if (action.Scope == ReactiveTargetScope.UnhealthiestAllyExceptSelf)
+            target = new Multiple(members.Values.ToArray().GetConsciousNonSelfAllies(reactor).Shuffled().OrderBy(x => x.CurrentHp()).Take(1));
         if (action.Scope == ReactiveTargetScope.OneRandomEnemy)
             target = new Single(members.Values.ToArray().GetConsciousEnemies(reactor).Random());
         return target;
