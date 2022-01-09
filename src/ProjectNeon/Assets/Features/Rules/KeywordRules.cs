@@ -21,9 +21,11 @@ public static class KeywordRules
     
     public static readonly string PrimaryStat = "PrimaryStat";
     public static readonly string Quick = "Quick";
+    public static readonly string SelfDestruct = "SelfDestruct";
     
     private static readonly string[] RulesByImportanceArr = {
         Injure,
+        SelfDestruct,
         Drain,
         Buyout,
         Afflicted,
@@ -81,6 +83,8 @@ public static class KeywordRules
 
     public static void AddAllDescriptionFoundRules(List<string> rulesToShow, string description)
     {
+        rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase(SelfDestruct));
+        rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase("Self-Destruct"));
         rulesToShow.AddIf(Injure, description.ContainsAnyCase(Injure));
         rulesToShow.AddIf(Injure, description.ContainsAnyCase("Injury"));
         rulesToShow.AddIf(Focus, description.ContainsAnyCase(Focus));
