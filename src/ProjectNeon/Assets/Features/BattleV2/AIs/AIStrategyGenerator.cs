@@ -55,8 +55,8 @@ public sealed class AIStrategyGenerator
         
         var designatedAttacker = team
             .OrderByDescending(e =>
-                e.BattleRole == BattleRole.Striker ? 2 :
-                e.BattleRole == BattleRole.Bruiser ? 1 :
+                e.BattleRole == BattleRole.DamageDealer ? 2 :
+                e.BattleRole == BattleRole.Specialist ? 1 :
                 0)
             .ThenByDescending(e => Math.Max(e.State.Attack(), e.State.Magic()))
             .First();

@@ -150,7 +150,7 @@ public static class AITargetSelectionLogic
             .Shuffled()
             .OrderByDescending(p =>
                 (p.Members.Contains(strategy.DesignatedAttacker) ? 1 : 0) * 100 // Prefer Designated Attack for immediate power
-                + p.Members.Count(x => x.BattleRole == BattleRole.Striker) * 50  // Prefer Strikers
+                + p.Members.Count(x => x.BattleRole == BattleRole.DamageDealer) * 50  // Prefer Strikers
                 + p.TotalAttack()) // Prefer more effective
             .First();
     
