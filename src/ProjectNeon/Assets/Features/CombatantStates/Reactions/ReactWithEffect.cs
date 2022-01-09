@@ -128,6 +128,8 @@ public class EffectReactWith : Effect
                     return true;
                 return false;
             }},
+        { ReactionConditionType.WhenAllyVulnerable, ctx => effect 
+            => ctx.Actor.IsConscious() && effect.EffectData.EffectScope.Value == "Vulnerable" && effect.Target.Members.Any(x => x.Id != ctx.Possessor.Id && x.TeamType == ctx.Possessor.TeamType) },
         };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
