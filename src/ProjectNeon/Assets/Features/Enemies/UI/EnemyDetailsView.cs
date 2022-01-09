@@ -31,8 +31,9 @@ public class EnemyDetailsView : MonoBehaviour
         _isInitialized = true;
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLabel.text = e.Name;
+        var eliteText = e.Tier == EnemyTier.Elite ? "Elite " : "";
         if (typeLabel != null)
-            typeLabel.text = e.Role.ToString();
+            typeLabel.text = eliteText + e.Role;
         statPanel.Initialized(e.Stats);
         var member = e.AsMember(InfoMemberId.Get());
         enemyDeckUi.Show(e.Cards, member);
