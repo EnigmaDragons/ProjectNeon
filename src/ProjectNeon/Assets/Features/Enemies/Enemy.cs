@@ -42,7 +42,7 @@ public class Enemy : ScriptableObject
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
             prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 
-            isHasty, unique, detail.CounterAdjustments, corp, animations, materialType, description, detail.startOfBattleEffects.Select(b => b.ReactionSequence));
+            isHasty, unique, detail.CounterAdjustments, corp, animations, materialType, description, detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence));
     } 
     public EffectData[] Effects => stageDetails.SelectMany(x => x.startOfBattleEffects).ToArray();
 }

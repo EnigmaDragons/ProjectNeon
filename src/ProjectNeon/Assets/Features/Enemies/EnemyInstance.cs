@@ -26,6 +26,7 @@ public class EnemyInstance : EnemyType
     private readonly Corp _corp;
 
     public int EnemyId => _enemyId;
+    public EffectData[] StartOfBattleEffects => _startOfBattleEffects;
     public GameObject Prefab { get; }
     public Vector3 LibraryCameraOffset { get; }
     public TurnAI AI { get; }
@@ -87,7 +88,7 @@ public class EnemyInstance : EnemyType
         IsHasty = isHasty;
         IsUnique = isUnique;
         Animations = animations;
-        ReactionCards = reactionCards;
+        ReactionCards = reactionCards != null ? reactionCards : new ReactionCardType[0];
         Description = description != null ? description : "";
         if (_resourceType == null)
             Log.Error($"Null Resource Type for {Name} {enemyId}");

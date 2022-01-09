@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Features.GameProgression;
 using TMPro;
@@ -18,6 +19,8 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private CorpUiBase corpUi;
     [SerializeField] private EnemyResourceInfoPresenter resources;
     [SerializeField] private CurrentAdventureProgress currentAdventureProgress;
+    [SerializeField] private MemberSpecialPowersUi specialPowers;
+    [SerializeField] private StatusIcons icons;
 
     private bool _isInitialized;
     
@@ -35,10 +38,25 @@ public class EnemyDetailsView : MonoBehaviour
         var eliteText = e.Tier == EnemyTier.Elite ? "Elite" : "";
         if (typeLabel != null)
             typeLabel.text = eliteText;
-        statPanel.Initialized(e.Stats);
+        if (statPanel != null)
+            statPanel.Initialized(e.Stats);
+        
         var member = e.AsMember(InfoMemberId.Get());
+        if (specialPowers != null && icons != null)
+        {
+            var powers = e.StartOfBattleEffects.Where(x => x.StatusTag != StatusTag.None).Select(s =>
+                new CurrentStatusValue
+                {
+                    Type = s.StatusTag.ToString(),
+                    Icon = icons[s.StatusTag].Icon,
+                    Tooltip = s.StatusDetailText
+                }).ToList();
+            specialPowers.UpdateStatuses(powers);
+        }
+
         var enemyCards = e.Cards.ToArray();
-        enemyDeckUi.Show(enemyCards, member);
+        if (enemyDeckUi != null)
+            enemyDeckUi.Show(enemyCards, member);
         if (cardsView != null)
             cardsView.Show(enemyCards.Cast<CardTypeData>().Concat(e.ReactionCards).Select(c => c.CreateInstance(-1, member)));
         if (corpUi != null)
