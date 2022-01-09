@@ -1,12 +1,7 @@
 ﻿public enum BattleRole
 {
     Unknown = 0,
-    Striker = 1,
-    Healer = 2,
-    Tank = 3,
-    Utility = 4,
-    Boss = 5,
-    Bruiser = 6,
-    Controller = 7,
-    Leader = 8,
+    DamageDealer = 1,
+    Survivability = 2,
+    Specialist = 3
 }

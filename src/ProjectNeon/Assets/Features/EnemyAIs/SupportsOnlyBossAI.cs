@@ -8,6 +8,6 @@ public class SupportsOnlyBossAI : StatelessTurnAI
     {
         return  new CardSelectionContext(memberId, battleState, strategy)
             .WithSelectedDesignatedAttackerCardIfApplicable()
-            .WithSelectedTargetsPlayedCard(t => t.Members.All(m => m.BattleRole == BattleRole.Boss));
+            .WithSelectedTargetsPlayedCard();
     }
 }
