@@ -36,7 +36,7 @@ MonoBehaviour:
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 36
+    maxHp: 32
     maxShield: 14
     startingShield: 0
     startingAegis: 0
@@ -46,28 +46,70 @@ MonoBehaviour:
     attack: 0
     magic: 10
     leadership: 0
-    armor: 0
+    armor: 3
     resistance: 0
     nonStatCardValueFactor: 0
     startingResourceAmount: 0
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 83
+    powerLevel: 79
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
-      perTurnValueAdjustment: 0
+      perTurnValueAdjustment: -2.5
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 37.542465
+      startingPower: 41.672462
       perCardValue: 10
       resourceValue: 3.3000002
-      perTurnPower: 13.3
+      perTurnPower: 10.8
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 3.7542465
-      calculatedPowerLevel: 83
-    startOfBattleEffects: []
+      estimatedTurnsAlive: 4.1672463
+      calculatedPowerLevel: 79
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When losing tech points: I lose 5 Magic for the turn'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 42
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: dbe0a960a181406489058737a89ed331, type: 2}
+      BonusCardType: {fileID: 0}
     Cards:
     - {fileID: 11400000, guid: a9fa25814378e4f4aa80da7526680f29, type: 2}
     - {fileID: 11400000, guid: 82d5e32d49d31a54391548f3f8d96d08, type: 2}
