@@ -68,9 +68,50 @@ MonoBehaviour:
       estimatedTurnsAlive: 16.604647
       calculatedPowerLevel: 316
     startOfBattleEffects:
+    - EffectType: 73
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: Attacks also apply 1 Damage over Time until the end of battle
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 33
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 08ee9f43f1f546e44a29530e3f30d10f, type: 2}
+      BonusCardType: {fileID: 0}
     - EffectType: 74
-      Conditions:
-      - {fileID: 11400000, guid: ff3d7d861d5f96049a084c2a30cbaa3f, type: 2}
+      Conditions: []
       BaseAmount:
         UseConstant: 0
         ConstantValue: 0
@@ -88,8 +129,8 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 12
-      StatusDetailText: 'When alone start of turn: Gain 1 card play and 1 Tech Points
-        \nAll attacks also apply 1 damage every turn until the end of the battle'
+      StatusDetailText: 'When Alone at Start of Turn: Gain 1 Card Play and 1 Tech
+        Points '
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:

@@ -25,6 +25,7 @@ public static class AICardSelectionLogic
     public static CardSelectionContext WithCommonSenseSelections(this CardSelectionContext ctx)
         => ctx
             .PlayAntiStealthCardIfAllEnemiesAreStealthed()
+            .DontPlayAntiStealthCardIfNoEnemiesAreStealthed()
             .DontPlaySelfAttackBuffIfAlreadyBuffed()
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
             .DontRemoveResourcesIfOpponentsDontHaveMany()
@@ -43,6 +44,9 @@ public static class AICardSelectionLogic
 
     public static CardSelectionContext PlayAntiStealthCardIfAllEnemiesAreStealthed(this CardSelectionContext ctx)
         => ctx.IfTruePlayType(x => x.Enemies.All(e => e.IsStealthed()), CardTag.AntiStealth);
+    
+    public static CardSelectionContext DontPlayAntiStealthCardIfNoEnemiesAreStealthed(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.None(e => e.IsStealthed()), CardTag.AntiStealth);
     
     public static CardSelectionContext DontGiveAlliesDodgeIfTheyAlreadyHaveEnough(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlay(x => x.Allies.Sum(a => a.State[TemporalStatType.Dodge]) >= x.Allies.Length, c => c.Is(CardTag.Defense, CardTag.Dodge));
