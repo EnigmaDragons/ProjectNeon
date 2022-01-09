@@ -132,6 +132,8 @@ public class EffectReactWith : Effect
             => ctx.Actor.IsConscious() && effect.EffectData.EffectScope.Value == "Vulnerable" && effect.Target.Members.Any(x => x.Id != ctx.Possessor.Id && x.TeamType == ctx.Possessor.TeamType) },
         { ReactionConditionType.OnResourcesLost, ctx => effect 
             => ctx.Actor.IsConscious() && effect.Source.Id != ctx.Actor.Id && effect.BattleBefore.Members[ctx.Actor.Id].State.PrimaryResourceAmount > effect.BattleAfter.Members[ctx.Actor.Id].State.PrimaryResourceAmount },
+        { ReactionConditionType.WhenEnemyShielded, ctx => effect 
+            => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => x.TeamType != ctx.Actor.TeamType && effect.BattleBefore.Members[x.Id].State.Shield < effect.BattleAfter.Members[x.Id].State.Shield) },
     };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
