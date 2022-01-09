@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Enemy_BoosterDrugs
+  m_Name: Enemy_Track
   m_EditorClassIdentifier: 
-  id: 520
+  id: 524
   customName: 
-  art: {fileID: 21300000, guid: c03113a2273473548a475f84cbd09e79, type: 3}
-  description: Gives {E[0]} Armor & Resistance this turn
+  art: {fileID: 21300000, guid: 041ac75153d50ff4a8d146600de60231, type: 3}
+  description: Next turn, gives <b>1 Vulnerable</b>
   typeDescription: {fileID: 0}
-  tags: 07000000
+  tags: 
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 1
   actionSequences:
-  - scope: 4
-    group: 2
-    cardActions: {fileID: 11400000, guid: 9dd19d0459c23d5468d2adacdb540b5b, type: 2}
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: b5ab9f153079c804aafefcbe025ad3f3, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
