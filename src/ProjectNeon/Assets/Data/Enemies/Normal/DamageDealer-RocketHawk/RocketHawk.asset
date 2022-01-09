@@ -10,65 +10,66 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
-  m_Name: Minion_HiredCleaner
+  m_Name: RocketHawk
   m_EditorClassIdentifier: 
-  id: 15
-  enemyName: Hired Cleaner
+  id: 49
+  enemyName: Rocket Hawk
   excludeFromBestiary: 0
-  lastBalanceDate: 1/8/22
+  lastBalanceDate: 1/9/22
   isCurrentlyWorking: 1
-  corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
   preferredTurnOrder: 99
-  prefab: {fileID: 6705478397166493558, guid: 6144630566c40e844aa69a96b8c951c0, type: 3}
-  materialType: 1
-  libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
+  prefab: {fileID: 1977276736307866363, guid: 9724e0d7a9e2c6f4e8aa6fa84550fec5, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: 0, y: -0.2, z: 2.6}
   deathEffect:
     UseConstant: 1
     ConstantValue: 
     Variable: {fileID: 0}
   battleRole: 1
-  tier: 1
+  tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: 
-  animations: {fileID: 11400000, guid: 8122ecd1fb5538141b8f649fe5db4c9a, type: 2}
+  resourceType: {fileID: 11400000, guid: f6dc0d0477e4a3f45a7376d02fd56dd9, type: 2}
+  description: Fast-maneuvering rocket drone that unleashes a barrage of shots and
+    missiles. Very shifty and hard to hit.
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
   stageDetails:
-  - stage: 2
-    maxHp: 20
-    maxShield: 0
+  - stage: 1
+    maxHp: 76
+    maxShield: 12
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
-    startingDodge: 2
+    startingDodge: 0
     startingTaunt: 0
-    attack: 15
+    attack: 16
     magic: 0
     leadership: 0
     armor: 2
-    resistance: 3
-    nonStatCardValueFactor: 15
+    resistance: 4
+    nonStatCardValueFactor: 0
     startingResourceAmount: 0
     maxResourceAmount: 0
-    resourceGainPerTurn: 0
+    resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 41
+    powerLevel: 276
     calculationVariables:
-      startingDefensiveValueAdjustment: -18
+      startingDefensiveValueAdjustment: 30
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 25.829998
-      perCardValue: 15
-      resourceValue: 4.9500003
-      perTurnPower: 15
+      startingPower: 123.45214
+      perCardValue: 16
+      resourceValue: 5.28
+      perTurnPower: 21.28
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 1.2915
-      calculatedPowerLevel: 41
+      estimatedTurnsAlive: 12.345214
+      calculatedPowerLevel: 276
     startOfBattleEffects:
-    - EffectType: 75
+    - EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -77,19 +78,19 @@ MonoBehaviour:
       FloatAmount:
         UseConstant: 0
         ConstantValue: 0
-        FloatVariable: {fileID: 11400000, guid: 5921ac0d85df4a2409b82c7f5aee6def, type: 2}
+        FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
       DurationFormula: -1
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 9
-      StatusDetailText: 'Flighty: Leaves battle when damaged'
+      StatusTag: 5
+      StatusDetailText: 'When Damaged: Gain 1 Dodge'
       TurnDelay: 0
-      Formula: 2
+      Formula: 
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -99,18 +100,20 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 1
+      ReactionConditionType: 4
       ReactionEffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
-      ReactionSequence: {fileID: 11400000, guid: 4cf2623eb1ef12b43b4e2a131877e4a7, type: 2}
+      ReactionSequence: {fileID: 0}
       ReactionEffect:
-        reactor: 0
+        reactor: 1
         scope: 0
-        cardActions: {fileID: 0}
+        cardActions: {fileID: 11400000, guid: aed57e30eaf6e9745b965aee734216e6, type: 2}
       BonusCardType: {fileID: 0}
     Cards:
-    - {fileID: 11400000, guid: 272cfefb9c7514343b8aa655fe95a16d, type: 2}
-    - {fileID: 11400000, guid: cf4f76b754ead8848bcb1c277948cba8, type: 2}
-    - {fileID: 11400000, guid: 3afd438744cfbb54eabde17083927587, type: 2}
+    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+    - {fileID: 11400000, guid: 4c5772970902504489199eb6f1c56209, type: 2}
+    - {fileID: 11400000, guid: c17a4d87658260f45a1090b5eace6bb9, type: 2}
+    - {fileID: 11400000, guid: 1796e37e5152a4844bc7e846c65d92fa, type: 2}
+    - {fileID: 11400000, guid: 56f7dc68eed41d149b355ae97efa0ac0, type: 2}
