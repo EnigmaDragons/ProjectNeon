@@ -10,37 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Spiderling_LeapingStrike
+  m_Name: Spiderling_PainfulAttachment
   m_EditorClassIdentifier: 
-  id: 205
+  id: 206
   customName: 
-  art: {fileID: 21300000, guid: cbd8cfe4d7e9c6547843d8b31bb54f8d, type: 3}
-  description: Deal {E[0]}. Target this character until they're dead.
+  art: {fileID: 21300000, guid: 46d7f8b9688167e4b844e93428555b7a, type: 3}
+  description: "Deal {E[0]}. \n\nEnter <b>Stealth</b>"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 04000000
+  tags: 04000000030000000c000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
+    cost: 3
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     plusXCost: 0
-  onPlayGain:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-    plusXCost: 0
-  rarity: 1
+  rarity: 3
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 74c905df6857ed840a3d3ff5efe5767a, type: 2}
+    cardActions: {fileID: 11400000, guid: 014528a8257259347ab013d0532b99e4, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: a321bc5f4c2c81e49b3d2682f12d2cf2, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
-  functionalityIssues: 
-  presentationIssues: unoriginal art
+  functionalityIssues: doesn't disappear on death. should do somethign better than
+    more damagerever
+  presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

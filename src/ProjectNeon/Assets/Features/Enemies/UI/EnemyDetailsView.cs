@@ -51,6 +51,13 @@ public class EnemyDetailsView : MonoBehaviour
                     Icon = icons[s.StatusTag].Icon,
                     Tooltip = s.StatusDetailText
                 }).ToList();
+            e.StartOfBattleEffects.Where(x => x.EffectType == EffectType.EnterStealth)
+                .ForEach(s => powers.Add(new CurrentStatusValue 
+                { 
+                    Type = TemporalStatType.Stealth.ToString(), 
+                    Icon = icons[TemporalStatType.Stealth].Icon,
+                    Tooltip = "Start Battle Stealthed"
+                }));
             specialPowers.UpdateStatuses(powers);
         }
 
