@@ -40,10 +40,15 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
     {
         var enemies = possible.Where(x =>
             ((elite && x.Tier == EnemyTier.Elite) || (!elite && x.Tier != EnemyTier.Elite && x.Tier != EnemyTier.Boss))
-            && x.BattleRole == role);
+            && x.BattleRole == role).ToArray();
+        if (!enemies.Any()) {
+            Log.Warn($"Missing Content: Couldn't find {(elite ? "elite" : "normal")} enemy with the {role} role");
+            enemies = possible.Where(x => (elite && x.Tier == EnemyTier.Elite) || (!elite && x.Tier != EnemyTier.Elite && x.Tier != EnemyTier.Boss)).ToArray();   
+        }
         var withInPowerRange = enemies.Where(x => strength * (1f - flexibility) > x.stageDetails[0].powerLevel && strength * (1f + flexibility) > x.stageDetails[0].powerLevel).ToArray();
         if (withInPowerRange.Any())
             return withInPowerRange.Random().ForStage(1);
+        Log.Warn($"Missing Content: Couldn't find {(elite ? "elite" : "normal")} enemy with the {role} role in the power range between {strength * (1f - flexibility)} - {strength * (1f + flexibility)}");
         return enemies.OrderBy(x => Math.Abs(x.stageDetails[0].powerLevel - strength)).First().ForStage(1);
     }
 
