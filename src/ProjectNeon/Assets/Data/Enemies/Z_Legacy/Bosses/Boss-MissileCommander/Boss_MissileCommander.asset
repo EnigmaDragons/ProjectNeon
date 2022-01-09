@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   enemyName: Missile Commander
-  excludeFromBestiary: 0
+  excludeFromBestiary: 1
   lastBalanceDate: 02/28/21
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
   ai: {fileID: 11400000, guid: c22317e5185a1f346b5183756c30d528, type: 2}
   preferredTurnOrder: 99
   prefab: {fileID: 6677782679426121482, guid: feb724408be2593428d043a2cbc8ede3, type: 3}
+  materialType: 0
   libraryCameraOffset: {x: -1.7, y: 0, z: 0}
   deathEffect:
     UseConstant: 1
@@ -83,7 +84,6 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 14
@@ -126,7 +126,6 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 11400000, guid: c776ae0c47cabd94e8fc5f9e6804abb2, type: 2}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 14
