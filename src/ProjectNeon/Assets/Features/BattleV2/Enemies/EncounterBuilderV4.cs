@@ -13,6 +13,12 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
     [SerializeField] private List<EncounterWeightsV4> weightedComps;
     [SerializeField] private List<EncounterRoleChanceV4> chancesBasedOnEnemyNumber;
 
+    //only to be used by EnemiessWantedEditor
+    public Enemy[] _possible => possible;
+    public float _flexibility => flexibility;
+    public List<EncounterWeightsV4> _weightedComps => weightedComps;
+    public List<EncounterRoleChanceV4> _chancesBasedOnEnemyNumber => chancesBasedOnEnemyNumber;
+    
     public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber)
     {
         var comp = GetComposition();
