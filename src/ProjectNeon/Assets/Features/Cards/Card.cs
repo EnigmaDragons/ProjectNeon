@@ -34,7 +34,7 @@ public sealed class Card : CardTypeData
     public string Description => _type.Description;
     public HashSet<CardTag> Tags => _type.Tags;
     public string TypeDescription => _type.TypeDescription;
-    public CardActionSequence[] ActionSequences => _type.ActionSequences;
+    public CardActionSequence[] ActionSequences => _type.ActionSequences ?? new CardActionSequence[0];
     public Maybe<CardTypeData> ChainedCard => _type.ChainedCard;
     public Maybe<CardTypeData> SwappedCard => _type.SwappedCard;
     public Rarity Rarity => _type.Rarity;
@@ -55,7 +55,7 @@ public sealed class Card : CardTypeData
     {
         this.owner = owner ?? throw new ArgumentNullException(nameof(owner));
         this.id = id;
-        this.type = type;
+        this.type = type ?? throw new ArgumentNullException(nameof(CardTypeData));
         this.tint = tint;
         this.ownerBust = ownerBust;
     }

@@ -27,7 +27,7 @@ public static class Localize
     
     private static string GetLocalizedStringOrDefault(string sheet, string key)
     {
-        var localized = _db.GetLocalizedString(sheet, key);
+        var localized = Db.GetLocalizedString(sheet, key);
         return string.IsNullOrWhiteSpace(localized) ? key : localized;
     }
 }

@@ -6,13 +6,15 @@ using UnityEngine;
 public sealed class UIStatusBar : StatusBar
 {
     [SerializeField] private StatusIcon iconPrototype;
+    [SerializeField] private GameObject parentTarget;
     
     private readonly List<StatusIcon> _icons = new List<StatusIcon>();
     
     private void Awake()
     {
-        gameObject.DestroyAllChildren();
-        Enumerable.Range(0, 8).ForEach(_ => _icons.Add(Instantiate(iconPrototype, transform)));
+        if (parentTarget == null)
+            gameObject.DestroyAllChildren();
+        Enumerable.Range(0, 8).ForEach(_ => _icons.Add(Instantiate(iconPrototype, parentTarget == null ? transform : parentTarget.transform)));
         UpdateStatuses(new List<CurrentStatusValue>());
     }
 

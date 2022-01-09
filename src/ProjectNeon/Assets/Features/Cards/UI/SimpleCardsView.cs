@@ -10,7 +10,7 @@ public class SimpleCardsView : MonoBehaviour
     
     public void Show(IEnumerable<Card> cards)
     {
-        cardPresenters.ForEach(c => c.gameObject.SetActive(false));
+        cardPresenters.ForEach(card => card.gameObject.SetActive(false));
         var c = cards.ToArray();
         for(var i = 0; i < cardPresenters.Length && i < c.Length; i++)
             cardPresenters[i].Set(c[i]);

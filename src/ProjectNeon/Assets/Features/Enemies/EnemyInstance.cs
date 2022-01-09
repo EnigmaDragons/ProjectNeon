@@ -26,6 +26,7 @@ public class EnemyInstance : EnemyType
     private readonly Corp _corp;
 
     public int EnemyId => _enemyId;
+    public EffectData[] StartOfBattleEffects => _startOfBattleEffects;
     public GameObject Prefab { get; }
     public Vector3 LibraryCameraOffset { get; }
     public TurnAI AI { get; }
@@ -43,6 +44,8 @@ public class EnemyInstance : EnemyType
     public int StartingResourceAmount => _startingResourceAmount;
     public int MaxResourceAmount => _maxResourceAmount;
     public CharacterAnimations Animations { get; }
+    public IEnumerable<ReactionCardType> ReactionCards { get; }
+    public string Description { get; }
 
     public bool DeckIsValid => Cards.None(x => x == null);
     public bool IsReadyForPlay => Cards != null && Prefab != null && AI != null;
@@ -52,7 +55,7 @@ public class EnemyInstance : EnemyType
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
         int preferredTurnOrder, string enemyName, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp,
-        CharacterAnimations animations, MemberMaterialType materialType)
+        CharacterAnimations animations, MemberMaterialType materialType, string description, IEnumerable<ReactionCardType> reactionCards)
     {
         _enemyId = enemyId;
         _resourceType = resourceType;
@@ -85,6 +88,8 @@ public class EnemyInstance : EnemyType
         IsHasty = isHasty;
         IsUnique = isUnique;
         Animations = animations;
+        ReactionCards = reactionCards != null ? reactionCards : new ReactionCardType[0];
+        Description = description != null ? description : "";
         if (_resourceType == null)
             Log.Error($"Null Resource Type for {Name} {enemyId}");
         if (_counterAdjustments == null)

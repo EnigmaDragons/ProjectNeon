@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: GrizzledVeteran_GoingDownFighting_E
+  m_Name: TriageBot_ArcWelder_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 68
+      EffectType: 31
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -25,18 +25,18 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: -1
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
+        Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.3 * Attack
+      Formula: 1.2 * Magic
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 

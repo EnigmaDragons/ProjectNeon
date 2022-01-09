@@ -13,7 +13,7 @@ public class EnemyBestiaryView : MonoBehaviour
     
     private void Awake()
     {
-        _enemies = new IndexSelector<Enemy>(enemies.Enemies.Where(x => !x.ExcludeFromBestiary).ToArray());
+        _enemies = new IndexSelector<Enemy>(enemies.Enemies.Where(x => !x.ExcludeFromBestiary).OrderBy(x => x.ForStage(1).PowerLevel).ToArray());
         previousButton.onClick.AddListener(MovePrevious);
         nextButton.onClick.AddListener(MoveNext);
         Render();

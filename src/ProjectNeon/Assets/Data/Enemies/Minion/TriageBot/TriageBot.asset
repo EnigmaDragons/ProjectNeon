@@ -10,63 +10,64 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
-  m_Name: Bruiser_GrizzledVeteran
+  m_Name: TriageBot
   m_EditorClassIdentifier: 
-  id: 11
-  enemyName: Grizzled Veteran
+  id: 45
+  enemyName: Triage Bot
   excludeFromBestiary: 0
-  lastBalanceDate: 1/8/21
+  lastBalanceDate: 1/9/2022
   isCurrentlyWorking: 1
-  corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
-  ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: 4de7bcb514c7bb447a3630a83b92c264, type: 2}
   preferredTurnOrder: 99
-  prefab: {fileID: 6235040150558374266, guid: 1e4179171c32c794fbef279d392c3916, type: 3}
-  materialType: 1
-  libraryCameraOffset: {x: 0, y: -0.6, z: 2.5}
+  prefab: {fileID: 1568388209794389976, guid: 143c8235831f1484ab82d9cab59ab870, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
   deathEffect:
     UseConstant: 1
     ConstantValue: 
     Variable: {fileID: 0}
-  battleRole: 1
-  tier: 2
+  battleRole: 2
+  tier: 1
   unique: 1
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
-  description: Tough veteran who retaliates every time he is attacked.
-  animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Quickly helps injured and damaged allies. Selflessly puts itself in
+    harm's way.
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 60
-    maxShield: 20
+    maxHp: 16
+    maxShield: 4
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 15
-    magic: 0
+    attack: 0
+    magic: 7
     leadership: 0
     armor: 1
     resistance: 0
-    nonStatCardValueFactor: 15
-    startingResourceAmount: 6
-    maxResourceAmount: 6
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
     resourceGainPerTurn: 0
     cardsPerTurn: 1
-    powerLevel: 180
+    powerLevel: 39
     calculationVariables:
-      startingDefensiveValueAdjustment: 0
-      startingValueAdjustment: 0
-      perTurnValueAdjustment: 7.5
-      resourceScaledValueOverride: 0.1
+      startingDefensiveValueAdjustment: -5
+      startingValueAdjustment: 16
+      perTurnValueAdjustment: 1
+      resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 64.75684
-      perCardValue: 15
-      resourceValue: 1.5
-      perTurnPower: 22.5
-      maxAndStartingResourcesPower: 10.106784
-      estimatedTurnsAlive: 6.4756846
-      calculatedPowerLevel: 180
+      startingPower: 30.6878
+      perCardValue: 7
+      resourceValue: 2.3100002
+      perTurnPower: 8
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 1.46878
+      calculatedPowerLevel: 39
     startOfBattleEffects:
     - EffectType: 75
       Conditions: []
@@ -76,7 +77,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: -1
+        ConstantValue: 2
         FloatVariable: {fileID: 0}
       DurationFormula: -1
       EffectScope:
@@ -86,8 +87,8 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 1
-      StatusDetailText: 'When Attacked: Return Fire'
+      StatusTag: 12
+      StatusDetailText: 'When Ally Damaged: Quick Triage'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -99,16 +100,16 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
+      ReactionConditionType: 102
       ReactionEffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
-      ReactionSequence: {fileID: 11400000, guid: cf3ab3b79d8f0d84c881bbcbe2ac08b7, type: 2}
+      ReactionSequence: {fileID: 11400000, guid: 39b3c8942b9e4c44f9cda28b31144f7b, type: 2}
       ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
+        reactor: 1
+        scope: 10
+        cardActions: {fileID: 11400000, guid: 0b0a2826a45779245b55098cec1e6216, type: 2}
       BonusCardType: {fileID: 0}
     - EffectType: 75
       Conditions: []
@@ -128,8 +129,8 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 14
-      StatusDetailText: 'When Bloodied: Buffs Attack'
+      StatusTag: 12
+      StatusDetailText: 'When Ally Bloodied: Interject'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -141,17 +142,17 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 10
+      ReactionConditionType: 101
       ReactionEffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
-      ReactionSequence: {fileID: 11400000, guid: b18f993f6d8ecb04493afffa74e9fad4, type: 2}
+      ReactionSequence: {fileID: 11400000, guid: 91703f321f71a5f4bb2be0d67977a6fc, type: 2}
       ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
+        reactor: 1
+        scope: 10
+        cardActions: {fileID: 11400000, guid: 0b0a2826a45779245b55098cec1e6216, type: 2}
       BonusCardType: {fileID: 0}
     Cards:
-    - {fileID: 11400000, guid: f3b0b55f3762a5543a7580b2183e4d7a, type: 2}
-    - {fileID: 11400000, guid: 7bd5c3fd3b2d4544683282e80dc3b132, type: 2}
+    - {fileID: 11400000, guid: 829ccd758f1b6c245995da7111bce553, type: 2}
+    - {fileID: 11400000, guid: 4beb2874834b0b14f997b8f17ea60c28, type: 2}
