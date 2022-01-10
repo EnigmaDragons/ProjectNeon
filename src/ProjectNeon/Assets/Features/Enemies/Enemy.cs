@@ -15,7 +15,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private GameObject prefab;
     [SerializeField] private MemberMaterialType materialType;
-    [SerializeField] private Vector3 libraryCameraOffset = new Vector3(-0.2f, -0.9f, 2.8f);
+    [SerializeField] private Vector3 libraryCameraOffset = new Vector3(0, -0.8f, 2.5f);
     [SerializeField] private StringReference deathEffect;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private EnemyTier tier; 
