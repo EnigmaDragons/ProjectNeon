@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Enemy_SwarmProtection
+  m_EditorClassIdentifier: 
+  id: 0
+  customName: 
+  art: {fileID: 21300000, guid: 5a82a04e6a6770b4f88353f118ec0245, type: 3}
+  description: 'Removes invulnerable from allies.
+
+    Makes one ally invulnerable
+    this turn.'
+  typeDescription: {fileID: 0}
+  tags: 2c000000
+  speed: 0
+  isSinglePlay: 0
+  cost:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+    plusXCost: 0
+  rarity: 2
+  actionSequences:
+  - scope: 3
+    group: 2
+    cardActions: {fileID: 11400000, guid: 2994539c21dea4a4ea0ad8dc8c707e9a, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 1
+    group: 2
+    cardActions: {fileID: 11400000, guid: e1470a6314c526047bef4e153c37272a, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 3
+    group: 2
+    cardActions: {fileID: 11400000, guid: 95c2654d1dd0962418f5988ca3f46768, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0
+  notAvailableForGeneralDistribution: 0

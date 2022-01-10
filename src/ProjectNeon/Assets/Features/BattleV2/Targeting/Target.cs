@@ -43,6 +43,8 @@ public static class TargetExtensions
 
     public static bool HasShield(this Target t)
         => t.Members.Sum(m => m.CurrentShield()) > 0;
+    
+    
 
     public static bool Matches(this Target t, Target other)
         => string.Join(",", t.Members.Select(m => m.Id.ToString()))
