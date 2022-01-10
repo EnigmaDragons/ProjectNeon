@@ -33,7 +33,6 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         _team = team;
         _characterAnimations = characterAnimations;
         _currentStates = new Dictionary<int, string>();
-        ReturnToDefault();
         
         // TODO: Temp Fix for Layering. Doesn't really belong in this class
         InitCharacterSortingLayer();
@@ -42,8 +41,10 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(partyAdventureState)} is null");
         if (state == null)
             Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(state)} is null");
-        if (state == null || partyAdventureState == null || animator == null || character == null)
+        if (state == null || partyAdventureState == null || animator == null || character == null || characterAnimations == null)
             _canAnimate = false;
+        
+        ReturnToDefault();
     }
     
 
@@ -133,6 +134,9 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
 
     private void ReturnToDefault()
     {
+        if (!_canAnimate)
+            return;
+        
         SetAnimatorFloat("Aim", _characterAnimations.Aim);
         SetAnimatorBool(_characterAnimations.Idle, true);
         SetAnimatorBool(_characterAnimations.AimIdle, true);
