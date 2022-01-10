@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -316,6 +315,8 @@ public sealed class MemberState : IStats
     public void Gain(ResourceQuantity qty, PartyAdventureState partyState) => GainResource(qty.ResourceType, qty.Amount, partyState);
     public void GainResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
     {
+        if (amount == 0)
+            return;
         if (resourceName == "Creds")
             partyState.UpdateCreditsBy(amount);
         else if (this[TemporalStatType.PreventResourceGains] == 0)
@@ -332,8 +333,11 @@ public sealed class MemberState : IStats
     }
 
     public void Lose(ResourceQuantity qty, PartyAdventureState partyState) => LoseResource(qty.ResourceType, qty.Amount, partyState);
+    // TODO: Combine Lose and Gain into one method
     private void LoseResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
-    {
+    {        
+        if (amount == 0)
+            return;
         if (resourceName == "Creds")
             partyState.UpdateCreditsBy(-amount);
         else
