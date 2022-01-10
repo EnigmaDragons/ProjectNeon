@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 31
   enemyName: Samurai
   excludeFromBestiary: 0
-  lastBalanceDate: Never
+  lastBalanceDate: 2022/01/09
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
   ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
@@ -32,42 +32,126 @@ MonoBehaviour:
   unique: 0
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-  description: 
+  description: Dealing damage while punishing attempts to hurt this Samurai
   animations: {fileID: 11400000, guid: 8122ecd1fb5538141b8f649fe5db4c9a, type: 2}
   stageDetails:
   - stage: 1
     maxHp: 42
     maxShield: 16
     startingShield: 0
-    startingAegis: 0
+    startingAegis: 1
     startingPhase: 0
     startingDodge: 1
     startingTaunt: 0
-    attack: 11
+    attack: 13
     magic: 0
     leadership: 0
-    armor: 0
+    armor: 3
     resistance: 0
     nonStatCardValueFactor: 0
     startingResourceAmount: 0
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 109
+    powerLevel: 187
     calculationVariables:
-      startingDefensiveValueAdjustment: 0
+      startingDefensiveValueAdjustment: 15
       startingValueAdjustment: 0
-      perTurnValueAdjustment: 0
+      perTurnValueAdjustment: 2
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 48.629395
-      perCardValue: 11
-      resourceValue: 3.63
-      perTurnPower: 14.63
+      startingPower: 76.75939
+      perCardValue: 13
+      resourceValue: 4.29
+      perTurnPower: 19.29
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 4.8629394
-      calculatedPowerLevel: 109
-    startOfBattleEffects: []
+      estimatedTurnsAlive: 7.675939
+      calculatedPowerLevel: 187
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Dodging or Aegising: Gain 1 Attack'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 30
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: e420af7b0dc751c4baef209c58236e74, type: 2}
+      BonusCardType: {fileID: 0}
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 31
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: e420af7b0dc751c4baef209c58236e74, type: 2}
+      BonusCardType: {fileID: 0}
     Cards:
     - {fileID: 11400000, guid: c3b0ab050d7734d4e9f9bb7e30c6aba6, type: 2}
     - {fileID: 11400000, guid: 3d537d0c252acda42805d3e8a2ea2d5b, type: 2}
