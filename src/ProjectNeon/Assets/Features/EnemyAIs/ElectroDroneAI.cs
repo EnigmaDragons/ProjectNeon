@@ -7,7 +7,7 @@ public class ElectroDroneAI : StatelessTurnAI
     {
         return new CardSelectionContext(memberId, battleState, strategy)
             .WithCommonSenseSelections()
-            .IfTrueDontPlayType(ctx => ctx.Member.CurrentShield() <= 26, CardTag.Ultimate)
+            .IfTrueDontPlayType(ctx => ctx.Member.CurrentShield() <= 32, CardTag.Ultimate)
             .WithSelectedUltimateIfAvailable()
             .WithSelectedTargetsPlayedCard();
     }

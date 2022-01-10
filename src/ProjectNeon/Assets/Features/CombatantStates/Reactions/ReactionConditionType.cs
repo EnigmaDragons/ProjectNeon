@@ -33,6 +33,7 @@ public enum ReactionConditionType
     WhenEnemyPrimaryStatBuffed = 40,
     WhenAllyVulnerable = 41,
     OnResourcesLost = 42,
+    WhenEnemyShielded = 43,
     //OnTeamCardCycled = 61, // Need To Implement in #3522 
     WhenKilled = 99,
     WhenNonSelfAllyBloodied = 101,
