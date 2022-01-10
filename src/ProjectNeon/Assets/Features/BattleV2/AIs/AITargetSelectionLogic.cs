@@ -90,6 +90,9 @@ public static class AITargetSelectionLogic
             return possibleTargets.OrderByDescending(x => x.TotalRemainingShieldCapacity()).First();
         }
 
+        if (card.Is(CardTag.Invulnerable))
+            return possibleTargets.ClosestToDeath();
+
         return possibleTargets.Random();
     }
 
@@ -172,6 +175,12 @@ public static class AITargetSelectionLogic
         .OrderBy(x => x.TotalResourceValue())
         .First();
 
+    public static Target ClosestToDeath(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderBy(x => x.Members.Sum(m => (m.CurrentHp() + m.CurrentShield()) / (m.MaxHp() + m.State.StartingShield())))
+        .First();
+ 
     private static void Log(string msg)
     {
         if (ShouldLogAiDetails)

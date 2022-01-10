@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 98
+// LAST NUMBER USED: 100
 
 public enum EffectType
 {
@@ -66,6 +66,7 @@ public enum EffectType
     DuplicateStatesOfType = 65,
     DuplicateStatesOfTypeToRandomEnemy = 90,
     RemoveTemporalModsMatchingStatusTag = 99,
+    InvulnerableForTurns = 100,
     
     // Healing
     HealFormula = 29,

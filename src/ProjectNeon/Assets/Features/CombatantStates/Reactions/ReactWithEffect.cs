@@ -134,6 +134,12 @@ public class EffectReactWith : Effect
             => ctx.Actor.IsConscious() && effect.Source.Id != ctx.Actor.Id && effect.BattleBefore.Members[ctx.Actor.Id].State.PrimaryResourceAmount > effect.BattleAfter.Members[ctx.Actor.Id].State.PrimaryResourceAmount },
         { ReactionConditionType.WhenEnemyShielded, ctx => effect 
             => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => x.TeamType != ctx.Actor.TeamType && effect.BattleBefore.Members[x.Id].State.Shield < effect.BattleAfter.Members[x.Id].State.Shield) },
+        { ReactionConditionType.WhenAllyBloodied, ctx => effect 
+            => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => 
+                x.TeamType == ctx.Actor.TeamType 
+                && x.Id != ctx.Actor.Id 
+                && !effect.BattleBefore.Members[x.Id].IsBloodied()
+                && effect.BattleAfter.Members[x.Id].IsBloodied()) },
     };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
