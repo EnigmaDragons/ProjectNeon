@@ -9778,6 +9778,7 @@ GameObject:
   - component: {fileID: 1152200485033810500}
   - component: {fileID: 4940209111172888098}
   - component: {fileID: 3602970687311561319}
+  - component: {fileID: -1631443329392749947}
   m_Layer: 0
   m_Name: VFX_Shot
   m_TagString: Untagged
@@ -14678,6 +14679,21 @@ MonoBehaviour:
   durationSeconds: 0.5
   maxLifetime: 1
   waitForCompletion: 1
+--- !u!114 &-1631443329392749947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713123640744359147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/BattleVFX/SHOOT
+  PlayOnAwake: 1
+  PlayOnDestroy: 0
 --- !u!1 &9050381724709313140
 GameObject:
   m_ObjectHideFlags: 0
