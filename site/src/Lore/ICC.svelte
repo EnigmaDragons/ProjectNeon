@@ -71,50 +71,12 @@ The safeguarding of a corporation's benefactor group allows for the unique stabi
 1. MetroCorps shall require that, when providing services or, where appropriate, ancillary services to clients, a MetroCorp shall act honestly, fairly and professionally no matter the affiliation of a benefactor and comply, in particular, with the principles set out in this Article.
 2. All information, including marketing communications, addressed by the MetroCorps to clients or potential clients shall be fair, clear and not misleading to specific Benefactors; Marketing communications shall be clearly identifiable as such.
 3. MetroCorps may not request, collect, record, document, or inquire about a benefactor's affiliation, employment status, or consumption preferences.
-4. MetroCorps may not offer separate services to a benefactor regardless of their affiliation, employment status, or consumption preferences..
-(Directive 2280/65/MZ -“Benefactor dicrimination”)
+4. MetroCorps may not offer separate services to a benefactor regardless of their affiliation, employment status, or consumption preferences.
+(Directive 2280/65/MZ -“Benefactor discrimination”)
 
 Signed: [signatures of the corporation of metroplex]
 
 ---
- 
-# DIRECTIVE 2280/65/MZ OF METROPLEX ZERO AND OF THE COUNCIL
-of 15 May 2280
-
-On Benefactor discrimination and amending section 3 and section 2 of the fundamental directives of metroplex
-(recast)
-(Text with EEA relevance)
-Having regard to the Treaty on the Functioning of the metroplex zero.
-Having regard to the opinion of the metroplex banking association (12),
-Having regard to the proposal from the Corporate Commission,(13)
-Acting in accordance with ordinary legislative procedure (14),
-Having regard to the opinion of the Metroplex Social Committee  (15),
- 
-(1)
-The Corporate Non-Discrimination ICP shall be the first amendment to the original 4 fundamental directives of metroplex. The Corporations of metroplex has sought to establish this amendment so that a social condition may arise under which authorised MetroCorps could provide specified services or establish specified relations in order to further profitability and competition between that metroCorp in relation to others. To that end, that Directive aimed to harmonise the initial authorisation and operating requirements for MetroCorps including conduct of good-faith business rules. It also provided for the harmonisation of some conditions governing the operation of unregulated markets and Social-economic affairs.
-
-
-.
-
-
- 
-Section 2
-Provisions to ensure benefactor protection
-1.   MetroCorps shall require that, when providing services or, where appropriate, ancillary services to clients, an MetroCrop shall act honestly, fairly and professionally no matter the affiliation of a benefactor and comply, in particular, with the principles set out in this Article.
-2.   All information, including marketing communications, addressed by the Metrocorps to clients or potential clients shall be fair, clear and not misleading too specific Benefactors ; Marketing communications shall be clearly identifiable as such.
- 
-3. A metrocorp may not inquire , request, or collect a benefactor’s affiliation.
-4. A metrocorp may not offer separate services to benefactor’s of a certain affiliation.
-
- 
-Section 3
-(exemptions)
-List of exempt services:
-    Employment.
-    The leasing of items or housing
-    Banking or financial services. 
-    
-The above provisions do not apply in the event a metrocorp has been found to be using that metrocorp’s benefactor group in order to acquire products or services for commercial uses.
 `
 </script>
 
