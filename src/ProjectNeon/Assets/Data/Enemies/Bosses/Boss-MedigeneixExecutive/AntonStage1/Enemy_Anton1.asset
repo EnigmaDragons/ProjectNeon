@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: Enemy_Anton1
+  m_EditorClassIdentifier: 
+  id: 50
+  enemyName: Anton
+  excludeFromBestiary: 1
+  lastBalanceDate: 2022/01/09
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
+  ai: {fileID: 11400000, guid: 66a76477419cada43ade2f3ffc5d2943, type: 2}
+  preferredTurnOrder: 1
+  prefab: {fileID: 2084796812294946461, guid: 1176129cacfeef241a0f005999f1e1b8, type: 3}
+  materialType: 1
+  libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 3
+  tier: 3
+  unique: 1
+  isHasty: 1
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
+  animations: {fileID: 11400000, guid: 0c6ec023aa24f014b9c90f242dccdf77, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 50
+    maxShield: 50
+    startingShield: 50
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 0
+    magic: 0
+    leadership: 16
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 16
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 182
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: -9
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 101.98969
+      perCardValue: 16
+      resourceValue: 5.28
+      perTurnPower: 12.280001
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 10.198969
+      calculatedPowerLevel: 182
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: When targeting an ally, they take 1 damage at start of turn
+        for the rest of the battle \nLeaves the battle if the only one left
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 33
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 930a85934f2acdd42af673f8262ada57, type: 2}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: cb4e9c41316824c429001acb62c7de15, type: 2}
+    - {fileID: 11400000, guid: a82b2d1633dbb6647a206de86997fd34, type: 2}
+    - {fileID: 11400000, guid: ba775b9118cc01a41baaa4531af3c118, type: 2}
+    - {fileID: 11400000, guid: 32a72c16327a9fa4ca3f3a5d292cf88e, type: 2}

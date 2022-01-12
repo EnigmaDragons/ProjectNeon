@@ -50,7 +50,9 @@ public static class AllEffects
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
         { EffectType.ShowCustomTooltip, e => new FullContextEffect((ctx, duration, m) => m.AddCustomStatus(
-            new CustomStatusIcon(e.FlavorText, e.EffectScope, e.IntAmount, e.ForSimpleDurationStatAdjustment(ctx.Source.Id, duration))), e.DurationFormula) },
+            new CustomStatusIcon(string.IsNullOrWhiteSpace(e.StatusDetailText) ? e.FlavorText: e.StatusDetailText, 
+                e.StatusTag == StatusTag.None ? e.EffectScope : e.StatusTag.ToString(), e.IntAmount, 
+                e.ForSimpleDurationStatAdjustment(ctx.Source.Id, duration))), e.DurationFormula) },
         { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.DurationFormula, e.ReactionSequence) },
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(m.MemberId, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
@@ -102,7 +104,11 @@ public static class AllEffects
                 Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount))) },
         { EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, 
             e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource(ctx.Target.TotalShields() 
-                * Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)))}
+                * Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)))},
+        { EffectType.RemoveTemporalModsMatchingStatusTag, e => new SimpleEffect(m => m.RemoveTemporaryEffects(t => t.Status.Tag.ToString() == e.EffectScope.Value))},
+        { EffectType.InvulnerableForTurns, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryMultiplier(new AdjustedStats(
+            new StatMultipliers().With(StatType.Damagability, 0f),
+            TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing())))), e.DurationFormula)}
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

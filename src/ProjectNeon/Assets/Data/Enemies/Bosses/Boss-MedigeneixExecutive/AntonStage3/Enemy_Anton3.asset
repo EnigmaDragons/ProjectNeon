@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: Enemy_Anton3
+  m_EditorClassIdentifier: 
+  id: 48
+  enemyName: Anton
+  excludeFromBestiary: 1
+  lastBalanceDate: 2022/01/09
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
+  ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
+  preferredTurnOrder: 99
+  prefab: {fileID: 2084796812294946461, guid: 1176129cacfeef241a0f005999f1e1b8, type: 3}
+  materialType: 1
+  libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 3
+  unique: 1
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
+  animations: {fileID: 11400000, guid: 0c6ec023aa24f014b9c90f242dccdf77, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 150
+    maxShield: 50
+    startingShield: 50
+    startingAegis: 1
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 16
+    magic: 0
+    leadership: 0
+    armor: 6
+    resistance: 6
+    nonStatCardValueFactor: 16
+    startingResourceAmount: 1
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 3
+    powerLevel: 725
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 235.10323
+      perCardValue: 16
+      resourceValue: 5.28
+      perTurnPower: 53.28
+      maxAndStartingResourcesPower: 5.28
+      estimatedTurnsAlive: 23.510323
+      calculatedPowerLevel: 731
+    startOfBattleEffects:
+    - EffectType: 73
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: Augment
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: Everytime Anton targets someone he also applies a 1 damage
+          dot til end of battle
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 6c486442156ddfd4c96870534c23f9b8, type: 2}
+    - {fileID: 11400000, guid: faa825ecf1e12a84b84cff15ebaa2666, type: 2}
+    - {fileID: 11400000, guid: 57f36ac3bc259ad4aa41b86b742ae8eb, type: 2}
+    - {fileID: 11400000, guid: 82ae3529e1ee94b4fa2ea5df394f7905, type: 2}

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: AggregateCore
+  m_EditorClassIdentifier: 
+  id: 7
+  enemyName: Core
+  excludeFromBestiary: 1
+  lastBalanceDate: Never
+  isCurrentlyWorking: 0
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: 6bf101ec6fe27ae4caa802e34394e16b, type: 2}
+  preferredTurnOrder: 100
+  prefab: {fileID: 5988069194025963528, guid: be1ec610282caad4386c4c0d8dc3fbb0, type: 3}
+  materialType: 0
+  libraryCameraOffset: {x: 0, y: 0, z: 0}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 2
+  tier: 3
+  unique: 1
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 160
+    maxShield: 40
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 14
+    magic: 18
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    powerLevel: 6
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 161.97044
+      perCardValue: 18
+      resourceValue: 5.94
+      perTurnPower: 18
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 16.197044
+      calculatedPowerLevel: 309
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: 26d71043c0d957a40993095bb2eb62af, type: 2}
+    - {fileID: 11400000, guid: a6d16d7c845f7f2409fefb55bcc21ea3, type: 2}
+    - {fileID: 11400000, guid: fb50b30f60dc2744a95ce0217f9264cc, type: 2}
+    - {fileID: 11400000, guid: 6cff28865689d024f9b056f127932152, type: 2}

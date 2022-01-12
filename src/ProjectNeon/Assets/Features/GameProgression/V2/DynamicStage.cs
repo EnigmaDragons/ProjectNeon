@@ -26,8 +26,8 @@ public class DynamicStage : ScriptableObject, IStage
     public HeatUpEventV0[] HeatUpEvents => heatUpEvents;
     public GameObject BattlegroundForSegment(int segment) => Battleground;
 
-    public EncounterBuilder EncounterBuilder => encounterBuilder;
-    public EncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
+    public IEncounterBuilder EncounterBuilder => encounterBuilder;
+    public IEncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
     public StorySetting StorySetting => storySetting;
     public int GetPowerLevel(float percent) => (int)Mathf.Round(powerCurve.Evaluate(percent));
     public int GetElitePowerLevel(float percent) => (int)Mathf.Round(elitePowerCurve.Evaluate(percent));

@@ -9,5 +9,7 @@ public enum ReactiveTargetScope
     AllAllies = 5,
     OneRandomAlly = 7,
     HealthiestAllyExceptSelf = 9,
+    UnhealthiestAllyExceptSelf = 10,
+    UnhealthiestByPercentageAllyExceptSelf = 11,
     Everyone = 6,
 }

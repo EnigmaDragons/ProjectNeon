@@ -13,7 +13,8 @@ public class SeekerDroneAI : StatefulTurnAI
     }
 
     protected override IPlayedCard Select(int memberId, BattleState battleState, AIStrategy strategy)
-    {        
+    {
+        var me = battleState.Members[memberId];
         if (battleState.Members[memberId].PrimaryResourceAmount() >= 3)
             return new CardSelectionContext(memberId, battleState, strategy)
                 .WithSelectedUltimateIfAvailable()
@@ -23,11 +24,13 @@ public class SeekerDroneAI : StatefulTurnAI
             || battleState.Members[_targetMap[memberId]].IsStealthed()
             || (!battleState.Members[_targetMap[memberId]].HasTaunt() && battleState.MembersWithoutIds.Any(x => x.TeamType == TeamType.Party && x.Id != _targetMap[memberId] && x.HasTaunt() && x.IsConscious())))
         {
-            var card = battleState.GetPlayableCards(memberId, battleState.Party).FirstOrDefault(x => x.Name == "Target Locked");
+            var card = battleState.GetPlayableCards(memberId, battleState.Party, strategy.SpecialCards).FirstOrDefault(x => x.Name == "Target Locked");
             if (card == null)
                 return new CardSelectionContext(memberId, battleState, strategy)
                     .WithSelectedTargetsPlayedCard();
-            var target = strategy.AttackTargetFor(card.ActionSequences[0]);
+            
+            var possibleTargets = battleState.GetPossibleConsciousTargets(me, card.ActionSequences[0].Group, card.ActionSequences[0].Scope);
+            var target = strategy.AttackTargetFor(possibleTargets, card.ActionSequences[0]);
             return new PlayedCardV2(battleState.Members[memberId], new [] { target }, card.CreateInstance(battleState.GetNextCardId(), battleState.Members[memberId]));
         }
         return new CardSelectionContext(memberId, battleState, strategy)
@@ -37,6 +40,9 @@ public class SeekerDroneAI : StatefulTurnAI
 
     protected override void TrackState(IPlayedCard card, BattleState state, AIStrategy strategy)
     {
-        _targetMap[card.MemberId()] = card.PrimaryTargetId();
+        if (card.Targets.Any() && card.Targets[0].Members.Any())
+            _targetMap[card.MemberId()] = card.PrimaryTargetId();
+        else
+            Log.Warn($"{card.Card.Name} was played with targets {card.Targets}");
     }
 }

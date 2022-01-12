@@ -15,7 +15,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private GameObject prefab;
     [SerializeField] private MemberMaterialType materialType;
-    [SerializeField] private Vector3 libraryCameraOffset = new Vector3(-0.2f, -0.9f, 2.8f);
+    [SerializeField] private Vector3 libraryCameraOffset = new Vector3(0, -0.8f, 2.5f);
     [SerializeField] private StringReference deathEffect;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private EnemyTier tier; 
@@ -28,6 +28,7 @@ public class Enemy : ScriptableObject
 
     public Corp Corp => corp;
     public EnemyTier Tier => tier;
+    public BattleRole BattleRole => battleRole;
     public bool ExcludeFromBestiary => excludeFromBestiary;
     public int[] Stages => stageDetails.OrderBy(x => x.stage).Select(x => x.stage).ToArray();
     public EnemyInstance ForStage(int stage)
@@ -41,7 +42,7 @@ public class Enemy : ScriptableObject
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
             prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 
-            isHasty, unique, detail.CounterAdjustments, corp, animations, materialType);
+            isHasty, unique, detail.CounterAdjustments, corp, animations, materialType, description, detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence));
     } 
     public EffectData[] Effects => stageDetails.SelectMany(x => x.startOfBattleEffects).ToArray();
 }

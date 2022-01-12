@@ -35,7 +35,7 @@ public static class BattleStateExtensions
     public static bool IsAnyFormPlayableByHero(this Card c, PartyAdventureState partyState, int numberOfCardPlaysRemainingThisTurn)
         => c.IsActive && c.Owner.TeamType == TeamType.Party && IsPlayableBy(c.Type, c.Owner, partyState, numberOfCardPlaysRemainingThisTurn) || IsPlayableBy(c.Owner.BasicCard.Value, c.Owner, partyState, numberOfCardPlaysRemainingThisTurn);
 
-    public static bool HasAnyValidTargets(this CardType c, Member m, BattleState state)
+    public static bool HasAnyValidTargets(this CardTypeData c, Member m, BattleState state)
         => c.ActionSequences.All(action
             => (action.Group == Group.Self && action.Scope == Scope.One)
             || (action.Group == Group.Self && action.Scope == Scope.All)

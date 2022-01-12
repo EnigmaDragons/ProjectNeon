@@ -24,6 +24,8 @@ public static class AICardSelectionLogic
 
     public static CardSelectionContext WithCommonSenseSelections(this CardSelectionContext ctx)
         => ctx
+            .PlayAntiStealthCardIfAllEnemiesAreStealthed()
+            .DontPlayAntiStealthCardIfNoEnemiesAreStealthed()
             .DontPlaySelfAttackBuffIfAlreadyBuffed()
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
             .DontRemoveResourcesIfOpponentsDontHaveMany()
@@ -40,6 +42,12 @@ public static class AICardSelectionLogic
             .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
             .DontStealCreditsIfOpponentDoesntHaveAny();
 
+    public static CardSelectionContext PlayAntiStealthCardIfAllEnemiesAreStealthed(this CardSelectionContext ctx)
+        => ctx.IfTruePlayType(x => x.Enemies.All(e => e.IsStealthed()), CardTag.AntiStealth);
+    
+    public static CardSelectionContext DontPlayAntiStealthCardIfNoEnemiesAreStealthed(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.None(e => e.IsStealthed()), CardTag.AntiStealth);
+    
     public static CardSelectionContext DontGiveAlliesDodgeIfTheyAlreadyHaveEnough(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlay(x => x.Allies.Sum(a => a.State[TemporalStatType.Dodge]) >= x.Allies.Length, c => c.Is(CardTag.Defense, CardTag.Dodge));
     
@@ -89,7 +97,9 @@ public static class AICardSelectionLogic
         => ctx.IfTrueDontPlayType(x => x.PartyAdventureState.Credits <= 0, CardTag.StealCredits);
 
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
-        => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).MostExpensive();
+        => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).ToArray()
+            .Shuffled()
+            .OrderBy(c => SmartCardPreference(ctx, c, Maybe<CardTypeData>.Missing())).First();
 
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx)
         => ctx.WithFinalizedCardSelection(_ => 0);
@@ -106,10 +116,32 @@ public static class AICardSelectionLogic
         => ctx.SelectedCard.IsMissing
             ? ctx.WithSelectedCard(FinalizeCardSelection(ctx, typePriority))
             : ctx;
+
+    public static readonly int Unpreferred = 99;
+    
+    private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card, Maybe<CardTypeData> lastPlayedCard)
+    {
+        var cardAction = card.ActionSequences.First();
+        if (ctx.Enemies.Length == 1 && cardAction.Scope == Scope.All && cardAction.Group == Group.Opponent)
+            return Unpreferred;
+        if (lastPlayedCard.IsPresentAnd(c => c.Id == card.Id))
+            return Unpreferred;
+        if (card.Is(CardTag.BuffAttack) && cardAction.Group == Group.Self && ctx.Member.HasAttackBuff())
+            return Unpreferred;
+        if (card.Is(CardTag.DoubleDamage) && cardAction.Group == Group.Self && ctx.Member.HasDoubleDamage())
+            return Unpreferred;
+        return 0;
+    }
+
+    public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx)
+        => ctx.WithFinalizedSmartCardSelection(Maybe<CardTypeData>.Missing());
+
+    public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx, Maybe<CardTypeData> lastPlayedCard)
+        => ctx.WithFinalizedCardSelection(c => SmartCardPreference(ctx, c, lastPlayedCard));
     
     public static CardSelectionContext WithPhases(this CardSelectionContext ctx)
     {
-        var phase = ctx.Member.State[TemporalStatType.Phase];
+        var phase = ctx.Member.State[TemporalStatType.Phase].CeilingInt();
         var phaselessCards = ctx.CardOptions.Where(x => !x.Tags.Contains(CardTag.Phase1) && !x.Tags.Contains(CardTag.Phase2) && !x.Tags.Contains(CardTag.Phase3));
         if (phase == 1)
             return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase1))));
@@ -123,17 +155,21 @@ public static class AICardSelectionLogic
     private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx,
         Func<CardTypeData, int> typePriority)
     {
-        var card = ctx.SelectedCard.IsPresent 
-            ? ctx.SelectedCard.Value
-            : ctx.CardOptions.Any()
-                ? ctx.CardOptions
-                    .ToArray()
-                    .Shuffled()
-                    .OrderByDescending(c => c.Cost.BaseAmount)
-                    .ThenBy(typePriority)
-                    .First()
-                : ctx.DisabledCard;
-        return card;
+        if (ctx.SelectedCard.IsPresent)
+            return ctx.SelectedCard.Value;
+        if (ctx.CardOptions.None())
+            return ctx.SpecialCards.DisabledCard;
+
+        var cardPreferenceOrder = ctx.CardOptions
+            .ToArray()
+            .Shuffled()
+            .OrderByDescending(typePriority)
+            .ThenBy(c => c.Cost.BaseAmount)
+            .ToList();
+        
+        DevLog.Write($"Card Preference Order: {string.Join(", ", cardPreferenceOrder.Select(c => c.Name))}");
+        
+        return cardPreferenceOrder.First();
     }
 
     public static CardTypeData MostExpensive(this IEnumerable<CardTypeData> cards) => cards

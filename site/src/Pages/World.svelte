@@ -2,21 +2,37 @@
   import Container from '../Elements/Container.svelte';
   import ICC from '../Lore/ICC.svelte';
   import AllMegaCorps from '../Lore/AllMegaCorps.svelte';
+  import AboutMetroplexZero from '../Lore/AboutMetroplexZero.svelte';
 
 </script>
 
 <Container>
+  <h1>The World of Metroplex Zero</h1>
+  <hr/>  
+
+  <AboutMetroplexZero />
+  <hr/>
+
   <AllMegaCorps />
 
-  <h1>Stories and Lore</h1>
-
-  <h2>Coming Soon!</h2>
-  <!-- <div class="story-container">
+  <h2>Legal Charter</h2>
+  <div class="story-container">
     <ICC/>
-  </div> -->
+  </div>
 </Container>
 
 <style>
+  h1, h2 {
+    width: 100%;
+    text-align: center;
+  }
+
+  hr {
+    width: 100%;
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+  }
+
   .story-container {
     margin-left: auto;
     margin-right: auto;

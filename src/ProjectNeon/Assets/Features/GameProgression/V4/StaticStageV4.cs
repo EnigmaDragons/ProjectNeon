@@ -5,8 +5,8 @@ using UnityEngine;
 public class StaticStageV4 : ScriptableObject, IStage
 {
     [SerializeField] private string displayName;
-    [SerializeField] private EncounterBuilder encounterBuilder;
-    [SerializeField] private EncounterBuilder eliteEncounterBuilder;
+    [SerializeField] private EncounterBuilderV4 encounterBuilder;
+    [SerializeField] private EncounterBuilderV4 eliteEncounterBuilder;
     [SerializeField] private StorySetting storySetting;
     [SerializeField] private PowerCurve powerCurve;
     [SerializeField] private PowerCurve elitePowerCurve;
@@ -29,8 +29,8 @@ public class StaticStageV4 : ScriptableObject, IStage
         return set.GetNext();
     }
 
-    public EncounterBuilder EncounterBuilder => encounterBuilder;
-    public EncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
+    public IEncounterBuilder EncounterBuilder => encounterBuilder;
+    public IEncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
     public StorySetting StorySetting => storySetting;
     public int GetPowerLevel(float percent) => powerCurve.GetValueAsInt(percent);
     public int GetElitePowerLevel(float percent) => elitePowerCurve.GetValueAsInt(percent);

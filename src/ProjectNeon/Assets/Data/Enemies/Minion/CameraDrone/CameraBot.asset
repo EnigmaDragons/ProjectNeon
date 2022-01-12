@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: CameraBot
+  m_EditorClassIdentifier: 
+  id: 51
+  enemyName: Camera Bot
+  excludeFromBestiary: 0
+  lastBalanceDate: 2022/01/09
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: 783e7e0b303bb41449ab6de7be056a1c, type: 2}
+  ai: {fileID: 11400000, guid: 66a76477419cada43ade2f3ffc5d2943, type: 2}
+  preferredTurnOrder: 99
+  prefab: {fileID: 1687609622097564120, guid: 543a59fd1fba5ec4ab3f20190483b075, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: 0, y: -0.6, z: 3}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 3
+  tier: 1
+  unique: 0
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: Provides additional power to allies and vulnerable to enemies by putting
+    them in the spotlight.
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 11
+    maxShield: 0
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 1
+    startingTaunt: 0
+    attack: 0
+    magic: 0
+    leadership: 5
+    armor: 2
+    resistance: 0
+    nonStatCardValueFactor: 5
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    powerLevel: 32
+    calculationVariables:
+      startingDefensiveValueAdjustment: 5
+      startingValueAdjustment: 5
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 31.7
+      perCardValue: 5
+      resourceValue: 1.6500001
+      perTurnPower: 5
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 2.67
+      calculatedPowerLevel: 45
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'The first time any ally becomes vulnerable: All vulnerable
+        allies gain 1 dodge'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 41
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 3
+        cardActions: {fileID: 11400000, guid: c766588a32e032940a937fb95771411c, type: 2}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: b705d255ef690f245a6225306f4742bc, type: 2}
+    - {fileID: 11400000, guid: 65616dc3afc45004abf729f8baf6c599, type: 2}
+    - {fileID: 11400000, guid: 3a1604a4c2ba6014db6c3c0d47fd4360, type: 2}

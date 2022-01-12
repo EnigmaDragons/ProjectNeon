@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: RocketHawk
+  m_EditorClassIdentifier: 
+  id: 49
+  enemyName: Rocket Hawk
+  excludeFromBestiary: 0
+  lastBalanceDate: 1/9/22
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
+  preferredTurnOrder: 99
+  prefab: {fileID: 1977276736307866363, guid: 9724e0d7a9e2c6f4e8aa6fa84550fec5, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: 0, y: -0.2, z: 2.6}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 0
+  unique: 0
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: f6dc0d0477e4a3f45a7376d02fd56dd9, type: 2}
+  description: Fast-maneuvering rocket drone that unleashes a barrage of shots and
+    missiles. Very shifty and hard to hit.
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 76
+    maxShield: 12
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 16
+    magic: 0
+    leadership: 0
+    armor: 2
+    resistance: 4
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 276
+    calculationVariables:
+      startingDefensiveValueAdjustment: 30
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 123.45214
+      perCardValue: 16
+      resourceValue: 5.28
+      perTurnPower: 21.28
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 12.345214
+      calculatedPowerLevel: 276
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 5
+      StatusDetailText: 'When Damaged: Gain 1 Dodge'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 4
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 1
+        scope: 0
+        cardActions: {fileID: 11400000, guid: aed57e30eaf6e9745b965aee734216e6, type: 2}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+    - {fileID: 11400000, guid: 4c5772970902504489199eb6f1c56209, type: 2}
+    - {fileID: 11400000, guid: c17a4d87658260f45a1090b5eace6bb9, type: 2}
+    - {fileID: 11400000, guid: 1796e37e5152a4844bc7e846c65d92fa, type: 2}
+    - {fileID: 11400000, guid: 56f7dc68eed41d149b355ae97efa0ac0, type: 2}

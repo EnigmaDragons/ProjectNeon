@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/EncounterBuilder")]
-public class EncounterBuilder : ScriptableObject
+public class EncounterBuilder : ScriptableObject, IEncounterBuilder
 {
     [SerializeField] private EncounterBuilderHistory history;
     [SerializeField] private bool allowElites = true;

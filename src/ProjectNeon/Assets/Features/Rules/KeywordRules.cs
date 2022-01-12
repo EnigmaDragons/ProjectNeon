@@ -13,14 +13,19 @@ public static class KeywordRules
     public static readonly string Buyout = "Buyout";
     public static readonly string Chain = "Chain";
     public static readonly string Drain = "Drain";
+    public static readonly string Focus = "Focus";
     public static readonly string Glitch = "Glitch";
     
     public static readonly string Igniting = "Igniting";
+    public static readonly string Injure = "Injure";
     
     public static readonly string PrimaryStat = "PrimaryStat";
     public static readonly string Quick = "Quick";
+    public static readonly string SelfDestruct = "SelfDestruct";
     
     private static readonly string[] RulesByImportanceArr = {
+        Injure,
+        SelfDestruct,
         Drain,
         Buyout,
         Afflicted,
@@ -43,6 +48,7 @@ public static class KeywordRules
         TemporalStatType.Lifesteal.ToString(),
         TemporalStatType.Confused.ToString(),
         ReactionConditionType.OnSlay.ToString(),
+        Focus,
         Glitch,
         "TagPlayed",
         TemporalStatType.Vulnerable.ToString(),
@@ -77,6 +83,11 @@ public static class KeywordRules
 
     public static void AddAllDescriptionFoundRules(List<string> rulesToShow, string description)
     {
+        rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase(SelfDestruct));
+        rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase("Self-Destruct"));
+        rulesToShow.AddIf(Injure, description.ContainsAnyCase(Injure));
+        rulesToShow.AddIf(Injure, description.ContainsAnyCase("Injury"));
+        rulesToShow.AddIf(Focus, description.ContainsAnyCase(Focus));
         rulesToShow.AddIf(Drain, description.ContainsAnyCase(Drain));
         rulesToShow.AddIf(Quick, description.ContainsAnyCase(Quick));
         rulesToShow.AddIf(Chain, description.ContainsAnyCase(Chain));

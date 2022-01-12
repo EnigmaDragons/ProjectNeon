@@ -31,13 +31,12 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: (1 + X) * 0.088 * MaxShield
+      Formula: 0.66 * Magic
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -70,6 +69,9 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
+      Conditions: []
     atTargetAnimation:
       animation:
         UseConstant: 1
@@ -81,5 +83,6 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
+      conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}

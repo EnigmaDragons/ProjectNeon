@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 21
   enemyName: Electro Drone
   excludeFromBestiary: 0
-  lastBalanceDate: Never
+  lastBalanceDate: 2022/01/09
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
   ai: {fileID: 11400000, guid: 4c7cd04827b071544b0393e60fe35136, type: 2}
@@ -27,24 +27,25 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 
     Variable: {fileID: 0}
-  battleRole: 6
+  battleRole: 1
   tier: 0
   unique: 0
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: 
+  description: Shields and steals your shields until it reaches a mass and then turns
+    its shields into a weapon
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
   stageDetails:
   - stage: 1
     maxHp: 20
-    maxShield: 40
+    maxShield: 60
     startingShield: 20
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
     attack: 0
-    magic: 8
+    magic: 12
     leadership: 0
     armor: 0
     resistance: 0
@@ -53,21 +54,64 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 86
+    powerLevel: 111
     calculationVariables:
-      startingDefensiveValueAdjustment: 0
+      startingDefensiveValueAdjustment: 5
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 41.970436
-      perCardValue: 9
-      resourceValue: 2.97
-      perTurnPower: 11.97
-      maxAndStartingResourcesPower: 2.97
-      estimatedTurnsAlive: 4.1970434
-      calculatedPowerLevel: 86
-    startOfBattleEffects: []
+      startingPower: 46.996407
+      perCardValue: 11
+      resourceValue: 3.63
+      perTurnPower: 14.63
+      maxAndStartingResourcesPower: 3.63
+      estimatedTurnsAlive: 4.6996408
+      calculatedPowerLevel: 111
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When an enemy is shielded: Transfer 5 of the shields to
+        me'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 43
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 1
+        scope: 3
+        cardActions: {fileID: 11400000, guid: bbf50be66545fec469e847bb9ef1917e, type: 2}
+      BonusCardType: {fileID: 0}
     Cards:
     - {fileID: 11400000, guid: eed3cead597b8c54eac442b3da9bcc33, type: 2}
     - {fileID: 11400000, guid: 455c9e693ec7f4941b51642076ab0e05, type: 2}

@@ -97,6 +97,10 @@ public class EffectReactWith : Effect
         { ReactionConditionType.WhenAllyDeath, ctx => effect => ctx.Actor.IsConscious() 
             && effect.BattleBefore.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) 
               > effect.BattleAfter.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) },
+        { ReactionConditionType.WhenNonSelfAllyBloodied, ctx => effect => ctx.Actor.IsConscious() 
+            && Increased(Logged(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Count(x => x.Value.IsBloodied())))) },
+        { ReactionConditionType.WhenNonSelfAllyHpDamaged, ctx => effect => ctx.Actor.IsConscious() 
+            && Decreased(Logged(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Sum(x => x.Value.State.Hp)))) },
         { ReactionConditionType.WhenAfflicted, ctx => effect => ctx.Actor.IsConscious() 
             && Increased(Select(effect, ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) },
         { ReactionConditionType.OnAppliedMark, ctx => effect => ctx.Actor.IsConscious() 
@@ -124,7 +128,19 @@ public class EffectReactWith : Effect
                     return true;
                 return false;
             }},
-        };
+        { ReactionConditionType.WhenAllyVulnerable, ctx => effect 
+            => ctx.Actor.IsConscious() && effect.EffectData.EffectScope.Value == "Vulnerable" && effect.Target.Members.Any(x => x.Id != ctx.Possessor.Id && x.TeamType == ctx.Possessor.TeamType) },
+        { ReactionConditionType.OnResourcesLost, ctx => effect 
+            => ctx.Actor.IsConscious() && effect.Source.Id != ctx.Actor.Id && effect.BattleBefore.Members[ctx.Actor.Id].State.PrimaryResourceAmount > effect.BattleAfter.Members[ctx.Actor.Id].State.PrimaryResourceAmount },
+        { ReactionConditionType.WhenEnemyShielded, ctx => effect 
+            => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => x.TeamType != ctx.Actor.TeamType && effect.BattleBefore.Members[x.Id].State.Shield < effect.BattleAfter.Members[x.Id].State.Shield) },
+        { ReactionConditionType.WhenAllyBloodied, ctx => effect 
+            => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => 
+                x.TeamType == ctx.Actor.TeamType 
+                && x.Id != ctx.Actor.Id 
+                && !effect.BattleBefore.Members[x.Id].IsBloodied()
+                && effect.BattleAfter.Members[x.Id].IsBloodied()) },
+    };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
         => (effect.EffectData.EffectType != EffectType.ReactWithCard || effect.EffectData.ReactionConditionType != type)

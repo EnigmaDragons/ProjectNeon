@@ -12,6 +12,9 @@ public static class BattleStateTargetingExtensions
     
     public static Member[] GetConsciousAllies(this Member[] members, Member self)
         => members.GetConscious(self.TeamType);
+
+    public static Member[] GetConsciousNonSelfAllies(this Member[] members, Member self)
+        => members.Where(m => m.Id != self.Id).ToArray().GetConsciousAllies(self);
     
     public static Member[] GetConscious(this BattleState state, TeamType team)
         => state.MembersWithoutIds.GetConscious(team);

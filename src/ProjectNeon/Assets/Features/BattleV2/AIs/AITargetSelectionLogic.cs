@@ -56,8 +56,8 @@ public static class AITargetSelectionLogic
             var vulnerableTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsVulnerable()));
             var vulnerableSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Vulnerable, out var targets) ? targets : new HashSet<Target>();
             var saneTargets = possibleTargets.Except(vulnerableSelectedTargets).Except(vulnerableTargets).ToArray();
-            return saneTargets.Any(x => x == ctx.Strategy.AttackTargetFor(action))
-                ? ctx.Strategy.AttackTargetFor(action)
+            return saneTargets.Any(x => x.Equals(ctx.Strategy.AttackTargetFor(possibleTargets, action)))
+                ? ctx.Strategy.AttackTargetFor(possibleTargets, action)
                 : saneTargets.Any()
                     ? saneTargets.Random()
                     : possibleTargets.Random();
@@ -76,7 +76,9 @@ public static class AITargetSelectionLogic
                 return possibleTarget;
         }
         if (card.Is(CardTag.Attack) && action.Group == Group.Opponent)
-            return Rng.Chance(0.80) ? ctx.Strategy.AttackTargetFor(action, possibleTargets) : possibleTargets.Random();
+            return ctx.Strategy.SingleMemberAttackTarget.IsPresentAnd(m => m.IsVulnerable()) || Rng.Chance(0.80) 
+                ? ctx.Strategy.AttackTargetFor(possibleTargets, action, possibleTargets) 
+                    : possibleTargets.Random();
         if (card.Is(CardTag.Healing) && action.Group == Group.Ally)
             return possibleTargets.MostDamaged();
         if (card.Is(CardTag.Defense, CardTag.Shield) && action.Group == Group.Ally)
@@ -87,6 +89,9 @@ public static class AITargetSelectionLogic
             // Or, use shield to whomever could use the most
             return possibleTargets.OrderByDescending(x => x.TotalRemainingShieldCapacity()).First();
         }
+
+        if (card.Is(CardTag.Invulnerable))
+            return possibleTargets.ClosestToDeath();
 
         return possibleTargets.Random();
     }
@@ -148,7 +153,7 @@ public static class AITargetSelectionLogic
             .Shuffled()
             .OrderByDescending(p =>
                 (p.Members.Contains(strategy.DesignatedAttacker) ? 1 : 0) * 100 // Prefer Designated Attack for immediate power
-                + p.Members.Count(x => x.BattleRole == BattleRole.Striker) * 50  // Prefer Strikers
+                + p.Members.Count(x => x.BattleRole == BattleRole.DamageDealer) * 50  // Prefer Strikers
                 + p.TotalAttack()) // Prefer more effective
             .First();
     
@@ -170,6 +175,12 @@ public static class AITargetSelectionLogic
         .OrderBy(x => x.TotalResourceValue())
         .First();
 
+    public static Target ClosestToDeath(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderBy(x => x.Members.Sum(m => (m.CurrentHp() + m.CurrentShield()) / (m.MaxHp() + m.State.StartingShield())))
+        .First();
+ 
     private static void Log(string msg)
     {
         if (ShouldLogAiDetails)

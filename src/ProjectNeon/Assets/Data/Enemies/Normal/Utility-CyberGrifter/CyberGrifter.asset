@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: CyberGrifter
+  m_EditorClassIdentifier: 
+  id: 43
+  enemyName: Cyber Grifter
+  excludeFromBestiary: 1
+  lastBalanceDate: 10/17/2021
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: e72d679f60e6cd847aae8a43673fa10f, type: 2}
+  ai: {fileID: 11400000, guid: cf1d5b6f0a8541448979216231c4038e, type: 2}
+  preferredTurnOrder: 99
+  prefab: {fileID: 7868847588171795255, guid: a383010e7b9060e46ad0ef0ef730e699, type: 3}
+  materialType: 1
+  libraryCameraOffset: {x: 0, y: -0.9, z: 2.8}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 3
+  tier: 0
+  unique: 1
+  isHasty: 1
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: Steals your credits and runs
+  animations: {fileID: 11400000, guid: 8122ecd1fb5538141b8f649fe5db4c9a, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 26
+    maxShield: 26
+    startingShield: 13
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 0
+    magic: 9
+    leadership: 0
+    armor: 0
+    resistance: 3
+    nonStatCardValueFactor: 10
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 106
+    calculationVariables:
+      startingDefensiveValueAdjustment: 5
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 54.00078
+      perCardValue: 9.5
+      resourceValue: 3.1350002
+      perTurnPower: 12.635
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 5.400078
+      calculatedPowerLevel: 106
+    startOfBattleEffects:
+    - EffectType: 58
+      Conditions: []
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 5c79a808f6b1810439b70f8a6d14ce33, type: 2}
+    - {fileID: 11400000, guid: a925973019f59c443a49d7109e22952c, type: 2}
+    - {fileID: 11400000, guid: 528f7df81508f684eb4f5448970b643b, type: 2}

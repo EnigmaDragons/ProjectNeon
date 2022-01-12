@@ -36,7 +36,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ApplyAdditiveStatInjury, new [] { "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.ApplyMultiplicativeStatInjury, new [] {  "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.Kill, new string[0]},
-        {EffectType.ShowCustomTooltip, new [] { "FlavorText", "FloatAmount", "EffectScope", "DurationFormula" }},
+        {EffectType.ShowCustomTooltip, new [] { "FlavorText", "FloatAmount", "EffectScope", "DurationFormula", "StatusTag", "StatusDetailText" }},
         {EffectType.OnDeath, new []{ "FloatAmount", "DurationFormula", "ReactionSequence",  }},
         {EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, new[]{"BaseAmount", "EffectScope", "StatusTag", "StatusDetailText", "BonusCardType"}},
         {EffectType.PlayBonusChainCard, new[]{ "StatusTag", "StatusDetailText", "BonusCardType"}},
@@ -66,7 +66,9 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.TransformCardsIntoCard, new[] { "EffectScope" }},
         {EffectType.AdjustCardCosts, new[] { "EffectScope", "Formula" }},
         {EffectType.Drain, new[] { "EffectScope", "Formula" }},
-        {EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, new[] {"Formula"}}
+        {EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, new[] {"Formula"}},
+        {EffectType.RemoveTemporalModsMatchingStatusTag, new[]{ "EffectScope"}},
+        {EffectType.InvulnerableForTurns, new [] { "DurationFormula" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

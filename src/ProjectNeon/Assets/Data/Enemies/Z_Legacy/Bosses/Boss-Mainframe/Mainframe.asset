@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: Mainframe
+  m_EditorClassIdentifier: 
+  id: 2
+  enemyName: Mainframe
+  excludeFromBestiary: 1
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: 6e3ba77e97c10d143afeb5da05da345d, type: 2}
+  preferredTurnOrder: 1
+  prefab: {fileID: 767478357397476194, guid: ac02a56c4edfe80408d3bb8ff13437cf, type: 3}
+  materialType: 0
+  libraryCameraOffset: {x: 0, y: 0, z: 2}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 3
+  tier: 3
+  unique: 1
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 50
+    maxShield: 36
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 14
+    magic: 0
+    leadership: 16
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 1
+    cardsPerTurn: 2
+    powerLevel: 267
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 51.954945
+      perCardValue: 16
+      resourceValue: 5.28
+      perTurnPower: 37.28
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 5.1954947
+      calculatedPowerLevel: 205
+    startOfBattleEffects:
+    - EffectType: 25
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 2
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionSequence: {fileID: 11400000, guid: 668ce369e69d9224d9844e9545870092, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 7126c7b4d9013514ba96e8865533ba12, type: 2}
+    - {fileID: 11400000, guid: 8b7885b9f658f0b41ad92ee07541de86, type: 2}
+    - {fileID: 11400000, guid: 307551c95ab84c949ab06ccf4c385e09, type: 2}
+    - {fileID: 11400000, guid: dfab5f7110e7c1a44aecc4f031b3df46, type: 2}
+    - {fileID: 11400000, guid: 3a33e9cee1b693543ba4a3252dc6a363, type: 2}
+    - {fileID: 11400000, guid: d2d5998ddb366dd47b719f0a6b3a1c43, type: 2}
+    - {fileID: 11400000, guid: 55377f11da33fc14d91f8b5a8603fe44, type: 2}
+    - {fileID: 11400000, guid: 3ed7bd25358e40943890df430edd0547, type: 2}
+    - {fileID: 11400000, guid: 7586b8cabb6c2bc4383fc5eaa67c3ca0, type: 2}
+    - {fileID: 11400000, guid: 9789730a5bdc7914ca81200e1ebec411, type: 2}
+    - {fileID: 11400000, guid: e09aaf6359ce00e43bd36445d57ae1d9, type: 2}
+    - {fileID: 11400000, guid: 9897e15dd444bb84a99da15913e66701, type: 2}
+    - {fileID: 11400000, guid: d227352926b8d37408604afc7a7ff5fa, type: 2}

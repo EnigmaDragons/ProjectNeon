@@ -9,6 +9,8 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     [SerializeField] private BattleResolutions resolutions;
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private CardType disabledCard;
+    [SerializeField] private CardType antiStealthCard;
+    [SerializeField] private CardType aiGlitchedCard;
     
     private readonly AIStrategyGenerator _enemyStrategy = new AIStrategyGenerator(TeamType.Enemies);
     private AIStrategy _currentTurnStrategy;
@@ -20,7 +22,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     public void GenerateAiStrategy()
     {
         DevLog.Write("Generated AI Strategy");
-        _currentTurnStrategy = _enemyStrategy.Generate(state, disabledCard);
+        _currentTurnStrategy = _enemyStrategy.Generate(state, new EnemySpecialCircumstanceCards(disabledCard, antiStealthCard, aiGlitchedCard));
         _enemiesToActThisTurn = state.Enemies
             .Where(e => e.Member.IsConscious())
             .OrderBy(e => e.Enemy.PreferredTurnOrder)

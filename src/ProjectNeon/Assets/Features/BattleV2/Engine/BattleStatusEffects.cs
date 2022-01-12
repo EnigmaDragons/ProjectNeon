@@ -20,7 +20,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
     {
         _isProcessing = true;
         _isProcessingStartOfTurn = true;
-        foreach (var member in state.Members.Values) 
+        foreach (var member in state.Members.Values.Where(x => x.IsConscious())) 
             _membersToProcess.Enqueue(member);
         ResolveNext();
     }

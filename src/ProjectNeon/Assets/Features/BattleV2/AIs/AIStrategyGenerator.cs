@@ -11,13 +11,13 @@ public sealed class AIStrategyGenerator
         _forTeam = forTeam;
     }
 
-    public AIStrategy Generate(BattleState s, CardTypeData disabledCard)
+    public AIStrategy Generate(BattleState s, EnemySpecialCircumstanceCards specialCards)
     {
         var consciousOpponents = GetConsciousOpponents(s);
         var preferredSingleTarget = GetPreferredSingleTarget(consciousOpponents);
         var designatedAttacker = SelectDesignatedAttacker(s);
         
-        return new AIStrategy(preferredSingleTarget, new Multiple(consciousOpponents.ToArray()), designatedAttacker, disabledCard);
+        return new AIStrategy(preferredSingleTarget, new Multiple(consciousOpponents.ToArray()), designatedAttacker, specialCards);
     }
 
     private static Maybe<Member> GetPreferredSingleTarget(Member[] relevantEnemies)
@@ -55,8 +55,8 @@ public sealed class AIStrategyGenerator
         
         var designatedAttacker = team
             .OrderByDescending(e =>
-                e.BattleRole == BattleRole.Striker ? 2 :
-                e.BattleRole == BattleRole.Bruiser ? 1 :
+                e.BattleRole == BattleRole.DamageDealer ? 2 :
+                e.BattleRole == BattleRole.Specialist ? 1 :
                 0)
             .ThenByDescending(e => Math.Max(e.State.Attack(), e.State.Magic()))
             .First();
@@ -74,7 +74,7 @@ public sealed class AIStrategyGenerator
     {
         if (strategy.DesignatedAttacker.IsConscious() || TeamMembers(s).None())
             return strategy;
-        return new AIStrategy(strategy.SingleMemberAttackTarget, strategy.GroupAttackTarget, SelectDesignatedAttacker(s), strategy.DisabledCard);
+        return new AIStrategy(strategy.SingleMemberAttackTarget, strategy.GroupAttackTarget, SelectDesignatedAttacker(s), strategy.SpecialCards);
     }
 
     private AIStrategy WithRefinedPreferredSingleTarget(BattleState s, AIStrategy strategy)
@@ -84,6 +84,6 @@ public sealed class AIStrategyGenerator
         
         var consciousOpponents = GetConsciousOpponents(s);
         var preferredSingleTarget = GetPreferredSingleTarget(consciousOpponents);
-        return new AIStrategy(preferredSingleTarget, strategy.GroupAttackTarget, strategy.DesignatedAttacker, strategy.DisabledCard);
+        return new AIStrategy(preferredSingleTarget, strategy.GroupAttackTarget, strategy.DesignatedAttacker, strategy.SpecialCards);
     }
 }
