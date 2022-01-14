@@ -15,6 +15,7 @@ MonoBehaviour:
   id: 8
   displayName: Safe Auto Reloader
   description: Reload when you play no cards for 2 turns in a row
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   rarity: 1
@@ -32,7 +33,7 @@ MonoBehaviour:
     Conditions: []
     BaseAmount:
       UseConstant: 1
-      ConstantValue: 2
+      ConstantValue: 1
       Variable: {fileID: 0}
     FloatAmount:
       UseConstant: 0
@@ -44,10 +45,10 @@ MonoBehaviour:
       ConstantValue: Soldier
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: Reload when you play no cards for 2 turns in a row
+    StatusDetailText: Reload when you play no cards in a turn
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -70,5 +71,9 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 11400000, guid: 5ecffafb038b36a419f3b4c8b2e0f2bc, type: 2}
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 
