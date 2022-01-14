@@ -174,7 +174,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         
         var hero = state.GetHeroById(e.MemberId);
         var s = _speech[hero];
-        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelay(s.Hide, 1.8f)));
+        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(s.Hide, 1.8f)));
         s.Proceed(true);
     }
 
@@ -188,6 +188,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     private IEnumerator ExecuteAfterDelay(Action a, float delay)
     {
         yield return new WaitForSeconds(delay);
+        a();
+    }
+    
+    private IEnumerator ExecuteAfterDelayRealtime(Action a, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
         a();
     }
 }
