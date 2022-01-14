@@ -81,7 +81,7 @@ public sealed class MemberState : IStats
     
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
-    public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
+    public int this[IResourceType resourceType] => _counters.TryGetValue(resourceType.Name, out var r) ? r.Amount : 0;
     public int ResourceAmount(string resourceType) => _counters[resourceType].Amount;
     public float this[StatType statType] => statType switch
     {
