@@ -264,26 +264,18 @@ public static class AllEffects
         return targets.Any() ? new Multiple(targets.Take(targets.Length - 1)) : new Multiple(new Member[0]);
     }
 
-    private static Target RandomEnemy(EffectContext ctx)
+    private static Target RandomEnemyExcludingTarget(EffectContext ctx) => RandomEnemy(ctx, ctx.Target.Members);
+    private static Target RandomEnemy(EffectContext ctx) => RandomEnemy(ctx, new Member[0]);
+    private static Target RandomEnemy(EffectContext ctx, Member[] excludedMembers)
     {
         var tauntEnemies = ctx.BattleMembers.Values
             .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt())
-            .ToArray()
-            .Shuffled();
+            .ToArray();
         if (tauntEnemies.Any())
             return new Single(tauntEnemies.First());
+        
         return new Multiple(ctx.BattleMembers.Values
-            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
-            .ToArray()
-            .Shuffled()
-            .Take(1));
-    }
-    
-    private static Target RandomEnemyExcludingTarget(EffectContext ctx)
-    {
-        return new Multiple(ctx.BattleMembers.Values
-            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
-            .Except(ctx.Target.Members)
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType)
             .ToArray()
             .Shuffled()
             .Take(1));
