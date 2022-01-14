@@ -18,7 +18,7 @@ public sealed class CardSelectionContext
     public string CardOptionsString => $"[{string.Join(", ", CardOptions.Select(x => x.Name))}]";
     
     public CardSelectionContext(int memberId, BattleState state, AIStrategy strategy)
-        : this(state.Members[memberId], state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, state.GetPlayableCards(memberId, state.Party, strategy.SpecialCards)) {}
+        : this(state.Members.VerboseGetValue(memberId, "Members"), state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, state.GetPlayableCards(memberId, state.Party, strategy.SpecialCards)) {}
     
     public CardSelectionContext(Member member, BattleState state, AIStrategy strategy)
         : this(member, state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, state.GetPlayableCards(member.Id, state.Party, strategy.SpecialCards)) {}

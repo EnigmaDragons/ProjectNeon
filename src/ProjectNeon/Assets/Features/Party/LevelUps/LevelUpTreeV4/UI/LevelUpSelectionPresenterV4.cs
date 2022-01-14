@@ -70,7 +70,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         headerLabel.transform.DOScale(1, 0.6f);
         var levelOriginalScale = levelLabel.transform.localScale;
         levelLabel.transform.localScale = new Vector3(0, 0, 0);
-        this.ExecuteAfterDelay(0.6f, () => levelLabel.transform.DOScale(levelOriginalScale.x, 0.6f));
+        levelLabel.transform.DOScale(levelOriginalScale.x, 0.6f).SetDelay(0.6f);
     }
 
     protected override void Execute(LevelUpOptionSelected msg)
