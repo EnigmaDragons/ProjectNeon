@@ -108,7 +108,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
             highlighter.Init(member);
     }
     
-    public Member Spawn(EnemyInstance enemy, Vector3 offset)
+    public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset)
     {
         DevLog.Write($"Spawning {enemy.Name}");
         var member = enemy.AsMember(state.GetNextEnemyId());
@@ -116,7 +116,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         state.AddEnemy(enemy, enemyObject, member);
         SetupEnemyUi(member, enemyObject.transform);
         SetupVisualComponents(enemyObject, member);
-        return member;
+        return new EnemySpawnDetails(enemy, member, enemyObject.transform);
     }
     
     public void Despawn(MemberState enemy)
@@ -158,17 +158,19 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
             });
         }
 
-        var t = state.GetTransform(m.Member.Id);
-        t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
-        t.DOSpiral(2);
-        this.ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2.2f);
+        state.GetMaybeTransform(m.Member.Id).IfPresent(t =>
+        {
+            t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
+            t.DOSpiral(2);
+            this.ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2.2f);
+        });
     }
 
     protected override void Execute(MemberRevived m)
     {
         if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
 
-        state.GetTransform(m.Member.Id).gameObject.SetActive(true);
+        state.GetMaybeTransform(m.Member.Id).IfPresent(t => t.gameObject.SetActive(true));
         uis.Where(u => u.Contains(m.Member)).ForEach(u => u.gameObject.SetActive(true));
     }
 

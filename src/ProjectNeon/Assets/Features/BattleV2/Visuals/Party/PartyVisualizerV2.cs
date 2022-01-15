@@ -134,10 +134,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         
         // TODO: Handle custom unconscious animation 
 
-        var t = state.GetTransform(m.Member.Id);
-        t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
-        t.DOSpiral(2);
-        StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
+        state.GetMaybeTransform(m.Member.Id).IfPresent(t =>
+        {
+            t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
+            t.DOSpiral(2);
+            StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
+        });
     }
 
     protected override void Execute(HighlightCardOwner msg)

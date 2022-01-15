@@ -355,9 +355,11 @@ public class BattleState : ScriptableObject
     public Dictionary<int, Color> OwnerTints => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Tint);
     public Dictionary<int, Sprite> OwnerBusts => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Bust);
     public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
-    public Transform GetTransform(int memberId) => _uiTransformsById.VerboseGetValue(memberId, id => $"Member Transforms for {id}");
+    [Obsolete("Use Get Maybe Transform instead")]
+    private Transform GetTransform(int memberId) => _uiTransformsById.VerboseGetValue(memberId, id => $"Member Transforms for {id}");
     public Maybe<Transform> GetMaybeTransform(int memberId) => _uiTransformsById.ValueOrMaybe(memberId);
 
+    [Obsolete("Unsafe. Turn into Maybe")]
     public Transform GetCenterPoint(int memberId)
     {
         var memberTransform = GetTransform(memberId);

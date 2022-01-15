@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Obsolete("Reference Only. New version may be used on Consoles.")]
 public class SelectionCursorV2 : OnMessage<TargetSelectionBegun, TargetSelectionFinished, TargetChanged>
 {
     [SerializeField] private GameObject cursor;
@@ -21,20 +23,20 @@ public class SelectionCursorV2 : OnMessage<TargetSelectionBegun, TargetSelection
 
     void UpdateTarget(Target firstTarget)
     {
-        if (firstTarget.Members.Length == 0) return;
-        
-        var firstMember = firstTarget.Members[0];
-        cursor.transform.position = battleState.GetTransform(firstMember.Id).position + Offset(firstMember);
-        if (firstTarget.Members.Length <= 1) return;
-        _extraCursors = new GameObject[firstTarget.Members.Length - 1];
-        for (var i = 1; i < firstTarget.Members.Length; i++)
-        {
-            _extraCursors[i - 1] = Instantiate(cursor, 
-                battleState.GetTransform(firstTarget.Members[i].Id).position + Offset(firstTarget.Members[i]), 
-                cursor.transform.rotation, 
-                transform);
-            _extraCursors[i - 1].SetActive(false);
-        }
+        // if (firstTarget.Members.Length == 0) return;
+        //
+        // var firstMember = firstTarget.Members[0];
+        // cursor.transform.position = battleState.GetTransform(firstMember.Id).position + Offset(firstMember);
+        // if (firstTarget.Members.Length <= 1) return;
+        // _extraCursors = new GameObject[firstTarget.Members.Length - 1];
+        // for (var i = 1; i < firstTarget.Members.Length; i++)
+        // {
+        //     _extraCursors[i - 1] = Instantiate(cursor, 
+        //         battleState.GetTransform(firstTarget.Members[i].Id).position + Offset(firstTarget.Members[i]), 
+        //         cursor.transform.rotation, 
+        //         transform);
+        //     _extraCursors[i - 1].SetActive(false);
+        // }
     }
 
     private Vector3 Offset(Member m) => m.TeamType == TeamType.Enemies ? enemyOffset : partyOffset;
