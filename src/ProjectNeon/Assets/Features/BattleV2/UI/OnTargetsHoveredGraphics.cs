@@ -35,7 +35,10 @@ public class OnTargetsHoveredGraphics : OnMessage<TargetChanged, TargetSelection
         var memberTransform = maybeMemberTransform.Value;
         var centerPoint = memberTransform.GetComponentInChildren<CenterPoint>();
         var parent = centerPoint?.transform ?? memberTransform;
-        var obj = Instantiate(targetingPrefab, Vector3.zero, Quaternion.identity, parent);
+        var obj = Instantiate(targetingPrefab);
+        // These next two lines are happening separate from instantiate to prevent weird scaling
+        obj.transform.parent = parent;
+        obj.transform.localPosition = Vector3.zero;
         return obj;
     }
 }

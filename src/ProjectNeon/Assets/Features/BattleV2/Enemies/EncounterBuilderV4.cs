@@ -22,40 +22,59 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
     public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber)
     {
         var comp = GetComposition();
-        var strengthPer1 = difficulty / comp.Sum(x => x.Weight);
+        var strengthPer1 = (float)difficulty / comp.Sum(x => x.Weight);
         return comp.Select(x => SelectEnemy(x.Weight * strengthPer1, x.Role, x.IsElite)).ToList();
     }
 
     private List<WeightedRole> GetComposition()
     {
         var options = new List<EncounterWeightsV4>();
-        for (int i = 0; i < weightedComps.Count; i++)
-            for (int ii = 0; ii < weightedComps[i].ChanceOfThisComp; ii++)
+        for (var i = 0; i < weightedComps.Count; i++)
+            for (var ii = 0; ii < weightedComps[i].ChanceOfThisComp; ii++)
                 options.Add(weightedComps[i]);
         var selectedOption = options.Random();
+        
         var result = new List<WeightedRole>();
         for (var i = 0; i < selectedOption.Weights.Length; i++)
-            result.Add(new WeightedRole { 
+            result.Add(new WeightedRole 
+            { 
                 Role = chancesBasedOnEnemyNumber[i].RollChances.Random(), 
                 Weight = selectedOption.Weights[i], 
-                IsElite = allowElites && selectedOption.Weights.Max(x => x) == selectedOption.Weights[i] });
+                IsElite = allowElites && selectedOption.Weights.Max(x => x) == selectedOption.Weights[i] 
+            });
         return result;
     }
 
-    private EnemyInstance SelectEnemy(float strength, BattleRole role, bool elite)
+    private EnemyInstance SelectEnemy(float strength, BattleRole role, bool isElite)
     {
-        var enemies = possible.Where(x =>
-            ((elite && x.Tier == EnemyTier.Elite) || (!elite && x.Tier != EnemyTier.Elite && x.Tier != EnemyTier.Boss))
-            && x.BattleRole == role).ToArray();
-        if (!enemies.Any()) {
-            Log.Warn($"Missing Content: Couldn't find {(elite ? "elite" : "normal")} enemy with the {role} role");
-            enemies = possible.Where(x => (elite && x.Tier == EnemyTier.Elite) || (!elite && x.Tier != EnemyTier.Elite && x.Tier != EnemyTier.Boss)).ToArray();   
-        }
-        var withInPowerRange = enemies.Where(x => strength * (1f - flexibility) > x.stageDetails[0].powerLevel && strength * (1f + flexibility) > x.stageDetails[0].powerLevel).ToArray();
+        var enemyPool = GetPossible(role, isElite);
+        var minPower = strength * (1f - flexibility);
+        var maxPower = strength * (1f + flexibility);
+        
+        var withInPowerRange = enemyPool.Where(x => x.PowerLevel >= minPower && x.PowerLevel <= maxPower).ToArray();
         if (withInPowerRange.Any())
-            return withInPowerRange.Random().ForStage(1);
-        Log.Warn($"Missing Content: Couldn't find {(elite ? "elite" : "normal")} enemy with the {role} role in the power range between {strength * (1f - flexibility)} - {strength * (1f + flexibility)}");
-        return enemies.OrderBy(x => Math.Abs(x.stageDetails[0].powerLevel - strength)).First().ForStage(1);
+            return withInPowerRange.Random();
+        
+        Log.Warn($"Missing Content: Couldn't find {(isElite ? "elite" : "normal")} enemy with the {role} role in the power range between {minPower} - {maxPower}");
+        return enemyPool.OrderBy(x => Math.Abs(x.PowerLevel - strength)).First();
+    }
+
+    private EnemyInstance[] GetPossible(BattleRole role, bool isElite)
+    {
+        var tieredEnemies = possible.Where(x => (isElite && x.Tier == EnemyTier.Elite) || (!isElite && x.Tier != EnemyTier.Elite && x.Tier != EnemyTier.Boss));
+        
+        var roleMatchingEnemies = tieredEnemies
+            .Where(x => x.BattleRole == role)
+            .Select(x => x.ForStage(1))
+            .ToArray();
+        
+        if (roleMatchingEnemies.Any())
+            return roleMatchingEnemies;
+        
+        Log.Warn($"Missing Content: Couldn't find {(isElite ? "elite" : "normal")} enemy with the {role} role");
+        return tieredEnemies
+            .Select(x => x.ForStage(1))
+            .ToArray();
     }
 
     private class WeightedRole
