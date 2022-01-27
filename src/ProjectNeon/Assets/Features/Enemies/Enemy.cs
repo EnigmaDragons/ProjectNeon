@@ -26,6 +26,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private CharacterAnimations animations;
     [SerializeField] public EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
+    public string EnemyName => this.GetName(enemyName);
     public Corp Corp => corp;
     public EnemyTier Tier => tier;
     public BattleRole BattleRole => battleRole;
@@ -35,13 +36,13 @@ public class Enemy : ScriptableObject
     {
         var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();
         if (detail == null)
-            Log.Error($"Enemy {enemyName} has no stage details and can not be used");
+            Log.Error($"Enemy {EnemyName} has no stage details and can not be used");
         if (enemyName == null)
             Log.Error($"Enemy {name} has no Enemy Name");
         return new EnemyInstance(id, resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
-            prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, enemyName, deathEffect, 
+            prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, EnemyName, deathEffect, 
             isHasty, unique, detail.CounterAdjustments, corp, animations, materialType, description, detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence));
     } 
     public EffectData[] Effects => stageDetails.SelectMany(x => x.startOfBattleEffects).ToArray();

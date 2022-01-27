@@ -26,10 +26,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private bool isWIP = true;
     [SerializeField] private bool notAvailableForGeneralDistribution = false;
 
-    public string Name => !string.IsNullOrWhiteSpace(customName) 
-        ? customName 
-        : name.SkipThroughFirstDash().SkipThroughFirstUnderscore().WithSpaceBetweenWords();
-
+    public string Name => this.GetName(customName);
     public int Id => id;
     public IResourceAmount Cost => cost;
     public CardSpeed Speed => speed;
