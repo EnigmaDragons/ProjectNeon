@@ -97,89 +97,37 @@ public sealed class ContentSummarizerEditor : EditorWindow
                 .Show();
             GUIUtility.ExitGUI();
         }
-        
         DrawUILine();
+        
         HeroName = GUILayout.TextField(HeroName);
         if (GUILayout.Button("Hero Content Summary"))
         {
             var hero = GetAllInstances<BaseHero>().FirstOrDefault(x => x.Name.Equals(HeroName, StringComparison.InvariantCultureIgnoreCase));
             if (hero == null)
                 GUIUtility.ExitGUI();
-            
-            var result = new List<string>();
-            
-            var archetypeKeys = hero.ArchetypeKeys;
-            var cards = GetAllInstances<CardType>()
-                .Where(c => !c.IsWip && archetypeKeys.Contains(c.GetArchetypeKey()))
-                .GroupBy(c => c.GetArchetypeKey())
-                .ToDictionary(
-                    x => x.Key, // By Archetype 
-                    x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
-                        .ToDictionary(
-                            r => r.Key,
-                            r => r.Count()));
-            
-            var equipments = GetAllInstances<StaticEquipment>()
-                .Where(e => e.IncludeInPools && archetypeKeys.Contains(e.ArchetypeKey))
-                .GroupBy(c => c.ArchetypeKey)
-                .ToDictionary(
-                    x => x.Key, // By Archetype 
-                    x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
-                        .ToDictionary(
-                            r => r.Key,
-                            r => r.Count()));
 
-            var expectedCardsCounter = 0;
-            var presentCardsCounter = 0;
-            foreach (var arch in archetypeKeys.Where(a => a.Count(c => c.Equals('+')) < 2))
-            {
-                var hasValue = cards.TryGetValue(arch, out var a);
-                var numCards = hasValue ? a.Sum(v => v.Value) : 0;
-                var archExpected = ArchCardsExpected(arch);
-                expectedCardsCounter += archExpected;
-                presentCardsCounter += numCards;
-                var checkChar = numCards >= archExpected ? "✓" : "✗";
-                result.Add(hasValue
-                    ? $"{checkChar} - {arch} Cards - Total {numCards} - {string.Join(", ", a.Select(v => $"{v.Key}: {v.Value}{TargetCardNumbers(arch, v.Key)}"))}"
-                    : $"{checkChar} - {arch} Cards - All {ArchCardsExpectedStr(arch)} Missing");
-            }
-
-            var expectedEquipCount = 0;
-            var expectedEquipRaritiesCounter = 0;
-            var presentEquipRaritiesCounter = 0;
-            var presentEquipCounter = 0;
-            foreach (var arch in archetypeKeys.Where(a => !a.Contains("+")))
-            {
-                var hasValue = equipments.TryGetValue(arch, out var e);
-                var numEquipRarities = hasValue ? e.Count(v => v.Value > 0) : 0;
-                var numEquip = hasValue ? e.Sum(v => v.Value) : 0;
-                var equipExpected = 4;
-                var archRaritiesExpected = 4;
-                expectedEquipCount += equipExpected;
-                presentEquipCounter += numEquip;
-                expectedEquipRaritiesCounter += archRaritiesExpected;
-                presentEquipRaritiesCounter += numEquipRarities;
-                var checkChar = numEquipRarities >= archRaritiesExpected && numEquip >= equipExpected ? "✓" : "✗";
-                result.Add(hasValue
-                    ? $"{checkChar} - {arch} Equips - Total {numEquip} - Rarities {numEquipRarities} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
-                    : $"{checkChar} - {arch} Equips - All 4 Rarities Missing");
-            }
-
-            var expectedAllCounter = expectedCardsCounter + expectedEquipCount;
-            var presentAllCounter = Math.Min(presentCardsCounter, expectedCardsCounter)
-                                    + Math.Min(Math.Min(presentEquipCounter, expectedEquipCount), Math.Min(presentEquipRaritiesCounter, expectedEquipRaritiesCounter));
-            var percentage = expectedAllCounter > 0 
-                ? presentAllCounter/(float)expectedAllCounter
-                : 0;
-            var finalCheckChar = presentAllCounter >= expectedAllCounter ? "✓" : "✗";
-            result.Add($"{finalCheckChar} - {HeroName.ToTitleCase()} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} - Missing {expectedAllCounter - presentAllCounter} - " +
-                       $"Cards {presentCardsCounter}/{expectedCardsCounter} " +
-                       $"Equip {presentEquipCounter}/{expectedEquipCount} " +
-                       $"Equip Rarities {presentEquipRaritiesCounter}/{expectedEquipRaritiesCounter}");
-            result = result.OrderBy(r => r.Contains("%") ? -1 : 0).ToList();
+            var (result, hasEverything) = GetHeroContentResult(hero);
             
             GetWindow<ListDisplayWindow>()
                 .Initialized($"Hero Content Summary", "", result.ToArray())
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        if (GUILayout.Button("All Heroes Content Summary"))
+        {
+            var result = new List<string>();
+            var heroes = GetAllInstances<Library>().First().UnlockedHeroes.OrderBy(x => x.Name);
+
+            foreach (var hero in heroes)
+            {
+                var (heroResultDetail, hasEverything) = GetHeroContentResult(hero);
+                result.Add($"{heroResultDetail.First()}");
+            }
+            
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"All Heroes Content Summary", "", result.ToArray())
                 .Show();
             GUIUtility.ExitGUI();
         }
@@ -207,6 +155,91 @@ public sealed class ContentSummarizerEditor : EditorWindow
         }
     }
 
+    private class HeroContentSummaryResult
+    {
+        public BaseHero Hero { get; }
+    }
+    
+    private (List<string>, bool) GetHeroContentResult(BaseHero hero)
+    {
+        var result = new List<string>();
+            
+        var archetypeKeys = hero.ArchetypeKeys;
+        var cards = GetAllInstances<CardType>()
+            .Where(c => !c.IsWip && archetypeKeys.Contains(c.GetArchetypeKey()) && !hero.ExcludedCards.Contains(c))
+            .GroupBy(c => c.GetArchetypeKey())
+            .ToDictionary(
+                x => x.Key, // By Archetype 
+                x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
+                    .ToDictionary(
+                        r => r.Key,
+                        r => r.Count()));
+        
+        var equipments = GetAllInstances<StaticEquipment>()
+            .Where(e => e.IncludeInPools && archetypeKeys.Contains(e.ArchetypeKey))
+            .GroupBy(c => c.ArchetypeKey)
+            .ToDictionary(
+                x => x.Key, // By Archetype 
+                x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
+                    .ToDictionary(
+                        r => r.Key,
+                        r => r.Count()));
+
+        var expectedCardsCounter = 0;
+        var presentCardsCounter = 0;
+        foreach (var arch in archetypeKeys.Where(a => a.Count(c => c.Equals('+')) < 2))
+        {
+            var hasValue = cards.TryGetValue(arch, out var a);
+            var numCards = hasValue ? a.Sum(v => v.Value) : 0;
+            var archExpected = ArchCardsExpected(arch);
+            expectedCardsCounter += archExpected;
+            presentCardsCounter += numCards;
+            var checkChar = CheckChar(numCards >= archExpected);
+            result.Add(hasValue
+                ? $"{checkChar} - {arch} Cards - Total {numCards} - {string.Join(", ", a.Select(v => $"{v.Key}: {v.Value}{TargetCardNumbers(arch, v.Key)}"))}"
+                : $"{checkChar} - {arch} Cards - All {ArchCardsExpectedStr(arch)} Missing");
+        }
+
+        var expectedEquipCount = 0;
+        var expectedEquipRaritiesCounter = 0;
+        var presentEquipRaritiesCounter = 0;
+        var presentEquipCounter = 0;
+        foreach (var arch in archetypeKeys.Where(a => !a.Contains("+")))
+        {
+            var hasValue = equipments.TryGetValue(arch, out var e);
+            var numEquipRarities = hasValue ? e.Count(v => v.Value > 0) : 0;
+            var numEquip = hasValue ? e.Sum(v => v.Value) : 0;
+            var equipExpected = 4;
+            var archRaritiesExpected = 4;
+            expectedEquipCount += equipExpected;
+            presentEquipCounter += numEquip;
+            expectedEquipRaritiesCounter += archRaritiesExpected;
+            presentEquipRaritiesCounter += numEquipRarities;
+            var checkChar = CheckChar(numEquipRarities >= archRaritiesExpected && numEquip >= equipExpected);
+            result.Add(hasValue
+                ? $"{checkChar} - {arch} Equips - Total {numEquip} - Rarities {numEquipRarities} - {string.Join(", ", e.Select(v => $"{v.Key}: {v.Value}{TargetEquipmentNumbers(arch, v.Key)}"))}"
+                : $"{checkChar} - {arch} Equips - All 4 Rarities Missing");
+        }
+
+        var expectedAllCounter = expectedCardsCounter + expectedEquipCount;
+        var presentAllCounter = Math.Min(presentCardsCounter, expectedCardsCounter)
+                                + Math.Min(Math.Min(presentEquipCounter, expectedEquipCount), Math.Min(presentEquipRaritiesCounter, expectedEquipRaritiesCounter));
+        var percentage = expectedAllCounter > 0 
+            ? presentAllCounter/(float)expectedAllCounter
+            : 0;
+        // Wrong.
+        var isContentComplete = presentAllCounter >= expectedAllCounter;
+        var finalCheckChar = CheckChar(isContentComplete);
+        result.Add($"{finalCheckChar} - {hero.Name} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} - Missing {expectedAllCounter - presentAllCounter} - " +
+                   $"Cards {presentCardsCounter}/{expectedCardsCounter} " +
+                   $"Equip {presentEquipCounter}/{expectedEquipCount} " +
+                   $"Equip Rarities {presentEquipRaritiesCounter}/{expectedEquipRaritiesCounter}");
+        result = result.OrderBy(r => r.Contains("%") ? -1 : 0).ToList();
+        return (result, isContentComplete);
+    }
+    
+    private string CheckChar(bool isComplete) => isComplete ? "✓" : "✗";
+    
     private string ArchCardsExpectedStr(string arch) => ArchCardsExpected(arch).ToString();
     private int ArchCardsExpected(string arch) => arch.Contains("+") ? 6 : 12;
     
