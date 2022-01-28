@@ -162,21 +162,33 @@ public sealed class ContentSummarizerEditor : EditorWindow
     
     private (List<string>, bool) GetHeroContentResult(BaseHero hero)
     {
+        var shouldLog = true;
         var result = new List<string>();
-            
+        if (shouldLog)
+            Log.Info($"Cards for {hero.Name}");
+        
         var archetypeKeys = hero.ArchetypeKeys;
+        var paragonCards = hero.ParagonCards.ToHashSet();
         var cards = GetAllInstances<CardType>()
-            .Where(c => !c.IsWip && archetypeKeys.Contains(c.GetArchetypeKey()) && !hero.ExcludedCards.Contains(c))
+            .Where(c => c.IncludeInPools && archetypeKeys.Contains(c.GetArchetypeKey()) && !hero.ExcludedCards.Contains(c) && archetypeKeys.Any() && !paragonCards.Contains(c))
+
             .GroupBy(c => c.GetArchetypeKey())
             .ToDictionary(
                 x => x.Key, // By Archetype 
-                x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
+                x => x
+                    .Select(c =>
+                    {
+                        if (shouldLog)
+                            Log.Info(c.Name);
+                        return c;
+                    })
+                    .GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
                     .ToDictionary(
                         r => r.Key,
                         r => r.Count()));
         
         var equipments = GetAllInstances<StaticEquipment>()
-            .Where(e => e.IncludeInPools && archetypeKeys.Contains(e.ArchetypeKey))
+            .Where(e => e.IncludeInPools && archetypeKeys.Contains(e.ArchetypeKey) && e.Archetypes.Any())
             .GroupBy(c => c.ArchetypeKey)
             .ToDictionary(
                 x => x.Key, // By Archetype 
@@ -227,10 +239,15 @@ public sealed class ContentSummarizerEditor : EditorWindow
         var percentage = expectedAllCounter > 0 
             ? presentAllCounter/(float)expectedAllCounter
             : 0;
-        // Wrong.
-        var isContentComplete = presentAllCounter >= expectedAllCounter;
+
+        var paragonsV4Count = hero.LevelUpTreeV4 != null ? hero.ParagonCards.Length : 0;
+        var extraCards = Math.Max(0, presentCardsCounter - expectedCardsCounter);
+        // Wrong Content Complete Check
+        var isContentComplete = presentAllCounter >= expectedAllCounter && paragonsV4Count == 3;
         var finalCheckChar = CheckChar(isContentComplete);
         result.Add($"{finalCheckChar} - {hero.Name} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} - Missing {expectedAllCounter - presentAllCounter} - " +
+                   $"Extra Cards {extraCards} " +
+                   $"V4 Paragons {paragonsV4Count}/3 " +
                    $"Cards {presentCardsCounter}/{expectedCardsCounter} " +
                    $"Equip {presentEquipCounter}/{expectedEquipCount} " +
                    $"Equip Rarities {presentEquipRaritiesCounter}/{expectedEquipRaritiesCounter}");
