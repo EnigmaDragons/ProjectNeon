@@ -21,6 +21,9 @@ MonoBehaviour:
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
   aiPreferences:
     CardTagPriority: 
+    RotatePlayingCardTags: 
+    UnpreferredCardTags: 
+    DesignatedAttackerPriority: 50
   preferredTurnOrder: 99
   prefab: {fileID: 5971160652351296526, guid: cbaf6d41ff63dd14db8da5c28301c6cd, type: 3}
   materialType: 1
@@ -151,7 +154,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReactionSequence: {fileID: 11400000, guid: 0c694d7960514cf42866255066ab46d6, type: 2}
+      ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
