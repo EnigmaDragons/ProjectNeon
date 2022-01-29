@@ -12,7 +12,18 @@ public class AiPreferences
     public AiPreferences WithDefaultsBasedOnRole(BattleRole role)
     {
         if (role == BattleRole.Specialist)
-            return CopyWith(x => x.UnpreferredCardTags = UnpreferredCardTags.Append(CardTag.Attack).ToHashSet().ToArray());
+            return CopyWith(x =>
+            {
+                x.UnpreferredCardTags = UnpreferredCardTags.Append(CardTag.Attack).ToHashSet().ToArray();
+                if (x.DesignatedAttackerPriority == DesignatedAttackerPriority.Default)
+                    x.DesignatedAttackerPriority = DesignatedAttackerPriority.IsNotDamageDealer;
+            });
+        if (role == BattleRole.Survivability)
+            return CopyWith(x =>
+            {
+                if (x.DesignatedAttackerPriority == DesignatedAttackerPriority.Default)
+                    x.DesignatedAttackerPriority = DesignatedAttackerPriority.IsNotDamageDealer;
+            });
         return this;
     }
 

@@ -12,6 +12,7 @@ public enum CardTag
     Healing = 6,
     Defense = 7,
     Vulnerable = 8,
+    DamageOverTime = 48,
     Group = 9,
     DoubleDamage = 11,
     Stealth = 12,

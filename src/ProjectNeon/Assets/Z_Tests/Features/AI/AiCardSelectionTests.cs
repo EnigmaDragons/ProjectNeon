@@ -76,13 +76,30 @@ public class AiCardSelectionTests
         AssertAlwaysPlays(ctx, ControlCard);
     }
 
+    [Test]
+    public void GeneralAI_DoesntPlayADamageOverTimeDefenseOnALowHpAlly()
+    {
+        var opp = TestMembers.Any();
+        var me = TestMembers.CreateEnemy(x => x.With(StatType.MaxHP, 4));
+        var designatedOtherAttacker = TestMembers.CreateEnemy(x => x.With(StatType.MaxHP, 4));
+        var aiPreferences = new AiPreferences();
+        var dotDefense = CreateCard("Dot Defense", new[] {CardTag.Defense, CardTag.DamageOverTime}, Scope.One, Group.Ally);
+        
+        var ctx = new CardSelectionContext(me, Maybe<Member>.Missing(), new[] {opp, me, designatedOtherAttacker},
+            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedOtherAttacker, SpecialCards),
+            PartyAdventureState.InMemory(), CardPlayZones.InMemory,
+            aiPreferences, new []{ dotDefense, AttackCard1 }, Maybe<CardTypeData>.Missing());
+        
+        AssertAlwaysPlays(ctx, AttackCard1);
+    }
+
     private void AssertAlwaysPlays(CardSelectionContext ctx, CardTypeData c)
     {
         var lastPlayedCard = Maybe<CardTypeData>.Missing();
         for (var i = 0; i < 10; i++)
         {
             var played = ExecuteGeneralAiSelection(ctx.WithLastPlayedCard(lastPlayedCard));
-            Assert.AreEqual(c.Name, played.Card.Name);
+            Assert.AreEqual(c.Name, played.Card.Name, $"Wrong Card Played on Turn {i + 1}");
             lastPlayedCard = played.Card;
         }
     }

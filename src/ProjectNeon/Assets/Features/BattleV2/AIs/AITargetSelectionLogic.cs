@@ -36,7 +36,7 @@ public static class AITargetSelectionLogic
         {
             var disabledTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsDisabled()));
             var disableSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Disable, out var targets) ? targets : new HashSet<Target>();
-            var saneTargets = possibleTargets.Except(disableSelectedTargets).Except(disabledTargets);
+            var saneTargets = possibleTargets.Except(disableSelectedTargets).Except(disabledTargets).ToArray();
             var actualTargets = saneTargets.Any() ? saneTargets : possibleTargets;
             return actualTargets.MostPowerful();
         }
@@ -78,9 +78,13 @@ public static class AITargetSelectionLogic
         if (card.Is(CardTag.Attack) && action.Group == Group.Opponent)
             return ctx.Strategy.SingleMemberAttackTarget.IsPresentAnd(m => m.IsVulnerable()) || Rng.Chance(0.80) 
                 ? ctx.Strategy.AttackTargetFor(possibleTargets, action, possibleTargets) 
-                    : possibleTargets.Random();
+                : possibleTargets.Random();
+        
         if (card.Is(CardTag.Healing) && action.Group == Group.Ally)
             return possibleTargets.MostDamaged();
+        
+        if (card.Is(CardTag.Defense, CardTag.DamageOverTime) && action.Group == Group.Ally)
+            return possibleTargets.Where(x => x.Members.All(m => m.CurrentHp() > 6)).MostPowerful();
         if (card.Is(CardTag.Defense, CardTag.Shield) && action.Group == Group.Ally)
         {
             if (possibleTargets.Any(x => !x.HasShield()))
