@@ -48,7 +48,7 @@ public class FindEnemiesEditor : EditorWindow
                 .OrderBy(e => e)
                 .ToArray();
             GetWindow<ListDisplayWindow>()
-                .Initialized($"Enemies W/ AI", items)
+                .Initialized($"Enemies by AI", "Enemy:", items)
                 .Show();
             GUIUtility.ExitGUI();
         }
