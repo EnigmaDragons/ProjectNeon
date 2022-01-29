@@ -47,4 +47,5 @@ public enum CardTag
     Invulnerable = 44,
     Focus = 45,
     RequiresFocus = 46,
+    Unpreferred = 47,
 }

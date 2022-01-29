@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/GeneralAI")]
 public class GeneralAI : StatefulTurnAI
 {
-    private Dictionary<int, IPlayedCard> _lastPlayedCard = new Dictionary<int, IPlayedCard>(); // To Alternate Cards
-    private Dictionary<int, int> _focusTargets = new Dictionary<int, int>(); // Focus Tracking
+    private Dictionary<int, IPlayedCard> _lastPlayedCard = new Dictionary<int, IPlayedCard>();
+    private Dictionary<int, int> _focusTargets = new Dictionary<int, int>();
 
     public override void InitForBattle()
     {
@@ -18,11 +18,12 @@ public class GeneralAI : StatefulTurnAI
     {
         var me = battleState.Members[memberId];
         var focusTarget = GetFocusTarget(me, battleState);
-        return new CardSelectionContext(me, battleState, strategy, focusTarget)
+        var lastPlayedCard = _lastPlayedCard.ValueOrMaybe(memberId).Map(c => c.Card.Type);
+        return new CardSelectionContext(me, battleState, strategy, focusTarget, lastPlayedCard)
             .WithCommonSenseSelections()
             .WithSelectedFocusCardIfApplicable()
             .WithSelectedDesignatedAttackerCardIfApplicable()
-            .WithFinalizedSmartCardSelection(_lastPlayedCard.ValueOrMaybe(memberId).Map(c => c.Card.Type)) // Alternate Cards -- Could embed this in the Card Selection Context
+            .WithFinalizedSmartCardSelection()
             .WithSelectedTargetsPlayedCard();
     }
 

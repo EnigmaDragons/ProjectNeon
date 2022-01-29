@@ -45,7 +45,8 @@ public class FindEnemiesEditor : EditorWindow
             var items = GetAllInstances<Enemy>()
                 .Where(e => e.IsCurrentlyWorking)
                 .Select(e => $"{e.ForStage(0).AI.name} - {e.name}")
-                .OrderBy(e => e)
+                .OrderBy(e => e.StartsWith("GeneralAI") ? 99 : 0)
+                .ThenBy(e => e)
                 .ToArray();
             GetWindow<ListDisplayWindow>()
                 .Initialized($"Enemies by AI", "Enemy:", items)
