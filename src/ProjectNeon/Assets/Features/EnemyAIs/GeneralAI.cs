@@ -19,9 +19,9 @@ public class GeneralAI : StatefulTurnAI
         var me = battleState.Members[memberId];
         var focusTarget = GetFocusTarget(me, battleState);
         return new CardSelectionContext(me, battleState, strategy, focusTarget)
+            .WithCommonSenseSelections()
             .WithSelectedFocusCardIfApplicable()
             .WithSelectedDesignatedAttackerCardIfApplicable()
-            .WithCommonSenseSelections()
             .WithFinalizedSmartCardSelection(_lastPlayedCard.ValueOrMaybe(memberId).Map(c => c.Card.Type)) // Alternate Cards -- Could embed this in the Card Selection Context
             .WithSelectedTargetsPlayedCard();
     }

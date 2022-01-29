@@ -39,6 +39,20 @@ public class FindEnemiesEditor : EditorWindow
             GUIUtility.ExitGUI();
         }
         DrawUILine();
+        
+        if (GUILayout.Button("By AI"))
+        {
+            var items = GetAllInstances<Enemy>()
+                .Where(e => e.IsCurrentlyWorking)
+                .Select(e => $"{e.ForStage(0).AI.name} - {e.name}")
+                .OrderBy(e => e)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Enemies W/ AI", items)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
     }
     
     private static T[] GetAllInstances<T>() where T : ScriptableObject

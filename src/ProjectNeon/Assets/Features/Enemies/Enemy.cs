@@ -27,6 +27,8 @@ public class Enemy : ScriptableObject
     [SerializeField] private CharacterAnimations animations;
     [SerializeField] public EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
+    public bool IsCurrentlyWorking => isCurrentlyWorking;
+    
     public string EnemyName => this.GetName(enemyName);
     public Corp Corp => corp;
     public EnemyTier Tier => tier;
