@@ -11,7 +11,12 @@ public static class AICardSelectionLogic
 
     public static CardSelectionContext WithRemovedCardByNameIfPresent(this CardSelectionContext ctx, string cardName)
         => ctx.WithCardOptions(ctx.CardOptions.Where(x => !x.Name.Equals(cardName)));
-    
+
+    public static CardSelectionContext WithSelectedFocusCardIfApplicable(this CardSelectionContext ctx)
+        => ctx.CardOptions.Any(c => c.Is(CardTag.Focus)) && ctx.FocusTarget.IsMissing 
+            ? ctx.WithSelectedCard(SelectFocusCard(ctx))
+            : ctx;
+
     public static CardSelectionContext WithSelectedDesignatedAttackerCardIfApplicable(this CardSelectionContext ctx) 
         => ctx.SelectedCard.IsMissing && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
             ? ctx.WithSelectedCard(ctx.SelectAttackCard())
@@ -25,6 +30,7 @@ public static class AICardSelectionLogic
     public static CardSelectionContext WithCommonSenseSelections(this CardSelectionContext ctx)
         => ctx
             .PlayAntiStealthCardIfAllEnemiesAreStealthed()
+            .DontPlayFocusCardIfFocusTargetAlreadySelected()
             .DontPlayAntiStealthCardIfNoEnemiesAreStealthed()
             .DontPlaySelfAttackBuffIfAlreadyBuffed()
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
@@ -42,6 +48,9 @@ public static class AICardSelectionLogic
             .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
             .DontStealCreditsIfOpponentDoesntHaveAny();
 
+    public static CardSelectionContext DontPlayFocusCardIfFocusTargetAlreadySelected(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsPresent, CardTag.Focus);    
+    
     public static CardSelectionContext PlayAntiStealthCardIfAllEnemiesAreStealthed(this CardSelectionContext ctx)
         => ctx.IfTruePlayType(x => x.Enemies.All(e => e.IsStealthed()), CardTag.AntiStealth);
     
@@ -100,6 +109,9 @@ public static class AICardSelectionLogic
         => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).ToArray()
             .Shuffled()
             .OrderBy(c => SmartCardPreference(ctx, c, Maybe<CardTypeData>.Missing())).First();
+
+    private static CardTypeData SelectFocusCard(this CardSelectionContext ctx)
+        => ctx.CardOptions.Where(o => o.Is(CardTag.Focus)).ToArray().Shuffled().First();
 
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx)
         => ctx.WithFinalizedCardSelection(_ => 0);

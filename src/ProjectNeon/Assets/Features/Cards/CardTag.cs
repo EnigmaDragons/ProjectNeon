@@ -44,5 +44,6 @@ public enum CardTag
     CredAdjust = 41,
     Shot = 42,
     AntiStealth = 43,
-    Invulnerable = 44
+    Invulnerable = 44,
+    Focus = 45,
 }

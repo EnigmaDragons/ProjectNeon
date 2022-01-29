@@ -97,7 +97,7 @@ public static class AITargetSelectionLogic
     }
 
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx)
-        => WithSelectedTargetsPlayedCard(ctx, _ => true);
+        => WithSelectedTargetsPlayedCard(ctx, t => ctx.FocusTarget.IsMissingOr(ft => t.Members.Contains(ft)));
     
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx, Func<Target, bool> isPreferredTarget)
     {
