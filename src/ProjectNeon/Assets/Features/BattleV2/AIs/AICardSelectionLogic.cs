@@ -118,7 +118,7 @@ public static class AICardSelectionLogic
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
         => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).ToArray()
             .Shuffled()
-            .OrderBy(c => SmartCardPreference(ctx, c, ctx.AiPreferences.CardTagPriority)).First();
+            .OrderBy(c => SmartCardPreference(ctx, c)).First();
 
     private static CardTypeData SelectFocusCard(this CardSelectionContext ctx)
         => ctx.CardOptions.Where(o => o.Is(CardTag.Focus)).ToArray().Shuffled().First();
@@ -149,20 +149,23 @@ public static class AICardSelectionLogic
         return ctx;
     }
 
-    private static readonly int Unpreferred = -99;
+    private static readonly int HighlyUnpreferred = -99;
+    private static readonly int SlightlyUnpreferred = -60;
     private static readonly int DefaultPreference = -50;
     private static readonly int SlightlyPreferred = 50;
     private static readonly int HighlyPreferred = 99;
     
-    private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card, CardTag[] preferences)
+    private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card)
     {
         var cardAction = card.ActionSequences.First();
         if (card.Is(CardTag.Unpreferred))
-            return Unpreferred;
+            return HighlyUnpreferred;
         if (card.Is(CardTag.Ultimate))
             return HighlyPreferred;
+        if (ctx.AiPreferences.UnpreferredCardTags.Any(t => card.Is(t)))
+            return HighlyUnpreferred;
         if (ctx.Enemies.Length == 1 && cardAction.Scope == Scope.All && cardAction.Group == Group.Opponent)
-            return Unpreferred;
+            return HighlyUnpreferred;
 
         if (ctx.LastPlayedCard.IsPresent)
         {
@@ -182,26 +185,28 @@ public static class AICardSelectionLogic
             }
             
             if (unpreferredTag.IsPresentAnd(t => card.Tags.Contains(t)))
-                return Unpreferred;
+                return HighlyUnpreferred;
             if (preferredTag.IsPresentAnd(t => card.Tags.Contains(t)))
                 return SlightlyPreferred;
         }
         
-        if (ctx.LastPlayedCard.IsPresentAnd(lastCard => lastCard.Id == card.Id))
-            return Unpreferred;
 
         if (card.Is(CardTag.BuffAttack) && cardAction.Group == Group.Self && ctx.Member.HasAttackBuff())
-            return Unpreferred;
+            return HighlyUnpreferred;
         if (card.Is(CardTag.DoubleDamage) && cardAction.Group == Group.Self && ctx.Member.HasDoubleDamage())
-            return Unpreferred;
-        for(var i = 0; i < preferences.Length; i++)
-            if (card.Is(preferences[i]))
+            return HighlyUnpreferred;
+
+        for(var i = 0; i < ctx.AiPreferences.CardTagPriority.Length; i++)
+            if (card.Is(ctx.AiPreferences.CardTagPriority[i]))
                 return i;
+        
+        if (ctx.LastPlayedCard.IsPresentAnd(lastCard => lastCard.Id == card.Id))
+            return SlightlyUnpreferred;
         return DefaultPreference;
     }
     
     public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx)
-        => ctx.WithFinalizedCardSelection(c => SmartCardPreference(ctx, c, ctx.AiPreferences.CardTagPriority));
+        => ctx.WithFinalizedCardSelection(c => SmartCardPreference(ctx, c));
 
     private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority)
     {
