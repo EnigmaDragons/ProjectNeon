@@ -25,6 +25,7 @@ public interface CardTypeData
 public static class CardTypeDataExtensions
 {
     public static bool Is(this CardTypeData c, params CardTag[] tags) => tags.All(tag => c.Tags.Contains(tag));
+    public static bool IsAoE(this CardTypeData c) => c.ActionSequences.Any() && c.ActionSequences[0].Scope == Scope.All;
 
     public static CardActionsData[] Actions(this CardTypeData c) => c.ActionSequences.Select(a => a.CardActions).ToArray();
     
