@@ -2,11 +2,12 @@
 public enum CardTag
 {
     None = 0,
+    Attack = 4,
+    Ultimate = 3,
+    Unpreferred = 47,
     Shield = 1,
     BuffAttack = 2,
     BuffResource = 10,
-    Ultimate = 3,
-    Attack = 4,
     Disable = 5,
     Healing = 6,
     Defense = 7,
@@ -47,5 +48,4 @@ public enum CardTag
     Invulnerable = 44,
     Focus = 45,
     RequiresFocus = 46,
-    Unpreferred = 47,
 }
