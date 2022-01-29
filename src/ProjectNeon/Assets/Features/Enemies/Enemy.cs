@@ -12,6 +12,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private bool isCurrentlyWorking = true;
     [SerializeField] private StaticCorp corp;
     [SerializeField] private TurnAI ai;
+    [SerializeField] private AiPreferences aiPreferences;
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private GameObject prefab;
     [SerializeField] private MemberMaterialType materialType;
@@ -43,7 +44,9 @@ public class Enemy : ScriptableObject
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
             prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, EnemyName, deathEffect, 
-            isHasty, unique, detail.CounterAdjustments, corp, animations, materialType, description, detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence));
+            isHasty, unique, detail.CounterAdjustments, corp, animations, materialType, description, 
+            detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence),
+            aiPreferences ?? new AiPreferences());
     } 
     public EffectData[] Effects => stageDetails.SelectMany(x => x.startOfBattleEffects).ToArray();
 }

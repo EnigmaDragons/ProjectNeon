@@ -358,6 +358,7 @@ public class BattleState : ScriptableObject
     [Obsolete("Use Get Maybe Transform instead")]
     private Transform GetTransform(int memberId) => _uiTransformsById.VerboseGetValue(memberId, id => $"Member Transforms for {id}");
     public Maybe<Transform> GetMaybeTransform(int memberId) => _uiTransformsById.ValueOrMaybe(memberId);
+    public AiPreferences GetAiPreferences(int memberId) => _enemiesById.ValueOrMaybe(memberId).Select(e => e.AIPreferences, () => new AiPreferences());
 
     [Obsolete("Unsafe. Turn into Maybe")]
     public Transform GetCenterPoint(int memberId)

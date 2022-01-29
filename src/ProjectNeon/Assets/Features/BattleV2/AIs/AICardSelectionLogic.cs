@@ -118,7 +118,7 @@ public static class AICardSelectionLogic
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
         => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).ToArray()
             .Shuffled()
-            .OrderBy(c => SmartCardPreference(ctx, c, Maybe<CardTypeData>.Missing())).First();
+            .OrderBy(c => SmartCardPreference(ctx, c, ctx.AiPreferences.CardTagPriority, Maybe<CardTypeData>.Missing())).First();
 
     private static CardTypeData SelectFocusCard(this CardSelectionContext ctx)
         => ctx.CardOptions.Where(o => o.Is(CardTag.Focus)).ToArray().Shuffled().First();
@@ -139,10 +139,11 @@ public static class AICardSelectionLogic
             ? ctx.WithSelectedCard(FinalizeCardSelection(ctx, typePriority))
             : ctx;
 
-    public static readonly int Unpreferred = 99;
-    public static readonly int Preferred = 1;
+    private static readonly int Unpreferred = 99;
+    private static readonly int DefaultPreference = 50;
+    private static readonly int Preferred = -1;
     
-    private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card, Maybe<CardTypeData> lastPlayedCard)
+    private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card, CardTag[] preferences, Maybe<CardTypeData> lastPlayedCard)
     {
         var cardAction = card.ActionSequences.First();
         if (card.Is(CardTag.Ultimate))
@@ -155,30 +156,22 @@ public static class AICardSelectionLogic
             return Unpreferred;
         if (card.Is(CardTag.DoubleDamage) && cardAction.Group == Group.Self && ctx.Member.HasDoubleDamage())
             return Unpreferred;
-        return 50;
+        for(var i = 0; i < preferences.Length; i++)
+            if (card.Is(preferences[i]))
+                return i;
+        return DefaultPreference;
     }
 
     public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx)
         => ctx.WithFinalizedSmartCardSelection(Maybe<CardTypeData>.Missing());
 
     public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx, Maybe<CardTypeData> lastPlayedCard)
-        => ctx.WithFinalizedCardSelection(c => SmartCardPreference(ctx, c, lastPlayedCard));
+        => ctx.WithFinalizedCardSelection(c => SmartCardPreference(ctx, c, Array.Empty<CardTag>(), lastPlayedCard));
     
-    public static CardSelectionContext WithPhases(this CardSelectionContext ctx)
-    {
-        var phase = ctx.Member.State[TemporalStatType.Phase].CeilingInt();
-        var phaselessCards = ctx.CardOptions.Where(x => !x.Tags.Contains(CardTag.Phase1) && !x.Tags.Contains(CardTag.Phase2) && !x.Tags.Contains(CardTag.Phase3));
-        if (phase == 1)
-            return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase1))));
-        if (phase == 2)
-            return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase2))));
-        if (phase == 3)
-            return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase3))));
-        return ctx;
-    }
-
-    private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx,
-        Func<CardTypeData, int> typePriority)
+    public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx, CardTag[] preferences, Maybe<CardTypeData> lastPlayedCard)
+        => ctx.WithFinalizedCardSelection(c => SmartCardPreference(ctx, c, preferences, lastPlayedCard));
+    
+    private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority)
     {
         if (ctx.SelectedCard.IsPresent)
             return ctx.SelectedCard.Value;
@@ -195,6 +188,19 @@ public static class AICardSelectionLogic
         DevLog.Write($"Card Preference Order: {string.Join(", ", cardPreferenceOrder.Select(c => c.Name))}");
         
         return cardPreferenceOrder.First();
+    }
+    
+    public static CardSelectionContext WithPhases(this CardSelectionContext ctx)
+    {
+        var phase = ctx.Member.State[TemporalStatType.Phase].CeilingInt();
+        var phaselessCards = ctx.CardOptions.Where(x => !x.Tags.Contains(CardTag.Phase1) && !x.Tags.Contains(CardTag.Phase2) && !x.Tags.Contains(CardTag.Phase3));
+        if (phase == 1)
+            return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase1))));
+        if (phase == 2)
+            return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase2))));
+        if (phase == 3)
+            return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase3))));
+        return ctx;
     }
 
     public static CardTypeData MostExpensive(this IEnumerable<CardTypeData> cards) => cards

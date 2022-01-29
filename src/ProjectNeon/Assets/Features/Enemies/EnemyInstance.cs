@@ -44,6 +44,7 @@ public class EnemyInstance : EnemyType
     public int StartingResourceAmount => _startingResourceAmount;
     public int MaxResourceAmount => _maxResourceAmount;
     public CharacterAnimations Animations { get; }
+    public AiPreferences AIPreferences { get; }
     public IEnumerable<ReactionCardType> ReactionCards { get; }
     public string Description { get; }
 
@@ -55,7 +56,7 @@ public class EnemyInstance : EnemyType
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
         int preferredTurnOrder, string enemyName, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp,
-        CharacterAnimations animations, MemberMaterialType materialType, string description, IEnumerable<ReactionCardType> reactionCards)
+        CharacterAnimations animations, MemberMaterialType materialType, string description, IEnumerable<ReactionCardType> reactionCards, AiPreferences aiPreferences)
     {
         _enemyId = enemyId;
         _resourceType = resourceType;
@@ -88,6 +89,7 @@ public class EnemyInstance : EnemyType
         IsHasty = isHasty;
         IsUnique = isUnique;
         Animations = animations;
+        AIPreferences = aiPreferences;
         ReactionCards = reactionCards != null ? reactionCards : new ReactionCardType[0];
         Description = description != null ? description : "";
         if (_resourceType == null)
