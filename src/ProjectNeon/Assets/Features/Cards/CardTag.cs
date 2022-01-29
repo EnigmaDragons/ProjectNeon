@@ -46,4 +46,5 @@ public enum CardTag
     AntiStealth = 43,
     Invulnerable = 44,
     Focus = 45,
+    RequiresFocus = 46,
 }

@@ -5,7 +5,8 @@ using System.Linq;
 public static class AICardSelectionLogic
 {
     public static CardSelectionContext WithSelectedCardByNameIfPresent(this CardSelectionContext ctx, string cardName)
-        => ctx.SelectedCard.IsMissing && ctx.CardOptions.Any(c => c.Name.Equals(cardName))
+        => ctx.SelectedCard.IsMissing 
+           && ctx.CardOptions.Any(c => c.Name.Equals(cardName))
             ? ctx.WithSelectedCard(ctx.CardOptions.First(c => c.Name.Equals(cardName)))
             : ctx;
 
@@ -13,23 +14,29 @@ public static class AICardSelectionLogic
         => ctx.WithCardOptions(ctx.CardOptions.Where(x => !x.Name.Equals(cardName)));
 
     public static CardSelectionContext WithSelectedFocusCardIfApplicable(this CardSelectionContext ctx)
-        => ctx.CardOptions.Any(c => c.Is(CardTag.Focus)) && ctx.FocusTarget.IsMissing 
+        => ctx.SelectedCard.IsMissing 
+           && ctx.CardOptions.None(c => c.Is(CardTag.Ultimate) && c.IsAoE()) 
+           && ctx.CardOptions.Any(c => c.Is(CardTag.Focus)) && ctx.FocusTarget.IsMissing
             ? ctx.WithSelectedCard(SelectFocusCard(ctx))
             : ctx;
 
     public static CardSelectionContext WithSelectedDesignatedAttackerCardIfApplicable(this CardSelectionContext ctx) 
-        => ctx.SelectedCard.IsMissing && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
+        => ctx.SelectedCard.IsMissing 
+           && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) 
+           && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
             ? ctx.WithSelectedCard(ctx.SelectAttackCard())
             : ctx;
 
     public static CardSelectionContext WithSelectedUltimateIfAvailable(this CardSelectionContext ctx)
-        => ctx.SelectedCard.IsMissing && ctx.CardOptions.Any(c => c.Tags.Contains(CardTag.Ultimate))
+        => ctx.SelectedCard.IsMissing 
+           && ctx.CardOptions.Any(c => c.Tags.Contains(CardTag.Ultimate))
             ? ctx.WithSelectedCard(ctx.CardOptions.Where(c => c.Tags.Contains(CardTag.Ultimate)).MostExpensive())
             : ctx;
 
     public static CardSelectionContext WithCommonSenseSelections(this CardSelectionContext ctx)
         => ctx
             .PlayAntiStealthCardIfAllEnemiesAreStealthed()
+            .DontPlayRequiresFocusCardWithoutAFocusTarget()
             .DontPlayFocusCardIfFocusTargetAlreadySelected()
             .DontPlayAntiStealthCardIfNoEnemiesAreStealthed()
             .DontPlaySelfAttackBuffIfAlreadyBuffed()
@@ -48,6 +55,9 @@ public static class AICardSelectionLogic
             .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
             .DontStealCreditsIfOpponentDoesntHaveAny();
 
+    public static CardSelectionContext DontPlayRequiresFocusCardWithoutAFocusTarget(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsMissing, CardTag.RequiresFocus);
+    
     public static CardSelectionContext DontPlayFocusCardIfFocusTargetAlreadySelected(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsPresent, CardTag.Focus);    
     
@@ -130,10 +140,13 @@ public static class AICardSelectionLogic
             : ctx;
 
     public static readonly int Unpreferred = 99;
+    public static readonly int Preferred = 1;
     
     private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card, Maybe<CardTypeData> lastPlayedCard)
     {
         var cardAction = card.ActionSequences.First();
+        if (card.Is(CardTag.Ultimate))
+            return Preferred;
         if (ctx.Enemies.Length == 1 && cardAction.Scope == Scope.All && cardAction.Group == Group.Opponent)
             return Unpreferred;
         if (lastPlayedCard.IsPresentAnd(c => c.Id == card.Id))
@@ -142,7 +155,7 @@ public static class AICardSelectionLogic
             return Unpreferred;
         if (card.Is(CardTag.DoubleDamage) && cardAction.Group == Group.Self && ctx.Member.HasDoubleDamage())
             return Unpreferred;
-        return 0;
+        return 50;
     }
 
     public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx)
