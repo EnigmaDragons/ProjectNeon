@@ -149,7 +149,7 @@ public class CardResolutionZone : ScriptableObject
 
         _current = new Maybe<IPlayedCard>(played);
         var card = played.Card;
-        if (card.IsActive && !card.Owner.IsStunnedForCard())
+        if (card.IsActive && !card.Owner.IsStunnedForCard() && currentResolvingCardZone.TopCard.IsMissingOr(c => c != card))
             currentResolvingCardZone.Set(card);
         
         Async.ExecuteAfterDelay(delayBeforeResolving, () =>

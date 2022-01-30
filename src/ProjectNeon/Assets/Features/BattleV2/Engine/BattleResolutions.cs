@@ -72,6 +72,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         var reactions = state.Members
             .Select(x => x.Value)
             .SelectMany(v => v.State.GetReactions(effectResolved)).ToList();
+        
+        DevLog.Write($"Number of Reactions: {reactions.Count}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. Cards: {reactions.Count(c => c.ReactionCard.IsPresent)}");
 
         var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
         immediateReactions.ForEach(r => _instantReactions.Enqueue(r));
