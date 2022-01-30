@@ -23,6 +23,33 @@ public class AiCardSelectionTests
         
         AssertAlwaysPlays(ctx, DisabledCard);
     }
+
+    [Test]
+    public void GeneralAI_TwoEquallyGoodCards_AlternatesCards()
+    {
+        var opp = TestMembers.Any();
+        var me = TestMembers.AnyEnemy();
+
+        var ctx = AsDesignatedAttacker(me, opp, new AiPreferences { CardOrderPreferenceFactor = 0 }, AttackCard2, AttackCard1);
+
+        var ai = CreateAI();
+        var played = ExecuteGeneralAiSelection(ctx.WithLastPlayedCard(AttackCard2), ai, 1);
+        Assert.AreEqual(AttackCard1.Name, played.Card.Name);
+        
+        var nextPlayed = ExecuteGeneralAiSelection(ctx.WithLastPlayedCard(AttackCard1), ai, 2);
+        Assert.AreEqual(AttackCard2.Name, nextPlayed.Card.Name);
+    }
+    
+    [Test]
+    public void GeneralAI_CardOrderFactor_PlaysPreferredCardFirst()
+    {
+        var opp = TestMembers.Any();
+        var me = TestMembers.AnyEnemy();
+
+        var ctx = AsDesignatedAttacker(me, opp, new AiPreferences { CardOrderPreferenceFactor = 1 }, AttackCard2, AttackCard1);
+
+        AssertFirstCardIsAlways(ctx, AttackCard2);
+    }
     
     [Test]
     public void GeneralAI_NonDesignatedAttackerWithRotatingPreference_RotatesCardTags()
@@ -144,6 +171,15 @@ public class AiCardSelectionTests
             var played = ExecuteGeneralAiSelection(ctx.WithLastPlayedCard(lastPlayedCard), ai, i + 1);
             Assert.AreEqual(c.Name, played.Card.Name, $"Wrong Card Played on Turn {i + 1}");
             lastPlayedCard = played.Card;
+        }
+    }
+
+    private void AssertFirstCardIsAlways(CardSelectionContext ctx, CardTypeData c)
+    {
+        for (var i = 0; i < 10; i++)
+        {
+            var played = ExecuteGeneralAiSelection(ctx.WithLastPlayedCard(Maybe<CardTypeData>.Missing()), CreateAI(), i + 1);
+            Assert.AreEqual(c.Name, played.Card.Name, $"Wrong Card Played on Turn {i + 1}");
         }
     }
 

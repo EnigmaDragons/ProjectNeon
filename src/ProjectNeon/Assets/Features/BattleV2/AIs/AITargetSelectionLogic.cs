@@ -8,9 +8,6 @@ public static class AITargetSelectionLogic
     private static readonly Color EnemyCardTint = new Color(160 / 255, 73 / 255, 77 / 255);
     private static bool ShouldLogAiDetails = false;
     
-    public static Target[] SelectedTargets(this CardSelectionContext ctx)
-        => SelectedTargets(ctx, _ => true);
-    
     public static Target[] SelectedTargets(this CardSelectionContext ctx, Func<Target, bool> isPreferredTarget)
     {
         if (ctx.SelectedCard.IsMissing)
@@ -106,7 +103,7 @@ public static class AITargetSelectionLogic
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx, Func<Target, bool> isPreferredTarget)
     {
         if (ctx.SelectedCard.IsMissing)
-            ctx = ctx.WithFinalizedCardSelection();
+            ctx = ctx.WithFinalizedSmartCardSelection();
         
         Log($"{ctx.Member.Name} chose {ctx.SelectedCard.Value.Name} out of {ctx.CardOptionsString}");
         
