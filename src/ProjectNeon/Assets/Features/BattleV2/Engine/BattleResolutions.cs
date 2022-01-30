@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,28 +65,40 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     private void FinalizeBattleEffect()
     {
-        var (msg, battleSnapshotBefore, res) = _currentBattleEffectContext.Value;
-        var ctx = res.UpdatedContext;
-        var battleSnapshotAfter = state.GetSnapshot();
-        
-        var effectResolved = new EffectResolved(res.WasApplied, msg.IsFirstBattleEffect, msg.Effect, ctx.Source, ctx.Target, battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, ctx.Preventions);
-        var reactions = state.Members
-            .Select(x => x.Value)
-            .SelectMany(v => v.State.GetReactions(effectResolved)).ToList();
-        
-        DevLog.Write($"Number of Reactions: {reactions.Count}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. Cards: {reactions.Count(c => c.ReactionCard.IsPresent)}");
+        var maybeEffectResolved = Maybe<EffectResolved>.Missing();
+        try
+        {
+            var (msg, battleSnapshotBefore, res) = _currentBattleEffectContext.Value;
+            var ctx = res.UpdatedContext;
+            var battleSnapshotAfter = state.GetSnapshot();
 
-        var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
-        immediateReactions.ForEach(r => _instantReactions.Enqueue(r));
-        
-        var reactionCards = reactions.Where(r => r.ReactionCard.IsPresent);
-        reactionCards.ForEach(r => _reactionCards.Enqueue(r));
-        
-        state.CleanupExpiredMemberStates();
-        
-        _currentBattleEffectContext = Maybe<(ApplyBattleEffect, BattleStateSnapshot, ApplyEffectResult)>.Missing();
+            var effectResolved = new EffectResolved(res.WasApplied, msg.IsFirstBattleEffect, msg.Effect, ctx.Source,
+                ctx.Target, battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, ctx.Preventions);
+            maybeEffectResolved = effectResolved;
+            
+            var reactions = state.Members
+                .Select(x => x.Value)
+                .SelectMany(v => v.State.GetReactions(effectResolved)).ToList();
 
-        Message.Publish(effectResolved);
+            DevLog.Write($"Number of Reactions: {reactions.Count}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. " +
+                         $"Cards: {reactions.Count(c => c.ReactionCard.IsPresent)}");
+
+            var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
+            immediateReactions.ForEach(r => _instantReactions.Enqueue(r));
+
+            var reactionCards = reactions.Where(r => r.ReactionCard.IsPresent);
+            reactionCards.ForEach(r => _reactionCards.Enqueue(r));
+
+            state.CleanupExpiredMemberStates();
+
+            _currentBattleEffectContext = Maybe<(ApplyBattleEffect, BattleStateSnapshot, ApplyEffectResult)>.Missing();
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+        }
+
+        maybeEffectResolved.IfPresent(Message.Publish);
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 
