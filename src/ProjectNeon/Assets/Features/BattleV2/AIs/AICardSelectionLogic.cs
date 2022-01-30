@@ -150,63 +150,71 @@ public static class AICardSelectionLogic
         return ctx;
     }
 
-    private static readonly int HighlyUnpreferred = -99;
-    private static readonly int SlightlyUnpreferred = -60;
-    private static readonly int DefaultPreference = -50;
-    private static readonly int SlightlyPreferred = 50;
-    private static readonly int HighlyPreferred = 99;
+    private static readonly int HighlyUnpreferred = -100;
+    private static readonly int MediumUnpreferred = -50;
+    private static readonly int SlightlyUnpreferred = -30;
+    private static readonly int DefaultPreference = -20;
+    private static readonly int SlightlyPreferred = 30;
+    private static readonly int MediumPreferred = 50;
+    private static readonly int HighlyPreferred = 100;
     
     private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card)
     {
         var cardAction = card.ActionSequences.First();
+        var preferenceScore = DefaultPreference;
+        
         if (card.Is(CardTag.Unpreferred))
-            return HighlyUnpreferred;
+            preferenceScore += HighlyUnpreferred;
         if (ctx.UnhighlightedCardOptions.Contains(card))
-            return HighlyUnpreferred;
+            preferenceScore += HighlyUnpreferred;
+        if (ctx.AiPreferences.UnpreferredCardTags.Any(t => card.Is(t)))
+            preferenceScore += HighlyUnpreferred;
         
         if (card.Is(CardTag.Ultimate))
-            return HighlyPreferred;
-        if (ctx.AiPreferences.UnpreferredCardTags.Any(t => card.Is(t)))
-            return HighlyUnpreferred;
+            preferenceScore += HighlyPreferred;
         
         if (ctx.Enemies.Length == 1 && cardAction.Scope == Scope.All && cardAction.Group == Group.Opponent)
-            return SlightlyUnpreferred;
-
-        // Rotating Card Tags
-        if (ctx.LastPlayedCard.IsPresent && ctx.AiPreferences.RotatePlayingCardTags.Any())
-        {
-            var lastCard = ctx.LastPlayedCard.Value;
-            var rotateTags = ctx.AiPreferences.RotatePlayingCardTags;
-            var unpreferredTag = Maybe<CardTag>.Missing();
-            var preferredTag = Maybe<CardTag>.Missing();
-            
-            for (var i = 0; i < rotateTags.Length; i++)
-            {
-                var currentTag = rotateTags[i];
-                if (!lastCard.Tags.Contains(currentTag)) continue;
-                
-                unpreferredTag = currentTag;
-                preferredTag = rotateTags[(i + 1) % rotateTags.Length];
-            }
-            
-            if (unpreferredTag.IsPresentAnd(t => card.Tags.Contains(t)))
-                return HighlyUnpreferred;
-            if (preferredTag.IsPresentAnd(t => card.Tags.Contains(t)))
-                return SlightlyPreferred;
-        }
+            preferenceScore += MediumUnpreferred;
+        if (card.Is(CardTag.DoubleDamage) && cardAction.Group == Group.Self && ctx.Member.HasDoubleDamage())
+            preferenceScore += MediumUnpreferred;
         
         if (card.Is(CardTag.BuffAttack) && cardAction.Group == Group.Self && ctx.Member.HasAttackBuff())
-            return SlightlyUnpreferred;
-        if (card.Is(CardTag.DoubleDamage) && cardAction.Group == Group.Self && ctx.Member.HasDoubleDamage())
-            return SlightlyUnpreferred;
+            preferenceScore += SlightlyUnpreferred;
         if (ctx.LastPlayedCard.IsPresentAnd(lastCard => lastCard.Id == card.Id))
-            return SlightlyUnpreferred;
+            preferenceScore += SlightlyUnpreferred;
+
+        var cardTagPriorities = ctx.AiPreferences.CardTagPriority.Reverse().ToArray();
+        for(var i = 0; i < cardTagPriorities.Length; i++)
+            if (card.Is(cardTagPriorities[i]))
+                preferenceScore += (i + 1) * 5;
         
-        for(var i = 0; i < ctx.AiPreferences.CardTagPriority.Length; i++)
-            if (card.Is(ctx.AiPreferences.CardTagPriority[i]))
-                return i;
+        if (ctx.LastPlayedCard.IsPresent && ctx.AiPreferences.RotatePlayingCardTags.Any())
+            preferenceScore += RotatingCardTagPreferenceAmount(ctx, card);
         
-        return DefaultPreference;
+        return preferenceScore;
+    }
+
+    private static int RotatingCardTagPreferenceAmount(this CardSelectionContext ctx, CardTypeData card)
+    {
+        var lastCard = ctx.LastPlayedCard.Value;
+        var rotateTags = ctx.AiPreferences.RotatePlayingCardTags;
+        var unpreferredTag = Maybe<CardTag>.Missing();
+        var preferredTag = Maybe<CardTag>.Missing();
+            
+        for (var i = 0; i < rotateTags.Length; i++)
+        {
+            var currentTag = rotateTags[i];
+            if (!lastCard.Tags.Contains(currentTag)) continue;
+                
+            unpreferredTag = currentTag;
+            preferredTag = rotateTags[(i + 1) % rotateTags.Length];
+        }
+            
+        if (unpreferredTag.IsPresentAnd(t => card.Tags.Contains(t)))
+            return HighlyUnpreferred;
+        if (preferredTag.IsPresentAnd(t => card.Tags.Contains(t)))
+            return MediumPreferred;
+        return 0;
     }
     
     public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx)
