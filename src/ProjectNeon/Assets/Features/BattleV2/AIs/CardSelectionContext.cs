@@ -11,6 +11,7 @@ public sealed class CardSelectionContext
     public Member[] AllMembers { get; }
     public AIStrategy Strategy { get; }
     public IEnumerable<CardTypeData> CardOptions { get; }
+    public HashSet<CardTypeData> UnhighlightedCardOptions { get; }
     public PartyAdventureState PartyAdventureState { get; }
     public CardPlayZones Zones { get; }
     public AiPreferences AiPreferences { get; }
@@ -23,21 +24,17 @@ public sealed class CardSelectionContext
 
     public CardSelectionContext(int memberId, BattleState state, AIStrategy strategy)
         : this(state.Members.VerboseGetValue(memberId, "Members"), Maybe<Member>.Missing(), state.MembersWithoutIds,
-            strategy, state.Party, state.PlayerCardZones, state.GetAiPreferences(memberId), 
-            state.GetPlayableCards(memberId, state.Party, strategy.SpecialCards), Maybe<CardTypeData>.Missing()) {}
+            strategy, state.Party, state.PlayerCardZones, state.GetAiPreferences(memberId), Maybe<CardTypeData>.Missing(),
+            state.GetPlayableCards(memberId, state.Party, strategy.SpecialCards), state.GetUnhighlightedCards(memberId, state.Party, strategy.SpecialCards)) {}
     
-    public CardSelectionContext(int memberId, BattleState state, AIStrategy strategy, Maybe<CardTypeData> lastPlayedCard)
-        : this(state.Members.VerboseGetValue(memberId, "Members"), Maybe<Member>.Missing(), state.MembersWithoutIds,
-            strategy, state.Party, state.PlayerCardZones, state.GetAiPreferences(memberId), 
-            state.GetPlayableCards(memberId, state.Party, strategy.SpecialCards), lastPlayedCard) {}
-    
-    public CardSelectionContext(Member member, BattleState state, AIStrategy strategy, Maybe<Member> focusTarget, Maybe<CardTypeData> lastPlayedCard)
+    public CardSelectionContext(Member member, BattleState state, AIStrategy strategy, Maybe<Member> focusTarget, 
+        Maybe<CardTypeData> lastPlayedCard, IEnumerable<CardTypeData> unhighlightedCardOptions)
         : this(member, focusTarget, state.MembersWithoutIds, strategy, state.Party, state.PlayerCardZones, 
-            state.GetAiPreferences(member.Id), state.GetPlayableCards(member.Id, state.Party, strategy.SpecialCards), lastPlayedCard) {}
+            state.GetAiPreferences(member.Id), lastPlayedCard, state.GetPlayableCards(member.Id, state.Party, strategy.SpecialCards), unhighlightedCardOptions) {}
 
     public CardSelectionContext(Member member, Maybe<Member> focusTarget, Member[] allMembers, AIStrategy strategy, 
-        PartyAdventureState partyAdventureState, CardPlayZones zones, AiPreferences aiPreferences, 
-        IEnumerable<CardTypeData> options, Maybe<CardTypeData> lastPlayedCard)
+        PartyAdventureState partyAdventureState, CardPlayZones zones, AiPreferences aiPreferences, Maybe<CardTypeData> lastPlayedCard,
+        IEnumerable<CardTypeData> options, IEnumerable<CardTypeData> unhighlightedCardOptions)
     {
         Member = member;
         FocusTarget = focusTarget;
@@ -46,6 +43,7 @@ public sealed class CardSelectionContext
         PartyAdventureState = partyAdventureState;
         Zones = zones;
         CardOptions = options;
+        UnhighlightedCardOptions = unhighlightedCardOptions.ToHashSet();
         LastPlayedCard = lastPlayedCard;
         AiPreferences = aiPreferences;
     }
@@ -58,32 +56,38 @@ public sealed class CardSelectionContext
             return this;
         }
         return LogAfter(() => shouldRefine(this)
-            ? new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, CardOptions.Where(o => !o.Is(excludedTagsCombination)), LastPlayedCard) { SelectedCard = SelectedCard }
+            ? new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, 
+                LastPlayedCard, CardOptions.Where(o => !o.Is(excludedTagsCombination)), UnhighlightedCardOptions) { SelectedCard = SelectedCard }
             : this);
     }
     
     public CardSelectionContext IfTrueDontPlay(Func<CardSelectionContext, bool> shouldRefine, Func<CardTypeData, bool> isExcludedCard) =>
         LogAfter(() => shouldRefine(this)
-            ? new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, CardOptions.Where(c => !isExcludedCard(c)), LastPlayedCard) { SelectedCard = SelectedCard }
+            ? new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, 
+                LastPlayedCard, CardOptions.Where(c => !isExcludedCard(c)), UnhighlightedCardOptions) { SelectedCard = SelectedCard }
             : this);
 
     public CardSelectionContext IfTruePlayType(Func<CardSelectionContext, bool> shouldRefine, params CardTag[] includeTagsCombination) => 
         LogAfter(() => shouldRefine(this)
-            ? new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, CardOptions.Where(o => o.Is(includeTagsCombination)), LastPlayedCard) { SelectedCard = SelectedCard }
+            ? new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, LastPlayedCard, 
+                CardOptions.Where(o => o.Is(includeTagsCombination)), UnhighlightedCardOptions) { SelectedCard = SelectedCard }
             : this);
 
     public CardSelectionContext WithSelectedCard(CardTypeData card)
-        => new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, CardOptions, LastPlayedCard) { SelectedCard = new Maybe<CardTypeData>(card)};
+        => new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, 
+            LastPlayedCard, CardOptions, UnhighlightedCardOptions) { SelectedCard = new Maybe<CardTypeData>(card)};
 
     public CardSelectionContext WithCardOptions(IEnumerable<CardTypeData> options)
-        => new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, options, LastPlayedCard) { SelectedCard = SelectedCard };
+        => new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, 
+            LastPlayedCard, options, UnhighlightedCardOptions) { SelectedCard = SelectedCard };
     
     public CardSelectionContext WithLastPlayedCard(CardTypeData lastPlayedCard)
         => WithLastPlayedCard(Maybe<CardTypeData>.Present(lastPlayedCard));
     
     public CardSelectionContext WithLastPlayedCard(Maybe<CardTypeData> lastPlayedCard)
-        => new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, CardOptions, lastPlayedCard) { SelectedCard = SelectedCard };
-    
+        => new CardSelectionContext(Member, FocusTarget, AllMembers, Strategy, PartyAdventureState, Zones, AiPreferences, 
+            lastPlayedCard, CardOptions, UnhighlightedCardOptions) { SelectedCard = SelectedCard };
+
     private CardSelectionContext LogAfter(Func<CardSelectionContext> getNext)
     {
         var ctx = getNext();
