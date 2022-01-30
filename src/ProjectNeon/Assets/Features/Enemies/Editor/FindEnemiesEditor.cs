@@ -64,6 +64,17 @@ public class FindEnemiesEditor : EditorWindow
                 .Show();
             GUIUtility.ExitGUI();
         }
+        if (GUILayout.Button("Animation Sets"))
+        {
+            var items = GetAllWorkingEnemies()
+                .Select(e => $"{e.name} - {e.Animations?.name}")
+                .OrderBy(e => e)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Enemy Animation Sets", "Enemy:", items)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
         DrawUILine();
 
         _corpName = GUILayout.TextField(_corpName);
