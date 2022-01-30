@@ -164,14 +164,19 @@ public static class AICardSelectionLogic
         var cardAction = card.ActionSequences.First();
         if (card.Is(CardTag.Unpreferred))
             return HighlyUnpreferred;
+        if (ctx.UnhighlightedCardOptions.Contains(card))
+            return HighlyUnpreferred;
+        
         if (card.Is(CardTag.Ultimate))
             return HighlyPreferred;
         if (ctx.AiPreferences.UnpreferredCardTags.Any(t => card.Is(t)))
             return HighlyUnpreferred;
+        
         if (ctx.Enemies.Length == 1 && cardAction.Scope == Scope.All && cardAction.Group == Group.Opponent)
-            return HighlyUnpreferred;
+            return SlightlyUnpreferred;
 
-        if (ctx.LastPlayedCard.IsPresent)
+        // Rotating Card Tags
+        if (ctx.LastPlayedCard.IsPresent && ctx.AiPreferences.RotatePlayingCardTags.Any())
         {
             var lastCard = ctx.LastPlayedCard.Value;
             var rotateTags = ctx.AiPreferences.RotatePlayingCardTags;
@@ -185,7 +190,6 @@ public static class AICardSelectionLogic
                 
                 unpreferredTag = currentTag;
                 preferredTag = rotateTags[(i + 1) % rotateTags.Length];
-                DevLog.Write($"Preferred Card Tag: {preferredTag}. Unpreferred Card Tag: {unpreferredTag}");
             }
             
             if (unpreferredTag.IsPresentAnd(t => card.Tags.Contains(t)))
@@ -194,18 +198,17 @@ public static class AICardSelectionLogic
                 return SlightlyPreferred;
         }
         
-
         if (card.Is(CardTag.BuffAttack) && cardAction.Group == Group.Self && ctx.Member.HasAttackBuff())
-            return HighlyUnpreferred;
+            return SlightlyUnpreferred;
         if (card.Is(CardTag.DoubleDamage) && cardAction.Group == Group.Self && ctx.Member.HasDoubleDamage())
-            return HighlyUnpreferred;
-
+            return SlightlyUnpreferred;
+        if (ctx.LastPlayedCard.IsPresentAnd(lastCard => lastCard.Id == card.Id))
+            return SlightlyUnpreferred;
+        
         for(var i = 0; i < ctx.AiPreferences.CardTagPriority.Length; i++)
             if (card.Is(ctx.AiPreferences.CardTagPriority[i]))
                 return i;
         
-        if (ctx.LastPlayedCard.IsPresentAnd(lastCard => lastCard.Id == card.Id))
-            return SlightlyUnpreferred;
         return DefaultPreference;
     }
     

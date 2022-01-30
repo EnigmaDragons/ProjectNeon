@@ -43,8 +43,12 @@ public class GeneralAI : StatefulTurnAI
         var me = battleState.Members[memberId];
         var focusTarget = GetFocusTarget(me, battleState);
         var lastPlayedCard = _lastPlayedCard.ValueOrMaybe(memberId).Map(c => c.Card.Type);
+
+        var unhighlightedCards = battleState.GetUnhighlightedCards(memberId,
+            battleState.GetPlayableCards(memberId, battleState.Party, strategy.SpecialCards));
+        var ctx = new CardSelectionContext(me, battleState, strategy, focusTarget, lastPlayedCard, unhighlightedCards);
         
-        return Select(battleState.TurnNumber, new CardSelectionContext(me, battleState, strategy, focusTarget, lastPlayedCard));
+        return Select(battleState.TurnNumber, ctx);
     }
 
     protected override void TrackState(IPlayedCard card, BattleState state, AIStrategy strategy)

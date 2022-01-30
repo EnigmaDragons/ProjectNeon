@@ -22,4 +22,11 @@ public static class AIHelpers
             Log.Info($"{me} has no playable cards in hand");
         return playableCards;
     }
+
+    public static CardTypeData[] GetUnhighlightedCards(this BattleState s, int memberId, PartyAdventureState partyState, EnemySpecialCircumstanceCards specialCircumstanceCards)
+        => GetUnhighlightedCards(s, memberId, GetPlayableCards(s, memberId, partyState, specialCircumstanceCards));
+    
+    public static CardTypeData[] GetUnhighlightedCards(this BattleState s, int memberId, CardTypeData[] options)
+        => options.Where(cardType => cardType.UnhighlightCondition
+                .IsPresentAnd(u => u.ConditionMet(new CardConditionContext(new Card(-1, s.Members[memberId], cardType), s)))).ToArray();
 }
