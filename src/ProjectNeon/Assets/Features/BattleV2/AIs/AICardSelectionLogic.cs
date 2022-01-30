@@ -10,9 +10,6 @@ public static class AICardSelectionLogic
             ? ctx.WithSelectedCard(ctx.CardOptions.First(c => c.Name.Equals(cardName)))
             : ctx).WithLoggedSelection(nameof(WithSelectedCardByNameIfPresent));
 
-    public static CardSelectionContext WithRemovedCardByNameIfPresent(this CardSelectionContext ctx, string cardName)
-        => ctx.WithCardOptions(ctx.CardOptions.Where(x => !x.Name.Equals(cardName)));
-
     public static CardSelectionContext WithSelectedFocusCardIfApplicable(this CardSelectionContext ctx)
         => (ctx.SelectedCard.IsMissing 
            && ctx.CardOptions.None(c => c.Is(CardTag.Ultimate) && c.IsAoE()) 
@@ -122,7 +119,7 @@ public static class AICardSelectionLogic
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
         => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).ToArray()
             .Shuffled()
-            .OrderBy(c => SmartCardPreference(ctx, c)).First();
+            .OrderByDescending(c => SmartCardPreference(ctx, c)).First();
 
     private static CardTypeData SelectFocusCard(this CardSelectionContext ctx)
         => ctx.CardOptions.Where(o => o.Is(CardTag.Focus)).ToArray().Shuffled().First();

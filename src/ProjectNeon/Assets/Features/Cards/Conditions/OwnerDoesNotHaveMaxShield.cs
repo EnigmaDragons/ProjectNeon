@@ -4,5 +4,5 @@ using UnityEngine;
 public class OwnerDoesNotHaveMaxShield: StaticCardCondition
 {
     public override bool ConditionMet(CardConditionContext ctx)
-        => ctx.Card.Owner.State.Shield() != ctx.Card.Owner.State.PrimaryResource.MaxAmount;
+        => ctx.Card.Owner.State.Shield() != ctx.Card.Owner.State.MaxShield();
 }
