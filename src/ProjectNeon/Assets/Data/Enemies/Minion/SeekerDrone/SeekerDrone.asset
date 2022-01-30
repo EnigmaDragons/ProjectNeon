@@ -19,6 +19,11 @@ MonoBehaviour:
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    CardTagPriority: 
+    RotatePlayingCardTags: 
+    UnpreferredCardTags: 
+    DesignatedAttackerPriority: 50
   preferredTurnOrder: 99
   prefab: {fileID: 9060184511325216849, guid: 49c10bb7a15659941967c5ee552c9c42, type: 3}
   materialType: 2
@@ -59,12 +64,12 @@ MonoBehaviour:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
-      resourceScaledValueOverride: 0
+      resourceScaledValueOverride: 0.01
     calculationResults:
       startingPower: 16.6878
       perCardValue: 6
-      resourceValue: 1.98
-      perTurnPower: 6
+      resourceValue: 0.06
+      perTurnPower: 6.06
       maxAndStartingResourcesPower: 0
       estimatedTurnsAlive: 1.66878
       calculatedPowerLevel: 28
