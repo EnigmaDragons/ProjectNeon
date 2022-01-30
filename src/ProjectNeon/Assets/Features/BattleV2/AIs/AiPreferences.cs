@@ -4,10 +4,17 @@ using System.Linq;
 [Serializable]
 public class AiPreferences
 {
-    public CardTag[] CardTagPriority = new CardTag[0];
-    public CardTag[] RotatePlayingCardTags = new CardTag[0];
-    public CardTag[] UnpreferredCardTags = new CardTag[0];
     public DesignatedAttackerPriority DesignatedAttackerPriority = DesignatedAttackerPriority.Default;
+    public int CardOrderPreferenceFactor = 0;
+    public CardTag[] CardTagPriority = new CardTag[0];
+    public CardTag[] UnpreferredCardTags = new CardTag[0];
+    public CardTag[] RotatePlayingCardTags = new CardTag[0];
+
+    public bool IsDefault => CardTagPriority.Length == 0
+                             && UnpreferredCardTags.Length == 0
+                             && RotatePlayingCardTags.Length == 0
+                             && CardOrderPreferenceFactor == 0
+                             && DesignatedAttackerPriority == DesignatedAttackerPriority.Default;
 
     public AiPreferences WithDefaultsBasedOnRole(BattleRole role)
     {
@@ -34,7 +41,8 @@ public class AiPreferences
             CardTagPriority = CardTagPriority,
             RotatePlayingCardTags = RotatePlayingCardTags,
             UnpreferredCardTags = UnpreferredCardTags.Append(CardTag.Attack).ToHashSet().ToArray(),
-            DesignatedAttackerPriority = DesignatedAttackerPriority
+            DesignatedAttackerPriority = DesignatedAttackerPriority,
+            CardOrderPreferenceFactor = 1
         };
         update(clone);
         return clone;

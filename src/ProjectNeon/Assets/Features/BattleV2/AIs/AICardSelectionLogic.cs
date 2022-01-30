@@ -117,25 +117,26 @@ public static class AICardSelectionLogic
         => ctx.IfTrueDontPlayType(x => x.PartyAdventureState.Credits <= 0, CardTag.StealCredits);
 
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
-        => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).ToArray()
-            .Shuffled()
-            .OrderByDescending(c => SmartCardPreference(ctx, c)).First();
+        => ctx.CardOptions.Where(o => o.Is(CardTag.Attack))
+            .Select((o, i) => (option: o, index: i))
+            .OrderByDescending(c => SmartCardPreference(ctx, c.option, c.index))
+            .First().option;
 
     private static CardTypeData SelectFocusCard(this CardSelectionContext ctx)
         => ctx.CardOptions.Where(o => o.Is(CardTag.Focus)).ToArray().Shuffled().First();
 
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx)
-        => ctx.WithFinalizedCardSelection(_ => 0);
+        => ctx.WithFinalizedCardSelection((_, __) => 0);
 
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, params CardTag[] tagPriority)
     {
         var dictionary = new DictionaryWithDefault<CardTag, int>(99);
         for (int i = 1; i < tagPriority.Length + 1; i++)
             dictionary[tagPriority[i - 1]] = i;
-        return ctx.WithFinalizedCardSelection(c => dictionary[c.Tags.First()]);
+        return ctx.WithFinalizedCardSelection((c, i) => dictionary[c.Tags.First()]);
     }
     
-    public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority)
+    public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int, int> typePriority)
         => (ctx.SelectedCard.IsMissing
             ? ctx.WithSelectedCard(FinalizeCardSelection(ctx, typePriority))
             : ctx).WithLoggedSelection(nameof(WithFinalizedCardSelection));
@@ -150,6 +151,7 @@ public static class AICardSelectionLogic
         return ctx;
     }
 
+    private static readonly int SuperHighlyUnpreferred = -999;
     private static readonly int HighlyUnpreferred = -100;
     private static readonly int MediumUnpreferred = -50;
     private static readonly int SlightlyUnpreferred = -30;
@@ -158,20 +160,21 @@ public static class AICardSelectionLogic
     private static readonly int MediumPreferred = 50;
     private static readonly int HighlyPreferred = 100;
     
-    private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card)
+    private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card, int optionIndex)
     {
         var cardAction = card.ActionSequences.First();
         var preferenceScore = DefaultPreference;
         
-        if (card.Is(CardTag.Unpreferred))
-            preferenceScore += HighlyUnpreferred;
         if (ctx.UnhighlightedCardOptions.Contains(card))
+            preferenceScore += SuperHighlyUnpreferred;
+        
+        if (card.Is(CardTag.Unpreferred))
             preferenceScore += HighlyUnpreferred;
         if (ctx.AiPreferences.UnpreferredCardTags.Any(t => card.Is(t)))
             preferenceScore += HighlyUnpreferred;
         
         if (card.Is(CardTag.Ultimate))
-            preferenceScore += HighlyPreferred;
+            preferenceScore += MediumPreferred;
         
         if (ctx.Enemies.Length == 1 && cardAction.Scope == Scope.All && cardAction.Group == Group.Opponent)
             preferenceScore += MediumUnpreferred;
@@ -190,6 +193,8 @@ public static class AICardSelectionLogic
         
         if (ctx.LastPlayedCard.IsPresent && ctx.AiPreferences.RotatePlayingCardTags.Any())
             preferenceScore += RotatingCardTagPreferenceAmount(ctx, card);
+
+        preferenceScore += (ctx.CardOptions.Count() - (optionIndex + 1)) * ctx.AiPreferences.CardOrderPreferenceFactor;
         
         return preferenceScore;
     }
@@ -218,9 +223,9 @@ public static class AICardSelectionLogic
     }
     
     public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx)
-        => ctx.WithFinalizedCardSelection(c => SmartCardPreference(ctx, c));
+        => ctx.WithFinalizedCardSelection((c, index) => SmartCardPreference(ctx, c, index));
 
-    private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority)
+    private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int, int> typePriority)
     {
         if (ctx.SelectedCard.IsPresent)
             return ctx.SelectedCard.Value;
@@ -228,7 +233,7 @@ public static class AICardSelectionLogic
             return ctx.SpecialCards.DisabledCard;
 
         var cardPreferenceOrder = ctx.CardOptions
-            .Select(card => (card, typePriority: typePriority(card)))
+            .Select((card, index) => (card, typePriority: typePriority(card, index)))
             .ToArray()
             .Shuffled()
             .OrderByDescending(o => o.typePriority)
