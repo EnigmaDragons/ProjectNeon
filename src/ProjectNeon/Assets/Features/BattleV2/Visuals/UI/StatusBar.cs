@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public abstract class StatusBar : OnMessage<MemberStateChanged>
@@ -28,19 +29,47 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             UpdateUi();
     }
 
-    private void AddCustomTextStatusIcons(List<CurrentStatusValue> statuses, StatusTag statusTag, string defaultText = "Unknown") 
-        => _member.State.StatusesOfType(statusTag)
-            .DistinctBy((x, i) => x.Status.CustomText.OrDefault(i.ToString))
-            .ForEach(s => statuses.Add(new CurrentStatusValue { 
-                Type = statusTag.ToString(), 
-                Icon = icons[statusTag].Icon, 
-                Tooltip = s.Status.CustomText.OrDefault(() => defaultText)
-                    .Replace("[Originator]", battleState.Members.TryGetValue(s.OriginatorId, out var m) 
-                        ? m.UnambiguousName 
-                        : "Originator")
-                    .Replace("[PrimaryStat]", _member.PrimaryStat().ToString()),
-                OriginatorId = s.OriginatorId
-            }));
+    private void AddCustomTextStatusIcons(List<CurrentStatusValue> statuses, StatusTag statusTag, string defaultText = "Unknown")
+    {
+        var s = _member.State.StatusesOfType(statusTag);
+        // .DistinctBy((x, i) => x.Status.CustomText.OrDefault(i.ToString))
+        // .ToArray();
+
+        var combined = Combine(s, x => x.Status.CustomText.OrDefault(() => defaultText)
+            .Replace("[Originator]", battleState.Members.TryGetValue(x.OriginatorId, out var m)
+                ? m.UnambiguousName
+                : "Originator")
+            .Replace("[PrimaryStat]", _member.PrimaryStat().ToString()), x => x.Length > 1 ? x.Length : 0);
+        combined.IfPresent(c => statuses.Add(c));
+    }
+
+    private Maybe<CurrentStatusValue> Combine(ITemporalState[] statuses, Func<ITemporalState, string> tooltipTemplate, Func<ITemporalState[], int> numberTemplate)
+    {
+        if (statuses.None())
+            return Maybe<CurrentStatusValue>.Missing();
+
+        var first = statuses.First();
+        var statusTag = first.Status.Tag;
+        var statusValue = new CurrentStatusValue
+        {
+            Type = statusTag.ToString(),
+            Icon = icons[statusTag].Icon,
+        };
+
+        var number = numberTemplate(statuses);
+        if (number != 0)
+            statusValue.Text = number.ToString();
+
+        var originators = statuses.Where(s => s.OriginatorId != _member.Id).Select(s => s.OriginatorId).Distinct().ToArray();
+        if (originators.Length == 1)
+            statusValue.OriginatorId = originators.First();
+        
+        var tooltip = new StringBuilder();
+        statuses.ForEach(status => tooltip.AppendLine(tooltipTemplate(status)));
+        statusValue.Tooltip = tooltip.ToString();
+        
+        return statusValue;
+    }
 
     private void UpdateUi()
     {
@@ -92,9 +121,10 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         if (extraCardBuffAmount != 0)
             statuses.Add(new CurrentStatusValue { Type = StatType.ExtraCardPlays.ToString(), Icon = icons[StatType.ExtraCardPlays].Icon, Text = extraCardBuffAmount.ToString(), Tooltip = $"Play {extraCardBuffAmount} Extra Cards"});
 
-        statuses.AddRange(_member.State.StatusesOfType(StatusTag.DamageOverTime)
-            .Select(s => new CurrentStatusValue { Type = StatusTag.DamageOverTime.ToString(), Icon = icons[StatusTag.DamageOverTime].Icon, Text = s.RemainingTurns.Select(r => r.ToString(), () => ""), 
-                Tooltip = s.Status.CustomText.Select(t => t, $"Takes {s.Amount.Value} at the Start of the next {s.RemainingTurns.Value} turns"), OriginatorId = s.OriginatorId }));
+        var dotCombined = Combine(_member.State.StatusesOfType(StatusTag.DamageOverTime),
+            s => s.Status.CustomText.Select(t => t, $"Takes {s.Amount.Value} at the Start of the next {s.RemainingTurns.Value} turns"),
+            s => s.Sum(x => x.Amount.OrDefault(0)));
+        dotCombined.IfPresent(d => statuses.Add(d));
         
         if (_member.State.HasStatus(StatusTag.HealOverTime))
             statuses.Add(new CurrentStatusValue {  Type = StatusTag.HealOverTime.ToString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
