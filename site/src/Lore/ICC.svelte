@@ -1,5 +1,5 @@
 <script>
-  import SvelteMarkdown from 'svelte-markdown'
+  import SvelteMarkdown from 'svelte-markdown';
   const source = `
 # THE FUNDAMENTAL AGREEMENTS BETWEEN THE CORPORATIONS OF METROPLEX ZERO
   of 2 May 2280
