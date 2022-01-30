@@ -15,7 +15,9 @@ MonoBehaviour:
   id: 413
   customName: 
   art: {fileID: 21300000, guid: 170a9535189f1ea4487849e1c950f0fc, type: 3}
-  description: "Gives <b>3</b> Primary Stat to everyone. \nDeal {E[1]} to one enemy."
+  description: 'Deal {E[0]} to one enemy.
+
+    Gives <b>3</b> Primary Stat to everyone. '
   typeDescription: {fileID: 0}
   tags: 0400000003000000
   speed: 0
@@ -26,14 +28,14 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 3
   actionSequences:
-  - scope: 1
-    group: 3
-    cardActions: {fileID: 11400000, guid: 78167666a9623534796298c0a9c5d225, type: 2}
-    repeatX: 0
-    repeatCount: 0
   - scope: 0
     group: 1
     cardActions: {fileID: 11400000, guid: 7059e69bb19356049b248031ac86e0b4, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 1
+    group: 3
+    cardActions: {fileID: 11400000, guid: 78167666a9623534796298c0a9c5d225, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -45,3 +47,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
