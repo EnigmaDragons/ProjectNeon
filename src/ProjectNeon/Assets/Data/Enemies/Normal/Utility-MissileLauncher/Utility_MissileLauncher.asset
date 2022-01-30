@@ -21,6 +21,9 @@ MonoBehaviour:
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
   aiPreferences:
     CardTagPriority: 
+    RotatePlayingCardTags: 
+    UnpreferredCardTags: 
+    DesignatedAttackerPriority: 50
   preferredTurnOrder: 99
   prefab: {fileID: 1881077737699664597, guid: b339d64409419e44e87707355ea800fe, type: 3}
   materialType: 2
@@ -50,25 +53,25 @@ MonoBehaviour:
     leadership: 0
     armor: 3
     resistance: 0
-    nonStatCardValueFactor: 10
+    nonStatCardValueFactor: 15
     startingResourceAmount: 0
     maxResourceAmount: 6
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 107
+    powerLevel: 148
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
-      perTurnValueAdjustment: 0
-      resourceScaledValueOverride: 0
+      perTurnValueAdjustment: 7.43
+      resourceScaledValueOverride: 0.01
     calculationResults:
       startingPower: 69.88685
-      perCardValue: 5
-      resourceValue: 1.6500001
-      perTurnPower: 6.65
-      maxAndStartingResourcesPower: 1.2174624
+      perCardValue: 7.5
+      resourceValue: 0.074999996
+      perTurnPower: 15.005
+      maxAndStartingResourcesPower: 0.0553392
       estimatedTurnsAlive: 6.9886847
-      calculatedPowerLevel: 106
+      calculatedPowerLevel: 148
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: f33118b6dbae0a347b6bfcbc41f052ac, type: 2}
