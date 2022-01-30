@@ -12,6 +12,8 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
     [SerializeField] private DamageNumbersController numbers;
     [SerializeField] private CharacterWordsController words;
     [SerializeField] private OnlyShowWhenHovered hoverReveal;
+    [SerializeField] private WorldStatPresenter primaryStatPresenter;
+    [SerializeField] private WorldTextPresenter descriptionPresenter;
 
     private Member _member;
 
@@ -19,7 +21,7 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
 
     private void Awake() => panel.SetActive(false);
     
-    public EnemyBattleUIPresenter Initialized(Member m)
+    public EnemyBattleUIPresenter Initialized(EnemyInstance e, Member m)
     {
         panel.SetActive(true);
         _member = m;
@@ -32,6 +34,10 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
         statusBar.Initialized(m);
         nameLabel.text = m.Name.WithSpaceBetweenWords();
         hoverReveal.Initialized(m);
+        if (primaryStatPresenter != null)
+            primaryStatPresenter.Init(m, m.PrimaryStat());
+        if (descriptionPresenter != null)
+            descriptionPresenter.Init(e.Description);
         return this;
     }
     
