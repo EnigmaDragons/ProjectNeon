@@ -115,6 +115,9 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
 
     private void AddBuffAmountIconIfApplicable(List<CurrentStatusValue> statuses, StatType statType)
     {
+        if (_member.TeamType == TeamType.Party && _member.PrimaryStat() == statType)
+            return;
+        
         var buffAmount = CeilingInt(_member.State[statType] - _member.State.BaseStats[statType]);
         if (buffAmount != 0)
             statuses.Add(new CurrentStatusValue { Icon = icons[statType].Icon, Text = buffAmount.ToString(), Tooltip = $"{Sign(buffAmount)}{buffAmount} {statType}"});

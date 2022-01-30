@@ -182,7 +182,7 @@ public class AegisTests
             Formula = "-1"
         }, attacker, defender);
         
-        Assert.AreEqual(2, defender.PrimaryResource().Amount);
+        Assert.AreEqual(2, defender.PrimaryResourceQuantity().Amount);
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
 
@@ -197,10 +197,10 @@ public class AegisTests
         {
             EffectType = EffectType.AdjustResourceFlat,
             BaseAmount = new IntReference(-1),
-            EffectScope = new StringReference(defender.PrimaryResource().ResourceType)
+            EffectScope = new StringReference(defender.PrimaryResourceQuantity().ResourceType)
         }, attacker, defender);
         
-        Assert.AreEqual(2, defender.PrimaryResource().Amount);
+        Assert.AreEqual(2, defender.PrimaryResourceQuantity().Amount);
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
     
@@ -217,7 +217,7 @@ public class AegisTests
             Formula = "-1"
         }, attacker, defender);
         
-        Assert.AreEqual(2, defender.PrimaryResource().Amount);
+        Assert.AreEqual(2, defender.PrimaryResourceQuantity().Amount);
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
 
