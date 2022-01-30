@@ -257,6 +257,7 @@ public static class InterpolatedCardDescriptions
         { "Mana", 20 },
         { "Insight", 24 },
         { "Tech Points", 23 },
+        { "TechPoints", 23 },
         { "PrimaryResource", 20 },
         { "Primary Resource", 20 },
         { "Grenades", 8 },
