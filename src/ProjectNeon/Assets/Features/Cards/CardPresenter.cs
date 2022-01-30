@@ -33,6 +33,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private CardRulesPresenter rules;
     [SerializeField] private CardTargetRulePresenter targetRule;
     [SerializeField] private CardScaledStatsPresenter scalingRule;
+    [SerializeField] private CardEnemyTypePresenter enemyTypePresenter;
     [SerializeField] private GameObject chainedCardParent;
     [SerializeField] private CardCostPresenter cardCostPresenter;
     [SerializeField] private Image[] glitchableComponents; 
@@ -174,6 +175,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         gameObject.SetActive(true);
         targetRule.Hide();
         scalingRule.Hide();
+        enemyTypePresenter.Hide();
         controls.SetActive(false);
         controls.SetCanToggleBasic(false);
         DisableCanPlayHighlight();
@@ -333,6 +335,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         DebugLog("Show Comprehensive Info");
         Message.Publish(new HideReferencedCard());
+        enemyTypePresenter.Hide();
         if (_card != null)
             rules.Show(_card,  _isHand ? 2 : 999);
         else
@@ -361,6 +364,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         rules.Hide();
         targetRule.Hide();
         scalingRule.Hide();
+        enemyTypePresenter.Show();
         Message.Publish(new HideReferencedCard());
     }
     
@@ -454,6 +458,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         DebugLog($"Can Play: {result}");
         return result;
     }
+
+    public void ShowEnemyCareType(string type) => enemyTypePresenter.Init(type);
 
     private void DebugLog(string msg)
     {
