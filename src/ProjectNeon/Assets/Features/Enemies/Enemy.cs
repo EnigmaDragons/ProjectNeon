@@ -12,7 +12,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private bool isCurrentlyWorking = true;
     [SerializeField] private StaticCorp corp;
     [SerializeField] private TurnAI ai;
-    [SerializeField] private AiPreferences aiPreferences;
+    [SerializeField] public AiPreferences aiPreferences;
     [SerializeField] private int preferredTurnOrder = 99;
     [SerializeField] private GameObject prefab;
     [SerializeField] private MemberMaterialType materialType;
