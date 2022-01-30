@@ -30,6 +30,7 @@ public class Enemy : ScriptableObject
     public bool IsCurrentlyWorking => isCurrentlyWorking;
     
     public string EnemyName => this.GetName(enemyName);
+    public string Description => description;
     public Corp Corp => corp;
     public EnemyTier Tier => tier;
     public BattleRole BattleRole => battleRole;
