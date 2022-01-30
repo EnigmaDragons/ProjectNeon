@@ -80,7 +80,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         for (var i = 0; i < enemyArea.Enemies.Count; i++)
         {
             var member = state.GetMemberByEnemyIndex(i);
-            SetupEnemyUi(member, enemyArea.EnemyUiPositions[i].gameObject.transform);
+            SetupEnemyUi(enemyArea.Enemies[i], member, enemyArea.EnemyUiPositions[i].gameObject.transform);
             SetupVisualComponents(active[i], member);
         }
     }
@@ -114,7 +114,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         var member = enemy.AsMember(state.GetNextEnemyId());
         var enemyObject = AddEnemy(enemy, member, offset);
         state.AddEnemy(enemy, enemyObject, member);
-        SetupEnemyUi(member, enemyObject.transform);
+        SetupEnemyUi(enemy, member, enemyObject.transform);
         SetupVisualComponents(enemyObject, member);
         return new EnemySpawnDetails(enemy, member, enemyObject.transform);
     }
@@ -128,13 +128,13 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         Destroy(uis[index]);
     }
 
-    private void SetupEnemyUi(Member member, Transform obj)
+    private void SetupEnemyUi(EnemyInstance enemy, Member member, Transform obj)
     {
         var pos = obj.transform.position;
         var customUi = obj.GetComponentInChildren<EnemyBattleUIPresenter>();
         uis.Add(customUi != null
-            ? customUi.Initialized(member)
-            : Instantiate(ui, pos, Quaternion.identity, obj).Initialized(member));
+            ? customUi.Initialized(enemy, member)
+            : Instantiate(ui, pos, Quaternion.identity, obj).Initialized(enemy, member));
     }
     
     protected override void Execute(MemberUnconscious m)
