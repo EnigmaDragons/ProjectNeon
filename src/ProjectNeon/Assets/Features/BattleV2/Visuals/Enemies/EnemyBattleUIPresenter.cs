@@ -12,6 +12,7 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
     [SerializeField] private DamageNumbersController numbers;
     [SerializeField] private CharacterWordsController words;
     [SerializeField] private OnlyShowWhenHovered hoverReveal;
+    [SerializeField] private WorldStatPresenter primaryStatPresenter;
 
     private Member _member;
 
@@ -32,6 +33,8 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
         statusBar.Initialized(m);
         nameLabel.text = m.Name.WithSpaceBetweenWords();
         hoverReveal.Initialized(m);
+        if (primaryStatPresenter != null)
+            primaryStatPresenter.Init(m, m.PrimaryStat());
         return this;
     }
     
