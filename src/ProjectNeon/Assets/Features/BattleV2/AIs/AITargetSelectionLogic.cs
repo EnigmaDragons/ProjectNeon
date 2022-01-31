@@ -94,6 +94,10 @@ public static class AITargetSelectionLogic
         if (card.Is(CardTag.Invulnerable))
             return possibleTargets.ClosestToDeath();
 
+        if (card.Is(CardTag.ScaledOnMissingMaxHealth))
+            return possibleTargets.OrderBy(t => t.Members.Sum(m => m.MaxHp() - m.State.BaseStats.MaxHp()))
+                .First();
+
         return possibleTargets.Random();
     }
 

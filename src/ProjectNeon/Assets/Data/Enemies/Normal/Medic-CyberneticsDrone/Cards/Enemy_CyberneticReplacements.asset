@@ -10,30 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Enemy_DualStrike
+  m_Name: Enemy_CyberneticReplacements
   m_EditorClassIdentifier: 
-  id: 209
+  id: 0
   customName: 
-  art: {fileID: 21300000, guid: 08cfc25ab328ed64bba6dafc484d0828, type: 3}
-  description: "Deal {E[0]}. \nDeal {E[1]}"
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 0400000003000000
+  art: {fileID: 21300000, guid: 94b23c0d0dc3e6e448e358b910f3f282, type: 3}
+  description: Reduces an ally's maximum health by half of their missing health and
+    heals them to full
+  typeDescription: {fileID: 0}
+  tags: 06000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 3
+    cost: 0
     resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 1
   actionSequences:
   - scope: 0
-    group: 1
-    cardActions: {fileID: 11400000, guid: e82d17604b3553344a5486165b0aaa95, type: 2}
-    repeatX: 0
-    repeatCount: 0
-  - scope: 0
-    group: 1
-    cardActions: {fileID: 11400000, guid: f693c8fb0e0ed554fa3455ecf2f35627, type: 2}
+    group: 2
+    cardActions: {fileID: 11400000, guid: 6439acdae98cbdc48b63a5e99f46b33b, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}

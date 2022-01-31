@@ -21,6 +21,9 @@ public class CardConditionContext
     public bool AnyEnemy(Func<Member, bool> condition) 
         => BattleState.GetConsciousEnemies(Card.Owner).Any(condition);
     
+    public bool AnyAlly(Func<Member, bool> condition) 
+        => BattleState.GetConsciousAllies(Card.Owner).Any(condition);
+    
     public bool AllEnemies(Func<Member, bool> condition) 
         => BattleState.GetConsciousEnemies(Card.Owner).All(condition);
 

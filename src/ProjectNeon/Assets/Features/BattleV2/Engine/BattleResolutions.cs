@@ -184,7 +184,11 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     private void BeginResolvingNextInstantReaction()
     {
         var r = _instantReactions.Dequeue();
-        r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
+        r = new ProposedReaction(r.ReactionSequence, r.Source, new Multiple(r.Target.Members.Where(x => state.Members.Any(m => m.Key == x.Id) && x.IsConscious())));
+        if (r.Target.Members.Any())
+            r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
+        else
+            Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id));
     }
     
     private IEnumerator ResolveNextReactionCard()
@@ -196,10 +200,13 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         {
             _resolvingEffect = false;
             Log.Error("Should not be Queueing instant Effect Reactions. They should already be processed.");
+            StartCoroutine(FinishEffect());
             yield break;
         }
+        
+        r = new ProposedReaction(r.ReactionCard.Value, r.Source, new Multiple(r.Target.Members.Where(x => state.Members.Any(m => m.Key == x.Id) && x.IsConscious())));
 
-        if (!state.Members.ContainsKey(r.Source.Id))
+        if (!state.Members.ContainsKey(r.Source.Id) || !r.Target.Members.Any())
         {
             StartCoroutine(FinishEffect());
             yield break;
