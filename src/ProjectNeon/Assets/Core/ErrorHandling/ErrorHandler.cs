@@ -19,7 +19,11 @@ public static class ErrorHandler
      
     private static void HandleException(string condition, string stackTrace, LogType type)
     {
-        if (type == LogType.Exception || type == LogType.Error) 
+#if UNITY_EDITOR
+        if (!stackTrace.Contains("error CS"))
+            return;
+#endif
+        if (type == LogType.Exception || type == LogType.Error)
             _onUnhandledError(type + "\n" + condition + "\n" + stackTrace);
     }
 }
