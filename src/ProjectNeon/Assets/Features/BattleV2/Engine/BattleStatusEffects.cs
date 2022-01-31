@@ -71,7 +71,11 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
     private void ResolveNextInstantReaction()
     { 
         var r = _instantReactions.Dequeue();
-        r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
+        r = new ProposedReaction(r.ReactionSequence, r.Source, new Multiple(r.Target.Members.Where(x => state.Members.Any(m => m.Key == x.Id) && x.IsConscious())));
+        if (r.Target.Members.Any())
+            r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
+        else
+            Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id));
     }
 
     private void ResolveNextStatusEffect()
