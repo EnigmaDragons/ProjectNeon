@@ -33,6 +33,8 @@ public static class Formula
         newExp = ReplaceResources(newExp, ctx);
         newExp = ReplaceStats(newExp, ctx);
         newExp = ReplaceTemporalStats(newExp, ctx);
+        newExp = ReplaceBaseStats(newExp, ctx);
+        newExp = ReplaceBaseTemporalStats(newExp, ctx);
         newExp = ReplaceXCost(newExp, ctx);
         try
         {
@@ -102,7 +104,27 @@ public static class Formula
         }
         return expression;
     }
+
+    private static string ReplaceBaseStats(string expression, FormulaContext ctx)
+    {
+        foreach (var stat in Enum.GetValues(typeof(StatType)).Cast<StatType>())
+        {
+            if (ctx.Target.IsPresent)
+                expression = expression.Replace($"TargetBase[{stat}]", ctx.Target.Value.BaseStats[stat].ToString());
+        }
+        return expression;
+    }
     
+    private static string ReplaceBaseTemporalStats(string expression, FormulaContext ctx)
+    {
+        foreach (var stat in Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>())
+        {
+            if (ctx.Target.IsPresent)
+                expression = expression.Replace($"TargetBase[{stat}]", ctx.Target.Value.BaseStats[stat].ToString());
+        }
+        return expression;
+    }
+
     private static string ReplaceXCost(string expression, FormulaContext ctx)
         => expression.Replace("X", ctx.XAmountPaid.Amount.ToString());
     
