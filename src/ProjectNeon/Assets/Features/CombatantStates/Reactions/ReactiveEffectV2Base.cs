@@ -7,6 +7,8 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     private readonly TemporalStateTracker _tracker;
     private readonly Func<EffectResolved, Maybe<ProposedReaction>> _createMaybeEffect;
 
+    public ReactionTimingWindow Timing { get; }
+    
     public int OriginatorId => _tracker.Metadata.OriginatorId;
     public Maybe<int> Amount => _tracker.RemainingUses;
     public IStats Stats => new StatAddends();
@@ -15,10 +17,11 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     public bool IsActive => _tracker.IsActive;
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
 
-    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
-        : this(new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), createMaybeEffect) {}
-    public ReactiveEffectV2Base(TemporalStateMetadata metadata, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+        : this(timing, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), createMaybeEffect) {}
+    public ReactiveEffectV2Base(ReactionTimingWindow timing, TemporalStateMetadata metadata, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
     {
+        Timing = timing;
         _tracker = new TemporalStateTracker(metadata);
         _createMaybeEffect = createMaybeEffect;
     }
@@ -32,8 +35,9 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     }
 
     public ITemporalState CloneOriginal() =>
-        new ClonedReactiveEffect(_tracker.Metadata, _createMaybeEffect);
-    
+        new ClonedReactiveEffect(Timing, _tracker.Metadata, _createMaybeEffect);
+
+
     public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
     {
         if (!_tracker.IsActive)
@@ -47,7 +51,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     
     protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(
         IDictionary<int, Member> members, int possessingMemberId, Member originator, bool canReactToReactions,
-        ReactionCardType reaction, Func<EffectResolved, bool> condition) => 
+        ReactionCardType reaction, ReactionTimingWindow timing, Func<EffectResolved, bool> condition) => 
             effect =>
             {
                 var possessor = members.VerboseGetValue(possessingMemberId, "Reaction Possessing Member");
@@ -58,13 +62,13 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
                 var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
                 var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
                 if (target.Members.Any())
-                    return new ProposedReaction(reaction, reactor, target);
+                    return new ProposedReaction(reaction, reactor, target, timing);
                 return Maybe<ProposedReaction>.Missing();
             };
     
     protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(
         IDictionary<int, Member> members, int possessingMemberId, Member originator, bool canReactToReactions,
-        CardReactionSequence reaction, Func<EffectResolved, bool> condition) => 
+        CardReactionSequence reaction, ReactionTimingWindow timing, Func<EffectResolved, bool> condition) => 
         effect =>
         {
             var possessor = members.VerboseGetValue(possessingMemberId, "Reaction Possessing Member");
@@ -75,7 +79,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
             var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
             var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
             if (target.Members.Any())
-                return new ProposedReaction(reaction, reactor, target);
+                return new ProposedReaction(reaction, reactor, target, timing);
             return Maybe<ProposedReaction>.Missing();
         };
 
@@ -119,7 +123,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
 public class ClonedReactiveEffect : ReactiveEffectV2Base
 {
-    public ClonedReactiveEffect(TemporalStateMetadata metadata, 
+    public ClonedReactiveEffect(ReactionTimingWindow timing, TemporalStateMetadata metadata, 
         Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect) 
-            : base(metadata, createMaybeEffect) {}
+            : base(timing, metadata, createMaybeEffect) {}
 }

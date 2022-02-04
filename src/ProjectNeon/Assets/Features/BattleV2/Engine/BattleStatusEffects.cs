@@ -69,9 +69,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
     }
 
     private void ResolveNextInstantReaction()
-    { 
-        var r = _instantReactions.Dequeue();
-        r = new ProposedReaction(r.ReactionSequence, r.Source, new Multiple(r.Target.Members.Where(x => state.Members.Any(m => m.Key == x.Id) && x.IsConscious())));
+    {
+        var r = _instantReactions.Dequeue().WithPresentAndConsciousTargets(state.Members);
         if (r.Target.Members.Any())
             r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
         else

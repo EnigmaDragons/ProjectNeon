@@ -179,6 +179,7 @@ public class EffectReactWith : Effect
     private readonly int _numberOfUses;
     private readonly string _maxDurationFormula;
     private readonly string _reactionEffectContext;
+    private readonly ReactionTimingWindow _timing;
     private readonly StatusDetail _status;
     private readonly ReactiveTriggerScope _triggerScope;
     private readonly Maybe<CardReactionSequence> _reactionEffect;
@@ -186,18 +187,21 @@ public class EffectReactWith : Effect
     private readonly ReactionConditionType _conditionType;
     private readonly Func<ReactionConditionContext, Func<EffectResolved, bool>> _conditionBuilder;
 
-    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, string reactionBonusEffectContext,
-        ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, ReactionCardType reactionCard)
-            : this(isDebuff, numberOfUses, maxDurationFormula, status, reactionBonusEffectContext, triggerScope, conditionType, Maybe<CardReactionSequence>.Missing(), 
+    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, 
+        string reactionBonusEffectContext, ReactionTimingWindow timing,  ReactiveTriggerScope triggerScope, 
+        ReactionConditionType conditionType, ReactionCardType reactionCard)
+            : this(isDebuff, numberOfUses, maxDurationFormula, status, reactionBonusEffectContext, timing, triggerScope, conditionType, Maybe<CardReactionSequence>.Missing(), 
                 new Maybe<ReactionCardType>(reactionCard, true)) {}
     
-    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, string reactionBonusEffectContext,
-        ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, CardReactionSequence reactionEffect)
-        : this(isDebuff, numberOfUses, maxDurationFormula, status, reactionBonusEffectContext, triggerScope, conditionType, new Maybe<CardReactionSequence>(reactionEffect, true), 
+    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, 
+        string reactionBonusEffectContext, ReactionTimingWindow timing, ReactiveTriggerScope triggerScope, 
+        ReactionConditionType conditionType, CardReactionSequence reactionEffect)
+        : this(isDebuff, numberOfUses, maxDurationFormula, status, reactionBonusEffectContext, timing, triggerScope, conditionType, new Maybe<CardReactionSequence>(reactionEffect, true), 
             Maybe<ReactionCardType>.Missing()) {}
         
-    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, string reactionBonusEffectContext,
-        ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, Maybe<CardReactionSequence> reactionEffect, Maybe<ReactionCardType> reactionCard)
+    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, 
+        string reactionBonusEffectContext, ReactionTimingWindow timing, ReactiveTriggerScope triggerScope, 
+        ReactionConditionType conditionType, Maybe<CardReactionSequence> reactionEffect, Maybe<ReactionCardType> reactionCard)
     {
         _isDebuff = isDebuff;
         _numberOfUses = numberOfUses;
@@ -209,6 +213,7 @@ public class EffectReactWith : Effect
         _conditionType = conditionType;
         _conditionBuilder = Conditions.VerboseGetValue(conditionType, conditionType.ToString());
         _reactionEffectContext = reactionBonusEffectContext;
+        _timing = timing;
         if (reactionCard.IsMissing && reactionEffect.IsMissing)
             Log.Info($"React With neither has an Effect nor a Card.");
     }
@@ -221,8 +226,8 @@ public class EffectReactWith : Effect
                 var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionCard.Value.ActionSequence.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
-                m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), _status, _triggerScope,
-                    ctx.BattleMembers, m.MemberId, ctx.Source, _reactionCard.Value,
+                m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount),
+                    _status, _timing, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionCard.Value,
                     _conditionBuilder(reactionConditionContext)));
                 DevLog.Write($"Applied React With Card {_conditionType} to {m.Name}");
             });
@@ -232,8 +237,8 @@ public class EffectReactWith : Effect
                 var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionEffect.Value.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
-                m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), _status, _triggerScope,
-                    ctx.BattleMembers, m.MemberId, ctx.Source, _reactionEffect.Value,
+                m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), 
+                    _status, _timing, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionEffect.Value,
                     _conditionBuilder(reactionConditionContext)));
                 DevLog.Write($"Applied React With Effect {_conditionType} to {m.Name}");
             });
@@ -242,9 +247,9 @@ public class EffectReactWith : Effect
 
 public sealed class ReactWithEffect : ReactiveEffectV2Base
 {
-    public ReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
+    public ReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactionTimingWindow timing, ReactiveTriggerScope triggerScope, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, CardReactionSequence reaction, Func<EffectResolved, bool> condition)
-            : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, status, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
+            : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, status, timing, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, timing,
                 effect =>
                 {
                     var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
@@ -256,9 +261,9 @@ public sealed class ReactWithEffect : ReactiveEffectV2Base
 
 public sealed class ReactWithCard : ReactiveEffectV2Base
 {
-    public ReactWithCard(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
+    public ReactWithCard(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactionTimingWindow timing, ReactiveTriggerScope triggerScope, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction, Func<EffectResolved, bool> condition)
-        : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, status, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
+        : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, status, timing, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, timing,
             effect =>
             {
                 var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);

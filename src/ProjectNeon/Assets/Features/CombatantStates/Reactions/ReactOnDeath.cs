@@ -7,26 +7,30 @@ public sealed class EffectOnDeath : Effect
     private readonly int _numberOfUses;
     private readonly string _maxDurationFormula;
     private readonly ReactionCardType _reaction;
+    private readonly ReactionTimingWindow _timing;
 
-    public EffectOnDeath(bool isDebuff, int numberOfUses, string maxDurationFormula, ReactionCardType reaction)
+    public EffectOnDeath(bool isDebuff, int numberOfUses, string maxDurationFormula, ReactionCardType reaction, ReactionTimingWindow timing)
     {
         _isDebuff = isDebuff;
         _numberOfUses = numberOfUses;
         _maxDurationFormula = maxDurationFormula;
         _reaction = reaction;
+        _timing = timing;
     }
     
     public void Apply(EffectContext ctx)
     {
         ctx.Target.ApplyToAllConscious(m => 
-            m.AddReactiveState(new ReactOnDeath(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), ctx.BattleMembers, m.MemberId, ctx.Source, _reaction)));
+            m.AddReactiveState(new ReactOnDeath(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, 
+                _maxDurationFormula, ctx.XPaidAmount), ctx.BattleMembers, m.MemberId, ctx.Source, _reaction, _timing)));
     }
 }
 
 public sealed class ReactOnDeath : ReactiveEffectV2Base
 {
-    public ReactOnDeath(bool isDebuff, int numberOfUses, int maxDurationTurns, IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction)
-        : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, new StatusDetail(StatusTag.WhenKilled), CreateMaybeEffect(allMembers, possessingMemberId, originator, true, reaction, 
+    public ReactOnDeath(bool isDebuff, int numberOfUses, int maxDurationTurns, IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction, 
+        ReactionTimingWindow timing)
+        : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, new StatusDetail(StatusTag.WhenKilled), timing, CreateMaybeEffect(allMembers, possessingMemberId, originator, true, reaction, timing,
             effect =>
             {
                 //this is super hacky but the amount of changes required to bypass the consciousness system turns out to be completely insane

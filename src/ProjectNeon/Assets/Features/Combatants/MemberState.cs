@@ -129,7 +129,7 @@ public sealed class MemberState : IStats
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
-
+    
     private IEnumerable<ReactiveStateV2> ApplicableReactiveStates =>
         this[TemporalStatType.Disabled] > 0 || this[TemporalStatType.Stun] > 0
             ? _reactiveStates.Where(x => x.Status.Tag != StatusTag.CounterAttack)

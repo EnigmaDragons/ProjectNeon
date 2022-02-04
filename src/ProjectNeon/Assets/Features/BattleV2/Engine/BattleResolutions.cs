@@ -183,8 +183,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     private void BeginResolvingNextInstantReaction()
     {
-        var r = _instantReactions.Dequeue();
-        r = new ProposedReaction(r.ReactionSequence, r.Source, new Multiple(r.Target.Members.Where(x => state.Members.Any(m => m.Key == x.Id) && x.IsConscious())));
+        var r = _instantReactions.Dequeue().WithPresentAndConsciousTargets(state.Members);
         if (r.Target.Members.Any())
             r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
         else
@@ -194,7 +193,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     private IEnumerator ResolveNextReactionCard()
     {
         _resolvingEffect = true;
-        var r = _reactionCards.Dequeue();
+        var r = _reactionCards.Dequeue().WithPresentAndConsciousTargets(state.Members);;
         var isReactionCard = r.ReactionCard.IsPresent;
         if (!isReactionCard)
         {
@@ -204,8 +203,6 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             yield break;
         }
         
-        r = new ProposedReaction(r.ReactionCard.Value, r.Source, new Multiple(r.Target.Members.Where(x => state.Members.Any(m => m.Key == x.Id) && x.IsConscious())));
-
         if (!state.Members.ContainsKey(r.Source.Id) || !r.Target.Members.Any())
         {
             StartCoroutine(FinishEffect());
