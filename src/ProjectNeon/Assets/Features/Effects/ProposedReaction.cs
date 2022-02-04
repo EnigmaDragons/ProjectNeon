@@ -27,7 +27,18 @@ public class ProposedReaction
         Timing = timing;
         ReactionSequence = a;
     }
+
+    private ProposedReaction(Maybe<ReactionCardType> maybeCard, CardReactionSequence a, Member source, Target target,
+        ReactionTimingWindow timing)
+    {
+        ReactionCard = maybeCard;
+        Source = source;
+        Target = target;
+        Timing = timing;
+        ReactionSequence = a;
+    }
     
-    public ProposedReaction WithPresentAndConsciousTargets(IDictionary<int, Member> allMembers) =>
-        new ProposedReaction(ReactionSequence, Source, new Multiple(Target.Members.Where(x => allMembers.Any(m => m.Key == x.Id) && x.IsConscious())), Timing);
+    public ProposedReaction WithPresentAndConsciousTargets(IDictionary<int, Member> allMembers) 
+        => new ProposedReaction(ReactionCard, ReactionSequence, Source, 
+            new Multiple(Target.Members.Where(x => allMembers.Any(m => m.Key == x.Id) && x.IsConscious())), Timing);
 }

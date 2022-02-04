@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,15 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     private readonly Queue<ProposedReaction> _reactionCards = new Queue<ProposedReaction>();
     private bool _resolvingEffect;
     private float _playerDelayFactor = 0.2f;
-    private Maybe<(ApplyBattleEffect, BattleStateSnapshot, ApplyEffectResult)> _currentBattleEffectContext;
+    private bool _debugLog;
+
+    private void DebugLog(string msg)
+    {
+        if (!_debugLog)
+            return;
+        
+        DevLog.Info(msg);
+    }
     
     private void ResolveNext()
     {
@@ -47,61 +54,45 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     protected override void Execute(ApplyBattleEffect msg)
     {
-        var beforeState = state.GetSnapshot();
-        var result = ApplyEffects(msg);
+        var (result, maybeEffectResolved) = ApplyEffects(msg);
         var ctx = result.UpdatedContext;
-        _currentBattleEffectContext = new Maybe<(ApplyBattleEffect, BattleStateSnapshot, ApplyEffectResult)>((msg, beforeState, result));
         if (ctx.Selections.CardSelectionOptions?.Any() ?? false)
         {
             var action = ctx.Selections.OnCardSelected;
-            ctx.Selections.OnCardSelected = card => { action(card); FinalizeBattleEffect(); };
+            ctx.Selections.OnCardSelected = card => { action(card); FinalizeBattleEffect(maybeEffectResolved); };
             Message.Publish(new PresentCardSelection { Selectons = ctx.Selections });
         }
         else
         {
-            FinalizeBattleEffect();   
+            FinalizeBattleEffect(maybeEffectResolved);   
         }
     }
 
-    private void FinalizeBattleEffect()
+    private void FinalizeBattleEffect(Maybe<EffectResolved> maybeEffectResolved)
     {
-        var maybeEffectResolved = Maybe<EffectResolved>.Missing();
-        try
-        {
-            var (msg, battleSnapshotBefore, res) = _currentBattleEffectContext.Value;
-            var ctx = res.UpdatedContext;
-            var battleSnapshotAfter = state.GetSnapshot();
-
-            var effectResolved = new EffectResolved(res.WasApplied, msg.IsFirstBattleEffect, msg.Effect, ctx.Source,
-                ctx.Target, battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, ctx.Preventions);
-            maybeEffectResolved = effectResolved;
-            
-            var reactions = state.Members
-                .Select(x => x.Value)
-                .SelectMany(v => v.State.GetReactions(effectResolved)).ToList();
-
-            DevLog.Write($"Number of Reactions: {reactions.Count}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. " +
-                         $"Cards: {reactions.Count(c => c.ReactionCard.IsPresent)}");
-
-            var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
-            immediateReactions.ForEach(r => _instantReactions.Enqueue(r));
-
-            var reactionCards = reactions.Where(r => r.ReactionCard.IsPresent);
-            reactionCards.ForEach(r => _reactionCards.Enqueue(r));
-
-            state.CleanupExpiredMemberStates();
-
-            _currentBattleEffectContext = Maybe<(ApplyBattleEffect, BattleStateSnapshot, ApplyEffectResult)>.Missing();
-        }
-        catch (Exception e)
-        {
-            Log.Error(e);
-        }
-
-        maybeEffectResolved.IfPresent(Message.Publish);
+        maybeEffectResolved.IfPresent(ApplyReactions);
         Message.Publish(new Finished<ApplyBattleEffect>());
     }
 
+    private void ApplyReactions(EffectResolved e)
+    {
+        var reactions = state.Members
+            .Select(x => x.Value)
+            .SelectMany(v => v.State.GetReactions(e)).ToList();
+
+        DevLog.Write($"Number of Reactions: {reactions.Count}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. " +
+                     $"Cards: {reactions.Count(c => c.ReactionCard.IsPresent)}");
+
+        var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
+        immediateReactions.ForEach(r => _instantReactions.Enqueue(r));
+
+        var reactionCards = reactions.Where(r => r.ReactionCard.IsPresent);
+        reactionCards.ForEach(r => _reactionCards.Enqueue(r));
+
+        state.CleanupExpiredMemberStates();
+        Message.Publish(e);
+    }
+    
     private static readonly HashSet<EffectType> StealthBreakingEffectTypes = new HashSet<EffectType>(new []
     {
         EffectType.AttackFormula, 
@@ -114,6 +105,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     {
         if (msg.ToDecrement == TemporalStatType.Blind)
             BattleLog.Write($"{msg.Source.Name} was blinded, so their attack missed.");
+        if (msg.ToDecrement == TemporalStatType.Inhibit)
+            BattleLog.Write($"{msg.Source.Name} was inhibited, so their action fizzled.");
         Message.Publish(new PlayRawBattleEffect("MissedText", Vector3.zero));
         msg.Source.State.Adjust(msg.ToDecrement, -1);
         Message.Publish(new Finished<CardActionPrevented>());
@@ -124,23 +117,33 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         Async.ExecuteAfterDelay(msg.Duration, () => Message.Publish(new Finished<WaitDuringResolution>()));
     }
 
-    private ApplyEffectResult ApplyEffects(ApplyBattleEffect msg)
+    private (ApplyEffectResult, Maybe<EffectResolved>) ApplyEffects(ApplyBattleEffect msg)
     {
+        DebugLog($"Apply Battle Effect {msg.Effect.EffectType} - Is Reaction: {msg.IsReaction}");
         // Core Execution
         var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
             state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction);
-        var effectResult = AllEffects.Apply(msg.Effect, ctx);
-
+        var battleSnapshotBefore = state.GetSnapshot();
+        var res = AllEffects.Apply(msg.Effect, ctx);
+        
+        // If Not Applicable Effect, Finish
+        if (!res.WasApplied)
+            return (res, Maybe<EffectResolved>.Missing());
+        
         // Stealth Processing
-        if (effectResult.WasApplied && msg.Source.IsStealthed() && StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
+        if (msg.Source.IsStealthed() && StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
         {
             msg.Source.State.BreakStealth();
             BattleLog.Write($"{msg.Source.Name} emerged from the shadows.");
         }
 
-        return effectResult;
+        // Effect Resolved Details
+        var battleSnapshotAfter = state.GetSnapshot();
+        var effectResolved = new EffectResolved(res.WasApplied, msg.IsFirstBattleEffect, msg.Effect, ctx.Source,
+            ctx.Target, battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, ctx.Preventions);
+        return (res, effectResolved);
     }
 
     protected override void Execute(SpawnEnemy msg)
@@ -197,8 +200,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         var isReactionCard = r.ReactionCard.IsPresent;
         if (!isReactionCard)
         {
-            _resolvingEffect = false;
-            Log.Error("Should not be Queueing instant Effect Reactions. They should already be processed.");
+            Log.Error($"Should not be Queueing instant Effect Reactions. They should already be processed. " +
+                      $"Reaction - {r.Source.Name} {r.Name} {r.ReactionSequence.CardActions.BattleEffects.First().EffectType}");
             StartCoroutine(FinishEffect());
             yield break;
         }
