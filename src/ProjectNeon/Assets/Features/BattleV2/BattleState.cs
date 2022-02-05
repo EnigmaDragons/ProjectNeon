@@ -30,7 +30,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private List<string> memberNames;
     [SerializeField, ReadOnly] private int turnNumber;
     [SerializeField, ReadOnly] private PlayerState playerState = new PlayerState();
-
+    
     public bool DontShuffleNextBattle { get; set; }
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
     private readonly CurrentBattleStats _currentBattleStats = new CurrentBattleStats();
@@ -76,6 +76,8 @@ public class BattleState : ScriptableObject
     public PlayerState PlayerState => playerState;
     public int BattleRngSeed => adventure.Adventure.IsV4 ? adventureProgress.AdventureProgress.RngSeed : map.CurrentNodeRngSeed;
     public AllCards AllCards => allCards;
+    public BattleReactions Reactions { get; private set; }
+    
     private Dictionary<int, EnemyInstance> _enemiesById = new Dictionary<int, EnemyInstance>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
@@ -83,6 +85,7 @@ public class BattleState : ScriptableObject
     private Dictionary<int, Member> _unconsciousMembers = new Dictionary<int, Member>();
     private EnemyInstance[] _battleStartingEnemies;
     private BattleAttritionTracker _tracker;
+
     public bool IsStoryEventCombat { get; private set; }
 
     public MemberMaterialType MaterialTypeOf(int memberId) 
@@ -123,6 +126,7 @@ public class BattleState : ScriptableObject
         SetPhase(BattleV2Phase.NotBegun);
         NextCardId.Reset();
         _tracker = BattleAttritionTracker.Start(party);
+        Reactions = new BattleReactions(new Queue<ProposedReaction>(), new Queue<ProposedReaction>());
         IsSelectingTargets = false;
         turnNumber = 0;
         _currentBattleStats.Clear();

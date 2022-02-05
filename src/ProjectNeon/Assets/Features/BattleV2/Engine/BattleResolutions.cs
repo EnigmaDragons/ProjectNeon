@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionPrevented, WaitDuringResolution>
+public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -15,8 +15,8 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     [SerializeField] private AllCards allCards;
 
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
-    private readonly Queue<ProposedReaction> _instantReactions = new Queue<ProposedReaction>();
-    private readonly Queue<ProposedReaction> _reactionCards = new Queue<ProposedReaction>();
+    private BattleReactions Reactions => state.Reactions;
+    
     private bool _resolvingEffect;
     private float _playerDelayFactor = 0.2f;
     private bool _debugLog;
@@ -35,7 +35,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         if (reactionZone.Count > 0)
             reactionZone.Clear();
         
-        if (_reactionCards.Any())
+        if (Reactions.AnyReactionCards)
             StartCoroutine(ResolveNextReactionCard());
         else if (resolutionZone.HasMore)
             resolutionZone.BeginResolvingNext();
@@ -43,14 +43,14 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             Message.Publish(new CardAndEffectsResolutionFinished());
     }
 
-    public void PerformConsciousnessUpdate()
+    private void PerformConsciousnessUpdate()
     {
         _unconsciousness.ProcessUnconsciousMembers(state)
             .ForEach(m => resolutionZone.ExpirePlayedCards(c => c.Member.Id == m.Id)); // Still needed?
         _unconsciousness.ProcessRevivedMembers(state);
     }
 
-    public bool IsDoneResolving => state.BattleIsOver() || _reactionCards.None() && resolutionZone.IsDone && _instantReactions.None() && !_resolvingEffect;
+    public bool IsDoneResolving => state.BattleIsOver() || !Reactions.AnyReactionCards && resolutionZone.IsDone && !Reactions.AnyReactionEffects && !_resolvingEffect;
 
     protected override void Execute(ApplyBattleEffect msg)
     {
@@ -78,16 +78,12 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     {
         var reactions = state.Members
             .Select(x => x.Value)
-            .SelectMany(v => v.State.GetReactions(e)).ToList();
+            .SelectMany(v => v.State.GetReactions(e)).ToArray();
 
-        DevLog.Write($"Number of Reactions: {reactions.Count}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. " +
+        DevLog.Write($"Number of Reactions: {reactions.Length}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. " +
                      $"Cards: {reactions.Count(c => c.ReactionCard.IsPresent)}");
 
-        var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
-        immediateReactions.ForEach(r => _instantReactions.Enqueue(r));
-
-        var reactionCards = reactions.Where(r => r.ReactionCard.IsPresent);
-        reactionCards.ForEach(r => _reactionCards.Enqueue(r));
+        Reactions.Enqueue(reactions);
 
         state.CleanupExpiredMemberStates();
         Message.Publish(e);
@@ -170,10 +166,10 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     {
         state.CleanupExpiredMemberStates();
         resolutionZone.ExpirePlayedCards(c => !state.Members.ContainsKey(c.MemberId()));
-        if (_instantReactions.Any())
+        if (Reactions.AnyReactionEffects)
         {
             _resolvingEffect = false;
-            BeginResolvingNextInstantReaction();
+            Reactions.ResolveNextInstantReaction(state.Members);
         }
         else
         {
@@ -184,19 +180,23 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         }
     }
 
-    private void BeginResolvingNextInstantReaction()
+    protected override void Execute(ResolveReactionCards msg)
     {
-        var r = _instantReactions.Dequeue().WithPresentAndConsciousTargets(state.Members);
-        if (r.Target.Members.Any())
-            r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
-        else
-            Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id));
+        if (Reactions.AnyReactionCards)
+            StartCoroutine(ResolveNextReactionCard());
     }
-    
+
+    protected override void Execute(ResolveReaction msg) => StartCoroutine(ResolveNextReactionCard(msg.Reaction));
+
     private IEnumerator ResolveNextReactionCard()
     {
+        var r = Reactions.DequeueNextReactionCard().WithPresentAndConsciousTargets(state.Members);
+        yield return ResolveNextReactionCard(r);
+    }
+    
+    private IEnumerator ResolveNextReactionCard(ProposedReaction r)
+    {
         _resolvingEffect = true;
-        var r = _reactionCards.Dequeue().WithPresentAndConsciousTargets(state.Members);;
         var isReactionCard = r.ReactionCard.IsPresent;
         if (!isReactionCard)
         {

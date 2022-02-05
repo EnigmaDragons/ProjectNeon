@@ -7,15 +7,17 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
     [SerializeField] private BattleState state;
     [SerializeField] private FloatReference delay = new FloatReference(0.5f);
 
+    private BattleReactions Reactions => state.Reactions;
+    
     private readonly Queue<Member> _membersToProcess = new Queue<Member>();
     private Maybe<Member> _currentMember;
+    
     private readonly Queue<IPayloadProvider> _currentMemberEffects = new Queue<IPayloadProvider>();
-    private readonly Queue<ProposedReaction> _instantReactions = new Queue<ProposedReaction>();
     private readonly HashSet<int> _processedCardIds = new HashSet<int>();
 
     private bool _isProcessing;
     private bool _isProcessingStartOfTurn;
-
+    
     public void ProcessStartOfTurnEffects()
     {
         _isProcessing = true;
@@ -48,8 +50,10 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
 
     private void ResolveNext()
     {
-        if (_instantReactions.Any())
-            ResolveNextInstantReaction();
+        if (Reactions.AnyReactionEffects)
+            Reactions.ResolveNextInstantReaction(state.Members);
+        else if (Reactions.AnyReactionCards)
+            Message.Publish(new ResolveReactionCards());
         else if (_currentMemberEffects.Any())
             ResolveNextStatusEffect();
         else if (_membersToProcess.Any())
@@ -67,16 +71,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                 Message.Publish(new EndOfTurnStatusEffectsResolved());
         }
     }
-
-    private void ResolveNextInstantReaction()
-    {
-        var r = _instantReactions.Dequeue().WithPresentAndConsciousTargets(state.Members);
-        if (r.Target.Members.Any())
-            r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
-        else
-            Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id));
-    }
-
+    
     private void ResolveNextStatusEffect()
     {
         var e = _currentMemberEffects.Dequeue();
@@ -136,11 +131,9 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
 
     protected override void Execute(StatusEffectResolved msg)
     {
-        Debug.Log("Status Effect Resolved");
-        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg.EffectResolved)).ToList();
-        
-        var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
-        immediateReactions.ForEach(r => _instantReactions.Enqueue(r));
+        DevLog.Write("Status Effect Resolved");
+        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg.EffectResolved)).ToArray();
+        Reactions.Enqueue(reactions);
         
         msg.Member.State.CleanExpiredStates();
         ResolveNext();
