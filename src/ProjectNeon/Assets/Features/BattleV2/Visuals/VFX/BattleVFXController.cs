@@ -30,7 +30,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         var ctx = new EffectContext(e.Source, e.Target, e.Card, e.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
-            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false);
+            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.NotApplicable);
         var conditionResult = e.Condition.GetShouldNotApplyReason(ctx);
         if (conditionResult.IsPresent)
         {

@@ -93,7 +93,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                     battleSnapshotAfter, 
                     false,
                     Maybe<Card>.Missing(), 
-                    new UnpreventableContext());
+                    new UnpreventableContext(),
+                    ReactionTimingWindow.FirstCause);
                 Message.Publish(new StatusEffectResolved(member, effectResolved));
             });
         }

@@ -202,7 +202,7 @@ public class BattleState : ScriptableObject
             var possibleTargets = this.GetPossibleConsciousTargets(heroLeader, e.Group, e.Scope);
             var target = possibleTargets.First();
             var src = target.Members.First();
-            var ctx = EffectContext.ForEffectFromBattleState(this, src, target);
+            var ctx = EffectContext.ForEffectFromBattleState(this, src, target, ReactionTimingWindow.FirstCause);
             AllEffects.Apply(e.EffectData, ctx);
         });
     }

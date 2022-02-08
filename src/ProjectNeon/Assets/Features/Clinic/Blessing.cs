@@ -33,7 +33,8 @@ public class Blessing
             new PlayedCardSnapshot[0],
             state.OwnerTints,
             state.OwnerBusts,
-            true);
+            true,
+            ReactionTimingWindow.FirstCause);
         AllEffects.Apply(Effect, ctx);
     }
 }

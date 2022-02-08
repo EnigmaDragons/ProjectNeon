@@ -123,14 +123,14 @@ public class Hero
         state.AllCards.GetMap(),
         state.Party.Credits, state.Party.Credits, new Dictionary<int, EnemyType>(), () => state.GetNextCardId(),
         new PlayedCardSnapshot[0],
-        state.OwnerTints, state.OwnerBusts, false);
+        state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.Default);
 
     private Member WithEquipmentState(Member m, EffectContext ctx)
     {
         Equipment.All.ForEach(e =>
         {
             m.Apply(s => s.ApplyPersistentState(new EquipmentPersistentState(e, ctx)));
-            e.BattleStartEffects.ForEach(effect => AllEffects.Apply(effect, ctx));
+            e.BattleStartEffects.ForEach(effect => AllEffects.Apply(effect, ctx.WithReactionTimingContext(effect.FinalReactionTimingWindow)));
         });
         return m;     
     }

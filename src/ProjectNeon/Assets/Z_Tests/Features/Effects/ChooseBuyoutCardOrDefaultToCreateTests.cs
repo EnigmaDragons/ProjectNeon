@@ -21,7 +21,7 @@ public class ChooseBuyoutCardOrDefaultToCreateTests
         var effectContext = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(), ResourceQuantity.None, 
             PartyAdventureState.InMemory(), new PlayerState(), BattleRewardState.InMemory(), battleMembers, CardPlayZones.InMemory, new UnpreventableContext(),
             new SelectionContext(), allCards, 0, 0, enemies, () => 0, new PlayedCardSnapshot[0], new Dictionary<int, Color>(), 
-            new Dictionary<int, Sprite>(), false);
+            new Dictionary<int, Sprite>(), false, ReactionTimingWindow.FirstCause);
 
         AllEffects.Apply(new EffectData
         {

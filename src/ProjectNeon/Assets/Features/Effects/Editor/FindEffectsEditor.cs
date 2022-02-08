@@ -157,6 +157,21 @@ public class FindEffectsEditor : EditorWindow
             GUIUtility.ExitGUI();
         }
         DrawUILine();
+
+        if (GUILayout.Button("Show All Reaction Timing Windows"))
+        {
+            var effectType = EffectType.ReactWithEffect;
+            var enemies = GetAllInstances<Enemy>()
+                .SelectMany(e => e.Effects.Where(x => x.EffectType == effectType).Select(x => $"{x.FinalReactionTimingWindow} - {e.EnemyName}"));
+            var equips = GetAllInstances<StaticEquipment>()
+                .SelectMany(e => e.AllEffects.Where(x => x.EffectType == effectType).Select(x => $"{x.FinalReactionTimingWindow} - {e.Name}"));
+            var cards = GetAllInstances<CardActionsData>()
+                .SelectMany(e => e.BattleEffects.Where(x => x.EffectType == effectType).Select(x => $"{x.FinalReactionTimingWindow} - {e.name}"));
+            var finalCollections = enemies.Concat(equips).Concat(cards).ToArray();
+            ShowItems("Reactions", finalCollections);
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
         
         if (GUILayout.Button("Show Broken Content (Experimental)"))
         {

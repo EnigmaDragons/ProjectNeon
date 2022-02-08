@@ -125,6 +125,7 @@ public sealed class MemberState : IStats
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
         ApplicableReactiveStates
+            .Where(x => (int)x.Timing > (int)e.Timing)
             .Select(x => x.OnEffectResolved(e))
             .Where(x => x.IsPresent)
             .Select(x => x.Value)

@@ -1,14 +1,15 @@
 
 public enum ReactionTimingWindow
 {
-    Default = 50,
-    OriginalCard = -1,
-    SuperFast = 10,
-    VeryFast = 20,
-    Fast = 30,
+    NotApplicable = -999,
+    FirstCause = -150,
+    SuperFast = -100,
+    VeryFast = -90,
+    Fast = -70,
+    Default = 0,
     Slow = 70,
     VerySlow = 80,
     SuperSlow = 90,
-    Card = 99,
-    AfterCards = 120,
+    ReactionCard = 99,
+    AfterEverything = 250,
 }
