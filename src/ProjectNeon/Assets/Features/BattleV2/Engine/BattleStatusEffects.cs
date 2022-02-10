@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction, CardResolutionFinished>
+public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction, CardResolutionFinished, Finished<ResolveReactionCards>>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private FloatReference delay = new FloatReference(0.5f);
@@ -50,6 +50,9 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
 
     private void ResolveNext()
     {
+        if (!_isProcessing)
+            return;
+        
         if (Reactions.AnyReactionEffects)
             Reactions.ResolveNextInstantReaction(state.Members);
         else if (Reactions.AnyReactionCards)
@@ -156,4 +159,6 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
         if (_isProcessing)
             ResolveNext();
     }
+
+    protected override void Execute(Finished<ResolveReactionCards> msg) => ResolveNext();
 }

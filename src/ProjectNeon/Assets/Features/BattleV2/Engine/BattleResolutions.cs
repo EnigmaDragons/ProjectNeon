@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -192,6 +193,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     {
         var r = Reactions.DequeueNextReactionCard().WithPresentAndConsciousTargets(state.Members);
         yield return ResolveNextReactionCard(r);
+        Message.Publish(new Finished<ResolveReactionCards>());
     }
     
     private IEnumerator ResolveNextReactionCard(ProposedReaction r)
