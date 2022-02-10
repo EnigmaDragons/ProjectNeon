@@ -24,7 +24,7 @@ public class EffectReactWith : Effect
         { ReactionConditionType.WhenBlinded, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
         { ReactionConditionType.WhenGainedPrimaryResource, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State.PrimaryResourceAmount)) },
         { ReactionConditionType.WhenShieldMaxed, ctx => effect 
-            => ctx.Possessor.IsConscious() && BecameTrue(Logged(Select(effect, ctx.Possessor, x => x.State.Shield == x.State.MaxShield )))},
+            => ctx.Possessor.IsConscious() && BecameTrue(Select(effect, ctx.Possessor, x => x.State.Shield == x.State.MaxShield ))},
         { ReactionConditionType.OnCausedShieldGain, ctx => effect 
             => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State[TemporalStatType.Shield]))},
         { ReactionConditionType.OnCausedStun, ctx => effect 
@@ -98,9 +98,9 @@ public class EffectReactWith : Effect
             && effect.BattleBefore.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) 
               > effect.BattleAfter.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) },
         { ReactionConditionType.WhenNonSelfAllyBloodied, ctx => effect => ctx.Actor.IsConscious() 
-            && Increased(Logged(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Count(x => x.Value.IsBloodied())))) },
+            && Increased(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Count(x => x.Value.IsBloodied()))) },
         { ReactionConditionType.WhenNonSelfAllyHpDamaged, ctx => effect => ctx.Actor.IsConscious() 
-            && Decreased(Logged(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Sum(x => x.Value.State.Hp)))) },
+            && Decreased(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Sum(x => x.Value.State.Hp))) },
         { ReactionConditionType.WhenAfflicted, ctx => effect => ctx.Actor.IsConscious() 
             && Increased(Select(effect, ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) },
         { ReactionConditionType.OnAppliedMark, ctx => effect => ctx.Actor.IsConscious() 

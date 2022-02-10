@@ -35,10 +35,5 @@ public class BattleReactions
             Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id));
     }
 
-    public void ResolveNextReactionCard(IDictionary<int, Member> allBattleMembers)
-    {
-        
-    }
-
     public ProposedReaction DequeueNextReactionCard() => _cardReactions.Dequeue();
 }
