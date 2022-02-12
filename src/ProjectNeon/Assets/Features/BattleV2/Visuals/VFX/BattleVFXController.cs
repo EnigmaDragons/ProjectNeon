@@ -45,14 +45,20 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         else if (e.Scope.Equals(Scope.One))
         {
             var member = e.Target.Members[0];
-            if (!member.IsConscious())
+            if (!member.IsConscious() || !state.Members.ContainsKey(member.Id))
             {
                 Message.Publish(new Finished<BattleEffectAnimationRequested>());
                 return;
             }
 
-            var location = state.GetCenterPoint(member.Id);
-            PlayEffect(f.Value, location.position, e.Size, e.Speed, e.Color, e.Target.Members[0].TeamType == TeamType.Enemies);
+            var maybeCenter = state.GetMaybeCenterPoint(member.Id);
+            if (maybeCenter.IsMissing)
+            {
+                Message.Publish(new Finished<BattleEffectAnimationRequested>());
+                return;
+            }
+            
+            PlayEffect(f.Value, maybeCenter.Value.position, e.Size, e.Speed, e.Color, member.TeamType == TeamType.Enemies);
         }
         else if (e.Group == Group.All)
         {

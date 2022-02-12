@@ -359,29 +359,29 @@ public class BattleState : ScriptableObject
     public Dictionary<int, Color> OwnerTints => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Tint);
     public Dictionary<int, Sprite> OwnerBusts => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Bust);
     public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
-    [Obsolete("Use Get Maybe Transform instead")]
-    private Transform GetTransform(int memberId) => _uiTransformsById.VerboseGetValue(memberId, id => $"Member Transforms for {id}");
     public Maybe<Transform> GetMaybeTransform(int memberId) => _uiTransformsById.ValueOrMaybe(memberId);
     public AiPreferences GetAiPreferences(int memberId) => _enemiesById.ValueOrMaybe(memberId).Select(e => e.AIPreferences.WithDefaultsBasedOnRole(e.Role), () => new AiPreferences());
-
-    [Obsolete("Unsafe. Turn into Maybe")]
-    public Transform GetCenterPoint(int memberId)
+    
+    public Maybe<Transform> GetMaybeCenterPoint(int memberId)
     {
-        var memberTransform = GetTransform(memberId);
-        var centerPoint = memberTransform.GetComponentInChildren<CenterPoint>();
-        if (centerPoint != null)
-            return centerPoint.transform;
-        Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
-        return memberTransform;
+        var maybeTransform = GetMaybeTransform(memberId);
+        return maybeTransform.Map(t =>
+        {
+            var centerPoint = maybeTransform.Value.GetComponentInChildren<CenterPoint>();
+            if (centerPoint != null)
+                return centerPoint.transform;
+            Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
+            return maybeTransform.Value;
+        });
     }
-
+    
     public Vector3 GetCenterPoint(Target target)
     {
         if (target.Members.Length == 0)
             return Vector3.zero;
-        var bounds = new Bounds(GetCenterPoint(target.Members[0].Id).position, Vector3.zero);
+        var bounds = new Bounds(GetMaybeCenterPoint(target.Members[0].Id).Map(cp => cp.position).OrDefault(Vector3.zero), Vector3.zero);
         for (var i = 1; i < target.Members.Length; i++)
-            bounds.Encapsulate(GetCenterPoint(target.Members[i].Id).position); 
+            bounds.Encapsulate(GetMaybeCenterPoint(target.Members[i].Id).Map(cp => cp.position).OrDefault(Vector3.zero)); 
         return bounds.center;
     }
     public Member GetMemberByHero(HeroCharacter hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];
