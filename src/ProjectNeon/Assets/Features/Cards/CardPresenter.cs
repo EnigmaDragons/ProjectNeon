@@ -342,7 +342,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             rules.Show(_cardType, _isHand ? 2 : 999);
         targetRule.Show(_cardType.ActionSequences.First());
         if (!_isHand)
-            scalingRule.Show(_cardType);
+            scalingRule.Show(_cardType, _card?.Owner.PrimaryStat() ?? StatType.Power);
 
         _cardType.ChainedCard.IfPresent(ShowReferencedCard);
         _cardType.SwappedCard.IfPresent(ShowReferencedCard);

@@ -74,7 +74,7 @@ public sealed class MemberState : IStats
 
     // Queries
     public MemberStateSnapshot ToSnapshot()
-        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats.ToSnapshot(),
+        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats.ToSnapshot(PrimaryStat),
             _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount,
                 new DictionaryWithDefault<StatusTag, int>(0, Enum.GetValues(typeof(StatusTag)).Cast<StatusTag>()
                     .SafeToDictionary(s => s, s => StatusesOfType(s).Length)), PrimaryStat);
@@ -87,6 +87,7 @@ public sealed class MemberState : IStats
     {
         StatType.Damagability => CurrentStats.Damagability() + (IsVulnerable() ? 0.33f : 0),
         StatType.Healability => CurrentStats.Healability() + (IsAntiHeal() ? -0.5f : 0),
+        StatType.Power => CurrentStats[PrimaryStat],
         _ => CurrentStats[statType]
     };
     private bool IsVulnerable() => Counter(TemporalStatType.Vulnerable).Amount > 0;
