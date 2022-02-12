@@ -7,12 +7,14 @@
 
 <div class="all">
   <div class="story-container">
-    <div class="logo-box">
-      <picture>
-        <source srcset={company.logoMobile} media="(max-width: 600px)">
-        <img src={company.logo} alt="{company.name} Logo" height="198" width="320">
-      </picture>
-    </div>
+    <a href="/index.html?page=stories">
+      <div class="logo-box">
+        <picture>
+          <source srcset={company.logoMobile} media="(max-width: 600px)">
+          <img src={company.logo} alt="{company.name} Logo" height="198" width="320">
+        </picture>
+      </div>
+    </a>
 
     <h1>{title}</h1>
 

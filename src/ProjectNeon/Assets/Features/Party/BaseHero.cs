@@ -17,6 +17,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private Deck startingDeck;
     [SerializeField] private Color tint;
     [SerializeField] private CharacterAnimations animations;
+    [SerializeField] private CharacterAnimationSoundSet animationSounds;
     [SerializeField] private int startingCredits = 100;
     [SerializeField, Range(1, 5)] private int complexityRating = 3;
 
@@ -63,7 +64,8 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
     public Color Tint => tint;
     public CharacterAnimations Animations => animations;
-
+    public CharacterAnimationSoundSet AnimationSounds => animationSounds;
+    
     public IStats Stats => new StatAddends
         {
             ResourceTypes = resource1 != null 

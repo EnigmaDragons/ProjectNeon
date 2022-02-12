@@ -105,7 +105,12 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     }
     
     protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayerCardsToFinishResolving());
-    protected override void Execute(StartOfTurnEffectsStatusResolved msg) => BeginHastyEnemiesPhase();
+    protected override void Execute(StartOfTurnEffectsStatusResolved msg)
+    {
+        Log.Info("StartOfTurnEffectsStatusResolved");
+        BeginHastyEnemiesPhase();
+    }
+
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
     protected override void Execute(CardAndEffectsResolutionFinished msg) => ResolveBattleFinishedOrExecute(() => Message.Publish(new CheckForAutomaticTurnEnd()));
 
@@ -172,6 +177,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         var finishedMessage = state.Phase != BattleV2Phase.NotBegun ? $"Finished {state.Phase} Phase -> " : "";
         var message = $"Phase - {finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);
+        BattleLog.Write($"-- Phase - {newPhase.ToString().WithSpaceBetweenWords()} --");
         state.CleanupExpiredMemberStates();
         state.SetPhase(newPhase);
     }

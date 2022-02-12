@@ -55,7 +55,7 @@ public class CutscenePresenter : MonoBehaviour
         
         DebugLog($"Num Cutscene Segments {cutscene.Current.Segments.Length}");
         MessageGroup.Start(
-            new MultiplePayloads(cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
+            new MultiplePayloads("Cutscene Script", cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
             () => Message.Publish(new CutsceneFinished()));
     }
 
