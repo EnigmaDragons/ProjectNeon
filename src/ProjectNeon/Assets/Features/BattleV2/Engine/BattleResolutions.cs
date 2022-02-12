@@ -197,14 +197,20 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     {
         while (Reactions.AnyReactionCards)
         {
-            var r = Reactions.DequeueNextReactionCard().WithPresentAndConsciousTargets(state.Members);
-            yield return ResolveNextReactionCard(r);
+            if (_resolvingEffect)
+                yield return new WaitUntil(() => !_resolvingEffect);
+            else
+            {
+                var r = Reactions.DequeueNextReactionCard().WithPresentAndConsciousTargets(state.Members);
+                yield return ResolveNextReactionCard(r);
+            }
         }
-        Message.Publish(new Finished<ResolveReactionCards>());
+        //Message.Publish(new Finished<ResolveReactionCards>());
     }
     
     private IEnumerator ResolveNextReactionCard(ProposedReaction r)
     {
+        Log.Info(nameof(ResolveNextReactionCard));
         _resolvingEffect = true;
         if (reactionZone.Count > 0)
             reactionZone.Clear();

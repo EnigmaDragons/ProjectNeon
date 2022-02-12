@@ -71,7 +71,6 @@ public sealed class PartyAdventureState : ScriptableObject
         {
             if(!h.Character.DeckIsValid())
                 Log.Error($"{h.Name} doesn't have a legal deck");
-            Log.Info($"Hero {h.Name}");
         });
 
         var allStartingCards = party.Heroes

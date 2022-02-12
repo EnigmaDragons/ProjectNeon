@@ -24,7 +24,7 @@ public class DamageOverTimeState : TemporalStateBase
             return new NoPayload();
 
         Tracker.AdvanceTurn();
-        return new SinglePayload(new PerformAction(() =>
+        return new SinglePayload("Damage Over Time", new PerformAction(() =>
         {
             var damageAmount =  _target.State.TakeRawDamage(_amount);
             var vulnerableDetailStr = _target.IsVulnerable() ? " [Vulnerable]" : ""; 

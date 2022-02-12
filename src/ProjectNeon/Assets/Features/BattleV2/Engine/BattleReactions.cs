@@ -20,6 +20,7 @@ public class BattleReactions
 
     public void Enqueue(ProposedReaction p)
     {
+        Log.Info($"Queued Proposed Reaction - {p.ReactionCard.Select(c => $"Card {c.Name}", "Effect")}");
         if (p.ReactionCard.IsMissing)
             _instantReactions.Enqueue(p);
         else
