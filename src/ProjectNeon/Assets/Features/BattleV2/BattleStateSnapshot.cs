@@ -14,6 +14,12 @@ public sealed class BattleStateSnapshot
         var me = Members[id];
         return Members.Where(m => m.Value.TeamType == me.TeamType && m.Key != id).ToDictionary(k => k.Key, v => v.Value);
     }
+    
+    public Dictionary<int, MemberSnapshot> NonSelfConsciousAllies(int id)
+    {
+        var me = Members[id];
+        return Members.Where(m => m.Value.IsConscious() && m.Value.TeamType == me.TeamType && m.Key != id).ToDictionary(k => k.Key, v => v.Value);
+    }
 
     public BattleStateSnapshot(params MemberSnapshot[] snapshots) 
         : this(BattleV2Phase.NotBegun, new List<PlayedCardSnapshot[]>(), 0, snapshots.ToDictionary(m => m.Id, m => m)) {}
