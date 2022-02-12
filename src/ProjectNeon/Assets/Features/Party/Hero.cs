@@ -110,8 +110,8 @@ public class Hero
         return m;
     }
 
-    public Member InitEquipmentState(Member m, BattleState state) 
-        => WithEquipmentState(m, CreateEffectContext(m, state));
+    public Member InitState(Member m, BattleState state) 
+        => WithSetupMemberState(WithEquipmentState(m, CreateEffectContext(m, state)), state);
 
     public void ApplyBattleEndEquipmentEffects(Member m, BattleState state) 
         => Equipment.All.SelectMany(e => e.BattleEndEffects)
@@ -133,6 +133,12 @@ public class Hero
             e.BattleStartEffects.ForEach(effect => AllEffects.Apply(effect, ctx.WithReactionTimingContext(effect.FinalReactionTimingWindow)));
         });
         return m;     
+    }
+
+    private Member WithSetupMemberState(Member m, BattleState s)
+    {
+        Character.SetupMemberState(m, s);
+        return m;
     }
 
     public void Apply(AdditiveStatInjury injury) => UpdateState(() => health.Apply(injury));
