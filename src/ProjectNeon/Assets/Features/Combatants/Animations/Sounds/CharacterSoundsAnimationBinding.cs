@@ -6,4 +6,5 @@ public class CharacterSoundsAnimationBinding : MonoBehaviour
     public void PlayStepBack() => CharacterAnimationSoundPublisher.PlayStepBack();
     public void PlayShoot() => CharacterAnimationSoundPublisher.PlayShoot();
     public void PlayRapidShot() => CharacterAnimationSoundPublisher.PlayRapidShot();
+    public void PlayMelee() => CharacterAnimationSoundPublisher.PlayMelee();
 }
