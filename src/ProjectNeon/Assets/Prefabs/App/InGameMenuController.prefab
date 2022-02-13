@@ -161,8 +161,8 @@ GameObject:
   - component: {fileID: 7329857057175961585}
   - component: {fileID: 7329857057175961584}
   - component: {fileID: 7329857057175961586}
-  - component: {fileID: 7329857057175961587}
   - component: {fileID: 1795354366828291251}
+  - component: {fileID: 1465338511555445529}
   m_Layer: 0
   m_Name: InGameMenuController
   m_TagString: Untagged
@@ -215,8 +215,8 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7329857057175961587}
-        m_TargetAssemblyTypeName: ToggleTarget, EnigmaDragons.Core
+      - m_Target: {fileID: 1465338511555445529}
+        m_TargetAssemblyTypeName: ToggleTargetIfNoModalOpen, EnigmaDragons.Core
         m_MethodName: Toggle
         m_Mode: 1
         m_Arguments:
@@ -227,20 +227,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7329857057175961587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7329857057175961590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec4e2cde23aca4142b3bc24a0cdf17f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targets:
-  - {fileID: 7329857057608068820}
 --- !u!114 &1795354366828291251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +240,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 7329857057608068820}
+--- !u!114 &1465338511555445529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7329857057175961590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacc1cc4f93846d498e0af6b03a4b80a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modalState: {fileID: 11400000, guid: 26e16576502f53c4b96bb33ae9125971, type: 2}
+  targets:
+  - {fileID: 7329857057608068820}
 --- !u!1 &7329857057530285586
 GameObject:
   m_ObjectHideFlags: 0

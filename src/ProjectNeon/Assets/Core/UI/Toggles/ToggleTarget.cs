@@ -9,4 +9,3 @@ public sealed class ToggleTarget : MonoBehaviour
         targets.ForEach(t => t.SetActive(!t.activeSelf));
     }
 }
-

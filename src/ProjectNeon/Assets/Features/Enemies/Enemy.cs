@@ -25,6 +25,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private ResourceType resourceType;
     [SerializeField, TextArea(2, 4)] private string description;
     [SerializeField] private CharacterAnimations animations;
+    [SerializeField] private CharacterAnimationSoundSet animationSounds;
     [SerializeField] public EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
     public bool IsCurrentlyWorking => isCurrentlyWorking;
@@ -48,7 +49,7 @@ public class Enemy : ScriptableObject
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
             prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, EnemyName, deathEffect, 
-            isHasty, unique, detail.CounterAdjustments, corp, animations, materialType, description, 
+            isHasty, unique, detail.CounterAdjustments, corp, animations, animationSounds, materialType, description, 
             detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence),
             aiPreferences ?? new AiPreferences());
     } 

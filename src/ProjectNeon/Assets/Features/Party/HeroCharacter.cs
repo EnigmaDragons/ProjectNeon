@@ -25,6 +25,7 @@ public interface HeroCharacter
     HashSet<string> Archetypes { get; }
     Color Tint { get; }
     CharacterAnimations Animations { get; }
+    CharacterAnimationSoundSet AnimationSounds { get; }
     Dictionary<string, int> CounterAdjustments { get; }
 
     void SetupMemberState(Member m, BattleState s);
@@ -53,6 +54,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public HashSet<string> Archetypes { get; set; } = new HashSet<string>();
     public Color Tint { get; } = Color.white;
     public CharacterAnimations Animations { get; }
+    public CharacterAnimationSoundSet AnimationSounds { get; }
     public Dictionary<string, int> CounterAdjustments { get; } = new Dictionary<string, int>();
     public void SetupMemberState(Member m, BattleState s) {}
 }
