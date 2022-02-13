@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: LocSch_ItsGoTime
+  m_EditorClassIdentifier: 
+  id: 532
+  customName: It's Go Time
+  art: {fileID: 21300000, guid: b11277331c792174088b271a6b80dd21, type: 3}
+  description: <b>Quick:</b> For each <b>Stunned</b> enemy, draw <b>2 Cards</b> and
+    gain <b>+1 Card Play</b>.
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  tags: 
+  speed: 1
+  isSinglePlay: 0
+  cost:
+    cost: 2
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
+    plusXCost: 0
+  rarity: 1
+  actionSequences:
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: d0c3cec5963a34345986bcdf1388e4f2, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
+  - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
+  highlightCondition:
+  - {fileID: 11400000, guid: 672b8eeaffd779f4fa4e63242da9ba68, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 700aa9a85270ba544b458efc0dee6cdf, type: 2}
+  isWIP: 0
+  notAvailableForGeneralDistribution: 0
