@@ -94,7 +94,7 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 12
-      StatusDetailText: 'When Ally Damaged: Quick Triage'
+      StatusDetailText: 'When Ally Hp Damaged: Quick Triage'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -106,11 +106,12 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 102
+      ReactionConditionType: 103
       ReactionEffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 11400000, guid: 39b3c8942b9e4c44f9cda28b31144f7b, type: 2}
       ReactionEffect:
         reactor: 1
@@ -148,11 +149,12 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 101
+      ReactionConditionType: 104
       ReactionEffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 11400000, guid: 91703f321f71a5f4bb2be0d67977a6fc, type: 2}
       ReactionEffect:
         reactor: 1

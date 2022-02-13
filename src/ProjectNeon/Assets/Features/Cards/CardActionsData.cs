@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Effect", order = -99)]
 public class CardActionsData : ScriptableObject
 {
+    public string Name => this != null ? name : "Unnamed" + nameof(CardActionsData);
     public CardActionV2[] Actions = new CardActionV2[0];
 
     public IEnumerable<EffectData> BattleEffects => (Actions ?? new CardActionV2[0])

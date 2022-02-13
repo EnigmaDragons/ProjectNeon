@@ -101,6 +101,8 @@ public class EffectReactWith : Effect
             && Increased(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Count(x => x.Value.IsBloodied()))) },
         { ReactionConditionType.WhenNonSelfAllyHpDamaged, ctx => effect => ctx.Actor.IsConscious() 
             && Decreased(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Sum(x => x.Value.State.Hp))) },
+        { ReactionConditionType.WhenNonSelfAllyHpDamagedButNotKilled, ctx => effect => ctx.Actor.IsConscious()
+            && Decreased(Logged(Select(effect, b => b.NonSelfConsciousAllies(ctx.Actor.Id).Sum(x => x.Value.State.Hp)))) },
         { ReactionConditionType.WhenAfflicted, ctx => effect => ctx.Actor.IsConscious() 
             && Increased(Select(effect, ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) },
         { ReactionConditionType.OnAppliedMark, ctx => effect => ctx.Actor.IsConscious() 
@@ -137,6 +139,12 @@ public class EffectReactWith : Effect
         { ReactionConditionType.WhenAllyBloodied, ctx => effect 
             => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => 
                 x.TeamType == ctx.Actor.TeamType 
+                && x.Id != ctx.Actor.Id 
+                && !effect.BattleBefore.Members[x.Id].IsBloodied()
+                && effect.BattleAfter.Members[x.Id].IsBloodied()) },
+        { ReactionConditionType.WhenNonSelfAllyBloodiedButNotKilled, ctx => effect 
+            => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => 
+                x.IsConscious() && x.TeamType == ctx.Actor.TeamType 
                 && x.Id != ctx.Actor.Id 
                 && !effect.BattleBefore.Members[x.Id].IsBloodied()
                 && effect.BattleAfter.Members[x.Id].IsBloodied()) },

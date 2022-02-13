@@ -35,6 +35,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private int startingDodge;
     [SerializeField] private int startingTaunt;
     [SerializeField] private ResourceType resource1;
+    [SerializeField] private int resource1GainPerTurn;
     [SerializeField] private ResourceType resource2;
     [SerializeField] private CardType[] additionalStartingCards;
     [SerializeField] private CardType[] excludedStartingCards;
@@ -121,4 +122,9 @@ public class BaseHero : ScriptableObject, HeroCharacter
         {TemporalStatType.Dodge.ToString(), startingDodge},
         {TemporalStatType.Taunt.ToString(), startingTaunt},
     };
+
+    public void SetupMemberState(Member m, BattleState s)
+    {
+        m.State.ApplyPersistentState(new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resource1.Name, Amount = resource1GainPerTurn}, m, s.Party));
+    }
 }
