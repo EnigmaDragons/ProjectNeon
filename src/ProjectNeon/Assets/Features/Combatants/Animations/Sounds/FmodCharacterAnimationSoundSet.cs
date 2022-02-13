@@ -4,15 +4,21 @@ using UnityEngine;
 public class FmodCharacterAnimationSoundSet : CharacterAnimationSoundSet
 {
     [SerializeField, FMODUnity.EventRef] private string stepSound;
+    [SerializeField, FMODUnity.EventRef] private string stepBackSound;
     [SerializeField, FMODUnity.EventRef] private string shootSound;
+    [SerializeField, FMODUnity.EventRef] private string rapidShotSound;
     [SerializeField, FMODUnity.EventRef] private string meleeAttack;
     
-    public override void Play(Member source, Transform uiSource, CharacterAnimationSoundType sound)
+    public override void Play(Transform uiSource, CharacterAnimationSoundType sound)
     {
         if (sound == CharacterAnimationSoundType.Step)
             Play(stepSound, uiSource.position);
+        if (sound == CharacterAnimationSoundType.StepBack)
+            Play(stepBackSound, uiSource.position);
         if (sound == CharacterAnimationSoundType.Shoot)
             Play(shootSound, uiSource.position);
+        if (sound == CharacterAnimationSoundType.RapidShot)
+            Play(rapidShotSound, uiSource.position);
         if (sound == CharacterAnimationSoundType.MeleeAttack)
             Play(meleeAttack, uiSource.position);
     }

@@ -46,7 +46,6 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         
         ReturnToDefault();
     }
-    
 
     private void Update()
     {

@@ -149,11 +149,25 @@ public class BattleState : ScriptableObject
         for (var i = 0; i < Party.BaseHeroes.Length; i++)
         {
             id++;
-            _heroesById[id] = heroes[i];
-            _uiTransformsById[id] = partyArea.UiPositions[i];
-            _uiTransformsById[id].GetComponentInChildren<ActiveMemberIndicator>()?.Init(id, true);
-            _uiTransformsById[id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, _heroesById[id].Character.Animations, TeamType.Party);
-            SetMemberName(id, heroes[i].Character.Name);
+            var hero = heroes[i];
+            var heroTransform = partyArea.UiPositions[i];
+            _heroesById[id] = hero;
+            _uiTransformsById[id] = heroTransform;
+            heroTransform.GetComponentInChildren<ActiveMemberIndicator>()?.Init(id, true);
+            heroTransform.GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, hero.Character.Animations, TeamType.Party);
+            if (hero.Character.AnimationSounds != null)
+            {
+                var sound = heroTransform.GetComponentInChildren<CharacterAnimationSoundPlayer>();
+                if (sound == null)
+                {
+                    Log.Warn($"{hero.Name} is missing CharacterAnimationSoundPlayer");
+                    sound = heroTransform.gameObject.AddComponent<CharacterAnimationSoundPlayer>();
+                }
+                if (sound != null)
+                    sound.Init(id, hero.Character.AnimationSounds, heroTransform);
+                
+            }
+            SetMemberName(id, hero.Character.Name);
         }
 
         id = EnemyStartingIndex - 1;
@@ -162,12 +176,16 @@ public class BattleState : ScriptableObject
         for (var i = 0; i < enemies.Enemies.Count; i++)
         {
             id++;
-            _enemiesById[id] = enemies.Enemies[i];
-            _uiTransformsById[id] = enemies.EnemyUiPositions[i];
+            var enemy = enemies.Enemies[i];
+            var enemyTransform = enemies.EnemyUiPositions[i];
+            _enemiesById[id] = enemy;
+            _uiTransformsById[id] = enemyTransform;
             _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, false);
             _uiTransformsById[id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, _enemiesById[id].Animations, TeamType.Enemies);
+            if(enemy.AnimationSounds != null)
+                _uiTransformsById[id].GetComponentInChildren<CharacterAnimationSoundPlayer>()?.Init(id, enemy.AnimationSounds, enemyTransform);
             SetMemberName(id, enemies.Enemies[i].Name);
-            result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id)));
+            result.Add(new Tuple<int, Member>(i, enemy.AsMember(id)));
         }
         _nextEnemyId = id + 1;
 
