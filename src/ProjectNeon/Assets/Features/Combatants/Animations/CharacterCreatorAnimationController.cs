@@ -27,6 +27,12 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     private float _secondsRemaining;
     private bool _canAnimate = true;
 
+    private void Awake()
+    {
+        if (animator != null && animator.gameObject.GetComponent<CharacterSoundsAnimationBinding>() == null)
+            animator.gameObject.AddComponent<CharacterSoundsAnimationBinding>();
+    }
+    
     public void Init(int memberId, CharacterAnimations characterAnimations, TeamType team)
     {
         _memberId = memberId;
