@@ -3123,7 +3123,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 0}
   - m_Name: Idle Narrow
     m_Type: 4
@@ -6507,7 +6507,7 @@ AnimatorStateMachine:
     m_Position: {x: 1220, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102539435617410266}
-    m_Position: {x: 380, y: 350, z: 0}
+    m_Position: {x: 130, y: 730, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102691879489694358}
     m_Position: {x: 380, y: 400, z: 0}
@@ -8492,6 +8492,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Idle Holding Rifle
+    m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: Aim
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102819271892988124}
