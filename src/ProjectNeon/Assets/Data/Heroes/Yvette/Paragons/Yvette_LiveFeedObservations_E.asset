@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Scheme_Scan_E
+  m_Name: Yvette_LiveFeedObservations_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
@@ -25,7 +25,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
@@ -77,19 +77,19 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: c280ce9d79081424a93be4b8b7944371, type: 2}
+        Variable: {fileID: 11400000, guid: d344c2ad8f7429348945a07501a28e84, type: 2}
       size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        ConstantValue: {r: 0.52156866, g: 0.09019608, b: 0.3019608, a: 1}
         Variable: {fileID: 0}
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 79
+      EffectType: 82
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -99,18 +99,18 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 0.15 * Leadership
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: a44ad20938ad98d4ba2a05ebec66e947, type: 2}
+        Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
-      TurnDelay: 1
-      Formula: 1
+      TurnDelay: 0
+      Formula: 4
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -163,7 +163,7 @@ MonoBehaviour:
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 82
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -171,20 +171,20 @@ MonoBehaviour:
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: -1
         FloatVariable: {fileID: 0}
-      DurationFormula: 0
+      DurationFormula: 1
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReTargetScope: 1
+      ReTargetScope: 41
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1
+      Formula: 
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -196,15 +196,15 @@ MonoBehaviour:
       ReferencedSequence: {fileID: 0}
       ReactionConditionType: 0
       ReactionEffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
       ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
+        reactor: 1
+        scope: 1
+        cardActions: {fileID: 11400000, guid: cecf7f77fc077984c943841f3516de43, type: 2}
       BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
