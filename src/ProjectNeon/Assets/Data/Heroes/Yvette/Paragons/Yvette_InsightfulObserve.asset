@@ -10,37 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Ionus_LoopbackKineticHarness
+  m_Name: Yvette_InsightfulObserve
   m_EditorClassIdentifier: 
-  id: 497
+  id: 536
   customName: 
-  art: {fileID: 21300000, guid: cc76da89df85c6a45942304bd7e7060b, type: 3}
-  description: 'Gives {E[0]}.
-
-
-    This turn, when an enemy attacks, you gain {RE[0]}'
+  art: {fileID: 21300000, guid: 8e01c6ae1dfe0a742bb69d3e5b00fddc, type: 3}
+  description: "Next turn, gives <b>1 Vulnerable</b>. \nYou gain {E[1]}.\nThis turn,
+    when an enemy attacks, you gain {RE[0]}"
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
   rarity: 1
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: 610a36f92d33a534ab18f02c9a3aa434, type: 2}
+    group: 1
+    cardActions: {fileID: 11400000, guid: 43612b6c59aac05409d8aa53f43e6b52, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
-  functionalityIssues: Create a version that counts the number of attacks from last
-    turn instead of working for this turn
-  presentationIssues: Enhance Art
+  functionalityIssues: 
+  presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
+  - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
