@@ -47,7 +47,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(partyAdventureState)} is null");
         if (state == null)
             Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(state)} is null");
-        if (state == null || partyAdventureState == null || animator == null || character == null || characterAnimations == null)
+        if (state == null || partyAdventureState == null || character == null || characterAnimations == null)
             _canAnimate = false;
         
         ReturnToDefault();

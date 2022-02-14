@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class CharacterAnimationSoundPlayer : OnMessage<CharacterAnimationRequested2, Finished<CharacterAnimationRequested2>, PlayCharacterAnimSound>
 {
+    [SerializeField] private bool alwaysActive = false;
+    
     private int _memberId;
     private CharacterAnimationSoundSet _sounds;
     private Transform _uiSource;
     private bool _active;
-    
+
     public void Init(int memberId, CharacterAnimationSoundSet sounds, Transform uiSource)
     {
         _memberId = memberId;
@@ -33,7 +35,7 @@ public class CharacterAnimationSoundPlayer : OnMessage<CharacterAnimationRequest
 
     protected override void Execute(PlayCharacterAnimSound msg)
     {
-        if (!_active)
+        if (!IsInitialized() || (!_active && !alwaysActive))
             return;
         
         _sounds.Play(_uiSource, msg.SoundType);
