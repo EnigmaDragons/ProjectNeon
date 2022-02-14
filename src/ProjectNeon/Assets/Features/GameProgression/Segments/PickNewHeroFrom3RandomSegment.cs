@@ -21,7 +21,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
         
         var maybeFeaturedHero = library.MaybeFeaturedHero;
         var featuredThree = randomThree;
-        if (maybeFeaturedHero.IsPresent && !randomThree.Contains(maybeFeaturedHero.Value))
+        if (maybeFeaturedHero.IsPresentAnd(h => !currentParty.Heroes.Contains(h) && !randomThree.Contains(h)))
             featuredThree = new [] {maybeFeaturedHero.Value, randomThree[0], randomThree[1]}.Shuffled();
 
         var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Leader" : "Choose A New Squad Member";
