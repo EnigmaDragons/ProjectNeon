@@ -7,7 +7,7 @@ public static class BattleCardExecution
     // Card
     public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount, Action onFinished)
     {
-        QueuePayloads(GetPayloads(card, targets, battleStateSnapshot, xPaidAmount), onFinished);
+        QueuePayloads(card.Name, GetPayloads(card, targets, battleStateSnapshot, xPaidAmount), onFinished);
         card.OnPlayCard();
     }
 
@@ -47,10 +47,10 @@ public static class BattleCardExecution
         return payloads;
     }
     
-    private static void QueuePayloads(List<IPayloadProvider> payloads, Action onFinished)
+    private static void QueuePayloads(string cardName, List<IPayloadProvider> payloads, Action onFinished)
     {
         if (payloads.Count > 1)
-            MessageGroup.Start(new MultiplePayloads(payloads), onFinished);
+            MessageGroup.Start(new MultiplePayloads(cardName, payloads), onFinished);
         else if (payloads.Count == 1)
             MessageGroup.Start(payloads[0], onFinished);
         else
@@ -61,20 +61,20 @@ public static class BattleCardExecution
     public static IPayloadProvider Play(this CardActionsData cardData, CardActionContext ctx, bool isFirstSequenceWithABattleEffect = true)
     {
         var firstBattleEffectIndex = cardData.Actions.FirstIndexOf(x => x.Type == CardBattleActionType.Battle);
-        return new MultiplePayloads(cardData.Actions.Select((x, i) => x.Play(isFirstSequenceWithABattleEffect && i == firstBattleEffectIndex, ctx)),
+        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.Play(isFirstSequenceWithABattleEffect && i == firstBattleEffectIndex, ctx)),
             new SinglePayload(new Finished<CardActionContext> {Message = ctx}).AsArray());
     }
 
     public static IPayloadProvider Play(this CardActionsData cardData, StatusEffectContext ctx)
     {
         var firstBattleEffectIndex = cardData.Actions.FirstIndexOf(x => x.Type == CardBattleActionType.Battle);
-        return new MultiplePayloads(cardData.Actions.Select((x, i) => x.Play(i == firstBattleEffectIndex, ctx)));
+        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.Play(i == firstBattleEffectIndex, ctx)));
     }
 
     public static IPayloadProvider PlayAsReaction(this CardActionsData cardData, Member source, Target target, ResourceQuantity xAmountPaid, string reactionName)
     {
         var firstBattleEffectIndex = cardData.Actions.FirstIndexOf(x => x.Type == CardBattleActionType.Battle);
-        return new MultiplePayloads(cardData.Actions.Select((x, i) => x.PlayReaction(i == firstBattleEffectIndex, source,  target, xAmountPaid))
+        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.PlayReaction(i == firstBattleEffectIndex, source,  target, xAmountPaid))
             .ToArray());
     }
 

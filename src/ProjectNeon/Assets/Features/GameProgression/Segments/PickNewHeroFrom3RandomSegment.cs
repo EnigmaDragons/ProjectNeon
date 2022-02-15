@@ -17,12 +17,17 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
         var currentArchs = currentParty.Heroes.SelectMany(h => h.Archetypes).ToHashSet();
         var preferredSelection = allOptions.Where(h => !h.Archetypes.Any(a => currentArchs.Contains(a))).ToList();
         var optimizedSelection = preferredSelection.Count() >= 3 ? preferredSelection : allOptions;
-        
         var randomThree = optimizedSelection.Shuffled().Take(3).ToArray();
+        
+        var maybeFeaturedHero = library.MaybeFeaturedHero;
+        var featuredThree = randomThree;
+        if (maybeFeaturedHero.IsPresentAnd(h => !currentParty.Heroes.Contains(h) && !randomThree.Contains(h)))
+            featuredThree = new [] {maybeFeaturedHero.Value, randomThree[0], randomThree[1]}.Shuffled();
+
         var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Leader" : "Choose A New Squad Member";
-        Message.Publish(new GetUserSelectedHero(prompt, randomThree, h =>
+        Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {
-            AllMetrics.PublishHeroSelected(h.Name, randomThree.Select(x => x.Name).ToArray(), existingHeroes.Select(x => x.Name).ToArray());
+            AllMetrics.PublishHeroSelected(h.Name, featuredThree.Select(x => x.Name).ToArray(), existingHeroes.Select(x => x.Name).ToArray());
             Message.Publish(new AddHeroToPartyRequested(h));
         }));
     }

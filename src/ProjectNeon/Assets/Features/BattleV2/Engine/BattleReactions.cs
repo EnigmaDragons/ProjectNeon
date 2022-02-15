@@ -20,6 +20,7 @@ public class BattleReactions
 
     public void Enqueue(ProposedReaction p)
     {
+        Log.Info($"Queued Proposed Reaction - {p.ReactionCard.Select(c => $"Card {c.Name}", "Effect")}");
         if (p.ReactionCard.IsMissing)
             _instantReactions.Enqueue(p);
         else
@@ -33,11 +34,6 @@ public class BattleReactions
             r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
         else
             Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id));
-    }
-
-    public void ResolveNextReactionCard(IDictionary<int, Member> allBattleMembers)
-    {
-        
     }
 
     public ProposedReaction DequeueNextReactionCard() => _cardReactions.Dequeue();

@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 8836867141484630520}
   - component: {fileID: 8836867141484631703}
   - component: {fileID: 8836867141484631518}
+  - component: {fileID: 463515629132997498}
   m_Layer: 0
   m_Name: DualGunAssassin
   m_TagString: Untagged
@@ -185,6 +186,19 @@ MonoBehaviour:
   character: {fileID: 8836867141484613831}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &463515629132997498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8836867141484622996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ed8081228749bea307ed4e2e729c18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewer: {fileID: 8490286351692572241}
 --- !u!1001 &185711288892186316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -337,6 +351,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5768642451740994633, guid: 6bdce8f07ab92a14b802899708577046, type: 3}
   m_PrefabInstance: {fileID: 1721801924839822072}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8490286351692572241 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7077019573556540585, guid: 6bdce8f07ab92a14b802899708577046, type: 3}
+  m_PrefabInstance: {fileID: 1721801924839822072}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &869482113425677897 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2014257861938531505, guid: 6bdce8f07ab92a14b802899708577046, type: 3}

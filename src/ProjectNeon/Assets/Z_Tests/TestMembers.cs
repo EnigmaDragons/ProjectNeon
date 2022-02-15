@@ -18,20 +18,26 @@ public static class TestMembers
     
     public static Member Create(Func<StatAddends, StatAddends> initStats) => Create("Any Name", TeamType.Party, initStats);
     public static Member CreateEnemy(Func<StatAddends, StatAddends> initStats) => Create("Any Name", TeamType.Enemies, initStats);
-    public static Member Create(string name, TeamType team, Func<StatAddends, StatAddends> initStats, params IResourceType[] resources) => 
-        new Member(
+    public static Member Create(string name, TeamType team, Func<StatAddends, StatAddends> initStats, params IResourceType[] resources)
+    {
+        var stats = initStats(DefaultStats().With(resources));
+        return new Member(
             NextId(),
             name,
             "Any Class",
             MemberMaterialType.Organic,
             team,
-            initStats(DefaultStats().With(resources)),
+            stats,
             BattleRole.Unknown,
-            StatType.Attack
+            stats.DefaultPrimaryStat()
         );
+    }
 
     public static Member AnyAlly() => Any();
 
-    public static Member AnyEnemy() => new Member(NextId(), "Any Name", "Any Class", MemberMaterialType.Organic, TeamType.Enemies, DefaultStats(),
-        BattleRole.Unknown, StatType.Attack);
+    public static Member AnyEnemy()
+    {
+        var stats = DefaultStats();
+        return new Member(NextId(), "Any Name", "Any Class", MemberMaterialType.Organic, TeamType.Enemies, stats, BattleRole.Unknown, stats.DefaultPrimaryStat());
+    }
 }

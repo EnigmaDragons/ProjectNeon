@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 1480802355129490977}
   - component: {fileID: 6660281066319569693}
   - component: {fileID: 638153831253901346}
+  - component: {fileID: 8595897576758265180}
   m_Layer: 0
   m_Name: Enemy_HiredCleaner
   m_TagString: Untagged
@@ -216,6 +217,19 @@ MonoBehaviour:
   character: {fileID: 2482174475972190979}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &8595897576758265180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6705478397166493558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ed8081228749bea307ed4e2e729c18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewer: {fileID: 6850628621972996769}
 --- !u!1001 &1189012257970892908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -356,6 +370,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 827201183302224043, guid: 46ea8071122859e45ad9a63e490fa7a1, type: 3}
   m_PrefabInstance: {fileID: 4131628748877606813}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6850628621972996769 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7369063387117333820, guid: 46ea8071122859e45ad9a63e490fa7a1, type: 3}
+  m_PrefabInstance: {fileID: 4131628748877606813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &5166592731755770227 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9143735250592915182, guid: 46ea8071122859e45ad9a63e490fa7a1, type: 3}

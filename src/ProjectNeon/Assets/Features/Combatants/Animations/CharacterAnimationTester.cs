@@ -5,6 +5,7 @@ public class CharacterAnimationTester : MonoBehaviour
     [SerializeField] private BaseHero hero;
     [SerializeField] private GameObject heroLocation;
     [SerializeField] private CharacterAnimationType animationType;
+    [SerializeField] private CharacterAnimationSoundSet soundSetOverride;
 
     private int _memberId = -1;
     private BaseHero _hero;
@@ -32,5 +33,11 @@ public class CharacterAnimationTester : MonoBehaviour
         var obj = Instantiate(hero.Body, heroLocation.transform);
         var ccAnimator = obj.GetComponentInChildren<CharacterCreatorAnimationController>();
         ccAnimator.Init(_memberId, hero.Animations, TeamType.Party);
+        var sounds = obj.GetComponentInChildren<CharacterAnimationSoundPlayer>();
+        if (sounds != null)
+        {
+            sounds.Init(_memberId, soundSetOverride != null ? soundSetOverride : hero.AnimationSounds, obj.transform);
+            sounds.SetAlwaysActive(true);
+        }
     }
 }

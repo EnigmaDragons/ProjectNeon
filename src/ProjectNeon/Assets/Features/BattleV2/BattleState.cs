@@ -149,11 +149,25 @@ public class BattleState : ScriptableObject
         for (var i = 0; i < Party.BaseHeroes.Length; i++)
         {
             id++;
-            _heroesById[id] = heroes[i];
-            _uiTransformsById[id] = partyArea.UiPositions[i];
-            _uiTransformsById[id].GetComponentInChildren<ActiveMemberIndicator>()?.Init(id, true);
-            _uiTransformsById[id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, _heroesById[id].Character.Animations, TeamType.Party);
-            SetMemberName(id, heroes[i].Character.Name);
+            var hero = heroes[i];
+            var heroTransform = partyArea.UiPositions[i];
+            _heroesById[id] = hero;
+            _uiTransformsById[id] = heroTransform;
+            heroTransform.GetComponentInChildren<ActiveMemberIndicator>()?.Init(id, true);
+            heroTransform.GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, hero.Character.Animations, TeamType.Party);
+            if (hero.Character.AnimationSounds != null)
+            {
+                var sound = heroTransform.GetComponentInChildren<CharacterAnimationSoundPlayer>();
+                if (sound == null)
+                {
+                    Log.Warn($"{hero.Name} is missing CharacterAnimationSoundPlayer");
+                    sound = heroTransform.gameObject.AddComponent<CharacterAnimationSoundPlayer>();
+                }
+                if (sound != null)
+                    sound.Init(id, hero.Character.AnimationSounds, heroTransform);
+                
+            }
+            SetMemberName(id, hero.Character.Name);
         }
 
         id = EnemyStartingIndex - 1;
@@ -162,12 +176,16 @@ public class BattleState : ScriptableObject
         for (var i = 0; i < enemies.Enemies.Count; i++)
         {
             id++;
-            _enemiesById[id] = enemies.Enemies[i];
-            _uiTransformsById[id] = enemies.EnemyUiPositions[i];
+            var enemy = enemies.Enemies[i];
+            var enemyTransform = enemies.EnemyUiPositions[i];
+            _enemiesById[id] = enemy;
+            _uiTransformsById[id] = enemyTransform;
             _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, false);
             _uiTransformsById[id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, _enemiesById[id].Animations, TeamType.Enemies);
+            if(enemy.AnimationSounds != null)
+                _uiTransformsById[id].GetComponentInChildren<CharacterAnimationSoundPlayer>()?.Init(id, enemy.AnimationSounds, enemyTransform);
             SetMemberName(id, enemies.Enemies[i].Name);
-            result.Add(new Tuple<int, Member>(i, _enemiesById[id].AsMember(id)));
+            result.Add(new Tuple<int, Member>(i, enemy.AsMember(id)));
         }
         _nextEnemyId = id + 1;
 
@@ -176,7 +194,7 @@ public class BattleState : ScriptableObject
             .Concat(result.Select(e => e.Item2))
             .ToDictionary(x => x.Id, x => x);
         
-        _heroesById.ForEach(h => h.Value.InitEquipmentState(_membersById[h.Key], this));
+        _heroesById.ForEach(h => h.Value.InitState(_membersById[h.Key], this));
         _enemiesById.ForEach(e => e.Value.SetupMemberState(_membersById[e.Key], this));
 
         PlayerState.NumberOfCyclesUsedThisTurn = 0;
@@ -359,29 +377,29 @@ public class BattleState : ScriptableObject
     public Dictionary<int, Color> OwnerTints => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Tint);
     public Dictionary<int, Sprite> OwnerBusts => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Bust);
     public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
-    [Obsolete("Use Get Maybe Transform instead")]
-    private Transform GetTransform(int memberId) => _uiTransformsById.VerboseGetValue(memberId, id => $"Member Transforms for {id}");
     public Maybe<Transform> GetMaybeTransform(int memberId) => _uiTransformsById.ValueOrMaybe(memberId);
     public AiPreferences GetAiPreferences(int memberId) => _enemiesById.ValueOrMaybe(memberId).Select(e => e.AIPreferences.WithDefaultsBasedOnRole(e.Role), () => new AiPreferences());
-
-    [Obsolete("Unsafe. Turn into Maybe")]
-    public Transform GetCenterPoint(int memberId)
+    
+    public Maybe<Transform> GetMaybeCenterPoint(int memberId)
     {
-        var memberTransform = GetTransform(memberId);
-        var centerPoint = memberTransform.GetComponentInChildren<CenterPoint>();
-        if (centerPoint != null)
-            return centerPoint.transform;
-        Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
-        return memberTransform;
+        var maybeTransform = GetMaybeTransform(memberId);
+        return maybeTransform.Map(t =>
+        {
+            var centerPoint = maybeTransform.Value.GetComponentInChildren<CenterPoint>();
+            if (centerPoint != null)
+                return centerPoint.transform;
+            Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
+            return maybeTransform.Value;
+        });
     }
-
+    
     public Vector3 GetCenterPoint(Target target)
     {
         if (target.Members.Length == 0)
             return Vector3.zero;
-        var bounds = new Bounds(GetCenterPoint(target.Members[0].Id).position, Vector3.zero);
+        var bounds = new Bounds(GetMaybeCenterPoint(target.Members[0].Id).Map(cp => cp.position).OrDefault(Vector3.zero), Vector3.zero);
         for (var i = 1; i < target.Members.Length; i++)
-            bounds.Encapsulate(GetCenterPoint(target.Members[i].Id).position); 
+            bounds.Encapsulate(GetMaybeCenterPoint(target.Members[i].Id).Map(cp => cp.position).OrDefault(Vector3.zero)); 
         return bounds.center;
     }
     public Member GetMemberByHero(HeroCharacter hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];

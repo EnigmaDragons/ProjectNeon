@@ -17,6 +17,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private Deck startingDeck;
     [SerializeField] private Color tint;
     [SerializeField] private CharacterAnimations animations;
+    [SerializeField] private CharacterAnimationSoundSet animationSounds;
     [SerializeField] private int startingCredits = 100;
     [SerializeField, Range(1, 5)] private int complexityRating = 3;
 
@@ -34,6 +35,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private int startingDodge;
     [SerializeField] private int startingTaunt;
     [SerializeField] private ResourceType resource1;
+    [SerializeField] private int resource1GainPerTurn;
     [SerializeField] private ResourceType resource2;
     [SerializeField] private CardType[] additionalStartingCards;
     [SerializeField] private CardType[] excludedStartingCards;
@@ -63,7 +65,8 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
     public Color Tint => tint;
     public CharacterAnimations Animations => animations;
-
+    public CharacterAnimationSoundSet AnimationSounds => animationSounds;
+    
     public IStats Stats => new StatAddends
         {
             ResourceTypes = resource1 != null 
@@ -119,4 +122,9 @@ public class BaseHero : ScriptableObject, HeroCharacter
         {TemporalStatType.Dodge.ToString(), startingDodge},
         {TemporalStatType.Taunt.ToString(), startingTaunt},
     };
+
+    public void SetupMemberState(Member m, BattleState s)
+    {
+        m.State.ApplyPersistentState(new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resource1.Name, Amount = resource1GainPerTurn}, m, s.Party));
+    }
 }

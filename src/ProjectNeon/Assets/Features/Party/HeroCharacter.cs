@@ -23,9 +23,12 @@ public interface HeroCharacter
     HeroLevelUpPathway LevelUpTree { get; }
     HeroLevelUpTreeV4 LevelUpTreeV4 { get; }
     HashSet<string> Archetypes { get; }
-    public Color Tint { get; }
-    public CharacterAnimations Animations { get; }
-    public Dictionary<string, int> CounterAdjustments { get; }
+    Color Tint { get; }
+    CharacterAnimations Animations { get; }
+    CharacterAnimationSoundSet AnimationSounds { get; }
+    Dictionary<string, int> CounterAdjustments { get; }
+
+    void SetupMemberState(Member m, BattleState s);
 }
 
 public class InMemoryHeroCharacter : HeroCharacter
@@ -51,7 +54,9 @@ public class InMemoryHeroCharacter : HeroCharacter
     public HashSet<string> Archetypes { get; set; } = new HashSet<string>();
     public Color Tint { get; } = Color.white;
     public CharacterAnimations Animations { get; }
+    public CharacterAnimationSoundSet AnimationSounds { get; }
     public Dictionary<string, int> CounterAdjustments { get; } = new Dictionary<string, int>();
+    public void SetupMemberState(Member m, BattleState s) {}
 }
 
 public static class HeroCharacterExtensions

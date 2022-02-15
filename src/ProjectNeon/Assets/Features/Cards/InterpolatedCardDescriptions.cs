@@ -327,7 +327,9 @@ public static class InterpolatedCardDescriptions
             return $"{Bold("Disabled")}";
         if (data.EffectType == EffectType.Drain)
             return $"{Bold(FormulaAmount(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()}";
-
+        if (data.EffectType == EffectType.EnterStealth)
+            return $"Enter {Bold("Stealth")}";
+        
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }

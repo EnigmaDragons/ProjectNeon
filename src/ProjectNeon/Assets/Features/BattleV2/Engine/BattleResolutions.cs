@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -182,21 +183,38 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     protected override void Execute(ResolveReactionCards msg)
     {
-        if (Reactions.AnyReactionCards)
+        if (!_resolvingEffect && Reactions.AnyReactionCards)
             StartCoroutine(ResolveNextReactionCard());
     }
 
-    protected override void Execute(ResolveReaction msg) => StartCoroutine(ResolveNextReactionCard(msg.Reaction));
+    protected override void Execute(ResolveReaction msg)
+    {
+        Log.Info("Resolve Reaction Message Received");
+        StartCoroutine(ResolveNextReactionCard(msg.Reaction));
+    }
 
     private IEnumerator ResolveNextReactionCard()
     {
-        var r = Reactions.DequeueNextReactionCard().WithPresentAndConsciousTargets(state.Members);
-        yield return ResolveNextReactionCard(r);
+        while (Reactions.AnyReactionCards)
+        {
+            if (_resolvingEffect)
+                yield return new WaitUntil(() => !_resolvingEffect);
+            else
+            {
+                var r = Reactions.DequeueNextReactionCard().WithPresentAndConsciousTargets(state.Members);
+                yield return ResolveNextReactionCard(r);
+            }
+        }
+        //Message.Publish(new Finished<ResolveReactionCards>());
     }
     
     private IEnumerator ResolveNextReactionCard(ProposedReaction r)
     {
+        Log.Info(nameof(ResolveNextReactionCard));
         _resolvingEffect = true;
+        if (reactionZone.Count > 0)
+            reactionZone.Clear();
+        
         var isReactionCard = r.ReactionCard.IsPresent;
         if (!isReactionCard)
         {
