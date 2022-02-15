@@ -26,12 +26,6 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     private float _totalSeconds;
     private float _secondsRemaining;
     private bool _canAnimate = true;
-
-    private void Awake()
-    {
-        if (animator != null && animator.gameObject.GetComponent<CharacterSoundsAnimationBinding>() == null)
-            animator.gameObject.AddComponent<CharacterSoundsAnimationBinding>();
-    }
     
     public void Init(int memberId, CharacterAnimations characterAnimations, TeamType team)
     {
@@ -39,6 +33,11 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         _team = team;
         _characterAnimations = characterAnimations;
         _currentStates = new Dictionary<int, string>();
+
+        if (animator != null && animator.gameObject.GetComponent<CharacterSoundsAnimationBinding>() == null)
+            animator.gameObject.AddComponent<CharacterSoundsAnimationBinding>();
+        if (gameObject.GetComponentInChildren<CharacterAnimationSoundPlayer>() == null)
+            gameObject.AddComponent<CharacterAnimationSoundPlayer>();
         
         // TODO: Temp Fix for Layering. Doesn't really belong in this class
         InitCharacterSortingLayer();

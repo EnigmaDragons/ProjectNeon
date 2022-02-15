@@ -17,7 +17,9 @@ public class CharacterAnimationSoundPlayer : OnMessage<CharacterAnimationRequest
         Log.Info("Init " + nameof(CharacterAnimationSoundPlayer));
     }
 
-    private bool IsInitialized() => _memberId > -1 && _sounds != null && _uiSource != null;
+    public void SetAlwaysActive(bool val) => alwaysActive = val;
+    
+    private bool IsInitialized() => _sounds != null && _uiSource != null;
     
     protected override void Execute(CharacterAnimationRequested2 msg)
     {
@@ -36,8 +38,11 @@ public class CharacterAnimationSoundPlayer : OnMessage<CharacterAnimationRequest
     protected override void Execute(PlayCharacterAnimSound msg)
     {
         if (!IsInitialized() || (!_active && !alwaysActive))
+        {
+            Log.Info($"{nameof(PlayCharacterAnimSound)} IsInitialized: {IsInitialized()}, IsActive {_active || alwaysActive}");
             return;
-        
+        }
+
         _sounds.Play(_uiSource, msg.SoundType);
     }
 }
