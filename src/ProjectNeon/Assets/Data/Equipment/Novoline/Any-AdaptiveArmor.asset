@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13
   displayName: 
-  description: On damaged, gain +2 Armor and +2 Resistance until the end of next
-    turn
+  description: 'When Damaged: Gain +2 Armor and Resistance until the end of next
+    turn'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
   rarity: 1
@@ -45,12 +45,11 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: On damaged, gain +2 Armor and +2 Resistance until the end of
-      next turn
+    StatusDetailText: 'When Damaged: Gain +2 Armor and Resistance until the end of
+      next turn'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -62,11 +61,12 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 1
+    ReactionConditionType: 4
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
@@ -74,4 +74,8 @@ MonoBehaviour:
       cardActions: {fileID: 11400000, guid: 455be005b5930be41a3d20f54d18c294, type: 2}
     BonusCardType: {fileID: 0}
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

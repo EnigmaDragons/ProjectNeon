@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 82
   displayName: 
-  description: 'On Caused Stun: Gain 1 Resource'
+  description: 'On Caused Stun: Gain 2 Resource'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
@@ -42,10 +42,10 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Caused Stun: Gain 1 Energy'
+    StatusDetailText: 'On Caused Stun: Gain 2 Resource'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -62,6 +62,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
@@ -69,4 +70,8 @@ MonoBehaviour:
       cardActions: {fileID: 11400000, guid: b3ebee5c5a3a87c40b254d5716ccaa9a, type: 2}
     BonusCardType: {fileID: 0}
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 
