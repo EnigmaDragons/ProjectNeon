@@ -27,6 +27,8 @@ public static class BattleStateExtensions
         return member.CanAfford(c, partyState);
     }
     
+    
+    
     public static bool IsPlayable(this Card c, PartyAdventureState partyState, int numberOfCardPlaysRemainingThisTurn)
     {
         return c.IsActive && IsPlayableBy(c.Type, c.Owner, partyState, numberOfCardPlaysRemainingThisTurn);

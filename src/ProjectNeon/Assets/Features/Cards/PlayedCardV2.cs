@@ -21,7 +21,7 @@ public class PlayedCardV2 : IPlayedCard
     {
         if (card.IsActive && targets.Length < card.ActionSequences.Length)
             throw new InvalidDataException($"Cannot play {card.Name} with only {targets.Length}");
-        
+
         _playedCardId = NextPlayedCardId.Get();
         _performer = performer;
         _targets = targets;
@@ -32,7 +32,7 @@ public class PlayedCardV2 : IPlayedCard
         _card.SetXValue(new ResourceQuantity { Amount = calculations.XAmount, ResourceType = calculations.ResourcePaidType.Name });
         _lockedXValue = _card.LockedXValue.Value;
     }
-
+    
     public int PlayedCardId => _playedCardId;
     public Member Member => _performer;
     public Card Card => _card;

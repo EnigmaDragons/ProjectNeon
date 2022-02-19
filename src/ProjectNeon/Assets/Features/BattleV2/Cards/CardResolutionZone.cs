@@ -51,7 +51,7 @@ public class CardResolutionZone : ScriptableObject
     
     public void PlayImmediately(IPlayedCard played)
     {
-        var shouldQueue = isResolving;
+        var shouldQueue = isResolving || MessageGroup.IsInProgress || currentResolvingCardZone.HasCards;
         RecordCardAndPayCosts(played);
         
         if (shouldQueue)
@@ -219,17 +219,20 @@ public class CardResolutionZone : ScriptableObject
         {
             var bonusCards = member.State.GetBonusCards(snapshot);
             Log.Info($"Num Bonus Cards {member.Name}: {bonusCards.Length}");
-            foreach (var card in bonusCards)
+            foreach (var bc in bonusCards)
             {
+                var card = bc.Card;
+                var bcCost = bc.Cost.Amount; 
+                var paidAmount = new ResourceCalculations(card.Cost.ResourceType, bcCost, 0, 0); // Not factoring in X-Cost. Not relevant unless we have X-Cost Chain cards.
                 if (!card.IsPlayableBy(member, battleState.Party, 1)) 
                     continue;
 
                 var lastPlayedMove = _movesThisTurn.LastOrMaybe();
                 var targets = GetTargets(member, card, lastPlayedMove.Map(move => move.Targets));
                 if (member.TeamType == TeamType.Party)
-                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true));
+                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true, paidAmount));
                 else
-                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true));
+                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true, paidAmount));
                 Message.Publish(new DisplayCharacterWordRequested(member, CharacterReactionType.BonusCardPlayed));
             }
         }

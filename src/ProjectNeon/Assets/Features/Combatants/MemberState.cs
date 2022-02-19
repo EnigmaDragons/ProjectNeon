@@ -116,7 +116,7 @@ public sealed class MemberState : IStats
         => _customStatusIcons.ToArray();
     
     // Bonus Cards 
-    public CardType[] GetBonusCards(BattleStateSnapshot snapshot)
+    public BonusCardDetails[] GetBonusCards(BattleStateSnapshot snapshot)
         => _bonusCardPlayers
             .Select(x => x.GetBonusCardOnResolutionPhaseBegun(snapshot))
             .Where(x => x.IsPresent)

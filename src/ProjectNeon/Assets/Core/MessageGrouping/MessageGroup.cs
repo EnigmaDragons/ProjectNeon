@@ -5,6 +5,7 @@ public static class MessageGroup
 {
     private static MessageGroupQueue Msgs = new MessageGroupQueue();
 
+    public static bool IsInProgress => !IsClear;
     public static bool IsClear => Msgs.IsClear;
     public static string CurrentName => Msgs.CurrentName;
     public static void Start(IPayloadProvider payloadProvider, Action onFinished) => Msgs.Start(payloadProvider, onFinished);

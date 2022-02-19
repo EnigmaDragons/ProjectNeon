@@ -19,19 +19,17 @@ public class PlayBonusChainCard : TemporalStateBase, IBonusCardPlayer
         _bonusCard = bonusCard;
     }
 
-    public Maybe<CardType> GetBonusCardOnResolutionPhaseBegun(BattleStateSnapshot snapshot)
+    public Maybe<BonusCardDetails> GetBonusCardOnResolutionPhaseBegun(BattleStateSnapshot snapshot)
     {
         if (snapshot.PlayedCardHistory.None() || snapshot.NumCardPlaysRemaining > 0)
-            return Maybe<CardType>.Missing();
+            return Maybe<BonusCardDetails>.Missing();
 
         var member = snapshot.Members[_memberId];
         var teamType = member.TeamType;
         var teamCurrentTurnCards = snapshot.PlayedCardHistory.Last().Where(x => x.Member.TeamType == teamType).Select(x => x.Member.Id).ToList();
         var result = teamCurrentTurnCards.Any() && teamCurrentTurnCards.All(id => id == _memberId)
-            ? _bonusCard
-            : Maybe<CardType>.Missing();
-        if (result.IsPresent)        
-            Message.Publish(new PlayRawBattleEffect("ChainText", new Vector3(0, 0, 0)));
+            ? new BonusCardDetails(_bonusCard, new ResourceQuantity { ResourceType = _bonusCard.Cost.ResourceType.Name, Amount = 0})
+            : Maybe<BonusCardDetails>.Missing();
         return result;
     }
 }
