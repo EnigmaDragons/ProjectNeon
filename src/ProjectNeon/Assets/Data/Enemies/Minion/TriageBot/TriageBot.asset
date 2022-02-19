@@ -38,9 +38,9 @@ MonoBehaviour:
   unique: 1
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-  description: Quickly helps injured and damaged allies. Selflessly puts itself in
-    harm's way.
+  description: Quickly helps injured and damaged allies
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
     maxHp: 16
@@ -113,49 +113,6 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReactionTimingWindow: 0
       ReactionSequence: {fileID: 11400000, guid: 39b3c8942b9e4c44f9cda28b31144f7b, type: 2}
-      ReactionEffect:
-        reactor: 1
-        scope: 10
-        cardActions: {fileID: 11400000, guid: 0b0a2826a45779245b55098cec1e6216, type: 2}
-      BonusCardType: {fileID: 0}
-    - EffectType: 75
-      Conditions: []
-      BaseAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 1
-        FloatVariable: {fileID: 0}
-      DurationFormula: -1
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReTargetScope: 0
-      ApplyToEachMemberIndividually: 0
-      StatusTag: 12
-      StatusDetailText: 'When Ally Bloodied: Interject'
-      TurnDelay: 0
-      Formula: 
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 104
-      ReactionEffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionTimingWindow: 0
-      ReactionSequence: {fileID: 11400000, guid: 91703f321f71a5f4bb2be0d67977a6fc, type: 2}
       ReactionEffect:
         reactor: 1
         scope: 10
