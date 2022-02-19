@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DG.DemiEditor.DeGUINodeSystem;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Battle/CardResolutionZone")]
