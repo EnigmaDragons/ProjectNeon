@@ -15,6 +15,14 @@ public static class ResourceTypeExtensions
 {
     public static IResourceType WithMax(this IResourceType r, int max) => r.WithAmounts(r.StartingAmount, max); 
     
+    public static IResourceType WithAmounts(this IResourceType r, int starting) => new InMemoryResourceType
+    {
+        Name = r.Name,
+        Icon = r.Icon,
+        StartingAmount =  starting,
+        MaxAmount = r.MaxAmount
+    };
+    
     public static IResourceType WithAmounts(this IResourceType r, int starting, int max) => new InMemoryResourceType
     {
         Name = r.Name,

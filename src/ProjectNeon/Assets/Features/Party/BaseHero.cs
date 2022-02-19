@@ -36,6 +36,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private int startingTaunt;
     [SerializeField] private ResourceType resource1;
     [SerializeField] private int resource1GainPerTurn;
+    [SerializeField] private int resource1StartingAmountOverride = -1;
     [SerializeField] private ResourceType resource2;
     [SerializeField] private CardType[] additionalStartingCards;
     [SerializeField] private CardType[] excludedStartingCards;
@@ -67,14 +68,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public CharacterAnimations Animations => animations;
     public CharacterAnimationSoundSet AnimationSounds => animationSounds;
     
-    public IStats Stats => new StatAddends
-        {
-            ResourceTypes = resource1 != null 
-                ? resource2 != null 
-                    ? new IResourceType[] {resource1, resource2} 
-                    : new IResourceType[] {resource1} 
-                : Array.Empty<IResourceType>()
-        }
+    public IStats Stats => new StatAddends { ResourceTypes = GetResourceTypes() }
         .With(StatType.MaxHP, maxHp)
         .With(StatType.MaxShield, maxShield)
         .With(StatType.StartingShield, startingShield)
@@ -122,9 +116,28 @@ public class BaseHero : ScriptableObject, HeroCharacter
         {TemporalStatType.Dodge.ToString(), startingDodge},
         {TemporalStatType.Taunt.ToString(), startingTaunt},
     };
-
+    
     public void SetupMemberState(Member m, BattleState s)
     {
         m.State.ApplyPersistentState(new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resource1.Name, Amount = resource1GainPerTurn}, m, s.Party));
+    }
+
+    private IResourceType[] GetResourceTypes()
+    {
+        var resourceCount = 0;
+        if (resource1 != null)
+            resourceCount++;
+        if (resource2 != null)
+            resourceCount++;
+        var rt = new IResourceType[resourceCount];
+        if (resource1 != null)
+        {
+            rt[0] = resource1StartingAmountOverride > -1
+                ? resource1.WithAmounts(resource1StartingAmountOverride)
+                : resource1;
+        }
+        if (resource2 != null)
+            rt[1] = resource2;
+        return rt;
     }
 }
