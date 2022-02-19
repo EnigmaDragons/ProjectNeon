@@ -23,7 +23,7 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
     [SerializeField] private GameObject stealthItem;
     [SerializeField] private GameObject tauntItem;
     [SerializeField] private TextMeshProUGUI tauntLabel;
-    
+
     public override void Init(Member m)
     {
         hpBar.Init(m);

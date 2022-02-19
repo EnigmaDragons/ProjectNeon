@@ -17,6 +17,8 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [FormerlySerializedAs("roleDescription")] [SerializeField] private TextMeshProUGUI complexityLabel;
     [SerializeField] private TextMeshProUGUI backstory;
     [SerializeField] private NamedGameObject[] tabTargets;
+    [SerializeField] private ResourceCounterPresenter resource1;
+    [SerializeField] private ResourceCounterPresenter resource2;
     [SerializeField] private MemberSimplifiedVisualStatPanel statPanel;
     [SerializeField] private Button statButton;
     [SerializeField] private Button loreButton;
@@ -61,6 +63,22 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
             deckUi.Init(c.Deck.Cards.Select(card => card.ToNonBattleCard(c)).ToArray());
         if (basicUi != null)
             basicUi.Init(c.BasicCard.ToNonBattleCard(c).AsArray(), false);
+        if (resource1 != null)
+        {
+            resource1.SetReactivity(false);
+            if(member.State.ResourceTypes.Length < 1)
+                resource1.Hide();
+            else
+                resource1.Init(member, member.State.ResourceTypes[0]);
+        }
+        if (resource2 != null)
+        { 
+            resource2.SetReactivity(false);
+            if(member.State.ResourceTypes.Length < 2)
+                resource2.Hide();
+            else
+                resource2.Init(member, member.State.ResourceTypes[1]);
+        }
     }
 
     private void ShowHeroPathway() => Message.Publish(new ShowHeroLevelUpPathway(currentHero));

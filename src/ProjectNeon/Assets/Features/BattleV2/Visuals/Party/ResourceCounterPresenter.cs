@@ -12,6 +12,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     private Member _member;
     private IResourceType _resourceType;
     private bool IsInitialized => _member != null;
+    private bool _ignoreMessages = false; 
     
     public void Hide()
     {
@@ -25,10 +26,12 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
         icon.sprite = resource.Icon;
         UpdateUi(member.State);
     }
+
+    public void SetReactivity(bool shouldUpdate) => _ignoreMessages = !shouldUpdate;
     
     protected override void Execute(MemberStateChanged msg)
     {
-        if (msg.State.MemberId != _member.Id) return;
+        if (_ignoreMessages || msg.State.MemberId != _member.Id) return;
         
         UpdateUi(msg.State);
     }
