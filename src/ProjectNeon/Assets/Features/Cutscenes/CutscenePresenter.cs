@@ -105,7 +105,7 @@ public class CutscenePresenter : MonoBehaviour
     {        
         if (_finishTriggered)
             return;
-        
+
         DebugLog($"Show Character Dialogue Line {msg.CharacterAlias}");
         _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
             .ExecuteIfPresentOrElse(c =>
@@ -115,7 +115,7 @@ public class CutscenePresenter : MonoBehaviour
                     speech.SetAllowManualAdvance(!useAutoAdvance);
                     if (useAutoAdvance)
                         speech.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: false,
-                            () => this.ExecuteAfterDelay(FinishCurrentSegment, dialogueWaitDelay));
+                            () => Async.ExecuteAfterDelay(dialogueWaitDelay, FinishCurrentSegment));
                     else
                         c.SpeechBubble.Display(msg.Text, shouldAutoProceed: false, FinishCurrentSegment);
                 },
