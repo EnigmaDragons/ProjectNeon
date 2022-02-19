@@ -118,7 +118,7 @@ public static class AITargetSelectionLogic
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
         RecordNonStackingTags(CardTag.Taunt, ctx, targets);
         
-        return new PlayedCardV2(ctx.Member, targets, card, isTransient: false, card.Type.CalculateResources(ctx.Member.State));
+        return new PlayedCardV2(ctx.Member, targets, card, isTransient: false, false, card.Type.CalculateResources(ctx.Member.State));
     }
 
     private static void RecordNonStackingTags(CardTag tag, CardSelectionContext ctx, Target[] targets)

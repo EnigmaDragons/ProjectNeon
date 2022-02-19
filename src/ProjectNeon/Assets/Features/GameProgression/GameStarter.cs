@@ -97,12 +97,22 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             }
             else if (phase == CurrentGamePhase.LoadError)
             {
-                io.ClearCurrentSlot();
-                CurrentGameData.Clear();
-                Message.Publish(new RefreshMainMenu());
-                Message.Publish(new ShowInfoDialog(
-                    "Unfortunately, your Save Game was unable to be loaded. A bug report has been automatically filed.",
-                    "Drek!"));
+                if (CurrentGameData.SaveMatchesCurrentVersion)
+                {
+                    Message.Publish(new RefreshMainMenu());
+                    Message.Publish(new ShowInfoDialog(
+                        $"Load failed. Save Game Version is {CurrentGameData.SaveGameVersion}. Current Game Version is {CurrentGameData.GameVersion}. Updating your game may fix this issue.",
+                        "Null Persp"));
+                }
+                else
+                {
+                    io.ClearCurrentSlot();
+                    CurrentGameData.Clear();
+                    Message.Publish(new RefreshMainMenu());
+                    Message.Publish(new ShowInfoDialog(
+                        "Unfortunately, your Save Game was unable to be loaded. A bug report has been automatically filed.",
+                        "Drek!"));
+                }
             }
         }
     }

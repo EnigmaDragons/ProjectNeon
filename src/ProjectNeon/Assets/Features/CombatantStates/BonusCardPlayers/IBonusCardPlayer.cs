@@ -1,5 +1,5 @@
 
 public interface IBonusCardPlayer : ITemporalState
 {
-    Maybe<CardType> GetBonusCardOnResolutionPhaseBegun(BattleStateSnapshot snapshot);
+    Maybe<BonusCardDetails> GetBonusCardOnResolutionPhaseBegun(BattleStateSnapshot snapshot);
 }

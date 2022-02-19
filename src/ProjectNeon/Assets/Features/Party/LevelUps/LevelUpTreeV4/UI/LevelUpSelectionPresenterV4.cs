@@ -14,6 +14,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
     [SerializeField] private TextMeshProUGUI heroClassLabel;
     [SerializeField] private Image bust;
     [SerializeField] private ResourceCounterPresenter primaryResourceCounter;
+    [SerializeField] private ResourceCounterPresenter secondaryResourceCounter;
     
     [SerializeField] private TextMeshProUGUI faintLevelLabel;
     [SerializeField] private Image faintBust;
@@ -43,7 +44,8 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
     {
         if (_hero == null)
             return;
-        
+
+        var member = _hero.AsMember(-1);
         gameObject.SetActive(true);
         toEnableOnRender.ForEach(g => g.SetActive(false));
         toEnableOnFinished.ForEach(g => g.SetActive(false));
@@ -52,7 +54,15 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         fader.color = faderStartColor;
         fader.DOColor(faderStartColor.Transparent(), 1).SetEase(Ease.InOutQuad);
         bust.sprite = _hero.Character.Bust;
-        primaryResourceCounter.Init(_hero.AsMember(-1), _hero.PrimaryResource);
+        primaryResourceCounter.Init(member, _hero.PrimaryResource);
+        if (secondaryResourceCounter != null)
+        { 
+            if(member.State.ResourceTypes.Length < 2)
+                secondaryResourceCounter.Hide();
+            else
+                secondaryResourceCounter.Init(member, member.State.ResourceTypes[1]);
+        }
+
         faintBust.sprite = _hero.Character.Bust;
         faintBust.color = new Color(1, 1, 1, 1 / 255f);
         faintLevelLabel.text = _hero.Level.ToString(); 

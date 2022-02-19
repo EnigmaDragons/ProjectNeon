@@ -371,6 +371,7 @@ public class BattleState : ScriptableObject
     public bool PlayerLoses() => Heroes.All(m => m.State.IsUnconscious);
     public bool BattleIsOver() => PlayerWins() || PlayerLoses();
 
+    public bool IsMissingOrUnconscious(int memberId) => !Members.TryGetValue(memberId, out var m) || m.IsUnconscious();
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
     public bool IsEnemy(int memberId) => _enemiesById.ContainsKey(memberId);
     public HeroCharacter GetHeroById(int memberId) => _heroesById[memberId].Character;

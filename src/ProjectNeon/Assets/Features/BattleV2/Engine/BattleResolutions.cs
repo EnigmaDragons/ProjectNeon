@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -205,7 +204,6 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
                 yield return ResolveNextReactionCard(r);
             }
         }
-        //Message.Publish(new Finished<ResolveReactionCards>());
     }
     
     private IEnumerator ResolveNextReactionCard(ProposedReaction r)
@@ -243,9 +241,9 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             yield return new WaitForSeconds(DelaySeconds(card.Owner.TeamType));
             
             var resourceCalculations = r.Source.CalculateResources(reactionCard);
-            var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, resourceCalculations);
+            var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, false, resourceCalculations);
             r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity, state.Party));
-            resolutionZone.StartResolvingOneCard(playedCard, () => reactionCard.ActionSequence.Perform(r.Name, r.Source, r.Target, resourceCalculations.XAmountQuantity));
+            resolutionZone.StartResolvingOneCard(playedCard, p => p.Perform(state.GetSnapshot()));
         }
         else
         {
