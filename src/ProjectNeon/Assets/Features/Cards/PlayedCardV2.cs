@@ -9,15 +9,16 @@ public class PlayedCardV2 : IPlayedCard
     private readonly ResourceCalculations _calculations;
     private readonly bool _isSingleUse;
     private readonly bool _isTransient;
+    private readonly bool _retargetingAllowed;
     private readonly ResourceQuantity _lockedXValue;
 
-    public PlayedCardV2(Member performer, Target[] targets, Card card)
-        : this(performer, targets, card, false, performer.CalculateResources(card.Type)) {}
+    public PlayedCardV2(Member performer, Target[] targets, Card card, bool retargetingAllowed)
+        : this(performer, targets, card, false, retargetingAllowed, performer.CalculateResources(card.Type)) {}
     
-    public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient)
-        : this(performer, targets, card, isTransient, performer.CalculateResources(card.Type)) {}
+    public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient, bool retargetingAllowed)
+        : this(performer, targets, card, isTransient, retargetingAllowed, performer.CalculateResources(card.Type)) {}
     
-    public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient, ResourceCalculations calculations)
+    public PlayedCardV2(Member performer, Target[] targets, Card card, bool isTransient, bool retargetingAllowed, ResourceCalculations calculations)
     {
         if (card.IsActive && targets.Length < card.ActionSequences.Length)
             throw new InvalidDataException($"Cannot play {card.Name} with only {targets.Length}");
@@ -29,6 +30,7 @@ public class PlayedCardV2 : IPlayedCard
         _calculations = calculations;
         _isSingleUse = card.IsSinglePlay;
         _isTransient = isTransient;
+        _retargetingAllowed = retargetingAllowed;
         _card.SetXValue(new ResourceQuantity { Amount = calculations.XAmount, ResourceType = calculations.ResourcePaidType.Name });
         _lockedXValue = _card.LockedXValue.Value;
     }
@@ -37,9 +39,11 @@ public class PlayedCardV2 : IPlayedCard
     public Member Member => _performer;
     public Card Card => _card;
     public Target[] Targets => _targets;
+    public ResourceCalculations Calculations => _calculations; 
     public ResourceQuantity Spent => _calculations.PaidQuantity;
     public bool IsSingleUse => _isSingleUse;
     public bool IsTransient => _isTransient;
+    public bool RetargetingAllowed => _retargetingAllowed;
 
     public void Perform(BattleStateSnapshot beforeCard)
     {

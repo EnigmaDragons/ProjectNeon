@@ -28,7 +28,7 @@ public abstract class StatefulTurnAI : TurnAI
         {
             Log.Error(e);
             var member = battleState.Members[memberId];
-            return new PlayedCardV2(member, new Target[1]{new Single(member)}, new Card(battleState.GetNextCardId(), member, strategy.SpecialCards.AiGlitchedCard));
+            return new PlayedCardV2(member, new Target[1]{new Single(member)}, new Card(battleState.GetNextCardId(), member, strategy.SpecialCards.AiGlitchedCard), false);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.DemiEditor.DeGUINodeSystem;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Battle/CardResolutionZone")]
@@ -51,6 +52,7 @@ public class CardResolutionZone : ScriptableObject
     
     public void PlayImmediately(IPlayedCard played)
     {
+        Log.Info($"{played.Member.Name} played {played.Card.Name}");
         var shouldQueue = isResolving || MessageGroup.IsInProgress || currentResolvingCardZone.HasCards;
         RecordCardAndPayCosts(played);
         
@@ -97,7 +99,17 @@ public class CardResolutionZone : ScriptableObject
         _pendingMoves = _pendingMoves.Skip(1).ToList();
         if (physicalZone.HasCards)
             physicalZone.DrawOneCard();
-        StartResolvingOneNonReactionCard(move);
+
+        if (move.RetargetingAllowed && move.Targets.FirstAsMaybe().IsPresentAnd(t => t.Members.All(m => battleState.IsMissingOrUnconscious(m.Id))))
+        {
+            var retargetedCard = move.Retargeted(GetTargets(move.Member, move.Card, Maybe<Target[]>.Missing()));
+            BattleLog.Write($"{move.Member.Name}'s {move.Card.Name} was auto-retargeted.");
+            StartResolvingOneNonReactionCard(retargetedCard);
+        }
+        else
+        {
+            StartResolvingOneNonReactionCard(move);
+        }
     }
     
     private void Enqueue(IPlayedCard card)
@@ -138,10 +150,10 @@ public class CardResolutionZone : ScriptableObject
     private void StartResolvingOneNonReactionCard(IPlayedCard played)
     {
         _movesThisTurn.Add(played);
-        StartResolvingOneCard(played, () => played.Perform(battleState.GetSnapshot()));
+        StartResolvingOneCard(played, p => p.Perform(battleState.GetSnapshot()));
     }
 
-    public void StartResolvingOneCard(IPlayedCard played, Action perform)
+    public void StartResolvingOneCard(IPlayedCard played, Action<IPlayedCard> perform)
     {
         isResolving = true;
         Message.Publish(new CardResolutionStarted(played));
@@ -182,7 +194,7 @@ public class CardResolutionZone : ScriptableObject
             }
             else
             {
-                perform();
+                perform(played);
             }
         });
     }
@@ -224,15 +236,18 @@ public class CardResolutionZone : ScriptableObject
                 var card = bc.Card;
                 var bcCost = bc.Cost.Amount; 
                 var paidAmount = new ResourceCalculations(card.Cost.ResourceType, bcCost, 0, 0); // Not factoring in X-Cost. Not relevant unless we have X-Cost Chain cards.
-                if (!card.IsPlayableBy(member, battleState.Party, 1)) 
+                if (!card.IsPlayableBy(member, battleState.Party, 1, paidAmount))
+                {
+                    Log.Info($"Bonus Card {bc.Card.Name} not playable since {member.Name} could not afford it.");
                     continue;
+                }
 
                 var lastPlayedMove = _movesThisTurn.LastOrMaybe();
                 var targets = GetTargets(member, card, lastPlayedMove.Map(move => move.Targets));
                 if (member.TeamType == TeamType.Party)
-                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true, paidAmount));
+                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true, retargetingAllowed: true, paidAmount));
                 else
-                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true, paidAmount));
+                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true, retargetingAllowed: true, paidAmount));
                 Message.Publish(new DisplayCharacterWordRequested(member, CharacterReactionType.BonusCardPlayed));
             }
         }
@@ -248,7 +263,7 @@ public class CardResolutionZone : ScriptableObject
         var card = chainingMove.Card.ChainedCard.Value;
         var targets = GetTargets(owner, card, chainingMove.Targets);
 
-        Queue(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner, chainingMove.Card.OwnerTint, chainingMove.Card.OwnerBust), true, ResourceCalculations.Free));
+        Queue(new PlayedCardV2(owner, targets, card.CreateInstance(battleState.GetNextCardId(), owner, chainingMove.Card.OwnerTint, chainingMove.Card.OwnerBust), isTransient: true, retargetingAllowed: true, ResourceCalculations.Free));
         Message.Publish(new DisplayCharacterWordRequested(owner, CharacterReactionType.ChainCardPlayed));
     }
     
