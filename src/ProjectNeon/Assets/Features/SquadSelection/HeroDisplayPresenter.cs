@@ -58,7 +58,13 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         backstory.text = c.Flavor.BackStory;
         var member = c.AsMemberForLibrary();
         if (statPanel != null)
+        {
             statPanel.Init(member);
+            var resourceGains = c.TurnResourceGains;
+            if (resourceGains.Length > 0)
+                if (resourceGains[0].BaseAmount > 0)
+                    statPanel.SetPrimaryResourceGain(resourceGains[0].ResourceType.Icon, resourceGains[0].BaseAmount);
+        }
         if (deckUi != null)
             deckUi.Init(c.Deck.Cards.Select(card => card.ToNonBattleCard(c)).ToArray());
         if (basicUi != null)

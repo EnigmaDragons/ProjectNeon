@@ -116,7 +116,11 @@ public class BaseHero : ScriptableObject, HeroCharacter
         {TemporalStatType.Dodge.ToString(), startingDodge},
         {TemporalStatType.Taunt.ToString(), startingTaunt},
     };
-    
+
+    public IResourceAmount[] TurnResourceGains => resource1 != null
+        ? new IResourceAmount[1] { new InMemoryResourceAmount(resource1GainPerTurn, resource1, false) }
+        : new IResourceAmount[0]; 
+
     public void SetupMemberState(Member m, BattleState s)
     {
         m.State.ApplyPersistentState(new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resource1.Name, Amount = resource1GainPerTurn}, m, s.Party));

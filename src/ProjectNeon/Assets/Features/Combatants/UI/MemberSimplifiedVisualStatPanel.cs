@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MemberSimplifiedVisualStatPanel : MemberUiBase
 {
@@ -8,6 +9,7 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
     [SerializeField] private TextMeshProUGUI cardPlaysLabel;
     [SerializeField] private GameObject resourceGainItem;
     [SerializeField] private TextMeshProUGUI resourceGainLabel;
+    [SerializeField] private Image resourceGainIcon;
     [SerializeField] private GameObject leadershipItem;
     [SerializeField] private TextMeshProUGUI leadershipLabel;
     [SerializeField] private GameObject atkItem;
@@ -40,6 +42,13 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
         Set(tauntItem, tauntLabel, m.Taunt());
     }
 
+    public void SetPrimaryResourceGain(Sprite icon, int amount)
+    {
+        resourceGainIcon.sprite = icon;
+        resourceGainLabel.text = amount.ToString();
+        resourceGainItem.SetActive(true);
+    }
+    
     private void Set(GameObject g, TextMeshProUGUI t, int value)
     {
         g.SetActive(value > 0);
