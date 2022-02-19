@@ -21,12 +21,24 @@ public class EnemiesWantedEditor : EditorWindow
         {
             var encounterBuilderCalculator = GetAllInstances<EncounterBuilderToUseToCalculateWhatEnemiesAreNeeded>().First();
             var battleRoles = encounterBuilderCalculator.NormalEncounterBuilder._chancesBasedOnEnemyNumber.SelectMany(x => x.RollChances).Distinct().ToArray();
-            var minTotal = encounterBuilderCalculator.NormalPowerCurve._start;
+            var minTotal = 0;
+            var maxTotal = 0;
+            if (encounterBuilderCalculator.NormalPowerCurve is SimpleLinearPowerCurve)
+            {
+                var powerCurve = (SimpleLinearPowerCurve) encounterBuilderCalculator.NormalPowerCurve;
+                minTotal = powerCurve._start;
+                maxTotal = powerCurve._end;
+            }
+            if (encounterBuilderCalculator.NormalPowerCurve is MultiPointPowerCurve)
+            {
+                var powerCurve = (MultiPointPowerCurve) encounterBuilderCalculator.NormalPowerCurve;
+                minTotal = powerCurve._start;
+                maxTotal = powerCurve._end;
+            }
             var min = Mathf.FloorToInt(encounterBuilderCalculator.NormalEncounterBuilder._weightedComps
                 .Select(x => (float)x.Weights.Min() * ((float)minTotal / (float)x.Weights.Sum()))
                 .OrderBy(x => x)
                 .First());
-            var maxTotal = encounterBuilderCalculator.NormalPowerCurve._end;
             var max = Mathf.CeilToInt(encounterBuilderCalculator.NormalEncounterBuilder._weightedComps
                 .Select(x => (float)x.Weights.Max() * ((float)maxTotal / (float)x.Weights.Sum()))
                 .OrderByDescending(x => x)
@@ -53,12 +65,24 @@ public class EnemiesWantedEditor : EditorWindow
         {
             var encounterBuilderCalculator = GetAllInstances<EncounterBuilderToUseToCalculateWhatEnemiesAreNeeded>().First();
             var battleRoles = encounterBuilderCalculator.EliteEncounterBuilder._chancesBasedOnEnemyNumber.SelectMany(x => x.RollChances).Distinct().ToArray();
-            var minTotal = encounterBuilderCalculator.ElitePowerCurve._start;
+            var minTotal = 0;
+            var maxTotal = 0;
+            if (encounterBuilderCalculator.ElitePowerCurve is SimpleLinearPowerCurve)
+            {
+                var powerCurve = (SimpleLinearPowerCurve) encounterBuilderCalculator.ElitePowerCurve;
+                minTotal = powerCurve._start;
+                maxTotal = powerCurve._end;
+            }
+            if (encounterBuilderCalculator.ElitePowerCurve is MultiPointPowerCurve)
+            {
+                var powerCurve = (MultiPointPowerCurve) encounterBuilderCalculator.ElitePowerCurve;
+                minTotal = powerCurve._start;
+                maxTotal = powerCurve._end;
+            }
             var min = Mathf.FloorToInt(encounterBuilderCalculator.EliteEncounterBuilder._weightedComps
                 .Select(x => (float)x.Weights.Max() * ((float)minTotal / (float)x.Weights.Sum()))
                 .OrderBy(x => x)
                 .First());
-            var maxTotal = encounterBuilderCalculator.ElitePowerCurve._end;
             var max = Mathf.CeilToInt(encounterBuilderCalculator.EliteEncounterBuilder._weightedComps
                 .Select(x => (float)x.Weights.Max() * ((float)maxTotal / (float)x.Weights.Sum()))
                 .OrderByDescending(x => x)
