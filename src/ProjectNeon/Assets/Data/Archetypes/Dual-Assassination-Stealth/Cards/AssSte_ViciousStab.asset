@@ -10,41 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: AssassinationStealth_LieInWait
+  m_Name: AssSte_ViciousStab
   m_EditorClassIdentifier: 
-  id: 47
+  id: 54
   customName: 
-  art: {fileID: 21300000, guid: 7bdbaf4e295581e4092f83b5818366db, type: 3}
-  description: Gives <b>2 Mark</b>\n\nEnter <b>Stealth</b>
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  art: {fileID: 21300000, guid: b675e34e30faf074b929afc7043e21cb, type: 3}
+  description: '<b>Sneaky</b>: Gives {E[0]}\nDeal {E[1]}.\n<b>Chain:</b> Gouge'
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    cost: 2
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
   rarity: 2
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: fb88a5f98ffd79947aa79ffbb16b786b, type: 2}
+    cardActions: {fileID: 11400000, guid: e04c1398dc814a44e83d35cd4d40dcd4, type: 2}
     repeatX: 0
     repeatCount: 0
-  - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
-    repeatX: 0
-    repeatCount: 0
-  chainedCard: {fileID: 0}
+  chainedCard: {fileID: 11400000, guid: b1a82869714474242b7f89f9161155f6, type: 2}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
-  highlightCondition: []
-  unhighlightCondition:
-  - {fileID: 11400000, guid: 4789d19598838464e801c47edc10315a, type: 2}
+  highlightCondition:
+  - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
+  unhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

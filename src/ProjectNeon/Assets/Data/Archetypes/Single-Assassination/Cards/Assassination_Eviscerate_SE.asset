@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: AssassinationStealth_PrepareAmbush_E_Self
+  m_Name: Assassination_Eviscerate_SE
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      EffectType: 0
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -23,18 +23,17 @@ MonoBehaviour:
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: 1
         FloatVariable: {fileID: 0}
-      DurationFormula: 0
+      DurationFormula: 1
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
+      StatusTag: 21
       StatusDetailText: 
       TurnDelay: 0
       Formula: 
@@ -47,16 +46,17 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
+      ReactionConditionType: 21
       ReactionEffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
-        cardActions: {fileID: 0}
+        cardActions: {fileID: 11400000, guid: ad175581c127ff24db70176c92fcd05f, type: 2}
       BonusCardType: {fileID: 0}
     conditionData:
       ConditionType: 0
@@ -72,6 +72,7 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 0
+      Conditions: []
     atTargetAnimation:
       animation:
         UseConstant: 1
@@ -83,5 +84,6 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
+      conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}

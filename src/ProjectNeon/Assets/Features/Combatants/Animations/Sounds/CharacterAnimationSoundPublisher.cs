@@ -9,7 +9,7 @@ public static class CharacterAnimationSoundPublisher
     
     public static void Play(CharacterAnimationSoundType sound)
     {
-        Log.Info($"Play {sound}");
+        Log.Info($"SFX: Play {sound}");
         Message.Publish(new PlayCharacterAnimSound {SoundType = sound});
     }
 }
