@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeroSelectionUI : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class HeroSelectionUI : MonoBehaviour
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private SelectHeroButton selectHeroButtonTemplate;
+    [SerializeField] private Button viewHeroDetailsButton;
     [SerializeField] private Transform parent;
 
+    private void Awake() => viewHeroDetailsButton.onClick.AddListener(ViewHeroDetails);
+    
     public void Init()
     {
         Log.Info($"Hero Selection UI - Init - Heroes {string.Join(",", party.Heroes.Select(h => h.Name))} Decks {party.Decks.Length}");
@@ -29,4 +33,6 @@ public class HeroSelectionUI : MonoBehaviour
     }
 
     private void SelectFirstHero() => state.SelectedHeroesDeck = state.HeroesDecks.First();
+
+    private void ViewHeroDetails() => Message.Publish(new ShowHeroDetailsView(state.SelectedHero));
 }

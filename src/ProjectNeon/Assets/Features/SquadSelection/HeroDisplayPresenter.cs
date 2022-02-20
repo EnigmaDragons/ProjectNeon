@@ -20,6 +20,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private ResourceCounterPresenter resource1;
     [SerializeField] private ResourceCounterPresenter resource2;
     [SerializeField] private MemberSimplifiedVisualStatPanel statPanel;
+    [SerializeField] private GameObject buttonsPanel;
     [SerializeField] private Button statButton;
     [SerializeField] private Button loreButton;
     [SerializeField] private Button cardsButton;
@@ -36,7 +37,8 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         loreButton.onClick.AddListener(() => ShowTab("Lore"));
         cardsButton.onClick.AddListener(() => ShowTab("Cards"));
         loreButton.Select();
-        ShowTab("Lore");
+        if (buttonsPanel.activeSelf)
+            ShowTab("Lore");
         if (!_isInitialized && currentHero != null)
             Init(currentHero);
     }
@@ -44,7 +46,8 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     public void Hide() => gameObject.SetActive(false);
     
     public void Init(HeroCharacter c) => Init(c, false, () => {});
-    public void Init(HeroCharacter c, bool isClickable, Action onClick)
+    public void Init(HeroCharacter c, bool isClickable, Action onClick) => Init(c, c.AsMemberForLibrary(), isClickable, onClick);
+    public void Init(HeroCharacter c, Member m, bool isClickable, Action onClick)
     {
         _isInitialized = true;
         _onClick = onClick;
@@ -56,7 +59,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         heroDescription.text = c.Flavor.HeroDescription;
         complexityLabel.text = $"Complexity: {c.ComplexityRating}/5";
         backstory.text = c.Flavor.BackStory;
-        var member = c.AsMemberForLibrary();
+        var member = m;
         if (statPanel != null)
         {
             statPanel.Init(member);
@@ -87,6 +90,12 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         }
     }
 
+    public void LockToTab(string tabName)
+    {
+        ShowTab(tabName);
+        buttonsPanel.SetActive(false);
+    }
+    
     private void ShowHeroPathway() => Message.Publish(new ShowHeroLevelUpPathway(currentHero));
 
     public void OnPointerEnter(PointerEventData eventData)

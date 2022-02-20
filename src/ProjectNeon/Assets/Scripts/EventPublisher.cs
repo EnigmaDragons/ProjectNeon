@@ -52,4 +52,5 @@ public class EventPublisher : ScriptableObject
     public void ToggleCredits() => Message.Publish(new ToggleCredits());
     public void SkipCutscene() => Message.Publish(new SkipCutsceneRequested());
     public void AdvanceCutscene() => Message.Publish(new AdvanceCutsceneRequested());
+    public void HideHeroDetailsView() => Message.Publish(new HideHeroDetailsView());
 }

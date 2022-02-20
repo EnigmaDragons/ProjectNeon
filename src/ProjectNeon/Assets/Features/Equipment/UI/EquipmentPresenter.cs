@@ -24,6 +24,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     private static void NoOp() {}
     
     private bool _useHoverHighlight = false;
+    private bool _useAnyHover = false;
     private Action _onClick = NoOp;
     private Action _onHoverEnter = NoOp;
     private Action _onHoverExit = NoOp;
@@ -31,13 +32,14 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
 
     public void Set(Equipment e, Action onClick) => Initialized(e, onClick);
     
-    public EquipmentPresenter Initialized(Equipment e, Action onClick, bool useHoverHighlight = false)
+    public EquipmentPresenter Initialized(Equipment e, Action onClick, bool useHoverHighlight = false, bool useAnyHover = true)
     {
         _currentEquipment = e;
         _onClick = onClick;
         _onHoverEnter = NoOp;
         _onHoverExit = NoOp;
         _useHoverHighlight = useHoverHighlight;
+        _useAnyHover = useAnyHover;
         nameLabel.text = e.Name;
         slotLabel.text = $"{e.Slot}";
         var archetypeText = e.Archetypes.Any()
@@ -73,6 +75,9 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!_useAnyHover)
+            return;
+        
         if (_useHoverHighlight)
             highlight.SetActive(true);
         
@@ -83,7 +88,10 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     }
 
     public void OnPointerExit(PointerEventData eventData)
-    {
+    {        
+        if (!_useAnyHover)
+            return;
+        
         if (_useHoverHighlight)
             highlight.SetActive(false);
         
