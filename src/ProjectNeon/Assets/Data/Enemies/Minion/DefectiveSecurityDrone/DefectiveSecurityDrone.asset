@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: DefectiveSecurityDrone
+  m_EditorClassIdentifier: 
+  id: 53
+  enemyName: 
+  excludeFromBestiary: 0
+  lastBalanceDate: 2022/02/19
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 10
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
+  preferredTurnOrder: 99
+  prefab: {fileID: 8479632304954044795, guid: d8e4dfe3008d6374a9b6097dbfa1afc6, type: 3}
+  materialType: 0
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 1
+  unique: 0
+  isHasty: 1
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: Damage dealer that breaks down over time
+  animations: {fileID: 11400000, guid: f4be4445584c15649bef7394b564dd13, type: 2}
+  animationSounds: {fileID: 11400000, guid: ef690b9ff1cdd2845a7095aceaca96ce, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 12
+    maxShield: 0
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 7
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 2
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 5
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 27
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: -2
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 17.7
+      perCardValue: 7
+      resourceValue: 2.3100002
+      perTurnPower: 5
+      maxAndStartingResourcesPower: 0
+      estimatedTurnsAlive: 1.7700001
+      calculatedPowerLevel: 27
+    startOfBattleEffects:
+    - EffectType: 66
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 8
+      StatusDetailText: Lose 1 Attack
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 44adda5a3ef2edb4588086d23ab9361d, type: 2}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
+    - {fileID: 11400000, guid: eaf631b5c07a72e4195f45094a5e59ca, type: 2}
+    - {fileID: 11400000, guid: 761950a3d56290744807009265401c22, type: 2}
