@@ -10,17 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Stealth_Opportunist
+  m_Name: Stealth_Hide
   m_EditorClassIdentifier: 
-  id: 482
+  id: 542
   customName: 
-  art: {fileID: 21300000, guid: f940052a2f7ad654d97f2bef56e8f8f9, type: 3}
-  description: '<b>Sneaky:</b> Deal {E[0]}.
-
-
-    Otherwise enter <b>Stealth</b>
-    and gain {E[2]}'
-  typeDescription: {fileID: 0}
+  art: {fileID: 21300000, guid: ad95441340a9efe438ebf8a1f70b3d96, type: 3}
+  description: Gain <b>Stealth</b>
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -28,16 +24,11 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 2
+  rarity: 0
   actionSequences:
   - scope: 0
-    group: 1
-    cardActions: {fileID: 11400000, guid: d01f02b21dd4efa47a11c4671cdd232e, type: 2}
-    repeatX: 0
-    repeatCount: 0
-  - scope: 0
     group: 0
-    cardActions: {fileID: 11400000, guid: 09d90b6c3b298f147aa7452710ae4455, type: 2}
+    cardActions: {fileID: 11400000, guid: 466d38571d5b4614ebf500301a65cb37, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -49,4 +40,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
-  notAvailableForGeneralDistribution: 0
+  notAvailableForGeneralDistribution: 1
