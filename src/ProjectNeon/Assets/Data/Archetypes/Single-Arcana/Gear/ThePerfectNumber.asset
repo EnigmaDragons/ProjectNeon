@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 48
   displayName: The Perfect Number
-  description: 'Start of Turn: If you have exactly 7 Mana, gain +3 Magic for the
-    battle'
+  description: 'End of Turn: If you have exactly 8 Mana, gain +4 Magic for the battle'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
@@ -24,7 +23,8 @@ MonoBehaviour:
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
-  turnStartEffects:
+  turnStartEffects: []
+  turnEndEffects:
   - EffectType: 68
     Conditions:
     - {fileID: 11400000, guid: e7c10c8a2338b8c48ad826aea99fbe87, type: 2}
@@ -42,12 +42,12 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: e04cb353987dbad4094394cb66ac1c6a, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 3
+    Formula: 4
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
@@ -62,12 +62,61 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
-  turnEndEffects: []
-  battleStartEffects: []
+  battleStartEffects:
+  - EffectType: 73
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    DurationFormula: -1
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
+    StatusTag: 12
+    StatusDetailText: 'End of Turn: If you have exactly 8 Mana, gain +4 Magic for
+      the battle'
+    TurnDelay: 0
+    Formula: 
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionTimingWindow: 0
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  requiresStatType: 03000000
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

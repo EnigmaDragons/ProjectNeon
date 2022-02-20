@@ -27,6 +27,7 @@ public interface HeroCharacter
     CharacterAnimations Animations { get; }
     CharacterAnimationSoundSet AnimationSounds { get; }
     Dictionary<string, int> CounterAdjustments { get; }
+    IResourceAmount[] TurnResourceGains { get; }
 
     void SetupMemberState(Member m, BattleState s);
 }
@@ -56,6 +57,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public CharacterAnimations Animations { get; }
     public CharacterAnimationSoundSet AnimationSounds { get; }
     public Dictionary<string, int> CounterAdjustments { get; } = new Dictionary<string, int>();
+    public IResourceAmount[] TurnResourceGains { get; } = new IResourceAmount[0];
     public void SetupMemberState(Member m, BattleState s) {}
 }
 
