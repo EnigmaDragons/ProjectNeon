@@ -10,26 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: AssSte_UnseenMenace
+  m_Name: AssSte_FlawlessExecution
   m_EditorClassIdentifier: 
-  id: 551
+  id: 549
   customName: 
-  art: {fileID: 21300000, guid: 6fc2e7f2002811040b427d3eb5791784, type: 3}
-  description: "For the Battle,\r\nOn Mark: Gain <b>+1 Power\r</b>\nOn Stealth: Gain
-    <b>+2 Power\r</b>\nOn Slay: Gain <b>+5 Power</b>"
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  art: {fileID: 21300000, guid: 2de94549c78244d46ad654bd46ecdefe, type: 3}
+  description: '<b>Sneaky: </b>Deal {E[0]}.
+
+    <b>Marked: </b>Deal {E[1]}.
+
+    Deal
+    {E[2]} <b>| Crit: Bloody</b>'
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
+    cost: 3
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 4
   actionSequences:
   - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: ee5d5354cf915d34a96158370c9884b7, type: 2}
+    group: 1
+    cardActions: {fileID: 11400000, guid: 6c013cf876e47054a83d5a037aad17b1, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: bbd9ded93a6c8944398943d690943a6c, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: f64e127fdd838c148beafdd2553e2307, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
