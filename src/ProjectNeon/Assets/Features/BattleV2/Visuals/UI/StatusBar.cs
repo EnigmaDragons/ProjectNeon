@@ -137,7 +137,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddCustomTextStatusIcons(statuses, StatusTag.WhenDamaged, "Secret When Damaged Effect");
         
         AddCustomTextStatusIcons(statuses, StatusTag.StartOfTurnTrigger, "Secret Start of Turn Effect");
-        AddCustomTextStatusIcons(statuses, StatusTag.EndOfTurnTrigger, "Secret Start of Turn Effect");
+        AddCustomTextStatusIcons(statuses, StatusTag.EndOfTurnTrigger, "Secret End of Turn Effect");
 
         UpdateComparisonWithPrevious(statuses);
         UpdateStatuses(statuses);

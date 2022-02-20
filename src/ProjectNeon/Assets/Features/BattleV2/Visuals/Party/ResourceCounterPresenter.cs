@@ -25,6 +25,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
         _resourceType = resource;
         icon.sprite = resource.Icon;
         UpdateUi(member.State);
+        gameObject.SetActive(true);
     }
 
     public void SetReactivity(bool shouldUpdate) => _ignoreMessages = !shouldUpdate;
