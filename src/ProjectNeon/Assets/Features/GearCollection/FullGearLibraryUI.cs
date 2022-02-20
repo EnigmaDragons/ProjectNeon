@@ -21,9 +21,9 @@ public class FullGearLibraryUI : MonoBehaviour
             gearPool.All
                 .Where(c => c.Slot != EquipmentSlot.Permanent)
                 .Where(c => !c.IsRandomlyGenerated())
-                .OrderByDescending(c => c.Corp)
-                .ThenByDescending(c => c.Archetypes.Any())
+                .OrderByDescending(c => c.Archetypes.Any())
                 .ThenBy(c => c.GetArchetypeKey())
+                .ThenBy(c => c.Corp)
                 .ThenBy(c => c.Slot)
                 .ThenBy(c => c.Rarity)
                 .ThenBy(c => c.Name)
