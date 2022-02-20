@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Lockdown_PowerTransfer
+  m_Name: Dominik_IonizingSlash
   m_EditorClassIdentifier: 
-  id: 358
+  id: 554
   customName: 
-  art: {fileID: 21300000, guid: 93d4bedb2ffe9a343bf738eb3394cae6, type: 3}
-  description: <b>Drain</b> all resources
-  typeDescription: {fileID: 11400000, guid: 9899a7b68bc22484e927e10f3ea183b5, type: 2}
+  art: {fileID: 21300000, guid: c5a0ce97cf214164aa62eb4dce7227d1, type: 3}
+  description: "Deal {E[0]}. \n\nYou gain {E[1]}"
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 1
+    cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 1
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: fa3865181e52ef44baf9dbd1335470b8, type: 2}
+    cardActions: {fileID: 11400000, guid: 784d159dd0a78324da342313619f0c16, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -36,8 +36,9 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
+  - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
   - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
-  notAvailableForGeneralDistribution: 0
+  notAvailableForGeneralDistribution: 1

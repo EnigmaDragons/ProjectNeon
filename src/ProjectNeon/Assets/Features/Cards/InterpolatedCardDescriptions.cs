@@ -119,6 +119,13 @@ public static class InterpolatedCardDescriptions
         if (owner.IsPresent && _resourceIcons.TryGetValue(owner.Value.PrimaryResourceQuantity().ResourceType, out var icon))
             result = result.Replace("Owner[PrimaryResource]", Sprite(icon));
 
+        if (owner.IsPresent)
+        {
+            var primaryStatText = owner.Value.PrimaryStat().ToString();
+            result = result.Replace("Power", primaryStatText);
+            result = result.Replace("POW", primaryStatText);
+        }
+
         foreach (var r in _resourceIcons)
             result = result.Replace(r.Key, Sprite(r.Value));
         
