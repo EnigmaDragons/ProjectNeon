@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: OrdinanceTargetingDrone
+  m_EditorClassIdentifier: 
+  id: 54
+  enemyName: 
+  excludeFromBestiary: 0
+  lastBalanceDate: Never
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: bd8e5654971a1ef4895e3bf12cf6c8be, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
+  preferredTurnOrder: 99
+  prefab: {fileID: 0}
+  materialType: 2
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 1
+  unique: 0
+  isHasty: 1
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: 
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
+  stageDetails:
+  - stage: 1
+    maxHp: 10
+    maxShield: 0
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 0
+    magic: 0
+    leadership: 9
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 1
+    maxResourceAmount: 4
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 0
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 10
+      perCardValue: 9
+      resourceValue: 2.97
+      perTurnPower: 11.97
+      maxAndStartingResourcesPower: 4.7234883
+      estimatedTurnsAlive: 1
+      calculatedPowerLevel: 27
+    startOfBattleEffects:
+    - EffectType: 0
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 0}
+    - {fileID: 0}
