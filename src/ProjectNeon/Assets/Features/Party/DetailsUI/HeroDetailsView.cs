@@ -11,6 +11,7 @@ public class HeroDetailsView : MonoBehaviour
     [SerializeField] private EquipmentPresenter equipmentPresenterProto;
     [SerializeField] private Image darken;
     [SerializeField] private GameObject view;
+    [SerializeField] private GameObject noAugmentsLabel;
 
     private float _duration = 0.4f;
     private Vector3 _viewScale;
@@ -30,6 +31,7 @@ public class HeroDetailsView : MonoBehaviour
         var numGear = h.Equipment.All.Length;
         contentSize.sizeDelta = new Vector2(contentSize.sizeDelta.x, numGear * itemHeight);
         h.Equipment.All.ForEach(a => Instantiate(equipmentPresenterProto, augmentsDisplay.transform).Initialized(a, () => {}, false, false));
+        noAugmentsLabel.SetActive(numGear == 0);
         
         Animate();
     }
