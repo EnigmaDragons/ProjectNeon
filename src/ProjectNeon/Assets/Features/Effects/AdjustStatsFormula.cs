@@ -26,7 +26,7 @@ public class AdjustStatsFormula : Effect
         var sourceSnapshot = ctx.Source.GetSnapshot().State;
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
-            var stat = _e.EffectScope.Value.Equals("PrimaryStat")
+            var stat = _e.EffectScope.Value.Equals("PrimaryStat") || _e.EffectScope.Value.Equals(StatType.Power.ToString())
                 ? m.PrimaryStat().ToString()
                 : _e.EffectScope;
 
@@ -62,7 +62,7 @@ public class AdjustStatsFormula : Effect
         var sourceSnapshot = ctx.Source.GetSnapshot().State;
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
-            var stat = _e.EffectScope.Value.Equals("PrimaryStat")
+            var stat = _e.EffectScope.Value.Equals("PrimaryStat") || _e.EffectScope.Value.Equals(StatType.Power.ToString())
                 ? m.PrimaryStat().ToString()
                 : _e.EffectScope;
 
