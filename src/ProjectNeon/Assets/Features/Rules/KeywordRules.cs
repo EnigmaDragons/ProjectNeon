@@ -23,6 +23,7 @@ public static class KeywordRules
     public static readonly string PrimaryStat = "PrimaryStat";
     public static readonly string Quick = "Quick";
     public static readonly string SelfDestruct = "SelfDestruct";
+    public static readonly string ReStealth = "ReStealth";
 
 
     private static readonly string[] RulesByImportanceArr = {
@@ -37,6 +38,7 @@ public static class KeywordRules
         "Sneaky",
         "Profitable",
         "Defenseless",
+        ReStealth,
         TemporalStatType.Marked.ToString(),
         TemporalStatType.DoubleDamage.ToString(),
         TemporalStatType.Stun.ToString(),
@@ -88,6 +90,8 @@ public static class KeywordRules
     {
         rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase(SelfDestruct));
         rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase("Self-Destruct"));
+        rulesToShow.AddIf(ReStealth, description.ContainsAnyCase(ReStealth));
+        rulesToShow.AddIf(ReStealth, description.ContainsAnyCase("Re-Stealth"));
         rulesToShow.AddIf(Injure, description.ContainsAnyCase(Injure));
         rulesToShow.AddIf(Injure, description.ContainsAnyCase("Injury"));
         rulesToShow.AddIf(Focus, description.ContainsAnyCase(Focus));
