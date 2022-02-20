@@ -23,9 +23,9 @@ public class FullGearLibraryUI : MonoBehaviour
                 .Where(c => !c.IsRandomlyGenerated())
                 .OrderByDescending(c => c.Archetypes.Any())
                 .ThenBy(c => c.GetArchetypeKey())
+                .ThenBy(c => c.Rarity)
                 .ThenBy(c => c.Corp)
                 .ThenBy(c => c.Slot)
-                .ThenBy(c => c.Rarity)
                 .ThenBy(c => c.Name)
                 .Select(InitEquipmentInLibraryButton)
                 .ToList(), 
