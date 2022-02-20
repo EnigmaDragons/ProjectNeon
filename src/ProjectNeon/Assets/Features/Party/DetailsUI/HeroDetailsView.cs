@@ -1,3 +1,4 @@
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +31,7 @@ public class HeroDetailsView : MonoBehaviour
         augmentsDisplay.DestroyAllChildren();
         var numGear = h.Equipment.All.Length;
         contentSize.sizeDelta = new Vector2(contentSize.sizeDelta.x, numGear * itemHeight);
-        h.Equipment.All.ForEach(a => Instantiate(equipmentPresenterProto, augmentsDisplay.transform).Initialized(a, () => {}, false, false));
+        h.Equipment.All.Where(x => !x.Name.Equals("Implant")).ForEach(a => Instantiate(equipmentPresenterProto, augmentsDisplay.transform).Initialized(a, () => {}, false, false));
         noAugmentsLabel.SetActive(numGear == 0);
         
         Animate();
