@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: EnergizedBruiser
+  m_EditorClassIdentifier: 
+  id: 0
+  enemyName: 
+  excludeFromBestiary: 0
+  lastBalanceDate: 2022/02/20
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: f536780fabfce9141933c05122731104, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 0f00000004000000
+  preferredTurnOrder: 40
+  prefab: {fileID: 7152533079230225068, guid: dae764c0ad160314d8995e478438a758, type: 3}
+  materialType: 1
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 2
+  unique: 1
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Giving resources for being damaged, and bringing an energetic playstyle,
+    as this enemy speeds up the longer left alive
+  animations: {fileID: 11400000, guid: 0c6ec023aa24f014b9c90f242dccdf77, type: 2}
+  animationSounds: {fileID: 11400000, guid: b37b21136045a4f47b5aa7d16f49dd3b, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 50
+    maxShield: 0
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 9
+    magic: 0
+    leadership: 0
+    armor: 1
+    resistance: 3
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 12
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 120
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 61.129997
+      perCardValue: 9
+      resourceValue: 2.97
+      perTurnPower: 11.97
+      maxAndStartingResourcesPower: 2.7659032
+      estimatedTurnsAlive: 6.113
+      calculatedPowerLevel: 120
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 9
+      StatusDetailText: When Damaged the attacker gains 1 resource
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 2
+        cardActions: {fileID: 11400000, guid: c2ba2802859a5ef4692d7ef4842a6786, type: 2}
+      BonusCardType: {fileID: 0}
+    Cards:
+    - {fileID: 11400000, guid: 7b18c20a3abb2c344b0ba32c74c3f487, type: 2}
+    - {fileID: 11400000, guid: 943bc25e79b55d64f83b9b79751aa4a9, type: 2}
+    - {fileID: 11400000, guid: 87c5f7470590e8f4796fcf2a66e7fed5, type: 2}
