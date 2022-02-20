@@ -35,6 +35,7 @@ public class BattleState : ScriptableObject
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
     private readonly CurrentBattleStats _currentBattleStats = new CurrentBattleStats();
     private int _numPlayerDiscardsUsedThisTurn = 0;
+    private bool _runStatsWritten = false;
 
     public int CreditsAtStartOfBattle { get; private set; }
     public bool IsSelectingTargets = false;
@@ -130,6 +131,7 @@ public class BattleState : ScriptableObject
         IsSelectingTargets = false;
         turnNumber = 0;
         _currentBattleStats.Clear();
+        _runStatsWritten = false;
     }
 
     public void SetPhase(BattleV2Phase p) => UpdateState(() => phase = p);
@@ -334,6 +336,16 @@ public class BattleState : ScriptableObject
             rewardGear = RewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
         };
         AllMetrics.PublishBattleSummary(battleSummaryReport);
+        AccumulateRunStats();
+        EnemyArea.Clear();
+    }
+
+    public void AccumulateRunStats()
+    {
+        if (_runStatsWritten)
+            return;
+
+        _runStatsWritten = true;
         CurrentGameData.Write(d =>
         {
             d.Stats.TotalTurnsPlayed += TurnNumber;
@@ -346,7 +358,6 @@ public class BattleState : ScriptableObject
             d.Stats.TotalHealingReceived += Stats.HealingReceived;
             return d;
         });
-        EnemyArea.Clear();
     }
     
     private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => Math.Min(h.CurrentHp(), h.State.BaseStats.MaxHp())).ToArray());
