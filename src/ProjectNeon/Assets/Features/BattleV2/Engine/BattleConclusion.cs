@@ -43,7 +43,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
             Message.Publish(new AutoSaveRequested());
             state.AccumulateRunStats();
             conclusion.Set(true, adventure.Adventure.VictoryConclusion, CurrentGameData.Data.Stats);
-            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeReturnToAdventure);
+            CurrentGameData.Clear();
+            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
         }
         else
         {
