@@ -84,8 +84,8 @@ public static class AITargetSelectionLogic
             return possibleTargets.Where(x => x.Members.All(m => m.CurrentHp() > 6)).MostPowerful();
         if (card.Is(CardTag.Defense, CardTag.Shield) && action.Group == Group.Ally)
         {
-            if (possibleTargets.Any(x => !x.HasShield()))
-                return possibleTargets.Where(x => !x.HasShield())
+            if (possibleTargets.Any(x => !x.HasShield() && x.TotalRemainingShieldCapacity() > 5))
+                return possibleTargets.Where(x => !x.HasShield() && x.TotalRemainingShieldCapacity() > 5)
                     .MostVulnerable();
             // Or, use shield to whomever could use the most
             return possibleTargets.OrderByDescending(x => x.TotalRemainingShieldCapacity()).First();
