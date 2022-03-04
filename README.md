@@ -20,7 +20,7 @@ Setup:
 1. Clone this repository using git
 2. Install any C# IDE of your choice. [Visual Studio 2019](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16) recommended.
 3. Install [Unity Hub](https://unity3d.com/get-unity/download)
-4. Launch Unity Hub and Install Unity Version 2019.3.1f1
+4. Launch Unity Hub and Install Unity Version 2020.3.1f1 from the Archive section or by clicking here: [Version 2020.3.1f1](unityhub://2020.3.1f1/77a89f25062f)
 5. In Unity Hub, click Add
 6. Browse and select `../repo/src/ProjectNeon`
 7. Click on `ProjectNeon`
