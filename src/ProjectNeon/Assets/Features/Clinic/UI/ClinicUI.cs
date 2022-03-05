@@ -39,7 +39,7 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
         if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4)
         {
             party.UpdateCreditsBy(-9999, false);
-            party.UpdateCreditsBy(party.Heroes.Length);   
+            party.UpdateCreditsBy(party.Heroes.Length + 1);   
         }
         patientParent.DestroyAllChildren();
         var costCalculator = clinics.GetCostCalculator(clinic.Corp);
