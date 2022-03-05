@@ -10,65 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: CorpFixer_PullingTheStrings
+  m_Name: Scheme-PullingTheStrings
   m_EditorClassIdentifier: 
   id: 56
   displayName: Pulling The Strings
-  description: '+1 Card Cycle. Start of Battle: Create a <b>Quick</b>, single use,
-    free, I''ve Got Connections'
+  description: 'Start of Battle: Create a <b>Quick</b>, single use, free, I''ve Got
+    Connections in hand'
   corp: {fileID: 11400000, guid: 33641feb13cddf64da66a37831d9c198, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   rarity: 4
-  slot: 3
+  slot: 2
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 28
-    Conditions: []
-    BaseAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      Variable: {fileID: 0}
-    FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    DurationFormula: -1
-    EffectScope:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
-    HitsRandomTargetMember: 0
-    TargetsSource: 0
-    ReTargetScope: 0
-    StatusTag: 0
-    StatusDetailText: 
-    TurnDelay: 0
-    Formula: 1
-    InterpolatePartialFormula:
-      EvaluationPartialFormula: 
-      Prefix: 
-      Suffix: 
-    FlavorText:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 0
-    ReactionEffectScope:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-    ReactionSequence: {fileID: 0}
-    ReactionEffect:
-      reactor: 0
-      scope: 0
-      cardActions: {fileID: 0}
-    BonusCardType: {fileID: 0}
   - EffectType: 43
     Conditions: []
     BaseAmount:
@@ -85,8 +43,8 @@ MonoBehaviour:
       ConstantValue: 370
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -105,10 +63,16 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 
