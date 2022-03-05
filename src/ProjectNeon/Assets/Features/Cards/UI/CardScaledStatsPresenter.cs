@@ -32,7 +32,7 @@ public class CardScaledStatsPresenter : MonoBehaviour
             if (formula.IndexOf(stat.ToString(), StringComparison.OrdinalIgnoreCase) >= 0)
                 stats.Add(stat.ToString());
         foreach (var stat in StatTypeAliases.AbbreviationToFullNames)
-            if (formula.IndexOf(stat.Key, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (formula.IndexOf(stat.Key, StringComparison.Ordinal) >= 0)
                 stats.Add(stat.Value);
         return stats;
     }
