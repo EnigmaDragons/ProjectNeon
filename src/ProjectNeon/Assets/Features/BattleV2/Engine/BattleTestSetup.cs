@@ -86,12 +86,33 @@ public class BattleTestSetup : MonoBehaviour
     
     public void SetupCardTest()
     {
+        var h1Deck = new List<CardTypeData>();
+        var h2Deck = new List<CardTypeData>();
+        var h3Deck = new List<CardTypeData>();
+        
         var cardArchs = cards.First().Archetypes;
         var hero = cardArchs.All(hero1.Archetypes.Contains) 
             ? hero1 
             : library.UnlockedHeroes.First(h => cardArchs.All(h.Archetypes.Contains));
+
+        var h1Cards = cards.Where(c => c.Archetypes.All(hero.Archetypes.Contains)).ToArray();
+        Enumerable.Range(0, 12).ForEach(i => h1Deck.Add(h1Cards[i % h1Cards.Length]));
+        
+        if (hero2 != null)
+        {
+            var h2Cards = cards.Except(h1Deck).Where(c => c.Archetypes.All(hero2.Archetypes.Contains)).ToArray();
+            if (h2Cards.Any())
+                Enumerable.Range(0, 12).ForEach(i => h2Deck.Add(h2Cards[i % h2Cards.Length]));
+        }
+        if (hero3 != null)
+        {
+            var h3Cards = cards.Except(h1Deck).Except(h2Deck).Where(c => c.Archetypes.All(hero3.Archetypes.Contains)).ToArray();
+            if (h3Cards.Any())
+                Enumerable.Range(0, 12).ForEach(i => h3Deck.Add(h3Cards[i % h3Cards.Length]));
+        }
+
         setup.InitParty(hero, hero2, hero3);
-        setup.InitPartyDecks(Enumerable.Range(0, 12).Select(i => cards[i % cards.Length]).Cast<CardTypeData>().ToList(), new List<CardTypeData>(), new List<CardTypeData>());
+        setup.InitPartyDecks(h1Deck, h2Deck, h3Deck);
         var equipment = hero.Name.Equals(hero1.Name) 
             ? hero1Equipment : hero.Name.Equals(hero2.Name) 
             ? hero2Equipment : hero.Name.Equals(hero3.Name) 
