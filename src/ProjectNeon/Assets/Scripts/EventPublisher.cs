@@ -46,10 +46,12 @@ public class EventPublisher : ScriptableObject
     public void MoveTutorialNext() => Message.Publish(new TutorialNextRequested());
     public void MoveTutorialPrevious() => Message.Publish(new TutorialPreviousRequested());
     public void ShowTutorialIfNeeded(string tutorialName) => Message.Publish(new ShowTutorialByNameIfNeeded(tutorialName));
+    public void ShowTutorial(string tutorialName) => Message.Publish(new ShowTutorialByName(tutorialName));
     public void ApplyGlobalEffect(StaticGlobalEffect e) => Message.Publish(new ApplyGlobalEffect(e));
     public void ClearGlobalEffects() => Message.Publish(new ClearGlobalEffects());
     public void WinGameImmediately() => Message.Publish(new WinGameRequested());
     public void ToggleCredits() => Message.Publish(new ToggleCredits());
+    public void ToggleLearningMenu() => Message.Publish(new ToggleNamedTarget("LearningMenu"));
     public void SkipCutscene() => Message.Publish(new SkipCutsceneRequested());
     public void AdvanceCutscene() => Message.Publish(new AdvanceCutsceneRequested());
     public void HideHeroDetailsView() => Message.Publish(new HideHeroDetailsView());
