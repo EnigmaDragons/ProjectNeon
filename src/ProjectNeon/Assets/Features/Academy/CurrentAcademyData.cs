@@ -17,8 +17,8 @@ public class CurrentAcademyData
     {
         _stored.Write(transform);
         _current = transform(_current);
+        Message.Publish(new AcademyDataUpdated(_current));
     }
 
-    public static void Save() => _stored.Write(_ => _current);
     public static void Clear() => Write(_ => new AcademyData());
 }
