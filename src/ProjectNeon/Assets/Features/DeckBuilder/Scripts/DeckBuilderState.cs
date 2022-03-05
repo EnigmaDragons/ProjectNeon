@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameState/DeckBuilder")]
@@ -23,4 +24,6 @@ public class DeckBuilderState : ScriptableObject
             Message.Publish(new DeckBuilderHeroSelected(_selectedHeroesDeck));
         }
     }
+    
+    public Action OnDeckbuilderClosedAction { get; set; }
 }

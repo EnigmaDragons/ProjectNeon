@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8993635129939822072
 RectTransform:
   m_ObjectHideFlags: 0
@@ -137,20 +137,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btn: {fileID: 8846141809657269297}
-  text: Reading Cards
+  text: Deck Building
   action:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
         m_TargetAssemblyTypeName: EventPublisher, GameAssembly
-        m_MethodName: ShowTutorial
+        m_MethodName: ToggleNamedUiElement
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Card
+          m_StringArgument: DeckBuilder
           m_BoolArgument: 0
         m_CallState: 2
   sounds: {fileID: 0}
@@ -411,7 +411,7 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: LearningMenu
     Variable: {fileID: 0}
-  alwaysStartInactive: 1
+  alwaysStartInactive: 0
 --- !u!114 &6038145283461214506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,9 +429,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
-        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
-        m_MethodName: ToggleLearningMenu
+      - m_Target: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
+        m_TargetAssemblyTypeName: Navigator, EnigmaDragons.Core
+        m_MethodName: NavigateToTitleScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
