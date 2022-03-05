@@ -46,13 +46,13 @@ public class EquipmentPool : ScriptableObject
     
     public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, int n, string corp = null)
     {
-        var primaryStats = party.Select(h => h.Stats.DefaultPrimaryStat()).ToHashSet();
+        var partyKeyStats = party.SelectMany(h => h.Stats.KeyStatTypes()).ToHashSet();
         return All
             .Where(x => x.Slot == slot)
             .Where(x => x.Rarity == rarity) 
             .Where(x => party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains)))
             .Where(x => string.IsNullOrWhiteSpace(corp) || x.Corp == corp)
-            .Where(x => x.DistributionRules.ShouldInclude(primaryStats))
+            .Where(x => x.DistributionRules.ShouldInclude(partyKeyStats))
             .DistinctBy(x => x.Description)
             .ToArray()
             .Shuffled()
@@ -72,10 +72,10 @@ public class EquipmentPool : ScriptableObject
         }
     }
 
-    public IEnumerable<Equipment> Possible(EquipmentSlot slot, Rarity rarity, HashSet<string> archs, StatType primaryStat)
+    public IEnumerable<Equipment> Possible(EquipmentSlot slot, Rarity rarity, HashSet<string> archs, HashSet<StatType> heroStats, HashSet<StatType> partyStats)
         => All
             .Where(x => x.Slot == slot)
             .Where(x => x.Rarity == rarity)
             .Where(x => x.Archetypes.All(archs.Contains))
-            .Where(x => x.DistributionRules.ShouldInclude(primaryStat));
+            .Where(x => x.DistributionRules.ShouldInclude(heroStats, partyStats));
 }

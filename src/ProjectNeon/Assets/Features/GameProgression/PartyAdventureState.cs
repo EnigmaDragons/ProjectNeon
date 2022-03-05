@@ -25,6 +25,7 @@ public sealed class PartyAdventureState : ScriptableObject
 
     public HeroCharacter[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
     public Hero[] Heroes => heroes;
+    public HashSet<StatType> KeyStats => heroes.SelectMany(h => h.Stats.KeyStatTypes()).ToHashSet();
     public int[] Hp =>  heroes.Select(h => h.CurrentHp).ToArray();
     public RuntimeDeck[] Decks => heroes.Select(h => h.Deck).ToArray();
     public Blessing[] Blessings => _blessings?.ToArray() ?? (_blessings = new Queue<Blessing>()).ToArray();
