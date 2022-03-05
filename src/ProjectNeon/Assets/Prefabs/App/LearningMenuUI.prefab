@@ -166,6 +166,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3034457169491597204}
   - component: {fileID: 9165161573603611603}
+  - component: {fileID: 6201152037556033148}
+  - component: {fileID: 8018220918066209058}
   m_Layer: 0
   m_Name: TutorialCard_1
   m_TagString: Untagged
@@ -206,14 +208,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btn: {fileID: 7897634271246614070}
-  text: Reading Cards
+  text: Combat Training
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
-        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
-        m_MethodName: ShowTutorial
-        m_Mode: 5
+      - m_Target: {fileID: 6201152037556033148}
+        m_TargetAssemblyTypeName: StageSegmentStarter, GameAssembly
+        m_MethodName: StartSegment
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -225,6 +227,48 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+--- !u!114 &6201152037556033148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3357156405456097481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e8e8641416439badc0578409f83ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beforeStartAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8018220918066209058}
+        m_TargetAssemblyTypeName: BattleV4TutorialSetup, GameAssembly
+        m_MethodName: PerformSetup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  stage: {fileID: 11400000, guid: 4f66f8e97d9f4414eb1b722742b9eac6, type: 2}
+--- !u!114 &8018220918066209058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3357156405456097481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f8bf0665fc4a73a9695bab3546c811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  trainee: {fileID: 11400000, guid: 70455e28326e267409572764043c04a8, type: 2}
 --- !u!1 &3850891364628184743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,6 +1297,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!224 &6298475267973101439 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 5991511649876129640}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8501786533881575381 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -1264,11 +1313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &6298475267973101439 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 5991511649876129640}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6636483738367986828
 PrefabInstance:
   m_ObjectHideFlags: 0
