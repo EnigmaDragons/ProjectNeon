@@ -12,6 +12,8 @@ public class StoryEventPresenterV4 : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Extensions.Gradient corpTint;
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private OptionButton optionButtonPrototype;
+    [SerializeField] private GameObject multiChoiceParent;
+    [SerializeField] private MultiChoiceButton multiChoiceButtonPrototype;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private EquipmentPool allEquipmentPool;
     [SerializeField] private GameObject rewardParent;
@@ -34,6 +36,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
     [SerializeField] private GameObject corpBranding;
     
     private OptionButton[] _buttons;
+    private MultiChoiceButton[] _multiChoiceButtons;
 
     private void Awake()
     {
@@ -77,14 +80,32 @@ public class StoryEventPresenterV4 : MonoBehaviour
             storyNameLabel.text = s.DisplayName;
         }
         storyTextArea.text = s.StoryText;
-        for (var i = _buttons.Length - 1; i > -1; i--)
+        if (s.IsMultiChoice)
         {
-            if (s.Choices.Length <= i)
+            InitFreshMultiChoiceButtons();
+            for (var i = _buttons.Length - 1; i > -1; i--)
             {
-                _buttons[i].Hide();
-                continue;
+                if (i == 1)
+                    _buttons[i].Init("Done", () =>
+                    {
+                        _multiChoiceButtons.ForEach(x => x.Apply());
+                        Message.Publish(new MarkStoryEventCompleted());
+                    });
+                else
+                    _buttons[i].Hide();
             }
-            _buttons[i].Init(s.Choices[i], ctx, s);
+        }
+        else
+        {
+            for (var i = _buttons.Length - 1; i > -1; i--)
+            {
+                if (s.Choices.Length <= i)
+                {
+                    _buttons[i].Hide();
+                    continue;
+                }
+                _buttons[i].Init(s.Choices[i], ctx, s);
+            }
         }
         Message.Publish(new StoryEventBegun(transform));
     }
@@ -96,6 +117,15 @@ public class StoryEventPresenterV4 : MonoBehaviour
         // Necessary due to TextMeshProUGUI Vertex Color
         _buttons = Enumerable.Range(0, 4)
             .Select(x => Instantiate(optionButtonPrototype, optionsParent.transform))
+            .ToArray();
+    }
+    
+    private void InitFreshMultiChoiceButtons()
+    {
+        multiChoiceParent.DestroyAllChildren();
+        // Necessary due to TextMeshProUGUI Vertex Color
+        _multiChoiceButtons = Enumerable.Range(0, 4)
+            .Select(x => Instantiate(multiChoiceButtonPrototype, multiChoiceParent.transform))
             .ToArray();
     }
     
