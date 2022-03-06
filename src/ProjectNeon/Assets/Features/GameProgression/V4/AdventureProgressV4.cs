@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,7 +10,9 @@ public class AdventureProgressV4 : AdventureProgressBase
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private int currentSegmentIndex;
     [SerializeField] private int rngSeed = Rng.NewSeed();
-    
+
+    private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
+
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public override int CurrentStageProgress => currentSegmentIndex;
@@ -22,6 +25,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     public override float BonusXpLevelFactor => 0.33333f;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     private int CurrentStageLength => CurrentChapter.SegmentCount;
+    
     
     public StaticStageV4 CurrentChapter
     {
@@ -113,7 +117,9 @@ public class AdventureProgressV4 : AdventureProgressBase
             FinishedStoryEvents = new string[0],
             PlayerReadMapPrompt = true,
             ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray(),
-            RngSeed = rngSeed
+            RngSeed = rngSeed,
+            States = _storyStates.Keys.ToArray(),
+            StateValues = _storyStates.Values.ToArray()
         };
     
     public bool InitAdventure(GameAdventureProgressData d, Adventure adventure)
@@ -122,6 +128,9 @@ public class AdventureProgressV4 : AdventureProgressBase
         currentSegmentIndex = d.CurrentSegmentIndex;
         ApplyGlobalEffects(d.ActiveGlobalEffectIds);
         rngSeed = d.RngSeed;
+        _storyStates = new DictionaryWithDefault<string, bool>(false);
+        for (var i = 0; i < d.States.Length; i++)
+            _storyStates[d.States[i]] = d.StateValues[i];
         return true;
     }
 
@@ -131,4 +140,6 @@ public class AdventureProgressV4 : AdventureProgressBase
         rngSeed = Rng.NewSeed();;
         AdvanceStageIfNeeded();
     }
+
+    public override void SetStoryState(string state, bool value) => _storyStates[state] = value;
 }

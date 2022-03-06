@@ -14,6 +14,7 @@ public static class AllCutsceneSegments
                 new ShowCharacterDialogueLine(CutsceneCharacterAliases.Narrator, e.Text),
                 new FullyDisplayDialogueLine(CutsceneCharacterAliases.Narrator))},
             {CutsceneSegmentType.Wait, e => new MessagePublishSegment(new CutsceneWaitRequested(e.FloatAmount))},
+            {CutsceneSegmentType.Choice, e => new MessagePublishSegment(new BeginStoryEvent2(e.StoryEvent))}
         };
 
     public static CutsceneSegment Create(CutsceneSegmentData data)

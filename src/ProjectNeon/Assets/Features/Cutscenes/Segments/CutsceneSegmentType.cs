@@ -5,4 +5,6 @@ public enum CutsceneSegmentType
     DialogueLine = 1,
     NarratorLine = 2,
     Wait = 3,
+    Choice = 4,
+    MultiChoice = 5
 }
