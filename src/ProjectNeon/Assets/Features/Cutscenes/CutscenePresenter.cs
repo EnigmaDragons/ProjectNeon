@@ -150,12 +150,16 @@ public class CutscenePresenter : MonoBehaviour
         narrator.SpeechBubble.ForceHide();
         disableOnFinished.ForEach(d => d.SetActive(false));
         MessageGroup.TerminateAndClear();
-        progress.AdventureProgress.Advance();
-        Message.Publish(new AutoSaveRequested());
+        if (cutscene.OnCutsceneFinishedAction.IsMissing) // Is Game Flow Cutscene
+        {
+            progress.AdventureProgress.Advance();
+            Message.Publish(new AutoSaveRequested());
+        }
+        var onFinishedAction = cutscene.OnCutsceneFinishedAction.Select(a => a, navigator.NavigateToGameSceneV4);
         if (useDelay)
-            this.ExecuteAfterDelay(navigator.NavigateToGameSceneV4, cutsceneFinishNavigationDelay);
+            this.ExecuteAfterDelay(onFinishedAction, cutsceneFinishNavigationDelay);
         else
-            navigator.NavigateToGameSceneV4();
+            onFinishedAction();
     }
 
     private void HidePreviousSegmentStuff()

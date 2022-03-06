@@ -7,7 +7,7 @@ public class CutsceneCommandHandler : OnMessage<StartCutsceneRequested>
     
     protected override void Execute(StartCutsceneRequested msg)
     {
-        current.Init(msg.Cutscene);
+        current.Init(msg.Cutscene, msg.OnFinished);
         navigator.NavigateToCutsceneScene();
     }
 }
