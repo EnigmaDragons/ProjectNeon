@@ -8,6 +8,7 @@ public abstract class ProgressiveText : MonoBehaviour
     public abstract void Display(string text, bool shouldAutoProceed, bool manualInterventionDisablesAuto, Action onFinished);
     public abstract void Proceed(bool isAuto);
     public abstract void SetAllowManualAdvance(bool allow);
+    public abstract void SetDisplayReversed(bool reversed);
 
     public void Display(string text) 
         => Display(text,  false, true, () => { });
