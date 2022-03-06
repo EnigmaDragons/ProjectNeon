@@ -19,15 +19,5 @@ public static class TutorialTracker
             };
             return s;
         });
-        
-        CurrentGameData.Write(s =>
-        {
-            s.TutorialData = new GameTutorialData
-            {
-                ShouldShowTutorials = s.TutorialData.ShouldShowTutorials,
-                CompletedTutorialNames = new HashSet<string>(s.TutorialData.CompletedTutorialNames) { tutorialName }.ToArray()
-            };
-            return s;
-        });
     }
 }
