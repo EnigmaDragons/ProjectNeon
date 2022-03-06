@@ -24,7 +24,7 @@ public class EventPublisher : ScriptableObject
     public void ConfirmSquadSelection() => Message.Publish(new ConfirmSquadSelection());
     public void ToggleClinic() => Message.Publish(new ToggleClinic());
     public void ReducePartyHeroesHpBy10() => Message.Publish(new UpdatePartyAdventureState(p => p.Heroes.ForEach(h => h.AdjustHp(-10))));
-    public void ActivatePartyDetailsWizardFlow() => Message.Publish(new TogglePartyDetails { ShouldSaveOnFinished = false });
+    public void ActivatePartyDetailsWizardFlow() => Message.Publish(new TogglePartyDetails { ShouldSaveOnFinished = false, ShouldFightOnFinished = true });
     public void ActivateDeckBuilderTutorialFlow() => Message.Publish(new TogglePartyDetails { ShouldSaveOnFinished = false, ShouldFightOnFinished = false });
     public void ToggleCardLibrary() => Message.Publish(new ToggleCardLibrary());
     public void ToggleEnemyCardLibrary() => Message.Publish(new ToggleEnemyCardLibrary());
