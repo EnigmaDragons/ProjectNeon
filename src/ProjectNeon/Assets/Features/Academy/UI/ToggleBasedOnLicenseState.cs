@@ -1,11 +1,9 @@
-using System.Linq;
 using UnityEngine;
 
-public class ToggleBasedOnCompletedTutorial : OnMessage<AcademyDataUpdated>
+public class ToggleBasedOnLicenseState : OnMessage<AcademyDataUpdated>
 {
-    [SerializeField] private GameObject[] targets;
+    [SerializeField] private GameObject[] turnOnTargets;
     [SerializeField] private GameObject[] turnOffTargets;
-    [SerializeField] private StringReference requiresTutorial;
 
     private bool _isEnabled;
     
@@ -13,15 +11,15 @@ public class ToggleBasedOnCompletedTutorial : OnMessage<AcademyDataUpdated>
 
     protected override void Execute(AcademyDataUpdated msg) => Render(true);
 
-    private void Render(bool animate)
+    private void Render(bool shouldAnimate)
     {
-        var shouldBeEnabled = CurrentAcademyData.Data.TutorialData.CompletedTutorialNames.Contains(requiresTutorial);
+        var shouldBeEnabled = CurrentAcademyData.Data.IsLicensedBenefactor;
         var changed = _isEnabled != shouldBeEnabled;
         _isEnabled = shouldBeEnabled;
-        targets.ForEach(t =>
+        turnOnTargets.ForEach(t =>
         {
             t.SetActive(shouldBeEnabled);
-            if (!animate || !shouldBeEnabled || !changed) return;
+            if (!shouldAnimate || !shouldBeEnabled || !changed) return;
             
             Message.Publish(new TweenMovementRequested(t.transform, new Vector3(0.56f, 0.56f, 0.56f), 1, MovementDimension.Scale));
             Message.Publish(new TweenMovementRequested(t.transform, new Vector3(-0.56f, -0.56f, -0.56f), 2, MovementDimension.Scale));
