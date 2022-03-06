@@ -62,9 +62,9 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
             {
                 for (var ii = 0; ii < 2; ii++)
                 {
-                    var option = GetOption(_party.Heroes[i], i);
+                    var option = GetOption(_party.Heroes[i], i * 2 + ii);
                     while (newGeneratedOptions.Any(x => x.Description == option.Description))
-                        option = GetOption(_party.Heroes[i], i);
+                        option = GetOption(_party.Heroes[i], i * 2 + ii);
                     newGeneratedOptions.Add(option);   
                 }
             }

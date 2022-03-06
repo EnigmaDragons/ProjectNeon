@@ -7,6 +7,7 @@ public class GameObjectSetting : CutsceneSetting
 
     public override void SpawnTo(GameObject parent)
     {
-        Instantiate(battlefield, parent.transform);
+        var obj = Instantiate(battlefield, parent.transform);
+        obj.GetComponent<CutsceneCharacterRoster>()?.Init();
     }
 }
