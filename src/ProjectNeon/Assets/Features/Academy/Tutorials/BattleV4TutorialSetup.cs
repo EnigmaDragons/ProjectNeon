@@ -14,7 +14,7 @@ public class BattleV4TutorialSetup : MonoBehaviour
             s.TutorialData = new AcademyTutorialData
             {
                 CompletedTutorialNames = s.TutorialData.CompletedTutorialNames
-                    .Where(x => !x.StartsWith("BattleV4"))
+                    .Where(x => !x.StartsWith("BattleV4-"))
                     .ToArray()
             };
             return s;

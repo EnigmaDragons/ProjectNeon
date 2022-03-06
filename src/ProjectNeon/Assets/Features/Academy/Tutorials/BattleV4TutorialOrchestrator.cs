@@ -35,7 +35,7 @@ public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Fi
         else if (!_hasPlayedTutorialAfterAttackPlay && state.Enemies[0].Member.CurrentShield() < 10)
         {
             _hasPlayedTutorialAfterAttackPlay = true;
-            Message.Publish(new ShowTutorialSlideshowIfNeeded(afterAttackPlay));
+            this.ExecuteAfterDelay(() => Message.Publish(new ShowTutorialSlideshowIfNeeded(afterAttackPlay)), 1f);
         }
         else if (!_hasPlayedTutorialAfterGaining6Resources && state.Heroes[0].PrimaryResourceQuantity().Amount >= 6)
         {
