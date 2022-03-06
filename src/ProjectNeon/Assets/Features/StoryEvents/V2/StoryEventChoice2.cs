@@ -30,7 +30,7 @@ public class StoryEventChoice2
         var roll = predeterminedRoll.OrDefault(Rng.Dbl());
         if (Resolution.Length > 1)
             Message.Publish(new ShowDieRoll((int)Math.Ceiling(Math.Abs(1 - roll) * 20)));
-        else if (Resolution.Length == 1 && !Resolution.Single().HasContinuation)
+        else if (Resolution.Length == 1 && !Resolution.Single().HasContinuation && !owner.InCutscene)
             Message.Publish(new ShowNoDieRollNeeded());
         var possibleOutcomes = new Dictionary<float, StoryResolution2>();
         var rangeStart = 0f;

@@ -172,4 +172,6 @@ public class AdventureProgress2 : AdventureProgressBase
         rngSeed = Rng.NewSeed();
         AdvanceStageIfNeeded();
     } 
+    
+    public override void SetStoryState(string state, bool value) {}
 }
