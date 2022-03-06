@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Finished<ShowTooltip>, TurnStarted, SwappedCard, ShowEnemyDetails, ShowDetailedCardView>
+public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Finished<ShowTooltip>, TurnStarted, SwappedCard, ShowEnemyDetails, ShowDetailedCardView, BattleFinished>
 {
     [SerializeField] private TutorialSlideshow intro;
     [SerializeField] private TutorialSlideshow afterShieldPlay;
@@ -91,5 +91,11 @@ public class BattleV4TutorialOrchestrator : OnMessage<CardResolutionFinished, Fi
             _hasInspectedACard = true;
             Message.Publish(new ShowTutorialSlideshowIfNeeded(afterInspectingCard));
         }
+    }
+
+    protected override void Execute(BattleFinished msg)
+    {
+        if (msg.Winner == TeamType.Party)
+            TutorialTracker.RecordTutorialCompleted(Tutorials.BattleV4);
     }
 }

@@ -15,9 +15,10 @@ public class CurrentAcademyData
     
     public static void Write(Func<AcademyData, AcademyData> transform)
     {
+        var before = Data.ToSnapshot();
         _stored.Write(transform);
         _current = transform(_current);
-        Message.Publish(new AcademyDataUpdated(_current));
+        Message.Publish(new AcademyDataUpdated(before, _current.ToSnapshot()));
     }
 
     public static void Clear() => Write(_ => new AcademyData());

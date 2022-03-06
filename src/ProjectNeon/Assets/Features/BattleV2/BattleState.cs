@@ -31,7 +31,7 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private int turnNumber;
     [SerializeField, ReadOnly] private PlayerState playerState = new PlayerState();
     
-    public bool DontShuffleNextBattle { get; set; }
+    public bool DontShuffleNextBattle { get; set; } // Weird to let something else set this
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
     private readonly CurrentBattleStats _currentBattleStats = new CurrentBattleStats();
     private int _numPlayerDiscardsUsedThisTurn = 0;
