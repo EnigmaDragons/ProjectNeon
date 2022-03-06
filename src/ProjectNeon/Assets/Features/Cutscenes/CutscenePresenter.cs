@@ -40,7 +40,7 @@ public class CutscenePresenter : MonoBehaviour
     {
         _characters.Clear();
         _characters.Add(narrator);
-        
+
         cutscene.Current.Setting.SpawnTo(settingParent);
         setupParty.Execute(settingParent);
 
