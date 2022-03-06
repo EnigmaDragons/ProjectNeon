@@ -21,16 +21,6 @@ public sealed class SaveLoadSystem : ScriptableObject
     public void SaveCheckpoint() => SaveCurrentGame();
     public void ClearCurrentSlot() => CurrentGameData.Clear();
 
-    public void SetShouldShowTutorials(bool shouldShow) => CurrentGameData.Write(s =>
-    {
-        s.TutorialData = new GameTutorialData
-        {
-            ShouldShowTutorials = shouldShow,
-            CompletedTutorialNames = s.TutorialData.CompletedTutorialNames
-        };
-        return s;
-    });
-    
     private void SaveCurrentGame()
     {
         CurrentGameData.Write(s =>

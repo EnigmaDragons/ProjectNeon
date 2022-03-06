@@ -38,7 +38,7 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
         equipmentLibraryUI.GenerateLibrary();
         cardFilter.Regenerate();
         heroDetails.Initialized();
-        if (msg.AllowDone)
+        if (msg.ShouldSaveOnFinished)
         {
             saveButton.gameObject.SetActive(true);
             fightOnlyElements.ForEach(x => x.SetActive(false));

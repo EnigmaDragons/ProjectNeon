@@ -24,7 +24,8 @@ public class EventPublisher : ScriptableObject
     public void ConfirmSquadSelection() => Message.Publish(new ConfirmSquadSelection());
     public void ToggleClinic() => Message.Publish(new ToggleClinic());
     public void ReducePartyHeroesHpBy10() => Message.Publish(new UpdatePartyAdventureState(p => p.Heroes.ForEach(h => h.AdjustHp(-10))));
-    public void ActivatePartyDetailsWizardFlow() => Message.Publish(new TogglePartyDetails { AllowDone = false });
+    public void ActivatePartyDetailsWizardFlow() => Message.Publish(new TogglePartyDetails { ShouldSaveOnFinished = false });
+    public void ActivateDeckBuilderTutorialFlow() => Message.Publish(new TogglePartyDetails { ShouldSaveOnFinished = false, ShouldFightOnFinished = false });
     public void ToggleCardLibrary() => Message.Publish(new ToggleCardLibrary());
     public void ToggleEnemyCardLibrary() => Message.Publish(new ToggleEnemyCardLibrary());
     public void ToggleGearLibrary() => Message.Publish(new ToggleGearLibrary());
@@ -46,11 +47,14 @@ public class EventPublisher : ScriptableObject
     public void MoveTutorialNext() => Message.Publish(new TutorialNextRequested());
     public void MoveTutorialPrevious() => Message.Publish(new TutorialPreviousRequested());
     public void ShowTutorialIfNeeded(string tutorialName) => Message.Publish(new ShowTutorialByNameIfNeeded(tutorialName));
+    public void ShowTutorial(string tutorialName) => Message.Publish(new ShowTutorialByName(tutorialName));
     public void ApplyGlobalEffect(StaticGlobalEffect e) => Message.Publish(new ApplyGlobalEffect(e));
     public void ClearGlobalEffects() => Message.Publish(new ClearGlobalEffects());
     public void WinGameImmediately() => Message.Publish(new WinGameRequested());
     public void ToggleCredits() => Message.Publish(new ToggleCredits());
+    public void ToggleLearningMenu() => Message.Publish(new ToggleNamedTarget("LearningMenu"));
     public void SkipCutscene() => Message.Publish(new SkipCutsceneRequested());
     public void AdvanceCutscene() => Message.Publish(new AdvanceCutsceneRequested());
     public void HideHeroDetailsView() => Message.Publish(new HideHeroDetailsView());
+    public void ToggleNamedUiElement(string elementName) => Message.Publish(new ToggleNamedTarget(elementName));
 }

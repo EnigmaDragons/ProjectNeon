@@ -535,6 +535,7 @@ GameObject:
   - component: {fileID: 1079700320}
   - component: {fileID: 1079700319}
   - component: {fileID: 1079700323}
+  - component: {fileID: 1079700324}
   m_Layer: 5
   m_Name: EarlyAccessUi
   m_TagString: Untagged
@@ -645,9 +646,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
-        m_TargetAssemblyTypeName: Navigator, EnigmaDragons.Core
-        m_MethodName: NavigateToTitleScreen
+      - m_Target: {fileID: 1079700324}
+        m_TargetAssemblyTypeName: NavigateToAcademyOrTitle, GameAssembly
+        m_MethodName: Execute
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -660,6 +661,19 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 1
+--- !u!114 &1079700324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079700318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc2beaeb7f854a90a1020ad6aa74b590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
 --- !u!1001 &1080228670
 PrefabInstance:
   m_ObjectHideFlags: 0

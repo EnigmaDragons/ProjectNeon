@@ -20,7 +20,6 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         io.ClearCurrentSlot();
         encounterHistory.Clear();
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
-        io.SetShouldShowTutorials(msg.ShouldShowTutorials);
         
         if (defaultAdventure.IsV2)
             if (allowPlayerToSelectAdventure)
@@ -29,7 +28,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                 SelectDefaultAdventureV2();
         
         if (defaultAdventure.IsV4)
-            StartDefaultAdventureV4(!msg.ShouldShowTutorials);
+            StartDefaultAdventureV4(true);
     }
     
     private void SelectDefaultAdventureV2()
@@ -135,22 +134,6 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
 
     private void KickOffGameStartProcess()
     {
-        if (defaultAdventure.IsV2 || defaultAdventure.IsV4)
-            AskPlayerWhetherTutorialsShouldBeEnabled();
-        else
-            Message.Publish(new StartNewGame(false));
-    }
-    
-    private void AskPlayerWhetherTutorialsShouldBeEnabled()
-    {
-        Message.Publish(new ShowTwoChoiceDialog
-        {
-            UseDarken = true,
-            Prompt = "Is this your first time playing Metroplex Zero?",
-            PrimaryButtonText = "Yes",
-            PrimaryAction = () => Message.Publish(new StartNewGame(true)),
-            SecondaryButtonText = "No",
-            SecondaryAction = () => Message.Publish(new StartNewGame(false)),
-        });
+        Message.Publish(new StartNewGame());
     }
 }

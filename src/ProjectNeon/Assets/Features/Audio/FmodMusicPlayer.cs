@@ -34,14 +34,16 @@ public class FmodMusicPlayer : MonoBehaviour
     private const float TitleMusic = 0f;
     private const float GameMainMusic = 1f;
     private const float BattleMusic = 2f;
+    private const float Med_Music = 5f;
     private const float ConclusionMusic = 3f;
     
     private readonly Dictionary<string, float> _musicProgressParamBySceneName = new Dictionary<string, float>
     {
         { "TitleScreen", TitleMusic },
         { "AdventureSelection", TitleMusic },
+        { "AcademyScene", TitleMusic },
         { "SquadSelection", GameMainMusic },
-        { "CutsceneScene", GameMainMusic },
+        { "CutsceneScene", Med_Music },
         { "GameScene", GameMainMusic },
         { "GameSceneV4", GameMainMusic },
         { "AutoLoadGameScene", GameMainMusic },

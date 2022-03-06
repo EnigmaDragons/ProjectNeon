@@ -9,18 +9,21 @@ public class CanChain : StaticCardCondition
     
     public static bool Evaluate(CardConditionContext ctx)
     {
-        var card = ctx.Card;
-        var battleState = ctx.BattleState;
-        var hasChainedCard = card.ChainedCard.IsPresent;
-        var partyMembersWhoHavePlayedCards = battleState
-            .CurrentTurnCardPlays()
-                .Where(x => x.Member.TeamType == TeamType.Party)
-                .Select(m => m.Member.Id)
-            .Concat(ctx.PendingCardsToResolve
-                .Where(x => x.Member.TeamType == TeamType.Party)
-                .Select(p => p.Member.Id));
-        
-        return hasChainedCard
-               && partyMembersWhoHavePlayedCards.All(x => x.Equals(card.Owner.Id));
+        var hasChainedCard = ctx.Card.ChainedCard.IsPresent;
+        return hasChainedCard && Evaluate(ctx.Card.Owner.Id, ctx.PendingCardsToResolve.ToArray(), ctx.BattleState.CurrentTurnCardPlays());
+    }
+    
+    public static bool Evaluate(int memberId, IPlayedCard[] pendingCards, PlayedCardSnapshot[] playedCardsThisTurn)
+    {
+        var partyMembersWhoHavePlayedCards = 
+            playedCardsThisTurn
+                .Where(x => x.Member.TeamType == TeamType.Party && x.Card.Speed != CardSpeed.Quick)
+                .Select(x => x.Member.Id)
+            .Concat(pendingCards
+                .Where(x => x.Member.TeamType == TeamType.Party && x.Card.Speed != CardSpeed.Quick)
+                .Select(p => p.Member.Id))
+            .ToList();
+
+        return partyMembersWhoHavePlayedCards.Any() && partyMembersWhoHavePlayedCards.All(x => x.Equals(memberId));
     }
 }

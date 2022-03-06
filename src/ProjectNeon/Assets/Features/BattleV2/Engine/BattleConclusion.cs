@@ -25,7 +25,12 @@ public class BattleConclusion : OnMessage<BattleFinished>
     
     private void Advance()
     {
-        if (state.IsStoryEventCombat)
+        if (state.IsTutorialCombat)
+        {
+            Log.Info("Returning to academy from tutorial combat");
+            this.ExecuteAfterDelay(() => navigator.NavigateToAcademyScene(), secondsBeforeReturnToAdventure);
+        }
+        else if (state.IsStoryEventCombat)
         {
             Log.Info("Returning to map from event combat");
             Message.Publish(new AutoSaveRequested());

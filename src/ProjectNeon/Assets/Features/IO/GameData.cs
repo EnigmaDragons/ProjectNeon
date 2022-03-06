@@ -9,7 +9,6 @@ public class GameData
     public string RunId = Guid.NewGuid().ToString();
     public bool IsInitialized = false;
     public CurrentGamePhase Phase = CurrentGamePhase.NotStarted;
-    public GameTutorialData TutorialData = new GameTutorialData();
     public GameAdventureProgressData AdventureProgress = new GameAdventureProgressData();
     public GamePartyData PartyData = new GamePartyData();
     public GameMapData GameMap = new GameMapData();
@@ -37,13 +36,6 @@ public enum GameAdventureProgressType
     Unknown = 0,
     V2 = 2,
     V4 = 4
-}
-
-[Serializable]
-public class GameTutorialData
-{
-    public bool ShouldShowTutorials = false;
-    public string[] CompletedTutorialNames = Array.Empty<string>();
 }
 
 [Serializable]

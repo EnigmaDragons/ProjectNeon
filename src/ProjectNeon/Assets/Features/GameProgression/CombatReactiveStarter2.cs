@@ -38,7 +38,7 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     {
         Log.Info("Setting Up Specific Battle");
         battleState.SetNextBattleground(msg.BattleField);
-        battleState.SetNextEncounter(msg.Enemies, msg.IsElite, msg.IsStoryEventCombat);
+        battleState.SetNextEncounter(msg.Enemies, msg.IsElite, msg.IsStoryEventCombat, msg.IsTutorial);
         if (msg.IsTutorial)
         {
             battleState.DontShuffleNextBattle = true;

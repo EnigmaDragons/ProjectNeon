@@ -31,7 +31,6 @@ public class BattleState : ScriptableObject
     [SerializeField, ReadOnly] private int turnNumber;
     [SerializeField, ReadOnly] private PlayerState playerState = new PlayerState();
     
-    public bool DontShuffleNextBattle { get; set; }
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
     private readonly CurrentBattleStats _currentBattleStats = new CurrentBattleStats();
     private int _numPlayerDiscardsUsedThisTurn = 0;
@@ -88,6 +87,8 @@ public class BattleState : ScriptableObject
     private BattleAttritionTracker _tracker;
 
     public bool IsStoryEventCombat { get; private set; }
+    public bool DontShuffleNextBattle { get; set; } // Weird to let something else set this
+    public bool IsTutorialCombat { get; private set; }
 
     public MemberMaterialType MaterialTypeOf(int memberId) 
         => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
@@ -95,11 +96,12 @@ public class BattleState : ScriptableObject
     // Setup
 
     public void SetNextBattleground(GameObject prototype) => nextBattlegroundPrototype = prototype;
-    public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false, bool isStoryEventCombat = false)
+    public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false, bool isStoryEventCombat = false, bool isTutorialCombat = false)
     {
         nextEnemies = e.ToArray();
         nextIsEliteBattle = isElite;
         IsStoryEventCombat = isStoryEventCombat;
+        IsTutorialCombat = isTutorialCombat;
         DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.Name))}");
     }
     
