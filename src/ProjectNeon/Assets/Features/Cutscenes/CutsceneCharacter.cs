@@ -5,6 +5,7 @@ using UnityEngine;
 public class CutsceneCharacter : MonoBehaviour
 {
     [SerializeField] private ProgressiveText text;
+    [SerializeField] private bool reverse = false;
     
     private HashSet<string> _names = new HashSet<string>();
 
@@ -18,6 +19,7 @@ public class CutsceneCharacter : MonoBehaviour
     {
         _names = new HashSet<string>(aliases);
         text.Hide();
+        SpeechBubble.SetDisplayReversed(reverse);
     }
 
     private void Awake()

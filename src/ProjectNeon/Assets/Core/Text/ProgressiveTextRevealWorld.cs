@@ -16,7 +16,8 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     [Header("Debug Info")]
     [SerializeField, ReadOnly] private bool isRevealing;
     [SerializeField, ReadOnly] private string fullText;
-    
+
+    private bool _reversed;
     private int _cursor;
     private bool _allowManualAdvance = true;
     private bool _shouldAutoProceed = false;
@@ -86,6 +87,12 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
         _allowManualAdvance = allow;
     }
 
+    public override void SetDisplayReversed(bool reversed)
+    {
+        if (_reversed != reversed)
+            ReversePanelFacing();
+    }
+
     private void Finish()
     {
         if (_finished)
@@ -105,6 +112,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
 
     public void ReversePanelFacing()
     {
+        _reversed = !_reversed;
         if (panelBg != null)
             panelBg.transform.Rotate(0, 180, 0);
         textBox.transform.localPosition = textBox.transform.localPosition + new Vector3(reversedTextBoxOffset.x, reversedTextBoxOffset.y);
