@@ -11,6 +11,7 @@ public class StoryEvent2 : ScriptableObject
     [SerializeField] private StaticCorp corp;
     [SerializeField] private StoryEventChoice2[] choices;
     [SerializeField] private bool inCutscene;
+    [SerializeField] private bool isMultiChoice;
 
     public string DisplayName => Localize.GetEvent($"Event{id}");
     
@@ -19,4 +20,5 @@ public class StoryEvent2 : ScriptableObject
     public string StoryText => Localize.GetEvent($"Event{id} Story");
     public StoryEventChoice2[] Choices => choices.ToArray();
     public bool InCutscene => inCutscene;
+    public bool IsMultiChoice => isMultiChoice;
 }
