@@ -142,4 +142,5 @@ public class AdventureProgressV4 : AdventureProgressBase
     }
 
     public override void SetStoryState(string state, bool value) => _storyStates[state] = value;
+    public override bool IsTrue(string state) => _storyStates[state];
 }

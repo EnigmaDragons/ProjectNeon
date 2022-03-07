@@ -8,10 +8,7 @@ public class RecordChoiceResult : StoryResult
     
     public override int EstimatedCreditsValue => 0;
     
-    public override void Apply(StoryEventContext ctx)
-    {
-        
-    }
+    public override void Apply(StoryEventContext ctx) => ctx.Adventure.SetStoryState(name.Value, state);
 
     public override void Preview() {}
 }
