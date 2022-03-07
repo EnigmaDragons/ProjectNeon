@@ -8,6 +8,7 @@ public class FmodMusicPlayer : MonoBehaviour
     private static EventInstance Music;
     private static EventInstance BattleLostStinger;
     private static EventInstance GameWonStinger;
+    private static EventInstance CustomMusic;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class FmodMusicPlayer : MonoBehaviour
         Message.Subscribe<GameLostStingerMSG>(Battle_Lost_FUNC, this);
         Message.Subscribe<GameWonStingerMSG>(Battle_Won_FUNC, this);
         Message.Subscribe<NavigateToSceneRequested>(MusicChanger, this);
+        Message.Subscribe<PlayCustomFmodMusic>(f => PlayCustomMusic(f.MusicName), this);
     }
 
     private void OnDisable() => Message.Unsubscribe(this);
@@ -34,6 +36,7 @@ public class FmodMusicPlayer : MonoBehaviour
     private const float TitleMusic = 0f;
     private const float GameMainMusic = 1f;
     private const float BattleMusic = 2f;
+    private const float Nothing = 2f;
     private const float Med_Music = 5f;
     private const float ConclusionMusic = 3f;
     
@@ -59,8 +62,25 @@ public class FmodMusicPlayer : MonoBehaviour
     {
         BattleLostStinger.stop(STOP_MODE.ALLOWFADEOUT);
         GameWonStinger.stop(STOP_MODE.ALLOWFADEOUT);
+        CustomMusic.stop(STOP_MODE.ALLOWFADEOUT);
+        
         var musicParam = _musicProgressParamBySceneName.ValueOrDefault(sceneName, () => GameMainMusic);
         Music.setParameterByName("MUSIC_PROGRESS", musicParam);
+    }
+
+    private void PlayCustomMusic(string musicName)
+    {
+        BattleLostStinger.stop(STOP_MODE.ALLOWFADEOUT);
+        GameWonStinger.stop(STOP_MODE.ALLOWFADEOUT);
+        CustomMusic.stop(STOP_MODE.ALLOWFADEOUT);
+        
+        Music.setParameterByName("MUSIC_PROGRESS", Nothing);
+        if (CustomMusic.hasHandle())
+            CustomMusic.release();
+        
+        CustomMusic = FMODUnity.RuntimeManager.CreateInstance(musicName);
+        CustomMusic.start();
+        CustomMusic.release();
     }
 
     private void MusicChanger(NavigateToSceneRequested msg) => PlayMusicForScene(msg.SceneName);
