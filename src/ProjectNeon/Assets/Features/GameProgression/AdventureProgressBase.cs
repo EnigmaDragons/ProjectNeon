@@ -21,4 +21,5 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract GameAdventureProgressData GetData();
     public abstract void Advance();
     public abstract void SetStoryState(string state, bool value);
+    public abstract bool IsTrue(string state);
 }

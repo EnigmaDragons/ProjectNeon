@@ -174,4 +174,5 @@ public class AdventureProgress2 : AdventureProgressBase
     } 
     
     public override void SetStoryState(string state, bool value) {}
+    public override bool IsTrue(string state) => false;
 }

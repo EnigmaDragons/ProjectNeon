@@ -12,13 +12,14 @@ public class MultiChoiceButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
 
     private StoryEventChoice2 _choice;
-    private StoryEventContext ctx;
+    private StoryEventContext _ctx;
     
     public void Init(StoryEventChoice2 choice, StoryEventContext ctx, StoryEvent2 owner)
     {
         if (choice.Resolution.Length != 1)
             Log.Error($"More than one resolution on a multi-choice option on event: {owner.name}");
         _choice = choice;
+        _ctx = ctx;
         text.text = choice.ChoiceFullText(ctx, owner);
         button.onClick.AddListener(() => toggle.isOn = !toggle.isOn);
     }
@@ -31,6 +32,6 @@ public class MultiChoiceButton : MonoBehaviour
     public void Apply()
     {
         if (toggle.isOn)
-            _choice.Resolution.First().Result.Apply(ctx);
+            _choice.Resolution.First().Result.Apply(_ctx);
     }
 }

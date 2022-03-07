@@ -55,7 +55,6 @@ public class StoryEventPresenterV4 : MonoBehaviour
         Message.Subscribe<ShowEquipmentResultPreview>(Execute, this);
         Message.Subscribe<HideStoryEventPreviews>(Execute, this);
         Message.Subscribe<ShowCardResultPreview>(Execute, this);
-        Message.Subscribe<SetStoryState>(Execute, this);
     }
 
     private void OnDisable() => Message.Unsubscribe(this);
@@ -235,12 +234,6 @@ public class StoryEventPresenterV4 : MonoBehaviour
         EnablePreviews();
         rewardPreviewParent.DestroyAllChildren();
         Instantiate(cardPreviewPrototype, rewardPreviewParent.transform).Init(msg.Card);
-    }
-
-    private void Execute(SetStoryState msg)
-    {
-        HideOutcomesAndPreviews();
-        adventure.SetStoryState(msg.State, msg.Value);
     }
 
     private void EnablePreviews()

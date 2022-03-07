@@ -9,4 +9,5 @@ public class CutsceneSegmentData
     [TextArea(4, 4)] public string Text = "";
     public FloatReference FloatAmount = new FloatReference(0);
     public StoryEvent2 StoryEvent;
+    public StringReference[] RequiredStates;
 }
