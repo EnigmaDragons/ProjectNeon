@@ -24,6 +24,7 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
     private bool _shouldAutoProceed = false;
     private bool _manualInterventionDisablesAuto = true;
     private bool _finished = false;
+    private Action _onFullyShown = () => { };
     private Action _onFinished = () => { };
 
     private static bool _debugLog = false;
@@ -99,6 +100,8 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
             ReversePanelFacing();
     }
 
+    public override void SetOnFullyShown(Action action) => _onFullyShown = action;
+
     private void Finish()
     {
         if (_finished)
@@ -114,6 +117,7 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
         Info($"Text Box - Displayed Completely");
         isRevealing = false;
         textBox.text = fullText;
+        _onFullyShown();
     }
 
     public void ReversePanelFacing()

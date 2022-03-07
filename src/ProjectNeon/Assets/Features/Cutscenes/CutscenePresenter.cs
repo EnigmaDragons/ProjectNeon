@@ -111,13 +111,15 @@ public class CutscenePresenter : MonoBehaviour
             .ExecuteIfPresentOrElse(c =>
                 {
                     var useAutoAdvance = CurrentGameOptions.Data.UseAutoAdvance;
+                    c.SetTalkingState(true);
                     var speech = c.SpeechBubble;
                     speech.SetAllowManualAdvance(!useAutoAdvance);
+                    speech.SetOnFullyShown(() => c.SetTalkingState(false));
                     if (useAutoAdvance)
                         speech.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: false,
                             () => Async.ExecuteAfterDelay(dialogueWaitDelay, FinishCurrentSegment));
                     else
-                        c.SpeechBubble.Display(msg.Text, shouldAutoProceed: false, FinishCurrentSegment);
+                        speech.Display(msg.Text, shouldAutoProceed: false, FinishCurrentSegment);
                 },
                 () =>
                 {
@@ -164,7 +166,11 @@ public class CutscenePresenter : MonoBehaviour
 
     private void HidePreviousSegmentStuff()
     {
-        _characters.ForEach(c => c.SpeechBubble.ForceHide());
+        _characters.ForEach(c =>
+        {
+            c.SetTalkingState(false);
+            c.SpeechBubble.ForceHide();
+        });
     }
     
     private void FinishCurrentSegment()
@@ -172,6 +178,7 @@ public class CutscenePresenter : MonoBehaviour
         if (_finishTriggered)
             return;
         
+        _characters.ForEach(c => c.SetTalkingState(false));
         DebugLog("Segment Finished");
         Message.Publish(new Finished<ShowCutsceneSegment>());
     }

@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 421617391805456913}
   - component: {fileID: 6793650654779564309}
   - component: {fileID: 4014035385491705068}
+  - component: {fileID: 6576921211788215596}
   m_Layer: 0
   m_Name: AcademyTrainer
   m_TagString: Untagged
@@ -153,6 +154,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3411876580237174904}
+  talking: {fileID: 6576921211788215596}
+  character: {fileID: 5196476631265355386}
+  reverse: 0
+--- !u!114 &6576921211788215596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8134626972215571258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b74b50f73a46b68fba997a15da0771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 2123160149499753257}
+  talkingSprites:
+  - {fileID: 21300000, guid: 7233f4aa7a1bfe5459762b72820a2b73, type: 3}
+  - {fileID: 21300000, guid: 8cae0910c7e0aa54393c93cf228cb098, type: 3}
+  - {fileID: 21300000, guid: 37585d4c4289d90469d9f90e644f97d5, type: 3}
+  - {fileID: 21300000, guid: ee78ba15393d3d84db62eb3a55a0eea3, type: 3}
 --- !u!1001 &406825405717159419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -668,6 +690,10 @@ PrefabInstance:
     - target: {fileID: 5256457557755698465, guid: ad85a4588dafaaf4e94b18388246e584, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8954928685049091613, guid: ad85a4588dafaaf4e94b18388246e584, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 9139953046109669882, guid: ad85a4588dafaaf4e94b18388246e584, type: 3}
       propertyPath: m_Name
