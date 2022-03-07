@@ -94,9 +94,19 @@ public class StoryEventPresenterV4 : MonoBehaviour
                 else
                     _buttons[i].Hide();
             }
+            for (var i = _multiChoiceButtons.Length - 1; i > -1; i--)
+            {
+                if (s.Choices.Length <= i)
+                {
+                    _multiChoiceButtons[i].Hide();
+                    continue;
+                }
+                _multiChoiceButtons[i].Init(s.Choices[i], ctx, s);
+            }
         }
         else
         {
+            multiChoiceParent.SetActive(false);
             for (var i = _buttons.Length - 1; i > -1; i--)
             {
                 if (s.Choices.Length <= i)
