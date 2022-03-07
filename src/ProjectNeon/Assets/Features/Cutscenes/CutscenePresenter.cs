@@ -146,7 +146,13 @@ public class CutscenePresenter : MonoBehaviour
     }
 
     private void Execute(CutsceneFinished msg) => FinishCutscene(true);
-    private void Execute(SkipCutsceneRequested msg) => FinishCutscene(false);
+
+    private void Execute(SkipCutsceneRequested msg)
+    { 
+        cutscene.Current.SkipTrueStates.ForEach(x => progress.AdventureProgress.SetStoryState(x, true));
+        cutscene.Current.SkipFalseStates.ForEach(x => progress.AdventureProgress.SetStoryState(x, false));
+        FinishCutscene(false);
+    } 
 
     private void FinishCutscene(bool useDelay)
     {
