@@ -10,4 +10,5 @@ public class CutsceneSegmentData
     public FloatReference FloatAmount = new FloatReference(0);
     public StoryEvent2 StoryEvent;
     public StringReference[] RequiredStates;
+    public StringReference[] ForbiddenStates;
 }
