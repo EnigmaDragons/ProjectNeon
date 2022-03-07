@@ -7,7 +7,7 @@
 
 Her Behind Blue Eyes series has quickly advanced to become one of the most popular cyberpunk book series in the indie publishing world.<br><br>
 
-To learn more about Anna and her work, please visit her website at <a href="https://www.annamocikat.com">www.annamocikat.com</a> or find Behind Blue Eyes on Amazon!</p>`,
+To learn more about Anna and her work, please visit her website at <a href="https://www.annamocikat.com">www.annamocikat.com</a> or find Behind Blue Eyes on <a href="https://www.amazon.com/gp/product/B089ZY18SB">Amazon</a>!</p>`,
     img: './images/AnnaMocikat.jpg'
 });
   const source = `“Hey, watch out!” 
@@ -430,7 +430,7 @@ We left the building and I inhaled the warm night air, happy to be alive.
 
 Only now, Giu opened the envelope. It was empty.
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 `;
 </script>
   
