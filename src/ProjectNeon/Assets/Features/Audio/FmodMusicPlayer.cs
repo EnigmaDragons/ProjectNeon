@@ -44,7 +44,6 @@ public class FmodMusicPlayer : MonoBehaviour
     {
         { "TitleScreen", TitleMusic },
         { "AdventureSelection", TitleMusic },
-        { "AcademyScene", TitleMusic },
         { "SquadSelection", GameMainMusic },
         { "CutsceneScene", Med_Music },
         { "GameScene", GameMainMusic },
@@ -53,9 +52,10 @@ public class FmodMusicPlayer : MonoBehaviour
         { "DeckBuilderTestScene", GameMainMusic },
         { "DeckBuilderScene", GameMainMusic },
         { "HoverVehicleScene", GameMainMusic },
-        { "BattleSceneV2", BattleMusic },
-        { "BattleTestScene", BattleMusic },
-        { "ConclusionScene", ConclusionMusic }
+        { "ConclusionScene", ConclusionMusic },
+        { "AcademyScene", Nothing },
+        { "BattleSceneV2", Nothing },
+        { "BattleTestScene", Nothing },
     };
 
     private void PlayMusicForScene(string sceneName)
@@ -66,6 +66,9 @@ public class FmodMusicPlayer : MonoBehaviour
         
         var musicParam = _musicProgressParamBySceneName.ValueOrDefault(sceneName, () => GameMainMusic);
         Music.setParameterByName("MUSIC_PROGRESS", musicParam);
+        
+        if (sceneName == "AcademyScene")
+            PlayCustomMusic("event:/GameMusic/ImmigrationOffice_Music");
     }
 
     private void PlayCustomMusic(string musicName)
@@ -75,8 +78,6 @@ public class FmodMusicPlayer : MonoBehaviour
         CustomMusic.stop(STOP_MODE.ALLOWFADEOUT);
         
         Music.setParameterByName("MUSIC_PROGRESS", Nothing);
-        if (CustomMusic.hasHandle())
-            CustomMusic.release();
         
         CustomMusic = FMODUnity.RuntimeManager.CreateInstance(musicName);
         CustomMusic.start();
