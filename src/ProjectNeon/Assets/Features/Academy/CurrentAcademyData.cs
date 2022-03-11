@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 public class CurrentAcademyData
 {
@@ -22,4 +23,11 @@ public class CurrentAcademyData
     }
 
     public static void Clear() => Write(_ => new AcademyData());
+
+    public static void Skip() => Write(a =>
+    {
+        a.TutorialData.CompletedTutorialNames = a.TutorialData.CompletedTutorialNames.Concat(AcademyData.RequiredLicenseTutorials).ToArray();
+        return a;
+    });
+
 }

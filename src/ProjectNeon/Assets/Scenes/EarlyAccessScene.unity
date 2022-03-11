@@ -532,6 +532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 832852441}
   - component: {fileID: 832852440}
+  - component: {fileID: 832852442}
   - component: {fileID: 832852439}
   - component: {fileID: 832852438}
   m_Layer: 0
@@ -550,10 +551,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 832852437}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08b1dfcfb0505f94e85c6ae7fcca8f76, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fe4683ab23343b3bb7b49cc2d277be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabled: 1
 --- !u!114 &832852439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,6 +613,34 @@ RectTransform:
   m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &832852442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832852437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a58015a0ad344745be8d684218d85943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: 0e01000061000000
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 832852438}
+        m_TargetAssemblyTypeName: FinishAcademyCheat, GameAssembly
+        m_MethodName: Execute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1079700318
 GameObject:
   m_ObjectHideFlags: 0
