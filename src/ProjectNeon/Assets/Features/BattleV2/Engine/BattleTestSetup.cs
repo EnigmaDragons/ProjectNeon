@@ -8,6 +8,7 @@ public class BattleTestSetup : MonoBehaviour
     [SerializeField] private BattleSetupV2 setup;
     [SerializeField] private BattleState state;
 
+    [SerializeField] private bool useRandomRngSeed = true;
     [SerializeField] private bool setupOnAwake = false;
     [SerializeField] private bool setupCardTest = false;
     
@@ -67,7 +68,9 @@ public class BattleTestSetup : MonoBehaviour
     }
 
     private void UseEverything()
-    {
+    {        
+        if (useRandomRngSeed)
+            setup.InitRng(new DeterministicRng(Rng.NewSeed()));
         if (hero1 != null)
             UseCustomParty();
         if (battlefield != null)
@@ -118,7 +121,9 @@ public class BattleTestSetup : MonoBehaviour
             ? hero2Equipment : hero.Name.Equals(hero3.Name) 
             ? hero3Equipment : new List<StaticEquipment>();
         setup.InitPartyEquipment(equipment, new List<Equipment>(), new List<Equipment>());
-        
+
+        if (useRandomRngSeed)
+            setup.InitRng(new DeterministicRng(Rng.NewSeed()));
         if (battlefield != null)
             UseCustomBattlefield();
         if (enemies != null && enemies.Any())

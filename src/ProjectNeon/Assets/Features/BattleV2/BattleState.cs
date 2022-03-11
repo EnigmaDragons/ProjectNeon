@@ -89,7 +89,7 @@ public class BattleState : ScriptableObject
     public bool IsStoryEventCombat { get; private set; }
     public bool DontShuffleNextBattle { get; set; } // Weird to let something else set this
     public bool IsTutorialCombat { get; private set; }
-
+    
     public MemberMaterialType MaterialTypeOf(int memberId) 
         => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
     
@@ -122,6 +122,7 @@ public class BattleState : ScriptableObject
         isEliteBattle = nextIsEliteBattle;
         nextEnemies = new EnemyInstance[0];
         nextIsEliteBattle = false;
+        
     }
 
     public void Init()

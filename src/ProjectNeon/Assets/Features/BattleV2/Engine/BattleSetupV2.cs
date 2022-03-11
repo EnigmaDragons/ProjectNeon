@@ -22,6 +22,8 @@ public class BattleSetupV2 : MonoBehaviour
     [Header("Technical")]
     [SerializeField] private CardResolutionZone resolutionZone;
     
+    private DeterministicRng _battleRng;
+    
     private CardPlayZone Hand => playerCardPlayZones.HandZone;
     private CardPlayZone Deck => playerCardPlayZones.DrawZone;
 
@@ -44,6 +46,7 @@ public class BattleSetupV2 : MonoBehaviour
     public void InitPartyDecks(List<CardTypeData> d1, List<CardTypeData> d2, List<CardTypeData> d3) => party.UpdateDecks(d1, d2, d3);
     public void InitEncounterBuilder(EncounterBuilder e) => encounterBuilder = e;
     public void InitEncounter(IEnumerable<EnemyInstance> enemies) => enemyArea.Initialized(enemies);
+    public void InitRng(DeterministicRng rng) => _battleRng = rng;
 
     public IEnumerator Execute()
     {
@@ -114,13 +117,14 @@ public class BattleSetupV2 : MonoBehaviour
         }
 
         DevLog.Write($"Setting Up Player Hand - Should Shuffle {!state.DontShuffleNextBattle} - Rng Seed {state.BattleRngSeed}");
+        var rng = _battleRng ?? new DeterministicRng(state.BattleRngSeed);
         if (state.DontShuffleNextBattle)
         {
             Deck.Init(cards);
             state.DontShuffleNextBattle = false;
         }
         else
-            Deck.InitShuffled(cards, new DeterministicRng(state.BattleRngSeed));
+            Deck.InitShuffled(cards, rng);
         yield return playerCardPlayZones.DrawHandAsync(state.PlayerState.CardDraws);
     }
 }

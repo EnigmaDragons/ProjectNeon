@@ -12,6 +12,8 @@ public sealed class TextCommandButton : MonoBehaviour
     private readonly Color _disabledTextColor = new Color(0.7f, 0.7f, 0.7f);
     private Button _button;
     private Action _cmd = () => { };
+    private Action _onHoverEnter = () => { };
+    private Action _onHoverExit = () => { };
     private bool _isInitialized;
 
     private void Awake() => InitButton();
@@ -56,9 +58,15 @@ public sealed class TextCommandButton : MonoBehaviour
         _button.interactable = true;
         gameObject.SetActive(true);
     }
+
+    public void SetHoverActions(Action onHoverEnter, Action onHoverExit)
+    {
+        _onHoverEnter = onHoverEnter;
+        _onHoverExit = onHoverExit;
+    }
     
     public void Init(NamedCommand cmd) => Init(cmd.Name, cmd.Action.Invoke);
-
+    
     public void Select() => _button.Select();
     public void Execute() => _button.onClick.Invoke();
 
@@ -67,4 +75,7 @@ public sealed class TextCommandButton : MonoBehaviour
         var localized = LocalizationSettings.StringDatabase.GetLocalizedString("UI", commandText);
         return string.IsNullOrWhiteSpace(localized) ? commandText : localized;
     }
+
+    public void OnHoverEnter() => _onHoverEnter();
+    public void OnHoverExit() => _onHoverExit();
 }
