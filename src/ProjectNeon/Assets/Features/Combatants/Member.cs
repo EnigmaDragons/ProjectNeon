@@ -53,6 +53,7 @@ public static class MemberExtensions
     public static string Names(this IEnumerable<Member> members) => string.Join(", ", members.Select(m => m.Name));
     
     public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.Name, m.Class, m.TeamType, m.State.ToSnapshot());
+    public static int HpAndShield(this Member m) => CurrentHp(m) + CurrentShield(m);
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);
     public static int MaxHp(this Member m) => RoundUp(m.State.MaxHp());
     public static int MissingHp(this Member m) => RoundUp(m.State.MaxHp() - m.CurrentHp());
