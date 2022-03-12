@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 8600782077654175763}
   - component: {fileID: 8176250864024576867}
   m_Layer: 0
-  m_Name: Major
+  m_Name: MajorImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,11 +262,51 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   DebugActive: 0
-  FeedbacksList: []
+  FeedbacksList:
+  - id: 0
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   references:
     version: 1
+    00000000:
+      type: {class: MMF_CameraShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
+      data:
+        Active: 1
+        UniqueID: 1595195337
+        Label: Camera Shake
+        Channel: 0
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        Owner: {fileID: 8176250864024576867}
+        DebugActive: 0
+        RepeatUntilStopped: 0
+        CameraShakeProperties:
+          Duration: 0.3
+          Amplitude: 0.5
+          Frequency: 40
+          AmplitudeX: 1
+          AmplitudeY: 1
+          AmplitudeZ: 0
 --- !u!1 &708355375968642222
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +867,7 @@ GameObject:
   - component: {fileID: 1255653860270213663}
   - component: {fileID: 495528209414262501}
   m_Layer: 0
-  m_Name: Minor
+  m_Name: MinorImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -897,11 +937,51 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   DebugActive: 0
-  FeedbacksList: []
+  FeedbacksList:
+  - id: 0
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   references:
     version: 1
+    00000000:
+      type: {class: MMF_CameraShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
+      data:
+        Active: 1
+        UniqueID: 1428084690
+        Label: Camera Shake
+        Channel: 0
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        Owner: {fileID: 495528209414262501}
+        DebugActive: 0
+        RepeatUntilStopped: 0
+        CameraShakeProperties:
+          Duration: 0.1
+          Amplitude: 0.2
+          Frequency: 40
+          AmplitudeX: 1
+          AmplitudeY: 1
+          AmplitudeZ: 0
 --- !u!1 &2649710967048410232
 GameObject:
   m_ObjectHideFlags: 0
@@ -3091,8 +3171,8 @@ MonoBehaviour:
   majorPositive: {fileID: 8520627006668525614}
   minorNegative: {fileID: 3570835882282105460}
   majorNegative: {fileID: 7905887640872644038}
-  minor: {fileID: 495528209414262501}
-  major: {fileID: 8176250864024576867}
+  minorImpact: {fileID: 495528209414262501}
+  majorImpact: {fileID: 8176250864024576867}
   majorThreshold:
     UseConstant: 1
     ConstantValue: 18

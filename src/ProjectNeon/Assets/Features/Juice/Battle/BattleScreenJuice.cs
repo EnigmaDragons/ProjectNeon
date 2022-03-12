@@ -9,8 +9,8 @@ public class BattleScreenJuice : OnMessage<EffectResolved>
     [SerializeField] private MMF_Player majorPositive;
     [SerializeField] private MMF_Player minorNegative;
     [SerializeField] private MMF_Player majorNegative;
-    [SerializeField] private MMF_Player minor;
-    [SerializeField] private MMF_Player major;
+    [SerializeField] private MMF_Player minorImpact;
+    [SerializeField] private MMF_Player majorImpact;
     [SerializeField] private IntReference majorThreshold;
     
     protected override void Execute(EffectResolved msg)
@@ -19,6 +19,7 @@ public class BattleScreenJuice : OnMessage<EffectResolved>
             return;
         
         var actionResultSummary = 0;
+        var impactAmountSummary = 0;
         var enemyEffectiveHpChange = msg.SelectSum(x => x.TeamType == TeamType.Enemies ? x.State.HpAndShield : 0).Delta();
         var partyEffectiveHpChange = msg.SelectSum(x => x.TeamType == TeamType.Party ? x.State.HpAndShield : 0).Delta();
 
@@ -40,8 +41,8 @@ public class BattleScreenJuice : OnMessage<EffectResolved>
         if (partyEffectiveHpChange > majorThreshold.Value)
             actionResultSummary += 1;
 
+
         actionResultSummary = actionResultSummary.Clamped(-2, 2);
-        Log.Info($"EnemyHpChange: {enemyEffectiveHpChange}. PartyHpChange: {partyEffectiveHpChange}. ActionResult Summary - {actionResultSummary}");
 
         if (actionResultSummary == 1)
             minorPositive.PlayFeedbacks();
@@ -51,9 +52,22 @@ public class BattleScreenJuice : OnMessage<EffectResolved>
             minorNegative.PlayFeedbacks();
         if (actionResultSummary == -2)
             majorNegative.PlayFeedbacks();
-        if (Math.Abs(actionResultSummary) == 1)
-            minor.PlayFeedbacks();
-        if (Math.Abs(actionResultSummary) == 2)
-            major.PlayFeedbacks();
+        
+        if (enemyEffectiveHpChange < 0)
+            impactAmountSummary += 1;
+        if (enemyEffectiveHpChange < -majorThreshold.Value)
+            impactAmountSummary += 1;
+        if (partyEffectiveHpChange < -majorThreshold.Value)
+            impactAmountSummary += 1;
+        if (partyEffectiveHpChange < 0)
+            impactAmountSummary += 1;
+        impactAmountSummary = impactAmountSummary.Clamped(0, 2);
+        
+        if (impactAmountSummary == 1)
+            minorImpact.PlayFeedbacks();
+        if (impactAmountSummary == 2)
+            majorImpact.PlayFeedbacks();
+        
+        Log.Info($"EnemyHpChange: {enemyEffectiveHpChange}. PartyHpChange: {partyEffectiveHpChange}. ActionResult Summary - {actionResultSummary}. Impact Summary - {impactAmountSummary}");
     }
 }
