@@ -8,6 +8,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
     [SerializeField] private AdventureProgressV5 progress;
     [SerializeField] private TravelReactiveSystem travelReactiveSystem;
     [SerializeField] private GameObject playerToken;
+    [SerializeField] private PartyAdventureState party;
     
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
@@ -28,21 +29,24 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
     private GameObject _playerToken;
     private GameObject _map;
     
-    protected override void Execute(RegenerateMapRequested msg) => SpawnNodes();
-    
+    protected override void Execute(RegenerateMapRequested msg)
+    {
+        SpawnPartyTokenIfNeeded(_map.gameObject);
+        SpawnNodes();
+    }
+
     private void Awake()
     {
         if (gameMap.CurrentMap == null)
             gameMap.CurrentMap = progress.CurrentChapter.Map;
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
-        SpawnToken(_map.gameObject);
-        StartPlayerTokenFloating();
+        SpawnPartyTokenIfNeeded(_map.gameObject);
         SpawnNodes();
     }
 
     private void Start()
     {
-        if (gameMap.CurrentNode.IsPresent && gameMap.CurrentNode.Value.Type != MapNodeType.Start)
+        if (gameMap.CurrentNode.IsPresent && gameMap.CurrentNode.Value.Type != MapNodeType.Start && _activeNodes.Any())
         {
             var activeNode = _activeNodes.First(x => x.MapData.Position.x == gameMap.CurrentNode.Value.Position.x && x.MapData.Position.y == gameMap.CurrentNode.Value.Position.y);
             Message.Publish(new TravelToNode
@@ -97,7 +101,8 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
                 return null;
             }
         }).ToArray();
-        _playerToken.transform.SetAsLastSibling();
+        if (_playerToken != null)
+            _playerToken.transform.SetAsLastSibling();
         Message.Publish(new AutoSaveRequested());
     }
 
@@ -143,14 +148,18 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
         return defaultNode;
     }
 
-    private void SpawnToken(GameObject map)
+    private void SpawnPartyTokenIfNeeded(GameObject map)
     {
+        if (party.Heroes.Length < 1 || _playerToken != null)
+            return;
+        
         progress.InitIfNeeded();
         _playerToken = Instantiate(playerToken, map.transform);
         var rect = (RectTransform)_playerToken.transform;
         rect.pivot = new Vector2(0.5f, 0.5f);
         rect.anchoredPosition = gameMap.DestinationPosition;
         travelReactiveSystem.PlayerToken = _playerToken;
+        StartPlayerTokenFloating();
     }
 
     private void StartPlayerTokenFloating()

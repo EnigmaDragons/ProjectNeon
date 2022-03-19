@@ -29,7 +29,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
         {
             AllMetrics.PublishHeroSelected(h.Name, featuredThree.Select(x => x.Name).ToArray(), existingHeroes.Select(x => x.Name).ToArray());
             Message.Publish(new AddHeroToPartyRequested(h));
-            Async.ExecuteAfterDelay(3, () => Message.Publish(new ToggleNamedTarget("HeroSelectionView")));
+            Async.ExecuteAfterDelay(0.5f, () => Message.Publish(new ToggleNamedTarget("HeroSelectionView")));
         }));
     }
 

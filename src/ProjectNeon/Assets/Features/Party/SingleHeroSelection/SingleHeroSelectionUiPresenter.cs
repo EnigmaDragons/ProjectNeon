@@ -20,6 +20,7 @@ public class SingleHeroSelectionUiPresenter : MonoBehaviour
                 var option = msg.Options[i];
                 presenters[i].Init(option, true, () =>
                 {
+                    presenters[capturedIndex].DisableClick();
                     HideAllExcept(capturedIndex);
                     msg.OnSelected(option);
                     onFinished();

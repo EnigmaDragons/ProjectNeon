@@ -44,6 +44,8 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     }
 
     public void Hide() => gameObject.SetActive(false);
+
+    public void DisableClick() => _isClickable = false;
     
     public void Init(HeroCharacter c) => Init(c, false, () => {});
     public void Init(HeroCharacter c, bool isClickable, Action onClick) => Init(c, c.AsMemberForLibrary(), isClickable, onClick);

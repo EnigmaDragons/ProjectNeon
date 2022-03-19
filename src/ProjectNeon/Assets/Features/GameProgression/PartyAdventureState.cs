@@ -94,6 +94,9 @@ public sealed class PartyAdventureState : ScriptableObject
 
     public PartyAdventureState WithAddedHero(BaseHero hero)
     {
+        if (BaseHeroes.Contains(hero))
+            return this;
+        
         if (!hero.DeckIsValid())
             Log.Error($"{hero.Name} doesn't have a legal deck");
 

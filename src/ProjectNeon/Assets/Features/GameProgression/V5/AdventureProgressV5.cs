@@ -28,7 +28,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     public HybridStageV5 CurrentChapter
     {
         get { 
-            if (currentChapterIndex < 0 || currentChapterIndex >= currentAdventure.Adventure.StagesV4.Length)
+            if (currentChapterIndex < 0 || currentChapterIndex >= currentAdventure.Adventure.StagesV5.Length)
                 Log.Error($"Adventure Stage is illegal. {this}");
             return currentAdventure.Adventure.StagesV5[currentChapterIndex]; 
         }

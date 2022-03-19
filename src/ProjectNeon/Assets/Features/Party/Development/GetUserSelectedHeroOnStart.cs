@@ -25,7 +25,7 @@ public class GetUserSelectedHeroOnStart : MonoBehaviour
         Message.Publish(new GetUserSelectedHero(prompt, randomThree, h =>
         {
             Message.Publish(new AddHeroToPartyRequested(h));
-            Async.ExecuteAfterDelay(3f, () => Message.Publish(new ToggleNamedTarget("HeroSelectionView")));
+            Async.ExecuteAfterDelay(0.5f, () => Message.Publish(new ToggleNamedTarget("HeroSelectionView")));
         })); 
     }
 }
