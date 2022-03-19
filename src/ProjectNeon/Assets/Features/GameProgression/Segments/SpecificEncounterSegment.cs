@@ -22,7 +22,10 @@ public class SpecificEncounterSegment : StageSegment
     
     public override void Start()
     {
-        Message.Publish(new EnterSpecificBattle(battlefield, isElite, enemies.Select(x => x.ForStage(currentAdventureProgress.AdventureProgress.CurrentChapterNumber)).ToArray(), false, isTutorial));
+        var stage = currentAdventureProgress != null && currentAdventureProgress.AdventureProgress != null
+            ? currentAdventureProgress.AdventureProgress.CurrentChapterNumber
+            : 0;
+        Message.Publish(new EnterSpecificBattle(battlefield, isElite, enemies.Select(x => x.ForStage(stage)).ToArray(), false, isTutorial));
     }
 
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;

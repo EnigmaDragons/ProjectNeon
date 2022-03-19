@@ -74,9 +74,11 @@ public class BattleState : ScriptableObject
     public Member[] ConsciousEnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies && x.IsConscious()).ToArray();
     public (Member Member, EnemyInstance Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
     public PlayerState PlayerState => playerState;
-    public int BattleRngSeed => adventure.Adventure.IsV4 ? adventureProgress.AdventureProgress.RngSeed : map.CurrentNodeRngSeed;
     public AllCards AllCards => allCards;
     public BattleReactions Reactions { get; private set; }
+    public int BattleRngSeed => adventureProgress != null && adventureProgress.AdventureProgress != null 
+        ? adventureProgress.AdventureProgress.RngSeed
+        : Rng.NewSeed();
     
     private Dictionary<int, EnemyInstance> _enemiesById = new Dictionary<int, EnemyInstance>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
@@ -113,10 +115,11 @@ public class BattleState : ScriptableObject
 
     public void SetupEnemyEncounter()
     {
-        if (isEliteBattle)
-            LogEncounterInfo(true, adventureProgress.AdventureProgress.CurrentElitePowerLevel, nextEnemies.Sum(e => e.PowerLevel));
-        else
-            LogEncounterInfo(false, adventureProgress.AdventureProgress.CurrentPowerLevel, nextEnemies.Sum(e => e.PowerLevel));
+        if (adventureProgress != null && adventureProgress.AdventureProgress != null)
+            if (isEliteBattle)
+                LogEncounterInfo(true, adventureProgress.AdventureProgress.CurrentElitePowerLevel, nextEnemies.Sum(e => e.PowerLevel));
+            else
+                LogEncounterInfo(false, adventureProgress.AdventureProgress.CurrentPowerLevel, nextEnemies.Sum(e => e.PowerLevel));
         _battleStartingEnemies = nextEnemies.ToArray();
         EnemyArea.Initialized(nextEnemies);
         isEliteBattle = nextIsEliteBattle;
@@ -221,15 +224,16 @@ public class BattleState : ScriptableObject
 
     private void ApplyAllGlobalStartOfBattleEffects()
     {
-        adventureProgress.AdventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
-        {
-            var heroLeader = _membersById.First().Value;
-            var possibleTargets = this.GetPossibleConsciousTargets(heroLeader, e.Group, e.Scope);
-            var target = possibleTargets.First();
-            var src = target.Members.First();
-            var ctx = EffectContext.ForEffectFromBattleState(this, src, target, ReactionTimingWindow.FirstCause);
-            AllEffects.Apply(e.EffectData, ctx);
-        });
+        if (adventureProgress != null && adventureProgress.AdventureProgress != null)
+            adventureProgress.AdventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
+            {
+                var heroLeader = _membersById.First().Value;
+                var possibleTargets = this.GetPossibleConsciousTargets(heroLeader, e.Group, e.Scope);
+                var target = possibleTargets.First();
+                var src = target.Members.First();
+                var ctx = EffectContext.ForEffectFromBattleState(this, src, target, ReactionTimingWindow.FirstCause);
+                AllEffects.Apply(e.EffectData, ctx);
+            });
     }
 
     public void CleanupIfNeeded()
