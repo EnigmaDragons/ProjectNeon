@@ -15,6 +15,7 @@ public class SpecificEncounterSegment : StageSegment
 
     public override string Name => "Specific Encounter";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
+    public override bool ShouldAutoStart => false;
     public override Maybe<string> Detail => Maybe<string>.Missing();
     
     public override void Start()

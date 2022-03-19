@@ -168,6 +168,8 @@ public class CutscenePresenter : MonoBehaviour
             progress.AdventureProgress.Advance();
             Message.Publish(new AutoSaveRequested());
         }
+        
+        // TODO: Needs V5
         var onFinishedAction = cutscene.OnCutsceneFinishedAction.Select(a => a, navigator.NavigateToGameSceneV4);
         if (useDelay)
             this.ExecuteAfterDelay(onFinishedAction, cutsceneFinishNavigationDelay);

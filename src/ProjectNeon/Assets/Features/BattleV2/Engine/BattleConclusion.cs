@@ -35,10 +35,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
             Log.Info("Returning to map from event combat");
             Message.Publish(new AutoSaveRequested());
             var adventureType = CurrentGameData.Data.AdventureProgress.Type;
-            if (adventureType == GameAdventureProgressType.V2)
-                this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
-            if (adventureType == GameAdventureProgressType.V4)
-                this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV4(), secondsBeforeReturnToAdventure);
+            ReturnToGameScene(adventureType);
         }
         else if (adventureProgress.AdventureProgress.IsFinalStageSegment)
         {
@@ -57,11 +54,18 @@ public class BattleConclusion : OnMessage<BattleFinished>
             adventureProgress.AdventureProgress.Advance();
             Message.Publish(new AutoSaveRequested());
             var adventureType = CurrentGameData.Data.AdventureProgress.Type;
-            if (adventureType == GameAdventureProgressType.V2)
-                this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
-            if (adventureType == GameAdventureProgressType.V4 || adventureType == GameAdventureProgressType.Unknown)
-                this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV4(), secondsBeforeReturnToAdventure);
+            ReturnToGameScene(adventureType);
         }
+    }
+
+    private void ReturnToGameScene(GameAdventureProgressType adventureType)
+    {
+        if (adventureType == GameAdventureProgressType.V2)
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
+        if (adventureType == GameAdventureProgressType.V4)
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV4(), secondsBeforeReturnToAdventure);
+        if (adventureType == GameAdventureProgressType.V5)
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV5(), secondsBeforeReturnToAdventure);
     }
 
     protected override void Execute(BattleFinished msg)

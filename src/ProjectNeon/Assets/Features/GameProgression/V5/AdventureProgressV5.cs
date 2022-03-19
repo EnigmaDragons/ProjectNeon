@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameState/AdventureProgressV5")]
@@ -103,22 +104,21 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override LootPicker CreateLootPicker(PartyAdventureState party) 
         => new LootPicker(CurrentChapterNumber, CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), party);
 
-    public override GameAdventureProgressData GetData()
-        => null;
-    // new GameAdventureProgressData
-    //     {
-    //         AdventureId = CurrentAdventureId,
-    //         Type = GameAdventureProgressType.V4,
-    //         CurrentChapterIndex = currentChapterIndex,
-    //         CurrentSegmentIndex = currentSegmentIndex,
-    //         CurrentChapterFinishedHeatUpEvents = new int[0],
-    //         FinishedStoryEvents = new string[0],
-    //         PlayerReadMapPrompt = true,
-    //         ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray(),
-    //         RngSeed = rngSeed,
-    //         States = _storyStates.Keys.ToArray(),
-    //         StateValues = _storyStates.Values.ToArray()
-    //     };
+    public override GameAdventureProgressData GetData() 
+        => new GameAdventureProgressData
+        {
+             AdventureId = CurrentAdventureId,
+             Type = GameAdventureProgressType.V5,
+             CurrentChapterIndex = currentChapterIndex,
+             CurrentSegmentIndex = currentSegmentIndex,
+             CurrentChapterFinishedHeatUpEvents = new int[0],
+             FinishedStoryEvents = new string[0],
+             PlayerReadMapPrompt = true,
+             ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray(),
+             RngSeed = rngSeed,
+             States = _storyStates.Keys.ToArray(),
+             StateValues = _storyStates.Values.ToArray()
+        };
     
     public bool InitAdventure(GameAdventureProgressData d, Adventure adventure)
     {

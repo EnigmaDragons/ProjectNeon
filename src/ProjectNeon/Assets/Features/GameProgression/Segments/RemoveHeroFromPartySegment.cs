@@ -7,7 +7,7 @@ public class RemoveHeroFromPartySegment : StageSegment
 
     public override string Name => $"Party Change Event";
     public override bool ShouldCountTowardsEnemyPowerLevel => false;
-
+    public override bool ShouldAutoStart => false;
     public override void Start()
     {
         Message.Publish(new RemoveHeroFromPartyRequested(hero));

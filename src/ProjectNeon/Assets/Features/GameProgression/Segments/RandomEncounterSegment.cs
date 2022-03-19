@@ -6,6 +6,7 @@ public class RandomEncounterSegment : StageSegment
 {
     public override string Name => "Battle";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
+    public override bool ShouldAutoStart => false;
     public override Maybe<string> Detail => Maybe<string>.Missing();
 
     [SerializeField] private GameObject[] possibleBattlegrounds;

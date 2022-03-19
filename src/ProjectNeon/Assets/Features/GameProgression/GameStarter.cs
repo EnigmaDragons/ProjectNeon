@@ -10,6 +10,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private AdventureProgress2 adventureProgress2;
     [SerializeField] private AdventureProgressV4 adventureProgress4;
+    [SerializeField] private AdventureProgressV5 adventureProgress5;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private Adventure defaultAdventure;
     [SerializeField] private bool allowPlayerToSelectAdventure;
@@ -27,7 +28,9 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             else
                 SelectDefaultAdventureV2();
         
-        if (defaultAdventure.IsV4)
+        if (defaultAdventure.IsV5)
+            StartDefaultAdventureV5();
+        else if (defaultAdventure.IsV4)
             StartDefaultAdventureV4(true);
     }
     
@@ -74,6 +77,25 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             navigator.NavigateToGameSceneV4();
         }
     } 
+    
+    private void StartDefaultAdventureV5()
+    {
+        var adventure = defaultAdventure;
+        var startingSegment = 0;
+        adventureProgress.AdventureProgress = adventureProgress5;
+        adventureProgress.AdventureProgress.Init(adventure, 0, startingSegment);
+        party.Initialized(adventure.FixedStartingHeroes);
+        CurrentGameData.Write(s =>
+        {
+            s.IsInitialized = true;
+            s.Phase = CurrentGamePhase.SelectedSquad;
+            s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
+            s.PartyData = party.GetData();
+            return s;
+        });
+        Message.Publish(new GameStarted());
+        navigator.NavigateToGameSceneV5();
+    } 
 
     protected override void Execute(ContinueCurrentGame msg)
     {
@@ -93,6 +115,8 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                     navigator.NavigateToGameScene();
                 if (adventureType == GameAdventureProgressType.V4)
                     navigator.NavigateToGameSceneV4();
+                if (adventureType == GameAdventureProgressType.V5)
+                    navigator.NavigateToGameSceneV5();
             }
             else if (phase == CurrentGamePhase.LoadError)
             {

@@ -10,6 +10,7 @@ public sealed class Navigator : ScriptableObject
     public void NavigateToSquadSelection() => NavigateTo("SquadSelection");
     public void NavigateToGameScene() => NavigateTo("GameScene");
     public void NavigateToGameSceneV4() => NavigateTo("GameSceneV4");
+    public void NavigateToGameSceneV5() => NavigateTo("GameSceneV5");
     public void NavigateToDeckBuilderScene() => NavigateTo("DeckBuilderScene");
     public void NavigateToBattleScene() => NavigateTo("BattleSceneV2");
     public void NavigateToConclusionScene() => NavigateTo("ConclusionScene");
