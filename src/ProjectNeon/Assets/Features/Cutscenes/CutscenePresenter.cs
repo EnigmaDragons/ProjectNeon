@@ -149,8 +149,7 @@ public class CutscenePresenter : MonoBehaviour
 
     private void Execute(SkipCutsceneRequested msg)
     { 
-        cutscene.Current.SkipTrueStates.ForEach(x => progress.AdventureProgress.SetStoryState(x, true));
-        cutscene.Current.SkipFalseStates.ForEach(x => progress.AdventureProgress.SetStoryState(x, false));
+        cutscene.Current.MarkSkipped(progress.AdventureProgress);
         FinishCutscene(false);
     } 
 
@@ -169,6 +168,8 @@ public class CutscenePresenter : MonoBehaviour
             progress.AdventureProgress.Advance();
             Message.Publish(new AutoSaveRequested());
         }
+        
+        // TODO: Needs V5
         var onFinishedAction = cutscene.OnCutsceneFinishedAction.Select(a => a, navigator.NavigateToGameSceneV4);
         if (useDelay)
             this.ExecuteAfterDelay(onFinishedAction, cutsceneFinishNavigationDelay);

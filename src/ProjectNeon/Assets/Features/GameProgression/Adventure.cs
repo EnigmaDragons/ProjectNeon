@@ -9,6 +9,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     [SerializeField] private string lockConditionExplanation = "";
     [SerializeField] private DynamicStage[] dynamicStages;
     [SerializeField] private StaticStageV4[] stages;
+    [SerializeField] private HybridStageV5[] v5Stages;
     [SerializeField] private string adventureTitle;
     [SerializeField] private Sprite adventureImage;
     [SerializeField] private int partySize;
@@ -34,6 +35,8 @@ public class Adventure : ScriptableObject, CurrentAdventureData
 
     public DynamicStage[] DynamicStages => dynamicStages.ToArray();
     public StaticStageV4[] StagesV4 => stages.ToArray();
+    public HybridStageV5[] StagesV5 => v5Stages.ToArray();
+    
     public Sprite AdventureImage => adventureImage;
     public int PartySize => partySize;
     public BaseHero[] RequiredHeroes => requiredHeroes;
@@ -44,6 +47,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     public float XpPerPowerLevel => xpPerPowerLevel;
     public bool IsV2 => !IsV4 && dynamicStages != null && dynamicStages.Any();
     public bool IsV4 => stages != null && stages.Any();
+    public bool IsV5 => v5Stages != null && v5Stages.Any();
     
     public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation);
     public string LockConditionExplanation => lockConditionExplanation ?? "";

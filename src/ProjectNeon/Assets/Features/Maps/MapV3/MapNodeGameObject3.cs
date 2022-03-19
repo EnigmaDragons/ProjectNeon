@@ -21,9 +21,12 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     private Maybe<GameObject> _rulesPanel;
 
     public void Init(MapNode3 mapData, CurrentGameMap3 gameMap, AdventureGenerationContext ctx, AllStaticGlobalEffects allGlobalEffects, Action<Transform> onMidPointArrive)
+        => Init(mapData, gameMap, segment.GenerateDeterministic(ctx, mapData), allGlobalEffects, onMidPointArrive);
+    
+    public void Init(MapNode3 mapData, CurrentGameMap3 gameMap, IStageSegment stageSegment, AllStaticGlobalEffects allGlobalEffects, Action<Transform> onMidPointArrive)
     {
         MapData = mapData;
-        ArrivalSegment = segment.GenerateDeterministic(ctx, mapData);
+        ArrivalSegment = stageSegment;
         var canTravel = !mapData.PreventTravel;
         if (plotEventVisual != null)
             plotEventVisual.SetActive(mapData.IsPlotNode);

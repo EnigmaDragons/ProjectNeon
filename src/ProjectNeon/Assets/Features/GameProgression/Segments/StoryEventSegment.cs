@@ -10,7 +10,10 @@ public class StoryEventSegment : StageSegment
 
     public override string Name => "Story Event";
     public override bool ShouldCountTowardsEnemyPowerLevel => false;
+    public override bool ShouldAutoStart => false;
     public override Maybe<string> Detail => Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => MapNodeType.StoryEvent;
+    public override Maybe<string> Corp => Maybe<string>.Missing();
 
     public override void Start()
     {

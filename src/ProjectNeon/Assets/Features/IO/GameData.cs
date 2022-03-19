@@ -37,7 +37,8 @@ public enum GameAdventureProgressType
 {
     Unknown = 0,
     V2 = 2,
-    V4 = 4
+    V4 = 4,
+    V5 = 5
 }
 
 [Serializable]

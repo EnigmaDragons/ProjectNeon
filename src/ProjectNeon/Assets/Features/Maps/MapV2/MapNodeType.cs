@@ -9,4 +9,5 @@
     GearShop = 5,
     StoryEvent = 6,
     Clinic = 7,
+    MainStory = 8
 }

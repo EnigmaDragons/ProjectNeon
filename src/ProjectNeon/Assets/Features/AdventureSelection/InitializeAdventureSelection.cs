@@ -10,6 +10,7 @@ public class InitializeAdventureSelection : MonoBehaviour
     [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private AdventureProgress2 adventureProgress2;
     [SerializeField] private AdventureProgressV4 adventureProgress4;
+    [SerializeField] private AdventureProgressV5 adventureProgress5;
     [SerializeField] private Navigator navigator;
 
     private void Start()
@@ -32,6 +33,8 @@ public class InitializeAdventureSelection : MonoBehaviour
                 adventureProgress.AdventureProgress = adventureProgress2;
             if (adventure.IsV4)
                 adventureProgress.AdventureProgress = adventureProgress4;
+            if (adventure.IsV5)
+                adventureProgress.AdventureProgress = adventureProgress5;
             adventureProgress.AdventureProgress.Init(adventure, 0);
             CurrentGameData.Write(s =>
             {
