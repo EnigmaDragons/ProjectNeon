@@ -149,8 +149,7 @@ public class CutscenePresenter : MonoBehaviour
 
     private void Execute(SkipCutsceneRequested msg)
     { 
-        cutscene.Current.SkipTrueStates.ForEach(x => progress.AdventureProgress.SetStoryState(x, true));
-        cutscene.Current.SkipFalseStates.ForEach(x => progress.AdventureProgress.SetStoryState(x, false));
+        cutscene.Current.MarkSkipped(progress.AdventureProgress);
         FinishCutscene(false);
     } 
 
