@@ -14,6 +14,8 @@ public class MapNode3
     public bool IsPlotNode;
     public int VisitedGlobalEffectId = -1;
     public int UnVisitedGlobalEffectId = -1;
+    
+    public StageSegment PresetStage;
 
     public string GetMetricDescription()
         => ($"{Type} " + (string.IsNullOrWhiteSpace(Corp) ? "" : Corp)).Trim();

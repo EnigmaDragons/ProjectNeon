@@ -12,5 +12,8 @@ public class CutsceneStageSegment : StageSegment
     public override bool ShouldCountTowardsEnemyPowerLevel => false;
     public override void Start() => Message.Publish(new StartCutsceneRequested(cutscene, Maybe<Action>.Missing()));
     public override Maybe<string> Detail { get; } = Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => MapNodeType.MainStory;
+    public override Maybe<string> Corp => Maybe<string>.Missing();
+    
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
 }

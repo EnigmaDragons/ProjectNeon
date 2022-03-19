@@ -8,6 +8,8 @@ public class RandomEncounterSegment : StageSegment
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
     public override bool ShouldAutoStart => false;
     public override Maybe<string> Detail => Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => MapNodeType.Combat;
+    public override Maybe<string> Corp => Maybe<string>.Missing();
 
     [SerializeField] private GameObject[] possibleBattlegrounds;
     [SerializeField] private BattleState battleState;

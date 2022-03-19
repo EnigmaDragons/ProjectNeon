@@ -15,5 +15,7 @@ public class RemoveHeroFromPartySegment : StageSegment
     } 
 
     public override Maybe<string> Detail { get; } = Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => MapNodeType.Unknown;
+    public override Maybe<string> Corp => Maybe<string>.Missing();
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
 }

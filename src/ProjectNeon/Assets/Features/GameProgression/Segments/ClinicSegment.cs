@@ -10,6 +10,9 @@ public class ClinicSegment : StageSegment
     public override bool ShouldAutoStart => false;
     public override void Start() => Message.Publish(new ToggleClinic { CorpName = corp });
     public override Maybe<string> Detail => Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => MapNodeType.Clinic;
+    public override Maybe<string> Corp => Maybe<string>.Present(corp);
+    
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) 
         => new GeneratedClinicSegment(mapData.Corp);
 }

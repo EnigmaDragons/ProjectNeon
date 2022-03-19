@@ -36,6 +36,10 @@ public class AdventureProgressV5 : AdventureProgressBase
 
     public StageSegment CurrentStageSegment => CurrentChapter.Segments[currentSegmentIndex];
 
+    public StageSegment[] SecondarySegments => CurrentChapter.MaybeSecondarySegments.Length > currentSegmentIndex
+        ? CurrentChapter.MaybeSecondarySegments[currentChapterIndex].AsArray().Where(s => s != null).ToArray() 
+        : new StageSegment[0];
+
     public override IStage Stage => CurrentChapter;
 
     private static int Int(float f) => f.CeilingInt();
