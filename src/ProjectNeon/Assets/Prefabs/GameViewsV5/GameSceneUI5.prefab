@@ -788,7 +788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33750a5d09919b847a0b63cea3e83959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
+  progress: {fileID: 11400000, guid: 434ca06c911c9fa409030447f7afe341, type: 2}
   label: {fileID: 6040414123694634183}
 --- !u!1 &3503457711331085520
 GameObject:
@@ -958,8 +958,6 @@ GameObject:
   - component: {fileID: 4753873711603834989}
   - component: {fileID: 5681688965739325028}
   - component: {fileID: 6668650861953692606}
-  - component: {fileID: 1351276312068521106}
-  - component: {fileID: 1592050591869097658}
   - component: {fileID: 340932138089035008}
   m_Layer: 5
   m_Name: MapUI5
@@ -1079,76 +1077,6 @@ MonoBehaviour:
   battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   eventPublisher: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
   navigator: {fileID: 0}
---- !u!114 &1351276312068521106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4753873711603834994}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03fcd53c3f074573a0b854fa49df968f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameMap: {fileID: 11400000, guid: 5064fe74d4176254a9e1729682f69c71, type: 2}
-  progress: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
-  travelReactiveSystem: {fileID: 5681688965739325028}
-  playerToken: {fileID: 62304065873535587, guid: a4775238501ca3445aad9d5cd06aaa55, type: 3}
-  partyState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
-  storyEventSegment: {fileID: 11400000, guid: 1d6f929dea855bd49b50131d4dc3cc2d, type: 2}
-  allEnemies: {fileID: 11400000, guid: d10371c939a84694b9f41a9963ad8226, type: 2}
-  allCorps: {fileID: 11400000, guid: 88b6eec066e88434b84f9b83598659ff, type: 2}
-  combatNode: {fileID: 591490670348005607, guid: a7d9119f37c7abd4a9edc65ba0f8e463, type: 3}
-  eliteCombatNode: {fileID: 6700350599225383442, guid: 44d454fc2abac8f4d806561e8e7abe13, type: 3}
-  cardShopNode: {fileID: 6029525275930381626, guid: 5f2f508cf25316544b311a742f0c0755, type: 3}
-  gearShopNode: {fileID: 3989423849726937382, guid: 42e8398631a1e0b4a8236d8d818e51a9, type: 3}
-  storyEventNode: {fileID: 4779642251439719200, guid: 4fb223eff3ecb85469ae59b78349a264, type: 3}
-  bossNode: {fileID: 1588401189862924260, guid: 46693bed753a26c479e4b92c26e77fcc, type: 3}
-  clinicNode: {fileID: 5256480319600714127, guid: f587ea481b3d96049a7f9ece4488faca, type: 3}
-  corpGearNodes:
-  - corp: {fileID: 11400000, guid: f536780fabfce9141933c05122731104, type: 2}
-    nodeGameObject: {fileID: 711384734810684186, guid: ddf37a1989902c749844430c8eb9ab61, type: 3}
-  - corp: {fileID: 11400000, guid: 4a1f16a350870734782dc204b16ce184, type: 2}
-    nodeGameObject: {fileID: 4013377510470430992, guid: 14b2ac06f6de7e94c9c478e1c417a530, type: 3}
-  - corp: {fileID: 11400000, guid: 8eee292fbfbac134b966e2efaca2a532, type: 2}
-    nodeGameObject: {fileID: 7915675359059332531, guid: 4f5bb7f34bb1bbc48b31262460de585e, type: 3}
-  - corp: {fileID: 11400000, guid: bd8e5654971a1ef4895e3bf12cf6c8be, type: 2}
-    nodeGameObject: {fileID: 525726425062379999, guid: 91768bb7f24b83f499aaa31936ae2526, type: 3}
-  - corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
-    nodeGameObject: {fileID: 4692022955311056982, guid: 2cc23a82e779dd14db44317f0225fec3, type: 3}
-  corpClinicNodes:
-  - corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
-    nodeGameObject: {fileID: 5733061901227342423, guid: bfba962baa867d449946a9afca172628, type: 3}
-  - corp: {fileID: 11400000, guid: 8eee292fbfbac134b966e2efaca2a532, type: 2}
-    nodeGameObject: {fileID: 6908695514287337272, guid: 83199bb0b415f544a845f312e88d2850, type: 3}
---- !u!114 &1592050591869097658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4753873711603834994}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0ba50d3488448f5a3fbc1e766961cff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
-        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
-        m_MethodName: ShowTutorialIfNeeded
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Map
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &340932138089035008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1172,6 +1100,7 @@ MonoBehaviour:
   storyEventNode: {fileID: 4779642251439719200, guid: 4fb223eff3ecb85469ae59b78349a264, type: 3}
   bossNode: {fileID: 1588401189862924260, guid: 46693bed753a26c479e4b92c26e77fcc, type: 3}
   clinicNode: {fileID: 5256480319600714127, guid: f587ea481b3d96049a7f9ece4488faca, type: 3}
+  mainStoryNode: {fileID: 395069194007913839, guid: b83269224ae7836458d268a674957bbc, type: 3}
   corpGearNodes:
   - corp: {fileID: 11400000, guid: f536780fabfce9141933c05122731104, type: 2}
     nodeGameObject: {fileID: 711384734810684186, guid: ddf37a1989902c749844430c8eb9ab61, type: 3}

@@ -4,11 +4,8 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
 {
     [SerializeField] private AdventureProgressV5 progress;
 
-    private void Start()
-    {
-        Go();
-    }
-    
+    private void Start() => Go();
+
     protected override void Execute(NodeFinished msg)
     {
         progress.Advance();
@@ -20,6 +17,6 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
         if (progress.CurrentStageSegment.ShouldAutoStart)
             progress.CurrentStageSegment.Start();
         else
-            Log.Info("Draw Map");
+            Message.Publish(new RegenerateMapRequested());
     }
 }

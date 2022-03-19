@@ -120,7 +120,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             }
             else if (phase == CurrentGamePhase.LoadError)
             {
-                if (CurrentGameData.SaveMatchesCurrentVersion)
+                if (!CurrentGameData.SaveMatchesCurrentVersion)
                 {
                     Message.Publish(new RefreshMainMenu());
                     Message.Publish(new ShowInfoDialog(

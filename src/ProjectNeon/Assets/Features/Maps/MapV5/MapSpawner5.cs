@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class MapSpawner5 : OnMessage<NodeFinished>
+public class MapSpawner5 : OnMessage<RegenerateMapRequested>
 {
     [SerializeField] private CurrentGameMap3 gameMap;
     [SerializeField] private AdventureProgressV5 progress;
@@ -17,6 +17,7 @@ public class MapSpawner5 : OnMessage<NodeFinished>
     [SerializeField] private MapNodeGameObject3 storyEventNode;
     [SerializeField] private MapNodeGameObject3 bossNode;
     [SerializeField] private MapNodeGameObject3 clinicNode;
+    [SerializeField] private MapNodeGameObject3 mainStoryNode;
     
     // Corp Nodes
     [SerializeField] private CorpTypedNode[] corpGearNodes;
@@ -27,10 +28,12 @@ public class MapSpawner5 : OnMessage<NodeFinished>
     private GameObject _playerToken;
     private GameObject _map;
     
-    protected override void Execute(NodeFinished msg) => SpawnNodes();
+    protected override void Execute(RegenerateMapRequested msg) => SpawnNodes();
     
     private void Awake()
     {
+        if (gameMap.CurrentMap == null)
+            gameMap.CurrentMap = progress.CurrentChapter.Map;
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         SpawnToken(_map.gameObject);
         StartPlayerTokenFloating();
@@ -55,26 +58,44 @@ public class MapSpawner5 : OnMessage<NodeFinished>
     private void InitOptions()
     {
         var stageSegments = progress.SecondarySegments.Concat(progress.CurrentStageSegment);
-        gameMap.CurrentChoices = stageSegments.Select(s => new MapNode3
+        gameMap.CurrentChoices = stageSegments
+            .Where(s => s.MapNodeType != MapNodeType.Unknown)
+            .Select(s => new MapNode3
+            {
+                Type = s.MapNodeType,
+                Corp = s.Corp.OrDefault(""),
+                PresetStage = s
+            }).ToList();
+        
+        var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition).ToArray().Shuffled();
+        for (var i = 0; i < gameMap.CurrentChoices.Count; i++)
         {
-            Type = s.MapNodeType,
-            Corp = s.Corp.OrDefault(""),
-            PresetStage = s
-        }).ToList();
+            gameMap.CurrentChoices[i].Position = locations[i];
+        }
     }
     
     private void SpawnNodes()
     {
         InitOptions();
         var fx = progress.GlobalEffects.AllStaticGlobalEffects;
+        Log.Info($"Map Spawning Nodes: {gameMap.CurrentChoices.Count} Nodes. Adventure Progress: Chapter {progress.CurrentChapterNumber}, Segment {progress.CurrentStageProgress}");
         _activeNodes = gameMap.CurrentChoices.Select(x =>
         {
-            var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), _map.transform);
-            obj.Init(x, gameMap, x.PresetStage, fx, _ => Message.Publish(new ContinueTraveling()));
-            var rect = (RectTransform) obj.transform;
-            rect.pivot = new Vector2(0.5f, 0.5f);
-            rect.anchoredPosition = x.Position;
-            return obj;
+            Log.Info($"Spawning Node: {x.Type} - {x.Corp}");
+            try
+            {
+                var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), _map.transform);
+                obj.Init(x, gameMap, x.PresetStage, fx, _ => Message.Publish(new ContinueTraveling()));
+                var rect = (RectTransform) obj.transform;
+                rect.pivot = new Vector2(0.5f, 0.5f);
+                rect.anchoredPosition = x.Position;
+                return obj;
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Node Prefab for {x.Type} - {x.Corp} is null");
+                return null;
+            }
         }).ToArray();
         _playerToken.transform.SetAsLastSibling();
         Message.Publish(new AutoSaveRequested());
@@ -97,6 +118,12 @@ public class MapSpawner5 : OnMessage<NodeFinished>
             nodePrefab = bossNode;
         else if (type == MapNodeType.Clinic)
             nodePrefab = GetCorpClinicShop(corpName);
+        else if (type == MapNodeType.MainStory)
+            nodePrefab = mainStoryNode;
+        
+        if (nodePrefab == null)
+            Log.Error($"{nameof(MapSpawner5)} - Unknown Map Node Type {type}");
+        
         return nodePrefab;
     }
 

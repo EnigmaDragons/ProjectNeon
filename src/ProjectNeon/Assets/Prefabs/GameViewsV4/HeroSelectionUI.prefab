@@ -267,6 +267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8000738864224328686}
   - component: {fileID: 4927172600162749076}
+  - component: {fileID: 8195844365169733519}
   m_Layer: 0
   m_Name: HeroSelectionUI
   m_TagString: Untagged
@@ -303,6 +304,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 6737436974309315700}
   presenter: {fileID: 2009399435285758912}
+--- !u!114 &8195844365169733519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218067141623896342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb9c3bd4bf1417c83695df1c2eca28d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 6737436974309315700}
+  targetName:
+    UseConstant: 1
+    ConstantValue: HeroSelectionView
+    Variable: {fileID: 0}
+  alwaysStartInactive: 0
 --- !u!1 &1786854507192420972
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private AdventureProgressV4 adventurev4;
+    [SerializeField] private AdventureProgressV5 adventurev5;
     [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private Library library;
     [SerializeField] private CurrentGameMap3 map;
@@ -64,6 +65,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             return adventure.InitAdventure(d, selectedAdventure.Value);
         if (d.Type == GameAdventureProgressType.V4)
             return adventurev4.InitAdventure(d, selectedAdventure.Value);
+        if (d.Type == GameAdventureProgressType.V5)
+            return adventurev5.InitAdventure(d, selectedAdventure.Value);
         return LoadFailedReason($"Unknown Adventure Type {d.Type}");
     }
 
