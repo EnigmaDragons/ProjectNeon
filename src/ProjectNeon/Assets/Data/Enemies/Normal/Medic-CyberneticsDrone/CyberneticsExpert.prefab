@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 1358028937840509144}
   - component: {fileID: 6501649394622643684}
   - component: {fileID: 2729305871706424709}
+  - component: {fileID: 4160266650980328403}
   m_Layer: 0
   m_Name: CyberneticsExpert
   m_TagString: Untagged
@@ -184,6 +185,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 2604797412643732986}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &4160266650980328403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6582794712477548943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 3191799128230473755}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1001 &1357421806461258904
 PrefabInstance:
@@ -681,3 +701,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3326159109834311044, guid: 85e9d37d5c038be46a29c1049a711f83, type: 3}
   m_PrefabInstance: {fileID: 9096636731685620840}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3191799128230473755 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5941992335816555635, guid: 85e9d37d5c038be46a29c1049a711f83, type: 3}
+  m_PrefabInstance: {fileID: 9096636731685620840}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

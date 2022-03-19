@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4018013075395433146}
   - component: {fileID: 7595082009149802236}
   - component: {fileID: 1217969054048832292}
+  - component: {fileID: 5800243688170173476}
   m_Layer: 0
   m_Name: VedaV2
   m_TagString: Untagged
@@ -110,6 +111,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1224898728314696165}
+  talking: {fileID: 0}
+  character: {fileID: 0}
+  reverse: 0
+--- !u!114 &5800243688170173476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4827642694620234641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 5301899839332632321}
+  sprite: {fileID: 0}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &7444220589274769295
 GameObject:
   m_ObjectHideFlags: 0

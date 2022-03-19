@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6420343474423826170}
   - component: {fileID: 1275933770164701849}
   - component: {fileID: 4847256971155747916}
+  - component: {fileID: 3434923831278109535}
   m_Layer: 0
   m_Name: CameraBot
   m_TagString: Untagged
@@ -75,6 +76,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 8893011971575446285}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &3434923831278109535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687609622097564120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 0}
+  sprite: {fileID: 4697965664983498584}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &2140774511560239273
 GameObject:

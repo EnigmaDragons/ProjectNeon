@@ -86,8 +86,9 @@ GameObject:
   - component: {fileID: 4336909617709871148}
   - component: {fileID: 8416387552866503952}
   - component: {fileID: 799122253539063153}
+  - component: {fileID: 1758719471198875611}
   m_Layer: 0
-  m_Name: DefectiveSecurityDronePrefab
+  m_Name: DefectiveSecurityBotPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,6 +153,25 @@ MonoBehaviour:
   animator: {fileID: 7120124024242682975}
   character: {fileID: 779515520432033038}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &1758719471198875611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8479632304954044795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 6954015194431483903}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &8713583458826925790
 GameObject:
@@ -520,6 +540,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2059603343430076816, guid: c0f4fdb8227251f4eaec9d107b0ae69d, type: 3}
   m_PrefabInstance: {fileID: 6301557528222217425}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6954015194431483903 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4031353709112744750, guid: c0f4fdb8227251f4eaec9d107b0ae69d, type: 3}
+  m_PrefabInstance: {fileID: 6301557528222217425}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &7120124024242682975 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3872077790088661134, guid: c0f4fdb8227251f4eaec9d107b0ae69d, type: 3}

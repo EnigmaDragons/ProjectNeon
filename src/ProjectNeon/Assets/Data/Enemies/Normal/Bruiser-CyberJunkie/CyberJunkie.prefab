@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8664691872966425710}
   - component: {fileID: 3521222182553403730}
   - component: {fileID: 5694778075296626995}
+  - component: {fileID: 5361594098689255901}
   m_Layer: 0
   m_Name: CyberJunkie
   m_TagString: Untagged
@@ -79,6 +80,25 @@ MonoBehaviour:
   animator: {fileID: 194142172176218603}
   character: {fileID: 5674960166499615052}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &5361594098689255901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3584112892095806777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 3819918273046940893}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &4394452161873574556
 GameObject:
@@ -623,6 +643,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6164548733377531864, guid: e467707b8c044974db14033522493b35, type: 3}
   m_PrefabInstance: {fileID: 2918987007383446792}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3819918273046940893 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2126051252389194197, guid: e467707b8c044974db14033522493b35, type: 3}
+  m_PrefabInstance: {fileID: 2918987007383446792}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &194142172176218603 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3041029746901015779, guid: e467707b8c044974db14033522493b35, type: 3}

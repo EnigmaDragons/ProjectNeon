@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 2235253319946762285}
   - component: {fileID: 6334304903770572049}
   - component: {fileID: 2899744388142611824}
+  - component: {fileID: 1162753803644453094}
   m_Layer: 0
   m_Name: GrizzledVeteran
   m_TagString: Untagged
@@ -153,6 +154,25 @@ MonoBehaviour:
   animator: {fileID: 2509902154733559165}
   character: {fileID: 3025185712692741391}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &1162753803644453094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6235040150558374266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 3238616867349982446}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &6613015578808106719
 GameObject:
@@ -267,6 +287,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5785296930428324625, guid: f03b2d4d2953f44428422a1b7ecdb708, type: 3}
   m_PrefabInstance: {fileID: 905239577111865352}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3238616867349982446 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2333408283862975718, guid: f03b2d4d2953f44428422a1b7ecdb708, type: 3}
+  m_PrefabInstance: {fileID: 905239577111865352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &2509902154733559165 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3334062506376246645, guid: f03b2d4d2953f44428422a1b7ecdb708, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7258521930549866909}
   - component: {fileID: 2893237050746810190}
   - component: {fileID: 6375877110631839544}
+  - component: {fileID: 8995433818976455440}
   m_Layer: 0
   m_Name: LexiV2
   m_TagString: Untagged
@@ -95,6 +96,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 514050419517181363}
+  talking: {fileID: 0}
+  character: {fileID: 0}
+  reverse: 0
+--- !u!114 &8995433818976455440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2874710230112043847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 2310838310008437678}
+  sprite: {fileID: 0}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &4425737612472053104
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +553,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4232638085172521091, guid: 1522e4f59ed8a144782ae2b57b829a61, type: 3}
   m_PrefabInstance: {fileID: 7429141517175978943}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2310838310008437678 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5118380465040637969, guid: 1522e4f59ed8a144782ae2b57b829a61, type: 3}
+  m_PrefabInstance: {fileID: 7429141517175978943}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &6293811903232851619 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3477201456752280860, guid: 1522e4f59ed8a144782ae2b57b829a61, type: 3}

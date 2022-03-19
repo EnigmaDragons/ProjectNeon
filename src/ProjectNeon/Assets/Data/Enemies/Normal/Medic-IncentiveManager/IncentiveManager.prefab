@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 4341741117650908445}
   - component: {fileID: 6931915193270090268}
   - component: {fileID: 1002306247667956301}
+  - component: {fileID: 4385978776371389813}
   m_Layer: 0
   m_Name: IncentiveManager
   m_TagString: Untagged
@@ -154,6 +155,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 7017737794751060741}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &4385978776371389813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6152737969646722987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 0}
+  sprite: {fileID: 5886942346454645583}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &6683839596010136057
 GameObject:

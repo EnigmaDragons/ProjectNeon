@@ -160,6 +160,7 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id] = heroTransform;
             heroTransform.GetComponentInChildren<ActiveMemberIndicator>()?.Init(id, true);
             heroTransform.GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, hero.Character.Animations, TeamType.Party);
+            heroTransform.GetComponentInChildren<DeathPresenter>()?.Init(id);
             if (hero.Character.AnimationSounds != null)
             {
                 var sound = heroTransform.GetComponentInChildren<CharacterAnimationSoundPlayer>();
@@ -187,6 +188,7 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id] = enemyTransform;
             _uiTransformsById[id].GetComponent<ActiveMemberIndicator>()?.Init(id, false);
             _uiTransformsById[id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(id, _enemiesById[id].Animations, TeamType.Enemies);
+            _uiTransformsById[id].GetComponentInChildren<DeathPresenter>()?.Init(id);
             if(enemy.AnimationSounds != null)
                 _uiTransformsById[id].GetComponentInChildren<CharacterAnimationSoundPlayer>()?.Init(id, enemy.AnimationSounds, enemyTransform);
             SetMemberName(id, enemies.Enemies[i].Name);

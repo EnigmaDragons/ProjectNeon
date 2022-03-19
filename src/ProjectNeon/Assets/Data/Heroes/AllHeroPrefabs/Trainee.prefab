@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7669871246760631787}
   - component: {fileID: 3549535050210111675}
   - component: {fileID: 7976005617304274064}
+  - component: {fileID: 7969203287410681153}
   m_Layer: 0
   m_Name: Trainee
   m_TagString: Untagged
@@ -110,6 +111,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 7800764037551358239}
+  talking: {fileID: 0}
+  character: {fileID: 0}
+  reverse: 0
+--- !u!114 &7969203287410681153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2255522391875570880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 7667986767134979499}
+  sprite: {fileID: 0}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &4250604161661970654
 GameObject:
   m_ObjectHideFlags: 0

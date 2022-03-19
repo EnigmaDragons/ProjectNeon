@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8218078353809077016}
   - component: {fileID: 2512263176302516203}
   - component: {fileID: 7192525634126938935}
+  - component: {fileID: 2206751325121847572}
   m_Layer: 0
   m_Name: AndiV2
   m_TagString: Untagged
@@ -110,6 +111,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 2001206046455048907}
+  talking: {fileID: 0}
+  character: {fileID: 0}
+  reverse: 0
+--- !u!114 &2206751325121847572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030401534289477601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 3517004855093978278}
+  sprite: {fileID: 0}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &5556414510271578547
 GameObject:
   m_ObjectHideFlags: 0

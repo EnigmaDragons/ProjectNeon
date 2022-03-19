@@ -33,6 +33,7 @@ public class CharacterAnimationTester : MonoBehaviour
         var obj = Instantiate(hero.Body, heroLocation.transform);
         var ccAnimator = obj.GetComponentInChildren<CharacterCreatorAnimationController>();
         ccAnimator.Init(_memberId, hero.Animations, TeamType.Party);
+        obj.GetComponentInChildren<DeathPresenter>()?.Init(_memberId);
         var sounds = obj.GetComponentInChildren<CharacterAnimationSoundPlayer>();
         if (sounds != null)
         {

@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 607104423589190229}
   - component: {fileID: 4665866785567413814}
   - component: {fileID: 1310987943017162979}
+  - component: {fileID: 3002478703389376374}
   m_Layer: 0
   m_Name: Spiderling
   m_TagString: Untagged
@@ -274,6 +275,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 3035190145924032418}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &3002478703389376374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5052724444396883319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 0}
+  sprite: {fileID: 1173184403066528759}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &5530689780295119878
 GameObject:

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8242233793276627941}
   - component: {fileID: 1278226989931767699}
   - component: {fileID: 2359255633426798738}
+  - component: {fileID: 6170362249095599499}
   m_Layer: 0
   m_Name: Enemy_Spellslinger
   m_TagString: Untagged
@@ -77,6 +78,25 @@ MonoBehaviour:
   animator: {fileID: 273029322349616708}
   character: {fileID: 6189484611248629711}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &6170362249095599499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3582005950873257460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 4182085293022515144}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &4712455582642098133
 GameObject:
@@ -340,6 +360,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 924875840471609836, guid: 994a547dc7dd09e4488b95812b93a94e, type: 3}
   m_PrefabInstance: {fileID: 3398307834809692102}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4182085293022515144 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1522487781341536270, guid: 994a547dc7dd09e4488b95812b93a94e, type: 3}
+  m_PrefabInstance: {fileID: 3398307834809692102}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &273029322349616708 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3233804711142896002, guid: 994a547dc7dd09e4488b95812b93a94e, type: 3}

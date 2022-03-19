@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 3910140365361084058}
   - component: {fileID: 7131067529590347173}
   - component: {fileID: 2118744510148038875}
+  - component: {fileID: 6897769597576802847}
   m_Layer: 0
   m_Name: Enemy_Enforcer
   m_TagString: Untagged
@@ -125,6 +126,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewer: {fileID: 4031168016126901941}
+--- !u!114 &6897769597576802847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3973068459240426225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 4031168016126901941}
+  sprite: {fileID: 0}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &4207001883576552788
 GameObject:
   m_ObjectHideFlags: 0

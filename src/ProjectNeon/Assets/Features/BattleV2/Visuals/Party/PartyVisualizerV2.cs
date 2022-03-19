@@ -5,7 +5,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner, UnhighlightCardOwner, DisplaySpriteEffect, ShowHeroBattleThought>
+public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, HighlightCardOwner, UnhighlightCardOwner, DisplaySpriteEffect, ShowHeroBattleThought>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private GameObject hero1;
@@ -126,20 +126,6 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
                 DevLog.Write($"Finished {e.Animation} Animation in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
-    }
-    
-    protected override void Execute(MemberUnconscious m)
-    {
-        if (!m.Member.TeamType.Equals(TeamType.Party)) return;
-        
-        // TODO: Handle custom unconscious animation 
-
-        state.GetMaybeTransform(m.Member.Id).IfPresent(t =>
-        {
-            t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
-            t.DOSpiral(2);
-            StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
-        });
     }
 
     protected override void Execute(HighlightCardOwner msg)

@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 1463730280282227151}
   - component: {fileID: 3392231734151326874}
   - component: {fileID: 6565724907333756782}
+  - component: {fileID: 8138840610259962605}
   m_Layer: 0
   m_Name: RocketHawk
   m_TagString: Untagged
@@ -105,6 +106,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 2326783850876288533}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &8138840610259962605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977276736307866363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 0}
+  sprite: {fileID: 1253232939477919104}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &2851356004189740332
 GameObject:

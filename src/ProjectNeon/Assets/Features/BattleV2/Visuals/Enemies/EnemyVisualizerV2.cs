@@ -5,7 +5,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, CharacterAnimationRequested>
+public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
@@ -135,35 +135,6 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         uis.Add(customUi != null
             ? customUi.Initialized(enemy, member)
             : Instantiate(ui, pos, Quaternion.identity, obj).Initialized(enemy, member));
-    }
-    
-    protected override void Execute(MemberUnconscious m)
-    {
-        if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
-
-        var enemy = state.GetEnemyById(m.Member.Id);
-        if (!string.IsNullOrWhiteSpace(enemy.DeathEffect))
-        {
-            Message.Publish(new BattleEffectAnimationRequested
-            {
-                EffectName = enemy.DeathEffect, 
-                Scope = Scope.One, 
-                Target = new Single(m.Member), 
-                Group = Group.Self,
-                PerformerId = m.Member.Id,
-                Condition = new NoEffectCondition(),
-                Card = Maybe<Card>.Missing(),
-                Source = m.Member,
-                XPaidAmount = ResourceQuantity.None
-            });
-        }
-
-        state.GetMaybeTransform(m.Member.Id).IfPresent(t =>
-        {
-            t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
-            t.DOSpiral(2);
-            this.ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2.2f);
-        });
     }
 
     protected override void Execute(MemberRevived m)

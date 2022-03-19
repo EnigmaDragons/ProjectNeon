@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 1216328358086806987}
   - component: {fileID: 6342066084015599863}
   - component: {fileID: 2397469903617397393}
+  - component: {fileID: 2599271085074159827}
   m_Layer: 0
   m_Name: RiotBotPrefab
   m_TagString: Untagged
@@ -214,6 +215,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 2747175290519990505}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &2599271085074159827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6441058707833588892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 791990105153191959}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1001 &5561144341133848998
 PrefabInstance:
@@ -285,6 +305,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2840456398974252309, guid: b5a282fafb145f943b13d5e02db7c44e, type: 3}
   m_PrefabInstance: {fileID: 5561144341133848998}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &791990105153191959 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5174796077872918961, guid: b5a282fafb145f943b13d5e02db7c44e, type: 3}
+  m_PrefabInstance: {fileID: 5561144341133848998}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6229548098381745623
 PrefabInstance:
   m_ObjectHideFlags: 0

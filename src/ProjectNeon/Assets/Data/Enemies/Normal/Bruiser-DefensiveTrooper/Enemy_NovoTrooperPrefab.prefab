@@ -117,8 +117,9 @@ GameObject:
   - component: {fileID: 1293393214647342916}
   - component: {fileID: 6418124198900034168}
   - component: {fileID: 2795556021264241177}
+  - component: {fileID: 7740328867986397259}
   m_Layer: 0
-  m_Name: Enemy_DefensiveTrooperPrefab
+  m_Name: Enemy_NovoTrooperPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,6 +184,25 @@ MonoBehaviour:
   animator: {fileID: 6250794300244888624}
   character: {fileID: 2814089146227206758}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &7740328867986397259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6373005449915045395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 2093894650185729395}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1001 &1296255669844171524
 PrefabInstance:
@@ -916,6 +936,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3909638507707266261, guid: 8e43f523cf8725a40b6ddcd081c719f1, type: 3}
   m_PrefabInstance: {fileID: 5632262931059457014}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2093894650185729395 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5991708747730222725, guid: 8e43f523cf8725a40b6ddcd081c719f1, type: 3}
+  m_PrefabInstance: {fileID: 5632262931059457014}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &6250794300244888624 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1771771759587243974, guid: 8e43f523cf8725a40b6ddcd081c719f1, type: 3}

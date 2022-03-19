@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 7666190170896060742}
   - component: {fileID: 5845761868576652307}
   - component: {fileID: 2679032359696562151}
+  - component: {fileID: 3632414025566375375}
   m_Layer: 0
   m_Name: Hypervisor
   m_TagString: Untagged
@@ -276,6 +277,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 6807635233605021340}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &3632414025566375375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296749555753384562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 0}
+  sprite: {fileID: 8023040756497986825}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &8807173551807922456
 GameObject:

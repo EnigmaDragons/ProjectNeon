@@ -86,8 +86,9 @@ GameObject:
   - component: {fileID: 3080635897345711099}
   - component: {fileID: 7071304199428466375}
   - component: {fileID: 1973803797438923937}
+  - component: {fileID: 6304892238524715916}
   m_Layer: 0
-  m_Name: EnergizedBruiserBody
+  m_Name: EnergizedPunkBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,6 +152,25 @@ MonoBehaviour:
   animator: {fileID: 322461654471459434}
   character: {fileID: 2035125015548569305}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &6304892238524715916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152533079230225068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 1899894237558713050}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &7927337730836585737
 GameObject:
@@ -277,6 +297,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2590484629592194886, guid: 839a0d6fd752f714f9f28d9786fada22, type: 3}
   m_PrefabInstance: {fileID: 221293664641208277}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1899894237558713050 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1823947766305678607, guid: 839a0d6fd752f714f9f28d9786fada22, type: 3}
+  m_PrefabInstance: {fileID: 221293664641208277}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &322461654471459434 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 534710375133679039, guid: 839a0d6fd752f714f9f28d9786fada22, type: 3}

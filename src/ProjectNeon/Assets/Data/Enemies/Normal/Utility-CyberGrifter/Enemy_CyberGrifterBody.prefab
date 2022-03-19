@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 2644100917545093728}
   - component: {fileID: 7805710622519048028}
   - component: {fileID: 8112608232219623160}
+  - component: {fileID: 2778699650151472173}
   m_Layer: 0
   m_Name: Enemy_CyberGrifterBody
   m_TagString: Untagged
@@ -183,6 +184,25 @@ MonoBehaviour:
   animator: {fileID: 3850294352609099884}
   character: {fileID: 1319293741933819714}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &2778699650151472173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7868847588171795255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 5749170255509505482}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1001 &2647989217369392672
 PrefabInstance:
@@ -912,6 +932,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7430385204668519545, guid: 3284aefb02cc1574bb9e4a7857711a16, type: 3}
   m_PrefabInstance: {fileID: 4030174503344236608}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5749170255509505482 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8657934681952071050, guid: 3284aefb02cc1574bb9e4a7857711a16, type: 3}
+  m_PrefabInstance: {fileID: 4030174503344236608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &3850294352609099884 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 180407919313823788, guid: 3284aefb02cc1574bb9e4a7857711a16, type: 3}

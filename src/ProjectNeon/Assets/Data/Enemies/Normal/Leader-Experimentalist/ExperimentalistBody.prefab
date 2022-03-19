@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7926857533335377851}
   - component: {fileID: 2802106892223474311}
   - component: {fileID: 6429200492199006950}
+  - component: {fileID: 7910492830295586032}
   m_Layer: 0
   m_Name: ExperimentalistBody
   m_TagString: Untagged
@@ -79,6 +80,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 6412971389019925145}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &7910492830295586032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2847297630096168684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 1671566862647495272}
+  sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &3081248575663821129
 GameObject:
@@ -685,3 +705,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7956741172905337889, guid: e539ae9056c9f5f4fa3bf30a07dc24f0, type: 3}
   m_PrefabInstance: {fileID: 9122002476424983329}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1671566862647495272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7612567571197360457, guid: e539ae9056c9f5f4fa3bf30a07dc24f0, type: 3}
+  m_PrefabInstance: {fileID: 9122002476424983329}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
