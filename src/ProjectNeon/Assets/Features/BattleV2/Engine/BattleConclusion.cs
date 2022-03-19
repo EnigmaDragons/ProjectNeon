@@ -15,12 +15,15 @@ public class BattleConclusion : OnMessage<BattleFinished>
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
         Message.Publish(new BattleRewardsStarted());
-        if (adventureProgress.AdventureProgress.IsFinalStageSegment)
-            Advance();
-        else if (state.IsEliteBattle)
-            adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
+        if (adventureProgress.HasActiveAdventure)
+            if (adventureProgress.AdventureProgress.IsFinalStageSegment)
+                Advance();
+            else if (state.IsEliteBattle)
+                adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
+            else
+                adventure.Adventure.NormalBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
         else
-            adventure.Adventure.NormalBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
+            onFinished();
     }
     
     private void Advance()

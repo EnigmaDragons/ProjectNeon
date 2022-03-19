@@ -76,7 +76,7 @@ public class BattleState : ScriptableObject
     public PlayerState PlayerState => playerState;
     public AllCards AllCards => allCards;
     public BattleReactions Reactions { get; private set; }
-    public int BattleRngSeed => adventureProgress != null && adventureProgress.AdventureProgress != null 
+    public int BattleRngSeed => adventureProgress.HasActiveAdventure
         ? adventureProgress.AdventureProgress.RngSeed
         : Rng.NewSeed();
     
@@ -115,7 +115,7 @@ public class BattleState : ScriptableObject
 
     public void SetupEnemyEncounter()
     {
-        if (adventureProgress != null && adventureProgress.AdventureProgress != null)
+        if (adventureProgress.HasActiveAdventure)
             if (isEliteBattle)
                 LogEncounterInfo(true, adventureProgress.AdventureProgress.CurrentElitePowerLevel, nextEnemies.Sum(e => e.PowerLevel));
             else
@@ -224,7 +224,7 @@ public class BattleState : ScriptableObject
 
     private void ApplyAllGlobalStartOfBattleEffects()
     {
-        if (adventureProgress != null && adventureProgress.AdventureProgress != null)
+        if (adventureProgress.HasActiveAdventure)
             adventureProgress.AdventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
             {
                 var heroLeader = _membersById.First().Value;
@@ -325,6 +325,11 @@ public class BattleState : ScriptableObject
     // Battle Wrapup
     public void Wrapup()
     {
+        EnemyArea.Clear();
+
+        if (!adventureProgress.HasActiveAdventure)
+            return;
+        
         RecordPartyAdventureHp();
         var battleAttritionReport = _tracker.Finalize(party);
         GrantRewardCredits();
@@ -346,7 +351,6 @@ public class BattleState : ScriptableObject
         };
         AllMetrics.PublishBattleSummary(battleSummaryReport);
         AccumulateRunStats();
-        EnemyArea.Clear();
     }
 
     public void AccumulateRunStats()

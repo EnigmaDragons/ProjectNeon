@@ -22,7 +22,7 @@ public class SpecificEncounterSegment : StageSegment
     
     public override void Start()
     {
-        var stage = currentAdventureProgress != null && currentAdventureProgress.AdventureProgress != null
+        var stage = currentAdventureProgress.HasActiveAdventure
             ? currentAdventureProgress.AdventureProgress.CurrentChapterNumber
             : 0;
         Message.Publish(new EnterSpecificBattle(battlefield, isElite, enemies.Select(x => x.ForStage(stage)).ToArray(), false, isTutorial));
