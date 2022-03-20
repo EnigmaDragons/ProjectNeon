@@ -68,6 +68,7 @@ public sealed class PartyAdventureState : ScriptableObject
         var baseHeroes = party.Heroes;
         heroes = baseHeroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
         credits = heroes.Sum(h => h.Character.StartingCredits);
+        clinicVouchers = 0;
         numShopRestocks = 2;
         
         heroes.ForEach(h =>
@@ -153,6 +154,7 @@ public sealed class PartyAdventureState : ScriptableObject
         if (amount == 0)
             return 0;
         
+        Log.Info($"Party - Gained {amount} Clinic Vouchers");
         var before = clinicVouchers;
         UpdateState(() => clinicVouchers = Mathf.Clamp(clinicVouchers + amount, canGoBelowZero ? int.MinValue : 0, int.MaxValue));
         if (clinicVouchers - before != 0)
