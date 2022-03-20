@@ -83,12 +83,17 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
         var stageSegments = sideSegments.Concat(progress.CurrentStageSegment);
         gameMap.CurrentChoices = stageSegments
             .Where(s => s.MapNodeType != MapNodeType.Unknown)
-            .Select(s => new MapNode3
+            .Select(s =>
             {
-                Type = s.MapNodeType,
-                Corp = s.Corp.OrDefault(""),
-                PresetStage = s,
-                AdvancesAdventure = !sideSegments.Contains(s)
+                var shouldAdvanceAdventure = !sideSegments.Contains(s);
+                Log.Info($"Map Node: {s.MapNodeType}. Advances Adventure: {shouldAdvanceAdventure}. {progress}");
+                return new MapNode3
+                {
+                    Type = s.MapNodeType,
+                    Corp = s.Corp.OrDefault(""),
+                    PresetStage = s,
+                    AdvancesAdventure = shouldAdvanceAdventure
+                };
             }).ToList();
         
         var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition).ToArray().Shuffled();

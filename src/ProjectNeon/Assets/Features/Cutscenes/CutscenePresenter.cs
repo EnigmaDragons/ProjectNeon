@@ -164,7 +164,8 @@ public class CutscenePresenter : MonoBehaviour
         MessageGroup.TerminateAndClear();
         if (cutscene.OnCutsceneFinishedAction.IsMissing) // Is Game Flow Cutscene
         {
-            progress.AdventureProgress.Advance();
+            if (progress.AdventureProgress.AdventureType == GameAdventureProgressType.V4)
+                progress.AdventureProgress.Advance();
             Message.Publish(new AutoSaveRequested());
         }
         

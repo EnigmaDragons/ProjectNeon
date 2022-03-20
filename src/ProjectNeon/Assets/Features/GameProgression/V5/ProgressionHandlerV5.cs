@@ -12,6 +12,7 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
         map.CompleteCurrentNode();
         if (map.CurrentNode.IsMissingOr(c => c.AdvancesAdventure))
         {
+            Log.Info("V5 - Advancing Segment");
             progress.Advance();
             map.AdvanceToNextSegment();
         }
@@ -20,8 +21,13 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
     
     private void Go()
     {
+        Log.Info("V5 - Regenerating Map");
         Message.Publish(new RegenerateMapRequested());
         if (progress.CurrentStageSegment.ShouldAutoStart)
+        {
+            Log.Info($"V5 - Auto-Start Segment");
+            map.CompleteCurrentNode();
             progress.CurrentStageSegment.Start();
+        }
     }
 }
