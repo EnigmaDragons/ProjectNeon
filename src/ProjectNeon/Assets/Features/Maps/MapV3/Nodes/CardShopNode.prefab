@@ -59,7 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -497,6 +497,11 @@ MonoBehaviour:
   button: {fileID: 3398313584656205306}
   segment: {fileID: 11400000, guid: 3ff6329504405af4398b6a75e24e272f, type: 2}
   hoverRulesPanel: {fileID: 4393414426454894417}
+  travelPreventedVisual: {fileID: 0}
+  plotEventVisual: {fileID: 0}
+  unvisitedTextLabel: {fileID: 0}
+  visitedTextLabel: {fileID: 0}
+  alwaysShowRules: 0
 --- !u!1 &7672242959462116024
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,7 +561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
