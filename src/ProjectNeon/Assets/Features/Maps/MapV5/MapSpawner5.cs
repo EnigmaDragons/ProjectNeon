@@ -1,16 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class MapSpawner5 : OnMessage<RegenerateMapRequested>
 {
-    [SerializeField] private CurrentGameMap3 gameMap;
+    [SerializeField] private CurrentMapSegmentV5 gameMap;
     [SerializeField] private AdventureProgressV5 progress;
     [SerializeField] private TravelReactiveSystem travelReactiveSystem;
     [SerializeField] private GameObject playerToken;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private StageSegment shopSegment;
+    [SerializeField] private GameObject mapNodesParent;
+    [SerializeField] private GameObject playerTokenParent;
     
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
@@ -26,8 +27,6 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
     [SerializeField] private CorpTypedNode[] corpGearNodes;
     [SerializeField] private CorpTypedNode[] corpClinicNodes;
 
-    private MapNodeGameObject3[] _activeNodes = new MapNodeGameObject3[0];
-
     private GameObject _playerToken;
     private GameObject _map;
     
@@ -42,26 +41,39 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
         if (gameMap.CurrentMap == null)
             gameMap.CurrentMap = progress.CurrentChapter.Map;
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
-        SpawnPartyTokenIfNeeded(_map.gameObject);
-        SpawnNodes();
+        _map.transform.SetAsFirstSibling();
     }
 
-    private void Start()
+    private void SpawnNodes()
     {
-        // if (gameMap.CurrentNode.IsPresent && gameMap.CurrentNode.Value.Type != MapNodeType.Start && _activeNodes.Any())
-        // {
-        //     var activeNode = _activeNodes.First(x => x.MapData.Position.x == gameMap.CurrentNode.Value.Position.x && x.MapData.Position.y == gameMap.CurrentNode.Value.Position.y);
-        //     Message.Publish(new TravelToNode
-        //     {
-        //         OnMidPointArrive = (_ => Message.Publish(new ContinueTraveling())),
-        //         OnArrive = _ => activeNode.ArrivalSegment.Start(),
-        //         Position = gameMap.CurrentNode.Value.Position,
-        //         TravelInstantly = false
-        //     });
-        // }
+        mapNodesParent.DestroyAllChildren();
+        
+        if (gameMap.CurrentChoices.None())
+            GenerateOptions();
+        var fx = progress.GlobalEffects.AllStaticGlobalEffects;
+        Log.Info($"Map Spawning Nodes: {gameMap.CurrentChoices.Count} Nodes. Adventure Progress: Chapter {progress.CurrentChapterNumber}, Segment {progress.CurrentStageProgress}");
+        gameMap.CurrentChoices.ForEach(x =>
+        {
+            Log.Info($"Spawning Node: {x.Type} - {x.Corp}");
+            try
+            {
+                var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), mapNodesParent.transform);
+                obj.InitForV5(x, gameMap, x.PresetStage, fx, _ => Message.Publish(new ContinueTraveling()));
+                var rect = (RectTransform) obj.transform;
+                rect.pivot = new Vector2(0.5f, 0.5f);
+                rect.anchoredPosition = x.Position;
+            }
+            catch (Exception)
+            {
+                Log.Error($"Node Prefab for {x.Type} - {x.Corp} is null");
+            }
+        });
+        if (_playerToken != null)
+            _playerToken.transform.SetAsLastSibling();
+        Message.Publish(new AutoSaveRequested());
     }
-
-    private void InitOptions()
+    
+    private void GenerateOptions()
     {
         var sideSegments = progress.SecondarySegments.ToList();
         var shouldHaveShop = progress.CurrentChapter.ShopOdds < Rng.Float();
@@ -84,34 +96,6 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
         {
             gameMap.CurrentChoices[i].Position = locations[i];
         }
-    }
-    
-    private void SpawnNodes()
-    {
-        InitOptions();
-        var fx = progress.GlobalEffects.AllStaticGlobalEffects;
-        Log.Info($"Map Spawning Nodes: {gameMap.CurrentChoices.Count} Nodes. Adventure Progress: Chapter {progress.CurrentChapterNumber}, Segment {progress.CurrentStageProgress}");
-        _activeNodes = gameMap.CurrentChoices.Select(x =>
-        {
-            Log.Info($"Spawning Node: {x.Type} - {x.Corp}");
-            try
-            {
-                var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), _map.transform);
-                obj.Init(x, gameMap, x.PresetStage, fx, _ => Message.Publish(new ContinueTraveling()));
-                var rect = (RectTransform) obj.transform;
-                rect.pivot = new Vector2(0.5f, 0.5f);
-                rect.anchoredPosition = x.Position;
-                return obj;
-            }
-            catch (Exception e)
-            {
-                Log.Error($"Node Prefab for {x.Type} - {x.Corp} is null");
-                return null;
-            }
-        }).ToArray();
-        if (_playerToken != null)
-            _playerToken.transform.SetAsLastSibling();
-        Message.Publish(new AutoSaveRequested());
     }
 
     private MapNodeGameObject3 GetNodePrefab(MapNodeType type, string corpName)
@@ -162,7 +146,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
             return;
         
         progress.InitIfNeeded();
-        _playerToken = Instantiate(playerToken, map.transform);
+        _playerToken = Instantiate(playerToken, playerTokenParent.transform);
         var rect = (RectTransform)_playerToken.transform;
         rect.pivot = new Vector2(0.5f, 0.5f);
         rect.anchoredPosition = gameMap.DestinationPosition;

@@ -6,6 +6,7 @@ public class AdventureProgressV5 : AdventureProgressBase
 {
     [SerializeField] private CurrentAdventure currentAdventure;
     [SerializeField] private CurrentGlobalEffects currentGlobalEffects;
+    [SerializeField] private CurrentMapSegmentV5 currentMap;
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private int currentSegmentIndex;
     [SerializeField] private int rngSeed = Rng.NewSeed();
@@ -19,6 +20,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     private float Progress => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     private bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
     private bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
+    public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V5;
     public override int RngSeed => rngSeed;
     public override bool UsesRewardXp => false;
     public override float BonusXpLevelFactor => 0.33333f;
@@ -45,7 +47,7 @@ public class AdventureProgressV5 : AdventureProgressBase
             else if (CurrentChapter.MaybeSecondarySegments == null)
                 Log.Error("MaybeSecondarySegments is null");
             return CurrentChapter.MaybeSecondarySegments.Length > currentSegmentIndex
-                ? CurrentChapter.MaybeSecondarySegments[currentChapterIndex].AsArray().Where(s => s != null).ToArray()
+                ? CurrentChapter.MaybeSecondarySegments[currentSegmentIndex].AsArray().Where(s => s != null).ToArray()
                 : new StageSegment[0];
         }
     }
@@ -67,9 +69,10 @@ public class AdventureProgressV5 : AdventureProgressBase
         Reset();
         currentChapterIndex = chapterIndex;
         currentSegmentIndex = segmentIndex;
+        currentMap.SetMap(CurrentChapter.Map);
         Log.Info($"Init Adventure. {this}");
     }
-
+    
     public void ApplyGlobalEffects(int[] effectIds)
     {
         var ctx = new GlobalEffectContext(currentGlobalEffects);
@@ -109,6 +112,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     {
         if (!IsFinalStage)
         {
+            currentMap.SetMap(CurrentChapter.Map);
             currentChapterIndex++;
         } 
         else

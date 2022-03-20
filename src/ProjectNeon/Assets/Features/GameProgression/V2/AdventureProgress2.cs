@@ -23,6 +23,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public float ProgressToUnlockChapterBoss => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
+    public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V2;
     public override int RngSeed => currentMap3.CurrentNodeRngSeed;
     public override bool UsesRewardXp { get; } = true;
     public override float BonusXpLevelFactor { get; } = 0;

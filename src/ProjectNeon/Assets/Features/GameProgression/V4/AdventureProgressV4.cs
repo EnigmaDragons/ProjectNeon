@@ -20,6 +20,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     private float Progress => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
     public bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
+    public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V4;
     public override int RngSeed => rngSeed;
     public override bool UsesRewardXp => false;
     public override float BonusXpLevelFactor => 0.33333f;

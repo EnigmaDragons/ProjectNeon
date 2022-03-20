@@ -168,12 +168,24 @@ public class CutscenePresenter : MonoBehaviour
             Message.Publish(new AutoSaveRequested());
         }
         
-        // TODO: Needs V5
-        var onFinishedAction = cutscene.OnCutsceneFinishedAction.Select(a => a, navigator.NavigateToGameSceneV4);
+        var onFinishedAction = cutscene.OnCutsceneFinishedAction.Select(a => a, NavigateToInferredGameScene);
         if (useDelay)
             this.ExecuteAfterDelay(onFinishedAction, cutsceneFinishNavigationDelay);
         else
             onFinishedAction();
+    }
+
+    private void NavigateToInferredGameScene()
+    {
+        var type = progress.AdventureProgress.AdventureType;
+        if (type == GameAdventureProgressType.V2)
+            navigator.NavigateToGameScene();
+        else if (type == GameAdventureProgressType.V4)
+            navigator.NavigateToGameSceneV4();
+        else if (type == GameAdventureProgressType.V5)
+            navigator.NavigateToGameSceneV5();
+        else
+            Log.Error("Unable to infer Cutscene Finished Scene to Navigate to");
     }
 
     private void HidePreviousSegmentStuff()

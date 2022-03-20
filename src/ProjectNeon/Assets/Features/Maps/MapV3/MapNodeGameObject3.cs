@@ -60,6 +60,44 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
                 Message.Publish(new AutoSaveRequested());
             });
     }
+
+    public void InitForV5(MapNode3 mapData, CurrentMapSegmentV5 gameMap, StageSegment stageSegment, AllStaticGlobalEffects allGlobalEffects, Action<Transform> onMidPointArrive)
+    {
+        MapData = mapData;
+        ArrivalSegment = stageSegment;
+        var canTravel = !mapData.PreventTravel;
+        if (plotEventVisual != null)
+            plotEventVisual.SetActive(mapData.IsPlotNode);
+        if (travelPreventedVisual != null)
+            travelPreventedVisual.SetActive(!canTravel);
+        if (unvisitedTextLabel != null)
+            unvisitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
+                .Select(e => $"<b>If Not Visited:</b>\n{e.FullDescription}", "");
+        if (visitedTextLabel != null)
+            visitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
+                .Select(e => $"<b>If Visited</b>:\n{e.FullDescription}", "");
+        button.enabled = canTravel;
+        if (canTravel)
+            button.onClick.AddListener(() =>
+            {
+                gameMap.CurrentNode = mapData;
+                gameMap.CurrentChoices.Remove(mapData);
+                if (mapData.AdvancesAdventure)
+                    gameMap.AdvanceToNextSegment();
+                Message.Publish(new TravelToNode
+                {
+                    Position = mapData.Position, 
+                    OnMidPointArrive = onMidPointArrive,
+                    OnArrive = t =>
+                    {
+                        Message.Publish(new TravelMovementStopped(t));
+                        Message.Publish(new ArrivedAtNode(transform, mapData.Type));
+                        ArrivalSegment.Start();
+                    }
+                });
+                Message.Publish(new AutoSaveRequested());
+            });
+    }
     
     private void Awake()
     {
