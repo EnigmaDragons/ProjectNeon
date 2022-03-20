@@ -18,6 +18,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     [SerializeField] private Enemy[] bossEnemies;
     [SerializeField] private StageRarityFactors rewardRarityFactors;
     [SerializeField] private float shopOdds = 0.17f;
+    [SerializeField] private int noShopsUntilSegment = 3;
 
     public string DisplayName => displayName;
 
@@ -35,6 +36,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     public IEncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
     public StorySetting StorySetting => storySetting;
     public float ShopOdds => shopOdds;
+    public int NoShopUntilSegment => noShopsUntilSegment;
     public int GetPowerLevel(float percent) => powerCurve.GetValueAsInt(percent);
     public int GetElitePowerLevel(float percent) => elitePowerCurve.GetValueAsInt(percent);
     private int CombatSegmentCount => primarySegments.Count(s => s.ShouldCountTowardsEnemyPowerLevel);
