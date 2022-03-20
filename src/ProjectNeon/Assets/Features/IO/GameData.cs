@@ -45,6 +45,7 @@ public enum GameAdventureProgressType
 public class GamePartyData
 {
     public int Credits = 0;
+    public int ClinicVouchers = 0;
     public GameHeroData[] Heroes = Array.Empty<GameHeroData>();
     public int[] CardIds = Array.Empty<int>();
     public GameEquipmentData[] Equipment = Array.Empty<GameEquipmentData>();

@@ -86,6 +86,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             numHeroes > 1 ? library.HeroById(partyData.Heroes[1].BaseHeroId) : library.HeroById(0),
             numHeroes > 2 ? library.HeroById(partyData.Heroes[2].BaseHeroId) : library.HeroById(0),
             partyData.Credits,
+            partyData.ClinicVouchers,
             maybeCards.Select(c => c.Value).ToArray(),
             maybeEquipments.Select(e => e.Value).ToArray());
         

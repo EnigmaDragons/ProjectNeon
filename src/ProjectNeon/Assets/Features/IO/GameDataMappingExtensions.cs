@@ -6,6 +6,7 @@ public static class GameDataMappingExtensions
         => new GamePartyData
         {
             Credits = s.Credits,
+            ClinicVouchers = s.ClinicVouchers,
             Heroes = s.Heroes
                 .Select(h => new GameHeroData
                 {
