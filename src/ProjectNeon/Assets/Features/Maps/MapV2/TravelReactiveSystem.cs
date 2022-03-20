@@ -5,6 +5,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
 {
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private CurrentGameMap3 gameMap;
+    [SerializeField] private CurrentMapSegmentV5 mapV5;
     [SerializeField] private float speed;
     [HideInInspector] public GameObject PlayerToken { private get; set; }
 
@@ -39,6 +40,8 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
         _travelingToMidpoint = !gameMap.HasCompletedEventEnRoute;
         gameMap.PreviousPosition = gameMap.DestinationPosition;
         gameMap.DestinationPosition = msg.Position;
+        mapV5.PreviousPosition = mapV5.DestinationPosition;
+        mapV5.DestinationPosition = msg.Position;
         _travelTo = msg.Position;
         Message.Publish(new TravelingSFX(transform));
         _midPoint = (new Vector2(PlayerToken.transform.localPosition.x, PlayerToken.transform.localPosition.y) + _travelTo) / 2;

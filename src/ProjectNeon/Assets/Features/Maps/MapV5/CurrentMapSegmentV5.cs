@@ -17,6 +17,7 @@ public class CurrentMapSegmentV5 : ScriptableObject
             return;
 
         CurrentChoices.Remove(CurrentNode.Value);
+        PreviousPosition = DestinationPosition;
     }
 
     public void AdvanceToNextSegment() => ClearSegment();
