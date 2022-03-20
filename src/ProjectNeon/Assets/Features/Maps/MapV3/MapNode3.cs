@@ -16,6 +16,7 @@ public class MapNode3
     public int UnVisitedGlobalEffectId = -1;
     
     public StageSegment PresetStage;
+    public bool AdvancesAdventure = true;
 
     public string GetMetricDescription()
         => ($"{Type} " + (string.IsNullOrWhiteSpace(Corp) ? "" : Corp)).Trim();

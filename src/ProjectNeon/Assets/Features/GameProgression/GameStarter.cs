@@ -1,5 +1,4 @@
 using System.Linq;
-using Features.GameProgression;
 using UnityEngine;
 
 public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNewGameRequested>

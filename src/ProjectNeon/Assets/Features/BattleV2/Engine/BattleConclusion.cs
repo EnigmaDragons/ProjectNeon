@@ -1,5 +1,4 @@
 using System;
-using Features.GameProgression;
 using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>

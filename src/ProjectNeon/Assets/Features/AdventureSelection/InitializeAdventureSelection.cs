@@ -1,5 +1,4 @@
-﻿using Features.GameProgression;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InitializeAdventureSelection : MonoBehaviour
 {

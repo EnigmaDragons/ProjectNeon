@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Schema;
-using Features.GameProgression;
 using TMPro;
 using UnityEngine;
 

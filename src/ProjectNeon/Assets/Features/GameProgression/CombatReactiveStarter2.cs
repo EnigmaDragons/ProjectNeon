@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Features.GameProgression;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

@@ -102,11 +102,14 @@ public sealed class PartyAdventureState : ScriptableObject
         if (!hero.DeckIsValid())
             Log.Error($"{hero.Name} doesn't have a legal deck");
 
-        heroes = heroes.Append(new Hero(hero, CreateDeck(hero.Deck))).ToArray();
-        party.Add(hero);
-        credits += hero.StartingCredits;
-        cards.Add(HeroStartingCards(hero).ToArray());
-        InitArchKeyHeroes();
+        UpdateState(() =>
+        {
+            heroes = heroes.Append(new Hero(hero, CreateDeck(hero.Deck))).ToArray();
+            party.Add(hero);
+            credits += hero.StartingCredits;
+            cards.Add(HeroStartingCards(hero).ToArray());
+            InitArchKeyHeroes();
+        });
         return this;
     }
 

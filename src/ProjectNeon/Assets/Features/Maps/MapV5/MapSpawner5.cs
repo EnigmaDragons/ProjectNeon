@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
     [SerializeField] private TravelReactiveSystem travelReactiveSystem;
     [SerializeField] private GameObject playerToken;
     [SerializeField] private PartyAdventureState party;
+    [SerializeField] private StageSegment shopSegment;
     
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
@@ -46,29 +48,35 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
 
     private void Start()
     {
-        if (gameMap.CurrentNode.IsPresent && gameMap.CurrentNode.Value.Type != MapNodeType.Start && _activeNodes.Any())
-        {
-            var activeNode = _activeNodes.First(x => x.MapData.Position.x == gameMap.CurrentNode.Value.Position.x && x.MapData.Position.y == gameMap.CurrentNode.Value.Position.y);
-            Message.Publish(new TravelToNode
-            {
-                OnMidPointArrive = (_ => Message.Publish(new ContinueTraveling())),
-                OnArrive = _ => activeNode.ArrivalSegment.Start(),
-                Position = gameMap.CurrentNode.Value.Position,
-                TravelInstantly = false
-            });
-        }
+        // if (gameMap.CurrentNode.IsPresent && gameMap.CurrentNode.Value.Type != MapNodeType.Start && _activeNodes.Any())
+        // {
+        //     var activeNode = _activeNodes.First(x => x.MapData.Position.x == gameMap.CurrentNode.Value.Position.x && x.MapData.Position.y == gameMap.CurrentNode.Value.Position.y);
+        //     Message.Publish(new TravelToNode
+        //     {
+        //         OnMidPointArrive = (_ => Message.Publish(new ContinueTraveling())),
+        //         OnArrive = _ => activeNode.ArrivalSegment.Start(),
+        //         Position = gameMap.CurrentNode.Value.Position,
+        //         TravelInstantly = false
+        //     });
+        // }
     }
 
     private void InitOptions()
     {
-        var stageSegments = progress.SecondarySegments.Concat(progress.CurrentStageSegment);
+        var sideSegments = progress.SecondarySegments.ToList();
+        var shouldHaveShop = progress.CurrentChapter.ShopOdds < Rng.Float();
+        if (shouldHaveShop)
+            sideSegments.Add(shopSegment);
+        
+        var stageSegments = sideSegments.Concat(progress.CurrentStageSegment);
         gameMap.CurrentChoices = stageSegments
             .Where(s => s.MapNodeType != MapNodeType.Unknown)
             .Select(s => new MapNode3
             {
                 Type = s.MapNodeType,
                 Corp = s.Corp.OrDefault(""),
-                PresetStage = s
+                PresetStage = s,
+                AdvancesAdventure = !sideSegments.Contains(s)
             }).ToList();
         
         var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition).ToArray().Shuffled();

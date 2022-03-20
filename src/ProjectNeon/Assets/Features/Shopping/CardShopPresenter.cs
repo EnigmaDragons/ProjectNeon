@@ -7,7 +7,7 @@ public class CardShopPresenter : OnMessage<RefreshShop>
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private ShopCardPurchaseSlot cardPurchasePrototype;
     [SerializeField] private GameObject cardParent;
-    [SerializeField] private AdventureProgress2 adventure;
+    [SerializeField] private CurrentAdventureProgress adventureProgress;
  
     private int _numCards;
 
@@ -31,7 +31,7 @@ public class CardShopPresenter : OnMessage<RefreshShop>
     public void GetMoreInventory()
     {
         Clear();
-        var selection = adventure.CreateLootPicker(party)
+        var selection = adventureProgress.AdventureProgress.CreateLootPicker(party)
             .GenerateCardSelection(cards, _numCards);
         var cardsWithOwners = selection.Cards.Select(c => c.ToNonBattleCard(party));
         cardsWithOwners.ForEach(c => 

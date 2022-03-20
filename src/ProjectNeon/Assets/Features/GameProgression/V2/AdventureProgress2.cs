@@ -45,7 +45,7 @@ public class AdventureProgress2 : AdventureProgressBase
     {
         get { 
             if (currentChapterIndex < 0 || currentChapterIndex >= currentAdventure.Adventure.DynamicStages.Length)
-                Log.Error($"Adventure Stage is illegal. {this}");
+                Log.Error($"V2 Adventure Stage is illegal. {this}");
             return currentAdventure.Adventure.DynamicStages[currentChapterIndex]; 
         }
     }

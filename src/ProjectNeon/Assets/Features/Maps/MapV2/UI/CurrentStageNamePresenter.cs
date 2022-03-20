@@ -1,4 +1,3 @@
-using Features.GameProgression;
 using TMPro;
 using UnityEngine;
 

@@ -36,9 +36,19 @@ public class AdventureProgressV5 : AdventureProgressBase
 
     public StageSegment CurrentStageSegment => CurrentChapter.Segments[currentSegmentIndex];
 
-    public StageSegment[] SecondarySegments => CurrentChapter.MaybeSecondarySegments.Length > currentSegmentIndex
-        ? CurrentChapter.MaybeSecondarySegments[currentChapterIndex].AsArray().Where(s => s != null).ToArray() 
-        : new StageSegment[0];
+    public StageSegment[] SecondarySegments
+    {
+        get
+        {
+            if (CurrentChapter == null)
+                Log.Error("Current Chapter is null");
+            else if (CurrentChapter.MaybeSecondarySegments == null)
+                Log.Error("MaybeSecondarySegments is null");
+            return CurrentChapter.MaybeSecondarySegments.Length > currentSegmentIndex
+                ? CurrentChapter.MaybeSecondarySegments[currentChapterIndex].AsArray().Where(s => s != null).ToArray()
+                : new StageSegment[0];
+        }
+    }
 
     public override IStage Stage => CurrentChapter;
 
@@ -52,7 +62,8 @@ public class AdventureProgressV5 : AdventureProgressBase
 
     public override void Init(Adventure adventure, int chapterIndex) => Init(adventure, chapterIndex, 0);
     public override void Init(Adventure adventure, int chapterIndex, int segmentIndex)
-    {        currentAdventure.Adventure = adventure;
+    {        
+        currentAdventure.Adventure = adventure;
         Reset();
         currentChapterIndex = chapterIndex;
         currentSegmentIndex = segmentIndex;
@@ -66,7 +77,8 @@ public class AdventureProgressV5 : AdventureProgressBase
     }
     
     public override string ToString() =>
-        $"Adventure: {currentAdventure.name}. Stage: {currentChapterIndex}. StageProgress: {Progress}";
+        $"Adventure: {currentAdventure.Adventure.Id} {currentAdventure.Adventure.Title}. Stage: {currentChapterIndex}. StageProgress: {Progress}." +
+        $"Chapter: {currentChapterIndex}/{currentAdventure.Adventure.StagesV5.Length}. Segment: {currentSegmentIndex}";
 
     public override void InitIfNeeded()
     {

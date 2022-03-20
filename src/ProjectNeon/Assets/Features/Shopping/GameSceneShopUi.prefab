@@ -362,7 +362,7 @@ MonoBehaviour:
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   cardPurchasePrototype: {fileID: 3460018478748534240, guid: f106ef0b925d65c4cb418aaa8a0ee111, type: 3}
   cardParent: {fileID: 8165069093484610705}
-  adventure: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
+  adventureProgress: {fileID: 11400000, guid: 434ca06c911c9fa409030447f7afe341, type: 2}
 --- !u!1 &7237734930376921010
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,7 +484,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  sounds: {fileID: 330058018700689628}
+  sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
 --- !u!114 &1064400786904027353
 MonoBehaviour:
@@ -527,7 +528,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  sounds: {fileID: 5424734135866021568}
+  sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
 --- !u!1 &7585321404298517998
 GameObject:
@@ -1732,17 +1734,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &330058018700689628 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1465932525613861321, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 1210504962523220245}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f1c274c540e41cf9fa6c68209bff3ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2095167533390482904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2448,7 +2439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3720849948325286015, guid: 9ba669ba3caf5e743a4c9ef276d85840, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 268
+      value: 280
       objectReference: {fileID: 0}
     - target: {fileID: 3720849948325286015, guid: 9ba669ba3caf5e743a4c9ef276d85840, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4427,16 +4418,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5424734135866021568 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3779120964690927367, guid: ee62c8d4014ec4f43a489817035a5e9c, type: 3}
-  m_PrefabInstance: {fileID: 9167820904726038983}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f1c274c540e41cf9fa6c68209bff3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
