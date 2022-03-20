@@ -14,6 +14,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     [SerializeField] private SegmentRangeBattlefieldSet[] battlefieldSets; 
     [SerializeField] private StageSegment[] primarySegments;
     [SerializeField] private StageSegment[] maybeSecondarySegments;
+    [SerializeField] private StageSegment[] maybeStorySegments;
     [SerializeField] private GameObject bossBattlefield;
     [SerializeField] private Enemy[] bossEnemies;
     [SerializeField] private StageRarityFactors rewardRarityFactors;
@@ -45,6 +46,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     public int SegmentCount => primarySegments.Length;
     public StageSegment[] Segments => primarySegments;
     public StageSegment[] MaybeSecondarySegments => maybeSecondarySegments;
+    public StageSegment[] MaybeStorySegments => maybeStorySegments;
     public GameObject BossBattlefield => bossBattlefield;
     public Enemy[] BossEnemies => bossEnemies;
     public RarityFactors RewardRarityFactors => rewardRarityFactors != null 

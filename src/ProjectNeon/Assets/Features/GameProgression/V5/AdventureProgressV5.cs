@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -46,9 +47,14 @@ public class AdventureProgressV5 : AdventureProgressBase
                 Log.Error("Current Chapter is null");
             else if (CurrentChapter.MaybeSecondarySegments == null)
                 Log.Error("MaybeSecondarySegments is null");
-            return CurrentChapter.MaybeSecondarySegments.Length > currentSegmentIndex
-                ? CurrentChapter.MaybeSecondarySegments[currentSegmentIndex].AsArray().Where(s => s != null).ToArray()
-                : new StageSegment[0];
+            else if (CurrentChapter.MaybeStorySegments == null)
+                Log.Error("MaybeStorySegments is null");
+            var segments = new List<StageSegment>();
+            if (CurrentChapter.MaybeSecondarySegments.Length > currentSegmentIndex && CurrentChapter.MaybeSecondarySegments[currentSegmentIndex] != null)
+                segments.Add(CurrentChapter.MaybeSecondarySegments[currentSegmentIndex]);
+            if (CurrentChapter.MaybeStorySegments.Length > currentSegmentIndex && CurrentChapter.MaybeStorySegments[currentSegmentIndex] != null)
+                segments.Add(CurrentChapter.MaybeStorySegments[currentSegmentIndex]);
+            return segments.ToArray();
         }
     }
 
