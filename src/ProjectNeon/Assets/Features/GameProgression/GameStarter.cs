@@ -84,6 +84,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         adventureProgress.AdventureProgress = adventureProgress5;
         adventureProgress.AdventureProgress.Init(adventure, 0, startingSegment);
         party.Initialized(adventure.FixedStartingHeroes);
+        party.UpdateClinicVouchersBy(adventure.StartingClinicVouchers);
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;
