@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private Library library;
     [SerializeField] private CurrentGameMap3 map;
+    [SerializeField] private CurrentMapSegmentV5 mapV5;
     [SerializeField] private AllMaps maps;
     [SerializeField] private CorpClinicProvider clinics;
     [SerializeField] private AllStaticGlobalEffects globalEffects;
@@ -28,7 +30,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             s.IsInitialized = true;
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             s.PartyData = party.GetData();
-            s.GameMap = map.GetData();
+            s.GameMap = adventureProgress.AdventureProgress.AdventureType.GetMapData(map, mapV5);
             s.Stats = runStats.GetData();
             return s;
         });
@@ -46,8 +48,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             loadedSuccessfully = InitAdventure(saveData.AdventureProgress);
         if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedSquad))
             loadedSuccessfully = InitParty(saveData.PartyData);
-        if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure) 
-                               && saveData.AdventureProgress.Type != GameAdventureProgressType.V4)
+        if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure))
             loadedSuccessfully = InitMap(saveData.GameMap);
         if (!loadedSuccessfully)
             return CurrentGamePhase.LoadError;
@@ -156,8 +157,32 @@ public sealed class SaveLoadSystem : ScriptableObject
 
         return true;
     }
-    
+
     private bool InitMap(GameMapData mapData)
+    {
+        if (mapData.Type == GameMapDataType.V5)
+            return InitMapV5(mapData);
+        else if (mapData.Type == GameMapDataType.V3)
+            return InitMapV3(mapData);
+        else
+            return true;
+    }
+    
+    private bool InitMapV5(GameMapData mapData)
+    {
+        var selectedMap = maps.GetMapById(mapData.GameMapId);
+        if (selectedMap.IsMissing)
+            return LoadFailedReason($"Unknown Map {mapData.GameMapId}");
+        mapV5.CurrentMap = selectedMap.Value;
+        mapV5.CurrentNode = mapData.CurrentNode;
+        mapV5.PreviousPosition = mapData.CurrentPosition;
+        mapV5.DestinationPosition = mapData.CurrentPosition;
+        mapV5.CurrentChoices = mapData.CurrentChoices.ToList();
+        mapV5.CurrentNodeRngSeed = mapData.CurrentNodeRngSeed;
+        return true;
+    }
+    
+    private bool InitMapV3(GameMapData mapData)
     {
         var selectedMap = maps.GetMapById(mapData.GameMapId);
         if (selectedMap.IsMissing)

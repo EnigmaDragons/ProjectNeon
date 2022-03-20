@@ -23,6 +23,7 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
     {
         Log.Info("V5 - Regenerating Map");
         Message.Publish(new RegenerateMapRequested());
+        Message.Publish(new AutoSaveRequested());
         if (progress.CurrentStageSegment.ShouldAutoStart)
         {
             Log.Info($"V5 - Auto-Start Segment");

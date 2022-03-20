@@ -95,9 +95,18 @@ public class GameEquipmentData
     public InMemoryEquipment GeneratedEquipment = new InMemoryEquipment();
 }
 
+public enum GameMapDataType
+{
+    Unknown = 0,
+    V3 = 3,
+    V5 = 5
+}
+
 [Serializable]
 public class GameMapData
 {
+    public GameMapDataType Type;
+    
     public int GameMapId;
     public Maybe<MapNode3> CurrentNode;
     public MapNode3[] CompletedNodes;
