@@ -51,6 +51,7 @@ public class BattleState : ScriptableObject
     public BattleRewardState RewardState => rewards;
     public int RewardCredits => rewards.RewardCredits;
     public int RewardXp => rewards.RewardXp;
+    public int RewardClinicVouchers => adventure.Adventure.BattleRewardClinicVouchers;
     public CardTypeData[] RewardCards => rewards.RewardCards;
     public Equipment[] RewardEquipments => rewards.RewardEquipments;
     
@@ -334,6 +335,7 @@ public class BattleState : ScriptableObject
         GrantRewardCredits();
         GrantRewardCards();
         GrantRewardEquipment();
+        GrantRewardClinicVouchers();
         var xpGranted = GrantXp();
         var battleSummaryReport = new BattleSummaryReport
         {
@@ -374,6 +376,7 @@ public class BattleState : ScriptableObject
     
     private void RecordPartyAdventureHp() => Party.UpdateAdventureHp(Heroes.Select(h => Math.Min(h.CurrentHp(), h.State.BaseStats.MaxHp())).ToArray());
     private void GrantRewardCredits() => Party.UpdateCreditsBy(RewardCredits + playerState.BonusCredits);
+    private void GrantRewardClinicVouchers() => Party.UpdateClinicVouchersBy(RewardClinicVouchers);
     private void GrantRewardCards() => Party.Add(RewardCards);
     private void GrantRewardEquipment() => Party.Add(RewardEquipments);
     private void GrantRewardXp() => Party.AwardXp(RewardXp);
