@@ -77,6 +77,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
     {
         var sideSegments = progress.SecondarySegments.ToList();
         var shouldHaveShop = progress.CurrentStageProgress >= progress.CurrentChapter.NoShopUntilSegment 
+                             && party.Credits >= 150
                              && progress.CurrentChapter.ShopOdds < Rng.Float();
         if (shouldHaveShop)
             sideSegments.Add(shopSegment);
