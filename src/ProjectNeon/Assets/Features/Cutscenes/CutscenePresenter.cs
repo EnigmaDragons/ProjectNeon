@@ -132,12 +132,14 @@ public class CutscenePresenter : MonoBehaviour
         if (_finishTriggered)
             return;
 
-        if (msg.SegmentData.RequiredStates.Any(x => !progress.AdventureProgress.IsTrue(x)) || msg.SegmentData.ForbiddenStates.Any(x => progress.AdventureProgress.IsTrue(x)))
+        if (msg.SegmentData.ForbiddenStates.Any(x => progress.AdventureProgress.IsTrue(x))
+            || (msg.SegmentData.Or && msg.SegmentData.RequiredStates.None(x => progress.AdventureProgress.IsTrue(x)))
+            || (!msg.SegmentData.Or && msg.SegmentData.RequiredStates.Any(x => !progress.AdventureProgress.IsTrue(x))))
         {
             FinishCurrentSegment();
             return;
         }
-        
+
         DebugLog("Show Cutscene Segment");
         HidePreviousSegmentStuff();
         _currentSegment = AllCutsceneSegments.Create(msg.SegmentData);

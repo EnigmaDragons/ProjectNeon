@@ -11,4 +11,5 @@ public class CutsceneSegmentData
     public StoryEvent2 StoryEvent;
     public StringReference[] RequiredStates;
     public StringReference[] ForbiddenStates;
+    public bool Or;
 }
