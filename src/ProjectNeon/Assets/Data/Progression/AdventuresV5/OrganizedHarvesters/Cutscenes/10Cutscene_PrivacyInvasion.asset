@@ -12,10 +12,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: 10Cutscene_PrivacyInvasion
   m_EditorClassIdentifier: 
-  setting: {fileID: 11400000, guid: d42606896799ba54da602487d5f11063, type: 2}
+  setting: {fileID: 11400000, guid: 10a496a46b7d1c543a7dc5860d1f9ebb, type: 2}
   skipTrueStates: []
   skipFalseStates: []
   segments:
+  - SegmentType: 7
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: 
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 7
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: 
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
@@ -36,6 +78,10 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     ForbiddenStates: []
     Or: 1
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
@@ -56,6 +102,10 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     ForbiddenStates: []
     Or: 1
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
@@ -77,6 +127,10 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     ForbiddenStates: []
     Or: 1
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
@@ -97,6 +151,10 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     ForbiddenStates: []
     Or: 1
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
@@ -117,6 +175,10 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     ForbiddenStates: []
     Or: 1
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
@@ -138,14 +200,17 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     ForbiddenStates: []
     Or: 1
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
-      UseConstant: 0
+      UseConstant: 1
       ConstantValue: Anton
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: That's right. Tell you what, I'll let you choose just how much privacy
-      invasion is the right amount for determining if it would be socially beneficial
-      to harvest them.
+    Text: That's right. Tell you what, you choose what privacy invasion is fair to
+      judge who is suicidal or evil enough for harvesting.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -160,14 +225,156 @@ MonoBehaviour:
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     ForbiddenStates: []
     Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
-      UseConstant: 0
+      UseConstant: 1
       ConstantValue: Anton
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: That's right. Tell you what, I'll let you choose just how much privacy
-      invasion is the right amount for determining if it would be socially beneficial
-      to harvest them.
+    Text: That's right. Tell you what, you choose what privacy invasion is fair to
+      judge who is suicidal enough for harvesting.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: That's right. Tell you what, you choose what privacy invasion is fair to
+      judge who is evil enough for harvesting.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 4
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: 
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 11400000, guid: e501c5a89f9c5b3479a1faa615b1dcd0, type: 2}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    ForbiddenStates: []
+    Or: 1
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: Two arbitars of justice in agreement.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: f23f07f682ad834489aa6243ac016c02, type: 2}
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: Nuanced Justice? or convenient morals? No matter my AI will adjust to your
+      choice.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7ee7d124521f90643b2d98490feb441e, type: 2}
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: How hypocritical, but I'll apply your decision. Hopefully, no one dies
+      that shouldn't...
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 966583302eafc0f4bb1d864fcde66ac2, type: 2}
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: As opposed to watching you attack another of Medigeneix facilities, I'll
+      save us both time and send my address.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -181,4 +388,595 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     ForbiddenStates: []
+    Or: 1
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: Alright, I have gained access. I found where Anton currently works and
+      lives. Let's see what else we can find on Anton.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: I also have access. Look's like Anton's parents used to work for Medigeneix
+      as programmers before they went missing.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: It seems Anton chose computer-based positions and was able to quickly replace
+      everyone in his departments doing all of their workload combined.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: Anton's parents believed that Medigeneix had a kill list that their surgery
+      machines were designed to perform the murderers.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: In each department Anton replaced, his boss would be fired, and Anton would
+      move up.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: Anton's parents were under investigation for corporate espionage.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: In Anton's new positions, he would never replace any of the people in his
+      previous positions.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: Anton
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: 'You''re saying: Anton is currently holding dozens of positions throughout
+      the company, completing all those workloads.'
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 8
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: 
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: Yes, it is quite impressive what one person with a cutting edge AI can
+      do.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: So you are fulfilling all those positions' workloads currently.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: Precisely.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: What happened to Anton's parents?
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: They died in surgery that their virtual assistant had scheduled for them.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: Murdered by Medigeneix.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: What were they doing that got them caught?
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: They programmed a virus that could destroy all of Medigeneix's surgery
+      machines.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: They never finished in time?
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: They finished the virus, but they never activated it.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: Why?
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: They feared that they would be killing more people than they would have
+      saved by destroying all of those machines.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: We could try to use the virus.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: I can't let you activate that virus. Activating it would ruin everything
+      that Anton is doing.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: AI
+      Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
+    Text: The security team has arrived. Cheerio.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}

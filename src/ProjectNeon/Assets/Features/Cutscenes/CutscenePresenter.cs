@@ -33,6 +33,9 @@ public class CutscenePresenter : MonoBehaviour
         Message.Subscribe<AdvanceCutsceneRequested>(Execute, this);
         Message.Subscribe<CutsceneWaitRequested>(Execute, this);
         Message.Subscribe<FinishCutsceneWaitEarlyRequested>(Execute, this);
+        Message.Subscribe<RecordStoryStateRequested>(Execute, this);
+        Message.Subscribe<HideCharacterRequested>(Execute, this);
+        Message.Subscribe<ShowCharacterRequested>(Execute, this);
     }
     
     private void Start()
@@ -65,6 +68,39 @@ public class CutscenePresenter : MonoBehaviour
         
         _waitFinishTriggered = false;
         this.ExecuteAfterDelay(msg.Duration, FinishWait);
+    }
+
+    private void Execute(RecordStoryStateRequested msg)
+    {
+        if (_finishTriggered)
+            return;
+
+        progress.AdventureProgress.SetStoryState(msg.State, true);
+        FinishCurrentSegment();
+    }
+    
+    private void Execute(HideCharacterRequested msg)
+    {
+        if (_finishTriggered)
+            return;
+
+        _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias)).ExecuteIfPresentOrElse(x =>
+        {
+            x.gameObject.SetActive(false);
+            FinishCurrentSegment();
+        }, FinishCurrentSegment);
+    }
+    
+    private void Execute(ShowCharacterRequested msg)
+    {
+        if (_finishTriggered)
+            return;
+
+        _characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias)).ExecuteIfPresentOrElse(x =>
+        {
+            x.gameObject.SetActive(true);
+            FinishCurrentSegment();
+        }, FinishCurrentSegment);
     }
     
     private void Execute(FinishCutsceneWaitEarlyRequested msg) => FinishWait();

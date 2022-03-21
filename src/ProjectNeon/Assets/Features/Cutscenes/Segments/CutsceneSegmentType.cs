@@ -6,5 +6,8 @@ public enum CutsceneSegmentType
     NarratorLine = 2,
     Wait = 3,
     Choice = 4,
-    MultiChoice = 5
+    MultiChoice = 5,
+    RecordStoryState = 6,
+    HideCharacter = 7,
+    ShowCharacter = 8
 }
