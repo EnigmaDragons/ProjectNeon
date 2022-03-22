@@ -22,7 +22,7 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
 
     protected override void Execute(LevelUpHero msg)
     {
-        var shouldUseV2 = !adventure.Adventure.IsV4 || _isTargetV4Null || _isPresenterV4Null;
+        var shouldUseV2 = (!adventure.Adventure.IsV4 && !adventure.Adventure.IsV5) || _isTargetV4Null || _isPresenterV4Null;
         if (shouldUseV2)
         {
             presenterV2.Initialized(msg.Hero);

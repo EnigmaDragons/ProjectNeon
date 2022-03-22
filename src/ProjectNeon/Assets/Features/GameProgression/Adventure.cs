@@ -50,7 +50,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     public int StartingClinicVouchers => startingClinicVouchers;
     public int BattleRewardClinicVouchers => battleRewardClinicVouchers;
     public bool IsV1 => false;
-    public bool IsV2 => !IsV4 && dynamicStages != null && dynamicStages.Any();
+    public bool IsV2 => !IsV4 && !IsV5 && dynamicStages != null && dynamicStages.Any();
     public bool IsV4 => stages != null && stages.Any();
     public bool IsV5 => v5Stages != null && v5Stages.Any();
     
