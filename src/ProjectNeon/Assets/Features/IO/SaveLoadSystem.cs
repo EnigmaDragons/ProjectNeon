@@ -61,12 +61,25 @@ public sealed class SaveLoadSystem : ScriptableObject
         var selectedAdventure = library.GetAdventureById(d.AdventureId);
         if (selectedAdventure.IsMissing)
             return LoadFailedReason($"Unknown Adventure {d.AdventureId}");
+        
         if (d.Type == GameAdventureProgressType.V2)
+        {
+            adventureProgress.AdventureProgress = adventure;
             return adventure.InitAdventure(d, selectedAdventure.Value);
+        }
+
         if (d.Type == GameAdventureProgressType.V4)
+        {
+            adventureProgress.AdventureProgress = adventurev4;
             return adventurev4.InitAdventure(d, selectedAdventure.Value);
+        }
+
         if (d.Type == GameAdventureProgressType.V5)
+        {
+            adventureProgress.AdventureProgress = adventurev5;   
             return adventurev5.InitAdventure(d, selectedAdventure.Value);
+        }
+        
         return LoadFailedReason($"Unknown Adventure Type {d.Type}");
     }
 
