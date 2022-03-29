@@ -28,10 +28,16 @@ public class HeroDetailsView : MonoBehaviour
     {
         heroDisplay.Init(h.Character, h.AsMember(-1), false, () => { });
         heroDisplay.LockToTab("Stats");
-        augmentsDisplay.DestroyAllChildren();
+        augmentsDisplay.DestroyAllChildrenImmediate();
         var numGear = h.Equipment.All.Length;
         contentSize.sizeDelta = new Vector2(contentSize.sizeDelta.x, numGear * itemHeight);
-        h.Equipment.All.Where(x => !x.Name.Equals("Implant")).ForEach(a => Instantiate(equipmentPresenterProto, augmentsDisplay.transform).Initialized(a, () => {}, false, false));
+        h.Equipment.All
+            .Where(x => !x.Name.Equals("Implant"))
+            .ForEach(a =>
+            {
+                Log.Info($"{h.Name} - Create {a.Name} Augment Panel");
+                Instantiate(equipmentPresenterProto, augmentsDisplay.transform).Initialized(a, () => { }, false, false);
+            });
         noAugmentsLabel.SetActive(numGear == 0);
         
         Animate();
