@@ -38,6 +38,7 @@ public class Enemy : ScriptableObject
     public bool ExcludeFromBestiary => excludeFromBestiary;
     public int[] Stages => stageDetails.OrderBy(x => x.stage).Select(x => x.stage).ToArray();
     public CharacterAnimations Animations => animations;
+    public GameObject Prefab => prefab;
     public EnemyInstance ForStage(int stage)
     {
         var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();

@@ -111,6 +111,18 @@ public class FindEnemiesEditor : EditorWindow
             });
         }
         DrawUILine();
+        
+        if (GUILayout.Button("Missing Death Animation Component"))
+        {
+            var items = GetAllInstances<Enemy>()
+                .Where(e => e.Prefab != null && e.Prefab.GetComponentsInChildren<DeathPresenter>().Length == 0)
+                .Select(e => e.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Enemies Missing Death Presenters", items)
+                .Show();
+        }
+        DrawUILine();
     }
 
     private IEnumerable<Enemy> GetAllWorkingEnemies() => GetAllInstances<Enemy>().Where(e => e.IsCurrentlyWorking);

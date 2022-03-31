@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2518287754062714762}
   - component: {fileID: 8158395361116464745}
   - component: {fileID: 1316897505460808791}
+  - component: {fileID: 8597802788155115084}
   m_Layer: 0
   m_Name: NotnaBody
   m_TagString: Untagged
@@ -97,6 +98,25 @@ MonoBehaviour:
   talking: {fileID: 0}
   character: {fileID: 7166893480568012098}
   reverse: 0
+--- !u!114 &8597802788155115084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2563240991985839073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 5031104331841262778}
+  sprite: {fileID: 0}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &3374074908851465284
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,6 +574,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8714599542476200438, guid: f3205580609b58847b2491c71bbcd3b2, type: 3}
   m_PrefabInstance: {fileID: 4636504181473991587}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5031104331841262778 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 399194495138991897, guid: f3205580609b58847b2491c71bbcd3b2, type: 3}
+  m_PrefabInstance: {fileID: 4636504181473991587}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &7166893480568012098 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2534893662153696993, guid: f3205580609b58847b2491c71bbcd3b2, type: 3}
