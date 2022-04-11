@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class HeroDetailsView : MonoBehaviour
 {
     [SerializeField] private HeroDisplayPresenter heroDisplay;
-    [SerializeField] private GameObject augmentsDisplay;
-    [SerializeField] private RectTransform contentSize;
+    [SerializeField] private GameObject augmentsDisplayParent;
+    [SerializeField] private GameObject augmentsDisplayPrototype;
     [SerializeField] private int itemHeight;
     [SerializeField] private EquipmentPresenter equipmentPresenterProto;
     [SerializeField] private Image darken;
     [SerializeField] private GameObject view;
     [SerializeField] private GameObject noAugmentsLabel;
 
+    private GameObject _augmentsDisplay;
     private float _duration = 0.4f;
     private Vector3 _viewScale;
     private float _darkenAlpha;
@@ -28,10 +29,13 @@ public class HeroDetailsView : MonoBehaviour
     {
         heroDisplay.Init(h.Character, h.AsMember(-1), false, () => { });
         heroDisplay.LockToTab("Stats");
-        augmentsDisplay.DestroyAllChildren();
+        if (_augmentsDisplay != null)
+            Destroy(_augmentsDisplay);
+        _augmentsDisplay = Instantiate(augmentsDisplayPrototype, augmentsDisplayParent.transform);
         var numGear = h.Equipment.All.Length;
-        contentSize.sizeDelta = new Vector2(contentSize.sizeDelta.x, numGear * itemHeight);
-        h.Equipment.All.Where(x => !x.Name.Equals("Implant")).ForEach(a => Instantiate(equipmentPresenterProto, augmentsDisplay.transform).Initialized(a, () => {}, false, false));
+        h.Equipment.All
+            .Where(x => !x.Name.Equals("Implant"))
+            .ForEach(a => Instantiate(equipmentPresenterProto, _augmentsDisplay.transform).Initialized(a, () => { }, false, false));
         noAugmentsLabel.SetActive(numGear == 0);
         
         Animate();

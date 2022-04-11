@@ -19,6 +19,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private NamedGameObject[] tabTargets;
     [SerializeField] private ResourceCounterPresenter resource1;
     [SerializeField] private ResourceCounterPresenter resource2;
+    [SerializeField] private TextMeshProUGUI startingCredits;
     [SerializeField] private MemberSimplifiedVisualStatPanel statPanel;
     [SerializeField] private GameObject buttonsPanel;
     [SerializeField] private Button statButton;
@@ -90,6 +91,9 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
             else
                 resource2.Init(member, member.State.ResourceTypes[1]);
         }
+
+        if (startingCredits != null)
+            startingCredits.text = c.StartingCredits.ToString();
     }
 
     public void LockToTab(string tabName)

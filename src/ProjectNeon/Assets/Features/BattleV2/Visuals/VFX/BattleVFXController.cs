@@ -42,7 +42,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             LogInfo($"No VFX of type {e.EffectName}");
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
         }
-        else if (e.Scope.Equals(Scope.One))
+        else if (e.Scope.Equals(Scope.One) || e.Scope.Equals(Scope.OneExceptSelf))
         {
             var member = e.Target.Members[0];
             if (!member.IsConscious() || !state.Members.ContainsKey(member.Id))

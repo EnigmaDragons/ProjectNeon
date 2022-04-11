@@ -36,4 +36,10 @@ public static class GameObjectExtensions
         foreach(Transform child in t)
             Object.DestroyImmediate(child.gameObject);
     }
+    
+    public static void DestroyAllChildrenImmediate(this GameObject o)
+    {
+        foreach(Transform child in o.transform)
+            Object.DestroyImmediate(child.gameObject);
+    }
 }
