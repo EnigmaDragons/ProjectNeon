@@ -39,7 +39,8 @@ public class FmodMusicPlayer : MonoBehaviour
     private const float Nothing = 2f;
     private const float Med_Music = 5f;
     private const float ConclusionMusic = 3f;
-    
+    private const float BattleWonStinger = 7f;
+
     private readonly Dictionary<string, float> _musicProgressParamBySceneName = new Dictionary<string, float>
     {
         { "TitleScreen", TitleMusic },
