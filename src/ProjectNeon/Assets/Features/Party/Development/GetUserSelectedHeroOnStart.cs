@@ -6,8 +6,13 @@ public class GetUserSelectedHeroOnStart : MonoBehaviour
     [SerializeField] private Library library;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private Party currentParty;
+    [SerializeField] private bool triggerOnStart = true;
 
-    private void Start() => Trigger();
+    private void Start()
+    {
+        if (triggerOnStart)
+            Trigger();
+    }
 
     public void Trigger()
     {
