@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -13,4 +14,38 @@ public class CutsceneSegmentData
     public StringReference[] ForbiddenStates;
     public bool Or;
     public StringReference StoryState;
+
+    public Maybe<string> GetRequiredConditionsDescription()
+    {
+        if (RequiredStates.None() && ForbiddenStates.None())
+            return Maybe<string>.Missing();
+        
+        var conditions = "";
+        if (RequiredStates.Any())
+            conditions += $"Required: {string.Join(", ", RequiredStates.Select(r => r.Value))}. ";
+        if (ForbiddenStates.Any())
+            conditions += $"Skipped If: {string.Join(", ", ForbiddenStates.Select(r => r.Value))}. ";
+        return Maybe<string>.Present(conditions.Trim());
+    }
+    
+    public string GetExportDescription()
+    {
+        if (SegmentType == CutsceneSegmentType.Nothing)
+            return "Nothing";
+        if (SegmentType == CutsceneSegmentType.NarratorLine)
+            return $"Narrator: \"{Text}\"";
+        if (SegmentType == CutsceneSegmentType.DialogueLine)
+            return $"{DialogueCharacterId.Value}: \"{Text}\"";
+        if (SegmentType == CutsceneSegmentType.ShowCharacter)
+            return $"Enter {DialogueCharacterId.Value}";
+        if (SegmentType == CutsceneSegmentType.HideCharacter)
+            return $"Exit {DialogueCharacterId.Value}";
+        if (SegmentType == CutsceneSegmentType.Choice)
+            return $"-- Present Player Game Choice --";
+        if (SegmentType == CutsceneSegmentType.MultiChoice)
+            return $"-- Present Player Game Multi-Choice --";
+        if (SegmentType == CutsceneSegmentType.RecordStoryState)
+            return $"-- Save Player Story Choice --";
+        return "Unknown Cutscene Segment";
+    }
 }
