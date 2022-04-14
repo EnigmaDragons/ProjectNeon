@@ -45,7 +45,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Sprite standardCard;
     [SerializeField] private Sprite transientCard;
     
-    private bool _debug = false;
+    private bool _debug = true;
     
     private Card _card;
     private CardTypeData _cardType;
@@ -105,6 +105,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void Clear()
     {
         gameObject.SetActive(false);
+        IsFocused = false;
         _card = null;
         _cardType = null;
         UpdateDragArea();
@@ -501,7 +502,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!eventData.dragging && _isHand && battleState.Phase == BattleV2Phase.PlayCards)
+        if (!eventData.dragging && _isHand && battleState.Phase == BattleV2Phase.PlayCards && Vector3.Distance(_position, transform.position) <= 0.1)
         {
             Message.Publish(new CardHoverEnter(this));
             Message.Publish(new CardHoverSFX(transform));

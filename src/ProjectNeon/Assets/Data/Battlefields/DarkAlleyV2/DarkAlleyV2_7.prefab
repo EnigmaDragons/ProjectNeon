@@ -70,6 +70,73 @@ Transform:
   m_Father: {fileID: 2869749654744451060}
   m_RootOrder: 57
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2611919137988514079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8761883468973737991}
+  - component: {fileID: 7807134534219380355}
+  - component: {fileID: 847313211230105519}
+  m_Layer: 0
+  m_Name: DarkAlleySound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8761883468973737991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2611919137988514079}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.19, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4068368358591497463}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7807134534219380355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2611919137988514079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5f1587bcbf137479527e1d6f654574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &847313211230105519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2611919137988514079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/BattleScene/DARK_ALLEY_AMB
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
 --- !u!1001 &411262153894194300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -663,6 +730,11 @@ PrefabInstance:
 --- !u!4 &2869749654744451060 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2478808124943540090, guid: 1245ccb12807d73f09ce06c4124c92bb, type: 3}
+  m_PrefabInstance: {fileID: 411262153967491214}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4068368358591497463 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4449740838569925753, guid: 1245ccb12807d73f09ce06c4124c92bb, type: 3}
   m_PrefabInstance: {fileID: 411262153967491214}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &411262153996307276
