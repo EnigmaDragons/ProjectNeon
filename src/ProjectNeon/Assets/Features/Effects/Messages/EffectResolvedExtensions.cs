@@ -10,9 +10,13 @@ public static class EffectResolvedExtensions
     public static int [] SelectSum(this EffectResolved e, Func<MemberSnapshot, int> selector)
     {
         var targetMembers = e.Target.Members;
-        var before = targetMembers.Select(t => e.BattleBefore.Members[t.Id])
+        var before = targetMembers
+            .Where(t => e.BattleBefore.Members.ContainsKey(t.Id))
+            .Select(t => e.BattleBefore.Members[t.Id])
             .Sum(selector);
-        var after = targetMembers.Select(t => e.BattleAfter.Members[t.Id])
+        var after = targetMembers
+            .Where(t => e.BattleBefore.Members.ContainsKey(t.Id))
+            .Select(t => e.BattleAfter.Members[t.Id])
             .Sum(selector);
         return new[] {before, after};
     }
