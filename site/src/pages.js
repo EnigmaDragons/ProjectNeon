@@ -7,6 +7,7 @@ import Stories from './Stories/StoryMenu.svelte';
 import WelcomeToZantoCorp from './Stories/WelcomeToZantoCorp.svelte';
 import LegacyOfVopvanaTech from './Stories/LegacyOfVopvanaTech.svelte';
 import TheHeist from './Stories/TheHeist.svelte';
+import UnusualDayAstroVerse from './Stories/UnusualDayInTheAstroVerse.svelte';
 
 const DefaultPage = Home;
 export const pages = [
@@ -18,5 +19,6 @@ export const pages = [
   { path: '/stories', href: '/index.html?page=stories', name: 'Stories', component: Stories, showInMainNav: false, useDefaultLayout: true },
   { path: '/story-welcome-to-zantocorp', href: '/index.html?page=story-welcome-to-zantocorp', name: 'Story - Welcome To ZantoCorp', component: WelcomeToZantoCorp, showInMainNav: false, useDefaultLayout: false },
   { path: '/story-vopvana', href: '/index.html?page=story-vopvana', name: 'Story - Legacy Of Vopvana', component: LegacyOfVopvanaTech, showInMainNav: false, useDefaultLayout: false },
-  { path: '/story-the-heist', href: '/index.html?page=the-heist', name: 'Story - The Heist', component: TheHeist, showInMainNav: false, useDefaultLayout: false },
+  { path: '/story-the-heist', href: '/index.html?page=story-the-heist', name: 'Story - The Heist', component: TheHeist, showInMainNav: false, useDefaultLayout: false },
+  { path: '/story-unusual-day-astroverse', href: '/index.html?page=unusual-day-astroverse', name: 'Story - Unusual Day in the AstroVerse', component: UnusualDayAstroVerse, showInMainNav: false, useDefaultLayout: false },
 ]
