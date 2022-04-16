@@ -16,7 +16,7 @@ MonoBehaviour:
   skipTrueStates: []
   skipFalseStates: []
   segments:
-  - SegmentType: 0
+  - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
@@ -39,7 +39,12 @@ MonoBehaviour:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
-  - SegmentType: 0
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
@@ -56,3 +61,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
