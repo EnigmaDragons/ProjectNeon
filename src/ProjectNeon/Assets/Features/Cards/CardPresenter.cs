@@ -600,6 +600,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         IsDragging = false;
         canvasGroup.blocksRaycasts = true;
         Message.Publish(new HideMouseTargetArrow());
+        if (_card != null)
+            Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
 
     public void Cancel() => ReturnHandToNormal();
