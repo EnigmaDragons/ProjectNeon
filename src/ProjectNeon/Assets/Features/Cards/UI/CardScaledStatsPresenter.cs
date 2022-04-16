@@ -19,9 +19,8 @@ public class CardScaledStatsPresenter : MonoBehaviour
     public void Show(string[] statTypes, StatType primaryStat)
     {
         var statTypesString = string.Join(", ", statTypes.Select(s => s.Equals(StatType.Power.ToString()) ? primaryStat.ToString() : s));
-        label.text = $"Scales with {statTypesString}";
-        if (statTypes.Any())
-            gameObject.SetActive(true);
+        label.text = statTypes.Any() ? $"Scales with {statTypesString}" : "No Scaling";
+        gameObject.SetActive(true);
     }
 
     private List<string> GetScalingStats(EffectData e)
