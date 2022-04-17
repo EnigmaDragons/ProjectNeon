@@ -72,6 +72,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     private void Play((Member Member, EnemyInstance Enemy) e)
     {
         var card = e.Enemy.AI.Play(e.Member.Id, state, _currentTurnStrategy);
+        Message.Publish(new EnemyCardPlayed(card));
         _numberOfCardsPlayedThisTurn[card.MemberId()] = _numberOfCardsPlayedThisTurn[card.MemberId()] + 1;
         if (_numberOfCardsPlayedThisTurn[card.MemberId()] == e.Member.State.ExtraCardPlays())
             _enemiesToActThisTurn.Remove(e);
