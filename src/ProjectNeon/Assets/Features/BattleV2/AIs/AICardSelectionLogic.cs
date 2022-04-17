@@ -40,6 +40,7 @@ public static class AICardSelectionLogic
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
             .DontRemoveResourcesIfOpponentsDontHaveMany()
             .DontPlayTauntIfAnyAllyIsPlayingOne()
+            .DontPlayTauntIfYouAlreadyHaveIt()
             .DontPlayMagicalCountersIfOpponentsAreNotMagical()
             .DontPlayPhysicalCountersIfOpponentsAreNotPhysical()
             .DontGiveExtraResourcesIfAlliesHaveEnough()
@@ -90,6 +91,9 @@ public static class AICardSelectionLogic
             
     public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Strategy.SelectedNonStackingTargets.ContainsKey(CardTag.Taunt), CardTag.Taunt);
+
+    public static CardSelectionContext DontPlayTauntIfYouAlreadyHaveIt(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Member.Taunt() > 0, CardTag.Taunt);
     
     public static CardSelectionContext DontPlayShieldAttackIfOpponentsDontHaveManyShields(this CardSelectionContext ctx, int minShields = 15)
         => ctx.IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < minShields, CardTag.Shield, CardTag.Attack)
