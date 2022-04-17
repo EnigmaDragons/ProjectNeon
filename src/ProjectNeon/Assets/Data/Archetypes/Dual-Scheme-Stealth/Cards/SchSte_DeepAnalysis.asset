@@ -10,25 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: SchSte_RiggedProxMine
+  m_Name: SchSte_DeepAnalysis
   m_EditorClassIdentifier: 
-  id: 557
+  id: 558
   customName: 
-  art: {fileID: 21300000, guid: b8c41adf92f24ed42870a160bd56fb1a, type: 3}
-  description: Next turn, <b>Sneaky:</b> deal {IE[0]}
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  art: {fileID: 21300000, guid: 8e2dd49253934044499fd3868b8f147c, type: 3}
+  description: 'Enter <b>Stealth</b>
+
+
+    Gain <b>4 Card Cycles</b>'
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 2
-    resourceType: {fileID: 11400000, guid: dbc453d1ebcda2a4e91d53e89abcf192, type: 2}
+    cost: 0
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 2
   actionSequences:
   - scope: 0
-    group: 1
-    cardActions: {fileID: 11400000, guid: a18326b4fe49a524280ffec481802dde, type: 2}
+    group: 0
+    cardActions: {fileID: 11400000, guid: 6f722ff7e9cdead418748d4153c9db66, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -38,9 +41,7 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
-  highlightCondition:
-  - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
-  unhighlightCondition:
-  - {fileID: 11400000, guid: f4b925cb22766bd4c8734ed15d347eaf, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0
