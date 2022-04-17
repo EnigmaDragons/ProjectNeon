@@ -45,7 +45,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Sprite standardCard;
     [SerializeField] private Sprite transientCard;
     
-    private bool _debug = true;
+    private bool _debug = false;
     
     private Card _card;
     private CardTypeData _cardType;

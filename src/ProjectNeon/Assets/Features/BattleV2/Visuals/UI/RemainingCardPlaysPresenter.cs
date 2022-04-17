@@ -31,6 +31,11 @@ public class RemainingCardPlaysPresenter : OnMessage<BattleStateChanged>
             transform.localScale = _scale;
             transform.DOPunchScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f, 1);
         }
+        else
+        {
+            DOTween.Kill(gameObject);
+            transform.localScale = _scale;
+        }
         _last = newValue;
     }
 }
