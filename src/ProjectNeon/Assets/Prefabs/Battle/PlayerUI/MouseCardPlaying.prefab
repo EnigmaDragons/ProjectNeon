@@ -367,7 +367,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 340, y: 32}
+  m_AnchoredPosition: {x: 190, y: 55}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &710097375821536684
@@ -749,7 +749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 77, y: 77}
+  m_AnchoredPosition: {x: 80, y: 100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &764293484154230906
@@ -790,6 +790,7 @@ GameObject:
   - component: {fileID: 607935585965809583}
   - component: {fileID: 1224408819948383282}
   - component: {fileID: 4057306077180044206}
+  - component: {fileID: 4451651746880072901}
   m_Layer: 5
   m_Name: TrashIcon
   m_TagString: Untagged
@@ -814,7 +815,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 190, y: 32}
+  m_AnchoredPosition: {x: 190, y: 55}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1224408819948383282
@@ -845,6 +846,20 @@ MonoBehaviour:
   rotateTarget: {fileID: 79866800564415110}
   shakeSize: 1
   shakeSpeed: 15
+--- !u!114 &4451651746880072901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730036098768759733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e7bb3425e5437d9348e41d565290ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 7401636735451076467}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &3001825911535174268
 GameObject:
   m_ObjectHideFlags: 0
