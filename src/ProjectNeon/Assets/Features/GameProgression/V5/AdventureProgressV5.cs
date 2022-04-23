@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,7 +33,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     {
         get { 
             if (currentChapterIndex < 0 || currentChapterIndex >= currentAdventure.Adventure.StagesV5.Length)
-                Log.Error($"Adventure Stage is illegal. {this}");
+                Log.Error($"Adventure Stage is illegal.");
             return currentAdventure.Adventure.StagesV5[currentChapterIndex]; 
         }
     }
@@ -84,10 +85,20 @@ public class AdventureProgressV5 : AdventureProgressBase
         var ctx = new GlobalEffectContext(currentGlobalEffects);
         effectIds.ForEach(id => currentGlobalEffects.ApplyById(id, ctx));
     }
-    
-    public override string ToString() =>
-        $"Adventure: {currentAdventure.Adventure.Id} {currentAdventure.Adventure.Title}. Stage: {currentChapterIndex}. StageProgress: {Progress}." +
-        $"Chapter: {currentChapterIndex}/{currentAdventure.Adventure.StagesV5.Length}. Segment: {currentSegmentIndex}";
+
+    public override string ToString()
+    {
+        try
+        {
+            return
+                $"Adventure: {currentAdventure.Adventure.Id} {currentAdventure.Adventure.Title}. Stage: {currentChapterIndex}. StageProgress: {Progress}." +
+                $"Chapter: {currentChapterIndex}/{currentAdventure.Adventure.StagesV5.Length}. Segment: {currentSegmentIndex}";
+        }
+        catch (Exception e)
+        {
+            return "Unable to Capture Adventure Details";
+        }
+    }
 
     public override void InitIfNeeded()
     {

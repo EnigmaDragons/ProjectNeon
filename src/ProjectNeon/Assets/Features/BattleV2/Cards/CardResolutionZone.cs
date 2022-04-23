@@ -175,6 +175,8 @@ public class CardResolutionZone : ScriptableObject
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Stun, -1);
                 Message.Publish(new DisplayCharacterWordRequested(card.Owner, CharacterReactionType.Stunned));
+                battleState.GetMaybeCenterPoint(card.Owner.Id)
+                    .IfPresent(c => Message.Publish(new PlayRawBattleEffect("StunnedWhenTriedToPlayCard", c.position)));
                 Message.Publish(new CardResolutionFinished(played));
             }
             else if (card.IsAttack && card.Owner.IsBlinded())

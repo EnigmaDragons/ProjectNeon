@@ -120,17 +120,32 @@ public class BattleState : ScriptableObject
 
     public void SetupEnemyEncounter()
     {
-        if (adventureProgress.HasActiveAdventure)
-            if (isEliteBattle)
-                LogEncounterInfo(true, adventureProgress.AdventureProgress.CurrentElitePowerLevel, nextEnemies.Sum(e => e.PowerLevel));
-            else
-                LogEncounterInfo(false, adventureProgress.AdventureProgress.CurrentPowerLevel, nextEnemies.Sum(e => e.PowerLevel));
+        LogEncounterInfo();
+
         _battleStartingEnemies = nextEnemies.ToArray();
         EnemyArea.Initialized(nextEnemies);
         isEliteBattle = nextIsEliteBattle;
         nextEnemies = new EnemyInstance[0];
         nextIsEliteBattle = false;
         
+    }
+
+    private void LogEncounterInfo()
+    {
+        try
+        {
+            if (adventureProgress.HasActiveAdventure)
+                if (isEliteBattle)
+                    LogEncounterInfo(true, adventureProgress.AdventureProgress.CurrentElitePowerLevel,
+                        nextEnemies.Sum(e => e.PowerLevel));
+                else
+                    LogEncounterInfo(false, adventureProgress.AdventureProgress.CurrentPowerLevel,
+                        nextEnemies.Sum(e => e.PowerLevel));
+        }
+        catch (Exception e)
+        {
+            Log.Info("Unable to Log Adventure Progress Info for Battle");
+        }
     }
 
     public void Init()
