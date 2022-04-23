@@ -29,7 +29,7 @@ public class EnemyStageController : OnMessage<ShowEnemyOnStage>
             enemyUi.gameObject.SetActive(false);
         var enemyAngleShift = enemyBody.GetComponentInChildren<Universal2DAngleShift>();
         if (enemyAngleShift != null)
-            enemyAngleShift.Revert();
+            enemyAngleShift.UseIdentityRotation();
         var shield = enemyBody.GetComponentInChildren<ShieldVisual>();
         if (shield != null)
             shield.Init(e.AsMember(InfoMemberId.Get()));

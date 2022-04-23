@@ -8,7 +8,7 @@ public class Universal2DAngleShift : MonoBehaviour
     public static Quaternion Euler => Quaternion.Euler(angle, 0, 0);
 
     private void Awake() => SetRotation(Quaternion.Euler(angle, 0, 0));
-    public void Revert() => SetRotation(Quaternion.Euler(-angle, 0, 0));
+    public void UseIdentityRotation() => transform.rotation = Quaternion.identity;
 
     private void SetRotation(Quaternion q)
     {
