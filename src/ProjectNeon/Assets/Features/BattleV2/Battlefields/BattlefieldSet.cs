@@ -5,16 +5,16 @@ using UnityEngine;
 public class BattlefieldSet : ScriptableObject
 {
     [SerializeField] private GameObject[] battlefields;
-    [SerializeField] private GameObject lastUsed;
+    [SerializeField] private int lastUsedId;
 
     public GameObject GetNext()
     {
-        var battlefieldOptions = battlefields.ToList();
-        if (lastUsed != null)
-            battlefieldOptions.Remove(lastUsed);
+        var battlefieldOptions = battlefields
+            .Select((b, i) => (b, i))
+            .Where(x => x.i != lastUsedId).ToList();
         
-        var selected = battlefieldOptions.Random();
-        lastUsed = selected;
-        return selected;
+        (GameObject battlefield, int index) selected = battlefieldOptions.Random();
+        lastUsedId = selected.index;
+        return selected.battlefield;
     }
 }
