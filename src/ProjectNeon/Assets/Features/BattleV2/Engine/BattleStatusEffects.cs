@@ -54,7 +54,9 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             return;
         
         Log.Info($"Status Effects Resolve Next - {debugCallerName}");
-        if (Reactions.AnyReactionEffects)
+        if (!MessageGroup.IsClear)
+            WaitForWrapup();
+        else if (Reactions.AnyReactionEffects)
             Reactions.ResolveNextInstantReaction(state.Members);
         else if (Reactions.AnyReactionCards)
             Message.Publish(new ResolveReactionCards());
@@ -62,7 +64,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             ResolveNextStatusEffect();
         else if (_membersToProcess.Any())
             ResolveNextMemberStatusEffects();
-        else if (!Reactions.Any && MessageGroup.IsClear)
+        else if (!Reactions.Any)
         {
             _isProcessing = false;
             if (_currentMember.IsPresent)
@@ -73,13 +75,15 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                 Message.Publish(new StartOfTurnEffectsStatusResolved());
             else
                 Message.Publish(new EndOfTurnStatusEffectsResolved());
-            return;
         }
         else
-        {
-            Log.Info("Status Effect - Waiting to Wrapup - MessageGroup" + MessageGroup.CurrentName);
-            Async.ExecuteAfterDelay(50, () => ResolveNext("Revolve Next after Delay - Waiting for Wrapup"));
-        }
+            WaitForWrapup();
+    }
+
+    private void WaitForWrapup()
+    {
+        Log.Info("Status Effect - Waiting to Wrapup - MessageGroup" + MessageGroup.CurrentName);
+        Async.ExecuteAfterDelay(50, () => ResolveNext("Revolve Next after Delay - Waiting for Wrapup"));
     }
     
     private void ResolveNextStatusEffect()
