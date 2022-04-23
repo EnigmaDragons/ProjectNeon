@@ -57,4 +57,5 @@ public class EventPublisher : ScriptableObject
     public void AdvanceCutscene() => Message.Publish(new AdvanceCutsceneRequested());
     public void HideHeroDetailsView() => Message.Publish(new HideHeroDetailsView());
     public void ToggleNamedUiElement(string elementName) => Message.Publish(new ToggleNamedTarget(elementName));
+    public void SaveGame() => Message.Publish(new AutoSaveRequested());
 }
