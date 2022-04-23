@@ -25,6 +25,8 @@ public class AssetUpdater
         UpdateAllHeroes();
         UpdateEnemyIDs();
         UpdateAllEnemies();
+        UpdateStageSegmentIDs();
+        UpdateAllStageSegments();
         UpdateAllCorps();
         UpdateStoryEventIDs();
         UpdateGlobalEffectIds();
