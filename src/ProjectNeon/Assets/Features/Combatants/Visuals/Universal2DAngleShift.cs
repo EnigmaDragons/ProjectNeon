@@ -6,10 +6,10 @@ public class Universal2DAngleShift : MonoBehaviour
 
     private void Awake()
     {
-        transform.rotation = Quaternion.Euler(angle, 0, 0);
+        transform.localRotation = Quaternion.Euler(angle, 0, 0);
     }
 
     public static Quaternion Euler => Quaternion.Euler(angle, 0, 0);
     
-    public void Revert() => transform.rotation = Quaternion.identity;
+    public void Revert() => transform.localRotation = Quaternion.identity;
 }
