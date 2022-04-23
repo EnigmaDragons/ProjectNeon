@@ -561,7 +561,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 Message.Publish(new ShowMouseTargetArrow(transform));
             
             // This is crude. Reason for not being able to play a card should flow through
-            if (_card.Cost.BaseAmount > _card.Owner.PrimaryResourceAmount())
+            if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
                 Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, 
                     Localize.Get("Speech", "I don't have enough resources to play this card right now.")));
 
