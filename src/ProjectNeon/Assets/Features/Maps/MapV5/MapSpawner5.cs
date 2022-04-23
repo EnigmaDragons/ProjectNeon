@@ -64,8 +64,9 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
                 rect.pivot = new Vector2(0.5f, 0.5f);
                 rect.anchoredPosition = x.Position;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.Error(e);
                 Log.Error($"Node Prefab for {x.Type} - {x.Corp} is null");
             }
         });
