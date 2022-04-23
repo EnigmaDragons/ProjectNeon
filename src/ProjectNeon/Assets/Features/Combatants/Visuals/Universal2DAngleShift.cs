@@ -2,14 +2,19 @@
 
 public class Universal2DAngleShift : MonoBehaviour
 {
-    public const float angle = 26;
-
-    private void Awake()
-    {
-        transform.localRotation = Quaternion.Euler(angle, 0, 0);
-    }
-
-    public static Quaternion Euler => Quaternion.Euler(angle, 0, 0);
+    [SerializeField] private bool useLocalRotation = true;
     
-    public void Revert() => transform.localRotation = Quaternion.identity;
+    public const float angle = 26;
+    public static Quaternion Euler => Quaternion.Euler(angle, 0, 0);
+
+    private void Awake() => SetRotation(Quaternion.Euler(angle, 0, 0));
+    public void Revert() => SetRotation(Quaternion.Euler(-angle, 0, 0));
+
+    private void SetRotation(Quaternion q)
+    {
+        if (useLocalRotation)
+            transform.localRotation = q;
+        else
+            transform.rotation = q;
+    }
 }
