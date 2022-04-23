@@ -2,6 +2,7 @@
 
 public abstract class StageSegment : ScriptableObject, IStageSegment
 {
+    public int Id;
     public abstract string Name { get; }
     public abstract bool ShouldCountTowardsEnemyPowerLevel { get; }
     public abstract bool ShouldAutoStart { get; }

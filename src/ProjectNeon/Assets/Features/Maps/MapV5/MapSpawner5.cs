@@ -12,6 +12,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
     [SerializeField] private StageSegment shopSegment;
     [SerializeField] private GameObject mapNodesParent;
     [SerializeField] private GameObject playerTokenParent;
+    [SerializeField] private AllStageSegments allStageSegments;
     
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
@@ -58,7 +59,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
             try
             {
                 var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), mapNodesParent.transform);
-                obj.InitForV5(x, gameMap, x.PresetStage, fx, _ => Message.Publish(new ContinueTraveling()));
+                obj.InitForV5(x, gameMap, allStageSegments.GetStageSegmentById(x.PresetStageId).Value, fx, _ => Message.Publish(new ContinueTraveling()));
                 var rect = (RectTransform) obj.transform;
                 rect.pivot = new Vector2(0.5f, 0.5f);
                 rect.anchoredPosition = x.Position;
@@ -94,6 +95,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
                     Type = s.MapNodeType,
                     Corp = s.Corp.OrDefault(""),
                     PresetStage = s,
+                    PresetStageId = s.Id,
                     AdvancesAdventure = shouldAdvanceAdventure
                 };
             }).ToList();

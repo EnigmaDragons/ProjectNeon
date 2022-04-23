@@ -290,6 +290,24 @@ public class AssetUpdater
         });
     }
     
+    [MenuItem("Neon/Update/Update Stage Segment IDs")]
+    private static void UpdateStageSegmentIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<StageSegment>(), c => c.Id, (c, id) => c.Id = id);
+    }
+    
+    [MenuItem("Neon/Update/Update All Stage Segments")]
+    private static void UpdateAllStageSegments()
+    {
+        var stageSegments = ScriptableExtensions.GetAllInstances<StageSegment>();
+        var allStageSegments = ScriptableExtensions.GetAllInstances<AllStageSegments>();
+        allStageSegments.ForEach(x =>
+        {
+            x.Stages = stageSegments;
+            EditorUtility.SetDirty(x);
+        });
+    }
+    
     [MenuItem("Neon/Update/Update Story Event IDs")]
     private static void UpdateStoryEventIDs()
     {
