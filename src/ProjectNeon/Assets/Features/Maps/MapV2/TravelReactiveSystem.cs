@@ -75,6 +75,7 @@ public class TravelReactiveSystem : OnMessage<TravelToNode, ContinueTraveling, F
             }
             else
             {
+                Log.Info("Finished Traveling", this);
                 _onArrive(PlayerToken.transform);
                 StartFloating();
                 _isTraveling = false;

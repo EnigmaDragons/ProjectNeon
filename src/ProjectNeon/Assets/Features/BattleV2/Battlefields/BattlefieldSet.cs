@@ -17,6 +17,7 @@ public class BattlefieldSet : ScriptableObject
             battlefieldOptions = battlefields.Select((b, i) => (b, i)).ToList();
         
         (GameObject battlefield, int index) selected = battlefieldOptions.Random();
+        DevLog.Info($"Last Battlefield {name} - {lastUsedId}. Next Battlefield {name} - {selected.index}");
         lastUsedId = selected.index;
         return selected.battlefield;
     }
