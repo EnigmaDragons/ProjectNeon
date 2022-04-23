@@ -20,10 +20,17 @@ public class TalkingCharacter : MonoBehaviour
 
     private void InitIfNeeded()
     {
-        if (_mouth == null && character != null && character.sprites != null)
-            _mouth = character.sprites.FirstOrDefault(s => s.name == "Mouth F") as SpriteRenderer;
-        if (_original == null && _mouth != null)
-            _original = _mouth.sprite;
+        try
+        {
+            if (_mouth == null && character != null && character.sprites != null)
+                _mouth = character.sprites.FirstOrDefault(s => s.name == "Mouth F") as SpriteRenderer;
+            if (_original == null && _mouth != null)
+                _original = _mouth.sprite;
+        }
+        catch (UnassignedReferenceException e)
+        {
+            Log.Warn(e.ToString());
+        }
     }
 
     public void SetTalkingState(bool isTalking)

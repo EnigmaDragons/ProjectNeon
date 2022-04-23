@@ -97,7 +97,12 @@ public class BattleState : ScriptableObject
     
     // Setup
 
-    public void SetNextBattleground(GameObject prototype) => nextBattlegroundPrototype = prototype;
+    public void SetNextBattleground(GameObject prototype)
+    {
+        nextBattlegroundPrototype = prototype;
+        DevLog.Write($"Next Battlefield is {prototype.name}");
+    }
+
     public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false, bool isStoryEventCombat = false, bool isTutorialCombat = false)
     {
         nextEnemies = e.ToArray();
