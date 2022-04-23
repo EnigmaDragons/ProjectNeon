@@ -107,6 +107,12 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (ArrivalSegment == null)
+        {
+            Log.Error("Mad Node Game Object has no Arrival Segment");
+            return;
+        }
+        
         if (alwaysShowRules)
             return;
         

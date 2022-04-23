@@ -68,10 +68,10 @@ public static class CardTypeDataExtensions
     }
 
     public static Card ToNonBattleCard(this CardTypeData c, Hero hero)
-        => ToNonBattleCard(c, hero.Character);
+        => ToNonBattleCard(c, hero.Character, hero.Stats);
     
-    public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero) 
-        => new Card(-1, hero.AsMemberForLibrary(), c, c.NonBattleTint(hero), c.NonBattleBust(hero));
+    public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero, IStats heroStats) 
+        => new Card(-1, hero.AsMemberForLibrary(heroStats), c, c.NonBattleTint(hero), c.NonBattleBust(hero));
 
     private static Color NonBattleTint(this CardTypeData c, HeroCharacter h)
         => c.Archetypes.Any() ? h.Tint : Color.white;
