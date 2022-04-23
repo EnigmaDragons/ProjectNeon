@@ -11,7 +11,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     [SerializeField] private CardPlayZone reactionZone;
     [SerializeField] private CardPlayZone currentResolvingCardZone;
     [SerializeField] private EnemyVisualizerV2 enemies;
-    [SerializeField] private FloatReference delay = new FloatReference(1.8f);
+    [SerializeField] private FloatReference delay = new FloatReference(1.4f);
     [SerializeField] private AllCards allCards;
 
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
@@ -236,12 +236,14 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
             if (r.Source.TeamType == TeamType.Party)
                 card = new Card(state.GetNextCardId(), r.Source, reactionCard, state.GetHeroById(r.Source.Id).Tint, state.GetHeroById(r.Source.Id).Bust);
+            
             reactionZone.PutOnBottom(card);
             currentResolvingCardZone.Set(card);
-            yield return new WaitForSeconds(DelaySeconds(card.Owner.TeamType));
-            
             var resourceCalculations = r.Source.CalculateResources(reactionCard);
             var playedCard = new PlayedCardV2(r.Source, new[] {r.Target}, card, true, false, resourceCalculations);
+            Message.Publish(new ReactionCardPlayed(playedCard));
+            yield return new WaitForSeconds(DelaySeconds(card.Owner.TeamType));
+            
             r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity, state.Party));
             resolutionZone.StartResolvingOneCard(playedCard, p => p.Perform(state.GetSnapshot()));
         }
