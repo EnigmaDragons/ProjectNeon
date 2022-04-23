@@ -27,7 +27,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
     [SerializeField] private StoryEquipmentRewardPresenter equipmentPreviewPrototype;
     [SerializeField] private StoryCardRewardPresenter cardPreviewPrototype;
     [SerializeField] private StoryEventResultTextPresenter textPreviewPrototype;
-    [SerializeField] private AdventureProgressV4 adventure;
+    [SerializeField] private AdventureProgressV5 adventure;
     [SerializeField] private CurrentGameMap3 map;
     [SerializeField] private FloatReference outcomeDelay;
     [SerializeField] private GameObject rewardPreviewLabel;
