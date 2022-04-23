@@ -72,9 +72,9 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
                     statPanel.SetPrimaryResourceGain(resourceGains[0].ResourceType.Icon, resourceGains[0].BaseAmount);
         }
         if (deckUi != null)
-            deckUi.Init(c.Deck.Cards.Select(card => card.ToNonBattleCard(c)).ToArray());
+            deckUi.Init(c.Deck.Cards.Select(card => card.ToNonBattleCard(c, c.Stats)).ToArray());
         if (basicUi != null)
-            basicUi.Init(c.BasicCard.ToNonBattleCard(c).AsArray(), false);
+            basicUi.Init(c.BasicCard.ToNonBattleCard(c, c.Stats).AsArray(), false);
         if (resource1 != null)
         {
             resource1.SetReactivity(false);
