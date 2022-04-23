@@ -15,6 +15,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private TextMeshProUGUI heroClassName;
     [SerializeField] private TextMeshProUGUI heroDescription;
     [FormerlySerializedAs("roleDescription")] [SerializeField] private TextMeshProUGUI complexityLabel;
+    [SerializeField] private Slider complexitySlider;
     [SerializeField] private TextMeshProUGUI backstory;
     [SerializeField] private NamedGameObject[] tabTargets;
     [SerializeField] private ResourceCounterPresenter resource1;
@@ -60,7 +61,8 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         heroName.text = c.DisplayName();
         heroClassName.text = c.Class;
         heroDescription.text = c.Flavor.HeroDescription;
-        complexityLabel.text = $"Complexity: {c.ComplexityRating}/5";
+        complexityLabel.text = $"Complexity:";
+        complexitySlider.value = Mathf.Clamp(c.ComplexityRating / 5f, 0.2f, 1f);
         backstory.text = c.Flavor.BackStory;
         var member = m;
         if (statPanel != null)

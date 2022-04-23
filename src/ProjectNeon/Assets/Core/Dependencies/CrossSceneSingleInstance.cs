@@ -11,7 +11,6 @@ public abstract class CrossSceneSingleInstance : MonoBehaviour
             return;
         }
 
-        Log.Info($"{nameof(CrossSceneSingleInstance)}", this);
         OnAwake();
         DontDestroyOnLoad(gameObject);
     }
