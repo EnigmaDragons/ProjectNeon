@@ -1,4 +1,5 @@
-﻿using UnityEngine.Localization;
+﻿using System;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 
 public static class Localize
@@ -30,7 +31,15 @@ public static class Localize
     
     private static string GetLocalizedStringOrDefault(string sheet, string key)
     {
-        var localized = Db.GetLocalizedString(sheet, key, _locale);
-        return string.IsNullOrWhiteSpace(localized) ? key : localized;
+        try
+        {
+            var localized = Db.GetLocalizedString(sheet, key, _locale);
+            return string.IsNullOrWhiteSpace(localized) ? key : localized;
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+            return key;
+        }
     }
 }

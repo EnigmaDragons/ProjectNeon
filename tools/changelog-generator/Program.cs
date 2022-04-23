@@ -129,6 +129,7 @@ namespace ChangeLogGenerator
             { "UI", "UI Improvements" },
             { "Tooltip", "UI Improvements" },
             { "View", "UI Improvements" },
+            { "Anim:", "Art Improvements" },
             { "Animations:", "Art Improvements" },
             { "Art", "Art Improvements" },
             { "Wording", "Card Improvements" },

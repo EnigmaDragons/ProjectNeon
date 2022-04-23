@@ -1,46 +1,55 @@
-## Patch Notes - v0.0.38
+## Patch Notes - v0.0.39
 ----
 
 New Content:
-- Adventure Flow Version 5 is out! Back with Card Shops and map travel.
-- Brand new Medical Lab Facilities for Medigeneix
-- Added Universal Clinic Vouchers as a separate currency
+- Hero: Alexei Content 100% Complete
+- New Card: Recreated Stealth Killer Intent
+- New Card: Scheme-Stealth Coordinated Takedown
+- New Card: Scheme-Stealth Deep Analysis
+- New Card: Scheme-Stealth Misdirect
+- New Card: Scheme-Stealth Rigged Prox Mine
+- New Battlefields: 3 new Dark Alley Battlefields
 
-Art Improvements:
-- Art Settings: Switched back color space, materials, and default PP
-- Art: Added Main Story map node
-- Art: Added new Space Vista Kit
-- Art: Added some Battle Screen Shake on damage dealt
-- Art: Anton Hologram Cutscene Setting
-- Art: Environment Tweaking to prepare Medigeneix Labs for game
-- Art: Final Showdown Cutscene Setting
-- Art: Screen Juice for Party/Enemy HP Damage
-- Art: Set new Medigeneix Battlefields into Adventure
-- Design: Adventure Flow 5. Doesn't Allow Shopping right at the start
-- Sound: Reactive Hooks for Slash/Stab and Throw Grenade
-- Animation: Death
-- Animation: Death VFX now centered correctly
-- Animation: Hired Cleaner charaction animations added
-- Animation: Sped up Pierce timing delay
-- Animation: Strip Defences added character animation
-- SFX: Added Cheat Accepted sound
+Balance Changes:
+- AI: Enemies won't play Taunt if they are already Taunting
+- Rebalance: Changed Encounter Group Odds (fewer 4 and 5 enemy groups)
+- Design: Alexei simplified into a single primary stat character
 
 Card Improvements:
-- Card Wording: Ironic Strike
+- Card Wording: Meticulous Scheme
+
+Art Improvements:
+- Music: Epic Boss Battle music
+- Anim: One Except Self target VFX now positioned correctly
+- Anim: Shield Anim is faster
+- Anim: Heartseeker Character Anim
+- Art: Added some fog to increase visual clarity and focus on characters and cards
+- Art: Added Syringe to Anton
+- Art: Dark Alley Battlefields 6-8 Tweaked and integrated
+- Art: Decreased environment darkening intensity
+- Art: Fixed some character drop shadows and enemy row spacing
 
 UI Improvements:
-- UI: Clinic UI rework to transact in Vouchers
-- UI: Game Scene V5 - UI Arch Improvment
-- UI: Map Vouchers UI
-- UI: Shows Credits and Voucher rewards in Battle Victory UI
+- UI: Hero Select shows starting MetroCreds
+- UI: Hired Cleaner UI bar adjusted
+- UI: Make Number of Card Plays more Prominent
+- UI: Map travel speed is faster
+- UI: Moved Resolution Zone slightly to the left
+- UI: Prevent card hovering while the card is being drawn
+- UI: Right-Click to view Hero Details in battle
+- UI: Shows Enemies Playing Cards
+- UI: Unhighlight Owner on CArd Play/Cancel
 
 Bug Fixes:
-- Bug Fix: Deck Builder Tutorial Darken coloring
-- Bug Fix: Battle Conclusion Null Ref with No Adventure
-- Bug Fix: Hot bugs around Academy Battles
-- Bug Fix: Hover too far below the card in tall aspect ratio makes cards go crazy
+- Bug Fix: Battle Juice run ender if an enemy leaves
+- Bug Fix: Hero Augments not always showing up
+- Bug Fix: Kata Complete showed wrong Chain Card
+- Bug Fix: Repair Bot still visible after dead
 
 Project:
-- Project: Added Ants to Credits
-- Project: Removed PlattarGLTF for better version control flow
-- Project: Upversion to v0.0.38
+- Project: Upversion to v0.0.39
+- New Story: Unusual Day in the Astroverse
+
+Miscellaneous:
+- Coding: Editor tool to verify Death Presenters are assigned
+- Editor: Story Exporter
