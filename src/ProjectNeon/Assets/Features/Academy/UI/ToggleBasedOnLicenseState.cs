@@ -4,6 +4,7 @@ public class ToggleBasedOnLicenseState : OnMessage<AcademyDataUpdated>
 {
     [SerializeField] private GameObject[] turnOnTargets;
     [SerializeField] private GameObject[] turnOffTargets;
+    [SerializeField] private bool requiresCompletedEntranceCutscene = false;
 
     private bool _isEnabled;
     
@@ -13,12 +14,14 @@ public class ToggleBasedOnLicenseState : OnMessage<AcademyDataUpdated>
 
     private void Render(bool shouldAnimate)
     {
-        var shouldBeEnabled = CurrentAcademyData.Data.IsLicensedBenefactor;
+        Log.Info(nameof(ToggleBasedOnLicenseState));
+        var data = CurrentAcademyData.Data;
+        var shouldBeEnabled = data.IsLicensedBenefactor;
         var changed = _isEnabled != shouldBeEnabled;
         _isEnabled = shouldBeEnabled;
         turnOnTargets.ForEach(t =>
         {
-            t.SetActive(shouldBeEnabled);
+            t.SetActive(shouldBeEnabled && !requiresCompletedEntranceCutscene || data.HasCompletedWelcomeToMetroplexCutscene);
             if (!shouldAnimate || !shouldBeEnabled || !changed) return;
             
             Message.Publish(new TweenMovementRequested(t.transform, new Vector3(0.56f, 0.56f, 0.56f), 1, MovementDimension.Scale));
