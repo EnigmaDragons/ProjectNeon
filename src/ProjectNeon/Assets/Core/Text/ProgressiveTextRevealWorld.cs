@@ -11,6 +11,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     [SerializeField] private FloatReference secondsPerCharacter = new FloatReference(0.07f);
     [SerializeField] private FloatReference autoAdvanceDelay = new FloatReference(0.8f);
     [SerializeField] private PlayableUiSound sfx;
+    [SerializeField] private int sfxEveryXCharacters = 2;
     [SerializeField] private Vector2 reversedTextBoxOffset = Vector2.zero;
     
     [Header("Debug Info")]
@@ -142,7 +143,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
             var shownText = fullText.Substring(0, _cursor);
             textBox.text = shownText;
             _cursor++;
-            if (sfx != null)
+            if (sfx != null && shownText.Length % sfxEveryXCharacters == 0)
                 sfx.Play(transform.position);
             //This advances past markdown
             while (_cursor < fullText.Length && fullText[_cursor - 1] == '<')
