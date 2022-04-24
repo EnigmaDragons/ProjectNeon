@@ -13,6 +13,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     [SerializeField] private GameObject mapNodesParent;
     [SerializeField] private GameObject playerTokenParent;
     [SerializeField] private AllStageSegments allStageSegments;
+    [SerializeField] private FloatReference minDistanceBetweenNodes = new FloatReference(0f);
     
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
@@ -109,10 +110,21 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
                 };
             }).ToList();
         
-        var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition).ToArray().Shuffled();
-        for (var i = 0; i < gameMap.CurrentChoices.Count; i++)
+        var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition)
+            .ToArray()
+            .Shuffled()
+            .ToList();
+        foreach (var choice in gameMap.CurrentChoices)
         {
-            gameMap.CurrentChoices[i].Position = locations[i];
+            if (locations.Count < 1)
+            {
+                Log.Error("Not Enough Map Points or Minimum Distance is too high");
+                return;
+            }
+
+            var pos = locations[0];
+            choice.Position = pos;
+            locations.RemoveAll(l => Vector2.Distance(l, pos) < minDistanceBetweenNodes);
         }
     }
 
