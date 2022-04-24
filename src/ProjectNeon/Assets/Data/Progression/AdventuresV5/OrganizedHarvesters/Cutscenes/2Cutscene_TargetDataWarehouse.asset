@@ -29,6 +29,11 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
@@ -42,6 +47,11 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
@@ -56,6 +66,11 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
@@ -69,13 +84,18 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Hacker
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Why bother? So you can pretend you understand what I'm talking about when
-      I list off a bunch of program names that I might have just made up for my amusement.
+    Text: I could look up what you had for breakfast a week ago, I have all the data
+      it's just a matter of finding the pointer in a data stack.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -83,25 +103,17 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 0
-      ConstantValue: Hacker
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: If that's how hostile you are with friends, I'm glad we have the same enemies.
-    FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates: []
-    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Weldon
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Enemies, you two are going to frag. We're arriving now.
+    Text: Arriving now, lock & load.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -109,3 +121,8 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
