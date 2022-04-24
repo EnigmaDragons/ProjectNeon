@@ -269,13 +269,13 @@ public static class AllEffects
     private static Target RandomEnemy(EffectContext ctx, Member[] excludedMembers)
     {
         var tauntEnemies = ctx.BattleMembers.Values
-            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt())
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt() && !excludedMembers.Contains(m))
             .ToArray();
         if (tauntEnemies.Any())
             return new Single(tauntEnemies.First());
         
         return new Multiple(ctx.BattleMembers.Values
-            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType)
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !excludedMembers.Contains(m))
             .ToArray()
             .Shuffled()
             .Take(1));
