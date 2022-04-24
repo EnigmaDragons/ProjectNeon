@@ -12,4 +12,5 @@ public class ShopSegment : StageSegment
     public override Maybe<string> Corp => Maybe<string>.Missing();
     public override void Start() => SceneManager.LoadScene("ShopScene");
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

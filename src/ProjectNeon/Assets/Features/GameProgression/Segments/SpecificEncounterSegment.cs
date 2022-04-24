@@ -32,4 +32,5 @@ public class SpecificEncounterSegment : StageSegment
     }
 
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

@@ -26,4 +26,5 @@ public class RandomEncounterSegment : StageSegment
     
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx , MapNode3 mapData)
         => new GeneratedBattleStageSegment(Name, possibleBattlegrounds.Random(), false, encounterBuilder.Generate(encounterDifficulty, 1).ToArray());
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

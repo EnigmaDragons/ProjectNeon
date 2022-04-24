@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -14,6 +15,14 @@ public class CutsceneSegmentData
     public StringReference[] ForbiddenStates;
     public bool Or;
     public StringReference StoryState;
+
+    public bool ShouldShow(Func<string, bool> storyState)
+        => !ShouldSkip(storyState);
+    
+    public bool ShouldSkip(Func<string, bool> storyState)
+        => ForbiddenStates.Any(x => storyState(x))
+           || (Or && RequiredStates.None(x => storyState(x)))
+           || (!Or && RequiredStates.Any(x => !storyState(x)));
 
     public Maybe<string> GetRequiredConditionsDescription()
     {

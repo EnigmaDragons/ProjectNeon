@@ -5,6 +5,7 @@ using UnityEngine;
 public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
 {
     [SerializeField] private CurrentMapSegmentV5 gameMap;
+    [SerializeField] private CurrentAdventureProgress currentProgress;
     [SerializeField] private AdventureProgressV5 progress;
     [SerializeField] private TravelReactiveSystem travelReactiveSystem;
     [SerializeField] private GameObject playerToken;
@@ -96,6 +97,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
         var stageSegments = sideSegments.Concat(progress.CurrentStageSegment);
         gameMap.CurrentChoices = stageSegments
             .Where(s => s.MapNodeType != MapNodeType.Unknown)
+            .Where(s => s.ShouldSpawnThisOnMap(currentProgress))
             .Select(s =>
             {
                 var shouldAdvanceAdventure = !sideSegments.Contains(s);

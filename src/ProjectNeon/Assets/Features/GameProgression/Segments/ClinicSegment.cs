@@ -15,4 +15,5 @@ public class ClinicSegment : StageSegment
     
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) 
         => new GeneratedClinicSegment(mapData.Corp);
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }
