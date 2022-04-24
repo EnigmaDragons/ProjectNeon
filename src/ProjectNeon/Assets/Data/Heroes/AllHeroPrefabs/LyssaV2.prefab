@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 1929384072179932847}
   - component: {fileID: 2873727688247454812}
   - component: {fileID: 82645932133769035}
+  - component: {fileID: 8295610085408666100}
   m_Layer: 0
   m_Name: LyssaV2
   m_TagString: Untagged
@@ -100,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6daf2917ddc48cab7c29b62e2c02525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useLocalRotation: 1
 --- !u!114 &6473494745802440804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,8 +156,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 8992668593980707958}
-  talking: {fileID: 0}
-  character: {fileID: 0}
+  talking: {fileID: 8295610085408666100}
+  character: {fileID: 6869955405669367133}
   reverse: 0
 --- !u!114 &82645932133769035
 MonoBehaviour:
@@ -176,6 +178,24 @@ MonoBehaviour:
   characterViewer: {fileID: 5286328209678047548}
   sprite: {fileID: 0}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &8295610085408666100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3426476201720257407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b74b50f73a46b68fba997a15da0771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 5286328209678047548}
+  talkingSprites:
+  - {fileID: 21300000, guid: 7233f4aa7a1bfe5459762b72820a2b73, type: 3}
+  - {fileID: 21300000, guid: 8cae0910c7e0aa54393c93cf228cb098, type: 3}
+  - {fileID: 21300000, guid: 37585d4c4289d90469d9f90e644f97d5, type: 3}
+  - {fileID: 21300000, guid: ee78ba15393d3d84db62eb3a55a0eea3, type: 3}
 --- !u!1001 &458417000044968036
 PrefabInstance:
   m_ObjectHideFlags: 0
