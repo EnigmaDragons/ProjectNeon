@@ -1,3 +1,4 @@
+using I2.Loc;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "StoryEvent/Rewards/Card")]
@@ -17,6 +18,6 @@ public class CardRarityReward : StoryResult
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { Text = Localize.GetFormattedEventResult("CardRarityRewardPreview", rarity.ToString()), IsReward = true });
+        Message.Publish(new ShowTextResultPreview { Text = string.Format(new LocalizedString("CardRarityRewardPreview"), rarity.ToString()), IsReward = true });
     }
 }

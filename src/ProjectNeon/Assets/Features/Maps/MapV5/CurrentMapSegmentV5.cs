@@ -30,7 +30,7 @@ public class CurrentMapSegmentV5 : ScriptableObject
         ClearSegment();
     }
 
-    private void ClearSegment()
+    public void ClearSegment()
     {
         CurrentNode = Maybe<MapNode3>.Missing();
         CurrentChoices = new List<MapNode3>();

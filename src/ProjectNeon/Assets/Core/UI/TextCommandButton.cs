@@ -1,7 +1,6 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
@@ -72,8 +71,7 @@ public sealed class TextCommandButton : MonoBehaviour
 
     private string GetLocalizedStringOrDefault(string commandText)
     {
-        var localized = LocalizationSettings.StringDatabase.GetLocalizedString("UI", commandText);
-        return string.IsNullOrWhiteSpace(localized) ? commandText : localized;
+        return commandText;
     }
 
     public void OnHoverEnter() => _onHoverEnter();

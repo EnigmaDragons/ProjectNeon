@@ -88,5 +88,5 @@ public static class HeroCharacterExtensions
         return m;
     }
 
-    public static string DisplayName(this HeroCharacter character) => Localize.GetHero(character.Name);
+    public static string DisplayName(this HeroCharacter character) => character.Name;
 }

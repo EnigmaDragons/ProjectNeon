@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
+using I2.Loc;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
-using UnityEngine.SocialPlatforms;
 
 [CreateAssetMenu(menuName = "StoryEvent/StoryEvent2")]
 public class StoryEvent2 : ScriptableObject
@@ -14,11 +13,11 @@ public class StoryEvent2 : ScriptableObject
     [SerializeField] private bool inCutscene;
     [SerializeField] private bool isMultiChoice;
 
-    public string DisplayName => Localize.GetEvent($"Event{id}");
+    public string DisplayName => new LocalizedString($"Event{id}");
     
     public StorySetting StorySetting => settingType;
     public StaticCorp Corp => corp;
-    public string StoryText => Localize.GetEvent($"Event{id} Story");
+    public string StoryText => new LocalizedString($"Event{id} Story");
     public StoryEventChoice2[] Choices => choices.ToArray();
     public bool InCutscene => inCutscene;
     public bool IsMultiChoice => isMultiChoice;

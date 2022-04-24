@@ -1,6 +1,6 @@
 ﻿using System;
+using I2.Loc;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 
 [CreateAssetMenu(menuName = "StoryEvent/Results/Corp Cost Modifier")]
 public class CorpCostModifierResult : StoryResult
@@ -20,36 +20,36 @@ public class CorpCostModifierResult : StoryResult
     {
         ctx.Party.AddCorpCostModifier(new CorpCostModifier { Corp = corp.Value, AppliesToEquipmentShop = appliesToEquipmentShop, AppliesToClinic = appliesToClinic, CostPercentageModifier = adjustment });
         if (appliesToEquipmentShop && appliesToClinic && IsReward)
-            Message.Publish(new ShowStoryEventResultMessage(Localize.GetFormattedEventResult("CorpCostModifierResult-GearClinicReward", corp.Value, adjustment * -100)));
+            Message.Publish(new ShowStoryEventResultMessage(string.Format(new LocalizedString("CorpCostModifierResult-GearClinicReward"), corp.Value, adjustment * -100)));
         else if (appliesToEquipmentShop && appliesToClinic && !IsReward)
-            Message.Publish(new ShowStoryEventResultMessage(Localize.GetFormattedEventResult("CorpCostModifierResult-GearClinicPenalty", corp.Value, adjustment * 100)));
+            Message.Publish(new ShowStoryEventResultMessage(string.Format(new LocalizedString("CorpCostModifierResult-GearClinicPenalty"), corp.Value, adjustment * 100)));
         else if (appliesToEquipmentShop && !appliesToClinic && IsReward)
-            Message.Publish(new ShowStoryEventResultMessage(Localize.GetFormattedEventResult("CorpCostModifierResult-GearReward", corp.Value, adjustment * -100)));
+            Message.Publish(new ShowStoryEventResultMessage(string.Format(new LocalizedString("CorpCostModifierResult-GearReward"), corp.Value, adjustment * -100)));
         else if (appliesToEquipmentShop && !appliesToClinic && !IsReward)
-            Message.Publish(new ShowStoryEventResultMessage(Localize.GetFormattedEventResult("EventResults", "CorpCostModifierResult-GearPenalty", corp.Value, adjustment * 100)));
+            Message.Publish(new ShowStoryEventResultMessage(string.Format(new LocalizedString("CorpCostModifierResult-GearPenalty"), corp.Value, adjustment * 100)));
         else if (!appliesToEquipmentShop && appliesToClinic && IsReward)
-            Message.Publish(new ShowStoryEventResultMessage(Localize.GetFormattedEventResult("CorpCostModifierResult-ClinicReward", corp.Value, adjustment * -100)));
+            Message.Publish(new ShowStoryEventResultMessage(string.Format(new LocalizedString("CorpCostModifierResult-ClinicReward"), corp.Value, adjustment * -100)));
         else if (!appliesToEquipmentShop && appliesToClinic && !IsReward)
-            Message.Publish(new ShowStoryEventResultMessage(Localize.GetFormattedEventResult("CorpCostModifierResult-ClinicPenalty", corp.Value, adjustment * 100)));
+            Message.Publish(new ShowStoryEventResultMessage(string.Format(new LocalizedString("CorpCostModifierResult-ClinicPenalty"), corp.Value, adjustment * 100)));
     }
 
     public override void Preview()
     {
         if (appliesToEquipmentShop && appliesToClinic && IsReward)
             Message.Publish(new ShowTextResultPreview { IsReward = IsReward, 
-                Text = Localize.GetFormattedEventResult("CorpCostModifierResultPreview-GearClinicReward", corp.Value, adjustment * -100)});
+                Text = string.Format(new LocalizedString("CorpCostModifierResultPreview-GearClinicReward"), corp.Value, adjustment * -100)});
         else if (appliesToEquipmentShop && appliesToClinic && !IsReward)
             Message.Publish(new ShowTextResultPreview { IsReward = IsReward, 
-                Text = Localize.GetFormattedEventResult("CorpCostModifierResultPreview-GearClinicPenalty", corp.Value, adjustment * 100)});
+                Text = string.Format(new LocalizedString("CorpCostModifierResultPreview-GearClinicPenalty"), corp.Value, adjustment * 100)});
         else if (appliesToEquipmentShop && !appliesToClinic && IsReward)
             Message.Publish(new ShowTextResultPreview { IsReward = IsReward, 
-                Text = Localize.GetFormattedEventResult("CorpCostModifierResultPreview-GearReward", corp.Value, adjustment * -100)});
+                Text = string.Format(new LocalizedString("CorpCostModifierResultPreview-GearReward"), corp.Value, adjustment * -100)});
         else if (appliesToEquipmentShop && !appliesToClinic && !IsReward)
             Message.Publish(new ShowTextResultPreview { IsReward = IsReward, 
-                Text = Localize.GetFormattedEventResult("CorpCostModifierResultPreview-GearPenalty", corp.Value, adjustment * 100)});
+                Text = string.Format(new LocalizedString("CorpCostModifierResultPreview-GearPenalty"), corp.Value, adjustment * 100)});
         else if (!appliesToEquipmentShop && appliesToClinic && IsReward)
-            Message.Publish(new ShowTextResultPreview { IsReward = IsReward, Text = Localize.GetFormattedEventResult("CorpCostModifierResultPreview-ClinicReward", corp.Value, adjustment * -100)});
+            Message.Publish(new ShowTextResultPreview { IsReward = IsReward, Text = string.Format(new LocalizedString("CorpCostModifierResultPreview-ClinicReward"), corp.Value, adjustment * -100)});
         else if (!appliesToEquipmentShop && appliesToClinic && !IsReward)
-            Message.Publish(new ShowTextResultPreview { IsReward = IsReward, Text = Localize.GetFormattedEventResult("CorpCostModifierResultPreview-ClinicPenalty", corp.Value, adjustment * 100)});
+            Message.Publish(new ShowTextResultPreview { IsReward = IsReward, Text = string.Format(new LocalizedString("CorpCostModifierResultPreview-ClinicPenalty"), corp.Value, adjustment * 100)});
     }
 }
