@@ -248,4 +248,12 @@ public static class CollectionExtensions
             set.Add(i);
         return set;
     }
+
+    public static Queue<T> ToQueue<T>(this IEnumerable<T> items)
+    {
+        var queue = new Queue<T>();
+        foreach (var i in items) 
+            queue.Enqueue(i);
+        return queue;
+    }
 }
