@@ -12,6 +12,7 @@ public class CutscenePresenter : MonoBehaviour
     [SerializeField] private GameObject defaultCamera;
     [SerializeField] private GameObject settingParent;
     [SerializeField] private CutsceneCharacter narrator;
+    [SerializeField] private CutsceneCharacter you;
     [SerializeField] private SpawnPartyToMarkers setupParty;
     [SerializeField] private GameObject[] disableOnFinished;
 
@@ -25,6 +26,7 @@ public class CutscenePresenter : MonoBehaviour
     private void OnEnable()
     {
         narrator.Init(new [] { CutsceneCharacterAliases.Narrator });
+        you.Init(new [] { CutsceneCharacterAliases.You });
         Message.Subscribe<ShowCutsceneSegment>(Execute, this);
         Message.Subscribe<ShowCharacterDialogueLine>(Execute, this);
         Message.Subscribe<FullyDisplayDialogueLine>(Execute, this);
@@ -42,6 +44,7 @@ public class CutscenePresenter : MonoBehaviour
     {
         _characters.Clear();
         _characters.Add(narrator);
+        _characters.Add(you);
 
         cutscene.Current.Setting.SpawnTo(settingParent);
         setupParty.Execute(settingParent);
@@ -198,6 +201,7 @@ public class CutscenePresenter : MonoBehaviour
         _finishTriggered = true;
         DebugLog("Cutscene Finished");
         narrator.SpeechBubble.ForceHide();
+        you.SpeechBubble.ForceHide();
         disableOnFinished.ForEach(d => d.SetActive(false));
         MessageGroup.TerminateAndClear();
         if (cutscene.OnCutsceneFinishedAction.IsMissing) // Is Game Flow Cutscene
