@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(menuName = "Adventure/FixedEncounter")]
 public class SpecificEncounterSegment : StageSegment
@@ -11,13 +9,19 @@ public class SpecificEncounterSegment : StageSegment
     [SerializeField] private bool isTutorial;
     [SerializeField] private Enemy[] enemies;
     [SerializeField] private CurrentAdventureProgress currentAdventureProgress;
+    [SerializeField] private MapNodeType mapNodeType;
 
     public override string Name => "Specific Encounter";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
     public override bool ShouldAutoStart => false;
     public override Maybe<string> Detail => Maybe<string>.Missing();
-    public override MapNodeType MapNodeType => MapNodeType.Combat;
     public override Maybe<string> Corp => Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => 
+        mapNodeType != MapNodeType.Unknown && mapNodeType != MapNodeType.Start
+            ? mapNodeType 
+            : isElite 
+                ? MapNodeType.Elite 
+                : MapNodeType.Combat;
     
     public override void Start()
     {
