@@ -89,7 +89,7 @@ public class EffectReactWith : Effect
         { ReactionConditionType.OnTagCardPlayed, ctx => effect => IsRelevant(ReactionConditionType.OnTagCardPlayed, effect, ctx) 
            && effect.IsFirstBattleEffect && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(ctx.ReactionEffectScope.EnumVal<CardTag>()))},
         { ReactionConditionType.OnArchetypeCardPlayed, ctx => effect => IsRelevant(ReactionConditionType.OnArchetypeCardPlayed, effect, ctx)
-           && effect.IsFirstBattleEffect&& effect.Card.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope))},
+           && effect.IsFirstBattleEffect && effect.Card.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope))},
         { ReactionConditionType.OnDodged, ctx => effect => ctx.Possessor.IsConscious() 
            && effect.Preventions.IsDodging(ctx.Possessor) 
            && Decreased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Dodge]))},
