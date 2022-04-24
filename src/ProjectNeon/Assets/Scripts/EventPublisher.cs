@@ -60,4 +60,5 @@ public class EventPublisher : ScriptableObject
     public void SaveGame() => Message.Publish(new AutoSaveRequested());
     public void SwitchToDayEnvironment() => Message.Publish(new SetNightMode(false));
     public void SwitchToNightEnvironment() => Message.Publish(new SetNightMode(true));
+    public void SkipSegment() => Message.Publish(new SkipSegment());
 }

@@ -1,4 +1,5 @@
 using System.Linq;
+using I2.Loc;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "StoryEvent/Rewards/Hp")]
@@ -16,14 +17,14 @@ public class GainHpReward : StoryResult
         var amount = Rng.Int(minGain, maxGain);
         members.ForEach(m => m.AdjustHp(amount));
         Message.Publish(new ShowStoryEventResultMessage(appliesToAll
-            ? Localize.GetFormattedEventResult("GainHpReward-All", amount)
-            : Localize.GetFormattedEventResult("GainHpReward-Single", members.First().DisplayName, amount)));
+            ? string.Format(new LocalizedString("GainHpReward-All"), amount)
+            : string.Format(new LocalizedString("GainHpReward-Single"), members.First().DisplayName, amount)));
     }
 
     public override void Preview()
     {
         Message.Publish(new ShowTextResultPreview { IsReward = true, Text = appliesToAll 
-            ? Localize.GetFormattedEventResult("GainHpRewardPreview-All", minGain, maxGain) 
-            : Localize.GetFormattedEventResult("GainHpRewardPreview-Single", minGain, maxGain)  });
+            ? string.Format(new LocalizedString("GainHpRewardPreview-All"), minGain, maxGain) 
+            : string.Format(new LocalizedString("GainHpRewardPreview-Single"), minGain, maxGain)  });
     }
 }

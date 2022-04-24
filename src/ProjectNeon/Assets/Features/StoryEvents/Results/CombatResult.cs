@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using I2.Loc;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 
 [CreateAssetMenu(menuName = "StoryEvent/Results/Combat")]
 public class CombatResult : StoryResult
@@ -21,6 +21,6 @@ public class CombatResult : StoryResult
     public override void Preview()
     {
         Message.Publish(new ShowTextResultPreview { IsReward = EstimatedCreditsValue > 0, 
-            Text = Localize.GetEventResult("CombatResultPreview") });
+            Text = new LocalizedString("CombatResultPreview") });
     }
 }

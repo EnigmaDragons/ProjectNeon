@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.Localization.Settings;
+﻿using I2.Loc;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "StoryEvent/Results/Heat")]
 public class HeatResult : StoryResult
@@ -12,14 +12,14 @@ public class HeatResult : StoryResult
     {
         ctx.Map.AdjustHeat(adjustment);
         Message.Publish(new ShowStoryEventResultMessage(IsReward 
-            ? Localize.GetFormattedEventResult("HeatResult-Reward", -adjustment)
-            : Localize.GetFormattedEventResult("HeatResult-Penalty", adjustment)));
+            ? string.Format(new LocalizedString("HeatResult-Reward"), -adjustment)
+            : string.Format(new LocalizedString("HeatResult-Penalty"), adjustment)));
     }
 
     public override void Preview()
     {
         Message.Publish(new ShowTextResultPreview { IsReward = IsReward, Text = IsReward
-                ? Localize.GetFormattedEventResult("HeatResultPreview-Reward", -adjustment)
-                : Localize.GetFormattedEventResult("HeatResultPreview-Penalty", adjustment)});
+                ? string.Format(new LocalizedString("HeatResultPreview-Reward"), -adjustment)
+                : string.Format(new LocalizedString("HeatResultPreview-Penalty"), adjustment)});
     }
 }

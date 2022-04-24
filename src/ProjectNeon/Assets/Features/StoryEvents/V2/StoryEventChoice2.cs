@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using I2.Loc;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 
 [Serializable]
 public class StoryEventChoice2
@@ -15,8 +15,8 @@ public class StoryEventChoice2
     public StoryResult Reward => Resolution.OrderByDescending(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     public StoryResult Penalty => Resolution.OrderBy(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     
-    public string ChoiceText(int parentStoryEventId) => Localize.GetEvent($"Event{parentStoryEventId} Choice{Choice}").Trim();
-    public string ChoiceFullText(StoryEventContext ctx, StoryEvent2 owner) => Localize.GetEvent($"Event{owner.id} Choice{Choice}").Trim();
+    public string ChoiceText(int parentStoryEventId) => ((string)new LocalizedString($"Event{parentStoryEventId} Choice{Choice}")).Trim();
+    public string ChoiceFullText(StoryEventContext ctx, StoryEvent2 owner) => ((string)new LocalizedString($"Event{owner.id} Choice{Choice}")).Trim();
     public bool CanSelect(StoryEventContext ctx) => true;
     
     public void Select(StoryEventContext ctx, StoryEvent2 owner, Maybe<double> predeterminedRoll)
@@ -51,7 +51,7 @@ public class StoryEventChoice2
         else
         {
             r.Result.Apply(ctx);
-            Message.Publish(new ShowStoryEventResolution(Localize.GetEvent($"Event{owner.id} Choice{Choice} Result{r.ResultNumber}").Trim(), r.EstimatedCreditsValue));   
+            Message.Publish(new ShowStoryEventResolution(((string)new LocalizedString($"Event{owner.id} Choice{Choice} Result{r.ResultNumber}")).Trim(), r.EstimatedCreditsValue));   
         }
     }
 }

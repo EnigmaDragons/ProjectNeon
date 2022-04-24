@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using I2.Loc;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "StoryEvent/Results/Blessing")]
 public class NextCombatEffectResult : StoryResult
@@ -14,11 +15,11 @@ public class NextCombatEffectResult : StoryResult
     {
         nextCombatEffect.Targets = ctx.Party.BaseHeroes;
         ctx.Party.AddBlessing(nextCombatEffect);
-        Message.Publish(new ShowStoryEventResultMessage(Localize.GetEventResult(text)));
+        Message.Publish(new ShowStoryEventResultMessage(new LocalizedString(text)));
     }
 
     public override void Preview()
     {
-        Message.Publish(new ShowTextResultPreview { IsReward = estimatedCreditsValue > 0, Text = Localize.GetEventResult(previewText) });
+        Message.Publish(new ShowTextResultPreview { IsReward = estimatedCreditsValue > 0, Text = new LocalizedString(previewText) });
     }
 }

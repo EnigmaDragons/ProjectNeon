@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using I2.Loc;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
@@ -29,16 +30,16 @@ public class PermanentStatAdjustmentResult : StoryResult
             }
         }
         var baseMessage = appliesToAll
-            ? Localize.GetEventResult("PermanentStatAdjustmentResult-All")
-            : Localize.GetFormattedEventResult("PermanentStatAdjustmentResult-Single", members.First().DisplayName);
-        Message.Publish(new ShowStoryEventResultMessage($"{baseMessage}\n{string.Join("\n", permanentStatAdjustments.Select(x => $"{x.Amount} {Localize.GetStat(x.Stat)}"))}"));
+            ? (string)new LocalizedString("PermanentStatAdjustmentResult-All")
+            : string.Format(new LocalizedString("PermanentStatAdjustmentResult-Single"), members.First().DisplayName);
+        Message.Publish(new ShowStoryEventResultMessage($"{baseMessage}\n{string.Join("\n", permanentStatAdjustments.Select(x => $"{x.Amount} { new LocalizedString(x.Stat.ToString())}"))}"));
     }
 
     public override void Preview()
     {
         var baseMessage = appliesToAll
-            ? Localize.GetEventResult("PermanentStatAdjustmentResultPreview-All")
-            : Localize.GetEventResult("PermanentStatAdjustmentResultPreview-Single");
+            ? new LocalizedString("PermanentStatAdjustmentResultPreview-All")
+            : new LocalizedString("PermanentStatAdjustmentResultPreview-Single");
         Message.Publish(new ShowTextResultPreview { IsReward = IsReward, 
             Text = $"{baseMessage}\n{string.Join("\n", permanentStatAdjustments.Select(x => $"{x.Amount} {x.Stat}"))}" });
     }

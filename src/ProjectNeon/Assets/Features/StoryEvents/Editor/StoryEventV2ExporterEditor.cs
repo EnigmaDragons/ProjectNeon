@@ -1,13 +1,8 @@
 #if UNITY_EDITOR
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using UnityEditor;
-using UnityEditor.Localization;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 
 public class StoryEventV2ExporterEditor : EditorWindow
 {
@@ -18,10 +13,7 @@ public class StoryEventV2ExporterEditor : EditorWindow
     }
     
     void OnGUI()
-    { 
-        if(!LocalizationSettings.InitializationOperation.IsDone) 
-            LocalizationSettings.InitializationOperation.Task.GetAwaiter().GetResult();
-        Localize.SetDb(LocalizationSettings.StringDatabase);
+    {
         if (GUILayout.Button("Export All"))
         {
             var storyEvents = GetAllInstances<StoryEvent2>();

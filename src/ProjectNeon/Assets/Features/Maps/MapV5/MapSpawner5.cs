@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class MapSpawner5 : OnMessage<RegenerateMapRequested>
+public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
 {
     [SerializeField] private CurrentMapSegmentV5 gameMap;
     [SerializeField] private AdventureProgressV5 progress;
@@ -33,6 +33,14 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested>
     
     protected override void Execute(RegenerateMapRequested msg)
     {
+        SpawnPartyTokenIfNeeded(_map.gameObject);
+        SpawnNodes();
+    }
+    
+    protected override void Execute(SkipSegment msg)
+    {
+        progress.Advance();
+        gameMap.ClearSegment();
         SpawnPartyTokenIfNeeded(_map.gameObject);
         SpawnNodes();
     }

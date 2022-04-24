@@ -1,6 +1,6 @@
 using System.Linq;
+using I2.Loc;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 
 [CreateAssetMenu(menuName = "StoryEvent/Penalties/LoseHp")]
 public class LoseHpPenalty : StoryResult
@@ -17,8 +17,8 @@ public class LoseHpPenalty : StoryResult
         var amount = -Rng.Int(minLoss, maxLoss);
         members.ForEach(m => m.AdjustHp(amount));
         Message.Publish(new ShowStoryEventResultMessage(appliesToAll
-            ? Localize.GetFormattedEventResult("LoseHpPenalty-All", -amount)
-            : Localize.GetFormattedEventResult("LoseHpPenalty-Single", members.First().DisplayName, -amount)));
+            ? string.Format(new LocalizedString("LoseHpPenalty-All"), -amount)
+            : string.Format(new LocalizedString("LoseHpPenalty-Single"), members.First().DisplayName, -amount)));
     }
 
     public override void Preview()
@@ -27,8 +27,8 @@ public class LoseHpPenalty : StoryResult
             {
                 IsReward = false, 
                 Text = appliesToAll 
-                    ? Localize.GetFormattedEventResult("LoseHpPenaltyPreview-All", minLoss, maxLoss)
-                    : Localize.GetFormattedEventResult("LoseHpPenaltyPreview-Single", minLoss, maxLoss)
+                    ? string.Format(new LocalizedString("LoseHpPenaltyPreview-All"), minLoss, maxLoss)
+                    : string.Format(new LocalizedString("LoseHpPenaltyPreview-Single"), minLoss, maxLoss)
             });
     }
 }
