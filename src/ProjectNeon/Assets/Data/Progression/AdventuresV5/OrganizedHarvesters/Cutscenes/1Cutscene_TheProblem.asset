@@ -16,13 +16,13 @@ MonoBehaviour:
   skipTrueStates: []
   skipFalseStates: []
   segments:
-  - SegmentType: 1
+  - SegmentType: 2
     DialogueCharacterId:
       UseConstant: 1
-      ConstantValue: Hacker
+      ConstantValue: You
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: New conspiracy is out, that Medigeneix is intentionally fragging people
-      for their organs.
+    Text: Our target is Medigeneix, the biggest medical company within Metroplex
+      Zero and one of the 8 mega corps on the ICC.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -30,12 +30,58 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 2
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: You
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: 'Medigeneix partakes in a variety of profitable corruptions:
+
+      From
+      selling recreational drug addictions to planned obsolescence on their augments
+      and implants'
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 2
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: You
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: 'But those are nothing on their newest venture: Killing people for their
+      organs.'
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Weldon
       Variable: {fileID: 11400000, guid: 1369fa9444f9ad046bfba76150d43e32, type: 2}
-    Text: I love an all organic theory.
+    Text: I love an all organic problem.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -43,13 +89,19 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Hacker
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: It was just a theory, until last night, those corpheads had every post
-      and video deleted.
+    Text: The missing people reports and recent fatal surgery statistics that skyrocketed
+      verify they are also selecting specific individuals or groups to kill off and
+      harvest.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -57,26 +109,18 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 0
+    Or: 0
+    StoryState:
+      UseConstant: 1
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Nothing says its true like a cover up.
-    FloatAmount:
-      UseConstant: 1
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates: []
-    ForbiddenStates: []
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Weldon
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: We are going after a big corp this time. I'm sending you to pickup a friend
-      of mine. You might run into trouble tho.
+    Text: We are going to need to pick up another rebel to help make runs on this
+      corp, expect trouble when getting them.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -84,6 +128,11 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
   - SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
@@ -97,3 +146,8 @@ MonoBehaviour:
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
