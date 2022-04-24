@@ -12,6 +12,7 @@ public class CutscenePresenter : MonoBehaviour
     [SerializeField] private GameObject defaultCamera;
     [SerializeField] private GameObject settingParent;
     [SerializeField] private CutsceneCharacter narrator;
+    [SerializeField] private CutsceneCharacter player;
     [SerializeField] private SpawnPartyToMarkers setupParty;
     [SerializeField] private GameObject[] disableOnFinished;
 
@@ -25,6 +26,7 @@ public class CutscenePresenter : MonoBehaviour
     private void OnEnable()
     {
         narrator.Init(new [] { CutsceneCharacterAliases.Narrator });
+        player.Init(new [] { CutsceneCharacterAliases.Player });
         Message.Subscribe<ShowCutsceneSegment>(Execute, this);
         Message.Subscribe<ShowCharacterDialogueLine>(Execute, this);
         Message.Subscribe<FullyDisplayDialogueLine>(Execute, this);
