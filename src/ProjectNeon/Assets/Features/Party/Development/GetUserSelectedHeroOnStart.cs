@@ -26,7 +26,7 @@ public class GetUserSelectedHeroOnStart : MonoBehaviour
         var optimizedSelection = preferredSelection.Count() >= 3 ? preferredSelection : allOptions;
 
         var randomThree = optimizedSelection.Shuffled().Take(3).ToArray();
-        var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Leader" : "Choose A New Squad Member";
+        var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Mission Squad Leader" : "Choose A New Squad Member";
         Message.Publish(new GetUserSelectedHero(prompt, randomThree, h =>
         {
             Message.Publish(new AddHeroToPartyRequested(h));

@@ -27,7 +27,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
             featuredThree = new [] {maybeFeaturedHero.Value, randomThree[0], randomThree[1]};
 
         featuredThree = featuredThree.OrderBy(h => h.ComplexityRating).ToArray();
-        var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Leader" : "Choose A New Squad Member";
+        var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Mission Squad Leader" : "Choose A New Squad Member";
         Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {
             AllMetrics.PublishHeroSelected(h.Name, featuredThree.Select(x => x.Name).ToArray(), existingHeroes.Select(x => x.Name).ToArray());
