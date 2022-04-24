@@ -58,7 +58,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
                 return;
             }
             
-            PlayEffect(f.Value, maybeCenter.Value.position, e.Size, e.Speed, e.Color, member.TeamType == TeamType.Enemies);
+            PlayEffect(f.Value, maybeCenter.Value.position, e.Size, e.Speed, e.Color, member.TeamType == TeamType.Enemies, e.SkipWaitingForCompletion);
         }
         else if (e.Group == Group.All)
         {
@@ -71,7 +71,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             var opponentTeam = performerTeam == TeamType.Enemies ? TeamType.Party : TeamType.Enemies;
             var targetTeam = e.Group == Group.Opponent ? opponentTeam : performerTeam;
             var location = targetTeam == TeamType.Enemies ? enemyGroupLocation : heroesGroupLocation;
-            PlayEffect(f.Value, location.position, e.Size, e.Speed, e.Color, e.Target.Members.All(x => x.TeamType == TeamType.Enemies));
+            PlayEffect(f.Value, location.position, e.Size, e.Speed, e.Color, e.Target.Members.All(x => x.TeamType == TeamType.Enemies), e.SkipWaitingForCompletion);
         }
     }
 
@@ -83,16 +83,16 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             LogInfo($"No VFX of type {e.EffectName}");
         else
         {
-            PlayEffect(f.Value, e.Target, 1, 1, new Color(0, 0, 0, 0), e.Flip);
+            PlayEffect(f.Value, e.Target, 1, 1, new Color(0, 0, 0, 0), e.Flip, false);
         }
     }
 
-    private void PlayEffect(BattleVFX f, Vector3 target, float size, float speed, Color color, bool shouldFlipHorizontal)
+    private void PlayEffect(BattleVFX f, Vector3 target, float size, float speed, Color color, bool shouldFlipHorizontal, bool skipWaitingForCompletion)
     {
         var o = Instantiate(f.gameObject, target + f.gameObject.transform.localPosition, f.gameObject.transform.rotation, effectsParent);
         var instVFX = o.GetComponent<BattleVFX>();
         SetupEffect(o, instVFX, size, speed, color, shouldFlipHorizontal);
-        if (instVFX.WaitForCompletion)
+        if (!skipWaitingForCompletion && instVFX.WaitForCompletion)
             StartCoroutine(AwaitAnimationFinish(instVFX));
         else
             Message.Publish(new Finished<BattleEffectAnimationRequested>());

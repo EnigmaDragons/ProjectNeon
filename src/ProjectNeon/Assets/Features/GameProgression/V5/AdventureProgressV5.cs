@@ -33,7 +33,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     {
         get { 
             if (currentChapterIndex < 0 || currentChapterIndex >= currentAdventure.Adventure.StagesV5.Length)
-                Log.Error($"Adventure Stage is illegal.");
+                Log.Error($"Adventure Stage is illegal. Chapter Index {currentChapterIndex}");
             return currentAdventure.Adventure.StagesV5[currentChapterIndex]; 
         }
     }
