@@ -9,5 +9,6 @@ public enum CutsceneSegmentType
     MultiChoice = 5,
     RecordStoryState = 6,
     HideCharacter = 7,
-    ShowCharacter = 8
+    ShowCharacter = 8,
+    PlayerLine = 9,
 }
