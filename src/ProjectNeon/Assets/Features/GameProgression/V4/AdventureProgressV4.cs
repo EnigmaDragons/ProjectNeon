@@ -12,7 +12,8 @@ public class AdventureProgressV4 : AdventureProgressBase
     [SerializeField] private int rngSeed = Rng.NewSeed();
 
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
-
+    
+    public override string AdventureName => currentAdventure.Adventure.Title;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public override int CurrentStageProgress => currentSegmentIndex;
