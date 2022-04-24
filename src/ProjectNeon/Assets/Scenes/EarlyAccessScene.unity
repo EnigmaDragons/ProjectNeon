@@ -655,6 +655,7 @@ GameObject:
   - component: {fileID: 1079700319}
   - component: {fileID: 1079700323}
   - component: {fileID: 1079700324}
+  - component: {fileID: 1079700325}
   m_Layer: 5
   m_Name: EarlyAccessUi
   m_TagString: Untagged
@@ -807,6 +808,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
   cutscene: {fileID: 11400000, guid: 602acc8818d69aa47b360c80898bac90, type: 2}
+  entranceCutsceneStarter: {fileID: 1079700325}
+--- !u!114 &1079700325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079700318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b68c914ac14e329bf2f09354912f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutscene: {fileID: 11400000, guid: 5636127e9804d4a48826330847a64eaa, type: 2}
+  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
 --- !u!1001 &1080228670
 PrefabInstance:
   m_ObjectHideFlags: 0
