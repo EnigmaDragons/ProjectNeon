@@ -120,7 +120,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (_isClickable && eventData.button == PointerEventData.InputButton.Left)
             _onClick();
     }
 
