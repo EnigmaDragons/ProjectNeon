@@ -34,14 +34,14 @@ public static class BattleCardExecution
             payloads.Add(new SinglePayload(new WaitDuringResolution(1f)));
         }
 
-        var firstSequenceWithABattleEffectIndex = sequences.FirstIndexOf(x => x.CardActions.BattleEffects.Any());
+        var firstSequenceWithABattleEffectWithChosenTargetIndex = sequences.FirstIndexOf(x => x.CardActions.BattleEffects.Any() && x.Group == sequences[0].Group && x.Scope == sequences[0].Scope);
         for (var i = 0; i < sequences.Count; i++)
         {
             var seq = sequences[i];
             var selectedTarget = sequenceTargets[i];
             var ctx = new CardActionContext(card.Owner, selectedTarget, seq.Group, seq.Scope, xPaidAmount, battleStateSnapshot, card);
-            var isFirstSequenceWithABattleEffect = i == firstSequenceWithABattleEffectIndex;
-            payloads.Add(seq.cardActions.Play(ctx, isFirstSequenceWithABattleEffect)); 
+            var firstSequenceWithABattleEffectWithChosenTarget = i == firstSequenceWithABattleEffectWithChosenTargetIndex;
+            payloads.Add(seq.cardActions.Play(ctx, firstSequenceWithABattleEffectWithChosenTarget)); 
         }
 
         return payloads;
@@ -58,10 +58,10 @@ public static class BattleCardExecution
     }
 
     // Sequence Actions
-    public static IPayloadProvider Play(this CardActionsData cardData, CardActionContext ctx, bool isFirstSequenceWithABattleEffect = true)
+    public static IPayloadProvider Play(this CardActionsData cardData, CardActionContext ctx, bool isFirstSequenceWithABattleEffectWithChosenTarget = true)
     {
         var firstBattleEffectIndex = cardData.Actions.FirstIndexOf(x => x.Type == CardBattleActionType.Battle);
-        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.Play(isFirstSequenceWithABattleEffect && i == firstBattleEffectIndex, ctx)),
+        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.Play(isFirstSequenceWithABattleEffectWithChosenTarget && i == firstBattleEffectIndex, ctx)), 
             new SinglePayload(new Finished<CardActionContext> {Message = ctx}).AsArray());
     }
 
@@ -79,15 +79,15 @@ public static class BattleCardExecution
     }
 
     // Individual Actions
-    private static IPayloadProvider Play(this CardActionV2 action, bool isFirstBattleEffect, StatusEffectContext ctx)
-        => Play(action, isFirstBattleEffect, new CardActionContext(ctx.Source, new Single(ctx.Member), 
+    private static IPayloadProvider Play(this CardActionV2 action, bool isFirstBattleEffectWithChosenTarget, StatusEffectContext ctx)
+        => Play(action, isFirstBattleEffectWithChosenTarget, new CardActionContext(ctx.Source, new Single(ctx.Member), 
             Group.Self, Scope.One, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing()));
     
-    private static IPayloadProvider Play(this CardActionV2 action, bool isFirstBattleEffect, CardActionContext ctx)
+    private static IPayloadProvider Play(this CardActionV2 action, bool isFirstBattleEffectOfChosenTarget, CardActionContext ctx)
     {
         var type = action.Type;
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffect, action.BattleEffect, ctx.Source, ctx.Target, ctx.Card, ctx.XAmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false, ReactionTimingWindow.FirstCause));
+            return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffectOfChosenTarget, action.BattleEffect, ctx.Source, ctx.Target, ctx.Card, ctx.XAmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false, ReactionTimingWindow.FirstCause));
         
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset));

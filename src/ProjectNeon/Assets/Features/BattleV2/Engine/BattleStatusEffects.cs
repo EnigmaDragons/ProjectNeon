@@ -99,7 +99,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             {
                 var battleSnapshotAfter = state.GetSnapshot();
                 var effectResolved = new EffectResolved(true, 
-                    true, 
+                    true,
                     EffectData.Nothing, 
                     member, // Replace with Status Originator
                     new Single(member), 

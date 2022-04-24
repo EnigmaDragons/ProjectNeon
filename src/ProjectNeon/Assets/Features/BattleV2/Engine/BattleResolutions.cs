@@ -137,7 +137,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
         // Effect Resolved Details
         var battleSnapshotAfter = state.GetSnapshot();
-        var effectResolved = new EffectResolved(res.WasApplied, msg.IsFirstBattleEffect, msg.Effect, ctx.Source, ctx.Target, 
+        var effectResolved = new EffectResolved(res.WasApplied, msg.IsFirstBattleEffectOfChosenTarget, msg.Effect, ctx.Source, ctx.Target, 
             battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, ctx.Preventions, ctx.Timing);
         return (res, effectResolved);
     }
