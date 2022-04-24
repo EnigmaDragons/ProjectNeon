@@ -11,13 +11,13 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     [SerializeField] private FloatReference secondsPerCharacter = new FloatReference(0.07f);
     [SerializeField] private FloatReference autoAdvanceDelay = new FloatReference(0.8f);
     [SerializeField] private PlayableUiSound sfx;
-    [SerializeField] private int sfxEveryXCharacters = 2;
     [SerializeField] private Vector2 reversedTextBoxOffset = Vector2.zero;
     
     [Header("Debug Info")]
     [SerializeField, ReadOnly] private bool isRevealing;
     [SerializeField, ReadOnly] private string fullText;
 
+    private int sfxEveryXCharacters = 1;
     private bool _reversed;
     private int _cursor;
     private bool _allowManualAdvance = true;
