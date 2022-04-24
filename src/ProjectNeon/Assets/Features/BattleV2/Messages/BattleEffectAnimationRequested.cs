@@ -16,4 +16,5 @@ public class BattleEffectAnimationRequested
     public Member Source { get; set; }
     public Maybe<Card> Card { get; set; }
     public ResourceQuantity XPaidAmount { get; set; }
+    public bool SkipWaitingForCompletion { get; set; } = false;
 }
