@@ -33,6 +33,7 @@ public static class AICardSelectionLogic
     public static CardSelectionContext WithCommonSenseSelections(this CardSelectionContext ctx)
         => ctx
             .PlayAntiStealthCardIfAllEnemiesAreStealthed()
+            .DontPlayAntiStealthCardIfAnyEnemyIsUnstealthed()
             .DontPlayRequiresFocusCardWithoutAFocusTarget()
             .DontPlayFocusCardIfFocusTargetAlreadySelected()
             .DontPlayAntiStealthCardIfNoEnemiesAreStealthed()
@@ -65,6 +66,11 @@ public static class AICardSelectionLogic
     
     public static CardSelectionContext DontPlayAntiStealthCardIfNoEnemiesAreStealthed(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.None(e => e.IsStealthed()), CardTag.AntiStealth);
+    
+    // This rule is a little weird. Mostly it's to prevent punishing stealth gameplay quite so hard. It's not actually quite a common sense rule.
+    [Obsolete("Gameplay AI Manipulation")]
+    public static CardSelectionContext DontPlayAntiStealthCardIfAnyEnemyIsUnstealthed(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => !x.Enemies.All(e => e.IsStealthed()), CardTag.AntiStealth);
     
     public static CardSelectionContext DontGiveAlliesDodgeIfTheyAlreadyHaveEnough(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlay(x => x.Allies.Sum(a => a.State[TemporalStatType.Dodge]) >= x.Allies.Length, c => c.Is(CardTag.Defense, CardTag.Dodge));
