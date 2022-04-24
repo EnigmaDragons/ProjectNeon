@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6399896275206866995}
   - component: {fileID: 5910917085887380006}
+  - component: {fileID: 6331653906307249713}
   m_Layer: 0
   m_Name: VFX_Stunned
   m_TagString: Untagged
@@ -48,6 +49,20 @@ MonoBehaviour:
   durationSeconds: 0.8
   maxLifetime: 2
   waitForCompletion: 1
+--- !u!114 &6331653906307249713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899219546143175974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46933f1cb0ef4a69ac32de6e49250a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnable: event:/BattleScene/STUNNED
+  onDisable: 
 --- !u!1 &6047221218951636349
 GameObject:
   m_ObjectHideFlags: 0
