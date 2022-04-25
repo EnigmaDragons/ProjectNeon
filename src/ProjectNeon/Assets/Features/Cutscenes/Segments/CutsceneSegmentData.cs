@@ -55,6 +55,8 @@ public class CutsceneSegmentData
             return $"-- Present Player Game Multi-Choice --";
         if (SegmentType == CutsceneSegmentType.RecordStoryState)
             return $"-- Save Player Story Choice --";
+        if (SegmentType == CutsceneSegmentType.PlayerLine)
+            return $"Player: \"{Text}\"";
         return "Unknown Cutscene Segment";
     }
 }

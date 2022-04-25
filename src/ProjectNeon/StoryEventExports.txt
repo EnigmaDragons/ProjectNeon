@@ -1,0 +1,146 @@
+How will you choose to end this?
+Choice: Activate the virus embedded in all of Metroplex Zero's Medigeneix clinics
+Outcome: Result-VirusActivated (RecordChoiceResult)
+Choice: Leave Anton and his AI alive, but it is clear he now works with your oversight
+Outcome: Result-LetAntonLive (RecordChoiceResult)
+Choice: Kill Anton and his AI, putting an end to his schemes
+Outcome: Result-AntonDies (RecordChoiceResult)
+
+How will you choose to end this?
+Choice: Leave Anton and his AI alive, but it is clear he now works with your oversight
+Outcome: Result-LetAntonLive (RecordChoiceResult)
+Choice: Kill Anton and his AI, putting an end to his schemes
+Outcome: Result-AntonDies (RecordChoiceResult)
+
+How evil does someone have to be to get marked for death?
+Choice: Murderers, causing the deaths of the innocent
+Outcome: Result-Murderers (RecordChoiceResult)
+Choice: Abusers, scarring and destroying the lives of those around them
+Outcome: Result-Abusers (RecordChoiceResult)
+Choice: Parasites, just a drain on society and those they depend on
+Outcome: Result-Parasites (RecordChoiceResult)
+
+How much privacy invasion is the right amount for determining if it would be socially beneficial to have their organs removed?
+Choice: Every piece of data is needed for making life and death calls
+Outcome: Result-NoPrivacy (RecordChoiceResult)
+Choice: Privacy invasion is necessary, only when there is reasonable suspicion
+Outcome: Result-PrivacyBreachedWhenNeeded (RecordChoiceResult)
+Choice: The only data that should be used, is the data publically available
+Outcome: Result-NoPrivacyInvasion (RecordChoiceResult)
+
+Choose again who gets targeted to be killed for their organs.
+Choice: Ready
+Outcome: Result-ChoiceRemade (RecordChoiceResult)
+
+Should they get a choice? Should that choice be incentivized?
+Choice: No choice, their organs will save someone
+Outcome: Result-NoChoice (RecordChoiceResult)
+Choice: It is their choice, but offering them money for their loved ones is acceptable
+Outcome: Result-IncentivizedChoice (RecordChoiceResult)
+Choice: Is is their choice and it shouldn't be tampered with money
+Outcome: Result-UntaintedChoice (RecordChoiceResult)
+
+Who will you allow to be killed to have their organs harvested to save others?
+Choice: Suicidal benefactors, predicted not to recover
+Outcome: Result-Suicidal (RecordChoiceResult)
+Choice: Terminally ill benefactors
+Outcome: Result-TerminallyIll (RecordChoiceResult)
+Choice: Specific Medigeneix executives, after all they are responsible
+Outcome: Result-MedigeneixExecutives (RecordChoiceResult)
+Choice: People that bring more harm than good to the world, such as murderers and abusers
+Outcome: Result-EvilBenefactors (RecordChoiceResult)
+
+Who will you allow to be killed to have their organs harvested to save others?
+Choice: Suicidal benefactors, predicted not to recover
+Outcome: Result-Suicidal (RecordChoiceResult)
+Choice: Terminally ill benefactors
+Outcome: Result-TerminallyIll (RecordChoiceResult)
+Choice: People that bring more harm than good to the world, such as murderers and abusers
+Outcome: Result-EvilBenefactors (RecordChoiceResult)
+
+You come accross a handful of corpses in an alley with smoking guns strewn about. 
+
+Like vultures, Astropoly scavenging drones have already started taking everything of value.
+Choice: Hack one of the drones to scavenge safely for you
+Outcome: Penalty-Injury-CharredHands (InjuryPenalty)
+Outcome: Penalty-Creds-25 (CreditsPenalty)
+Outcome: Reward-CommonAugment (EquipmentReward)
+Outcome: Reward-RareAugment (EquipmentReward)
+Choice: Go for the creds on the closest bodies
+Outcome: Result-VulnerabilityAndCreds (AndResult)
+Outcome: Reward-Tier1-Credits (CreditsReward)
+Outcome: Reward-Tier3-Credits (CreditsReward)
+Outcome: Penalty-Curse-Vulnerability (NextCombatEffectResult)
+Choice: Rush for the Predator X Pro lying on an untouched corpse
+Outcome: Penalty-Heat-3 (HeatResult)
+Outcome: Reward-Equipment-PredatorX (StaticEquipmentReward)
+Outcome: Reward-Equipment-PredatorXPro (StaticEquipmentReward)
+
+Medigeneix is handing out free samples of a new contact drug that supposedly treats Existential Crisis Syndrome. 
+
+You notice that they are pulling their samples from one larger bin and sometimes a discreet smaller bin. 
+
+Being curious, you spy on the pad of the technician handing them out. 
+
+You also notice that the smaller bin ihas warning labels detailing additional negative side effects.
+Choice: Take some free samples to sell for profit.
+Outcome: Reward-Tier1-Credits (CreditsReward)
+Choice: Create a diversion, steal the extra harmful drugs and refill the smaller bin from the larger one.
+Outcome: Penalty-Tier2-Credits (CreditsPenalty)
+Outcome: Penalty-Tier1-Credits (CreditsPenalty)
+Outcome: Reward-Card-ECSCure (SpecificCardReward)
+Outcome: Reward-Card-NanoECSCure (SpecificCardReward)
+Choice: Steal the Medigeneix pad and show onlookers what is happening
+Outcome: Penalty-Injury-BrokenRib (InjuryPenalty)
+Outcome: Penalty-Injury-BrokenNose (InjuryPenalty)
+Outcome: Reward-Equipment-StimSystem (StaticEquipmentReward)
+Outcome: Reward-Equipment-AdvancedStimSystem (StaticEquipmentReward)
+
+Your contacts have informed you that a peaceful protest outside of ZantoCorp is about to turn violent.
+
+ZantoCorp has hired Novoline to pretend to be protesters and start violence, in order to give ZantoCorp an excuse to retaliate against the protestors.
+Choice: Intercept Novoline and fight their team.
+Outcome: Penalty-Combat-NovolineRiotIncitingTeam (CombatResult)
+Outcome: Reward-DamageNovolineInciters (AndResult)
+Choice: Steal from Novoline's transport vehicle after their team leaves it
+Outcome: Penalty-LoseHP-Random-10-15 (LoseHpPenalty)
+Outcome: Reward-CommonWeapon-Novoline (EquipmentReward)
+Outcome: Reward-RareWeapon-Novoline (EquipmentReward)
+Choice: Hijack the cameras in the area, to force the media company NGN to pay you for good footage of the violence
+Outcome: Penalty-Tier2-Credits (CreditsPenalty)
+Outcome: Penalty-Tier1-Credits (CreditsPenalty)
+Outcome: Reward-Tier3-Credits (CreditsReward)
+
+You pass a Plasmigarchy vehicle leaving in a hurry. 
+
+Upon rounding the corner, you see directional explosives planted all around an indie micro-battery factory.
+
+You think that Plasmigarchy must not like the competition. These micro-batteries must be decent.
+
+Choice: Run in and warn them to evacute the building.
+Outcome: Penalty-LoseHP-Random-30-40 (LoseHpPenalty)
+Outcome: Penalty-Tier1-Credits (CreditsPenalty)
+Outcome: Reward-Tier3-Credits (CreditsReward)
+Choice: Split up and try to remove every single explosive from the building before they detonate.
+Outcome: Penalty-LoseHP-Team-10-15 (LoseHpPenalty)
+Outcome: Penalty-LoseHP-Random-10-15 (LoseHpPenalty)
+Outcome: Reward-Equipment-PrechargedShield (StaticEquipmentReward)
+Outcome: Reward-Equipment-OverchargedShieldPrototype (StaticEquipmentReward)
+
+You spot a group of robed figures slipping into an abandonded warehouse with a large hovering cage between them. 
+
+You sneak inside and see a Tritoonico employee drawing ritual circles accross the floor as the cage is opened dumping out unconcious homeless looking people into the middle of the circles.
+
+You overhear a conversation between the Tritoonico employees:
+Tritoonico Employee 1 "Why do we always sacrifice the sick homeless, when we could have way more people to sacrifice in the prison system?"
+
+Tritoonico Employee 2 "Because Tritoonico has a deal with the other corps, they are paying us to keep the streets clean of the litter" speaking nonchalantly, as she motioned to the people lying in the middle of the circle
+.
+Tritoonico Employee 2 "Also the prison corps that are using prisoners for cheap labor would be very upset if we tried to cut in."
+Choice: Attempt to kill the Tritoonico employees to stop the ritual
+Outcome: Penalty-Combat-TritoonicaRitualists (CombatResult)
+Outcome: Reward-StunTritoonicoRitualists (AndResult)
+Choice: Film the whole thing to use as blackmail against Tritoonico
+Outcome: Penalty-CorpCost-TritoonicaClinic-20 (CorpCostModifierResult)
+Outcome: Penalty-Creds-25 (CreditsPenalty)
+Outcome: Reward-Tier2-Credits (Cr
