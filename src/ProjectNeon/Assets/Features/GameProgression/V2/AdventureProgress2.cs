@@ -29,6 +29,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public override bool UsesRewardXp { get; } = true;
     public override float BonusXpLevelFactor { get; } = 0;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
+    public override bool IsFinalBoss => IsFinalStageSegment;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
 

@@ -26,6 +26,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     public override bool UsesRewardXp => false;
     public override float BonusXpLevelFactor => 0.33333f;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
+    public override bool IsFinalBoss => IsFinalStageSegment;
     private int CurrentStageLength => CurrentChapter.SegmentCount;
     
     

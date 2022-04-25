@@ -21,13 +21,14 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     private float Progress => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
-    private bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
+    private bool IsFinalStage => currentChapterIndex >= currentAdventure.Adventure.StagesV5.Length - 1;
     private bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
     public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V5;
     public override int RngSeed => rngSeed;
     public override bool UsesRewardXp => false;
     public override float BonusXpLevelFactor => 0.33333f;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
+    public override bool IsFinalBoss => IsFinalStage && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
     private int CurrentStageLength => CurrentChapter.SegmentCount;
     
     public HybridStageV5 CurrentChapter

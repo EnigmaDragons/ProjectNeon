@@ -15,7 +15,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
     {
         Message.Publish(new BattleRewardsStarted());
         if (adventureProgress.HasActiveAdventure)
-            if (adventureProgress.AdventureProgress.IsFinalStageSegment)
+            if (adventureProgress.AdventureProgress.IsFinalStageSegment || adventureProgress.AdventureProgress.IsFinalBoss)
                 Advance();
             else if (state.IsEliteBattle)
                 adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
