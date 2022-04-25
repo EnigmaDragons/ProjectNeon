@@ -37,26 +37,41 @@ public class CutsceneSegmentData
         return Maybe<string>.Present(conditions.Trim());
     }
     
-    public string GetExportDescription()
+    public string[] GetExportDescription()
     {
         if (SegmentType == CutsceneSegmentType.Nothing)
-            return "Nothing";
+            return new [] { "Nothing" };
         if (SegmentType == CutsceneSegmentType.NarratorLine)
-            return $"Narrator: \"{Text}\"";
+            return new [] { $"Narrator: \"{Text}\"" };
         if (SegmentType == CutsceneSegmentType.DialogueLine)
-            return $"{DialogueCharacterId.Value}: \"{Text}\"";
+            return new [] { $"{DialogueCharacterId.Value}: \"{Text}\"" };
         if (SegmentType == CutsceneSegmentType.ShowCharacter)
-            return $"Enter {DialogueCharacterId.Value}";
+            return new [] { $"Enter {DialogueCharacterId.Value}" };
         if (SegmentType == CutsceneSegmentType.HideCharacter)
-            return $"Exit {DialogueCharacterId.Value}";
+            return new [] { $"Exit {DialogueCharacterId.Value}" };
         if (SegmentType == CutsceneSegmentType.Choice)
-            return $"-- Present Player Game Choice --";
+            return GetChoiceDescription();
         if (SegmentType == CutsceneSegmentType.MultiChoice)
-            return $"-- Present Player Game Multi-Choice --";
+            return GetChoiceDescription();
         if (SegmentType == CutsceneSegmentType.RecordStoryState)
-            return $"-- Save Player Story Choice --";
+            return new [] { $"Story State:{StoryState.Value} - true" };
         if (SegmentType == CutsceneSegmentType.PlayerLine)
-            return $"Player: \"{Text}\"";
-        return "Unknown Cutscene Segment";
+            return new [] { $"Player: \"{Text}\"" };
+        return new [] { "Unknown Cutscene Segment" };
+    }
+
+    private string[] GetChoiceDescription()
+    {
+        var lines = new List<string>();
+        lines.Add($"Present Player Game With {(StoryEvent.IsMultiChoice ? "Multi-Choice" : "Choice")}: {StoryEvent.DisplayName}");
+        lines.Add($"  {StoryEvent.StoryText}");
+        foreach (var choice in StoryEvent.Choices)
+        {
+            if (choice.Resolution.Length == 1 && choice.Resolution[0].Result is RecordChoiceResult)
+                lines.Add($"    {((RecordChoiceResult)choice.Resolution[0].Result).Name} - {((RecordChoiceResult)choice.Resolution[0].Result).state}: {choice.ChoiceText(StoryEvent.id)}");
+            else
+                lines.Add($"    {choice.ChoiceText(StoryEvent.id)}");
+        }
+        return lines.ToArray();
     }
 }

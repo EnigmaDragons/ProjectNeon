@@ -90,11 +90,13 @@ public class StoryExporterEditor : EditorWindow
                     {
                         if (!d.Equals(lastCondition, StringComparison.InvariantCultureIgnoreCase))
                             storyLines.Add("  " + d);
-                        storyLines.Add("      " + l.GetExportDescription());
+                        foreach (var line in l.GetExportDescription())
+                            storyLines.Add("      " + line);
                         lastCondition = d;
                     }, () =>
                     {
-                        storyLines.Add("  " + l.GetExportDescription());
+                        foreach (var line in l.GetExportDescription())
+                            storyLines.Add("  " + line);
                         lastCondition = "";
                     });
                 }
