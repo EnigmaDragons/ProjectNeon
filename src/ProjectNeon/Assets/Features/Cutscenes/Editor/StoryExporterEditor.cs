@@ -54,8 +54,17 @@ public class StoryExporterEditor : EditorWindow
             storyLines.Add("Story: Intro");
             storyLines.Add("  " + a.Story);
             storyLines.Add(_divider);
-
-            var storySegments = a.StagesV5.SelectMany(s => s.MaybeStorySegments);
+            var storySegments = new List<StageSegment>();
+            for (var stage = 0; stage < a.StagesV5.Length; stage++)
+            {            
+                for (var i = 0; i < a.StagesV5[stage].Segments.Length; i++)
+                {
+                    if (a.StagesV5[stage].Segments[i].MapNodeType == MapNodeType.MainStory)
+                        storySegments.Add(a.StagesV5[stage].Segments[i]);
+                    if (a.StagesV5[stage].MaybeStorySegments.Length > i && a.StagesV5[stage].MaybeStorySegments[i]?.MapNodeType == MapNodeType.MainStory)
+                        storySegments.Add(a.StagesV5[stage].MaybeStorySegments[i]);
+                }
+            }
             var sceneNumber = 0;
             storySegments.ForEach(s =>
             {
