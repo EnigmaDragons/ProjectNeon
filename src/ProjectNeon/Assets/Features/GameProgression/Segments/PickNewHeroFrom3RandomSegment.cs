@@ -43,4 +43,5 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
     public override Maybe<string> Corp => Maybe<string>.Missing();
     
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

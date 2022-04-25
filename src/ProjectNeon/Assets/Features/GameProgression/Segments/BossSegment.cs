@@ -14,4 +14,6 @@ public class BossSegment : StageSegment
 
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData)
         => new GeneratedBattleStageSegment(Name, ctx.BossDetails.Battlefield, false, ctx.BossDetails.Enemies.Select(x => x.ForStage(ctx.BossDetails.CurrentChapterNumber)).ToArray());
+
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

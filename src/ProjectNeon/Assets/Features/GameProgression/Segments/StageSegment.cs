@@ -11,4 +11,5 @@ public abstract class StageSegment : ScriptableObject, IStageSegment
     public abstract MapNodeType MapNodeType { get; }
     public abstract Maybe<string> Corp { get; }
     public abstract IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData);
+    public abstract bool ShouldSpawnThisOnMap(CurrentAdventureProgress p);
 }

@@ -13,4 +13,5 @@ public class CombatSegment : StageSegment
     
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData)
         => AdventureProgress2MapNode3CombatNodeGeneration.Generate(Name, false, ctx, mapData);
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

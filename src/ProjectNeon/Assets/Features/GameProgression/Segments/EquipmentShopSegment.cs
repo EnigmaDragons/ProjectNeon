@@ -12,4 +12,5 @@ public class EquipmentShopSegment : StageSegment
     public override Maybe<string> Corp => Maybe<string>.Missing();
     
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => new GeneratedEquipmentShopSegment(mapData.Corp);
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

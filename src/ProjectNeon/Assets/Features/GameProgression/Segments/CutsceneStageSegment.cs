@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Cutscene")]
@@ -16,6 +17,8 @@ public class CutsceneStageSegment : StageSegment
     public override Maybe<string> Corp => Maybe<string>.Missing();
     
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) 
+        => cutscene.Segments.Any(s => s.ShouldShow(x => p.AdventureProgress.IsTrue(x)));
 
     public Cutscene Cutscene => cutscene;
 }
