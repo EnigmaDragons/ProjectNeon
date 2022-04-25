@@ -41,14 +41,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
         }
         else if (adventureProgress.AdventureProgress.IsFinalStageSegment)
         {
-            Log.Info("Navigating to victory screen");
-            adventureProgress.AdventureProgress.Advance();
-            AllMetrics.PublishGameWon();
-            Message.Publish(new AutoSaveRequested());
             state.AccumulateRunStats();
-            conclusion.Set(true, adventure.Adventure.VictoryConclusion, CurrentGameData.Data.Stats);
-            CurrentGameData.Clear();
-            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
+            this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion), secondsBeforeGameOverScreen);
         }
         else
         {

@@ -6,6 +6,8 @@ public class CutscenePresenter : MonoBehaviour
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private CurrentAdventureProgress progress;
+    [SerializeField] private CurrentAdventure adventure;
+    [SerializeField] private AdventureConclusionState conclusion;
     [SerializeField] private FloatReference cutsceneFinishNavigationDelay = new FloatReference(1f);
     [SerializeField] private FloatReference dialogueWaitDelay = new FloatReference(2f);
     [SerializeField] private CurrentCutscene cutscene;
@@ -206,14 +208,22 @@ public class CutscenePresenter : MonoBehaviour
         player.SpeechBubble.ForceHide();
         disableOnFinished.ForEach(d => d.SetActive(false));
         MessageGroup.TerminateAndClear();
+
+        var shouldGoToAdventureVictoryScreen = cutscene.OnCutsceneFinishedAction.IsMissing
+                                               && cutscene.Current.IsPrimaryCutscene
+                                               && progress.AdventureProgress.IsFinalStageSegment;
         if (cutscene.OnCutsceneFinishedAction.IsMissing) // Is Game Flow Cutscene
         {
             if (progress.AdventureProgress.AdventureType == GameAdventureProgressType.V4)
                 progress.AdventureProgress.Advance();
+            else if (cutscene.Current.IsPrimaryCutscene)
+                progress.AdventureProgress.Advance();
             Message.Publish(new AutoSaveRequested());
         }
         
-        var onFinishedAction = cutscene.OnCutsceneFinishedAction.Select(a => a, NavigateToInferredGameScene);
+        var onFinishedAction = shouldGoToAdventureVictoryScreen 
+            ? () => GameWrapup.NavigateToVictoryScreen(progress, adventure, navigator, conclusion) 
+            : cutscene.OnCutsceneFinishedAction.Select(a => a, NavigateToInferredGameScene);
         if (useDelay)
             this.ExecuteAfterDelay(onFinishedAction, cutsceneFinishNavigationDelay);
         else
