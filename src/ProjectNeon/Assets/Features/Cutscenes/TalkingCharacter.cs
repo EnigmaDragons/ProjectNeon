@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using CharacterCreator2D;
 using UnityEngine;
@@ -27,7 +28,7 @@ public class TalkingCharacter : MonoBehaviour
             if (_original == null && _mouth != null)
                 _original = _mouth.sprite;
         }
-        catch (UnassignedReferenceException e)
+        catch (Exception e)
         {
             Log.Warn(e.ToString());
         }

@@ -64,13 +64,14 @@ public class CutsceneSegmentData
     {
         var lines = new List<string>();
         lines.Add($"Present Player Game With {(StoryEvent.IsMultiChoice ? "Multi-Choice" : "Choice")}: {StoryEvent.DisplayName}");
-        lines.Add($"  {StoryEvent.StoryText}");
-        foreach (var choice in StoryEvent.Choices)
+        lines.Add($"  Choice Prompt: \"{StoryEvent.StoryText}\"");
+        for (var i = 0; i < StoryEvent.Choices.Length; i++)
         {
+            var choice = StoryEvent.Choices[i];
             if (choice.Resolution.Length == 1 && choice.Resolution[0].Result is RecordChoiceResult)
-                lines.Add($"    {((RecordChoiceResult)choice.Resolution[0].Result).Name} - {((RecordChoiceResult)choice.Resolution[0].Result).state}: {choice.ChoiceText(StoryEvent.id)}");
+                lines.Add($"    {i + 1}. \"{choice.ChoiceText(StoryEvent.id)}\" - {((RecordChoiceResult)choice.Resolution[0].Result).Name} - {((RecordChoiceResult)choice.Resolution[0].Result).state}");
             else
-                lines.Add($"    {choice.ChoiceText(StoryEvent.id)}");
+                lines.Add($"    {i + 1}. \"{choice.ChoiceText(StoryEvent.id)}\"");
         }
         return lines.ToArray();
     }
