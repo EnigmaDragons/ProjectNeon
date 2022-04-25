@@ -14,22 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 33
   displayName: Energy Pack V1
-  description: +2 Starting Energy
+  description: +2 Starting Resources
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
   rarity: 3
   slot: 2
   priceFactor: 1
-  modifiers:
-  - ModifierType: 0
-    Amount: 0
-    StatType: 
+  modifiers: []
   resourceModifiers:
-  - baseResource: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  - baseResource: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     maxAdjustment: 0
     startingAdjustment: 2
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects: []
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 
