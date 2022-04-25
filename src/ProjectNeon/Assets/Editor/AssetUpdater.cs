@@ -28,7 +28,6 @@ public class AssetUpdater
         UpdateStageSegmentIDs();
         UpdateAllStageSegments();
         UpdateAllCorps();
-        UpdateStoryEventIDs();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
         Timed("All Battle VFX", UpdateAllBattleVfx);
@@ -308,12 +307,6 @@ public class AssetUpdater
             x.Stages = stageSegments;
             EditorUtility.SetDirty(x);
         });
-    }
-    
-    [MenuItem("Neon/Update/Update Story Event IDs")]
-    private static void UpdateStoryEventIDs()
-    {
-        AssignAllIds(ScriptableExtensions.GetAllInstances<StoryEvent2>(), c => c.id, (c, id) => c.id = id);
     }
 
     private const float _hpValue = 1;
