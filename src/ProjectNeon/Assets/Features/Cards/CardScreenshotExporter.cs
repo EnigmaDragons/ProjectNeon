@@ -51,7 +51,9 @@ public class CardScreenshotExporter : MonoBehaviour
             }
         }
         Log.Info("Finished Export");
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     private void ExportCard(BaseHero h, CardTypeData c)
