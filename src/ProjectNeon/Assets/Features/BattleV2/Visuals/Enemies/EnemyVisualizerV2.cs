@@ -106,6 +106,12 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             Debug.LogError($"{member.Name} is missing a {nameof(MemberHighlighter)}");
         else
             highlighter.Init(member);
+        
+        var tauntEffect = obj.GetComponentInChildren<TauntEffect>();
+        if (tauntEffect == null)
+            Debug.LogError($"{member.Name} is missing a {nameof(TauntEffect)}");
+        else
+            tauntEffect.Init(member);
     }
     
     public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset)
