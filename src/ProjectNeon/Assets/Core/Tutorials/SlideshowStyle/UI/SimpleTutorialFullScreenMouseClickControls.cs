@@ -7,6 +7,7 @@ public class SimpleTutorialFullScreenMouseClickControls : MonoBehaviour, IPointe
     {
         if (eventData.button == PointerEventData.InputButton.Left)
             Message.Publish(new TutorialNextRequested());
+        Message.Publish(new TutorialLeftButtonClick());
         if (eventData.button == PointerEventData.InputButton.Right)
             Message.Publish(new TutorialPreviousRequested());
     }
