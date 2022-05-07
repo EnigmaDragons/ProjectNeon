@@ -6,10 +6,21 @@ public class TutorialClicksPlayer : MonoBehaviour
 {
     [SerializeField, FMODUnity.EventRef] private string RightClick;
     [SerializeField, FMODUnity.EventRef] private string LeftClick;
+    [SerializeField, FMODUnity.EventRef] private string HeroNameHover;
+    
     private void OnEnable()
     {
         Message.Subscribe<TutorialNextRequested>(OnLeftClick, this);
         Message.Subscribe<TutorialPreviousRequested>(OnRightClick, this);
+        Message.Subscribe<ShowTooltip>(OnHeroNameHover, this);
+        
+    }
+
+  
+
+    private void OnHeroNameHover(ShowTooltip msg)
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(HeroNameHover, Vector3.zero);
     }
 
     private void OnRightClick(TutorialPreviousRequested msg)
