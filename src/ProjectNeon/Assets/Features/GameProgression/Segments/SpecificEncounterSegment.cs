@@ -10,6 +10,7 @@ public class SpecificEncounterSegment : StageSegment
     [SerializeField] private Enemy[] enemies;
     [SerializeField] private CurrentAdventureProgress currentAdventureProgress;
     [SerializeField] private MapNodeType mapNodeType;
+    [SerializeField] private Cutscene cutscene;
 
     public override string Name => "Specific Encounter";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
@@ -28,6 +29,8 @@ public class SpecificEncounterSegment : StageSegment
         var stage = currentAdventureProgress.HasActiveAdventure
             ? currentAdventureProgress.AdventureProgress.CurrentChapterNumber
             : 0;
+        if (cutscene != null)
+            Message.Publish(new SetStartBattleCutsceneRequested(cutscene));
         Message.Publish(new EnterSpecificBattle(battlefield, isElite, enemies.Select(x => x.ForStage(stage)).ToArray(), false, isTutorial));
     }
 

@@ -5,7 +5,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequested>
+public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequested, ShowHeroBattleThought>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
@@ -17,7 +17,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
 
     [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
     [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
-
+    
+    private readonly Dictionary<EnemyInstance, ProgressiveTextRevealWorld> _speech = new Dictionary<EnemyInstance, ProgressiveTextRevealWorld>();
     private List<Tuple<int, Member>> _enemyPositions; 
     
     public IEnumerator Spawn()
@@ -51,6 +52,9 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
         enemyArea.WithUiTransforms(active.Select(a => a.transform));
+        var speech = enemyObject.GetComponentInChildren<ProgressiveTextRevealWorld>();
+        if (speech != null)
+            _speech[enemy] = speech;
         return enemyObject;
     }
 
@@ -172,5 +176,21 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
                 DevLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
+    }
+    
+    protected override void Execute(ShowHeroBattleThought e)
+    {
+        if (!state.IsEnemy(e.MemberId)) return;
+        
+        var enemy = state.GetEnemyById(e.MemberId);
+        var s = _speech[enemy];
+        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(s.Hide, 1.8f)));
+        s.Proceed(true);
+    }
+    
+    private IEnumerator ExecuteAfterDelayRealtime(Action a, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        a();
     }
 }
