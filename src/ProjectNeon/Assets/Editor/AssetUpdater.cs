@@ -19,6 +19,7 @@ public class AssetUpdater
         UpdateAllCards();
         UpdateEquipmentIDs();
         UpdateAllEquipments();
+        UpdateAllResourceTypes();
         EnsureDurationPresent();
         UpdateMapIDs();
         UpdateAllMaps();
@@ -236,7 +237,19 @@ public class AssetUpdater
             EditorUtility.SetDirty(x);
         });
     }
-
+    
+    [MenuItem("Neon/Update/UpdateAllResourceTypes")]
+    private static void UpdateAllResourceTypes()
+    {
+        var resourceTypes = ScriptableExtensions.GetAllInstances<SimpleResourceType>().ToArray();
+        var all = ScriptableExtensions.GetAllInstances<AllResourceTypes>();
+        all.ForEach(x =>
+        {
+            x.ResourceTypes = resourceTypes;
+            EditorUtility.SetDirty(x);
+        });
+    }
+    
     [MenuItem("Neon/Update/Update Map IDs")]
     private static void UpdateMapIDs()
     {

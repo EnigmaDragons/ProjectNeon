@@ -244,7 +244,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             Message.Publish(new ReactionCardPlayed(playedCard));
             yield return new WaitForSeconds(DelaySeconds(card.Owner.TeamType));
             
-            r.Source.Apply(s => s.Lose(resourceCalculations.PaidQuantity, state.Party));
+            r.Source.Apply(s => s.Spend(resourceCalculations.PaidQuantity, state.Party));
             resolutionZone.StartResolvingOneCard(playedCard, p => p.Perform(state.GetSnapshot()));
         }
         else

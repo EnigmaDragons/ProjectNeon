@@ -314,36 +314,65 @@ public sealed class MemberState : IStats
     public void ReducePreventedTagCounters() => _preventedTags.ToList().ForEach(x => _preventedTags[x.Key] = x.Value > 0 ? x.Value - 1 : 0);
     
     // Resource Commands
-    public void Gain(ResourceQuantity qty, PartyAdventureState partyState) => GainResource(qty.ResourceType, qty.Amount, partyState);
-    public void GainResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
+    public void ChangeResource(ResourceQuantity qty, PartyAdventureState partyState)
     {
-        if (amount == 0)
+        if (qty.Amount == 0)
             return;
-        if (resourceName == "Creds")
-            partyState.UpdateCreditsBy(amount);
+        
+        if (qty.Amount < 0)
+            LoseResource(qty, partyState, false);
+        else
+            GainResource(qty, partyState);
+    }
+    
+    public void GainResource(ResourceQuantity qty, PartyAdventureState partyState)
+    {
+        if (qty.Amount == 0)
+            return;
+        
+        if (qty.ResourceType == "Creds")
+            partyState.UpdateCreditsBy(qty.Amount);
         else if (this[TemporalStatType.PreventResourceGains] == 0)
-            Counter(resourceName).ChangeBy(amount);
-    });
+           ChangeResourceAmount(qty, false);
+    }
     
     public void AdjustPrimaryResource(int numToGive)
     {
-        if (this[TemporalStatType.PreventResourceGains] == 0)
+        if (numToGive < 0 || this[TemporalStatType.PreventResourceGains] == 0)
         {
             BattleLog.Write($"{Name} {BattleLog.GainedOrLostTerm(numToGive)} {numToGive} {PrimaryResource.Name}");
-            PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
+            ChangeResourceAmount(new ResourceQuantity { Amount = numToGive, ResourceType = PrimaryResource.Name }, false);
         }
     }
 
-    public void Lose(ResourceQuantity qty, PartyAdventureState partyState) => LoseResource(qty.ResourceType, qty.Amount, partyState);
-    // TODO: Combine Lose and Gain into one method
-    private void LoseResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
-    {        
-        if (amount == 0)
+    public void Spend(ResourceQuantity qty, PartyAdventureState partyState) => LoseResource(qty, partyState, true);
+    public void LoseResource(ResourceQuantity qty, PartyAdventureState partyState, bool wasPaidCost)
+    {
+        if (qty.Amount == 0)
             return;
-        if (resourceName == "Creds")
-            partyState.UpdateCreditsBy(-amount);
+        
+        if (qty.ResourceType == "Creds")
+            partyState.UpdateCreditsBy(-qty.Amount);
         else
-            Counter(resourceName).ChangeBy(-amount);
+            ChangeResourceAmount(qty.Negate(), wasPaidCost);
+    }
+
+    private void ChangeResourceAmount(ResourceQuantity qty, bool wasPaidCost) => PublishAfter(() =>
+    {
+        var beforeAmount = Counter(qty.ResourceType).Amount;
+        Counter(qty.ResourceType).ChangeBy(qty.Amount);
+        var delta = Counter(qty.ResourceType).Amount - beforeAmount;
+
+        if (delta == 0)
+            return;
+        
+        Message.Publish(new MemberResourceChanged(MemberId, qty, wasPaidCost));
+        if (wasPaidCost)
+            BattleLog.Write($"{Name} spent {qty}");
+        else if (qty.Amount > 0) 
+            BattleLog.Write($"{Name} gained {qty}");
+        else if (qty.Amount < 0)
+            BattleLog.Write($"{Name} lost {qty.Negate()}");
     });
 
     public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any() || _temporalStatsToReduceAtEndOfTurn.Any(x => this[x] > 0); 
