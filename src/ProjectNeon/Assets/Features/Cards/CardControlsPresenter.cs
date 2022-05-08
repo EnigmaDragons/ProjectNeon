@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public sealed class CardControlsPresenter : OnMessage<BattleStateChanged>
@@ -6,6 +5,7 @@ public sealed class CardControlsPresenter : OnMessage<BattleStateChanged>
     [SerializeField] private BattleState state;
     [SerializeField] private GameObject cycleControl;
     [SerializeField] private GameObject toggleBasicControl;
+    [SerializeField] private GameObject basicSuperFocus;
 
     public void SetActive(bool active)
     {
@@ -21,5 +21,11 @@ public sealed class CardControlsPresenter : OnMessage<BattleStateChanged>
     
     protected override void AfterEnable() => UpdateUi();
     protected override void Execute(BattleStateChanged msg) => UpdateUi();
-    private void UpdateUi() => cycleControl.SetActive(state.NumberOfRecyclesRemainingThisTurn > 0);
+    
+    private void UpdateUi()
+    {
+        Debug.Log($"Basic Super Focus Enabled - {state.BasicSuperFocusEnabled}");
+        cycleControl.SetActive(state.NumberOfRecyclesRemainingThisTurn > 0);
+        basicSuperFocus.SetActive(state.BasicSuperFocusEnabled);
+    }
 }

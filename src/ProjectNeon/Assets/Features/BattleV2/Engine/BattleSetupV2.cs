@@ -129,6 +129,8 @@ public class BattleSetupV2 : MonoBehaviour
         }
         else
             Deck.InitShuffled(cards, rng);
-        yield return playerCardPlayZones.DrawHandAsync(state.PlayerState.CardDraws);
+
+        var cardsToDraw = state.OverrideStartingPlayerCards.Select(numCards => numCards, () => state.PlayerState.CardDraws);
+        yield return playerCardPlayZones.DrawHandAsync(cardsToDraw);
     }
 }
