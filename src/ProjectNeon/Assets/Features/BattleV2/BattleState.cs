@@ -108,6 +108,7 @@ public class BattleState : ScriptableObject
     public Maybe<int> OverrideStartingPlayerCards { get; private set; } = Maybe<int>.Missing();
     public bool ShowSwapCardForBasic { get; private set; } = true;
     public bool AllowRightClickOnCard { get; private set; } = true;
+    public bool BasicSuperFocusEnabled { get; private set; } = false;
 
     public MemberMaterialType MaterialTypeOf(int memberId)
         => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
@@ -130,6 +131,7 @@ public class BattleState : ScriptableObject
         OverrideStartingPlayerCards = Maybe<int>.Missing();
         ShowSwapCardForBasic = true;
         AllowRightClickOnCard = true;
+        BasicSuperFocusEnabled = false;
         DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.Name))}");
     }
 
@@ -145,7 +147,9 @@ public class BattleState : ScriptableObject
         AllowRightClickOnCard = shouldAllow;
         DevLog.Write($"Next Encounter has Allow Swap to Basic {shouldAllow}");
     }
-    
+
+    public void SetBasicSuperFocusEnabled(bool enabled) => UpdateState(() => BasicSuperFocusEnabled = enabled);
+
     private void LogEncounterInfo(bool isElite, int targetPower, int actualPower)
     {
         var factor = actualPower / (float) targetPower;
@@ -456,6 +460,7 @@ public class BattleState : ScriptableObject
     public HeroCharacter GetHeroById(int memberId) => _heroesById[memberId].Character;
     public Dictionary<int, Color> OwnerTints => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Tint);
     public Dictionary<int, Sprite> OwnerBusts => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Bust);
+
     public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
     public Maybe<Transform> GetMaybeTransform(int memberId) => _uiTransformsById.ValueOrMaybe(memberId);
     public AiPreferences GetAiPreferences(int memberId) => _enemiesById.ValueOrMaybe(memberId).Select(e => e.AIPreferences.WithDefaultsBasedOnRole(e.Role), () => new AiPreferences());
