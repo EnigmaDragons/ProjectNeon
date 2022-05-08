@@ -9,8 +9,9 @@ public sealed class EnterSpecificBattle
     public bool IsTutorial { get; }
     public bool ShouldOverrideStartingCards { get; }
     public int OverrideNumStartingCards { get; }
+    public bool AllowBasic { get; }
 
-    public EnterSpecificBattle(GameObject battleField, bool isElite, EnemyInstance[] enemies, bool isStoryEventCombat, bool isTutorial = false, bool shouldOverrideStartingCards = false, int overrideNumStartingCards = -1)
+    public EnterSpecificBattle(GameObject battleField, bool isElite, EnemyInstance[] enemies, bool isStoryEventCombat, bool isTutorial = false, bool shouldOverrideStartingCards = false, int overrideNumStartingCards = -1, bool allowBasic = true)
     {
         BattleField = battleField;
         IsElite = isElite;
@@ -19,5 +20,6 @@ public sealed class EnterSpecificBattle
         IsTutorial = isTutorial;
         ShouldOverrideStartingCards = shouldOverrideStartingCards;
         OverrideNumStartingCards = overrideNumStartingCards;
+        AllowBasic = allowBasic;
     }
 }

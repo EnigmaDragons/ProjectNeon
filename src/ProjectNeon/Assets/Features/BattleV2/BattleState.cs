@@ -20,16 +20,18 @@ public class BattleState : ScriptableObject
     [SerializeField] private AllCards allCards;
     [SerializeField] private BattleRewardState rewards;
 
-    [Header("Next Encounter")]
-    [SerializeField] private GameObject nextBattlegroundPrototype;
+    [Header("Next Encounter")] [SerializeField]
+    private GameObject nextBattlegroundPrototype;
+
     [SerializeField] private EnemyInstance[] nextEnemies;
     [SerializeField] private bool nextIsEliteBattle;
-    
-    [Header("ReadOnly")]
-    [SerializeField, ReadOnly] private List<string> memberNames;
+
+    [Header("ReadOnly")] [SerializeField, ReadOnly]
+    private List<string> memberNames;
+
     [SerializeField, ReadOnly] private int turnNumber;
     [SerializeField, ReadOnly] private PlayerState playerState = new PlayerState();
-    
+
     private List<List<PlayedCardSnapshot>> _playedCardHistory = new List<List<PlayedCardSnapshot>>();
     private readonly CurrentBattleStats _currentBattleStats = new CurrentBattleStats();
     private int _numPlayerDiscardsUsedThisTurn = 0;
@@ -40,9 +42,14 @@ public class BattleState : ScriptableObject
     public BattleV2Phase Phase => phase;
     public int TurnNumber => turnNumber;
     public int NumberOfRecyclesRemainingThisTurn => PlayerState.NumberOfRecyclesRemainingThisTurn;
+
     private int CurrentTurnPartyNonBonusStandardCardPlays => CurrentTurnCardPlays()
         .Count(x => x.Member.TeamType == TeamType.Party && !x.WasTransient && x.Card.Speed == CardSpeed.Standard);
-    public int NumberOfCardPlaysRemainingThisTurn => playerState.CurrentStats.CardPlays() - CurrentTurnPartyNonBonusStandardCardPlays - _numPlayerDiscardsUsedThisTurn;
+
+    public int NumberOfCardPlaysRemainingThisTurn => playerState.CurrentStats.CardPlays() -
+                                                     CurrentTurnPartyNonBonusStandardCardPlays -
+                                                     _numPlayerDiscardsUsedThisTurn;
+
     public PlayedCardSnapshot[] CurrentTurnCardPlays() => _playedCardHistory.Any()
         ? _playedCardHistory.Last().ToArray()
         : Array.Empty<PlayedCardSnapshot>();
@@ -54,7 +61,7 @@ public class BattleState : ScriptableObject
     public int RewardClinicVouchers => adventure.Adventure.BattleRewardClinicVouchers;
     public CardTypeData[] RewardCards => rewards.RewardCards;
     public Equipment[] RewardEquipments => rewards.RewardEquipments;
-    
+
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
     public EnemyInstance[] NextEncounterEnemies => nextEnemies.ToArray();
     public int Stage => adventureProgress.AdventureProgress.CurrentChapterNumber;
@@ -71,15 +78,21 @@ public class BattleState : ScriptableObject
     public Member[] MembersWithoutIds => Members.Values.ToArray();
     public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
     public Member[] EnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
-    public Member[] ConsciousEnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies && x.IsConscious()).ToArray();
-    public (Member Member, EnemyInstance Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
+
+    public Member[] ConsciousEnemyMembers =>
+        Members.Values.Where(x => x.TeamType == TeamType.Enemies && x.IsConscious()).ToArray();
+
+    public (Member Member, EnemyInstance Enemy)[] Enemies =>
+        EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
+
     public PlayerState PlayerState => playerState;
     public AllCards AllCards => allCards;
     public BattleReactions Reactions { get; private set; }
+
     public int BattleRngSeed => adventureProgress.HasActiveAdventure
         ? adventureProgress.AdventureProgress.RngSeed
         : Rng.NewSeed();
-    
+
     private Dictionary<int, EnemyInstance> _enemiesById = new Dictionary<int, EnemyInstance>();
     private Dictionary<int, Hero> _heroesById = new Dictionary<int, Hero>();
     private Dictionary<int, Member> _membersById = new Dictionary<int, Member>();
@@ -88,14 +101,17 @@ public class BattleState : ScriptableObject
     private EnemyInstance[] _battleStartingEnemies;
     private BattleAttritionTracker _tracker;
 
+    // Tutorial State. Pretty hacky.
     public bool IsStoryEventCombat { get; private set; }
     public bool DontShuffleNextBattle { get; set; } // Weird to let something else set this
     public bool IsTutorialCombat { get; private set; }
     public Maybe<int> OverrideStartingPlayerCards { get; private set; } = Maybe<int>.Missing();
-    
-    public MemberMaterialType MaterialTypeOf(int memberId) 
+    public bool ShowSwapCardForBasic { get; private set; } = true;
+    public bool AllowRightClickOnCard { get; private set; } = true;
+
+    public MemberMaterialType MaterialTypeOf(int memberId)
         => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
-    
+
     // Setup
 
     public void SetNextBattleground(GameObject prototype)
@@ -104,13 +120,16 @@ public class BattleState : ScriptableObject
         DevLog.Write($"Next Battlefield is {prototype.name}");
     }
 
-    public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false, bool isStoryEventCombat = false, bool isTutorialCombat = false)
+    public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false, bool isStoryEventCombat = false,
+        bool isTutorialCombat = false)
     {
         nextEnemies = e.ToArray();
         nextIsEliteBattle = isElite;
         IsStoryEventCombat = isStoryEventCombat;
         IsTutorialCombat = isTutorialCombat;
         OverrideStartingPlayerCards = Maybe<int>.Missing();
+        ShowSwapCardForBasic = true;
+        AllowRightClickOnCard = true;
         DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.Name))}");
     }
 
@@ -118,6 +137,13 @@ public class BattleState : ScriptableObject
     {
         OverrideStartingPlayerCards = cardCount;
         DevLog.Write($"Next Encounter has {cardCount} Starting Cards");
+    }
+
+    public void SetAllowSwapToBasic(bool shouldAllow)
+    {
+        ShowSwapCardForBasic = shouldAllow;
+        AllowRightClickOnCard = shouldAllow;
+        DevLog.Write($"Next Encounter has Allow Swap to Basic {shouldAllow}");
     }
     
     private void LogEncounterInfo(bool isElite, int targetPower, int actualPower)
@@ -135,7 +161,6 @@ public class BattleState : ScriptableObject
         isEliteBattle = nextIsEliteBattle;
         nextEnemies = new EnemyInstance[0];
         nextIsEliteBattle = false;
-        OverrideStartingPlayerCards = Maybe<int>.Missing();
     }
 
     private void LogEncounterInfo()

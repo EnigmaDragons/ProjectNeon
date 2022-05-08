@@ -139,8 +139,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _getCanActivate = getCanActivate;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _onRightClick = _isHand ? ToggleAsBasic : (Action)card.ShowDetailedCardView;
-        controls.SetCanToggleBasic(_isHand && card.Owner.BasicCard.IsPresent);
+        _onRightClick =_isHand
+            ? battleState.AllowRightClickOnCard
+                ? ToggleAsBasic
+                : (Action)(() => { })
+            : card.ShowDetailedCardView;
+        controls.SetCanToggleBasic(_isHand && battleState.ShowSwapCardForBasic && card.Owner.BasicCard.IsPresent);
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
     }

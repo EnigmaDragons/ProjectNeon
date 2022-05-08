@@ -49,9 +49,10 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
             eventPublisher.ActivatePartyDetailsWizardFlow();
         }
 
-        if (msg.ShouldOverrideStartingCards)
-        {
+        if (msg.ShouldOverrideStartingCards) 
             battleState.SetNextBattleStartingCardCount(msg.OverrideNumStartingCards);
-        }
+
+        if (!msg.AllowBasic) 
+            battleState.SetAllowSwapToBasic(msg.AllowBasic);
     }
 }
