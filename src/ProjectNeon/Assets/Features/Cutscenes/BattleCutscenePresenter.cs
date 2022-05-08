@@ -14,6 +14,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
 
     public IEnumerator Begin()
     {
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false));
         disableOnStarted.ForEach(d => d.SetActive(false));
         enableOnStarted.ForEach(d => d.SetActive(true));
         Characters.Clear();
@@ -53,6 +54,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
         enableOnFinished.ForEach(d => d.SetActive(true));
         MessageGroup.TerminateAndClear();
         cutscene.FinishStartBattleCutscene();
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true));
         Message.Publish(new StartCardSetupRequested());
     }
 }
