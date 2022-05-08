@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class BattleCutscenePresenter : BaseCutscenePresenter
@@ -11,7 +12,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
     [SerializeField] private GameObject[] enableOnFinished;
     [SerializeField] private StringReference[] heroAliases;
 
-    public void Begin()
+    public IEnumerator Begin()
     {
         disableOnStarted.ForEach(d => d.SetActive(false));
         enableOnStarted.ForEach(d => d.SetActive(true));
@@ -32,6 +33,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
             Characters.Add(enemies[i]);
         }
         DebugLog($"Num Cutscene Segments {cutscene.StartBattleCutscene.Segments.Length}");
+        yield return new WaitForSeconds(1f);
         MessageGroup.Start(
             new MultiplePayloads("Cutscene Script", cutscene.StartBattleCutscene.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
             () => Message.Publish(new CutsceneFinished()));

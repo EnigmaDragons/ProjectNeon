@@ -18,10 +18,7 @@ public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : MonoBehaviour
         else if (!d.IsLicensedBenefactor && !useNewTutorialFlow.Value)
             Message.Publish(new StartCutsceneRequested(cutscene, Maybe<Action>.Present(() => navigator.NavigateToAcademyScene())));
         else if (!d.IsLicensedBenefactor && useNewTutorialFlow.Value)
-        {
-            adventure.Adventure = tutorialAdventure;
-            navigator.NavigateToGameScene();
-        }
+            Message.Publish(new StartAdventureV5Requested(tutorialAdventure));
         else if (!d.HasCompletedWelcomeToMetroplexCutscene)
             entranceCutsceneStarter.Execute();
         else

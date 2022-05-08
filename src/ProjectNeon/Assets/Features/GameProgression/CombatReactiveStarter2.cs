@@ -38,6 +38,11 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
         Log.Info("Setting Up Specific Battle");
         battleState.SetNextBattleground(msg.BattleField);
         battleState.SetNextEncounter(msg.Enemies, msg.IsElite, msg.IsStoryEventCombat, msg.IsTutorial);
+        if (msg.ShouldOverrideStartingCards) 
+            battleState.SetNextBattleStartingCardCount(msg.OverrideNumStartingCards);
+
+        if (!msg.AllowBasic) 
+            battleState.SetAllowSwapToBasic(msg.AllowBasic);
         if (msg.IsTutorial)
         {
             battleState.DontShuffleNextBattle = true;
@@ -48,11 +53,5 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
             battleState.DontShuffleNextBattle = false;
             eventPublisher.ActivatePartyDetailsWizardFlow();
         }
-
-        if (msg.ShouldOverrideStartingCards) 
-            battleState.SetNextBattleStartingCardCount(msg.OverrideNumStartingCards);
-
-        if (!msg.AllowBasic) 
-            battleState.SetAllowSwapToBasic(msg.AllowBasic);
     }
 }

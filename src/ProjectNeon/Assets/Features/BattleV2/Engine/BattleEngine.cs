@@ -48,7 +48,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         if (cutscene.HasStartBattleCutscene)
         {
             BeginPhase(BattleV2Phase.Cutscene);
-            battleCutscenePresenter.Begin();
+            yield return battleCutscenePresenter.Begin();
         }
         else
         {

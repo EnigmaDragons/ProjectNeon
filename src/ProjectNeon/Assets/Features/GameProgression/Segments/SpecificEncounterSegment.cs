@@ -10,6 +10,7 @@ public class SpecificEncounterSegment : StageSegment
     [SerializeField] private CurrentAdventureProgress currentAdventureProgress;
     [SerializeField] private MapNodeType mapNodeType;
     [SerializeField] private Cutscene cutscene;
+    [SerializeField] private bool shouldAutoStart = false;
     
     [Header("Tutorial Settings")]
     [SerializeField] private bool isTutorial;
@@ -19,7 +20,7 @@ public class SpecificEncounterSegment : StageSegment
 
     public override string Name => "Specific Encounter";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
-    public override bool ShouldAutoStart => false;
+    public override bool ShouldAutoStart => shouldAutoStart;
     public override Maybe<string> Detail => Maybe<string>.Missing();
     public override Maybe<string> Corp => Maybe<string>.Missing();
     public override MapNodeType MapNodeType => 
