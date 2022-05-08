@@ -6,10 +6,11 @@ public class DeckCountUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrent
     [SerializeField] private TextMeshProUGUI deckCount;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private IntReference deckSize;
+    [SerializeField] private string prefix = "";
 
     private void UpdateCount()
     {
-        deckCount.text = $"Deck Size {state.SelectedHeroesDeck.Deck.Count}/{deckSize.Value}";
+        deckCount.text = $"{prefix} {state.SelectedHeroesDeck.Deck.Count}/{deckSize.Value}".Trim();
     }
 
     protected override void Execute(DeckBuilderHeroSelected msg) => UpdateCount();
