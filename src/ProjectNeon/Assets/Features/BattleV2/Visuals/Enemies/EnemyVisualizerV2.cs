@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using UnityEngine;
 
-public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequested, ShowHeroBattleThought>
+public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequested, ShowHeroBattleThought, SetEnemiesUiVisibility>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
@@ -187,7 +186,12 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(s.Hide, 1.8f)));
         s.Proceed(true);
     }
-    
+
+    protected override void Execute(SetEnemiesUiVisibility msg)
+    {
+        uis.ForEach(u => u.gameObject.SetActive(msg.ShouldShow));
+    }
+
     private IEnumerator ExecuteAfterDelayRealtime(Action a, float delay)
     {
         yield return new WaitForSecondsRealtime(delay);
