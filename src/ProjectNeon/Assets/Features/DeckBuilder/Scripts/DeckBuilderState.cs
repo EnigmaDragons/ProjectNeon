@@ -6,8 +6,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameState/DeckBuilder")]
 public class DeckBuilderState : ScriptableObject
 {
+    [SerializeField] private IntReference deckSize;
+    
     private HeroesDeck _selectedHeroesDeck;
 
+    public bool AllHeroDecksAreValid => HeroesDecks.All(h => h.Deck.Count == deckSize);
+    public bool SelectedHeroDeckIsValid => SelectedHeroesDeck.Deck.Count == deckSize;
+    
     public List<HeroesDeck> HeroesDecks { get; set; }
     
     public bool ShowFormulas { get; set; } = false;
