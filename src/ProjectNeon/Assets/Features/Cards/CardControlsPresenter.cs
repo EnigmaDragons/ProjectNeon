@@ -24,7 +24,6 @@ public sealed class CardControlsPresenter : OnMessage<BattleStateChanged>
     
     private void UpdateUi()
     {
-        Debug.Log($"Basic Super Focus Enabled - {state.BasicSuperFocusEnabled}");
         cycleControl.SetActive(state.NumberOfRecyclesRemainingThisTurn > 0);
         basicSuperFocus.SetActive(state.BasicSuperFocusEnabled);
     }
