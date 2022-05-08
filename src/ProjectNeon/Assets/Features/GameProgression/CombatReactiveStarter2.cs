@@ -48,5 +48,10 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
             battleState.DontShuffleNextBattle = false;
             eventPublisher.ActivatePartyDetailsWizardFlow();
         }
+
+        if (msg.ShouldOverrideStartingCards)
+        {
+            battleState.SetNextBattleStartingCardCount(msg.OverrideNumStartingCards);
+        }
     }
 }

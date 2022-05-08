@@ -91,6 +91,7 @@ public class BattleState : ScriptableObject
     public bool IsStoryEventCombat { get; private set; }
     public bool DontShuffleNextBattle { get; set; } // Weird to let something else set this
     public bool IsTutorialCombat { get; private set; }
+    public Maybe<int> OverrideStartingPlayerCards { get; private set; } = Maybe<int>.Missing();
     
     public MemberMaterialType MaterialTypeOf(int memberId) 
         => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
@@ -109,7 +110,14 @@ public class BattleState : ScriptableObject
         nextIsEliteBattle = isElite;
         IsStoryEventCombat = isStoryEventCombat;
         IsTutorialCombat = isTutorialCombat;
+        OverrideStartingPlayerCards = Maybe<int>.Missing();
         DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.Name))}");
+    }
+
+    public void SetNextBattleStartingCardCount(int cardCount)
+    {
+        OverrideStartingPlayerCards = cardCount;
+        DevLog.Write($"Next Encounter has {cardCount} Starting Cards");
     }
     
     private void LogEncounterInfo(bool isElite, int targetPower, int actualPower)
@@ -127,7 +135,7 @@ public class BattleState : ScriptableObject
         isEliteBattle = nextIsEliteBattle;
         nextEnemies = new EnemyInstance[0];
         nextIsEliteBattle = false;
-        
+        OverrideStartingPlayerCards = Maybe<int>.Missing();
     }
 
     private void LogEncounterInfo()

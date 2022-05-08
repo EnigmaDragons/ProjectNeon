@@ -7,13 +7,17 @@ public sealed class EnterSpecificBattle
     public EnemyInstance[] Enemies { get; }
     public bool IsStoryEventCombat { get; }
     public bool IsTutorial { get; }
+    public bool ShouldOverrideStartingCards { get; }
+    public int OverrideNumStartingCards { get; }
 
-    public EnterSpecificBattle(GameObject battleField, bool isElite, EnemyInstance[] enemies, bool isStoryEventCombat, bool isTutorial = false)
+    public EnterSpecificBattle(GameObject battleField, bool isElite, EnemyInstance[] enemies, bool isStoryEventCombat, bool isTutorial = false, bool shouldOverrideStartingCards = false, int overrideNumStartingCards = -1)
     {
         BattleField = battleField;
         IsElite = isElite;
         Enemies = enemies;
         IsStoryEventCombat = isStoryEventCombat;
         IsTutorial = isTutorial;
+        ShouldOverrideStartingCards = shouldOverrideStartingCards;
+        OverrideNumStartingCards = overrideNumStartingCards;
     }
 }
