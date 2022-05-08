@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeckCountUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckChanged>
 {
@@ -7,12 +8,26 @@ public class DeckCountUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrent
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private IntReference deckSize;
     [SerializeField] private string prefix = "";
+    [SerializeField] private Image statusTintTarget;
+    [SerializeField] private Color invalidStatusColor;
+    
+    private Color _originalColor;
 
-    private void UpdateCount()
+    protected override void AfterEnable()
     {
-        deckCount.text = $"{prefix} {state.SelectedHeroesDeck.Deck.Count}/{deckSize.Value}".Trim();
+        if (statusTintTarget == null)
+            return;
+
+        _originalColor = statusTintTarget.color;
     }
 
-    protected override void Execute(DeckBuilderHeroSelected msg) => UpdateCount();
-    protected override void Execute(DeckBuilderCurrentDeckChanged msg) => UpdateCount();
+    private void Render()
+    {
+        deckCount.text = $"{prefix} {state.SelectedHeroesDeck.Deck.Count}/{deckSize.Value}".Trim();
+        if (statusTintTarget != null)
+            statusTintTarget.color = state.SelectedHeroDeckIsValid ? _originalColor : invalidStatusColor;
+    }
+
+    protected override void Execute(DeckBuilderHeroSelected msg) => Render();
+    protected override void Execute(DeckBuilderCurrentDeckChanged msg) => Render();
 }
