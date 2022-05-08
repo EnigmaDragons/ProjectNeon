@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using UnityEngine;
 
-public class NavigateToAcademyOrTitleOrWelcomeCutscene : MonoBehaviour
+public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : MonoBehaviour
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private Cutscene cutscene;
@@ -10,7 +10,9 @@ public class NavigateToAcademyOrTitleOrWelcomeCutscene : MonoBehaviour
     public void Execute()
     {
         var d = CurrentAcademyData.Data;
-        if (!d.IsLicensedBenefactor)
+        if (!d.HasConfiguredSettings)
+            navigator.NavigateToSettingsScene();
+        else if (!d.IsLicensedBenefactor)
             Message.Publish(new StartCutsceneRequested(cutscene, Maybe<Action>.Present(() => navigator.NavigateToAcademyScene())));
         else if (!d.HasCompletedWelcomeToMetroplexCutscene)
             entranceCutsceneStarter.Execute();
