@@ -7,12 +7,14 @@ public class AcademyDataSnapshot
 {
     public bool IsLicensedBenefactor { get; private set; }
     public List<string> CompletedTutorials { get; private set; }
+    public bool HasConfiguredSettings { get; private set; }
     public bool HasCompletedWelcomeToMetroplexCutscene { get; private set; }
 
     public AcademyDataSnapshot(AcademyData src)
     {
         IsLicensedBenefactor = src.IsLicensedBenefactor;
         CompletedTutorials = src.TutorialData.CompletedTutorialNames.ToList();
+        HasConfiguredSettings = src.HasConfiguredSettings;
         HasCompletedWelcomeToMetroplexCutscene = src.HasCompletedWelcomeToMetroplexCutscene;
     }
 }
@@ -21,6 +23,7 @@ public class AcademyDataSnapshot
 public class AcademyData
 {
     public AcademyTutorialData TutorialData = new AcademyTutorialData();
+    public bool HasConfiguredSettings = false;
     public bool HasCompletedWelcomeToMetroplexCutscene = false;
     
     public static List<string> RequiredLicenseTutorials = new List<string>
