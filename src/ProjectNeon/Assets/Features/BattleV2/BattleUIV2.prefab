@@ -1105,6 +1105,7 @@ GameObject:
   - component: {fileID: 325210002661469019}
   - component: {fileID: 6709270935040684346}
   - component: {fileID: 843903515366541529}
+  - component: {fileID: 3045489316334639011}
   m_Layer: 5
   m_Name: ToggleLogButton
   m_TagString: Untagged
@@ -1266,6 +1267,34 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 3045489316334639011}
+          m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
+          m_MethodName: Show
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3045489316334639011}
+          m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
+          m_MethodName: Hide
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &843903515366541529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,6 +1311,19 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
+--- !u!114 &3045489316334639011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945749596453154519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: Toggle Battle Log
 --- !u!1 &3641779309417327841
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,6 +1709,7 @@ GameObject:
   - component: {fileID: 6822798566737510892}
   - component: {fileID: 341878008758778596}
   - component: {fileID: 5415236864237345804}
+  - component: {fileID: 8760847299875079621}
   m_Layer: 5
   m_Name: ToggleMenuButton
   m_TagString: Untagged
@@ -1844,6 +1887,47 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 8760847299875079621}
+          m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
+          m_MethodName: Show
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8760847299875079621}
+          m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
+          m_MethodName: Hide
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &8760847299875079621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4349093701420402364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: Open Game Menu
 --- !u!1 &4448769814096526193
 GameObject:
   m_ObjectHideFlags: 0
@@ -3252,6 +3336,7 @@ GameObject:
   - component: {fileID: 7100763177291325287}
   - component: {fileID: 7230178423911063440}
   - component: {fileID: 4247455616185417491}
+  - component: {fileID: 8421457867964468217}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -3414,6 +3499,34 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 8421457867964468217}
+          m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
+          m_MethodName: Show
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8421457867964468217}
+          m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
+          m_MethodName: Hide
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &4247455616185417491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3430,6 +3543,19 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
+--- !u!114 &8421457867964468217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471804755952166628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: Change Battle Speed
 --- !u!1 &8621732298528678625
 GameObject:
   m_ObjectHideFlags: 0
@@ -4452,6 +4578,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb8b9149a706d88409323b89578ad513, type: 3}
+--- !u!4 &3072995381961361377 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8061764282782556941, guid: eb8b9149a706d88409323b89578ad513, type: 3}
+  m_PrefabInstance: {fileID: 4991214214951904492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2302279183736993579 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6536706966725448647, guid: eb8b9149a706d88409323b89578ad513, type: 3}
+  m_PrefabInstance: {fileID: 4991214214951904492}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5901881830582814465 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1487288089447375853, guid: eb8b9149a706d88409323b89578ad513, type: 3}
@@ -4463,16 +4599,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9d15bc3c5541819356c5a05e702017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &3072995381961361377 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8061764282782556941, guid: eb8b9149a706d88409323b89578ad513, type: 3}
-  m_PrefabInstance: {fileID: 4991214214951904492}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2302279183736993579 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6536706966725448647, guid: eb8b9149a706d88409323b89578ad513, type: 3}
-  m_PrefabInstance: {fileID: 4991214214951904492}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6029858674252801991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5390,6 +5516,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3451b23bfd07bb04fba069d28a6c2827, type: 3}
+--- !u!224 &1045856409360972380 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8134241471560018986, guid: 3451b23bfd07bb04fba069d28a6c2827, type: 3}
+  m_PrefabInstance: {fileID: 9106561405491041910}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8594580844033786293 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 659518841420879811, guid: 3451b23bfd07bb04fba069d28a6c2827, type: 3}
@@ -5401,8 +5532,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dafa42163a047e3b467e73aeadc1a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &1045856409360972380 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8134241471560018986, guid: 3451b23bfd07bb04fba069d28a6c2827, type: 3}
-  m_PrefabInstance: {fileID: 9106561405491041910}
-  m_PrefabAsset: {fileID: 0}
