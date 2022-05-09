@@ -10,14 +10,14 @@ public class DeckBuilderState : ScriptableObject
     
     private HeroesDeck _selectedHeroesDeck;
 
-    public bool AllHeroDecksAreValid => HeroesDecks.All(h => h.Deck.Count == deckSize);
+    public bool AllHeroDecksAreValid => HeroesDecks != null && HeroesDecks.Any() && HeroesDecks.Where(h => h != null).All(h => h.Deck.Count == deckSize);
     public bool SelectedHeroDeckIsValid => SelectedHeroesDeck.Deck.Count == deckSize;
-    
-    public List<HeroesDeck> HeroesDecks { get; set; }
+
+    public List<HeroesDeck> HeroesDecks { get; set; } = new List<HeroesDeck>();
     
     public bool ShowFormulas { get; set; } = false;
     public Rarity[] ShowRarities { get; set; } = {Rarity.Basic, Rarity.Common, Rarity.Rare, Rarity.Epic, Rarity.Starter};
-    public string[] ShowArchetypes { get; set; }
+    public string[] ShowArchetypes { get; set; } = new string [0];
     public EquipmentSlot[] ShowEquipmentSlots { get; set; } = new EquipmentSlot[0];
 
     public HeroCharacter SelectedHeroCharacter => SelectedHeroesDeck.Hero.Character;
@@ -34,5 +34,5 @@ public class DeckBuilderState : ScriptableObject
         }
     }
 
-    public Action OnDeckbuilderClosedAction { get; set; }
+    public Action OnDeckbuilderClosedAction { get; set; } = () => { };
 }
