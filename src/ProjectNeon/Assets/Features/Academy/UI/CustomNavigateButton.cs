@@ -16,9 +16,12 @@ public class CustomNavigateButton : OnMessage<AcademyDataUpdated>
     private void Render()
     {
         var data = CurrentAcademyData.Data;
+        var wasActive = button.gameObject.activeSelf;
         if (data.HasCompletedWelcomeToMetroplexCutscene)
             button.Init("Proceed", navigator.NavigateToTitleScreen);
         else
             button.Init("Proceed", cutscene.Execute);
+        if (!wasActive)
+            button.Hide();
     }
 }

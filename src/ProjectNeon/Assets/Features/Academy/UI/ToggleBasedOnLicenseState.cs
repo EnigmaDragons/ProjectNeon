@@ -14,14 +14,15 @@ public class ToggleBasedOnLicenseState : OnMessage<AcademyDataUpdated>
 
     private void Render(bool shouldAnimate)
     {
-        Log.Info(nameof(ToggleBasedOnLicenseState));
         var data = CurrentAcademyData.Data;
         var shouldBeEnabled = data.IsLicensedBenefactor;
         var changed = _isEnabled != shouldBeEnabled;
         _isEnabled = shouldBeEnabled;
+        var canBeTurnedOn = shouldBeEnabled && (!requiresCompletedEntranceCutscene || data.HasCompletedWelcomeToMetroplexCutscene);
+        Log.Info($"{nameof(ToggleBasedOnLicenseState)} - IsLicensedBenefactor {data.IsLicensedBenefactor} - Enabled {shouldBeEnabled} - Can Be Turned On {canBeTurnedOn}", gameObject);
         turnOnTargets.ForEach(t =>
         {
-            t.SetActive(shouldBeEnabled && !requiresCompletedEntranceCutscene || data.HasCompletedWelcomeToMetroplexCutscene);
+            t.SetActive(canBeTurnedOn);
             if (!shouldAnimate || !shouldBeEnabled || !changed) return;
             
             Message.Publish(new TweenMovementRequested(t.transform, new Vector3(0.56f, 0.56f, 0.56f), 1, MovementDimension.Scale));
