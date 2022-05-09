@@ -13,6 +13,7 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     private bool _hasTargetedEnemy;
     private float _timeTilPrompt;
     private bool _firstCardResolved;
+    private bool _firstEnemyCardResolved;
     
     private void Start()
     {
@@ -86,10 +87,15 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
 
     protected override void Execute(CardResolutionStarted msg)
     {
-        if (!_firstCardResolved)
+        if (!_firstCardResolved && msg.Originator == 1)
         {
             _firstCardResolved = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true));
+        }
+        if (!_firstEnemyCardResolved && msg.Originator == 4)
+        {
+            _firstEnemyCardResolved = true;
+            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, true));
         }
     }
 }
