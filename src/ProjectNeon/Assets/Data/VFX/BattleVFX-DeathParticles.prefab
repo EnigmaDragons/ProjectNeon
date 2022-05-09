@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6377193434840174837}
   - component: {fileID: 8434106395033755611}
   - component: {fileID: -5468912016453280684}
+  - component: {fileID: 4745293697319008397}
   m_Layer: 0
   m_Name: BattleVFX-DeathParticles
   m_TagString: Untagged
@@ -4897,3 +4898,18 @@ MonoBehaviour:
   durationSeconds: 2
   maxLifetime: 2
   waitForCompletion: 1
+--- !u!114 &4745293697319008397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891505460145422625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/BattleScene/CHAR_DEATH
+  PlayOnAwake: 1
+  PlayOnDestroy: 0
