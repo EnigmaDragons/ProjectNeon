@@ -34,6 +34,11 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         Message.Subscribe<HideCharacterRequested>(Execute, this);
         Message.Subscribe<ShowCharacterRequested>(Execute, this);
     }
+
+    private void OnDisable()
+    {
+        Message.Unsubscribe(this);
+    }
     
     private void Execute(CutsceneWaitRequested msg)
     {
