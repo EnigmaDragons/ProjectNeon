@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNewGameRequested>
+public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNewGameRequested, StartAdventureV5Requested>
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private SaveLoadSystem io;
@@ -75,11 +75,14 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             Message.Publish(new GameStarted());
             navigator.NavigateToGameSceneV4();
         }
-    } 
+    }
+
+    private void StartDefaultAdventureV5() => StartAdventureV5(defaultAdventure);
     
-    private void StartDefaultAdventureV5()
+    protected override void Execute(StartAdventureV5Requested msg) => StartAdventureV5(msg.Adventure);
+
+    private void StartAdventureV5(Adventure adventure)
     {
-        var adventure = defaultAdventure;
         var startingSegment = 0;
         adventureProgress.AdventureProgress = adventureProgress5;
         adventureProgress.AdventureProgress.Init(adventure, 0, startingSegment);
@@ -95,7 +98,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         });
         Message.Publish(new GameStarted());
         navigator.NavigateToGameSceneV5();
-    } 
+    }
 
     protected override void Execute(ContinueCurrentGame msg)
     {

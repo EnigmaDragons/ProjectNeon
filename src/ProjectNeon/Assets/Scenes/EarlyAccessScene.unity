@@ -656,6 +656,7 @@ GameObject:
   - component: {fileID: 1079700323}
   - component: {fileID: 1079700324}
   - component: {fileID: 1079700325}
+  - component: {fileID: 1079700326}
   m_Layer: 5
   m_Name: EarlyAccessUi
   m_TagString: Untagged
@@ -767,8 +768,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1079700324}
-        m_TargetAssemblyTypeName: NavigateToAcademyOrTitle, GameAssembly
+      - m_Target: {fileID: 1079700326}
+        m_TargetAssemblyTypeName: NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene,
+          GameAssembly
         m_MethodName: Execute
         m_Mode: 1
         m_Arguments:
@@ -806,9 +808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2beaeb7f854a90a1020ad6aa74b590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
-  cutscene: {fileID: 11400000, guid: 602acc8818d69aa47b360c80898bac90, type: 2}
-  entranceCutsceneStarter: {fileID: 1079700325}
 --- !u!114 &1079700325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -823,6 +822,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutscene: {fileID: 11400000, guid: 5636127e9804d4a48826330847a64eaa, type: 2}
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
+--- !u!114 &1079700326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079700318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c217342eb0d84f568eb71b3a72711a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
+  cutscene: {fileID: 11400000, guid: 602acc8818d69aa47b360c80898bac90, type: 2}
+  entranceCutsceneStarter: {fileID: 1079700325}
+  useNewTutorialFlow:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 40d1180b9d71c5447b077e06e1d3c357, type: 2}
+  adventure: {fileID: 11400000, guid: 62e84d9ce18ccb747b8d7d0083704709, type: 2}
+  tutorialAdventure: {fileID: 11400000, guid: 33573d05bf3281c49ba648958ee7cf7f, type: 2}
 --- !u!1001 &1080228670
 PrefabInstance:
   m_ObjectHideFlags: 0

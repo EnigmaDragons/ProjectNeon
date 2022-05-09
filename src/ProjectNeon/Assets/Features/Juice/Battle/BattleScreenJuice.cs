@@ -15,7 +15,10 @@ public class BattleScreenJuice : OnMessage<EffectResolved>
     
     protected override void Execute(EffectResolved msg)
     {
-        if (msg.BattleAfter.Phase == BattleV2Phase.Setup || msg.BattleAfter.Phase == BattleV2Phase.NotBegun)
+        if (msg.BattleAfter.Phase == BattleV2Phase.SetupCharacters 
+         || msg.BattleAfter.Phase == BattleV2Phase.Cutscene 
+         || msg.BattleAfter.Phase == BattleV2Phase.SetupPlayerCards 
+         || msg.BattleAfter.Phase == BattleV2Phase.NotBegun)
             return;
         
         var actionResultSummary = 0;

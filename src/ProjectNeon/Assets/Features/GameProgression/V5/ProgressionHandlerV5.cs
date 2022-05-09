@@ -5,7 +5,10 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
     [SerializeField] private AdventureProgressV5 progress;
     [SerializeField] private CurrentMapSegmentV5 map;
 
-    private void Start() => Go();
+    private void Start()
+    {
+        Go();
+    } 
 
     protected override void Execute(NodeFinished msg)
     {

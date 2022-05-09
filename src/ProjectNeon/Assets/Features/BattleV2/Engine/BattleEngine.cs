@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, ResolutionsFinished, CardAndEffectsResolutionFinished>
+public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, ResolutionsFinished, CardAndEffectsResolutionFinished, StartCardSetupRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones cards;
@@ -17,6 +17,8 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private CardResolutionZone resolutionZone;
     [SerializeField] private bool logProcessSteps;
     [SerializeField] private bool setupOnStart;
+    [SerializeField] private CurrentCutscene cutscene;
+    [SerializeField] private BattleCutscenePresenter battleCutscenePresenter;
 
     private bool _triggeredBattleFinish;
     private bool _playerTurnConfirmed = false;
@@ -39,14 +41,29 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     
     private IEnumerator ExecuteSetupAsync()
     {
-        BeginPhase(BattleV2Phase.Setup);
+        BeginPhase(BattleV2Phase.SetupCharacters);
         BattleLog.Write("Battle Setup Begun");
         _triggeredBattleFinish = false;
-        yield return setup.Execute();
+        yield return setup.ExecuteCharacters();
+        if (cutscene.HasStartBattleCutscene)
+        {
+            BeginPhase(BattleV2Phase.Cutscene);
+            yield return battleCutscenePresenter.Begin();
+        }
+        else
+        {
+            yield return ExecuteCardSetupAsync();
+        }
+    }
+    
+    private IEnumerator ExecuteCardSetupAsync()
+    {
+        BeginPhase(BattleV2Phase.SetupPlayerCards);
+        yield return setup.ExecuteCards();
         BattleLog.Write("Battle Started");
         BeginStartOfTurn();
     }
-
+    
     private void BeginStartOfTurn()
     {
         BattleLog.Write($"--------------  Turn {state.TurnNumber}  --------------");
@@ -113,6 +130,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
 
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
     protected override void Execute(CardAndEffectsResolutionFinished msg) => ResolveBattleFinishedOrExecute(() => Message.Publish(new CheckForAutomaticTurnEnd()));
+    protected override void Execute(StartCardSetupRequested msg) => StartCoroutine(ExecuteCardSetupAsync());
 
     protected override void Execute(ResolutionsFinished msg)
     {

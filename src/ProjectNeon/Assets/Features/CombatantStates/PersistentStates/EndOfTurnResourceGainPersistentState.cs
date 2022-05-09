@@ -13,12 +13,5 @@ public class EndOfTurnResourceGainPersistentState : IPersistentState
     }
     
     public void OnTurnStart() {}
-    public void OnTurnEnd()
-    {
-        if (_qty.Amount == 0)
-            return;
-        
-        BattleLog.Write($"{_member.Name} gained {_qty}");
-        _member.State.Gain(_qty, _partyState);
-    }
+    public void OnTurnEnd() => _member.State.ChangeResource(_qty, _partyState);
 }

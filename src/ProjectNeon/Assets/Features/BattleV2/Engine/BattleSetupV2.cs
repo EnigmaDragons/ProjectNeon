@@ -48,25 +48,29 @@ public class BattleSetupV2 : MonoBehaviour
     public void InitEncounter(IEnumerable<EnemyInstance> enemies) => enemyArea.Initialized(enemies);
     public void InitRng(DeterministicRng rng) => _battleRng = rng;
 
-    public IEnumerator Execute()
+    public IEnumerator ExecuteCharacters()
     {
         state.CleanupIfNeeded();
         state.Init();
         ClearResolutionZone();
         SetupEnemyEncounter();
         yield return visuals.Setup(); // Could Animate
-        Message.Publish(new PlayerDeckShuffled()); // Play sound early for flow
-        
+
         playerCardPlayZones.ClearAll();
         var enemies = state.FinishSetup();
         visuals.Setup2(enemies);
         visuals.AfterBattleStateInitialized();
-        
         ui.Setup();
+        DevLog.Write("Finished Character Setup");
+    }
+    
+    public IEnumerator ExecuteCards()
+    {
+        Message.Publish(new PlayerDeckShuffled()); // Play sound early for flow
         yield return new WaitForSeconds(0.1f);
         yield return SetupPlayerCards();
         yield return new WaitForSeconds(1.05f);
-        DevLog.Write("Finished Battle Setup");
+        DevLog.Write("Finished Card Setup");
     }
 
     private void ClearResolutionZone()
@@ -112,19 +116,20 @@ public class BattleSetupV2 : MonoBehaviour
             var hero = party.BaseHeroes[i];
             if (hero == null || hero.Name.Equals(""))
                  continue;
+
+            var cardTypes = state.OverrideDeck == null ? party.Decks[i].Cards : state.OverrideDeck.Cast<CardTypeData>();
             
-            cards.AddRange(party.Decks[i].Cards.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero), hero.Tint, hero.Bust)));
+            cards.AddRange(cardTypes.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero), hero.Tint, hero.Bust)));
         }
 
         DevLog.Write($"Setting Up Player Hand - Should Shuffle {!state.DontShuffleNextBattle} - Rng Seed {state.BattleRngSeed}");
         var rng = _battleRng ?? new DeterministicRng(state.BattleRngSeed);
         if (state.DontShuffleNextBattle)
-        {
             Deck.Init(cards);
-            state.DontShuffleNextBattle = false;
-        }
         else
             Deck.InitShuffled(cards, rng);
-        yield return playerCardPlayZones.DrawHandAsync(state.PlayerState.CardDraws);
+
+        var cardsToDraw = state.OverrideStartingPlayerCards.Select(numCards => numCards, () => state.PlayerState.CardDraws);
+        yield return playerCardPlayZones.DrawHandAsync(cardsToDraw);
     }
 }
