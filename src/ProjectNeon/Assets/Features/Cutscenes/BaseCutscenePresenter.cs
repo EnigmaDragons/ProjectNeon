@@ -41,7 +41,11 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
             return;
         
         _waitFinishTriggered = false;
-        this.ExecuteAfterDelay(msg.Duration, FinishWait);
+        this.ExecuteAfterDelay(msg.Duration, () =>
+        {
+            if (gameObject != null)
+                FinishWait();
+        });
     }
 
     private void Execute(RecordStoryStateRequested msg)
@@ -84,6 +88,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         if (_waitFinishTriggered)
             return;
 
+        Debug.Log("Finish Wait", this);
         _waitFinishTriggered = true;
         FinishCurrentSegment();
     }
