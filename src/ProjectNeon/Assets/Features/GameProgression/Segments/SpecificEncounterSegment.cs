@@ -11,12 +11,13 @@ public class SpecificEncounterSegment : StageSegment
     [SerializeField] private MapNodeType mapNodeType;
     [SerializeField] private Cutscene cutscene;
     [SerializeField] private bool shouldAutoStart = false;
-    
+
     [Header("Tutorial Settings")]
     [SerializeField] private bool isTutorial;
     [SerializeField] private bool shouldOverrideStartingCards;
     [SerializeField] private int overrideStartingCardsCount;
     [SerializeField] private bool allowBasic = true;
+    [SerializeField] private CardType[] overrideDeck;
 
     public override string Name => "Specific Encounter";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
@@ -38,7 +39,7 @@ public class SpecificEncounterSegment : StageSegment
         if (cutscene != null)
             Message.Publish(new SetStartBattleCutsceneRequested(cutscene));
         Message.Publish(new EnterSpecificBattle(battlefield, isElite, enemies.Select(x => x.ForStage(stage)).ToArray(), 
-            false, isTutorial, shouldOverrideStartingCards, overrideStartingCardsCount, allowBasic));
+            false, overrideDeck?.Length > 0 ? overrideDeck : null, isTutorial, shouldOverrideStartingCards, overrideStartingCardsCount, allowBasic));
     }
 
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;

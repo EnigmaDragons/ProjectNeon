@@ -37,21 +37,15 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
     {
         Log.Info("Setting Up Specific Battle");
         battleState.SetNextBattleground(msg.BattleField);
-        battleState.SetNextEncounter(msg.Enemies, msg.IsElite, msg.IsStoryEventCombat, msg.IsTutorial);
+        battleState.SetNextEncounter(msg.Enemies, msg.IsElite, msg.IsStoryEventCombat, msg.IsTutorial, msg.OverrideDeck);
         if (msg.ShouldOverrideStartingCards) 
             battleState.SetNextBattleStartingCardCount(msg.OverrideNumStartingCards);
 
         if (!msg.AllowBasic) 
             battleState.SetAllowSwapToBasic(msg.AllowBasic);
         if (msg.IsTutorial)
-        {
-            battleState.DontShuffleNextBattle = true;
-            navigator.NavigateToBattleScene();   
-        }
+            navigator.NavigateToBattleScene();
         else
-        {
-            battleState.DontShuffleNextBattle = false;
             eventPublisher.ActivatePartyDetailsWizardFlow();
-        }
     }
 }

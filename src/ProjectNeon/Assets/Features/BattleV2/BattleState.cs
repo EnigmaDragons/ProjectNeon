@@ -103,12 +103,13 @@ public class BattleState : ScriptableObject
 
     // Tutorial State. Pretty hacky.
     public bool IsStoryEventCombat { get; private set; }
-    public bool DontShuffleNextBattle { get; set; } // Weird to let something else set this
+    public bool DontShuffleNextBattle { get; private set; }
     public bool IsTutorialCombat { get; private set; }
     public Maybe<int> OverrideStartingPlayerCards { get; private set; } = Maybe<int>.Missing();
     public bool ShowSwapCardForBasic { get; private set; } = true;
     public bool AllowRightClickOnCard { get; private set; } = true;
     public bool BasicSuperFocusEnabled { get; private set; } = false;
+    public CardType[] OverrideDeck { get; private set; }
 
     public MemberMaterialType MaterialTypeOf(int memberId)
         => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
@@ -122,12 +123,14 @@ public class BattleState : ScriptableObject
     }
 
     public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false, bool isStoryEventCombat = false,
-        bool isTutorialCombat = false)
+        bool isTutorialCombat = false, CardType[] overrideDeck = null)
     {
         nextEnemies = e.ToArray();
         nextIsEliteBattle = isElite;
         IsStoryEventCombat = isStoryEventCombat;
+        DontShuffleNextBattle = isTutorialCombat;
         IsTutorialCombat = isTutorialCombat;
+        OverrideDeck = overrideDeck;
         OverrideStartingPlayerCards = Maybe<int>.Missing();
         ShowSwapCardForBasic = true;
         AllowRightClickOnCard = true;

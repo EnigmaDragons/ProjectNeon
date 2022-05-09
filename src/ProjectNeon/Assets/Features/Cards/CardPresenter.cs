@@ -483,6 +483,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         DebugLog($"UI - Pointer Down");
         if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
         {
+            Message.Publish(new CardClicked());
             Cursor.visible = false;
             Message.Publish(new TweenMovementRequested(transform, new Vector3(0, 30f, 0), 0.03f, MovementDimension.Spatial, TweenMovementType.RubberBand, "Click"));
         }
@@ -573,6 +574,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, "This probably isn't a good time to play that card."));
             
             _onBeginDrag();
+            Message.Publish(new CardDragged());
             Message.Publish(new BeginTargetSelectionRequested(_card));
         }, () => { });
 

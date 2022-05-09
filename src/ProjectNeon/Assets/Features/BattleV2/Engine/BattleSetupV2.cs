@@ -116,17 +116,16 @@ public class BattleSetupV2 : MonoBehaviour
             var hero = party.BaseHeroes[i];
             if (hero == null || hero.Name.Equals(""))
                  continue;
+
+            var cardTypes = state.OverrideDeck == null ? party.Decks[i].Cards : state.OverrideDeck.Cast<CardTypeData>();
             
-            cards.AddRange(party.Decks[i].Cards.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero), hero.Tint, hero.Bust)));
+            cards.AddRange(cardTypes.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero), hero.Tint, hero.Bust)));
         }
 
         DevLog.Write($"Setting Up Player Hand - Should Shuffle {!state.DontShuffleNextBattle} - Rng Seed {state.BattleRngSeed}");
         var rng = _battleRng ?? new DeterministicRng(state.BattleRngSeed);
         if (state.DontShuffleNextBattle)
-        {
             Deck.Init(cards);
-            state.DontShuffleNextBattle = false;
-        }
         else
             Deck.InitShuffled(cards, rng);
 
