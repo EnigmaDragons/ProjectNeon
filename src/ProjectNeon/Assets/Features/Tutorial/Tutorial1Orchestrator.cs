@@ -12,6 +12,7 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     private bool _hasDraggedCard;
     private bool _hasTargetedEnemy;
     private float _timeTilPrompt;
+    private bool _firstCardResolved;
     
     private void Start()
     {
@@ -52,12 +53,17 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     {
         _hasStarted = true;
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PrimaryStat, false));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, false));
     }
 
     protected override void Execute(PlayerCardSelected msg)
     {
-        _hasTargetedEnemy = true;
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DeckInfo, true));
+        if (!_hasTargetedEnemy)
+        {
+            _hasTargetedEnemy = true;
+            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DeckInfo, true));   
+        }
     }
 
     protected override void Execute(CardClicked msg)
@@ -80,6 +86,10 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
 
     protected override void Execute(CardResolutionStarted msg)
     {
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true));
+        if (!_firstCardResolved)
+        {
+            _firstCardResolved = true;
+            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true));
+        }
     }
 }

@@ -189,7 +189,12 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
 
     protected override void Execute(SetEnemiesUiVisibility msg)
     {
-        uis.ForEach(u => u.gameObject.SetActive(msg.ShouldShow));
+        if (msg.Component == BattleUiElement.EnemyInfo)
+            uis.ForEach(u => u.gameObject.SetActive(msg.ShouldShow));
+        else if (msg.Component == BattleUiElement.EnemyTechPoints)
+            uis.ForEach(u => u.SetTechPointVisibility(msg.ShouldShow));
+        else if (msg.Component == BattleUiElement.PrimaryStat)
+            uis.ForEach(u => u.SetStatVisibility(msg.ShouldShow));
     }
 
     private IEnumerator ExecuteAfterDelayRealtime(Action a, float delay)

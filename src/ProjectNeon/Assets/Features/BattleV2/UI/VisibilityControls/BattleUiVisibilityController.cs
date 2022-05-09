@@ -16,7 +16,7 @@ public class BattleUiVisibilityController : OnMessage<SetBattleUiElementVisibili
     {
         if (_uiElements.TryGetValue(msg.UiElementName, out var el))
             el.SetActive(msg.ShouldShow);
-        if (msg.UiElementName == BattleUiElement.EnemyInfo)
-            Message.Publish(new SetEnemiesUiVisibility(msg.ShouldShow));
+        if (msg.UiElementName == BattleUiElement.EnemyInfo || msg.UiElementName == BattleUiElement.EnemyTechPoints || msg.UiElementName == BattleUiElement.PrimaryStat)
+            Message.Publish(new SetEnemiesUiVisibility(msg.ShouldShow, msg.UiElementName));
     }
 }

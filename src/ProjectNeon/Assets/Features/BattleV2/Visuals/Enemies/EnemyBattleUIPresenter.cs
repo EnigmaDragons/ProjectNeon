@@ -46,4 +46,14 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
         if (msg.Member.Equals(_member))
             gameObject.SetActive(false);
     }
+
+    public void SetStatVisibility(bool isVisible)
+    {
+        primaryStatPresenter.gameObject.SetActive(isVisible);
+    }
+
+    public void SetTechPointVisibility(bool isVisible)
+    {
+        resourceCounter2.gameObject.SetActive(isVisible);
+    }
 }
