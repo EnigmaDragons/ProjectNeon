@@ -29,6 +29,7 @@ public class Enemy : ScriptableObject
     [SerializeField] public EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
     public bool IsCurrentlyWorking => isCurrentlyWorking;
+    public bool IsReadyForPlay => isCurrentlyWorking && Prefab != null && ai != null;
     
     public string EnemyName => this.GetName(enemyName);
     public string Description => description;

@@ -61,7 +61,7 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
 
     private EnemyInstance[] GetPossible(BattleRole role, bool isElite)
     {
-        var tieredEnemies = possible.Where(x => (isElite && x.Tier == EnemyTier.Elite) || (!isElite && x.Tier != EnemyTier.Elite && x.Tier != EnemyTier.Boss));
+        var tieredEnemies = possible.Where(x => x.IsReadyForPlay && (isElite && x.Tier == EnemyTier.Elite) || (!isElite && x.Tier != EnemyTier.Elite && x.Tier != EnemyTier.Boss));
         
         var roleMatchingEnemies = tieredEnemies
             .Where(x => x.BattleRole == role)
