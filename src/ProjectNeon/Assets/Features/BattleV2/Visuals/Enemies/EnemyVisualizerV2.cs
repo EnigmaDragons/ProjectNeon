@@ -48,13 +48,22 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
 
     private GameObject InstantiateEnemyVisuals(EnemyInstance enemy)
     {
-        var enemyObject = Instantiate(enemy.Prefab, transform);
-        active.Add(enemyObject);
-        enemyArea.WithUiTransforms(active.Select(a => a.transform));
-        var speech = enemyObject.GetComponentInChildren<ProgressiveTextRevealWorld>();
-        if (speech != null)
-            _speech[enemy] = speech;
-        return enemyObject;
+        try
+        {
+            var enemyObject = Instantiate(enemy.Prefab, transform);
+            active.Add(enemyObject);
+            enemyArea.WithUiTransforms(active.Select(a => a.transform));
+            var speech = enemyObject.GetComponentInChildren<ProgressiveTextRevealWorld>();
+            if (speech != null)
+                _speech[enemy] = speech;
+            return enemyObject;
+        }
+        catch(Exception e)
+        {
+            Log.Error($"Cannot Instantiate {enemy.Name}");
+            Log.Error(e);
+            return null;
+        }
     }
 
     private GameObject AddEnemy(EnemyInstance enemy, Member member, Vector3 offset)

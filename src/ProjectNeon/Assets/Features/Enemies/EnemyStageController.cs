@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyStageController : OnMessage<ShowEnemyOnStage>
@@ -21,17 +22,25 @@ public class EnemyStageController : OnMessage<ShowEnemyOnStage>
     
     private void RenderEnemyBody(EnemyInstance e)
     {
-        stage.transform.localPosition = _initialStagePosition - e.LibraryCameraOffset;
-        var enemyBody = Instantiate(e.Prefab, stage.transform);
-        
-        var enemyUi = enemyBody.GetComponentInChildren<EnemyBattleUIPresenter>();
-        if (enemyUi != null)
-            enemyUi.gameObject.SetActive(false);
-        var enemyAngleShift = enemyBody.GetComponentInChildren<Universal2DAngleShift>();
-        if (enemyAngleShift != null)
-            enemyAngleShift.UseIdentityRotation();
-        var shield = enemyBody.GetComponentInChildren<ShieldVisual>();
-        if (shield != null)
-            shield.Init(e.AsMember(InfoMemberId.Get()));
+        try
+        {
+            stage.transform.localPosition = _initialStagePosition - e.LibraryCameraOffset;
+            var enemyBody = Instantiate(e.Prefab, stage.transform);
+
+            var enemyUi = enemyBody.GetComponentInChildren<EnemyBattleUIPresenter>();
+            if (enemyUi != null)
+                enemyUi.gameObject.SetActive(false);
+            var enemyAngleShift = enemyBody.GetComponentInChildren<Universal2DAngleShift>();
+            if (enemyAngleShift != null)
+                enemyAngleShift.UseIdentityRotation();
+            var shield = enemyBody.GetComponentInChildren<ShieldVisual>();
+            if (shield != null)
+                shield.Init(e.AsMember(InfoMemberId.Get()));
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Cannot Setup {e.Name}");
+            Log.Error(ex);
+        }
     }
 }
