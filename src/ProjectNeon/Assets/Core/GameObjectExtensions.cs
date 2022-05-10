@@ -6,12 +6,15 @@ using Object = UnityEngine.Object;
 public static class GameObjectExtensions
 {    
     public static void ExecuteAfterTinyDelay(this MonoBehaviour o, Action a) 
-        => o.StartCoroutine(ExecuteAfterDelay(a, 0.02f));
-    public static void ExecuteAfterDelay(this MonoBehaviour o, Action a, float secondsDelay) 
-        => o.StartCoroutine(ExecuteAfterDelay(a, secondsDelay));
+        => ExecuteAfterDelay(o, a, 0.02f);
     
-    public static void ExecuteAfterDelay(this MonoBehaviour o, float secondsDelay, Action a) 
-        => o.StartCoroutine(ExecuteAfterDelay(a, secondsDelay));
+    public static void ExecuteAfterDelay(this MonoBehaviour o, float secondsDelay, Action a)
+        => ExecuteAfterDelay(o, a, secondsDelay);
+    public static void ExecuteAfterDelay(this MonoBehaviour o, Action a, float secondsDelay)
+    {
+        if (o.gameObject.activeSelf)
+            o.StartCoroutine(ExecuteAfterDelay(a, secondsDelay));
+    }
     
     private static IEnumerator ExecuteAfterDelay(Action a, float secondsDelay)
     {
