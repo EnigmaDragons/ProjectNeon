@@ -77,4 +77,6 @@ public sealed class Maybe<T>
             return other.Value.Equals(Value);
         return false;
     }
+
+    public override string ToString() => Select(x => x.ToString(), "Missing " + typeof(T));
 }

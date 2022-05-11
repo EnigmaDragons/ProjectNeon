@@ -22,6 +22,15 @@ public class FormulaTests
 
     [Test] public void Formula_RawStatValue() 
         => AssertResultsIs(2, "Attack", TestMembers.Create(s => s.With(StatType.Attack, 2)));
+    
+    [Test] public void Formula_PrimaryStatOfAttack_PowerCorrect() 
+        => AssertResultsIs(2, "Power", TestMembers.Create(s => s.With(StatType.Attack, 2)));
+    
+    [Test] public void Formula_PrimaryStatOfMagic_PowerCorrect() 
+        => AssertResultsIs(2, "Power", TestMembers.Create(s => s.With(StatType.Magic, 2)));
+    
+    [Test] public void Formula_PrimaryStatOfLeadership_PowerCorrect() 
+        => AssertResultsIs(2, "Power", TestMembers.Create(s => s.With(StatType.Leadership, 2)));
 
     [Test] public void Formula_StatValue_Multiply()
         => AssertResultsIs(3, "Attack * 1.5", TestMembers.Create(s => s.With(StatType.Attack, 2)));

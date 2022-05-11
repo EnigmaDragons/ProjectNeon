@@ -15,6 +15,7 @@ public enum StatType
     StartingShield = 10,
     Economy = 11,
     ExtraCardPlays = 30,
+    Power = 50, // AKA Primary Stat
 }
 
 public static class StatExtensions

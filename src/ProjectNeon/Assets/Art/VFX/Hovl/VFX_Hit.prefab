@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5742501694539812686}
   - component: {fileID: 7390674972517796678}
   - component: {fileID: 4518665633972671837}
+  - component: {fileID: 4292420458436635059}
   m_Layer: 0
   m_Name: VFX_Hit
   m_TagString: Untagged
@@ -4910,6 +4911,21 @@ MonoBehaviour:
   durationSeconds: 0.3
   maxLifetime: 0.3
   waitForCompletion: 1
+--- !u!114 &4292420458436635059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522708251359183877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/BattleVFX/PH_HIT
+  PlayOnAwake: 1
+  PlayOnDestroy: 0
 --- !u!1 &8177464438074415622
 GameObject:
   m_ObjectHideFlags: 0

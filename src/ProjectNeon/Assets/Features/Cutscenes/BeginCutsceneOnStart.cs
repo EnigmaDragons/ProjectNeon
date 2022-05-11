@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BeginCutsceneOnStart : MonoBehaviour
@@ -6,6 +7,6 @@ public class BeginCutsceneOnStart : MonoBehaviour
     
     private void Start()
     {
-        Message.Publish(new StartCutsceneRequested(Cutscene));
+        Message.Publish(new StartCutsceneRequested(Cutscene, Maybe<Action>.Missing()));
     }
 }

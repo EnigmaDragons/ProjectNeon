@@ -5,6 +5,6 @@ public class EncounterBuilderToUseToCalculateWhatEnemiesAreNeeded : ScriptableOb
 {
     public EncounterBuilderV4 NormalEncounterBuilder;
     public EncounterBuilderV4 EliteEncounterBuilder;
-    public SimpleLinearPowerCurve NormalPowerCurve;
-    public SimpleLinearPowerCurve ElitePowerCurve;
+    public PowerCurve NormalPowerCurve;
+    public PowerCurve ElitePowerCurve;
 }

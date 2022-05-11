@@ -19,10 +19,13 @@ public static class KeywordRules
     public static readonly string Igniting = "Igniting";
     public static readonly string Injure = "Injure";
     
+    public static readonly string Motionless = "Motionless";
     public static readonly string PrimaryStat = "PrimaryStat";
     public static readonly string Quick = "Quick";
     public static readonly string SelfDestruct = "SelfDestruct";
-    
+    public static readonly string ReStealth = "ReStealth";
+
+
     private static readonly string[] RulesByImportanceArr = {
         Injure,
         SelfDestruct,
@@ -31,9 +34,11 @@ public static class KeywordRules
         Afflicted,
         Igniting,
         Bloodied,
+        Motionless,
         "Sneaky",
         "Profitable",
         "Defenseless",
+        ReStealth,
         TemporalStatType.Marked.ToString(),
         TemporalStatType.DoubleDamage.ToString(),
         TemporalStatType.Stun.ToString(),
@@ -85,6 +90,8 @@ public static class KeywordRules
     {
         rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase(SelfDestruct));
         rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase("Self-Destruct"));
+        rulesToShow.AddIf(ReStealth, description.ContainsAnyCase(ReStealth));
+        rulesToShow.AddIf(ReStealth, description.ContainsAnyCase("Re-Stealth"));
         rulesToShow.AddIf(Injure, description.ContainsAnyCase(Injure));
         rulesToShow.AddIf(Injure, description.ContainsAnyCase("Injury"));
         rulesToShow.AddIf(Focus, description.ContainsAnyCase(Focus));
@@ -101,6 +108,7 @@ public static class KeywordRules
         rulesToShow.AddIf(TemporalStatType.Marked.ToString(), description.ContainsAnyCase("Mark"));
         rulesToShow.AddIf(TemporalStatType.Lifesteal.ToString(), description.ContainsAnyCase(TemporalStatType.Lifesteal.ToString()));
         rulesToShow.AddIf(Afflicted, description.ContainsAnyCase("Afflict"));
+        rulesToShow.AddIf(Motionless, description.ContainsAnyCase(Motionless));
     }
 
     public static void AddAllMatchingEffectScopeRules(List<string> rulesToShow, EffectData e, params string[] scopes) 

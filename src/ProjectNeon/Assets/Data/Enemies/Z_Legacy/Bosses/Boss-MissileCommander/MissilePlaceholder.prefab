@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 8157773381323273282}
   - component: {fileID: 4351292413307733608}
   - component: {fileID: 7592020417131784724}
+  - component: {fileID: 3514303159867889759}
   m_Layer: 0
   m_Name: MissilePlaceholder
   m_TagString: Untagged
@@ -228,6 +229,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 3093791752494273997}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &3514303159867889759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5111181449664446232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 0}
+  sprite: {fileID: 1204588182678147480}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &5490036806055003753
 GameObject:

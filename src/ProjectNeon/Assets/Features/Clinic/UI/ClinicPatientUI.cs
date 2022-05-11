@@ -8,6 +8,7 @@ public class ClinicPatientUI : OnMessage<UpdateClinic, HeroStateChanged, PartyAd
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private HeroHpPresenter hpPresenter;
     [SerializeField] private Button healToFullButton;
+    [SerializeField] private Button viewHeroDetailButton;
     [SerializeField] private TextMeshProUGUI healToFullCostLabel;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject injuriesParent;
@@ -21,8 +22,11 @@ public class ClinicPatientUI : OnMessage<UpdateClinic, HeroStateChanged, PartyAd
     private void Awake()
     {
         healToFullButton.onClick.AddListener(HealHeroToFull);
+        viewHeroDetailButton.onClick.AddListener(ViewHeroDetail);
         injuriesParent.DestroyAllChildren();
     }
+
+    private void ViewHeroDetail() => Message.Publish(new ShowHeroDetailsView(_hero));
     
     public ClinicPatientUI Initialized(Hero h, ClinicCostCalculator cost)
     {

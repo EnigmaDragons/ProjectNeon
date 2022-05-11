@@ -14,7 +14,7 @@ public class EffectDataEditor : PropertyDrawer
         new DictionaryWithDefault<EffectType, string[]>(new string[] { "BaseAmount", "FloatAmount", "DurationFormula", "HitsRandomTargetMember" })
     {
         {EffectType.Nothing, new string[0]},
-        {EffectType.ReactWithEffect, new []{ "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionEffect"}},
+        {EffectType.ReactWithEffect, new []{ "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionTimingWindow", "ReactionEffect"}},
         {EffectType.ReactWithCard, new []{ "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionSequence"}},
         {EffectType.AdjustResourceFlat, new [] { "FloatAmount", "DurationFormula", "EffectScope" }},
         {EffectType.RemoveDebuffs, new string[0]},

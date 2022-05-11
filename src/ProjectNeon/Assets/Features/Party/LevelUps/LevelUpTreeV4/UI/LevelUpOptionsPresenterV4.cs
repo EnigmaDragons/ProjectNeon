@@ -17,22 +17,25 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
     [SerializeField] private float unfoldInitialDelay = 3f;
     [SerializeField] private float unfoldGapBetweenItems = 0.6f;
 
+    private bool _initialized;
     private readonly Dictionary<LevelUpOption, GameObject> _options = new Dictionary<LevelUpOption, GameObject>();
-    
-    private void Start()
+
+    private void Start() => InitComponent();
+
+    private void InitComponent()
     {
-        if (toDestroyOnStart == null)
+        if (_initialized)
             return;
         
-        var toDestroy = toDestroyOnStart.ToList();
-        toDestroy.ForEach(Destroy);
+        _initialized = true;
+        toDestroyOnStart?.ToList().ForEach(DestroyImmediate);
     }
 
     public void ClearUnselectedOptions(LevelUpOption selected)
     {
         _options.ForEach(o =>
         {
-            if (o.Key != selected)
+            if (o.Value != null && o.Key != selected)
                 o.Value.SetActive(false);
         });
         promptLabel.text = "";
@@ -46,7 +49,8 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
 
     public void Init(Hero hero, int level, string optionPrompt, LevelUpOption[] options)
     {
-        _options.ForEach(o => Destroy(o.Value));
+        InitComponent();
+        _options.ForEach(o => DestroyImmediate(o.Value));
         _options.Clear();
         if (levelLabel != null)
             levelLabel.text = level.ToString();
@@ -62,7 +66,11 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
                     : Instantiate(basicOptionPrototype, optionParent.transform).Initialized(o, options).gameObject;
                 presenter.transform.localRotation = Quaternion.Euler(0, 90, 0);
                 presenter.transform.DORotate(Vector3.zero, unfoldDuration).SetEase(Ease.OutQuint).SetDelay(currentDelay);
-                this.ExecuteAfterDelay(() => Message.Publish(new PlayUiSound("LevelUpOptionReveal", presenter.transform)), unfoldDelay);
+                this.ExecuteAfterDelay(() =>
+                {
+                    if (presenter != null)
+                        Message.Publish(new PlayUiSound("LevelUpOptionReveal", presenter.transform));
+                }, unfoldDelay);
                 unfoldDelay += unfoldGapBetweenItems;
                 _options[o] = presenter;
             });

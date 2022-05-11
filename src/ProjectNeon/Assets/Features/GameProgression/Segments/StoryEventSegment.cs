@@ -10,7 +10,10 @@ public class StoryEventSegment : StageSegment
 
     public override string Name => "Story Event";
     public override bool ShouldCountTowardsEnemyPowerLevel => false;
+    public override bool ShouldAutoStart => false;
     public override Maybe<string> Detail => Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => MapNodeType.StoryEvent;
+    public override Maybe<string> Corp => Maybe<string>.Missing();
 
     public override void Start()
     {
@@ -35,4 +38,5 @@ public class StoryEventSegment : StageSegment
 
     // Only Non-Deterministic for now
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

@@ -5,8 +5,13 @@ public class CombatSegment : StageSegment
 {
     public override string Name => "Battle";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
+    public override bool ShouldAutoStart => false;
     public override void Start() => Message.Publish(new EnterRandomCombat());
     public override Maybe<string> Detail => Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => MapNodeType.Combat;
+    public override Maybe<string> Corp => Maybe<string>.Missing();
+    
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData)
         => AdventureProgress2MapNode3CombatNodeGeneration.Generate(Name, false, ctx, mapData);
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

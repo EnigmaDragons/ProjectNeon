@@ -18,7 +18,13 @@ MonoBehaviour:
   lastBalanceDate: 1/8/22
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
-  ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
   preferredTurnOrder: 99
   prefab: {fileID: 6705478397166493558, guid: 6144630566c40e844aa69a96b8c951c0, type: 3}
   materialType: 1
@@ -32,10 +38,12 @@ MonoBehaviour:
   unique: 0
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: 
-  animations: {fileID: 11400000, guid: 8122ecd1fb5538141b8f649fe5db4c9a, type: 2}
+  description: Deals good damage, but when reminded of his mortality by bleeding,
+    decides he isn't paid enough to die, and escapes.
+  animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
+  animationSounds: {fileID: 11400000, guid: 991c5e6dfa8be8f48a94dac660a52f43, type: 2}
   stageDetails:
-  - stage: 2
+  - stage: 1
     maxHp: 20
     maxShield: 0
     startingShield: 0
@@ -53,7 +61,7 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 0
     cardsPerTurn: 1
-    powerLevel: 41
+    powerLevel: 66
     calculationVariables:
       startingDefensiveValueAdjustment: -18
       startingValueAdjustment: 0
@@ -65,8 +73,8 @@ MonoBehaviour:
       resourceValue: 4.9500003
       perTurnPower: 15
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 1.2915
-      calculatedPowerLevel: 41
+      estimatedTurnsAlive: 2.5829997
+      calculatedPowerLevel: 66
     startOfBattleEffects:
     - EffectType: 75
       Conditions: []
@@ -75,8 +83,8 @@ MonoBehaviour:
         ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0
+        UseConstant: 1
+        ConstantValue: 1
         FloatVariable: {fileID: 11400000, guid: 5921ac0d85df4a2409b82c7f5aee6def, type: 2}
       DurationFormula: -1
       EffectScope:
@@ -104,6 +112,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 11400000, guid: 4cf2623eb1ef12b43b4e2a131877e4a7, type: 2}
       ReactionEffect:
         reactor: 0

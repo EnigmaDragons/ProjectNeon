@@ -23,9 +23,13 @@ public interface HeroCharacter
     HeroLevelUpPathway LevelUpTree { get; }
     HeroLevelUpTreeV4 LevelUpTreeV4 { get; }
     HashSet<string> Archetypes { get; }
-    public Color Tint { get; }
-    public CharacterAnimations Animations { get; }
-    public Dictionary<string, int> CounterAdjustments { get; }
+    Color Tint { get; }
+    CharacterAnimations Animations { get; }
+    CharacterAnimationSoundSet AnimationSounds { get; }
+    Dictionary<string, int> CounterAdjustments { get; }
+    IResourceAmount[] TurnResourceGains { get; }
+
+    void SetupMemberState(Member m, BattleState s);
 }
 
 public class InMemoryHeroCharacter : HeroCharacter
@@ -51,7 +55,10 @@ public class InMemoryHeroCharacter : HeroCharacter
     public HashSet<string> Archetypes { get; set; } = new HashSet<string>();
     public Color Tint { get; } = Color.white;
     public CharacterAnimations Animations { get; }
+    public CharacterAnimationSoundSet AnimationSounds { get; }
     public Dictionary<string, int> CounterAdjustments { get; } = new Dictionary<string, int>();
+    public IResourceAmount[] TurnResourceGains { get; } = new IResourceAmount[0];
+    public void SetupMemberState(Member m, BattleState s) {}
 }
 
 public static class HeroCharacterExtensions
@@ -72,14 +79,14 @@ public static class HeroCharacterExtensions
         archetypeKeys.Add(string.Join(" + ", archetypes));
         return archetypeKeys;
     }
-    
-    public static Member AsMemberForLibrary(this HeroCharacter h)
+
+    public static Member AsMemberForLibrary(this HeroCharacter h) => AsMemberForLibrary(h, h.Stats);
+    public static Member AsMemberForLibrary(this HeroCharacter h, IStats stats)
     {
-        var stats = h.Stats;
         var m = new Member(-1, h.Name, h.Class, h.MaterialType, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.BasicCard));
         h.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;
     }
 
-    public static string DisplayName(this HeroCharacter character) => Localize.GetHero(character.Name);
+    public static string DisplayName(this HeroCharacter character) => character.Name;
 }

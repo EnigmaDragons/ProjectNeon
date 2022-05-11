@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class FinalRunStatSummaryPresenter : MonoBehaviour
 {
+    [SerializeField] private AdventureConclusionState state;
     [SerializeField] private TextMeshProUGUI[] labels;
     [SerializeField] private TextMeshProUGUI[] values;
 
@@ -10,8 +11,8 @@ public class FinalRunStatSummaryPresenter : MonoBehaviour
 
     private void Render()
     {
-        var stats = CurrentGameData.Data.Stats;
-        Render(0, "Run Duration", $"{(stats.TimeElapsedSeconds / 60):F0}:{stats.TimeElapsedSeconds % 60}");
+        var stats = state.Stats;
+        Render(0, "Run Duration", $"{(stats.TimeElapsedSeconds / 60):F0}:{(stats.TimeElapsedSeconds % 60).ToString().PadLeft(2, '0')}");
         Render(1, "Cards Played", stats.TotalCardsPlayed);
         Render(2, "Turns Played", stats.TotalTurnsPlayed);
         Render(3, "Enemies Defeated", stats.TotalEnemiesKilled);

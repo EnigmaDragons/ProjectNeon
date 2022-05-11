@@ -20,14 +20,14 @@ public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusC
         _numTurns = numTurns;
     }
 
-    public Maybe<CardType> GetBonusCardOnResolutionPhaseBegun(BattleStateSnapshot snapshot)
+    public Maybe<BonusCardDetails> GetBonusCardOnResolutionPhaseBegun(BattleStateSnapshot snapshot)
     {
         return snapshot.PlayedCardHistory.Count < _numTurns
                || snapshot.PlayedCardHistory
                     .TakeLast(_numTurns)
                     .SelectMany(x => x)
                     .Any(x => x.Member.Id == _memberId)
-            ? Maybe<CardType>.Missing()
-            : _bonusCard;
+            ? Maybe<BonusCardDetails>.Missing()
+            : new BonusCardDetails(_bonusCard, new ResourceQuantity { ResourceType = _bonusCard.Cost.ResourceType.Name, Amount = _bonusCard.Cost.BaseAmount });
     }
 }

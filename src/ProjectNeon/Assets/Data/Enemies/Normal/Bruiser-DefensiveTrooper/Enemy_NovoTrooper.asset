@@ -18,7 +18,13 @@ MonoBehaviour:
   lastBalanceDate: 10/16/2021
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: bd8e5654971a1ef4895e3bf12cf6c8be, type: 2}
-  ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
   preferredTurnOrder: 99
   prefab: {fileID: 6373005449915045395, guid: d029cb2ece825a5498554c06675733df, type: 3}
   materialType: 0
@@ -35,6 +41,7 @@ MonoBehaviour:
   description: When attacked, this enemy gains large armor and resistance for the
     turn, making the first strike critical against them
   animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
+  animationSounds: {fileID: 11400000, guid: f31f3f458a9414c40b41bf417f757877, type: 2}
   stageDetails:
   - stage: 1
     maxHp: 26
@@ -105,6 +112,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0

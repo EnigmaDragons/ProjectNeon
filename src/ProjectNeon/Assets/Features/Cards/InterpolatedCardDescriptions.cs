@@ -116,8 +116,15 @@ public static class InterpolatedCardDescriptions
                 result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex], owner, xCost));
         }
 
-        if (owner.IsPresent && _resourceIcons.TryGetValue(owner.Value.PrimaryResource().ResourceType, out var icon))
+        if (owner.IsPresent && _resourceIcons.TryGetValue(owner.Value.PrimaryResourceQuantity().ResourceType, out var icon))
             result = result.Replace("Owner[PrimaryResource]", Sprite(icon));
+
+        if (owner.IsPresent)
+        {
+            var primaryStatText = owner.Value.PrimaryStat().ToString();
+            result = result.Replace("Power", primaryStatText);
+            result = result.Replace("POW", primaryStatText);
+        }
 
         foreach (var r in _resourceIcons)
             result = result.Replace(r.Key, Sprite(r.Value));
@@ -257,6 +264,7 @@ public static class InterpolatedCardDescriptions
         { "Mana", 20 },
         { "Insight", 24 },
         { "Tech Points", 23 },
+        { "TechPoints", 23 },
         { "PrimaryResource", 20 },
         { "Primary Resource", 20 },
         { "Grenades", 8 },
@@ -305,7 +313,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustCounterFormula)
             return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent ? owner.Value.PrimaryResource().ResourceType : "Resources")}";
+            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources")}";
         if (data.EffectType == EffectType.ShieldBasedOnNumberOfOpponentsDoTs)
             return owner.IsPresent
                 ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.MaxShield]))).ToString()
@@ -326,7 +334,9 @@ public static class InterpolatedCardDescriptions
             return $"{Bold("Disabled")}";
         if (data.EffectType == EffectType.Drain)
             return $"{Bold(FormulaAmount(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()}";
-
+        if (data.EffectType == EffectType.EnterStealth)
+            return $"Enter {Bold("Stealth")}";
+        
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";
     }
@@ -357,8 +367,8 @@ public static class InterpolatedCardDescriptions
                 : "";
             formulaResult = formulaResult.Equals("0") ? "" : formulaResult;
             return FormattedFormula($"{ipf.Prefix} {formulaResult} {ipf.Suffix}".Trim())
-                    .Replace("Owner[PrimaryResource]", owner.PrimaryResource().ResourceType)
-                    .Replace("PrimaryResource", owner.PrimaryResource().ResourceType);
+                    .Replace("Owner[PrimaryResource]", owner.PrimaryResourceQuantity().ResourceType)
+                    .Replace("PrimaryResource", owner.PrimaryResourceQuantity().ResourceType);
         }
 
         return RoundUp(FormulaResult(f.FullFormula, owner, xCost)).ToString();

@@ -9,6 +9,7 @@ public class HeroBattleUIPresenter : MonoBehaviour
     [SerializeField] private ResourceCounterPresenter resource1;
     [SerializeField] private ResourceCounterPresenter resource2;
     [SerializeField] private StatusBar statusBar;
+    [SerializeField] private UiStatPresenter primaryStat;
 
     private BaseHero _hero;
 
@@ -22,6 +23,7 @@ public class HeroBattleUIPresenter : MonoBehaviour
         hp.Init(member);
         InitResources(member, hero.Stats.ResourceTypes);
         statusBar.Initialized(member);
+        primaryStat.Init(member, member.PrimaryStat());
     }
 
     private void InitResources(Member member, IResourceType[] resources)

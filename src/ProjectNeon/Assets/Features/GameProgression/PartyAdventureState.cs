@@ -9,22 +9,25 @@ public sealed class PartyAdventureState : ScriptableObject
 {
     [SerializeField] private Party party;
     [SerializeField] private int credits;
+    [SerializeField] private int clinicVouchers;
     [SerializeField] private int numShopRestocks;
     [SerializeField] private PartyCardCollection cards;
     [SerializeField] private PartyEquipmentCollection equipment;
     [SerializeField] private Hero[] heroes = new Hero[0];
     [SerializeField] private ShopCardPool allCards;
 
-    private List<CorpCostModifier> corpCostModifiers = new List<CorpCostModifier>();
+    private List<CorpCostModifier> _corpCostModifiers = new List<CorpCostModifier>();
     private Queue<Blessing> _blessings = new Queue<Blessing>(); 
 
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
+    public int ClinicVouchers => clinicVouchers;
     public int TotalMissingHp => Heroes.Sum(h => h.Health.MissingHp);
     public int TotalNumInjuries => Heroes.Sum(h => h.Health.InjuryNames.Count());
 
     public HeroCharacter[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
     public Hero[] Heroes => heroes;
+    public HashSet<StatType> KeyStats => heroes.SelectMany(h => h.Stats.KeyStatTypes()).ToHashSet();
     public int[] Hp =>  heroes.Select(h => h.CurrentHp).ToArray();
     public RuntimeDeck[] Decks => heroes.Select(h => h.Deck).ToArray();
     public Blessing[] Blessings => _blessings?.ToArray() ?? (_blessings = new Queue<Blessing>()).ToArray();
@@ -65,13 +68,13 @@ public sealed class PartyAdventureState : ScriptableObject
         var baseHeroes = party.Heroes;
         heroes = baseHeroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
         credits = heroes.Sum(h => h.Character.StartingCredits);
+        clinicVouchers = 0;
         numShopRestocks = 2;
         
         heroes.ForEach(h =>
         {
             if(!h.Character.DeckIsValid())
                 Log.Error($"{h.Name} doesn't have a legal deck");
-            Log.Info($"Hero {h.Name}");
         });
 
         var allStartingCards = party.Heroes
@@ -94,14 +97,20 @@ public sealed class PartyAdventureState : ScriptableObject
 
     public PartyAdventureState WithAddedHero(BaseHero hero)
     {
+        if (BaseHeroes.Contains(hero))
+            return this;
+        
         if (!hero.DeckIsValid())
             Log.Error($"{hero.Name} doesn't have a legal deck");
 
-        heroes = heroes.Append(new Hero(hero, CreateDeck(hero.Deck))).ToArray();
-        party.Add(hero);
-        credits += hero.StartingCredits;
-        cards.Add(HeroStartingCards(hero).ToArray());
-        InitArchKeyHeroes();
+        UpdateState(() =>
+        {
+            heroes = heroes.Append(new Hero(hero, CreateDeck(hero.Deck))).ToArray();
+            party.Add(hero);
+            credits += hero.StartingCredits;
+            cards.Add(HeroStartingCards(hero).ToArray());
+            InitArchKeyHeroes();
+        });
         return this;
     }
 
@@ -114,12 +123,13 @@ public sealed class PartyAdventureState : ScriptableObject
         return this;
     }
 
-    public void InitFromSave(BaseHero one, BaseHero two, BaseHero three, int numCredits, CardTypeData[] partyCards, Equipment[] equipments)
+    public void InitFromSave(BaseHero one, BaseHero two, BaseHero three, int numCredits, int numClinicVouchers, CardTypeData[] partyCards, Equipment[] equipments)
     {
         party.Initialized(one, two, three);
         var baseHeroes = party.Heroes;
         heroes = baseHeroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
         credits = numCredits;
+        clinicVouchers = numClinicVouchers;
         cards.Initialized(partyCards);
         equipment = new PartyEquipmentCollection(equipments);
         InitArchKeyHeroes();
@@ -137,6 +147,19 @@ public sealed class PartyAdventureState : ScriptableObject
         if (credits - creditsBefore != 0)
             Message.Publish(new PartyCreditsChanged(creditsBefore, credits));
         return credits - creditsBefore;
+    }
+
+    public int UpdateClinicVouchersBy(int amount, bool canGoBelowZero = false)
+    {
+        if (amount == 0)
+            return 0;
+        
+        Log.Info($"Party - Gained {amount} Clinic Vouchers");
+        var before = clinicVouchers;
+        UpdateState(() => clinicVouchers = Mathf.Clamp(clinicVouchers + amount, canGoBelowZero ? int.MinValue : 0, int.MaxValue));
+        if (clinicVouchers - before != 0)
+            Message.Publish(new PartyClinicVouchersChanged(before, credits));
+        return clinicVouchers - before;
     }
 
     public void UpdateNumShopRestocksBy(int amount) => UpdateState(() => numShopRestocks += amount);
@@ -245,18 +268,18 @@ public sealed class PartyAdventureState : ScriptableObject
             .Select(card => card.Key.Id));
     }
 
-    public CorpCostModifier[] CorpCostModifiers => corpCostModifiers.ToArray();
-    public void SetCorpCostModifier(CorpCostModifier[] modifiers) => corpCostModifiers = modifiers?.ToList() ?? new List<CorpCostModifier>();
-    public void AddCorpCostModifier(CorpCostModifier modifier) => corpCostModifiers.Add(modifier);
+    public CorpCostModifier[] CorpCostModifiers => _corpCostModifiers.ToArray();
+    public void SetCorpCostModifier(CorpCostModifier[] modifiers) => _corpCostModifiers = modifiers?.ToList() ?? new List<CorpCostModifier>();
+    public void AddCorpCostModifier(CorpCostModifier modifier) => _corpCostModifiers.Add(modifier);
 
     public float GetCostFactorForEquipment(string corp)
-        => Mathf.Clamp(corpCostModifiers
+        => Mathf.Clamp(_corpCostModifiers
             .Where(x => x.AppliesToEquipmentShop && x.Corp.Equals(corp, StringComparison.OrdinalIgnoreCase))
             .Concat(new[] {new CorpCostModifier {CostPercentageModifier = 1}})
             .Sum(x => x.CostPercentageModifier), 0, 99);
     
     public float GetCostFactorForClinic(string corp)
-        => Mathf.Clamp(corpCostModifiers
+        => Mathf.Clamp(_corpCostModifiers
             .Where(x => x.AppliesToClinic && x.Corp.Equals(corp, StringComparison.OrdinalIgnoreCase))
             .Concat(new[] {new CorpCostModifier {CostPercentageModifier = 1}})
             .Sum(x => x.CostPercentageModifier), 0, 99);

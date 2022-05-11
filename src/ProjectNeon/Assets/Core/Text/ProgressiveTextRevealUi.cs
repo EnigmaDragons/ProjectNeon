@@ -17,12 +17,15 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
     [Header("Debug Info")]
     [SerializeField, ReadOnly] private bool isRevealing;
     [SerializeField, ReadOnly] private string fullText;
-    
+
+    private int sfxEveryXCharacters = 1;
+    private bool _reversed;
     private int _cursor;
     private bool _allowManualAdvance = true;
     private bool _shouldAutoProceed = false;
     private bool _manualInterventionDisablesAuto = true;
     private bool _finished = false;
+    private Action _onFullyShown = () => { };
     private Action _onFinished = () => { };
 
     private static bool _debugLog = false;
@@ -92,6 +95,14 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
         chatBox.interactable = _allowManualAdvance;
     }
 
+    public override void SetDisplayReversed(bool reversed)
+    {
+        if (reversed != _reversed)
+            ReversePanelFacing();
+    }
+
+    public override void SetOnFullyShown(Action action) => _onFullyShown = action;
+
     private void Finish()
     {
         if (_finished)
@@ -107,10 +118,12 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
         Info($"Text Box - Displayed Completely");
         isRevealing = false;
         textBox.text = fullText;
+        _onFullyShown();
     }
 
     public void ReversePanelFacing()
     {
+        _reversed = !_reversed;
         if (panelBg != null)
             panelBg.transform.Rotate(0, 180, 0);
         textBox.transform.localPosition = textBox.transform.localPosition + new Vector3(reversedTextBoxOffset.x, reversedTextBoxOffset.y);
@@ -136,7 +149,7 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
             var shownText = fullText.Substring(0, _cursor);
             textBox.text = shownText;
             _cursor++;
-            if (sfx != null)
+            if (sfx != null && shownText.Length % sfxEveryXCharacters == 0)
                 sfx.Play(transform.position);
             //This advances past markdown
             while (_cursor < fullText.Length && fullText[_cursor - 1] == '<')

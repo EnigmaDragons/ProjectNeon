@@ -5,31 +5,43 @@ using System.Linq;
 public static class AICardSelectionLogic
 {
     public static CardSelectionContext WithSelectedCardByNameIfPresent(this CardSelectionContext ctx, string cardName)
-        => ctx.SelectedCard.IsMissing && ctx.CardOptions.Any(c => c.Name.Equals(cardName))
+        => (ctx.SelectedCard.IsMissing 
+           && ctx.CardOptions.Any(c => c.Name.Equals(cardName))
             ? ctx.WithSelectedCard(ctx.CardOptions.First(c => c.Name.Equals(cardName)))
-            : ctx;
+            : ctx).WithLoggedSelection(nameof(WithSelectedCardByNameIfPresent));
 
-    public static CardSelectionContext WithRemovedCardByNameIfPresent(this CardSelectionContext ctx, string cardName)
-        => ctx.WithCardOptions(ctx.CardOptions.Where(x => !x.Name.Equals(cardName)));
-    
+    public static CardSelectionContext WithSelectedFocusCardIfApplicable(this CardSelectionContext ctx)
+        => (ctx.SelectedCard.IsMissing 
+           && ctx.CardOptions.None(c => c.Is(CardTag.Ultimate) && c.IsAoE()) 
+           && ctx.CardOptions.Any(c => c.Is(CardTag.Focus)) && ctx.FocusTarget.IsMissing
+            ? ctx.WithSelectedCard(SelectFocusCard(ctx))
+            : ctx).WithLoggedSelection(nameof(WithSelectedFocusCardIfApplicable));
+
     public static CardSelectionContext WithSelectedDesignatedAttackerCardIfApplicable(this CardSelectionContext ctx) 
-        => ctx.SelectedCard.IsMissing && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
+        => (ctx.SelectedCard.IsMissing 
+           && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) 
+           && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
             ? ctx.WithSelectedCard(ctx.SelectAttackCard())
-            : ctx;
+            : ctx).WithLoggedSelection(nameof(WithSelectedDesignatedAttackerCardIfApplicable));
 
     public static CardSelectionContext WithSelectedUltimateIfAvailable(this CardSelectionContext ctx)
-        => ctx.SelectedCard.IsMissing && ctx.CardOptions.Any(c => c.Tags.Contains(CardTag.Ultimate))
+        => (ctx.SelectedCard.IsMissing 
+           && ctx.CardOptions.Any(c => c.Tags.Contains(CardTag.Ultimate))
             ? ctx.WithSelectedCard(ctx.CardOptions.Where(c => c.Tags.Contains(CardTag.Ultimate)).MostExpensive())
-            : ctx;
+            : ctx).WithLoggedSelection(nameof(WithSelectedUltimateIfAvailable));
 
     public static CardSelectionContext WithCommonSenseSelections(this CardSelectionContext ctx)
         => ctx
             .PlayAntiStealthCardIfAllEnemiesAreStealthed()
+            .DontPlayAntiStealthCardIfAnyEnemyIsUnstealthed()
+            .DontPlayRequiresFocusCardWithoutAFocusTarget()
+            .DontPlayFocusCardIfFocusTargetAlreadySelected()
             .DontPlayAntiStealthCardIfNoEnemiesAreStealthed()
             .DontPlaySelfAttackBuffIfAlreadyBuffed()
             .DontPlayShieldAttackIfOpponentsDontHaveManyShields()
             .DontRemoveResourcesIfOpponentsDontHaveMany()
             .DontPlayTauntIfAnyAllyIsPlayingOne()
+            .DontPlayTauntIfYouAlreadyHaveIt()
             .DontPlayMagicalCountersIfOpponentsAreNotMagical()
             .DontPlayPhysicalCountersIfOpponentsAreNotPhysical()
             .DontGiveExtraResourcesIfAlliesHaveEnough()
@@ -37,16 +49,28 @@ public static class AICardSelectionLogic
             .DontPlayHealsIfAlliesDontNeedHealing()
             .DontPlayShieldsIfAlliesDontNeedShielding()
             .DontPlayResistanceIfEnemiesDontHaveMagic()
+            .DontPlayDamageOverTimeDefenseIfAlliesAreTooLow()
             .DontPlayArmorIfEnemiesDontHaveAttack()
             .DontGiveAlliesDodgeIfTheyAlreadyHaveEnough()
             .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
             .DontStealCreditsIfOpponentDoesntHaveAny();
 
+    public static CardSelectionContext DontPlayRequiresFocusCardWithoutAFocusTarget(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsMissing, CardTag.RequiresFocus);
+    
+    public static CardSelectionContext DontPlayFocusCardIfFocusTargetAlreadySelected(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsPresent, CardTag.Focus);    
+    
     public static CardSelectionContext PlayAntiStealthCardIfAllEnemiesAreStealthed(this CardSelectionContext ctx)
         => ctx.IfTruePlayType(x => x.Enemies.All(e => e.IsStealthed()), CardTag.AntiStealth);
     
     public static CardSelectionContext DontPlayAntiStealthCardIfNoEnemiesAreStealthed(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.None(e => e.IsStealthed()), CardTag.AntiStealth);
+    
+    // This rule is a little weird. Mostly it's to prevent punishing stealth gameplay quite so hard. It's not actually quite a common sense rule.
+    [Obsolete("Gameplay AI Manipulation")]
+    public static CardSelectionContext DontPlayAntiStealthCardIfAnyEnemyIsUnstealthed(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => !x.Enemies.All(e => e.IsStealthed()), CardTag.AntiStealth);
     
     public static CardSelectionContext DontGiveAlliesDodgeIfTheyAlreadyHaveEnough(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlay(x => x.Allies.Sum(a => a.State[TemporalStatType.Dodge]) >= x.Allies.Length, c => c.Is(CardTag.Defense, CardTag.Dodge));
@@ -73,6 +97,9 @@ public static class AICardSelectionLogic
             
     public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Strategy.SelectedNonStackingTargets.ContainsKey(CardTag.Taunt), CardTag.Taunt);
+
+    public static CardSelectionContext DontPlayTauntIfYouAlreadyHaveIt(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Member.Taunt() > 0, CardTag.Taunt);
     
     public static CardSelectionContext DontPlayShieldAttackIfOpponentsDontHaveManyShields(this CardSelectionContext ctx, int minShields = 15)
         => ctx.IfTrueDontPlayType(x => x.Enemies.Sum(e => e.CurrentShield()) < minShields, CardTag.Shield, CardTag.Attack)
@@ -82,14 +109,17 @@ public static class AICardSelectionLogic
         => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentHp() >= a.MaxHp() * 0.9), CardTag.Healing);
 
     private static CardSelectionContext DontPlayShieldsIfAlliesDontNeedShielding(this CardSelectionContext ctx)
-        => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentShield() > a.MaxShield() * 0.7), CardTag.Defense, CardTag.Shield);
+        => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentShield() > a.MaxShield() * 0.6), CardTag.Defense, CardTag.Shield);
+
+    private static CardSelectionContext DontPlayDamageOverTimeDefenseIfAlliesAreTooLow(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentHp() < 6), CardTag.Defense, CardTag.DamageOverTime);
 
     private static CardSelectionContext DontPlayResistanceIfEnemiesDontHaveMagic(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Magic] < 5), CardTag.Defense, CardTag.Resistance);
     
     private static CardSelectionContext DontPlayArmorIfEnemiesDontHaveAttack(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Attack] < 5), CardTag.Defense, CardTag.Armor);
-    
+
     private static CardSelectionContext DontRemoveResourcesIfOpponentsDontHaveMany(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State.PrimaryResourceValue < 1f), CardTag.RemoveResources);
 
@@ -97,47 +127,133 @@ public static class AICardSelectionLogic
         => ctx.IfTrueDontPlayType(x => x.PartyAdventureState.Credits <= 0, CardTag.StealCredits);
 
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
-        => ctx.CardOptions.Where(o => o.Is(CardTag.Attack)).ToArray()
-            .Shuffled()
-            .OrderBy(c => SmartCardPreference(ctx, c, Maybe<CardTypeData>.Missing())).First();
+        => ctx.CardOptions.Where(o => o.Is(CardTag.Attack))
+            .Select((o, i) => (option: o, index: i))
+            .OrderByDescending(c => SmartCardPreference(ctx, c.option, c.index))
+            .First().option;
+
+    private static CardTypeData SelectFocusCard(this CardSelectionContext ctx)
+        => ctx.CardOptions.Where(o => o.Is(CardTag.Focus)).ToArray().Shuffled().First();
 
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx)
-        => ctx.WithFinalizedCardSelection(_ => 0);
+        => ctx.WithFinalizedCardSelection((_, __) => 0);
 
     public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, params CardTag[] tagPriority)
     {
         var dictionary = new DictionaryWithDefault<CardTag, int>(99);
         for (int i = 1; i < tagPriority.Length + 1; i++)
             dictionary[tagPriority[i - 1]] = i;
-        return ctx.WithFinalizedCardSelection(c => dictionary[c.Tags.First()]);
+        return ctx.WithFinalizedCardSelection((c, i) => dictionary[c.Tags.First()]);
     }
     
-    public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int> typePriority)
-        => ctx.SelectedCard.IsMissing
+    public static CardSelectionContext WithFinalizedCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int, int> typePriority)
+        => (ctx.SelectedCard.IsMissing
             ? ctx.WithSelectedCard(FinalizeCardSelection(ctx, typePriority))
-            : ctx;
-
-    public static readonly int Unpreferred = 99;
+            : ctx).WithLoggedSelection(nameof(WithFinalizedCardSelection));
     
-    private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card, Maybe<CardTypeData> lastPlayedCard)
+    private static Maybe<CardTypeData> _lastCard = Maybe<CardTypeData>.Missing();
+    private static CardSelectionContext WithLoggedSelection(this CardSelectionContext ctx, string selectionPhase)
+    {
+        if (_lastCard.IsMissing && ctx.SelectedCard.IsPresent)
+            DevLog.Write($"Selected Card in {selectionPhase}: {ctx.SelectedCard.Value.Name}");
+
+        _lastCard = ctx.SelectedCard;
+        return ctx;
+    }
+
+    private static readonly int SuperHighlyUnpreferred = -999;
+    private static readonly int HighlyUnpreferred = -100;
+    private static readonly int MediumUnpreferred = -50;
+    private static readonly int SlightlyUnpreferred = -30;
+    private static readonly int DefaultPreference = -20;
+    private static readonly int SlightlyPreferred = 30;
+    private static readonly int MediumPreferred = 50;
+    private static readonly int HighlyPreferred = 100;
+    
+    private static int SmartCardPreference(CardSelectionContext ctx, CardTypeData card, int optionIndex)
     {
         var cardAction = card.ActionSequences.First();
+        var preferenceScore = DefaultPreference;
+        
+        if (ctx.UnhighlightedCardOptions.Contains(card))
+            preferenceScore += SuperHighlyUnpreferred;
+        
+        if (card.Is(CardTag.Unpreferred))
+            preferenceScore += HighlyUnpreferred;
+        if (ctx.AiPreferences.UnpreferredCardTags.Any(t => card.Is(t)))
+            preferenceScore += HighlyUnpreferred;
+        
+        if (card.Is(CardTag.Ultimate))
+            preferenceScore += MediumPreferred;
+        
         if (ctx.Enemies.Length == 1 && cardAction.Scope == Scope.All && cardAction.Group == Group.Opponent)
-            return Unpreferred;
-        if (lastPlayedCard.IsPresentAnd(c => c.Id == card.Id))
-            return Unpreferred;
-        if (card.Is(CardTag.BuffAttack) && cardAction.Group == Group.Self && ctx.Member.HasAttackBuff())
-            return Unpreferred;
+            preferenceScore += MediumUnpreferred;
         if (card.Is(CardTag.DoubleDamage) && cardAction.Group == Group.Self && ctx.Member.HasDoubleDamage())
-            return Unpreferred;
-        return 0;
+            preferenceScore += MediumUnpreferred;
+        
+        if (card.Is(CardTag.BuffAttack) && cardAction.Group == Group.Self && ctx.Member.HasAttackBuff())
+            preferenceScore += SlightlyUnpreferred;
+        if (ctx.LastPlayedCard.IsPresentAnd(lastCard => lastCard.Id == card.Id))
+            preferenceScore += SlightlyUnpreferred;
+
+        var cardTagPriorities = ctx.AiPreferences.CardTagPriority.Reverse().ToArray();
+        for(var i = 0; i < cardTagPriorities.Length; i++)
+            if (card.Is(cardTagPriorities[i]))
+                preferenceScore += (i + 1) * 5;
+        
+        if (ctx.LastPlayedCard.IsPresent && ctx.AiPreferences.RotatePlayingCardTags.Any())
+            preferenceScore += RotatingCardTagPreferenceAmount(ctx, card);
+
+        preferenceScore += (ctx.CardOptions.Count() - (optionIndex + 1)) * ctx.AiPreferences.CardOrderPreferenceFactor;
+        
+        return preferenceScore;
     }
 
+    private static int RotatingCardTagPreferenceAmount(this CardSelectionContext ctx, CardTypeData card)
+    {
+        var lastCard = ctx.LastPlayedCard.Value;
+        var rotateTags = ctx.AiPreferences.RotatePlayingCardTags;
+        var unpreferredTag = Maybe<CardTag>.Missing();
+        var preferredTag = Maybe<CardTag>.Missing();
+            
+        for (var i = 0; i < rotateTags.Length; i++)
+        {
+            var currentTag = rotateTags[i];
+            if (!lastCard.Tags.Contains(currentTag)) continue;
+                
+            unpreferredTag = currentTag;
+            preferredTag = rotateTags[(i + 1) % rotateTags.Length];
+        }
+            
+        if (unpreferredTag.IsPresentAnd(t => card.Tags.Contains(t)))
+            return HighlyUnpreferred;
+        if (preferredTag.IsPresentAnd(t => card.Tags.Contains(t)))
+            return MediumPreferred;
+        return 0;
+    }
+    
     public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx)
-        => ctx.WithFinalizedSmartCardSelection(Maybe<CardTypeData>.Missing());
+        => ctx.WithFinalizedCardSelection((c, index) => SmartCardPreference(ctx, c, index));
 
-    public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx, Maybe<CardTypeData> lastPlayedCard)
-        => ctx.WithFinalizedCardSelection(c => SmartCardPreference(ctx, c, lastPlayedCard));
+    private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int, int> typePriority)
+    {
+        if (ctx.SelectedCard.IsPresent)
+            return ctx.SelectedCard.Value;
+        if (ctx.CardOptions.None())
+            return ctx.SpecialCards.DisabledCard;
+
+        var cardPreferenceOrder = ctx.CardOptions
+            .Select((card, index) => (card, typePriority: typePriority(card, index)))
+            .ToArray()
+            .Shuffled()
+            .OrderByDescending(o => o.typePriority)
+            .ThenBy(o => o.card.Cost.BaseAmount)
+            .ToList();
+        
+        DevLog.Write($"Card Preference Order: {string.Join(", ", cardPreferenceOrder.Select(c => $"{c.card.Name} {c.typePriority}"))}");
+        
+        return cardPreferenceOrder.First().card;
+    }
     
     public static CardSelectionContext WithPhases(this CardSelectionContext ctx)
     {
@@ -150,26 +266,6 @@ public static class AICardSelectionLogic
         if (phase == 3)
             return ctx.WithCardOptions(phaselessCards.Concat(ctx.CardOptions.Where(x => x.Tags.Contains(CardTag.Phase3))));
         return ctx;
-    }
-
-    private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx,
-        Func<CardTypeData, int> typePriority)
-    {
-        if (ctx.SelectedCard.IsPresent)
-            return ctx.SelectedCard.Value;
-        if (ctx.CardOptions.None())
-            return ctx.SpecialCards.DisabledCard;
-
-        var cardPreferenceOrder = ctx.CardOptions
-            .ToArray()
-            .Shuffled()
-            .OrderByDescending(typePriority)
-            .ThenBy(c => c.Cost.BaseAmount)
-            .ToList();
-        
-        DevLog.Write($"Card Preference Order: {string.Join(", ", cardPreferenceOrder.Select(c => c.Name))}");
-        
-        return cardPreferenceOrder.First();
     }
 
     public static CardTypeData MostExpensive(this IEnumerable<CardTypeData> cards) => cards

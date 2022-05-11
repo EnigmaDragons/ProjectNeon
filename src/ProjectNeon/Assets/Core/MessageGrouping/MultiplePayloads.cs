@@ -6,16 +6,22 @@ public sealed class MultiplePayloads : IPayloadProvider
     private readonly IPayloadProvider[] _payloadProviders;
     private int _index;
 
-    public MultiplePayloads() 
-        : this(new IPayloadProvider[0]) {}
-    public MultiplePayloads(object[] objects)
-        : this(objects.Select(o => new SinglePayload(o))) {}
-    public MultiplePayloads(params IEnumerable<IPayloadProvider>[] payloadProviders) 
-        : this(payloadProviders.SelectMany(p => p).ToArray()) {}
-    public MultiplePayloads(IEnumerable<IPayloadProvider> payloadProviders) 
-        : this(payloadProviders.ToArray()) {}
-    public MultiplePayloads(params IPayloadProvider[] payloadProviders) => _payloadProviders = payloadProviders;
+    public MultiplePayloads()
+        : this("No Payload", new IPayloadProvider[0]) {}
+    public MultiplePayloads(string name, object[] objects)
+        : this(name, objects.Select(o => new SinglePayload(o))) {}
+    public MultiplePayloads(string name, params IEnumerable<IPayloadProvider>[] payloadProviders) 
+        : this(name, payloadProviders.SelectMany(p => p).ToArray()) {}
+    public MultiplePayloads(string prefix, IEnumerable<IPayloadProvider> payloadProviders) 
+        : this(prefix + " " + payloadProviders.FirstOrMaybe().Select(p => p.Name, "Nothing"), payloadProviders.ToArray()) {}
 
+    public MultiplePayloads(string name, params IPayloadProvider[] payloadProviders)
+    {
+        Name = name;
+        _payloadProviders = payloadProviders;
+    }
+
+    public string Name { get; }
     public int Count => _payloadProviders.Length;
 
     public bool IsFinished()

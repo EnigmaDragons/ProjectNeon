@@ -2,9 +2,14 @@
 
 public abstract class StageSegment : ScriptableObject, IStageSegment
 {
+    public int Id;
     public abstract string Name { get; }
     public abstract bool ShouldCountTowardsEnemyPowerLevel { get; }
+    public abstract bool ShouldAutoStart { get; }
     public abstract void Start();
     public abstract Maybe<string> Detail { get; }
+    public abstract MapNodeType MapNodeType { get; }
+    public abstract Maybe<string> Corp { get; }
     public abstract IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData);
+    public abstract bool ShouldSpawnThisOnMap(CurrentAdventureProgress p);
 }

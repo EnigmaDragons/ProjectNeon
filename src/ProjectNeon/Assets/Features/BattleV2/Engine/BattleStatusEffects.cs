@@ -2,27 +2,29 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction, CardResolutionFinished>
+public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction, CardResolutionFinished, CardAndEffectsResolutionFinished>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private FloatReference delay = new FloatReference(0.5f);
 
+    private BattleReactions Reactions => state.Reactions;
+    
     private readonly Queue<Member> _membersToProcess = new Queue<Member>();
     private Maybe<Member> _currentMember;
+    
     private readonly Queue<IPayloadProvider> _currentMemberEffects = new Queue<IPayloadProvider>();
-    private readonly Queue<ProposedReaction> _instantReactions = new Queue<ProposedReaction>();
     private readonly HashSet<int> _processedCardIds = new HashSet<int>();
 
     private bool _isProcessing;
     private bool _isProcessingStartOfTurn;
-
+    
     public void ProcessStartOfTurnEffects()
     {
         _isProcessing = true;
         _isProcessingStartOfTurn = true;
         foreach (var member in state.Members.Values.Where(x => x.IsConscious())) 
             _membersToProcess.Enqueue(member);
-        ResolveNext();
+        ResolveNext(nameof(ProcessStartOfTurnEffects));
     }
     
     public void ProcessEndOfTurnEffects()
@@ -31,7 +33,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
         _isProcessingStartOfTurn = false;
         foreach (var m in state.Members.Where(x => x.Value.IsConscious())) 
             _membersToProcess.Enqueue(m.Value);
-        this.ExecuteAfterDelay(ResolveNext, delay);
+        this.ExecuteAfterDelay(() => ResolveNext(nameof(ProcessEndOfTurnEffects)), delay);
     }
 
     private void ProcessCards()
@@ -46,38 +48,48 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
         }
     }
 
-    private void ResolveNext()
+    private void ResolveNext(string debugCallerName)
     {
-        if (_instantReactions.Any())
-            ResolveNextInstantReaction();
+        if (!_isProcessing)
+            return;
+        
+        Log.Info($"Status Effects Resolve Next - {debugCallerName}");
+        if (!MessageGroup.IsClear)
+            WaitForWrapup();
+        else if (Reactions.AnyReactionEffects)
+            Reactions.ResolveNextInstantReaction(state.Members);
+        else if (Reactions.AnyReactionCards)
+            Message.Publish(new ResolveReactionCards());
         else if (_currentMemberEffects.Any())
             ResolveNextStatusEffect();
         else if (_membersToProcess.Any())
             ResolveNextMemberStatusEffects();
-        else
+        else if (!Reactions.Any)
         {
+            _isProcessing = false;
             if (_currentMember.IsPresent)
                 _currentMember.Value.State.CleanExpiredStates();
             _currentMember = Maybe<Member>.Missing();
             ProcessCards();
-            _isProcessing = false;
             if (_isProcessingStartOfTurn)
                 Message.Publish(new StartOfTurnEffectsStatusResolved());
             else
                 Message.Publish(new EndOfTurnStatusEffectsResolved());
         }
+        else
+            WaitForWrapup();
     }
 
-    private void ResolveNextInstantReaction()
-    { 
-        var r = _instantReactions.Dequeue();
-        r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
+    private void WaitForWrapup()
+    {
+        Log.Info("Status Effect - Waiting to Wrapup - MessageGroup" + MessageGroup.CurrentName);
+        Async.ExecuteAfterDelay(50, () => ResolveNext("Revolve Next after Delay - Waiting for Wrapup"));
     }
-
+    
     private void ResolveNextStatusEffect()
     {
         var e = _currentMemberEffects.Dequeue();
-        DevLog.Write($"Effect is Finished {e.IsFinished()}");
+        DevLog.Write($"Resolve Next Status Effect - Effect is Finished {e.IsFinished()}");
         if (!e.IsFinished())
         {
             var member = _currentMember.Value;
@@ -87,7 +99,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             {
                 var battleSnapshotAfter = state.GetSnapshot();
                 var effectResolved = new EffectResolved(true, 
-                    true, 
+                    true,
                     EffectData.Nothing, 
                     member, // Replace with Status Originator
                     new Single(member), 
@@ -95,7 +107,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                     battleSnapshotAfter, 
                     false,
                     Maybe<Card>.Missing(), 
-                    new UnpreventableContext());
+                    new UnpreventableContext(),
+                    ReactionTimingWindow.FirstCause);
                 Message.Publish(new StatusEffectResolved(member, effectResolved));
             });
         }
@@ -104,7 +117,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             this.ExecuteAfterDelay(() =>
             {
                 _currentMember.Value.State.CleanExpiredStates();
-                ResolveNext();
+                ResolveNext("Resolve Next Status Effect - Effect already Finished");
             }, delay);
         }
     }
@@ -116,7 +129,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
         
         if (!member.State.HasAnyTemporalStates)
         {
-            ResolveNext();
+            ResolveNext("Go To Next Member");
         }
         else
         {
@@ -127,20 +140,18 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                 DevLog.Write($"Resolving {effects.Length} Status Effects for {member.Name}");
             effects.Where(e => !e.IsFinished())
                 .ForEach(e => _currentMemberEffects.Enqueue(e));
-            ResolveNext();
+            ResolveNext("Enqueue Next Member Effects");
         }
     }
 
     protected override void Execute(StatusEffectResolved msg)
     {
-        Debug.Log("Status Effect Resolved");
-        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg.EffectResolved)).ToList();
-        
-        var immediateReactions = reactions.Where(r => r.ReactionCard.IsMissing);
-        immediateReactions.ForEach(r => _instantReactions.Enqueue(r));
+        DevLog.Write("Status Effect Resolved - Adding Status Effect Reactions");
+        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg.EffectResolved)).ToArray();
+        Reactions.Enqueue(reactions);
         
         msg.Member.State.CleanExpiredStates();
-        ResolveNext();
+        ResolveNext(nameof(StatusEffectResolved));
     }
 
     protected override void Execute(PerformAction msg)
@@ -157,6 +168,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
         DevLog.Write($"Card Resolution Finished {msg.CardName} {msg.CardId} {msg.PlayedCardId}");
         _processedCardIds.Add(msg.PlayedCardId);
         if (_isProcessing)
-            ResolveNext();
+            ResolveNext("Card Resolution Finished");
     }
+
+    protected override void Execute(CardAndEffectsResolutionFinished msg) => ResolveNext("Resolve Reaction Cards Finished");
 }

@@ -12,5 +12,5 @@ public class RepeatNumberOfTimes : ILogicFlow
     }
 
     public IPayloadProvider Resolve(CardActionContext ctx)
-        => new MultiplePayloads(Enumerable.Range(0, _numberOfTimes).Select(x => _effect.Play(ctx)));
+        => new MultiplePayloads("Repeated", Enumerable.Range(0, _numberOfTimes).Select(x => _effect.Play(ctx)));
 }

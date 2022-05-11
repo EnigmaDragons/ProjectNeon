@@ -5,6 +5,7 @@ using UnityEngine;
 public class Library : ScriptableObject
 {
     [SerializeField] private BaseHero[] unlockedHeroes;
+    [SerializeField] private BaseHero featuredHero;
     [SerializeField] private AllHeroes allHeroes;
     [SerializeField] private AllCards allCards;
     [SerializeField] private AllEquipment allEquipment;
@@ -13,6 +14,7 @@ public class Library : ScriptableObject
     [SerializeField] private BaseHero noHero;
 
     public BaseHero NoHero => noHero;
+    public Maybe<BaseHero> MaybeFeaturedHero => featuredHero != null ? featuredHero : Maybe<BaseHero>.Missing();
     public BaseHero[] UnlockedHeroes => unlockedHeroes;
     public Adventure[] UnlockedAdventures => unlockedAdventures;
 

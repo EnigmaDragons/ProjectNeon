@@ -4,9 +4,11 @@
     Member Member { get; }
     Card Card { get; }
     Target[] Targets { get; }
+    ResourceCalculations Calculations { get; }
     ResourceQuantity Spent { get; }
     bool IsSingleUse { get; }
     bool IsTransient { get; }
+    bool RetargetingAllowed { get; }
 
     void Perform(BattleStateSnapshot beforeCard);
 }
@@ -15,6 +17,7 @@ public static class IPlayedCardExtensions
 {
     public static int MemberId(this IPlayedCard c) => c.Member.Id;
     public static int PrimaryTargetId(this IPlayedCard c) => c.Targets[0].Members[0].Id;
+    public static IPlayedCard Retargeted(this IPlayedCard c, Target[] targets) => new PlayedCardV2(c.Member, targets, c.Card, c.IsTransient, c.RetargetingAllowed, c.Calculations);
 }
 
 public sealed class PlayedCardSnapshot

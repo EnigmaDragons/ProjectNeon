@@ -10,14 +10,18 @@ public sealed class Navigator : ScriptableObject
     public void NavigateToSquadSelection() => NavigateTo("SquadSelection");
     public void NavigateToGameScene() => NavigateTo("GameScene");
     public void NavigateToGameSceneV4() => NavigateTo("GameSceneV4");
+    public void NavigateToGameSceneV5() => NavigateTo("GameSceneV5");
     public void NavigateToDeckBuilderScene() => NavigateTo("DeckBuilderScene");
     public void NavigateToBattleScene() => NavigateTo("BattleSceneV2");
     public void NavigateToConclusionScene() => NavigateTo("ConclusionScene");
     public void NavigateToShopScene() => NavigateTo("ShopScene");
     public void NavigateToRewardScene() => NavigateTo("RewardScene");
     public void NavigateToCutsceneScene() => NavigateTo("CutsceneScene");
+    public void NavigateToAcademyScene() => NavigateTo("AcademyScene");
     public void NavigateToDiscordServer() => Application.OpenURL("https://discord.gg/V3yKWAwknC");
     public void NavigateToSteamPage() => Application.OpenURL("https://store.steampowered.com/app/1412960/Metroplex_Zero/");
+    public void NavigateToSettingsScene() => NavigateTo("SettingsScene");
+
     public void ReloadScene()
     {
         if (loggingEnabled)

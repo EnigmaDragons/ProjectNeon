@@ -34176,6 +34176,7 @@ GameObject:
   - component: {fileID: 782467902919467824}
   - component: {fileID: 765938833251415132}
   - component: {fileID: 5400166600291665965}
+  - component: {fileID: 8347374321589600261}
   m_Layer: 0
   m_Name: VFX_Afflict
   m_TagString: Untagged
@@ -39064,6 +39065,21 @@ MonoBehaviour:
   durationSeconds: 1
   maxLifetime: 4
   waitForCompletion: 1
+--- !u!114 &8347374321589600261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604168616898814292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/BattleVFX/AFFLICT
+  PlayOnAwake: 1
+  PlayOnDestroy: 0
 --- !u!1 &605646497401386624
 GameObject:
   m_ObjectHideFlags: 0

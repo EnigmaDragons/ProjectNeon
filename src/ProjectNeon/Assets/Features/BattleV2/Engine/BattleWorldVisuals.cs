@@ -46,5 +46,6 @@ public class BattleWorldVisuals : MonoBehaviour
         
         _battlefield = Instantiate(state.Battlefield, new Vector3(0, 0, battleFieldZPos), Quaternion.identity, battlefieldParent.transform);
         _battlefield.transform.localScale = new Vector3(battleFieldScale, battleFieldScale, battleFieldScale);
+        Log.Info($"Setup Battlefield {state.Battlefield.name}");
     }
 }

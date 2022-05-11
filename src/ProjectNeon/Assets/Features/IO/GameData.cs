@@ -9,7 +9,6 @@ public class GameData
     public string RunId = Guid.NewGuid().ToString();
     public bool IsInitialized = false;
     public CurrentGamePhase Phase = CurrentGamePhase.NotStarted;
-    public GameTutorialData TutorialData = new GameTutorialData();
     public GameAdventureProgressData AdventureProgress = new GameAdventureProgressData();
     public GamePartyData PartyData = new GamePartyData();
     public GameMapData GameMap = new GameMapData();
@@ -30,26 +29,23 @@ public class GameAdventureProgressData
     public bool PlayerReadMapPrompt = false;
     public int[] ActiveGlobalEffectIds = new int[0];
     public int RngSeed = Rng.NewSeed();
+    public string[] States = new string[0];
+    public bool[] StateValues = new bool[0];
 }
 
 public enum GameAdventureProgressType
 {
     Unknown = 0,
     V2 = 2,
-    V4 = 4
-}
-
-[Serializable]
-public class GameTutorialData
-{
-    public bool ShouldShowTutorials = false;
-    public string[] CompletedTutorialNames = Array.Empty<string>();
+    V4 = 4,
+    V5 = 5
 }
 
 [Serializable]
 public class GamePartyData
 {
     public int Credits = 0;
+    public int ClinicVouchers = 0;
     public GameHeroData[] Heroes = Array.Empty<GameHeroData>();
     public int[] CardIds = Array.Empty<int>();
     public GameEquipmentData[] Equipment = Array.Empty<GameEquipmentData>();
@@ -99,9 +95,18 @@ public class GameEquipmentData
     public InMemoryEquipment GeneratedEquipment = new InMemoryEquipment();
 }
 
+public enum GameMapDataType
+{
+    Unknown = 0,
+    V3 = 3,
+    V5 = 5
+}
+
 [Serializable]
 public class GameMapData
 {
+    public GameMapDataType Type;
+    
     public int GameMapId;
     public Maybe<MapNode3> CurrentNode;
     public MapNode3[] CompletedNodes;

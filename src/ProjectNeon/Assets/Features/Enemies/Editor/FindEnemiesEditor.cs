@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
@@ -24,6 +25,56 @@ public class FindEnemiesEditor : EditorWindow
                 .Show();
             GUIUtility.ExitGUI();
         }
+        if (GUILayout.Button("By AI"))
+        {
+            var items = GetAllInstances<Enemy>()
+                .Where(e => e.IsCurrentlyWorking)
+                .Select(e => $"{e.ForStage(0).AI.name} - {e.name}")
+                .OrderBy(e => e.StartsWith("GeneralAI") ? 99 : 0)
+                .ThenBy(e => e)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Enemies by AI", "Enemy:", items)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("AI Preferences"))
+        {
+            var items = GetAllWorkingEnemies()
+                .Select(e =>
+                {
+                    var p = e.ForStage(0).AIPreferences;
+                    return $"{AiPrefName(p)} - {e.name} - {p.GetCustomizationDescription()}";
+                })
+                .OrderBy(e => e)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Enemies by AI Preferences", "Enemy:", items)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("Enemy Descriptions"))
+        {
+            var items = GetAllWorkingEnemies()
+                .Select(e => $"{e.name} - {e.Description}")
+                .OrderBy(e => e)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Enemy Descriptions", "Enemy:", items)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("Animation Sets"))
+        {
+            var items = GetAllWorkingEnemies()
+                .Select(e => $"{e.name} - {e.Animations?.name}")
+                .OrderBy(e => e)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Enemy Animation Sets", "Enemy:", items)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
         DrawUILine();
 
         _corpName = GUILayout.TextField(_corpName);
@@ -39,7 +90,44 @@ public class FindEnemiesEditor : EditorWindow
             GUIUtility.ExitGUI();
         }
         DrawUILine();
+        
+        if (GUILayout.Button("Reset Card Order Factor"))
+        {
+            var items = GetAllInstances<Enemy>();
+            items.ForEach(e =>
+            {
+                e.aiPreferences.CardOrderPreferenceFactor = 0;
+                EditorUtility.SetDirty(e);
+            });
+        }
+        if (GUILayout.Button("Simplify Specialist Attack Unpreferred"))
+        {
+            var items = GetAllInstances<Enemy>().Where(e => e.IsCurrentlyWorking && e.BattleRole == BattleRole.Specialist);
+            items.ForEach(e =>
+            {
+                if (e.aiPreferences.UnpreferredCardTags.Any(t => t == CardTag.Attack))
+                    e.aiPreferences.UnpreferredCardTags = e.aiPreferences.UnpreferredCardTags.Except(CardTag.Attack).ToArray();
+                EditorUtility.SetDirty(e);
+            });
+        }
+        DrawUILine();
+        
+        if (GUILayout.Button("Missing Death Animation Component"))
+        {
+            var items = GetAllInstances<Enemy>()
+                .Where(e => e.Prefab != null && e.Prefab.GetComponentsInChildren<DeathPresenter>().Length == 0)
+                .Select(e => e.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Enemies Missing Death Presenters", items)
+                .Show();
+        }
+        DrawUILine();
     }
+
+    private IEnumerable<Enemy> GetAllWorkingEnemies() => GetAllInstances<Enemy>().Where(e => e.IsCurrentlyWorking);
+
+    private static string AiPrefName(AiPreferences p) => p.IsDefault ? "Default" : "Custom";
     
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {

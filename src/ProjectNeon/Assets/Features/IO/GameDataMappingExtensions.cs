@@ -6,6 +6,7 @@ public static class GameDataMappingExtensions
         => new GamePartyData
         {
             Credits = s.Credits,
+            ClinicVouchers = s.ClinicVouchers,
             Heroes = s.Heroes
                 .Select(h => new GameHeroData
                 {
@@ -33,12 +34,35 @@ public static class GameDataMappingExtensions
                 .ToArray(),
             CorpCostModifiers = s.CorpCostModifiers
         };
+
+    public static GameMapData GetMapData(this GameAdventureProgressType type, CurrentGameMap3 map3, CurrentMapSegmentV5 map5)
+    {
+        if (type == GameAdventureProgressType.V5)
+            return map5.GetData();
+        if (type == GameAdventureProgressType.V2)
+            return map3.GetData();
+        return new GameMapData();
+    }
+    
+    public static GameMapData GetData(this CurrentMapSegmentV5 map)
+        => map.CurrentMap == null
+            ? new GameMapData()
+            : new GameMapData
+            {
+                Type = GameMapDataType.V5,
+                GameMapId = map.CurrentMap.id,
+                CurrentNode =  map.CurrentNode.Value,
+                CurrentPosition = map.PreviousPosition,
+                CurrentChoices = map.CurrentChoices.ToArray(),
+                CurrentNodeRngSeed = map.CurrentNodeRngSeed,
+            };
     
     public static GameMapData GetData(this CurrentGameMap3 map)
         => map.CurrentMap == null 
             ? new GameMapData() 
             : new GameMapData
                 {
+                    Type = GameMapDataType.V3,
                     GameMapId = map.CurrentMap.id,
                     CurrentNode =  map.CurrentNode.Value,
                     CompletedNodes = map.CompletedNodes.ToArray(),

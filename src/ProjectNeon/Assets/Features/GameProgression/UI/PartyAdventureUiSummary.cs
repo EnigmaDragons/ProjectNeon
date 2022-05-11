@@ -23,7 +23,7 @@ public class PartyAdventureUiSummary : OnMessage<PartyAdventureStateChanged, Par
         for (var i = 0; i < party.BaseHeroes.Length; i++)
         {
             var h = Instantiate(heroPresenter, itemParent.transform);
-            h.Init(party.Heroes[i], !current.Adventure.IsV2);
+            h.Init(party.Heroes[i], current.Adventure.IsV1);
             active.Add(h);
         }
     }

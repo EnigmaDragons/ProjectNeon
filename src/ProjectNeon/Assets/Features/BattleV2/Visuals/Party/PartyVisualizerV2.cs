@@ -5,7 +5,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUnconscious, HighlightCardOwner, UnhighlightCardOwner, DisplaySpriteEffect, ShowHeroBattleThought>
+public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, HighlightCardOwner, UnhighlightCardOwner, DisplaySpriteEffect, ShowHeroBattleThought>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private GameObject hero1;
@@ -24,6 +24,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     private readonly Dictionary<HeroCharacter, ShieldVisual> _shields  = new Dictionary<HeroCharacter, ShieldVisual>();
     private readonly Dictionary<HeroCharacter, CharacterCreatorStealthTransparency> _stealths = new Dictionary<HeroCharacter, CharacterCreatorStealthTransparency>();
     private readonly Dictionary<HeroCharacter, MemberHighlighter> _highlighters  = new Dictionary<HeroCharacter, MemberHighlighter>();
+    private readonly Dictionary<HeroCharacter, TauntEffect> _tauntEffects  = new Dictionary<HeroCharacter, TauntEffect>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     private readonly Dictionary<HeroCharacter, CharacterWordsController> _words  = new Dictionary<HeroCharacter, CharacterWordsController>();
     private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
@@ -54,6 +55,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
         _shields.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _stealths.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _highlighters.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _tauntEffects.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
     private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
@@ -98,7 +100,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
          
         var stealth = character.GetComponentInChildren<CharacterCreatorStealthTransparency>();
         if (stealth == null)
-            Debug.LogError($"{hero.Name} is missing a {nameof(CharacterCreatorStealthTransparency)}");
+            Debug.LogWarning($"{hero.Name} is missing a {nameof(CharacterCreatorStealthTransparency)}");
         else
             _stealths[hero] = stealth;
 
@@ -109,6 +111,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
             _speech[hero] = speech;
         
         character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
+        
+        var tauntEffect = character.GetComponentInChildren<TauntEffect>();
+        if (tauntEffect == null)
+            Debug.LogWarning($"{hero.Name} is missing a {nameof(TauntEffect)}");
+        else
+            _tauntEffects[hero] = tauntEffect;
     }
 
     protected override void Execute(CharacterAnimationRequested e)
@@ -126,18 +134,6 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
                 DevLog.Write($"Finished {e.Animation} Animation in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
-    }
-    
-    protected override void Execute(MemberUnconscious m)
-    {
-        if (!m.Member.TeamType.Equals(TeamType.Party)) return;
-        
-        // TODO: Handle custom unconscious animation 
-
-        var t = state.GetTransform(m.Member.Id);
-        t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
-        t.DOSpiral(2);
-        StartCoroutine(ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2));
     }
 
     protected override void Execute(HighlightCardOwner msg)
@@ -172,9 +168,11 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     {
         if (!state.IsHero(e.MemberId)) return;
         
+        if (!gameObject.activeSelf)
+            gameObject.SetActive(true);
         var hero = state.GetHeroById(e.MemberId);
         var s = _speech[hero];
-        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelay(s.Hide, 1.8f)));
+        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(s.Hide, 5f)));
         s.Proceed(true);
     }
 
@@ -188,6 +186,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, MemberUn
     private IEnumerator ExecuteAfterDelay(Action a, float delay)
     {
         yield return new WaitForSeconds(delay);
+        a();
+    }
+    
+    private IEnumerator ExecuteAfterDelayRealtime(Action a, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
         a();
     }
 }

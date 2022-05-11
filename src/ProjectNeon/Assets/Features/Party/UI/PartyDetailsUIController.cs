@@ -8,7 +8,7 @@ public class PartyDetailsUIController : OnMessage<TogglePartyDetails>
     protected override void Execute(TogglePartyDetails msg)
     {
         target.gameObject.SetActive(!target.gameObject.activeSelf);
-        if (target.gameObject.activeSelf && !msg.AllowDone)
+        if (target.gameObject.activeSelf && !msg.ShouldSaveOnFinished)
             target.UseNextButtonOneTime();
     }
 }

@@ -15,9 +15,14 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private TextMeshProUGUI heroClassName;
     [SerializeField] private TextMeshProUGUI heroDescription;
     [FormerlySerializedAs("roleDescription")] [SerializeField] private TextMeshProUGUI complexityLabel;
+    [SerializeField] private Slider complexitySlider;
     [SerializeField] private TextMeshProUGUI backstory;
     [SerializeField] private NamedGameObject[] tabTargets;
+    [SerializeField] private ResourceCounterPresenter resource1;
+    [SerializeField] private ResourceCounterPresenter resource2;
+    [SerializeField] private TextMeshProUGUI startingCredits;
     [SerializeField] private MemberSimplifiedVisualStatPanel statPanel;
+    [SerializeField] private GameObject buttonsPanel;
     [SerializeField] private Button statButton;
     [SerializeField] private Button loreButton;
     [SerializeField] private Button cardsButton;
@@ -34,15 +39,19 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         loreButton.onClick.AddListener(() => ShowTab("Lore"));
         cardsButton.onClick.AddListener(() => ShowTab("Cards"));
         loreButton.Select();
-        ShowTab("Lore");
+        if (buttonsPanel.activeSelf)
+            ShowTab("Lore");
         if (!_isInitialized && currentHero != null)
             Init(currentHero);
     }
 
     public void Hide() => gameObject.SetActive(false);
+
+    public void DisableClick() => _isClickable = false;
     
     public void Init(HeroCharacter c) => Init(c, false, () => {});
-    public void Init(HeroCharacter c, bool isClickable, Action onClick)
+    public void Init(HeroCharacter c, bool isClickable, Action onClick) => Init(c, c.AsMemberForLibrary(), isClickable, onClick);
+    public void Init(HeroCharacter c, Member m, bool isClickable, Action onClick)
     {
         _isInitialized = true;
         _onClick = onClick;
@@ -52,17 +61,49 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         heroName.text = c.DisplayName();
         heroClassName.text = c.Class;
         heroDescription.text = c.Flavor.HeroDescription;
-        complexityLabel.text = $"Complexity: {c.ComplexityRating}/5";
+        complexityLabel.text = $"Complexity:";
+        complexitySlider.value = Mathf.Clamp(c.ComplexityRating / 5f, 0.2f, 1f);
         backstory.text = c.Flavor.BackStory;
-        var member = c.AsMemberForLibrary();
+        var member = m;
         if (statPanel != null)
+        {
             statPanel.Init(member);
+            var resourceGains = c.TurnResourceGains;
+            if (resourceGains.Length > 0)
+                if (resourceGains[0].BaseAmount > 0)
+                    statPanel.SetPrimaryResourceGain(resourceGains[0].ResourceType.Icon, resourceGains[0].BaseAmount);
+        }
         if (deckUi != null)
-            deckUi.Init(c.Deck.Cards.Select(card => card.ToNonBattleCard(c)).ToArray());
+            deckUi.Init(c.Deck.Cards.Select(card => card.ToNonBattleCard(c, c.Stats)).ToArray());
         if (basicUi != null)
-            basicUi.Init(c.BasicCard.ToNonBattleCard(c).AsArray(), false);
+            basicUi.Init(c.BasicCard.ToNonBattleCard(c, c.Stats).AsArray(), false);
+        if (resource1 != null)
+        {
+            resource1.SetReactivity(false);
+            if(member.State.ResourceTypes.Length < 1)
+                resource1.Hide();
+            else
+                resource1.Init(member, member.State.ResourceTypes[0]);
+        }
+        if (resource2 != null)
+        { 
+            resource2.SetReactivity(false);
+            if(member.State.ResourceTypes.Length < 2)
+                resource2.Hide();
+            else
+                resource2.Init(member, member.State.ResourceTypes[1]);
+        }
+
+        if (startingCredits != null)
+            startingCredits.text = c.StartingCredits.ToString();
     }
 
+    public void LockToTab(string tabName)
+    {
+        ShowTab(tabName);
+        buttonsPanel.SetActive(false);
+    }
+    
     private void ShowHeroPathway() => Message.Publish(new ShowHeroLevelUpPathway(currentHero));
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -79,7 +120,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (_isClickable && eventData.button == PointerEventData.InputButton.Left)
             _onClick();
     }
 

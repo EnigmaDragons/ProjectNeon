@@ -74,19 +74,20 @@ public sealed class MemberState : IStats
 
     // Queries
     public MemberStateSnapshot ToSnapshot()
-        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats.ToSnapshot(),
+        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats.ToSnapshot(PrimaryStat),
             _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount,
                 new DictionaryWithDefault<StatusTag, int>(0, Enum.GetValues(typeof(StatusTag)).Cast<StatusTag>()
                     .SafeToDictionary(s => s, s => StatusesOfType(s).Length)), PrimaryStat);
     
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
-    public int this[IResourceType resourceType] => _counters[resourceType.Name].Amount;
+    public int this[IResourceType resourceType] => _counters.TryGetValue(resourceType.Name, out var r) ? r.Amount : 0;
     public int ResourceAmount(string resourceType) => _counters[resourceType].Amount;
     public float this[StatType statType] => statType switch
     {
         StatType.Damagability => CurrentStats.Damagability() + (IsVulnerable() ? 0.33f : 0),
         StatType.Healability => CurrentStats.Healability() + (IsAntiHeal() ? -0.5f : 0),
+        StatType.Power => CurrentStats[PrimaryStat],
         _ => CurrentStats[statType]
     };
     private bool IsVulnerable() => Counter(TemporalStatType.Vulnerable).Amount > 0;
@@ -115,7 +116,7 @@ public sealed class MemberState : IStats
         => _customStatusIcons.ToArray();
     
     // Bonus Cards 
-    public CardType[] GetBonusCards(BattleStateSnapshot snapshot)
+    public BonusCardDetails[] GetBonusCards(BattleStateSnapshot snapshot)
         => _bonusCardPlayers
             .Select(x => x.GetBonusCardOnResolutionPhaseBegun(snapshot))
             .Where(x => x.IsPresent)
@@ -125,11 +126,12 @@ public sealed class MemberState : IStats
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
         ApplicableReactiveStates
+            .Where(x => (int)x.Timing > (int)e.Timing)
             .Select(x => x.OnEffectResolved(e))
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
-
+    
     private IEnumerable<ReactiveStateV2> ApplicableReactiveStates =>
         this[TemporalStatType.Disabled] > 0 || this[TemporalStatType.Stun] > 0
             ? _reactiveStates.Where(x => x.Status.Tag != StatusTag.CounterAttack)
@@ -312,36 +314,65 @@ public sealed class MemberState : IStats
     public void ReducePreventedTagCounters() => _preventedTags.ToList().ForEach(x => _preventedTags[x.Key] = x.Value > 0 ? x.Value - 1 : 0);
     
     // Resource Commands
-    public void Gain(ResourceQuantity qty, PartyAdventureState partyState) => GainResource(qty.ResourceType, qty.Amount, partyState);
-    public void GainResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
+    public void ChangeResource(ResourceQuantity qty, PartyAdventureState partyState)
     {
-        if (amount == 0)
+        if (qty.Amount == 0)
             return;
-        if (resourceName == "Creds")
-            partyState.UpdateCreditsBy(amount);
+        
+        if (qty.Amount < 0)
+            LoseResource(qty, partyState, false);
+        else
+            GainResource(qty, partyState);
+    }
+    
+    public void GainResource(ResourceQuantity qty, PartyAdventureState partyState)
+    {
+        if (qty.Amount == 0)
+            return;
+        
+        if (qty.ResourceType == "Creds")
+            partyState.UpdateCreditsBy(qty.Amount);
         else if (this[TemporalStatType.PreventResourceGains] == 0)
-            Counter(resourceName).ChangeBy(amount);
-    });
+           ChangeResourceAmount(qty, false);
+    }
     
     public void AdjustPrimaryResource(int numToGive)
     {
-        if (this[TemporalStatType.PreventResourceGains] == 0)
+        if (numToGive < 0 || this[TemporalStatType.PreventResourceGains] == 0)
         {
             BattleLog.Write($"{Name} {BattleLog.GainedOrLostTerm(numToGive)} {numToGive} {PrimaryResource.Name}");
-            PublishAfter(() => _counters[PrimaryResource.Name].ChangeBy(numToGive));
+            ChangeResourceAmount(new ResourceQuantity { Amount = numToGive, ResourceType = PrimaryResource.Name }, false);
         }
     }
 
-    public void Lose(ResourceQuantity qty, PartyAdventureState partyState) => LoseResource(qty.ResourceType, qty.Amount, partyState);
-    // TODO: Combine Lose and Gain into one method
-    private void LoseResource(string resourceName, int amount, PartyAdventureState partyState) => PublishAfter(() =>
-    {        
-        if (amount == 0)
+    public void Spend(ResourceQuantity qty, PartyAdventureState partyState) => LoseResource(qty, partyState, true);
+    public void LoseResource(ResourceQuantity qty, PartyAdventureState partyState, bool wasPaidCost)
+    {
+        if (qty.Amount == 0)
             return;
-        if (resourceName == "Creds")
-            partyState.UpdateCreditsBy(-amount);
+        
+        if (qty.ResourceType == "Creds")
+            partyState.UpdateCreditsBy(-qty.Amount);
         else
-            Counter(resourceName).ChangeBy(-amount);
+            ChangeResourceAmount(qty.Negate(), wasPaidCost);
+    }
+
+    private void ChangeResourceAmount(ResourceQuantity qty, bool wasPaidCost) => PublishAfter(() =>
+    {
+        var beforeAmount = Counter(qty.ResourceType).Amount;
+        Counter(qty.ResourceType).ChangeBy(qty.Amount);
+        var delta = Counter(qty.ResourceType).Amount - beforeAmount;
+
+        if (delta == 0)
+            return;
+        
+        Message.Publish(new MemberResourceChanged(MemberId, qty, wasPaidCost));
+        if (wasPaidCost)
+            BattleLog.Write($"{Name} spent {qty}");
+        else if (qty.Amount > 0) 
+            BattleLog.Write($"{Name} gained {qty}");
+        else if (qty.Amount < 0)
+            BattleLog.Write($"{Name} lost {qty.Negate()}");
     });
 
     public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any() || _temporalStatsToReduceAtEndOfTurn.Any(x => this[x] > 0); 

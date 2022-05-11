@@ -5,11 +5,15 @@ public class UiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     [TextArea(1, 10), SerializeField] private string tooltipText;
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData) => Show();
+
+    public void OnPointerExit(PointerEventData eventData) => Hide();
+    
+    public void Show()
     {
-        if (!eventData.dragging)
+        if (!MouseDragState.IsDragging)
             Message.Publish(new ShowTooltip(transform, tooltipText));
     }
 
-    public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
+    public void Hide() => Message.Publish(new HideTooltip());
 }

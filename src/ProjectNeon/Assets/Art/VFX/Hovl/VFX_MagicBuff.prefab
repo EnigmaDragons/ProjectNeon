@@ -14658,6 +14658,7 @@ GameObject:
   - component: {fileID: 876408017529670082}
   - component: {fileID: 9051182715143373590}
   - component: {fileID: 2457611066940737546}
+  - component: {fileID: 6164073351872536483}
   m_Layer: 0
   m_Name: VFX_MagicBuff
   m_TagString: Untagged
@@ -19605,6 +19606,21 @@ MonoBehaviour:
   durationSeconds: 1
   maxLifetime: 2
   waitForCompletion: 1
+--- !u!114 &6164073351872536483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908576367016503106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/BattleVFX/MAGIC_BUFF
+  PlayOnAwake: 1
+  PlayOnDestroy: 0
 --- !u!1 &6427402607796696151
 GameObject:
   m_ObjectHideFlags: 0

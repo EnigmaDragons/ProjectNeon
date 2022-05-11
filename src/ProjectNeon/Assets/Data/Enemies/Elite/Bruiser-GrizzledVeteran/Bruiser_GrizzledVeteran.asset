@@ -18,7 +18,13 @@ MonoBehaviour:
   lastBalanceDate: 1/8/21
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
-  ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
   preferredTurnOrder: 99
   prefab: {fileID: 6235040150558374266, guid: 1e4179171c32c794fbef279d392c3916, type: 3}
   materialType: 1
@@ -34,6 +40,7 @@ MonoBehaviour:
   resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
   description: Tough veteran who retaliates every time he is attacked.
   animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
+  animationSounds: {fileID: 11400000, guid: 320a1f41711f2514e858f7835f7dd049, type: 2}
   stageDetails:
   - stage: 1
     maxHp: 60
@@ -104,6 +111,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 11400000, guid: cf3ab3b79d8f0d84c881bbcbe2ac08b7, type: 2}
       ReactionEffect:
         reactor: 0
@@ -146,6 +154,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 11400000, guid: b18f993f6d8ecb04493afffa74e9fad4, type: 2}
       ReactionEffect:
         reactor: 0

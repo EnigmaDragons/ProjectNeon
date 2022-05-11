@@ -57,9 +57,18 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
     {
         if (_generatedOptions == null)
         {
-            _generatedOptions = new ClinicServiceButtonData[_party.Heroes.Length];
+            var newGeneratedOptions = new List<ClinicServiceButtonData>();
             for (int i = 0; i < _party.Heroes.Length; i++)
-                _generatedOptions[i] = GetOption(_party.Heroes[i], i);
+            {
+                for (var ii = 0; ii < 2; ii++)
+                {
+                    var option = GetOption(_party.Heroes[i], i * 2 + ii);
+                    while (newGeneratedOptions.Any(x => x.Description == option.Description))
+                        option = GetOption(_party.Heroes[i], i * 2 + ii);
+                    newGeneratedOptions.Add(option);   
+                }
+            }
+            _generatedOptions = newGeneratedOptions.ToArray();
             _available = _generatedOptions.Select(x => true).ToArray();
         }
         for (var i = 0; i < _generatedOptions.Length; i++)

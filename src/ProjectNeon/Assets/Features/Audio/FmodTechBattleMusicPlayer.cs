@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FmodTechBattleMusicPlayer : MonoBehaviour
@@ -21,25 +19,17 @@ public class FmodTechBattleMusicPlayer : MonoBehaviour
     void OnEnable()
     {
         Message.Subscribe<NavigateToSceneRequested>(Music_Stopper, this);
+        Message.Subscribe<WinBattleWithRewards>(OnStingerStopper, this);
+    }
+
+    private void OnStingerStopper(WinBattleWithRewards msg)
+    {
+        BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     private void Music_Stopper(NavigateToSceneRequested msg)
     {
         BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-
-       /* if (msg.SceneName == "GameScene")
-        {
-           
-        }
-        if (msg.SceneName == "ConclusionScene")
-        {
-            BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }
-        if (msg.SceneName == "TitleScreen")
-        {
-            BattleMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }*/
-
     }
 
     private void OnDisable()

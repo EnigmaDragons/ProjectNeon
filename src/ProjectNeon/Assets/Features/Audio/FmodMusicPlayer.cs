@@ -8,6 +8,7 @@ public class FmodMusicPlayer : MonoBehaviour
     private static EventInstance Music;
     private static EventInstance BattleLostStinger;
     private static EventInstance GameWonStinger;
+    private static EventInstance CustomMusic;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class FmodMusicPlayer : MonoBehaviour
         Message.Subscribe<GameLostStingerMSG>(Battle_Lost_FUNC, this);
         Message.Subscribe<GameWonStingerMSG>(Battle_Won_FUNC, this);
         Message.Subscribe<NavigateToSceneRequested>(MusicChanger, this);
+        Message.Subscribe<PlayCustomFmodMusic>(f => PlayCustomMusic(f.MusicName), this);
     }
 
     private void OnDisable() => Message.Unsubscribe(this);
@@ -34,31 +36,54 @@ public class FmodMusicPlayer : MonoBehaviour
     private const float TitleMusic = 0f;
     private const float GameMainMusic = 1f;
     private const float BattleMusic = 2f;
+    private const float Nothing = 2f;
+    private const float Med_Music = 5f;
     private const float ConclusionMusic = 3f;
-    
+    private const float BattleWonStinger = 7f;
+
     private readonly Dictionary<string, float> _musicProgressParamBySceneName = new Dictionary<string, float>
     {
         { "TitleScreen", TitleMusic },
         { "AdventureSelection", TitleMusic },
+        { "SettingsScene", TitleMusic },
         { "SquadSelection", GameMainMusic },
-        { "CutsceneScene", GameMainMusic },
+        { "CutsceneScene", Med_Music },
         { "GameScene", GameMainMusic },
         { "GameSceneV4", GameMainMusic },
         { "AutoLoadGameScene", GameMainMusic },
         { "DeckBuilderTestScene", GameMainMusic },
         { "DeckBuilderScene", GameMainMusic },
         { "HoverVehicleScene", GameMainMusic },
-        { "BattleSceneV2", BattleMusic },
-        { "BattleTestScene", BattleMusic },
-        { "ConclusionScene", ConclusionMusic }
+        { "ConclusionScene", ConclusionMusic },
+        { "AcademyScene", Nothing },
+        { "BattleSceneV2", Nothing },
+        { "BattleTestScene", Nothing },
     };
 
     private void PlayMusicForScene(string sceneName)
     {
         BattleLostStinger.stop(STOP_MODE.ALLOWFADEOUT);
         GameWonStinger.stop(STOP_MODE.ALLOWFADEOUT);
+        CustomMusic.stop(STOP_MODE.ALLOWFADEOUT);
+        
         var musicParam = _musicProgressParamBySceneName.ValueOrDefault(sceneName, () => GameMainMusic);
         Music.setParameterByName("MUSIC_PROGRESS", musicParam);
+        
+        if (sceneName == "AcademyScene")
+            PlayCustomMusic("event:/GameMusic/ImmigrationOffice_Music");
+    }
+
+    private void PlayCustomMusic(string musicName)
+    {
+        BattleLostStinger.stop(STOP_MODE.ALLOWFADEOUT);
+        GameWonStinger.stop(STOP_MODE.ALLOWFADEOUT);
+        CustomMusic.stop(STOP_MODE.ALLOWFADEOUT);
+        
+        Music.setParameterByName("MUSIC_PROGRESS", Nothing);
+        
+        CustomMusic = FMODUnity.RuntimeManager.CreateInstance(musicName);
+        CustomMusic.start();
+        CustomMusic.release();
     }
 
     private void MusicChanger(NavigateToSceneRequested msg) => PlayMusicForScene(msg.SceneName);

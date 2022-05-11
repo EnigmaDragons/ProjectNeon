@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="MixerGroup" id="{1e26040f-bfda-4fec-8d42-5649d56bf792}">
+		<property name="name">
+			<value>BATTLE_MUSIC</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{e3661a3d-5914-498d-a1e9-37b637c24d97}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{c50bef39-e08c-4191-b24e-912e9318aba2}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{0a25e1f9-f2e2-499c-a0f8-785adb81c858}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{e3661a3d-5914-498d-a1e9-37b637c24d97}">
+		<relationship name="effects">
+			<destination>{5abdfb05-fe6d-476a-b972-a917bcd59ade}</destination>
+			<destination>{841c0cef-dc13-4a6d-96cb-0b23886c4772}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{c50bef39-e08c-4191-b24e-912e9318aba2}" />
+	<object class="MixerBusFader" id="{5abdfb05-fe6d-476a-b972-a917bcd59ade}" />
+	<object class="CompressorEffect" id="{841c0cef-dc13-4a6d-96cb-0b23886c4772}">
+		<property name="bypass">
+			<value>true</value>
+		</property>
+		<property name="threshold">
+			<value>-60</value>
+		</property>
+		<property name="ratio">
+			<value>15</value>
+		</property>
+		<property name="attackTime">
+			<value>0.100000001</value>
+		</property>
+		<property name="releaseTime">
+			<value>5000</value>
+		</property>
+		<relationship name="sidechains">
+			<destination>{eed9a8d5-6578-4fd0-a5e4-f14f6844c672}</destination>
+		</relationship>
+	</object>
+</objects>

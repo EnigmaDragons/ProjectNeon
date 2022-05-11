@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   displayName: 
-  description: When applying a Mark, also give Vulnerable for the turn
+  description: 'On Mark: Give Vulnerable 1'
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
   rarity: 3
@@ -42,12 +43,12 @@ MonoBehaviour:
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
+      Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: When applying a Mark, also give Vulnerable for the turn
+    StatusDetailText: 'On Mark: Give Vulnerable 1'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -64,11 +65,16 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 3
       cardActions: {fileID: 11400000, guid: 4032de53288919a47b06ba41b7a77dd8, type: 2}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 

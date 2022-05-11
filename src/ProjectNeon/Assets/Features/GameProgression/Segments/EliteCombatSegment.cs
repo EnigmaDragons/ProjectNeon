@@ -6,8 +6,13 @@ public class EliteCombatSegment : StageSegment
 {
     public override string Name => "Elite Combat";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
+    public override bool ShouldAutoStart => false;
     public override void Start() => Message.Publish(new EnterRandomEliteCombat());
     public override Maybe<string> Detail => Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => MapNodeType.Elite;
+    public override Maybe<string> Corp => Maybe<string>.Missing();
+    
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData)
         => AdventureProgress2MapNode3CombatNodeGeneration.Generate(Name, true, ctx, mapData);
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

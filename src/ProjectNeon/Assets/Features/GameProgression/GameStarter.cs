@@ -1,8 +1,7 @@
 using System.Linq;
-using Features.GameProgression;
 using UnityEngine;
 
-public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNewGameRequested>
+public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNewGameRequested, StartAdventureV5Requested>
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private SaveLoadSystem io;
@@ -10,6 +9,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private AdventureProgress2 adventureProgress2;
     [SerializeField] private AdventureProgressV4 adventureProgress4;
+    [SerializeField] private AdventureProgressV5 adventureProgress5;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private Adventure defaultAdventure;
     [SerializeField] private bool allowPlayerToSelectAdventure;
@@ -20,7 +20,6 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         io.ClearCurrentSlot();
         encounterHistory.Clear();
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
-        io.SetShouldShowTutorials(msg.ShouldShowTutorials);
         
         if (defaultAdventure.IsV2)
             if (allowPlayerToSelectAdventure)
@@ -28,8 +27,10 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             else
                 SelectDefaultAdventureV2();
         
-        if (defaultAdventure.IsV4)
-            StartDefaultAdventureV4(!msg.ShouldShowTutorials);
+        if (defaultAdventure.IsV5)
+            StartDefaultAdventureV5();
+        else if (defaultAdventure.IsV4)
+            StartDefaultAdventureV4(true);
     }
     
     private void SelectDefaultAdventureV2()
@@ -74,7 +75,30 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             Message.Publish(new GameStarted());
             navigator.NavigateToGameSceneV4();
         }
-    } 
+    }
+
+    private void StartDefaultAdventureV5() => StartAdventureV5(defaultAdventure);
+    
+    protected override void Execute(StartAdventureV5Requested msg) => StartAdventureV5(msg.Adventure);
+
+    private void StartAdventureV5(Adventure adventure)
+    {
+        var startingSegment = 0;
+        adventureProgress.AdventureProgress = adventureProgress5;
+        adventureProgress.AdventureProgress.Init(adventure, 0, startingSegment);
+        party.Initialized(adventure.FixedStartingHeroes);
+        party.UpdateClinicVouchersBy(adventure.StartingClinicVouchers);
+        CurrentGameData.Write(s =>
+        {
+            s.IsInitialized = true;
+            s.Phase = CurrentGamePhase.SelectedSquad;
+            s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
+            s.PartyData = party.GetData();
+            return s;
+        });
+        Message.Publish(new GameStarted());
+        navigator.NavigateToGameSceneV5();
+    }
 
     protected override void Execute(ContinueCurrentGame msg)
     {
@@ -94,15 +118,27 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                     navigator.NavigateToGameScene();
                 if (adventureType == GameAdventureProgressType.V4)
                     navigator.NavigateToGameSceneV4();
+                if (adventureType == GameAdventureProgressType.V5)
+                    navigator.NavigateToGameSceneV5();
             }
             else if (phase == CurrentGamePhase.LoadError)
             {
-                io.ClearCurrentSlot();
-                CurrentGameData.Clear();
-                Message.Publish(new RefreshMainMenu());
-                Message.Publish(new ShowInfoDialog(
-                    "Unfortunately, your Save Game was unable to be loaded. A bug report has been automatically filed.",
-                    "Drek!"));
+                if (!CurrentGameData.SaveMatchesCurrentVersion)
+                {
+                    Message.Publish(new RefreshMainMenu());
+                    Message.Publish(new ShowInfoDialog(
+                        $"Load failed. Save Game Version is {CurrentGameData.SaveGameVersion}. Current Game Version is {CurrentGameData.GameVersion}. Updating your game may fix this issue.",
+                        "Null Persp"));
+                }
+                else
+                {
+                    io.ClearCurrentSlot();
+                    CurrentGameData.Clear();
+                    Message.Publish(new RefreshMainMenu());
+                    Message.Publish(new ShowInfoDialog(
+                        "Unfortunately, your Save Game was unable to be loaded. A bug report has been automatically filed.",
+                        "Drek!"));
+                }
             }
         }
     }
@@ -125,22 +161,6 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
 
     private void KickOffGameStartProcess()
     {
-        if (defaultAdventure.IsV2 || defaultAdventure.IsV4)
-            AskPlayerWhetherTutorialsShouldBeEnabled();
-        else
-            Message.Publish(new StartNewGame(false));
-    }
-    
-    private void AskPlayerWhetherTutorialsShouldBeEnabled()
-    {
-        Message.Publish(new ShowTwoChoiceDialog
-        {
-            UseDarken = true,
-            Prompt = "Is this your first time playing Metroplex Zero?",
-            PrimaryButtonText = "Yes",
-            PrimaryAction = () => Message.Publish(new StartNewGame(true)),
-            SecondaryButtonText = "No",
-            SecondaryAction = () => Message.Publish(new StartNewGame(false)),
-        });
+        Message.Publish(new StartNewGame());
     }
 }

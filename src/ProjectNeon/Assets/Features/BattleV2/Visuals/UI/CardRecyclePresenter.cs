@@ -13,7 +13,7 @@ public sealed class CardRecyclePresenter : OnMessage<BattleStateChanged>
 
     private void Render()
     {
-        panel.SetActive(state.PlayerState.CardCycles > 0);
+        panel.SetActive(state.NumberOfRecyclesRemainingThisTurn > 0);
         counter.text = state.NumberOfRecyclesRemainingThisTurn.ToString();
     }
 }

@@ -33,7 +33,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         else if (shouldDiscard)
             DiscardCard();
         else if (targetingState.HasValidTargets && card != null && card.IsPlayable(battleState.Party, battleState.NumberOfCardPlaysRemainingThisTurn))
-            PlayCard(new PlayedCardV2(card.Owner, targetingState.Targets, card));
+            PlayCard(new PlayedCardV2(card.Owner, targetingState.Targets, card, false));
         else 
             Cancel();
     }

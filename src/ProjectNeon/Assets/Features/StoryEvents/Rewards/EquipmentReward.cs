@@ -1,3 +1,4 @@
+using I2.Loc;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "StoryEvent/Rewards/Equipment")]
@@ -19,7 +20,7 @@ public class EquipmentReward : StoryResult
     public override void Preview()
     {
         Message.Publish(new ShowTextResultPreview { IsReward = true, Text = string.IsNullOrWhiteSpace(corp.Value) 
-            ? Localize.GetFormattedEventResult("EquipmentRewardPreview", rarity, slot)
-            : Localize.GetFormattedEventResult("EquipmentRewardPreview-Corp", rarity, slot, corp.Value)});
+            ? string.Format(new LocalizedString("EquipmentRewardPreview"), rarity, slot)
+            : string.Format(new LocalizedString("EquipmentRewardPreview-Corp"), rarity, slot, corp.Value)});
     }
 }

@@ -21,9 +21,9 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
 
     private void Awake()
     {
-        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4)
-            doneButton.onClick.AddListener(() => party.UpdateCreditsBy(-9999, false));
+        V4ClinicHackOnLeave();
     }
+    
     protected override void Execute(UpdateClinic msg) => UpdateServices();
     protected override void Execute(RefreshShop msg)
     {
@@ -36,11 +36,7 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
     {
         if (clinic.Corp == null)
             return;
-        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4)
-        {
-            party.UpdateCreditsBy(-9999, false);
-            party.UpdateCreditsBy(party.Heroes.Length);   
-        }
+        V4ClinicHackOnEnter();
         patientParent.DestroyAllChildren();
         var costCalculator = clinics.GetCostCalculator(clinic.Corp);
         party.Heroes.ForEach(h => Instantiate(patientPrototype, patientParent.transform).Initialized(h, costCalculator));
@@ -49,7 +45,7 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
         _serviceButtons = _serviceProvider.GetOptions().Select(x => Instantiate(serviceButtonPrototype, servicesParent.transform)).ToArray();
         UpdateServices();
     }
-
+    
     private void UpdateServices()
     {
         if (clinic.Corp != null && corpUi != null)
@@ -61,5 +57,20 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
         {
             _serviceButtons[i].Init(options[i], party);
         }
+    }
+    
+    private void V4ClinicHackOnEnter()
+    {
+        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4)
+        {
+            party.UpdateCreditsBy(-9999, false);
+            party.UpdateCreditsBy(party.Heroes.Length + 1);
+        }
+    }
+    
+    private void V4ClinicHackOnLeave()
+    {
+        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4)
+            doneButton.onClick.AddListener(() => party.UpdateCreditsBy(-9999, false));
     }
 }

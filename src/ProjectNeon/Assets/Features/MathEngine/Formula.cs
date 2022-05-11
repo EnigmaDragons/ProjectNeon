@@ -85,21 +85,41 @@ public static class Formula
     {
         foreach (var stat in Enum.GetValues(typeof(StatType)).Cast<StatType>())
         {
-            if (ctx.Target.IsPresent)
-                expression = expression.Replace($"Target[{stat}]", ctx.Target.Value[stat].ToString());
+            expression = ReplaceOrRemoveTargetValue(expression, stat, ctx);
             expression = expression.Replace(stat.ToString(), ctx.Source[stat].ToString());
         }
         return expression;
     }
-
+    
     private static string ReplaceTemporalStats(string expression, FormulaContext ctx)
     {
         foreach (var stat in Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>())
         {
-            if (ctx.Target.IsPresent)
-                expression = expression.Replace($"Target[{stat}]", ctx.Target.Value[stat].ToString());
+            expression = ReplaceOrRemoveTargetValue(expression, stat, ctx);
             expression = expression.Replace(stat.ToString(), ctx.Source[stat].ToString());
         }
+        return expression;
+    }
+    
+    private static string ReplaceOrRemoveTargetValue(string expression, StatType stat, FormulaContext ctx)
+    {        
+        ctx.Target.ExecuteIfPresentOrElse(
+            t => expression = expression.Replace($"Target[{stat}]", t[stat].ToString()), 
+            () => expression = expression.Replace($"Target[{stat}]", ""));
+        ctx.Target.ExecuteIfPresentOrElse(
+            t => expression = expression.Replace($"TargetBase[{stat}]", t.BaseStats[stat].ToString()), 
+            () => expression = expression.Replace($"TargetBase[{stat}]", ""));
+        return expression;
+    }
+    
+    private static string ReplaceOrRemoveTargetValue(string expression, TemporalStatType stat, FormulaContext ctx)
+    {
+        ctx.Target.ExecuteIfPresentOrElse(
+            t => expression = expression.Replace($"Target[{stat}]", t[stat].ToString()), 
+            () => expression = expression.Replace($"Target[{stat}]", ""));
+        ctx.Target.ExecuteIfPresentOrElse(
+            t => expression = expression.Replace($"TargetBase[{stat}]", t.BaseStats[stat].ToString()), 
+            () => expression = expression.Replace($"TargetBase[{stat}]", ""));
         return expression;
     }
     

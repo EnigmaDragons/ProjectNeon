@@ -7,4 +7,6 @@
     public string ResourceType;
 
     public override string ToString() => $"{Amount} {ResourceType}";
+
+    public ResourceQuantity Negate() => new ResourceQuantity {Amount = -Amount, ResourceType = ResourceType};
 }

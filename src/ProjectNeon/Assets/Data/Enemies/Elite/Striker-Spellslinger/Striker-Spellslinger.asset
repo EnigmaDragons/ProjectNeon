@@ -19,6 +19,12 @@ MonoBehaviour:
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
   ai: {fileID: 11400000, guid: 2e53d4cc259d3ca42b08031865d2def1, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
   preferredTurnOrder: 99
   prefab: {fileID: 3582005950873257460, guid: c43b214a231893846b22303fa96ea239, type: 3}
   materialType: 1
@@ -32,8 +38,10 @@ MonoBehaviour:
   unique: 0
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: 
-  animations: {fileID: 11400000, guid: 8122ecd1fb5538141b8f649fe5db4c9a, type: 2}
+  description: Taking 2 actions a turn, a weak version followed by the bigger one.
+    She is able to devalue stuns, dodges and aegises.
+  animations: {fileID: 11400000, guid: 031b7becd83efa0478482b92d33c47ab, type: 2}
+  animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
   stageDetails:
   - stage: 1
     maxHp: 64

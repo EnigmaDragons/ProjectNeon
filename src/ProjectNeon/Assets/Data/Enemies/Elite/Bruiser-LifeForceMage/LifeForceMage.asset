@@ -18,7 +18,13 @@ MonoBehaviour:
   lastBalanceDate: 10/17/2021
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
-  ai: {fileID: 11400000, guid: 02e1ead62e23c4a4b85b7ae93d8d87ec, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
   preferredTurnOrder: 99
   prefab: {fileID: 5971160652351296526, guid: cbaf6d41ff63dd14db8da5c28301c6cd, type: 3}
   materialType: 1
@@ -33,8 +39,9 @@ MonoBehaviour:
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   description: Passively provides defenses to allies, and when bloodied, this enemy
-    steals his allies life force and buffs himself
-  animations: {fileID: 11400000, guid: 8122ecd1fb5538141b8f649fe5db4c9a, type: 2}
+    steals her allies life force and buffs herself.
+  animations: {fileID: 11400000, guid: 6360c74e8cab4e94c88f63faa4290bc3, type: 2}
+  animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
   stageDetails:
   - stage: 1
     maxHp: 100
@@ -106,6 +113,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 11400000, guid: 0c694d7960514cf42866255066ab46d6, type: 2}
       ReactionEffect:
         reactor: 0
@@ -149,7 +157,8 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReactionSequence: {fileID: 11400000, guid: 0c694d7960514cf42866255066ab46d6, type: 2}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0

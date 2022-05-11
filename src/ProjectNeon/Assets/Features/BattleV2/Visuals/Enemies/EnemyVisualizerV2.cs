@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using UnityEngine;
 
-public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, CharacterAnimationRequested>
+public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequested, ShowHeroBattleThought, SetEnemiesUiVisibility>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private EnemyArea enemyArea;
@@ -17,7 +16,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
 
     [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
     [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
-
+    
+    private readonly Dictionary<EnemyInstance, ProgressiveTextRevealWorld> _speech = new Dictionary<EnemyInstance, ProgressiveTextRevealWorld>();
     private List<Tuple<int, Member>> _enemyPositions; 
     
     public IEnumerator Spawn()
@@ -48,10 +48,22 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
 
     private GameObject InstantiateEnemyVisuals(EnemyInstance enemy)
     {
-        var enemyObject = Instantiate(enemy.Prefab, transform);
-        active.Add(enemyObject);
-        enemyArea.WithUiTransforms(active.Select(a => a.transform));
-        return enemyObject;
+        try
+        {
+            var enemyObject = Instantiate(enemy.Prefab, transform);
+            active.Add(enemyObject);
+            enemyArea.WithUiTransforms(active.Select(a => a.transform));
+            var speech = enemyObject.GetComponentInChildren<ProgressiveTextRevealWorld>();
+            if (speech != null)
+                _speech[enemy] = speech;
+            return enemyObject;
+        }
+        catch(Exception e)
+        {
+            Log.Error($"Cannot Instantiate {enemy.Name}");
+            Log.Error(e);
+            return null;
+        }
     }
 
     private GameObject AddEnemy(EnemyInstance enemy, Member member, Vector3 offset)
@@ -80,7 +92,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         for (var i = 0; i < enemyArea.Enemies.Count; i++)
         {
             var member = state.GetMemberByEnemyIndex(i);
-            SetupEnemyUi(member, enemyArea.EnemyUiPositions[i].gameObject.transform);
+            SetupEnemyUi(enemyArea.Enemies[i], member, enemyArea.EnemyUiPositions[i].gameObject.transform);
             SetupVisualComponents(active[i], member);
         }
     }
@@ -106,17 +118,23 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
             Debug.LogError($"{member.Name} is missing a {nameof(MemberHighlighter)}");
         else
             highlighter.Init(member);
+        
+        var tauntEffect = obj.GetComponentInChildren<TauntEffect>();
+        if (tauntEffect == null)
+            Debug.LogError($"{member.Name} is missing a {nameof(TauntEffect)}");
+        else
+            tauntEffect.Init(member);
     }
     
-    public Member Spawn(EnemyInstance enemy, Vector3 offset)
+    public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset)
     {
         DevLog.Write($"Spawning {enemy.Name}");
         var member = enemy.AsMember(state.GetNextEnemyId());
         var enemyObject = AddEnemy(enemy, member, offset);
         state.AddEnemy(enemy, enemyObject, member);
-        SetupEnemyUi(member, enemyObject.transform);
+        SetupEnemyUi(enemy, member, enemyObject.transform);
         SetupVisualComponents(enemyObject, member);
-        return member;
+        return new EnemySpawnDetails(enemy, member, enemyObject.transform);
     }
     
     public void Despawn(MemberState enemy)
@@ -128,47 +146,20 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
         Destroy(uis[index]);
     }
 
-    private void SetupEnemyUi(Member member, Transform obj)
+    private void SetupEnemyUi(EnemyInstance enemy, Member member, Transform obj)
     {
         var pos = obj.transform.position;
         var customUi = obj.GetComponentInChildren<EnemyBattleUIPresenter>();
         uis.Add(customUi != null
-            ? customUi.Initialized(member)
-            : Instantiate(ui, pos, Quaternion.identity, obj).Initialized(member));
-    }
-    
-    protected override void Execute(MemberUnconscious m)
-    {
-        if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
-
-        var enemy = state.GetEnemyById(m.Member.Id);
-        if (!string.IsNullOrWhiteSpace(enemy.DeathEffect))
-        {
-            Message.Publish(new BattleEffectAnimationRequested
-            {
-                EffectName = enemy.DeathEffect, 
-                Scope = Scope.One, 
-                Target = new Single(m.Member), 
-                Group = Group.Self,
-                PerformerId = m.Member.Id,
-                Condition = new NoEffectCondition(),
-                Card = Maybe<Card>.Missing(),
-                Source = m.Member,
-                XPaidAmount = ResourceQuantity.None
-            });
-        }
-
-        var t = state.GetTransform(m.Member.Id);
-        t.DOPunchScale(new Vector3(8, 8, 8), 2, 1);
-        t.DOSpiral(2);
-        this.ExecuteAfterDelay(() => t.gameObject.SetActive(false), 2.2f);
+            ? customUi.Initialized(enemy, member)
+            : Instantiate(ui, pos, Quaternion.identity, obj).Initialized(enemy, member));
     }
 
     protected override void Execute(MemberRevived m)
     {
         if (!m.Member.TeamType.Equals(TeamType.Enemies)) return;
 
-        state.GetTransform(m.Member.Id).gameObject.SetActive(true);
+        state.GetMaybeTransform(m.Member.Id).IfPresent(t => t.gameObject.SetActive(true));
         uis.Where(u => u.Contains(m.Member)).ForEach(u => u.gameObject.SetActive(true));
     }
 
@@ -193,5 +184,31 @@ public class EnemyVisualizerV2 : OnMessage<MemberUnconscious, MemberRevived, Cha
                 DevLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
+    }
+    
+    protected override void Execute(ShowHeroBattleThought e)
+    {
+        if (!state.IsEnemy(e.MemberId)) return;
+        
+        var enemy = state.GetEnemyById(e.MemberId);
+        var s = _speech[enemy];
+        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(s.Hide, 5f)));
+        s.Proceed(true);
+    }
+
+    protected override void Execute(SetEnemiesUiVisibility msg)
+    {
+        if (msg.Component == BattleUiElement.EnemyInfo)
+            uis.ForEach(u => u.gameObject.SetActive(msg.ShouldShow));
+        else if (msg.Component == BattleUiElement.EnemyTechPoints)
+            uis.ForEach(u => u.SetTechPointVisibility(msg.ShouldShow));
+        else if (msg.Component == BattleUiElement.PrimaryStat)
+            uis.ForEach(u => u.SetStatVisibility(msg.ShouldShow));
+    }
+
+    private IEnumerator ExecuteAfterDelayRealtime(Action a, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        a();
     }
 }

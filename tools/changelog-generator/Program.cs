@@ -94,6 +94,7 @@ namespace ChangeLogGenerator
             { "Editor:", "Miscellaneous"},
             { "Coding:", "Miscellaneous"},
             { "Project:", "Project" },
+            { "Site:", "Project" },
             { "Tutorial", "Player Aids" },
             { "New Feature:", "New Features" },
             { "Feature:", "New Features" },
@@ -128,6 +129,7 @@ namespace ChangeLogGenerator
             { "UI", "UI Improvements" },
             { "Tooltip", "UI Improvements" },
             { "View", "UI Improvements" },
+            { "Anim:", "Art Improvements" },
             { "Animations:", "Art Improvements" },
             { "Art", "Art Improvements" },
             { "Wording", "Card Improvements" },
@@ -137,6 +139,9 @@ namespace ChangeLogGenerator
             { "Progression", "Balance Changes" },
             { "AI", "Balance Changes" },
             { "New Battle Role", "Balance Changes" },
+            { "Enemy Rework", "Balance Changes" },
+            { "Enemy Tweak", "Balance Changes" },
+            { "Enemy Update", "Balance Changes" },
         };
 
         private static Tuple<string, string> GetCategorizedLine(string rawLine)

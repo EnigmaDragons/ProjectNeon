@@ -26,13 +26,18 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
     private float _totalSeconds;
     private float _secondsRemaining;
     private bool _canAnimate = true;
-
+    
     public void Init(int memberId, CharacterAnimations characterAnimations, TeamType team)
     {
         _memberId = memberId;
         _team = team;
         _characterAnimations = characterAnimations;
         _currentStates = new Dictionary<int, string>();
+
+        if (animator != null && animator.gameObject.GetComponent<CharacterSoundsAnimationBinding>() == null)
+            animator.gameObject.AddComponent<CharacterSoundsAnimationBinding>();
+        if (gameObject.GetComponentInChildren<CharacterAnimationSoundPlayer>() == null)
+            gameObject.AddComponent<CharacterAnimationSoundPlayer>();
         
         // TODO: Temp Fix for Layering. Doesn't really belong in this class
         InitCharacterSortingLayer();
@@ -41,12 +46,11 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(partyAdventureState)} is null");
         if (state == null)
             Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(state)} is null");
-        if (state == null || partyAdventureState == null || animator == null || character == null || characterAnimations == null)
+        if (state == null || partyAdventureState == null || character == null || characterAnimations == null)
             _canAnimate = false;
         
         ReturnToDefault();
     }
-    
 
     private void Update()
     {
@@ -72,7 +76,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
                 state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), state.CreditsAtStartOfBattle, 
                 state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
-                state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false);
+                state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.NotApplicable);
             var reasonToNotApply = msg.Condition.Value.GetShouldNotApplyReason(ctx);
             if (reasonToNotApply.IsPresent)
             {

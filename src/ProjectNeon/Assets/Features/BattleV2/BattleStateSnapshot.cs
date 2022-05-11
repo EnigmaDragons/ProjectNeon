@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public sealed class BattleStateSnapshot
 {
@@ -13,6 +12,12 @@ public sealed class BattleStateSnapshot
     {
         var me = Members[id];
         return Members.Where(m => m.Value.TeamType == me.TeamType && m.Key != id).ToDictionary(k => k.Key, v => v.Value);
+    }
+    
+    public Dictionary<int, MemberSnapshot> NonSelfConsciousAllies(int id)
+    {
+        var me = Members[id];
+        return Members.Where(m => m.Value.IsConscious() && m.Value.TeamType == me.TeamType && m.Key != id).ToDictionary(k => k.Key, v => v.Value);
     }
 
     public BattleStateSnapshot(params MemberSnapshot[] snapshots) 

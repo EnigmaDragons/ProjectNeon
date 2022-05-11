@@ -25,6 +25,7 @@ public interface CardTypeData
 public static class CardTypeDataExtensions
 {
     public static bool Is(this CardTypeData c, params CardTag[] tags) => tags.All(tag => c.Tags.Contains(tag));
+    public static bool IsAoE(this CardTypeData c) => c.ActionSequences.Any() && c.ActionSequences[0].Scope == Scope.All;
 
     public static CardActionsData[] Actions(this CardTypeData c) => c.ActionSequences.Select(a => a.CardActions).ToArray();
     
@@ -67,10 +68,10 @@ public static class CardTypeDataExtensions
     }
 
     public static Card ToNonBattleCard(this CardTypeData c, Hero hero)
-        => ToNonBattleCard(c, hero.Character);
+        => ToNonBattleCard(c, hero.Character, hero.Stats);
     
-    public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero) 
-        => new Card(-1, hero.AsMemberForLibrary(), c, c.NonBattleTint(hero), c.NonBattleBust(hero));
+    public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero, IStats heroStats) 
+        => new Card(-1, hero.AsMemberForLibrary(heroStats), c, c.NonBattleTint(hero), c.NonBattleBust(hero));
 
     private static Color NonBattleTint(this CardTypeData c, HeroCharacter h)
         => c.Archetypes.Any() ? h.Tint : Color.white;

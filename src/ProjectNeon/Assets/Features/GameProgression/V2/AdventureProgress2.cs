@@ -23,10 +23,13 @@ public class AdventureProgress2 : AdventureProgressBase
     public float ProgressToUnlockChapterBoss => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
-    public override int RngSeed { get; }
+    public override string AdventureName => CurrentAdventure.Title;
+    public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V2;
+    public override int RngSeed => currentMap3.CurrentNodeRngSeed;
     public override bool UsesRewardXp { get; } = true;
     public override float BonusXpLevelFactor { get; } = 0;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
+    public override bool IsFinalBoss => IsFinalStageSegment;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
 
@@ -45,7 +48,7 @@ public class AdventureProgress2 : AdventureProgressBase
     {
         get { 
             if (currentChapterIndex < 0 || currentChapterIndex >= currentAdventure.Adventure.DynamicStages.Length)
-                Log.Error($"Adventure Stage is illegal. {this}");
+                Log.Error($"V2 Adventure Stage is illegal. {this}");
             return currentAdventure.Adventure.DynamicStages[currentChapterIndex]; 
         }
     }
@@ -172,4 +175,7 @@ public class AdventureProgress2 : AdventureProgressBase
         rngSeed = Rng.NewSeed();
         AdvanceStageIfNeeded();
     } 
+    
+    public override void SetStoryState(string state, bool value) {}
+    public override bool IsTrue(string state) => false;
 }

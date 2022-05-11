@@ -1,10 +1,6 @@
-
 #if UNITY_EDITOR
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using UnityEditor;
 using UnityEngine;
 
@@ -18,13 +14,12 @@ public class StoryEventV2ExporterEditor : EditorWindow
     
     void OnGUI()
     {
-        //Localize.SetDb(LocalizationEditorSettings.StringsDatabase); // Needs ASMDEF Import of Unity.Localization.Editor
         if (GUILayout.Button("Export All"))
         {
             var storyEvents = GetAllInstances<StoryEvent2>();
             var storyEventStrings = new List<string>();
             foreach (var storyEvent in storyEvents)
-                storyEventStrings.Add(ToString(storyEvent));
+                storyEventStrings.Add(storyEvent.ToString());
 
             var writer = new StreamWriter("StoryEventExports.txt", false);
             writer.Write(string.Join("\n", storyEventStrings));
@@ -32,25 +27,7 @@ public class StoryEventV2ExporterEditor : EditorWindow
             GUIUtility.ExitGUI();
         }
     }
-
-    private static string ToString(StoryEvent2 s)
-    {
-        var sb = new StringBuilder();
-        sb.Append(s.StoryText);
-        sb.AppendLine();
-        foreach (var choice in s.Choices)
-        {
-            sb.AppendLine($"Choice: {choice.ChoiceText(s.id)}");
-            foreach (var resolution in choice.Resolution)
-                if (!resolution.HasContinuation)
-                    sb.AppendLine($"Outcome: {resolution.Result}");
-                else
-                    sb.AppendLine(ToString(resolution.ContinueWith));
-        }
-
-        return sb.ToString();
-    }
-
+    
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

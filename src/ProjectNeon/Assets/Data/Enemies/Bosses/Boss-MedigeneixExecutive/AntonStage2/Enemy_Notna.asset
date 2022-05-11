@@ -18,9 +18,15 @@ MonoBehaviour:
   lastBalanceDate: 2022/01/09
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
-  ai: {fileID: 11400000, guid: bd43a568158dcc4418a29a0054efecc5, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
   preferredTurnOrder: 99
-  prefab: {fileID: 1771151275093467103, guid: c50db8efb1027e346b45de5e46b52c43, type: 3}
+  prefab: {fileID: 2563240991985839073, guid: 654b0afd89275e841a76fffd1bb80da9, type: 3}
   materialType: 2
   libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
   deathEffect:
@@ -32,8 +38,11 @@ MonoBehaviour:
   unique: 1
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: 
-  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  description: This android has been taken over by the AI that works as Anton's loyal
+    assistant. Your cards will be glitched, and become a vulnerability that allows
+    your heroes to be disabled.
+  animations: {fileID: 11400000, guid: 3f0fa87766465714f94d998773453036, type: 2}
+  animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
   stageDetails:
   - stage: 1
     maxHp: 75
@@ -75,8 +84,8 @@ MonoBehaviour:
         ConstantValue: 0
         Variable: {fileID: 0}
       FloatAmount:
-        UseConstant: 0
-        ConstantValue: 0
+        UseConstant: 1
+        ConstantValue: 1
         FloatVariable: {fileID: 0}
       DurationFormula: -1
       EffectScope:
@@ -104,6 +113,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0

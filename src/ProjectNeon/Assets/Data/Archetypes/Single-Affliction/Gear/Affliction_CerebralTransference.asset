@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 59
   displayName: 
-  description: 'On Afflict: Draw 1 Card, Gain 1 Card Play'
+  description: 'On Afflict: Draw 1 Card, Gain 1 Card Play <i>(2x / turn)</i>'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
@@ -23,9 +23,7 @@ MonoBehaviour:
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
-  turnStartEffects: []
-  turnEndEffects: []
-  battleStartEffects:
+  turnStartEffects:
   - EffectType: 74
     Conditions: []
     BaseAmount:
@@ -33,19 +31,19 @@ MonoBehaviour:
       ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
-    DurationFormula: -1
+      UseConstant: 1
+      ConstantValue: 2
+      FloatVariable: {fileID: 0}
+    DurationFormula: 1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Afflict: Draw 1 Card, Gain 1 Card Play'
+    StatusDetailText: 'On Afflict: Draw 1 Card, Gain 1 Card Play <i>(2x / turn)</i>'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -62,10 +60,18 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 11400000, guid: 07e4a67103adc1940957d19b384fdf6b, type: 2}
     BonusCardType: {fileID: 0}
+  turnEndEffects: []
+  battleStartEffects: []
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

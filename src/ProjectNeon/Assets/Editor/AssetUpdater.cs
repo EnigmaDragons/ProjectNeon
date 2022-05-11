@@ -19,14 +19,16 @@ public class AssetUpdater
         UpdateAllCards();
         UpdateEquipmentIDs();
         UpdateAllEquipments();
+        UpdateAllResourceTypes();
         EnsureDurationPresent();
         UpdateMapIDs();
         UpdateAllMaps();
         UpdateAllHeroes();
         UpdateEnemyIDs();
         UpdateAllEnemies();
+        UpdateStageSegmentIDs();
+        UpdateAllStageSegments();
         UpdateAllCorps();
-        UpdateStoryEventIDs();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
         Timed("All Battle VFX", UpdateAllBattleVfx);
@@ -235,7 +237,19 @@ public class AssetUpdater
             EditorUtility.SetDirty(x);
         });
     }
-
+    
+    [MenuItem("Neon/Update/UpdateAllResourceTypes")]
+    private static void UpdateAllResourceTypes()
+    {
+        var resourceTypes = ScriptableExtensions.GetAllInstances<SimpleResourceType>().ToArray();
+        var all = ScriptableExtensions.GetAllInstances<AllResourceTypes>();
+        all.ForEach(x =>
+        {
+            x.ResourceTypes = resourceTypes;
+            EditorUtility.SetDirty(x);
+        });
+    }
+    
     [MenuItem("Neon/Update/Update Map IDs")]
     private static void UpdateMapIDs()
     {
@@ -290,10 +304,22 @@ public class AssetUpdater
         });
     }
     
-    [MenuItem("Neon/Update/Update Story Event IDs")]
-    private static void UpdateStoryEventIDs()
+    [MenuItem("Neon/Update/Update Stage Segment IDs")]
+    private static void UpdateStageSegmentIDs()
     {
-        AssignAllIds(ScriptableExtensions.GetAllInstances<StoryEvent2>(), c => c.id, (c, id) => c.id = id);
+        AssignAllIds(ScriptableExtensions.GetAllInstances<StageSegment>(), c => c.Id, (c, id) => c.Id = id);
+    }
+    
+    [MenuItem("Neon/Update/Update All Stage Segments")]
+    private static void UpdateAllStageSegments()
+    {
+        var stageSegments = ScriptableExtensions.GetAllInstances<StageSegment>();
+        var allStageSegments = ScriptableExtensions.GetAllInstances<AllStageSegments>();
+        allStageSegments.ForEach(x =>
+        {
+            x.Stages = stageSegments;
+            EditorUtility.SetDirty(x);
+        });
     }
 
     private const float _hpValue = 1;

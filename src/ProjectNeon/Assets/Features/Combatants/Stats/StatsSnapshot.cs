@@ -9,11 +9,12 @@ public class StatsSnapshot : IStats
     public float this[TemporalStatType statType] => _values[statType.ToString()];
     public IResourceType[] ResourceTypes { get; }
 
-    public StatsSnapshot(IResourceType[] resourceTypes, IStats origin)
+    public StatsSnapshot(IResourceType[] resourceTypes, IStats origin, StatType primaryStat)
     {
         ResourceTypes = resourceTypes;
         foreach (StatType st in Enum.GetValues(typeof(StatType)))
             _values[st.ToString()] = origin[st];
+        _values[StatType.Power.ToString()] = origin[primaryStat];
         foreach (TemporalStatType st in Enum.GetValues(typeof(TemporalStatType)))
             _values[st.ToString()] = origin[st];
     }
@@ -21,5 +22,5 @@ public class StatsSnapshot : IStats
 
 public static class StatsSnapshotExtensions
 {
-    public static IStats ToSnapshot(this IStats stats) => new StatsSnapshot(stats.ResourceTypes, stats);
+    public static IStats ToSnapshot(this IStats stats, StatType primaryStat) => new StatsSnapshot(stats.ResourceTypes, stats, primaryStat);
 }

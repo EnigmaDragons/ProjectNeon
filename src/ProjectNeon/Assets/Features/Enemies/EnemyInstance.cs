@@ -44,6 +44,8 @@ public class EnemyInstance : EnemyType
     public int StartingResourceAmount => _startingResourceAmount;
     public int MaxResourceAmount => _maxResourceAmount;
     public CharacterAnimations Animations { get; }
+    public CharacterAnimationSoundSet AnimationSounds { get; }
+    public AiPreferences AIPreferences { get; }
     public IEnumerable<ReactionCardType> ReactionCards { get; }
     public string Description { get; }
 
@@ -55,7 +57,7 @@ public class EnemyInstance : EnemyType
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
         int preferredTurnOrder, string enemyName, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp,
-        CharacterAnimations animations, MemberMaterialType materialType, string description, IEnumerable<ReactionCardType> reactionCards)
+        CharacterAnimations animations, CharacterAnimationSoundSet sounds, MemberMaterialType materialType, string description, IEnumerable<ReactionCardType> reactionCards, AiPreferences aiPreferences)
     {
         _enemyId = enemyId;
         _resourceType = resourceType;
@@ -88,6 +90,8 @@ public class EnemyInstance : EnemyType
         IsHasty = isHasty;
         IsUnique = isUnique;
         Animations = animations;
+        AnimationSounds = sounds;
+        AIPreferences = aiPreferences;
         ReactionCards = reactionCards != null ? reactionCards : new ReactionCardType[0];
         Description = description != null ? description : "";
         if (_resourceType == null)
@@ -110,11 +114,11 @@ public class EnemyInstance : EnemyType
         var ctx = new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.RewardState, 
             state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), 
             state.CreditsAtStartOfBattle, state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), 
-            () => state.GetNextCardId(), new PlayedCardSnapshot[0], new Dictionary<int, Color>(), new Dictionary<int, Sprite>(), true);
+            () => state.GetNextCardId(), new PlayedCardSnapshot[0], new Dictionary<int, Color>(), new Dictionary<int, Sprite>(), true, ReactionTimingWindow.Default);
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = _resourceType.Name, Amount = _resourceGainPerTurn}, m, state.Party));
-        _startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx));
+        _startOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx.WithReactionTimingContext(effect.FinalReactionTimingWindow)));
         return m;
     }
     

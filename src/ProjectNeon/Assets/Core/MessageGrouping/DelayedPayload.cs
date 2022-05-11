@@ -8,6 +8,15 @@ public sealed class DelayedPayload : IPayloadProvider
 
     public DelayedPayload(Func<IPayloadProvider> getPayloadProvider) => _getPayloadProvider = getPayloadProvider;
 
+    public string Name
+    {
+        get
+        {
+            EnsureInitialized();
+            return "Delayed - " + _payloadProvider.Name;
+        }
+    }
+    
     public int Count => _isInitialized ? _payloadProvider.Count : 1;
 
     public bool IsFinished()

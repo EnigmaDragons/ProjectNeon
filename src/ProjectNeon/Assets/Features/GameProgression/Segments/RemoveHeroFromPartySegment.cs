@@ -7,7 +7,7 @@ public class RemoveHeroFromPartySegment : StageSegment
 
     public override string Name => $"Party Change Event";
     public override bool ShouldCountTowardsEnemyPowerLevel => false;
-
+    public override bool ShouldAutoStart => false;
     public override void Start()
     {
         Message.Publish(new RemoveHeroFromPartyRequested(hero));
@@ -15,5 +15,8 @@ public class RemoveHeroFromPartySegment : StageSegment
     } 
 
     public override Maybe<string> Detail { get; } = Maybe<string>.Missing();
+    public override MapNodeType MapNodeType => MapNodeType.Unknown;
+    public override Maybe<string> Corp => Maybe<string>.Missing();
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
+    public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

@@ -33,6 +33,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private CardRulesPresenter rules;
     [SerializeField] private CardTargetRulePresenter targetRule;
     [SerializeField] private CardScaledStatsPresenter scalingRule;
+    [SerializeField] private CardEnemyTypePresenter enemyTypePresenter;
     [SerializeField] private GameObject chainedCardParent;
     [SerializeField] private CardCostPresenter cardCostPresenter;
     [SerializeField] private Image[] glitchableComponents; 
@@ -104,6 +105,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void Clear()
     {
         gameObject.SetActive(false);
+        IsFocused = false;
         _card = null;
         _cardType = null;
         UpdateDragArea();
@@ -137,8 +139,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _getCanActivate = getCanActivate;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _onRightClick = _isHand ? ToggleAsBasic : (Action)card.ShowDetailedCardView;
-        controls.SetCanToggleBasic(_isHand && card.Owner.BasicCard.IsPresent);
+        _onRightClick =_isHand
+            ? battleState.AllowRightClickOnCard
+                ? ToggleAsBasic
+                : (Action)(() => { })
+            : card.ShowDetailedCardView;
+        controls.SetCanToggleBasic(_isHand && battleState.ShowSwapCardForBasic && card.Owner.BasicCard.IsPresent);
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
     }
@@ -174,6 +180,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         gameObject.SetActive(true);
         targetRule.Hide();
         scalingRule.Hide();
+        enemyTypePresenter.Hide();
         controls.SetActive(false);
         controls.SetCanToggleBasic(false);
         DisableCanPlayHighlight();
@@ -333,13 +340,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         DebugLog("Show Comprehensive Info");
         Message.Publish(new HideReferencedCard());
+        enemyTypePresenter.Hide();
         if (_card != null)
             rules.Show(_card,  _isHand ? 2 : 999);
         else
             rules.Show(_cardType, _isHand ? 2 : 999);
         targetRule.Show(_cardType.ActionSequences.First());
         if (!_isHand)
-            scalingRule.Show(_cardType);
+            scalingRule.Show(_cardType, _card?.Owner.PrimaryStat() ?? StatType.Power);
 
         _cardType.ChainedCard.IfPresent(ShowReferencedCard);
         _cardType.SwappedCard.IfPresent(ShowReferencedCard);
@@ -361,6 +369,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         rules.Hide();
         targetRule.Hide();
         scalingRule.Hide();
+        enemyTypePresenter.Show();
         Message.Publish(new HideReferencedCard());
     }
     
@@ -455,6 +464,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         return result;
     }
 
+    public void ShowEnemyCareType(string type) => enemyTypePresenter.Init(type);
+
     private void DebugLog(string msg)
     {
         if (_debug)
@@ -472,6 +483,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         DebugLog($"UI - Pointer Down");
         if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
         {
+            Message.Publish(new CardClicked());
             Cursor.visible = false;
             Message.Publish(new TweenMovementRequested(transform, new Vector3(0, 30f, 0), 0.03f, MovementDimension.Spatial, TweenMovementType.RubberBand, "Click"));
         }
@@ -495,7 +507,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!eventData.dragging && _isHand && battleState.Phase == BattleV2Phase.PlayCards)
+        if (!eventData.dragging && _isHand && battleState.Phase == BattleV2Phase.PlayCards && Vector3.Distance(_position, transform.position) <= 0.1)
         {
             Message.Publish(new CardHoverEnter(this));
             Message.Publish(new CardHoverSFX(transform));
@@ -554,15 +566,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 Message.Publish(new ShowMouseTargetArrow(transform));
             
             // This is crude. Reason for not being able to play a card should flow through
-            if (_card.Cost.BaseAmount > _card.Owner.PrimaryResourceAmount())
-                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, 
-                    Localize.Get("Speech", "I don't have enough resources to play this card right now.")));
-
-            if (conditionNotMetHighlight.activeSelf)
-                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id,
-                    Localize.Get("Speech", "This probably isn't a good time to play that card.")));
-
+            if (_card.Owner.IsDisabled())
+                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, "I'm disabled this turn. I can only discard, watch an ally play a card, or end the turn early."));
+            else if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
+                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, "I don't have enough resources to play this card right now."));
+            else if (conditionNotMetHighlight.activeSelf)
+                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, "This probably isn't a good time to play that card."));
+            
             _onBeginDrag();
+            Message.Publish(new CardDragged());
             Message.Publish(new BeginTargetSelectionRequested(_card));
         }, () => { });
 
@@ -593,6 +605,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         IsDragging = false;
         canvasGroup.blocksRaycasts = true;
         Message.Publish(new HideMouseTargetArrow());
+        if (_card != null)
+            Message.Publish(new UnhighlightCardOwner(_card.Owner));
     }
 
     public void Cancel() => ReturnHandToNormal();

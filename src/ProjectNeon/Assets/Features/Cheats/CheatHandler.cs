@@ -1,4 +1,3 @@
-using Features.GameProgression;
 using UnityEngine;
 
 public class CheatHandler : OnMessage<GainRandomEquipment, CompleteAnyMapNode, WinGameRequested>
@@ -25,7 +24,7 @@ public class CheatHandler : OnMessage<GainRandomEquipment, CompleteAnyMapNode, W
 
     protected override void Execute(WinGameRequested msg)
     {
-        conclusion.Set(true, "You won because you pressed the developer cheat buttons! Congratulations! This is an epic tale!");
+        conclusion.Set(true, "You won because you pressed the developer cheat buttons! Congratulations! This is an epic tale!", CurrentGameData.Data.Stats);
         navigator.NavigateToConclusionScene();
     }
 }

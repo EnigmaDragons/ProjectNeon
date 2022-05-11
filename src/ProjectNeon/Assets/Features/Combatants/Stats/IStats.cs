@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -44,4 +45,7 @@ public static class StatsExtensions
             .OrderByDescending(x => stats[x])
             .ThenByDescending(x => baseStats[x])
             .First();
+
+    public static HashSet<StatType> KeyStatTypes(this IStats stats)
+        => PrimaryStatOptions.Where(x => stats[x] > 0).ToHashSet();
 }

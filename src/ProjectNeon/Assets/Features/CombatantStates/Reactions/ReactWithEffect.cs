@@ -15,26 +15,29 @@ public class EffectReactWith : Effect
         { ReactionConditionType.WhenBloodied, ctx => effect => 
             ctx.Actor.IsConscious() && !effect.BattleBefore.Members[ctx.Possessor.Id].IsBloodied() && effect.BattleAfter.Members[ctx.Possessor.Id].IsBloodied() },
         {ReactionConditionType.WhenVulnerabled, ctx => effect 
-            => ctx.Actor.IsConscious() && effect.EffectData.EffectScope.Value == "Vulnerable" && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
-        { ReactionConditionType.WhenShieldBroken, ctx => effect => ctx.Possessor.IsConscious() && WentToZero(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
-        { ReactionConditionType.WhenShielded, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
-        { ReactionConditionType.WhenDamagedHp, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp))},
-        { ReactionConditionType.WhenDamagedShield, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Shield))},
-        { ReactionConditionType.WhenDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(Select(effect, ctx.Possessor, m => m.State.Hp + m.State.Shield))},
-        { ReactionConditionType.WhenBlinded, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
-        { ReactionConditionType.WhenGainedPrimaryResource, ctx => effect => ctx.Possessor.IsConscious() && Increased(Select(effect, ctx.Possessor, m => m.State.PrimaryResourceAmount)) },
+            => ctx.Actor.IsConscious() 
+            && effect.EffectData.EffectScope.Value == "Vulnerable"
+            && effect.BattleBefore.Members[ctx.Possessor.Id].State[TemporalStatType.Vulnerable] < effect.BattleAfter.Members[ctx.Possessor.Id].State[TemporalStatType.Vulnerable] 
+            && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
+        { ReactionConditionType.WhenShieldBroken, ctx => effect => ctx.Possessor.IsConscious() && WentToZero(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
+        { ReactionConditionType.WhenShielded, ctx => effect => ctx.Possessor.IsConscious() && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
+        { ReactionConditionType.WhenDamagedHp, ctx => effect => ctx.Actor.IsConscious() && Decreased(effect.Select(ctx.Possessor, m => m.State.Hp))},
+        { ReactionConditionType.WhenDamagedShield, ctx => effect => ctx.Actor.IsConscious() && Decreased(effect.Select(ctx.Possessor, m => m.State.Shield))},
+        { ReactionConditionType.WhenDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(effect.Select(ctx.Possessor, m => m.State.Hp + m.State.Shield))},
+        { ReactionConditionType.WhenBlinded, ctx => effect => ctx.Possessor.IsConscious() && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
+        { ReactionConditionType.WhenGainedPrimaryResource, ctx => effect => ctx.Possessor.IsConscious() && Increased(effect.Select(ctx.Possessor, m => m.State.PrimaryResourceAmount)) },
         { ReactionConditionType.WhenShieldMaxed, ctx => effect 
-            => ctx.Possessor.IsConscious() && BecameTrue(Logged(Select(effect, ctx.Possessor, x => x.State.Shield == x.State.MaxShield )))},
+            => ctx.Possessor.IsConscious() && BecameTrue(effect.Select(ctx.Possessor, x => x.State.Shield == x.State.MaxShield ))},
         { ReactionConditionType.OnCausedShieldGain, ctx => effect 
-            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State[TemporalStatType.Shield]))},
+            => PossessorCaused(ctx, effect) && Increased(effect.SelectSum(x => x.State[TemporalStatType.Shield]))},
         { ReactionConditionType.OnCausedStun, ctx => effect 
-            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State[TemporalStatType.Stun] + x.State[TemporalStatType.Disabled]))},
+            => PossessorCaused(ctx, effect) && Increased(effect.SelectSum(x => x.State[TemporalStatType.Stun] + x.State[TemporalStatType.Disabled]))},
         { ReactionConditionType.OnCausedAffliction, ctx => effect 
-            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State.StatusesOfType[StatusTag.DamageOverTime])) },
+            => PossessorCaused(ctx, effect) && Increased(effect.SelectSum(x => x.State.StatusesOfType[StatusTag.DamageOverTime])) },
         { ReactionConditionType.OnSlay, ctx => effect
-            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.IsUnconscious() ? 1 : 0)) },
+            => PossessorCaused(ctx, effect) && Increased(effect.SelectSum(x => x.IsUnconscious() ? 1 : 0)) },
         { ReactionConditionType.OnCausedHeal, ctx => effect
-            => PossessorCaused(ctx, effect) && Increased(SelectSum(effect, x => x.State.Hp)) },
+            => PossessorCaused(ctx, effect) && Increased(effect.SelectSum(x => x.State.Hp)) },
         { ReactionConditionType.OnCausedBloodied, ctx => effect =>
             {
                 if (!Equals(ctx.Possessor, effect.Source) || ctx.Actor.IsUnconscious())
@@ -84,30 +87,32 @@ public class EffectReactWith : Effect
             }
         },
         { ReactionConditionType.OnTagCardPlayed, ctx => effect => IsRelevant(ReactionConditionType.OnTagCardPlayed, effect, ctx) 
-           && effect.IsFirstBattleEffect && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(ctx.ReactionEffectScope.EnumVal<CardTag>()))},
+           && effect.IsFirstBattleEffectOfChosenTarget && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(ctx.ReactionEffectScope.EnumVal<CardTag>()))},
         { ReactionConditionType.OnArchetypeCardPlayed, ctx => effect => IsRelevant(ReactionConditionType.OnArchetypeCardPlayed, effect, ctx)
-           && effect.IsFirstBattleEffect&& effect.Card.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope))},
+           && effect.IsFirstBattleEffectOfChosenTarget && effect.Card.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope))},
         { ReactionConditionType.OnDodged, ctx => effect => ctx.Possessor.IsConscious() 
            && effect.Preventions.IsDodging(ctx.Possessor) 
-           && Decreased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Dodge]))},
+           && Decreased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Dodge]))},
         { ReactionConditionType.OnAegised, ctx => effect => ctx.Possessor.IsConscious() 
            && effect.Preventions.IsAegising(ctx.Possessor) 
-           && Decreased(Select(effect, ctx.Possessor, m => m.State[TemporalStatType.Aegis]))},
+           && Decreased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Aegis]))},
         { ReactionConditionType.WhenNearDeath, ctx => effect => ctx.Actor.IsConscious() && ctx.Possessor.CurrentHp() == 1 },
         { ReactionConditionType.WhenAllyDeath, ctx => effect => ctx.Actor.IsConscious() 
             && effect.BattleBefore.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) 
               > effect.BattleAfter.Members.Count(x => x.Value.TeamType == ctx.Possessor.TeamType && x.Value.IsConscious()) },
         { ReactionConditionType.WhenNonSelfAllyBloodied, ctx => effect => ctx.Actor.IsConscious() 
-            && Increased(Logged(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Count(x => x.Value.IsBloodied())))) },
+            && Increased(effect.Select(b => b.NonSelfAllies(ctx.Actor.Id).Count(x => x.Value.IsBloodied()))) },
         { ReactionConditionType.WhenNonSelfAllyHpDamaged, ctx => effect => ctx.Actor.IsConscious() 
-            && Decreased(Logged(Select(effect, b => b.NonSelfAllies(ctx.Actor.Id).Sum(x => x.Value.State.Hp)))) },
+            && Decreased(effect.Select(b => b.NonSelfAllies(ctx.Actor.Id).Sum(x => x.Value.State.Hp))) },
+        { ReactionConditionType.WhenNonSelfAllyHpDamagedButNotKilled, ctx => effect => ctx.Actor.IsConscious()
+            && Decreased(Logged(effect.Select(b => b.NonSelfConsciousAllies(ctx.Actor.Id).Sum(x => x.Value.State.Hp)))) },
         { ReactionConditionType.WhenAfflicted, ctx => effect => ctx.Actor.IsConscious() 
-            && Increased(Select(effect, ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) },
+            && Increased(effect.Select(ctx.Possessor, m => m.State.StatusesOfType[StatusTag.DamageOverTime])) },
         { ReactionConditionType.OnAppliedMark, ctx => effect => ctx.Actor.IsConscious() 
-            && Increased(Select(effect, b => b.TargetMembers(effect.Target).Sum(x => x.State[TemporalStatType.Marked]))) },
+            && Increased(effect.Select(b => b.TargetMembers(effect.Target).Sum(x => x.State[TemporalStatType.Marked]))) },
         { ReactionConditionType.OnStealthed, ctx => effect => ctx.Actor.IsConscious() 
             && !effect.BattleBefore.Members[ctx.Possessor.Id].IsStealthed()
-            && Increased(Select(effect, ctx.Actor, m => m.State[TemporalStatType.Stealth])) },
+            && Increased(effect.Select(ctx.Actor, m => m.State[TemporalStatType.Stealth])) },
         { ReactionConditionType.WhenEnemyPrimaryStatBuffed, ctx => effect =>
             {
                 if (!ctx.Possessor.IsConscious())
@@ -140,6 +145,12 @@ public class EffectReactWith : Effect
                 && x.Id != ctx.Actor.Id 
                 && !effect.BattleBefore.Members[x.Id].IsBloodied()
                 && effect.BattleAfter.Members[x.Id].IsBloodied()) },
+        { ReactionConditionType.WhenNonSelfAllyBloodiedButNotKilled, ctx => effect 
+            => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => 
+                x.IsConscious() && x.TeamType == ctx.Actor.TeamType 
+                && x.Id != ctx.Actor.Id 
+                && !effect.BattleBefore.Members[x.Id].IsBloodied()
+                && effect.BattleAfter.Members[x.Id].IsBloodied()) },
     };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
@@ -160,25 +171,12 @@ public class EffectReactWith : Effect
         Debug.Log(string.Join(", ", values.Select(v => v.ToString())));
         return values;
     }
-
-    private static T[] Select<T>(EffectResolved e, Func<BattleStateSnapshot, T> selector)
-        => new[] {selector(e.BattleBefore), selector(e.BattleAfter)};
-    private static T[] Select<T>(EffectResolved e, Member possessor, Func<MemberSnapshot, T> selector)
-        => new[] {selector(e.BattleBefore.Members[possessor.Id]), selector(e.BattleAfter.Members[possessor.Id])};
-    private static int [] SelectSum(EffectResolved e, Func<MemberSnapshot, int> selector)
-    {
-        var targetMembers = e.Target.Members;
-        var before = targetMembers.Select(t => e.BattleBefore.Members[t.Id])
-            .Sum(selector);
-        var after = targetMembers.Select(t => e.BattleAfter.Members[t.Id])
-            .Sum(selector);
-        return new[] {before, after};
-    }
-
+    
     private readonly bool _isDebuff;
     private readonly int _numberOfUses;
     private readonly string _maxDurationFormula;
     private readonly string _reactionEffectContext;
+    private readonly ReactionTimingWindow _timing;
     private readonly StatusDetail _status;
     private readonly ReactiveTriggerScope _triggerScope;
     private readonly Maybe<CardReactionSequence> _reactionEffect;
@@ -186,18 +184,21 @@ public class EffectReactWith : Effect
     private readonly ReactionConditionType _conditionType;
     private readonly Func<ReactionConditionContext, Func<EffectResolved, bool>> _conditionBuilder;
 
-    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, string reactionBonusEffectContext,
-        ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, ReactionCardType reactionCard)
-            : this(isDebuff, numberOfUses, maxDurationFormula, status, reactionBonusEffectContext, triggerScope, conditionType, Maybe<CardReactionSequence>.Missing(), 
+    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, 
+        string reactionBonusEffectContext, ReactionTimingWindow timing,  ReactiveTriggerScope triggerScope, 
+        ReactionConditionType conditionType, ReactionCardType reactionCard)
+            : this(isDebuff, numberOfUses, maxDurationFormula, status, reactionBonusEffectContext, timing, triggerScope, conditionType, Maybe<CardReactionSequence>.Missing(), 
                 new Maybe<ReactionCardType>(reactionCard, true)) {}
     
-    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, string reactionBonusEffectContext,
-        ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, CardReactionSequence reactionEffect)
-        : this(isDebuff, numberOfUses, maxDurationFormula, status, reactionBonusEffectContext, triggerScope, conditionType, new Maybe<CardReactionSequence>(reactionEffect, true), 
+    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, 
+        string reactionBonusEffectContext, ReactionTimingWindow timing, ReactiveTriggerScope triggerScope, 
+        ReactionConditionType conditionType, CardReactionSequence reactionEffect)
+        : this(isDebuff, numberOfUses, maxDurationFormula, status, reactionBonusEffectContext, timing, triggerScope, conditionType, new Maybe<CardReactionSequence>(reactionEffect, true), 
             Maybe<ReactionCardType>.Missing()) {}
         
-    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, string reactionBonusEffectContext,
-        ReactiveTriggerScope triggerScope, ReactionConditionType conditionType, Maybe<CardReactionSequence> reactionEffect, Maybe<ReactionCardType> reactionCard)
+    public EffectReactWith(bool isDebuff, int numberOfUses, string maxDurationFormula, StatusDetail status, 
+        string reactionBonusEffectContext, ReactionTimingWindow timing, ReactiveTriggerScope triggerScope, 
+        ReactionConditionType conditionType, Maybe<CardReactionSequence> reactionEffect, Maybe<ReactionCardType> reactionCard)
     {
         _isDebuff = isDebuff;
         _numberOfUses = numberOfUses;
@@ -209,6 +210,7 @@ public class EffectReactWith : Effect
         _conditionType = conditionType;
         _conditionBuilder = Conditions.VerboseGetValue(conditionType, conditionType.ToString());
         _reactionEffectContext = reactionBonusEffectContext;
+        _timing = timing;
         if (reactionCard.IsMissing && reactionEffect.IsMissing)
             Log.Info($"React With neither has an Effect nor a Card.");
     }
@@ -221,8 +223,8 @@ public class EffectReactWith : Effect
                 var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionCard.Value.ActionSequence.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
-                m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), _status, _triggerScope,
-                    ctx.BattleMembers, m.MemberId, ctx.Source, _reactionCard.Value,
+                m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount),
+                    _status, _timing, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionCard.Value,
                     _conditionBuilder(reactionConditionContext)));
                 DevLog.Write($"Applied React With Card {_conditionType} to {m.Name}");
             });
@@ -232,8 +234,8 @@ public class EffectReactWith : Effect
                 var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionEffect.Value.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
-                m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), _status, _triggerScope,
-                    ctx.BattleMembers, m.MemberId, ctx.Source, _reactionEffect.Value,
+                m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), 
+                    _status, _timing, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionEffect.Value,
                     _conditionBuilder(reactionConditionContext)));
                 DevLog.Write($"Applied React With Effect {_conditionType} to {m.Name}");
             });
@@ -242,9 +244,9 @@ public class EffectReactWith : Effect
 
 public sealed class ReactWithEffect : ReactiveEffectV2Base
 {
-    public ReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
+    public ReactWithEffect(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactionTimingWindow timing, ReactiveTriggerScope triggerScope, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, CardReactionSequence reaction, Func<EffectResolved, bool> condition)
-            : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, status, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
+            : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, status, timing, CreateMaybeEffect(allMembers, possessingMemberId, originator, true, reaction, timing,
                 effect =>
                 {
                     var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
@@ -256,9 +258,9 @@ public sealed class ReactWithEffect : ReactiveEffectV2Base
 
 public sealed class ReactWithCard : ReactiveEffectV2Base
 {
-    public ReactWithCard(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactiveTriggerScope triggerScope, 
+    public ReactWithCard(bool isDebuff, int numberOfUses, int maxDurationTurns, StatusDetail status, ReactionTimingWindow timing, ReactiveTriggerScope triggerScope, 
         IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction, Func<EffectResolved, bool> condition)
-        : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, status, CreateMaybeEffect(allMembers, possessingMemberId, originator, false, reaction, 
+        : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, status, timing, CreateMaybeEffect(allMembers, possessingMemberId, originator, true, reaction, timing,
             effect =>
             {
                 var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);

@@ -1,5 +1,5 @@
+using System;
 using System.Linq;
-using Features.GameProgression;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "OnlyOnce/SaveLoadSystem")]
@@ -9,9 +9,11 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private AdventureProgressV4 adventurev4;
+    [SerializeField] private AdventureProgressV5 adventurev5;
     [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private Library library;
     [SerializeField] private CurrentGameMap3 map;
+    [SerializeField] private CurrentMapSegmentV5 mapV5;
     [SerializeField] private AllMaps maps;
     [SerializeField] private CorpClinicProvider clinics;
     [SerializeField] private AllStaticGlobalEffects globalEffects;
@@ -21,16 +23,6 @@ public sealed class SaveLoadSystem : ScriptableObject
     public void SaveCheckpoint() => SaveCurrentGame();
     public void ClearCurrentSlot() => CurrentGameData.Clear();
 
-    public void SetShouldShowTutorials(bool shouldShow) => CurrentGameData.Write(s =>
-    {
-        s.TutorialData = new GameTutorialData
-        {
-            ShouldShowTutorials = shouldShow,
-            CompletedTutorialNames = s.TutorialData.CompletedTutorialNames
-        };
-        return s;
-    });
-    
     private void SaveCurrentGame()
     {
         CurrentGameData.Write(s =>
@@ -38,7 +30,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             s.IsInitialized = true;
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             s.PartyData = party.GetData();
-            s.GameMap = map.GetData();
+            s.GameMap = adventureProgress.AdventureProgress.AdventureType.GetMapData(map, mapV5);
             s.Stats = runStats.GetData();
             return s;
         });
@@ -56,8 +48,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             loadedSuccessfully = InitAdventure(saveData.AdventureProgress);
         if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedSquad))
             loadedSuccessfully = InitParty(saveData.PartyData);
-        if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure) 
-                               && saveData.AdventureProgress.Type != GameAdventureProgressType.V4)
+        if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure))
             loadedSuccessfully = InitMap(saveData.GameMap);
         if (!loadedSuccessfully)
             return CurrentGamePhase.LoadError;
@@ -70,10 +61,25 @@ public sealed class SaveLoadSystem : ScriptableObject
         var selectedAdventure = library.GetAdventureById(d.AdventureId);
         if (selectedAdventure.IsMissing)
             return LoadFailedReason($"Unknown Adventure {d.AdventureId}");
+        
         if (d.Type == GameAdventureProgressType.V2)
+        {
+            adventureProgress.AdventureProgress = adventure;
             return adventure.InitAdventure(d, selectedAdventure.Value);
+        }
+
         if (d.Type == GameAdventureProgressType.V4)
+        {
+            adventureProgress.AdventureProgress = adventurev4;
             return adventurev4.InitAdventure(d, selectedAdventure.Value);
+        }
+
+        if (d.Type == GameAdventureProgressType.V5)
+        {
+            adventureProgress.AdventureProgress = adventurev5;   
+            return adventurev5.InitAdventure(d, selectedAdventure.Value);
+        }
+        
         return LoadFailedReason($"Unknown Adventure Type {d.Type}");
     }
 
@@ -93,6 +99,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             numHeroes > 1 ? library.HeroById(partyData.Heroes[1].BaseHeroId) : library.HeroById(0),
             numHeroes > 2 ? library.HeroById(partyData.Heroes[2].BaseHeroId) : library.HeroById(0),
             partyData.Credits,
+            partyData.ClinicVouchers,
             maybeCards.Select(c => c.Value).ToArray(),
             maybeEquipments.Select(e => e.Value).ToArray());
         
@@ -163,8 +170,32 @@ public sealed class SaveLoadSystem : ScriptableObject
 
         return true;
     }
-    
+
     private bool InitMap(GameMapData mapData)
+    {
+        if (mapData.Type == GameMapDataType.V5)
+            return InitMapV5(mapData);
+        else if (mapData.Type == GameMapDataType.V3)
+            return InitMapV3(mapData);
+        else
+            return true;
+    }
+    
+    private bool InitMapV5(GameMapData mapData)
+    {
+        var selectedMap = maps.GetMapById(mapData.GameMapId);
+        if (selectedMap.IsMissing)
+            return LoadFailedReason($"Unknown Map {mapData.GameMapId}");
+        mapV5.CurrentMap = selectedMap.Value;
+        mapV5.CurrentNode = mapData.CurrentNode;
+        mapV5.PreviousPosition = mapData.CurrentPosition;
+        mapV5.DestinationPosition = mapData.CurrentPosition;
+        mapV5.CurrentChoices = mapData.CurrentChoices.ToList();
+        mapV5.CurrentNodeRngSeed = mapData.CurrentNodeRngSeed;
+        return true;
+    }
+    
+    private bool InitMapV3(GameMapData mapData)
     {
         var selectedMap = maps.GetMapById(mapData.GameMapId);
         if (selectedMap.IsMissing)

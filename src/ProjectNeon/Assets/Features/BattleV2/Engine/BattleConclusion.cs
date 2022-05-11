@@ -1,5 +1,4 @@
 using System;
-using Features.GameProgression;
 using UnityEngine;
 
 public class BattleConclusion : OnMessage<BattleFinished>
@@ -15,34 +14,35 @@ public class BattleConclusion : OnMessage<BattleFinished>
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
         Message.Publish(new BattleRewardsStarted());
-        if (adventureProgress.AdventureProgress.IsFinalStageSegment)
-            Advance();
-        else if (state.IsEliteBattle)
-            adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
+        if (adventureProgress.HasActiveAdventure && !state.IsTutorialCombat)
+            if (adventureProgress.AdventureProgress.IsFinalStageSegment || adventureProgress.AdventureProgress.IsFinalBoss)
+                Advance();
+            else if (state.IsEliteBattle)
+                adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
+            else
+                adventure.Adventure.NormalBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
         else
-            adventure.Adventure.NormalBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
+            onFinished();
     }
     
     private void Advance()
     {
-        if (state.IsStoryEventCombat)
+        if (state.IsTutorialCombat)
+        {
+            Log.Info("Returning to academy from tutorial combat");
+            this.ExecuteAfterDelay(() => navigator.NavigateToAcademyScene(), secondsBeforeReturnToAdventure);
+        }
+        else if (state.IsStoryEventCombat)
         {
             Log.Info("Returning to map from event combat");
             Message.Publish(new AutoSaveRequested());
             var adventureType = CurrentGameData.Data.AdventureProgress.Type;
-            if (adventureType == GameAdventureProgressType.V2)
-                this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
-            if (adventureType == GameAdventureProgressType.V4)
-                this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV4(), secondsBeforeReturnToAdventure);
+            ReturnToGameScene(adventureType);
         }
         else if (adventureProgress.AdventureProgress.IsFinalStageSegment)
         {
-            Log.Info("Navigating to victory screen");
-            adventureProgress.AdventureProgress.Advance();
-            AllMetrics.PublishGameWon();
-            Message.Publish(new AutoSaveRequested());
-            conclusion.Set(true, adventure.Adventure.VictoryConclusion);
-            this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeReturnToAdventure);
+            state.AccumulateRunStats();
+            this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion), secondsBeforeGameOverScreen);
         }
         else
         {
@@ -50,11 +50,18 @@ public class BattleConclusion : OnMessage<BattleFinished>
             adventureProgress.AdventureProgress.Advance();
             Message.Publish(new AutoSaveRequested());
             var adventureType = CurrentGameData.Data.AdventureProgress.Type;
-            if (adventureType == GameAdventureProgressType.V2)
-                this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
-            if (adventureType == GameAdventureProgressType.V4 || adventureType == GameAdventureProgressType.Unknown)
-                this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV4(), secondsBeforeReturnToAdventure);
+            ReturnToGameScene(adventureType);
         }
+    }
+
+    private void ReturnToGameScene(GameAdventureProgressType adventureType)
+    {
+        if (adventureType == GameAdventureProgressType.V2)
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameScene(), secondsBeforeReturnToAdventure);
+        if (adventureType == GameAdventureProgressType.V4)
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV4(), secondsBeforeReturnToAdventure);
+        if (adventureType == GameAdventureProgressType.V5)
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV5(), secondsBeforeReturnToAdventure);
     }
 
     protected override void Execute(BattleFinished msg)
@@ -66,8 +73,9 @@ public class BattleConclusion : OnMessage<BattleFinished>
         {
             Log.Info("Navigating to defeat screen");
             AllMetrics.PublishGameLost();
+            state.AccumulateRunStats();
+            conclusion.Set(false, adventure.Adventure.DefeatConclusion, CurrentGameData.Data.Stats);
             CurrentGameData.Clear();
-            conclusion.Set(false,  adventure.Adventure.DefeatConclusion);
             this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
         }
     }

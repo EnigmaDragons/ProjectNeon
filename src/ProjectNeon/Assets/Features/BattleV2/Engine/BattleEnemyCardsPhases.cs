@@ -34,7 +34,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     private void PlayNextHastyCard()
     {
         DevLog.Info($"Enemies - Began Playing Next Hasty Card. {_enemiesToActThisTurn.Count(x => x.Enemy.IsHasty)} to act.");
-        RemoveUnconsciousEnemiesFromActPool();
+        RemoveUnconsciousAndEscapedEnemiesFromActPool();
         Message.Publish(new UpdateAIStrategy());
         _enemiesToActThisTurn
             .Where(x => x.Enemy.IsHasty)
@@ -49,7 +49,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     private void PlayNextStandardCard()
     {
         DevLog.Info($"Enemies - Began Playing Next Standard Card. {_enemiesToActThisTurn.Count(x => !x.Enemy.IsHasty)} to act.");
-        RemoveUnconsciousEnemiesFromActPool();
+        RemoveUnconsciousAndEscapedEnemiesFromActPool();
         Message.Publish(new UpdateAIStrategy());
         _enemiesToActThisTurn
             .Where(x => !x.Enemy.IsHasty)
@@ -66,11 +66,13 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
         Message.Publish(new ResolutionsFinished(phase));
     }
 
-    private void RemoveUnconsciousEnemiesFromActPool() => _enemiesToActThisTurn.RemoveAll(e => e.Member.IsUnconscious());
+    private void RemoveUnconsciousAndEscapedEnemiesFromActPool() 
+        => _enemiesToActThisTurn.RemoveAll(e => e.Member.IsUnconscious() || !state.Members.ContainsKey(e.Member.Id));
 
     private void Play((Member Member, EnemyInstance Enemy) e)
     {
         var card = e.Enemy.AI.Play(e.Member.Id, state, _currentTurnStrategy);
+        Message.Publish(new EnemyCardPlayed(card));
         _numberOfCardsPlayedThisTurn[card.MemberId()] = _numberOfCardsPlayedThisTurn[card.MemberId()] + 1;
         if (_numberOfCardsPlayedThisTurn[card.MemberId()] == e.Member.State.ExtraCardPlays())
             _enemiesToActThisTurn.Remove(e);

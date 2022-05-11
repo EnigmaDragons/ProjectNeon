@@ -10,9 +10,11 @@ public class CorpBrandingPresenter : CorpUiBase
     
     public override void Init(Corp c)
     {
-        logo.sprite = c.Logo;
+        if (logo != null)
+            logo.sprite = c.Logo;
         gradient.Vertex1 = c.Color1;
         gradient.Vertex2 = c.Color2;
-        corpNameLabel.text = c.Name;
+        if (corpNameLabel != null)
+            corpNameLabel.text = c.Name;
     }
 }

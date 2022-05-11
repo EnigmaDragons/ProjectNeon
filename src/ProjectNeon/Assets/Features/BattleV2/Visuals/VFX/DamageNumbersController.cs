@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public sealed class DamageNumbersController : OnMessage<MemberStateChanged>
+public sealed class DamageNumbersController : OnMessage<MemberStateChanged, MemberResourceChanged>
 {
     [SerializeField] private SingleUseDamageNumber hpNumberPrototype;
     [SerializeField] private Vector3 hpNumOffset;
     [SerializeField] private SingleUseDamageNumber shieldNumberPrototype;
     [SerializeField] private Vector3 shieldNumOffset;
+    [SerializeField] private SingleUseResourceNumber resourcePrototype;
+    [SerializeField] private Vector3 resourceNumOffset;
     [SerializeField] private FloatReference delayBeforeNewNumber = new FloatReference(0.2f);
 
+    private int _memberId;
     private MemberStateSnapshot _last;
     private float _cooldown;
     private readonly Queue<Action> _actionQueue = new Queue<Action>(); 
 
     public void Init(Member m)
     {
+        _memberId = m.Id;
         _last = m.State.ToSnapshot();
     }
 
@@ -53,6 +57,18 @@ public sealed class DamageNumbersController : OnMessage<MemberStateChanged>
             }
 
             _last = current;
+        });
+    }
+
+    protected override void Execute(MemberResourceChanged msg)
+    {
+        if (msg.MemberId != _memberId)
+            return;
+        
+        _actionQueue.Enqueue(() =>
+        {
+            if (!msg.WasPaidCost)
+                Instantiate(resourcePrototype, transform.position + resourceNumOffset, Quaternion.identity, transform).Initialized(msg.ResourceQuantity);
         });
     }
 }

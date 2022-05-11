@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9094642486484333541}
   - component: {fileID: 9093884206025983959}
   - component: {fileID: 4411752835693637071}
+  - component: {fileID: 8373734745635439792}
   m_Layer: 0
   m_Name: VFX_Charge
   m_TagString: Untagged
@@ -42,8 +43,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9003030703784512983}
   serializedVersion: 7
-  lengthInSec: 1.5
-  simulationSpeed: 1
+  lengthInSec: 1
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
@@ -4925,9 +4926,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectName: {fileID: 11400000, guid: d344c2ad8f7429348945a07501a28e84, type: 2}
-  durationSeconds: 1
-  maxLifetime: 2.5
+  durationSeconds: 0.6
+  maxLifetime: 1.4
   waitForCompletion: 1
+--- !u!114 &8373734745635439792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003030703784512983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4068305db2a199148adc29d0b9e62fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/BattleVFX/CHARGE
+  PlayOnAwake: 1
+  PlayOnDestroy: 0
 --- !u!1 &9003557865293406041
 GameObject:
   m_ObjectHideFlags: 0
@@ -4968,8 +4984,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9003557865293406041}
   serializedVersion: 7
-  lengthInSec: 1.5
-  simulationSpeed: 1
+  lengthInSec: 1
+  simulationSpeed: 1.5
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0

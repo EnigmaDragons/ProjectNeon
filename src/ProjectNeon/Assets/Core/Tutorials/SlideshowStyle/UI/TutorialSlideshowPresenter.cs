@@ -33,7 +33,7 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
 
     public void Enqueue(TutorialSlideshow slideshow)
     {
-        if (_current.IsPresent)
+        if (_current.IsPresentAnd(c => c != slideshow))
         {
             _queue.Enqueue(slideshow);
             return;

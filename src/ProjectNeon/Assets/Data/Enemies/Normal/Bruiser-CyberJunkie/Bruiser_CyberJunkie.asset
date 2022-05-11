@@ -19,6 +19,12 @@ MonoBehaviour:
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
   preferredTurnOrder: 99
   prefab: {fileID: 3584112892095806777, guid: 525eb6dd39bff9046a5bf7709bb8627f, type: 3}
   materialType: 1
@@ -34,6 +40,7 @@ MonoBehaviour:
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   description: Tough enemy who acts quickly, packs a wallop, and swaps defenses.
   animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
+  animationSounds: {fileID: 11400000, guid: 320a1f41711f2514e858f7835f7dd049, type: 2}
   stageDetails:
   - stage: 2
     maxHp: 76
@@ -104,6 +111,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
@@ -115,4 +123,3 @@ MonoBehaviour:
     - {fileID: 11400000, guid: c888bd26b7c873d45a046d5efba4b675, type: 2}
     - {fileID: 11400000, guid: af35d56220925b1489452c05bf31c741, type: 2}
     - {fileID: 11400000, guid: 6d806d0c3bc23ff46820f6a20fb18e20, type: 2}
-    - {fileID: 11400000, guid: 54a732491097bd54ea36b312f785718d, type: 2}

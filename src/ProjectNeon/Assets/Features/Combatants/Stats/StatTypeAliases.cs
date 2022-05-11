@@ -12,6 +12,7 @@ public static class StatTypeAliases
         { "ARM", StatType.Armor.ToString() },
         { "ECON", StatType.Economy.ToString() },
         { "EC", StatType.Economy.ToString() },
+        { "POW", StatType.Power.ToString() },
     };
     
     public static readonly Dictionary<string, string> FullNameToAbbreviations = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
@@ -21,5 +22,6 @@ public static class StatTypeAliases
         { StatType.Magic.ToString(), "MAG" },
         { StatType.Armor.ToString(), "ARM" },
         { StatType.Economy.ToString(), "EC" },
+        { StatType.Power.ToString(), "POW" },
     };
 }

@@ -20,4 +20,6 @@ public class InMemoryCard : CardTypeData
     public string Description { get; set; }
     public HashSet<CardTag> Tags { get; set; }
     public string TypeDescription { get; set; }
+
+    public override string ToString() => Name;
 }

@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 5864943415331955127}
   - component: {fileID: 6758856194890366817}
   - component: {fileID: 6694741852705731118}
+  - component: {fileID: 4790256970888665561}
   m_Layer: 0
   m_Name: MainframePlaceholder
   m_TagString: Untagged
@@ -107,6 +108,25 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 7396997702281525687}
   partyAdventureState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+--- !u!114 &4790256970888665561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767478357397476194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb972d8485a0495aa734115433b721bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6c778b0c59e41f46addd187f601ed0c, type: 2}
+  characterViewer: {fileID: 0}
+  sprite: {fileID: 6701285450935483874}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
 --- !u!1 &4802028735864428320
 GameObject:

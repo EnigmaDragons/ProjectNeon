@@ -11,9 +11,9 @@ public static class AllEffects
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.AdjustStatAdditivelyFormula, e => new AdjustStatsFormula(e, multiplicative: false)},
         { EffectType.AdjustStatMultiplicativelyFormula, e => new AdjustStatsFormula(e, multiplicative: true)},
-        { EffectType.ReactWithEffect, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope,
+        { EffectType.ReactWithEffect, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow,
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionEffect)},
-        { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, 
+        { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow,
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionSequence)},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.Name} has been cleansed of {n} debuffs", n => n > 0, m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
@@ -21,7 +21,9 @@ public static class AllEffects
             => BattleLoggedItem(diff => $"{m.Name} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, amount => amount < 0)},
         { EffectType.ShieldRemoveAll, e => new AegisPreventable(new SimpleEffect(m => BattleLogged($"{m.Name} lost all their shields", () => m.AdjustShield(-999))), "Losing All Shields") },
         { EffectType.ShieldBasedOnNumberOfOpponentsDoTs, e => new ShieldBasedOnNumberOfOpponentsDoTs(e.FloatAmount) },
-        { EffectType.AdjustResourceFlat, e =>  AegisPreventable.If(new FullContextEffect((ctx, duration, m) => m.GainResource(e.EffectScope.Value, e.TotalIntAmount, ctx.AdventureState), e.DurationFormula), e.TotalIntAmount < 0, "Resource Loss") },
+        { EffectType.AdjustResourceFlat, e =>  AegisPreventable.If(
+            new FullContextEffect((ctx, duration, m) => m.ChangeResource(new ResourceQuantity{ Amount = e.TotalIntAmount, ResourceType = e.EffectScope.Value }, ctx.AdventureState), 
+                e.DurationFormula), e.TotalIntAmount < 0, "Resource Loss") },
         { EffectType.AdjustPrimaryResourceFormula, e => new AegisIfFormulaResult((ctx, amount, m) => 
             m.AdjustPrimaryResource(amount.CeilingInt()), e.Formula, amount => amount < 0) },
         { EffectType.DamageOverTimeFormula, e => new AegisPreventable(new DamageOverTimeFormula(e), "Damage Over Time") },
@@ -53,7 +55,7 @@ public static class AllEffects
             new CustomStatusIcon(string.IsNullOrWhiteSpace(e.StatusDetailText) ? e.FlavorText: e.StatusDetailText, 
                 e.StatusTag == StatusTag.None ? e.EffectScope : e.StatusTag.ToString(), e.IntAmount, 
                 e.ForSimpleDurationStatAdjustment(ctx.Source.Id, duration))), e.DurationFormula) },
-        { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.DurationFormula, e.ReactionSequence) },
+        { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.DurationFormula, e.ReactionSequence, e.ReactionTimingWindow) },
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(m.MemberId, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
         { EffectType.PlayBonusChainCard, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(new PlayBonusChainCard(m.MemberId, e.BonusCardType, e.StatusDetail)))},
@@ -264,26 +266,18 @@ public static class AllEffects
         return targets.Any() ? new Multiple(targets.Take(targets.Length - 1)) : new Multiple(new Member[0]);
     }
 
-    private static Target RandomEnemy(EffectContext ctx)
+    private static Target RandomEnemyExcludingTarget(EffectContext ctx) => RandomEnemy(ctx, ctx.Target.Members);
+    private static Target RandomEnemy(EffectContext ctx) => RandomEnemy(ctx, new Member[0]);
+    private static Target RandomEnemy(EffectContext ctx, Member[] excludedMembers)
     {
         var tauntEnemies = ctx.BattleMembers.Values
-            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt())
-            .ToArray()
-            .Shuffled();
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt() && !excludedMembers.Contains(m))
+            .ToArray();
         if (tauntEnemies.Any())
             return new Single(tauntEnemies.First());
+        
         return new Multiple(ctx.BattleMembers.Values
-            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
-            .ToArray()
-            .Shuffled()
-            .Take(1));
-    }
-    
-    private static Target RandomEnemyExcludingTarget(EffectContext ctx)
-    {
-        return new Multiple(ctx.BattleMembers.Values
-            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
-            .Except(ctx.Target.Members)
+            .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !excludedMembers.Contains(m))
             .ToArray()
             .Shuffled()
             .Take(1));

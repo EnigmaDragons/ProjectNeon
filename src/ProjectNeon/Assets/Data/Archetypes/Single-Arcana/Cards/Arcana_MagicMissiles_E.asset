@@ -31,7 +31,6 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
@@ -52,6 +51,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
@@ -72,6 +72,7 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 3
+      Conditions: []
     atTargetAnimation:
       animation:
         UseConstant: 1
@@ -83,6 +84,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
+      conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 31
@@ -103,7 +105,6 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
@@ -124,6 +125,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
@@ -144,17 +146,19 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 0
+      Conditions: []
     atTargetAnimation:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 827ee69f817df7e479315afc06a743db, type: 2}
+        Variable: {fileID: 11400000, guid: a00ed9b736202f64591a339d7d2a4b2a, type: 2}
       size: 0.75
-      speed: 2
+      speed: 1
       color:
         UseConstant: 1
         ConstantValue: {r: 1, g: 0, b: 0.45490196, a: 1}
         Variable: {fileID: 0}
+      conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
@@ -175,7 +179,6 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 20
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
@@ -196,6 +199,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
@@ -216,6 +220,7 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 0
+      Conditions: []
     atTargetAnimation:
       animation:
         UseConstant: 1
@@ -227,5 +232,6 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
+      conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}

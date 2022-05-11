@@ -2,15 +2,17 @@
 public enum CardTag
 {
     None = 0,
+    Attack = 4,
+    Ultimate = 3,
+    Unpreferred = 47,
     Shield = 1,
     BuffAttack = 2,
     BuffResource = 10,
-    Ultimate = 3,
-    Attack = 4,
     Disable = 5,
     Healing = 6,
     Defense = 7,
     Vulnerable = 8,
+    DamageOverTime = 48,
     Group = 9,
     DoubleDamage = 11,
     Stealth = 12,
@@ -44,5 +46,8 @@ public enum CardTag
     CredAdjust = 41,
     Shot = 42,
     AntiStealth = 43,
-    Invulnerable = 44
+    Invulnerable = 44,
+    Focus = 45,
+    RequiresFocus = 46,
+    ScaledOnMissingMaxHealth = 100
 }

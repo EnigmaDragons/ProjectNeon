@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Features.GameProgression
+[CreateAssetMenu(menuName = "OnlyOnce/CurrentAdventureProgress")]
+public class CurrentAdventureProgress : ScriptableObject
 {
-    [CreateAssetMenu(menuName = "OnlyOnce/CurrentAdventureProgress")]
-    public class CurrentAdventureProgress : ScriptableObject
-    {
-        public AdventureProgressBase AdventureProgress;
-    }
+    public bool HasActiveAdventure => AdventureProgress != null;
+    public AdventureProgressBase AdventureProgress;
 }

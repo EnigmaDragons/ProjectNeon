@@ -58,6 +58,7 @@ public sealed class AIStrategyGenerator
                 e.BattleRole == BattleRole.DamageDealer ? 2 :
                 e.BattleRole == BattleRole.Specialist ? 1 :
                 0)
+            .ThenByDescending(e => (int)s.GetAiPreferences(e.Id).DesignatedAttackerPriority)
             .ThenByDescending(e => Math.Max(e.State.Attack(), e.State.Magic()))
             .First();
         

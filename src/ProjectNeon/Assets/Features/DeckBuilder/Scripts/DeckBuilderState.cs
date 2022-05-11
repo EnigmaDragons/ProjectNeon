@@ -1,16 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameState/DeckBuilder")]
 public class DeckBuilderState : ScriptableObject
 {
+    [SerializeField] private IntReference deckSize;
+    
     private HeroesDeck _selectedHeroesDeck;
 
-    public List<HeroesDeck> HeroesDecks { get; set; }
-    public bool ShowFormulas { get; set; }
-    public Rarity[] ShowRarities { get; set; }
-    public string[] ShowArchetypes { get; set; }
-    public EquipmentSlot[] ShowEquipmentSlots { get; set; }
+    public bool AllHeroDecksAreValid => HeroesDecks != null && HeroesDecks.Any() && HeroesDecks.Where(h => h != null).All(h => h.Deck.Count == deckSize);
+    public bool SelectedHeroDeckIsValid => SelectedHeroesDeck.Deck.Count == deckSize;
+
+    public List<HeroesDeck> HeroesDecks { get; set; } = new List<HeroesDeck>();
+    
+    public bool ShowFormulas { get; set; } = false;
+    public Rarity[] ShowRarities { get; set; } = {Rarity.Basic, Rarity.Common, Rarity.Rare, Rarity.Epic, Rarity.Starter};
+    public string[] ShowArchetypes { get; set; } = new string [0];
+    public EquipmentSlot[] ShowEquipmentSlots { get; set; } = new EquipmentSlot[0];
 
     public HeroCharacter SelectedHeroCharacter => SelectedHeroesDeck.Hero.Character;
     public Hero SelectedHero => SelectedHeroesDeck.Hero;
@@ -20,7 +28,11 @@ public class DeckBuilderState : ScriptableObject
         set
         {
             _selectedHeroesDeck = value;
+            ShowArchetypes = value.Hero.Archetypes.Concat("").ToArray();
             Message.Publish(new DeckBuilderHeroSelected(_selectedHeroesDeck));
+            Message.Publish(new DeckBuilderFiltersChanged());
         }
     }
+
+    public Action OnDeckbuilderClosedAction { get; set; } = () => { };
 }

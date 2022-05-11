@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InitMetrics : MonoBehaviour
@@ -7,7 +8,20 @@ public class InitMetrics : MonoBehaviour
     
     private void Awake()
     {
-        ErrorReport.Init(appName, version);
         AllMetrics.Init(version, InstallId.Get());
+        InitErrorReporting();
+    }
+
+    private void InitErrorReporting()
+    {
+        var recentLogsQueue = new Queue<string>();
+        var maxRecentQueueLogs = 15;
+        ErrorReport.Init(appName, version, recentLogsQueue);
+        Log.AddSink(s =>
+        {
+            while (recentLogsQueue.Count > maxRecentQueueLogs - 1)
+                recentLogsQueue.Dequeue();
+            recentLogsQueue.Enqueue(s);
+        });
     }
 }

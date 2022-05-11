@@ -53,6 +53,7 @@ public static class MemberExtensions
     public static string Names(this IEnumerable<Member> members) => string.Join(", ", members.Select(m => m.Name));
     
     public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.Name, m.Class, m.TeamType, m.State.ToSnapshot());
+    public static int HpAndShield(this Member m) => CurrentHp(m) + CurrentShield(m);
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);
     public static int MaxHp(this Member m) => RoundUp(m.State.MaxHp());
     public static int MissingHp(this Member m) => RoundUp(m.State.MaxHp() - m.CurrentHp());
@@ -90,7 +91,8 @@ public static class MemberExtensions
     public static bool IsMarked(this Member m) => m.State[TemporalStatType.Marked] > 0;
     public static bool HasMaxPrimaryResource(this Member m) => m.State.PrimaryResourceAmount == m.ResourceMax(m.State.PrimaryResource);
     public static int PrimaryResourceAmount(this Member m) => m.State.PrimaryResourceAmount;
-    public static ResourceQuantity PrimaryResource(this Member m) => m.State.CurrentPrimaryResources;
+    public static ResourceQuantity PrimaryResourceQuantity(this Member m) => m.State.CurrentPrimaryResources;
+    public static IResourceType PrimaryResourceType(this Member m) => m.State.PrimaryResource;
     public static StatType PrimaryStat(this Member m) => m.State.PrimaryStat;
     
     public static int RemainingPrimaryResourceCapacity(this Member m) => m.ResourceMax(m.State.PrimaryResource) - m.State.PrimaryResourceAmount;
@@ -103,10 +105,7 @@ public static class MemberExtensions
         {
             if (!c.Cost.PlusXCost && c.Cost.BaseAmount == 0)
                 return true;
-            var calc = m.CalculateResources(c);
-            var amountAvailable = c.Cost.ResourceType.Name == "Creds" ? partyState.Credits : m.State.ResourceAmount(calc.ResourcePaidType.Name);
-            var remaining = amountAvailable - calc.ResourcesPaid;
-            return remaining >= 0;
+            return m.CanAfford(m.CalculateResources(c), partyState);
         }
         catch (Exception)
         {
@@ -115,6 +114,15 @@ public static class MemberExtensions
         }
     }
 
+    public static bool CanAfford(this Member m, ResourceCalculations calc, PartyAdventureState partyState)
+    {
+        if (calc.XAmount == 0 && calc.ResourcesPaid == 0)
+            return true;
+        var amountAvailable = calc.ResourcePaidType.Name == "Creds" ? partyState.Credits : m.State.ResourceAmount(calc.ResourcePaidType.Name);
+        var remaining = amountAvailable - calc.ResourcesPaid;
+        return remaining >= 0;
+    }
+    
     public static ResourceCalculations CalculateResources(this Member m, CardTypeData card)
         => m.State.CalculateResources(card).ClampResources(m);
     

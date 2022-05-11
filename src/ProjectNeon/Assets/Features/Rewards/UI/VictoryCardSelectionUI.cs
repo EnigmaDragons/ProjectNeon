@@ -9,6 +9,7 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private BattleState state;
     [SerializeField] private TextMeshProUGUI creditsLabel;
+    [SerializeField] private TextMeshProUGUI clinicVouchersLabel;
 
     private bool _hasSelected = false;
     private Action<Maybe<CardTypeData>> _onSelectedType = _ => { };
@@ -36,6 +37,7 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
             Instantiate(cardPresenter, optionsParent.transform)
                 .Set(o, () => SelectCard(o)));
         creditsLabel.text = state.RewardCredits.ToString();
+        clinicVouchersLabel.text = state.RewardClinicVouchers.ToString();
         view.SetActive(true);
     }
 

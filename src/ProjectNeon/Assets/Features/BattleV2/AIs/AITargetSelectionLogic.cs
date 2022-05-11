@@ -8,9 +8,6 @@ public static class AITargetSelectionLogic
     private static readonly Color EnemyCardTint = new Color(160 / 255, 73 / 255, 77 / 255);
     private static bool ShouldLogAiDetails = false;
     
-    public static Target[] SelectedTargets(this CardSelectionContext ctx)
-        => SelectedTargets(ctx, _ => true);
-    
     public static Target[] SelectedTargets(this CardSelectionContext ctx, Func<Target, bool> isPreferredTarget)
     {
         if (ctx.SelectedCard.IsMissing)
@@ -36,7 +33,7 @@ public static class AITargetSelectionLogic
         {
             var disabledTargets = possibleTargets.Where(p => p.Members.Any(m => m.IsDisabled()));
             var disableSelectedTargets = ctx.Strategy.SelectedNonStackingTargets.TryGetValue(CardTag.Disable, out var targets) ? targets : new HashSet<Target>();
-            var saneTargets = possibleTargets.Except(disableSelectedTargets).Except(disabledTargets);
+            var saneTargets = possibleTargets.Except(disableSelectedTargets).Except(disabledTargets).ToArray();
             var actualTargets = saneTargets.Any() ? saneTargets : possibleTargets;
             return actualTargets.MostPowerful();
         }
@@ -78,13 +75,17 @@ public static class AITargetSelectionLogic
         if (card.Is(CardTag.Attack) && action.Group == Group.Opponent)
             return ctx.Strategy.SingleMemberAttackTarget.IsPresentAnd(m => m.IsVulnerable()) || Rng.Chance(0.80) 
                 ? ctx.Strategy.AttackTargetFor(possibleTargets, action, possibleTargets) 
-                    : possibleTargets.Random();
+                : possibleTargets.Random();
+        
         if (card.Is(CardTag.Healing) && action.Group == Group.Ally)
             return possibleTargets.MostDamaged();
+        
+        if (card.Is(CardTag.Defense, CardTag.DamageOverTime) && action.Group == Group.Ally)
+            return possibleTargets.Where(x => x.Members.All(m => m.CurrentHp() > 6)).MostPowerful();
         if (card.Is(CardTag.Defense, CardTag.Shield) && action.Group == Group.Ally)
         {
-            if (possibleTargets.Any(x => !x.HasShield()))
-                return possibleTargets.Where(x => !x.HasShield())
+            if (possibleTargets.Any(x => !x.HasShield() && x.TotalRemainingShieldCapacity() > 5))
+                return possibleTargets.Where(x => !x.HasShield() && x.TotalRemainingShieldCapacity() > 5)
                     .MostVulnerable();
             // Or, use shield to whomever could use the most
             return possibleTargets.OrderByDescending(x => x.TotalRemainingShieldCapacity()).First();
@@ -93,16 +94,20 @@ public static class AITargetSelectionLogic
         if (card.Is(CardTag.Invulnerable))
             return possibleTargets.ClosestToDeath();
 
+        if (card.Is(CardTag.ScaledOnMissingMaxHealth))
+            return possibleTargets.OrderBy(t => t.Members.Sum(m => m.MaxHp() - m.State.BaseStats.MaxHp()))
+                .First();
+
         return possibleTargets.Random();
     }
 
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx)
-        => WithSelectedTargetsPlayedCard(ctx, _ => true);
+        => WithSelectedTargetsPlayedCard(ctx, t => ctx.FocusTarget.IsMissingOr(ft => t.Members.Contains(ft)));
     
     public static PlayedCardV2 WithSelectedTargetsPlayedCard(this CardSelectionContext ctx, Func<Target, bool> isPreferredTarget)
     {
         if (ctx.SelectedCard.IsMissing)
-            ctx = ctx.WithFinalizedCardSelection();
+            ctx = ctx.WithFinalizedSmartCardSelection();
         
         Log($"{ctx.Member.Name} chose {ctx.SelectedCard.Value.Name} out of {ctx.CardOptionsString}");
         
@@ -113,7 +118,7 @@ public static class AITargetSelectionLogic
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
         RecordNonStackingTags(CardTag.Taunt, ctx, targets);
         
-        return new PlayedCardV2(ctx.Member, targets, card, isTransient: false, card.Type.CalculateResources(ctx.Member.State));
+        return new PlayedCardV2(ctx.Member, targets, card, isTransient: false, false, card.Type.CalculateResources(ctx.Member.State));
     }
 
     private static void RecordNonStackingTags(CardTag tag, CardSelectionContext ctx, Target[] targets)

@@ -11,6 +11,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private bool _isConfirming = false;
     private bool _confirmRequestedManually;
+    private bool _alreadyConfirmedThisTurn = false;
 
     private void Awake()
     {
@@ -57,6 +58,8 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private void UpdateState(BattleStateChanged msg)
     {
+        if (battleState.Phase == BattleV2Phase.PlayCards && msg.Before.Phase != BattleV2Phase.PlayCards)
+            _alreadyConfirmedThisTurn = false;
         if (msg.Before.Phase != BattleV2Phase.PlayCards && battleState.Phase == BattleV2Phase.PlayCards)
             confirmUi.gameObject.SetActive(true);
         if (battleState.Phase != BattleV2Phase.PlayCards)
@@ -76,8 +79,9 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         if (confirmUi != null)
             confirmUi.gameObject.SetActive(false);
         playArea.Clear();
-        if (battleState.Phase != BattleV2Phase.NotBegun)
+        if (!_alreadyConfirmedThisTurn)
             BattleLog.Write($"Turn {battleState.TurnNumber} {battleState.Phase} - Player turn ended {reasonWord}");
+        _alreadyConfirmedThisTurn = true;
         Message.Publish(new PlayerTurnConfirmed());
     }
 

@@ -2,6 +2,8 @@
 
 public abstract class AdventureProgressBase : ScriptableObject
 {
+    public abstract string AdventureName { get; }
+    public abstract GameAdventureProgressType AdventureType { get; }
     public abstract int RngSeed { get; }
     public abstract bool UsesRewardXp { get; }
     public abstract float BonusXpLevelFactor { get; }
@@ -20,4 +22,7 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract LootPicker CreateLootPicker(PartyAdventureState party);
     public abstract GameAdventureProgressData GetData();
     public abstract void Advance();
+    public abstract void SetStoryState(string state, bool value);
+    public abstract bool IsTrue(string state);
+    public abstract bool IsFinalBoss { get; }
 }
