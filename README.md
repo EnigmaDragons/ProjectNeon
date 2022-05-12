@@ -21,12 +21,13 @@ Setup:
 2. Install any C# IDE of your choice. [Visual Studio 2019](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16) recommended.
 3. Install [Unity Hub](https://unity3d.com/get-unity/download)
 4. Launch Unity Hub and Install Unity Version 2020.3.1f1 from the Archive section or by clicking here: [Version 2020.3.1f1](unityhub://2020.3.1f1/77a89f25062f)
-5. In Unity Hub, click Add
-6. Browse and select `../repo/src/ProjectNeon`
-7. Click on `ProjectNeon`
-8. Open Fmod Studio
-9. `File` -> `Open` -> `repo/src/ProjectNeon/PNFmod/PNFmod.fspro`
-10. Press `F7` 
+5. Install [Fmod Studio 2.01](https://www.fmod.com/download#fmodstudio)
+6. In Unity Hub, click Ad
+7. Browse and select `../repo/src/ProjectNeon`
+8. Click on `ProjectNeon`
+9. Open Fmod Studio
+10. `File` -> `Open` -> `repo/src/ProjectNeon/PNFmod/PNFmod.fspro`
+11. Press `F7`
 
 ----
 
@@ -43,16 +44,19 @@ Setup:
 - Architect: Silas Reinagel
 - Character Art: Yuliia Seliukova
 - Character Art: Herbert Losloso
+- Environment Art: Silas Reinagel
+- Environment Art: Ants Aare Alamaa
 - Environment Art: GraphicEdit
-- User Interface:
 - Game Design: Silas Reinagel
 - Game Design: Noah Reinagel
 - Game Design: Caleb Reinagel
-- Sound Effects: Jean-Alexander Nevskiy
+- Sound Effects/Music: Jean-Alexander Nevskiy
 - Music: Ian Booms
 - Programming: Silas Reinagel
+- Programming: Noah Reinagel
 - Programming: Paulo Lobo
 - Programming: Talio
 - QA Tester: Mustafa Contractor
+- Marketing: Anton Vilgotsky
 
 ----
