@@ -374,7 +374,13 @@ MonoBehaviour:
 
 
     Let''s do a one-time configuration of your game settings
-    before we start.'
+    before we start.
+
+
+
+
+    <i>NNZ and ZantoCorp guarantee they won''t discriminate
+    against you based on your choices here!</i>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
   m_sharedMaterial: {fileID: -3462019426021366834, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
@@ -538,8 +544,6 @@ GameObject:
   - component: {fileID: 2100770866}
   - component: {fileID: 2100770865}
   - component: {fileID: 2100770864}
-  - component: {fileID: 2100770863}
-  - component: {fileID: 2100770862}
   - component: {fileID: 2100770861}
   - component: {fileID: 2100770860}
   m_Layer: 5
@@ -584,63 +588,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutscene: {fileID: 11400000, guid: 5636127e9804d4a48826330847a64eaa, type: 2}
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
---- !u!114 &2100770862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100770859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc2beaeb7f854a90a1020ad6aa74b590, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2100770863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100770859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btn: {fileID: 0}
-  text: Accept
-  action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2100770860}
-        m_TargetAssemblyTypeName: NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene,
-          GameAssembly
-        m_MethodName: Execute
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MoreMountains.Feedbacks.MMF_Player, MoreMountains.Feedbacks
-        m_MethodName: PlayFeedbacks
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  sounds: {fileID: 0}
-  fmodSounds: {fileID: 0}
-  isPrimaryActionButton: 1
 --- !u!114 &2100770864
 MonoBehaviour:
   m_ObjectHideFlags: 0
