@@ -41,6 +41,7 @@ public enum CardTag
     Exclusive = 36,
     Grenade = 37,
     SelfOnly = 38,
+    NonSelfOnly = 49,
     Glitch = 39,
     Igniting = 40,
     CredAdjust = 41,

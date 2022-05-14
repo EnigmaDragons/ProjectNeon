@@ -8,6 +8,7 @@ public sealed class CardSelectionContext
     public Maybe<Member> FocusTarget { get; }
     public Member[] Enemies => AllMembers.GetConsciousEnemies(Member);
     public Member[] Allies => AllMembers.GetConsciousAllies(Member);
+    public Member[] NonSelfAllies => Allies.Except(Member).ToArray();
     public Member[] AllMembers { get; }
     public AIStrategy Strategy { get; }
     public IEnumerable<CardTypeData> CardOptions { get; }

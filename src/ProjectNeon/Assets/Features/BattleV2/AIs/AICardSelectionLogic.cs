@@ -85,7 +85,7 @@ public static class AICardSelectionLogic
         => ctx.IfTrueDontPlay(x => x.Member.PrimaryResourceAmount() == 0, c => c.Cost.PlusXCost);
     
     public static CardSelectionContext DontGiveExtraResourcesIfAlliesHaveEnough(this CardSelectionContext ctx)
-        => ctx.IfTrueDontPlayType(x => x.Allies.Except(ctx.Member).All(e => e.RemainingPrimaryResourceCapacity() < 2), CardTag.BuffResource);
+        => ctx.IfTrueDontPlayType(x => x.NonSelfAllies.All(e => e.RemainingPrimaryResourceCapacity() < 2), CardTag.BuffResource);
     
     public static CardSelectionContext DontPlayPhysicalCountersIfOpponentsAreNotPhysical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.DebuffPhysical)
@@ -109,7 +109,8 @@ public static class AICardSelectionLogic
         => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentHp() >= a.MaxHp() * 0.9), CardTag.Healing);
 
     private static CardSelectionContext DontPlayShieldsIfAlliesDontNeedShielding(this CardSelectionContext ctx)
-        => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentShield() > a.MaxShield() * 0.6), CardTag.Defense, CardTag.Shield);
+        => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentShield() >= a.MaxShield() * 0.6), CardTag.Defense, CardTag.Shield)
+            .IfTrueDontPlayType(x => x.NonSelfAllies.All(a => a.CurrentShield() >= a.MaxShield() * 0.6), CardTag.Shield, CardTag.Defense, CardTag.NonSelfOnly);
 
     private static CardSelectionContext DontPlayDamageOverTimeDefenseIfAlliesAreTooLow(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentHp() < 6), CardTag.Defense, CardTag.DamageOverTime);
