@@ -78,7 +78,7 @@ public static class AllEffects
         { EffectType.DrawCardsOfArchetype, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(BattleLoggedItem(v => $"Drew {v} {e.EffectScope} cards", 
                 Formula.EvaluateToInt(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount)), 
                     card => card.Archetypes.Contains(e.EffectScope.Value)), e.DurationFormula)},
-        { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope, cards => cards) },
+        { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope) },
         { EffectType.LeaveBattle, e => new SimpleEffect((m, __) =>
         {
             Message.Publish(new DisplayCharacterWordRequested(m, CharacterReactionType.LeftBattle));
