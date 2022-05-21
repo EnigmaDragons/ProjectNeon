@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: NNZSecurityGuard
   m_EditorClassIdentifier: 
-  id: 0
+  id: 57
   enemyName: NNZ Security
   allowedForSocialMedia: 0
   excludeFromBestiary: 1
@@ -27,7 +27,7 @@ MonoBehaviour:
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
   preferredTurnOrder: 99
-  prefab: {fileID: 7631820889290517161, guid: e1e1237b1ca10d1418b9bca5e385fd14, type: 3}
+  prefab: {fileID: 1266148324363578724, guid: 56a29b95fba54514da6cd565f37d6c78, type: 3}
   materialType: 0
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
   deathEffect:
@@ -39,34 +39,34 @@ MonoBehaviour:
   unique: 0
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: 
+  description: 'After the first shot, this enemy '
   animations: {fileID: 11400000, guid: b6a3876d317273348b9af1d1383ce245, type: 2}
   animationSounds: {fileID: 11400000, guid: 991c5e6dfa8be8f48a94dac660a52f43, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 0
+    maxHp: 60
     maxShield: 0
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 0
+    attack: 9
     magic: 0
     leadership: 0
     armor: 0
     resistance: 0
     nonStatCardValueFactor: 0
     startingResourceAmount: 0
-    maxResourceAmount: 0
-    resourceGainPerTurn: 0
-    cardsPerTurn: 0
+    maxResourceAmount: 1
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
     powerLevel: 0
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
-      resourceScaledValueOverride: 0
+      resourceScaledValueOverride: 1
     calculationResults:
       startingPower: 0
       perCardValue: 0
@@ -76,4 +76,6 @@ MonoBehaviour:
       estimatedTurnsAlive: 0
       calculatedPowerLevel: 0
     startOfBattleEffects: []
-    Cards: []
+    Cards:
+    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+    - {fileID: 11400000, guid: 840f1ae69a943b845a33689480284649, type: 2}
