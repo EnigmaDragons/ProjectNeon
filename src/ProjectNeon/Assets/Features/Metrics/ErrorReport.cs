@@ -17,6 +17,7 @@ public static class ErrorReport
     private static Queue<string> _recentLogs = new Queue<string>();
     private static bool _isEditor = false;
     private static string[] _ignoreIfContainsInEditor = {  "Coroutine couldn't be started" };
+    private static string[] _ignoreIfContains = { "Error Releasing render texture that is set as Camera.targetTexture" };
 
 public static void Init(string appName, string version, Queue<string> recentLogs)
     {
@@ -36,6 +37,8 @@ public static void Init(string appName, string version, Queue<string> recentLogs
         if (_ignoreIfContainsInEditor.Any(errorMessage.Contains))
             return;
 #endif
+        if (_ignoreIfContains.Any(errorMessage.Contains))
+            return;
 
         Client.Post(
             new Uri(_securedUrl.FromBase64(), UriKind.Absolute),
