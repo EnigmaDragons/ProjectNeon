@@ -18,7 +18,10 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
     
     private readonly Dictionary<EnemyInstance, ProgressiveTextRevealWorld> _speech = new Dictionary<EnemyInstance, ProgressiveTextRevealWorld>();
-    private List<Tuple<int, Member>> _enemyPositions; 
+    private List<Tuple<int, Member>> _enemyPositions;
+    private bool _enemyVisualsVisible = true;
+    private bool _techPointsVisible = true;
+    private bool _enemyStatsVisible = true;
     
     public IEnumerator Spawn()
     {
@@ -150,9 +153,13 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     {
         var pos = obj.transform.position;
         var customUi = obj.GetComponentInChildren<EnemyBattleUIPresenter>();
-        uis.Add(customUi != null
+        customUi = customUi != null
             ? customUi.Initialized(enemy, member)
-            : Instantiate(ui, pos, Quaternion.identity, obj).Initialized(enemy, member));
+            : Instantiate(ui, pos, Quaternion.identity, obj).Initialized(enemy, member);
+        uis.Add(customUi);
+        customUi.gameObject.SetActive(_enemyVisualsVisible);
+        customUi.SetTechPointVisibility(_techPointsVisible);  
+        customUi.SetStatVisibility(_enemyStatsVisible);
     }
 
     protected override void Execute(MemberRevived m)
@@ -199,11 +206,20 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     protected override void Execute(SetEnemiesUiVisibility msg)
     {
         if (msg.Component == BattleUiElement.EnemyInfo)
-            uis.ForEach(u => u.gameObject.SetActive(msg.ShouldShow));
+        {
+            _enemyVisualsVisible = msg.ShouldShow;
+            uis.ForEach(u => u.gameObject.SetActive(msg.ShouldShow));   
+        }
         else if (msg.Component == BattleUiElement.EnemyTechPoints)
-            uis.ForEach(u => u.SetTechPointVisibility(msg.ShouldShow));
+        {
+            _techPointsVisible = msg.ShouldShow;
+            uis.ForEach(u => u.SetTechPointVisibility(msg.ShouldShow));   
+        }
         else if (msg.Component == BattleUiElement.PrimaryStat)
-            uis.ForEach(u => u.SetStatVisibility(msg.ShouldShow));
+        {
+            _enemyStatsVisible = msg.ShouldShow;
+            uis.ForEach(u => u.SetStatVisibility(msg.ShouldShow));   
+        }
     }
 
     private IEnumerator ExecuteAfterDelayRealtime(Action a, float delay)

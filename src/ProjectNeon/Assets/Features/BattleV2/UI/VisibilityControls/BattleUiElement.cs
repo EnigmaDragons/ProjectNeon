@@ -9,4 +9,6 @@ public static class BattleUiElement
     public static string EnemyTechPoints = "EnemyTechPoints";
     public static string PrimaryStat = "PrimaryStats";
     public static string BattlePhase = "BattlePhase";
+    public static string PlayerResources = "PlayerResources";
+    public static string PlayerShields = "PlayerShields";
 }

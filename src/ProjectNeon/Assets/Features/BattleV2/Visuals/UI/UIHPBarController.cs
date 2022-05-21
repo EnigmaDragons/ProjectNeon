@@ -27,4 +27,6 @@ public sealed class UIHPBarController : HPBarControllerBase
     {
         shieldImage.DOFillAmount(amount, 2);
     }
+
+    public void SetShieldsVisibility(bool isVisible) => shieldTextValue.gameObject.SetActive(isVisible);
 }
