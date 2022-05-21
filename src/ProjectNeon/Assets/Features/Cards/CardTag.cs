@@ -50,5 +50,6 @@ public enum CardTag
     Invulnerable = 44,
     Focus = 45,
     RequiresFocus = 46,
+    NextTurn = 50,
     ScaledOnMissingMaxHealth = 100
 }

@@ -71,6 +71,13 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
 
     private void Play((Member Member, EnemyInstance Enemy) e)
     {
+        if (_currentTurnStrategy.ShouldRegenerate)
+        {
+            var previous = _currentTurnStrategy;
+            _currentTurnStrategy = _enemyStrategy.Generate(state, new EnemySpecialCircumstanceCards(disabledCard, antiStealthCard, aiGlitchedCard));
+            previous.SelectedNonStackingTargets.ForEach(ns => ns.Value.ForEach(t => _currentTurnStrategy.RecordNonStackingTarget(ns.Key, t)));
+        }
+
         var card = e.Enemy.AI.Play(e.Member.Id, state, _currentTurnStrategy);
         Message.Publish(new EnemyCardPlayed(card));
         _numberOfCardsPlayedThisTurn[card.MemberId()] = _numberOfCardsPlayedThisTurn[card.MemberId()] + 1;

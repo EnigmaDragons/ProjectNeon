@@ -8,6 +8,7 @@ public sealed class AIStrategy
     public Member DesignatedAttacker { get; }
     public EnemySpecialCircumstanceCards SpecialCards { get; }
     public Dictionary<CardTag, HashSet<Target>> SelectedNonStackingTargets { get; }
+    public bool ShouldRegenerate { get; private set; }
 
     public AIStrategy(Maybe<Member> singleMemberAttackTarget, Target groupAttackTarget, Member designatedAttacker, EnemySpecialCircumstanceCards specialCards)
     {
@@ -24,6 +25,8 @@ public sealed class AIStrategy
             SelectedNonStackingTargets[tag] = new HashSet<Target>();
         SelectedNonStackingTargets[tag].Add(target);
     }
+
+    public void TriggerStrategyRegeneration() => ShouldRegenerate = true;
 
     public Target AttackTargetFor(Target[] possibleTargets, CardActionSequence a) 
         => a.Scope == Scope.All
