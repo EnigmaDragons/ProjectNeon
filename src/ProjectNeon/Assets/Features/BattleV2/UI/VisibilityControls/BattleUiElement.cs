@@ -8,4 +8,5 @@ public static class BattleUiElement
     public static string TrashRecycleDropArea = "TrashRecycleDropArea";
     public static string EnemyTechPoints = "EnemyTechPoints";
     public static string PrimaryStat = "PrimaryStats";
+    public static string BattlePhase = "BattlePhase";
 }

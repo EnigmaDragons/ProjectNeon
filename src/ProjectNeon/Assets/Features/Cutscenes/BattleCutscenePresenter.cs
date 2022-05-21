@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BattleCutscenePresenter : BaseCutscenePresenter
 {
+    private const string _callerId = "BattleCutscenePresenter";
+    
     [SerializeField] private GameObject heroArea;
     [SerializeField] private GameObject enemyArea;
     [SerializeField] private GameObject[] disableOnStarted;
@@ -14,7 +16,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
 
     public IEnumerator Begin()
     {
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false, _callerId));
         disableOnStarted.ForEach(d => d.SetActive(false));
         enableOnStarted.ForEach(d => d.SetActive(true));
         Characters.Clear();
@@ -54,7 +56,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
         enableOnFinished.ForEach(d => d.SetActive(true));
         MessageGroup.TerminateAndClear();
         cutscene.FinishStartBattleCutscene();
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));
         Message.Publish(new StartCardSetupRequested());
     }
 }
