@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, DeckBuilderFiltersChanged>
+public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, DeckBuilderStateUpdated>
 {
     [SerializeField] private PageViewer pageViewer;
     [SerializeField] private EquipmentInLibraryButton equipmentInLibraryButtonTemplate;
@@ -15,7 +15,7 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, D
     private Hero _selectedHero;
     
     protected override void Execute(EquipmentPickerCurrentGearChanged msg) => GenerateLibrary();
-    protected override void Execute(DeckBuilderFiltersChanged msg) => GenerateLibrary();
+    protected override void Execute(DeckBuilderStateUpdated msg) => GenerateLibrary();
     
     public void GenerateLibrary()
     {
@@ -26,9 +26,8 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, D
         var equipUsage = new List<(Equipment, bool)>();
         
         partyState.Equipment.Available
-            .Where(e => e.Archetypes.All(_selectedHero.Archetypes.Contains)
-                && (builderState.ShowRarities.None() || builderState.ShowRarities.Contains(e.Rarity))
-                && (builderState.ShowEquipmentSlots.None() || builderState.ShowEquipmentSlots.Contains(e.Slot)))
+            .Where(e => e.Archetypes.All(_selectedHero.Archetypes.Contains) 
+                        && (builderState.ShowEquipmentSlots.None() || builderState.ShowEquipmentSlots.Contains(e.Slot)))
             .ForEach(x =>
             {
                 equipUsage.Add((x, x.Slot != EquipmentSlot.Augmentation || _selectedHero.Equipment.Augments.Length != 3));
@@ -42,7 +41,6 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, D
         
         partyState.Equipment.Equipped
             .Where(e => e.Archetypes.All(_selectedHero.Archetypes.Contains)
-                && (builderState.ShowRarities.None() || builderState.ShowRarities.Contains(e.Rarity))
                 && (builderState.ShowEquipmentSlots.None() || builderState.ShowEquipmentSlots.Contains(e.Slot)))
             .ForEach(x =>
             {

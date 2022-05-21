@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Obsolete("Dead Feature")]
 public class EquipmentLibraryFilterUI : OnMessage<DeckBuilderHeroSelected, CustomizationTabSwitched>
 {
     [SerializeField] private Toggle starterToggle;
@@ -59,8 +61,8 @@ public class EquipmentLibraryFilterUI : OnMessage<DeckBuilderHeroSelected, Custo
             rarities.Add(Rarity.Rare);
         if (epicToggle.isOn)
             rarities.Add(Rarity.Epic);
-        deckBuilderState.ShowRarities = rarities.ToArray();
-        deckBuilderState.ShowArchetypes = new string[0];
+        // deckBuilderState.ShowRarities = rarities.ToArray();
+        // deckBuilderState.ShowArchetypes = new string[0];
         var equipmentSlots = new List<EquipmentSlot>();
         if (weaponToggle.isOn)
             equipmentSlots.Add(EquipmentSlot.Weapon);
@@ -69,6 +71,6 @@ public class EquipmentLibraryFilterUI : OnMessage<DeckBuilderHeroSelected, Custo
         if (augmentToggle.isOn)
             equipmentSlots.Add(EquipmentSlot.Augmentation);
         deckBuilderState.ShowEquipmentSlots = equipmentSlots.ToArray();
-        Message.Publish(new DeckBuilderFiltersChanged());
+        Message.Publish(new DeckBuilderStateUpdated());
     }
 }

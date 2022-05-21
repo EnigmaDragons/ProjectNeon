@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFiltersChanged>
+public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderStateUpdated>
 {
     [SerializeField] private PageViewer pageViewer;
     [SerializeField] private CardInLibraryButton cardInLibraryButtonTemplate;
@@ -14,26 +14,23 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderFil
     private Hero _selectedHero;
     
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => GenerateLibrary();
-    protected override void Execute(DeckBuilderFiltersChanged msg) => GenerateLibrary();
+    protected override void Execute(DeckBuilderStateUpdated msg) => GenerateLibrary();
 
     private void GenerateLibrary()
     {
+        Log.Info("Generate Library");
         var heroChanged = state.SelectedHeroesDeck.Hero != _selectedHero;
         _selectedHero = state.SelectedHeroesDeck.Hero;
         var cardsForHero = partyCards.AllCards
             .Where(cardWithCount => 
                 cardWithCount.Key.Archetypes.All(archetype => _selectedHero.Character.Archetypes.Contains(archetype)) 
-                && cardWithCount.Key.Name != _selectedHero.BasicCard.Name
-                && (state.ShowRarities.None() || state.ShowRarities.Contains(cardWithCount.Key.Rarity)) 
-                && (state.ShowArchetypes.None() 
-                    || (cardWithCount.Key.Archetypes.None() && state.ShowArchetypes.Contains("")) 
-                    || cardWithCount.Key.Archetypes.Any(state.ShowArchetypes.Contains)))
+                && cardWithCount.Key.Id != _selectedHero.BasicCard.Id)
             .OrderBy(c => c.Key.Archetypes.None() ? 999 : 0)
             .ThenByDescending(c => (int)c.Key.Rarity)
             .ToList();
-        if ((state.ShowRarities.None() || state.ShowRarities.Contains(Rarity.Basic))
-            && (state.ShowArchetypes.None() || state.ShowArchetypes.Contains(_selectedHero.BasicCard.GetArchetypeKey())))
-                cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(_selectedHero.BasicCard, 0));
+
+        cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(_selectedHero.BasicCard, 0));
+
         var cardUsage = cardsForHero.ToDictionary(c => c.Key,
             c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card.Id == c.Key.Id))));
 

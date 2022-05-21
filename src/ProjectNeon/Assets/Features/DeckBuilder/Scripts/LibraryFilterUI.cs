@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Obsolete("Dead Feature")]
 public class LibraryFilterUI : OnMessage<DeckBuilderHeroSelected, CustomizationTabSwitched>
 {
     [SerializeField] private Toggle showFormulas;
@@ -78,9 +80,9 @@ public class LibraryFilterUI : OnMessage<DeckBuilderHeroSelected, CustomizationT
             rarities.Add(Rarity.Rare);
         if (epicToggle.isOn)
             rarities.Add(Rarity.Epic);
-        deckBuilderState.ShowRarities = rarities.ToArray();
-        deckBuilderState.ShowArchetypes = _selectedArchetypes.ToArray();
+        // deckBuilderState.ShowRarities = rarities.ToArray();
+        // deckBuilderState.ShowArchetypes = _selectedArchetypes.ToArray();
         deckBuilderState.ShowEquipmentSlots = new EquipmentSlot[0];
-        Message.Publish(new DeckBuilderFiltersChanged());
+        Message.Publish(new DeckBuilderStateUpdated());
     }
 }
