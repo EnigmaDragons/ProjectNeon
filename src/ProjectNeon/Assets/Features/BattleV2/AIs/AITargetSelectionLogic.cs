@@ -117,6 +117,8 @@ public static class AITargetSelectionLogic
         RecordNonStackingTags(CardTag.Disable, ctx, targets);
         RecordNonStackingTags(CardTag.Vulnerable, ctx, targets);
         RecordNonStackingTags(CardTag.Taunt, ctx, targets);
+        if (ctx.SelectedCard.Value.Is(CardTag.Vulnerable) && !ctx.SelectedCard.Value.Is(CardTag.NextTurn))
+            ctx.Strategy.TriggerStrategyRegeneration();
         
         return new PlayedCardV2(ctx.Member, targets, card, isTransient: false, false, card.Type.CalculateResources(ctx.Member.State));
     }
