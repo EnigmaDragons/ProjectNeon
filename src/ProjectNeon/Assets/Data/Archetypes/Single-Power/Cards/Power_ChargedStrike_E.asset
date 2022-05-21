@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Power_Strike_E
+  m_Name: Power_ChargedStrike_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 30
@@ -153,7 +153,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 11400000, guid: bb526f4ffd0e9044b9af0ec49bc72b02, type: 2}
-      size: 0.8
+      size: 1.95
       speed: 1
       color:
         UseConstant: 1
@@ -165,7 +165,7 @@ MonoBehaviour:
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 30
+      EffectType: 31
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -186,7 +186,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.8 * Attack
+      Formula: 1.95 * Attack
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
