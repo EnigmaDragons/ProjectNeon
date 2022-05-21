@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 4468786076495583874}
   - component: {fileID: 844992091615041076}
   - component: {fileID: 6306788090977602119}
-  - component: {fileID: 3544140418162844879}
+  - component: {fileID: 9020885624612416713}
   - component: {fileID: 7844006097250137785}
   - component: {fileID: 236303132778056880}
   - component: {fileID: 5185844001985185326}
@@ -586,7 +586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e13e9effb04ce9a11bfd3b537bb934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3544140418162844879
+--- !u!114 &9020885624612416713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -595,13 +595,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1062663383584248952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55aa7ca825bc44cc9d3e7555d4e52243, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b7c078047a6467b87c3c496b13631e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targets:
-  - {fileID: 3656062974215423205}
-  - {fileID: 7455171673568021649}
-  - {fileID: 5008551270900841074}
+  - ClickableControls
+  - BattlePhase
 --- !u!114 &7844006097250137785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,6 +655,8 @@ MonoBehaviour:
     Obj: {fileID: 165632996793638704}
   - Name: TrashRecycleDropArea
     Obj: {fileID: 4792363772940897085}
+  - Name: BattlePhase
+    Obj: {fileID: 7455171673568021649}
 --- !u!114 &1338314674560044714
 MonoBehaviour:
   m_ObjectHideFlags: 0
