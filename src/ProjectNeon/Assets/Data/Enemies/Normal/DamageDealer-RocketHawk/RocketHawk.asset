@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 49
   enemyName: Rocket Hawk
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
   lastBalanceDate: 1/9/22
   isCurrentlyWorking: 1
@@ -41,6 +42,7 @@ MonoBehaviour:
   description: Fast-maneuvering rocket drone that unleashes a barrage of shots and
     missiles. Very shifty and hard to hit.
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
     maxHp: 76
@@ -111,6 +113,7 @@ MonoBehaviour:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 1

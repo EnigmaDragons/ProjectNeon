@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 21
   enemyName: Electro Drone
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
   lastBalanceDate: 2022/01/09
   isCurrentlyWorking: 1
@@ -41,6 +42,7 @@ MonoBehaviour:
   description: Shields and steals your shields until it reaches a mass and then turns
     its shields into a weapon
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
     maxHp: 20
@@ -112,6 +114,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 1
