@@ -21,4 +21,5 @@ public enum TemporalStatType
     PreventResourceGains = 20,
     Vulnerable = 21,
     AntiHeal = 22,
+    PrimaryResource = 23,
 }
