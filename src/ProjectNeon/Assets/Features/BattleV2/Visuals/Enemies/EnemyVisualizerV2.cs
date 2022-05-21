@@ -19,9 +19,9 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     
     private readonly Dictionary<EnemyInstance, ProgressiveTextRevealWorld> _speech = new Dictionary<EnemyInstance, ProgressiveTextRevealWorld>();
     private List<Tuple<int, Member>> _enemyPositions;
-    private bool _enemyVisualsVisible;
-    private bool _techPointsVisible;
-    private bool _enemyStatsVisible;
+    private bool _enemyVisualsVisible = true;
+    private bool _techPointsVisible = true;
+    private bool _enemyStatsVisible = true;
     
     public IEnumerator Spawn()
     {

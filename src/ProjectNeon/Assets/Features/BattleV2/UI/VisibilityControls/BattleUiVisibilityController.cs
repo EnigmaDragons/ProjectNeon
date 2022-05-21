@@ -31,5 +31,7 @@ public class BattleUiVisibilityController : OnMessage<SetBattleUiElementVisibili
             el.SetActive(shouldShow);
         if (msg.UiElementName == BattleUiElement.EnemyInfo || msg.UiElementName == BattleUiElement.EnemyTechPoints || msg.UiElementName == BattleUiElement.PrimaryStat)
             Message.Publish(new SetEnemiesUiVisibility(shouldShow, msg.UiElementName));
+        if (msg.UiElementName == BattleUiElement.PrimaryStat || msg.UiElementName == BattleUiElement.PlayerResources || msg.UiElementName == BattleUiElement.PlayerShields)
+            Message.Publish(new SetHeroesUiVisibility(shouldShow, msg.UiElementName));
     }
 }
