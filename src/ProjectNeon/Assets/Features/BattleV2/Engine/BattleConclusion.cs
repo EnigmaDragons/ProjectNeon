@@ -10,6 +10,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
     [SerializeField] private float secondsBeforeGameOverScreen = 3f;
     [SerializeField] private BattleState state;
+    [SerializeField] private BoolReference useNewTutorialFlow;
 
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
@@ -27,7 +28,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
     
     private void Advance()
     {
-        if (state.IsTutorialCombat)
+        if (state.IsTutorialCombat && !useNewTutorialFlow.Value)
         {
             Log.Info("Returning to academy from tutorial combat");
             this.ExecuteAfterDelay(() => navigator.NavigateToAcademyScene(), secondsBeforeReturnToAdventure);
