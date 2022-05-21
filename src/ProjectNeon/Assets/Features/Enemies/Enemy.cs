@@ -7,6 +7,7 @@ public class Enemy : ScriptableObject
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private string enemyName;
+    [SerializeField] private bool allowedForSocialMedia = false;
     [SerializeField] private bool excludeFromBestiary = false;
     [SerializeField] private string lastBalanceDate = "Never";
     [SerializeField] private bool isCurrentlyWorking = true;
@@ -28,6 +29,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private CharacterAnimationSoundSet animationSounds;
     [SerializeField] public EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
 
+    public bool IsAllowedForSocialMedia => allowedForSocialMedia;
     public bool IsCurrentlyWorking => isCurrentlyWorking;
     public bool IsReadyForPlay => isCurrentlyWorking && Prefab != null && ai != null;
     
@@ -39,6 +41,7 @@ public class Enemy : ScriptableObject
     public bool ExcludeFromBestiary => excludeFromBestiary;
     public int[] Stages => stageDetails.OrderBy(x => x.stage).Select(x => x.stage).ToArray();
     public CharacterAnimations Animations => animations;
+    public CharacterAnimationSoundSet AnimationSounds => animationSounds;
     public GameObject Prefab => prefab;
     public EnemyInstance ForStage(int stage)
     {

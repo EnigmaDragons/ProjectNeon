@@ -7,6 +7,7 @@ using UnityEngine;
 public class BaseHero : ScriptableObject, HeroCharacter
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
+    [SerializeField] private bool allowedForSocialMedia = false;
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
     [SerializeField] private StringReference className;
@@ -67,6 +68,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public Color Tint => tint;
     public CharacterAnimations Animations => animations;
     public CharacterAnimationSoundSet AnimationSounds => animationSounds;
+    public bool IsAllowedForSocialMedia => allowedForSocialMedia;
     
     public IStats Stats => new StatAddends { ResourceTypes = GetResourceTypes() }
         .With(StatType.MaxHP, maxHp)
