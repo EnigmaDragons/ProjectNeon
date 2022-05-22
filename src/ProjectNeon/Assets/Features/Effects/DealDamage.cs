@@ -27,6 +27,8 @@ public sealed class DealDamage : Effect
                     m.State.TakeRawDamage(amount);
                 else
                     m.State.TakeDamage(amount);
+                if (amount < 1)
+                    Message.Publish(new DisplayCharacterWordRequested(m.Id, CharacterReactionType.TookZeroDamage));
             }
         });
     }
