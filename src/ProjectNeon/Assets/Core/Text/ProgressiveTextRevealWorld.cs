@@ -59,6 +59,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
         _manualInterventionDisablesAuto = manualInterventionDisablesAuto;
         _finished = false;
         gameObject.SetActive(true);
+        enabled = true;
         StartCoroutine(BeginReveal());
     }
 
@@ -125,6 +126,9 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
 
     private IEnumerator BeginReveal()
     {
+        if (!gameObject.activeSelf)
+            yield break;
+        
         if (secondsPerCharacter.Value < 0.01f)
         {
             ShowCompletely();
