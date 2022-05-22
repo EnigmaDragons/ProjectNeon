@@ -221,6 +221,9 @@ public class EffectReactWith : Effect
             ctx.Target.ApplyToAllConscious(m =>
             {
                 var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
+                if (!ctx.BattleMembers.ContainsKey(m.MemberId))
+                    return;
+                
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionCard.Value.ActionSequence.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
                 m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount),
@@ -232,6 +235,9 @@ public class EffectReactWith : Effect
             ctx.Target.ApplyToAllConscious(m =>
             {
                 var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
+                if (!ctx.BattleMembers.ContainsKey(m.MemberId))
+                    return;
+
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionEffect.Value.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
                 m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), 

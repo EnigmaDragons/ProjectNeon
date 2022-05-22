@@ -20,6 +20,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         io.ClearCurrentSlot();
         encounterHistory.Clear();
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
+        RunTimer.ConsumeElapsedTime();
         
         if (defaultAdventure.IsV2)
             if (allowPlayerToSelectAdventure)

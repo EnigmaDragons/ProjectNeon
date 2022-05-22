@@ -127,7 +127,7 @@ public class StatAddendData
 [Serializable]
 public class RunStats
 {
-    public int TimeElapsedSeconds;
+    public float TimeElapsedSeconds;
     public int TotalTurnsPlayed;
     public int TotalDamageDealt;
     public int TotalDamageReceived;
@@ -135,6 +135,12 @@ public class RunStats
     public int TotalCardsPlayed;
     public int TotalEnemiesKilled;
     [FormerlySerializedAs("TotalHealingGiven")] public int TotalHealingReceived;
+    
+    public RunStats WithAdditionalElapsedTime(float time)
+    {
+        TimeElapsedSeconds += time;
+        return this;
+    }
 }
 
 public enum GameEquipmentDataType

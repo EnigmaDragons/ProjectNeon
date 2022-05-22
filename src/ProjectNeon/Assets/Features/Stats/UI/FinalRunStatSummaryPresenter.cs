@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +13,9 @@ public class FinalRunStatSummaryPresenter : MonoBehaviour
     private void Render()
     {
         var stats = state.Stats;
-        Render(0, "Run Duration", $"{(stats.TimeElapsedSeconds / 60):F0}:{(stats.TimeElapsedSeconds % 60).ToString().PadLeft(2, '0')}");
+        var timeSpan = TimeSpan.FromSeconds(stats.TimeElapsedSeconds.CeilingInt());
+        var timeText = $"{timeSpan.Hours:D2}:{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
+        Render(0, "Run Duration", timeText);
         Render(1, "Cards Played", stats.TotalCardsPlayed);
         Render(2, "Turns Played", stats.TotalTurnsPlayed);
         Render(3, "Enemies Defeated", stats.TotalEnemiesKilled);

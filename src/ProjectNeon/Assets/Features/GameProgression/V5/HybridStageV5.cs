@@ -44,6 +44,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     public float CombatProgress(int completedSegments) => primarySegments.Take(completedSegments).Count(s => s.ShouldCountTowardsEnemyPowerLevel) / (float)CombatSegmentCount;
     public GameObject Battleground => BattlegroundForSegment(0);
     public int SegmentCount => primarySegments.Length;
+    public int SegmentCountToBoss => primarySegments.TakeWhile(s => s.MapNodeType != MapNodeType.Boss).Count();
     public StageSegment[] Segments => primarySegments;
     public StageSegment[] MaybeSecondarySegments => maybeSecondarySegments;
     public StageSegment[] MaybeStorySegments => maybeStorySegments;

@@ -13,13 +13,20 @@ public static class GameObjectExtensions
     public static void ExecuteAfterDelay(this MonoBehaviour o, Action a, float secondsDelay)
     {
         if (o.gameObject.activeSelf)
-            o.StartCoroutine(ExecuteAfterDelay(a, secondsDelay));
+            o.StartCoroutine(ExecuteAfterDelayIfGameObjectActive(o, a, secondsDelay));
     }
     
     private static IEnumerator ExecuteAfterDelay(Action a, float secondsDelay)
     {
         yield return new WaitForSeconds(secondsDelay);
         a();
+    }
+    
+    private static IEnumerator ExecuteAfterDelayIfGameObjectActive(MonoBehaviour o, Action a, float secondsDelay)
+    {
+        yield return new WaitForSeconds(secondsDelay);
+        if (o.gameObject.activeSelf)
+            a();
     }
 
     public static void DestroyAllChildren(this GameObject o)

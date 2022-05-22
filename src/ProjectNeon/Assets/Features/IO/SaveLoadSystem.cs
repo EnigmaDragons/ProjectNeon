@@ -17,7 +17,6 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private AllMaps maps;
     [SerializeField] private CorpClinicProvider clinics;
     [SerializeField] private AllStaticGlobalEffects globalEffects;
-    [SerializeField] private CurrentRunStats runStats;
 
     public bool HasSavedGame => CurrentGameData.HasActiveGame;
     public void SaveCheckpoint() => SaveCurrentGame();
@@ -31,7 +30,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             s.PartyData = party.GetData();
             s.GameMap = adventureProgress.AdventureProgress.AdventureType.GetMapData(map, mapV5);
-            s.Stats = runStats.GetData();
+            s.Stats = s.Stats.WithAdditionalElapsedTime(RunTimer.ConsumeElapsedTime());
             return s;
         });
     }
@@ -42,8 +41,6 @@ public sealed class SaveLoadSystem : ScriptableObject
         var loadedSuccessfully = true;
         if (!string.IsNullOrWhiteSpace(saveData.RunId))
             AllMetrics.SetRunId(saveData.RunId);
-        if (loadedSuccessfully)
-            runStats.Init(saveData.Stats);
         if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure))
             loadedSuccessfully = InitAdventure(saveData.AdventureProgress);
         if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedSquad))
