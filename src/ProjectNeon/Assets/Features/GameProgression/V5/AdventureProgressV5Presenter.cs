@@ -1,3 +1,4 @@
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,14 +25,14 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged>
     private void RenderMarkers()
     {
         markerParent.DestroyAllChildren();
-        return;
-        //
-        // var heatUps = adventure.RemainingHeatUpEvents;
-        // heatUps.ForEach(h =>
-        // {
-        //     var o = Instantiate(heatUpMarkerPrototype, heatUpMarketParent.transform);
-        //     o.GetComponent<RectTransform>().anchoredPosition = new Vector2(h.Value.ProgressThreshold * heatUpPlacementFactor * _visualFactor, 0);
-        // });
+
+        var progress = adventure.AdventureProgress.ProgressToBoss;
+        var risingActions = adventure.AdventureProgress.RisingActionPoints;
+        risingActions.Where(h => h > progress).ForEach(h =>
+        {
+            var o = Instantiate(eliteMarkerPrototype, markerParent.transform);
+            o.GetComponent<RectTransform>().anchoredPosition = new Vector2(h * markerPlacementFactor * _visualFactor, 0);
+        });
     }
 
     private void SmoothTransitionTo(float amount) => barFill.DOFillAmount(amount * _visualFactor + _offsetAmount, 1);

@@ -22,6 +22,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public override int CurrentStageProgress => currentMap3.Progress;
     public float ProgressToUnlockChapterBoss => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public override float ProgressToBoss => ProgressToUnlockChapterBoss;
+    public override float[] RisingActionPoints => new float[0];
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
     public override string AdventureName => CurrentAdventure.Title;

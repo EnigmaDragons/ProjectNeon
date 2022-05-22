@@ -30,7 +30,11 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public override bool IsFinalBoss => IsFinalStage && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
     public override float ProgressToBoss => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
-    private int CurrentStageLength => CurrentChapter.SegmentCount;
+    private int CurrentStageLength => CurrentChapter.SegmentCount;    
+    public override float[] RisingActionPoints => CurrentChapter.Segments
+        .Select((x, i) => (x, i))
+        .Where(y => y.x.MapNodeType == MapNodeType.Elite).Select(y => (float) y.i / CurrentChapter.SegmentCountToBoss)
+        .ToArray();
     
     public HybridStageV5 CurrentChapter
     {

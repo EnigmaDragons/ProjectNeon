@@ -26,4 +26,5 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract bool IsTrue(string state);
     public abstract bool IsFinalBoss { get; }
     public abstract float ProgressToBoss { get; }
+    public abstract float[] RisingActionPoints { get; }
 }

@@ -28,6 +28,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public override bool IsFinalBoss => IsFinalStageSegment;
     public override float ProgressToBoss => CurrentStageProgress < 1 || CurrentChapter == null || CurrentChapter.SegmentCount < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
+    public override float[] RisingActionPoints => new float[0];
     private int CurrentStageLength => CurrentChapter.SegmentCount;
     
     public StaticStageV4 CurrentChapter
