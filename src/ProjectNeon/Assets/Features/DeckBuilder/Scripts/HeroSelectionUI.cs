@@ -32,7 +32,11 @@ public class HeroSelectionUI : MonoBehaviour
         SelectFirstHero();
     }
 
-    private void SelectFirstHero() => state.SelectedHeroesDeck = state.HeroesDecks.First();
+    private void SelectFirstHero()
+    {
+        if (state.HeroesDecks.Any())
+            state.SelectedHeroesDeck = state.HeroesDecks.First();
+    }
 
     private void ViewHeroDetails() => Message.Publish(new ShowHeroDetailsView(state.SelectedHero));
 }

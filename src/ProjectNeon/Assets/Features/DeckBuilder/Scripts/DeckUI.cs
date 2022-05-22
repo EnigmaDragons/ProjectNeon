@@ -35,6 +35,9 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
     public void GenerateDeck()
     {
         _cardButtons = new List<CardInDeckButton>();
+        if (state.SelectedHeroesDeck == null)
+            return;
+        
         var hero = state.SelectedHeroesDeck.Hero;
         pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.SelectedHeroesDeck.Deck
             .Select(x => x.ToNonBattleCard(hero))
