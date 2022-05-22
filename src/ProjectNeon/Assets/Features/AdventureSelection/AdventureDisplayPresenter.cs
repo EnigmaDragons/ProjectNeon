@@ -18,6 +18,7 @@ public class AdventureDisplayPresenter : MonoBehaviour
     [SerializeField] private GameObject lockVisual;
     [SerializeField] private TextMeshProUGUI lockReasonLabel;
     [SerializeField] private Image hoverGlow;
+    [SerializeField] private GameObject isCompletedView;
     
     public void Init(Adventure adventure, Action onSelect)
     {
@@ -30,6 +31,7 @@ public class AdventureDisplayPresenter : MonoBehaviour
         selectButton.enabled = !adventure.IsLocked;
         lockVisual.SetActive(adventure.IsLocked);
         lockReasonLabel.text = adventure.LockConditionExplanation;
+        isCompletedView.SetActive(!adventure.IsLocked && adventure.IsCompleted);
         if (adventure.IsLocked)
             hoverGlow.color = new Color(0, 0, 0, 0);
     }
