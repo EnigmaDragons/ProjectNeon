@@ -15,7 +15,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
         Message.Publish(new BattleRewardsStarted());
-        if (adventureProgress.HasActiveAdventure && !state.IsTutorialCombat)
+        if (adventureProgress.HasActiveAdventure && (!state.IsTutorialCombat || useNewTutorialFlow.Value))
             if (adventureProgress.AdventureProgress.IsFinalStageSegment || adventureProgress.AdventureProgress.IsFinalBoss)
                 Advance();
             else if (state.IsEliteBattle)
