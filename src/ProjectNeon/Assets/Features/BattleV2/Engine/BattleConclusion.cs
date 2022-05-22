@@ -11,6 +11,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private float secondsBeforeGameOverScreen = 3f;
     [SerializeField] private BattleState state;
     [SerializeField] private BoolReference useNewTutorialFlow;
+    [SerializeField] private SaveLoadSystem saveLoadSystem;
+    [SerializeField] private PartyAdventureState partyState;
 
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
@@ -78,6 +80,13 @@ public class BattleConclusion : OnMessage<BattleFinished>
         Time.timeScale = 1;
         if (msg.Winner == TeamType.Party)
             Advance();
+        else if (state.IsTutorialCombat && useNewTutorialFlow.Value)
+        {
+            Log.Info("Restarting Battle");
+            saveLoadSystem.LoadSavedGame();
+            partyState.Heroes.ForEach(x => x.SetHp(x.Stats.MaxHp()));
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV5(), secondsBeforeGameOverScreen);
+        }
         else
         {
             Log.Info("Navigating to defeat screen");
