@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
+  m_Name: 4Boosters
+  m_EditorClassIdentifier: 
+  isPrimaryCutscene: 0
+  setting: {fileID: 0}
+  skipTrueStates: []
+  skipFalseStates: []
+  segments:
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: enemy1
+      Variable: {fileID: 0}
+    Text: 'Ever hear of a fire sale? Turns out you just got a limited time bounty
+      put on your head. '
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: enemy1
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: Everyone else has failed. What do you have, that they didn't?
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: enemy1
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: Combat drugs! I am able to do twice as many actions and will get stronger
+      the more boosters I take.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: enemy1
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: You look to weak to even hurt me with that puny sword.
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
