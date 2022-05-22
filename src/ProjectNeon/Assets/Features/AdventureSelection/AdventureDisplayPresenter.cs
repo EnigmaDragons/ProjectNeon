@@ -17,6 +17,7 @@ public class AdventureDisplayPresenter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI heroLimitDescriptionLabel;
     [SerializeField] private GameObject lockVisual;
     [SerializeField] private TextMeshProUGUI lockReasonLabel;
+    [SerializeField] private Image hoverGlow;
     
     public void Init(Adventure adventure, Action onSelect)
     {
@@ -29,6 +30,8 @@ public class AdventureDisplayPresenter : MonoBehaviour
         selectButton.enabled = !adventure.IsLocked;
         lockVisual.SetActive(adventure.IsLocked);
         lockReasonLabel.text = adventure.LockConditionExplanation;
+        if (adventure.IsLocked)
+            hoverGlow.color = new Color(0, 0, 0, 0);
     }
 
     private void DisplayHeroPool(Adventure adventure)
