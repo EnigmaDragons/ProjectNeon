@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, ToggleUseCardAsBasic, CardResolutionStarted, ResolutionsFinished>
+public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, CardResolutionStarted, ResolutionsFinished>
 {
     private const string _callerId = "Tutorial2Orchestrator";
     
@@ -36,7 +36,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, ToggleUs
     }
     
     protected override void Execute(StartCardSetupRequested msg) => _hasStarted = true;
-    protected override void Execute(ToggleUseCardAsBasic msg) => _hasSwappedToBasic = true;
+    protected override void Execute(CardResolutionFinished msg) => _hasSwappedToBasic = true;
     protected override void Execute(CardResolutionStarted msg) => Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerResources, true, _callerId));
 
     protected override void Execute(ResolutionsFinished msg)
