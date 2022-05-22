@@ -16,6 +16,12 @@ public class CutsceneCharacter : MonoBehaviour
     public ProgressiveText SpeechBubble => text;
     public bool Matches(string characterName) => _names.Contains(characterName);
 
+    public void ForceEndConversation()
+    {
+        SetTalkingState(false);
+        SpeechBubble.ForceHide();
+    }
+    
     public void SetTalkingState(bool isTalking)
     {
         if (talking != null)
