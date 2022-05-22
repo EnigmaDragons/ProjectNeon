@@ -44,7 +44,8 @@ public class BattleConclusion : OnMessage<BattleFinished>
         {
             if (state.IsTutorialCombat)
             {
-                this.ExecuteAfterDelay(() => Message.Publish(new NavigateToNextTutorialFlow()), secondsBeforeGameOverScreen);
+                Message.Publish(new TutorialWon());
+                this.ExecuteAfterDelay(() => Message.Publish(new NavigateToNextTutorialFlow()), secondsBeforeGameOverScreen);   
             }
             else
             {

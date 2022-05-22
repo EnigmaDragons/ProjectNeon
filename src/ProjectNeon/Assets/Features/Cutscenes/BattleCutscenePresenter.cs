@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -52,8 +53,12 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
         _finishTriggered = true;
         DebugLog("Cutscene Finished");
         Characters.ForEach(x => x.SpeechBubble.ForceHide());
-        disableOnFinished.ForEach(d => d.SetActive(false));
-        enableOnFinished.ForEach(d => d.SetActive(true));
+        try
+        {
+            disableOnFinished.ForEach(d => d.SetActive(false));
+            enableOnFinished.ForEach(d => d.SetActive(true));
+        }
+        catch (Exception ex) {}
         MessageGroup.TerminateAndClear();
         cutscene.FinishStartBattleCutscene();
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));

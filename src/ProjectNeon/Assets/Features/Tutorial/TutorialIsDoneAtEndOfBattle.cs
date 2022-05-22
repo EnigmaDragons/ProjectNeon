@@ -1,6 +1,6 @@
-﻿public class TutorialIsDoneAtEndOfBattle : OnMessage<BattleFinished>
+﻿public class TutorialIsDoneAtEndOfBattle : OnMessage<TutorialWon>
 {
-    protected override void Execute(BattleFinished msg)
+    protected override void Execute(TutorialWon msg)
     {
         CurrentAcademyData.Write(a =>
         {
