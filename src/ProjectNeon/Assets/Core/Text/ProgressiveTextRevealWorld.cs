@@ -33,18 +33,16 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     {
         if (!chatBox.gameObject.activeSelf || isRevealing)
             return;
-        
-        Info($"Text Box - Hide");
-        chatBox.gameObject.SetActive(false);
-    }
 
+        PerformHideUpdates();
+    }
+    
     public override void ForceHide()
     {
         if (!chatBox.gameObject.activeSelf)
             return;
-        
-        Info($"Text Box - Hide");
-        chatBox.gameObject.SetActive(false);
+
+        PerformHideUpdates();
     }
     
     public override void Display(string text, bool shouldAutoProceed, bool manualInterventionDisablesAuto, Action onFinished) 
@@ -97,7 +95,14 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     }
 
     public override void SetOnFullyShown(Action action) => _onFullyShown = action;
-
+    
+    private void PerformHideUpdates()
+    {
+        Info($"Text Box - Hide");
+        chatBox.gameObject.SetActive(false);
+        isRevealing = false;
+    }
+    
     private void Finish()
     {
         if (_finished)
@@ -123,7 +128,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
             panelBg.transform.Rotate(0, 180, 0);
         textBox.transform.localPosition = textBox.transform.localPosition + new Vector3(reversedTextBoxOffset.x, reversedTextBoxOffset.y);
     }
-
+    
     private IEnumerator BeginReveal()
     {
         if (!gameObject.activeSelf)

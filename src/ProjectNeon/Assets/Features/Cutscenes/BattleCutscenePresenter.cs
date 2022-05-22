@@ -52,7 +52,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
         
         _finishTriggered = true;
         DebugLog("Cutscene Finished");
-        Characters.ForEach(x => x.SpeechBubble.ForceHide());
+        Characters.ForEach(x => x.ForceEndConversation());
         try
         {
             disableOnFinished.ForEach(d => d.SetActive(false));
