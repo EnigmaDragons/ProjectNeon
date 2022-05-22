@@ -38,6 +38,7 @@ public class StaticStageV4 : ScriptableObject, IStage
     public float CombatProgress(int completedSegments) => segments.Take(completedSegments).Count(s => s.ShouldCountTowardsEnemyPowerLevel) / (float)CombatSegmentCount;
     public GameObject Battleground => BattlegroundForSegment(0);
     public int SegmentCount => segments.Length;
+    public int SegmentCountToBoss => segments.TakeWhile(s => s.MapNodeType != MapNodeType.Boss).Count();
     public int RepeatPlayStartingSegmentIndex => repeatPlayStartingSegmentIndex;
     public StageSegment[] Segments => segments;
     public GameObject BossBattlefield => bossBattlefield;

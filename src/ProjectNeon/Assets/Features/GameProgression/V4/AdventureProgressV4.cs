@@ -27,8 +27,8 @@ public class AdventureProgressV4 : AdventureProgressBase
     public override float BonusXpLevelFactor => 0.33333f;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public override bool IsFinalBoss => IsFinalStageSegment;
+    public override float ProgressToBoss => CurrentStageProgress < 1 || CurrentChapter == null || CurrentChapter.SegmentCount < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
     private int CurrentStageLength => CurrentChapter.SegmentCount;
-    
     
     public StaticStageV4 CurrentChapter
     {
