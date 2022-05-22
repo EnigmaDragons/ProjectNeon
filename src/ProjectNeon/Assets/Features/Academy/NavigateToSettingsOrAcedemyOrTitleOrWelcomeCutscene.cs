@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : MonoBehaviour
+public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : OnMessage<NavigateToNextTutorialFlow>
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private Cutscene cutscene;
@@ -9,7 +9,9 @@ public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : MonoBehaviour
     [SerializeField] private BoolReference useNewTutorialFlow;
     [SerializeField] private CurrentAdventure adventure;
     [SerializeField] private Adventure tutorialAdventure;
-    
+
+    protected override void Execute(NavigateToNextTutorialFlow msg) => Execute();
+
     public void Execute()
     {
         var d = CurrentAcademyData.Data;
