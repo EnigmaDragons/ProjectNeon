@@ -7,7 +7,7 @@ import Stories from './Stories/StoryMenu.svelte';
 import WelcomeToZantoCorp from './Stories/WelcomeToZantoCorp.svelte';
 import LegacyOfVopvanaTech from './Stories/LegacyOfVopvanaTech.svelte';
 import TheHeist from './Stories/TheHeist.svelte';
-import UnusualDayAstroVerse from './Stories/UnusualDayInTheAstroVerse.svelte';
+import UnusualDayAstroVerse from './Stories/UnusualDayInTheAstroverse.svelte';
 
 const DefaultPage = Home;
 export const pages = [
