@@ -22,14 +22,12 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
         RunTimer.ConsumeElapsedTime();
         
-        if (defaultAdventure.IsV2)
-            if (allowPlayerToSelectAdventure)
-                navigator.NavigateToAdventureSelection();
-            else
-                SelectDefaultAdventureV2();
-        
-        if (defaultAdventure.IsV5)
+        if (allowPlayerToSelectAdventure)
+            navigator.NavigateToAdventureSelection();
+        else if (defaultAdventure.IsV5)
             StartDefaultAdventureV5();
+        else if (defaultAdventure.IsV2)
+            SelectDefaultAdventureV2();
         else if (defaultAdventure.IsV4)
             StartDefaultAdventureV4(true);
     }

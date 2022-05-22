@@ -34,6 +34,8 @@ public class InitializeAdventureSelection : MonoBehaviour
                 adventureProgress.AdventureProgress = adventureProgress4;
             if (adventure.IsV5)
                 adventureProgress.AdventureProgress = adventureProgress5;
+
+            currentAdventure.Adventure = adventure;
             adventureProgress.AdventureProgress.Init(adventure, 0);
             CurrentGameData.Write(s =>
             {
@@ -42,7 +44,13 @@ public class InitializeAdventureSelection : MonoBehaviour
                 s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
                 return s;
             });
-            navigator.NavigateToSquadSelection();
+            
+            if (adventure.IsV2)
+                navigator.NavigateToSquadSelection();
+            if (adventure.IsV4)
+                navigator.NavigateToGameSceneV4();
+            if (adventure.IsV5)
+                Message.Publish(new StartAdventureV5Requested(adventure));
         }
     }
 }
