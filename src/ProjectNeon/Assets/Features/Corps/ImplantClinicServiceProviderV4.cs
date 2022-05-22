@@ -45,11 +45,15 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         StatType.Economy
     };
     private readonly PartyAdventureState _party;
+    private readonly int _numOfImplants;
     private ClinicServiceButtonData[] _generatedOptions;
     private bool[] _available;
 
-    public ImplantClinicServiceProviderV4(PartyAdventureState party)
-        => _party = party;
+    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants)
+    {
+        _party = party;
+        _numOfImplants = numOfImplants;
+    }
     
     public string GetTitle() => "Available Implant Procedures";
 
@@ -60,7 +64,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
             var newGeneratedOptions = new List<ClinicServiceButtonData>();
             for (int i = 0; i < _party.Heroes.Length; i++)
             {
-                for (var ii = 0; ii < 2; ii++)
+                for (var ii = 0; ii < _numOfImplants / _party.Heroes.Length; ii++)
                 {
                     var option = GetOption(_party.Heroes[i], i * 2 + ii);
                     while (newGeneratedOptions.Any(x => x.Description == option.Description))

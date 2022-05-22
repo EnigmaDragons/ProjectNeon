@@ -20,10 +20,12 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     [SerializeField] private int baseNumberOfCardCycles = 2;
     [SerializeField] private float rewardCreditsPerPowerLevel = 1f;
     [SerializeField] private float xpPerPowerLevel = 0.2f;
+    [SerializeField] private float bonusXpFactor = 0.33333f;
     [SerializeField] private BattleRewards normalBattleRewards;
     [SerializeField] private BattleRewards eliteBattleRewards;
     [SerializeField] private int startingClinicVouchers = 1;
     [SerializeField] private int battleRewardClinicVouchers = 1;
+    [SerializeField] private int numOfImplantOptions = 4;
     [SerializeField, TextArea(4, 10)] private string story;
     [SerializeField, TextArea(4, 10)] private string defeatConclusion = "";
     [SerializeField, TextArea(4, 10)] private string victoryConclusion = "";
@@ -47,8 +49,10 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     public int BaseNumberOfCardCycles => baseNumberOfCardCycles;
     public float RewardCreditsPerPowerLevel => rewardCreditsPerPowerLevel;
     public float XpPerPowerLevel => xpPerPowerLevel;
+    public float BonusXpFactor => bonusXpFactor;
     public int StartingClinicVouchers => startingClinicVouchers;
     public int BattleRewardClinicVouchers => battleRewardClinicVouchers;
+    public int NumOfImplantOptions => numOfImplantOptions;
     public bool IsV1 => false;
     public bool IsV2 => !IsV4 && !IsV5 && dynamicStages != null && dynamicStages.Any();
     public bool IsV4 => stages != null && stages.Any();
