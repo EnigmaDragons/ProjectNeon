@@ -15,7 +15,6 @@ public class Tutorial5Orchestrator : OnMessage<BeginTargetSelectionRequested, En
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerShields, false, _callerId));
     }
 
-
     protected override void Execute(BeginTargetSelectionRequested msg)
     {
         if (msg.Card.Name == "Strike" && !_firstTurnFinished)
