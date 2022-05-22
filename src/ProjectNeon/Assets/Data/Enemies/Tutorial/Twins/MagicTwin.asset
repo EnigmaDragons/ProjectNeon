@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
-  m_Name: NNZSecurityGuard
+  m_Name: MagicTwin
   m_EditorClassIdentifier: 
-  id: 57
-  enemyName: NNZ Security
+  id: 58
+  enemyName: Mage Twin
   allowedForSocialMedia: 0
   excludeFromBestiary: 1
-  lastBalanceDate: 05/21/2022
+  lastBalanceDate: 2022/05/21
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: 783e7e0b303bb41449ab6de7be056a1c, type: 2}
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
@@ -27,46 +27,46 @@ MonoBehaviour:
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
   preferredTurnOrder: 99
-  prefab: {fileID: 1266148324363578724, guid: 56a29b95fba54514da6cd565f37d6c78, type: 3}
-  materialType: 0
+  prefab: {fileID: 2912120188382704682, guid: 19abc810fc42f2346bcb072b3c66acc6, type: 3}
+  materialType: 1
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
   deathEffect:
     UseConstant: 1
     ConstantValue: 
     Variable: {fileID: 0}
   battleRole: 1
-  tier: 0
-  unique: 0
+  tier: 2
+  unique: 1
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: 'After the first shot, this enemy '
-  animations: {fileID: 11400000, guid: b6a3876d317273348b9af1d1383ce245, type: 2}
-  animationSounds: {fileID: 11400000, guid: 991c5e6dfa8be8f48a94dac660a52f43, type: 2}
+  resourceType: {fileID: 11400000, guid: 1e927c3fac5358644891283bd51dfe31, type: 2}
+  description: Very resistant to magic damage. Alternates between attacking and charging.
+  animations: {fileID: 11400000, guid: 1dc6b26695ac4b740919009fa699a952, type: 2}
+  animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 62
+    maxHp: 40
     maxShield: 0
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 9
-    magic: 0
+    attack: 0
+    magic: 9
     leadership: 0
     armor: 0
-    resistance: 0
+    resistance: 20
     nonStatCardValueFactor: 0
     startingResourceAmount: 0
-    maxResourceAmount: 1
-    resourceGainPerTurn: 1
+    maxResourceAmount: 3
+    resourceGainPerTurn: 0
     cardsPerTurn: 1
     powerLevel: 0
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
-      resourceScaledValueOverride: 1
+      resourceScaledValueOverride: 0
     calculationResults:
       startingPower: 0
       perCardValue: 0
@@ -77,5 +77,5 @@ MonoBehaviour:
       calculatedPowerLevel: 0
     startOfBattleEffects: []
     Cards:
-    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
-    - {fileID: 11400000, guid: 840f1ae69a943b845a33689480284649, type: 2}
+    - {fileID: 11400000, guid: f1e153c0aee7c0a4aad77f466b4c6205, type: 2}
+    - {fileID: 11400000, guid: 674747a3b46009a43aa67897c52c5b92, type: 2}
