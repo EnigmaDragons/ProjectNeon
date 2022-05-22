@@ -185,16 +185,21 @@ public sealed class MemberState : IStats
 
     public void ResetStatToBase(string statType) => PublishAfter(() =>
     {
-        _counters[statType].Set(0);
+        if (_counters.TryGetValue(statType, out var counter))
+            counter.Set(0);
         if (Enum.TryParse(statType, out TemporalStatType tst))
         {
+            Log.Info($"Resetting Stat Type {tst}");
             _additiveMods.RemoveAll(m => m.Stats[tst] > 0);
             _multiplierMods.RemoveAll(m => m.Stats[tst] > 1);
         }
         if (Enum.TryParse(statType, out StatType t))
         {
+            Log.Info(this[t].ToString());
+            Log.Info($"Resetting Stat Type {t}");
             _additiveMods.RemoveAll(m => m.Stats[t] > 0);
             _multiplierMods.RemoveAll(m => m.Stats[t] > 1);
+            Log.Info(this[t].ToString());
         }
     });
     
@@ -368,7 +373,7 @@ public sealed class MemberState : IStats
         
         Message.Publish(new MemberResourceChanged(MemberId, qty, wasPaidCost));
         if (wasPaidCost)
-            BattleLog.Write($"{Name} spent {qty}");
+            BattleLog.Write($"{Name} spent {qty.Negate()}");
         else if (qty.Amount > 0) 
             BattleLog.Write($"{Name} gained {qty}");
         else if (qty.Amount < 0)
