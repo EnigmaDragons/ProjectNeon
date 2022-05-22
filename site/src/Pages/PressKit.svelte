@@ -1,6 +1,7 @@
 <script>
   import Container from '../Elements/Container.svelte';
   import Screenshots from '../Sections/Screenshots.svelte';
+  import Lazy from '../Elements/Lazy.svelte';
 
   import { presskit } from '../static-content.js';
 </script>
@@ -11,14 +12,16 @@
   <div class="column mt4 px1 press center">
     <h1 class="center">{presskit.name} Press Kit</h1>
 
-    <div class="presskit-section facts">
+    <div class="presskit-section facts mt2">
       <hr>
       <h3>Fact Sheet</h3>
       <hr class="mb2">
+      <p><b>Genre</b>: {presskit.genre}</p>
       <p><b>Developer</b>: {presskit.developer}</p>
       <p><b>Location</b>: {presskit.location}</p>
       <p><b>Release Date</b>: {presskit.releaseDate}</p>
       <p><b>Platforms</b>: {presskit.platforms}</p>
+      <p><b>Price</b>: {presskit.price}</p>
       <p><b>Website</b>: <a href={presskit.website}>{presskit.website}</a></p>
       <p><b>Press Contact</b>: <a href="mailto:{presskit.contact}">{presskit.contact}</a></p>
       <p><b>Presskit (PDF)</b>: <a href={presskit.pdf}>Download</a></p>
@@ -53,12 +56,30 @@
       {/each}
     </div>
 
+    {#if presskit.trailer}
+      <div class="presskit-section trailer">
+        <hr>
+        <h3>Trailer</h3>
+        <hr>
+
+          <div class="center-vh mt2">
+            <Lazy height=360 name="Trailer" disabled={!presskit.lazy}>
+              <iframe width="640" height="360" src={presskit.trailer}
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+              </iframe>
+            </Lazy>
+          </div>
+      </div>
+    {/if}
+
     <div class="screenshots">
       <hr>
       <h3>Screenshots</h3>
       <hr>
 
-      <Screenshots/>
+      <Screenshots lazy={presskit.lazy}/>
     </div>
 
     <div class="presskit-section credits">
@@ -89,10 +110,6 @@
 </section>
 
 <style>
-  section, main {
-    background-image: linear-gradient(rgba(23, 17, 26, 0.01) 0%, rgba(23, 17, 26, 0.9) 100%);
-  }
-
   .two-col {    
     display: flex;
     flex-direction: row;

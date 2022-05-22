@@ -8,11 +8,13 @@ export const gameDetails = ({
     "More than 20 unique random events",
     "Over 30 different enemies"
   ],
-  shortDescription: "Cyberpunk party-based strategic card battle RPG. Assemble a team that fits your playstyle to take on evil megacorporations. Customize your decks and choose your cards wisely to defeat tough foes. Power up your heroes with gear, augments, cards, and level ups.",
+  shortDescription: "Cyberpunk party-based card battler. Assemble a team that fits your playstyle to take on evil MegaCorps. Customize your decks and choose your cards wisely to defeat tough foes. Power up your heroes with cards, implants, and augments. ",
   descriptionParagraphs: [
-    "In 2280, Eurasica is ruled by cutthroat hyper-capitalist megacorporations. Only you can thwart ZantoCorp's attempts to reestablish a dark tyranny. Metroplex Zero brings a new take on roguelike deckbuilding with it's party-based RPG-style combat.",
-    "To resist capitalistic tyranny, you’ll need to power up. Choose your route carefully, different locations give different benefits; upgrade your champion, recruit powerful units, upgrade cards, gain passive bonuses or duplicate any card in your deck.",
-    "With 9 heroes to choose from, each has its own unique and surprising gameplay. Before each battle, scout your enemies and pick the ideal 36 cards to take on your foes. You are never forced to bring any card you don't like into battle. During your run you will be able to acquire new cards, equipment, and augments. You can get special surgical implants, level up your heroes, and manipulate corporations into giving you very nice shopping discounts.",
+    "We fused card games, roguelikes and JRPGS together to make the best single player card battler we could. Assemble your squad, customize your decks, gain powerful cybernetic augments, and take on evil megacorporations!",
+    "People have described Metroplex Zero as a cross between Slay the Spire, Magic: The Gathering, and Shadowrun.",
+    "In 2280, Eurasica is ruled by cutthroat hyper-capitalist megacorporations. To resist capitalistic tyranny, you’ll need to power up. Choose your route carefully, different locations give different benefits; upgrade your champion, recruit powerful units, upgrade cards, gain passive bonuses or duplicate any card in your deck.",
+    "There are a variety of unique heroes you can include in your squad, each with their own unique and surprising gameplay. Every hero has a unique combination of skills. Want to throw grenades and shoot rifles? Protect your team with powered shields? Interfere with enemy plans? Afflict your foes with intense psychological pain? Hide in the shadows and wait for the perfect time to strike? You can do all of that! Put the heroes you want in your squad and synergize their skills for double-infinite variety of playstyles!",
+    "Gain powerful cards for your heroes by winning battles, or purchasing training from the VR skills training shop. Customize your deck to develop your own squad strategy, empowering each hero to do what you want them to do, and preparing them to deal with a variety of challenging foes. You are never forced to bring any card you don't like into battle. Under your strategic direction, each of your heroes will bring the perfect 12 cards into battle. Before each battle, scout your enemies and pick the ideal cards to take them on.",
   ],
 })
 
@@ -32,16 +34,19 @@ const site = ({
   social: {
     steam: 'https://store.steampowered.com/app/1412960/Metroplex_Zero/',
     twitter: 'https://twitter.com/EnigmaDragonsGS',
-    //itchio: 'https://enigmadragons.itch.io',
-    reddit: ''
+    itchio: 'https://enigmadragons.itch.io',
+    reddit: '',
+    discord: 'https://discord.gg/V3yKWAwknC',
   },
   screenshots: [
-    '/images/img1.jpg',
-    '/images/img2.jpg',
-    '/images/img3.jpg',
-    '/images/img4.jpg',
-    '/images/img5.jpg',
-    '/images/img6.jpg'
+    '/images/1.jpg',
+    '/images/2.jpg',
+    '/images/3.jpg',
+    '/images/4.jpg',
+    '/images/5.jpg',
+    '/images/6.jpg',
+    '/images/7.jpg',
+    '/images/8.jpg',
   ],
   gameDetailSections: [
   ]
@@ -50,18 +55,22 @@ const site = ({
 export default site;
 
 export const presskit = ({
+  lazy: true,
   name: site.name,
   developer: site.siteOwner,
   location: 'Phoenix, AZ, USA',
-  releaseDate: 'May 22, 2022',
-  platforms: 'PC',
+  genre: 'Card Battler, Roguelike, Strategy, RPG',
+  releaseDate: 'Q3, 2022',
+  platforms: 'Steam - PC, Steam - Mac',
   website: 'https://www.metroplexzero.com',
   contact: site.email,
   social: site.social,
   pdf: './download/presskit.pdf',
   logo: site.logo,
+  price: "$19.99",
   features: gameDetails.features,
   descriptionParagraphs: gameDetails.descriptionParagraphs,
+  trailer: 'https://www.youtube-nocookie.com/embed/L-PdE4qIUok',
   credits: [
     { name: 'Silas Reinagel', role: 'Executive Producer' },
     { name: 'Silas Reinagel', role: 'Game Design' },
@@ -71,8 +80,10 @@ export const presskit = ({
     { name: 'Noah Reinagel', role: 'Programming' },
     { name: 'Paulo Lobo', role: 'Programming' },
     { name: 'Jean-Alexander Nevskiy', role: 'Sound Design' },
+    { name: 'Tony Vilgotsky', role: 'Sound Design' },
     { name: 'Jean-Alexander Nevskiy', role: 'Composer' },
     { name: 'Ian Booms', role: 'Composer' },
+    { name: 'Ants Aare Alamaa', role: 'Environment Art' },
     { name: 'Yuliia Seliukova', role: 'Character Art' },
     { name: 'Ludmila Sosa', role: 'Character Art' },
     { name: 'Mustafa Contractor', role: 'Quality Testing' },

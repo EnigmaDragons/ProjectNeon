@@ -1,6 +1,7 @@
 <script>
   import { fade } from 'svelte/transition';
 
+  export let disabled = false;
   export let name = '';
   export let height = 0;
   export let offset = 150;
@@ -111,20 +112,26 @@
   }
 </script>
 
-<div use:load>
-  {#if loaded}
-    {#if fadeOption}
-      <div transition:fade={fadeOption}>
+{#if disabled}
+  <slot>Content</slot>
+{/if}
+
+{#if !disabled}
+  <div use:load>
+    {#if loaded}
+      {#if fadeOption}
+        <div transition:fade={fadeOption}>
+          <slot>Lazy load content</slot>
+        </div>
+      {:else}
         <slot>Lazy load content</slot>
-      </div>
-    {:else}
-      <slot>Lazy load content</slot>
+      {/if}
+    {:else if !!placeholder}
+      <div style="height: {height}"/>
+    {:else if typeof placeholder === 'string'}
+      <div>{placeholder}</div>
+    {:else if typeof placeholder === 'function'}
+      <svelte:component this={placeholder} />
     {/if}
-  {:else if !!placeholder}
-    <div style="height: {height}"/>
-  {:else if typeof placeholder === 'string'}
-    <div>{placeholder}</div>
-  {:else if typeof placeholder === 'function'}
-    <svelte:component this={placeholder} />
-  {/if}
-</div>
+  </div>
+{/if}

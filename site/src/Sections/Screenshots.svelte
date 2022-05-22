@@ -3,6 +3,8 @@
   import Lazy from '../Elements/Lazy.svelte';
   import project from '../static-content';
 
+  export let lazy = true;
+
   const screenshots = project.screenshots;
 
   const leftImgs = screenshots.filter((_,i) => i % 2 === 0);
@@ -11,7 +13,7 @@
   const skeletonHeight = leftImgs.length * 300;
 </script>
 
-<Lazy height={skeletonHeight}>
+<Lazy height={skeletonHeight} disabled={!lazy}>
   <TwoColumnLayout>
     <div slot="first">
       {#each leftImgs as image}
