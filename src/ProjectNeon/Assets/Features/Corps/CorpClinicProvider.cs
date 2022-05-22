@@ -7,6 +7,7 @@ public class CorpClinicProvider : ScriptableObject
     [SerializeField] private StaticCorp[] healthPercentCorp;
     [SerializeField] private StaticCorp[] credDependentCorp;
     [SerializeField] private PartyAdventureState party;
+    [SerializeField] private CurrentAdventure adventure;
     [SerializeField] private StaticCorp[] procedureCorps;
     [SerializeField] private StaticCorp[] blessingCorps;
     [SerializeField] private BlessingData[] blessings;
@@ -26,11 +27,11 @@ public class CorpClinicProvider : ScriptableObject
     public ClinicServiceProvider GetServices(Corp corp)
     {
         if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V5 && procedureCorps.Contains(corp))
-            return new ImplantClinicServiceProviderV4(party);
+            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions);
         if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V5 && blessingCorps.Contains(corp))
             return new BlessingClinicServiceProviderV4(party, blessingsV4);
         if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4 && procedureCorps.Contains(corp))
-            return new ImplantClinicServiceProviderV4(party);
+            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions);
         if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4 && blessingCorps.Contains(corp))
             return new BlessingClinicServiceProviderV4(party, blessingsV4);
         if (procedureCorps.Contains(corp))

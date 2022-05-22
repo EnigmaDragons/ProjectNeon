@@ -8,6 +8,7 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
     [SerializeField] private EquipmentPool allEquipmentPool;
     [SerializeField] private Rarity rarity;
     [SerializeField] private EquipmentPresenter customPresenterPrototype;
+    [SerializeField] private StaticEquipment[] choiceOverride;
 
     public override string ChoiceDescription => "Choose an Augment";
 
@@ -32,6 +33,9 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
             .Concat(additionalAugments)
             .DistinctBy(a => a.Description)
             .Take(3);
+
+        if (choiceOverride.Length == 3)
+            finalSet = choiceOverride;
         
         // Create Options
         var options = finalSet

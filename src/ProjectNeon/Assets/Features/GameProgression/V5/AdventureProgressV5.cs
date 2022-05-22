@@ -26,7 +26,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V5;
     public override int RngSeed => rngSeed;
     public override bool UsesRewardXp => false;
-    public override float BonusXpLevelFactor => 0.33333f;
+    public override float BonusXpLevelFactor => currentAdventure.Adventure.BonusXpFactor;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public override bool IsFinalBoss => IsFinalStage && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
     public override float ProgressToBoss => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
