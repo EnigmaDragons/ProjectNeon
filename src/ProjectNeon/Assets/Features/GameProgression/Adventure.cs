@@ -11,6 +11,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     [SerializeField] private StaticStageV4[] stages;
     [SerializeField] private HybridStageV5[] v5Stages;
     [SerializeField] private string adventureTitle;
+    [SerializeField] private string mapAdventureTitle;
     [SerializeField] private Sprite adventureImage;
     [SerializeField] private int partySize;
     [SerializeField] private string allowedHeroesDescription = "";
@@ -33,6 +34,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
 
     public int Id => id;
     public string Title => adventureTitle;
+    public string MapTitle => string.IsNullOrWhiteSpace(mapAdventureTitle) ? adventureTitle : mapAdventureTitle;
     public string Story => story;
 
     public string DefeatConclusion => defeatConclusion;
