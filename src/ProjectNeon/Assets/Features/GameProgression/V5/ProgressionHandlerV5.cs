@@ -8,7 +8,7 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
     private void Start()
     {
         Go();
-    } 
+    }
 
     protected override void Execute(NodeFinished msg)
     {
