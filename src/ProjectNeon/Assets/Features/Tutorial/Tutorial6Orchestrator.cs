@@ -22,7 +22,7 @@ public class Tutorial6Orchestrator : OnMessage<CardResolutionStarted, BeginTarge
     protected override void Execute(BeginTargetSelectionRequested msg)
     {
         if (msg.Card.Name == "Strike" && !_firstTurnFinished)
-            Message.Publish(new ShowHeroBattleThought(4, "Give me your best shot! You can't target anyone else"));
+            Message.Publish(new ShowHeroBattleThought(5, "Give me your best shot! You can't target anyone else"));
             
     }
 
