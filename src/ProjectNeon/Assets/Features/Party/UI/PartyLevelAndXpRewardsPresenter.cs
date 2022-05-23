@@ -17,8 +17,9 @@ public class PartyLevelAndXpRewardsPresenter : MonoBehaviour
         heroParent.DestroyAllChildren();
         _presenters = new List<HeroLevelAndXpPresenter>();
         _presenters = state.Party.Heroes.Select(h => Instantiate(heroPrototype, heroParent.transform).Initialized(h)).ToList();
-        partyXpGainLabel.text = $"Heroes Gained {state.RewardXp} Xp";
-        this.ExecuteAfterDelay(() => ShowXpPreview(state.RewardXp), 2f);
+        var totalXp = state.PredictedTotalRewardXp;
+        partyXpGainLabel.text = $"Heroes Gained {totalXp} Xp";
+        this.ExecuteAfterDelay(() => ShowXpPreview(totalXp), 2f);
     }
 
     private void ShowXpPreview(int xp)
