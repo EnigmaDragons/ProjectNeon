@@ -88,6 +88,8 @@ namespace ChangeLogGenerator
 
         private static Dictionary<string, string> _containsTextThenCategory = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase)
         {
+            { "Bug:", "Bug Fixes" },
+            { "Bug Fix:", "Bug Fixes" },
             { "Fixed", "Bug Fixes" },
             { "UI:", "UI Improvements" },
             { "Battle Log:", "UI Improvements"},
@@ -117,8 +119,6 @@ namespace ChangeLogGenerator
             { "New Hero:", "New Content" },
             { "New Content:", "New Content" },
             { "New Story Event:", "New Content" },
-            { "Bug:", "Bug Fixes" },
-            { "Bug Fix:", "Bug Fixes" },
             { "Effect:", "New Features" },
             { "Rebalance:", "Balance Changes" },
             { "Rebalanced:", "Balance Changes" },
@@ -142,6 +142,7 @@ namespace ChangeLogGenerator
             { "Enemy Rework", "Balance Changes" },
             { "Enemy Tweak", "Balance Changes" },
             { "Enemy Update", "Balance Changes" },
+            { "SFX", "Art Improvements" },
         };
 
         private static Tuple<string, string> GetCategorizedLine(string rawLine)
