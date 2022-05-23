@@ -29,6 +29,6 @@ public class Tutorial5Orchestrator : OnMessage<BeginTargetSelectionRequested, En
         if (msg.CardName == "Hide" && !_firstTurnFinished)
             Message.Publish(new ShowHeroBattleThought(4, "You have ruined my assassination! Where are you?!"));
         if (msg.CardName == "Hidden Blade" && battleState.Members[4].CurrentHp() == battleState.Members[4].MaxHp())
-            Message.Publish(new ShowHeroBattleThought(4, "You can't deal damage with that if you are not in stealth, foolish opponent")); 
+            Message.Publish(new ShowHeroBattleThought(4, "You can't deal damage with that if you are not in stealth. Foolish foe!")); 
     }
 }
