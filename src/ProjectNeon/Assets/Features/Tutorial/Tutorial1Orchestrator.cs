@@ -41,7 +41,7 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
                 if (!_hasClickedCard)
                 {
                     _timeTilPrompt = _notClickingCardPromptDelay;
-                    Message.Publish(new ShowHeroBattleThought(4, "I knew you would be easy to take, you can't even figure out you need to click and hold your card"));
+                    Message.Publish(new ShowHeroBattleThought(4, "I knew you would be easy to take. You can't even figure out that you need to click and hold your card"));
                 }
                 else if (!_hasDraggedCard)
                 {
