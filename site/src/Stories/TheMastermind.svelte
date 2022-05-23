@@ -376,4 +376,4 @@ She tried swindling me and pinning the blame on someone else. I couldn't let her
 away with that. My job here is done. For now.`
 </script>
 
-<StoryPage source={source} title={'Legacy of Vopvana Tech'} />
+<StoryPage source={source} title={'The Mastermind'} />
