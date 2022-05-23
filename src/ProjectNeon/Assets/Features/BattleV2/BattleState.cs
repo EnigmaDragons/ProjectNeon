@@ -58,6 +58,7 @@ public class BattleState : ScriptableObject
     public BattleRewardState RewardState => rewards;
     public int RewardCredits => rewards.RewardCredits;
     public int RewardXp => rewards.RewardXp;
+    public int PredictedTotalRewardXp => rewards.RewardXp + (_heroesById.First().Value.Levels.XpRequiredForNextLevel * adventureProgress.AdventureProgress.BonusXpLevelFactor).CeilingInt();
     public int RewardClinicVouchers => adventure.Adventure.BattleRewardClinicVouchers;
     public CardTypeData[] RewardCards => rewards.RewardCards;
     public Equipment[] RewardEquipments => rewards.RewardEquipments;

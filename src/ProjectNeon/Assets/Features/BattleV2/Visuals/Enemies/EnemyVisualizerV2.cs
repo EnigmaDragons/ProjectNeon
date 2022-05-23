@@ -109,6 +109,12 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             Log.Info($"{member.Name} is missing a {nameof(StealthTransparency)}");
         else
             stealth.Init(member);
+        
+        var stealth2 = obj.GetComponentInChildren<CharacterCreatorStealthTransparency>();
+        if (stealth2 == null)
+            Log.Info($"{member.Name} is missing a {nameof(CharacterCreatorStealthTransparency)}");
+        else
+            stealth2.Init(member);
 
         var shield = obj.GetComponentInChildren<ShieldVisual>();
         if (shield == null)
