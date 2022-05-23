@@ -9,6 +9,7 @@ public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : OnMessage<Nav
     [SerializeField] private BoolReference useNewTutorialFlow;
     [SerializeField] private CurrentAdventure adventure;
     [SerializeField] private Adventure tutorialAdventure;
+    [SerializeField] private SaveLoadSystem io;
 
     protected override void Execute(NavigateToNextTutorialFlow msg) => Execute();
 
@@ -19,6 +20,16 @@ public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : OnMessage<Nav
             navigator.NavigateToSettingsScene();
         else if (!d.IsLicensedBenefactor && !useNewTutorialFlow.Value)
             Message.Publish(new StartCutsceneRequested(cutscene, Maybe<Action>.Present(() => navigator.NavigateToAcademyScene())));
+        else if (!d.IsLicensedBenefactor 
+             && useNewTutorialFlow.Value 
+             && CurrentGameData.HasActiveGame 
+             && adventure.Adventure != null 
+             && adventure.Adventure.Id == tutorialAdventure.Id && io.HasSavedGame)
+        {
+            io.LoadSavedGame();
+            Message.Publish(new GameLoaded());
+            navigator.NavigateToGameSceneV5();
+        }
         else if (!d.IsLicensedBenefactor && useNewTutorialFlow.Value)
             Message.Publish(new StartAdventureV5Requested(tutorialAdventure));
         else if (!d.HasCompletedWelcomeToMetroplexCutscene)

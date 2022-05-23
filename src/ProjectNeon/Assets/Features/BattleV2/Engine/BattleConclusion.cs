@@ -47,6 +47,10 @@ public class BattleConclusion : OnMessage<BattleFinished>
             if (state.IsTutorialCombat)
             {
                 Message.Publish(new TutorialWon());
+                adventureProgress.AdventureProgress.Advance();
+                Message.Publish(new AutoSaveRequested());
+                conclusion.Set(true, adventure.Adventure.VictoryConclusion, CurrentGameData.Data.Stats);
+                CurrentGameData.Clear();
                 this.ExecuteAfterDelay(() => Message.Publish(new NavigateToNextTutorialFlow()), secondsBeforeGameOverScreen);   
             }
             else
