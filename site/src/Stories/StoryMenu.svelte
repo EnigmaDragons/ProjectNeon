@@ -9,6 +9,7 @@
     <a href="/index.html?page=story-vopvana">2. Legacy of Vopvana Tech</a>
     <a href="/index.html?page=story-the-heist">3. The Heist</a>
     <a href="/index.html?page=story-unusual-day-astroverse">4. Unusual Day in the Astroverse</a>
+    <a href="/index.html?page=story-the-mastermind">5. The Mastermind</a>
   </div>
 </Container>
 
