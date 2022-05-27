@@ -21,7 +21,7 @@ public class CharacterAnimationTester : MonoBehaviour
     public void Play()
     {
         SetupCharacter();
-        
+
         var source = useHero ? _hero.AsMemberForLibrary() : enemy.ForStage(0).AsMember(_memberId);
         Message.Publish(new CharacterAnimationRequested2(_memberId, animationType)
         {
@@ -99,11 +99,13 @@ public class CharacterAnimationTester : MonoBehaviour
         _hero = null;
         heroLocation.DestroyAllChildren();
         enemyLocation.DestroyAllChildren();
-        notEnabledForSocialMedia.SetActive(false);
+        if (notEnabledForSocialMedia != null)
+            notEnabledForSocialMedia.SetActive(false);
     }
 
     private void ShowNotAllowed()
     {
-        notEnabledForSocialMedia.SetActive(true);
+        if (notEnabledForSocialMedia != null)
+            notEnabledForSocialMedia.SetActive(true);
     }
 }
