@@ -19,6 +19,13 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
     public List<EncounterWeightsV4> _weightedComps => weightedComps;
     public List<EncounterRoleChanceV4> _chancesBasedOnEnemyNumber => chancesBasedOnEnemyNumber;
     
+    private EnemyInstance[] _damageDealers;
+    private EnemyInstance[] _protectors;
+    private EnemyInstance[] _specialists;
+    private EnemyInstance[] _eliteDamageDealers;
+    private EnemyInstance[] _eliteProtectors;
+    private EnemyInstance[] _eliteSpecialists;
+    
     public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber)
     {
         var comp = GetComposition(difficulty);
@@ -28,18 +35,28 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
 
     private List<WeightedRole> GetComposition(int difficulty)
     {
-        float minDamageDealer = GetPossible(BattleRole.DamageDealer, false).Min(x => x.PowerLevel) * (1f - flexibility);
-        float minProtector = GetPossible(BattleRole.Survivability, false).Min(x => x.PowerLevel) * (1f - flexibility);
-        float minSpecialist = GetPossible(BattleRole.Specialist, false).Min(x => x.PowerLevel) * (1f - flexibility);
-        float maxDamageDealer = GetPossible(BattleRole.DamageDealer, false).Max(x => x.PowerLevel) * (1f + flexibility);
-        float maxProtector = GetPossible(BattleRole.Survivability, false).Max(x => x.PowerLevel) * (1f + flexibility);
-        float maxSpecialist = GetPossible(BattleRole.Specialist, false).Max(x => x.PowerLevel) * (1f + flexibility);
-        float minEliteDamageDealer = allowElites ? GetPossible(BattleRole.DamageDealer, true).Min(x => x.PowerLevel) * (1f - flexibility) : 0;
-        float minEliteProtector = allowElites ? GetPossible(BattleRole.Survivability, true).Min(x => x.PowerLevel) * (1f - flexibility) : 0;
-        float minEliteSpecialist = allowElites ? GetPossible(BattleRole.Specialist, true).Min(x => x.PowerLevel) * (1f - flexibility) : 0;
-        float maxEliteDamageDealer = allowElites ? GetPossible(BattleRole.DamageDealer, true).Max(x => x.PowerLevel) * (1f + flexibility) : 0;
-        float maxEliteProtector = allowElites ? GetPossible(BattleRole.Survivability, true).Max(x => x.PowerLevel) * (1f + flexibility) : 0;
-        float maxEliteSpecialist = allowElites ? GetPossible(BattleRole.Specialist, true).Max(x => x.PowerLevel) * (1f + flexibility) : 0;
+        if (_damageDealers == null || !_damageDealers.Any())
+        {
+            _damageDealers = GetPossible(BattleRole.DamageDealer, false);
+            _protectors = GetPossible(BattleRole.Survivability, false);
+            _specialists = GetPossible(BattleRole.Specialist, false);
+            _eliteDamageDealers = GetPossible(BattleRole.DamageDealer, true);
+            _eliteProtectors = GetPossible(BattleRole.Survivability, true);
+            _eliteSpecialists = GetPossible(BattleRole.Specialist, true);
+        }
+        
+        float minDamageDealer = _damageDealers.Any() ? _damageDealers.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float minProtector = _protectors.Any() ? _protectors.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float minSpecialist = _specialists.Any() ? _specialists.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float maxDamageDealer = _damageDealers.Any() ? _damageDealers.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float maxProtector = _protectors.Any() ? _protectors.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float maxSpecialist = _specialists.Any() ? _specialists.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float minEliteDamageDealer = allowElites && _eliteDamageDealers.Any() ? _eliteDamageDealers.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float minEliteProtector = allowElites && _eliteProtectors.Any() ? _eliteProtectors.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float minEliteSpecialist = allowElites && _eliteSpecialists.Any() ? _eliteSpecialists.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float maxEliteDamageDealer = allowElites && _eliteDamageDealers.Any() ? _eliteDamageDealers.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float maxEliteProtector = allowElites && _eliteProtectors.Any() ? _eliteProtectors.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float maxEliteSpecialist = allowElites && _eliteSpecialists.Any() ? _eliteSpecialists.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
 
         var validWeightedComps = GetValidWeightedComps(difficulty,
             Math.Min(minDamageDealer, Math.Min(minProtector, minSpecialist)),
@@ -98,10 +115,11 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
     private EncounterWeightsV4[] GetValidWeightedComps(int difficulty, float min, float max, float minElite, float maxElite)
         => allowElites 
             ? weightedComps.Where(weights 
-                => (float)weights.Weights.Min() / (float)weights.Weights.Sum() * (float)difficulty > min 
-                && (float)weights.Weights.Where(x => x != weights.Weights.Max()).Max() / (float)weights.Weights.Sum() * (float)difficulty < max
-                && (float)weights.Weights.Max() / (float)weights.Weights.Sum() * (float)difficulty > minElite
-                && (float)weights.Weights.Max() / (float)weights.Weights.Sum() * (float)difficulty < maxElite).ToArray()
+                => weights.Weights.Length == 1 
+                || (   (float)weights.Weights.Min() / (float)weights.Weights.Sum() * (float)difficulty > min 
+                    && (float)weights.Weights.Where(x => x != weights.Weights.Max()).Max() / (float)weights.Weights.Sum() * (float)difficulty < max
+                    && (float)weights.Weights.Max() / (float)weights.Weights.Sum() * (float)difficulty > minElite
+                    && (float)weights.Weights.Max() / (float)weights.Weights.Sum() * (float)difficulty < maxElite)).ToArray()
             : weightedComps.Where(x 
                 => (float)x.Weights.Min() / (float)x.Weights.Sum() * (float)difficulty > min 
                 && (float)x.Weights.Max() / (float)x.Weights.Sum() * (float)difficulty < max).ToArray();
