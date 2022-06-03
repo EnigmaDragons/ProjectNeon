@@ -26,14 +26,29 @@ const queryUniqueInstalls = (db, version) => {
   return db.queryAsync(`SELECT DISTINCT InstallId FROM ${tblName} WHERE GameVersion LIKE '%${version}%'`);
 }
 
+const queryUniqueRuns = (db, version) => {
+  return db.queryAsync(`SELECT DISTINCT RunId FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND RunId != 'Not Initialized'`);
+}
+
 const queryGamesWonOrLost = (db, version) => {
   return db.queryAsync(`SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType IN ('gameWon', 'gameLost')`);
+}
+
+const queryHeroesPicked = (db, version) => {
+  return db.queryAsyncEventData(`SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType = '${eventTypes.heroAdded}'`);
+}
+
+const queryCardsPicked = (db, version) => {  
+  return db.queryAsyncEventData(`SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType = '${eventTypes.rewardCardSelected}'`);
 }
 
 const createByVersion = (db, version) => ({
   queryEvents: (eventType, onEvents) => queryEvents(db, version, eventType, onEvents),
   queryUniqueInstalls: () => queryUniqueInstalls(db, version),
+  queryUniqueRuns: () => queryUniqueRuns(db, version),
   queryGamesWonOrLost: () => queryGamesWonOrLost(db, version),
+  queryHeroesPicked: () => queryHeroesPicked(db, version),
+  queryCardsPicked: () => queryCardsPicked(db, version),
 });
 
 module.exports = ({ eventTypes, queryEventTypes, queryEvents, queryUniqueInstalls, createByVersion });

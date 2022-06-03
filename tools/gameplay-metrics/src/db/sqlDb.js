@@ -19,10 +19,20 @@ const queryAsync = async (cfg, queryStr) => {
   return result;
 }
 
+const queryAsyncEventData = async (cfg, queryStr) => {
+  const conn = await sql.connect(cfg);
+  const request = new sql.Request();    
+  const rs = await request.query(queryStr);
+  const result = rs.recordset.map(r => JSON.parse(r.EventData));
+  await conn.close();
+  return result;
+}
+
 const create = (cfg) => {
   return ({
     query: (queryStr, onRecordset) => query(cfg, queryStr, onRecordset),
-    queryAsync: (queryStr) => queryAsync(cfg, queryStr)
+    queryAsync: (queryStr) => queryAsync(cfg, queryStr),
+    queryAsyncEventData: (queryStr) => queryAsyncEventData(cfg, queryStr),
   })
 }
 
