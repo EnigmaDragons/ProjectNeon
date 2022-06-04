@@ -46,18 +46,19 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
             for (int i = 0; i < 3; i++)
             {
                 var index = i;
+                var d = blessingChoices[i].blessingData;
                 _generatedOptions[i] = new ClinicServiceButtonData(
-                    blessingChoices[i].blessingData.Name,
-                    blessingChoices[i].blessingData.IsSingleTarget
-                        ? string.Format(blessingChoices[i].blessingData.Description,
+                    d.Name,
+                    d.IsSingleTarget
+                        ? string.Format(d.Description,
                             blessingChoices[i].blessing.Targets[0].DisplayName())
-                        : blessingChoices[i].blessingData.Description,
+                        : d.Description,
                     1,
                     () =>
                     {
                         _party.AddBlessing(blessingChoices[index].blessing);
                         _available[index] = false;
-                    });
+                    }, d.Effect.AsArray());
             }
         }
         for (var i = 0; i < _generatedOptions.Length; i++)

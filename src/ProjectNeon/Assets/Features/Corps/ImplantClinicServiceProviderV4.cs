@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
 {
@@ -96,7 +96,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
             {
                 AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount);
                 _available[index] = false;
-            });
+            }, Array.Empty<EffectData>());
     }
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)

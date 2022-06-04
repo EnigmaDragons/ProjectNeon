@@ -9,9 +9,13 @@ public class ClinicServiceButtonV5 : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private Image currencyIcon;
     [SerializeField] private Button button;
+    [SerializeField] private TwoSidedRulesDescriptionPresenter rules;
 
+    private ClinicServiceButtonData _data;
+    
     public void Init(ClinicServiceButtonData data, PartyAdventureState party)
     {
+        _data = data;
         title.text = data.Name;
         description.text = data.Description;
         cost.text = data.Cost.ToString();
@@ -29,5 +33,17 @@ public class ClinicServiceButtonV5 : MonoBehaviour
             cost.gameObject.SetActive(false);
             currencyIcon.gameObject.SetActive(false);
         }
+    }
+
+    public void ShowRules()
+    {
+        if (rules != null)
+            rules.Show(_data.RulesContext);
+    }
+
+    public void HideRules()
+    {
+        if (rules != null)
+            rules.Hide();
     }
 }

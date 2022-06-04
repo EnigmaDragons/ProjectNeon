@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -67,7 +68,8 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
             $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}",
             $"Lose {lossAmount} {lossStat.ToString().WithSpaceBetweenWords()} to gain {gainAmount} {gainStat.ToString().WithSpaceBetweenWords()} on {hero.DisplayName}",
             CalculateCost(hero, lossStat, lossAmount, gainStat, gainAmount),
-            () => AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount));
+            () => AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount),
+            Array.Empty<EffectData>());
     }
 
     public int CalculateCost(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount) 
