@@ -10,26 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Enemy_PrepareAssassination
+  m_Name: Fundamental_Shockwave
   m_EditorClassIdentifier: 
-  id: 574
+  id: 577
   customName: 
-  art: {fileID: 21300000, guid: 22f906a870f816c43bfae778764b24b5, type: 3}
-  description: "Enter <b>Stealth</b> \n\nGives <b>90 Attack</b> until the end of
-    next turn"
+  art: {fileID: 0}
+  description: Deal {E[0]}
   typeDescription: {fileID: 0}
-  tags: 04000000030000000c000000
+  tags: 04000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 1
-    resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 1
   actionSequences:
-  - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: c922895a3ad55b041ae58d381c85eca0, type: 2}
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: 21604c28be844e94e8b4451c46c89744, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -37,7 +36,7 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  - {fileID: 11400000, guid: 76794ee97ef5dc24d8a6ea1153280d53, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
