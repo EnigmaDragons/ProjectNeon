@@ -17,11 +17,8 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     
     protected override void Execute(StartNewGame msg)
     {
-        io.ClearCurrentSlot();
-        encounterHistory.Clear();
-        AllMetrics.SetRunId(CurrentGameData.Data.RunId);
-        RunTimer.ConsumeElapsedTime();
-        
+        Init();
+
         if (allowPlayerToSelectAdventure)
             navigator.NavigateToAdventureSelection();
         else if (defaultAdventure.IsV5)
@@ -31,7 +28,15 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         else if (defaultAdventure.IsV4)
             StartDefaultAdventureV4(true);
     }
-    
+
+    private void Init()
+    {
+        io.ClearCurrentSlot();
+        encounterHistory.Clear();
+        AllMetrics.SetRunId(CurrentGameData.Data.RunId);
+        RunTimer.ConsumeElapsedTime();
+    }
+
     private void SelectDefaultAdventureV2()
     {
         var adventure = defaultAdventure;
@@ -78,7 +83,11 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
 
     private void StartDefaultAdventureV5() => StartAdventureV5(defaultAdventure);
     
-    protected override void Execute(StartAdventureV5Requested msg) => StartAdventureV5(msg.Adventure);
+    protected override void Execute(StartAdventureV5Requested msg)
+    {
+        Init();
+        StartAdventureV5(msg.Adventure);
+    }
 
     private void StartAdventureV5(Adventure adventure)
     {
