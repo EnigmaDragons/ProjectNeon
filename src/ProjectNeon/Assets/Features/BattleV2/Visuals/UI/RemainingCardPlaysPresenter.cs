@@ -24,7 +24,7 @@ public class RemainingCardPlaysPresenter : OnMessage<BattleStateChanged>
     {
         var newValue = s.NumberOfCardPlaysRemainingThisTurn;
         
-        counter.text = newValue.ToString();
+        counter.text = $"{newValue.ToString()}/{s.PlayerState.CurrentStats.CardPlays().ToString()}";
         if (shouldAnimateChange &&(_last != newValue))
         {
             DOTween.Kill(gameObject);
