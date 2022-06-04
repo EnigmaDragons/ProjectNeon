@@ -63,7 +63,7 @@ public sealed class MemberState : IStats
 
         baseStats.ResourceTypes?.ForEach(r =>
             _counters[r.Name] = new BattleCounter(r.Name, Math.Max(0, r.StartingAmount), () => r.MaxAmount));
-        if (baseStats.ResourceTypes.Length > 0)
+        if ((baseStats.ResourceTypes?.Length ?? 0) > 0)
             _counters["PrimaryResource"] = _counters[baseStats.ResourceTypes[0].Name];
         
         _counters["None"] = new BattleCounter("None", 0, () => 0);
@@ -81,8 +81,8 @@ public sealed class MemberState : IStats
     
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
-    public int this[IResourceType resourceType] => _counters.TryGetValue(resourceType.Name, out var r) ? r.Amount : 0;
-    public int ResourceAmount(string resourceType) => _counters[resourceType].Amount;
+    public int this[IResourceType resourceType] => ResourceAmount(resourceType.Name);
+    public int ResourceAmount(string resourceType) => _counters.TryGetValue(resourceType, out var r) ? r.Amount : 0;
     public float this[StatType statType] => statType switch
     {
         StatType.Damagability => CurrentStats.Damagability() + (IsVulnerable() ? 0.33f : 0),
