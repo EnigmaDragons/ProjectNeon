@@ -473,13 +473,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
     
     #region Mouse Controls
+
+    private bool _buttonAlreadyDown = false;
     public void MiddleClick() => _onMiddleMouse();
     
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.dragging)
+        if (eventData.dragging || _buttonAlreadyDown)
             return;
-        
+
+        _buttonAlreadyDown = true;
         DebugLog($"UI - Pointer Down");
         if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
         {
@@ -498,6 +501,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnPointerUp(PointerEventData eventData)
     {
         Cursor.visible = true;
+        _buttonAlreadyDown = false;
         DebugLog("UI - Pointer Up");
         if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
         {

@@ -3,12 +3,11 @@ const createConnection = require('./sqlDb.js');
 const mp0Metrics = require('./mp0metrics.js');
 const kpis = require('./mp0kpis');
 const fs = require('fs');
-const { fileURLToPath } = require('url');
 
 const sqlConfig = JSON.parse(cfg.SQL_CONFIG);
 const db = createConnection(sqlConfig);
 const eventTypes = mp0Metrics.eventTypes;
-const version = '0.0.42';
+const version = '%';
 const metrics = mp0Metrics.createByVersion(db, version);
 
 const report = ({ version });

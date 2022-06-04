@@ -116,11 +116,22 @@ public static class MemberExtensions
 
     public static bool CanAfford(this Member m, ResourceCalculations calc, PartyAdventureState partyState)
     {
-        if (calc.XAmount == 0 && calc.ResourcesPaid == 0)
-            return true;
-        var amountAvailable = calc.ResourcePaidType.Name == "Creds" ? partyState.Credits : m.State.ResourceAmount(calc.ResourcePaidType.Name);
-        var remaining = amountAvailable - calc.ResourcesPaid;
-        return remaining >= 0;
+        try
+        {
+            if (calc.XAmount == 0 && calc.ResourcesPaid == 0)
+                return true;
+
+            var amountAvailable = calc.ResourcePaidType.Name == "Creds"
+                ? partyState.Credits
+                : m.State[calc.ResourcePaidType];
+            var remaining = amountAvailable - calc.ResourcesPaid;
+            return remaining >= 0;
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+            return false;
+        }
     }
     
     public static ResourceCalculations CalculateResources(this Member m, CardTypeData card)
