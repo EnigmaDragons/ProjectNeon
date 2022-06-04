@@ -10,6 +10,7 @@ public class ClinicUIController : OnMessage<ToggleClinic>
     protected override void Execute(ToggleClinic msg)
     {
         clinic.Corp = corps.GetCorpByNameOrNone(msg.CorpName);
+        clinic.IsTutorial = msg.IsTutorial;
         clinicUi.SetActive(!clinicUi.activeSelf);
     } 
 }
