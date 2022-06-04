@@ -16,6 +16,14 @@ public static class Log
     public static void Error(string msg) => IgnoreExceptions(() => SinkAnd("Error: " + msg, () => Debug.LogError(msg)));
     public static void Error(string msg, Object context) => IgnoreExceptions(() => SinkAnd("Error: " + msg, () => Debug.LogError(msg, context)));
     public static void Error(Exception e) => IgnoreExceptions(() => Debug.LogException(e));
+    
+    public static void InfoOrError(string msg, bool isError) => IgnoreExceptions(() =>
+    {
+        if (isError)
+            Error(msg);
+        else
+            Info(msg);
+    });
 
     private static void SinkAnd(string msg, Action a)
     {

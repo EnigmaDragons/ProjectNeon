@@ -43,8 +43,12 @@ public class QualityAssurance
             if (issues.Any())
                 badEnemies.Add(new ValidationResult(e.EnemyName, issues));
         }
+
+        var qaPassed = badEnemies.None();
+        var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
         Log.Info($"--------------------------------------------------------------");
-        Log.Info($"QA - Enemies: {numEnemiesCount - badEnemies.Count} out of {numEnemiesCount} passed inspection.");
+        Log.InfoOrError($"QA - {qaResultTerm}", !qaPassed);
+        Log.InfoOrError($"QA - Enemies: {numEnemiesCount - badEnemies.Count} out of {numEnemiesCount} passed inspection.", badEnemies.Any());
         badEnemies.ForEach(e => Log.Error($"{e}"));
         Log.Info($"--------------------------------------------------------------");
     }
@@ -64,7 +68,7 @@ public class QualityAssurance
 
         if (stealth2 != null)
             if (stealth2.viewer == null)
-                issues.Add($"{enemyName}'s Stealth Transparency Character Viewer binding is null");
+                issues.Add($"{enemyName}'s {nameof(CharacterCreatorStealthTransparency)} {nameof(CharacterCreatorStealthTransparency.viewer)} binding is null");
         
         var shield = obj.GetComponentInChildren<ShieldVisual>();
         if (shield == null) 
@@ -77,6 +81,10 @@ public class QualityAssurance
         var tauntEffect = obj.GetComponentInChildren<TauntEffect>();
         if (tauntEffect == null) 
             issues.Add($"{enemyName} is missing a {nameof(TauntEffect)}");
+
+        var talkingCharacter = obj.GetComponentInChildren<TalkingCharacter>();
+        if (talkingCharacter != null && talkingCharacter.character == null)
+            issues.Add($"{enemyName}'s {nameof(TalkingCharacter)} {nameof(TalkingCharacter.character)} binding is null");
 
         Object.DestroyImmediate(obj);
     }
