@@ -22,9 +22,7 @@ public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : OnMessage<Nav
             Message.Publish(new StartCutsceneRequested(cutscene, Maybe<Action>.Present(() => navigator.NavigateToAcademyScene())));
         else if (!d.IsLicensedBenefactor 
              && useNewTutorialFlow.Value 
-             && CurrentGameData.HasActiveGame 
-             && adventure.Adventure != null 
-             && adventure.Adventure.Id == tutorialAdventure.Id && io.HasSavedGame)
+             && io.HasSavedGame)
         {
             io.LoadSavedGame();
             Message.Publish(new GameLoaded());

@@ -7,5 +7,6 @@
             a.TutorialData = new AcademyTutorialData { CompletedTutorialNames = AcademyData.RequiredLicenseTutorials.ToArray() };
             return a;
         });
+        CurrentGameData.Clear();
     }
 }
