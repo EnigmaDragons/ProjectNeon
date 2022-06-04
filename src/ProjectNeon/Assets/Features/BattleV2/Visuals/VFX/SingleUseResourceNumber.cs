@@ -8,13 +8,17 @@ public class SingleUseResourceNumber : MonoBehaviour
     [SerializeField] TextMeshPro text;
     [SerializeField] private SpriteRenderer resourceIcon;
     [SerializeField] private AllResourceTypes allResourceTypes;
-    [SerializeField] private float driftDistance = 0.18f;
-    [SerializeField] private float duration = 1.8f;
+    [SerializeField] private SingleUseObjectDriftConfig driftConfig;
     [SerializeField] private Color positiveChangeColor = Color.green;
     [SerializeField] private Color negativeChangeColor = Color.red;
     [SerializeField] private bool showNegativeSign = true;
     
+    private float _duration = SingleUseObjectDriftConfig.DefaultDuration;
+    private float _fadeDuration = SingleUseObjectDriftConfig.DefaultFadeDuration;
+    private float _driftDistance = SingleUseObjectDriftConfig.DefaultDriftDistance;
+    
     private float _remaining;
+    private float _remainingBeforeFade;
     
     public SingleUseResourceNumber Initialized(ResourceQuantity r)
     {
@@ -26,7 +30,14 @@ public class SingleUseResourceNumber : MonoBehaviour
     {
         if (r.Amount == 0)
             return;
-
+        
+        if (driftConfig != null)
+        {
+            _duration = driftConfig.Duration;
+            _driftDistance = driftConfig.DriftDistance;
+            _fadeDuration = driftConfig.FadeDuration;
+        }
+        
         var amt = r.Amount;
         text.gameObject.SetActive(true);
         text.color = amt > 0 ? positiveChangeColor : negativeChangeColor;
@@ -34,18 +45,29 @@ public class SingleUseResourceNumber : MonoBehaviour
         text.text = $"{prefix}{Mathf.Abs(amt).ToString()}";
         allResourceTypes.GetResourceTypeByName(r.ResourceType)
             .ExecuteIfPresentOrElse(t => resourceIcon.sprite = t.Icon, () => resourceIcon.enabled = false);
-        _remaining = duration;
+        _remaining = _duration;
+        _remainingBeforeFade = _duration - _fadeDuration;
         StartCoroutine(FloatAnim());
         transform.DOPunchScale(new Vector3(2.2f, 2.2f, 2.2f), 0.5f, 1);
     }
 
     private IEnumerator FloatAnim()
     {
+        var originalTextColor = text.color;
+        var transparentTextColor = originalTextColor.WithAlpha(0);
+        var originalIconColor = resourceIcon.color;
+        var transparentIconColor = originalIconColor.WithAlpha(0);
         while (_remaining > 0)
         {
             yield return new WaitForSeconds(0.033f);
-            transform.position += new Vector3(0, driftDistance, 0);
+            transform.position += new Vector3(0, _driftDistance, 0);
             _remaining -= 0.033f;
+            _remainingBeforeFade -= 0.033f;
+            if (_remainingBeforeFade <= 0)
+            {
+                text.color = Color.Lerp(transparentTextColor, originalTextColor, _remaining / _fadeDuration);
+                resourceIcon.color = Color.Lerp(transparentIconColor, originalIconColor, _remaining / _fadeDuration);
+            }
         }
         text.text = "";
         text.gameObject.SetActive(false);
