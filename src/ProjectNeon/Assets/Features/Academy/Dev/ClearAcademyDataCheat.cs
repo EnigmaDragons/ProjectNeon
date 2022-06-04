@@ -6,11 +6,7 @@ public class ClearAcademyDataCheat : MonoBehaviour
     {
         CurrentAcademyData.Clear();
         if (CurrentGameData.HasActiveGame)
-        {
-            var data = CurrentGameData.Data;
-            if (data.AdventureProgress.AdventureId == 10) // Tutorial Adventure ID
-                CurrentGameData.Clear();
-        }
+            CurrentGameData.Clear();
         Message.Publish(new CheatAcceptedSuccessfully());
     }
 }
