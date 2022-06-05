@@ -8,10 +8,12 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private HeroHpPresenter hpPresenter;
     [SerializeField] private Button healToFullButton;
+    [SerializeField] private GameObject fullHealth;
     [SerializeField] private Button viewHeroDetailButton;
     [SerializeField] private TextMeshProUGUI healToFullCostLabel;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject injuriesParent;
+    [SerializeField] private GameObject noInjuriesPrototype;
     [SerializeField] private HealInjuryButton healInjuryButtonPrototype;
     
     private Hero _hero;
@@ -61,9 +63,13 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     private void UpdateButtons()
     {
         healToFullButton.gameObject.SetActive(party.ClinicVouchers >= _fullHealCost && _hero.CurrentHp < _hero.Stats.MaxHp());
+        if (fullHealth != null)
+            fullHealth.SetActive(_hero.CurrentHp >= _hero.Stats.MaxHp());
         injuriesParent.DestroyAllChildren();
         _hero.Health.InjuryNames.ForEach(x => Instantiate(healInjuryButtonPrototype, injuriesParent.transform)
             .Init(x, _injuryHealCost, party.ClinicVouchers >= _injuryHealCost ? (Action)(() => HealInjury(x)) : () => { }));
+        if (noInjuriesPrototype != null && _hero.Health.InjuryNames.None())
+            Instantiate(noInjuriesPrototype, injuriesParent.transform);
     }
     
     private void HealHeroToFull()
