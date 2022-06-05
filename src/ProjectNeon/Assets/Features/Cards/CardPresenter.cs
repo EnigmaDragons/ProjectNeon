@@ -47,6 +47,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Sprite standardCard;
     [SerializeField] private Sprite transientCard;
     [SerializeField] private AllCards allCards;
+    [SerializeField] private CardPlayZone handZone;
+    [SerializeField] private BattleState state;
     
     private bool _debug = false;
     
@@ -405,7 +407,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         nameLabel.text = _cardType.Name;
         description.text = shouldUseLibraryMode
             ? _cardType.InterpolatedDescription(_card?.Owner ?? Maybe<Member>.Missing(), ResourceQuantity.DontInterpolateX)
-            : _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity));
+            : _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity), handZone.Count, state.PlayerState.NumberOfCyclesUsedThisTurn);
         type.text = _cardType.ArchetypeDescription();
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);
@@ -586,6 +588,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             controls.SetActive(false);
             canvasGroup.blocksRaycasts = false;
             HideComprehensiveCardInfo();
+            
+            if (_rightButtonAlreadyDown == true && _card.Mode == CardMode.Normal)
+                _card.TransitionTo(CardMode.Basic);
 
             // Targeting Card Selection Process can run the arrow
             if (_requiresPlayerTargeting && IsPlayable) 
