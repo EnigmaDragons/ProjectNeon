@@ -86,8 +86,6 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             {
                 gameMap.CurrentNode = mapData;
                 gameMap.CurrentChoices.Remove(mapData);
-                if (mapData.AdvancesAdventure)
-                    gameMap.AdvanceToNextSegment();
                 Message.Publish(new TravelToNode
                 {
                     Position = mapData.Position, 
@@ -96,6 +94,8 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
                     {
                         Message.Publish(new TravelMovementStopped(t));
                         Message.Publish(new ArrivedAtNode(transform, mapData.Type));
+                        if (mapData.AdvancesAdventure)
+                            gameMap.AdvanceToNextSegment();
                         ArrivalSegment.Start();
                     }
                 });
