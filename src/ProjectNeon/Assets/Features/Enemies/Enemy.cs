@@ -9,6 +9,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private string enemyName;
     [SerializeField] private bool allowedForSocialMedia = false;
     [SerializeField] private bool excludeFromBestiary = false;
+    [SerializeField] private bool isTutorialEnemy = false;
     [SerializeField] private string lastBalanceDate = "Never";
     [SerializeField] private bool isCurrentlyWorking = true;
     [SerializeField] private StaticCorp corp;
@@ -32,6 +33,7 @@ public class Enemy : ScriptableObject
     public bool IsAllowedForSocialMedia => allowedForSocialMedia;
     public bool IsCurrentlyWorking => isCurrentlyWorking;
     public bool IsReadyForPlay => isCurrentlyWorking && Prefab != null && ai != null;
+    public bool IsTutorialEnemy => isTutorialEnemy;
     
     public string EnemyName => this.GetName(enemyName);
     public string Description => description;

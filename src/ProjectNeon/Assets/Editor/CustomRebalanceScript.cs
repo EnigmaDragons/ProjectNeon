@@ -24,7 +24,7 @@ public class CustomRebalanceScript
         });
         ScriptableExtensions.GetAllInstances<Enemy>().ForEach(e =>
         {
-            if (e.Tier == EnemyTier.Minion || e.Tier == EnemyTier.Boss)
+            if (!e.IsCurrentlyWorking || e.IsTutorialEnemy || e.Tier == EnemyTier.Minion || e.Tier == EnemyTier.Boss)
                 return;
 
             var amountToIncrease = (e.stageDetails[0].powerLevel * 0.12f).CeilingInt();
@@ -43,7 +43,7 @@ public class CustomRebalanceScript
         
         ScriptableExtensions.GetAllInstances<Enemy>().ForEach(e =>
         {
-            if (e.Tier == EnemyTier.Minion || e.Tier == EnemyTier.Boss)
+            if (!e.IsCurrentlyWorking || e.IsTutorialEnemy || e.Tier == EnemyTier.Minion || e.Tier == EnemyTier.Boss)
                 return;
 
             var amountToIncrease = (e.stageDetails[0].powerLevel * 0.12f).CeilingInt();
