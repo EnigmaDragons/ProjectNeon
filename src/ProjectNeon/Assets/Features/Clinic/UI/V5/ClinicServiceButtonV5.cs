@@ -10,6 +10,8 @@ public class ClinicServiceButtonV5 : MonoBehaviour
     [SerializeField] private Image currencyIcon;
     [SerializeField] private Button button;
     [SerializeField] private TwoSidedRulesDescriptionPresenter rules;
+    [SerializeField] private CorpUiBase[] corpUi;
+    [SerializeField] private AllCorps corps;
 
     private ClinicServiceButtonData _data;
     
@@ -33,6 +35,8 @@ public class ClinicServiceButtonV5 : MonoBehaviour
             cost.gameObject.SetActive(false);
             currencyIcon.gameObject.SetActive(false);
         }
+        corps.GetCorpByName(data.CorpName)
+            .IfPresent(c => corpUi.ForEach(cui => cui.Init(c)));
     }
 
     public void ShowRules()

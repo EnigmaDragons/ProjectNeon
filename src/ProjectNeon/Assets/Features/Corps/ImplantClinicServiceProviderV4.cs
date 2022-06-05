@@ -96,7 +96,8 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
             {
                 AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount);
                 _available[index] = false;
-            }, Array.Empty<EffectData>());
+            }, Array.Empty<EffectData>(),
+            "Medigeneix");
     }
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)

@@ -58,7 +58,8 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                     {
                         _party.AddBlessing(blessingChoices[index].blessing);
                         _available[index] = false;
-                    }, d.Effect.AsArray());
+                    }, d.Effect.AsArray(), 
+                    "Tritoonico");
             }
         }
         for (var i = 0; i < _generatedOptions.Length; i++)
