@@ -23,7 +23,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField, Range(1, 5)] private int complexityRating = 3;
 
     // Stats
-    [SerializeField] private int maxHp = 40;
+    [SerializeField] public int maxHp = 40;
     [SerializeField] private int maxShield = 12;
     [SerializeField] private int startingShield = 0;
     [SerializeField] private int attack = 8;
