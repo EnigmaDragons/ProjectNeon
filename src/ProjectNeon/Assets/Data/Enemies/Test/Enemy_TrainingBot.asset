@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 44
   enemyName: Training Program
+  allowedForSocialMedia: 0
   excludeFromBestiary: 1
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: e72d679f60e6cd847aae8a43673fa10f, type: 2}
@@ -40,6 +42,7 @@ MonoBehaviour:
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   description: A simple pre-programmed fighter, for training.
   animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
     maxHp: 90
@@ -110,6 +113,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
