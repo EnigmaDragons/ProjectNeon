@@ -23,6 +23,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public int Credits => credits;
     public int ClinicVouchers => clinicVouchers;
     public int TotalMissingHp => Heroes.Sum(h => h.Health.MissingHp);
+    public float MissingHpFactor => (float)TotalMissingHp / Heroes.Sum(h => h.CurrentHp);
     public int TotalNumInjuries => Heroes.Sum(h => h.Health.InjuryNames.Count());
 
     public HeroCharacter[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
