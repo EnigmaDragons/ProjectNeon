@@ -588,6 +588,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             controls.SetActive(false);
             canvasGroup.blocksRaycasts = false;
             HideComprehensiveCardInfo();
+            
+            if (_rightButtonAlreadyDown == true && _card.Mode == CardMode.Normal)
+                _card.TransitionTo(CardMode.Basic);
 
             // Targeting Card Selection Process can run the arrow
             if (_requiresPlayerTargeting && IsPlayable) 
