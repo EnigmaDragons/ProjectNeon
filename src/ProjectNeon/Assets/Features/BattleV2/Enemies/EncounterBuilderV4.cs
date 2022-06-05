@@ -18,14 +18,7 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
     public float _flexibility => flexibility;
     public List<EncounterWeightsV4> _weightedComps => weightedComps;
     public List<EncounterRoleChanceV4> _chancesBasedOnEnemyNumber => chancesBasedOnEnemyNumber;
-    
-    private EnemyInstance[] _damageDealers;
-    private EnemyInstance[] _protectors;
-    private EnemyInstance[] _specialists;
-    private EnemyInstance[] _eliteDamageDealers;
-    private EnemyInstance[] _eliteProtectors;
-    private EnemyInstance[] _eliteSpecialists;
-    
+
     public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber)
     {
         var comp = GetComposition(difficulty);
@@ -35,28 +28,25 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
 
     private List<WeightedRole> GetComposition(int difficulty)
     {
-        if (_damageDealers == null || !_damageDealers.Any())
-        {
-            _damageDealers = GetPossible(BattleRole.DamageDealer, false);
-            _protectors = GetPossible(BattleRole.Survivability, false);
-            _specialists = GetPossible(BattleRole.Specialist, false);
-            _eliteDamageDealers = GetPossible(BattleRole.DamageDealer, true);
-            _eliteProtectors = GetPossible(BattleRole.Survivability, true);
-            _eliteSpecialists = GetPossible(BattleRole.Specialist, true);
-        }
-        
-        float minDamageDealer = _damageDealers.Any() ? _damageDealers.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
-        float minProtector = _protectors.Any() ? _protectors.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
-        float minSpecialist = _specialists.Any() ? _specialists.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
-        float maxDamageDealer = _damageDealers.Any() ? _damageDealers.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
-        float maxProtector = _protectors.Any() ? _protectors.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
-        float maxSpecialist = _specialists.Any() ? _specialists.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
-        float minEliteDamageDealer = allowElites && _eliteDamageDealers.Any() ? _eliteDamageDealers.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
-        float minEliteProtector = allowElites && _eliteProtectors.Any() ? _eliteProtectors.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
-        float minEliteSpecialist = allowElites && _eliteSpecialists.Any() ? _eliteSpecialists.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
-        float maxEliteDamageDealer = allowElites && _eliteDamageDealers.Any() ? _eliteDamageDealers.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
-        float maxEliteProtector = allowElites && _eliteProtectors.Any() ? _eliteProtectors.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
-        float maxEliteSpecialist = allowElites && _eliteSpecialists.Any() ? _eliteSpecialists.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        var damageDealers = GetPossible(BattleRole.DamageDealer, false);
+        var protectors = GetPossible(BattleRole.Survivability, false);
+        var specialists = GetPossible(BattleRole.Specialist, false);
+        var eliteDamageDealers = GetPossible(BattleRole.DamageDealer, true);
+        var eliteProtectors = GetPossible(BattleRole.Survivability, true);
+        var eliteSpecialists = GetPossible(BattleRole.Specialist, true);
+
+        float minDamageDealer = damageDealers.Any() ? damageDealers.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float minProtector = protectors.Any() ? protectors.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float minSpecialist = specialists.Any() ? specialists.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float maxDamageDealer = damageDealers.Any() ? damageDealers.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float maxProtector = protectors.Any() ? protectors.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float maxSpecialist = specialists.Any() ? specialists.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float minEliteDamageDealer = allowElites && eliteDamageDealers.Any() ? eliteDamageDealers.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float minEliteProtector = allowElites && eliteProtectors.Any() ? eliteProtectors.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float minEliteSpecialist = allowElites && eliteSpecialists.Any() ? eliteSpecialists.Min(x => x.PowerLevel) * (1f - flexibility) : 0f;
+        float maxEliteDamageDealer = allowElites && eliteDamageDealers.Any() ? eliteDamageDealers.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float maxEliteProtector = allowElites && eliteProtectors.Any() ? eliteProtectors.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
+        float maxEliteSpecialist = allowElites && eliteSpecialists.Any() ? eliteSpecialists.Max(x => x.PowerLevel) * (1f + flexibility) : 0f;
 
         var validWeightedComps = GetValidWeightedComps(difficulty,
             Math.Min(minDamageDealer, Math.Min(minProtector, minSpecialist)),
@@ -78,7 +68,7 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
         var result = new List<WeightedRole>();
         for (var i = 0; i < selectedOptionWeights.Length; i++)
         {
-            var strength = (float)selectedOptionWeights[i] / (float)selectedOptionWeights.Max() * (float)difficulty;
+            var strength = (float)selectedOptionWeights[i] / (float)selectedOptionWeights.Sum() * (float)difficulty;
             var isElite = allowElites && selectedOptionWeights.Max() == selectedOptionWeights[i];
             var validRoles = chancesBasedOnEnemyNumber[i].RollChances;
             validRoles = validRoles.Where(x =>

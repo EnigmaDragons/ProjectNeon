@@ -44,7 +44,7 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>
     {
         if (clinic.Corp != null && corpUi != null)
             corpUi.ForEach(c => c.Init(clinic.Corp));
-        doneButton.interactable = !_serviceProvider.RequiresSelection();
+        doneButton.interactable = !_serviceProvider.RequiresSelection() && (!clinic.IsTutorial || party.ClinicVouchers == 0 || party.Heroes.All(x => x.Health.MissingHp == 0));
         serviceTitle.text = $"{_serviceProvider.GetTitle()}{(_serviceProvider.RequiresSelection() ? " (Selection Required To Leave)" : "")}";
         var options = _serviceProvider.GetOptions();
         for (var i = 0; i < _serviceButtons.Length; i++)

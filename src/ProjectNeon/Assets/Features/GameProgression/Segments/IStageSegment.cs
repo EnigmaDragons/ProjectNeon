@@ -64,12 +64,17 @@ public sealed class GeneratedEquipmentShopSegment : IStageSegment
 public sealed class GeneratedClinicSegment : IStageSegment
 {
     private readonly string _corpName;
+    private readonly bool _isTutorial;
 
     public string Name => $"{_corpName} Clinic";
     public bool ShouldCountTowardsEnemyPowerLevel => false;
-    public void Start() => Message.Publish(new ToggleClinic { CorpName = _corpName });
+    public void Start() => Message.Publish(new ToggleClinic { CorpName = _corpName, IsTutorial = _isTutorial });
     public Maybe<string> Detail => Maybe<string>.Missing();
     public IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
 
-    public GeneratedClinicSegment(string corpName) => _corpName = corpName;
+    public GeneratedClinicSegment(string corpName, bool isTutorial)
+    {
+        _corpName = corpName;
+        _isTutorial = isTutorial;
+    }
 }
