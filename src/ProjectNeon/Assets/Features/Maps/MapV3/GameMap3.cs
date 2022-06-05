@@ -10,4 +10,5 @@ public class GameMap3 : ScriptableObject
     public GameObject Background => background.gameObject;
     public Vector2 StartingPoint => background.StartingPoint;
     public Vector2[] Points => background.AllPoints;
+    public Vector2 EndingPoint => background.EndingPoint;
 }

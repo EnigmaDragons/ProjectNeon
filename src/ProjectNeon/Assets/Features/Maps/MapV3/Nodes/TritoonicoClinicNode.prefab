@@ -637,6 +637,19 @@ MonoBehaviour:
   unvisitedTextLabel: {fileID: 0}
   visitedTextLabel: {fileID: 0}
   alwaysShowRules: 0
+  imagesToEnlarge:
+  - {fileID: 1012065703887236702}
+  - {fileID: 2461120418636715020}
+  enlargeAmount:
+    UseConstant: 0
+    ConstantValue: 0
+    FloatVariable: {fileID: 11400000, guid: a678a018f03acad4e9c82b035457e956, type: 2}
+  objectsToOffsetWhenEnlarged:
+  - {fileID: 1629957947833228975}
+  enlargedYOffsets:
+    UseConstant: 0
+    ConstantValue: 0
+    FloatVariable: {fileID: 11400000, guid: ffbfb01dd024aef4487b06a1ec1abaf4, type: 2}
 --- !u!1001 &5484882567241264253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -731,6 +744,10 @@ PrefabInstance:
     - target: {fileID: 1877379453960305296, guid: 089b051c0bf3c044abf7ef7599d7b549, type: 3}
       propertyPath: m_Name
       value: TravelPrevented
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877379453960305296, guid: 089b051c0bf3c044abf7ef7599d7b549, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 089b051c0bf3c044abf7ef7599d7b549, type: 3}
