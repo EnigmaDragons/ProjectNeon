@@ -139,7 +139,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _getCanActivate = getCanActivate;
         _zone = zone;
         _isHand = _zone.Contains("Hand");
-        _onRightClick =_isHand
+        _onRightClick = _isHand
             ? battleState.AllowRightClickOnCard
                 ? ToggleAsBasic
                 : (Action)(() => { })
@@ -474,7 +474,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     #region Mouse Controls
 
-    private bool _buttonAlreadyDown = false;
+    private bool _buttonAlreadyDown => _leftButtonAlreadyDown || _rightButtonAlreadyDown;
+    private bool _leftButtonAlreadyDown = false;
+    private bool _rightButtonAlreadyDown = false;
     public void MiddleClick() => _onMiddleMouse();
     
     public void OnPointerDown(PointerEventData eventData)
@@ -482,7 +484,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (eventData.dragging || _buttonAlreadyDown)
             return;
 
-        _buttonAlreadyDown = true;
+        if (eventData.button == PointerEventData.InputButton.Left)
+            _leftButtonAlreadyDown = true;
+        if (eventData.button == PointerEventData.InputButton.Right)
+            _rightButtonAlreadyDown = true;
         DebugLog($"UI - Pointer Down");
         if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
         {
@@ -500,12 +505,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Cursor.visible = true;
-        _buttonAlreadyDown = false;
         DebugLog("UI - Pointer Up");
-        if (_isHand && IsPlayable && eventData.button == PointerEventData.InputButton.Left)
+        if (_leftButtonAlreadyDown && eventData.button == PointerEventData.InputButton.Left)
         {
-            Message.Publish(new SnapBackTweenRequested(transform, "Click"));
+            Cursor.visible = true;
+            _leftButtonAlreadyDown = false; 
+            if (_isHand && IsPlayable)
+                Message.Publish(new SnapBackTweenRequested(transform, "Click"));
+        }
+        if (_rightButtonAlreadyDown && eventData.button == PointerEventData.InputButton.Right)
+        {
+            Cursor.visible = true;
+            _rightButtonAlreadyDown = false;
         }
     }
     
