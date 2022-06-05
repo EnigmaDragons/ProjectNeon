@@ -29,7 +29,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
             _timeTilPrompt = Math.Max(0, _timeTilPrompt - Time.deltaTime);
             if (_timeTilPrompt <= 0)
             {
-                Message.Publish(new ShowHeroBattleThought(4, "It is good that you don't know you can right-click cards to swap them to your hero's Basic"));
+                Message.Publish(new ShowHeroBattleThought(4, "It is good that you don't know you can right-click & hold cards to swap them to your hero's Basic"));
                 _timeTilPrompt = _notSwappingToBasicPromptDelay;
             }
         }

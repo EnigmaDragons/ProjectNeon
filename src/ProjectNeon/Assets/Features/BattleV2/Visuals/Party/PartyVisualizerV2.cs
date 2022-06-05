@@ -172,7 +172,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
             gameObject.SetActive(true);
         var hero = state.GetHeroById(e.MemberId);
         var s = _speech[hero];
-        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(s.Hide, 5f)));
+        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(s.Hide, 6f)));
         s.Proceed(true);
     }
 
