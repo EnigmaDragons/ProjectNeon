@@ -34,7 +34,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private CardTargetRulePresenter targetRule;
     [SerializeField] private CardScaledStatsPresenter scalingRule;
     [SerializeField] private CardEnemyTypePresenter enemyTypePresenter;
-    [SerializeField] private GameObject chainedCardParent;
+    [SerializeField] private GameObject referencedCardParent1;
+    [SerializeField] private GameObject referencedCardParent2detailed;
+    [SerializeField] private GameObject referencedCardParent2inHand;
     [SerializeField] private CardCostPresenter cardCostPresenter;
     [SerializeField] private Image[] glitchableComponents; 
     [SerializeField] private Material glitchMaterial;
@@ -44,6 +46,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private Image background;
     [SerializeField] private Sprite standardCard;
     [SerializeField] private Sprite transientCard;
+    [SerializeField] private AllCards allCards;
     
     private bool _debug = false;
     
@@ -349,19 +352,27 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (!_isHand)
             scalingRule.Show(_cardType, _card?.Owner.PrimaryStat() ?? StatType.Power);
 
-        _cardType.ChainedCard.IfPresent(ShowReferencedCard);
-        _cardType.SwappedCard.IfPresent(ShowReferencedCard);
+        var referencedCardParent2 = _isHand ? referencedCardParent2inHand : referencedCardParent2detailed;
+        _cardType.ChainedCard.IfPresent(x => ShowReferencedCard(x, referencedCardParent1));
+        _cardType.SwappedCard.IfPresent(x => ShowReferencedCard(x, _cardType.ChainedCard.IsPresent ? referencedCardParent2 : referencedCardParent1));
         var reactionCards = _cardType.BattleEffects().Where(x => x.IsReactionCard).ToArray();
-        if (reactionCards.Any()) 
-            ShowReferencedCard(reactionCards[0].ReactionSequence);
+        if (reactionCards.Any() && (!_cardType.ChainedCard.IsPresent || !_cardType.SwappedCard.IsPresent)) 
+            ShowReferencedCard(reactionCards[0].ReactionSequence, _cardType.ChainedCard.IsPresent || _cardType.SwappedCard.IsPresent ? referencedCardParent2 : referencedCardParent1);
+        var chooseCardToCreateEffects = _card.BattleEffects().FirstOrDefault(x => x.EffectType == EffectType.ChooseCardToCreate);
+        if (chooseCardToCreateEffects != null && chooseCardToCreateEffects.EffectScope.Value.Count(x => x == ',') == 1)
+        {
+            var choiceCardIds = chooseCardToCreateEffects.EffectScope.Value.Split(',').Select(int.Parse).ToArray();
+            Message.Publish(new ShowReferencedCard(referencedCardParent1, new Card(battleState.GetNextCardId(), _card.Owner, allCards.GetCardById(choiceCardIds[0]).Value, _card.OwnerTint, _card.OwnerBust)));
+            Message.Publish(new ShowReferencedCard(referencedCardParent2, new Card(battleState.GetNextCardId(), _card.Owner, allCards.GetCardById(choiceCardIds[1]).Value, _card.OwnerTint, _card.OwnerBust)));
+        }
     }
 
-    private void ShowReferencedCard(CardTypeData c)
+    private void ShowReferencedCard(CardTypeData c, GameObject referenceCardParent)
     {
         if (_card != null)
-            Message.Publish(new ShowReferencedCard(chainedCardParent, new Card(-1, _card.Owner, c, _card.OwnerTint, _card.OwnerBust)));
+            Message.Publish(new ShowReferencedCard(referenceCardParent, new Card(-1, _card.Owner, c, _card.OwnerTint, _card.OwnerBust)));
         else
-            Message.Publish(new ShowReferencedCard(chainedCardParent, c));
+            Message.Publish(new ShowReferencedCard(referenceCardParent, c));
     }
     
     private void HideComprehensiveCardInfo()
