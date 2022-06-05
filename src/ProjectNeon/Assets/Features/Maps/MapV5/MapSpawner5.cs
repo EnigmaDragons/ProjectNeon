@@ -35,7 +35,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     
     protected override void Execute(RegenerateMapRequested msg)
     {
-        SpawnPartyTokenIfNeeded(_map.gameObject);
+        SpawnPartyToken();
         SpawnNodes();
     }
     
@@ -43,7 +43,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     {
         progress.Advance();
         gameMap.ClearSegment();
-        SpawnPartyTokenIfNeeded(_map.gameObject);
+        SpawnPartyToken();
         SpawnNodes();
     }
 
@@ -69,7 +69,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
             try
             {
                 var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), mapNodesParent.transform);
-                obj.InitForV5(x, gameMap, allStageSegments.GetStageSegmentById(x.PresetStageId).Value, fx, _ => Message.Publish(new ContinueTraveling()));
+                obj.InitForV5(x, gameMap, allStageSegments.GetStageSegmentById(x.PresetStageId).Value, fx, x.AdvancesAdventure, _ => Message.Publish(new ContinueTraveling()));
                 var rect = (RectTransform) obj.transform;
                 rect.pivot = new Vector2(0.5f, 0.5f);
                 rect.anchoredPosition = x.Position;
@@ -118,15 +118,21 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
             .ToList();
         foreach (var choice in gameMap.CurrentChoices)
         {
-            if (locations.Count < 1)
+            if (gameMap.CurrentChoices.Last() == choice)
             {
-                Log.Error("Not Enough Map Points or Minimum Distance is too high");
-                return;
+                choice.Position = gameMap.CurrentMap.EndingPoint;
             }
-
-            var pos = locations[0];
-            choice.Position = pos;
-            locations.RemoveAll(l => Vector2.Distance(l, pos) < minDistanceBetweenNodes);
+            else
+            {
+                if (locations.Count < 1)
+                {
+                    Log.Error("Not Enough Map Points or Minimum Distance is too high");
+                    return;
+                }
+                var pos = locations[0];
+                choice.Position = pos;
+                locations.RemoveAll(l => Vector2.Distance(l, pos) < minDistanceBetweenNodes);   
+            }
         }
     }
 
@@ -170,6 +176,16 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
         if (matchingCorpNodes.Length > 0)
             defaultNode = matchingCorpNodes[0].Object;
         return defaultNode;
+    }
+
+    private void SpawnPartyToken()
+    {
+        if (_playerToken != null)
+        {
+            Destroy(_playerToken);
+            _playerToken = null;
+        }
+        SpawnPartyTokenIfNeeded(_map.gameObject);
     }
 
     private void SpawnPartyTokenIfNeeded(GameObject map)

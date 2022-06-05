@@ -32,6 +32,8 @@ public class CurrentMapSegmentV5 : ScriptableObject
 
     public void ClearSegment()
     {
+        PreviousPosition = CurrentMap.StartingPoint;
+        DestinationPosition = CurrentMap.StartingPoint;
         CurrentNode = Maybe<MapNode3>.Missing();
         CurrentChoices = new List<MapNode3>();
         UpdateSeed();

@@ -15,6 +15,10 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private TextMeshProUGUI unvisitedTextLabel;
     [SerializeField] private TextMeshProUGUI visitedTextLabel;
     [SerializeField] private bool alwaysShowRules = false;
+    [SerializeField] private GameObject[] imagesToEnlarge;
+    [SerializeField] private FloatReference enlargeAmount;
+    [SerializeField] private GameObject[] objectsToOffsetWhenEnlarged;
+    [SerializeField] private FloatReference enlargedYOffsets;
     
     public IStageSegment ArrivalSegment { get; private set; }
     public MapNode3 MapData { get; private set; }
@@ -61,7 +65,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             });
     }
 
-    public void InitForV5(MapNode3 mapData, CurrentMapSegmentV5 gameMap, StageSegment stageSegment, AllStaticGlobalEffects allGlobalEffects, Action<Transform> onMidPointArrive)
+    public void InitForV5(MapNode3 mapData, CurrentMapSegmentV5 gameMap, StageSegment stageSegment, AllStaticGlobalEffects allGlobalEffects, bool isEnlarged, Action<Transform> onMidPointArrive)
     {
         MapData = mapData;
         ArrivalSegment = stageSegment;
@@ -97,6 +101,19 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
                 });
                 Message.Publish(new AutoSaveRequested());
             });
+        if (isEnlarged)
+        {
+            foreach (var image in imagesToEnlarge)
+            {
+                var scale = image.transform.localScale;
+                image.transform.localScale = new Vector3(scale.x * enlargeAmount, scale.y * enlargeAmount, scale.z);
+            }
+            foreach (var obj in objectsToOffsetWhenEnlarged)
+            {
+                var pos = obj.transform.localPosition;
+                obj.transform.localPosition = new Vector3(pos.x, pos.y + enlargedYOffsets, pos.z);
+            }
+        }
     }
     
     private void Awake()

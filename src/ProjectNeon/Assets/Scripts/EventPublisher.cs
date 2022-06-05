@@ -62,4 +62,5 @@ public class EventPublisher : ScriptableObject
     public void SwitchToNightEnvironment() => Message.Publish(new SetNightMode(true));
     public void SkipSegment() => Message.Publish(new SkipSegment());
     public void SetBasicSuperFocusEnabled(bool enabled) => Message.Publish(new SetSuperFocusBasicControl(enabled));
+    public void RespawnMap() => Message.Publish(new RespawnMap());
 }
