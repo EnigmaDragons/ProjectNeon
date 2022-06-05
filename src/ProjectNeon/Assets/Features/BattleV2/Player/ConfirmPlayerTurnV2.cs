@@ -1,4 +1,5 @@
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +13,11 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     private bool _isConfirming = false;
     private bool _confirmRequestedManually;
     private bool _alreadyConfirmedThisTurn = false;
+    private Vector3 _confirmUiScale;
 
     private void Awake()
     {
+        _confirmUiScale = confirmUi.gameObject.transform.localScale;
         confirmUi.gameObject.SetActive(false);
         confirmUi.onClick.AddListener(ConfirmEarly);
     }
@@ -41,27 +44,42 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private void CheckForAutomaticTurnEnd()
     {
-        if (battleState.Phase == BattleV2Phase.PlayCards && 
-            (!battleState.PlayerCardZones.HandZone.HasCards 
-                || (battleState.NumberOfRecyclesRemainingThisTurn <= 0 
-                    && battleState.NumberOfCardPlaysRemainingThisTurn <= 0
-                    && battleState.PlayerCardZones.PlayZone.IsEmpty
-                    && battleState.PlayerCardZones.ResolutionZone.IsEmpty
-                    && battleState.PlayerCardZones.HandZone.Cards.All(c => 
-                        !c.IsAnyFormPlayableByHero(battleState.Party, battleState.NumberOfCardPlaysRemainingThisTurn) 
-                        || !c.Owner.CanPlayCards()))))
+        if (WillAutomaticallyEndTurn())
         {
             DevLog.Write($"No playable cards. Requesting early turn Confirmation. Hand Size {battleState.PlayerCardZones.HandZone.Cards.Length}. Num Cycles {battleState.NumberOfRecyclesRemainingThisTurn}");
             Confirm();
         }
     }
 
+    private bool WillAutomaticallyEndTurn() => battleState.Phase == BattleV2Phase.PlayCards &&
+                                               (!battleState.PlayerCardZones.HandZone.HasCards
+                                                || (battleState.NumberOfRecyclesRemainingThisTurn <= 0
+                                                    && battleState.NumberOfCardPlaysRemainingThisTurn <= 0
+                                                    && battleState.PlayerCardZones.PlayZone.IsEmpty
+                                                    && battleState.PlayerCardZones.ResolutionZone.IsEmpty
+                                                    && battleState.PlayerCardZones.HandZone.Cards.All(c =>
+                                                        !c.IsAnyFormPlayableByHero(battleState.Party,
+                                                            battleState.NumberOfCardPlaysRemainingThisTurn)
+                                                        || !c.Owner.CanPlayCards())));
+    
     private void UpdateState(BattleStateChanged msg)
     {
         if (battleState.Phase == BattleV2Phase.PlayCards && msg.Before.Phase != BattleV2Phase.PlayCards)
             _alreadyConfirmedThisTurn = false;
-        if (msg.Before.Phase != BattleV2Phase.PlayCards && battleState.Phase == BattleV2Phase.PlayCards)
-            confirmUi.gameObject.SetActive(true);
+        if (battleState.Phase == BattleV2Phase.PlayCards && msg.State.NumberOfCardPlaysRemainingThisTurn == 0)
+        {
+            var g = confirmUi.gameObject;
+            var shouldBeVisible = !WillAutomaticallyEndTurn();
+            var activate = !g.activeSelf && shouldBeVisible;
+            g.SetActive(shouldBeVisible);
+            if (activate)
+            {
+                DOTween.Kill(g);
+                g.transform.localScale = _confirmUiScale;
+                g.transform.DOPunchScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f, 1);
+            }
+        }
+
         if (battleState.Phase != BattleV2Phase.PlayCards)
             confirmUi.gameObject.SetActive(false);
     }
