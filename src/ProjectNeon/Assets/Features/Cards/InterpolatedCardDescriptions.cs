@@ -104,6 +104,8 @@ public static class InterpolatedCardDescriptions
 
             if (token.Value.StartsWith("{E["))
                 result = result.Replace("{E[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner, xCost)));
+            if (token.Value.StartsWith("{ES["))
+                result = result.Replace("{ES[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner, xCost, false)));
             if (token.Value.StartsWith("{D["))
                 result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex], owner, xCost));
             if (forReaction)
@@ -282,18 +284,18 @@ public static class InterpolatedCardDescriptions
     private static string WithMagicDamageIcon(string s) => $"{s} {MagicDamageIcon}";
     private static string WithRawDamageIcon(string s) => $"{s} {RawDamageIcon}";
     
-    public static string EffectDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
+    public static string EffectDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost, bool showSprites = true)
     {
         if (data.EffectType == EffectType.AttackFormula)
-            return WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost));
+            return showSprites ? WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.MagicAttackFormula)
-            return WithMagicDamageIcon(FormulaAmount(data, owner, xCost));
+            return showSprites ? WithMagicDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.RawDamageAttackFormula)
-            return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
+            return showSprites ? WithRawDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.DamageOverTimeFormula)
-            return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
+            return showSprites ? WithRawDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.DealRawDamageFormula)
-            return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
+            return showSprites ? WithRawDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.HealFormula 
                 || data.EffectType == EffectType.AdjustPlayerStatsFormula
                 || data.EffectType == EffectType.ChooseCardToCreate)
@@ -313,7 +315,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustCounterFormula)
             return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources")}";
+            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent && showSprites ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources")}";
         if (data.EffectType == EffectType.ShieldBasedOnNumberOfOpponentsDoTs)
             return owner.IsPresent
                 ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.MaxShield]))).ToString()
