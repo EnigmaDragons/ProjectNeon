@@ -11,6 +11,6 @@ public class CardTrashPresenter : OnMessage<BattleStateChanged>
 
     private void Render()
     {
-        panel.SetActive(state.NumberOfRecyclesRemainingThisTurn <= 0);
+        panel.SetActive(state.Phase == BattleV2Phase.PlayCards && state.NumberOfRecyclesRemainingThisTurn <= 0);
     }
 }

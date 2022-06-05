@@ -76,7 +76,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
             {
                 DOTween.Kill(g);
                 g.transform.localScale = _confirmUiScale;
-                g.transform.DOPunchScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f, 1);
+                g.transform.DOPunchScale(new Vector3(1.1f * _confirmUiScale.x, 1.1f * _confirmUiScale.y, 1.1f * _confirmUiScale.z), 0.5f, 1);
             }
         }
 

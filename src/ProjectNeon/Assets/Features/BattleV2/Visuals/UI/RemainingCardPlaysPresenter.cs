@@ -32,7 +32,7 @@ public class RemainingCardPlaysPresenter : OnMessage<BattleStateChanged>
         {
             DOTween.Kill(gameObject);
             transform.localScale = _scale;
-            transform.DOPunchScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f, 1);
+            transform.DOPunchScale(new Vector3(1.1f * _scale.x, 1.1f * _scale.y, 1.1f * _scale.z), 0.5f, 1);
             if (newValue == 0 && hideTextWhen0PlaysRemaining)
                 this.ExecuteAfterDelay(() =>
                 {
