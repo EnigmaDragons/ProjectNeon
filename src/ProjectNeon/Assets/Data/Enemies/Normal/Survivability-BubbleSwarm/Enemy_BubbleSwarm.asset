@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 22
   enemyName: Bubble Swarm
+  allowedForSocialMedia: 0
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 2022/01/09
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -40,9 +42,10 @@ MonoBehaviour:
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   description: Strategically provides temporary invulnerability to its allies.
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
-    maxHp: 121
+    maxHp: 152
     maxShield: 0
     startingShield: 0
     startingAegis: 0
@@ -110,6 +113,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 11400000, guid: 8207f5bbe632f8147931294f5480f559, type: 2}
       ReactionEffect:
         reactor: 0
