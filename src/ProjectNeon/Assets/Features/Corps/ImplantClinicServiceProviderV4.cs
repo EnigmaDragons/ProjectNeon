@@ -17,7 +17,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
     };
     private static readonly Dictionary<StatType, string> _negativePrefix = new Dictionary<StatType, string>
     {
-        { StatType.MaxHP, "Unhealthy" },
+        { StatType.MaxHP, "Lifeblood" },
         { StatType.StartingShield, "Powered" },
         { StatType.Attack, "Dulled" },
         { StatType.Magic, "Inhibiting" },
