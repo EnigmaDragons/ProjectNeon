@@ -44,6 +44,11 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         }
         else if (e.Scope.Equals(Scope.One) || e.Scope.Equals(Scope.OneExceptSelf))
         {
+            if (e.Target.Members.None())
+            {
+                Message.Publish(new Finished<BattleEffectAnimationRequested>());
+                return;
+            }
             var member = e.Target.Members[0];
             if (!member.IsConscious() || !state.Members.ContainsKey(member.Id))
             {
