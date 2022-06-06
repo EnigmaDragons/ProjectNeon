@@ -11,6 +11,9 @@ public class CorpClinicImage : CorpUiBase
         if (clinicImage == null)
             corpClinicImage.enabled = false;
         else
+        {
+            corpClinicImage.enabled = true;
             corpClinicImage.sprite = clinicImage;
+        }
     }
 }
