@@ -69,7 +69,14 @@ public class QualityAssurance
         if (stealth2 != null)
             if (stealth2.viewer == null)
                 issues.Add($"{enemyName}'s {nameof(CharacterCreatorStealthTransparency)} {nameof(CharacterCreatorStealthTransparency.viewer)} binding is null");
-        
+
+        var deathPresenter = obj.GetComponentInChildren<DeathPresenter>();
+        if (deathPresenter == null)
+            issues.Add($"{enemyName} is missing a {nameof(DeathPresenter)}");
+
+        if (deathPresenter != null && deathPresenter.sprite == null && deathPresenter.characterViewer == null)
+            issues.Add($"{enemyName}'s {nameof(DeathPresenter)} has no Sprite or Character Viewer binding");
+
         var shield = obj.GetComponentInChildren<ShieldVisual>();
         if (shield == null) 
             issues.Add($"{enemyName} is missing a {nameof(ShieldVisual)}");
