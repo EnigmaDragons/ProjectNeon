@@ -19,6 +19,7 @@ public static class ErrorReport
     private static bool _isEditor = false;
     private static string[] _ignoreIfContainsInEditor = {  "Coroutine couldn't be started" };
     private static string[] _ignoreIfContains = { "Error Releasing render texture that is set as Camera.targetTexture" };
+    private static string _lastErrorMessage = null;
 
     public static void Init(string appName, string version, Queue<string> recentLogs)
     {
@@ -41,13 +42,17 @@ public static class ErrorReport
         if (_disabled)
             return;
         
+        if (string.Equals(errorMessage, _lastErrorMessage, StringComparison.OrdinalIgnoreCase))
+            return;
+        
 #if UNITY_EDITOR
-        if (_ignoreIfContainsInEditor.Any(errorMessage.Contains))
+        if (_ignoreIfContainsInEditor.Any(errorMessage.ContainsAnyCase))
             return;
 #endif
-        if (_ignoreIfContains.Any(errorMessage.Contains))
+        if (_ignoreIfContains.Any(errorMessage.ContainsAnyCase))
             return;
 
+        _lastErrorMessage = errorMessage;
         Client.Post(
             new Uri(_securedUrl.FromBase64(), UriKind.Absolute),
             new StringContent(
