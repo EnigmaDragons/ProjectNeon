@@ -6,18 +6,26 @@ public class ReferencedCardPresenter : OnMessage<ShowReferencedCard, HideReferen
     [SerializeField] private CardPresenter cardPrototype;
 
     private List<GameObject> _parents;
-    
-    private void Show(Card c, GameObject parent)
-    {
-        var cp = Instantiate(cardPrototype, parent.transform);
-        cp.Set(c);
-    }
 
-    private void Show(CardTypeData c, GameObject parent)
+    private void Awake()
     {
-        var cp = Instantiate(cardPrototype, parent.transform);
-        cp.Set(c);
+        if (cardPrototype == null)
+            Log.Error($"{nameof(ReferencedCardPresenter)} {nameof(cardPrototype)} is null");
     }
+    
+    private void Show(Card c, GameObject parent) => 
+        ErrorHandler.BasicNeverCrash(() =>
+        {
+            var cp = Instantiate(cardPrototype, parent.transform);
+            cp.Set(c);
+        });
+
+    private void Show(CardTypeData c, GameObject parent) =>
+        ErrorHandler.BasicNeverCrash(() =>
+        {
+            var cp = Instantiate(cardPrototype, parent.transform);
+            cp.Set(c);
+        });
 
     public void Hide()
     {
