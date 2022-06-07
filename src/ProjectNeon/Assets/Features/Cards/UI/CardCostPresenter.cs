@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,17 +11,25 @@ public class CardCostPresenter : MonoBehaviour
     
     public void Render(Maybe<Card> c, CardTypeData ct, IResourceType primaryResourceType)
     {
-        var cost = ct.Cost;
-        var hasCost = !cost.ResourceType.Name.Equals("None") && cost.BaseAmount > 0 || cost.PlusXCost;
-        costPanel.SetActive(hasCost);
-        if (hasCost)
+        try
         {
-            costLabel.text = CostLabel(c, cost);
-            costResourceTypeIcon.sprite = c.IsPresent && cost.ResourceType.Name.Equals("PrimaryResource") 
-                ? c.Value.Owner.State.PrimaryResource.Icon 
-                : cost.ResourceType.Name.Equals("PrimaryResource") 
-                    ? primaryResourceType.Icon 
-                    : cost.ResourceType.Icon;
+            var cost = ct.Cost;
+            var hasCost = !cost.ResourceType.Name.Equals("None") && (cost.BaseAmount > 0 || cost.PlusXCost);
+            costPanel.SetActive(hasCost);
+            if (hasCost)
+            {
+                costLabel.text = CostLabel(c, cost);
+                costResourceTypeIcon.sprite = c.IsPresent && cost.ResourceType.Name.Equals("PrimaryResource")
+                    ? c.Value.Owner.State.PrimaryResource.Icon
+                    : cost.ResourceType.Name.Equals("PrimaryResource")
+                        ? primaryResourceType.Icon
+                        : cost.ResourceType.Icon;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+            costPanel.SetActive(false);
         }
     }
     

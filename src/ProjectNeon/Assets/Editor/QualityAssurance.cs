@@ -23,11 +23,26 @@ public class QualityAssurance
     [MenuItem("Neon/QA/Run Full Content QA")]
     public static void Go()
     {
+        ErrorReport.DisableDuringQa();
+        
         Log.Info("QA - Started");
-        QaAllEnemies();
+        var (enemyCount, enemyFailures) = QaAllEnemies();
+        var (cardCount, cardFailures) = QaAllCards();
+
+        var qaPassed = enemyFailures.None() && cardFailures.None();
+        var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
+        Log.Info($"--------------------------------------------------------------");
+        Log.InfoOrError($"QA - {qaResultTerm}", !qaPassed);
+        Log.InfoOrError($"QA - Enemies: {enemyCount - enemyFailures.Count} out of {enemyCount} passed inspection.", enemyFailures.Any());
+        enemyFailures.ForEach(e => Log.Error($"{e}"));
+        Log.InfoOrError($"QA - Cards: {cardCount - cardFailures.Count} out of {cardCount} passed inspection.", cardFailures.Any());
+        cardFailures.ForEach(e => Log.Error($"{e}"));
+        Log.Info($"--------------------------------------------------------------");
+        
+        ErrorReport.ReenableAfterQa();
     }
 
-    private static void QaAllEnemies()
+    private static (int, List<ValidationResult>) QaAllEnemies()
     {
         var enemies = ScriptableExtensions.GetAllInstances<Enemy>();
         var badEnemies = new List<ValidationResult>();
@@ -43,14 +58,8 @@ public class QualityAssurance
             if (issues.Any())
                 badEnemies.Add(new ValidationResult(e.EnemyName, issues));
         }
-
-        var qaPassed = badEnemies.None();
-        var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
-        Log.Info($"--------------------------------------------------------------");
-        Log.InfoOrError($"QA - {qaResultTerm}", !qaPassed);
-        Log.InfoOrError($"QA - Enemies: {numEnemiesCount - badEnemies.Count} out of {numEnemiesCount} passed inspection.", badEnemies.Any());
-        badEnemies.ForEach(e => Log.Error($"{e}"));
-        Log.Info($"--------------------------------------------------------------");
+        
+        return (numEnemiesCount, badEnemies);
     }
 
     private static void ValidateEnemyPrefab(Enemy e, List<string> issues)
@@ -94,5 +103,22 @@ public class QualityAssurance
             issues.Add($"{enemyName}'s {nameof(TalkingCharacter)} {nameof(TalkingCharacter.character)} binding is null");
 
         Object.DestroyImmediate(obj);
+    }
+
+    private static (int, List<ValidationResult>) QaAllCards()
+    {
+        var items = ScriptableExtensions.GetAllInstances<CardType>();
+        var failures = new List<ValidationResult>();
+        var itemCount = items.Length;
+        foreach (var i in items)
+        {
+            var issues = new List<string>();
+            if (i.cost.RawResourceType == null) 
+                issues.Add($"Broken Card: {i.Name} has Null Cost");
+            if (issues.Any())
+                failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
+        }
+        
+        return (itemCount, failures);
     }
 }

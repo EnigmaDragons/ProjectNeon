@@ -4,12 +4,18 @@ using UnityEngine;
 public static class TimelessResourceCalculator
 {
     public static ResourceCalculations CalculateResources(this CardTypeData card, MemberState member) 
-        => CalculateResources(card.Cost, member);
+        => CalculateResources(card.Name, card.Cost, member);
     
-    public static ResourceCalculations CalculateResources(IResourceAmount cost, MemberState member)
+    private static ResourceCalculations CalculateResources(string cardName, IResourceAmount cost, MemberState member)
     {
         try
         {
+            if (cost == null || cost.ResourceType == null)
+            {
+                Log.Warn($"{cardName} has invalid/null Cost.");
+                return new ResourceCalculations(new InMemoryResourceType(), 0, 0, 0);
+            }
+
             return new ResourceCalculations(cost.ResourceType.Name.Equals("PrimaryResource")
                     ? member.PrimaryResource
                     : cost.ResourceType,
