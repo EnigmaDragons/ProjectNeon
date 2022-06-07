@@ -10,7 +10,7 @@ public class ReferencedCardPresenter : OnMessage<ShowReferencedCard, HideReferen
     private void Awake()
     {
         if (cardPrototype == null)
-            Log.Error($"{nameof(ReferencedCardPresenter)} {nameof(cardPrototype)} is null");
+            Log.Error($"{nameof(ReferencedCardPresenter)} {nameof(cardPrototype)} is null", this);
     }
     
     private void Show(Card c, GameObject parent) => 
