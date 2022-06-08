@@ -21,7 +21,7 @@ public class QualityAssurance
     }
     
     [MenuItem("Neon/QA/Run Full Content QA")]
-    public static void Go()
+    public static bool Go()
     {
         ErrorReport.DisableDuringQa();
         
@@ -40,6 +40,7 @@ public class QualityAssurance
         Log.Info($"--------------------------------------------------------------");
         
         ErrorReport.ReenableAfterQa();
+        return qaPassed;
     }
 
     private static (int, List<ValidationResult>) QaAllEnemies()
