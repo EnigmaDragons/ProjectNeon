@@ -59,7 +59,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     {
         mapNodesParent.DestroyAllChildren();
         
-        if (gameMap.CurrentChoices.None())
+        if (gameMap.CurrentChoices.None(c => c.AdvancesAdventure))
             GenerateOptions();
         var fx = progress.GlobalEffects.AllStaticGlobalEffects;
         Log.Info($"Map Spawning Nodes: {gameMap.CurrentChoices.Count} Nodes. Adventure Progress: Chapter {progress.CurrentChapterNumber}, Segment {progress.CurrentStageProgress}");

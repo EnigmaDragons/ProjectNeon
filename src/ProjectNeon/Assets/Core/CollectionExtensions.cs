@@ -256,4 +256,12 @@ public static class CollectionExtensions
             queue.Enqueue(i);
         return queue;
     }
+
+    public static T IndexValueOrDefault<T>(this T[] arr, int index, Func<T> createDefault)
+    {
+        if (arr.Length <= index)
+            return createDefault();
+
+        return arr[index];
+    }
 }
