@@ -8,8 +8,6 @@ public class RunQaBeforeBuild : IPreprocessBuild
 
     public void OnPreprocessBuild(BuildTarget target, string path)
     {
-        AssetUpdater.Go();
-        
         var succeeded = QualityAssurance.Go();
         if (!succeeded)
             throw new BuildFailedException("Neon Quality Assurance Checks Failed");
