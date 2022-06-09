@@ -14,8 +14,12 @@ const eventTypes = ({
 
 const queryEvents = (db, version, eventType, onEvents) => {
   const q = `SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType LIKE '%${eventType}'`;
-  console.log({ q });
   return db.query(q, onEvents);
+}
+
+const queryEventsAsync = (db, version, eventType) => {
+  const q = `SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType LIKE '%${eventType}'`;
+  return db.queryAsync(q);
 }
 
 const queryEventTypes = (db, onEventTypes) => {
@@ -42,13 +46,20 @@ const queryCardsPicked = (db, version) => {
   return db.queryAsyncEventData(`SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType = '${eventTypes.rewardCardSelected}'`);
 }
 
+const queryBattleSummary = (db, version) => {
+  return db.queryAsyncEventData(`SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType = '${eventTypes.battleSummary}'`);
+}
+
 const createByVersion = (db, version) => ({
+  eventTypes: eventTypes,
   queryEvents: (eventType, onEvents) => queryEvents(db, version, eventType, onEvents),
+  queryEventsAsync: (eventType) => queryEventsAsync(db, version, eventType),
   queryUniqueInstalls: () => queryUniqueInstalls(db, version),
   queryUniqueRuns: () => queryUniqueRuns(db, version),
   queryGamesWonOrLost: () => queryGamesWonOrLost(db, version),
   queryHeroesPicked: () => queryHeroesPicked(db, version),
   queryCardsPicked: () => queryCardsPicked(db, version),
+  queryBattleSummaries: () => queryBattleSummary(db, version),
 });
 
 module.exports = ({ eventTypes, queryEventTypes, queryEvents, queryUniqueInstalls, createByVersion });
