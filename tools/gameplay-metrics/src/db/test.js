@@ -3,36 +3,40 @@ const createConnection = require('./sqlDb.js');
 const mp0Metrics = require('./mp0metrics.js');
 const kpis = require('./mp0kpis');
 const fs = require('fs');
+const toCsv = require('../csvWriter');
 
 const sqlConfig = JSON.parse(cfg.SQL_CONFIG);
 const db = createConnection(sqlConfig);
 const eventTypes = mp0Metrics.eventTypes;
-const version = '%';
+const version = '0.0.43';
 const metrics = mp0Metrics.createByVersion(db, version);
 
-const report = ({ version });
-const time = new Date().getTime();
+const report = ({ version, playSummary: null, heroSummary: null, cardSummary: null });
 
-const writeReport = () => fs.writeFileSync(`./tempreport.json`, JSON.stringify(report, null, 2));
+const writeReport = () => fs.writeFileSync(`./${version}-report.json`, JSON.stringify(report, null, 2));
 
-kpis.getWinLossDetails(metrics).then(winLossDetails => { 
-  report.winLoss = winLossDetails;
-  console.log({ version, winLossDetails });
+kpis.getPlaySummary(metrics).then(details => {
+  report.playSummary = details;
+  //console.log({ version, details });
   writeReport();
+  //fs.writeFileSync(`./${version}-play-report.csv`, toCsv(details)); 
 });
-kpis.getHeroSelectionDetails(metrics).then(details => { 
-  report.heroSelections = details;
-  console.log({ version, details });
+kpis.getHeroSummary(metrics).then(details => {
+  report.heroSummary = details;
+  //console.log({ version, details });
   writeReport();
+  fs.writeFileSync(`./${version}-hero-report.csv`, toCsv(details)); 
 });
-kpis.getNumberOfRunsPlayed(metrics).then(n => { 
-  report.runsPlayed = n;
-  console.log({ version, runsPlayed: n });
+kpis.getCardSummary(metrics).then(details => {
+  report.cardSummary = details;
+  //console.log({ version, details });
   writeReport();
+  fs.writeFileSync(`./${version}-card-report.csv`, toCsv(details)); 
 });
-kpis.getCardSelectionDetails(metrics).then(details => {
-  report.cardSelections = details;
-  console.log({ version, details });
+kpis.getAttritionFactors(metrics).then(details => {
+  report.attritionFactors = details;
+  //console.log({ version, enemies: details.enemies, enemyGroups: details.enemyGroups });
   writeReport();
+  fs.writeFileSync(`./${version}-attrition-enemy-report.csv`, toCsv(details.enemies)); 
+  fs.writeFileSync(`./${version}-attrition-enemy-groups-report.csv`, toCsv(details.enemyGroups)); 
 });
-
