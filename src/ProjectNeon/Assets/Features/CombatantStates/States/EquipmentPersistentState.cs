@@ -10,15 +10,21 @@ public sealed class EquipmentPersistentState : IPersistentState
         _ctx = ctx;
     }
 
-    public void OnTurnStart()
+    public IPayloadProvider OnTurnStart()
     {
-        _equipment.TurnStartEffects
-            .ForEach(e => AllEffects.Apply(e, _ctx.WithFreshPreventionContext()));
+        return new SinglePayload($"Equipment - {_equipment.Name}", new PerformAction(() =>
+        {
+            _equipment.TurnStartEffects
+                .ForEach(e => AllEffects.Apply(e, _ctx.WithFreshPreventionContext()));
+        }));
     }
 
-    public void OnTurnEnd()
-    {
-        _equipment.TurnEndEffects
-            .ForEach(e => AllEffects.Apply(e, _ctx.WithFreshPreventionContext()));
+    public IPayloadProvider OnTurnEnd()
+    {       
+        return new SinglePayload($"Equipment - {_equipment.Name}", new PerformAction(() =>
+        {
+            _equipment.TurnEndEffects
+                .ForEach(e => AllEffects.Apply(e, _ctx.WithFreshPreventionContext()));
+        }));
     }
 }

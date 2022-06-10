@@ -1,5 +1,5 @@
 public interface IPersistentState
 {
-    void OnTurnStart();
-    void OnTurnEnd();
+    IPayloadProvider OnTurnStart();
+    IPayloadProvider OnTurnEnd();
 }
