@@ -42,7 +42,8 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
         pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.SelectedHeroesDeck.Deck
             .Select(x => x.ToNonBattleCard(hero))
             .GroupBy(x => x.Name)
-            .OrderBy(x => x.First().Rarity)
+            .OrderBy(x => x.First().Cost.CostSortOrder())
+            .ThenBy(x => x.First().Rarity)
             .ThenBy(x => x.Key)
             .Select(x => InitCardInDeckButton(x.First()))
             .ToList(), x => {},

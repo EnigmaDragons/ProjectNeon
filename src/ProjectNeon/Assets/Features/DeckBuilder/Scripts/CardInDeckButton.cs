@@ -1,16 +1,14 @@
 ﻿using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
 {
-    [SerializeField] private TextMeshProUGUI cardNameText;
-    [SerializeField] private TextMeshProUGUI countText;
+    [SerializeField] private SimpleDeckCardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private HoverCard hoverCard;
 
     private Canvas _canvas;
-    private Maybe<Card> _card;
+    private Maybe<Card> _card = Maybe<Card>.Missing();
     private CardTypeData _cardType;
     private int _count;
     private GameObject _hoverCard;
@@ -21,6 +19,7 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
     
     public void Init(CardTypeData c)
     {
+        _card = Maybe<Card>.Missing();
         _cardType = c;
         UpdateInfo();
     }
@@ -59,7 +58,10 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
     private void UpdateInfo()
     {
         _count = state.SelectedHeroesDeck.Deck.Count(x => x.Name == _cardType.Name);
-        cardNameText.text = _cardType.Name;
-        countText.text = _count.ToString();
+        if (_card != null && _card.IsPresent)
+            presenter.Initialized(_count, _card.Value);
+        else
+            presenter.Initialized(_count, _cardType);
+        presenter.BindLeftClickAction(RemoveCard);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
     private CardTypeData _cardType;
     private int _count;
     private GameObject _hoverCard;
+    private Action _leftClickAction = () => { };
 
     private void Awake() => InitCanvasIfNeeded();
     private void OnDestroy() => OnExit();
@@ -33,6 +35,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
         _count = count;
         _card = Maybe<Card>.Missing();
         _cardType = c;
+        _leftClickAction = () => { };
         Render();
         return this;
     }
@@ -42,8 +45,14 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
         _count = count;
         _card = c;
         _cardType = c.BaseType;
+        _leftClickAction = () => { };
         Render();
         return this;
+    }
+
+    public void BindLeftClickAction(Action a)
+    {
+        _leftClickAction = a;
     }
 
     private void InitCanvasIfNeeded()
@@ -98,6 +107,9 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
     public void OnPointerExit(PointerEventData eventData) => OnExit();
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (eventData.button == PointerEventData.InputButton.Left)
+            _leftClickAction();
+        
         if (eventData.button == PointerEventData.InputButton.Right)
             if (_card.IsPresent)
                 Message.Publish(new ShowDetailedCardView(_card.Value));
