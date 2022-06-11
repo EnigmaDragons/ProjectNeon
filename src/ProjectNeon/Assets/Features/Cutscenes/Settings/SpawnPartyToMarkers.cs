@@ -7,6 +7,8 @@ public class SpawnPartyToMarkers : MonoBehaviour
     [SerializeField] private Party party;
     [SerializeField] private bool executeOnAwake;
 
+    public Party Party => party;
+    
     private void Awake()
     {
         if (executeOnAwake)

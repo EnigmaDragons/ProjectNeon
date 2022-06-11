@@ -49,14 +49,14 @@ public class BattleConclusion : OnMessage<BattleFinished>
                 Message.Publish(new TutorialWon());
                 adventureProgress.AdventureProgress.Advance();
                 Message.Publish(new AutoSaveRequested());
-                conclusion.Set(true, adventure.Adventure.VictoryConclusion, CurrentGameData.Data.Stats);
+                conclusion.Set(true, adventure.Adventure.VictoryConclusion, CurrentGameData.Data.Stats, partyState.BaseHeroes);
                 CurrentGameData.Clear();
                 this.ExecuteAfterDelay(() => Message.Publish(new NavigateToNextTutorialFlow()), secondsBeforeGameOverScreen);   
             }
             else
             {
                 state.AccumulateRunStats();
-                this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion), secondsBeforeGameOverScreen);   
+                this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion, partyState.BaseHeroes), secondsBeforeGameOverScreen);   
             }
         }
         else
@@ -96,7 +96,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
             Log.Info("Navigating to defeat screen");
             AllMetrics.PublishGameLost();
             state.AccumulateRunStats();
-            conclusion.Set(false, adventure.Adventure.DefeatConclusion, CurrentGameData.Data.Stats);
+            conclusion.Set(false, adventure.Adventure.DefeatConclusion, CurrentGameData.Data.Stats, partyState.BaseHeroes);
             CurrentGameData.Clear();
             this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
         }
