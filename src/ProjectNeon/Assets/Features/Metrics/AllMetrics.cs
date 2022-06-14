@@ -51,8 +51,11 @@ public static class AllMetrics
     public static void PublishHeroSelected(string selectedHero, string[] options, string[] existingPartyHeroes)
         => Send("heroAdded", new HeroSelectedData {heroName = selectedHero, heroOptions = options, currentPartyHeroes = existingPartyHeroes});
 
+    public static void PublishAdventureProgress(string adventureName, float totalProgress)
+        => Send("adventureProgress", new AdventureProgressData {adventureName = adventureName, totalProgress = totalProgress});
+    
     public static void PublishDecks(string[] heroesNames, string[][] decks)
-        => Send("battleDeck", new DeckData {
+        => Send("battleDeck", () => new DeckData {
             heroes = heroesNames, 
             deck1 = decks.IndexValueOrDefault(0, Array.Empty<string>), 
             deck2 = decks.IndexValueOrDefault(1, Array.Empty<string>),
@@ -99,7 +102,7 @@ public static class AllMetrics
     private static void OnResponse(HttpResponseMessage resp)
     {
         if (!resp.IsSuccessStatusCode)
-            Log.Error($"Failed to submit Error Message: {resp.StatusCode}");
+            Log.Error($"Failed to submit Metric: {resp.StatusCode}");
     }
 
     [Serializable]
@@ -161,5 +164,12 @@ public static class AllMetrics
         public string[] deck1;
         public string[] deck2;
         public string[] deck3;
+    }
+
+    [Serializable]
+    private class AdventureProgressData
+    {
+        public string adventureName;
+        public float totalProgress;
     }
 }
