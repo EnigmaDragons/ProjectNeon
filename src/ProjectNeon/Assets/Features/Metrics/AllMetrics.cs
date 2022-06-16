@@ -62,6 +62,9 @@ public static class AllMetrics
             deck3 = decks.IndexValueOrDefault(2, Array.Empty<string>),
         });
 
+    public static void PublishCardShopPurchases(string[] cardOptions, string[] cardPurchases)
+        => Send("cardShopPurchase", new CardShopPurchaseData { options = cardOptions, purchases = cardPurchases });
+
     private static void Send(string eventName, Func<object> createPayload)
     {
         try
@@ -171,5 +174,12 @@ public static class AllMetrics
     {
         public string adventureName;
         public float totalProgress;
+    }
+
+    [Serializable]
+    private class CardShopPurchaseData
+    {
+        public string[] options;
+        public string[] purchases;
     }
 }
