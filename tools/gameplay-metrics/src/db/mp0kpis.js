@@ -89,37 +89,12 @@ const getHeroSelectionDetails = async (metrics) => {
   return asPickSummary(result);
 }
 
-const getHeroWinRates = async (metrics) => {
-  const winLossTable = await getWinLossTable(metrics);
-
-  const heroesAddedEvents = await metrics.queryEventsAsync(metrics.eventTypes.heroAdded);
-  const result = ({});
-  heroesAddedEvents.forEach(x => {
-    if (x.RunId === undefined) return;  
-    const victory = winLossTable[asKey(x.RunId)]; 
-    if (victory === undefined) return;
-
-    const e = JSON.parse(x.EventData);
-    const hero = e.heroName;
-
-    const key = asKey(hero);
-    if (!result[key])
-      result[key] = { wins: 0, losses: 0 };
-    if (victory === true)
-      result[key].wins++;
-    if (victory === false)
-      result[key].losses++;
-
-  });
-  return convertObjectToNamedArray(enrichedWithRates(result, x => x.wins, x => x.wins + x.losses))
-    .sort((a, b) => ((b.rate - a.rate) * 100) 
-      + ((b.wins - a.wins) * 10) 
-      + a.losses - b.losses);
-}
-
 const getHeroSummary = async (metrics) => {
+  const winLossTable = await getWinLossTable(metrics);
+  const winRate = Object.values(winLossTable).filter(x => x).length / Object.values(winLossTable).length;
   const selectionDetails = await getHeroSelectionDetails(metrics);
-  const winRateDetails = await getHeroWinRates(metrics);
+  const winRateDetails = await getHeroWinRatesFromTable(metrics, winLossTable);
+
   const result = ({});
   selectionDetails
     .map(x => ({ name: x.name, selected: x.selected, presented: x.presented, pickRate: x.rate }))
@@ -128,14 +103,20 @@ const getHeroSummary = async (metrics) => {
     .map(x => ({ name: x.name, wins: x.wins, losses: x.losses, winRate: x.rate }))
     .forEach(x => result[asKey(x.name)] = ({ ...result[asKey(x.name)], ...x }) );
   return convertObjectToNamedArray(result)
-    .map(x => ({ ...x, impact: getImpact(x.pickRate, x.selected, x.wins, x.losses) }))
+    .map(x => ({ ...x, impact: getImpact(x.pickRate, x.selected, x.wins, x.losses, winRate) }))
     .sort((a,b) => b.impact - a.impact);
 }
 
-const getCardPickWinRates = async (metrics) => {
-  const winLossTable = await getWinLossTable(metrics);
+const getHeroWinRatesFromTable = async (metrics, winLossTable) => {
+  return await getWinRatesFromTable(metrics, metrics.eventTypes.heroAdded, winLossTable, e => e.heroName);
+}
 
-  const events = await metrics.queryEventsAsync(metrics.eventTypes.rewardCardSelected);
+const getCardPickWinRatesFromTable = async (metrics, winLossTable) => {
+  return await getWinRatesFromTable(metrics, metrics.eventTypes.rewardCardSelected, winLossTable, e => e.selected);
+}
+
+const getWinRatesFromTable = async (metrics, eventType, winLossTable, selectItemKey) => {
+  const events = await metrics.queryEventsAsync(eventType);
   const result = ({});
   events.forEach(x => {
     if (x.RunId === undefined) return;
@@ -144,19 +125,13 @@ const getCardPickWinRates = async (metrics) => {
     if (victory === undefined) return;
 
     const e = JSON.parse(x.EventData);
-    const card = e.selected;
-
-    const key = asKey(card);
+    const key = asKey(selectItemKey(e));
     if (!result[key])
-      result[key] = { 
-        wins: ({}), 
-        losses: ({}), 
-      };
+      result[key] = { wins: ({}), losses: ({}) };
     if (victory === true)
       result[key].wins[runKey] = true;
     if (victory === false)
       result[key].losses[runKey] = true;
-
   });
   const summary = convertObjectToNamedArray(result).map(r => ({ ...r, wins: Object.keys(r.wins).length, losses: Object.keys(r.losses).length }));
   return enrichedWithRates(summary, x => x.wins, x => x.wins + x.losses)
@@ -221,7 +196,9 @@ const asKey = (str) => !str
     .replaceAll(']', '')
     .replaceAll('"', '')
     .replaceAll('-', '')
-    .replaceAll(',', '');
+    .replaceAll(',', '')
+    .replaceAll(':', '')
+    .replaceAll('\\n', '');
 
 const getCardSelectionDetails = async (metrics) => {
   const cardsPicked = await metrics.queryCardsPicked();
@@ -238,21 +215,23 @@ const getCardSelectionDetails = async (metrics) => {
   return asPickSummary(result);
 }
 
-const getImpact = (pickRate, numTimesSelected, numWins, numLosses) => {
-  return naiveRound((pickRate * 10) * numTimesSelected * getWinImpactFactor(numWins, numLosses), 2);
+const getImpact = (pickRate, numTimesSelected, numWins, numLosses, versionWinrate) => {
+  return naiveRound((pickRate * 10) * numTimesSelected * getWinImpactFactor(numWins, numLosses, versionWinrate), 2);
 }
 
-const getWinImpactFactor = (numWins, numLosses) => {
+const getWinImpactFactor = (numWins, numLosses, versionWinrate) => {
   if (numWins + numLosses === 0 || numWins === numLosses)
     return 1;
   
-  const result = ((numWins / (numWins + numLosses)) - 0.5) * 10;
+  const result = ((numWins / (numWins + numLosses)) - versionWinrate) * 10;
   return result;
 }
 
 const getCardSummary = async (metrics) => {
+  const winLossTable = await getWinLossTable(metrics);
+  const winRate = Object.values(winLossTable).filter(x => x).length / Object.values(winLossTable).length;
   const selectionDetails = await getCardSelectionDetails(metrics);
-  const winRateDetails = await getCardPickWinRates(metrics);
+  const winRateDetails = await getCardPickWinRatesFromTable(metrics, winLossTable);
   const result = ({});
   selectionDetails
     .map(x => ({ name: x.name, selected: x.selected, presented: x.presented, pickRate: x.rate }))
@@ -261,9 +240,68 @@ const getCardSummary = async (metrics) => {
     .map(x => ({ name: x.name, wins: x.wins, losses: x.losses, winRate: x.rate }))
     .forEach(x => result[asKey(x.name)] = ({ ...result[asKey(x.name)], ...x }));
   return convertObjectToNamedArray(result)
-    .map(x => ({ ...x, impact: getImpact(x.pickRate, x.selected, x.wins, x.losses) }))
+    .map(x => ({ ...x, impact: getImpact(x.pickRate, x.selected, x.wins, x.losses, winRate) }))
     .sort((a,b) => b.impact - a.impact);
 }
 
+const createLevelUpItemKey = (itemName) => asKey(`Item${itemName}`);
+const createItemHeroLevelKey = (p, itemName) => asKey(`Hero${p.heroName}Level${p.level}${itemName}`);
+
+const getLevelUpSelectionDetails = async (metrics) => {
+  const picked = await metrics.queryLevelUpsPicked();
+  const itemResult = ({});
+  const heroLevelResult = ({});
+  picked.forEach(p => {
+    p.options.forEach(o => {
+      const heroKey = createItemHeroLevelKey(p, o);
+      if (!heroLevelResult[heroKey])
+        heroLevelResult[heroKey] = { selected: 0, presented: 0 };
+      heroLevelResult[heroKey].presented++;
+
+      const key = createLevelUpItemKey(o);
+      if (!itemResult[key])
+        itemResult[key] = { selected: 0, presented: 0 };
+      itemResult[key].presented++;
+    });
+    heroLevelResult[createItemHeroLevelKey(p, p.selection)].selected++;
+    itemResult[createLevelUpItemKey(p.selection)].selected++;
+  });
+  return ({ items: asPickSummary(itemResult), heroes: asPickSummary(heroLevelResult) });
+}
+
+const getLevelUpSummary = async (metrics) => {
+  const winLossTable = await getWinLossTable(metrics);
+  const winRate = Object.values(winLossTable).filter(x => x).length / Object.values(winLossTable).length;
+  const selectionDetails = await getLevelUpSelectionDetails(metrics);
+  
+  const itemWinRateDetails = await getWinRatesFromTable(metrics, metrics.eventTypes.heroLevelUp, 
+    winLossTable, e => createLevelUpItemKey(e.selection));
+  const itemResult = ({});
+  selectionDetails.items
+    .map(x => ({ name: x.name, selected: x.selected, presented: x.presented, pickRate: x.rate }))
+    .forEach(x => itemResult[asKey(x.name)] = { ...x, winRate: NaN, wins: 0, losses: 0,  });
+  itemWinRateDetails
+    .map(x => ({ name: x.name, wins: x.wins, losses: x.losses, winRate: x.rate }))
+    .forEach(x => itemResult[asKey(x.name)] = ({ ...itemResult[asKey(x.name)], ...x }));
+  const itemSummary = convertObjectToNamedArray(itemResult)
+    .map(x => ({ ...x, impact: getImpact(x.pickRate, x.selected, x.wins, x.losses, winRate) }))
+    .sort((a,b) => b.impact - a.impact);
+
+  const heroItemWinRateDetails = await getWinRatesFromTable(metrics, metrics.eventTypes.heroLevelUp, 
+    winLossTable, e => createItemHeroLevelKey(e, e.selection));
+  const heroItemResult = ({});
+  selectionDetails.heroes
+    .map(x => ({ name: x.name, selected: x.selected, presented: x.presented, pickRate: x.rate }))
+    .forEach(x => heroItemResult[asKey(x.name)] = { ...x, winRate: NaN, wins: 0, losses: 0,  });
+    heroItemWinRateDetails
+    .map(x => ({ name: x.name, wins: x.wins, losses: x.losses, winRate: x.rate }))
+    .forEach(x => heroItemResult[asKey(x.name)] = ({ ...heroItemResult[asKey(x.name)], ...x }));
+  const heroItemSummary = convertObjectToNamedArray(heroItemResult)
+    .map(x => ({ ...x, impact: getImpact(x.pickRate, x.selected, x.wins, x.losses, winRate) }))
+    .sort((a,b) => a.name.localeCompare(b.name));
+
+  return ({ items: itemSummary, heroes: heroItemSummary });
+}
+
 module.exports = { getPlaySummary, getHeroSummary, getCardSummary,
-  getHeroSelectionDetails, getCardSelectionDetails, getAttritionFactors, getHeroWinRates, getCardPickWinRates, };
+  getHeroSelectionDetails, getCardSelectionDetails, getAttritionFactors, getLevelUpSelectionDetails, getLevelUpSummary };

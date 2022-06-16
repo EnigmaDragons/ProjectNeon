@@ -11,10 +11,17 @@ const eventTypes = mp0Metrics.eventTypes;
 const version = '0.0.43';
 const metrics = mp0Metrics.createByVersion(db, version);
 
-const report = ({ version, playSummary: null, heroSummary: null, cardSummary: null });
+const report = ({ version, playSummary: null, heroSummary: null, cardSummary: null, levelUpSummary: null });
 
 const writeReport = () => fs.writeFileSync(`./${version}-report.json`, JSON.stringify(report, null, 2));
 
+kpis.getLevelUpSummary(metrics).then(details => {
+    report.levelUpSummary = details;
+    //console.log({ version, details });
+    writeReport();
+    fs.writeFileSync(`./${version}-level-up-items-report.csv`, toCsv(details.items)); 
+    fs.writeFileSync(`./${version}-level-up-heroes-report.csv`, toCsv(details.heroes)); 
+  });
 kpis.getPlaySummary(metrics).then(details => {
   report.playSummary = details;
   //console.log({ version, details });

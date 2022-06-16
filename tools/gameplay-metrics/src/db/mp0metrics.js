@@ -50,6 +50,10 @@ const queryBattleSummary = (db, version) => {
   return db.queryAsyncEventData(`SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType = '${eventTypes.battleSummary}'`);
 }
 
+const queryLevelUpsPicked = (db, version) => {  
+  return db.queryAsyncEventData(`SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType = '${eventTypes.heroLevelUp}'`);
+}
+
 const createByVersion = (db, version) => ({
   eventTypes: eventTypes,
   queryEvents: (eventType, onEvents) => queryEvents(db, version, eventType, onEvents),
@@ -59,6 +63,7 @@ const createByVersion = (db, version) => ({
   queryGamesWonOrLost: () => queryGamesWonOrLost(db, version),
   queryHeroesPicked: () => queryHeroesPicked(db, version),
   queryCardsPicked: () => queryCardsPicked(db, version),
+  queryLevelUpsPicked: () => queryLevelUpsPicked(db, version),
   queryBattleSummaries: () => queryBattleSummary(db, version),
 });
 
