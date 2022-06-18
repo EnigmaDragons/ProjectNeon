@@ -83,16 +83,6 @@ public class QualityAssurance
         return (numEnemiesCount, badEnemies);
     }
 
-    private static void QaAllCards()
-    {
-        var cards = ScriptableExtensions.GetAllInstances<CardType>();
-        foreach (var card in cards)
-        {
-            if (string.Equals(card.Cost.ResourceType?.Name, "PrimaryResource"))
-                Log.Error($"Card: {card.Name} has a resource cost of primary resource");
-        }
-    }
-
     private static void ValidateEnemyPrefab(Enemy e, List<string> issues)
     {
         if (!e.Prefab)
