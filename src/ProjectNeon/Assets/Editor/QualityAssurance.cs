@@ -25,6 +25,7 @@ public class QualityAssurance
     {
         Log.Info("QA - Started");
         QaAllEnemies();
+        QaAllCards();
     }
 
     private static void QaAllEnemies()
@@ -51,6 +52,16 @@ public class QualityAssurance
         Log.InfoOrError($"QA - Enemies: {numEnemiesCount - badEnemies.Count} out of {numEnemiesCount} passed inspection.", badEnemies.Any());
         badEnemies.ForEach(e => Log.Error($"{e}"));
         Log.Info($"--------------------------------------------------------------");
+    }
+
+    private static void QaAllCards()
+    {
+        var cards = ScriptableExtensions.GetAllInstances<CardType>();
+        foreach (var card in cards)
+        {
+            if (string.Equals(card.Cost.ResourceType?.Name, "PrimaryResource"))
+                Log.Error($"Card: {card.Name} has a resource cost of primary resource");
+        }
     }
 
     private static void ValidateEnemyPrefab(Enemy e, List<string> issues)

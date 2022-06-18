@@ -14,6 +14,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
     protected bool _debugLoggingEnabled = true;
     protected bool _finishTriggered = false;
     protected bool _waitFinishTriggered = false;
+    private bool _skippable = true;
     
     protected readonly List<CutsceneCharacter> Characters = new List<CutsceneCharacter>();
     
@@ -113,7 +114,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         if (_finishTriggered)
             return;
         
-        if (_currentSegment != null)
+        if (_currentSegment != null && _skippable)
         {
             DebugLog("Advance Cutscene");
             _currentSegment.FastForwardToFinishInstantly();
@@ -160,6 +161,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
 
         DebugLog("Show Cutscene Segment");
         HidePreviousSegmentStuff();
+        _skippable = msg.SegmentData.SegmentType != CutsceneSegmentType.Wait; 
         _currentSegment = AllCutsceneSegments.Create(msg.SegmentData);
         _currentSegment.Start();
     }
