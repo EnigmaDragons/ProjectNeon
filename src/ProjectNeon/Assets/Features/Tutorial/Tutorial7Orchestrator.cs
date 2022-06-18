@@ -25,7 +25,7 @@ public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     {
         if (msg.CardName == "Shockwave" && !_hasShowedTip)
         {
-            Message.Publish(new ShowHeroBattleThought(1, "Tip: top-right corner of a card shows the targeting scope"));
+            Message.Publish(new ShowHeroBattleThought(1, "I Told you I didn't need to see you to hit you"));
             _hasShowedTip = true;
         }
     }

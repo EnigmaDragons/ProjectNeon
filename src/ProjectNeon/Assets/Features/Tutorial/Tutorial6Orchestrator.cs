@@ -6,6 +6,7 @@ public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private const string _callerId = "Tutorial6Orchestrator";
     
     private bool _firstTurnFinished;
+    private bool _gainedShields;
     
     private void Start()
     {
@@ -24,8 +25,12 @@ public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     
     protected override void Execute(CardResolutionStarted msg)
     {
-        if (msg.Card.Card.Name == "Powered Shield")
+        if (msg.Card.Card.Name == "Powered Shield" && !_gainedShields)
+        {
+            _gainedShields = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerShields, true, _callerId));
+            Message.Publish(new ShowHeroBattleThought(4, "Damn shields! This is going to be annoying to get through"));
+        }
     }
 
     protected override void Execute(BeginTargetSelectionRequested msg)
