@@ -10,28 +10,32 @@ public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointer
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private TextMeshProUGUI numCopiesLabel;
 
-    public void InitInfoOnly(Card card, Action action)
+    public CardInLibraryButton InitInfoOnly(Card card, Action action)
     {
         presenter.Set(card, action);
         numCopiesLabel.text = "";
+        return this;
     }
 
-    public void InitInfoOnly(CardTypeData card)
+    public CardInLibraryButton InitInfoOnly(CardTypeData card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "";
+        return this;
     }
 
-    public void Init(Card card, int numTotal, int numAvailable)
+    public CardInLibraryButton Init(Card card, int numTotal, int numAvailable)
     {
         presenter.Set(card, CreateCardAction(card, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
+        return this;
     }
     
-    public void Init(CardTypeData card, int numTotal, int numAvailable)
+    public CardInLibraryButton Init(CardTypeData card, int numTotal, int numAvailable)
     {
         presenter.Set(card, CreateCardAction(card, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
+        return this;
     }
 
     private Action CreateCardAction(CardTypeData c, int numAvailable) =>
@@ -44,16 +48,20 @@ public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointer
     private void UpdateNumberText(int numTotal, int numAvailable) 
         => numCopiesLabel.text = $"{numAvailable}/{numTotal}";
 
-    public void InitBasic(CardTypeData card)
+    public void SetNumberText(string value) => numCopiesLabel.text = value;
+    
+    public CardInLibraryButton InitBasic(CardTypeData card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "Basic";
+        return this;
     }
     
-    public void InitBasic(Card card)
+    public CardInLibraryButton InitBasic(Card card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "Basic";
+        return this;
     }
 
     public void AddCard(CardTypeData card)

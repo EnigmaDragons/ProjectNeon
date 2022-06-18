@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 2915648417636701911}
   - component: {fileID: 2122512008036683779}
   - component: {fileID: 8544452979038640608}
+  - component: {fileID: 4836491249811927783}
   m_Layer: 0
   m_Name: DeckUIV2
   m_TagString: Untagged
@@ -533,6 +534,34 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4836491249811927783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4650624640807934854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696a8c0e53d8446e877820ad00842749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowedButtons: 01000000
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 7f807cc2eef22b842be1f4d93833b2b6, type: 2}
+        m_TargetAssemblyTypeName: DecklistEventPublisher, GameAssembly
+        m_MethodName: ShowDeckCards
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5985885304616074751
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,7 +712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
