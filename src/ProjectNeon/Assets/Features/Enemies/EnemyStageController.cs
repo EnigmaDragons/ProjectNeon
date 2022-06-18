@@ -36,6 +36,9 @@ public class EnemyStageController : OnMessage<ShowEnemyOnStage>
             var shield = enemyBody.GetComponentInChildren<ShieldVisual>();
             if (shield != null)
                 shield.Init(e.AsMember(InfoMemberId.Get()));
+            var floating = enemyBody.GetComponentInChildren<Floating>();
+            if (floating != null)
+                floating.enabled = false;
             foreach (Transform c in enemyBody.transform)
             {
                 if (c.name.ContainsAnyCase("Shadow"))
