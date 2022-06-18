@@ -20,7 +20,7 @@ public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTar
 
     private IEnumerator ShowTutorialAfterDelay()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         Message.Publish(new ShowTutorialByName(_callerId));
     }
 

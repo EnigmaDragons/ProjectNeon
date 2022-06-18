@@ -17,7 +17,7 @@ public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardReso
 
     private IEnumerator ShowTutorialAfterDelay()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(9);
         Message.Publish(new ShowTutorialByName(_callerId));
     }
     
