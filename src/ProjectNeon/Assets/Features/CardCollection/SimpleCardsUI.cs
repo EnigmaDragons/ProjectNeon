@@ -6,12 +6,14 @@ public class SimpleCardsUI : MonoBehaviour
 {
     [SerializeField] private GameObject deckParent;
     [SerializeField] private CardInLibraryButton cardPrototype;
+    [SerializeField] private GameObject noCardsInZone;
     [SerializeField] private TextMeshProUGUI headerLabel;
     
     public void Init(string header, Card[] cards)
     {
         headerLabel.text = header;
         deckParent.DestroyAllChildren();
+        noCardsInZone.SetActive(cards.Length == 0);
         var sortedCards = cards
             .OrderBy(x => x.Owner.Id)
             .ThenBy(x => x.Cost.CostSortOrder())
