@@ -15,7 +15,7 @@ public class Library : ScriptableObject
 
     public BaseHero NoHero => noHero;
     public Maybe<BaseHero> MaybeFeaturedHero => featuredHero != null ? featuredHero : Maybe<BaseHero>.Missing();
-    public BaseHero[] UnlockedHeroes => unlockedHeroes;
+    public BaseHero[] UnlockedHeroes => unlockedHeroes.Where(h => !h.IsDisabled).ToArray();
     public Adventure[] UnlockedAdventures => unlockedAdventures;
 
     public BaseHero HeroById(int id) => allHeroes.GetHeroByIdOrDefault(id);
