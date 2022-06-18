@@ -13,10 +13,10 @@ public class AdventureProgress2 : AdventureProgressBase
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
     [SerializeField] private List<int> finishedCurrentStageHeatUpEvents = new List<int>();
     [SerializeField] private bool playerReadMapPrompt = false;
-    
+
+    public override int AdventureId => currentAdventure.Adventure.Id;
     public Adventure CurrentAdventure => currentAdventure.Adventure;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
-    public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
     public override int CurrentStageProgress => currentMap3.Progress;
@@ -149,7 +149,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public override GameAdventureProgressData GetData()
         => new GameAdventureProgressData
         {
-            AdventureId = CurrentAdventureId,
+            AdventureId = AdventureId,
             Type = GameAdventureProgressType.V2,
             CurrentChapterIndex = CurrentChapterIndex,
             CurrentChapterFinishedHeatUpEvents = FinishedCurrentStageHeatUpEvents,

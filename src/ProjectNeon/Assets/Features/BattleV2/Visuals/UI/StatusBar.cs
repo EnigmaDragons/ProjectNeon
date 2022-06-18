@@ -75,6 +75,11 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     {
         var statuses = new List<CurrentStatusValue>();
 
+        var cardPlayAmount = CeilingInt(_member.State[StatType.ExtraCardPlays]);
+        if (cardPlayAmount > 1)
+            statuses.Add(new CurrentStatusValue { Type = StatType.ExtraCardPlays.ToString(), Icon = icons[StatType.ExtraCardPlays].Icon, Text = cardPlayAmount.ToString(), 
+                Tooltip = $"Plays {cardPlayAmount} Cards per turn"});
+        
         if (_member.State.HasStatus(StatusTag.Invulnerable))
             statuses.Add(new CurrentStatusValue { Type = StatusTag.Invulnerable.ToString(), Icon = icons[StatusTag.Invulnerable].Icon, Tooltip = "Invincible to all Damage" });
         
@@ -84,7 +89,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
                 
         foreach (var s in _member.State.CustomStatuses())
             statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip, OriginatorId = s.OriginatorId });;
-        
+
         AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => $"Dodges the next {v} attacks");
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => $"Reduces attack damage taken by {v}");
         AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => $"Reduces magic damage taken by {v}");
@@ -116,10 +121,6 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => $"Received {v} Injuries, applied at end of battle");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Marked, true, v => $"Marked. Subject to Assassination Effects.");
         AddStatusIconIfApplicable(statuses, TemporalStatType.PreventResourceGains, true, v => $"Cannot gain resources for {v} Turns");
-
-        var extraCardBuffAmount = CeilingInt(_member.State[StatType.ExtraCardPlays] - _member.State.BaseStats.ExtraCardPlays());
-        if (extraCardBuffAmount != 0)
-            statuses.Add(new CurrentStatusValue { Type = StatType.ExtraCardPlays.ToString(), Icon = icons[StatType.ExtraCardPlays].Icon, Text = extraCardBuffAmount.ToString(), Tooltip = $"Play {extraCardBuffAmount} Extra Cards"});
 
         var dotCombined = Combine(_member.State.StatusesOfType(StatusTag.DamageOverTime),
             s => s.Status.CustomText.Select(t => t, $"Takes {s.Amount.Value} at the Start of the next {s.RemainingTurns.Value} turns"),

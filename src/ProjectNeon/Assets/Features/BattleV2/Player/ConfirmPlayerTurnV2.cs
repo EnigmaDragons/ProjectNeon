@@ -14,6 +14,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     private bool _confirmRequestedManually;
     private bool _alreadyConfirmedThisTurn = false;
     private Vector3 _confirmUiScale;
+    private BattleResolutions _battleResolutions;
 
     private void Awake()
     {
@@ -21,12 +22,15 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         confirmUi.gameObject.SetActive(false);
         confirmUi.onClick.AddListener(ConfirmEarly);
     }
+
+    public void Init(BattleResolutions b) => _battleResolutions = b;
     
     private void OnEnable()
     {
         Message.Subscribe<BattleStateChanged>(msg => UpdateState(msg), this);
         Message.Subscribe<BeginPlayerTurnConfirmation>(_ => OnConfirmationRequested(), this);
         Message.Subscribe<CheckForAutomaticTurnEnd>(msg => CheckForAutomaticTurnEnd(), this);
+        Message.Subscribe<CardAndEffectsResolutionFinished>(msg => CheckForAutomaticTurnEnd(), this);
     }
     
     private void OnDisable()
@@ -44,9 +48,13 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
 
     private void CheckForAutomaticTurnEnd()
     {
+        if (_battleResolutions != null && !_battleResolutions.IsDoneResolving)
+            return;
+        
         if (WillAutomaticallyEndTurn())
         {
-            DevLog.Write($"No playable cards. Requesting early turn Confirmation. Hand Size {battleState.PlayerCardZones.HandZone.Cards.Length}. Num Cycles {battleState.NumberOfRecyclesRemainingThisTurn}");
+            DevLog.Write($"No playable cards. Requesting early turn Confirmation. " +
+                         $"Hand Size {battleState.PlayerCardZones.HandZone.Cards.Length}. Num Cycles {battleState.NumberOfRecyclesRemainingThisTurn}");
             Confirm();
         }
     }

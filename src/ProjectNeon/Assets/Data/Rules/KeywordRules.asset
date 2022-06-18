@@ -41,7 +41,7 @@ MonoBehaviour:
     Value: '<b>Vulnerable</b>
 
 
-      Takes an additional 33% damage. Lasts for X
+      Takes an additional 50% damage. Lasts for X
       turns.'
   - title: X Cost
     Key:
@@ -407,3 +407,13 @@ MonoBehaviour:
 
 
       Immediately gain Stealth. Works even if Prominent. '
+  - title: Debuffs
+    Key:
+      UseConstant: 1
+      ConstantValue: Debuffs
+      Variable: {fileID: 11400000, guid: 1dfa209aa72491b45aa3c27a38739cfd, type: 2}
+    Value: '<b>Debuffs</b>
+
+
+      Any temporary negative effect applied to a character.
+      Includes damage over time, vulnerable, blind, disabled, etc...'

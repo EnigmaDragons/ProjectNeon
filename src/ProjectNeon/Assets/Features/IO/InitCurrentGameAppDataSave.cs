@@ -18,5 +18,11 @@ public class InitCurrentGameAppDataSave : MonoBehaviour
         
         CurrentAcademyData.Init(new JsonFileStored<AcademyData>(Path.Combine(Application.persistentDataPath, "academy.json"), 
             () => new AcademyData()));
+
+        var progressStored = new JsonFileStored<ProgressionData>(Path.Combine(Application.persistentDataPath, "progress.json"),
+                () => new ProgressionData());
+        if (!progressStored.FileExists())
+            progressStored.Write(d => d);
+        CurrentProgressionData.Init(progressStored);
     }
 }

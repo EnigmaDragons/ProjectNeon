@@ -19,6 +19,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private bool setupOnStart;
     [SerializeField] private CurrentCutscene cutscene;
     [SerializeField] private BattleCutscenePresenter battleCutscenePresenter;
+    [SerializeField] private ConfirmPlayerTurnV2 confirm;
 
     private bool _triggeredBattleFinish;
     private bool _playerTurnConfirmed = false;
@@ -29,6 +30,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     {
         state.SetPhase(BattleV2Phase.NotBegun);
         cards.ClearAll();
+        confirm.Init(resolutions);
     }
     
     public void Start()

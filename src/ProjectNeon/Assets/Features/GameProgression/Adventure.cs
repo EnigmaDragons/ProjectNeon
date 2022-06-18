@@ -61,7 +61,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     public bool IsV4 => stages != null && stages.Any();
     public bool IsV5 => v5Stages != null && v5Stages.Any();
 
-    public bool IsCompleted => isCompleted;
+    public bool IsCompleted => CurrentProgressionData.Data.Completed(Id);
     
     public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation);
     public string LockConditionExplanation => lockConditionExplanation ?? "";

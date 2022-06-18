@@ -15,9 +15,9 @@ public class AdventureProgressV5 : AdventureProgressBase
 
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
 
+    public override int AdventureId => currentAdventure.Adventure.Id;
     public override string AdventureName => currentAdventure.Adventure.MapTitle;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
-    private int CurrentAdventureId => currentAdventure.Adventure.Id;
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     private float Progress => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
@@ -152,7 +152,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override GameAdventureProgressData GetData() 
         => new GameAdventureProgressData
         {
-             AdventureId = CurrentAdventureId,
+             AdventureId = AdventureId,
              Type = GameAdventureProgressType.V5,
              CurrentChapterIndex = currentChapterIndex,
              CurrentSegmentIndex = currentSegmentIndex,
