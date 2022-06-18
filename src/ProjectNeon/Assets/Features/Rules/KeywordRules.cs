@@ -24,6 +24,7 @@ public static class KeywordRules
     public static readonly string Quick = "Quick";
     public static readonly string SelfDestruct = "SelfDestruct";
     public static readonly string ReStealth = "ReStealth";
+    public static readonly string Debuffs = "Debuffs";
 
 
     private static readonly string[] RulesByImportanceArr = {
@@ -60,6 +61,7 @@ public static class KeywordRules
         "Critical",
         PrimaryStat,
         PlayerStatType.CardCycles.ToString(),
+        Debuffs,
         "Swap",
         "SingleUse",
         "X-Cost",
@@ -109,6 +111,8 @@ public static class KeywordRules
         rulesToShow.AddIf(TemporalStatType.Lifesteal.ToString(), description.ContainsAnyCase(TemporalStatType.Lifesteal.ToString()));
         rulesToShow.AddIf(Afflicted, description.ContainsAnyCase("Afflict"));
         rulesToShow.AddIf(Motionless, description.ContainsAnyCase(Motionless));
+        rulesToShow.AddIf(Debuffs, description.ContainsAnyCase(Debuffs));
+        rulesToShow.AddIf(Debuffs, description.ContainsAnyCase("Debuff"));
     }
 
     public static void AddAllMatchingEffectScopeRules(List<string> rulesToShow, EffectData e, params string[] scopes) 
