@@ -85,7 +85,7 @@ public sealed class MemberState : IStats
     public int ResourceAmount(string resourceType) => _counters.TryGetValue(resourceType, out var r) ? r.Amount : 0;
     public float this[StatType statType] => statType switch
     {
-        StatType.Damagability => CurrentStats.Damagability() + (IsVulnerable() ? 0.33f : 0),
+        StatType.Damagability => CurrentStats.Damagability() + (IsVulnerable() ? 0.5f : 0),
         StatType.Healability => CurrentStats.Healability() + (IsAntiHeal() ? -0.5f : 0),
         StatType.Power => CurrentStats[PrimaryStat],
         _ => CurrentStats[statType]
