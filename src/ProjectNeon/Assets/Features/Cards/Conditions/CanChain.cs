@@ -15,15 +15,15 @@ public class CanChain : StaticCardCondition
     
     public static bool Evaluate(int memberId, IPlayedCard[] pendingCards, PlayedCardSnapshot[] playedCardsThisTurn)
     {
-        var partyMembersWhoHavePlayedCards = 
-            playedCardsThisTurn
-                .Where(x => x.Member.TeamType == TeamType.Party && x.Card.Speed != CardSpeed.Quick)
-                .Select(x => x.Member.Id)
+        var cardOwnersInPlayOrder = playedCardsThisTurn
+            .Where(x => x.Member.TeamType == TeamType.Party && x.Card.Speed != CardSpeed.Quick)
+            .Select(x => x.Member.Id)
             .Concat(pendingCards
                 .Where(x => x.Member.TeamType == TeamType.Party && x.Card.Speed != CardSpeed.Quick)
-                .Select(p => p.Member.Id))
-            .ToList();
+                .Select(x => x.Member.Id))
+            .Reverse()
+            .ToArray();
 
-        return partyMembersWhoHavePlayedCards.Any() && partyMembersWhoHavePlayedCards.All(x => x.Equals(memberId));
+        return cardOwnersInPlayOrder.Length > 2 && cardOwnersInPlayOrder.Take(3).All(x => x.Equals(memberId));
     }
 }

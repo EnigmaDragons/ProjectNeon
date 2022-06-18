@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Tutorial6Orchestrator : OnMessage<CardResolutionStarted, BeginTargetSelectionRequested, EndOfTurnStatusEffectsResolved>
+public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionStarted, BeginTargetSelectionRequested, EndOfTurnStatusEffectsResolved>
 {
     private const string _callerId = "Tutorial6Orchestrator";
     
@@ -11,6 +12,14 @@ public class Tutorial6Orchestrator : OnMessage<CardResolutionStarted, BeginTarge
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.ClickableControls, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.TrashRecycleDropArea, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerShields, false, _callerId));
+    }
+    
+    protected override void Execute(StartCardSetupRequested msg) => StartCoroutine(ShowTutorialAfterDelay());
+
+    private IEnumerator ShowTutorialAfterDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Message.Publish(new ShowTutorialByName(_callerId));
     }
     
     protected override void Execute(CardResolutionStarted msg)

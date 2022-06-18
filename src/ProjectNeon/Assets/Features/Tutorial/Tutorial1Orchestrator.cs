@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCardSelected, CardClicked, CardDragged, CardResolutionStarted>
@@ -57,7 +58,17 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
         }
     }
 
-    protected override void Execute(StartCardSetupRequested msg) => _hasStarted = true;
+    protected override void Execute(StartCardSetupRequested msg)
+    {
+        _hasStarted = true;
+        StartCoroutine(ShowTutorialAfterDelay());
+    }
+
+    private IEnumerator ShowTutorialAfterDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Message.Publish(new ShowTutorialByName(_callerId));
+    }
 
     protected override void Execute(PlayerCardSelected msg)
     {

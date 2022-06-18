@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Tutorial3Orchestrator : OnMessage<TurnStarted, CardResolutionFinished>
+public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStarted, CardResolutionFinished>
 {
     private const string _callerId = "Tutorial3Orchestrator";
 
@@ -16,6 +17,14 @@ public class Tutorial3Orchestrator : OnMessage<TurnStarted, CardResolutionFinish
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.TrashRecycleDropArea, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PrimaryStat, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerShields, false, _callerId));
+    }
+    
+    protected override void Execute(StartCardSetupRequested msg) => StartCoroutine(ShowTutorialAfterDelay());
+
+    private IEnumerator ShowTutorialAfterDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Message.Publish(new ShowTutorialByName(_callerId));
     }
 
     protected override void Execute(TurnStarted msg) => UpdateHealthTotals();

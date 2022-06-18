@@ -22,7 +22,7 @@ public static class CharacterReactionTypeDisplayWords
     public static readonly Dictionary<CharacterReactionType, string> DisplayWords =
         new Dictionary<CharacterReactionType, string>
         {
-            {CharacterReactionType.ChainCardPlayed, "Chain!"},
+            {CharacterReactionType.ChainCardPlayed, "Finisher!"},
             {CharacterReactionType.BonusCardPlayed, "Bonus Card!"},
             {CharacterReactionType.ReactionCardPlayed, "Reaction!"},
             {CharacterReactionType.Blinded, "Blinded"},
