@@ -31,6 +31,7 @@ public class AssetUpdater
         UpdateAllCorps();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
+        UpdateAllTutorialSlideshows();
         Timed("All Battle VFX", UpdateAllBattleVfx);
         Log.Info("Asset Updates Complete");
     }
@@ -270,6 +271,18 @@ public class AssetUpdater
         all.ForEach(x =>
         {
             x.Effects = effects;
+            EditorUtility.SetDirty(x);
+        });
+    }
+
+    [MenuItem("Neon/Update/Update Tutorial Slideshows")]
+    private static void UpdateAllTutorialSlideshows()
+    {
+        var slideshows = ScriptableExtensions.GetAllInstances<TutorialSlideshow>();
+        var all = ScriptableExtensions.GetAllInstances<AllTutorialSlideshows>();
+        all.ForEach(x =>
+        {
+            x.tutorials = slideshows;
             EditorUtility.SetDirty(x);
         });
     }

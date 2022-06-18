@@ -76,7 +76,7 @@ public static class InterpolatedCardDescriptions
                 sb.Append("<b>Quick:</b> ");
             sb.Append(AutoDescription(effects, owner, xCost));
             sb = new StringBuilder(ShortenRepeatedEffects(sb.ToString()));
-            sb.Append(chainedCard.Select(c => $". {Bold("Chain:")} {c.Name}", ""));
+            sb.Append(chainedCard.Select(c => $". {Bold("Finisher:")} {c.Name}", ""));
             sb.Append(swappedCard.Select(c => $". {Bold("Swap:")} {c.Name}", ""));
             return sb.ToString();
         }

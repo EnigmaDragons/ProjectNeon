@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Tutorial7Orchestrator : OnMessage<CardResolutionFinished>
+public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished>
 {
     private const string _callerId = "Tutorial7Orchestrator";
 
@@ -10,6 +11,14 @@ public class Tutorial7Orchestrator : OnMessage<CardResolutionFinished>
     {
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.ClickableControls, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.TrashRecycleDropArea, false, _callerId));
+    }
+    
+    protected override void Execute(StartCardSetupRequested msg) => StartCoroutine(ShowTutorialAfterDelay());
+
+    private IEnumerator ShowTutorialAfterDelay()
+    {
+        yield return new WaitForSeconds(9);
+        Message.Publish(new ShowTutorialByName(_callerId));
     }
     
     protected override void Execute(CardResolutionFinished msg)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, CardResolutionStarted, ResolutionsFinished>
@@ -34,8 +35,19 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
             }
         }
     }
+
+    protected override void Execute(StartCardSetupRequested msg)
+    {
+        _hasStarted = true;
+        StartCoroutine(ShowTutorialAfterDelay());
+    }
+
+    private IEnumerator ShowTutorialAfterDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Message.Publish(new ShowTutorialByName(_callerId));
+    }
     
-    protected override void Execute(StartCardSetupRequested msg) => _hasStarted = true;
     protected override void Execute(CardResolutionFinished msg) => _hasSwappedToBasic = true;
     protected override void Execute(CardResolutionStarted msg) => Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerResources, true, _callerId));
 
