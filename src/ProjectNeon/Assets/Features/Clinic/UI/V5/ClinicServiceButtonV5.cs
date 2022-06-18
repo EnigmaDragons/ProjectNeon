@@ -12,6 +12,7 @@ public class ClinicServiceButtonV5 : MonoBehaviour
     [SerializeField] private TwoSidedRulesDescriptionPresenter rules;
     [SerializeField] private CorpUiBase[] corpUi;
     [SerializeField] private AllCorps corps;
+    [SerializeField] private CanvasGroup disabledCanvasGroup;
 
     private ClinicServiceButtonData _data;
     
@@ -21,7 +22,10 @@ public class ClinicServiceButtonV5 : MonoBehaviour
         title.text = data.Name;
         description.text = data.Description;
         cost.text = data.Cost.ToString();
-        button.interactable = data.Enabled && party.ClinicVouchers >= data.Cost;
+        var interactable = data.Enabled && party.ClinicVouchers >= data.Cost;
+        button.interactable = interactable;
+        if (disabledCanvasGroup != null)
+            disabledCanvasGroup.alpha = interactable ? 1 : 0.3f;
         button.onClick.RemoveAllListeners();
         if (party.Credits >= data.Cost)
             button.onClick.AddListener(() =>

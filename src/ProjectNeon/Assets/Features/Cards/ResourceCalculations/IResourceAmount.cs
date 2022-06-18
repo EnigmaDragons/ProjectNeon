@@ -5,3 +5,8 @@ public interface IResourceAmount
     IResourceType ResourceType { get; }
     bool PlusXCost { get; }
 }
+
+public static class ResourceAmountExtensions
+{
+    public static int CostSortOrder(this IResourceAmount cost) => cost.PlusXCost ? 99 : cost.BaseAmount;
+}

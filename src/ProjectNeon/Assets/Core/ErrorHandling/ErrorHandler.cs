@@ -26,4 +26,16 @@ public static class ErrorHandler
         if (type == LogType.Exception || type == LogType.Error)
             _onUnhandledError(type + "\n" + condition + "\n" + stackTrace);
     }
+
+    public static void BasicNeverCrash(Action action)
+    {
+        try
+        {
+            action();
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+        }
+    }
 }

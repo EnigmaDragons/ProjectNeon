@@ -10,8 +10,12 @@ public sealed class ResourceCost : IResourceAmount
     [FormerlySerializedAs("isXCost")] [SerializeField] private bool plusXCost;
     
     public int BaseAmount => cost;
-    public IResourceType ResourceType => resourceType;
+    public IResourceType ResourceType => resourceType != null 
+        ? resourceType 
+        : (IResourceType)new InMemoryResourceType();
     public bool PlusXCost => plusXCost;
+    
+    public ResourceType RawResourceType => resourceType; // For QA
     
     public ResourceCost() {}
 

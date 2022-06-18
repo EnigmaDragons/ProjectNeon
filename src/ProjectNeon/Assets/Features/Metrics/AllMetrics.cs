@@ -37,7 +37,7 @@ public static class AllMetrics
         => Send("heroLevelUp", new HeroLevelUpSelectionData {heroName = heroName, level = level, selection = selectedDescription, options = optionsDescription});
     
     public static void PublishMapNodeSelection(int mapProgress, string selectedMapNodeName, string[] mapNodeOptions)
-        => Send("mapNodeSelected", new MapNodeSelectionData { progress = mapProgress, selected = selectedMapNodeName, options = mapNodeOptions});
+        => Send("mapNodeSelected",  new MapNodeSelectionData { progress = mapProgress, selected = selectedMapNodeName, options = mapNodeOptions});
 
     public static void PublishBattleSummary(BattleSummaryReport report)
         => Send("battleSummary", report);
@@ -50,6 +50,32 @@ public static class AllMetrics
 
     public static void PublishHeroSelected(string selectedHero, string[] options, string[] existingPartyHeroes)
         => Send("heroAdded", new HeroSelectedData {heroName = selectedHero, heroOptions = options, currentPartyHeroes = existingPartyHeroes});
+
+    public static void PublishAdventureProgress(string adventureName, float totalProgress)
+        => Send("adventureProgress", new AdventureProgressData {adventureName = adventureName, totalProgress = totalProgress});
+    
+    public static void PublishDecks(string[] heroesNames, string[][] decks)
+        => Send("battleDeck", () => new DeckData {
+            heroes = heroesNames, 
+            deck1 = decks.IndexValueOrDefault(0, Array.Empty<string>), 
+            deck2 = decks.IndexValueOrDefault(1, Array.Empty<string>),
+            deck3 = decks.IndexValueOrDefault(2, Array.Empty<string>),
+        });
+
+    public static void PublishCardShopPurchases(string[] cardOptions, string[] cardPurchases)
+        => Send("cardShopPurchase", new CardShopPurchaseData { options = cardOptions, purchases = cardPurchases });
+
+    private static void Send(string eventName, Func<object> createPayload)
+    {
+        try
+        {
+            Send(eventName, createPayload());
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+        }
+    }
     
     private static void Send(string eventName, object payload)
         => Send(new GeneralMetric(eventName, JsonUtility.ToJson(payload)));
@@ -79,7 +105,7 @@ public static class AllMetrics
     private static void OnResponse(HttpResponseMessage resp)
     {
         if (!resp.IsSuccessStatusCode)
-            Log.Error($"Failed to submit Error Message: {resp.StatusCode}");
+            Log.Error($"Failed to submit Metric: {resp.StatusCode}");
     }
 
     [Serializable]
@@ -132,5 +158,28 @@ public static class AllMetrics
         public string[] currentPartyHeroes;
         public string heroName;
         public string[] heroOptions;
+    }
+
+    [Serializable]
+    private class DeckData
+    {
+        public string[] heroes;
+        public string[] deck1;
+        public string[] deck2;
+        public string[] deck3;
+    }
+
+    [Serializable]
+    private class AdventureProgressData
+    {
+        public string adventureName;
+        public float totalProgress;
+    }
+
+    [Serializable]
+    private class CardShopPurchaseData
+    {
+        public string[] options;
+        public string[] purchases;
     }
 }

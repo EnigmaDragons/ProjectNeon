@@ -5,8 +5,8 @@ using UnityEngine;
 public class DeathPresenter : OnMessage<MemberUnconscious>
 {
     [SerializeField] private IntReference deathSeconds;
-    [SerializeField] private CharacterViewer characterViewer;
-    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] public CharacterViewer characterViewer;
+    [SerializeField] public SpriteRenderer sprite;
     [SerializeField] private BattleState state;
 
     private int _id;
@@ -25,12 +25,12 @@ public class DeathPresenter : OnMessage<MemberUnconscious>
         if (!_dying)
             return;
         _t = Math.Min(1, _t + Time.deltaTime / deathSeconds.Value);
-        if (_isCharacterCreator)
+        if (_isCharacterCreator && characterViewer != null)
         {
             characterViewer.TintColor = new Color(1, 1, 1, 1 - _t);
             characterViewer.RepaintTintColor();   
         }
-        else
+        else if (sprite != null)
         {
             sprite.color = new Color(1, 1, 1, 1 - _t);
         }

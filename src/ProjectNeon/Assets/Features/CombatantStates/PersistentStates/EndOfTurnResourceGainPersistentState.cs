@@ -11,7 +11,7 @@ public class EndOfTurnResourceGainPersistentState : IPersistentState
         _member = member;
         _partyState = partyState;
     }
-    
-    public void OnTurnStart() {}
-    public void OnTurnEnd() => _member.State.ChangeResource(_qty, _partyState);
+
+    public IPayloadProvider OnTurnStart() => new NoPayload();
+    public IPayloadProvider OnTurnEnd() => new SinglePayload(new PerformAction(() => _member.State.ChangeResource(_qty, _partyState)));
 }

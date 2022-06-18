@@ -26,7 +26,7 @@ public class CheatHandler : OnMessage<GainRandomEquipment, CompleteAnyMapNode, W
 
     protected override void Execute(WinGameRequested msg)
     {
-        conclusion.Set(true, "You won because you pressed the developer cheat buttons! Congratulations! This is an epic tale!", CurrentGameData.Data.Stats);
+        conclusion.Set(true, "You won because you pressed the developer cheat buttons! Congratulations! This is an epic tale!", CurrentGameData.Data.Stats, party.BaseHeroes);
         navigator.NavigateToConclusionScene();
     }
 

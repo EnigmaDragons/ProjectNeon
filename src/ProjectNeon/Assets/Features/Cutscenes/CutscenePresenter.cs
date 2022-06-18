@@ -72,7 +72,7 @@ public class CutscenePresenter : BaseCutscenePresenter
         }
         
         var onFinishedAction = shouldGoToAdventureVictoryScreen 
-            ? () => GameWrapup.NavigateToVictoryScreen(progress, adventure, navigator, conclusion) 
+            ? () => GameWrapup.NavigateToVictoryScreen(progress, adventure, navigator, conclusion, setupParty.Party.Heroes.Cast<HeroCharacter>().ToArray()) 
             : cutscene.OnCutsceneFinishedAction.Select(a => a, NavigateToInferredGameScene);
         if (_skipDelay)
             onFinishedAction();

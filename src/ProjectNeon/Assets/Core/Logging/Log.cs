@@ -31,6 +31,12 @@ public static class Log
         a();
     }
     
+    public static void ErrorIfNull<T>(T obj, string context, string elementName)
+    {
+        if (obj == null)
+            Error($"{context}: {elementName} is null/not assigned");
+    }
+    
     public static void ErrorIfNull(Object obj, string context, string elementName)
     {
         if (obj == null)

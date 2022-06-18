@@ -383,13 +383,13 @@ public sealed class MemberState : IStats
     public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any() || _temporalStatsToReduceAtEndOfTurn.Any(x => this[x] > 0); 
     public IPayloadProvider[] GetTurnStartEffects()
     {
-        _persistentStates.ForEach(m => m.OnTurnStart());
         return _additiveMods.Select(m => m.OnTurnStart())
             .Concat(_multiplierMods.Select(m => m.OnTurnStart()))
             .Concat(_reactiveStates.Select(m => m.OnTurnStart()))
             .Concat(_transformers.Select(m => m.OnTurnStart()))
             .Concat(_additiveResourceCalculators.Select(m => m.OnTurnStart()))
             .Concat(_multiplicativeResourceCalculators.Select(m => m.OnTurnStart()))
+            .Concat(_persistentStates.Select(m => m.OnTurnStart()))
             .ToArray();
     }
 
@@ -429,7 +429,6 @@ public sealed class MemberState : IStats
     {
         PublishAfter(() =>
         {
-            _persistentStates.ForEach(m => m.OnTurnEnd());
             _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
             _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
             _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
@@ -442,6 +441,7 @@ public sealed class MemberState : IStats
             .Concat(_transformers.Select(m => m.OnTurnEnd()))
             .Concat(_additiveResourceCalculators.Select(m => m.OnTurnEnd()))
             .Concat(_multiplicativeResourceCalculators.Select(m => m.OnTurnEnd()))
+            .Concat(_persistentStates.Select(m => m.OnTurnEnd()))
             .ToArray();;
     }
     

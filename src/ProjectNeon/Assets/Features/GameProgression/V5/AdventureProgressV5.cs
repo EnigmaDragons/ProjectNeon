@@ -138,6 +138,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         {
             currentMap.SetMap(CurrentChapter.Map);
             currentChapterIndex++;
+            AllMetrics.PublishAdventureProgress(AdventureName, Progress);
         } 
         else
         {

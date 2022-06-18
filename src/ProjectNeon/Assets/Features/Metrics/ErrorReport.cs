@@ -12,15 +12,18 @@ public static class ErrorReport
     private static readonly string _securedUrl =
         "aHR0cHM6Ly9wcm9kLTE4Lndlc3R1czIubG9naWMuYXp1cmUuY29tOjQ0My93b3JrZmxvd3MvNDVlZmIwYTc3MjllNGI1NzhhYzcwOWY4NjBhMjRhNTQvdHJpZ2dlcnMvbWFudWFsL3BhdGhzL2ludm9rZT9hcGktdmVyc2lvbj0yMDE2LTEwLTAxJnNwPSUyRnRyaWdnZXJzJTJGbWFudWFsJTJGcnVuJnN2PTEuMCZzaWc9bDVUY2lXV3VDYXRqN2pwYVI0aGJEM2VJaHJlakc4U0d1ZFFGNXNrZGJjNA==";
 
+    private static bool _disabled = false;
     private static string _appName = "Not Initialized";
     private static string _version = "Not Initialized";
     private static Queue<string> _recentLogs = new Queue<string>();
     private static bool _isEditor = false;
     private static string[] _ignoreIfContainsInEditor = {  "Coroutine couldn't be started" };
     private static string[] _ignoreIfContains = { "Error Releasing render texture that is set as Camera.targetTexture" };
+    private static string _lastErrorMessage = null;
 
-public static void Init(string appName, string version, Queue<string> recentLogs)
+    public static void Init(string appName, string version, Queue<string> recentLogs)
     {
+        _disabled = false;
         _appName = appName;
         _version = version;
         _recentLogs = recentLogs;
@@ -31,15 +34,25 @@ public static void Init(string appName, string version, Queue<string> recentLogs
     
     public static void Test() => throw new Exception("Test Exception");
 
+    public static void DisableDuringQa() => _disabled = true;
+    public static void ReenableAfterQa() => _disabled = false;
+    
     public static void Send(string errorMessage)
     {
+        if (_disabled)
+            return;
+        
+        if (string.Equals(errorMessage, _lastErrorMessage, StringComparison.OrdinalIgnoreCase))
+            return;
+        
 #if UNITY_EDITOR
-        if (_ignoreIfContainsInEditor.Any(errorMessage.Contains))
+        if (_ignoreIfContainsInEditor.Any(errorMessage.ContainsAnyCase))
             return;
 #endif
-        if (_ignoreIfContains.Any(errorMessage.Contains))
+        if (_ignoreIfContains.Any(errorMessage.ContainsAnyCase))
             return;
 
+        _lastErrorMessage = errorMessage;
         Client.Post(
             new Uri(_securedUrl.FromBase64(), UriKind.Absolute),
             new StringContent(
