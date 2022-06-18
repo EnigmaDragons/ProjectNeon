@@ -26,6 +26,7 @@ public class QualityAssurance
         ErrorReport.DisableDuringQa();
         
         Log.Info("QA - Started");
+
         var (enemyCount, enemyFailures) = QaAllEnemies();
         var (cardCount, cardFailures) = QaAllCards();
         var (heroCount, heroFailures) = QaAllHeroes();
