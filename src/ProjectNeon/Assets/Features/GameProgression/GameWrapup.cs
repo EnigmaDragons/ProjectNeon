@@ -1,4 +1,3 @@
-
 using System.Linq;
 
 public static class GameWrapup
@@ -8,6 +7,11 @@ public static class GameWrapup
         Log.Info("Navigating to victory screen");
         p.AdventureProgress.Advance();
         AllMetrics.PublishGameWon();
+        CurrentProgressionData.Write(d =>
+        {
+            d.CompletedAdventureIds = d.CompletedAdventureIds.Concat(p.AdventureProgress.AdventureId).Distinct().ToArray();
+            return d;
+        });
         Message.Publish(new AutoSaveRequested());
         c.Set(true, a.Adventure.VictoryConclusion, CurrentGameData.Data.Stats, heroes);
         CurrentGameData.Clear();

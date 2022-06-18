@@ -29,5 +29,4 @@ public class CurrentAcademyData
         a.TutorialData.CompletedTutorialNames = a.TutorialData.CompletedTutorialNames.Concat(AcademyData.RequiredLicenseTutorials).ToArray();
         return a;
     });
-
 }

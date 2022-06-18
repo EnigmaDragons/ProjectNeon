@@ -2,6 +2,7 @@
 
 public abstract class AdventureProgressBase : ScriptableObject
 {
+    public abstract int AdventureId { get; }
     public abstract string AdventureName { get; }
     public abstract GameAdventureProgressType AdventureType { get; }
     public abstract int RngSeed { get; }
