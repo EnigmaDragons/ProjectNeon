@@ -42,7 +42,7 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
                 if (!_hasClickedCard)
                 {
                     _timeTilPrompt = _notClickingCardPromptDelay;
-                    Message.Publish(new ShowHeroBattleThought(4, "I knew you would be easy to take. You can't even figure out that you need to click and hold your card"));
+                    Message.Publish(new ShowHeroBattleThought(4, "I knew you would be easy to take. You can't even figure out that you need to click and hold your card."));
                 }
                 else if (!_hasDraggedCard)
                 {
@@ -103,11 +103,13 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
         {
             _firstCardResolved = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));
+            Message.Publish(new ShowHeroBattleThought(4, "Ouch! Is what I would have said if I didn't have anti-pain implants so I don't let pain get in my way of focusing!"));
         }
         if (!_firstEnemyCardResolved && msg.Originator == 4)
         {
             _firstEnemyCardResolved = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, true, _callerId));
+            Message.Publish(new ShowHeroBattleThought(4, "Now look who is hurting"));
         }
     }
 }

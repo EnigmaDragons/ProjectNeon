@@ -90,14 +90,14 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
             {
                 if (movement.MovementType != TweenMovementType.RubberBand)
                 {
-                    var beforeDistance = movement.RelativeDistance * EaseInOutCubic(movement.T);
+                    var beforeDistance = movement.RelativeDistance * EaseInOutCubic(movement.T, false);
                     var endDistance = movement.RelativeDistance * 1;
                     var difference = endDistance - beforeDistance;
                     currentDestination += difference;   
                 }
                 else
                 {
-                    var beforeDistance = movement.RelativeDistance * EaseInOutCubic(movement.T);
+                    var beforeDistance = movement.RelativeDistance * EaseInOutCubic(movement.T, false);
                     currentDestination -= beforeDistance;   
                 }
             }
@@ -133,8 +133,8 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
             else
                 movement.T = Math.Min(1, beforeT + deltaTime / movement.Seconds);
             var afterT = movement.T;
-            var beforeDistance = movement.RelativeDistance * EaseInOutCubic(beforeT);
-            var afterDistance = movement.RelativeDistance * EaseInOutCubic(afterT);
+            var beforeDistance = movement.RelativeDistance * EaseInOutCubic(beforeT, movement.MovementType == TweenMovementType.RubberBand);
+            var afterDistance = movement.RelativeDistance * EaseInOutCubic(afterT, movement.MovementType == TweenMovementType.RubberBand);
             var currentDistance = afterDistance - beforeDistance;
             if (float.IsNaN(currentDistance.x))
                 continue;
@@ -146,7 +146,9 @@ public class TweenUIMovement : OnMessage<TweenMovementRequested, StopMovementTwe
         }
     }
 
-    private float EaseInOutCubic(float progress) => progress < 0.5f ? 4f * progress * progress * progress : 1f - Mathf.Pow(-2f * progress + 2f, 3f) / 2f;
+    private float EaseInOutCubic(float progress, bool rubberBand) => rubberBand 
+        ? EaseInOutCubic(progress <= 0.5f ? progress * 2 : 1 - (progress - 0.5f) * 2, false)
+        : progress < 0.5f ? 4f * progress * progress * progress : 1f - Mathf.Pow(-2f * progress + 2f, 3f) / 2f;
     
     private class TweenProgress
     {

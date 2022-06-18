@@ -34,5 +34,9 @@ public class Tutorial8Orchestartor : OnMessage<StartCardSetupRequested, CardReso
             Message.Publish(new ShowHeroBattleThought(4, "OW! I'm all out of dodge!"));
             _hasShowedLine2 = true;
         }
+        else if (msg.CardName == "Impale V1" && _hasShowedLine1 && _hasShowedLine2)
+        {
+            Message.Publish(new ShowHeroBattleThought(4, "Oh no not a finisher!"));
+        }
     }
 }

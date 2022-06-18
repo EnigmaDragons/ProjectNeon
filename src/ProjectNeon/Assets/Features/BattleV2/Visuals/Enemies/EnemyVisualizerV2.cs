@@ -214,7 +214,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         if (msg.Component == BattleUiElement.EnemyInfo)
         {
             _enemyVisualsVisible = msg.ShouldShow;
-            uis.ForEach(u => u.gameObject.SetActive(msg.ShouldShow));   
+            uis.ForEach(u => u.gameObject.SetActive(msg.ShouldShow));
         }
         else if (msg.Component == BattleUiElement.EnemyTechPoints)
         {
