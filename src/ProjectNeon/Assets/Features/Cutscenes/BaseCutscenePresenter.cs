@@ -34,6 +34,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         Message.Subscribe<RecordStoryStateRequested>(Execute, this);
         Message.Subscribe<HideCharacterRequested>(Execute, this);
         Message.Subscribe<ShowCharacterRequested>(Execute, this);
+        Message.Subscribe<WinBattleWithRewards>(Execute, this);
     }
 
     private void OnDisable()
@@ -195,4 +196,6 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         if (_debugLoggingEnabled)
             Log.Info("Cutscene Presenter - " + msg);
     }
+    
+    protected abstract void Execute(WinBattleWithRewards msg);
 }

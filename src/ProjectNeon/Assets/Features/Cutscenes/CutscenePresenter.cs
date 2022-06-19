@@ -39,12 +39,14 @@ public class CutscenePresenter : BaseCutscenePresenter
             () => Message.Publish(new CutsceneFinished()));
     }
 
-    protected override void Execute(SkipCutsceneRequested msg)
-    { 
+    protected override void Execute(SkipCutsceneRequested msg) => SkipCutscene();
+
+    private void SkipCutscene()
+    {
         cutscene.Current.MarkSkipped(progress.AdventureProgress);
         _skipDelay = true;
         FinishCutscene();
-    } 
+    }
 
     protected override void FinishCutscene()
     {
@@ -79,6 +81,8 @@ public class CutscenePresenter : BaseCutscenePresenter
         else
             this.ExecuteAfterDelay(onFinishedAction, cutsceneFinishNavigationDelay);
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => SkipCutscene();
 
     private void NavigateToInferredGameScene()
     {

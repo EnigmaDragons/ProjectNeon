@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCardSelected, CardClicked, CardDragged, CardResolutionStarted>
+public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCardSelected, CardClicked, CardDragged, CardResolutionStarted, WinBattleWithRewards>
 {
     private const string _callerId = "Tutorial1Orchestrator";
     
@@ -17,6 +17,7 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     private float _timeTilPrompt;
     private bool _firstCardResolved;
     private bool _firstEnemyCardResolved;
+    private bool _hasWon;
     
     private void Start()
     {
@@ -68,7 +69,8 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(1);
-        Message.Publish(new ShowTutorialByName(_callerId));
+        if (!_hasWon)
+            Message.Publish(new ShowTutorialByName(_callerId));
     }
 
     protected override void Execute(PlayerCardSelected msg)
@@ -118,4 +120,6 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
             Message.Publish(new ShowHeroBattleThought(4, "Now look who is hurting"));
         }
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 }
