@@ -1,0 +1,143 @@
+using System;
+using System.Linq;
+using UnityEngine;
+
+public class CardsVisualizerV2 : MonoBehaviour
+{
+    [SerializeField] private CardPlayZone zone;
+    [SerializeField] private float cardSpacingScreenPercent = 0.15f;
+    [SerializeField] private CardPresenter[] cardPool;
+    [SerializeField] private int maxCards = 12;
+    [SerializeField] private Vector3 cardRotation;
+    
+    private Card[] _oldCards = new Card[0];
+    private bool _isDirty = false;
+    private Action _onShownCardsChanged = () => { };
+    private bool _isFocused = true;
+    private float _xOffset;
+
+    private void Awake()
+    {
+        _xOffset = transform.localPosition.x;
+        cardPool.ForEach(c => c.Clear());
+    }
+    
+    void OnEnable()
+    {
+        _isDirty = true;
+        zone.OnZoneCardsChanged.Subscribe(new GameEventSubscription(zone.OnZoneCardsChanged.name, x => _isDirty = true, this));
+        Message.Subscribe<MemberStateChanged>(_ => _isDirty = true, this);
+    }
+
+    void OnDisable()
+    {
+        zone.OnZoneCardsChanged.Unsubscribe(this);
+        Message.Unsubscribe(this);
+    }
+
+    void Update()
+    {
+        if (!_isDirty)
+            return;
+
+        _isDirty = false;
+        UpdateVisibleCards();
+    }
+    
+    void UpdateVisibleCards()
+    {
+        var newCards = zone.Cards.ToArray();
+        CleanRemovedCards(newCards);
+        UpdateCurrentCards(newCards);
+        _oldCards = newCards;
+        _onShownCardsChanged();
+    }
+
+    private void CleanRemovedCards(Card[] newCards)
+    {
+        var newCopy = newCards.ToList();
+        foreach (var old in _oldCards)
+        {
+            if (newCopy.Contains(old))
+            {
+                newCopy.Remove(old);
+                continue;
+            }
+
+            foreach (var c in cardPool)
+            {
+                if (c.Contains(old))
+                {
+                    c.Clear();
+                    c.transform.position += new Vector3(1920, 0, 0);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void UpdateCurrentCards(Card[] cards)
+    {
+        var screenWidth = Screen.width;
+        var totalSpaceNeeded = screenWidth * (cardSpacingScreenPercent * cards.Length);
+        var startX = (screenWidth - totalSpaceNeeded) / 2f;
+
+        for (var i = 0; i < cards.Length; i++)
+        {
+            var effectivePosition = transform.position;
+            var cardIndex = i;
+            var card = cards[cardIndex];
+            var (presenterIndex, presenter) = GetCardPresenter(cardIndex, card);
+            var c = presenter;
+            var isFocused = c.IsFocused;
+            
+            if (!c.HasCard)
+                c.TeleportTo(new Vector3(screenWidth * 1.5f, effectivePosition.y, effectivePosition.z));
+            
+            var targetX = _xOffset + startX + cardSpacingScreenPercent * (cardIndex + 0.5f) * screenWidth;
+            var targetPosition = new Vector3(targetX, effectivePosition.y, effectivePosition.z);
+
+            c.Set(card);
+            c.SetDisabled(card.Owner.IsUnconscious() || card.Owner.IsDisabled() || !_isFocused || !card.IsActive);
+            SwapCardPoolSpots(cardIndex, presenterIndex);
+            c.SetHandHighlight(isFocused);
+            c.SetTargetPosition(targetPosition);
+        }
+    }
+
+    private void SwapCardPoolSpots(int first, int second)
+    {
+        if (first == second)
+            return;
+        
+        var tmp = cardPool[first];
+        cardPool[first] = cardPool[second];
+        cardPool[second] = tmp;
+    }
+    
+    private (int, CardPresenter) GetCardPresenter(int startAtIndex, Card c)
+    {
+        CardPresenter emptyCard = null;
+        var emptyCardIndex = -1;
+        
+        for (var i = startAtIndex; i < cardPool.Length; i++)
+        {
+            var cp = cardPool[i];
+            
+            // Find First Unused Card Presenter
+            if (emptyCard == null && !cp.HasCard)
+            {
+                emptyCard = cp;
+                emptyCardIndex = i;
+            }
+
+            // Return Matching Card
+            if (cp.Contains(c))
+                return (i, cp);
+        }
+
+        return (emptyCardIndex, emptyCard);
+    }
+    
+    public void RefreshPositions() => UpdateCurrentCards(_oldCards);
+}
