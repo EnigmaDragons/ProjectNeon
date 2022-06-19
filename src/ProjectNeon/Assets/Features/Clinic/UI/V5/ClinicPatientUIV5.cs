@@ -3,11 +3,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, PartyAdventureStateChanged>
+public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, PartyAdventureStateChanged, SetSuperFocusHealControl>
 {
     [SerializeField] private TextMeshProUGUI nameLabel;
     [SerializeField] private HeroHpPresenter hpPresenter;
     [SerializeField] private Button healToFullButton;
+    [SerializeField] private GameObject healToFullSuperFocus;
     [SerializeField] private GameObject fullHealth;
     [SerializeField] private Button viewHeroDetailButton;
     [SerializeField] private TextMeshProUGUI healToFullCostLabel;
@@ -59,6 +60,7 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     }
 
     protected override void Execute(PartyAdventureStateChanged msg) => UpdateButtons();
+    protected override void Execute(SetSuperFocusHealControl msg) => healToFullSuperFocus.SetActive(msg.Enabled);
 
     private void UpdateButtons()
     {

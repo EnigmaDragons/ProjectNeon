@@ -44,5 +44,7 @@ public class ClinicUIController : OnMessage<ToggleClinic>
         clinic.Corp = corps.GetCorpByNameOrNone(msg.CorpName);
         clinic.IsTutorial = msg.IsTutorial;
         clinicUi.SetActive(!clinicUi.activeSelf);
+        if (msg.IsTutorial)
+            Message.Publish(new SetSuperFocusHealControl(true));
     } 
 }

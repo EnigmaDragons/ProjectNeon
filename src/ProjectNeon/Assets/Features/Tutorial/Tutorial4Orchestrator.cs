@@ -38,6 +38,7 @@ public class Tutorial4Orchestrator : OnMessage<StartCardSetupRequested, CardReso
         {
             _hasPlayedStatsBuffCard = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PrimaryStat, true, _callerId));
+            Message.Publish(new PunchYourself(BattleUiElement.PrimaryStat));
             Message.Publish(new ShowHeroBattleThought(1, "My enemy's armor no longer will hold up against my attacks"));
         }
     }

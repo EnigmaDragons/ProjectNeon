@@ -22,6 +22,7 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     {
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.ClickableControls, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DeckInfo, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DiscardInfo, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.TrashRecycleDropArea, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false, _callerId));
@@ -76,6 +77,9 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
         {
             _hasTargetedEnemy = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DeckInfo, true, _callerId));   
+            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DiscardInfo, false, _callerId));
+            Message.Publish(new PunchYourself(BattleUiElement.DeckInfo));
+            Message.Publish(new PunchYourself(BattleUiElement.DiscardInfo));
         }
     }
 
@@ -103,12 +107,14 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
         {
             _firstCardResolved = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));
+            Message.Publish(new PunchYourself(BattleUiElement.EnemyInfo));
             Message.Publish(new ShowHeroBattleThought(4, "Ouch! Is what I would have said if I didn't have anti-pain implants so I don't let pain get in my way of focusing!"));
         }
         if (!_firstEnemyCardResolved && msg.Originator == 4)
         {
             _firstEnemyCardResolved = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, true, _callerId));
+            Message.Publish(new PunchYourself(BattleUiElement.SquadInfo));
             Message.Publish(new ShowHeroBattleThought(4, "Now look who is hurting"));
         }
     }

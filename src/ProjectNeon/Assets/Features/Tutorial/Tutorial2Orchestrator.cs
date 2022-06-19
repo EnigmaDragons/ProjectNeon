@@ -54,14 +54,19 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
         _hasSwappedToBasic = true;
         Message.Publish(new ShowHeroBattleThought(4, "I hope I don't have to be worried about what you will use that energy for"));
     }
-    
-    protected override void Execute(CardResolutionStarted msg) => Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerResources, true, _callerId));
+
+    protected override void Execute(CardResolutionStarted msg)
+    {
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerResources, true, _callerId));
+        Message.Publish(new PunchYourself(BattleUiElement.PlayerResources));
+    }
 
     protected override void Execute(ResolutionsFinished msg)
     {
         if (msg.Phase == BattleV2Phase.EnemyCards)
         {
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, true, _callerId));
+            Message.Publish(new PunchYourself(BattleUiElement.EnemyTechPoints));
             Message.Publish(new ShowHeroBattleThought(4, "I can gain powerful resources too! Hah!"));
             
         }

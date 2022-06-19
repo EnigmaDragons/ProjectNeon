@@ -29,6 +29,7 @@ public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardReso
         {
             _gainedShields = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerShields, true, _callerId));
+            Message.Publish(new PunchYourself(BattleUiElement.PlayerShields));
             Message.Publish(new ShowHeroBattleThought(4, "Damn shields! This is going to be annoying to get through"));
         }
     }
