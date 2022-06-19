@@ -35,7 +35,11 @@ public sealed class EffectData
     
     public bool IsReactionCard => ReactionSequence != null;
     public bool IsReactionEffect => ReactionEffect != null;
-    public ReactionTimingWindow FinalReactionTimingWindow => !ReferenceEquals(ReactionSequence, null) ? ReactionTimingWindow.ReactionCard : ReactionTimingWindow;
+    public ReactionTimingWindow FinalReactionTimingWindow => !ReactionTimingWindow.Equals(ReactionTimingWindow.Default) 
+        ? ReactionTimingWindow 
+        : !ReferenceEquals(ReactionSequence, null) 
+            ? ReactionTimingWindow.ReactionCard 
+            : ReactionTimingWindow.Default;
     public ReactionConditionType ReactionConditionType;
     public StringReference ReactionEffectScope = new StringReference();
     public ReactionTimingWindow ReactionTimingWindow = ReactionTimingWindow.Default;

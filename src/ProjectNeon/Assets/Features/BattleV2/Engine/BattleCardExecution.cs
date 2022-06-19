@@ -71,10 +71,10 @@ public static class BattleCardExecution
         return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.Play(i == firstBattleEffectIndex, ctx)));
     }
 
-    public static IPayloadProvider PlayAsReaction(this CardActionsData cardData, Member source, Target target, ResourceQuantity xAmountPaid, string reactionName)
+    public static IPayloadProvider PlayAsReaction(this CardActionsData cardData, Member source, Target target, ResourceQuantity xAmountPaid, string reactionName, ReactionTimingWindow timing)
     {
         var firstBattleEffectIndex = cardData.Actions.FirstIndexOf(x => x.Type == CardBattleActionType.Battle);
-        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.PlayReaction(i == firstBattleEffectIndex, source,  target, xAmountPaid))
+        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.PlayReaction(i == firstBattleEffectIndex, source,  target, xAmountPaid, timing))
             .ToArray());
     }
 
@@ -122,12 +122,12 @@ public static class BattleCardExecution
         throw new Exception($"Unrecognized card battle action type: {type}");
     }
     
-    private static IPayloadProvider PlayReaction(this CardActionV2 action, bool isFirstBattleEffect, Member source, Target target, ResourceQuantity xAmountPaid)
+    private static IPayloadProvider PlayReaction(this CardActionV2 action, bool isFirstBattleEffect, Member source, Target target, ResourceQuantity xAmountPaid, ReactionTimingWindow timing)
     {
         var type = action.Type;
         if (type == CardBattleActionType.Battle)
             return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffect, action.BattleEffect, source, target, Maybe<Card>.Missing(), xAmountPaid, 
-                new PreventionContextMut(target), isReaction: true, ReactionTimingWindow.ReactionCard));
+                new PreventionContextMut(target), isReaction: true, timing));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(PayloadData.ExactMatch(new CharacterAnimationRequested2(source.Id, action.CharacterAnimation2.Type)
             {

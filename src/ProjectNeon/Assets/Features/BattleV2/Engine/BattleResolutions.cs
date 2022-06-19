@@ -80,7 +80,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
             .Select(x => x.Value)
             .SelectMany(v => v.State.GetReactions(e)).ToArray();
 
-        DevLog.Write($"Reaction Timing {e.Timing}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. " +
+        DebugLog($"Reaction Timing {e.Timing}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. " +
                      $"Cards: {reactions.Count(c => c.ReactionCard.IsPresent)}");
 
         Reactions.Enqueue(reactions);
@@ -115,7 +115,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
 
     private (ApplyEffectResult, Maybe<EffectResolved>) ApplyEffects(ApplyBattleEffect msg)
     {
-        DebugLog($"Apply Battle Effect {msg.Effect.EffectType} - Is Reaction: {msg.IsReaction}");
+        DebugLog($"Apply Battle Effect {msg.Effect.EffectType} - Is Reaction: {msg.IsReaction} - Reaction Timing {msg.Timing}");
         // Core Execution
         var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 

@@ -31,7 +31,7 @@ public class BattleReactions
     {
         var r = _instantReactions.Dequeue().WithPresentAndConsciousTargets(allBattleMembers);
         if (r.Target.Members.Any())
-            r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None);
+            r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None, r.Timing);
         else
             Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id));
     }
