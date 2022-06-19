@@ -35,6 +35,7 @@ public sealed class MemberState : IStats
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter '{n}'");
     private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
     private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
+    public int GetCounterAmount(TemporalStatType statType) => _counters[statType.ToString()].Amount;
 
     public int MemberId { get; }
     public string Name { get; }

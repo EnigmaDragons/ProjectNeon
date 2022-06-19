@@ -16,6 +16,13 @@ public class GlitchCards : Effect
     
     public void Apply(EffectContext ctx)
     {
+        if (ctx.Target.Members.All(x => x.Aegis() > 0))
+        {
+            ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, ctx.Target.Members);   
+            BattleLog.Write($"{string.Join(" & ", ctx.Target.Members.Select(x => x.Name))} prevented glitching with an Aegis");
+            return;
+        }
+        
         var possibleCards = new List<CardGlitchedDetails>();
         if (_location.HasFlag(CardLocation.Hand))
             possibleCards.AddRange(ctx.PlayerCardZones.HandZone.Cards.Select(c => new CardGlitchedDetails(c, CardLocation.Hand)));

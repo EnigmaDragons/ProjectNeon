@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
-  m_Name: Gilgamesh3
+  m_Name: Gilgamesh4
   m_EditorClassIdentifier: 
-  id: 66
+  id: 67
   enemyName: Gilgamesh
   allowedForSocialMedia: 0
   excludeFromBestiary: 1
@@ -38,7 +38,7 @@ MonoBehaviour:
   battleRole: 2
   tier: 3
   unique: 1
-  isHasty: 0
+  isHasty: 1
   resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
   description: A Cybernetic Celebrity that has a reputation of being immortal
   animations: {fileID: 11400000, guid: 0c6ec023aa24f014b9c90f242dccdf77, type: 2}
@@ -46,11 +46,11 @@ MonoBehaviour:
   stageDetails:
   - stage: 1
     maxHp: 99
-    maxShield: 0
-    startingShield: 0
-    startingAegis: 1
+    maxShield: 99
+    startingShield: 99
+    startingAegis: 0
     startingPhase: 0
-    startingDodge: 99
+    startingDodge: 9
     startingTaunt: 0
     attack: 9
     magic: 0
@@ -58,10 +58,10 @@ MonoBehaviour:
     armor: 99
     resistance: 99
     nonStatCardValueFactor: 0
-    startingResourceAmount: 4
-    maxResourceAmount: 4
+    startingResourceAmount: 0
+    maxResourceAmount: 1
     resourceGainPerTurn: 1
-    cardsPerTurn: 1
+    cardsPerTurn: 2
     powerLevel: 0
     calculationVariables:
       startingDefensiveValueAdjustment: 0
@@ -120,50 +120,6 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
-    - EffectType: 25
-      Conditions: []
-      BaseAmount:
-        UseConstant: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: -1
-        FloatVariable: {fileID: 0}
-      DurationFormula: -1
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReTargetScope: 0
-      ApplyToEachMemberIndividually: 0
-      StatusTag: 10
-      StatusDetailText: 'When Damaged: Leaves Battle'
-      TurnDelay: 0
-      Formula: 
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 99
-      ReactionEffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionTimingWindow: 0
-      ReactionSequence: {fileID: 11400000, guid: c2dada3bbd335284c8bd31a00222c897, type: 2}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
     Cards:
-    - {fileID: 11400000, guid: e66a392d71390264f84917a0250b49c8, type: 2}
+    - {fileID: 11400000, guid: 76e04ea9a2508f8439de832cb0515186, type: 2}
     - {fileID: 11400000, guid: ab9d349cd738f5a408f865f5f49179f5, type: 2}
-    - {fileID: 11400000, guid: 5cac3f70136907a4ea5bb519343ada2a, type: 2}

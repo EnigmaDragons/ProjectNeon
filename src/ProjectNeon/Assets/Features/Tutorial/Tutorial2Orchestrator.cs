@@ -12,6 +12,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private bool _hasStarted;
     private bool _hasSwappedToBasic;
     private bool _hasWon;
+    private bool _hasWorried;
     
     private void Start()
     {
@@ -54,7 +55,11 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     protected override void Execute(CardResolutionFinished msg)
     {
         _hasSwappedToBasic = true;
-        Message.Publish(new ShowHeroBattleThought(4, "I hope I don't have to be worried about what you will use that energy for"));
+        if (msg.CardName == "Energize" && !_hasWorried)
+        {
+            _hasWorried = true;
+            Message.Publish(new ShowHeroBattleThought(4, "I hope I don't have to be worried about what you will use that energy for."));
+        }
         Message.Publish(new SetSuperFocusBasicControl(false));
     }
 
