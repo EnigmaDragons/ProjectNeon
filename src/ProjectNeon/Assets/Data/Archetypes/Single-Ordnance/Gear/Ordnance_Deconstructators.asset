@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 79
   displayName: 
-  description: Grenades apply Vulnerable 2
+  description: Grenades apply Vulnerable 1
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
@@ -42,10 +42,10 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: Grenades apply Vulnerable 2
+    StatusDetailText: Grenades apply Vulnerable 1
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -62,6 +62,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0bd6c4bf422f6f747b50b4d25e38ed72, type: 2}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
@@ -69,4 +70,8 @@ MonoBehaviour:
       cardActions: {fileID: 11400000, guid: 4815349f5f98d424fa36b9f41b520091, type: 2}
     BonusCardType: {fileID: 0}
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 
