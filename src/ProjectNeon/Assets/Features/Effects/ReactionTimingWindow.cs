@@ -11,5 +11,6 @@ public enum ReactionTimingWindow
     VerySlow = 80,
     SuperSlow = 90,
     ReactionCard = 99,
+    AfterReactionCards = 100,
     AfterEverything = 250,
 }

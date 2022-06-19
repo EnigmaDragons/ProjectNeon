@@ -15,7 +15,7 @@ public class EffectDataEditor : PropertyDrawer
     {
         {EffectType.Nothing, new string[0]},
         {EffectType.ReactWithEffect, new []{ "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionTimingWindow", "ReactionEffect"}},
-        {EffectType.ReactWithCard, new []{ "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionSequence"}},
+        {EffectType.ReactWithCard, new []{ "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionSequence", "ReactionTimingWindow"}},
         {EffectType.AdjustResourceFlat, new [] { "FloatAmount", "DurationFormula", "EffectScope" }},
         {EffectType.RemoveDebuffs, new string[0]},
         {EffectType.ShieldRemoveAll, new string[0]},
