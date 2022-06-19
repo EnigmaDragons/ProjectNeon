@@ -314,8 +314,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         var tweenDuration = 0.08f;
         if (active)
         {
-            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, sign * 180f, sign * 2f), tweenDuration, MovementDimension.Spatial, TweenMovementType.GoTo, "Highlight"));
-            Message.Publish(new TweenMovementRequested(transform, new Vector3(highlightedScale - 1f, highlightedScale - 1f, highlightedScale - 1f), tweenDuration, MovementDimension.Scale, TweenMovementType.GoTo, "HighlightScale"));
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, sign * 180f, sign * 2f), tweenDuration, MovementDimension.Spatial, TweenMovementType.RubberBand, "Highlight"));
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(highlightedScale - 1f, highlightedScale - 1f, highlightedScale - 1f), tweenDuration, MovementDimension.Scale, TweenMovementType.RubberBand, "HighlightScale"));
         }
         else
         {
@@ -506,7 +506,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         {
             Message.Publish(new CardClicked());
             Cursor.visible = false;
-            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, 30f, 0), 0.03f, MovementDimension.Spatial, TweenMovementType.GoTo, "Click"));
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, 30f, 0), 0.03f, MovementDimension.Spatial, TweenMovementType.RubberBand, "Click"));
         }
         if (!_isHand && eventData.button == PointerEventData.InputButton.Left)
             _onClick();
