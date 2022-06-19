@@ -2,16 +2,15 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public sealed class HandVisualizer : HandVisualizerBase
+// More Performant than HandVisualizer by 80ms due to avoiding Instantitions
+public sealed class HandVisualizerV2 : HandVisualizerBase
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones zones;
     [SerializeField] private bool allowInteractions = true;
     [SerializeField] private float cardSpacingScreenPercent = 0.15f;
-    [SerializeField] private CardPresenter cardPrototype;
-    [SerializeField] private int maxCards = 12;
+    [SerializeField] private CardPresenter[] cards;
     [SerializeField] private Vector3 unfocusedOffset = new Vector3(0, 400, 0);
-    [SerializeField] private Vector3 cardRotation;
 
     private CardPlayZone Hand => zones.HandZone;
     private CardPool _cardPool;
@@ -33,7 +32,7 @@ public sealed class HandVisualizer : HandVisualizerBase
     {
         _defaultPosition = transform.position;
         _unfocusedPosition = _defaultPosition - unfocusedOffset;
-        _cardPool = new CardPool(maxCards, this, cardPrototype, cardRotation);
+        _cardPool = new CardPool(cards);
     }
     
     void OnEnable()
