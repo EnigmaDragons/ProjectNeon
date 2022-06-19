@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
-  m_Name: 13StunDisable
+  m_Name: 14Boss
   m_EditorClassIdentifier: 
   isPrimaryCutscene: 0
   setting: {fileID: 0}
@@ -19,10 +19,10 @@ MonoBehaviour:
   segments:
   - SegmentType: 1
     DialogueCharacterId:
-      UseConstant: 0
+      UseConstant: 1
       ConstantValue: enemy1
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: What tactic will you employ this time to try and show off your faux immortality.
+    Text: You brought a backup. Guess that means it's time to get serious.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -40,8 +40,7 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: enemy1
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: That's a good one, my sharp-witted rival! How about you hit me and find
-      out what kind of response I have.
+    Text: Time for our final showdown. At least for today.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -59,26 +58,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: enemy1
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Finally learned to not tell me your strategy before we begin fighting?
-    FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates: []
-    ForbiddenStates: []
-    Or: 0
-    StoryState:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 1
-      ConstantValue: enemy1
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: I mean you COULD mouse over my status icons or me, or even right click
-      me to see details, or you could find out when I viscerely punish you.
+    Text: Good! I was getting tired of your antics.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
