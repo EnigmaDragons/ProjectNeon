@@ -23,6 +23,7 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string onDoubleDMetal;
     [SerializeField, FMODUnity.EventRef] private string onDoubleDFlesh;
     [SerializeField, FMODUnity.EventRef] private string onInhibited;
+    [SerializeField, FMODUnity.EventRef] private string onTookZeroDamage;
 
     private bool debuggingLoggingEnabled = true;
 
@@ -58,6 +59,8 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
             var characterMaterialType = MaterialTypeOf(msg.MemberId);
             if (msg.ReactionType == CharacterReactionType.ChainCardPlayed) 
                 PlayOneShot(onCardChained, memberTransform);
+            if (msg.ReactionType == CharacterReactionType.TookZeroDamage)
+                PlayOneShot(onTookZeroDamage, memberTransform);
             if (msg.ReactionType == CharacterReactionType.Stunned)
                  PlayOneShot(onCardFizzledBecauseStunnedEvent, memberTransform);
             if (msg.ReactionType == CharacterReactionType.BonusCardPlayed)
