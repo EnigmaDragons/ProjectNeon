@@ -345,7 +345,6 @@ public sealed class MemberState : IStats
     {
         if (numToGive < 0 || this[TemporalStatType.PreventResourceGains] == 0)
         {
-            BattleLog.Write($"{Name} {BattleLog.GainedOrLostTerm(numToGive)} {numToGive} {PrimaryResource.Name}");
             ChangeResourceAmount(new ResourceQuantity { Amount = numToGive, ResourceType = PrimaryResource.Name }, false);
         }
     }
