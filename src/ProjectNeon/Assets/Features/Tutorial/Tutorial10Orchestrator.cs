@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial9Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
+public class Tutorial10Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
 {
-    private const string _callerId = "Tutorial9Orchestrator";
-
+    private const string _callerId = "Tutorial10Orchestrator";
+    
     private bool _hasStriked;
+    private bool _hasAcidCoated;
     private bool _hasWon;
     
     private void Start()
@@ -25,14 +26,19 @@ public class Tutorial9Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     
     protected override void Execute(CardResolutionFinished msg)
     {
-        if ((msg.CardName == "Strike" || msg.CardName == "Charged Strike") && !_hasStriked)
+        if (msg.CardName == "Piercing Strike" && !_hasStriked)
         {
             _hasStriked = true;
-            Message.Publish(new ShowHeroBattleThought(4, "You are not nearly strong enough to hurt me with those attacks! HAHAHA!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Sometimes all you need to be immortal is be unhittable"));
         }
-        else if (msg.CardName == "True Damage")
+        else if (msg.CardName == "Dodge")
         {
-            Message.Publish(new ShowHeroBattleThought(4, "Now you see the power of true damage! No armor, resistance, or shields can stop my blade!"));
+            Message.Publish(new ShowHeroBattleThought(4, "This fight just got interesting"));
+        }
+        else if (msg.CardName == "Acid Coating" && _hasAcidCoated)
+        {
+            _hasAcidCoated = true;
+            Message.Publish(new ShowHeroBattleThought(4, "What did you just get ON ME?!"));
         }
     }
 
