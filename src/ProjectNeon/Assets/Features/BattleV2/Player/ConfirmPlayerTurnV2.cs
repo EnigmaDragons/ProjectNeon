@@ -9,6 +9,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     [SerializeField] private CardPlayZone playArea;
     [SerializeField] private CardPlayZone playerHand;
     [SerializeField] private Button confirmUi;
+    [SerializeField] private Button endEarlyButton;
 
     private bool _isConfirming = false;
     private bool _confirmRequestedManually;
@@ -21,6 +22,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         _confirmUiScale = confirmUi.gameObject.transform.localScale;
         confirmUi.gameObject.SetActive(false);
         confirmUi.onClick.AddListener(ConfirmEarly);
+        endEarlyButton.onClick.AddListener(ConfirmEarly);
     }
 
     public void Init(BattleResolutions b) => _battleResolutions = b;
@@ -72,8 +74,14 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     
     private void UpdateState(BattleStateChanged msg)
     {
+        // Play Phase Started
         if (battleState.Phase == BattleV2Phase.PlayCards && msg.Before.Phase != BattleV2Phase.PlayCards)
+        {
             _alreadyConfirmedThisTurn = false;
+            if (!msg.State.IsTutorialCombat)
+                endEarlyButton.gameObject.SetActive(true);
+        }
+        // Nearly Done With Play Phase
         if (battleState.Phase == BattleV2Phase.PlayCards && msg.State.NumberOfCardPlaysRemainingThisTurn == 0)
         {
             var g = confirmUi.gameObject;
@@ -86,10 +94,14 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
                 g.transform.localScale = _confirmUiScale;
                 g.transform.DOPunchScale(new Vector3(1.1f * _confirmUiScale.x, 1.1f * _confirmUiScale.y, 1.1f * _confirmUiScale.z), 0.5f, 1);
             }
+            endEarlyButton.gameObject.SetActive(false);
         }
-
+        // Out of Play Phase
         if (battleState.Phase != BattleV2Phase.PlayCards)
+        {
             confirmUi.gameObject.SetActive(false);
+            endEarlyButton.gameObject.SetActive(false);
+        }
     }
 
     private void ConfirmEarly()
@@ -102,8 +114,8 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     {
         var reasonWord = _confirmRequestedManually ? "manually" : "automatically";
         _confirmRequestedManually = false;
-        if (confirmUi != null)
-            confirmUi.gameObject.SetActive(false);
+        confirmUi.gameObject.SetActive(false);
+        endEarlyButton.gameObject.SetActive(false);
         playArea.Clear();
         if (!_alreadyConfirmedThisTurn)
             BattleLog.Write($"Turn {battleState.TurnNumber} {battleState.Phase} - Player turn ended {reasonWord}");
