@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class QualityAssurance
 {
@@ -30,21 +32,57 @@ public class QualityAssurance
         var (enemyCount, enemyFailures) = QaAllEnemies();
         var (cardCount, cardFailures) = QaAllCards();
         var (heroCount, heroFailures) = QaAllHeroes();
+        var (cutsceneCount, cutsceneFailures) = QaAllCutscenes();
 
         var qaPassed = enemyFailures.None() && cardFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
         Log.Info($"--------------------------------------------------------------");
         Log.InfoOrError($"QA - {qaResultTerm}", !qaPassed);
-        Log.InfoOrError($"QA - Enemies: {enemyCount - enemyFailures.Count} out of {enemyCount} passed inspection.", enemyFailures.Any());
-        enemyFailures.ForEach(e => Log.Error($"{e}"));
-        Log.InfoOrError($"QA - Cards: {cardCount - cardFailures.Count} out of {cardCount} passed inspection.", cardFailures.Any());
-        cardFailures.ForEach(e => Log.Error($"{e}"));
-        Log.InfoOrError($"QA - Heroes: {heroCount - heroFailures.Count} out of {heroCount} passed inspection.", heroFailures.Any());
-        heroFailures.ForEach(e => Log.Error($"{e}"));
+        LogReport("Enemies", enemyCount, enemyFailures);
+        LogReport("Cards", cardCount, cardFailures);
+        LogReport("Heroes", heroCount, heroFailures);
+        LogReport("Cutscenes", cutsceneCount, cutsceneFailures);
         Log.Info($"--------------------------------------------------------------");
         
         ErrorReport.ReenableAfterQa();
         return qaPassed;
+    }
+
+    private static void LogReport(string qaCategory, int itemCount, List<ValidationResult> failures)
+    {
+        Log.InfoOrError($"QA - {qaCategory}: {itemCount - failures.Count} out of {itemCount} passed inspection.", failures.Any());
+        failures.ForEach(e => Log.Error($"{e}"));
+    }
+    
+    private static int CCount(string haystack, string needle)
+    {
+        return haystack.Split(new[] { needle }, StringSplitOptions.None).Length - 1;
+    }
+    
+    private static (int, List<ValidationResult>) QaAllCutscenes()
+    {
+        var cutscenes = ScriptableExtensions.GetAllInstances<Cutscene>();
+        var badItems = new List<ValidationResult>();
+        var numItemsCount = cutscenes.Length;
+        foreach (var c in cutscenes)
+        {
+            var issues = new List<string>();
+            for (var i = 0; i < c.Segments.Length; i++)
+            {
+                var s = c.Segments[i];
+                var text = s.Text;
+                var numberOfLineBreaks = CCount(text, "\n");
+                var textEffectiveLength = text.Length + numberOfLineBreaks * 77;
+                if (textEffectiveLength > 252)
+                    Log.Warn($"Cutscene Segment is a little long: {c.name} - Segment {i}. More than 252 Effective Characters. (Linebreaks count at 77, a pessimistic value)");
+                if (textEffectiveLength > 385)
+                    issues.Add($"Cutscene Segment Too Long: {c.name} - Segment {i}");
+            }
+            if (issues.Any())
+                badItems.Add(new ValidationResult(c.name, issues));
+        }
+        
+        return (numItemsCount, badItems);
     }
 
     private static (int, List<ValidationResult>) QaAllHeroes()
