@@ -122,6 +122,25 @@ public class FindEnemiesEditor : EditorWindow
                 .Initialized($"Enemies Missing Death Presenters", items)
                 .Show();
         }
+        
+        if (GUILayout.Button("With Speech Bubble Update Needed"))
+        {
+            var items = GetAllInstances<Enemy>()
+                .Where(e =>
+                {
+                    if (e.Prefab == null)
+                        return false;
+
+                    var texts = e.Prefab.GetComponentsInChildren<ProgressiveTextRevealWorld>();
+                    return texts.Any() 
+                           && texts.Count(t => t.name.Equals("EnemySpeechBubble", StringComparison.InvariantCultureIgnoreCase)) == 0;
+                })
+                .Select(e => e.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"With Speech Bubble Update Needed", items)
+                .Show();
+        }
         DrawUILine();
     }
 
