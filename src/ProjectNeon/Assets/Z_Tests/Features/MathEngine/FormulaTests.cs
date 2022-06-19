@@ -29,6 +29,9 @@ public class FormulaTests
     [Test] public void Formula_PrimaryStatOfMagic_PowerCorrect() 
         => AssertResultsIs(2, "Power", TestMembers.Create(s => s.With(StatType.Magic, 2)));
     
+    [Test] public void Formula_PrimaryStatOfMagicAlt_PowerCorrect() 
+        => AssertResultsIs(2, "PrimaryStat", TestMembers.Create(s => s.With(StatType.Magic, 2)));
+
     [Test] public void Formula_PrimaryStatOfLeadership_PowerCorrect() 
         => AssertResultsIs(2, "Power", TestMembers.Create(s => s.With(StatType.Leadership, 2)));
 

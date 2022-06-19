@@ -28,6 +28,7 @@ public static class Formula
     private static float Evaluate(FormulaContext ctx, string expression)
     {
         var newExp = string.IsNullOrWhiteSpace(expression) ? "0" : expression;
+        newExp = newExp.Replace("PrimaryStat", "Power");
         newExp = ReplaceTags(newExp, ctx);
         newExp = ReplaceShorthandStatNames(newExp);
         newExp = ReplaceResources(newExp, ctx);
