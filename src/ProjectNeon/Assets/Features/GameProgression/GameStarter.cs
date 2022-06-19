@@ -108,7 +108,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     {
         var segment = a.CurrentStageSegment;
         DevLog.Info($"Start Adventure. Auto-Start: {segment.ShouldAutoStart}. MapNodeType: {segment.MapNodeType}");
-        if (segment.ShouldAutoStart && segment.MapNodeType != MapNodeType.Unknown)
+        if (a != null && segment.ShouldAutoStart && segment.MapNodeType != MapNodeType.Unknown)
             segment.Start();
         else
             n.NavigateToGameSceneV5();
