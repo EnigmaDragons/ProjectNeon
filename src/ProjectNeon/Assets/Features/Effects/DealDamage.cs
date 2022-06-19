@@ -10,13 +10,15 @@ public sealed class DealDamage : Effect
     public void Apply(EffectContext ctx)
     {
         ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Dodge, ctx.Target.Members);
-        var preventingMembers = ctx.Preventions.GetPreventingMembers(PreventionType.Dodge).Select(m => m.Id);
         ctx.Target.Members.ForEach(m =>
         {
             var amount = Mathf.CeilToInt(_damage.Calculate(ctx, m) * m.State[StatType.Damagability]);
             var wasVulnerableString = m.IsVulnerable() ? " (Vulnerable) " : " ";
-            if (preventingMembers.Any(id => m.Id == id))
+            if (ctx.Preventions.IsDodging(m))
+            {
+                BattleLog.Write($"{m.UnambiguousName} Dodged the attack.");
                 return;
+            }
             
             if (m.State[StatType.Damagability] < 0.01)
                 BattleLog.Write($"0 damage was dealt to Invincible {m.UnambiguousName}");

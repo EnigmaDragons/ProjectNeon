@@ -30,9 +30,9 @@ public class Transfer : Effect
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
             
             if (ctx.Preventions.IsDodging(m) && (statType == TemporalStatType.HP || statType == TemporalStatType.Shield))
-                BattleLog.Write($"{m.Name} prevented Drain with a Dodge");
+                BattleLog.Write($"{m.UnambiguousName} prevented Drain with a Dodge");
             else if (ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.Name} prevented Drain with an Aegis");
+                BattleLog.Write($"{m.UnambiguousName} prevented Drain with an Aegis");
             else
                 drainedAmount -= m.State.Adjust(statType, amount);
         }
