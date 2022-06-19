@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 public class CurrentProgressionData
 {
@@ -11,6 +12,15 @@ public class CurrentProgressionData
     {
         _stored = stored;
         _current = _stored.Get();
+    }
+
+    public static void RecordCompletedAdventure(int adventureId)
+    {
+        Write(d =>
+        {
+            d.CompletedAdventureIds = d.CompletedAdventureIds.Concat(adventureId).Distinct().ToArray();
+            return d;
+        });
     }
     
     public static void Write(Func<ProgressionData, ProgressionData> transform)

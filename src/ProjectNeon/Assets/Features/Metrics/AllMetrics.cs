@@ -42,11 +42,11 @@ public static class AllMetrics
     public static void PublishBattleSummary(BattleSummaryReport report)
         => Send("battleSummary", report);
 
-    public static void PublishGameLost()
-        => Send("gameLost", new NoEventData());
+    public static void PublishGameLost(int adventureId)
+        => Send("gameLost", new AdventureIdData {adventureId = adventureId});
 
-    public static void PublishGameWon()
-        => Send("gameWon", new NoEventData());
+    public static void PublishGameWon(int adventureId)
+        => Send("gameWon", new AdventureIdData {adventureId = adventureId});
 
     public static void PublishHeroSelected(string selectedHero, string[] options, string[] existingPartyHeroes)
         => Send("heroAdded", new HeroSelectedData {heroName = selectedHero, heroOptions = options, currentPartyHeroes = existingPartyHeroes});
@@ -152,6 +152,12 @@ public static class AllMetrics
     [Serializable]
     private class NoEventData {}
 
+    [Serializable]
+    private class AdventureIdData
+    {
+        public int adventureId;
+    }
+    
     [Serializable]
     private class HeroSelectedData
     {
