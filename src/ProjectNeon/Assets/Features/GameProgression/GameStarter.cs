@@ -49,7 +49,6 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             return s;
         });
-        Message.Publish(new GameStarted());
         navigator.NavigateToSquadSelection();
     }
 
@@ -62,7 +61,6 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         if (adventure.FixedStartingHeroes.Length == 0)
         {
             Log.Error("Developer Data Error - V4 Adventures should start with a fixed party");
-            Message.Publish(new GameStarted());
             navigator.NavigateToSquadSelection();
         }
         else
@@ -76,7 +74,6 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                 s.PartyData = party.GetData();
                 return s;
             });
-            Message.Publish(new GameStarted());
             navigator.NavigateToGameSceneV4();
         }
     }
@@ -104,8 +101,17 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             s.PartyData = party.GetData();
             return s;
         });
-        Message.Publish(new GameStarted());
-        navigator.NavigateToGameSceneV5();
+        Navigate(navigator, adventureProgress5);
+    }
+
+    public static void Navigate(Navigator n, AdventureProgressV5 a)
+    {
+        var segment = a.CurrentStageSegment;
+        DevLog.Info($"Start Adventure. Auto-Start: {segment.ShouldAutoStart}. MapNodeType: {segment.MapNodeType}");
+        if (segment.ShouldAutoStart && segment.MapNodeType != MapNodeType.Unknown)
+            segment.Start();
+        else
+            n.NavigateToGameSceneV5();
     }
 
     protected override void Execute(ContinueCurrentGame msg)

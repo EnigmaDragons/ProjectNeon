@@ -10,6 +10,7 @@ public class NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene : OnMessage<Nav
     [SerializeField] private CurrentAdventure adventure;
     [SerializeField] private Adventure tutorialAdventure;
     [SerializeField] private SaveLoadSystem io;
+    [SerializeField] private AdventureProgressV5 adventureProgress5;
 
     protected override void Execute(NavigateToNextTutorialFlow msg) => Execute();
 
@@ -23,13 +24,10 @@ public class NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene : OnMessage<Nav
         else if (!d.IsLicensedBenefactor && !useNewTutorialFlow.Value)
             Message.Publish(new StartCutsceneRequested(cutscene, Maybe<Action>.Present(() => navigator.NavigateToAcademyScene())));
         // Continue Tutorial Adventure
-        else if (!d.IsLicensedBenefactor 
-             && useNewTutorialFlow.Value 
-             && io.HasSavedGame)
+        else if (!d.IsLicensedBenefactor && useNewTutorialFlow.Value && io.HasSavedGame)
         {
             io.LoadSavedGame();
-            Message.Publish(new GameLoaded());
-            navigator.NavigateToGameSceneV5();
+            GameStarter.Navigate(navigator, adventureProgress5);
         }
         // Start Tutorial Adventure
         else if (!d.IsLicensedBenefactor && useNewTutorialFlow.Value)
