@@ -105,8 +105,8 @@ public static class AllEffects
             (ctx, m) => BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {e.EffectScope.Value}", 
                 Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount))) },
         { EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, 
-            e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource(ctx.Target.TotalShields() 
-                * Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)))},
+            e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource((ctx.Target.TotalShields() 
+                * Formula.EvaluateRaw(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)).CeilingInt()))},
         { EffectType.RemoveTemporalModsMatchingStatusTag, e => new SimpleEffect(m => m.RemoveTemporaryEffects(t => t.Status.Tag.ToString() == e.EffectScope.Value))},
         { EffectType.InvulnerableForTurns, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryMultiplier(new AdjustedStats(
             new StatMultipliers().With(StatType.Damagability, 0f),
