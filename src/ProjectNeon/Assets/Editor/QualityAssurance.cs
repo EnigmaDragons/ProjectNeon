@@ -123,6 +123,10 @@ public class QualityAssurance
         if (talkingCharacter != null && talkingCharacter.character == null)
             issues.Add($"{enemyName}'s {nameof(TalkingCharacter)} {nameof(TalkingCharacter.character)} binding is null");
 
+        var cutsceneCharacter = obj.GetComponentInChildren<CutsceneCharacter>();
+        if (cutsceneCharacter != null && cutsceneCharacter.SpeechBubble == null)
+            issues.Add($"{enemyName}'s {nameof(CutsceneCharacter)} {nameof(CutsceneCharacter.SpeechBubble)} binding is null");
+        
         Object.DestroyImmediate(obj);
     }
 

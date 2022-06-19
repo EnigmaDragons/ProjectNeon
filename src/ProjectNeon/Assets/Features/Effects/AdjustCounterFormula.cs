@@ -31,7 +31,7 @@ public class AdjustCounterFormula : Effect
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, new [] { m });
             
             if (isDebuff && ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.Name} prevented {_e.EffectType} with an Aegis");
+                BattleLog.Write($"{m.UnambiguousName} prevented {_e.EffectType} with an Aegis");
             else
                 m.State.Adjust(_e.EffectScope, formulaAmount);
         });
