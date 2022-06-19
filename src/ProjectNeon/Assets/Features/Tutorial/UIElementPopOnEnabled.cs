@@ -8,6 +8,6 @@ public class UIElementPopOnEnabled : MonoBehaviour
     private void OnEnable()
     {
         if (Time.timeSinceLevelLoad > 1)
-            Message.Publish(new TweenMovementRequested(transform, new Vector3(_scale, _scale, 0), _seconds, MovementDimension.Scale, TweenMovementType.RubberBand, "")); 
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(_scale, _scale, 0), _seconds, MovementDimension.Scale, TweenMovementType.AutoRubberBand, "")); 
     }
 }

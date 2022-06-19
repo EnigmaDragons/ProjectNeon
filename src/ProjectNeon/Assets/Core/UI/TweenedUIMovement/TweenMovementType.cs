@@ -1,5 +1,6 @@
 ﻿public enum TweenMovementType
 {
     GoTo,
-    RubberBand
+    RubberBand,
+    AutoRubberBand
 }

@@ -20,6 +20,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerShields, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerResources, false, _callerId));
+        Message.Publish(new SetSuperFocusBasicControl(true));
         _timeTilPrompt = _notSwappingToBasicPromptDelay;
     }
     
