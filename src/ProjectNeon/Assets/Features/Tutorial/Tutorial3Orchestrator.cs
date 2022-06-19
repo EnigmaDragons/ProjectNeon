@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStarted, CardResolutionFinished>
+public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStarted, CardResolutionFinished, WinBattleWithRewards>
 {
     private const string _callerId = "Tutorial3Orchestrator";
 
@@ -14,6 +14,7 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
     private bool _hitWithMagicAttack;
     private bool _blockedWithArmor;
     private bool _blockedWithResistance;
+    private bool _hasWon;
     
     private void Start()
     {
@@ -28,7 +29,8 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(1);
-        Message.Publish(new ShowTutorialByName(_callerId));
+        if (!_hasWon)
+            Message.Publish(new ShowTutorialByName(_callerId));
     }
 
     protected override void Execute(TurnStarted msg) => UpdateHealthTotals();
@@ -69,6 +71,8 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
         }
         UpdateHealthTotals();
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 
     private void UpdateHealthTotals()
     {

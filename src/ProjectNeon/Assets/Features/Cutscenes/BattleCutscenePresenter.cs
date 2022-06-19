@@ -64,4 +64,6 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));
         Message.Publish(new StartCardSetupRequested());
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => FinishCutscene();
 }

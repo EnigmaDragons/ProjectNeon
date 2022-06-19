@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished>
+public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
 {
     private const string _callerId = "Tutorial7Orchestrator";
 
     private bool _hasShowedTip;
+    private bool _hasWon;
     
     private void Start()
     {
@@ -18,7 +19,8 @@ public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(9);
-        Message.Publish(new ShowTutorialByName(_callerId));
+        if (!_hasWon)
+            Message.Publish(new ShowTutorialByName(_callerId));
     }
     
     protected override void Execute(CardResolutionFinished msg)
@@ -29,4 +31,6 @@ public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardReso
             _hasShowedTip = true;
         }
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 }

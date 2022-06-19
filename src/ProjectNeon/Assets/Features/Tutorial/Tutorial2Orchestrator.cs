@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, CardResolutionStarted, ResolutionsFinished>
+public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, CardResolutionStarted, ResolutionsFinished, WinBattleWithRewards>
 {
     private const string _callerId = "Tutorial2Orchestrator";
     
@@ -11,6 +11,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private float _timeTilPrompt;
     private bool _hasStarted;
     private bool _hasSwappedToBasic;
+    private bool _hasWon;
     
     private void Start()
     {
@@ -46,13 +47,15 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(1);
-        Message.Publish(new ShowTutorialByName(_callerId));
+        if (!_hasWon)
+            Message.Publish(new ShowTutorialByName(_callerId));
     }
 
     protected override void Execute(CardResolutionFinished msg)
     {
         _hasSwappedToBasic = true;
         Message.Publish(new ShowHeroBattleThought(4, "I hope I don't have to be worried about what you will use that energy for"));
+        Message.Publish(new SetSuperFocusBasicControl(false));
     }
 
     protected override void Execute(CardResolutionStarted msg)
@@ -71,4 +74,6 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
             
         }
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 }

@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial4Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionStarted>
+public class Tutorial4Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionStarted, WinBattleWithRewards>
 {
     private const string _callerId = "Tutorial4Orchestrator";
 
     [SerializeField] private BattleState battleState;
 
     private bool _hasPlayedStatsBuffCard;
+    private bool _hasWon;
     
     private void Start()
     {
@@ -22,7 +23,8 @@ public class Tutorial4Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(1);
-        Message.Publish(new ShowTutorialByName(_callerId));
+        if (!_hasWon)
+            Message.Publish(new ShowTutorialByName(_callerId));
     }
 
     protected override void Execute(CardResolutionStarted msg)
@@ -42,4 +44,6 @@ public class Tutorial4Orchestrator : OnMessage<StartCardSetupRequested, CardReso
             Message.Publish(new ShowHeroBattleThought(1, "My enemy's armor no longer will hold up against my attacks"));
         }
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 }

@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTargetSelectionRequested, EndOfTurnStatusEffectsResolved, CardResolutionFinished>
+public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTargetSelectionRequested, EndOfTurnStatusEffectsResolved, CardResolutionFinished, WinBattleWithRewards>
 {
     private const string _callerId = "Tutorial5Orchestrator";
 
     [SerializeField] private BattleState battleState;
     
     private bool _firstTurnFinished;
+    private bool _hasWon;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTar
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(5);
+        if (!_hasWon)
         Message.Publish(new ShowTutorialByName(_callerId));
     }
 
@@ -40,4 +42,6 @@ public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTar
         if (msg.CardName == "Hidden Blade" && battleState.Members[4].CurrentHp() == battleState.Members[4].MaxHp())
             Message.Publish(new ShowHeroBattleThought(4, "You can't deal damage with that if you are not in stealth. Foolish foe!")); 
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 }

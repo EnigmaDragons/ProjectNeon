@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionStarted, BeginTargetSelectionRequested, EndOfTurnStatusEffectsResolved>
+public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionStarted, BeginTargetSelectionRequested, EndOfTurnStatusEffectsResolved, WinBattleWithRewards>
 {
     private const string _callerId = "Tutorial6Orchestrator";
     
     private bool _firstTurnFinished;
     private bool _gainedShields;
+    private bool _hasWon;
     
     private void Start()
     {
@@ -20,7 +21,8 @@ public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(6);
-        Message.Publish(new ShowTutorialByName(_callerId));
+        if (!_hasWon)
+            Message.Publish(new ShowTutorialByName(_callerId));
     }
     
     protected override void Execute(CardResolutionStarted msg)
@@ -42,4 +44,5 @@ public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     }
 
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => _firstTurnFinished = true;
+    protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 }

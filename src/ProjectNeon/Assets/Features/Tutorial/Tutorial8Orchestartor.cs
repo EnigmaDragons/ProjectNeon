@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial8Orchestartor : OnMessage<StartCardSetupRequested, CardResolutionFinished>
+public class Tutorial8Orchestartor : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
 {
     private const string _callerId = "Tutorial8Orchestrator";
 
     private bool _hasShowedLine1;
     private bool _hasShowedLine2;
+    private bool _hasWon;
     
     private void Start()
     {
@@ -19,7 +20,8 @@ public class Tutorial8Orchestartor : OnMessage<StartCardSetupRequested, CardReso
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(1);
-        Message.Publish(new ShowTutorialByName(_callerId));
+        if (!_hasWon)
+            Message.Publish(new ShowTutorialByName(_callerId));
     }
     
     protected override void Execute(CardResolutionFinished msg)
@@ -39,4 +41,6 @@ public class Tutorial8Orchestartor : OnMessage<StartCardSetupRequested, CardReso
             Message.Publish(new ShowHeroBattleThought(4, "Oh no not a finisher!"));
         }
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 }
