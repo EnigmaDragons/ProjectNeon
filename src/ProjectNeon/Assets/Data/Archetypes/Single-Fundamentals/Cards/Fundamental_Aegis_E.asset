@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Gilgamesh_Afflict_E
+  m_Name: Fundamental_Aegis_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 30
@@ -71,7 +71,7 @@ MonoBehaviour:
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     characterAnimation2:
-      Type: 3
+      Type: 5
       Conditions: []
     atTargetAnimation:
       animation:
@@ -152,12 +152,12 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 91361f73b3d67b749bcca295d0bdd55c, type: 2}
-      size: 0.8
+        Variable: {fileID: 11400000, guid: 9122ff70b566e7949b5824047d3801c9, type: 2}
+      size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 1}
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
       skipWaitingForCompletion: 0
       conditions: []
@@ -165,7 +165,7 @@ MonoBehaviour:
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 84
+      EffectType: 79
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -175,18 +175,18 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 3
+      DurationFormula: 0
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: Attack * 0.5
+      Formula: 1
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
