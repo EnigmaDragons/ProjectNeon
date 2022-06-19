@@ -31,11 +31,15 @@ public class HeroHealth
     public HeroHealth(Func<IStats> getCurrentStats) => _getCurrentStats = getCurrentStats;
 
     public void Init(Func<IStats> getCurrentStats) => _getCurrentStats = getCurrentStats;
-    public void HealToFull() => missingHp = 0;
-    public void SetHp(int hp) => missingHp = _getCurrentStats().MaxHp() - hp;
-    public void AdjustHp(int amount) => missingHp = Mathf.Clamp(missingHp - amount, 0, _getCurrentStats().MaxHp());
     public void Apply(AdditiveStatInjury injury) => additiveStatInjuries.Add(injury);
     public void Apply(MultiplicativeStatInjury injury) => multiplicativeStatInjuries.Add(injury);
+    public void HealToFull() => missingHp = 0;
+    public void SetHp(int hp)
+    {
+        var maxHp = _getCurrentStats().MaxHp();
+        missingHp = Mathf.Clamp(maxHp - hp, 0, maxHp);
+    }
+    public void AdjustHp(int amount) => missingHp = Mathf.Clamp(missingHp - amount, 0, _getCurrentStats().MaxHp());
 
     public void HealInjuryByName(string name)
     {
