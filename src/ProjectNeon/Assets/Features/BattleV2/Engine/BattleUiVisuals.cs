@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, TargetSelectionFinished, PlayerCardCanceled, CardResolutionStarted, CardResolutionFinished>
@@ -8,9 +7,6 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     [SerializeField] private GameObject hand;
     [SerializeField] private GameObject defeatUi;
     [SerializeField] private GameObject victoryUi;
-    
-    [SerializeField] private BattleState battleState;
-    [SerializeField] private CardResolutionZone playArea;
     
     public void Setup()
     {
@@ -23,7 +19,8 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
     public void BeginCommandPhase()
     {
         hand.SetActive(true);
-        resolutionPhaseUi.gameObject.SetActive(true);
+        if (resolutionPhaseUi != null)
+            resolutionPhaseUi.gameObject.SetActive(true);
     }
 
     public void EndCommandPhase()
@@ -31,8 +28,12 @@ public class BattleUiVisuals : OnMessage<BattleFinished, TargetSelectionBegun, T
         HideCommandPhaseUI();
     }
     
-    private void HideResolutionPhaseUI() => resolutionPhaseUi.gameObject.SetActive(false);
-    
+    private void HideResolutionPhaseUI()
+    {
+        if (resolutionPhaseUi != null)
+            resolutionPhaseUi.gameObject.SetActive(false);
+    }
+
     protected override void Execute(BattleFinished msg)
     {
         if (msg.Winner == TeamType.Enemies)
