@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : OnMessage<NavigateToNextTutorialFlow>
+public class NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene : OnMessage<NavigateToNextTutorialFlow>
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private Cutscene cutscene;
@@ -16,10 +16,13 @@ public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : OnMessage<Nav
     public void Execute()
     {
         var d = CurrentAcademyData.Data;
+        // Initial Settings
         if (!d.HasConfiguredSettings)
             navigator.NavigateToSettingsScene();
+        // Old Academy
         else if (!d.IsLicensedBenefactor && !useNewTutorialFlow.Value)
             Message.Publish(new StartCutsceneRequested(cutscene, Maybe<Action>.Present(() => navigator.NavigateToAcademyScene())));
+        // Continue Tutorial Adventure
         else if (!d.IsLicensedBenefactor 
              && useNewTutorialFlow.Value 
              && io.HasSavedGame)
@@ -28,10 +31,13 @@ public class NavigateToSettingsOrAcedemyOrTitleOrWelcomeCutscene : OnMessage<Nav
             Message.Publish(new GameLoaded());
             navigator.NavigateToGameSceneV5();
         }
+        // Start Tutorial Adventure
         else if (!d.IsLicensedBenefactor && useNewTutorialFlow.Value)
             Message.Publish(new StartAdventureV5Requested(tutorialAdventure));
+        // Welcome To Metroplex Cutscene
         else if (!d.HasCompletedWelcomeToMetroplexCutscene)
             entranceCutsceneStarter.Execute();
+        // Main Menu
         else
             navigator.NavigateToTitleScreen();
     }

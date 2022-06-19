@@ -46,12 +46,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         {
             if (state.IsTutorialCombat)
             {
-                Message.Publish(new TutorialWon());
-                adventureProgress.AdventureProgress.Advance();
-                Message.Publish(new AutoSaveRequested());
-                conclusion.Set(true, adventure.Adventure.VictoryConclusion, CurrentGameData.Data.Stats, partyState.BaseHeroes);
-                CurrentGameData.Clear();
-                this.ExecuteAfterDelay(() => Message.Publish(new NavigateToNextTutorialFlow()), secondsBeforeGameOverScreen);   
+                TutorialWonHandler.Execute(secondsBeforeGameOverScreen);
             }
             else
             {
@@ -94,7 +89,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else
         {
             Log.Info("Navigating to defeat screen");
-            AllMetrics.PublishGameLost();
+            AllMetrics.PublishGameLost(adventure.Adventure.Id);
             state.AccumulateRunStats();
             conclusion.Set(false, adventure.Adventure.DefeatConclusion, CurrentGameData.Data.Stats, partyState.BaseHeroes);
             CurrentGameData.Clear();

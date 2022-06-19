@@ -535,7 +535,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!eventData.dragging && _isHand && battleState.Phase == BattleV2Phase.PlayCards && Vector3.Distance(_position, transform.position) <= 0.1)
+        if (!MouseDragState.IsDragging && _isHand && battleState.Phase == BattleV2Phase.PlayCards && Vector3.Distance(_position, transform.position) <= 0.1)
         {
             Message.Publish(new CardHoverEnter(this));
             Message.Publish(new CardHoverSFX(transform));
@@ -548,7 +548,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!eventData.dragging && !IsDragging && _isHand)
+        if (!MouseDragState.IsDragging && !IsDragging && _isHand)
         {
             SetHandHighlight(false);
             Message.Publish(new CardHoverExitSFX(transform));
