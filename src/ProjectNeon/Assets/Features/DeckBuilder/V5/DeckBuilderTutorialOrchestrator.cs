@@ -11,6 +11,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
     [SerializeField] private GameObject heroStatsHighlight;
     [SerializeField] private GameObject libraryNextHighlight;
     [SerializeField] private Button libraryNextButton;
+    [SerializeField] private DeckBuilderModeControllerV5 deckBuilderModeControllerV5;
 
     private bool _hasSwitchedToEnemyTab;
     private bool _hasSwitchedToHeroTab;
@@ -46,6 +47,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
                 libraryNextHighlight.SetActive(false);
             }
         });
+        deckBuilderModeControllerV5.SetSaveButtonContInteractivity(false);
     }
         
     private void OnDisable() => Message.Unsubscribe(this);
@@ -109,4 +111,13 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
             Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInLibrary, false));
         }
     }
+
+    private void SetDoneButtonInteractivity() => deckBuilderModeControllerV5.SetSaveButtonContInteractivity(
+           _hasSwitchedToEnemyTab 
+        && _hasSwitchedToHeroTab
+        && _hasSwitchedHeroes
+        && _hasClearedDeck
+        && _hasViewedHeroStats
+        && _hasAddedCard
+        && _hasRemovedCard);
 }

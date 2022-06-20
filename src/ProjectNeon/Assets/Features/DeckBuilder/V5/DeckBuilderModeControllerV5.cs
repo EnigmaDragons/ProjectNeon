@@ -14,6 +14,8 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     [SerializeField] private Button fightButton;
     [SerializeField] private Navigator navigator;
 
+    private bool _doneButtonCannotBeInteractive;
+    
     private void Awake()
     {
         saveButtonCont.Init("Save", OnFinished);
@@ -63,7 +65,7 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     
     private void OnFightButtonClicked()
     {
-        if (state.HeroesDecks.Any(x => x.Deck.Count != deckSize)) 
+        if (state.HeroesDecks.Any(x => x.Deck.Count != deckSize) || _doneButtonCannotBeInteractive) 
             return;
         
         BeginFight();
@@ -82,7 +84,12 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
 
     protected override void Execute(DeckBuilderCurrentDeckChanged msg)
     {
-        if (state.HeroesDecks.All(x => x.Deck.Count == deckSize))
+        UpdateSaveButtonCont();
+    }
+
+    private void UpdateSaveButtonCont()
+    {
+        if (state.HeroesDecks.All(x => x.Deck.Count == deckSize) && !_doneButtonCannotBeInteractive)
         {
             saveButtonCont.SetButtonDisabled(false, Color.white);
             saveButtonCont.SetButtonDisabled(false, Color.white);
@@ -92,5 +99,11 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
             saveButtonCont.SetButtonDisabled(true, Color.white);
             saveButtonCont.SetButtonDisabled(true, Color.white);
         }
+    }
+
+    public void SetSaveButtonContInteractivity(bool isInteractive)
+    {
+        _doneButtonCannotBeInteractive = !isInteractive;
+        UpdateSaveButtonCont();
     }
 }
