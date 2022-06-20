@@ -66,12 +66,15 @@ public class QualityAssurance
         var numItemsCount = cutscenes.Length;
         foreach (var c in cutscenes)
         {
+            if (c.IsObsolete)
+                continue;
+            
             var issues = new List<string>();
             for (var i = 0; i < c.Segments.Length; i++)
             {
                 var s = c.Segments[i];
                 var text = s.Text;
-                var numberOfLineBreaks = CCount(text, "\n");
+                var numberOfLineBreaks = CCount(text.Replace("\n\n", "\n"), "\n");
                 var textEffectiveLength = text.Length + numberOfLineBreaks * 77;
                 if (textEffectiveLength > 252)
                     Log.Warn($"Cutscene Segment is a little long: {c.name} - Segment {i}. More than 252 Effective Characters. (Linebreaks count at 77, a pessimistic value)");
