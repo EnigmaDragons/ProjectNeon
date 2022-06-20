@@ -20,6 +20,7 @@ public static class AICardSelectionLogic
     public static CardSelectionContext WithSelectedDesignatedAttackerCardIfApplicable(this CardSelectionContext ctx) 
         => (ctx.SelectedCard.IsMissing 
            && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) 
+           && ctx.CurrentTurnPlayedCards.None(p => p.Is(CardTag.Attack))
            && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
             ? ctx.WithSelectedCard(ctx.SelectAttackCard())
             : ctx).WithLoggedSelection(nameof(WithSelectedDesignatedAttackerCardIfApplicable));
@@ -127,11 +128,17 @@ public static class AICardSelectionLogic
     private static CardSelectionContext DontStealCreditsIfOpponentDoesntHaveAny(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.PartyAdventureState.Credits <= 0, CardTag.StealCredits);
 
-    private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
-        => ctx.CardOptions.Where(o => o.Is(CardTag.Attack))
-            .Select((o, i) => (option: o, index: i))
-            .OrderByDescending(c => SmartCardPreference(ctx, c.option, c.index))
-            .First().option;
+    private static CardTypeData SelectAttackCard(this CardSelectionContext ctx)
+    {
+        var options = ctx.CardOptions.Where(o => o.Is(CardTag.Attack))
+            .Select((o, i) => (option: o, index: i, preference: SmartCardPreference(ctx, o, i)))
+            .ToArray()
+            .Shuffled()
+            .OrderByDescending(c => c.preference);
+            
+        DevLog.Write($"Card Preference Order: {string.Join(", ", options.Select(c => $"{c.option.Name} {c.preference}"))}");
+        return options.First().option;
+    }
 
     private static CardTypeData SelectFocusCard(this CardSelectionContext ctx)
         => ctx.CardOptions.Where(o => o.Is(CardTag.Focus)).ToArray().Shuffled().First();
@@ -204,8 +211,9 @@ public static class AICardSelectionLogic
         
         if (ctx.LastPlayedCard.IsPresent && ctx.AiPreferences.RotatePlayingCardTags.Any())
             preferenceScore += RotatingCardTagPreferenceAmount(ctx, card);
-
-        preferenceScore += (ctx.CardOptions.Count() - (optionIndex + 1)) * ctx.AiPreferences.CardOrderPreferenceFactor;
+        
+        if (ctx.AiPreferences.CardOrderPreferenceFactor != 0 && !card.Is(CardTag.IgnoreCardOrder))
+            preferenceScore += (ctx.CardOptions.Count() - (optionIndex + 1)) * ctx.AiPreferences.CardOrderPreferenceFactor;
         
         return preferenceScore;
     }

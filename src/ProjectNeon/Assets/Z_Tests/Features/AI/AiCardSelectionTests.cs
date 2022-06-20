@@ -91,7 +91,8 @@ public class AiCardSelectionTests
 
         var ctx = AsNonDesignatedAttacker(me, opp, designatedOtherAttacker, aiPreferences, AttackCard1, ControlCard);
         
-        AssertAlwaysPlays(ctx, ControlCard);
+        var played = ExecuteGeneralAiSelection(ctx, CreateAI(), 1);
+        Assert.AreNotEqual(AttackCard1.Name, played.Card.Name);
     }
 
     [Test]
@@ -143,6 +144,19 @@ public class AiCardSelectionTests
             new AiPreferences(), Maybe<CardTypeData>.Missing(), new []{ AttackCard1, AttackCard2 }, AttackCard2.AsArray());
 
         AssertAlwaysPlays(ctx, AttackCard1);
+    }
+
+    [Test]
+    public void GeneralAI_MultiCardDesignatedAttacker_OnlyNeedsToPlayOneAttack()
+    {
+        var opp = TestMembers.Any();
+        var me = TestMembers.CreateEnemy(s => s.With(StatType.ExtraCardPlays, 2));
+
+        var ctx = AsDesignatedAttacker(me, opp, new AiPreferences(), ControlCard, AttackCard1)
+            .WithCurrentTurnPlayedCards(AttackCard1.AsArray());
+        
+        for(var i = 0; i < 10; i++)
+            Assert.AreEqual(ControlCard.Name, ExecuteGeneralAiSelection(ctx, CreateAI(), 1).Card.Name);
     }
     
     private static GeneralAI CreateAI() 

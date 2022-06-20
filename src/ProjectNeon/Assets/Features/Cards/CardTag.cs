@@ -51,5 +51,6 @@ public enum CardTag
     Focus = 45,
     RequiresFocus = 46,
     NextTurn = 50,
-    ScaledOnMissingMaxHealth = 100
+    ScaledOnMissingMaxHealth = 100,
+    IgnoreCardOrder = 101,
 }

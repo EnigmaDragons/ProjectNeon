@@ -30,6 +30,7 @@ public class GeneralAI : StatefulTurnAI
         UpdateTurnTracking(turnNumber);
         
         return ctx
+            .WithCurrentTurnPlayedCards(_currentTurnPlayed.ValueOrMaybe(ctx.Member.Id).OrDefault(() => new List<IPlayedCard>()).Select(p => p.Card.Type).ToArray())
             .WithCommonSenseSelections()
             .IfTrueDontPlayType(_ => _currentTurnPlayed.ValueOrMaybe(ctx.Member.Id).IsPresentAnd(cards => cards.Any(c => c.Card.Is(CardTag.Exclusive))), CardTag.Exclusive)
             .WithSelectedFocusCardIfApplicable()

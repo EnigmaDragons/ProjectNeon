@@ -22,7 +22,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ShieldFormula, new [] {"Formula", "InterpolatePartialFormula"}},
         {EffectType.AdjustStatAdditivelyFormula, new [] { "Formula", "InterpolatePartialFormula", "DurationFormula", "EffectScope" }},
         {EffectType.AdjustStatMultiplicativelyFormula, new [] { "Formula", "InterpolatePartialFormula", "DurationFormula", "EffectScope" }},
-        {EffectType.AdjustCounterFormula, new [] {"Formula", "InterpolatePartialFormula", "EffectScope" }},
+        {EffectType.AdjustCounterFormula, new [] {"Formula", "InterpolatePartialFormula", "EffectScope", "Unpreventable" }},
         {EffectType.GainCredits, new [] {"BaseAmount" }},
         {EffectType.AdjustPrimaryResourceFormula, new [] {"Formula", "InterpolatePartialFormula"}},
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "DurationFormula", "EffectScope" }},

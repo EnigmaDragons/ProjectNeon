@@ -47,6 +47,7 @@ public sealed class EffectData
     public CardReactionSequence ReactionEffect;
 
     public CardType BonusCardType;
+    public bool Unpreventable = false;
 }
 
 public static class EffectDataExtensions

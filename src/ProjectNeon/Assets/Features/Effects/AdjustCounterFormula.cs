@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,7 +26,7 @@ public class AdjustCounterFormula : Effect
             var formulaAmount = Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.Formula, ctx.XPaidAmount);
 
             var isDebuff = impactSign * formulaAmount < 0; 
-            if (isDebuff)
+            if (isDebuff && !_e.Unpreventable)
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, new [] { m });
             
             if (isDebuff && ctx.Preventions.IsAegising(m))
