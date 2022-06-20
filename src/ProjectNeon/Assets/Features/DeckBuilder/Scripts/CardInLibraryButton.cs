@@ -4,11 +4,12 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 
-public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl>, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private CardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private TextMeshProUGUI numCopiesLabel;
+    [SerializeField] private GameObject superFocus;
 
     public CardInLibraryButton InitInfoOnly(Card card, Action action)
     {
@@ -24,17 +25,19 @@ public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointer
         return this;
     }
 
-    public CardInLibraryButton Init(Card card, int numTotal, int numAvailable)
+    public CardInLibraryButton Init(Card card, int numTotal, int numAvailable, bool superFocusEnabled)
     {
         presenter.Set(card, CreateCardAction(card, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
+        superFocus.SetActive(superFocusEnabled);
         return this;
     }
     
-    public CardInLibraryButton Init(CardTypeData card, int numTotal, int numAvailable)
+    public CardInLibraryButton Init(CardTypeData card, int numTotal, int numAvailable, bool superFocusEnabled)
     {
         presenter.Set(card, CreateCardAction(card, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
+        superFocus.SetActive(superFocusEnabled);
         return this;
     }
 
@@ -78,5 +81,11 @@ public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerExit(PointerEventData eventData)
     {
+    }
+
+    protected override void Execute(SetSuperFocusDeckBuilderControl msg)
+    {
+        if (msg.Name == DeckBuilderControls.CardInLibrary)
+            superFocus.SetActive(msg.Enabled);
     }
 }
