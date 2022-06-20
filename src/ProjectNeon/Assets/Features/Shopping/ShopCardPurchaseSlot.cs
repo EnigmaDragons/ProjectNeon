@@ -2,17 +2,26 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
+public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged, SetSuperFocusBuyControl>
 {
     [SerializeField] private TextMeshProUGUI costLabel;
     [SerializeField] private CardPresenter cardPresenter;
     [SerializeField] private GameObject soldVisual;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private CurrentGlobalEffects globalEffects;
+    [SerializeField] private GameObject superFocus;
 
     private Card _card;
     private int _price;
     private bool _purchased;
+
+    protected override void Execute(SetSuperFocusBuyControl msg)
+    {
+        if (!msg.Enabled)
+            superFocus.SetActive(false);
+        else if (party.Credits >= _price)
+            superFocus.SetActive(true);
+    }
 
     protected override void AfterEnable()
     {
@@ -51,6 +60,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged>
         party.UpdateCreditsBy(-_price);
         party.Add(_card.BaseType);
         Message.Publish(new CardPurchased(_card, transform));
+        Message.Publish(new SetSuperFocusBuyControl(false));
     }
 
     protected override void Execute(PartyAdventureStateChanged msg) => UpdateAffordability();
