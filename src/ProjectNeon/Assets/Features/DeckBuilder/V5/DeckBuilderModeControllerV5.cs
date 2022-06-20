@@ -12,6 +12,7 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     [SerializeField] private TextCommandButton saveButtonCont;
     [SerializeField] private GameObject[] fightOnlyElements;
     [SerializeField] private Button fightButton;
+    [SerializeField] private TextCommandButton fightButtonCont;
     [SerializeField] private Navigator navigator;
 
     private bool _doneButtonCannotBeInteractive;
@@ -92,12 +93,12 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
         if (state.HeroesDecks.All(x => x.Deck.Count == deckSize) && !_doneButtonCannotBeInteractive)
         {
             saveButtonCont.SetButtonDisabled(false, Color.white);
-            saveButtonCont.SetButtonDisabled(false, Color.white);
+            fightButtonCont.SetButtonDisabled(false, Color.white);
         }
         else
         {
             saveButtonCont.SetButtonDisabled(true, Color.white);
-            saveButtonCont.SetButtonDisabled(true, Color.white);
+            fightButtonCont.SetButtonDisabled(true, Color.white);
         }
     }
 

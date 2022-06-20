@@ -47,7 +47,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
                 libraryNextHighlight.SetActive(false);
             }
         });
-        deckBuilderModeControllerV5.SetSaveButtonContInteractivity(false);
+        SetDoneButtonInteractivity();
     }
         
     private void OnDisable() => Message.Unsubscribe(this);
@@ -59,11 +59,13 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
             _hasSwitchedToEnemyTab = true;
             enemyTabHighlight.SetActive(false);
             deckTabHighlight.SetActive(true);
+            SetDoneButtonInteractivity();
         }
         if (msg.TabName == "hero" && _hasSwitchedToEnemyTab && !_hasSwitchedToHeroTab)
         {
             _hasSwitchedToHeroTab = true;
             deckTabHighlight.SetActive(false);
+            SetDoneButtonInteractivity();
         }
     }
 
@@ -73,6 +75,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         {
             _hasSwitchedHeroes = true;
             Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.HeroTab, false));
+            SetDoneButtonInteractivity();
         }
     }
 
@@ -82,6 +85,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         {
             _hasClearedDeck = true;
             deckClearHighlight.SetActive(false);
+            SetDoneButtonInteractivity();
         }
     }
     
@@ -91,6 +95,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         {
             _hasViewedHeroStats = true;
             heroStatsHighlight.SetActive(false);
+            SetDoneButtonInteractivity();
         }
     }
     
@@ -100,6 +105,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         {
             _hasRemovedCard = true;
             Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInDeck, false));
+            SetDoneButtonInteractivity();
         }
     }
     
@@ -109,6 +115,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         {
             _hasAddedCard = true;
             Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInLibrary, false));
+            SetDoneButtonInteractivity();
         }
     }
 
