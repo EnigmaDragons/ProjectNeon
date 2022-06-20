@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderStateUpdated>
+public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderStateUpdated, SetSuperFocusDeckBuilderControl>
 {
     [SerializeField] private PageViewer pageViewer;
     [SerializeField] private CardInLibraryButton cardInLibraryButtonTemplate;
@@ -12,9 +12,16 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderSta
     [SerializeField] private DeckBuilderState state;
 
     private Hero _selectedHero;
+    private bool _superFocusEnabledOnCardsInLibrary;
     
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => GenerateLibrary();
     protected override void Execute(DeckBuilderStateUpdated msg) => GenerateLibrary();
+
+    protected override void Execute(SetSuperFocusDeckBuilderControl msg)
+    {
+        if (msg.Name == DeckBuilderControls.CardInLibrary)
+            _superFocusEnabledOnCardsInLibrary = msg.Enabled;
+    }
 
     private void GenerateLibrary()
     {
@@ -59,7 +66,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderSta
                 if (card.Id.Equals(_selectedHero.BasicCard.Id))
                     button.InitBasic(card);
                 else
-                    button.Init(card, numTotal, numAvailable);
+                    button.Init(card, numTotal, numAvailable, _superFocusEnabledOnCardsInLibrary);
         }
 
         return Init;
@@ -73,7 +80,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderSta
             if (card.Id.Equals(_selectedHero.BasicCard.Id))
                 button.InitBasic(card);
             else
-                button.Init(card, numTotal, numAvailable);
+                button.Init(card, numTotal, numAvailable, _superFocusEnabledOnCardsInLibrary);
         }
 
         return Init;

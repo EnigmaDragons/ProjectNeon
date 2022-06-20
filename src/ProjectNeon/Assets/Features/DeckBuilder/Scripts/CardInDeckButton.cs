@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
+public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSuperFocusDeckBuilderControl>
 {
     [SerializeField] private SimpleDeckCardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private HoverCard hoverCard;
+    [SerializeField] private GameObject superFocus;
 
     private Canvas _canvas;
     private Maybe<Card> _card = Maybe<Card>.Missing();
@@ -16,19 +17,27 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged>
     private void Awake() => _canvas = FindObjectOfType<Canvas>();
     private void OnDestroy() => OnExit();
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => UpdateInfo();
-    
-    public void Init(CardTypeData c)
+
+    protected override void Execute(SetSuperFocusDeckBuilderControl msg)
+    {
+        if (msg.Name == DeckBuilderControls.CardInDeck)
+            superFocus.SetActive(msg.Enabled);
+    } 
+
+    public void Init(CardTypeData c, bool superFocusEnabled)
     {
         _card = Maybe<Card>.Missing();
         _cardType = c;
         UpdateInfo();
+        superFocus.SetActive(superFocusEnabled);
     }
 
-    public void Init(Card c)
+    public void Init(Card c, bool superFocusEnabled)
     {
         _card = c;
         _cardType = c.BaseType;
         UpdateInfo();
+        superFocus.SetActive(superFocusEnabled);
     }
 
     public void RemoveCard()
