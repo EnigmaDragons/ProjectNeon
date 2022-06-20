@@ -44,7 +44,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         }
         else if (adventureProgress.AdventureProgress.IsFinalStageSegment)
         {
-            if (state.IsTutorialCombat)
+            if (state.IsTutorialCombat || !CurrentAcademyData.Data.IsLicensedBenefactor)
             {
                 TutorialWonHandler.Execute(secondsBeforeGameOverScreen);
             }
