@@ -3,10 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Adventure/CardShop")]
 public class CardShopSegment : StageSegment
 {
+    [SerializeField] private bool isTutorial;
+    
     public override string Name => "Card Shop";
     public override bool ShouldCountTowardsEnemyPowerLevel => false;
     public override bool ShouldAutoStart => false;
-    public override void Start() => Message.Publish(new ToggleCardShop());
+    public override void Start() => Message.Publish(new ToggleCardShop(isTutorial));
     public override Maybe<string> Detail => Maybe<string>.Missing();
     public override MapNodeType MapNodeType => MapNodeType.CardShop;
     public override Maybe<string> Corp => Maybe<string>.Missing();
