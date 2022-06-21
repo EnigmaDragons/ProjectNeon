@@ -30,7 +30,6 @@ public class GeneralAI : StatefulTurnAI
         UpdateTurnTracking(turnNumber);
         
         return ctx
-            .WithCurrentTurnPlayedCards(_currentTurnPlayed.ValueOrMaybe(ctx.Member.Id).OrDefault(() => new List<IPlayedCard>()).Select(p => p.Card.Type).ToArray())
             .WithCommonSenseSelections()
             .IfTrueDontPlayType(_ => _currentTurnPlayed.ValueOrMaybe(ctx.Member.Id).IsPresentAnd(cards => cards.Any(c => c.Card.Is(CardTag.Exclusive))), CardTag.Exclusive)
             .WithSelectedFocusCardIfApplicable()
@@ -47,7 +46,8 @@ public class GeneralAI : StatefulTurnAI
 
         var unhighlightedCards = battleState.GetUnhighlightedCards(memberId,
             battleState.GetPlayableCards(memberId, battleState.Party, strategy.SpecialCards));
-        var ctx = new CardSelectionContext(me, battleState, strategy, focusTarget, lastPlayedCard, unhighlightedCards);
+        var ctx = new CardSelectionContext(me, battleState, strategy, focusTarget, lastPlayedCard, unhighlightedCards)
+            .WithCurrentTurnPlayedCards(_currentTurnPlayed.ValueOrMaybe(memberId).OrDefault(() => new List<IPlayedCard>()).Select(p => p.Card.Type).ToArray());
         
         return Select(battleState.TurnNumber, ctx);
     }

@@ -62,7 +62,7 @@ public class AiPreferences
             RotatePlayingCardTags = RotatePlayingCardTags,
             UnpreferredCardTags = UnpreferredCardTags.Append(CardTag.Attack).ToHashSet().ToArray(),
             DesignatedAttackerPriority = DesignatedAttackerPriority,
-            CardOrderPreferenceFactor = 1
+            CardOrderPreferenceFactor = CardOrderPreferenceFactor
         };
         update(clone);
         return clone;

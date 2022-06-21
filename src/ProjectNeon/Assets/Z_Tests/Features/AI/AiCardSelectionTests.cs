@@ -153,10 +153,15 @@ public class AiCardSelectionTests
         var me = TestMembers.CreateEnemy(s => s.With(StatType.ExtraCardPlays, 2));
 
         var ctx = AsDesignatedAttacker(me, opp, new AiPreferences(), ControlCard, AttackCard1)
+            .WithLastPlayedCard(AttackCard1)
             .WithCurrentTurnPlayedCards(AttackCard1.AsArray());
-        
-        for(var i = 0; i < 10; i++)
-            Assert.AreEqual(ControlCard.Name, ExecuteGeneralAiSelection(ctx, CreateAI(), 1).Card.Name);
+
+        for (var i = 0; i < 10; i++)
+        {
+            var ai = CreateAI();
+            var cardTwo = ExecuteGeneralAiSelection(ctx, ai);
+            Assert.AreEqual(ControlCard.Name, cardTwo.Card.Name, $"Wrong Card Played on Turn {i + 1}");
+        }
     }
     
     private static GeneralAI CreateAI() 

@@ -50,4 +50,6 @@ public class PlayedCardV2 : IPlayedCard
         Log.Info($"Perform {PlayedCardId}");
         Card.Play(_targets, beforeCard, _lockedXValue, () => Message.Publish(new CardResolutionFinished(this)));
     }
+
+    public override string ToString() => $"Played - {Card.Name}";
 }
