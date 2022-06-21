@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,9 +28,9 @@ public class GeneralAI : StatefulTurnAI
         
     private IPlayedCard Select(int turnNumber, CardSelectionContext ctx)
     {
-        UpdateTurnTracking(turnNumber);
+        var updatedContext = UpdateTurnTracking(turnNumber, ctx);
         
-        return ctx
+        return updatedContext
             .WithCommonSenseSelections()
             .IfTrueDontPlayType(_ => _currentTurnPlayed.ValueOrMaybe(ctx.Member.Id).IsPresentAnd(cards => cards.Any(c => c.Card.Is(CardTag.Exclusive))), CardTag.Exclusive)
             .WithSelectedFocusCardIfApplicable()
@@ -86,12 +87,13 @@ public class GeneralAI : StatefulTurnAI
         return maybeMember;
     }
     
-    private void UpdateTurnTracking(int currentTurnNumber)
+    private CardSelectionContext UpdateTurnTracking(int currentTurnNumber, CardSelectionContext ctx)
     {
         if (currentTurnNumber == _currentTurnNumber)
-            return;
+            return ctx;
 
         _currentTurnNumber = currentTurnNumber;
         _currentTurnPlayed = new Dictionary<int, List<IPlayedCard>>();
+        return ctx.WithCurrentTurnPlayedCards(Array.Empty<CardTypeData>());
     }
 }

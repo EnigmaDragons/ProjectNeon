@@ -82,7 +82,9 @@ public static class EffectDataExtensions
             ReactionSequence = e.ReactionSequence,
             ReactionEffect = e.ReactionEffect,
             
-            BonusCardType = e.BonusCardType
+            BonusCardType = e.BonusCardType,
+            
+            Unpreventable = e.Unpreventable
         };
 
     public static EffectData Immediately(this EffectData e)
