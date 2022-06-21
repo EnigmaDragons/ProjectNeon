@@ -84,22 +84,44 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (canTravel)
             button.onClick.AddListener(() =>
             {
-                gameMap.CurrentNode = mapData;
-                gameMap.CurrentChoices.Remove(mapData);
-                Message.Publish(new TravelToNode
+                Action action = () =>
                 {
-                    Position = mapData.Position, 
-                    OnMidPointArrive = onMidPointArrive,
-                    OnArrive = t =>
+                    gameMap.CurrentNode = mapData;
+                    gameMap.CurrentChoices.Remove(mapData);
+                    Message.Publish(new TravelToNode
                     {
-                        Message.Publish(new TravelMovementStopped(t));
-                        Message.Publish(new ArrivedAtNode(transform, mapData.Type));
-                        if (mapData.AdvancesAdventure)
-                            gameMap.AdvanceToNextSegment();
-                        ArrivalSegment.Start();
-                    }
-                });
-                Message.Publish(new AutoSaveRequested());
+                        Position = mapData.Position, 
+                        OnMidPointArrive = onMidPointArrive,
+                        OnArrive = t =>
+                        {
+                            Message.Publish(new TravelMovementStopped(t));
+                            Message.Publish(new ArrivedAtNode(transform, mapData.Type));
+                            if (mapData.AdvancesAdventure)
+                                gameMap.AdvanceToNextSegment();
+                            ArrivalSegment.Start();
+                        }
+                    });
+                    Message.Publish(new AutoSaveRequested());
+                };
+
+                if (!CurrentAcademyData.Data.ConfirmedStorySkipBehavior && mapData.Type != MapNodeType.MainStory && gameMap.CurrentChoices.Any(n => n.Type == MapNodeType.MainStory))
+                {
+                    Message.Publish(new ShowTwoChoiceDialog
+                    {     
+                        UseDarken = true,                   
+                        Prompt = "You are skipping a Main Story segment. If you don't visit the Main Story segment right now, you will miss it for this entire run. Are you sure you wish to skip it?",
+                        PrimaryButtonText = "Oops! Thanks!",
+                        PrimaryAction = () => { },
+                        SecondaryButtonText = "Skip the Story",
+                        SecondaryAction = () =>
+                        {
+                            CurrentAcademyData.Mutate(d => d.ConfirmedStorySkipBehavior = true);
+                            action();
+                        }
+                    });
+                }
+                else
+                    action();
             });
         if (isEnlarged)
         {

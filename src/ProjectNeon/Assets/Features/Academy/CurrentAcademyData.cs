@@ -13,6 +13,15 @@ public class CurrentAcademyData
         _stored = stored;
         _current = _stored.Get();
     }
+
+    public static void Mutate(Action<AcademyData> mutate)
+    {
+        Write(d =>
+        {
+            mutate(d);
+            return d;
+        });
+    }
     
     public static void Write(Func<AcademyData, AcademyData> transform)
     {

@@ -9,6 +9,7 @@ public class AcademyDataSnapshot
     public List<string> CompletedTutorials { get; private set; }
     public bool HasConfiguredSettings { get; private set; }
     public bool HasCompletedWelcomeToMetroplexCutscene { get; private set; }
+    public bool ConfirmedStorySkipBehavior { get; private set; }
 
     public AcademyDataSnapshot(AcademyData src)
     {
@@ -16,6 +17,7 @@ public class AcademyDataSnapshot
         CompletedTutorials = src.TutorialData.CompletedTutorialNames.ToList();
         HasConfiguredSettings = src.HasConfiguredSettings;
         HasCompletedWelcomeToMetroplexCutscene = src.HasCompletedWelcomeToMetroplexCutscene;
+        ConfirmedStorySkipBehavior = src.ConfirmedStorySkipBehavior;
     }
 }
 
@@ -25,6 +27,7 @@ public class AcademyData
     public AcademyTutorialData TutorialData = new AcademyTutorialData();
     public bool HasConfiguredSettings = false;
     public bool HasCompletedWelcomeToMetroplexCutscene = false;
+    public bool ConfirmedStorySkipBehavior = false;
     
     public static List<string> RequiredLicenseTutorials = new List<string>
     {
