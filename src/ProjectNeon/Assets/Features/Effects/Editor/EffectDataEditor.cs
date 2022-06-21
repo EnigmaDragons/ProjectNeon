@@ -37,7 +37,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ApplyMultiplicativeStatInjury, new [] {  "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.Kill, new string[0]},
         {EffectType.ShowCustomTooltip, new [] { "FlavorText", "FloatAmount", "EffectScope", "DurationFormula", "StatusTag", "StatusDetailText" }},
-        {EffectType.OnDeath, new []{ "FloatAmount", "DurationFormula", "ReactionSequence",  }},
+        {EffectType.OnDeath, new []{ "FloatAmount", "DurationFormula", "ReactionSequence", "StatusDetailText" }},
         {EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, new[]{"BaseAmount", "EffectScope", "StatusTag", "StatusDetailText", "BonusCardType"}},
         {EffectType.PlayBonusChainCard, new[]{ "StatusTag", "StatusDetailText", "BonusCardType"}},
         {EffectType.AttackFormula, new [] { "Formula", "InterpolatePartialFormula", "HitsRandomTargetMember" }},
