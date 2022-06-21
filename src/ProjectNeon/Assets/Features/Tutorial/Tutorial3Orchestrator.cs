@@ -55,7 +55,7 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
         {
             Message.Publish(new ShowHeroBattleThought(4, "You have no clue how to resist my magic attacks"));
         }
-        if (msg.MemberId == 4 && heroHealth == battleState.Members[1].State.Hp() && _blockedWithResistance)
+        if (msg.MemberId == 4 && heroHealth == battleState.Members[1].State.Hp() && !_blockedWithResistance)
         {
             _blockedWithResistance = true;
             Message.Publish(new ShowHeroBattleThought(4, "You resisted my entire attack!"));
@@ -64,7 +64,7 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
         {
             Message.Publish(new ShowHeroBattleThought(5, "Maybe next time bring some armor"));
         }
-        if (msg.MemberId == 5 && heroHealth == battleState.Members[1].State.Hp() && _blockedWithArmor)
+        if (msg.MemberId == 5 && heroHealth == battleState.Members[1].State.Hp() && !_blockedWithArmor)
         {
             _blockedWithArmor = true;
             Message.Publish(new ShowHeroBattleThought(5, "Impressive... your armor is strong"));

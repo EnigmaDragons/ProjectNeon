@@ -38,7 +38,7 @@ public class Tutorial8Orchestrator : OnMessage<StartCardSetupRequested, CardReso
         }
         else if (msg.CardName == "Impale V1" && _hasShowedLine1 && _hasShowedLine2)
         {
-            Message.Publish(new ShowHeroBattleThought(4, "Oh no not a finisher!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Oh no! Not a finisher!"));
         }
     }
 

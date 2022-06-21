@@ -37,7 +37,7 @@ public class Tutorial13Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         else if (msg.CardName == "Counter" && !_hasCountered)
         {
             _hasCountered = true;
-            Message.Publish(new ShowHeroBattleThought(4, "I'm good as new, while you are unable to do anything except discard."));
+            Message.Publish(new ShowHeroBattleThought(4, "I'm as good as new, while you are unable to do anything except discard."));
         }
     }
 

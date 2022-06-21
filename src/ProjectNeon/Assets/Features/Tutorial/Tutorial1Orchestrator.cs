@@ -110,14 +110,14 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
             _firstCardResolved = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));
             Message.Publish(new PunchYourself(BattleUiElement.EnemyInfo));
-            Message.Publish(new ShowHeroBattleThought(4, "Ouch! Is what I would have said if I didn't have anti-pain implants so I don't let pain get in my way of focusing!"));
+            Message.Publish(new ShowHeroBattleThought(4, "<i>Ouch</i> is what I would have said if I didn't have anti-pain implants!"));
         }
         if (!_firstEnemyCardResolved && msg.Originator == 4)
         {
             _firstEnemyCardResolved = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, true, _callerId));
             Message.Publish(new PunchYourself(BattleUiElement.SquadInfo));
-            Message.Publish(new ShowHeroBattleThought(4, "Now look who is hurting"));
+            Message.Publish(new ShowHeroBattleThought(4, "Now look who is hurting!"));
         }
     }
 

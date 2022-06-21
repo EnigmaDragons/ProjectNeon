@@ -29,11 +29,11 @@ public class Tutorial10Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         if (msg.CardName == "Piercing Strike" && !_hasStriked)
         {
             _hasStriked = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Sometimes all you need to be immortal is be unhittable"));
+            Message.Publish(new ShowHeroBattleThought(4, "Sometimes all you need to be immortal is to be unhittable"));
         }
         else if (msg.CardName == "Dodge")
         {
-            Message.Publish(new ShowHeroBattleThought(4, "This fight just got interesting"));
+            Message.Publish(new ShowHeroBattleThought(4, "This fight just got interesting..."));
         }
         else if (msg.CardName == "Acid Coating" && _hasAcidCoated)
         {

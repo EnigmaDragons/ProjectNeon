@@ -32,7 +32,7 @@ public class Tutorial9Orchestrator : OnMessage<StartCardSetupRequested, CardReso
         }
         else if (msg.CardName == "True Damage")
         {
-            Message.Publish(new ShowHeroBattleThought(4, "Now you see the power of true damage! No armor, resistance, or shields can stop my blade!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Now you see the power of raw damage! No armor, resistance, or shields can stop my blade!"));
         }
     }
 
