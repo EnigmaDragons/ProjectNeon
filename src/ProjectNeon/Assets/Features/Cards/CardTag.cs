@@ -53,4 +53,5 @@ public enum CardTag
     NextTurn = 50,
     ScaledOnMissingMaxHealth = 100,
     IgnoreCardOrder = 101,
+    CanPlayThisReactionEvenWhenStunned = 102,
 }

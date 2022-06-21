@@ -160,8 +160,10 @@ public class CardResolutionZone : ScriptableObject
 
         _current = new Maybe<IPlayedCard>(played);
         var card = played.Card;
-        if (card.IsActive && !card.Owner.IsStunnedForCard() && currentResolvingCardZone.TopCard.IsMissingOr(c => c != card))
-            currentResolvingCardZone.Set(card);
+        if (card.IsActive 
+            && currentResolvingCardZone.TopCard.IsMissingOr(c => c != card)
+            && (!card.Owner.IsStunnedForCard() || card.Is(CardTag.CanPlayThisReactionEvenWhenStunned)))
+                currentResolvingCardZone.Set(card);
         
         Async.ExecuteAfterDelay(delayBeforeResolving, () =>
         {
@@ -170,7 +172,7 @@ public class CardResolutionZone : ScriptableObject
                 BattleLog.Write($"{card.Name} is {card.Mode}, so it does not resolve.");
                 Message.Publish(new CardResolutionFinished(played));
             }
-            else if (card.Owner.IsStunnedForCard())
+            else if (card.Owner.IsStunnedForCard() && !card.Is(CardTag.CanPlayThisReactionEvenWhenStunned))
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Stun, -1);
