@@ -214,6 +214,8 @@ public static class AICardSelectionLogic
         
         if (ctx.AiPreferences.CardOrderPreferenceFactor != 0 && !card.Is(CardTag.IgnoreCardOrder))
             preferenceScore += (ctx.CardOptions.Count() - (optionIndex + 1)) * ctx.AiPreferences.CardOrderPreferenceFactor;
+
+        preferenceScore += card.Cost.BaseAmount * SlightlyPreferred;
         
         return preferenceScore;
     }

@@ -12,8 +12,8 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
     private int warriorHealth;
     private bool _hitWithPhysicalAttack;
     private bool _hitWithMagicAttack;
-    private bool _blockedWithArmor;
-    private bool _blockedWithResistance;
+    private bool _blockedWithArmorAlready;
+    private bool _blockedWithResistanceAlready;
     private bool _hasWon;
     
     private void Start()
@@ -51,22 +51,23 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
             _hitWithMagicAttack = true;
             Message.Publish(new ShowHeroBattleThought(5, "Oof! Your magic attacks hurt"));
         }
-        if (msg.MemberId == 4 && heroHealth != battleState.Members[1].State.Hp())
+        var heroHealthChanged = heroHealth != battleState.Members[1].State.Hp();
+        if (msg.MemberId == 4 && heroHealthChanged)
         {
             Message.Publish(new ShowHeroBattleThought(4, "You have no clue how to resist my magic attacks"));
         }
-        if (msg.MemberId == 4 && heroHealth == battleState.Members[1].State.Hp() && !_blockedWithResistance)
+        if (msg.MemberId == 4 && msg.CardName == "Scorch" && !heroHealthChanged && !_blockedWithResistanceAlready)
         {
-            _blockedWithResistance = true;
+            _blockedWithResistanceAlready = true;
             Message.Publish(new ShowHeroBattleThought(4, "You resisted my entire attack!"));
         }
-        if (msg.MemberId == 5 && heroHealth != battleState.Members[1].State.Hp())
+        if (msg.MemberId == 5 && heroHealthChanged)
         {
             Message.Publish(new ShowHeroBattleThought(5, "Maybe next time bring some armor"));
         }
-        if (msg.MemberId == 5 && heroHealth == battleState.Members[1].State.Hp() && !_blockedWithArmor)
+        if (msg.MemberId == 5 && msg.CardName == "Devastating Blow" && !heroHealthChanged && !_blockedWithArmorAlready)
         {
-            _blockedWithArmor = true;
+            _blockedWithArmorAlready = true;
             Message.Publish(new ShowHeroBattleThought(5, "Impressive... your armor is strong"));
         }
         UpdateHealthTotals();

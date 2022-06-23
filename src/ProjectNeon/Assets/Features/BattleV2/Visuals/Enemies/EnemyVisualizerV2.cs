@@ -205,7 +205,11 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         
         var enemy = state.GetEnemyById(e.MemberId);
         var s = _speech[enemy];
-        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(s.Hide, 6f)));
+        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(() =>
+        {
+            if (s != null) 
+                s.Hide();
+        }, 6f)));
         s.Proceed(true);
     }
 

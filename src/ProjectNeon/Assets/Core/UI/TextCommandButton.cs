@@ -30,6 +30,9 @@ public sealed class TextCommandButton : MonoBehaviour
     public void Hide() => gameObject.SetActive(false);
     public void SetButtonDisabled(bool isDisabled, Color activeColor)
     {
+        if (!_isInitialized)
+            InitButton();
+        
         _button.interactable = !isDisabled;
         label.color = isDisabled ? _disabledTextColor : activeColor; 
     }

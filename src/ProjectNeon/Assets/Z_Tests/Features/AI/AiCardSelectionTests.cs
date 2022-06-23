@@ -11,6 +11,7 @@ public class AiCardSelectionTests
     private static readonly CardTypeData ControlCard = CreateCard("Control 1", CardTag.Disable.AsArray(), Scope.One, Group.Opponent);
     private static readonly CardTypeData AttackCard1 = CreateCard("Attack 1", CardTag.Attack.AsArray(), Scope.One, Group.Opponent);
     private static readonly CardTypeData AttackCard2 = CreateCard("Attack 2", CardTag.Attack.AsArray(), Scope.One, Group.Opponent);
+    private static readonly CardTypeData HigherCostAttackCard = CreateCard("High-Cost Attack", CardTag.Attack.AsArray(), Scope.One, Group.Opponent, 5);
     private static readonly EnemySpecialCircumstanceCards SpecialCards = new EnemySpecialCircumstanceCards(DisabledCard, AntiStealthCard, AIGlitchedCard);
     
     [Test]
@@ -38,6 +39,17 @@ public class AiCardSelectionTests
         
         var nextPlayed = ExecuteGeneralAiSelection(ctx.WithLastPlayedCard(AttackCard1), ai, 2);
         Assert.AreEqual(AttackCard2.Name, nextPlayed.Card.Name);
+    }
+    
+    [Test]
+    public void GeneralAI_HigherCostAttackCards_PlaysHigherCostedOne()
+    {
+        var opp = TestMembers.Any();
+        var me = TestMembers.CreateEnemy(e => e.With(new InMemoryResourceType("Energy") { MaxAmount = 99, StartingAmount = 99 }));
+
+        var ctx = AsDesignatedAttacker(me, opp, new AiPreferences { CardOrderPreferenceFactor = 0 }, HigherCostAttackCard, AttackCard1);
+
+        AssertAlwaysPlays(ctx, HigherCostAttackCard);
     }
     
     [Test]
@@ -205,13 +217,14 @@ public class AiCardSelectionTests
     private static IPlayedCard ExecuteGeneralAiSelection(CardSelectionContext ctx, GeneralAI ai, int turnNumber = 0) 
         => ai.Play(turnNumber, ctx);
 
-    private static CardTypeData CreateCard(string name, CardTag[] tags, Scope s, Group g)
+    private static CardTypeData CreateCard(string name, CardTag[] tags, Scope s, Group g, int cost = 0)
     {
        return new InMemoryCard
         {
             Name = name,
             Id = _nextCardId++,
             Tags = new HashSet<CardTag>(tags),
+            Cost = new InMemoryResourceAmount(cost, "Energy"),
             ActionSequences = new []
             {
                 CardActionSequence.Create(s, g, TestableObjectFactory.Create<CardActionsData>(), false),
