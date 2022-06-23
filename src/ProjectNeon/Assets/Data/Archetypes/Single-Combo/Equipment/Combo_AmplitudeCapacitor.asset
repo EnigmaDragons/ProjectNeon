@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 86
   displayName: 
-  description: 'On Combo Card: +2 Attack this turn<br>Chain: Gain Double Damage'
+  description: 'On Combo Card: +2 Attack this turn<br>Finisher: Gain Double Damage'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
@@ -42,8 +42,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: 'On Combo Card: +2 Attack this turn'
     TurnDelay: 0
@@ -62,12 +62,14 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 11400000, guid: 2983f8c062ccf3240a3abe87f0199133, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   - EffectType: 92
     Conditions: []
     BaseAmount:
@@ -84,10 +86,10 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'Chain: Gain Double Damage'
+    StatusDetailText: 'Finisher: Gain Double Damage'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -104,11 +106,17 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 11400000, guid: 2983f8c062ccf3240a3abe87f0199133, type: 2}
     BonusCardType: {fileID: 11400000, guid: d02b2bdcc7f6e53469dbdd8900553645, type: 2}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 
