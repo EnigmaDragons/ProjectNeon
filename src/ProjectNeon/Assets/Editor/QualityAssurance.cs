@@ -21,18 +21,19 @@ public class QualityAssurance
 
         public override string ToString() => $"{ItemName} issues: {string.Join(", ", Issues)}";
     }
-    
+
     [MenuItem("Neon/QA/Run Full Content QA")]
     public static bool Go()
     {
         ErrorReport.DisableDuringQa();
-        
+
         Log.Info("QA - Started");
 
         var (enemyCount, enemyFailures) = QaAllEnemies();
         var (cardCount, cardFailures) = QaAllCards();
         var (heroCount, heroFailures) = QaAllHeroes();
         var (cutsceneCount, cutsceneFailures) = QaAllCutscenes();
+        var (prefabCount, prefabFailures) = QaSpecificPrefabs();
 
         var qaPassed = enemyFailures.None() && cardFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
@@ -42,21 +43,60 @@ public class QualityAssurance
         LogReport("Cards", cardCount, cardFailures);
         LogReport("Heroes", heroCount, heroFailures);
         LogReport("Cutscenes", cutsceneCount, cutsceneFailures);
+        LogReport("Prefabs", prefabCount, prefabFailures);
         Log.Info($"--------------------------------------------------------------");
-        
+
         ErrorReport.ReenableAfterQa();
         return qaPassed;
     }
 
     private static void LogReport(string qaCategory, int itemCount, List<ValidationResult> failures)
     {
-        Log.InfoOrError($"QA - {qaCategory}: {itemCount - failures.Count} out of {itemCount} passed inspection.", failures.Any());
+        Log.InfoOrError($"QA - {qaCategory}: {itemCount - failures.Count} out of {itemCount} passed inspection.",
+            failures.Any());
         failures.ForEach(e => Log.Error($"{e}"));
     }
-    
+
     private static int CCount(string haystack, string needle)
     {
-        return haystack.Split(new[] { needle }, StringSplitOptions.None).Length - 1;
+        return haystack.Split(new[] {needle}, StringSplitOptions.None).Length - 1;
+    }
+
+    private static (int, List<ValidationResult>) QaSpecificPrefabs()
+    {
+        var badItems = new List<ValidationResult>();
+        var deckBuilder = QaDeckBuilderPrefab();
+        if (!deckBuilder.IsValid)
+            badItems.Add(deckBuilder);
+        return (1, badItems);
+    }
+
+    private static ValidationResult QaDeckBuilderPrefab()
+    {
+        var issues = new List<string>();
+        var assets = AssetDatabase.FindAssets("t:prefab", new[] {"Assets/Prefabs/GameViewsV5"})
+            .Select(x => AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(x)))
+            .Where(x => x.name.Equals("DeckBuilderUI-V5")).ToArray();
+        if (assets.None())
+            issues.Add("No DeckBuilder V5 Prefab Found");
+        else
+        {
+            var obj = (GameObject)PrefabUtility.InstantiatePrefab(assets[0]);
+            try
+            {
+                var canvas = obj.transform.Find("DeckBuilderCanvas");
+                if (canvas == null)
+                    issues.Add("Count Not Find DeckBuilder Canvas");
+                else if (canvas.gameObject.activeSelf)
+                    issues.Add("Deck Builder Canvas must be turned off in the Prefab, but was on");
+            }
+            catch (Exception)
+            {
+                Object.DestroyImmediate(obj);
+            }
+        }
+        
+        return new ValidationResult("DeckBuilder-V5-Prefab", issues);
     }
     
     private static (int, List<ValidationResult>) QaAllCutscenes()
