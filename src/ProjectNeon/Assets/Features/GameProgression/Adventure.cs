@@ -30,7 +30,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     [SerializeField, TextArea(4, 10)] private string story;
     [SerializeField, TextArea(4, 10)] private string defeatConclusion = "";
     [SerializeField, TextArea(4, 10)] private string victoryConclusion = "";
-    [SerializeField] private bool isCompleted; // This is a hacky but fast way to get a Checkmark on the Tutorial Adventure
+    [SerializeField] private bool mapDeckbuildingEnabled = true;
 
     public int Id => id;
     public string Title => adventureTitle;
@@ -62,6 +62,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     public bool IsV5 => v5Stages != null && v5Stages.Any();
 
     public bool IsCompleted => CurrentProgressionData.Data.Completed(Id);
+    public bool MapDeckbuildingEnabled => mapDeckbuildingEnabled;
     
     public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation);
     public string LockConditionExplanation => lockConditionExplanation ?? "";
