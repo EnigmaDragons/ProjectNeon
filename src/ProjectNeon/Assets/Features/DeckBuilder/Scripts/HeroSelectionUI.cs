@@ -17,6 +17,9 @@ public class HeroSelectionUI : MonoBehaviour
     
     public void Init()
     {
+        if (party.Heroes.None())
+            return;
+        
         Log.Info($"Hero Selection UI - Init - Heroes {string.Join(",", party.Heroes.Select(h => h.Name))} Decks {party.Decks.Length}");
         var buttons = new List<RectTransform>();
         state.HeroesDecks = party.Decks.Select((deck, i) => new HeroesDeck { Deck = deck.Cards.ToList(), Hero = party.Heroes[i]}).ToList();

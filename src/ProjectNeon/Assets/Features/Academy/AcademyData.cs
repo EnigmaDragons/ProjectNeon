@@ -10,6 +10,7 @@ public class AcademyDataSnapshot
     public bool HasConfiguredSettings { get; private set; }
     public bool HasCompletedWelcomeToMetroplexCutscene { get; private set; }
     public bool ConfirmedStorySkipBehavior { get; private set; }
+    public bool ReceivedNoticeAboutGeneralStarterCards { get; private set; }
 
     public AcademyDataSnapshot(AcademyData src)
     {
@@ -18,6 +19,7 @@ public class AcademyDataSnapshot
         HasConfiguredSettings = src.HasConfiguredSettings;
         HasCompletedWelcomeToMetroplexCutscene = src.HasCompletedWelcomeToMetroplexCutscene;
         ConfirmedStorySkipBehavior = src.ConfirmedStorySkipBehavior;
+        ReceivedNoticeAboutGeneralStarterCards = src.ReceivedNoticeAboutGeneralStarterCards;
     }
 }
 
@@ -28,6 +30,7 @@ public class AcademyData
     public bool HasConfiguredSettings = false;
     public bool HasCompletedWelcomeToMetroplexCutscene = false;
     public bool ConfirmedStorySkipBehavior = false;
+    public bool ReceivedNoticeAboutGeneralStarterCards = false;
     
     public static List<string> RequiredLicenseTutorials = new List<string>
     {

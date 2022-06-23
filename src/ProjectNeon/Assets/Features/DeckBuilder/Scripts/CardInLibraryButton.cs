@@ -69,6 +69,12 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl>, I
 
     public void AddCard(CardTypeData card)
     {
+        if (card.Rarity == Rarity.Starter && card.Archetypes.None() && !CurrentAcademyData.Data.ReceivedNoticeAboutGeneralStarterCards)
+        {
+            CurrentAcademyData.Mutate(a => a.ReceivedNoticeAboutGeneralStarterCards = true);
+            Message.Publish(new ShowInfoDialog("The general starter cards (Lite Charge Shield/Improvise/Scrounge) are playable, but usually weaker than your hero's card set. " +
+                                               "Choose wisely! Be sure you want them.", "Got it!"));
+        }
         state.SelectedHeroesDeck.Deck.Add(card);
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
         Message.Publish(new CardAddedToDeck(transform));
