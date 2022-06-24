@@ -54,13 +54,29 @@ public sealed class PartyAdventureState : ScriptableObject
 
         return false;
     }
-
+    
     public PartyAdventureState Initialized(params BaseHero[] startingHeroes)
     {
         var one = startingHeroes.Length > 0 ? startingHeroes[0] : null;
         var two = startingHeroes.Length > 1 ? startingHeroes[1] : null;
         var three = startingHeroes.Length > 2 ? startingHeroes[2] : null;
         return Initialized(one, two, three);
+    }
+
+    public PartyAdventureState InitializedForDraft(params BaseHero[] startingHeroes)
+    {
+        var one = startingHeroes.Length > 0 ? startingHeroes[0] : null;
+        var two = startingHeroes.Length > 1 ? startingHeroes[1] : null;
+        var three = startingHeroes.Length > 2 ? startingHeroes[2] : null;
+        Initialized(one, two, three);
+        
+        var allStartingCards = party.Heroes
+            .SelectMany(HeroStartingCards)
+            .Where(c => c.Archetypes.None())
+            .ToArray();
+        cards.Initialized(allStartingCards);
+        
+        return this;
     }
     
     public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)

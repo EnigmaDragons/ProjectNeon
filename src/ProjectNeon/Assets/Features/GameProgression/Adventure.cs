@@ -7,6 +7,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
 {
     [SerializeField] public int id;
     [SerializeField] private string lockConditionExplanation = "";
+    [SerializeField] private AdventureMode mode;
     [SerializeField] private DynamicStage[] dynamicStages;
     [SerializeField] private StaticStageV4[] stages;
     [SerializeField] private HybridStageV5[] v5Stages;
@@ -32,6 +33,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     [SerializeField, TextArea(4, 10)] private string victoryConclusion = "";
     [SerializeField] private bool mapDeckbuildingEnabled = true;
 
+    public AdventureMode Mode => mode;
     public int Id => id;
     public string Title => adventureTitle;
     public string MapTitle => string.IsNullOrWhiteSpace(mapAdventureTitle) ? adventureTitle : mapAdventureTitle;
