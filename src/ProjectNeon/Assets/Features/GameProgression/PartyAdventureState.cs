@@ -17,8 +17,10 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private ShopCardPool allCards;
 
     private List<CorpCostModifier> _corpCostModifiers = new List<CorpCostModifier>();
-    private Queue<Blessing> _blessings = new Queue<Blessing>(); 
+    private Queue<Blessing> _blessings = new Queue<Blessing>();
 
+    public Party Party => party;
+    
     public int NumShopRestocks => numShopRestocks;
     public int Credits => credits;
     public int ClinicVouchers => clinicVouchers;
@@ -95,7 +97,7 @@ public sealed class PartyAdventureState : ScriptableObject
         });
 
         var allStartingCards = party.Heroes
-            .SelectMany(HeroStartingCards)
+            .SelectMany(HeroDraftStartingCards)
             .ToArray();
         cards.Initialized(allStartingCards); 
         
@@ -104,6 +106,10 @@ public sealed class PartyAdventureState : ScriptableObject
         Log.Info("Party Adventure State Initialized");
         return this;
     }
+
+    private IEnumerable<CardTypeData> HeroDraftStartingCards(BaseHero hero)
+        => HeroStartingCards(hero)
+            .Where(c => c.Archetypes.None());
 
     private IEnumerable<CardTypeData> HeroStartingCards(BaseHero hero)
         => allCards
@@ -126,6 +132,21 @@ public sealed class PartyAdventureState : ScriptableObject
             party.Add(hero);
             credits += hero.StartingCredits;
             cards.Add(HeroStartingCards(hero).ToArray());
+            InitArchKeyHeroes();
+        });
+        return this;
+    }
+
+    public PartyAdventureState WithAddedDraftHero(BaseHero hero, RuntimeDeck deck)
+    {
+        if (BaseHeroes.Contains(hero))
+            return this;
+        
+        UpdateState(() =>
+        {
+            heroes = heroes.Append(new Hero(hero, deck)).ToArray();
+            party.Add(hero);
+            cards.Add(HeroDraftStartingCards(hero).ToArray());
             InitArchKeyHeroes();
         });
         return this;

@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Adventure/DraftSegment")]
 public class DraftSegment : NonMapAutoStartSegment
 {
-    public override string Name { get; } = "Draft";
+    public override string Name => "Draft";
     public override void Start() => Message.Publish(new BeginDraft());
 
     public override Maybe<string> Detail { get; } = Maybe<string>.Missing();
