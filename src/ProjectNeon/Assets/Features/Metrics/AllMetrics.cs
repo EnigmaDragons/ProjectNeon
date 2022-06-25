@@ -33,6 +33,12 @@ public static class AllMetrics
     public static void PublishGearRewardSelection(string selectedGearNameOrDescription, string[] optionNameOrDescriptions)
         => Send("rewardGearSelected", new OptionSelectionData {selected = selectedGearNameOrDescription, options = optionNameOrDescriptions});
 
+    public static void PublishDraftCardSelection(string selectedCardName, string[] optionNames)
+        => Send("draftCardSelected", new OptionSelectionData {selected = selectedCardName, options = optionNames});
+    
+    public static void PublishDraftGearSelection(string selectedGearNameOrDescription, string[] optionNameOrDescriptions)
+        => Send("draftGearSelected", new OptionSelectionData {selected = selectedGearNameOrDescription, options = optionNameOrDescriptions});
+    
     public static void PublishLevelUpOptionSelection(string heroName, int level, string selectedDescription, string[] optionsDescription)
         => Send("heroLevelUp", new HeroLevelUpSelectionData {heroName = heroName, level = level, selection = selectedDescription, options = optionsDescription});
     

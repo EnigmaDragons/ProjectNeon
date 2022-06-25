@@ -43,13 +43,16 @@ public class EquipmentPool : ScriptableObject
         var factoredList = odds.SelectMany(odd => Enumerable.Range(0, odd.Value).Select(_ => odd.Key));
         return Enumerable.Range(0, n).Select(_ => factoredList.Random());
     }
+
+    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, int n, string corp = null) 
+        => Random(slot, new HashSet<Rarity> {rarity}, party, n, corp);
     
-    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, int n, string corp = null)
+    public IEnumerable<Equipment> Random(EquipmentSlot slot, HashSet<Rarity> rarities, HeroCharacter[] party, int n, string corp = null)
     {
         var partyKeyStats = party.SelectMany(h => h.Stats.KeyStatTypes()).ToHashSet();
         return All
             .Where(x => x.Slot == slot)
-            .Where(x => x.Rarity == rarity) 
+            .Where(x => rarities.Contains(x.Rarity)) 
             .Where(x => party.Any(hero => x.Archetypes.All(hero.Archetypes.Contains)))
             .Where(x => string.IsNullOrWhiteSpace(corp) || x.Corp == corp)
             .Where(x => x.DistributionRules.ShouldInclude(partyKeyStats))
@@ -63,7 +66,7 @@ public class EquipmentPool : ScriptableObject
     {
         try
         {
-            return Random(slot, rarity, party, 1, corp).First();
+            return Random(slot, new HashSet<Rarity> { rarity }, party, 1, corp).First();
         }
         catch (Exception e)
         {
@@ -72,10 +75,10 @@ public class EquipmentPool : ScriptableObject
         }
     }
 
-    public IEnumerable<Equipment> Possible(EquipmentSlot slot, Rarity rarity, HashSet<string> archs, HashSet<StatType> heroStats, HashSet<StatType> partyStats)
+    public IEnumerable<Equipment> Possible(EquipmentSlot slot, HashSet<Rarity> rarities, HashSet<string> archs, HashSet<StatType> heroStats, HashSet<StatType> partyStats)
         => All
             .Where(x => x.Slot == slot)
-            .Where(x => x.Rarity == rarity)
+            .Where(x => rarities.Contains(x.Rarity))
             .Where(x => x.Archetypes.All(archs.Contains))
             .Where(x => x.DistributionRules.ShouldInclude(heroStats, partyStats));
 }

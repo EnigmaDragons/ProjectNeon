@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
     [SerializeField] private Library library;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private CardType[] blankDraftDeck;
+    [SerializeField] private EquipmentPool gearPool;
+    [SerializeField] private ShopCardPool cardPool;
 
     private int _numDraftHeroes = 0;
     private int _heroIndex = -1;
@@ -76,7 +79,27 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
 
     private void SelectGear()
     {
-        Message.Publish(new NodeFinished());
+        var currentHero = party.Heroes[_heroIndex];
+        var gearOptions = HeroPermanentAugmentOptions.GenerateHeroGearOptions(gearPool, party, currentHero.Character, new HashSet<Rarity>
+        {
+            Rarity.Common,
+            Rarity.Uncommon,
+            Rarity.Rare,
+            Rarity.Epic
+        }, 5);
+        Message.Publish(new GetUserSelectedEquipmentForDraft(gearOptions, e =>
+        {
+            if (e.IsMissing)
+            {
+                Log.Error("Draft Gear Selection - No Gear Picked. Should Not Be Possible");
+                Message.Publish(new NodeFinished());
+            }
+
+            var gear = e.Value;
+            AllMetrics.PublishDraftGearSelection(gear.Name, gearOptions.Select(g => g.Name).ToArray());
+            currentHero.Equipment.EquipPermanent(gear);
+            Message.Publish(new DraftStepCompleted());
+        }));
     }
 
     private void SelectCard()
