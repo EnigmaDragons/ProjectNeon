@@ -32,4 +32,11 @@ public class DeckBuilderState : ScriptableObject
     }
 
     public Action OnDeckbuilderClosedAction { get; set; } = () => { };
+
+    public void ClearCurrentDeck()
+    {
+        SelectedHeroesDeck.Deck.Clear();
+        Message.Publish(new DeckCleared());
+        Message.Publish(new DeckBuilderCurrentDeckChanged(SelectedHeroesDeck));
+    }
 }

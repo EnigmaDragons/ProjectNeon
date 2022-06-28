@@ -66,10 +66,17 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
     private void SelectCard()
     {
         var currentHero = party.Heroes[draftState.HeroIndex];
-        var starterCardOptions = currentHero.Character.StartingCards(cardPool).Distinct().TakeRandom(2);
+        var cardsYouCantHaveMoreOf = party.CardsYouCantHaveMoreOf();
+        var starterCardOptions = currentHero.Character
+            .StartingCards(cardPool)
+            .Where(x => x.Archetypes.Any())
+            .Where(x => !cardsYouCantHaveMoreOf.Contains(x.Id))
+            .Distinct()
+            .TakeRandom(2);
+        
         var nonStarterOptions = _picker.PickCards(cardPool, 5, new [] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic});
         var member = currentHero.AsMember(draftState.HeroIndex);
-        var options = starterCardOptions.Concat(nonStarterOptions).Select(s => new Card(NextCardId.Get(), member, s)).ToArray();
+        var options = starterCardOptions.Concat(nonStarterOptions).Select(s => new Card(NextCardId.Get(), member, s)).ToArray().Shuffled();
         Message.Publish(new GetUserSelectedCardForDraft(options, e =>
         {
             if (e.IsMissing)
@@ -80,7 +87,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
 
             var selected = e.Value;
             AllMetrics.PublishDraftCardSelection(selected.Name, options.Select(g => g.Name).ToArray());
-            party.Cards.Add(e.Value);
+            party.Cards.Add(e.Value.BaseType);
             Message.Publish(new DraftStepCompleted());
         }));
     }
@@ -105,7 +112,8 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
 
     private void FinishDraft()
     {
-        Message.Publish(new NodeFinished());
         draftUi.SetActive(false);
+        Message.Publish(new NodeFinished());
+        Message.Publish(new TogglePartyDetails { ClearDeckOnShow = true });
     }
 }

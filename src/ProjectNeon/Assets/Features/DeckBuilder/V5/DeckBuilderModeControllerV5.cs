@@ -49,7 +49,13 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
         }
 
         var initialTab = "hero";
-        Message.Publish(new CustomizationTabSwitched { TabName = initialTab });
+        Message.Publish(new CustomizationTabSwitched {TabName = initialTab});
+        if (msg.ClearDeckOnShow)
+        {
+            state.HeroesDecks.ForEach(x => x.Deck.Clear());
+            Message.Publish(new DeckCleared());
+            Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
+        }
     }
 
     private void OnFinished() => state.OnDeckbuilderClosedAction();

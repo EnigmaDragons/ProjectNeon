@@ -79,10 +79,5 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
         return init;
     }
 
-    private void ClearDeck()
-    {
-        state.SelectedHeroesDeck.Deck.Clear();
-        Message.Publish(new DeckCleared());
-        Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
-    }
+    private void ClearDeck() => state.ClearCurrentDeck();
 }

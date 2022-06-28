@@ -23,6 +23,9 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
 
     private void Render()
     {
+        if (draftState.HeroIndex < party.Heroes.Length)
+            return;
+        
         var currentHero = party.Heroes[draftState.HeroIndex];
 
         if (decklistUi != null)
