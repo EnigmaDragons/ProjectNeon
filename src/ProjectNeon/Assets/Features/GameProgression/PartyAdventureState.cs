@@ -111,12 +111,7 @@ public sealed class PartyAdventureState : ScriptableObject
         => HeroStartingCards(hero)
             .Where(c => c.Archetypes.None());
 
-    private IEnumerable<CardTypeData> HeroStartingCards(BaseHero hero)
-        => allCards
-            .Get(hero.Archetypes, new HashSet<int>(), Rarity.Starter)
-            .Concat(hero.AdditionalStartingCards)
-            .Except(hero.ExcludedCards)
-            .NumCopies(4);
+    private IEnumerable<CardTypeData> HeroStartingCards(BaseHero hero) => hero.StartingCards(allCards);
 
     public PartyAdventureState WithAddedHero(BaseHero hero)
     {

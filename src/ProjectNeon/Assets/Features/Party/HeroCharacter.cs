@@ -17,6 +17,7 @@ public interface HeroCharacter
     CardTypeData BasicCard { get; }
     CardTypeData[] ParagonCards { get; }
     HashSet<CardTypeData> ExcludedCards { get; }
+    CardTypeData[] AdditionalStartingCards { get; }
     IStats Stats { get; }
     int StartingCredits { get; }
     HeroFlavorDetails Flavor { get; }
@@ -46,6 +47,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public CardTypeData BasicCard { get; set; }
     public CardTypeData[] ParagonCards { get; set; } = new CardTypeData[0];
     public HashSet<CardTypeData> ExcludedCards { get; set; } = new HashSet<CardTypeData>();
+    public CardTypeData[] AdditionalStartingCards { get; } = new CardTypeData[0];
     public IStats Stats { get; set; } = new StatAddends();
     public int StartingCredits { get; set; } = 100;
     public HeroFlavorDetails Flavor { get; set; } 
@@ -89,4 +91,11 @@ public static class HeroCharacterExtensions
     }
 
     public static string DisplayName(this HeroCharacter character) => character.Name;
+    
+    public static CardTypeData[] StartingCards(this HeroCharacter hero, ShopCardPool allCards) => allCards
+        .Get(hero.Archetypes, new HashSet<int>(), Rarity.Starter)
+        .Concat(hero.AdditionalStartingCards)
+        .Except(hero.ExcludedCards)
+        .NumCopies(4)
+        .ToArray();
 }

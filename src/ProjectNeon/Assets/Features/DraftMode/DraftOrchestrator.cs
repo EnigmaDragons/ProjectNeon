@@ -4,51 +4,22 @@ using UnityEngine;
 
 public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
 {
+    [SerializeField] private DraftState draftState;
     [SerializeField] private CurrentAdventure adventure;
     [SerializeField] private Library library;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private CardType[] blankDraftDeck;
     [SerializeField] private EquipmentPool gearPool;
     [SerializeField] private ShopCardPool cardPool;
-
-    private int _numDraftHeroes = 0;
-    private int _heroIndex = -1;
-    private int _draftStepIndex = 0;
-
-    private DraftStep[] DraftSteps = {
-        DraftStep.PickHero,
-        DraftStep.PickGear,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickGear,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-        DraftStep.PickCard,
-    };
+    [SerializeField] private GameObject draftUi;
     
-    private enum DraftStep
-    {
-        PickHero = 0,
-        PickGear = 1,
-        PickCard = 2,
-    }
+    private LootPicker _picker;
 
     protected override void Execute(BeginDraft msg)
     {
-        _numDraftHeroes = adventure.Adventure.PartySize;
-        _heroIndex = -1;
-        _draftStepIndex = 0;
+        draftState.Init(adventure.Adventure.PartySize);
+        draftUi.SetActive(true);
+        _picker = new LootPicker(1, new DefaultRarityFactors(), party);
         Advance();
     }
 
@@ -56,30 +27,20 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
 
     private void Advance()
     {
-        _heroIndex++;
-        if (_heroIndex == _numDraftHeroes)
-        {
-            _heroIndex = 0;
-            _draftStepIndex++;
-        }
-        if (_draftStepIndex >= DraftSteps.Length)
-        {
-            Message.Publish(new NodeFinished());
-            return;
-        }
-
-        var draftStep = DraftSteps[_draftStepIndex];
+        var draftStep = draftState.Advance();
         if (draftStep == DraftStep.PickHero) 
             SelectHero();
         else if (draftStep == DraftStep.PickCard)
             SelectCard();
         else if (draftStep == DraftStep.PickGear)
             SelectGear();
+        else if (draftStep == DraftStep.Finished)
+            FinishDraft();
     }
 
     private void SelectGear()
     {
-        var currentHero = party.Heroes[_heroIndex];
+        var currentHero = party.Heroes[draftState.HeroIndex];
         var gearOptions = HeroPermanentAugmentOptions.GenerateHeroGearOptions(gearPool, party, currentHero.Character, new HashSet<Rarity>
         {
             Rarity.Common,
@@ -92,7 +53,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
             if (e.IsMissing)
             {
                 Log.Error("Draft Gear Selection - No Gear Picked. Should Not Be Possible");
-                Message.Publish(new NodeFinished());
+                FinishDraft();
             }
 
             var gear = e.Value;
@@ -104,7 +65,24 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
 
     private void SelectCard()
     {
-        Message.Publish(new NodeFinished());
+        var currentHero = party.Heroes[draftState.HeroIndex];
+        var starterCardOptions = currentHero.Character.StartingCards(cardPool).Distinct().TakeRandom(2);
+        var nonStarterOptions = _picker.PickCards(cardPool, 5, new [] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic});
+        var member = currentHero.AsMember(draftState.HeroIndex);
+        var options = starterCardOptions.Concat(nonStarterOptions).Select(s => new Card(NextCardId.Get(), member, s)).ToArray();
+        Message.Publish(new GetUserSelectedCardForDraft(options, e =>
+        {
+            if (e.IsMissing)
+            {
+                Log.Error("Draft Card Selection - No Card Picked. Should Not Be Possible");
+                FinishDraft();
+            }
+
+            var selected = e.Value;
+            AllMetrics.PublishDraftCardSelection(selected.Name, options.Select(g => g.Name).ToArray());
+            party.Cards.Add(e.Value);
+            Message.Publish(new DraftStepCompleted());
+        }));
     }
 
     private void SelectHero()
@@ -123,5 +101,11 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
                 Message.Publish(new DraftStepCompleted());
             });
         }));
+    }
+
+    private void FinishDraft()
+    {
+        Message.Publish(new NodeFinished());
+        draftUi.SetActive(false);
     }
 }

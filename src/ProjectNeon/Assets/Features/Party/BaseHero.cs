@@ -56,7 +56,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public string Class => className;
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
-    public CardType[] AdditionalStartingCards => additionalStartingCards ?? new CardType[0];    
+    public CardTypeData[] AdditionalStartingCards => additionalStartingCards != null ? additionalStartingCards.Cast<CardTypeData>().ToArray() : Array.Empty<CardTypeData>();    
     public HashSet<CardTypeData> ExcludedCards => excludedStartingCards != null 
         ? new HashSet<CardTypeData>(excludedStartingCards.Concat(BasicCard)) 
         : new HashSet<CardTypeData>(BasicCard.AsArray());

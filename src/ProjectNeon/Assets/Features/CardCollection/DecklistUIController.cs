@@ -6,11 +6,16 @@ public class DecklistUIController : OnMessage<ShowDeckList, ToggleDecklistView>
     [SerializeField] private SimpleDeckUI deckUi;
 
     private void Awake() => uiObj.SetActive(false);
+
+    public void ShowDeckList(Card[] cards)
+    {
+        deckUi.Init(cards);
+        uiObj.SetActive(true);
+    }
     
     protected override void Execute(ShowDeckList msg)
     {
-        deckUi.Init(msg.Cards);
-        uiObj.SetActive(true);
+        ShowDeckList(msg.Cards);
     }
 
     protected override void Execute(ToggleDecklistView msg)
