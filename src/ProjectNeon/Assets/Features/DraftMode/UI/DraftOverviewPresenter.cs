@@ -9,6 +9,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private TextMeshProUGUI stepLabel;
     [SerializeField] private DecklistUIController decklistUi;
+    [SerializeField] private DraftHeroButton[] heroes;
 
     protected override void AfterEnable()
     {
@@ -26,8 +27,9 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
         if (party.Heroes.None() || draftState.HeroIndex < 0 || draftState.HeroIndex >= party.Heroes.Length)
             return;
         
+        RenderHeroes();
+        
         var currentHero = party.Heroes[draftState.HeroIndex];
-
         if (decklistUi != null)
         {
             var cardsForHero = party.Cards.AllCards
@@ -51,6 +53,18 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
                 .ToArray();
 
             decklistUi.ShowDeckList(cards);
+        }
+    }
+    
+    private void RenderHeroes()
+    {
+        for (var i = 0; i < heroes.Length; i++)
+        {
+            var hero = heroes[i];
+            if (party.Heroes.Length > i)
+                hero.Init(party.Heroes[i].Character, draftState.HeroIndex == i);
+            else
+                hero.Disable();
         }
     }
 }
