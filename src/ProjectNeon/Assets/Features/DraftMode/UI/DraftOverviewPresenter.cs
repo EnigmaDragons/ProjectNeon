@@ -10,6 +10,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
     [SerializeField] private TextMeshProUGUI stepLabel;
     [SerializeField] private DecklistUIController decklistUi;
     [SerializeField] private DraftHeroButton[] heroes;
+    [SerializeField] private EquipmentPresenter[] gear;
 
     protected override void AfterEnable()
     {
@@ -30,6 +31,25 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
         RenderHeroes();
         
         var currentHero = party.Heroes[draftState.HeroIndex];
+        RenderCards(currentHero);
+        RenderGear(currentHero);
+    }
+
+    private void RenderGear(Hero currentHero)
+    {
+        var equippedGear = currentHero.Equipment.All;
+        for (var i = 0; i < gear.Length; i++)
+        {
+            var hasEquipment = equippedGear.Length > i;
+            if (hasEquipment)
+                gear[i].Initialized(equippedGear[i], () => { }, false, false);
+            else
+                gear[i].gameObject.SetActive(false);
+        }
+    }
+
+    private void RenderCards(Hero currentHero)
+    {
         if (decklistUi != null)
         {
             var cardsForHero = party.Cards.AllCards
@@ -55,7 +75,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
             decklistUi.ShowDeckList(cards);
         }
     }
-    
+
     private void RenderHeroes()
     {
         for (var i = 0; i < heroes.Length; i++)
