@@ -109,7 +109,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
             });
         }));
     }
-
+    
     private void FinishDraft()
     {
         draftUi.SetActive(false);

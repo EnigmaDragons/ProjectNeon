@@ -54,6 +54,7 @@ public class DraftState : ScriptableObject
             return DraftStep.Finished;
         }
         Debug.Log($"Draft - Advance - Hero {heroIndex} - Draft Step {draftStepIndex}");
+        Message.Publish(new DraftStateUpdated(draftStepIndex, DraftSteps.Length - 1, heroIndex));
         return DraftSteps[draftStepIndex];
     }
 }

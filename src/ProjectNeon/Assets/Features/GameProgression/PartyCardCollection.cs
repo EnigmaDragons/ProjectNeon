@@ -63,4 +63,14 @@ public sealed class PartyCardCollection : ScriptableObject
         if (numAdditionalNeeded > 0)
             Enumerable.Range(0, numAdditionalNeeded).ForEach(_ => Add(c));
     }
+    
+    public CardTypeData[] CardsForHero(HeroCharacter h)
+        => AllCards
+            .Where(cardWithCount => 
+                cardWithCount.Key.Archetypes.All(archetype => h.Archetypes.Contains(archetype)) 
+                && cardWithCount.Key.Id != h.BasicCard.Id)
+            .OrderBy(c => c.Key.Archetypes.None() ? 999 : 0)
+            .ThenByDescending(c => (int)c.Key.Rarity)
+            .SelectMany(c => Enumerable.Range(0, c.Value).Select(i => c.Key))
+            .ToArray();
 }

@@ -23,7 +23,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
 
     private void Render()
     {
-        if (draftState.HeroIndex < party.Heroes.Length)
+        if (party.Heroes.None() || draftState.HeroIndex < 0 || draftState.HeroIndex >= party.Heroes.Length)
             return;
         
         var currentHero = party.Heroes[draftState.HeroIndex];
@@ -37,10 +37,11 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
                 .OrderBy(c => c.Key.Archetypes.None() ? 999 : 0)
                 .ThenByDescending(c => (int) c.Key.Rarity)
                 .ToList();
-            cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(currentHero.BasicCard, 0));
+            cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(currentHero.BasicCard, 1));
 
             var cards = cardsForHero
                 .SelectMany(x => Enumerable.Range(0, x.Value).Select(i => x.Key))
+                .Where(x => x.Archetypes.Any())
                 .Select(x => x.ToNonBattleCard(currentHero))
                 .GroupBy(x => x.Name)
                 .OrderBy(x => x.First().Cost.CostSortOrder())
