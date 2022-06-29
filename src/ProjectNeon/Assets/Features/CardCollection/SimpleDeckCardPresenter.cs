@@ -85,7 +85,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
         }
         if (costPresenter != null)
         {
-            costPresenter.Render(_card, _cardType, _card.Select(c => c.Owner.PrimaryResourceType(), () => _cardType.Cost.ResourceType));
+            costPresenter.Render(_card, _cardType, _card.Select(c => c.Owner.PrimaryResourceType(), () => _cardType.Cost.ResourceType), forceShowXcostAsX: true);
         }
         if (archetypeTint != null)
             archetypeTint.color = tints.ForArchetypes(_cardType.Archetypes).WithAlpha(0.75f);
