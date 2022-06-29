@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
 {
@@ -43,7 +42,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                 .Shuffled()
                 .Take(3)
                 .ToArray();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < blessingChoices.Length; i++)
             {
                 var index = i;
                 var d = blessingChoices[i].blessingData;

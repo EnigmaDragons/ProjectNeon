@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
 {
@@ -9,9 +10,18 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private TextMeshProUGUI stepLabel;
     [SerializeField] private DecklistUIController decklistUi;
+    [SerializeField] private Button viewHeroDetailsButton;
+    [SerializeField] private Image heroBust;
+    [SerializeField] private TextMeshProUGUI heroName;
+    [SerializeField] private GameObject currentHeroUi;
     [SerializeField] private DraftHeroButton[] heroes;
     [SerializeField] private EquipmentPresenter[] gear;
-
+    
+    private void Awake()
+    {
+        viewHeroDetailsButton.onClick.AddListener(ViewHeroDetails);
+    }
+    
     protected override void AfterEnable()
     {
         Render();
@@ -23,9 +33,14 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
         Render();
     }
 
+    private bool HeroesReady => !(party.Heroes.None() || draftState.HeroIndex < 0 || draftState.HeroIndex >= party.Heroes.Length);
+    
     private void Render()
     {
-        if (party.Heroes.None() || draftState.HeroIndex < 0 || draftState.HeroIndex >= party.Heroes.Length)
+        var heroesReady = HeroesReady;
+        viewHeroDetailsButton.gameObject.SetActive(heroesReady);
+        currentHeroUi.SetActive(heroesReady);
+        if (!heroesReady)
             return;
         
         RenderHeroes();
@@ -86,5 +101,18 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
             else
                 hero.Disable();
         }
+        
+        var currentHero = party.Heroes[draftState.HeroIndex];
+        heroBust.sprite = currentHero.Character.Bust;
+        heroName.text = currentHero.Name;
+    }
+    
+    private void ViewHeroDetails()
+    {
+        if (!HeroesReady)
+            return;
+
+        var currentHero = party.Heroes[draftState.HeroIndex];
+        Message.Publish(new ShowHeroDetailsView(currentHero));
     }
 }

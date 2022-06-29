@@ -58,6 +58,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
 
             var gear = e.Value;
             AllMetrics.PublishDraftGearSelection(gear.Name, gearOptions.Select(g => g.Name).ToArray());
+            party.Add(gear);
             currentHero.Equipment.EquipPermanent(gear);
             Message.Publish(new DraftStepCompleted());
         }));
