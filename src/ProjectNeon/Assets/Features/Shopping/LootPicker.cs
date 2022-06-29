@@ -16,9 +16,12 @@ public class LootPicker
 
     public Rarity RandomRarity() => factors.Random();
     
-    public CardTypeData[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
+    public CardTypeData[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities) 
+        => PickCards(cards, party.BaseHeroes.SelectMany(h => h.Archetypes).ToHashSet(), numCards, rarities);
+
+    public CardTypeData[] PickCards(ShopCardPool cards, HashSet<string> archetypes, int numCards, params Rarity[] rarities)
     {
-        var weightedCards = party.BaseHeroes.SelectMany(h => cards.Get(h.Archetypes, party.CardsYouCantHaveMoreOf(), rarities))
+        var weightedCards = cards.Get(archetypes, party.CardsYouCantHaveMoreOf(), rarities)
             .Distinct()
             .FactoredByRarity(factors, x => x.Rarity)
             .ToArray()
