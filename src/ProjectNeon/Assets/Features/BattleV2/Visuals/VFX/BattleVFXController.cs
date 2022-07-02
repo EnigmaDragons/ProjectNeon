@@ -75,8 +75,8 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             var performerTeam = state.Members[e.PerformerId].TeamType;
             var opponentTeam = performerTeam == TeamType.Enemies ? TeamType.Party : TeamType.Enemies;
             var targetTeam = e.Group == Group.Opponent ? opponentTeam : performerTeam;
-            var location = targetTeam == TeamType.Enemies ? enemyGroupLocation : heroesGroupLocation;
-            PlayEffect(f.Value, location.position, e.Size, e.Speed, e.Color, e.Target.Members.All(x => x.TeamType == TeamType.Enemies), e.SkipWaitingForCompletion);
+            var location = state.GetCenterPoint(targetTeam);
+            PlayEffect(f.Value, location, e.Size, e.Speed, e.Color, e.Target.Members.All(x => x.TeamType == TeamType.Enemies), e.SkipWaitingForCompletion);
         }
     }
 

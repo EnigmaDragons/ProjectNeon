@@ -481,6 +481,12 @@ public class BattleState : ScriptableObject
             return maybeTransform.Value;
         });
     }
+
+    public Vector3 GetCenterPoint(TeamType team)
+    {
+        var target = team == TeamType.Party ? new Multiple(Heroes) : new Multiple(EnemyMembers);
+        return GetCenterPoint(target);
+    }
     
     public Vector3 GetCenterPoint(Target target)
     {
