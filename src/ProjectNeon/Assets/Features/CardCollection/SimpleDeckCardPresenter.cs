@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
     [SerializeField] private HoverCard hoverCard;
     [SerializeField] private CardCostPresenter costPresenter;
     [SerializeField] private Image archetypeTint;
+    [SerializeField] private UnityEngine.UI.Extensions.Gradient tintGradient;
     [SerializeField] private ArchetypeTints tints;
 
     private Canvas _canvas;
@@ -87,8 +89,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
         {
             costPresenter.Render(_card, _cardType, _card.Select(c => c.Owner.PrimaryResourceType(), () => _cardType.Cost.ResourceType), forceShowXcostAsX: true);
         }
-        if (archetypeTint != null)
-            archetypeTint.color = tints.ForArchetypes(_cardType.Archetypes).WithAlpha(0.75f);
+        RenderTint();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -113,5 +114,29 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
         if (eventData.button == PointerEventData.InputButton.Right)
             if (_card.IsPresent)
                 Message.Publish(new ShowDetailedCardView(_card.Value));
+    }
+    
+    private void RenderTint()
+    {
+        if (archetypeTint != null)
+            archetypeTint.color = tints.ForArchetypes(_cardType.Archetypes).WithAlpha(0.75f);
+        tintGradient.enabled = _cardType.Archetypes.Count > 1;
+        if (_cardType.Archetypes.Count == 0)
+            SetGradientColors(Color.white, Color.white);
+        else if (_cardType.Archetypes.Count == 1)
+        {
+            var t = tints.ForArchetypes(_cardType.Archetypes);
+            SetGradientColors(t, t);
+        }
+        else
+            SetGradientColors(
+                tints.ForArchetypes(new HashSet<string>(new[] {_cardType.Archetypes.OrderBy(x => x).First()})),
+                tints.ForArchetypes(new HashSet<string>(new[] {_cardType.Archetypes.OrderBy(x => x).Last()})));
+    }
+    
+    private void SetGradientColors(Color cOne, Color cTwo)
+    {
+        tintGradient.Vertex1 = cTwo;
+        tintGradient.Vertex2 = cOne;
     }
 }
