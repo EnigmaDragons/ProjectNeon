@@ -23,6 +23,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
     private int _count;
     private GameObject _hoverCard;
     private Action _leftClickAction = () => { };
+    private bool _isBasic;
 
     private void Awake() => InitCanvasIfNeeded();
     private void OnDestroy() => OnExit();
@@ -38,6 +39,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
         _card = Maybe<Card>.Missing();
         _cardType = c;
         _leftClickAction = () => { };
+        _isBasic = false;
         Render();
         return this;
     }
@@ -48,6 +50,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
         _card = c;
         _cardType = c.BaseType;
         _leftClickAction = () => { };
+        _isBasic = c.Owner.BasicCard.IsPresentAnd(b => c.Id == b.Id);
         Render();
         return this;
     }
@@ -79,7 +82,11 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
     private void Render()
     {
         cardNameText.text = _cardType.Name;
-        countText.text = _count > -1 ? _count.ToString() : "";
+        countText.text = _isBasic 
+            ? "B" 
+            : _count > -1 
+                ? _count.ToString() 
+                : "";
         if (cardArt != null)
         {
             cardArt.gameObject.SetActive(true);

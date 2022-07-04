@@ -42,6 +42,8 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                 .Shuffled()
                 .Take(3)
                 .ToArray();
+            if (blessingChoices.Length == 0)
+                Log.Error("Blessing Clinic Provider Generated 0 Blessing Choices");
             for (int i = 0; i < blessingChoices.Length; i++)
             {
                 var index = i;
@@ -62,7 +64,8 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
             }
         }
         for (var i = 0; i < _generatedOptions.Length; i++)
-            _generatedOptions[i].Enabled = _available[i];
+            if (_generatedOptions[i] != null)
+                _generatedOptions[i].Enabled = _available[i];
         return _generatedOptions;
     }
     

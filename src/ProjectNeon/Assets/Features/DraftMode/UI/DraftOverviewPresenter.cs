@@ -74,7 +74,6 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
                 .OrderBy(c => c.Key.Archetypes.None() ? 999 : 0)
                 .ThenByDescending(c => (int) c.Key.Rarity)
                 .ToList();
-            cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(currentHero.BasicCard, 1));
 
             var cards = cardsForHero
                 .SelectMany(x => Enumerable.Range(0, x.Value).Select(i => x.Key))
@@ -87,7 +86,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
                 .SelectMany(x => x)
                 .ToArray();
 
-            decklistUi.ShowDeckList(cards);
+            decklistUi.ShowDeckList(currentHero.BasicCard.ToNonBattleCard(currentHero).Concat(cards).ToArray());
         }
     }
 
