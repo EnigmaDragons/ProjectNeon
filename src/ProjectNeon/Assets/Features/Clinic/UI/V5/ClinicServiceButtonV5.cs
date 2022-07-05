@@ -27,7 +27,7 @@ public class ClinicServiceButtonV5 : MonoBehaviour
         if (disabledCanvasGroup != null)
             disabledCanvasGroup.alpha = interactable ? 1 : 0.3f;
         button.onClick.RemoveAllListeners();
-        if (party.Credits >= data.Cost)
+        if (party.ClinicVouchers >= data.Cost)
             button.onClick.AddListener(() =>
             {
                 party.UpdateClinicVouchersBy(-data.Cost);

@@ -42,6 +42,7 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>
     
     private void UpdateServices()
     {
+        Log.Info("Clinic - Update Services");
         if (clinic.Corp != null && corpUi != null)
             corpUi.ForEach(c => c.Init(clinic.Corp));
         doneButton.interactable = !_serviceProvider.RequiresSelection() && (!clinic.IsTutorial || party.ClinicVouchers == 0 || party.Heroes.All(x => x.Health.MissingHp == 0));
