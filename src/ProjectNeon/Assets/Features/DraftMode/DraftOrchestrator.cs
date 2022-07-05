@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
+public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipDraft>
 {
     [SerializeField] private DraftState draftState;
     [SerializeField] private CurrentAdventure adventure;
@@ -24,6 +24,21 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
     }
 
     protected override void Execute(DraftStepCompleted msg) => Advance();
+    
+    protected override void Execute(SkipDraft msg)
+    {
+        if (!draftState.PickedHeroes())
+        {
+            for (var i = 0; i < adventure.Adventure.PartySize; i++)
+            {
+                var currentParty = party.Party.Heroes;
+                var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty);
+                var choice = featuredThree.Random();
+                party.WithAddedDraftHero(choice, CreateBlankDeck());
+            }
+        }
+        FinishDraftWithoutConfiguringDeck();
+    }
 
     private void Advance()
     {
@@ -93,6 +108,8 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
         }));
     }
 
+    private RuntimeDeck CreateBlankDeck() => new RuntimeDeck {Cards = blankDraftDeck.Cast<CardTypeData>().ToList()};
+    
     private void SelectHero()
     {
         var currentParty = party.Party.Heroes;
@@ -101,7 +118,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
         Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {
             AllMetrics.PublishHeroSelected(h.Name, featuredThree.Select(x => x.Name).ToArray(), currentParty.Select(x => x.Name).ToArray());
-            party.WithAddedDraftHero(h, new RuntimeDeck { Cards = blankDraftDeck.Cast<CardTypeData>().ToList() });
+            party.WithAddedDraftHero(h, CreateBlankDeck());
             Message.Publish(new AddHeroToPartyRequested(h));
             Async.ExecuteAfterDelay(0.5f, () =>
             {
@@ -114,7 +131,15 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted>
     private void FinishDraft()
     {
         draftUi.SetActive(false);
+        Message.Publish(new HideNamedTarget("HeroSelectionView"));
         Message.Publish(new NodeFinished());
         Message.Publish(new TogglePartyDetails { ClearDeckOnShow = true });
+    }
+    
+    private void FinishDraftWithoutConfiguringDeck()
+    {
+        draftUi.SetActive(false);
+        Message.Publish(new HideNamedTarget("HeroSelectionView"));
+        Message.Publish(new NodeFinished());
     }
 }

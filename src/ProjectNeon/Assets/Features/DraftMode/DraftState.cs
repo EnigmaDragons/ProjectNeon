@@ -39,6 +39,8 @@ public class DraftState : ScriptableObject
 
     public int HeroIndex => heroIndex;
 
+    public bool PickedHeroes() => draftStepIndex > DraftSteps.LastIndexOf(x => x == DraftStep.PickHero);
+    
     public DraftStep Advance()
     {
         Debug.Log("Draft - Advance Hero");

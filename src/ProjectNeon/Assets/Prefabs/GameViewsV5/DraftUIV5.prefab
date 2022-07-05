@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 5575142656323913336}
   - component: {fileID: 8507783394187999967}
   - component: {fileID: 2643741109274218823}
+  - component: {fileID: 5477795643711585624}
   m_Layer: 0
   m_Name: DraftUIV5
   m_TagString: Untagged
@@ -202,6 +203,34 @@ MonoBehaviour:
   - {fileID: 6288681225644978299}
   - {fileID: 4972261569814112142}
   - {fileID: 955543923542662324}
+--- !u!114 &5477795643711585624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330249620172650752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a58015a0ad344745be8d684218d85943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: 0d01000064000000
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
+        m_MethodName: SkipDraftCheat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &372868230621253163
 GameObject:
   m_ObjectHideFlags: 0
@@ -11967,6 +11996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deckParent: {fileID: 7782761203116846844}
   cardPrototype: {fileID: 643360188770524361, guid: 92af839c84e0b4a42bbfa231e5a002b2, type: 3}
+  canvasOverride: {fileID: 0}
 --- !u!1 &5819448245545310757
 GameObject:
   m_ObjectHideFlags: 0
