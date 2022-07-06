@@ -56,13 +56,10 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     private void SelectGear()
     {
         var currentHero = party.Heroes[draftState.HeroIndex];
+        var currentHeroGearIds = currentHero.Equipment.All.Select(e => e.Id).ToHashSet();
         var gearOptions = HeroPermanentAugmentOptions.GenerateHeroGearOptions(gearPool, party, currentHero.Character, new HashSet<Rarity>
-        {
-            Rarity.Common,
-            Rarity.Uncommon,
-            Rarity.Rare,
-            Rarity.Epic
-        }, 5);
+                { Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic}, 10)
+            .Where(g => !currentHeroGearIds.Contains(g.Id)).Take(5);
         Message.Publish(new GetUserSelectedEquipmentForDraft(gearOptions, e =>
         {
             if (e.IsMissing)
