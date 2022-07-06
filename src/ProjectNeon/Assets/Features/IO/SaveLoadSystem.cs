@@ -83,6 +83,9 @@ public sealed class SaveLoadSystem : ScriptableObject
     private bool InitParty(GamePartyData partyData)
     {
         var numHeroes = partyData.Heroes.Length;
+        if (numHeroes == 0)
+            return true;
+        
         var maybeCards = partyData.CardIds.Select(id => library.GetCardById(id));
         if (maybeCards.Any(c => c.IsMissing))
             return LoadFailedReason("Missing Cards");
