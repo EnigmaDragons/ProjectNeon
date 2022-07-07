@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: SchSte_CoordinatedTakedown
+  m_Name: Stealth_Misdirect
   m_EditorClassIdentifier: 
-  id: 556
+  id: 555
   customName: 
-  art: {fileID: 21300000, guid: 19f88068cd1c8bc4ab02601e8b7d2a52, type: 3}
-  description: 'Next turn, gives allies {ES[0]} each and when an enemy dies, draw
-    {RE[0]} <b>Card</b> and <b>+</b>{RE[1]} <b>Card Play</b> '
+  art: {fileID: 21300000, guid: 0266fe1237cc3b14c894c5abc777849f, type: 3}
+  description: '<b>Re-Stealth</b>
+
+
+    Gain {E[0]}'
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   tags: 
   speed: 0
@@ -25,11 +27,11 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
-  rarity: 3
+  rarity: 1
   actionSequences:
-  - scope: 1
-    group: 3
-    cardActions: {fileID: 11400000, guid: 0cfaaee2a483b7a49806665159099d27, type: 2}
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: b110485ea4b744142981927fd45ef13f, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -37,7 +39,6 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
   highlightCondition: []
   unhighlightCondition: []
