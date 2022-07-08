@@ -59,6 +59,9 @@ public class Tutorial11Orchestrator : OnMessage<StartCardSetupRequested, CardRes
     {
         var s = msg.State;
         _turn = s.TurnNumber;
+        if (s.Enemies.Length < 1)
+            return;
+        
         var aegisCount = s.Enemies[0].Member.Aegis();
         if (_turn == 2 && aegisCount > 0 && !_turn2AegisShown)
         {
