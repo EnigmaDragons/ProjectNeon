@@ -3,14 +3,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased, SetSuperFocusBuyControl>
+public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
 {
     [SerializeField] private ShopCardPool cards;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private ShopCardPurchaseSlot cardPurchasePrototype;
     [SerializeField] private GameObject cardParent;
     [SerializeField] private CurrentAdventureProgress adventureProgress;
-    [SerializeField] private Button doneButton;
  
     private int _numCards;
     private ShopSelection _selection;
@@ -33,7 +32,6 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased, SetSuperF
 
     protected override void Execute(RefreshShop msg) => GetMoreInventory();
     protected override void Execute(CardPurchased msg) => _purchases.Add(msg.Card);
-    protected override void Execute(SetSuperFocusBuyControl msg) => doneButton.interactable = !msg.Enabled || party.Credits < 40;
 
     protected override void AfterEnable() => GetMoreInventory();
     protected override void AfterDisable()
