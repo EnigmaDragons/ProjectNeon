@@ -283,15 +283,10 @@ public static class InterpolatedCardDescriptions
     private static string RawDamageIcon => Sprite(1);
     private static string MagicDamageIcon => Sprite(2);
     private static string Sprite(int index) => $"<sprite index={index}>";
-
-    private static string PhysDamageColored(string s) => Colored(s, "#fac34c");
-    private static string RawDamageColored(string s) => Colored(s, "#ff647b");
-    private static string MagicDamageColored(string s) => Colored(s, "#d79fff");
-    private static string Colored(string s, string color) => $"<color={color}>{s}</color>";
-
-    private static string WithPhysicalDamageIcon(string s) => $"{PhysDamageColored(s)} {PhysDamageIcon}";
-    private static string WithMagicDamageIcon(string s) => $"{MagicDamageColored(s)} {MagicDamageIcon}";
-    private static string WithRawDamageIcon(string s) => $"{RawDamageColored(s)} {RawDamageIcon}";
+    
+    private static string WithPhysicalDamageIcon(string s) => $"{s.PhysDamageColored()} {PhysDamageIcon}";
+    private static string WithMagicDamageIcon(string s) => $"{s.MagicDamageColored()} {MagicDamageIcon}";
+    private static string WithRawDamageIcon(string s) => $"{s.RawDamageColored()} {RawDamageIcon}";
     
     public static string EffectDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardCyclesUsedThisTurn = 0, bool showSprites = true)
     {
