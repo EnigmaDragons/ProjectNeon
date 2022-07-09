@@ -46,7 +46,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
             ? string.Join(",", e.Archetypes.Select(c => c))
             : "Any";
         classesLabel.text = $"Archetypes: {archetypeText}";
-        descriptionLabel.text = e.Description;
+        descriptionLabel.text = e.GetInterpolatedDescription();
         rarity.Set(e.Rarity);
         slotIcon.sprite = slotIcons.All[e.Slot];
         var corp = allCorps.GetCorpByNameOrNone(e.Corp);
@@ -60,7 +60,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         gameObject.SetActive(true);
         return this;
     }
-
+    
     public void SetOnHover(Action onHoverEnter, Action onHoverExit)
     {
         _onHoverEnter = onHoverEnter;

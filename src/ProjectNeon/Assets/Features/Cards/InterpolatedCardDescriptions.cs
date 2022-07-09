@@ -279,14 +279,14 @@ public static class InterpolatedCardDescriptions
         { "Credits", 21},
         { "Creds", 21},
     };
-    private static string PhysDamageIcon => Sprite(0);
-    private static string TrueDamageIcon => Sprite(1);
-    private static string MagicDamageIcon => Sprite(2);
+    public static string PhysDamageIcon => Sprite(0);
+    public static string TrueDamageIcon => Sprite(1);
+    public static string MagicDamageIcon => Sprite(2);
     private static string Sprite(int index) => $"<sprite index={index}>";
     
-    private static string WithPhysicalDamageIcon(string s) => $"{s.PhysDamageColored()} {PhysDamageIcon}";
-    private static string WithMagicDamageIcon(string s) => $"{s.MagicDamageColored()} {MagicDamageIcon}";
-    private static string WithTrueDamageIcon(string s) => $"{s.TrueDamageColored()} {TrueDamageIcon}";
+    public static string WithPhysicalDamageIcon(string s) => $"{s.PhysDamageColored()} {PhysDamageIcon}";
+    public static string WithMagicDamageIcon(string s) => $"{s.MagicDamageColored()} {MagicDamageIcon}";
+    public static string WithTrueDamageIcon(string s) => $"{s.TrueDamageColored()} {TrueDamageIcon}";
     
     public static string EffectDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardCyclesUsedThisTurn = 0, bool showSprites = true)
     {
