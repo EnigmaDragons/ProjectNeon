@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,14 +35,17 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     private void PlayNextHastyCard()
     {
         DevLog.Info($"Enemies - Began Playing Next Hasty Card. {_enemiesToActThisTurn.Count(x => x.Enemy.IsHasty)} to act.");
-        RemoveUnconsciousAndEscapedEnemiesFromActPool();
-        Message.Publish(new UpdateAIStrategy());
-        _enemiesToActThisTurn
-            .Where(x => x.Enemy.IsHasty)
-            .FirstAsMaybe()
-            .ExecuteIfPresentOrElse(
-                Play, 
-                () => StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.HastyEnemyCards)));
+        StartCoroutine(ExecuteAfterReactionsFinished(() =>
+        {
+            RemoveUnconsciousAndEscapedEnemiesFromActPool();
+            Message.Publish(new UpdateAIStrategy());
+            _enemiesToActThisTurn
+                .Where(x => x.Enemy.IsHasty)
+                .FirstAsMaybe()
+                .ExecuteIfPresentOrElse(
+                    Play,
+                    () => StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.HastyEnemyCards)));
+        }));
     }
     
     public void BeginPlayingAllStandardEnemyCards() => PlayNextStandardCard();
@@ -49,21 +53,31 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     private void PlayNextStandardCard()
     {
         DevLog.Info($"Enemies - Began Playing Next Standard Card. {_enemiesToActThisTurn.Count(x => !x.Enemy.IsHasty)} to act.");
-        RemoveUnconsciousAndEscapedEnemiesFromActPool();
-        Message.Publish(new UpdateAIStrategy());
-        _enemiesToActThisTurn
-            .Where(x => !x.Enemy.IsHasty)
-            .FirstAsMaybe()
-            .ExecuteIfPresentOrElse(
-                Play, 
-                () => StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.EnemyCards)));
-    }
-
+        StartCoroutine(ExecuteAfterReactionsFinished(() =>
+        {
+            RemoveUnconsciousAndEscapedEnemiesFromActPool();
+            Message.Publish(new UpdateAIStrategy());
+            _enemiesToActThisTurn
+                .Where(x => !x.Enemy.IsHasty)
+                .FirstAsMaybe()
+                .ExecuteIfPresentOrElse(
+                    Play,
+                    () => StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.EnemyCards)));
+        }));
+}
+    
     private IEnumerator WaitForResolutionsFinished(BattleV2Phase phase)
     {
         while (!resolutions.IsDoneResolving)
             yield return new WaitForSeconds(0.1f);
         Message.Publish(new ResolutionsFinished(phase));
+    }
+
+    private IEnumerator ExecuteAfterReactionsFinished(Action onFinished)
+    {
+        while (!resolutions.IsDoneResolving || state.Reactions.Any)
+            yield return new WaitForSeconds(0.1f);
+        onFinished();
     }
     
     private void RemoveUnconsciousAndEscapedEnemiesFromActPool() 
@@ -71,6 +85,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
 
     private void Play((Member Member, EnemyInstance Enemy) e)
     {
+        RemoveUnconsciousAndEscapedEnemiesFromActPool();
         if (_currentTurnStrategy.ShouldRegenerate)
         {
             var previous = _currentTurnStrategy;
