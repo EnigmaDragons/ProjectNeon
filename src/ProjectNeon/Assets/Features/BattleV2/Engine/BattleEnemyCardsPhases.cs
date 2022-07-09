@@ -65,7 +65,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
             yield return new WaitForSeconds(0.1f);
         Message.Publish(new ResolutionsFinished(phase));
     }
-
+    
     private void RemoveUnconsciousAndEscapedEnemiesFromActPool() 
         => _enemiesToActThisTurn.RemoveAll(e => e.Member.IsUnconscious() || !state.Members.ContainsKey(e.Member.Id));
 
