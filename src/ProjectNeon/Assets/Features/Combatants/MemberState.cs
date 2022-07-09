@@ -276,7 +276,7 @@ public sealed class MemberState : IStats
     // HP Commands
     public void GainHp(float amount) => ChangeHp(amount * this[StatType.Healability]);
     public void SetHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).Set(amount));
-    public int TakeRawDamage(int amount) => -ChangeHp(-amount * this[StatType.Damagability]);
+    public int TakeTrueDamage(int amount) => -ChangeHp(-amount * this[StatType.Damagability]);
     public void TakeDamage(int amount)
     {
         var clampedAmount = Math.Max(amount, 0);

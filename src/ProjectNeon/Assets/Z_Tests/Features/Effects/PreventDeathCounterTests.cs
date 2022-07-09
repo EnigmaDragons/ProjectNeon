@@ -8,7 +8,7 @@ public class PreventDeathCounterTests
         var member = TestMembers.Create(s => s.With(StatType.MaxHP, 2).With(TemporalStatType.PreventDeath, 1));
 
         member.State.TakeDamage(300);
-        member.State.TakeRawDamage(300);
+        member.State.TakeTrueDamage(300);
         
         Assert.AreEqual(1, member.CurrentHp());
         Assert.True(member.IsConscious());

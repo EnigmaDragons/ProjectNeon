@@ -25,8 +25,8 @@ public sealed class DealDamage : Effect
             else
             {
                 BattleLog.Write($"{amount} damage dealt to{wasVulnerableString}{m.UnambiguousName}");
-                if (_damage.DealRawDamage)
-                    m.State.TakeRawDamage(amount);
+                if (_damage.DealTrueDamage)
+                    m.State.TakeTrueDamage(amount);
                 else
                     m.State.TakeDamage(amount);
                 if (amount < 1)

@@ -45,9 +45,9 @@ public static class AllEffects
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.DuplicateStatesOfTypeToRandomEnemy, e => new DuplicateStatesOfTypeToRandomEnemy(e.StatusTag)},
-        { EffectType.DealRawDamageFormula, e => new FullContextEffect((ctx, _, m) => 
-            BattleLoggedItem(amount => $"{amount} raw damage dealt to {m.Name}", 
-                m.TakeRawDamage(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount))), e.DurationFormula)},
+        { EffectType.DealTrueDamageFormula, e => new FullContextEffect((ctx, _, m) => 
+            BattleLoggedItem(amount => $"{amount} true damage dealt to {m.Name}", 
+                m.TakeTrueDamage(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount))), e.DurationFormula)},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
@@ -62,7 +62,7 @@ public static class AllEffects
         { EffectType.HealFormula, e => new FullContextEffect((ctx, _, m) => m.GainHp(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)), e.DurationFormula) },
         { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
-        { EffectType.RawDamageAttackFormula, e => new RawDamageAttack(new RawDamageCalculation((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.TrueDamageAttackFormula, e => new TrueDamageAttack(new TrueDamageCalculation((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.CycleAllCardsInHand, e => new FullContextEffect((ctx, _) =>
             {

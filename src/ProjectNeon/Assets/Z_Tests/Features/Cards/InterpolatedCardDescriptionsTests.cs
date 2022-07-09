@@ -77,9 +77,9 @@ public sealed class InterpolatedCardDescriptionsTests
             , Owner));
 
     [Test]
-    public void Interpolated_RawDamageFormula_IsCorrect()
-        => AssertMatchesIgnoreStyling("Deal 8 raw damage",
-            Description("Deal {E[0]} raw damage", new EffectData {EffectType = EffectType.DealRawDamageFormula, Formula = "Shield * 2"},
+    public void Interpolated_TrueDamageFormula_IsCorrect()
+        => AssertMatchesIgnoreStyling("Deal 8 true damage",
+            Description("Deal {E[0]} true damage", new EffectData {EffectType = EffectType.DealTrueDamageFormula, Formula = "Shield * 2"},
                 OwnerWith(m => m.State.AdjustShield(4))));
 
     [Test]

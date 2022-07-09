@@ -26,7 +26,7 @@ public class DamageOverTimeState : TemporalStateBase
         Tracker.AdvanceTurn();
         return new SinglePayload("Damage Over Time", new PerformAction(() =>
         {
-            var damageAmount =  _target.State.TakeRawDamage(_amount);
+            var damageAmount =  _target.State.TakeTrueDamage(_amount);
             var vulnerableDetailStr = _target.IsVulnerable() ? " [Vulnerable]" : ""; 
             BattleLog.Write($"{damageAmount} DoT damage dealt to {_target.Name}{vulnerableDetailStr}");
         }));

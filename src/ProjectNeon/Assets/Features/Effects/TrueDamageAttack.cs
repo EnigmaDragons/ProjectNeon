@@ -1,10 +1,10 @@
 
-public class RawDamageAttack : Effect
+public class TrueDamageAttack : Effect
 {
-    private readonly RawDamageCalculation _damage;
+    private readonly TrueDamageCalculation _damage;
     private readonly bool _hitsRandomTarget;
     
-    public RawDamageAttack(RawDamageCalculation damage, bool hitsRandomTarget = false)
+    public TrueDamageAttack(TrueDamageCalculation damage, bool hitsRandomTarget = false)
     {
         _damage = damage;
         _hitsRandomTarget = hitsRandomTarget;
