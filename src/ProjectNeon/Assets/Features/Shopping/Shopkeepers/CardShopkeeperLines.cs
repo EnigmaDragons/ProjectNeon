@@ -46,5 +46,5 @@ public class CardShopkeeperLines : MonoBehaviour
             SaySomeStandardLine);
     }
     
-    private void Say(string line) => Message.Publish(new ShowCharacterDialogueLine("Shopkeeper", line));
+    private void Say(string line) => Message.Publish(new ShowCharacterDialogueLine("Shopkeeper", line, forceAutoAdvanceBecauseThisIsASingleMessage: true));
 }

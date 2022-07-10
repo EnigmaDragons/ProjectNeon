@@ -10,11 +10,14 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged,
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private CurrentGlobalEffects globalEffects;
     [SerializeField] private GameObject superFocus;
+    [SerializeField] private bool highlightOnHover = false;
 
     private Card _card;
     private int _price;
     private bool _purchased;
 
+    private bool CanAfford => _price <= party.Credits;
+    
     protected override void Execute(SetSuperFocusBuyControl msg)
     {
         if (!msg.Enabled)
@@ -44,7 +47,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged,
         if (_card == null || _purchased)
             return;
         
-        var canAfford = party.Credits >= _price;
+        var canAfford = CanAfford;
         var cardAction = canAfford ? PurchaseCard : (Action) (() => { });
         cardPresenter.Set(_card, cardAction);
         
@@ -64,4 +67,12 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged,
     }
 
     protected override void Execute(PartyAdventureStateChanged msg) => UpdateAffordability();
+
+    public void HoverEnter()
+    {
+        if (highlightOnHover && !_purchased && CanAfford)
+            cardPresenter.SetHoverHighlight(true);
+    }
+
+    public void HoverExit() => cardPresenter.SetHoverHighlight(false);
 }

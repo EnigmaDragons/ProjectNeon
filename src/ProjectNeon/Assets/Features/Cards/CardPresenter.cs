@@ -290,6 +290,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         fullScreenDarken.color = active ? Transparent : fullScreenDarkenFinalColor;
         fullScreenDarken.DOColor(active ? fullScreenDarkenFinalColor : Transparent, 0.6f);
     }
+
+    public void SetHoverHighlight(bool active)
+    {
+        highlight.SetActive(active);
+    }
     
     public void SetHandHighlight(bool active)
     {

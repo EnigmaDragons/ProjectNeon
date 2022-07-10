@@ -5,6 +5,8 @@ public class GeneralDialoguePresenter : OnMessage<ShowCharacterDialogueLine, Hid
     [SerializeField] private CutsceneCharacter[] characters;
     [SerializeField] private FloatReference dialogueWaitDelay;
     [SerializeField] private FloatReference messageLingerDuration = new FloatReference(4f);
+    
+    protected bool _debugLoggingEnabled = true;
 
     protected override void AfterEnable()
     {
@@ -16,7 +18,7 @@ public class GeneralDialoguePresenter : OnMessage<ShowCharacterDialogueLine, Hid
         characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
             .ExecuteIfPresentOrElse(c =>
                 {
-                    var useAutoAdvance = CurrentGameOptions.Data.UseAutoAdvance;
+                    var useAutoAdvance = msg.ForceAutoAdvanceBecauseThisIsASingleMessage || CurrentGameOptions.Data.UseAutoAdvance;
                     c.SetTalkingState(true);
                     var speech = c.SpeechBubble;
                     speech.SetAllowManualAdvance(!useAutoAdvance);
@@ -44,6 +46,7 @@ public class GeneralDialoguePresenter : OnMessage<ShowCharacterDialogueLine, Hid
 
     private void HideAllSpeeches()
     {
+        DebugLog("Hide All Speeches");
         characters.ForEach(c => c.ForceEndConversation());
     }
     
@@ -51,5 +54,11 @@ public class GeneralDialoguePresenter : OnMessage<ShowCharacterDialogueLine, Hid
     {
         characters.FirstOrMaybe(c => c.Matches(characterAlias))
             .ExecuteIfPresentOrElse(c => c.ForceEndConversation(), () => {});
+    }
+
+    private void DebugLog(string msg)
+    {
+        if (_debugLoggingEnabled)
+            Log.Info($"General Cutscene Presenter - {msg}");
     }
 }
