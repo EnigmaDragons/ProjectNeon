@@ -16,7 +16,7 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
     public override LevelUpOption[] Generate(Hero h)
     {
         var finalSet = GenerateHeroGearOptions(allEquipmentPool, party, h.Character, new HashSet<Rarity> {rarity}, 3);
-            if (choiceOverride.Length == 3)
+        if (choiceOverride.Length == 3)
             finalSet = choiceOverride.Cast<Equipment>().ToArray();
             
         return ToLevelUpOptions(h, finalSet, party, customPresenterPrototype);
