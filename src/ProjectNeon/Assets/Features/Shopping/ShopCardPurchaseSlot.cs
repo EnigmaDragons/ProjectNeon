@@ -71,7 +71,10 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged,
     public void HoverEnter()
     {
         if (highlightOnHover && !_purchased && CanAfford)
+        {
             cardPresenter.SetHoverHighlight(true);
+            Message.Publish(new ShopCardHovered(transform));
+        }
     }
 
     public void HoverExit() => cardPresenter.SetHoverHighlight(false);
