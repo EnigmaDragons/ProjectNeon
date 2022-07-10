@@ -15,6 +15,8 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     private ShopSelection _selection;
     private List<CardTypeData> _purchases = new List<CardTypeData>();
 
+    public ShopSelection Selection => _selection;
+    
     private void Awake()
     {
         _numCards = cardParent.transform.childCount;
