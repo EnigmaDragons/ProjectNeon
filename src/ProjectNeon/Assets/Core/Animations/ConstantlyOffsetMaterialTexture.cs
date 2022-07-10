@@ -10,7 +10,7 @@ public class ConstantlyOffsetMaterialTexture : MonoBehaviour
 
     void Awake()
     {
-        _renderer = GetComponent<Renderer> ();
+        _renderer = GetComponent<Renderer>();
     }
 
     void Update()

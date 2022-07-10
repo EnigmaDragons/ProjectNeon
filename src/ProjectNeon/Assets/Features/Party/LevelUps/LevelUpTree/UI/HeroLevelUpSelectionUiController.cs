@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
@@ -10,9 +12,16 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
     
     private bool _isTargetV4Null;
     private bool _isPresenterV4Null;
+    private bool _isInitialized;
 
-    private void Awake()
+    private void Awake() => InitIfNeeded();
+
+    private void InitIfNeeded()
     {
+        if (_isInitialized)
+            return;
+        
+        _isInitialized = true;
         _isPresenterV4Null = presenterV4 == null;
         _isTargetV4Null = targetV4 == null;
         targetV2.SetActive(false);
@@ -22,20 +31,33 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
 
     protected override void Execute(LevelUpHero msg)
     {
+        InitIfNeeded();
         var shouldUseV2 = (!adventure.Adventure.IsV4 && !adventure.Adventure.IsV5) || _isTargetV4Null || _isPresenterV4Null;
         if (shouldUseV2)
         {
             presenterV2.Initialized(msg.Hero);
             targetV2.SetActive(true);
+            Message.Publish(new HeroLeveledUpSFX(transform));
         }
         else
         {
             if (msg.Hero.IsMaxLevelV4)
                 return;
-            
-            presenterV4.Initialized(msg.Hero);
-            targetV4.SetActive(true);
+
+            StartCoroutine(ExecuteOnceV4CanvasIsHidden(() =>
+            {
+                Log.Info("Starting Level Up");
+                presenterV4.Initialized(msg.Hero);
+                targetV4.SetActive(true);
+                Message.Publish(new HeroLeveledUpSFX(transform));
+            }));
         }
-        Message.Publish(new HeroLeveledUpSFX(transform));
+    }
+
+    private IEnumerator ExecuteOnceV4CanvasIsHidden(Action a)
+    {
+        while (targetV4.activeSelf)
+            yield return new WaitForSeconds(0.1f);
+        a();
     }
 }

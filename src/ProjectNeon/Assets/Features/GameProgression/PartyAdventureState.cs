@@ -263,7 +263,7 @@ public sealed class PartyAdventureState : ScriptableObject
             return Heroes.Random();
         
         InitArchKeyHeroes();
-        return _archKeyHeroes[archetypeKey].First();
+        return _archKeyHeroes[archetypeKey].FirstOrMaybe().OrDefault(() => Heroes.Random());
     }
 
     private void InitArchKeyHeroes()
