@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: DefTech_AcceleratorCircuit
+  m_Name: Scheme_BigBrain
   m_EditorClassIdentifier: 
-  id: 115
+  id: 105
   displayName: 
-  description: If you have Max Shield during a turn, gain +1 Card Play
-  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
+  description: If you have 10+ cards in hand, gain +1 Card Play <i>(1x per turn)</i>
+  corp: {fileID: 11400000, guid: 1c216af8c1977f34dbbb75041357df2d, type: 2}
   archetypes:
-  - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
-  rarity: 3
+  - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
+  rarity: 4
   slot: 2
   priceFactor: 1
   modifiers: []
@@ -26,7 +26,7 @@ MonoBehaviour:
   turnStartEffects:
   - EffectType: 28
     Conditions:
-    - {fileID: 11400000, guid: 0a148ce2d0f114148af55e7f08548de8, type: 2}
+    - {fileID: 11400000, guid: 4f75b996620f5334e9bf13a4f029d2ef, type: 2}
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
     Unpreventable: 0
   - EffectType: 74
     Conditions:
-    - {fileID: 11400000, guid: dfd0a81729c665147affbb0614bd5e37, type: 2}
+    - {fileID: 11400000, guid: 8494263a6b3077a45a40b8ec2671a32d, type: 2}
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'When Shield Maxed: +1 Card Play'
+    StatusDetailText: '10 Cards in Hand: +1 Card Play'
     TurnDelay: 0
     Formula: 1
     InterpolatePartialFormula:
@@ -101,7 +101,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 38
+    ReactionConditionType: 105
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 

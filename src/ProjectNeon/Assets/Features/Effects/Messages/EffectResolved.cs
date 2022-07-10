@@ -11,9 +11,10 @@ public sealed class EffectResolved
     public Maybe<Card> Card { get; }
     public PreventionContext Preventions { get; }
     public ReactionTimingWindow Timing { get; }
+    public CardPlayZones CardZones { get; }
 
     public EffectResolved(bool wasApplied, bool isFirstBattleEffectOfChosenTarget, EffectData e, Member src, Target target, BattleStateSnapshot before, BattleStateSnapshot after, 
-        bool isReaction, Maybe<Card> card, PreventionContext preventions, ReactionTimingWindow timing)
+        bool isReaction, Maybe<Card> card, PreventionContext preventions, ReactionTimingWindow timing, CardPlayZones cardZones)
     {
         WasApplied = wasApplied;
         IsFirstBattleEffectOfChosenTarget = isFirstBattleEffectOfChosenTarget;
@@ -26,5 +27,6 @@ public sealed class EffectResolved
         Card = card;
         Preventions = preventions;
         Timing = timing;
+        CardZones = cardZones;
     }
 }

@@ -40,5 +40,6 @@ public enum ReactionConditionType
     WhenNonSelfAllyBloodied = 101,
     WhenNonSelfAllyHpDamaged = 102,
     WhenNonSelfAllyHpDamagedButNotKilled = 103,
-    WhenNonSelfAllyBloodiedButNotKilled = 104
+    WhenNonSelfAllyBloodiedButNotKilled = 104,
+    Has10CardsOrMoreInHand = 105,
 }

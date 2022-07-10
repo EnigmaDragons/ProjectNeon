@@ -112,6 +112,9 @@ public sealed class InterpolatedCardDescriptionsTests
         var unstyledActual = actual
             .Replace("<b>", "")
             .Replace("</b>", "")
+            .Replace("<color=#fac34c>", "")
+            .Replace("<color=#ff647b>", "")
+            .Replace("</color>", "")
             .Replace(" <sprite index=", "");
         Enumerable.Range(0, 32)
             .ForEach(i => unstyledActual = unstyledActual.Replace($"{i}>", ""));

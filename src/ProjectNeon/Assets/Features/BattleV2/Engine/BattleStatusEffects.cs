@@ -108,7 +108,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                     false,
                     Maybe<Card>.Missing(), 
                     new UnpreventableContext(),
-                    ReactionTimingWindow.FirstCause);
+                    ReactionTimingWindow.FirstCause,
+                    state.PlayerCardZones);
                 Message.Publish(new StatusEffectResolved(member, effectResolved));
             });
         }
