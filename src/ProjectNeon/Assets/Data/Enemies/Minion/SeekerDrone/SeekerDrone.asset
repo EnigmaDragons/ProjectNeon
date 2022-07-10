@@ -16,6 +16,7 @@ MonoBehaviour:
   enemyName: Seeker Drone
   allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 1/9/22
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -44,15 +45,15 @@ MonoBehaviour:
   animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
-    maxHp: 11
-    maxShield: 4
+    maxHp: 18
+    maxShield: 6
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 1
     startingTaunt: 0
     attack: 0
-    magic: 6
+    magic: 5
     leadership: 0
     armor: 0
     resistance: 0
@@ -61,20 +62,22 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 28
+    powerLevel: 32
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0.01
     calculationResults:
-      startingPower: 16.6878
-      perCardValue: 6
-      resourceValue: 0.06
-      perTurnPower: 6.06
+      startingPower: 23.937119
+      perCardValue: 5.5
+      resourceValue: 0.055
+      perTurnPower: 5.555
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 1.66878
-      calculatedPowerLevel: 28
+      estimatedHeroDamage: 10
+      estimatedTurnsAlive: 1.5958079
+      estimatedPerTurnTotalValue: 8.3525
+      calculatedPowerLevel: 32
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 292c5a425cc7e3343872c2858201a16d, type: 2}
@@ -110,8 +113,10 @@ MonoBehaviour:
       resourceValue: 2.97
       perTurnPower: 9
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 1.3468559
-      calculatedPowerLevel: 36
+      estimatedHeroDamage: 10
+      estimatedTurnsAlive: 1.7958078
+      estimatedPerTurnTotalValue: 14.927603
+      calculatedPowerLevel: 42
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 292c5a425cc7e3343872c2858201a16d, type: 2}
@@ -147,8 +152,10 @@ MonoBehaviour:
       resourceValue: 3.96
       perTurnPower: 12
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 0.80562896
-      calculatedPowerLevel: 44
+      estimatedHeroDamage: 10
+      estimatedTurnsAlive: 2.148344
+      estimatedPerTurnTotalValue: 24.219542
+      calculatedPowerLevel: 56
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 292c5a425cc7e3343872c2858201a16d, type: 2}

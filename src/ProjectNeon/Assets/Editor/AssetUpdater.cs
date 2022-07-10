@@ -335,22 +335,16 @@ public class AssetUpdater
         });
     }
 
-    private const float _hpValue = 1;
-    private const float _startingShieldValue = 1;
-    private const float _maxShieldValue = 0.2f;
-    private const float _dodgeValue = 5;
-    private const float _aegisValue = 5;
-    private const float _tauntValue = 10;
-    private const float _armorValue = 3;
-    private const float _resistanceValue = 3;
-    private const float _resourceScaledValue = 0.33f;
-    private const float _maxResourceFactor = 0.2f;
-    private static Dictionary<int, float> _stageDefensiveValuePerTurnAliveMap = new Dictionary<int, float>()
-    {
-        { 1, 10f },
-        { 2, 20f },
-        { 3, 40f },
-    };
+    private const decimal _hpValue = 1;
+    private const decimal _startingShieldValue = 1;
+    private const decimal _maxShieldValue = 0.2m;
+    private const decimal _armorValue = 3;
+    private const decimal _resistanceValue = 3;
+    private const decimal _resourceScaledValue = 0.33m;
+    private const decimal _maxResourceFactor = 0.1m;
+    private const decimal _dodgeScaledValue = 0.5m;
+    private const decimal _aegisScaledValue = 0.5m;
+    private const decimal _tauntScaledValue = 1m;
 
     [MenuItem("Neon/Calculate Enemy Power Levels")]
     private static void CalculateEnemyPowerLevels()
@@ -360,51 +354,122 @@ public class AssetUpdater
         {
             foreach (var stage in enemy.stageDetails)
             {
-                var hpValue = _hpValue * stage.maxHp;
-                var shieldValue = _startingShieldValue * stage.startingShield + WithFallOff(_maxShieldValue, stage.maxShield, 0.9f);
-                var aegisValue = WithFallOff(_aegisValue, stage.startingAegis, 0.8f);
-                var dodgeValue = _dodgeValue * stage.startingDodge;
-                var tauntValue = WithFallOff(_tauntValue, stage.startingTaunt, 0.8f);
-                var armorValue = WithFallOff(_armorValue, stage.armor, 0.9f);
-                var resistanceValue = WithFallOff(_resistanceValue, stage.resistance, 0.9f);
-                var startingValue = hpValue + shieldValue + aegisValue + dodgeValue + tauntValue + armorValue + resistanceValue + stage.calculationVariables.startingValueAdjustment + stage.calculationVariables.startingDefensiveValueAdjustment;
-
-                var highestStat = Mathf.Max(stage.attack, stage.leadership, stage.magic);
-                var scalingValuePerCard = stage.nonStatCardValueFactor == 0
-                    ? highestStat
-                    : (highestStat + stage.nonStatCardValueFactor) / 2f;
-                var resourceValue = stage.calculationVariables.resourceScaledValueOverride == 0
-                    ? scalingValuePerCard * _resourceScaledValue
-                    : scalingValuePerCard * stage.calculationVariables.resourceScaledValueOverride;
-                var valuePerTurn = scalingValuePerCard * stage.cardsPerTurn + resourceValue * stage.resourceGainPerTurn + stage.calculationVariables.perTurnValueAdjustment;
-                var defensiveValue = hpValue + shieldValue + aegisValue + dodgeValue + armorValue + resistanceValue + stage.calculationVariables.startingDefensiveValueAdjustment;
-                var averageTurnsAlive = defensiveValue / _stageDefensiveValuePerTurnAliveMap[stage.stage];
-                var activeValue = WithFallOff(valuePerTurn, Mathf.RoundToInt(averageTurnsAlive), 0.9f);
-                var startingResourceValue = resourceValue * stage.startingResourceAmount;
-                var resourceMaxValue = WithFallOff(_maxResourceFactor * resourceValue, stage.maxResourceAmount, 0.8f);
-                int totalValue = Mathf.RoundToInt(activeValue + startingValue + resourceMaxValue + startingResourceValue);
-                if (totalValue != stage.calculationResults.calculatedPowerLevel)
-                {
-                    stage.calculationResults.startingPower = startingValue;
-                    stage.calculationResults.perCardValue = scalingValuePerCard;
-                    stage.calculationResults.resourceValue = resourceValue;
-                    stage.calculationResults.perTurnPower = valuePerTurn;
-                    stage.calculationResults.maxAndStartingResourcesPower = startingResourceValue + resourceMaxValue;
-                    stage.calculationResults.estimatedTurnsAlive = averageTurnsAlive;
-                    stage.calculationResults.calculatedPowerLevel = totalValue;
-                    EditorUtility.SetDirty(enemy);
-                }
+                if (stage.stage == 0)
+                    return;
+                CalculateEnemyPowerLevel(stage, enemy);
             }
         }
     }
 
-    private static float WithFallOff(float value, int amount, float fallOff)
+    private static void CalculateEnemyPowerLevel(EnemyStageDetails stage, Enemy enemy)
+    {
+        var previousPlayerDamage = 0m;
+        var playerDamage = 10m;
+        while ((int)Math.Round(playerDamage) != (int)Math.Round(previousPlayerDamage))
+        {
+            if (previousPlayerDamage == 0m)
+                previousPlayerDamage = 10m;
+            previousPlayerDamage = previousPlayerDamage + (playerDamage - previousPlayerDamage) / 2m;
+            playerDamage = 0m;
+            
+            decimal hpValue = _hpValue * stage.maxHp;
+            decimal shieldValue = _startingShieldValue * stage.startingShield +
+                                  WithFallOff(_maxShieldValue, stage.maxShield, 0.9m);
+            decimal aegisValue = WithFallOff(_aegisScaledValue * previousPlayerDamage, stage.startingAegis, 0.8m);
+            decimal dodgeValue = _dodgeScaledValue * previousPlayerDamage * stage.startingDodge;
+            decimal tauntValue = WithFallOff(_tauntScaledValue * previousPlayerDamage, stage.startingTaunt, 0.8m);
+            decimal armorValue = WithFallOff(_armorValue, stage.armor, 0.9m);
+            decimal resistanceValue = WithFallOff(_resistanceValue, stage.resistance, 0.9m);
+            decimal startingValue = hpValue + shieldValue + aegisValue + dodgeValue + tauntValue + armorValue +
+                                    resistanceValue + (decimal)stage.calculationVariables.startingValueAdjustment +
+                                    (decimal)stage.calculationVariables.startingDefensiveValueAdjustment;
+
+            decimal highestStat = Mathf.Max(stage.attack, stage.leadership, stage.magic);
+            decimal scalingValuePerCard = stage.nonStatCardValueFactor == 0
+                ? highestStat
+                : (highestStat + (decimal)stage.nonStatCardValueFactor) / 2m;
+            decimal resourceValue = stage.calculationVariables.resourceScaledValueOverride == 0
+                ? scalingValuePerCard * _resourceScaledValue
+                : scalingValuePerCard * (decimal)stage.calculationVariables.resourceScaledValueOverride;
+            decimal valuePerTurn = scalingValuePerCard * stage.cardsPerTurn +
+                                   resourceValue * stage.resourceGainPerTurn +
+                                   (decimal)stage.calculationVariables.perTurnValueAdjustment;
+            decimal defensiveValue = hpValue + shieldValue + aegisValue + dodgeValue + armorValue +
+                                     resistanceValue + (decimal)stage.calculationVariables.startingDefensiveValueAdjustment;
+            decimal averageTurnsAlive = defensiveValue / (previousPlayerDamage * 1.5m);
+            decimal activeValue = WithFallOff(valuePerTurn, enemy.isHasty ? averageTurnsAlive : averageTurnsAlive - 1, 0.9m);
+            decimal startingResourceValue = resourceValue * stage.startingResourceAmount;
+            decimal resourceMaxValue = WithFallOff(_maxResourceFactor * resourceValue, stage.maxResourceAmount, 0.8m);
+            decimal totalValue = activeValue + startingValue + resourceMaxValue + startingResourceValue;
+            decimal valueCost = 0m;
+            while (valueCost + (playerDamage + 1m) * 2m < totalValue)
+            {
+                playerDamage += 1m;
+                valueCost += playerDamage * 2m;
+            }
+            playerDamage += (totalValue - valueCost) / ((playerDamage + 1) * 2m) ;
+        }
+        if (Math.Round(playerDamage) < 10)
+            FinalEnemyCalculation(stage, enemy, 10);
+        else
+            FinalEnemyCalculation(stage, enemy, Math.Round(playerDamage));
+    }
+
+    private static void FinalEnemyCalculation(EnemyStageDetails stage, Enemy enemy, decimal avgDefensiveValueRemovedPerTurn)
+    {
+        decimal hpValue = _hpValue * stage.maxHp;
+        decimal shieldValue = _startingShieldValue * stage.startingShield +
+                              WithFallOff(_maxShieldValue, stage.maxShield, 0.9m);
+        decimal aegisValue = WithFallOff(_aegisScaledValue * avgDefensiveValueRemovedPerTurn, stage.startingAegis, 0.8m);
+        decimal dodgeValue = _dodgeScaledValue * avgDefensiveValueRemovedPerTurn * stage.startingDodge;
+        decimal tauntValue = WithFallOff(_tauntScaledValue * avgDefensiveValueRemovedPerTurn, stage.startingTaunt, 0.8m);
+        decimal armorValue = WithFallOff(_armorValue, stage.armor, 0.9m);
+        decimal resistanceValue = WithFallOff(_resistanceValue, stage.resistance, 0.9m);
+        decimal startingValue = hpValue + shieldValue + aegisValue + dodgeValue + tauntValue + armorValue +
+                                resistanceValue + (decimal)stage.calculationVariables.startingValueAdjustment +
+                                (decimal)stage.calculationVariables.startingDefensiveValueAdjustment;
+
+        decimal highestStat = Mathf.Max(stage.attack, stage.leadership, stage.magic);
+        decimal scalingValuePerCard = stage.nonStatCardValueFactor == 0
+            ? highestStat
+            : (highestStat + (decimal)stage.nonStatCardValueFactor) / 2m;
+        decimal resourceValue = stage.calculationVariables.resourceScaledValueOverride == 0
+            ? scalingValuePerCard * _resourceScaledValue
+            : scalingValuePerCard * (decimal)stage.calculationVariables.resourceScaledValueOverride;
+        decimal valuePerTurn = scalingValuePerCard * stage.cardsPerTurn +
+                               resourceValue * stage.resourceGainPerTurn +
+                               (decimal)stage.calculationVariables.perTurnValueAdjustment;
+        decimal defensiveValue = hpValue + shieldValue + aegisValue + dodgeValue + armorValue +
+                                 resistanceValue + (decimal)stage.calculationVariables.startingDefensiveValueAdjustment;
+        decimal averageTurnsAlive = defensiveValue / (avgDefensiveValueRemovedPerTurn * 1.5m);
+        decimal activeValue = WithFallOff(valuePerTurn, averageTurnsAlive, 0.9m);
+        decimal startingResourceValue = resourceValue * stage.startingResourceAmount;
+        decimal resourceMaxValue = WithFallOff(_maxResourceFactor * resourceValue, stage.maxResourceAmount, 0.8m);
+        int totalValue = (int)Math.Round((double)(activeValue + startingValue + resourceMaxValue + startingResourceValue));
+        if (totalValue != stage.calculationResults.calculatedPowerLevel)
+        {
+            stage.calculationResults.startingPower = (float)startingValue;
+            stage.calculationResults.perCardValue = (float)scalingValuePerCard;
+            stage.calculationResults.resourceValue = (float)resourceValue;
+            stage.calculationResults.perTurnPower = (float)valuePerTurn;
+            stage.calculationResults.maxAndStartingResourcesPower = (float)(startingResourceValue + resourceMaxValue);
+            stage.calculationResults.estimatedTurnsAlive = (float)averageTurnsAlive;
+            stage.calculationResults.calculatedPowerLevel = totalValue;
+            stage.calculationResults.estimatedHeroDamage = (float)avgDefensiveValueRemovedPerTurn;
+            stage.calculationResults.estimatedPerTurnTotalValue = (float)activeValue;
+            EditorUtility.SetDirty(enemy);
+        }
+    }
+
+    private static decimal WithFallOff(decimal value, decimal amount, decimal fallOff)
     {
         if (amount == 0)
             return 0;
         var currentValue = value;
-        for (var i = 1; i < amount; i++)
-            currentValue += value * Mathf.Pow(fallOff, i);
+        var i = 2;
+        for (; i <= amount; i++)
+            currentValue += value * (decimal)Math.Pow((double)fallOff, i - 1);
+        currentValue += value * (decimal)Math.Pow((double)fallOff, (double)amount) * (amount - i + 1);
         return currentValue;
     }
     

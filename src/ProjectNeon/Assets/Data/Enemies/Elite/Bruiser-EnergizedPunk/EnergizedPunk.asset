@@ -46,14 +46,14 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: b37b21136045a4f47b5aa7d16f49dd3b, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 65
-    maxShield: 0
-    startingShield: 0
+    maxHp: 150
+    maxShield: 18
+    startingShield: 9
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 9
+    attack: 7
     magic: 0
     leadership: 0
     armor: 1
@@ -63,20 +63,22 @@ MonoBehaviour:
     maxResourceAmount: 12
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 120
+    powerLevel: 241
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
-      perTurnValueAdjustment: 0
+      perTurnValueAdjustment: 3
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 76.13
-      perCardValue: 9
-      resourceValue: 2.97
-      perTurnPower: 11.97
-      maxAndStartingResourcesPower: 2.7659032
-      estimatedTurnsAlive: 7.613
-      calculatedPowerLevel: 147
+      startingPower: 171.8298
+      perCardValue: 7
+      resourceValue: 2.31
+      perTurnPower: 12.31
+      maxAndStartingResourcesPower: 1.075629
+      estimatedHeroDamage: 15
+      estimatedTurnsAlive: 7.6368804
+      estimatedPerTurnTotalValue: 67.728134
+      calculatedPowerLevel: 241
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
@@ -97,7 +99,7 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 9
-      StatusDetailText: When Damaged the attacker gains 1 resource
+      StatusDetailText: When Damaged the attacker loses 1 resource
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -121,6 +123,7 @@ MonoBehaviour:
         scope: 2
         cardActions: {fileID: 11400000, guid: c2ba2802859a5ef4692d7ef4842a6786, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 7b18c20a3abb2c344b0ba32c74c3f487, type: 2}
     - {fileID: 11400000, guid: 943bc25e79b55d64f83b9b79751aa4a9, type: 2}

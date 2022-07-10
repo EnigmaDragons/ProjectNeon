@@ -16,6 +16,7 @@ MonoBehaviour:
   enemyName: Anton
   allowedForSocialMedia: 1
   excludeFromBestiary: 1
+  isTutorialEnemy: 0
   lastBalanceDate: 10/16/2021
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
@@ -68,13 +69,15 @@ MonoBehaviour:
       perTurnValueAdjustment: 3
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 877.4153
+      startingPower: 887.9153
       perCardValue: 12.5
       resourceValue: 4.125
       perTurnPower: 19.625
-      maxAndStartingResourcesPower: 2.77332
-      estimatedTurnsAlive: 23.870764
-      calculatedPowerLevel: 1061
+      maxAndStartingResourcesPower: 1.38666
+      estimatedHeroDamage: 31
+      estimatedTurnsAlive: 10.492803
+      estimatedPerTurnTotalValue: 131.02339
+      calculatedPowerLevel: 1020
     startOfBattleEffects:
     - EffectType: 73
       Conditions: []
@@ -121,6 +124,7 @@ MonoBehaviour:
         scope: 5
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 54
       Conditions: []
       BaseAmount:
@@ -164,6 +168,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 74
       Conditions: []
       BaseAmount:
@@ -207,6 +212,7 @@ MonoBehaviour:
         scope: 5
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 75
       Conditions: []
       BaseAmount:
@@ -250,6 +256,7 @@ MonoBehaviour:
         scope: 5
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 75
       Conditions: []
       BaseAmount:
@@ -293,6 +300,7 @@ MonoBehaviour:
         scope: 5
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 56d296ed36a55284ab5127849b74e3db, type: 2}
     - {fileID: 11400000, guid: 07f708cabd75982429eb6013e4d79b53, type: 2}
@@ -324,13 +332,15 @@ MonoBehaviour:
       perTurnValueAdjustment: 15
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 877.4153
+      startingPower: 888.9153
       perCardValue: 14
-      resourceValue: 4.6200004
+      resourceValue: 4.62
       perTurnPower: 33.62
-      maxAndStartingResourcesPower: 3.1061187
-      estimatedTurnsAlive: 23.870764
-      calculatedPowerLevel: 1190
+      maxAndStartingResourcesPower: 1.5530592
+      estimatedHeroDamage: 33
+      estimatedTurnsAlive: 9.877077
+      estimatedPerTurnTotalValue: 216.36485
+      calculatedPowerLevel: 1107
     startOfBattleEffects:
     - EffectType: 73
       Conditions: []
@@ -378,6 +388,7 @@ MonoBehaviour:
         scope: 5
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 54
       Conditions: []
       BaseAmount:
@@ -422,6 +433,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 54
       Conditions: []
       BaseAmount:
@@ -465,6 +477,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 74
       Conditions: []
       BaseAmount:
@@ -508,6 +521,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 11400000, guid: 8f3eb9142df936b4fb3b347159ce9f96, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 74
       Conditions: []
       BaseAmount:
@@ -551,6 +565,7 @@ MonoBehaviour:
         scope: 5
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 75
       Conditions: []
       BaseAmount:
@@ -594,6 +609,7 @@ MonoBehaviour:
         scope: 5
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 75
       Conditions: []
       BaseAmount:
@@ -637,6 +653,7 @@ MonoBehaviour:
         scope: 5
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 56d296ed36a55284ab5127849b74e3db, type: 2}
     - {fileID: 11400000, guid: 07f708cabd75982429eb6013e4d79b53, type: 2}

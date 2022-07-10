@@ -45,14 +45,14 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: 320a1f41711f2514e858f7835f7dd049, type: 2}
   stageDetails:
   - stage: 2
-    maxHp: 97
-    maxShield: 26
+    maxHp: 90
+    maxShield: 30
     startingShield: 0
     startingAegis: 1
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 12
+    attack: 8
     magic: 0
     leadership: 0
     armor: 0
@@ -62,20 +62,22 @@ MonoBehaviour:
     maxResourceAmount: 6
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 175
+    powerLevel: 171
     calculationVariables:
-      startingDefensiveValueAdjustment: 24
+      startingDefensiveValueAdjustment: 21
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 127.87078
-      perCardValue: 12
-      resourceValue: 3.96
-      perTurnPower: 15.96
-      maxAndStartingResourcesPower: 2.92191
-      estimatedTurnsAlive: 6.393539
-      calculatedPowerLevel: 206
+      startingPower: 119.415215
+      perCardValue: 8
+      resourceValue: 2.64
+      perTurnPower: 10.64
+      maxAndStartingResourcesPower: 0.97396994
+      estimatedHeroDamage: 13
+      estimatedTurnsAlive: 6.1238575
+      estimatedPerTurnTotalValue: 50.54595
+      calculatedPowerLevel: 171
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
@@ -120,6 +122,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 11400000, guid: bf674097bc9a92b4586206e7adad0830, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: b133b0844aac3a141aed20b804335eb4, type: 2}
     - {fileID: 11400000, guid: c888bd26b7c873d45a046d5efba4b675, type: 2}
