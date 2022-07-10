@@ -133,6 +133,8 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     {
         draftUi.SetActive(false);
         Message.Publish(new HideNamedTarget("HeroSelectionView"));
+        Message.Publish(new HideNamedTarget("DraftGearPicker"));
+        Message.Publish(new HideNamedTarget("DraftCardPicker"));
         Message.Publish(new NodeFinished());
     }
 }
