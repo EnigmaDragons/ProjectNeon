@@ -5,20 +5,23 @@ public class CurrentProgressionData
 {
     private static Stored<ProgressionData> _stored = new MemoryStored<ProgressionData>(new ProgressionData());
     private static ProgressionData _current = new ProgressionData();
+    private static string _version;
 
     public static ProgressionData Data => _current;
 
-    public static void Init(Stored<ProgressionData> stored)
+    public static void Init(Stored<ProgressionData> stored, string version)
     {
         _stored = stored;
         _current = _stored.Get();
+        _version = version;
     }
 
-    public static void RecordCompletedAdventure(int adventureId)
+    public static void RecordCompletedAdventure(int adventureId, int difficulty, int[] heroes)
     {
         Write(d =>
         {
             d.CompletedAdventureIds = d.CompletedAdventureIds.Concat(adventureId).Distinct().ToArray();
+            heroes.ForEach(heroId => d.Record(new AdventureCompletionRecord { AdventureId = adventureId, HeroId = heroId, Version = _version }));
             return d;
         });
     }
