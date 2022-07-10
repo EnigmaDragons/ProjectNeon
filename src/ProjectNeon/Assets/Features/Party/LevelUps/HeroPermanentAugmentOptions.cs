@@ -18,19 +18,21 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
         var finalSet = GenerateHeroGearOptions(allEquipmentPool, party, h.Character, new HashSet<Rarity> {rarity}, 3);
             if (choiceOverride.Length == 3)
             finalSet = choiceOverride.Cast<Equipment>().ToArray();
-        
-        // Create Options
-        var options = finalSet
-            .Select(e => (LevelUpOption)new WithCustomPresenter(
-                    new AugmentLevelUpOption(party, e), 
-                        ctx => Instantiate(customPresenterPrototype, ctx.Parent)
-                            .Initialized(e, () => Message.Publish(new LevelUpOptionSelected(ctx.Option, ctx.AllOptions)), true).gameObject))
-            .ToArray()
-            .Shuffled();
-        
-        return options;
+            
+        return ToLevelUpOptions(h, finalSet, party, customPresenterPrototype);
     }
 
+    public static LevelUpOption[] ToLevelUpOptions(Hero h, Equipment[] equipments, PartyAdventureState party, EquipmentPresenter customPresenterPrototype)
+    {
+        return equipments
+            .Select(e => (LevelUpOption)new WithCustomPresenter(
+                new AugmentLevelUpOption(party, e), 
+                ctx => Instantiate(customPresenterPrototype, ctx.Parent)
+                    .Initialized(e, () => Message.Publish(new LevelUpOptionSelected(ctx.Option, ctx.AllOptions)), true).gameObject))
+            .ToArray()
+            .Shuffled();
+    }
+    
     public static Equipment[] GenerateHeroGearOptions(EquipmentPool allEquipmentPool, PartyAdventureState party,
         HeroCharacter h, HashSet<Rarity> rarities, int count)
     {
