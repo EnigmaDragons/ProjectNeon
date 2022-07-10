@@ -12,7 +12,7 @@ public static class DraftModeLevelUpRewardGenerator
         ("+3 Starting Shield", new StatAddends().With(StatType.StartingShield, 10)),
     };
     
-    public static LevelUpOption[] GenerateOptions(Hero hero, PartyAdventureState party)
+    public static LevelUpOption[] GenerateOptions(Hero hero)
     {
         var options = statOptions.ToArray().Shuffled().Take(3).ToArray();
         return options
