@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
 {
+    [SerializeField] private CurrentAdventure adventure;
+    
     [SerializeField] private TextMeshProUGUI headerLabel;
     [SerializeField] private TextMeshProUGUI levelLabel;
     [SerializeField] private GameObject heroNameObject;
@@ -73,7 +75,8 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         heroNameLabel.text = _hero.DisplayName;
         heroClassLabel.text = _hero.Class;
         levelLabel.text = $"Level {_hero.Level.ToString()}";
-        optionsPresenter.Init(_hero);
+        var adventureMode = adventure != null ? adventure.Adventure.Mode : AdventureMode.Standard;
+        optionsPresenter.Init(adventureMode, _hero);
         
         toEnableOnRender.ForEach(g => g.SetActive(true));
         headerLabel.transform.localScale = new Vector3(4, 4, 4);
