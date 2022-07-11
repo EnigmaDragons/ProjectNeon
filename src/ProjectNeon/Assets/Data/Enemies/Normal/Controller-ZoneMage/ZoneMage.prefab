@@ -657,6 +657,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38246723344e39f498834f6c8f5a3735, type: 3}
+--- !u!114 &7566943383803343028 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5457854519754766488, guid: 38246723344e39f498834f6c8f5a3735, type: 3}
+  m_PrefabInstance: {fileID: 2503191251502303276}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc0929217a19e241adb6928cc4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &4756480166112321783 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6971421233006635227, guid: 38246723344e39f498834f6c8f5a3735, type: 3}
+  m_PrefabInstance: {fileID: 2503191251502303276}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6122610292949736567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -664,10 +680,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 228389169731448838, guid: 8ce96b8ecc7ff7846b5b49430e6ac800, type: 3}
+      propertyPath: characterViewer
+      value: 
+      objectReference: {fileID: 7566943383803343028}
     - target: {fileID: 414496025460700951, guid: 8ce96b8ecc7ff7846b5b49430e6ac800, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 451690014702264552, guid: 8ce96b8ecc7ff7846b5b49430e6ac800, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 4756480166112321783}
     - target: {fileID: 541225682972448919, guid: 8ce96b8ecc7ff7846b5b49430e6ac800, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -712,10 +736,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 851921234889226949, guid: 8ce96b8ecc7ff7846b5b49430e6ac800, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 4756480166112321783}
     - target: {fileID: 1940596747914176226, guid: 8ce96b8ecc7ff7846b5b49430e6ac800, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.22
       objectReference: {fileID: 0}
+    - target: {fileID: 2732728257286766419, guid: 8ce96b8ecc7ff7846b5b49430e6ac800, type: 3}
+      propertyPath: viewer
+      value: 
+      objectReference: {fileID: 7566943383803343028}
+    - target: {fileID: 3815846227284286637, guid: 8ce96b8ecc7ff7846b5b49430e6ac800, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 7566943383803343028}
     - target: {fileID: 4970016734788596076, guid: 8ce96b8ecc7ff7846b5b49430e6ac800, type: 3}
       propertyPath: m_Layer
       value: 10
