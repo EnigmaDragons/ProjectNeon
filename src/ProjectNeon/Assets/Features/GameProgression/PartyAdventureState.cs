@@ -263,6 +263,12 @@ public sealed class PartyAdventureState : ScriptableObject
             return Heroes.Random();
         
         InitArchKeyHeroes();
+        if (!_archKeyHeroes.ContainsKey(archetypeKey))
+        {
+            Log.Error($"Cannot Find Hero BestMatchFor {archetypeKey}");
+            return Heroes.Random();
+        }
+
         return _archKeyHeroes[archetypeKey].FirstOrMaybe().OrDefault(() => Heroes.Random());
     }
 
