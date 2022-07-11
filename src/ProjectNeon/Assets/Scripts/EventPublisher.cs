@@ -35,6 +35,7 @@ public class EventPublisher : ScriptableObject
     public void HideHeroLevelUpPathway() => Message.Publish(new HideHeroLevelUpPathway());
     public void GivePartyXp() => Message.Publish(new GivePartyXp(100));
     public void CancelTargetSelection() => Message.Publish(new CancelTargetSelectionRequested());
+    public void EnableMapView() => Message.Publish(new ShowNamedTarget("MapView"));
     public void FinishNode() => Message.Publish(new NodeFinished());
     public void ToggleBestiary() => Message.Publish(new ToggleBestiary());
     public void GainRandomEquipment() => Message.Publish(new GainRandomEquipment());
