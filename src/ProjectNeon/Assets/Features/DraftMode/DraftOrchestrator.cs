@@ -83,7 +83,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
             .Distinct()
             .TakeRandom(2);
         
-        var nonStarterOptions = _picker.PickCards(cardPool, currentHero.Archetypes, 5, new [] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic});
+        var nonStarterOptions = _picker.PickCardsForSingleHero(cardPool, currentHero.Archetypes, 5, new [] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic});
         var member = currentHero.AsMember(draftState.HeroIndex);
         var options = starterCardOptions.Concat(nonStarterOptions).Select(s => new Card(NextCardId.Get(), member, s)).ToArray().Shuffled();
         Message.Publish(new GetUserSelectedCardForDraft(options, e =>
