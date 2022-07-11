@@ -32,8 +32,6 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     private void AddCustomTextStatusIcons(List<CurrentStatusValue> statuses, StatusTag statusTag, string defaultText = "Unknown")
     {
         var s = _member.State.StatusesOfType(statusTag);
-        // .DistinctBy((x, i) => x.Status.CustomText.OrDefault(i.ToString))
-        // .ToArray();
 
         var combined = Combine(s, x => x.Status.CustomText.OrDefault(() => defaultText)
             .Replace("[Originator]", battleState.Members.TryGetValue(x.OriginatorId, out var m)
@@ -108,7 +106,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => $"Confused for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Aegis, true, v => $"Prevents next {v} harmful effects");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Lifesteal, true, v => "Gain HP from your next attack");
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Vulnerable, true, v => "Vulnerable (Takes 33% more damage)");
+        AddStatusIconIfApplicable(statuses, TemporalStatType.Vulnerable, true, v => "Vulnerable (Takes 50% more damage)");
         AddStatusIconIfApplicable(statuses, TemporalStatType.AntiHeal, true, v => "Anti Heal (Only get 50% healing)");
         AddCustomTextStatusIcons(statuses, StatusTag.AfterShielded, "Unknown After Shielded Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.OnClipUsed, "Unknown On Clip Used Effect");

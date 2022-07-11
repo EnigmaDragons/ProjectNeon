@@ -36,4 +36,8 @@ public static class EquipmentExtensions
     public static bool IsRandomlyGenerated(this Equipment e) => e is InMemoryEquipment;
     public static bool IsImplant(this Equipment e) => e.Slot == EquipmentSlot.Permanent && e.Name.Equals("Implant");
     public static string GetMetricNameOrDescription(this Equipment e) => e.IsRandomlyGenerated() ? e.Description : e.Name;
+    public static string GetInterpolatedDescription(this Equipment e)
+    {
+        return e.Description.Replace("true damage", InterpolatedCardDescriptions.TrueDamageIcon);
+    }
 }

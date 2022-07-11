@@ -100,7 +100,7 @@ public class BalanceEngine
     private static readonly HashSet<EffectType> DamageEffects = new HashSet<EffectType>
     {
         EffectType.AttackFormula,
-        EffectType.DealRawDamageFormula,
+        EffectType.DealTrueDamageFormula,
         EffectType.MagicAttackFormula,
         EffectType.DamageOverTimeFormula,
     };

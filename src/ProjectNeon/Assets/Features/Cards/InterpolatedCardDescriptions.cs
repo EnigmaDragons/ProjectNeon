@@ -163,11 +163,11 @@ public static class InterpolatedCardDescriptions
         var coreDesc = "";
         if (data.EffectType == EffectType.AttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.RawDamageAttackFormula)
+        if (data.EffectType == EffectType.TrueDamageAttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.HealFormula)
             coreDesc = $"heal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.DealRawDamageFormula)
+        if (data.EffectType == EffectType.DealTrueDamageFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.MagicAttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
@@ -279,14 +279,14 @@ public static class InterpolatedCardDescriptions
         { "Credits", 21},
         { "Creds", 21},
     };
-    private static string PhysDamageIcon => Sprite(0);
-    private static string RawDamageIcon => Sprite(1);
-    private static string MagicDamageIcon => Sprite(2);
+    public static string PhysDamageIcon => Sprite(0);
+    public static string TrueDamageIcon => Sprite(1);
+    public static string MagicDamageIcon => Sprite(2);
     private static string Sprite(int index) => $"<sprite index={index}>";
-
-    private static string WithPhysicalDamageIcon(string s) => $"{s} {PhysDamageIcon}";
-    private static string WithMagicDamageIcon(string s) => $"{s} {MagicDamageIcon}";
-    private static string WithRawDamageIcon(string s) => $"{s} {RawDamageIcon}";
+    
+    public static string WithPhysicalDamageIcon(string s) => $"{s.PhysDamageColored()} {PhysDamageIcon}";
+    public static string WithMagicDamageIcon(string s) => $"{s.MagicDamageColored()} {MagicDamageIcon}";
+    public static string WithTrueDamageIcon(string s) => $"{s.TrueDamageColored()} {TrueDamageIcon}";
     
     public static string EffectDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardCyclesUsedThisTurn = 0, bool showSprites = true)
     {
@@ -294,12 +294,12 @@ public static class InterpolatedCardDescriptions
             return showSprites ? WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.MagicAttackFormula)
             return showSprites ? WithMagicDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
-        if (data.EffectType == EffectType.RawDamageAttackFormula)
-            return showSprites ? WithRawDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
+        if (data.EffectType == EffectType.TrueDamageAttackFormula)
+            return showSprites ? WithTrueDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.DamageOverTimeFormula)
-            return showSprites ? WithRawDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
-        if (data.EffectType == EffectType.DealRawDamageFormula)
-            return showSprites ? WithRawDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
+            return showSprites ? WithTrueDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
+        if (data.EffectType == EffectType.DealTrueDamageFormula)
+            return showSprites ? WithTrueDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.HealFormula 
                 || data.EffectType == EffectType.AdjustPlayerStatsFormula
                 || data.EffectType == EffectType.ChooseCardToCreate)

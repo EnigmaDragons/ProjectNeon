@@ -7,8 +7,8 @@ public class SwapLifeForceTests
     {
         var source = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
-        source.State.TakeRawDamage(6);
-        target.State.TakeRawDamage(4);
+        source.State.TakeTrueDamage(6);
+        target.State.TakeTrueDamage(4);
 
         new SwapLifeForce().ApplyForTests(source, target);
 
@@ -21,7 +21,7 @@ public class SwapLifeForceTests
     {
         var source = TestMembers.Create(s => s.With(StatType.MaxHP, 10));
         var target = TestMembers.Create(s => s.With(StatType.MaxHP, 20));
-        source.State.TakeRawDamage(6);
+        source.State.TakeTrueDamage(6);
 
         new SwapLifeForce().ApplyForTests(source, target);
 

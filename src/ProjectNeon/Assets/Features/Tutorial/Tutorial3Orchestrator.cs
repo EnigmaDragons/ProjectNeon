@@ -44,17 +44,17 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
         if (msg.MemberId == 1 && msg.CardName == "Strike" && mageHealth != battleState.Members[4].State.Hp() && !_hitWithPhysicalAttack)
         {
             _hitWithPhysicalAttack = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Oof! I can't stop your physical damage"));
+            Message.Publish(new ShowHeroBattleThought(4, $"Oof! I can't stop your {TextColors.PhysDamageColoredDark("physical damage")}"));
         }
         if (msg.MemberId == 1 && msg.CardName == "Charged Strike" && warriorHealth != battleState.Members[5].State.Hp() && _hitWithMagicAttack)
         {
             _hitWithMagicAttack = true;
-            Message.Publish(new ShowHeroBattleThought(5, "Oof! Your magic attacks hurt"));
+            Message.Publish(new ShowHeroBattleThought(5, $"Oof! Your {TextColors.MagicDamageColoredDark("magic")} attacks hurt"));
         }
         var heroHealthChanged = heroHealth != battleState.Members[1].State.Hp();
         if (msg.MemberId == 4 && heroHealthChanged)
         {
-            Message.Publish(new ShowHeroBattleThought(4, "You have no clue how to resist my magic attacks"));
+            Message.Publish(new ShowHeroBattleThought(4, $"You have no clue how to resist my {TextColors.MagicDamageColoredDark("magic")} attacks"));
         }
         if (msg.MemberId == 4 && msg.CardName == "Scorch" && !heroHealthChanged && !_blockedWithResistanceAlready)
         {

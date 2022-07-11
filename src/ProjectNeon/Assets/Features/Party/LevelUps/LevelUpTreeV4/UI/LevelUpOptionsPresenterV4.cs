@@ -6,6 +6,7 @@ using UnityEngine;
 
 public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
 {
+    [SerializeField] private LevelUpOptions draftOptions;
     [SerializeField] private TextMeshProUGUI levelLabel;
     [SerializeField] private TextMeshProUGUI promptLabel;
     [SerializeField] private GameObject optionParent;
@@ -41,10 +42,15 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
         promptLabel.text = "";
     }
     
-    public void Init(Hero hero)
+    public void Init(AdventureMode mode, Hero hero)
     {
-        var reward = hero.NextLevelUpRewardV4;
-        Init(hero, hero.Levels.NextLevelUpLevel, reward.OptionsPrompt, reward.GenerateOptions(hero, party));
+        if (mode == AdventureMode.Draft && hero.Levels.NextLevelUpLevel != 4) // Only use draft option for non-Basic Card picks
+            Init(hero, hero.Levels.NextLevelUpLevel, "Select An Option!", draftOptions.Generate(hero));
+        else
+        {
+            var reward = hero.NextLevelUpRewardV4;
+            Init(hero, hero.Levels.NextLevelUpLevel, reward.OptionsPrompt, reward.GenerateOptions(hero, party));
+        }
     }
 
     public void Init(Hero hero, int level, string optionPrompt, LevelUpOption[] options)

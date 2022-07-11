@@ -52,6 +52,7 @@ public class EventPublisher : ScriptableObject
     public void ClearGlobalEffects() => Message.Publish(new ClearGlobalEffects());
     public void WinGameImmediately() => Message.Publish(new WinGameRequested());
     public void ToggleCredits() => Message.Publish(new ToggleCredits());
+    public void ToggleGameProgressionSummary() => Message.Publish(new ToggleNamedTarget("ProgressionView"));
     public void ToggleLearningMenu() => Message.Publish(new ToggleNamedTarget("LearningMenu"));
     public void SkipCutscene() => Message.Publish(new SkipCutsceneRequested());
     public void AdvanceCutscene() => Message.Publish(new AdvanceCutsceneRequested());

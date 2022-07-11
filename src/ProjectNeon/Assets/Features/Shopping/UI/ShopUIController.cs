@@ -11,7 +11,7 @@ public class ShopUIController : OnMessage<ToggleCardShop, ToggleEquipmentShop>
     protected override void Execute(ToggleCardShop msg)
     {
         cardShop.SetActive(!cardShop.activeSelf);
-        if (msg.IsTutorial)
+        if (cardShop.activeSelf && msg.IsTutorial)
             Message.Publish(new SetSuperFocusBuyControl(true));
     }
 

@@ -42,6 +42,7 @@ public class DeathPresenter : OnMessage<MemberUnconscious>
     {
         if (msg.Member.Id != _id) return;
         _dying = true;
-        Message.Publish(new PlayRawBattleEffect("Death", state.GetCenterPoint(new Single(msg.Member))));
+        var effectType = msg.Member.MaterialType == MemberMaterialType.Organic ? "Death" : "DeathMetallic";
+        Message.Publish(new PlayRawBattleEffect(effectType, state.GetCenterPoint(new Single(msg.Member))));
     }
 }

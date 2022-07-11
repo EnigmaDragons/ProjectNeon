@@ -14,7 +14,7 @@ public class CutsceneSegmentData
     public StringReference[] RequiredStates;
     public StringReference[] ForbiddenStates;
     public bool Or;
-    public StringReference StoryState;
+    public StringReference StoryState = new StringReference("");
 
     public bool ShouldShow(Func<string, bool> storyState)
         => !ShouldSkip(storyState);

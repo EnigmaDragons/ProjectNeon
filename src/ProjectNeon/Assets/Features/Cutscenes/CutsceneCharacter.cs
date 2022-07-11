@@ -8,6 +8,7 @@ public class CutsceneCharacter : MonoBehaviour
     [SerializeField] private TalkingCharacter talking;
     [SerializeField] private Animator character;
     [SerializeField] private bool reverse = false;
+    [SerializeField] private string[] defaultAliases = new string[0];
     
     private HashSet<string> _names = new HashSet<string>();
 
@@ -33,7 +34,7 @@ public class CutsceneCharacter : MonoBehaviour
     public void Init(string alias) => Init(new[] {alias});
     public void Init(string[] aliases)
     {
-        _names = new HashSet<string>(aliases);
+        _names = new HashSet<string>(defaultAliases.Concat(aliases));
         text.Hide();
         SpeechBubble.SetDisplayReversed(reverse);
     }
@@ -41,5 +42,7 @@ public class CutsceneCharacter : MonoBehaviour
     private void Awake()
     {
         text.Hide();
+        if (_names.None())
+            _names = new HashSet<string>(defaultAliases);
     }
 }

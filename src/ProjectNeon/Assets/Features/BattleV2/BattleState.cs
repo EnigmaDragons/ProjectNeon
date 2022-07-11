@@ -468,6 +468,8 @@ public class BattleState : ScriptableObject
     public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
     public Maybe<Transform> GetMaybeTransform(int memberId) => _uiTransformsById.ValueOrMaybe(memberId);
     public AiPreferences GetAiPreferences(int memberId) => _enemiesById.ValueOrMaybe(memberId).Select(e => e.AIPreferences.WithDefaultsBasedOnRole(e.Role), () => new AiPreferences());
+
+    public MemberMaterialType GetMaterialType(int memberId) => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
     
     public Maybe<Transform> GetMaybeCenterPoint(int memberId)
     {

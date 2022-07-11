@@ -24,13 +24,19 @@ public class DraftCardPicker : OnMessage<GetUserSelectedCardForDraft>
         for (var i = 0; i < slots.Length; i++)
         {
             var e = msg.Options[i];
-            slots[i].Set(e, () =>  SelectCard(e));
+            var s = slots[i];
+            s.Set(e, () => SelectCard(e, s.transform));
+            s.SetHoverAction(() =>
+            {
+                Message.Publish(new CardHovered(s.transform));
+                s.SetHoverHighlight(true);
+            }, () => s.SetHoverHighlight(false));
         }
         panel.SetActive(true);
         Log.Info("Begun Card Pick");
     }
     
-    private void SelectCard(Card c)
+    private void SelectCard(Card c, Transform t)
     {        
         if (_hasSelected)
             return;
@@ -38,6 +44,7 @@ public class DraftCardPicker : OnMessage<GetUserSelectedCardForDraft>
         _hasSelected = true;
         HideView();
         Debug.Log($"Draft - Selected Card {c.Name}");
+        Message.Publish(new DraftItemPicked(t));
         _onSelected(new Maybe<Card>(c));
     }
     

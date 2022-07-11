@@ -29,7 +29,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
     
     protected override void Execute(DraftStateUpdated msg)
     {
-        stepLabel.text = $"Draft Progress: {msg.StepNumber}/{msg.TotalStepsCount}";
+        stepLabel.text = $"Draft Step: {msg.StepNumber}/{msg.TotalStepsCount}";
         Render();
     }
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 72
   displayName: 
-  description: Grenades deal +1 raw damage
+  description: Grenades deal +1 true damage
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
@@ -45,7 +45,7 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: Grenades deal +1 raw damage
+    StatusDetailText: Grenades deal +1 true damage
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -62,12 +62,14 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0bd6c4bf422f6f747b50b4d25e38ed72, type: 2}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 3
       cardActions: {fileID: 11400000, guid: 9683b773814a52c4dad7a399fb3aae79, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

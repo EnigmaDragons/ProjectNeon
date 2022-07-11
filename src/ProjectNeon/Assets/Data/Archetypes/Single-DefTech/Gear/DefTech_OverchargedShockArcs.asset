@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 107
   displayName: 
-  description: When an enemy damages your shield, deal 5 raw damage back
+  description: When an enemy damages your shield, deal 5 true damage back
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
@@ -42,11 +42,10 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: When an enemy damages your shield, deal 5 raw damage back
+    StatusDetailText: When an enemy damages your shield, deal 5 true damage back
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -63,12 +62,17 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
       scope: 2
       cardActions: {fileID: 11400000, guid: c05456c7644d8d74a94ae7b9c00891bc, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
   designComment: 

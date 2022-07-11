@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
+  m_Name: Scheme_InspirationalVrQuotes
+  m_EditorClassIdentifier: 
+  id: 117
+  displayName: Inspirational VR Quotes
+  description: 'On Card Cycle: +1 Power to random ally for the turn'
+  corp: {fileID: 11400000, guid: 4da9e8a658cc248438c17122d0269d3f, type: 2}
+  archetypes:
+  - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
+  rarity: 3
+  slot: 2
+  priceFactor: 1
+  modifiers: []
+  resourceModifiers: []
+  turnStartEffects: []
+  turnEndEffects: []
+  battleStartEffects:
+  - EffectType: 74
+    Conditions: []
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
+    DurationFormula: -1
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    HitsRandomTargetMember: 0
+    ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
+    StatusTag: 12
+    StatusDetailText: 'On Card Cycle: +1 Power to random ally for the turn'
+    TurnDelay: 0
+    Formula: 
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReactionConditionType: 61
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionTimingWindow: 0
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 7
+      cardActions: {fileID: 11400000, guid: c83037215cb24104b914278a44f4977e, type: 2}
+    BonusCardType: {fileID: 0}
+    Unpreventable: 0
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
+  isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

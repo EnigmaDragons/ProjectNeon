@@ -1,6 +1,6 @@
 ﻿public interface DamageCalculation 
 {
-    bool DealRawDamage { get; }
+    bool DealTrueDamage { get; }
     
     int Calculate(EffectContext ctx, Member member);
 
