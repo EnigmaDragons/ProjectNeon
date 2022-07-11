@@ -2,6 +2,7 @@
 ----
 
 New Content:
+- New Draft Mode (a very fun completely different way to play the game)
 - New Augment: Scheme - Big Brain
 - New Augment: Scheme - Inspirational VR Quotes
 - New Augment: Scheme - Remote Meeting Conn
@@ -13,6 +14,7 @@ New Content:
 - New Enemy: Void Blade
 - New Enemy: Torturer
 - New Enemy: Mage Duelist
+- Card Shop Design: A brand new look with Nikita at the shop has things to say every time you shop 
 
 Balance Changes:
 - Draft Mode: Create Plain Anton Third Phase Fight with no cutscene bits
@@ -33,6 +35,7 @@ Player Aids:
 Card Improvements:
 - Card Wording: Damage Types are color-coded
 - Wording: Renamed Raw Damage to True Damage
+- Card Redesign: Revamped Stealth Domino
 
 UI Improvements:
 - Draft: Setup UI Hovers and Sounds for Card picks
@@ -54,6 +57,7 @@ UI Improvements:
 - UI: New Shop Dialogue panel is hidden eventually
 - UI: Smoothed the transition timing if you have multiple Heroes level up at the same time
 - UI: Tutorial 3 - Colors text to correspond with damage type colors
+- UI: After Draft - Go To Build Decks
 
 Art Improvements:
 - Art: Changed hp damage VFX for synthetic enemies
@@ -63,6 +67,8 @@ Art Improvements:
 - Art: Reworked Anon Character Art
 - Audio: Integrated sounds into Shop View
 - SFX: Turned down Level Up Finished sound a little
+- Music: Integrated NNZ Battle Music
+- VFX: AoEs are now positioned based on the actual enemy positions
 
 Bug Fixes:
 - Bug Fix: Broken UI Helper on Tutorial 11
@@ -74,32 +80,12 @@ Bug Fixes:
 - Bug Fix: Visiting Clinics with 0 Credits no longer prevents using Vouchers
 - Bug Fix: Vulnerable status icon hover text updated to match buffed Vulernable amount
 - Buf Fix: Inititilization for adventure mode
+- Bug Fix: Loot picker in adventure mode blowing up the game
 
 Project:
 - Project: Cover Banner Art for v0.0.45
 - Project: Upversion to v0.0.45
 
 Miscellaneous:
-- Card Redesign: Revamped Stealth Domino
-- Coding: Added 2 and 3 Hero Draft-Mode Adventures
-- Coding: Added Skip Draft cheat for faster development
-- Coding: After Draft - Go To Build Decks
-- Coding: Draft Card Selection is appropriate to each Hero
-- Coding: Draft Mode - Pick Gear Option Generation
-- Coding: Draft Mode Card & Gear pick UI
-- Coding: Started work on Draft Mode
 - Coding: Updated Content Summarizer to expect 8 Augments per Archetype
 - Coding: Added an enemy Stats window to visualize enemy content
-- Design: Nikita at the shop has things to say every time you shop
-- Draft Mode: Select Hero
-- Draft Mode: Setup Wild Draft Level Up Options
-- Draft Mode: Uses Dual-Rarity Packs for Augments. Picks 4 Augments
-- Draft: Changed Draft Level Up Rewards
-- Draft: Does not offer duplicate Augment Options
-- Fix: loot picker in adventure mode
-- Loop_correction
-- Looping_correction
-- Music: Integrated NNZ Battle Music
-- NNZ_TRACK
-- VFX: AoEs are now positioned based on the actual enemy positions
-
