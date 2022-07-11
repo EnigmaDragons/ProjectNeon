@@ -106,7 +106,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                     battleSnapshotBefore,
                     battleSnapshotAfter, 
                     false,
-                    Maybe<Card>.Missing(), 
+                    Maybe<Card>.Missing(),
+                    Maybe<Card>.Missing(),
                     new UnpreventableContext(),
                     ReactionTimingWindow.FirstCause,
                     state.PlayerCardZones);

@@ -190,6 +190,7 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
         
         state.UseRecycle();
         var cycledCard = Hand.Take(cardIndex).RevertedToStandard();
+        BattleLog.Write($"Cycled Card {cycledCard.Name}");
         zones.DiscardZone.PutOnBottom(cycledCard);
         zones.DrawOneCard();
         

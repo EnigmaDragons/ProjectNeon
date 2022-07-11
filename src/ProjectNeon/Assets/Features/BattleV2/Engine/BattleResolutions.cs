@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction>
+public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, 
+    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -51,6 +52,16 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
     }
 
     public bool IsDoneResolving => state.BattleIsOver() || !Reactions.AnyReactionCards && resolutionZone.IsDone && !Reactions.AnyReactionEffects && !_resolvingEffect;
+
+    protected override void Execute(CardCycled msg)
+    {
+        Log.Info("Cycled Card - Battle Resolutions");
+        var battleSnapshot = state.GetSnapshot();
+        var effectResolved = new EffectResolved(true, true, EffectData.Nothing, msg.CycledCard.Owner, new Single(msg.CycledCard.Owner), 
+            battleSnapshot, battleSnapshot, false, Maybe<Card>.Missing(), msg.CycledCard, new UnpreventableContext(), ReactionTimingWindow.FirstCause, state.PlayerCardZones);
+        FinalizeBattleEffect(Maybe<EffectResolved>.Present(effectResolved));
+        StartCoroutine(FinishEffect());
+    }
 
     protected override void Execute(ApplyBattleEffect msg)
     {
@@ -138,7 +149,7 @@ public class BattleResolutions : OnMessage<ApplyBattleEffect, SpawnEnemy, Despaw
         // Effect Resolved Details
         var battleSnapshotAfter = state.GetSnapshot();
         var effectResolved = new EffectResolved(res.WasApplied, msg.IsFirstBattleEffectOfChosenTarget, msg.Effect, ctx.Source, ctx.Target, 
-            battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, ctx.Preventions, ctx.Timing, state.PlayerCardZones);
+            battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, Maybe<Card>.Missing(), ctx.Preventions, ctx.Timing, state.PlayerCardZones);
         return (res, effectResolved);
     }
 

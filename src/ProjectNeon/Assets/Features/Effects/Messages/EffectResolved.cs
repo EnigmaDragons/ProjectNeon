@@ -12,9 +12,10 @@ public sealed class EffectResolved
     public PreventionContext Preventions { get; }
     public ReactionTimingWindow Timing { get; }
     public CardPlayZones CardZones { get; }
+    public Maybe<Card> CycledCard { get; }
 
     public EffectResolved(bool wasApplied, bool isFirstBattleEffectOfChosenTarget, EffectData e, Member src, Target target, BattleStateSnapshot before, BattleStateSnapshot after, 
-        bool isReaction, Maybe<Card> card, PreventionContext preventions, ReactionTimingWindow timing, CardPlayZones cardZones)
+        bool isReaction, Maybe<Card> card, Maybe<Card> cycledCard, PreventionContext preventions, ReactionTimingWindow timing, CardPlayZones cardZones)
     {
         WasApplied = wasApplied;
         IsFirstBattleEffectOfChosenTarget = isFirstBattleEffectOfChosenTarget;
@@ -25,6 +26,7 @@ public sealed class EffectResolved
         BattleAfter = after;
         IsReaction = isReaction;
         Card = card;
+        CycledCard = cycledCard;
         Preventions = preventions;
         Timing = timing;
         CardZones = cardZones;
