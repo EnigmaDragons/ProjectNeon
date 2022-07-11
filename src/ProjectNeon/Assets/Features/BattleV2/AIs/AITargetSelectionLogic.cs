@@ -46,6 +46,12 @@ public static class AITargetSelectionLogic
             return possibleTargets.MostResources();
         if ((card.Is(CardTag.RemoveShields) || card.Is(CardTag.Attack, CardTag.Shield)) && action.Group == Group.Opponent)
             return possibleTargets.MostShielded();
+        if (card.Is(CardTag.RemoveDodge) && action.Group == Group.Opponent)
+            return possibleTargets.MostDodge();
+        if (card.Is(CardTag.Attack) && card.Is(CardTag.Resistance) && action.Group == Group.Opponent)
+            return possibleTargets.MostResistance();
+        if (card.Is(CardTag.Attack) && card.Is(CardTag.Armor) && action.Group == Group.Opponent)
+            return possibleTargets.MostArmor();
         if (card.Is(CardTag.Blind))
             return possibleTargets.MostAttack();
         if (card.Is(CardTag.Vulnerable) && action.Group == Group.Opponent)
@@ -180,6 +186,24 @@ public static class AITargetSelectionLogic
         .ToArray()
         .Shuffled()
         .OrderBy(x => x.TotalResourceValue())
+        .First();
+    
+    public static Target MostDodge(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(x => x.TotalDodgeValue())
+        .First();
+    
+    public static Target MostResistance(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(x => x.TotalResistance())
+        .First();
+    
+    public static Target MostArmor(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderByDescending(x => x.TotalArmor())
         .First();
 
     public static Target ClosestToDeath(this IEnumerable<Target> targets) => targets

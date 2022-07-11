@@ -54,7 +54,10 @@ public static class AICardSelectionLogic
             .DontPlayArmorIfEnemiesDontHaveAttack()
             .DontGiveAlliesDodgeIfTheyAlreadyHaveEnough()
             .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
-            .DontStealCreditsIfOpponentDoesntHaveAny();
+            .DontStealCreditsIfOpponentDoesntHaveAny()
+            .DontRemoveDodgeIfOpponentDoesntHaveAny()
+            .DontPlayAttackResistanceIfEnemiesDontHaveResistance()
+            .DontPlayAttackArmorIfEnemiesDontHaveArmor();
 
     public static CardSelectionContext DontPlayRequiresFocusCardWithoutAFocusTarget(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsMissing, CardTag.RequiresFocus);
@@ -90,11 +93,11 @@ public static class AICardSelectionLogic
     
     public static CardSelectionContext DontPlayPhysicalCountersIfOpponentsAreNotPhysical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.DebuffPhysical)
-            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.Armor);
+            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.Defense, CardTag.Armor);
 
     public static CardSelectionContext DontPlayMagicalCountersIfOpponentsAreNotMagical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.DebuffMagical)
-            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Resistance);
+            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Armor, CardTag.Resistance);
             
     public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Strategy.SelectedNonStackingTargets.ContainsKey(CardTag.Taunt), CardTag.Taunt);
@@ -121,13 +124,22 @@ public static class AICardSelectionLogic
     
     private static CardSelectionContext DontPlayArmorIfEnemiesDontHaveAttack(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Attack] < 5), CardTag.Defense, CardTag.Armor);
+    
+    private static CardSelectionContext DontPlayAttackResistanceIfEnemiesDontHaveResistance(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Resistance] < 1), CardTag.Attack, CardTag.Resistance);
+    
+    private static CardSelectionContext DontPlayAttackArmorIfEnemiesDontHaveArmor(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Armor] < 1), CardTag.Attack, CardTag.Armor);
 
     private static CardSelectionContext DontRemoveResourcesIfOpponentsDontHaveMany(this CardSelectionContext ctx)
-        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State.PrimaryResourceValue < 1f), CardTag.RemoveResources);
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State.PrimaryResourceAmount < 1f), CardTag.RemoveResources);
 
     private static CardSelectionContext DontStealCreditsIfOpponentDoesntHaveAny(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.PartyAdventureState.Credits <= 0, CardTag.StealCredits);
 
+    private static CardSelectionContext DontRemoveDodgeIfOpponentDoesntHaveAny(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[TemporalStatType.Dodge] < 1f), CardTag.RemoveDodge);
+    
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx)
     {
         var options = ctx.CardOptions.Where(o => o.Is(CardTag.Attack))

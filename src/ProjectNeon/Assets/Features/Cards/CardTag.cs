@@ -54,4 +54,5 @@ public enum CardTag
     ScaledOnMissingMaxHealth = 100,
     IgnoreCardOrder = 101,
     CanPlayThisReactionEvenWhenStunned = 102,
+    RemoveDodge = 103,
 }

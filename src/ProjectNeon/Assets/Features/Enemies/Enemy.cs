@@ -23,7 +23,7 @@ public class Enemy : ScriptableObject
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private EnemyTier tier; 
     [SerializeField] private bool unique;
-    [SerializeField] private bool isHasty;
+    [SerializeField] public bool isHasty;
     [SerializeField] private ResourceType resourceType;
     [SerializeField, TextArea(2, 4)] private string description;
     [SerializeField] private CharacterAnimations animations;

@@ -11,6 +11,7 @@ public class AiCardSelectionTests
     private static readonly CardTypeData ControlCard = CreateCard("Control 1", CardTag.Disable.AsArray(), Scope.One, Group.Opponent);
     private static readonly CardTypeData AttackCard1 = CreateCard("Attack 1", CardTag.Attack.AsArray(), Scope.One, Group.Opponent);
     private static readonly CardTypeData AttackCard2 = CreateCard("Attack 2", CardTag.Attack.AsArray(), Scope.One, Group.Opponent);
+    private static readonly CardTypeData ResistanceAttackCard = CreateCard("Resistance Attack", new [] { CardTag.Attack, CardTag.Resistance }, Scope.One, Group.Opponent);
     private static readonly CardTypeData HigherCostAttackCard = CreateCard("High-Cost Attack", CardTag.Attack.AsArray(), Scope.One, Group.Opponent, 5);
     private static readonly EnemySpecialCircumstanceCards SpecialCards = new EnemySpecialCircumstanceCards(DisabledCard, AntiStealthCard, AIGlitchedCard);
     
@@ -174,6 +175,17 @@ public class AiCardSelectionTests
             var cardTwo = ExecuteGeneralAiSelection(ctx, ai);
             Assert.AreEqual(ControlCard.Name, cardTwo.Card.Name, $"Wrong Card Played on Turn {i + 1}");
         }
+    }
+
+    [Test]
+    public void GeneralAI_AttackResistance_DoesntPlayWhenNoResistance()
+    {
+        var opp = TestMembers.Create(s => s.With(StatType.Resistance, 1));
+        var me = TestMembers.CreateEnemy(s => s.With(StatType.Resistance, 1));
+
+        var ctx = AsDesignatedAttacker(me, opp, new AiPreferences { CardTagPriority = new [] { CardTag.Resistance } }, ResistanceAttackCard, AttackCard1);
+        
+        AssertFirstCardIsAlways(ctx, ResistanceAttackCard);
     }
     
     private static GeneralAI CreateAI() 

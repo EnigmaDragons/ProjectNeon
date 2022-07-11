@@ -45,37 +45,39 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: 320a1f41711f2514e858f7835f7dd049, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 82
+    maxHp: 240
     maxShield: 20
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 15
+    attack: 16
     magic: 0
     leadership: 0
-    armor: 1
+    armor: 4
     resistance: 0
-    nonStatCardValueFactor: 15
-    startingResourceAmount: 6
-    maxResourceAmount: 6
+    nonStatCardValueFactor: 12
+    startingResourceAmount: 4
+    maxResourceAmount: 4
     resourceGainPerTurn: 0
     cardsPerTurn: 1
-    powerLevel: 180
+    powerLevel: 400
     calculationVariables:
       startingDefensiveValueAdjustment: 0
-      startingValueAdjustment: 0
-      perTurnValueAdjustment: 7.5
-      resourceScaledValueOverride: 0.1
+      startingValueAdjustment: 12
+      perTurnValueAdjustment: 6
+      resourceScaledValueOverride: 0.25
     calculationResults:
-      startingPower: 86.75684
-      perCardValue: 15
-      resourceValue: 1.5
-      perTurnPower: 22.5
-      maxAndStartingResourcesPower: 10.106784
-      estimatedTurnsAlive: 8.675685
-      calculatedPowerLevel: 235
+      startingPower: 264.07385
+      perCardValue: 14
+      resourceValue: 3.5
+      perTurnPower: 20
+      maxAndStartingResourcesPower: 15.0332
+      estimatedHeroDamage: 19
+      estimatedTurnsAlive: 8.844696
+      estimatedPerTurnTotalValue: 120.559586
+      calculatedPowerLevel: 400
     startOfBattleEffects:
     - EffectType: 75
       Conditions: []
@@ -120,6 +122,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 75
       Conditions: []
       BaseAmount:
@@ -163,6 +166,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: f3b0b55f3762a5543a7580b2183e4d7a, type: 2}
     - {fileID: 11400000, guid: 7bd5c3fd3b2d4544683282e80dc3b132, type: 2}

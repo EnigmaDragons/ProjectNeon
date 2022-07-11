@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: VoidBlade
+  m_EditorClassIdentifier: 
+  id: 73
+  enemyName: Void Blade
+  allowedForSocialMedia: 1
+  excludeFromBestiary: 0
+  isTutorialEnemy: 0
+  lastBalanceDate: 2022-07-10
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: f536780fabfce9141933c05122731104, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 0400000002000000
+  preferredTurnOrder: 99
+  prefab: {fileID: 4565013380162803522, guid: f5655729273c62c43a3501f6422e8764, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 0
+  unique: 0
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  description: Piercing damage enemy that gets more deadly over time
+  animations: {fileID: 11400000, guid: 0c6ec023aa24f014b9c90f242dccdf77, type: 2}
+  animationSounds: {fileID: 11400000, guid: b37b21136045a4f47b5aa7d16f49dd3b, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 80
+    maxShield: 10
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 10
+    magic: 0
+    leadership: 0
+    armor: 4
+    resistance: 4
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    powerLevel: 150
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 101.936646
+      perCardValue: 10
+      resourceValue: 3.3
+      perTurnPower: 10
+      maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 11
+      estimatedTurnsAlive: 6.1779785
+      estimatedPerTurnTotalValue: 47.78418
+      calculatedPowerLevel: 150
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: 5cc9351eeea61f54ab97a37943f633d8, type: 2}
+    - {fileID: 11400000, guid: 27ad1e494823ec9489dfeb8c4e0fc163, type: 2}
+    - {fileID: 11400000, guid: 18c5d21765c84c04a8f8741d766189d3, type: 2}
