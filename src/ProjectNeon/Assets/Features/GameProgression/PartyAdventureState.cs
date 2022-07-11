@@ -73,7 +73,7 @@ public sealed class PartyAdventureState : ScriptableObject
         Initialized(one, two, three);
         
         var allStartingCards = party.Heroes
-            .SelectMany(HeroStartingCards)
+            .SelectMany(HeroDraftStartingCards)
             .Where(c => c.Archetypes.None())
             .ToArray();
         cards.Initialized(allStartingCards);
@@ -97,7 +97,7 @@ public sealed class PartyAdventureState : ScriptableObject
         });
 
         var allStartingCards = party.Heroes
-            .SelectMany(HeroDraftStartingCards)
+            .SelectMany(HeroStartingCards)
             .ToArray();
         cards.Initialized(allStartingCards); 
         
