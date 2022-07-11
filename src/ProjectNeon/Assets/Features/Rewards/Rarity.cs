@@ -20,10 +20,10 @@ public static class RarityExtensions
         => items.SelectMany(item => Enumerable.Range(0, factors[getRarity(item)]).Select(_ => item));
 
     public static IEnumerable<Rarity> Random(this Rarity[] rarities, RarityFactors f, int n)
-        => Enumerable.Range(0, n).Select(_ => f.Random(rarities));
+        => Enumerable.Range(0, n).Select(_ => rarities.Random(f));
 
-    public static Rarity RandomExceptStarters(this RarityFactors f) => Random(f, AllExceptStarters);
-    public static Rarity Random(this RarityFactors f, params Rarity[] rarities)
+    public static Rarity Random(this RarityFactors f) => Random(AllExceptStarters, f);
+    public static Rarity Random(this Rarity[] rarities, RarityFactors f)
         => rarities.SelectMany(r => Factored(f, r)).Random();
     
     public static Rarity[] AllExceptStarters { get; } = {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic};

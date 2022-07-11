@@ -21,7 +21,7 @@ public static class GearPackGeneration
     public static Equipment[] GetDualRarityAugmentPack(Hero currentHero, EquipmentPool gearPool, PartyAdventureState party)
     {
         var packRarityPicked = Enumerable.Range(0, 5)
-            .Select(r => Factors.Random(Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic))
+            .Select(r => new Rarity[] { Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic }.Random(Factors))
             .OrderByDescending(r => (int)r)
             .First();
         var packRarity = packRarityPicked == Rarity.Common ? Rarity.Uncommon : packRarityPicked;
