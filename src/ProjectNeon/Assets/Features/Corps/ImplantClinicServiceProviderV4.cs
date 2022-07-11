@@ -6,8 +6,8 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
 {
     private static readonly Dictionary<StatType, int> _statAmounts = new Dictionary<StatType, int>
     {
-        { StatType.MaxHP, 9 },
-        { StatType.StartingShield, 6 },
+        { StatType.MaxHP, 16 },
+        { StatType.StartingShield, 8 },
         { StatType.Attack, 1 },
         { StatType.Magic, 1 },
         { StatType.Leadership, 1 },
