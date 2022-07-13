@@ -87,6 +87,7 @@ public static class Formula
         foreach (var stat in Enum.GetValues(typeof(StatType)).Cast<StatType>())
         {
             expression = ReplaceOrRemoveTargetValue(expression, stat, ctx);
+            expression = expression.Replace($"Base[{stat}]", ctx.Source.BaseStats[stat].ToString());
             expression = expression.Replace(stat.ToString(), ctx.Source[stat].ToString());
         }
         return expression;

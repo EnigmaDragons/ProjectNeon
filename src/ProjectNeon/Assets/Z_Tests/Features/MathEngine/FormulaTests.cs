@@ -78,6 +78,15 @@ public class FormulaTests
         => AssertResultsIs(1, "Target[Marked]", 
             new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.Marked, 1)), ResourceQuantity.None));
 
+    [Test] public void Formula_BasePower()
+    {
+        var member = TestMembers.Create(x => x.With(StatType.Attack, 10));
+        member.State.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(StatType.Attack, 5), TemporalStateMetadata.Unlimited(-1, false)));
+        
+        AssertResultsIs(15, "Power", new FormulaContext(member.State.ToSnapshot(), member, ResourceQuantity.None));
+        AssertResultsIs(10, "Base[Power]", new FormulaContext(member.State.ToSnapshot(), member, ResourceQuantity.None));
+    }
+
     private void AssertResultsIs(float val, string exp) 
         => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None));
     
