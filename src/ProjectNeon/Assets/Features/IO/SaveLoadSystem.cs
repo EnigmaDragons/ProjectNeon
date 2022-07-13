@@ -159,7 +159,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             hero.AddToStats(new StatAddends(heroSaveData.Stats.ToDictionary(x => x.Stat, x => x.Value)));
             
             var generatedLevelUpOptionId = -2;
-            foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds.Where(id => id != generatedLevelUpOptionId))
+            var draftLevelUpOptionId = -3;
+            foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds.Where(id => id != generatedLevelUpOptionId && id != draftLevelUpOptionId))
             {
                 var maybePerk = library.GetLevelUpPerkById(optionId);
                 if (!maybePerk.IsPresent)

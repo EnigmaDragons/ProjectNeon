@@ -1,4 +1,3 @@
-
 using NUnit.Framework;
 
 [TestFixture]
@@ -26,5 +25,20 @@ public class HeroTests
         
         Assert.AreEqual(1, hero.Stats.ResourceTypes.Length);
         Assert.AreEqual(3, hero.Stats.ResourceTypes[0].StartingAmount);
+    }
+
+    [Test]
+    public void Hero_AddPower_HasMorePower()
+    {
+        var hero = new Hero(new InMemoryHeroCharacter 
+            {
+                Stats = new StatAddends()
+                    .With(StatType.Attack, 10)
+            }, 
+            new RuntimeDeck());
+        
+        hero.AddToStats(new StatAddends().With(StatType.Power, 1));
+        
+        Assert.AreEqual(11, hero.Stats.Attack());
     }
 }
