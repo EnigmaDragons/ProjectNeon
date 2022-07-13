@@ -167,6 +167,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             return;
         
         _triggeredBattleFinish = true;
+        var startedOnFinish = false;
         if (state.PlayerLoses())
         {
             Message.Publish(new BattleFinished(TeamType.Enemies));
@@ -177,6 +178,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         {
             conclusion.GrantVictoryRewardsAndThen(() =>
             {
+                if (startedOnFinish)
+                    return;
+
+                startedOnFinish = true;
                 state.Heroes.Where(h => h.CurrentHp() < 1).ForEach(h => h.State.SetHp(1));
                 state.Party.Heroes.ForEach(h => h.ApplyBattleEndEquipmentEffects(state.GetMemberByHero(h.Character), state));
                 Message.Publish(new BattleFinished(TeamType.Party));

@@ -66,4 +66,5 @@ public class EventPublisher : ScriptableObject
     public void SetBasicSuperFocusEnabled(bool enabled) => Message.Publish(new SetSuperFocusBasicControl(enabled));
     public void RespawnMap() => Message.Publish(new RespawnMap());
     public void SkipDraftCheat() => Message.Publish(new SkipDraft());
+    public void Proceed(string contextName) => Message.Publish(new ProceedRequested(contextName));
 }

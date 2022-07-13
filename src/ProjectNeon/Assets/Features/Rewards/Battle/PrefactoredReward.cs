@@ -12,7 +12,7 @@ public class PrefactoredReward : BattleRewards
         var credits = s.RewardCredits;
         var clinicVouchers = s.RewardClinicVouchers;
         Log.Info($"Reward: Prefactored Credits {credits} Clinic Vouchers {clinicVouchers}");
-        Message.Publish(new ShowPrefactoredReward(credits, clinicVouchers));
+        Message.Publish(new ShowPrefactoredReward(credits, clinicVouchers, onFinished));
         Message.Publish(new ExecuteAfterDelayRequested(delayBeforeProceed, onFinished));
     }
 }
