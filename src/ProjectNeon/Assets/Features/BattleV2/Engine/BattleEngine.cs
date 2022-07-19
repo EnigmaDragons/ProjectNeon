@@ -3,7 +3,8 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, ResolutionsFinished, CardAndEffectsResolutionFinished, StartCardSetupRequested>
+public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, 
+    ResolutionsFinished, CardAndEffectsResolutionFinished, StartCardSetupRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones cards;

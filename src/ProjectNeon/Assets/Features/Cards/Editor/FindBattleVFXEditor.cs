@@ -1,6 +1,4 @@
 ﻿#if UNITY_EDITOR
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -15,6 +13,7 @@ public class FindBattleVFXEditor : EditorWindow
 
     private VfxUsages[] vfxUsages;
     private Vector2 scrollPos;
+    private string _vfxName;
     
     private void OnGUI()
     {
@@ -29,6 +28,7 @@ public class FindBattleVFXEditor : EditorWindow
                 && effects.None(cardActionsData => cardActionsData.Actions.Any(cardAction 
                     => cardAction.Type == CardBattleActionType.AnimateAtTarget 
                     && cardAction.AtTargetAnimation.Animation == x.Value)));
+            vfx = vfx.Where(x => !x.name.StartsWith("BattleVFX-HpDamage") && !x.name.StartsWith("BattleVFX-HpDamageMetallic"));
             vfxUsages = vfx.Select(x => new VfxUsages { Name = x.name, CardNames = new string[0] }).ToArray();
         }
         if (GUILayout.Button("Show Used VFX"))
@@ -36,25 +36,49 @@ public class FindBattleVFXEditor : EditorWindow
             var cards = GetAllInstances<CardType>();
             var vfx = GetAllInstances<StringVariable>().Where(x => x.name.StartsWith("BattleVFX-"));
             vfxUsages = vfx
-                .Select(vfx => new VfxUsages
+                .Select(x => new VfxUsages
                 {
-                    Name = vfx.name, 
+                    Name = x.name, 
                     CardNames = cards
                         .Where(card => card.ActionSequences != null && card.ActionSequences
                             .Any(actionSequence => actionSequence.CardActions != null && actionSequence.CardActions.Actions
                                 .Any(cardAction 
                                     => cardAction.Type == CardBattleActionType.AnimateAtTarget 
                                        && cardAction.AtTargetAnimation != null 
-                                       && cardAction.AtTargetAnimation.Animation == vfx.Value)))
+                                       && cardAction.AtTargetAnimation.Animation == x.Value)))
                         .Select(card => card.Name)
                         .ToArray()
                 })
                 .Where(x => x.CardNames.Length > 0)
                 .ToArray();
         }
-
+        
+        DrawUILine();
+        _vfxName = GUILayout.TextField(_vfxName);
+        if (GUILayout.Button("Search"))
+        {
+            var cards = GetAllInstances<CardType>();
+            var vfx = GetAllInstances<StringVariable>().Where(x => x.name.ContainsAnyCase(_vfxName));
+            vfxUsages = vfx.Select(x => new VfxUsages
+                {
+                    Name = x.name, 
+                    CardNames = cards
+                        .Where(card => card.ActionSequences != null && card.ActionSequences
+                            .Any(actionSequence => actionSequence.CardActions != null && actionSequence.CardActions.Actions
+                                .Any(cardAction 
+                                    => cardAction.Type == CardBattleActionType.AnimateAtTarget 
+                                       && cardAction.AtTargetAnimation != null 
+                                       && cardAction.AtTargetAnimation.Animation == x.Value)))
+                        .Select(card => card.Name)
+                        .ToArray()
+                })
+                .Where(x => x.CardNames.Length > 0)
+                .ToArray();
+        }
+        
         if (vfxUsages == null)
             return;
+        
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
         foreach (var vfx in vfxUsages)
         {
