@@ -18,6 +18,9 @@ public class EnemyHoverRightClickViewDetails : OnMessage<CharacterHoverChanged>
             {
                 h.SetAction(() => { }, () =>
                 {
+                    if (MouseDragState.IsDragging)
+                        return;
+                    
                     h.Revert();
                     Message.Publish(new ShowEnemyDetails(state.GetEnemyById(h.Member.Id)));
                     Message.Publish(new ShowEnemySFX(transform));
