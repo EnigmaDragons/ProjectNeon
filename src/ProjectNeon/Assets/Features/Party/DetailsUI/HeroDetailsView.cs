@@ -32,11 +32,11 @@ public class HeroDetailsView : MonoBehaviour
         if (_augmentsDisplay != null)
             Destroy(_augmentsDisplay);
         _augmentsDisplay = Instantiate(augmentsDisplayPrototype, augmentsDisplayParent.transform);
-        var numGear = h.Equipment.All.Length;
-        h.Equipment.All
-            .Where(x => !x.Name.Equals("Implant"))
-            .ForEach(a => Instantiate(equipmentPresenterProto, _augmentsDisplay.transform).Initialized(a, () => { }, false, false));
-        noAugmentsLabel.SetActive(numGear == 0);
+        var augments = h.Equipment.All
+                .Where(x => !x.Name.Equals("Implant") && !x.Name.StartsWith("Starting"))
+                .ToArray();
+        augments.ForEach(a => Instantiate(equipmentPresenterProto, _augmentsDisplay.transform).Initialized(a, () => { }, false, false));
+        noAugmentsLabel.SetActive(augments.Length == 0);
         
         Animate();
     }
