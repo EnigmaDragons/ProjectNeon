@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: NoHero
   m_EditorClassIdentifier: 
   id: 6
+  allowedForSocialMedia: 0
+  isDisabled: 0
   bust: {fileID: 21300000, guid: 4c6b31fddce7ae14c985cb02985b2502, type: 3}
   body: {fileID: 733478400889874795, guid: 8f57d304746f3c24986b1eac6d037943, type: 3}
   className:
@@ -26,6 +28,7 @@ MonoBehaviour:
   startingDeck: {fileID: 0}
   tint: {r: 0, g: 0, b: 0, a: 0}
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   startingCredits: 100
   complexityRating: 1
   maxHp: 0
@@ -37,7 +40,12 @@ MonoBehaviour:
   resistance: 0
   leadership: 0
   economy: 0
+  startingAegis: 0
+  startingDodge: 0
+  startingTaunt: 0
   resource1: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resource1GainPerTurn: 0
+  resource1StartingAmountOverride: -1
   resource2: {fileID: 0}
   additionalStartingCards: []
   excludedStartingCards: []
