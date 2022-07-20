@@ -24,6 +24,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     {
         if (Time.timeScale < 0.01)
             Time.timeScale = 1;
+        MouseDragState.Set(false);
         
         _isLoading = true;
         onStartedLoading.Invoke();
