@@ -31,7 +31,7 @@ public static class StringExtensions
 
     public static string SkipThroughFirstDash(this string s) => s.Substring(s.IndexOf('-') + 1);
     public static string SkipThroughFirstUnderscore(this string s) => s.Substring(s.IndexOf('_') + 1);
-    public static bool ContainsAnyCase(this string s, string term) => s.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0;
+    public static bool ContainsAnyCase(this string s, string term) => s != null && s.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0;
     public static T EnumVal<T>(this string s) => (T)Enum.Parse(typeof(T), s);
     public static Maybe<T> MaybeEnumVal<T>(this string s) where T : struct => Enum.TryParse(s, true, out T r) ? new Maybe<T>(r, true) : Maybe<T>.Missing();
     public static string ToTitleCase(this string s) => System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(s);
