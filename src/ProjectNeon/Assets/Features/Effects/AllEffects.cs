@@ -82,7 +82,7 @@ public static class AllEffects
         { EffectType.LeaveBattle, e => new SimpleEffect((m, __) =>
         {
             Message.Publish(new DisplayCharacterWordRequested(m, CharacterReactionType.LeftBattle));
-            Message.Publish(new DespawnEnemy(m));
+            Message.Publish(new DespawnEnemy(m, true));
         }) },
         { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))},
         { EffectType.TransferPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 

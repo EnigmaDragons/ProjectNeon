@@ -349,6 +349,12 @@ public class BattleState : ScriptableObject
         });
 
     public void UseRecycle() => UpdateState(() => PlayerState.NumberOfCyclesUsedThisTurn++);
+    public void AddEnemyDefeatedRewards(int memberId)
+    {
+        var enemy = GetEnemyById(memberId);
+        AddRewardCredits(enemy.GetRewardCredits(CreditPerPowerLevelRewardFactor));
+        AddRewardXp(enemy.GetRewardXp(XpPerPowerLevelRewardFactor));
+    }
     public void AddRewardCredits(int amount) => UpdateState(() => rewards.AddRewardCredits(amount));
     public void AddRewardXp(int xp) => UpdateState(() => rewards.AddRewardXp(xp)); 
     public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewards.SetRewardCards(cards));
