@@ -120,11 +120,9 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
     }
 
     private void SetDoneButtonInteractivity() => deckBuilderModeControllerV5.SetSaveButtonContInteractivity(
-           _hasSwitchedToEnemyTab 
+        _hasSwitchedToEnemyTab 
         && _hasSwitchedToHeroTab
         && _hasSwitchedHeroes
-        && _hasClearedDeck
         && _hasViewedHeroStats
-        && _hasAddedCard
-        && _hasRemovedCard);
+        && _hasAddedCard);
 }

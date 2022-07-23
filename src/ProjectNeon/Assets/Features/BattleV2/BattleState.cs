@@ -324,12 +324,14 @@ public class BattleState : ScriptableObject
         RecordSingleCardDamageDealt(totalBefore - totalAfter);
     }
     
-    public void RecordSingleCardDamageDealt(int amount)
+    private void RecordSingleCardDamageDealt(int amount)
     {
         if (TurnNumber > 3)
             return;
 
         Stats.HighestPreTurn4CardDamage = Math.Max(amount, Stats.HighestPreTurn4CardDamage);
+        if (Stats.HighestPreTurn4CardDamage > PermanentStats.Data.HighestPreTurn4SingleCardDamage)
+            PermanentStats.Mutate(s => s.HighestPreTurn4SingleCardDamage = Stats.HighestPreTurn4CardDamage);
     }
     
     public Member[] GetAllNewlyUnconsciousMembers()
