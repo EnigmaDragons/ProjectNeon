@@ -7,6 +7,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
 {
     [SerializeField] public int id;
     [SerializeField] private string lockConditionExplanation = "";
+    [SerializeField] private Adventure[] prerequisiteCompletedAdventures;
     [SerializeField] private AdventureMode mode;
     [SerializeField] private DynamicStage[] dynamicStages;
     [SerializeField] private StaticStageV4[] stages;
@@ -66,8 +67,19 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     public bool IsCompleted => CurrentProgressionData.Data.Completed(Id);
     public bool MapDeckbuildingEnabled => mapDeckbuildingEnabled;
     
-    public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation);
-    public string LockConditionExplanation => lockConditionExplanation ?? "";
+    public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation) || prerequisiteCompletedAdventures.Any(p => !p.IsCompleted);
+    public string LockConditionExplanation
+    {
+        get
+        {
+            var staticCondition = lockConditionExplanation ?? "";
+            if (staticCondition.Length > 0)
+                return staticCondition;
+
+            var firstUncompletedRequiredAdventure = prerequisiteCompletedAdventures.Where(p => !p.IsCompleted).FirstAsMaybe();
+            return firstUncompletedRequiredAdventure.Select(a => $"Must Complete {a.MapTitle}", () => "");
+        }
+    }
 
     public string AllowedHeroesDescription => allowedHeroesDescription;
     public BattleRewards NormalBattleRewards => normalBattleRewards;
