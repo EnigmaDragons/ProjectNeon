@@ -36,7 +36,9 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>
         party.Heroes.ForEach(h => Instantiate(patientPrototype, patientParent.transform).Initialized(h));
         _serviceProvider = clinics.GetServices(clinic.Corp);
         servicesParent.DestroyAllChildren();
-        _serviceButtons = _serviceProvider.GetOptions().Select(x => Instantiate(serviceButtonPrototype, servicesParent.transform)).ToArray();
+        var options = _serviceProvider.GetOptions();
+        Log.Info($"{_serviceProvider.GetType().Name} - NumOptions {options.Length}");
+        _serviceButtons = options.Select(x => Instantiate(serviceButtonPrototype, servicesParent.transform)).ToArray();
         UpdateServices();
     }
     
