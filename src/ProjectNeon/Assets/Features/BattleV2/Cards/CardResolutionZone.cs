@@ -18,6 +18,7 @@ public class CardResolutionZone : ScriptableObject
     private List<IPlayedCard> _movesThisTurn = new List<IPlayedCard>();
     private List<IPlayedCard> _pendingMoves = new List<IPlayedCard>();
     private Maybe<IPlayedCard> _current = Maybe<IPlayedCard>.Missing();
+    private Maybe<BattleStateSnapshot> _currentCardStartSnapshot = Maybe<BattleStateSnapshot>.Missing();
 
     public Maybe<TeamType> CurrentTeamType => _current.Map(c => c.Member.TeamType);
     
@@ -85,7 +86,11 @@ public class CardResolutionZone : ScriptableObject
 
     public void OnCardResolutionFinished()
     {
-        _current.IfPresent(c => WrapupCard(c, c.Card));
+        _current.IfPresent(c =>
+        {
+            _currentCardStartSnapshot.IfPresent(s => battleState.RecordSingleCardDamageDealt(s));
+            WrapupCard(c, c.Card);
+        });
         _current = Maybe<IPlayedCard>.Missing();
         currentResolvingCardZone.Clear();
     }
@@ -159,6 +164,7 @@ public class CardResolutionZone : ScriptableObject
         BattleLog.Write($"Resolving {played.Member.Name}'s {played.Card.Name}");
 
         _current = new Maybe<IPlayedCard>(played);
+        _currentCardStartSnapshot = battleState.GetSnapshot();
         var card = played.Card;
         if (card.IsActive 
             && currentResolvingCardZone.TopCard.IsMissingOr(c => c != card)

@@ -317,6 +317,21 @@ public class BattleState : ScriptableObject
     public void RecordCardDiscarded() => UpdateState(() => _numPlayerDiscardsUsedThisTurn++);
     public void CleanupExpiredMemberStates() => UpdateState(() => _membersById.ForEach(x => x.Value.State.CleanExpiredStates()));
 
+    public void RecordSingleCardDamageDealt(BattleStateSnapshot before)
+    {
+        var totalBefore = before.Members.Where(x => x.Value.TeamType == TeamType.Enemies).Sum(x => x.Value.State.HpAndShield);
+        var totalAfter = Enemies.Sum(x => x.Member.HpAndShield());
+        RecordSingleCardDamageDealt(totalBefore - totalAfter);
+    }
+    
+    public void RecordSingleCardDamageDealt(int amount)
+    {
+        if (TurnNumber > 3)
+            return;
+
+        Stats.HighestPreTurn4CardDamage = Math.Max(amount, Stats.HighestPreTurn4CardDamage);
+    }
+    
     public Member[] GetAllNewlyUnconsciousMembers()
     {
         var newlyUnconscious = Members
@@ -437,6 +452,7 @@ public class BattleState : ScriptableObject
             d.Stats.TotalDamageReceived += Stats.DamageReceived;
             d.Stats.TotalHpDamageReceived += Stats.HpDamageReceived;
             d.Stats.TotalHealingReceived += Stats.HealingReceived;
+            d.Stats.HighestPreTurn4SingleCardDamage = Math.Max(Stats.HighestPreTurn4CardDamage, d.Stats.HighestPreTurn4SingleCardDamage);
             return d;
         });
     }

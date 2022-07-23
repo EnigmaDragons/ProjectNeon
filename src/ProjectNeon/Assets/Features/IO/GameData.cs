@@ -135,6 +135,7 @@ public class RunStats
     public int TotalCardsPlayed;
     public int TotalEnemiesKilled;
     [FormerlySerializedAs("TotalHealingGiven")] public int TotalHealingReceived;
+    public int HighestPreTurn4SingleCardDamage;
     
     public RunStats WithAdditionalElapsedTime(float time)
     {
