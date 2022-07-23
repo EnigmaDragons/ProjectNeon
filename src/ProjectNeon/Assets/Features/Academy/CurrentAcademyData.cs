@@ -35,7 +35,11 @@ public class CurrentAcademyData
 
     public static void Skip() => Write(a =>
     {
-        a.TutorialData.CompletedTutorialNames = a.TutorialData.CompletedTutorialNames.Concat(AcademyData.RequiredLicenseTutorials).ToArray();
+        a.TutorialData.CompletedTutorialNames = a.TutorialData.CompletedTutorialNames
+            .Concat(AcademyData.RequiredLicenseTutorials)
+            .Concat(AcademyData.SimpleTutorialPanels)
+            .Distinct()
+            .ToArray();
         return a;
     });
 }

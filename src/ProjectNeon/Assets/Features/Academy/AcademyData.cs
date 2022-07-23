@@ -39,6 +39,13 @@ public class AcademyData
         Tutorials.BattleV4
     };
 
+    public static List<string> SimpleTutorialPanels = new List<string>()
+    {
+        Tutorials.SimpleClinic,
+        Tutorials.SimpleDeckbuilder,
+        Tutorials.SimpleCardShop,
+    };
+    
     public bool IsLicensedBenefactor => RequiredLicenseTutorials.All(TutorialData.CompletedTutorialNames.Contains);
     public AcademyDataSnapshot ToSnapshot() => new AcademyDataSnapshot(this);
 }
