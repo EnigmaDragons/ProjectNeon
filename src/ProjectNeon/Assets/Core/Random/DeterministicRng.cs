@@ -69,3 +69,8 @@ public class DeterministicRng
             .Take(number)
             .ToArray();
 }
+
+public static class DeterministicRngExtensions
+{
+    public static T[] Shuffled<T>(this T[] arr, DeterministicRng rng) => rng.Shuffled(arr);
+}

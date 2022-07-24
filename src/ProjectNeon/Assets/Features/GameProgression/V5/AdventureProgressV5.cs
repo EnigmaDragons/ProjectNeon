@@ -147,7 +147,10 @@ public class AdventureProgressV5 : AdventureProgressBase
     }
 
     public override LootPicker CreateLootPicker(PartyAdventureState party) 
-        => new LootPicker(CurrentChapterNumber, CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), party);
+        => new LootPicker(CurrentChapterNumber, 
+            CurrentChapterNumber > 0 ? CurrentChapter.RewardRarityFactors : new DefaultRarityFactors(), 
+            party,
+            new DeterministicRng(ConsumableRngSeed.Consume()));
 
     public override GameAdventureProgressData GetData() 
         => new GameAdventureProgressData

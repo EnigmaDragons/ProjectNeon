@@ -18,7 +18,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     {
         draftState.Init(adventure.Adventure.PartySize);
         draftUi.SetActive(true);
-        _picker = new LootPicker(1, new DefaultRarityFactors(), party);
+        _picker = new LootPicker(1, new DefaultRarityFactors(), party, new DeterministicRng(Rng.NewSeed()));
         Advance();
     }
 
