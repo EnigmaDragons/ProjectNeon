@@ -5,7 +5,8 @@ public class EventPublisher : ScriptableObject
 {
     public void WinBattle() => Message.Publish(new WinBattleWithRewards());
     public void LoseBattle() => Message.Publish(new BattleFinished(TeamType.Enemies));
-    public void StartNewGame() => Message.Publish(new StartNewGameRequested());
+    public void StartNewGame() => Message.Publish(new StartNewGameRequested(AdventureMode.Standard));
+    public void StartNewDraft() => Message.Publish(new StartNewGameRequested(AdventureMode.Draft));
     public void ContinueCurrentGame() => Message.Publish(new ContinueCurrentGame());
     public void StartNextStage() => Message.Publish(new StartNextStage());
     public void ToggleUseCardAsBasic() => Message.Publish(new ToggleUseCardAsBasic());
