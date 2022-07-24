@@ -58,4 +58,14 @@ public sealed class MemberStateTests
         
         Assert.AreEqual(1, numCleansed);
     }
+
+    [Test]
+    public void MemberState_OverkillCounter_CountCorrect()
+    {
+        var m = TestMembers.With(StatType.MaxHP, 10);
+
+        m.State.TakeDamage(18);
+        
+        Assert.AreEqual(8, m.State[TemporalStatType.OverkillDamageAmount]);
+    }
 }

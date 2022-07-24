@@ -291,8 +291,14 @@ public sealed class MemberState : IStats
     {
         if (this[TemporalStatType.PreventDeath] > 0)
             amount = Math.Max(amount, 1 - this[TemporalStatType.HP]);
-        if (amount < 0)
+
+        var isDamage = amount < 0;
+        if (isDamage)
+        {
+            Counter(TemporalStatType.OverkillDamageAmount).ChangeBy(-(amount + this[TemporalStatType.HP]));
             Message.Publish(new CharacterAnimationRequested2(MemberId, CharacterAnimationType.WhenHit) { Condition = Maybe<EffectCondition>.Missing() });
+        }
+        
         Counter(TemporalStatType.HP).ChangeBy(amount);
     }, () => Counter(TemporalStatType.HP).Amount));
 

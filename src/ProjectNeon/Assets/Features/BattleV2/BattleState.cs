@@ -319,8 +319,8 @@ public class BattleState : ScriptableObject
 
     public void RecordSingleCardDamageDealt(BattleStateSnapshot before)
     {
-        var totalBefore = before.Members.Where(x => x.Value.TeamType == TeamType.Enemies).Sum(x => x.Value.State.HpAndShield);
-        var totalAfter = Enemies.Sum(x => x.Member.HpAndShield());
+        var totalBefore = before.Members.Where(x => x.Value.TeamType == TeamType.Enemies).Sum(x => x.Value.State.HpAndShieldWithOverkill);
+        var totalAfter = Enemies.Sum(x => x.Member.HpAndShieldWithOverkill());
         RecordSingleCardDamageDealt(totalBefore - totalAfter);
     }
     

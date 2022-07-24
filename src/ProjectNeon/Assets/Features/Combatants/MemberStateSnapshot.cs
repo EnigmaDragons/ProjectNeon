@@ -35,8 +35,10 @@ public sealed class MemberStateSnapshot
     public int MaxHp => Stats[StatType.MaxHP].CeilingInt();
     public int MissingHp => MaxHp - Hp;
     public int Shield => this[TemporalStatType.Shield];
+    public int OverkillDamageAmount => this[TemporalStatType.OverkillDamageAmount];
     public int MaxShield => Stats[StatType.MaxShield].CeilingInt();
     public int HpAndShield => Hp + Shield;
+    public int HpAndShieldWithOverkill => Hp + Shield - OverkillDamageAmount;
     public IResourceType PrimaryResource => ResourceTypes.Any() ? ResourceTypes[0] : new InMemoryResourceType();
     public int PrimaryResourceAmount => ResourceTypes.Any() ? Counters[PrimaryResource.Name] : 0;
 }
