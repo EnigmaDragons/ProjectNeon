@@ -72,5 +72,7 @@ public class DeterministicRng
 
 public static class DeterministicRngExtensions
 {
+    public static T Random<T>(this T[] arr, DeterministicRng rng) => rng.Random(arr);
+    public static T Random<T>(this IEnumerable<T> items, DeterministicRng rng) => rng.Random(items);
     public static T[] Shuffled<T>(this T[] arr, DeterministicRng rng) => rng.Shuffled(arr);
 }

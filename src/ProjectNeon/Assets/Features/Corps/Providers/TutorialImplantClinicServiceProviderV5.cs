@@ -31,11 +31,13 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
     private readonly int _numOfImplants;
     private ClinicServiceButtonData[] _generatedOptions;
     private bool[] _available;
+    private DeterministicRng _rng;
 
-    public TutorialImplantClinicServiceProviderV5(PartyAdventureState party, int numOfImplants)
+    public TutorialImplantClinicServiceProviderV5(PartyAdventureState party, int numOfImplants, DeterministicRng rng)
     {
         _party = party;
         _numOfImplants = numOfImplants;
+        _rng = rng;
     }
     
     public string GetTitle() => "Available Implant Procedures";
@@ -65,10 +67,10 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
 
     private ClinicServiceButtonData GetOption(Hero hero, int index)
     {
-        var loss = _statAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value).ToArray().Shuffled().First();
+        var loss = _statAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value).Random(_rng);
         var lossStat = loss.Key;
         var lossAmount = loss.Value;
-        var gain = _statAmounts.Where(x => x.Key != loss.Key).ToArray().Shuffled().First();
+        var gain = _statAmounts.Where(x => x.Key != loss.Key).Random(_rng);
         var gainStat = gain.Key;
         var gainAmount = gain.Value;
         return new ClinicServiceButtonData(

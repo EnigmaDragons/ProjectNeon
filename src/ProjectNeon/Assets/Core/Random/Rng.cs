@@ -30,6 +30,7 @@ public static class Rng
         return item;
     }
 
+    [Obsolete("Non-Deterministic")]
     public static T[] Shuffled<T>(this T[] arr)
     {
         var shuffled = arr.ToArray();
@@ -44,6 +45,7 @@ public static class Rng
         return shuffled;
     }
     
+    [Obsolete("Non-Deterministic")]
     public static List<T> Shuffled<T>(this List<T> list)
     {
         var shuffled = list.ToList();
@@ -58,6 +60,7 @@ public static class Rng
         return shuffled;
     }
 
+    [Obsolete("Non-Deterministic")]
     public static T[] TakeRandom<T>(this IEnumerable<T> items, int number)
         => items
             .ToArray()

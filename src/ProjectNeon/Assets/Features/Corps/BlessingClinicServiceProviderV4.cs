@@ -4,13 +4,15 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
 {
     private readonly PartyAdventureState _party;
     private readonly BlessingData[] _blessings;
+    private readonly DeterministicRng _rng;
     private ClinicServiceButtonData[] _generatedOptions;
     private bool[] _available;
     
-    public BlessingClinicServiceProviderV4(PartyAdventureState party, BlessingData[] blessings)
+    public BlessingClinicServiceProviderV4(PartyAdventureState party, BlessingData[] blessings, DeterministicRng rng)
     {
         _party = party;
         _blessings = blessings;
+        _rng = rng;
     }
     
     public string GetTitle() => "Blessings";
@@ -31,7 +33,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                                 .Where(x => x.Stats[blessingData.StatRequirement] >= blessingData.RequirementThreshold)
                                 .Select(h => h.Character)
                                 .ToArray()
-                                .Shuffled()
+                                .Shuffled(_rng)
                                 .Take(1)
                                 .ToArray()
                             : _party.Heroes.Select(h => h.Character).ToArray()
@@ -41,7 +43,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                           || x.blessingData.IsSingleTarget 
                           || x.blessing.Targets.Count(target => target.Stats[x.blessingData.StatRequirement] >= x.blessingData.RequirementThreshold) > 1))
                 .ToArray()
-                .Shuffled()
+                .Shuffled(_rng)
                 .Take(3)
                 .ToArray();
             if (blessingChoices.Length == 0)
