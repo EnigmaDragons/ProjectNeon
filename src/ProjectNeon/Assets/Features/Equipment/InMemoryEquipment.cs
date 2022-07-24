@@ -112,7 +112,9 @@ public class InMemoryEquipment : Equipment
         get => distributionRules;
         set => distributionRules = value;
     }
-    
+
+    public Maybe<CardTypeData> ReferencedCard { get; } = Maybe<CardTypeData>.Missing();
+
     public GameEquipmentData GetData() 
         => new GameEquipmentData { Type = GameEquipmentDataType.GeneratedEquipment, GeneratedEquipment = this };
 

@@ -588,13 +588,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnBeginDrag(PointerEventData eventData)
         => WhenActivatableHand(() =>
         {
+            Cursor.visible = false;
             IsDragging = true;
             MouseDragState.Set(true);
             controls.SetActive(false);
             canvasGroup.blocksRaycasts = false;
             HideComprehensiveCardInfo();
-            
-            if (_rightButtonAlreadyDown == true && _card.Mode == CardMode.Normal)
+
+            if (_rightButtonAlreadyDown == true && _card.Mode == CardMode.Normal) 
                 _card.TransitionTo(CardMode.Basic);
 
             // Targeting Card Selection Process can run the arrow
