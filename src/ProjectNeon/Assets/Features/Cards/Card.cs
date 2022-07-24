@@ -17,7 +17,7 @@ public sealed class Card : CardTypeData
     public CardMode Mode { get; private set; }
     public bool IsActive => Mode != CardMode.Dead && Mode != CardMode.Glitched;
 
-    public bool IsBasic => Owner != null && (Mode == CardMode.Basic || Owner.BasicCard.Value.Id == type.Id);
+    public bool IsBasic => Owner != null && (Mode == CardMode.Basic || Owner.BasicCard.IsPresentAnd(b => b.Id == type.Id));
     private CardTypeData _type => IsBasic ? Owner.BasicCard.Value : type;
     public CardTypeData Type => IsBasic ? Owner.BasicCard.Value : this;
     public CardTypeData BaseType => type;

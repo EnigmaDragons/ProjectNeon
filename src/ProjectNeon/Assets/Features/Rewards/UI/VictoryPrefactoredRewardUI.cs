@@ -7,6 +7,7 @@ public class VictoryPrefactoredRewardUI : OnMessage<ShowPrefactoredReward, Proce
     [SerializeField] private GameObject view;
     [SerializeField] private TextMeshProUGUI creditsLabel;
     [SerializeField] private TextMeshProUGUI clinicVouchersLabel;
+    [SerializeField] private GameObject creditsPanel;
 
     private bool _triggeredFinish;
     private Action _onFinished;
@@ -18,6 +19,8 @@ public class VictoryPrefactoredRewardUI : OnMessage<ShowPrefactoredReward, Proce
         _triggeredFinish = false;
         creditsLabel.text = msg.NumCredits.ToString();
         clinicVouchersLabel.text = msg.NumClinicVouchers.ToString();
+        if (creditsPanel != null)
+            creditsPanel.SetActive(msg.NumCredits > 0);
     }
 
     protected override void Execute(ProceedRequested msg)
