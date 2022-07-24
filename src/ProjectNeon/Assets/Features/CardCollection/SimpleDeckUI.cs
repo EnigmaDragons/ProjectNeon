@@ -14,8 +14,12 @@ public class SimpleDeckUI : MonoBehaviour
             ? canvasOverride 
             : gameObject.transform.GetComponentInParent<Canvas>();
         
-        foreach (var c in cards.OrderBy(x => x.Cost.CostSortOrder()).ThenBy(x => x.GetArchetypeKey()).GroupBy(x => x.Id))
-            Instantiate(cardPrototype, deckParent.transform).Initialized(showCount ? c.Count() : -1, c.First())
-                .SetCanvas(canvas);
+        foreach (var c in cards
+            .OrderBy(x => x.IsBasic ? -999 : 0)
+            .ThenBy(x => x.Cost.CostSortOrder())
+            .ThenBy(x => x.GetArchetypeKey())
+            .GroupBy(x => x.Id))
+                Instantiate(cardPrototype, deckParent.transform).Initialized(showCount ? c.Count() : -1, c.First())
+                    .SetCanvas(canvas);
     }
 }
