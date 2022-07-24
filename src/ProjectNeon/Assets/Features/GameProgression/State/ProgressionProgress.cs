@@ -15,7 +15,8 @@ public class ProgressionProgress : MonoBehaviour
         
         var completedAcademy = CurrentAcademyData.Data.IsLicensedBenefactor;
         var progress = CurrentProgressionData.Data;
-        return completedAcademy && progress.Completed(firstStoryAdventure.Id);
+        var isUnlocked = completedAcademy && progress.Completed(firstStoryAdventure.Id);
+        return isUnlocked;
     }
 
     public ProgressionItem[] GetAllProgress()
