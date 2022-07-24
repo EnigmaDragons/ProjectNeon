@@ -25,6 +25,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     
     private bool _useHoverHighlight = false;
     private bool _useAnyHover = false;
+    private bool _useDarkenOnHover = true;
     private Action _onClick = NoOp;
     private Action _onHoverEnter = NoOp;
     private Action _onHoverExit = NoOp;
@@ -40,6 +41,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         _onHoverExit = NoOp;
         _useHoverHighlight = useHoverHighlight;
         _useAnyHover = useAnyHover;
+        _useDarkenOnHover = true;
         nameLabel.text = e.Name;
         slotLabel.text = $"{e.Slot}";
         var archetypeText = e.Archetypes.Any()
@@ -58,6 +60,14 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         corpLabel.Hide();
         
         gameObject.SetActive(true);
+        return this;
+    }
+
+    public EquipmentPresenter WithHoverSettings(bool useAnyHover, bool useHoverHighlight, bool useHoverDarken)
+    {
+        _useAnyHover = useAnyHover;
+        _useHoverHighlight = useHoverHighlight;
+        _useDarkenOnHover = useHoverDarken;
         return this;
     }
     
@@ -81,10 +91,13 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         if (_useHoverHighlight)
             highlight.SetActive(true);
         
+        if (_useDarkenOnHover)
+            focusDarken.Show();
+        
         _onHoverEnter();
         rulesPresenter.Show(_currentEquipment);
         corpLabel.Show();
-        focusDarken.Show();
+        Message.Publish(new ItemHovered(transform));
     }
 
     public void OnPointerExit(PointerEventData eventData)

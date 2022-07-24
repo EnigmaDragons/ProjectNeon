@@ -24,12 +24,14 @@ public class DraftGearPicker : OnMessage<GetUserSelectedEquipmentForDraft>
         for (var i = 0; i < slots.Length; i++)
         {
             var e = msg.Options[i];
-            slots[i].Set(e, () =>  SelectEquipment(e));
+            var itemTransform = slots[i].transform;
+            slots[i].Set(e, () =>  SelectEquipment(e, itemTransform));
+            slots[i].WithHoverSettings(true, true, false);
         }
         panel.SetActive(true);
     }
     
-    private void SelectEquipment(Equipment e)
+    private void SelectEquipment(Equipment e, Transform itemTransform)
     {
         if (_hasSelected)
             return;
@@ -37,6 +39,7 @@ public class DraftGearPicker : OnMessage<GetUserSelectedEquipmentForDraft>
         _hasSelected = true;
         HideView();
         Debug.Log($"Draft - Selected Equipment {e.Name}");
+        Message.Publish(new DraftItemPicked(itemTransform));
         _onSelected(new Maybe<Equipment>(e));
     }
 

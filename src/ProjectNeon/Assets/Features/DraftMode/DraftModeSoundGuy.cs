@@ -12,6 +12,7 @@ public class DraftModeSoundGuy : MonoBehaviour
     private void OnEnable()
     {
         Message.Subscribe<CardHovered>(e => PlayOneShot(OnItemHovered, e.UiSource), this);
+        Message.Subscribe<ItemHovered>(e => PlayOneShot(OnItemHovered, e.UiSource), this);
         Message.Subscribe<DraftItemPicked>(e => PlayOneShot(OnItemSelected, e.UiSource), this);
     }
     
