@@ -410,6 +410,7 @@ public class BattleState : ScriptableObject
     public void Wrapup()
     {
         EnemyArea.Clear();
+        EncounterIdTrackingState.MarkEncounterFinished();
 
         if (!adventureProgress.HasActiveAdventure)
             return;

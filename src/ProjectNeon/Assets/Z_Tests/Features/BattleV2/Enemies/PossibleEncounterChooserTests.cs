@@ -198,7 +198,7 @@ public class PossibleEncounterChooserTests
     {
         for (var i = 0; i < 10; i++)
         {
-            var choice = new PossibleEncounterChooser().Choose(encounters, previousEncounters, difficulty, flexibility, randomness);
+            var choice = new PossibleEncounterChooser(DeterministicRng.CreateRandom()).Choose(encounters, previousEncounters, difficulty, flexibility, randomness);
             Assert.AreEqual(expected.Id, choice.Id);
         }
     }
@@ -209,7 +209,7 @@ public class PossibleEncounterChooserTests
         var encountersChosen = new List<PossibleEncounter>();
         for (var i = 0; i < 100000; i++)
         {
-            var choice = new PossibleEncounterChooser().Choose(encounters, previousEncounters, difficulty, flexibility, randomness);
+            var choice = new PossibleEncounterChooser(DeterministicRng.CreateRandom()).Choose(encounters, previousEncounters, difficulty, flexibility, randomness);
             if (encountersNotChosen.Contains(choice))
             {
                 encountersNotChosen.Remove(choice);

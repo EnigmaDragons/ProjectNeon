@@ -25,16 +25,13 @@ public class EncounterBuilderV5 : ScriptableObject, IEncounterBuilder
     
     public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber, bool isElite)
     {
+        var rng = new DeterministicRng(ConsumableRngSeed.Consume());
         var previousFights = CurrentGameData.Data.Fights.Encounters
-            .Select(encounterId => possibleNormalEncounters.Concat(possibleEliteEncounters).FirstOrDefault(encounter => encounter.Id == encounterId))
+            .Select(encounterId => possibleNormalEncounters.Concat(possibleEliteEncounters).FirstOrDefault(e => e.Id == encounterId))
             .Where(x => x != null)
             .ToArray();
-        var encounter = new PossibleEncounterChooser().Choose(isElite ? possibleEliteEncounters : possibleNormalEncounters, previousFights, difficulty, flexibility, randomness);
-        CurrentGameData.Write(x =>
-        {
-            x.Fights.Encounters = x.Fights.Encounters.Concat(encounter.Id).ToArray();
-            return x;
-        });
-        return encounter.Enemies.Shuffled().Select(x => x.ForStage(1)).ToList();
+        var encounter = new PossibleEncounterChooser(rng).Choose(isElite ? possibleEliteEncounters : possibleNormalEncounters, previousFights, difficulty, flexibility, randomness);
+        EncounterIdTrackingState.StoreEncounterId(encounter.Id);
+        return encounter.Enemies.Shuffled(rng).Select(x => x.ForStage(1)).ToList();
     }
 }

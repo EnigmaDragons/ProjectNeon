@@ -19,6 +19,15 @@ public static class CurrentGameData
         _current = _stored.Get();
     }
     
+    public static void Mutate(Action<GameData> mutate)
+    {
+        Write(g =>
+        {
+            mutate(g);
+            return g;
+        });
+    }
+    
     public static void Write(Func<GameData, GameData> transform)
     {
         _stored.Write(g => transform(Upversion(g)));

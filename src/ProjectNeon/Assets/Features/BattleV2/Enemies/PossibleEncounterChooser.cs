@@ -3,6 +3,8 @@ using System.Linq;
 
 public class PossibleEncounterChooser
 {
+    private readonly DeterministicRng _rng;
+
     //the higher this is the more effect randomness has
     private const decimal _baseEncounterValue = 200;
     //this is a cumulative bonus/penalty for every step closer to correction
@@ -23,7 +25,12 @@ public class PossibleEncounterChooser
     private const decimal _tooStrongPenalty = 600;
     //this is a cumulative bonus/penalty for every step closer to correction (comparing 3 ratios instead of 1 inflates modifications so treat it as 3 times the amount)
     private const decimal _roleRatioCorrectionAdjustment = 10;
-        
+
+    public PossibleEncounterChooser(DeterministicRng rng)
+    {
+        _rng = rng;
+    }
+    
     public PossibleEncounter Choose(PossibleEncounter[] encounters, PossibleEncounter[] previousEncounters, int difficulty, float flexibility, float randomness)
     {
         var possibleEncounters = encounters.Where(encounter 
@@ -96,5 +103,5 @@ public class PossibleEncounterChooser
     }
 
     private decimal GetRandomModifier(float randomness)
-        => 1m - (decimal)Rng.Dbl() * (decimal)randomness;
+        => 1m - (decimal)_rng.Dbl() * (decimal)randomness;
 }
