@@ -13,6 +13,7 @@ public class GameData
     public GamePartyData PartyData = new GamePartyData();
     public GameMapData GameMap = new GameMapData();
     public RunStats Stats = new RunStats();
+    public FightHistoryData Fights = new FightHistoryData();
 
     public bool FinishedPhase(CurrentGamePhase phase) => (int)Phase >= (int)phase;
 }
@@ -141,6 +142,12 @@ public class RunStats
         TimeElapsedSeconds += time;
         return this;
     }
+}
+
+[Serializable]
+public class FightHistoryData
+{
+    public string[] Encounters = new string[0];
 }
 
 public enum GameEquipmentDataType

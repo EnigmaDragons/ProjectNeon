@@ -29,6 +29,9 @@ public class Enemy : ScriptableObject
     [SerializeField] private CharacterAnimations animations;
     [SerializeField] private CharacterAnimationSoundSet animationSounds;
     [SerializeField] public EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
+    [SerializeField] public int maxCopies;
+    [SerializeField] public int minimumAllies;
+    [SerializeField] public DamageType damageType;
 
     public bool IsAllowedForSocialMedia => allowedForSocialMedia;
     public bool IsCurrentlyWorking => isCurrentlyWorking;
@@ -45,6 +48,9 @@ public class Enemy : ScriptableObject
     public CharacterAnimations Animations => animations;
     public CharacterAnimationSoundSet AnimationSounds => animationSounds;
     public GameObject Prefab => prefab;
+    public int MaxCopies => maxCopies;
+    public int MinimumAllies => minimumAllies;
+    public DamageType DamageType => damageType;
     public EnemyInstance ForStage(int stage)
     {
         var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();
@@ -61,4 +67,16 @@ public class Enemy : ScriptableObject
             aiPreferences ?? new AiPreferences());
     } 
     public EffectData[] Effects => stageDetails.SelectMany(x => x.startOfBattleEffects).ToArray();
+
+    public Enemy InitializedForTest(int id, BattleRole role, DamageType damageType, EnemyTier tier, int powerLevel, int maxCopies, int minAllies)
+    {
+        this.id = id;
+        this.battleRole = role;
+        this.damageType = damageType;
+        this.tier = tier;
+        this.stageDetails = new[] { new EnemyStageDetails { powerLevel = powerLevel } };
+        this.maxCopies = maxCopies;
+        this.minimumAllies = minAllies;
+        return this;
+    }
 }

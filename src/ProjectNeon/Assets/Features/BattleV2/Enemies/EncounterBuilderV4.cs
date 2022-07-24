@@ -19,7 +19,7 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
     public List<EncounterWeightsV4> _weightedComps => weightedComps;
     public List<EncounterRoleChanceV4> _chancesBasedOnEnemyNumber => chancesBasedOnEnemyNumber;
 
-    public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber)
+    public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber, bool isElite)
     {
         var comp = GetComposition(difficulty);
         var strengthPer1 = (float)difficulty / comp.Sum(x => x.Weight);

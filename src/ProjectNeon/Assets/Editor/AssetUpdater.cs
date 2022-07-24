@@ -317,6 +317,58 @@ public class AssetUpdater
         });
     }
     
+    [MenuItem("Neon/Update/UpdatePossibleEncounters")]
+    private static void UpdatePossibleEncounters()
+    {
+        var enemies = ScriptableExtensions.GetAllInstances<EncounterBuilderV5>();
+        enemies.ForEach(x =>
+        {
+            var normalEncounterPossibilities = new PossibleEncounterBuilder().CalculatePossibilities(
+                x.possible.Where(enemy => enemy.Tier != EnemyTier.Elite).ToArray(), 
+                x.dissynergies, 
+                amountOfElites: 0, 
+                x.minEnemiesInNormalFight, 
+                x.maxEnemiesInNormalFight, 
+                x.maxDamageDealers, 
+                x.maxDamageMitigators, 
+                x.maxSpecialists, 
+                Mathf.RoundToInt(x.minNormalEncounterPower * (1 - x.flexibility)), 
+                Mathf.RoundToInt(x.maxNormalEncounterPower * (1 + x.flexibility)));
+            var eliteEncounterPossibilities = new PossibleEncounterBuilder().CalculatePossibilities(
+                x.possible, 
+                x.dissynergies, 
+                amountOfElites: 1, 
+                x.minEnemiesInEliteFight, 
+                x.maxEnemiesInEliteFight, 
+                x.maxDamageDealers, 
+                x.maxDamageMitigators, 
+                x.maxSpecialists, 
+                Mathf.RoundToInt(x.minEliteEncounterPower * (1 - x.flexibility)), 
+                Mathf.RoundToInt(x.maxEliteEncounterPower * (1 + x.flexibility)));
+            if (normalEncounterPossibilities.Length >= 100000)
+                Log.Error($"Too many normal encounter possibilities {normalEncounterPossibilities.Length}");
+            else
+                x.possibleNormalEncounters = normalEncounterPossibilities;
+            if (eliteEncounterPossibilities.Length >= 100000)
+                Log.Error($"Too many elite encounter possibilities {eliteEncounterPossibilities.Length}");
+            else
+                x.possibleEliteEncounters = eliteEncounterPossibilities;
+            EditorUtility.SetDirty(x);
+        });
+    }
+
+    [MenuItem("Neon/Update/ClearPossibleEncounters")]
+    private static void ClearPossibleEncounters()
+    {
+        var enemies = ScriptableExtensions.GetAllInstances<EncounterBuilderV5>();
+        enemies.ForEach(x =>
+        {
+            x.possibleNormalEncounters = new PossibleEncounter[0];
+            x.possibleEliteEncounters = new PossibleEncounter[0];
+            EditorUtility.SetDirty(x);
+        });
+    }
+    
     [MenuItem("Neon/Update/Update Stage Segment IDs")]
     private static void UpdateStageSegmentIDs()
     {
