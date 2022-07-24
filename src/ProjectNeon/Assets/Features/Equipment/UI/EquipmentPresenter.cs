@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Object = System.Object;
 
 public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -20,6 +21,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     [SerializeField] private AllCorps allCorps;
     [SerializeField] private GearRulesPresenter rulesPresenter;
     [SerializeField] private LabelPresenter corpLabel;
+    [SerializeField] private HoverCard hoverCardPrototype;
 
     private static void NoOp() {}
     
@@ -30,11 +32,17 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     private Action _onHoverEnter = NoOp;
     private Action _onHoverExit = NoOp;
     private Equipment _currentEquipment;
+    
+    private Maybe<CardTypeData> _referencedCard = Maybe<CardTypeData>.Missing();
+    private Canvas _canvas;
+    private HoverCard _hoverCard;
 
     public void Set(Equipment e, Action onClick) => Initialized(e, onClick);
     
     public EquipmentPresenter Initialized(Equipment e, Action onClick, bool useHoverHighlight = false, bool useAnyHover = true)
     {
+        InitCanvasIfNeeded();
+        ClearHoverCard();
         _currentEquipment = e;
         _onClick = onClick;
         _onHoverEnter = NoOp;
@@ -58,6 +66,9 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         highlight.SetActive(false);
         rulesPresenter.Hide();
         corpLabel.Hide();
+        focusDarken.Hide();
+
+        _referencedCard = _currentEquipment.ReferencedCard;
         
         gameObject.SetActive(true);
         return this;
@@ -70,7 +81,9 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         _useDarkenOnHover = useHoverDarken;
         return this;
     }
-    
+
+    private void OnDisable() => ClearHoverCard();
+
     public void SetOnHover(Action onHoverEnter, Action onHoverExit)
     {
         _onHoverEnter = onHoverEnter;
@@ -98,6 +111,7 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         rulesPresenter.Show(_currentEquipment);
         corpLabel.Show();
         Message.Publish(new ItemHovered(transform));
+        _referencedCard.IfPresent(c => _hoverCard = Instantiate(hoverCardPrototype, _canvas.transform).Initialized(c));
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -112,5 +126,33 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         rulesPresenter.Hide();
         corpLabel.Hide();
         focusDarken.Hide();
+        ClearHoverCard();
+    }
+    
+    public void SetReferencedCardCanvas(Canvas c)
+    {
+        _canvas = c;
+    }
+
+    private void ClearHoverCard()
+    {
+        if (_hoverCard != null)
+        {
+            DestroyImmediate(_hoverCard.gameObject);
+            _hoverCard = null;
+        }
+    }
+    
+    private void InitCanvasIfNeeded()
+    {
+        if (_canvas != null)
+            return;
+        
+        var allCanvases = FindObjectsOfType<Canvas>();
+        _canvas = allCanvases
+            .Where(c => c != null)
+            .Where(c => c.gameObject.activeInHierarchy)
+            .OrderByDescending(c => c.sortingOrder)
+            .First();
     }
 }
