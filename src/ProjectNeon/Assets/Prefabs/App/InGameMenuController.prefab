@@ -494,6 +494,9 @@ GameObject:
   - component: {fileID: 7329857057608068822}
   - component: {fileID: 7987734861177649560}
   - component: {fileID: 5571601894601334500}
+  - component: {fileID: 5328501207372322318}
+  - component: {fileID: 5026519559197437544}
+  - component: {fileID: 323666188165540792}
   m_Layer: 0
   m_Name: InGameMenu
   m_TagString: Untagged
@@ -667,6 +670,57 @@ MonoBehaviour:
   - {fileID: 8786532323490452131}
   turnOffTargets: []
   requiresCompletedEntranceCutscene: 0
+--- !u!114 &5328501207372322318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7329857057608068820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85535086a1364d7da1b67ec094c20b87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5026519559197437544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7329857057608068820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a86dfdeee3b04eaeb1dddb7f69b1031e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &323666188165540792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7329857057608068820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 244fb61b57ecaa8409c2711044349bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
+        m_MethodName: CancelTargetSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7329857059130860091
 GameObject:
   m_ObjectHideFlags: 0
