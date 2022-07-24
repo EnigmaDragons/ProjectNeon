@@ -24,7 +24,7 @@ public class DeterministicRng
     public T Random<T>(T[] array) => array[Int(array.Length)];
     public T Random<T>(List<T> list) => list[Int(list.Count)];
     public T Random<T>(Array array) => (T) array.GetValue(Int(array.Length));
-    public T Random<T>(IEnumerable<T> items) => items.ToArray().Random();
+    public T Random<T>(IEnumerable<T> items) => Random(items.ToArray());
 
     public T DrawRandom<T>(List<T> list)
     {
@@ -65,7 +65,7 @@ public class DeterministicRng
     public T[] TakeRandom<T>(IEnumerable<T> items, int number)
         => items
             .ToArray()
-            .Shuffled()
+            .Shuffled(this)
             .Take(number)
             .ToArray();
 }

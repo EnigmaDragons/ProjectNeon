@@ -1,13 +1,14 @@
 public static class ConsumableRngSeed
 {
-    private static bool _loggingEnabled = true;
+    private static bool _loggingEnabled = false;
     private static OneTimeSeed NewSeed() => new OneTimeSeed(Rng.NewSeed());
 
     public static OneTimeSeed Current { get; private set; } = NewSeed();
     public static OneTimeSeed GenerateNew()
     {
-        DebugLog("Generate New");
-        return Current = NewSeed();
+        Current = NewSeed();
+        DebugLog($"Generated New - {Current.Peek}");
+        return Current;
     }
 
     public static OneTimeSeed GetValid() =>
@@ -17,8 +18,8 @@ public static class ConsumableRngSeed
 
     public static int Consume()
     {
-        DebugLog("Consume");
         var seed = GetValid().Consume().Value;
+        DebugLog($"Consumed - {seed}");
         GenerateNew();
         return seed;
     }

@@ -21,12 +21,13 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
 
     public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber)
     {
-        var comp = GetComposition(difficulty);
+        var rng = new DeterministicRng(ConsumableRngSeed.Consume());
+        var comp = GetComposition(difficulty, rng);
         var strengthPer1 = (float)difficulty / comp.Sum(x => x.Weight);
-        return comp.Select(x => SelectEnemy(x.Weight * strengthPer1, x.Role, x.IsElite)).ToList();
+        return comp.Select(x => SelectEnemy(x.Weight * strengthPer1, x.Role, x.IsElite, rng)).ToList();
     }
 
-    private List<WeightedRole> GetComposition(int difficulty)
+    private List<WeightedRole> GetComposition(int difficulty, DeterministicRng rng)
     {
         var damageDealers = GetPossible(BattleRole.DamageDealer, false);
         var protectors = GetPossible(BattleRole.Survivability, false);
@@ -62,8 +63,8 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
         for (var i = 0; i < validWeightedComps.Length; i++)
             for (var ii = 0; ii < validWeightedComps[i].ChanceOfThisComp; ii++)
                 options.Add(validWeightedComps[i]);
-        var selectedOption = options.Random();
-        var selectedOptionWeights = selectedOption.Weights.Shuffled();
+        var selectedOption = options.Random(rng);
+        var selectedOptionWeights = selectedOption.Weights.Shuffled(rng);
         
         var result = new List<WeightedRole>();
         for (var i = 0; i < selectedOptionWeights.Length; i++)
@@ -94,7 +95,7 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
             }
             result.Add(new WeightedRole 
             { 
-                Role = validRoles.Random(), 
+                Role = validRoles.Random(rng), 
                 Weight = selectedOptionWeights[i], 
                 IsElite = isElite
             });
@@ -114,7 +115,7 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
                 => (float)x.Weights.Min() / (float)x.Weights.Sum() * (float)difficulty > min 
                 && (float)x.Weights.Max() / (float)x.Weights.Sum() * (float)difficulty < max).ToArray();
 
-    private EnemyInstance SelectEnemy(float strength, BattleRole role, bool isElite)
+    private EnemyInstance SelectEnemy(float strength, BattleRole role, bool isElite, DeterministicRng rng)
     {
         var enemyPool = GetPossible(role, isElite);
         var minPower = strength * (1f - flexibility);
@@ -122,7 +123,7 @@ public class EncounterBuilderV4 : ScriptableObject, IEncounterBuilder
         
         var withInPowerRange = enemyPool.Where(x => x.PowerLevel >= minPower && x.PowerLevel <= maxPower).ToArray();
         if (withInPowerRange.Any())
-            return withInPowerRange.Random();
+            return withInPowerRange.Random(rng);
         
         Log.Warn($"Missing Content: Couldn't find {(isElite ? "elite" : "normal")} enemy with the {role} role in the power range between {minPower} - {maxPower}");
         return enemyPool.OrderBy(x => Math.Abs(x.PowerLevel - strength)).First();

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Obsolete("Old Map Version")]
 public class MapSpawner2 : MonoBehaviour
 {
     [SerializeField] private CurrentGameMap2 gameMap;
