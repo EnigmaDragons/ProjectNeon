@@ -78,20 +78,23 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         }
     }
 
-    private void StartDefaultAdventureV5() => StartAdventureV5(defaultAdventure);
+    private void StartDefaultAdventureV5() => StartAdventureV5(defaultAdventure, Maybe<BaseHero[]>.Missing());
     
     protected override void Execute(StartAdventureV5Requested msg)
     {
         Init();
-        StartAdventureV5(msg.Adventure);
+        StartAdventureV5(msg.Adventure, msg.OverrideHeroes);
     }
 
-    private void StartAdventureV5(Adventure adventure)
+    private void StartAdventureV5(Adventure adventure, Maybe<BaseHero[]> overrideHeroes)
     {
         var startingSegment = 0;
         adventureProgress.AdventureProgress = adventureProgress5;
         adventureProgress.AdventureProgress.Init(adventure, 0, startingSegment);
-        party.Initialized(adventure.FixedStartingHeroes);
+        if (adventure.Mode == AdventureMode.Draft)
+            party.InitializedForDraft(overrideHeroes.Select(o => o, adventure.FixedStartingHeroes));
+        else
+            party.Initialized(overrideHeroes.Select(o => o, adventure.FixedStartingHeroes));
         party.UpdateClinicVouchersBy(adventure.StartingClinicVouchers);
         CurrentGameData.Write(s =>
         {
