@@ -38,7 +38,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
         var currentArchs = currentHeroes.SelectMany(h => h.Archetypes).ToHashSet();
         var preferredSelection = allOptions.Where(h => !h.Archetypes.Any(a => currentArchs.Contains(a))).ToList();
         var optimizedSelection = preferredSelection.Count() >= 3 ? preferredSelection : allOptions;
-        var randomThree = optimizedSelection.Shuffled().Take(3).ToArray();
+        var randomThree = optimizedSelection.Shuffled(new DeterministicRng(ConsumableRngSeed.Consume())).Take(3).ToArray();
         
         var maybeFeaturedHero = library.MaybeFeaturedHero;
         var featuredThree = randomThree;

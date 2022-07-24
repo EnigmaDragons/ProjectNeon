@@ -4,7 +4,7 @@ using System.Linq;
 
 public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
 {
-    private static readonly Dictionary<StatType, int> _statAmounts = new Dictionary<StatType, int>
+    private static readonly Dictionary<StatType, int> StatAmounts = new Dictionary<StatType, int>
     {
         { StatType.MaxHP, 16 },
         { StatType.StartingShield, 8 },
@@ -15,7 +15,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         { StatType.Armor, 2 },
         { StatType.Resistance, 2 },
     };
-    private static readonly Dictionary<StatType, string> _negativePrefix = new Dictionary<StatType, string>
+    private static readonly Dictionary<StatType, string> NegativePrefix = new Dictionary<StatType, string>
     {
         { StatType.MaxHP, "Lifeblood" },
         { StatType.StartingShield, "Powered" },
@@ -26,7 +26,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         { StatType.Armor, "Fragilizing" },
         { StatType.Resistance, "Cursed" },
     };
-    private static readonly Dictionary<StatType, string> _positiveSuffix = new Dictionary<StatType, string>
+    private static readonly Dictionary<StatType, string> PositiveSuffix = new Dictionary<StatType, string>
     {
         { StatType.MaxHP, "Vitality" },
         { StatType.StartingShield, "Barrier" },
@@ -37,22 +37,25 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         { StatType.Armor, "Protection" },
         { StatType.Resistance, "Ward" },
     };
-    private static readonly StatType[] _powerStats = new[]
-    {
+    private static readonly StatType[] PowerStats = {
         StatType.Attack,
         StatType.Magic,
         StatType.Leadership,
         StatType.Economy
     };
+    
     private readonly PartyAdventureState _party;
     private readonly int _numOfImplants;
+    private readonly DeterministicRng _rng;
+    
     private ClinicServiceButtonData[] _generatedOptions;
     private bool[] _available;
 
-    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants)
+    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants, DeterministicRng rng)
     {
         _party = party;
         _numOfImplants = numOfImplants;
+        _rng = rng;
     }
     
     public string GetTitle() => "Available Implant Procedures";
@@ -82,14 +85,14 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
 
     private ClinicServiceButtonData GetOption(Hero hero, int index)
     {
-        var loss = _statAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value && (!_powerStats.Contains(x.Key) || x.Key == hero.PrimaryStat)).ToArray().Shuffled().First();
+        var loss = StatAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat)).Random(_rng);
         var lossStat = loss.Key;
         var lossAmount = loss.Value;
-        var gain = _statAmounts.Where(x => x.Key != loss.Key && (!_powerStats.Contains(x.Key) || x.Key == hero.PrimaryStat)).ToArray().Shuffled().First();
+        var gain = StatAmounts.Where(x => x.Key != loss.Key && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat)).Random(_rng);
         var gainStat = gain.Key;
         var gainAmount = gain.Value;
         return new ClinicServiceButtonData(
-            $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}",
+            $"{NegativePrefix[lossStat]} {PositiveSuffix[gainStat]}",
             $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}</b>",
             1,
             () =>

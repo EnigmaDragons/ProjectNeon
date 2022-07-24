@@ -132,7 +132,7 @@ public class AiCardSelectionTests
         var exclusiveCard2 = CreateCard("Exclusive 2", new[] {CardTag.Exclusive}, Scope.One, Group.Opponent);
         
         var ctx = new CardSelectionContext(me, Maybe<Member>.Missing(), new[] {opp, me, designatedOtherAttacker},
-            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedOtherAttacker, SpecialCards),
+            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedOtherAttacker, SpecialCards, new DeterministicRng(Rng.NewSeed())),
             PartyAdventureState.InMemory(), CardPlayZones.InMemory,
             aiPreferences, Maybe<CardTypeData>.Missing(), new []{ exclusiveCard1, exclusiveCard2, AttackCard1 }, new CardTypeData[0]);
 
@@ -152,7 +152,7 @@ public class AiCardSelectionTests
         var designatedOtherAttacker = TestMembers.AnyEnemy();
         
         var ctx = new CardSelectionContext(me, Maybe<Member>.Missing(), new[] {opp, me, designatedOtherAttacker},
-            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedOtherAttacker, SpecialCards),
+            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedOtherAttacker, SpecialCards, new DeterministicRng(Rng.NewSeed())),
             PartyAdventureState.InMemory(), CardPlayZones.InMemory,
             new AiPreferences(), Maybe<CardTypeData>.Missing(), new []{ AttackCard1, AttackCard2 }, AttackCard2.AsArray());
 
@@ -197,12 +197,12 @@ public class AiCardSelectionTests
     
     private static CardSelectionContext AsDesignatedAttacker(Member me, Member opp, AiPreferences aiPreferences, params CardTypeData[] cards)
         => new CardSelectionContext(me, Maybe<Member>.Missing(), new[] {opp, me},
-            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), me, SpecialCards),
+            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), me, SpecialCards, new DeterministicRng(Rng.NewSeed())),
             PartyAdventureState.InMemory(), CardPlayZones.InMemory, aiPreferences,Maybe<CardTypeData>.Missing(), cards, new CardTypeData[0]);
     
     private static CardSelectionContext AsNonDesignatedAttacker(Member me, Member opp, Member designatedAttacker, AiPreferences aiPreferences, params CardTypeData[] cards)
         => new CardSelectionContext(me, Maybe<Member>.Missing(), new[] {opp, me, designatedAttacker},
-            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedAttacker, SpecialCards),
+            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedAttacker, SpecialCards, new DeterministicRng(Rng.NewSeed())),
             PartyAdventureState.InMemory(), CardPlayZones.InMemory, aiPreferences, Maybe<CardTypeData>.Missing(), cards, new CardTypeData[0]);
 
     private void AssertAlwaysPlays(CardSelectionContext ctx, CardTypeData c) => AssertAlwaysPlays(ctx, c, CreateAI());

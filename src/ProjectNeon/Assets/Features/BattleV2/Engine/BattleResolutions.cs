@@ -165,6 +165,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     protected override void Execute(DespawnEnemy msg)
     {
         var pos = state.GetMaybeTransform(msg.Member.Id).Map(t => t.position).OrDefault(Vector3.zero);
+        state.AddEnemyDefeatedRewards(msg.Member.Id);
         enemies.Despawn(msg.Member.State);
         BattleLog.Write($"Despawned {msg.Member.Name}");
         Message.Publish(new MemberDespawned(msg.Member, pos));

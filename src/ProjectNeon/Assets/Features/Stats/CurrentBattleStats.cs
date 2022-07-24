@@ -7,6 +7,8 @@ public class CurrentBattleStats
     public int HpDamageReceived;
     public int HealingReceived;
 
+    public int HighestPreTurn4CardDamage;
+
     public void Clear()
     {
         CardsPlayed = 0;
@@ -14,5 +16,6 @@ public class CurrentBattleStats
         DamageReceived = 0;
         HpDamageReceived = 0;
         HealingReceived = 0;
+        HighestPreTurn4CardDamage = 0;
     }
 }

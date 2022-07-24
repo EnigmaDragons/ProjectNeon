@@ -19,12 +19,8 @@ public sealed class BattleUnconsciousnessChecker
 
     private void ResolveUnconsciousMember(Member member, BattleState state)
     {
-        if (member.TeamType == TeamType.Enemies)
-        {
-            var enemy = state.GetEnemyById(member.Id);
-            state.AddRewardCredits(enemy.GetRewardCredits(state.CreditPerPowerLevelRewardFactor));
-            state.AddRewardXp(enemy.GetRewardXp(state.XpPerPowerLevelRewardFactor));
-        }
+        if (member.TeamType == TeamType.Enemies) 
+            state.AddEnemyDefeatedRewards(member.Id);
 
         var idString = member.TeamType == TeamType.Enemies ? $" {member.Id} " : " ";
         BattleLog.Write($"{member.Name}{idString}is unconscious");

@@ -1,7 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+[Obsolete("MapView1")]
 public sealed class MapLocationNode : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameLabel;

@@ -22,4 +22,5 @@ public enum TemporalStatType
     Vulnerable = 21,
     AntiHeal = 22,
     PrimaryResource = 23,
+    OverkillDamageAmount = 24,
 }

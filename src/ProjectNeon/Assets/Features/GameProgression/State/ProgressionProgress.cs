@@ -15,7 +15,8 @@ public class ProgressionProgress : MonoBehaviour
         
         var completedAcademy = CurrentAcademyData.Data.IsLicensedBenefactor;
         var progress = CurrentProgressionData.Data;
-        return completedAcademy && progress.Completed(firstStoryAdventure.Id);
+        var isUnlocked = completedAcademy && progress.Completed(firstStoryAdventure.Id);
+        return isUnlocked;
     }
 
     public ProgressionItem[] GetAllProgress()
@@ -33,12 +34,12 @@ public class ProgressionProgress : MonoBehaviour
     
     private ProgressionItem[] GetTutorialProgress()
     {
-        return new ProgressionItem(true, $"Adventure - {tutorialAdventure.MapTitle} - Anon").AsArray();
+        return new ProgressionItem(true, $"Adventure - {tutorialAdventure.MapTitle} - Anon", tutorialAdventure.RequiredHeroes.First(), tutorialAdventure).AsArray();
     }
 
     private ProgressionItem[] GetHeroUnlockProgress(BaseHero[] heroes)
     {
-        return heroes.Select(x => new ProgressionItem(false, $"Hero - Unlocked - {x.Name}")).ToArray();
+        return heroes.Select(x => new ProgressionItem(false, $"Hero - Unlocked - {x.Name}", x, Maybe<Adventure>.Missing())).ToArray();
     }
 
     private ProgressionItem[] GetAdventureBaseDifficultyProgress(BaseHero[] heroes, Adventure[] adventures, List<AdventureCompletionRecord> records)
@@ -51,7 +52,7 @@ public class ProgressionProgress : MonoBehaviour
                 return heroes
                     .Select(h =>
                         new ProgressionItem(keyable.ContainsKey($"{a.Id}-{h.id}"),
-                            $"{adventureWord} - {a.MapTitle} - {h.Name}"));
+                            $"{adventureWord} - {a.MapTitle} - {h.Name}", h, a));
             })
             .ToArray();
     }
@@ -59,6 +60,6 @@ public class ProgressionProgress : MonoBehaviour
     private ProgressionItem[] GetAdventureHigherDifficultyProgress(int numAdventures)
     {
         return Enumerable.Range(0, HighestDifficulty * numAdventures)
-            .Select(x => new ProgressionItem(false, $"Hidden - Unlockable Later In Early Access")).ToArray();
+            .Select(x => new ProgressionItem(false, $"Higher Difficulty - Unlockable Later In Early Access", Maybe<BaseHero>.Missing(), Maybe<Adventure>.Missing())).ToArray();
     }
 }

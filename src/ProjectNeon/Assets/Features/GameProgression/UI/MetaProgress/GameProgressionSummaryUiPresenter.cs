@@ -8,7 +8,7 @@ public class GameProgressionSummaryUiPresenter : MonoBehaviour
     [SerializeField] private ProgressionProgress progress;
     [SerializeField] private TextMeshProUGUI totalPercentLabel;
     [SerializeField] private TextMeshProUGUI listSummary;
-
+    
     private void OnEnable()
     {
         Render();

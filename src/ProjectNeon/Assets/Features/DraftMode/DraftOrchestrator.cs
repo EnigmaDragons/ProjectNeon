@@ -18,7 +18,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     {
         draftState.Init(adventure.Adventure.PartySize);
         draftUi.SetActive(true);
-        _picker = new LootPicker(1, new DefaultRarityFactors(), party);
+        _picker = new LootPicker(1, new DefaultRarityFactors(), party, new DeterministicRng(Rng.NewSeed()));
         Advance();
     }
 
@@ -42,8 +42,11 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     private void Advance()
     {
         var draftStep = draftState.Advance();
-        if (draftStep == DraftStep.PickHero) 
-            SelectHero();
+        if (draftStep == DraftStep.PickHero)
+            if (party.Party.Heroes.Length > draftState.HeroIndex)
+                Advance();
+            else
+                SelectHero();
         else if (draftStep == DraftStep.PickCard)
             SelectCard();
         else if (draftStep == DraftStep.PickGear)

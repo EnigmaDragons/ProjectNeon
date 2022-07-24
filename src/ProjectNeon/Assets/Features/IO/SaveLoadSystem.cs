@@ -192,7 +192,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         mapV5.PreviousPosition = mapData.CurrentPosition;
         mapV5.DestinationPosition = mapData.CurrentPosition;
         mapV5.CurrentChoices = mapData.CurrentChoices.ToList();
-        mapV5.CurrentNodeRngSeed = mapData.CurrentNodeRngSeed;
+        mapV5.CurrentNodeRngSeed = ConsumableRngSeed.Init(mapData.CurrentNodeRngSeed);
         return true;
     }
     

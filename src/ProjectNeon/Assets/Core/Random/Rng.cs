@@ -9,19 +9,21 @@ public static class Rng
     private static readonly Random Instance = new Random(Seed);
 
     public static int NewSeed() => Guid.NewGuid().GetHashCode();
-    public static bool Bool() => Int(2) == 1;
-    public static bool Chance(double percent) => Instance.NextDouble() < percent;
-    public static int Int() => Int(int.MaxValue);
-    public static int Int(int max) => Instance.Next(max);
-    public static int Int(int min, int max) => Instance.Next(min, max);
-    public static float Float() => Convert.ToSingle(Dbl());
-    public static double Dbl() => Instance.NextDouble();
-    public static KeyValuePair<T, T2> Random<T, T2>(this Dictionary<T, T2> dictionary) => dictionary.ElementAt(Int(dictionary.Count));
-    public static T Random<T>(this T[] array) => array[Int(array.Length)];
-    public static T Random<T>(this List<T> list) => list[Int(list.Count)];
-    public static T Random<T>(this Array array) => (T) array.GetValue(Int(array.Length));
-    public static T Random<T>(this IEnumerable<T> items) => items.ToArray().Random();
+    
+    [Obsolete("Non-Deterministic")] public static bool Bool() => Int(2) == 1;
+    [Obsolete("Non-Deterministic")] public static bool Chance(double percent) => Instance.NextDouble() < percent;
+    [Obsolete("Non-Deterministic")] public static int Int() => Int(int.MaxValue);
+    [Obsolete("Non-Deterministic")] public static int Int(int max) => Instance.Next(max);
+    [Obsolete("Non-Deterministic")] public static int Int(int min, int max) => Instance.Next(min, max);
+    [Obsolete("Non-Deterministic")] public static float Float() => Convert.ToSingle(Dbl());
+    [Obsolete("Non-Deterministic")] public static double Dbl() => Instance.NextDouble();
+    [Obsolete("Non-Deterministic")] public static KeyValuePair<T, T2> Random<T, T2>(this Dictionary<T, T2> dictionary) => dictionary.ElementAt(Int(dictionary.Count));
+    [Obsolete("Non-Deterministic")] public static T Random<T>(this T[] array) => array[Int(array.Length)];
+    [Obsolete("Non-Deterministic")] public static T Random<T>(this List<T> list) => list[Int(list.Count)];
+    [Obsolete("Non-Deterministic")] public static T Random<T>(this Array array) => (T) array.GetValue(Int(array.Length));
+    [Obsolete("Non-Deterministic")] public static T Random<T>(this IEnumerable<T> items) => items.ToArray().Random();
 
+    [Obsolete("Non-Deterministic")] 
     public static T DrawRandom<T>(this List<T> list)
     {
         var roll = Int(list.Count);
@@ -30,6 +32,7 @@ public static class Rng
         return item;
     }
 
+    [Obsolete("Non-Deterministic")]
     public static T[] Shuffled<T>(this T[] arr)
     {
         var shuffled = arr.ToArray();
@@ -44,6 +47,7 @@ public static class Rng
         return shuffled;
     }
     
+    [Obsolete("Non-Deterministic")]
     public static List<T> Shuffled<T>(this List<T> list)
     {
         var shuffled = list.ToList();
@@ -58,6 +62,7 @@ public static class Rng
         return shuffled;
     }
 
+    [Obsolete("Non-Deterministic")]
     public static T[] TakeRandom<T>(this IEnumerable<T> items, int number)
         => items
             .ToArray()

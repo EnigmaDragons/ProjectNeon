@@ -17,7 +17,7 @@ public sealed class AIStrategyGenerator
         var preferredSingleTarget = GetPreferredSingleTarget(consciousOpponents);
         var designatedAttacker = SelectDesignatedAttacker(s);
         
-        return new AIStrategy(preferredSingleTarget, new Multiple(consciousOpponents.ToArray()), designatedAttacker, specialCards);
+        return new AIStrategy(preferredSingleTarget, new Multiple(consciousOpponents.ToArray()), designatedAttacker, specialCards, new DeterministicRng(s.BattleRngSeed));
     }
 
     private static Maybe<Member> GetPreferredSingleTarget(Member[] relevantEnemies)
@@ -75,7 +75,7 @@ public sealed class AIStrategyGenerator
     {
         if (strategy.DesignatedAttacker.IsConscious() || TeamMembers(s).None())
             return strategy;
-        return new AIStrategy(strategy.SingleMemberAttackTarget, strategy.GroupAttackTarget, SelectDesignatedAttacker(s), strategy.SpecialCards);
+        return new AIStrategy(strategy.SingleMemberAttackTarget, strategy.GroupAttackTarget, SelectDesignatedAttacker(s), strategy.SpecialCards, strategy.Rng);
     }
 
     private AIStrategy WithRefinedPreferredSingleTarget(BattleState s, AIStrategy strategy)
@@ -85,6 +85,6 @@ public sealed class AIStrategyGenerator
         
         var consciousOpponents = GetConsciousOpponents(s);
         var preferredSingleTarget = GetPreferredSingleTarget(consciousOpponents);
-        return new AIStrategy(preferredSingleTarget, strategy.GroupAttackTarget, strategy.DesignatedAttacker, strategy.SpecialCards);
+        return new AIStrategy(preferredSingleTarget, strategy.GroupAttackTarget, strategy.DesignatedAttacker, strategy.SpecialCards, strategy.Rng);
     }
 }

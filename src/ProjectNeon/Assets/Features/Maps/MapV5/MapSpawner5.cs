@@ -114,7 +114,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
         
         var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition)
             .ToArray()
-            .Shuffled()
+            .Shuffled(new DeterministicRng(progress.RngSeed))
             .ToList();
         foreach (var choice in gameMap.CurrentChoices)
         {

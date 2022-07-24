@@ -317,6 +317,23 @@ public class BattleState : ScriptableObject
     public void RecordCardDiscarded() => UpdateState(() => _numPlayerDiscardsUsedThisTurn++);
     public void CleanupExpiredMemberStates() => UpdateState(() => _membersById.ForEach(x => x.Value.State.CleanExpiredStates()));
 
+    public void RecordSingleCardDamageDealt(BattleStateSnapshot before)
+    {
+        var totalBefore = before.Members.Where(x => x.Value.TeamType == TeamType.Enemies).Sum(x => x.Value.State.HpAndShieldWithOverkill);
+        var totalAfter = Enemies.Sum(x => x.Member.HpAndShieldWithOverkill());
+        RecordSingleCardDamageDealt(totalBefore - totalAfter);
+    }
+    
+    private void RecordSingleCardDamageDealt(int amount)
+    {
+        if (TurnNumber > 3)
+            return;
+
+        Stats.HighestPreTurn4CardDamage = Math.Max(amount, Stats.HighestPreTurn4CardDamage);
+        if (Stats.HighestPreTurn4CardDamage > PermanentStats.Data.HighestPreTurn4SingleCardDamage)
+            PermanentStats.Mutate(s => s.HighestPreTurn4SingleCardDamage = Stats.HighestPreTurn4CardDamage);
+    }
+    
     public Member[] GetAllNewlyUnconsciousMembers()
     {
         var newlyUnconscious = Members
@@ -349,6 +366,12 @@ public class BattleState : ScriptableObject
         });
 
     public void UseRecycle() => UpdateState(() => PlayerState.NumberOfCyclesUsedThisTurn++);
+    public void AddEnemyDefeatedRewards(int memberId)
+    {
+        var enemy = GetEnemyById(memberId);
+        AddRewardCredits(enemy.GetRewardCredits(CreditPerPowerLevelRewardFactor));
+        AddRewardXp(enemy.GetRewardXp(XpPerPowerLevelRewardFactor));
+    }
     public void AddRewardCredits(int amount) => UpdateState(() => rewards.AddRewardCredits(amount));
     public void AddRewardXp(int xp) => UpdateState(() => rewards.AddRewardXp(xp)); 
     public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewards.SetRewardCards(cards));
@@ -431,6 +454,7 @@ public class BattleState : ScriptableObject
             d.Stats.TotalDamageReceived += Stats.DamageReceived;
             d.Stats.TotalHpDamageReceived += Stats.HpDamageReceived;
             d.Stats.TotalHealingReceived += Stats.HealingReceived;
+            d.Stats.HighestPreTurn4SingleCardDamage = Math.Max(Stats.HighestPreTurn4CardDamage, d.Stats.HighestPreTurn4SingleCardDamage);
             return d;
         });
     }

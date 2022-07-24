@@ -13,6 +13,8 @@ public class CorpClinicProvider : ScriptableObject
     [SerializeField] private BlessingData[] blessings;
     [SerializeField] private BlessingData[] blessingsV4;
 
+    private const int _tutorialAdventureId = 10;
+    
     public ClinicCostCalculator GetCostCalculator(Corp corp)
     {
         if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4)
@@ -26,14 +28,19 @@ public class CorpClinicProvider : ScriptableObject
 
     public ClinicServiceProvider GetServices(Corp corp)
     {
-        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V5 && procedureCorps.Contains(corp))
-            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions);
-        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V5 && blessingCorps.Contains(corp))
-            return new BlessingClinicServiceProviderV4(party, blessingsV4);
-        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4 && procedureCorps.Contains(corp))
-            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions);
-        if (CurrentGameData.Data.AdventureProgress.Type == GameAdventureProgressType.V4 && blessingCorps.Contains(corp))
-            return new BlessingClinicServiceProviderV4(party, blessingsV4);
+        var adv = CurrentGameData.Data.AdventureProgress;
+        var gameType = adv.Type;
+        var rng = new DeterministicRng(adv.RngSeed);
+        if (adv.AdventureId == _tutorialAdventureId && gameType == GameAdventureProgressType.V5 && procedureCorps.Contains(corp))
+            return new TutorialImplantClinicServiceProviderV5(party, adventure.Adventure.NumOfImplantOptions, rng);
+        if (gameType == GameAdventureProgressType.V5 && procedureCorps.Contains(corp))
+            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng);
+        if (gameType == GameAdventureProgressType.V5 && blessingCorps.Contains(corp))
+            return new BlessingClinicServiceProviderV4(party, blessingsV4, rng);
+        if (gameType == GameAdventureProgressType.V4 && procedureCorps.Contains(corp))
+            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng);
+        if (gameType == GameAdventureProgressType.V4 && blessingCorps.Contains(corp))
+            return new BlessingClinicServiceProviderV4(party, blessingsV4, rng);
         if (procedureCorps.Contains(corp))
             return new ImplantClinicServiceProvider(party);
         if (blessingCorps.Contains(corp))
