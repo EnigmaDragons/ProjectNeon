@@ -29,7 +29,7 @@ MonoBehaviour:
     RotatePlayingCardTags: 
   preferredTurnOrder: 99
   prefab: {fileID: 1266148324363578724, guid: 56a29b95fba54514da6cd565f37d6c78, type: 3}
-  materialType: 0
+  materialType: 1
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
   deathEffect:
     UseConstant: 1
@@ -74,9 +74,14 @@ MonoBehaviour:
       resourceValue: 0
       perTurnPower: 0
       maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
       estimatedTurnsAlive: 0
+      estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 0
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
     - {fileID: 11400000, guid: 840f1ae69a943b845a33689480284649, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0
