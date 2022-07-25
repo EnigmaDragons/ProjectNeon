@@ -98,7 +98,7 @@ public class HeroEquipment
         var equippedAugment = false;
         if (e.Slot == EquipmentSlot.Augmentation)
             for (var i = 0; i < _augments.Length; i++)
-                if (_augments[i] == null)
+                if (!equippedAugment && _augments[i] == null)
                 {
                     Log.Info($"Equipped {e.Name} to Augment Slot {i + 1}");
                     _augments[i] = e;
