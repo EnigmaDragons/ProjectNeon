@@ -54,9 +54,9 @@ public class StaticEquipment : ScriptableObject, Equipment
         };
 
     public Maybe<CardTypeData> ReferencedCard => TurnStartEffects.Concat(TurnEndEffects).Concat(BattleStartEffects)
-        .Where(e => e.BonusCardType != null)
         .Select(e => e.BonusCardType)
         .Cast<CardTypeData>()
+        .Where(e => e != null)
         .FirstAsMaybe();
 
     private static string WipWord(bool isWip) => isWip ? "WIP - " : "";

@@ -111,7 +111,9 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         rulesPresenter.Show(_currentEquipment);
         corpLabel.Show();
         Message.Publish(new ItemHovered(transform));
-        _referencedCard.IfPresent(c => _hoverCard = Instantiate(hoverCardPrototype, _canvas.transform).Initialized(c));
+        InitCanvasIfNeeded();
+        if (_canvas != null)
+            _referencedCard.IfPresent(c => _hoverCard = Instantiate(hoverCardPrototype, _canvas.transform).Initialized(c));
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -153,6 +155,6 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
             .Where(c => c != null)
             .Where(c => c.gameObject.activeInHierarchy)
             .OrderByDescending(c => c.sortingOrder)
-            .First();
+            .FirstOrDefault();
     }
 }
