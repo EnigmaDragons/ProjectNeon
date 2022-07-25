@@ -19,9 +19,9 @@ public class DraftWildLevelUpOptions : LevelUpOptions
     public override LevelUpOption[] Generate(Hero h)
     {
         var numOptions = 3;
-        var pickTypes = Num(DraftWildType.Augment, augmentWeight)
-            .Concat(Num(DraftWildType.Equipment, permanentEquipmentWeight))
+        var pickTypes = Num(DraftWildType.Equipment, permanentEquipmentWeight)
             .Concat(Num(DraftWildType.StatGain, statGainWeight))
+            .Concat(h.Equipment.Augments.Length == 6 ? new DraftWildType[0] : Num(DraftWildType.Augment, augmentWeight))
             .ToArray()
             .Shuffled()
             .Take(numOptions);
