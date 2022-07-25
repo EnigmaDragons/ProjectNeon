@@ -9,6 +9,7 @@ public class DraftWildLevelUpOptions : LevelUpOptions
     [SerializeField] private EquipmentPresenter equipmentPresenterPrototype;
     [SerializeField] private EquipmentPool allEquipmentPool;
     [SerializeField] private StaticHeroLevelUpOptions permanentEquipmentPool;
+    [SerializeField] private StageRarityFactors augmentRarityFactors;
     [SerializeField] private int augmentWeight = 2;
     [SerializeField] private int permanentEquipmentWeight = 4;
     [SerializeField] private int statGainWeight = 8;
@@ -26,9 +27,13 @@ public class DraftWildLevelUpOptions : LevelUpOptions
             .Take(numOptions);
 
         var statGains = DraftModeLevelUpRewardGenerator.GenerateOptions(h).ToQueue();
-        var augmentsGear = HeroPermanentAugmentOptions.GenerateHeroGearOptions(allEquipmentPool, party, h.Character, new HashSet<Rarity>
-            { Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic}, 3);
-        var augments = HeroPermanentAugmentOptions.ToLevelUpOptions(h, augmentsGear, party, equipmentPresenterPrototype).ToQueue();
+        var rarities = 
+            Enumerable.Range(0, augmentRarityFactors[Rarity.Common]).Select(_ => Rarity.Common).Concat(
+            Enumerable.Range(0, augmentRarityFactors[Rarity.Uncommon]).Select(_ => Rarity.Uncommon)).Concat(
+            Enumerable.Range(0, augmentRarityFactors[Rarity.Rare]).Select(_ => Rarity.Rare)).Concat(
+            Enumerable.Range(0, augmentRarityFactors[Rarity.Epic]).Select(_ => Rarity.Epic));
+        var augmentGear = allEquipmentPool.Random(EquipmentSlot.Augmentation, rarities.Random(), new[] {h.Character}, 1);
+        var augments = HeroPermanentAugmentOptions.ToLevelUpOptions(h, augmentGear.ToArray(), party, equipmentPresenterPrototype).ToQueue();
         var equipments = permanentEquipmentPool.options.Take(3).ToQueue();
 
         var options = pickTypes.Select(t =>
