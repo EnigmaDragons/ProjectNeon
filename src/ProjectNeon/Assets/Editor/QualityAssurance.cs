@@ -156,6 +156,8 @@ public class QualityAssurance
             var issues = new List<string>();
             if (!e.IsReadyForPlay) 
                 issues.Add($"Broken Enemy: {e.EnemyName} is not ReadyForPlay");
+            if (e.MaterialType == MemberMaterialType.Unknown)
+                issues.Add($"Enemy {e.EnemyName} does not have a Material Type set.");
             ValidateEnemyPrefab(e, issues);
             if (issues.Any())
                 badEnemies.Add(new ValidationResult(e.EnemyName, issues));
