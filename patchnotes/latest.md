@@ -1,91 +1,83 @@
-## Patch Notes - v0.0.45
+## Patch Notes - v0.0.46
 ----
 
 New Content:
-- New Draft Mode (a very fun completely different way to play the game)
-- New Augment: Scheme - Big Brain
-- New Augment: Scheme - Inspirational VR Quotes
-- New Augment: Scheme - Remote Meeting Conn
-- New Augment: Stealth - Reactive Camo
-- New Augment: Stealth - Shadow Frequency Graft
-- New Augment: Scheme - Insight Stimulator
-- New Card: Stealth - Bide My Time
-- New Card: Stealth-Scheme Scrutinize
-- New Enemy: Void Blade
-- New Enemy: Torturer
-- New Enemy: Mage Duelist
-- Card Shop Design: A brand new look with Nikita at the shop has things to say every time you shop 
+- Draft Mode: Now allows players to construct any Squad they like
 
 Balance Changes:
-- Draft Mode: Create Plain Anton Third Phase Fight with no cutscene bits
-- Progression: Persists Hero/Adventure Win Combinations
-- Rebalance: Buffed Intrusive Thoughts. Now Scales with Primary Stat
-- Rebalance: Implants
-- Rebalance: Level up health gains
-- Rebalance: Strategy Meeting no longer scales off Primary Stat for self-buff
-- Rebalance: Victoria's Level Up now increase her Max Shield to 32, up from 26
-- Rebalance: All heroes HP is greatly increased
-- Rebalance: All enemies in the game are now tougher and do less
-- Rebalance: Decrease the adventure number of battles and increased level up timing
-- Rebalance: increased the power level curve of the adventure
+- Rebalance: All Hero base HP reduced by 24%
+- Rebalance: Boost Shields and Super Charge now scale with Base Power instead of current Power
+- Rebalance: Buffed Omnislash Scaling
+- Rebalance: Draft fights and curves
+- Rebalance: Draft Level Up Odds of Equipment Rarity has been tuned
+- Rebalance: Enemies got some power back
+- Rebalance: Enemies who flee from battle still grant you reward XP and Creds
+- Rebalance: Major Encounter Builder Rework
+- Rebalance: Rifle - Buffed Bullet Barrage and Covering Fire
+- Rebalance: The power curve is a little more linear but gets higher
+- Rebalance: Tuned some Stealth and Scheme cards that caused circular boost engines unintentionally
+- Rebalance: Veda's Starting Magic Decreased by 1
 
 Player Aids:
-- Design: Added Tutorial Hint for Gilgamesh Aegis puzzle
+- Design: Added Implants to the Tutorial Clinic
+- Tutorial: Added explanation panels for Clinic/Shop/Deckbuilder
 
 Card Improvements:
-- Card Wording: Damage Types are color-coded
-- Wording: Renamed Raw Damage to True Damage
-- Card Redesign: Revamped Stealth Domino
-
-UI Improvements:
-- Draft: Setup UI Hovers and Sounds for Card picks
-- UI - Draft Mode - Shows Basic at Top of Decklist during picks
-- UI: Added Basic Game Progress view
-- UI: Added description of the initial Tutorial Adventure goal to Settings Scene
-- UI: Added Draft Mode button to Main Menu
-- UI: AoE Tutorial Text Panel is color-coded to match Ally/Enemy target symbol colors
-- UI: Augments shows True Damage symbol
-- UI: Can view Party collection and details from Card Shop now
-- UI: Decklist now shows Dual-Archetype Gradient tints
-- UI: Draft - Show Selected Gear
-- UI: Draft - Shows Hero's Cards as they are drafted
-- UI: Draft Mode - Show Chosen Heroes
-- UI: Draft Mode Better Hero experience
-- UI: Draft Mode Hover Card now shown above everything else
-- UI: Draft Mode shows X instead of locked cost for X-Cost Picked Cards
-- UI: Evolved Card Shop UI
-- UI: New Shop Dialogue panel is hidden eventually
-- UI: Smoothed the transition timing if you have multiple Heroes level up at the same time
-- UI: Tutorial 3 - Colors text to correspond with damage type colors
-- UI: After Draft - Go To Build Decks
+- Card Function: Improved Roomsweeper Grenade resolution (1 packet of damage)
 
 Art Improvements:
-- Art: Changed hp damage VFX for synthetic enemies
-- Art: Death Particles are differently colored for humanoids and robots
-- Art: New Card Shop environment
-- Art: New Card Shopkeeper Character Art
-- Art: Reworked Anon Character Art
-- Audio: Integrated sounds into Shop View
-- SFX: Turned down Level Up Finished sound a little
-- Music: Integrated NNZ Battle Music
-- VFX: AoEs are now positioned based on the actual enemy positions
+- Anim: Added Character anim for Reverse Polarity
+- Art: Cover Art for v0.0.46
+- Art: Evolved Riot Bot Card Animations
+- Art: Improved New Map Node Placements
+- New Art: Brand New Cyberpunk City Map art from Dystoth
+
+UI Improvements:
+- UI: Added Unlock Draft Mode Cheat
+- UI: Augments with associated cards show the card on Hover
+- UI: Can advance Tutorial Victory screen using a button on screen
+- UI: Draft Heroes start with random selected heroes
+- UI: Draft Mode - Augment UI has hovers and sounds
+- UI: Draft Mode - Basic Card always shown at the top of the card list
+- UI: Draft Rules panel added
+- UI: Hero Augments panel is larger to support Draft extra augments
+- UI: Hides Mouse Cursor when right-click-dragging a card
+- UI: Improved Hero Panel Stats icon
+- UI: Map has Persistent Node Locations across Save/Load
+- UI: Minor tweak to Map Hero Panel
+- UI: New Map View Layout
+- UI: Opening the menu resets the Cursor and Mouse Drag
+- UI: Prevents most mouse click actions while dragging. Cleaned up battle keyboard
+- UI: Progress Screen shows unlock requirements
+- UI: Progress View V2
+- UI: Resets Mouse Drag State on Scene change or Menu Open
+- UI: Starting a Draft from Main Menu when you have an existing game will now prompt to confirm
+- UI: Updated Vulnerable Rule Panel
+- UI: Victory Screen doesn't shows Credits Panel if you didn't earn any
 
 Bug Fixes:
-- Bug Fix: Broken UI Helper on Tutorial 11
-- Bug Fix: Can now re-start Prologue adventure from Adventure Select
-- Bug Fix: Can't Continue Game if you Exit at Hero Pick 3 Fixed
-- Bug Fix: Energy Amplification now works correctly with Electro Backflow Intake
-- Bug Fix: Heal Anim repositioned
-- Bug Fix: Tritoonico Implants now show up in V5 Adventure for Solo Hero
-- Bug Fix: Visiting Clinics with 0 Credits no longer prevents using Vouchers
-- Bug Fix: Vulnerable status icon hover text updated to match buffed Vulernable amount
-- Buf Fix: Inititilization for adventure mode
-- Bug Fix: Loot picker in adventure mode blowing up the game
+- Bug Fix: 3 Hero Party extra Level Up screen triggered in the UI
+- Bug Fix: Combat Drone V2 now correctly Disable hero with Shock Blast
+- Bug Fix: Draft Mode Load now can fit up to your 6 Augments
+- Bug Fix: Draft Save/Load after level up now working correctly
+- Bug Fix: Editor Find Cards String Comparison Null-Ref Fixed
+- Bug Fix: Hero damage taken wasn't persisting between Boss Phases. Fixed
+- Bug Fix: Missing Animation Shot-Rifle fixed in all cards
+- Bug Fix: Prevent entering Deck Builder from Tutorial Card Shop
+- Bug Fix: Reduced requirements to leave Deck Builder in Tutorial
+- Bug Fix: Starting Permanent Gear can crash Hero Details View
 
 Project:
-- Project: Cover Banner Art for v0.0.45
-- Project: Upversion to v0.0.45
+- Project: Added Dystoth to the Credits
+- Project: Started Coverage document
 
 Miscellaneous:
-- Coding: Updated Content Summarizer to expect 8 Augments per Archetype
-- Coding: Added an enemy Stats window to visualize enemy content
+- Coding: Adding Playtest Damage Competition Tracker
+- Coding: Can Track Overkill damage amounts
+- Coding: Deterministic Rng for Clinic Service Generation
+- Coding: Draft Odds Tweaks
+- Coding: Enemy Encounter Generation is now Deterministic
+- Coding: Pick 3 Hero is now Persistent Deteministic
+- Coding: Progressively Unlocks Draft Adventures
+- Coding: Retrofitted Encounter Builder V5 to be Persistent Deterministic
+- Coding: Shop Selection Determinism

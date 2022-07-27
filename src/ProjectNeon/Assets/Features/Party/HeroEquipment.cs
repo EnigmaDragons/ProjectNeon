@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class HeroEquipment
 {
-    private const int MaxAugments = 4;
+    private const int MaxAugments = 6;
     
     [SerializeField] private string[] archetypes;
     [SerializeField] private string weaponName;
@@ -85,23 +85,28 @@ public class HeroEquipment
         {
             _weapon = e;
             weaponName = _weapon.Name;
+            return;
         }
 
         if (e.Slot == EquipmentSlot.Armor)
         {
             _armor = e;
             armorName = _armor.Name;
+            return;
         }
-        
+
+        var equippedAugment = false;
         if (e.Slot == EquipmentSlot.Augmentation)
             for (var i = 0; i < _augments.Length; i++)
-                if (_augments[i] == null)
+                if (!equippedAugment && _augments[i] == null)
                 {
                     Log.Info($"Equipped {e.Name} to Augment Slot {i + 1}");
                     _augments[i] = e;
                     augments[i] = e.Name;
-                    return;
+                    equippedAugment = true;
                 }
         
+        if (!equippedAugment)
+            Log.Error($"Did not Successfully Equip Augment {e.Name}. Num Augments Already Equipped {_augments.Length}");
     }
 }

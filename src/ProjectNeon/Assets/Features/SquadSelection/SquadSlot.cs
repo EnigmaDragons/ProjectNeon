@@ -12,13 +12,16 @@ public class SquadSlot : MonoBehaviour
     private int _index;
     private BaseHero[] _bannedHeroes;
     
-    public void Init(int index, BaseHero[] bannedHeroes)
+    public void Init(int slotIndex, BaseHero[] bannedHeroes)
     {
-        _index = index;
+        _index = slotIndex;
         _bannedHeroes = bannedHeroes;
         SelectNextHero();
         SelectPreviousHero();
     }
+
+    public void Randomize(DeterministicRng rng) =>
+        Enumerable.Range(0, rng.Int(AvailableHeroes.Count())).ForEach(_ => SelectNextHero());
     
     public void SelectNextHero()
     {

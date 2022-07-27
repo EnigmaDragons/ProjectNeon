@@ -15,7 +15,7 @@ public class CurrentProgressionData
         _current = _stored.Get();
         _version = version;
     }
-
+    
     public static void RecordCompletedAdventure(int adventureId, int difficulty, int[] heroes)
     {
         Write(d =>
@@ -26,6 +26,15 @@ public class CurrentProgressionData
         });
     }
     
+    public static void Mutate(Action<ProgressionData> mutate)
+    {
+        Write(d =>
+        {
+            mutate(d);
+            return d;
+        });
+    }
+
     public static void Write(Func<ProgressionData, ProgressionData> transform)
     {
         _stored.Write(transform);

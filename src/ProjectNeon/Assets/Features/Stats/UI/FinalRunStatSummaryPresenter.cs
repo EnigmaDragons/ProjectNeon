@@ -27,7 +27,7 @@ public class FinalRunStatSummaryPresenter : MonoBehaviour
         Render(5, "Damage Taken", stats.TotalDamageReceived);
         Render(6, "HP Damage Taken", stats.TotalHpDamageReceived);
         Render(7, "Healing Received", stats.TotalHealingReceived);
-        Render(8, "Single-Card Damage Peak", stats.HighestPreTurn4SingleCardDamage);
+        Render(8, "Top Card Damage", stats.HighestPreTurn4SingleCardDamage);
     }
 
     private void RenderHeroes()

@@ -1,6 +1,6 @@
 public static class ConsumableRngSeed
 {
-    private static bool _loggingEnabled = false;
+    private static bool _loggingEnabled = true;
     private static OneTimeSeed NewSeed() => new OneTimeSeed(Rng.NewSeed());
 
     public static OneTimeSeed Current { get; private set; } = NewSeed();

@@ -142,6 +142,20 @@ public class FindEnemiesEditor : EditorWindow
                 .Show();
         }
         DrawUILine();
+        
+        if (GUILayout.Button("Without Material Types")) 
+        {
+            var items = GetAllInstances<Enemy>()
+                .Where(e => e.IsCurrentlyWorking)
+                .Where(e => e.MaterialType == MemberMaterialType.Unknown)
+                .Select(e => e.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Without Material Types - {items.Length} Enemies", items)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
     }
 
     private IEnumerable<Enemy> GetAllWorkingEnemies() => GetAllInstances<Enemy>().Where(e => e.IsCurrentlyWorking);

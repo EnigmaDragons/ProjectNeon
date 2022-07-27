@@ -2,5 +2,5 @@
 
 public interface IEncounterBuilder
 {
-    List<EnemyInstance> Generate(int difficulty, int currentChapterNumber);
+    List<EnemyInstance> Generate(int difficulty, int currentChapterNumber, bool isElite);
 }

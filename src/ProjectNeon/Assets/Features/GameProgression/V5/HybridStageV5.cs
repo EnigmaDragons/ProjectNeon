@@ -6,8 +6,7 @@ public class HybridStageV5 : ScriptableObject, IStage
 {
     [SerializeField] private string displayName;
     [SerializeField] private GameMap3 gameMap3;
-    [SerializeField] private EncounterBuilderV4 encounterBuilder;
-    [SerializeField] private EncounterBuilderV4 eliteEncounterBuilder;
+    [SerializeField] private EncounterBuilderV5 encounterBuilder;
     [SerializeField] private StorySetting storySetting;
     [SerializeField] private PowerCurve powerCurve;
     [SerializeField] private PowerCurve elitePowerCurve;
@@ -34,7 +33,7 @@ public class HybridStageV5 : ScriptableObject, IStage
 
     public GameMap3 Map => gameMap3;
     public IEncounterBuilder EncounterBuilder => encounterBuilder;
-    public IEncounterBuilder EliteEncounterBuilder => eliteEncounterBuilder;
+    public IEncounterBuilder EliteEncounterBuilder => encounterBuilder;
     public StorySetting StorySetting => storySetting;
     public float ShopOdds => shopOdds;
     public int NoShopUntilSegment => noShopsUntilSegment;

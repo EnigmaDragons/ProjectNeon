@@ -17,6 +17,7 @@ public interface Equipment
     EffectData[] BattleEndEffects { get; }
     string Corp { get; }
     EquipmentDistributionRules DistributionRules { get; }
+    Maybe<CardTypeData> ReferencedCard { get; }
 
     GameEquipmentData GetData();
 }

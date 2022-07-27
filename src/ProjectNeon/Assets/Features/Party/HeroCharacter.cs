@@ -48,7 +48,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public CardTypeData[] ParagonCards { get; set; } = new CardTypeData[0];
     public HashSet<CardTypeData> ExcludedCards { get; set; } = new HashSet<CardTypeData>();
     public CardTypeData[] AdditionalStartingCards { get; } = new CardTypeData[0];
-    public IStats Stats { get; set; } = new StatAddends();
+    public IStats Stats { get; set; } = new StatAddends().With(StatType.Damagability, 1);
     public int StartingCredits { get; set; } = 100;
     public HeroFlavorDetails Flavor { get; set; } 
         = new HeroFlavorDetails { HeroDescription = "Desc", RoleDescription = "Desc", BackStory = "BackStory" };

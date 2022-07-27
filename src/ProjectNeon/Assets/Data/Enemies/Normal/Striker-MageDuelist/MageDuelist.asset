@@ -29,7 +29,7 @@ MonoBehaviour:
     RotatePlayingCardTags: 
   preferredTurnOrder: 99
   prefab: {fileID: 4586683221125935857, guid: c0c7fa90d1875f648bf565ab6cf19d74, type: 3}
-  materialType: 0
+  materialType: 1
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
   deathEffect:
     UseConstant: 1
@@ -45,15 +45,15 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 111
-    maxShield: 22
+    maxHp: 102
+    maxShield: 20
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
     attack: 0
-    magic: 10
+    magic: 12
     leadership: 0
     armor: 0
     resistance: 3
@@ -62,24 +62,27 @@ MonoBehaviour:
     maxResourceAmount: 5
     resourceGainPerTurn: 0
     cardsPerTurn: 1
-    powerLevel: 172
+    powerLevel: 171
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 120.933044
-      perCardValue: 10
-      resourceValue: 3.3
-      perTurnPower: 10
-      maxAndStartingResourcesPower: 1.109328
+      startingPower: 111.88685
+      perCardValue: 12
+      resourceValue: 3.96
+      perTurnPower: 12
+      maxAndStartingResourcesPower: 1.3311936
       estimatedHeroDamage: 12
-      estimatedTurnsAlive: 6.7185025
-      estimatedPerTurnTotalValue: 50.395927
-      calculatedPowerLevel: 172
+      estimatedTurnsAlive: 6.2159357
+      estimatedPerTurnTotalValue: 57.57319
+      calculatedPowerLevel: 171
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 1bd9e4bf6ab559e48821096e2f91fbb5, type: 2}
     - {fileID: 11400000, guid: 3203248386effad4a898a7c39526cdf8, type: 2}
     - {fileID: 11400000, guid: a51b0e494e745d944a5862713f25ff56, type: 2}
+  maxCopies: 2
+  minimumAllies: 0
+  damageType: 2

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RepairBot
   m_EditorClassIdentifier: 
   id: 29
-  enemyName: RepairBot
+  enemyName: Repair Bot
   allowedForSocialMedia: 1
   excludeFromBestiary: 0
   isTutorialEnemy: 0
@@ -45,15 +45,15 @@ MonoBehaviour:
   animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
-    maxHp: 88
-    maxShield: 24
-    startingShield: 24
+    maxHp: 83
+    maxShield: 21
+    startingShield: 21
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 8
-    magic: 8
+    attack: 0
+    magic: 10
     leadership: 0
     armor: 0
     resistance: 0
@@ -62,25 +62,28 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 165
+    powerLevel: 167
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 113.84047
-      perCardValue: 8
-      resourceValue: 2.64
-      perTurnPower: 10.64
+      startingPower: 105.78116
+      perCardValue: 10
+      resourceValue: 3.3
+      perTurnPower: 13.3
       maxAndStartingResourcesPower: 0
       estimatedHeroDamage: 12
-      estimatedTurnsAlive: 6.3244705
-      estimatedPerTurnTotalValue: 51.627743
-      calculatedPowerLevel: 165
+      estimatedTurnsAlive: 5.8767314
+      estimatedPerTurnTotalValue: 60.742718
+      calculatedPowerLevel: 167
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 2b2816ed41205944082d811b837a8467, type: 2}
-    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+    - {fileID: 11400000, guid: a9fa25814378e4f4aa80da7526680f29, type: 2}
     - {fileID: 11400000, guid: dac690d0a62dd9941a0aa234b3be2575, type: 2}
     - {fileID: 11400000, guid: c3e0f1bb923e29e47b9a3a6ca32f4eb7, type: 2}
+  maxCopies: 1
+  minimumAllies: 1
+  damageType: 0

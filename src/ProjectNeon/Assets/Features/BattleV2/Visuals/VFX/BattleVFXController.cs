@@ -39,7 +39,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         }
         else if (f.IsMissing)
         {
-            Log.Error($"No VFX of type {e.EffectName}");
+            Log.Warn($"No VFX of type {e.EffectName}");
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
         }
         else if (e.Scope.Equals(Scope.One) || e.Scope.Equals(Scope.OneExceptSelf))

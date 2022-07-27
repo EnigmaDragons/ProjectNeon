@@ -84,6 +84,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         currentChapterIndex = chapterIndex;
         currentSegmentIndex = segmentIndex;
         currentMap.SetMap(CurrentChapter.Map);
+        rngSeed = ConsumableRngSeed.GenerateNew().Peek.Value;
         Log.Info($"Init Adventure. {this}");
     }
     
@@ -99,7 +100,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         {
             return
                 $"Adventure: {currentAdventure.Adventure.Id} {currentAdventure.Adventure.Title}. Stage: {currentChapterIndex}. StageProgress: {Progress}." +
-                $"Chapter: {currentChapterIndex}/{currentAdventure.Adventure.StagesV5.Length}. Segment: {currentSegmentIndex}";
+                $"Chapter: {currentChapterIndex}/{currentAdventure.Adventure.StagesV5.Length}. Segment: {currentSegmentIndex}. Rng: {RngSeed}";
         }
         catch (Exception e)
         {

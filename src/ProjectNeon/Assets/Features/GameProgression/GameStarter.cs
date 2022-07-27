@@ -163,21 +163,24 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     protected override void Execute(StartNewGameRequested msg)
     {
         if (!CurrentGameData.HasActiveGame) 
-            KickOffGameStartProcess();
+            KickOffGameStartProcess(msg.Mode);
         else
             Message.Publish(new ShowTwoChoiceDialog
             {
                 UseDarken = true,
                 Prompt = "Starting a new game will abandon your current run. Are you sure you wish to start to start a new game?",
                 PrimaryButtonText = "Yes",
-                PrimaryAction = KickOffGameStartProcess,
+                PrimaryAction = () => KickOffGameStartProcess(msg.Mode),
                 SecondaryButtonText = "No",
                 SecondaryAction = () => { }
             });
     }
 
-    private void KickOffGameStartProcess()
+    private void KickOffGameStartProcess(AdventureMode mode)
     {
-        Message.Publish(new StartNewGame());
+        if (mode == AdventureMode.Draft)
+            navigator.NavigateToDraftAdventureSelection();
+        else
+            Message.Publish(new StartNewGame());
     }
 }

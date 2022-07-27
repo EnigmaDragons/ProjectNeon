@@ -26,6 +26,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
     private bool _isBasic;
 
     private void Awake() => InitCanvasIfNeeded();
+    private void OnDisable() => OnExit();
     private void OnDestroy() => OnExit();
 
     public void SetCanvas(Canvas c)

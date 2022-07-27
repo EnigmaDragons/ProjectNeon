@@ -143,6 +143,7 @@ public sealed class SaveLoadSystem : ScriptableObject
 
             foreach (var equipmentIdName in heroSaveData.EquipmentIdNames)
             {
+                Log.Info($"Load Equipment - {equipmentIdName}");
                 if (equipmentIdName.Name.Equals("Implant"))
                     continue;
                 

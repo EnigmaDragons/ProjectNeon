@@ -4,12 +4,12 @@ public static class DraftModeLevelUpRewardGenerator
 {
     private static (string description, StatAddends stats)[] statOptions =
     {
-        ("+6 MaxHP", new StatAddends().With(StatType.MaxHP, 6)),
-        ("+2 Armor", new StatAddends().With(StatType.Armor, 1)),
-        ("+2 Resistance", new StatAddends().With(StatType.Resistance, 1)),
+        ("+8 MaxHP", new StatAddends().With(StatType.MaxHP, 8)),
+        ("+1 Armor", new StatAddends().With(StatType.Armor, 1)),
+        ("+1 Resistance", new StatAddends().With(StatType.Resistance, 1)),
         ("+1 Power", new StatAddends().With(StatType.Power, 1)),
-        ("+10 Max Shield", new StatAddends().With(StatType.MaxShield, 10)),
-        ("+3 Starting Shield", new StatAddends().With(StatType.StartingShield, 10)),
+        ("+16 Max Shield", new StatAddends().With(StatType.MaxShield, 16)),
+        ("+4 Starting Shield", new StatAddends().With(StatType.StartingShield, 4)),
     };
     
     public static LevelUpOption[] GenerateOptions(Hero hero)

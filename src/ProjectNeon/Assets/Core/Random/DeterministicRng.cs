@@ -7,6 +7,8 @@ public class DeterministicRng
     private readonly Random _instance;
     
     public int Seed { get; }
+
+    public static DeterministicRng CreateRandom() => new DeterministicRng(Guid.NewGuid().GetHashCode());
     
     public DeterministicRng(int seed)
     {
