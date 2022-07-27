@@ -97,8 +97,11 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
             1,
             () =>
             {
-                AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount);
-                _available[index] = false;
+                if (_available.Length > index)
+                {
+                    _available[index] = false;
+                    AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount);
+                }
             }, Array.Empty<EffectData>(),
             "Medigeneix");
     }
