@@ -96,6 +96,11 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
             }
             endEarlyButton.gameObject.SetActive(false);
         }
+        //in case you gained card plays
+        if (battleState.Phase == BattleV2Phase.PlayCards && msg.State.NumberOfCardPlaysRemainingThisTurn != 0)
+        {
+            confirmUi.gameObject.SetActive(true);
+        }
         // Out of Play Phase
         if (battleState.Phase != BattleV2Phase.PlayCards)
         {
