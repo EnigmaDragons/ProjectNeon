@@ -9,7 +9,7 @@ public class EffectReactWith : Effect
     {
         { ReactionConditionType.WhenHas10CardsOrMoreInHand, ctx => effect => ctx.Possessor.IsConscious() && effect.CardZones.HandZone.Count >= 10 },
         { ReactionConditionType.OnTeamCardCycled, ctx => effect => ctx.Actor.IsConscious() && effect.CycledCard.IsPresent },
-        { ReactionConditionType.OnCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(c => c.Owner.Id == ctx.Possessor.Id) },
+        { ReactionConditionType.OnCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(c => c.Owner.Id == ctx.Possessor.Id) && effect.IsFirstBattleEffectOfChosenTarget },
         { ReactionConditionType.WhenAttacked, ctx => effect => 
             ctx.Actor.IsConscious()
             && new [] {EffectType.AttackFormula, EffectType.MagicAttackFormula, EffectType.TrueDamageAttackFormula}.Contains(effect.EffectData.EffectType)
