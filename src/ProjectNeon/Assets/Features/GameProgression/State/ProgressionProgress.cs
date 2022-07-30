@@ -44,7 +44,7 @@ public class ProgressionProgress : MonoBehaviour
 
     private ProgressionItem[] GetAdventureBaseDifficultyProgress(BaseHero[] heroes, Adventure[] adventures, List<AdventureCompletionRecord> records)
     {
-        var keyable = records.ToDictionary(x => $"{x.AdventureId}-{x.HeroId}", x => x);
+        var keyable = records.DistinctBy(x => $"{x.AdventureId}-{x.HeroId}").ToDictionary(x => $"{x.AdventureId}-{x.HeroId}", x => x);
         return adventures
             .SelectMany(a =>
             {
