@@ -99,7 +99,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         //in case you gained card plays
         if (battleState.Phase == BattleV2Phase.PlayCards && msg.State.NumberOfCardPlaysRemainingThisTurn != 0)
         {
-            confirmUi.gameObject.SetActive(true);
+            confirmUi.gameObject.SetActive(false);
         }
         // Out of Play Phase
         if (battleState.Phase != BattleV2Phase.PlayCards)
