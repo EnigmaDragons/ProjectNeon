@@ -12,6 +12,7 @@ public class CorpClinicProvider : ScriptableObject
     [SerializeField] private StaticCorp[] blessingCorps;
     [SerializeField] private BlessingData[] blessings;
     [SerializeField] private BlessingData[] blessingsV4;
+    [SerializeField] private ClinicState clinicState;
 
     private const int _tutorialAdventureId = 10;
     
@@ -34,11 +35,11 @@ public class CorpClinicProvider : ScriptableObject
         if (adv.AdventureId == _tutorialAdventureId && gameType == GameAdventureProgressType.V5 && procedureCorps.Contains(corp))
             return new TutorialImplantClinicServiceProviderV5(party, adventure.Adventure.NumOfImplantOptions, rng);
         if (gameType == GameAdventureProgressType.V5 && procedureCorps.Contains(corp))
-            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng);
+            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng, clinicState.IsTutorial);
         if (gameType == GameAdventureProgressType.V5 && blessingCorps.Contains(corp))
             return new BlessingClinicServiceProviderV4(party, blessingsV4, rng);
         if (gameType == GameAdventureProgressType.V4 && procedureCorps.Contains(corp))
-            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng);
+            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng, clinicState.IsTutorial);
         if (gameType == GameAdventureProgressType.V4 && blessingCorps.Contains(corp))
             return new BlessingClinicServiceProviderV4(party, blessingsV4, rng);
         if (procedureCorps.Contains(corp))

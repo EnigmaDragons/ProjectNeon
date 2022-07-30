@@ -37,25 +37,35 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         { StatType.Armor, "Protection" },
         { StatType.Resistance, "Ward" },
     };
-    private static readonly StatType[] PowerStats = {
+    private static readonly StatType[] PowerStats = 
+    {
         StatType.Attack,
         StatType.Magic,
         StatType.Leadership,
         StatType.Economy
     };
+    private static readonly StatType[] TutorialStatTypes =
+    {
+        StatType.MaxHP,
+        StatType.Attack,
+        StatType.Armor,
+        StatType.Resistance
+    };
     
     private readonly PartyAdventureState _party;
     private readonly int _numOfImplants;
     private readonly DeterministicRng _rng;
+    private readonly bool _isTutorial;
     
     private ClinicServiceButtonData[] _generatedOptions;
     private bool[] _available;
 
-    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants, DeterministicRng rng)
+    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants, DeterministicRng rng, bool isTutorial)
     {
         _party = party;
         _numOfImplants = numOfImplants;
         _rng = rng;
+        _isTutorial = isTutorial;
     }
     
     public string GetTitle() => "Available Implant Procedures";
@@ -85,10 +95,10 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
 
     private ClinicServiceButtonData GetOption(Hero hero, int index)
     {
-        var loss = StatAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat)).Random(_rng);
+        var loss = StatAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat) && (!_isTutorial || TutorialStatTypes.Contains(x.Key))).Random(_rng);
         var lossStat = loss.Key;
         var lossAmount = loss.Value;
-        var gain = StatAmounts.Where(x => x.Key != loss.Key && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat)).Random(_rng);
+        var gain = StatAmounts.Where(x => x.Key != loss.Key && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat) && (!_isTutorial || TutorialStatTypes.Contains(x.Key))).Random(_rng);
         var gainStat = gain.Key;
         var gainAmount = gain.Value;
         return new ClinicServiceButtonData(
