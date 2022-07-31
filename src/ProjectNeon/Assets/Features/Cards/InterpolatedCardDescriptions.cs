@@ -133,7 +133,9 @@ public static class InterpolatedCardDescriptions
         }
 
         foreach (var r in _resourceIcons)
-            result = result.Replace(r.Key, Sprite(r.Value));
+            result = Regex.Replace(result, $" {r.Key}", $" {Sprite(r.Value)}");
+
+        result = Regex.Replace(result, @"@(\w+)", "$1");
         
         // Add Line Breaks
         result = result.Replace("\\n", "\n");
