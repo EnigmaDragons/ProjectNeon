@@ -32,19 +32,22 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         Message.Subscribe<ShowHeroDetailsView>(Execute, this);
         Message.Subscribe<CardRemovedFromDeck>(Execute, this);
         Message.Subscribe<CardAddedToDeck>(Execute, this);
-        enemyTabHighlight.SetActive(true);
-        Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.HeroTab, true));
-        deckClearHighlight.SetActive(true);
-        heroStatsHighlight.SetActive(true);
-        Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInLibrary, true));
-        Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInDeck, true));
-        libraryNextHighlight.SetActive(true);
+        
+        SetFocusEnemyTabActive(true);
+        SetFocusDeckTabActive(false);
+        SetFocusHeroStatsActive(false);
+        SetFocusHeroTabActive(false);
+        SetFocusDeckClearActive(false);
+        SetFocusAddCardActive(false);
+        SetFocusRemoveCardActive(false);
+        SetFocusLibraryNextActive(false);
+        
         libraryNextButton.onClick.AddListener(() =>
         {
             if (!_hasChangedLibraryPages)
             {
                 _hasChangedLibraryPages = true;
-                libraryNextHighlight.SetActive(false);
+                SetNextFocus();
             }
         });
         SetDoneButtonInteractivity();
@@ -57,15 +60,12 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         if (msg.TabName == "enemy" && !_hasSwitchedToEnemyTab)
         {
             _hasSwitchedToEnemyTab = true;
-            enemyTabHighlight.SetActive(false);
-            deckTabHighlight.SetActive(true);
-            SetDoneButtonInteractivity();
+            SetNextFocus();
         }
         if (msg.TabName == "hero" && _hasSwitchedToEnemyTab && !_hasSwitchedToHeroTab)
         {
             _hasSwitchedToHeroTab = true;
-            deckTabHighlight.SetActive(false);
-            SetDoneButtonInteractivity();
+            SetNextFocus();
         }
     }
 
@@ -74,8 +74,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         if (msg.HeroesDeck.Hero.Name != tutorialHero.Name && !_hasSwitchedHeroes)
         {
             _hasSwitchedHeroes = true;
-            Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.HeroTab, false));
-            SetDoneButtonInteractivity();
+            SetNextFocus();
         }
     }
 
@@ -84,8 +83,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         if (!_hasClearedDeck)
         {
             _hasClearedDeck = true;
-            deckClearHighlight.SetActive(false);
-            SetDoneButtonInteractivity();
+            SetNextFocus();
         }
     }
     
@@ -94,8 +92,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         if (!_hasViewedHeroStats)
         {
             _hasViewedHeroStats = true;
-            heroStatsHighlight.SetActive(false);
-            SetDoneButtonInteractivity();
+            SetNextFocus();
         }
     }
     
@@ -104,8 +101,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         if (!_hasRemovedCard)
         {
             _hasRemovedCard = true;
-            Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInDeck, false));
-            SetDoneButtonInteractivity();
+            SetNextFocus();
         }
     }
     
@@ -114,15 +110,45 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         if (!_hasAddedCard)
         {
             _hasAddedCard = true;
-            Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInLibrary, false));
-            SetDoneButtonInteractivity();
+            SetNextFocus();
         }
     }
+
+    private void SetNextFocus()
+    {
+        var hasFocused = false;
+        SetFocusEnemyTabActive(!_hasSwitchedToEnemyTab);
+        hasFocused = !_hasSwitchedToEnemyTab;
+        SetFocusDeckTabActive(!_hasSwitchedToHeroTab && !hasFocused);
+        hasFocused = !_hasSwitchedToHeroTab || hasFocused;
+        SetFocusHeroStatsActive(!_hasViewedHeroStats && !hasFocused);
+        hasFocused = !_hasViewedHeroStats || hasFocused;
+        SetFocusHeroTabActive(!_hasSwitchedHeroes && !hasFocused);
+        hasFocused = !_hasSwitchedHeroes || hasFocused;
+        SetFocusDeckClearActive(!_hasClearedDeck && !hasFocused);
+        hasFocused = !_hasClearedDeck || hasFocused;
+        SetFocusAddCardActive(!_hasAddedCard && !hasFocused);
+        hasFocused = !_hasAddedCard || hasFocused;
+        SetFocusRemoveCardActive(!_hasRemovedCard && !hasFocused);
+        hasFocused = !_hasRemovedCard || hasFocused;
+        SetFocusLibraryNextActive(!_hasChangedLibraryPages && !hasFocused);
+        SetDoneButtonInteractivity();
+    }
+    
+    private void SetFocusEnemyTabActive(bool isActive) => enemyTabHighlight.SetActive(isActive);
+    private void SetFocusDeckTabActive(bool isActive) => deckTabHighlight.SetActive(isActive);
+    private void SetFocusHeroStatsActive(bool isActive) => heroStatsHighlight.SetActive(isActive);
+    private void SetFocusHeroTabActive(bool isActive) => Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.HeroTab, isActive));
+    private void SetFocusDeckClearActive(bool isActive) =>  deckClearHighlight.SetActive(isActive && !_hasClearedDeck);
+    private void SetFocusAddCardActive(bool isActive) => Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInLibrary, isActive));
+    private void SetFocusRemoveCardActive(bool isActive) => Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInDeck, isActive));
+    private void SetFocusLibraryNextActive(bool isActive) => libraryNextHighlight.SetActive(isActive);
 
     private void SetDoneButtonInteractivity() => deckBuilderModeControllerV5.SetSaveButtonContInteractivity(
         _hasSwitchedToEnemyTab 
         && _hasSwitchedToHeroTab
         && _hasSwitchedHeroes
         && _hasViewedHeroStats
-        && _hasAddedCard);
+        && _hasAddedCard
+        && _hasRemovedCard);
 }
