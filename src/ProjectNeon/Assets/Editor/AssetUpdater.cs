@@ -32,6 +32,7 @@ public class AssetUpdater
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
         UpdateAllTutorialSlideshows();
+        UpdateAllCorpLoadingScreens();
         Timed("All Battle VFX", UpdateAllBattleVfx);
         Log.Info("Asset Updates Complete");
     }
@@ -42,6 +43,18 @@ public class AssetUpdater
         a();
         var stop = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         Log.Info($"Updated {name} in {stop - start}ms");
+    }
+
+    [MenuItem("Neon/Update/Update All Corp Loading Screens")]
+    private static void UpdateAllCorpLoadingScreens()
+    {        
+        var screens = ScriptableExtensions.GetAllInstances<CorpLoadingScreen>();
+        
+        ScriptableExtensions.GetAllInstances<AllCorpLoadingScreens>().ForEach(x =>
+        {
+            x.allScreens = screens.ToArray();
+            EditorUtility.SetDirty(x);
+        });
     }
 
     [MenuItem("Neon/Update/Update All Battle VFX")]
