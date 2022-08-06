@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI.Extensions;
 
 public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
 {
@@ -11,10 +12,13 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     [SerializeField] private GameObject playerToken;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private StageSegment shopSegment;
+    [SerializeField] private UILineRenderer pathLinePrototype;
+    [SerializeField] private GameObject pathLinesParent;
     [SerializeField] private GameObject mapNodesParent;
     [SerializeField] private GameObject playerTokenParent;
     [SerializeField] private AllStageSegments allStageSegments;
     [SerializeField] private FloatReference minDistanceBetweenNodes = new FloatReference(0f);
+    
     
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
@@ -57,6 +61,8 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
 
     private void SpawnNodes()
     {
+        if (pathLinesParent != null)
+            pathLinesParent.DestroyAllChildren();
         mapNodesParent.DestroyAllChildren();
         
         if (gameMap.CurrentChoices.None(c => c.AdvancesAdventure))
@@ -73,6 +79,9 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
                 var rect = (RectTransform) obj.transform;
                 rect.pivot = new Vector2(0.5f, 0.5f);
                 rect.anchoredPosition = x.Position;
+
+                var pathLine = Instantiate(pathLinePrototype, pathLinesParent.transform);
+                pathLine.m_points = new [] {gameMap.DestinationPosition, x.Position};
             }
             catch (Exception e)
             {
