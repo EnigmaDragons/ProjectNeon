@@ -51,6 +51,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private BattleState state;
     
     private bool _debug = false;
+
+    private const string HandString = "Hand";
+    private const string LibraryString = "Library";
     
     private Card _card;
     private CardTypeData _cardType;
@@ -88,7 +91,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public bool IsPlayable { get; private set; }
     public bool IsDragging { get; private set; } = false;
     
-    public string CardName => _cardType?.Name ?? "";
+    public string CardName => _cardType?.Name ?? string.Empty;
     
     private void OnEnable()
     {
@@ -127,13 +130,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _maxDragPoint = new Vector2(screenWidth + _dragOffset.x - xPadding, screenHeight + _dragOffset.y - yPadding);
     }
 
-    public void Set(Card card) => Set("Library", card, () => { }, () => {}, () => { }, (_, __) => false, () => false);
-    public void Set(Card card, Action onClick) => Set("Library", card, onClick, () => {}, () => { }, (_, __) => false, () => false);
+    public void Set(Card card) => Set(LibraryString, card, () => { }, () => {}, () => { }, (_, __) => false, () => false);
+    public void Set(Card card, Action onClick) => Set(LibraryString, card, onClick, () => {}, () => { }, (_, __) => false, () => false);
     public void Set(CardTypeData card) => Set(card, () => { });
     
     public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Action onDiscard, Func<BattleState, Card, bool> getCanPlay, Func<bool> getCanActivate)
     {
-        DebugLog($"Card Set - {card.Name}");
+        if (_debug)
+            DebugLog($"Card Set - {card.Name}");
         InitFreshCard(onClick);
 
         _onDiscard = onDiscard;
@@ -143,7 +147,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _getCanPlay = getCanPlay;
         _getCanActivate = getCanActivate;
         _zone = zone;
-        _isHand = _zone.Contains("Hand");
+        _isHand = _zone.Contains(HandString);
         _onRightClick = _isHand
             ? battleState.AllowRightClickOnCard
                 ? ToggleAsBasic
@@ -163,7 +167,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType = cardType;
         _getCanPlay = (_, __) => false;
         _onRightClick = _cardType.ShowDetailedCardView;
-        _zone = "Library";
+        _zone = LibraryString;
         _isHand = false;
         _requiresPlayerTargeting = false;
         RenderCardType();
@@ -220,7 +224,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_card.Owner.BasicCard.IsMissing)
             return;
         
-        DebugLog($"UI - Toggle as Basic");
+        if (_debug)
+            DebugLog($"UI - Toggle as Basic");
         _card.TransitionTo(_card.Mode != CardMode.Basic ? CardMode.Basic : CardMode.Normal);
         _cardType = _card.Type;
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
@@ -235,7 +240,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (isDisabled)
         {
-            DebugLog($"is disabled.");
+            if (_debug)
+                DebugLog($"is disabled.");
             DisableCanPlayHighlight();
             DisableSelectedHighlight();
             controls.SetActive(false);
@@ -283,7 +289,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (!IsFocused && !active)
             return;
         
-        DebugLog($"Setting Detail Highlight {active}");
+        if (_debug)
+            DebugLog($"Setting Detail Highlight {active}");
         highlight.SetActive(active);
         IsFocused = active;
         SetShowComprehensiveInfo(active);
@@ -295,13 +302,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         highlight.SetActive(active);
     }
+
+    private const string HighlightString = "Highlight";
+    private const string HighlightScaleString = "HighlightScale";
     
     public void SetHandHighlight(bool active)
     {
         if (!IsFocused && !active && AreCloseEnough(transform.localScale.x, 1.0f))
             return;
 
-        DebugLog($"Setting Selected Highlight {active}");
+        if (_debug)
+            DebugLog($"Setting Selected Highlight {active}");
         SetSelectedHighlight(IsPlayable && active);
         IsFocused = active;
         
@@ -319,13 +330,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         var tweenDuration = 0.08f;
         if (active)
         {
-            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, sign * 180f, sign * 2f), tweenDuration, MovementDimension.Spatial, TweenMovementType.RubberBand, "Highlight"));
-            Message.Publish(new TweenMovementRequested(transform, new Vector3(highlightedScale - 1f, highlightedScale - 1f, highlightedScale - 1f), tweenDuration, MovementDimension.Scale, TweenMovementType.RubberBand, "HighlightScale"));
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(0, sign * 180f, sign * 2f), tweenDuration, MovementDimension.Spatial, TweenMovementType.RubberBand, HighlightString));
+            Message.Publish(new TweenMovementRequested(transform, new Vector3(highlightedScale - 1f, highlightedScale - 1f, highlightedScale - 1f), tweenDuration, MovementDimension.Scale, TweenMovementType.RubberBand, HighlightScaleString));
         }
         else
         {
-            Message.Publish(new SnapBackTweenRequested(transform, "Highlight"));  
-            Message.Publish(new SnapBackTweenRequested(transform, "HighlightScale"));  
+            Message.Publish(new SnapBackTweenRequested(transform, HighlightString));  
+            Message.Publish(new SnapBackTweenRequested(transform, HighlightScaleString));  
         }
         
         if (_card != null)
@@ -348,7 +359,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void ShowComprehensiveCardInfo()
     {
-        DebugLog("Show Comprehensive Info");
+        if (_debug)
+            DebugLog("Show Comprehensive Info");
         Message.Publish(new HideReferencedCard());
         enemyTypePresenter.Hide();
         if (_card != null)
@@ -400,7 +412,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void SetTargetPosition(Vector3 targetPosition)
     {
-        DebugLog($"Set Target Position {targetPosition.ToString()}");
+        if (_debug)
+            DebugLog($"Set Target Position {targetPosition.ToString()}");
         _position = targetPosition;
         Message.Publish(new GoToTweenRequested(transform, targetPosition, Vector3.Distance(transform.position, targetPosition) / 1600f, MovementDimension.Spatial));
     }
@@ -478,7 +491,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private bool CheckIfCanPlay()
     {
         var result = _card != null && _getCanPlay(battleState, _card);
-        DebugLog($"Can Play: {result}");
+        if (_debug)
+            DebugLog($"Can Play: {result}");
         return result;
     }
 
@@ -506,7 +520,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             _leftButtonAlreadyDown = true;
         if (eventData.button == PointerEventData.InputButton.Right)
             _rightButtonAlreadyDown = true;
-        DebugLog($"UI - Pointer Down");
+        if (_debug)
+            DebugLog($"UI - Pointer Down");
         if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
         {
             Message.Publish(new CardClicked());
@@ -521,15 +536,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             _onRightClick();
     }
 
+    private const string ClickString = "Click";
     public void OnPointerUp(PointerEventData eventData)
     {
-        DebugLog("UI - Pointer Up");
+        if (_debug)
+            DebugLog("UI - Pointer Up");
         if (_leftButtonAlreadyDown && eventData.button == PointerEventData.InputButton.Left)
         {
             Cursor.visible = true;
             _leftButtonAlreadyDown = false; 
             if (_isHand && IsPlayable)
-                Message.Publish(new SnapBackTweenRequested(transform, "Click"));
+                Message.Publish(new SnapBackTweenRequested(transform, ClickString));
         }
         if (_rightButtonAlreadyDown && eventData.button == PointerEventData.InputButton.Right)
         {
@@ -652,7 +669,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (battleState.NumberOfCardPlaysRemainingThisTurn <= 0)
             return;
-        DebugLog($"Discard");
+        if (_debug)
+            DebugLog($"Discard");
         ReturnHandToNormal();
         Message.Publish(new CardDiscarded(transform, _card));
         _onDiscard();
@@ -660,7 +678,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void Activate()
     {
-        DebugLog($"Activate");
+        if (_debug)
+            DebugLog($"Activate");
         ReturnHandToNormal();
         _onClick();
     }

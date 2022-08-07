@@ -80,7 +80,7 @@ public class AegisTests
             DurationFormula = "3",
         }, attacker, defender);
         
-        Assert.AreEqual(0, defender.State.StatusesOfType(StatusTag.DamageOverTime).Length);
+        Assert.AreEqual(0, defender.State.DamageOverTimes().Length);
         Assert.AreEqual(0, defender.State[TemporalStatType.Aegis]);
     }
 

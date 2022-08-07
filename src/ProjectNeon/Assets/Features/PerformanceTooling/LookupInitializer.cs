@@ -10,6 +10,9 @@ public static class LookupInitializer
         _ = AllEffects.Init;
         _ = StatsSnapshotExtensions.Init;
         _ = BattleV2PhaseExtensions.Init;
+        _ = MemberStateSnapshotExtensions.Init;
+        _ = WithMinimumStatsExtensions.Init;
+        _ = WholeNumberStatExtensions.Init;
         IntExtensions.Init();
         FloatExtensions.Init();
     }

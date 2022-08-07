@@ -31,11 +31,21 @@ public class StatsSnapshotMut : IStats
 public static class StatsSnapshotExtensions
 {
     private static int _poolIndex = 0;
-    private static readonly StatsSnapshotMut[] Pool = Enumerable.Range(0, 1000).Select(_ => new StatsSnapshotMut()).ToArray();
+    private static readonly StatsSnapshotMut[] Pool = Enumerable.Range(0, ObjectPoolSizes.StatsSnapshotPoolSize).Select(_ => new StatsSnapshotMut()).ToArray();
 
-    private static StatsSnapshotMut GetNext() => Pool[++_poolIndex];
+    private static StatsSnapshotMut GetNext()
+    {
+        _poolIndex = (_poolIndex + 1) % Pool.Length;
+        return Pool[_poolIndex];
+    }
 
     public static bool Init = true;
     
-    public static IStats ToSnapshot(this IStats stats, StatType primaryStat) => GetNext().Initialized(stats.ResourceTypes, stats, primaryStat);
+    public static IStats ToSnapshot(this IStats stats, StatType primaryStat)
+    {
+        if (stats is StatsSnapshotMut)
+            return stats;
+        
+        return GetNext().Initialized(stats.ResourceTypes, stats, primaryStat);
+    }
 }

@@ -2,8 +2,9 @@
 using System;
 using System.Linq;
 
-public static class Message 
+public static class Message
 {
+    private static readonly object Lock = new object();
     private static readonly List<MessageSubscription> EventSubs = new List<MessageSubscription>();
     private static MessageQueue Msgs = new MessageQueue();
 
@@ -16,7 +17,7 @@ public static class Message
         var tempOwner = new { };
         Subscribe(MessageSubscription.Create<T>(x => 
         { 
-            Message.Unsubscribe(tempOwner);
+            Unsubscribe(tempOwner);
             onEvent(x);
         }, tempOwner));
     } 
@@ -31,13 +32,15 @@ public static class Message
     public static void Subscribe(MessageSubscription subscription)
     {
         Msgs.Subscribe(subscription);
-        EventSubs.Add(subscription);
+        lock(Lock)
+            EventSubs.Add(subscription);
     }
 
     public static void Unsubscribe(object owner)
     {
         Msgs.Unsubscribe(owner);
-        EventSubs.Where(x => x.Owner.Equals(owner)).CopiedForEach(x => EventSubs.Remove(x));
+        lock(Lock)
+            EventSubs.RemoveAll(x => x.Owner.Equals(owner));
     }
     
     public sealed class MessageQueue
@@ -60,7 +63,7 @@ public static class Message
 
         public void Subscribe(MessageSubscription subscription)
         {
-            var eventType = subscription.EventType.Name;
+            var eventType = GetTypeName(subscription.EventType);
             if (!_eventActions.ContainsKey(eventType))
                 _eventActions[eventType] = new List<object>();
             if (!_ownerSubscriptions.ContainsKey(subscription.Owner))
@@ -73,9 +76,9 @@ public static class Message
         {
             if (!_ownerSubscriptions.ContainsKey(owner))
                 return;
+            
             var events = _ownerSubscriptions[owner];
-            for (var i = 0; i < _eventActions.Count; i++)
-                _eventActions.ElementAt(i).Value.RemoveAll(x => events.AnyNonAlloc(y => y.OnEvent.Equals(x)));
+            _eventActions.ForEach(e => e.Value.RemoveAll(x => events.AnyNonAlloc(y => y.OnEvent.Equals(x))));
             _ownerSubscriptions.Remove(owner);
         }
 
@@ -99,9 +102,10 @@ public static class Message
                     ((Action<object>)action)(payload);
         }
 
-        private string GetTypeName(object payload)
+        private string GetTypeName(object payload) => GetTypeName(payload.GetType());
+
+        private string GetTypeName(Type t)
         {
-            var t = payload.GetType();
             if (TypeNamesCache.TryGetValue(t, out var name)) 
                 return name;
             

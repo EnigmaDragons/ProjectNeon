@@ -11,7 +11,7 @@ public class ResourceTypeStats
     public ResourceTypeStats WithSubtracted(params IResourceType[] resourceTypes) => With((first, second) => first - second, resourceTypes);
     public ResourceTypeStats WithMultiplied(params IResourceType[] resourceTypes) => With((first, second) => first * second, resourceTypes);
     
-    private ResourceTypeStats With(Func<int, int, int> combineOperation, params IResourceType[] resourceTypes)
+    private ResourceTypeStats With(Func<int, int, int> combineOperation, IResourceType[] resourceTypes)
     {
         foreach (var resourceType in resourceTypes)
             With(resourceType, combineOperation);

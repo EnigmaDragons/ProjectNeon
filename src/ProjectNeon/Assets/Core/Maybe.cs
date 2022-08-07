@@ -46,10 +46,11 @@ public sealed class Maybe<T>
         isPresent = false;
     }
 
-    public void Set(T obj, bool newIsPresent)
+    public Maybe<T> Set(T obj, bool newIsPresent)
     {
         value = obj;
         isPresent = newIsPresent;
+        return this;
     }
     
     public bool IsPresentAnd(Func<T, bool> condition) => IsPresent && condition(value);
@@ -76,10 +77,16 @@ public sealed class Maybe<T>
             ? new Maybe<T2>(val) 
             : Maybe<T2>.Missing();
     
+    [Obsolete("Prefer Non-Allocating Version")]
     public Maybe<T2> Map<T2>(Func<T, T2> convert) 
         => IsPresent 
             ? new Maybe<T2>(convert(Value)) 
             : Maybe<T2>.Missing();
+    
+    public Maybe<T2> MapNonAlloc<T2>(Func<T, T2> convert, Maybe<T2> dest) 
+        => IsPresent 
+            ? dest.Set(convert(value), true) 
+            : dest.Set(default(T2), false);
 
     public bool Equals(Maybe<T> other)
     {

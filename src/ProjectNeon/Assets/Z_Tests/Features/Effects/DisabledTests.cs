@@ -38,7 +38,7 @@ public sealed class DisabledTests
         var target = TestMembers.Any();
 
         TestEffects.Apply(e, TestMembers.Any(), target);
-        target.State.GetTurnEndEffects();
+        TestPayloadExecutor.ExecuteEndOfTurnEffects(target);
         
         Assert.AreEqual(4, target.State[TemporalStatType.Disabled]);
     }

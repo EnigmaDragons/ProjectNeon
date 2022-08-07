@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class TestMembers
 {
+    private static bool _init = LookupInitializer.Init;
+    
     private static int _id;
     private static int NextId() => Interlocked.Increment(ref _id);
     private static StatAddends DefaultStats() => new StatAddends()

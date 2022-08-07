@@ -70,6 +70,11 @@ public class FormulaTests
         => AssertResultsIs(1, "PrimaryResource", 
             new FormulaContext(TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }).GetSnapshot().State, Maybe<MemberState>.Missing(), ResourceQuantity.None));
     
+    [Test] public void Formula_NamedResource()
+        => AssertResultsIs(2, "Ammo", 
+            new FormulaContext(TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }, 
+                new InMemoryResourceType("Ammo") { MaxAmount = 4, StartingAmount = 2 }).GetSnapshot().State, Maybe<MemberState>.Missing(), ResourceQuantity.None));
+    
     [Test] public void Formula_TargetPrimaryResource()
         => AssertResultsIs(1, "Target[PrimaryResource]", 
             new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }), ResourceQuantity.None));

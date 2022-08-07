@@ -41,7 +41,18 @@ public class CardType : ScriptableObject, CardTypeData
     public CardActionV2[] AllCardEffectSteps => Actions.SelectMany(a => a.Actions).ToArray(); 
     public Maybe<CardTypeData> ChainedCard => chainedCard;
     public Maybe<CardTypeData> SwappedCard => swappedCard;
-    public HashSet<string> Archetypes => archetypes != null ? new HashSet<string>(archetypes.Where(x => x != null).Select(x => x.Value)) : new HashSet<string>();
+    
+    private HashSet<string> _cachedArchetypes = new HashSet<string>();
+    public HashSet<string> Archetypes
+    {
+        get
+        {
+            if (_cachedArchetypes == null)
+                _cachedArchetypes = archetypes != null ? new HashSet<string>(archetypes.Where(x => x != null).Select(x => x.Value)) : new HashSet<string>();
+            return _cachedArchetypes;
+        }
+    }
+    
     public bool IsWip => isWIP;
     public bool IncludeInPools => !isWIP && !notAvailableForGeneralDistribution;
     public Maybe<CardCondition> HighlightCondition => highlightCondition != null && highlightCondition.Length > 0

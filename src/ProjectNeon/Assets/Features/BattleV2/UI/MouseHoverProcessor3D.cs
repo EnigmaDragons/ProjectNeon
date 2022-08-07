@@ -4,16 +4,13 @@ public class MouseHoverProcessor3D : MonoBehaviour
 {
     private Camera _cam;
     private readonly RaycastHit[] _hits = new RaycastHit[100];
-    private readonly MouseHoverStatusIcon _statusIcon = new MouseHoverStatusIcon();
+    private MouseHoverStatusIcon _statusIcon;
     private Maybe<HoverCharacter> _lastHover = Maybe<HoverCharacter>.Missing();
-    
-    private readonly Maybe<HoverCharacter> _hoverCharacter = Maybe<HoverCharacter>.Missing();
-    private readonly Maybe<Vector3> _hoverCharacterPosition = Maybe<Vector3>.Missing();
-    private readonly Maybe<WorldStatusIconPresenter> _hoverStatusIcon = Maybe<WorldStatusIconPresenter>.Missing();
     
     private void Awake()
     {
         _cam = Camera.main;
+        _statusIcon = new MouseHoverStatusIcon();
     }
 
     private void Update()
@@ -27,43 +24,45 @@ public class MouseHoverProcessor3D : MonoBehaviour
         var v3 = _cam.ScreenPointToRay(Input.mousePosition);
         var numHits = Physics.RaycastNonAlloc(v3, _hits, 100f);
 
-        _hoverCharacter.Clear();
-        _hoverStatusIcon.Clear();
-        _hoverCharacterPosition.Clear();
+        var hoverCharacter = Maybe<HoverCharacter>.Missing();
+        var hoverStatusIcon = Maybe<WorldStatusIconPresenter>.Missing();
+        var hoverCharacterPosition = Maybe<Vector3>.Missing();
         if (numHits > 0)
         {
             for (var i = 0; i < numHits; i++)
-                if (_hoverCharacter.IsMissing && _hits[i].collider.gameObject.layer == characterLayer)
+                if (hoverCharacter.IsMissing && _hits[i].collider.gameObject.layer == characterLayer)
                 {
                     var obj = _hits[i].transform.gameObject;
-                    _hoverCharacterPosition.Set(obj.transform.position, true);
+                    hoverCharacterPosition = obj.transform.position;
                     var spriteHover = obj.GetComponentInChildren<HoverSpriteCharacter3D>();
                     var basicHover = obj.GetComponentInChildren<HoverBasicCharacter3D>();
                     if (spriteHover == null && basicHover == null)
                         Log.Error($"{obj.name} is missing a {nameof(HoverCharacter)} script");
                     else
-                        _hoverCharacter.Set(spriteHover != null ? (HoverCharacter) spriteHover : basicHover, true);
+                        hoverCharacter = new Maybe<HoverCharacter>(spriteHover != null
+                            ? (HoverCharacter) spriteHover
+                            : basicHover);
                 }
             
             for (var i = 0; i < numHits; i++)
-                if (_hoverStatusIcon.IsMissing && _hits[i].collider.gameObject.layer == statusIconLayer)
+                if (hoverStatusIcon.IsMissing && _hits[i].collider.gameObject.layer == statusIconLayer)
                 {
                     var obj = _hits[i].transform.gameObject;
                     var c = obj.GetComponentInChildren<WorldStatusIconPresenter>();
                     if (c == null)
                         Log.Error($"{obj.name} is missing a {nameof(WorldStatusIconPresenter)} script");
                     else
-                        _hoverStatusIcon.Set(c, true);
+                        hoverStatusIcon = c;
                 }
         }
 
         var isMouseDragging = MouseDragState.IsDragging;
-        if (_lastHover == null || !_lastHover.Map(v => v.MemberId).Equals(_hoverCharacter.Map(v => v.MemberId)))
+        if (_lastHover == null || !_lastHover.Map(v => v.MemberId).Equals(hoverCharacter.Map(v => v.MemberId)))
         {
-            Message.Publish(new CharacterHoverChanged(_hoverCharacter.As<HoverCharacter>(), _hoverCharacterPosition, isMouseDragging));
-            _lastHover = _hoverCharacter;
+            Message.Publish(new CharacterHoverChanged(hoverCharacter.As<HoverCharacter>(), hoverCharacterPosition, isMouseDragging));
+            _lastHover = hoverCharacter;
         }
         if (!isMouseDragging && _statusIcon != null)
-            _statusIcon.Update(_hoverStatusIcon);
+            _statusIcon.Update(hoverStatusIcon);
     }
 }

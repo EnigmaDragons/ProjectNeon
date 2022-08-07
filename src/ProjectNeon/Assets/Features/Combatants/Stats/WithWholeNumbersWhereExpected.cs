@@ -1,13 +1,20 @@
-
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WithWholeNumbersWhereExpected : IStats
 {
-    private readonly IStats _inner;
+    private IStats _inner;
 
-    public WithWholeNumbersWhereExpected(IStats inner) => _inner = inner;
+    public WithWholeNumbersWhereExpected() : this(new StatAddends()) {}
+    public WithWholeNumbersWhereExpected(IStats inner) => Initialized(inner);
 
+    public WithWholeNumbersWhereExpected Initialized(IStats inner)
+    {
+        _inner = inner;
+        return this;
+    }
+    
     private static readonly HashSet<StatType> WholeNumberStatTypes = new HashSet<StatType>
     {
         StatType.Armor,
@@ -30,7 +37,17 @@ public class WithWholeNumbersWhereExpected : IStats
 }
 
 public static class WholeNumberStatExtensions
-{
-    public static IStats WithWholeNumbersWhereExpected(this IStats s) => new WithWholeNumbersWhereExpected(s);
+{   
+    private static int _poolIndex = 0;
+    private static readonly WithWholeNumbersWhereExpected[] Pool = Enumerable.Range(0, 500).Select(_ => new WithWholeNumbersWhereExpected()).ToArray();
     
+    private static WithWholeNumbersWhereExpected GetNext()
+    {
+        _poolIndex = (_poolIndex + 1) % Pool.Length;
+        return Pool[_poolIndex];
+    }
+
+    public static bool Init = true;
+    
+    public static IStats WithWholeNumbersWhereExpected(this IStats s) => GetNext().Initialized(s);
 }
