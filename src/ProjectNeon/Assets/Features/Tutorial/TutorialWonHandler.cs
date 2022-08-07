@@ -1,4 +1,6 @@
 ﻿
+using System.Linq;
+
 public class TutorialWonHandler : OnMessage<TutorialWon>
 {
     protected override void Execute(TutorialWon msg) => Execute();
@@ -10,11 +12,7 @@ public class TutorialWonHandler : OnMessage<TutorialWon>
     public static void Execute(float delay = 3f)
     {
         Log.Info("Finished Tutorial Adventure");
-        CurrentAcademyData.Write(a =>
-        {
-            a.TutorialData = new AcademyTutorialData { CompletedTutorialNames = AcademyData.RequiredLicenseTutorials.ToArray() };
-            return a;
-        });
+        CurrentAcademyData.Mutate(a => a.TutorialData = new AcademyTutorialData { CompletedTutorialNames = AcademyData.RequiredLicenseTutorials.Concat(AcademyData.SimpleTutorialPanels).ToArray() });
         CurrentProgressionData.RecordCompletedAdventure(TutorialAdventureId, TutorialDifficultyLevel, TutorialHeroId.AsArray());
         CurrentGameData.Clear();
         Message.Publish(new ExecuteAfterDelayRequested(delay, () => Message.Publish(new NavigateToNextTutorialFlow())));

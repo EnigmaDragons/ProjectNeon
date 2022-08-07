@@ -23,7 +23,7 @@ public class CurrentAcademyData
         });
     }
     
-    public static void Write(Func<AcademyData, AcademyData> transform)
+    private static void Write(Func<AcademyData, AcademyData> transform)
     {
         var before = Data.ToSnapshot();
         _stored.Write(transform);

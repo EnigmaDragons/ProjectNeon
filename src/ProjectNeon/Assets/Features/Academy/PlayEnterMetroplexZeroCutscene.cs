@@ -10,11 +10,7 @@ public class PlayEnterMetroplexZeroCutscene : MonoBehaviour
     {
         Message.Publish(new StartCutsceneRequested(cutscene, Maybe<Action>.Present(() =>
         {
-            CurrentAcademyData.Write(a =>
-            {
-                a.HasCompletedWelcomeToMetroplexCutscene = true;
-                return a;
-            });
+            CurrentAcademyData.Mutate(a => a.HasCompletedWelcomeToMetroplexCutscene = true);
             navigator.NavigateToTitleScreen();
         })));
     }

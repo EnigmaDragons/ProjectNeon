@@ -9,15 +9,11 @@ public class BattleV4TutorialSetup : MonoBehaviour
     public void PerformSetup()
     {
         party.Initialized(trainee);
-        CurrentAcademyData.Write(s =>
+        CurrentAcademyData.Mutate(s => s.TutorialData = new AcademyTutorialData
         {
-            s.TutorialData = new AcademyTutorialData
-            {
-                CompletedTutorialNames = s.TutorialData.CompletedTutorialNames
-                    .Where(x => !x.StartsWith("BattleV4-"))
-                    .ToArray()
-            };
-            return s;
+            CompletedTutorialNames = s.TutorialData.CompletedTutorialNames
+                .Where(x => !x.StartsWith("BattleV4-"))
+                .ToArray()
         });
     }
 }
