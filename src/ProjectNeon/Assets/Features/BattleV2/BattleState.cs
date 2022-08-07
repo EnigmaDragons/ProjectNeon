@@ -435,6 +435,7 @@ public class BattleState : ScriptableObject
             rewardCards = RewardCards.Select(c => c.Name).ToArray(),
             rewardGear = RewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
         };
+        Log.Info($"Battle Xp {xpGranted} - Creds {RewardCredits}");
         AllMetrics.PublishBattleSummary(battleSummaryReport);
         AccumulateRunStats();
     }

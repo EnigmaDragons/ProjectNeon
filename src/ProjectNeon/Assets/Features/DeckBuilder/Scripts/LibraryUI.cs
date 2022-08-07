@@ -38,7 +38,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderSta
 
         cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(_selectedHero.BasicCard, 0));
 
-        var cardUsage = cardsForHero.ToDictionary(c => c.Key,
+        var cardUsage = cardsForHero.SafeToDictionary(c => c.Key,
             c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card.Id == c.Key.Id))));
 
         var heroMember = state.SelectedHeroesDeck.Hero.AsMember(-1);  

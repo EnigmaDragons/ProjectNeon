@@ -17,7 +17,7 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
 
     private bool _doneButtonCannotBeInteractive;
     
-    private void Awake()
+    private void Start()
     {
         saveButtonCont.Init("Save", OnFinished);
         fightButton.onClick.AddListener(OnFinished);
@@ -96,6 +96,9 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
 
     private void UpdateSaveButtonCont()
     {
+        if (state == null || state.HeroesDecks == null || state.HeroesDecks.AnyNonAlloc(h => h.Deck == null))
+            return;
+        
         if (state.HeroesDecks.All(x => x.Deck.Count == deckSize) && !_doneButtonCannotBeInteractive)
         {
             saveButtonCont.SetButtonDisabled(false, Color.white);

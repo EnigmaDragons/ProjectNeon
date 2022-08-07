@@ -26,6 +26,8 @@ public class PartyClinicVouchersPresenter : OnMessage<PartyAdventureStateChanged
         Render();
         _isInitialized = true;
     }
+    
+    protected override void AfterDisable() => _isInitialized = false;
 
     protected override void Execute(PartyAdventureStateChanged msg) => Render();
     protected override void Execute(PartyClinicVouchersChanged msg) => Render();
