@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,7 @@ public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageReq
     
     private readonly List<string> _battleLogMessages = new List<string>();
 
-    private void Awake() => textArea.text = "";
+    private void Awake() => textArea.text = string.Empty;
     
     protected override void Execute(WriteBattleLogMessageRequested msg)
     {

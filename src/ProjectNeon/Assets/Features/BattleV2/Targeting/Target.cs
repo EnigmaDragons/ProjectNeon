@@ -56,6 +56,6 @@ public static class TargetExtensions
     
 
     public static bool Matches(this Target t, Target other)
-        => string.Join(",", t.Members.Select(m => m.Id.ToString()))
-            .Equals(string.Join(",", other.Members.Select(m => m.Id.ToString())));
+        => string.Join(",", t.Members.Select(m => m.Id.GetString()))
+            .Equals(string.Join(",", other.Members.Select(m => m.Id.GetString())));
 }

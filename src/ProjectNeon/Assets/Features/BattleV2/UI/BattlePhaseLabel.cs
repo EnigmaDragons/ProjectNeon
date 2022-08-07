@@ -13,7 +13,7 @@ public class BattlePhaseLabel : OnMessage<BattleStateChanged>
     protected override void Execute(BattleStateChanged msg)
     {
         label.text = msg.State.Phase == BattleV2Phase.NotBegun 
-            ? "" 
-            : $"{msg.State.Phase.ToString().WithSpaceBetweenWords()}";
+            ? string.Empty 
+            : msg.State.Phase.GetFriendlyString();
     }
 }

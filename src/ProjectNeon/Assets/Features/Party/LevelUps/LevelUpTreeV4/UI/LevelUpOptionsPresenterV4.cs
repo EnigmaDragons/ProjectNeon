@@ -39,7 +39,7 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
             if (o.Value != null && o.Key != selected)
                 o.Value.SetActive(false);
         });
-        promptLabel.text = "";
+        promptLabel.text = string.Empty;
     }
     
     public void Init(AdventureMode mode, Hero hero)
@@ -60,7 +60,7 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
         _options.Clear();
         if (levelLabel != null)
             levelLabel.text = level.ToString();
-        promptLabel.text = "";
+        promptLabel.text = string.Empty;
 
         var unfoldDelay = unfoldInitialDelay;
         options.Where(x => x.IsFunctional)

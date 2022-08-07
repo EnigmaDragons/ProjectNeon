@@ -157,7 +157,7 @@ public class BattleState : ScriptableObject
     private void LogEncounterInfo(bool isElite, int targetPower, int actualPower)
     {
         var factor = actualPower / (float) targetPower;
-        DevLog.Write($"{(isElite ? "Elite " : "")}Encounter: Target Power Level {targetPower}. Actual: {actualPower}. Factor: {factor:F2}");
+        DevLog.Write($"{(isElite ? "Elite " : string.Empty)}Encounter: Target Power Level {targetPower}. Actual: {actualPower}. Factor: {factor:F2}");
     }
 
     public void SetupEnemyEncounter()
@@ -399,11 +399,11 @@ public class BattleState : ScriptableObject
             
         });
 
-    private void SetMemberName(int id, string name)
+    private void SetMemberName(int id, string memberName)
     {
         while (memberNames.Count <= id)
-            memberNames.Add("");
-        memberNames[id] = name;
+            memberNames.Add(string.Empty);
+        memberNames[id] = memberName;
     }
     
     // Battle Wrapup

@@ -37,7 +37,7 @@ public class RemainingCardPlaysPresenter : OnMessage<BattleStateChanged>
                 this.ExecuteAfterDelay(() =>
                 {
                     if (state.NumberOfCardPlaysRemainingThisTurn == 0)
-                        counter.text = "";
+                        counter.text = string.Empty;
                 }, 0.5f);
         }
         else

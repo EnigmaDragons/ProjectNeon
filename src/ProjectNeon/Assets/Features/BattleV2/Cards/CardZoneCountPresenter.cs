@@ -22,7 +22,7 @@ public class CardZoneCountPresenter : MonoBehaviour
     private void UpdateCardCount()
     {
         var count = zone.Cards.Length;
-        textField.text = count.ToString();
+        textField.text = count.GetString();
         textField.enabled = count > 0 || showWithZeroCards;
         deckVisual.SetActive(count > 0 || showWithZeroCards);
     }

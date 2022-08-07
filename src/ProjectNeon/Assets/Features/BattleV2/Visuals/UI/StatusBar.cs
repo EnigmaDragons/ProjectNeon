@@ -152,7 +152,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             statuses.Add(new CurrentStatusValue { Icon = icons[statType].Icon, Text = buffAmount.GetString(), Tooltip = $"{Sign(buffAmount)}{buffAmount} {statType}"});
     }
 
-    private string Sign(float amount) => amount > 0 ? "+" : "";
+    private string Sign(float amount) => amount > 0 ? "+" : string.Empty;
 
     private void UpdateComparisonWithPrevious(List<CurrentStatusValue> statuses)
     {
@@ -185,7 +185,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         var value = _member.State[stat];
         var text = showNumber && value < 800 // More than 800 is effectively infinite.
             ? value.GetCeilingIntString() 
-            : "";
+            : string.Empty;
         if (value > 0)
             statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
     }
@@ -193,7 +193,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     private void AddStatusIconIfApplicable(List<CurrentStatusValue> statuses, StatType stat, bool showNumber, Func<float, string> makeTooltip)
     {
         var value = _member.State[stat];
-        var text = showNumber ? value.GetCeilingIntString() : "";
+        var text = showNumber ? value.GetCeilingIntString() : string.Empty;
         if (value > 0)
             statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
     }

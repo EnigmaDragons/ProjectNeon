@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -33,7 +34,7 @@ public class CardType : ScriptableObject, CardTypeData
     public Sprite Art => art;
     public string Description => description;
     public HashSet<CardTag> Tags => new HashSet<CardTag>(tags);
-    public string TypeDescription => typeDescription?.Value ?? "";
+    public string TypeDescription => typeDescription?.Value ?? string.Empty;
     public Rarity Rarity => rarity;
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
     public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();
@@ -51,7 +52,7 @@ public class CardType : ScriptableObject, CardTypeData
         : Maybe<CardCondition>.Missing();
     public bool IsSinglePlay => isSinglePlay;
     
-    private static string WipWord(bool isWip) => isWip ? "WIP - " : "";
+    private static string WipWord(bool isWip) => isWip ? "WIP - " : string.Empty;
     public string EditorName => $"{WipWord(IsWip)}{Rarity} - {Name}";
 
     public override string ToString() => Name;

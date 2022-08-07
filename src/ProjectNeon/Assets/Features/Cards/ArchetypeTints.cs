@@ -16,7 +16,7 @@ public class ArchetypeTints : ScriptableObject
                 tints.Where(x => x.Archetypes.None(a => a == null))
                     .ToDictionary(x => x.Archetypes.Any() 
                             ? string.Join("&", x.Archetypes.Where(a => a != null).Select(a => a.Value).OrderBy(a => a)) 
-                            : "", 
+                            : string.Empty, 
                         x => x.Tint));
         return _tintMap[archetypes.Any() ? string.Join("&", archetypes.OrderBy(a => a)) : ""];
     }

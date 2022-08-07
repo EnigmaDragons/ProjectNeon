@@ -35,8 +35,8 @@ public class EnemyDetailsView : MonoBehaviour
         _isInitialized = true;
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLabel.text = e.Name;
-        var eliteText = e.Tier == EnemyTier.Elite ? "Elite" : "";
-        var hastyText = e.IsHasty ? "Hasty " : "";
+        var eliteText = e.Tier == EnemyTier.Elite ? "Elite" : string.Empty;
+        var hastyText = e.IsHasty ? "Hasty " : string.Empty;
         if (typeLabel != null)
             typeLabel.text = hastyText + eliteText;
         if (statPanel != null)

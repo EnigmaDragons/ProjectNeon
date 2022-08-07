@@ -4,7 +4,7 @@ public class FloatVariable : ScriptableObject
 {
 #if UNITY_EDITOR
     [Multiline]
-    public string DeveloperDescription = "";
+    public string DeveloperDescription = string.Empty;
 #endif
     public float Value;
 

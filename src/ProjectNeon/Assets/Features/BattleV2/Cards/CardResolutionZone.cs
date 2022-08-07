@@ -143,12 +143,12 @@ public class CardResolutionZone : ScriptableObject
         if (seq.Scope == Scope.One)
             return $" on {c.Targets[0].Members[0].Name}";
         if (seq.Group == Group.Self)
-            return "";
+            return string.Empty;
         if (seq.Group == Group.Ally && seq.Scope == Scope.All)
             return " on all Allies";
         if (seq.Group == Group.Opponent && seq.Scope == Scope.All)
             return " on all Enemies";
-        return "";
+        return string.Empty;
     }
     
     private void StartResolvingOneNonReactionCard(IPlayedCard played)

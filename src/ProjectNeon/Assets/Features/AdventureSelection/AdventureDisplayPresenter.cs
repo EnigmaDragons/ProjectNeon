@@ -48,7 +48,7 @@ public class AdventureDisplayPresenter : MonoBehaviour
         }
         else
         {
-            heroLimitDescriptionLabel.text = "";
+            heroLimitDescriptionLabel.text = string.Empty;
             heroIcons[0].SetActive(adventure.RequiredHeroes.Length > 0);
             heroIcons[1].SetActive(adventure.RequiredHeroes.Length > 1);
             heroIcons[2].SetActive(adventure.RequiredHeroes.Length > 2);

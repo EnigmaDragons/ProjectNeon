@@ -30,8 +30,8 @@ public sealed class MemberStateSnapshot
     
     public int this[IResourceType resourceType] => Counters.ValueOrDefault(resourceType.Name, 0);
     public float this[StatType statType] => Stats[statType];
-    public int this[TemporalStatType statType] => Counters.VerboseGetValue(statType.ToString(), n => $"Counter '{n}'") + Stats[statType].CeilingInt();
-    public int Hp => Counters[TemporalStatType.HP.ToString()];
+    public int this[TemporalStatType statType] => Counters.VerboseGetValue(statType.GetString(), n => $"Counter '{n}'") + Stats[statType].CeilingInt();
+    public int Hp => Counters[TemporalStatType.HP.GetString()];
     public int MaxHp => Stats[StatType.MaxHP].CeilingInt();
     public int MissingHp => MaxHp - Hp;
     public int Shield => this[TemporalStatType.Shield];

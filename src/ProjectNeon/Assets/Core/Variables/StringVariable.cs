@@ -4,7 +4,7 @@
 public class StringVariable : ScriptableObject
 {
     [SerializeField]
-    private string value = "";
+    private string value = string.Empty;
 
     public string Value
     {

@@ -205,7 +205,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             return;
         }
 
-        var finishedMessage = state.Phase != BattleV2Phase.NotBegun ? $"Finished {state.Phase} Phase -> " : "";
+        var finishedMessage = state.Phase != BattleV2Phase.NotBegun ? $"Finished {state.Phase} Phase -> " : string.Empty;
         var message = $"Phase - {finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);
         BattleLog.Write(PhaseMessages[newPhase]);

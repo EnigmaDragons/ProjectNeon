@@ -114,7 +114,7 @@ public class BattleSetupV2 : MonoBehaviour
         for (var i = 0; i < party.BaseHeroes.Length; i++)
         {
             var hero = party.BaseHeroes[i];
-            if (hero == null || hero.Name.Equals(""))
+            if (hero == null || hero.Name.Equals(string.Empty))
                  continue;
 
             var cardTypes = state.OverrideDeck == null ? party.Decks[i].Cards : state.OverrideDeck.Cast<CardTypeData>();

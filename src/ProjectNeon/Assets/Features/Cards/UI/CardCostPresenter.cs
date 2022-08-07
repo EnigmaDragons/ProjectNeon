@@ -47,8 +47,8 @@ public class CardCostPresenter : MonoBehaviour
         {
             var card = maybeCard.Value;
             return card.LockedXValue.Select(
-                r => $"{card.Cost.BaseAmount}+{r.Amount}".Replace("0+", ""),
-                () => $"{card.Cost.BaseAmount}+{card.Owner.CalculateResources(card.Type).XAmountPriceTag}".Replace("0+", ""));
+                r => $"{card.Cost.BaseAmount}+{r.Amount}".Replace("0+", string.Empty),
+                () => $"{card.Cost.BaseAmount}+{card.Owner.CalculateResources(card.Type).XAmountPriceTag}".Replace("0+", string.Empty));
         }
     }
 }
