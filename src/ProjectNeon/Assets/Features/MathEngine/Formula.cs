@@ -72,7 +72,7 @@ public static class Formula
 
     private static string ReplaceResources(string expression, FormulaContext ctx)
     {
-        if (ctx.Target.IsPresent)
+        if (ctx.Target.IsPresent && expression.ContainsAnyCase("Target"))
         {
             expression = expression.Replace("Target[MaxPrimaryResource]", ctx.Target.Value.PrimaryResource.MaxAmount.ToString());
             expression = expression.Replace("Target[PrimaryResource]", ctx.Target.Value.PrimaryResourceAmount.ToString());
@@ -109,6 +109,9 @@ public static class Formula
     
     private static string ReplaceOrRemoveTargetValue(string expression, StatType stat, FormulaContext ctx)
     {        
+        if (!expression.ContainsAnyCase("Target"))
+            return expression;
+        
         ctx.Target.ExecuteIfPresentOrElse(
             t => expression = expression.Replace($"Target[{stat}]", t[stat].CeilingInt().ToString()), 
             () => expression = expression.Replace($"Target[{stat}]", ""));
@@ -120,6 +123,9 @@ public static class Formula
     
     private static string ReplaceOrRemoveTargetValue(string expression, TemporalStatType stat, FormulaContext ctx)
     {
+        if (!expression.ContainsAnyCase("Target"))
+            return expression;
+        
         ctx.Target.ExecuteIfPresentOrElse(
             t => expression = expression.Replace($"Target[{stat}]", t[stat].CeilingInt().ToString()), 
             () => expression = expression.Replace($"Target[{stat}]", ""));

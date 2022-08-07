@@ -83,7 +83,7 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
 
     private void MoveNext(string completedTutorialName)
     {
-        if (_queue.Any())
+        if (_queue.AnyNonAlloc())
             StartSlideshow(_queue.Dequeue());
         else
             Message.Publish(new HideTutorial(completedTutorialName));

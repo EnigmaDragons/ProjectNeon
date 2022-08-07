@@ -22,7 +22,7 @@ public class CardScaledStatsPresenter : MonoBehaviour
             => s.Equals(StatType.Power.ToString()) ? primaryStat.ToString() 
                 : s.Equals("Base Power") ? $"Base {primaryStat}"
                     : s));
-        label.text = statTypes.Any() ? $"Scales with {statTypesString}" : "No Scaling";
+        label.text = statTypes.AnyNonAlloc() ? $"Scales with {statTypesString}" : "No Scaling";
         gameObject.SetActive(true);
     }
 

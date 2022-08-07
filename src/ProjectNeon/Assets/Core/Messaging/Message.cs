@@ -84,7 +84,7 @@ public static class Message
             if (_isPublishing) return;
             
             _isPublishing = true;
-            while (_eventQueue.Any()) 
+            while (_eventQueue.AnyNonAlloc()) 
                 Publish(_eventQueue.Dequeue());
             _isPublishing = false;
         }

@@ -31,7 +31,9 @@ public enum TemporalStatType
 
 public static class TemporalStatTypeExtensions
 {
-    public static Dictionary<TemporalStatType, string> StatNames = Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>().ToDictionary(s => s, s => s.ToString());
-    public static Dictionary<string, TemporalStatType> StatTypesByName = Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>().ToDictionary(s => s.ToString(), s => s);
+    public static readonly TemporalStatType[] StatTypes = Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>().ToArray();
+    public static readonly Dictionary<TemporalStatType, string> StatNames = StatTypes.ToDictionary(s => s, s => s.ToString());
+    public static readonly Dictionary<string, TemporalStatType> StatTypesByName = StatTypes.ToDictionary(s => s.ToString(), s => s);
+    
     public static string GetString(this TemporalStatType s) => StatNames[s];
 }

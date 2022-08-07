@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public static class CollectionExtensions
 {    
@@ -157,7 +155,7 @@ public static class CollectionExtensions
     public static Maybe<T> FirstAsMaybe<T>(this IEnumerable<T> items)
     {
         var maybeNext = items.Take(1).ToArray();
-        return maybeNext.Any() ? new Maybe<T>(maybeNext[0]) : Maybe<T>.Missing();
+        return maybeNext.AnyNonAlloc() ? new Maybe<T>(maybeNext[0]) : Maybe<T>.Missing();
     }
     
     public static Maybe<TValue> ValueOrMaybe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) =>
@@ -264,6 +262,11 @@ public static class CollectionExtensions
 
         return arr[index];
     }
+
+    public static bool AnyNonAlloc<T>(this T[] items) => items.Length > 0;
+    public static bool AnyNonAlloc<T>(this List<T> items) => items.Count > 0;
+    public static bool AnyNonAlloc<T>(this Queue<T> items) => items.Count > 0;
+    public static bool AnyNonAlloc<T>(this HashSet<T> items) => items.Count > 0;
 
     public static bool AnyNonAlloc<T>(this IEnumerable<T> items, Func<T, bool> condition)
     {

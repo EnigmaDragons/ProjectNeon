@@ -26,7 +26,7 @@ public class BattleUiVisibilityController : OnMessage<SetBattleUiElementVisibili
             lockList = lockList.With(msg.CallerId).ToHashSet();
         _locks[msg.UiElementName] = lockList;
         
-        var shouldShow = !lockList.Any();
+        var shouldShow = !lockList.AnyNonAlloc();
         if (_uiElements.TryGetValue(msg.UiElementName, out var el))
             el.SetActive(shouldShow);
         if (msg.UiElementName == BattleUiElement.EnemyInfo || msg.UiElementName == BattleUiElement.EnemyTechPoints || msg.UiElementName == BattleUiElement.PrimaryStat)

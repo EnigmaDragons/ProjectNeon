@@ -363,7 +363,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _cardType.ChainedCard.IfPresent(x => ShowReferencedCard(x, referencedCardParent1));
         _cardType.SwappedCard.IfPresent(x => ShowReferencedCard(x, _cardType.ChainedCard.IsPresent ? referencedCardParent2 : referencedCardParent1));
         var reactionCards = _cardType.BattleEffects().Where(x => x.IsReactionCard).ToArray();
-        if (reactionCards.Any() && (!_cardType.ChainedCard.IsPresent || !_cardType.SwappedCard.IsPresent)) 
+        if (reactionCards.AnyNonAlloc() && (!_cardType.ChainedCard.IsPresent || !_cardType.SwappedCard.IsPresent)) 
             ShowReferencedCard(reactionCards[0].ReactionSequence, _cardType.ChainedCard.IsPresent || _cardType.SwappedCard.IsPresent ? referencedCardParent2 : referencedCardParent1);
         var chooseCardToCreateEffects = _card.BattleEffects().FirstOrDefault(x => x.EffectType == EffectType.ChooseCardToCreate);
         if (chooseCardToCreateEffects != null && chooseCardToCreateEffects.EffectScope.Value.Count(x => x == ',') == 1)

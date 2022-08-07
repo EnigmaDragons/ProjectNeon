@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class Member 
+public class Member
 {
     public int Id { get; }
+    public string UnambiguousName { get; }
     public string Name { get; }
     public string Class { get; }
     public MemberMaterialType MaterialType { get; }
@@ -18,8 +19,6 @@ public class Member
     public override bool Equals(object obj) => obj is Member && ((Member)obj).Id == Id;
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{Name} {Id}";
-    
-    public string UnambiguousName => TeamType == TeamType.Enemies ? ToString() : Name;
     
     public Member(int id, string name, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
         : this(id, name, characterClass, materialType, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
@@ -37,6 +36,7 @@ public class Member
         BattleRole = battleRole;
         State = new MemberState(id, name, baseStats, primaryStat, initialHp);
         BasicCard = basicCard;
+        UnambiguousName = TeamType == TeamType.Enemies ? $"{Name} {Id}" : Name;
     }
 
     public Member Apply(Action<MemberState> effect)

@@ -265,7 +265,7 @@ public static class AllEffects
             .Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType)
             .ToArray()
             .Shuffled();
-        return targets.Any() ? new Multiple(targets.Take(targets.Length - 1)) : new Multiple(new Member[0]);
+        return targets.AnyNonAlloc() ? new Multiple(targets.Take(targets.Length - 1)) : new Multiple(new Member[0]);
     }
 
     private static Target RandomEnemyExcludingTarget(EffectContext ctx) => RandomEnemy(ctx, ctx.Target.Members);
@@ -275,7 +275,7 @@ public static class AllEffects
         var tauntEnemies = ctx.BattleMembers.Values
             .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt() && !excludedMembers.Contains(m))
             .ToArray();
-        if (tauntEnemies.Any())
+        if (tauntEnemies.AnyNonAlloc())
             return new Single(tauntEnemies.First());
         
         return new Multiple(ctx.BattleMembers.Values
@@ -291,13 +291,13 @@ public static class AllEffects
             .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt())
             .ToArray()
             .Shuffled();
-        if (tauntEnemies.Any())
+        if (tauntEnemies.AnyNonAlloc())
             return new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.Id != tauntEnemies[0].Id));
         var enemiesToIgnore = ctx.BattleMembers.Values
             .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
             .ToArray()
             .Shuffled();
-        if (enemiesToIgnore.Any())
+        if (enemiesToIgnore.AnyNonAlloc())
             return new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.Id != enemiesToIgnore[0].Id));
         return new Multiple(new Member[0]);
     }

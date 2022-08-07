@@ -31,7 +31,7 @@ public class CardResolutionZone : ScriptableObject
     }
 
     public bool IsDone => !isResolving && !HasMore;
-    public bool HasMore => _pendingMoves.Any();
+    public bool HasMore => _pendingMoves.AnyNonAlloc();
     public int NumPlayedThisTurn => _movesThisTurn.Count;
 
     public void NotifyTurnFinished()
@@ -228,7 +228,7 @@ public class CardResolutionZone : ScriptableObject
             }
         }
         played.Member.State.RemoveTemporaryEffects(x => x.Status.Tag == StatusTag.CurrentCardOnly);
-        isResolving = _pendingMoves.Any();
+        isResolving = _pendingMoves.AnyNonAlloc();
     }
 
     private void AddBonusCardsIfApplicable()

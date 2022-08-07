@@ -14,7 +14,7 @@ public class TargetIsBelowPercentageLifeCondition : ILogicFlow
     public IPayloadProvider Resolve(CardActionContext ctx)
     {
         var applicableMembers = ctx.Target.Members.Where(x => x.State[TemporalStatType.HP] < x.State.MaxHp() * _percentage).ToArray();
-        if (applicableMembers.Any())
+        if (applicableMembers.AnyNonAlloc())
             return _effect.Play(ctx.WithTarget(new Multiple(applicableMembers)));
         return new NoPayload();
     }

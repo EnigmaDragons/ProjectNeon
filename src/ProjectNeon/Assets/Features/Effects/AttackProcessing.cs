@@ -6,7 +6,7 @@ public static class AttackProcessing
     {
         var attacker = ctx.Source;
         var applicableTargets = ctx.Target.Members.Where(x => x.IsConscious()).ToArray();
-        var selectedTarget = hitsRandomTarget && applicableTargets.Any() ? (Target)new Single(applicableTargets.Random()) : new Multiple(applicableTargets);
+        var selectedTarget = hitsRandomTarget && applicableTargets.AnyNonAlloc() ? (Target)new Single(applicableTargets.Random()) : new Multiple(applicableTargets);
 
         // Processing Double Damage
         var usesDoubleDamage = attacker.State[TemporalStatType.DoubleDamage] > 0;

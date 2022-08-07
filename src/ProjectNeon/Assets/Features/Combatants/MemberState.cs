@@ -6,11 +6,9 @@ public sealed class MemberState : IStats
 {
     private int _versionNumber;
 
-    private readonly Dictionary<string, BattleCounter> _counters =
-        new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
+    private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>();
 
-    private readonly DictionaryWithDefault<CardTag, int> _tagsPlayedCount 
-        = new DictionaryWithDefault<CardTag, int>(0);
+    private readonly DictionaryWithDefault<CardTag, int> _tagsPlayedCount = new DictionaryWithDefault<CardTag, int>(0);
 
     private readonly IStats _baseStats;
     private readonly List<IPersistentState> _persistentStates = new List<IPersistentState>();
@@ -75,10 +73,20 @@ public sealed class MemberState : IStats
 
     // Queries
     public MemberStateSnapshot ToSnapshot()
-        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats.ToSnapshot(PrimaryStat), BaseStats.ToSnapshot(PrimaryStat),
-            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount,
-                new DictionaryWithDefault<StatusTag, int>(0, StatusTagExtensions.Values.SafeToDictionary(s => s, s => StatusesOfType(s).Length)), PrimaryStat);
-    
+    {
+        var statusTagCounts = new DictionaryWithDefault<StatusTag, int>(0);
+        foreach (var tmp in TemporalStates)
+        {
+            var tag = tmp.Status.Tag;
+            if (!statusTagCounts.ContainsKey(tag))
+                statusTagCounts[tag] = 0;
+            statusTagCounts[tag]++;
+        }
+
+        return new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats.ToSnapshot(PrimaryStat), BaseStats.ToSnapshot(PrimaryStat),
+            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount, statusTagCounts, PrimaryStat);
+    }
+
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => ResourceAmount(resourceType.Name);
@@ -95,8 +103,8 @@ public sealed class MemberState : IStats
     public float this[TemporalStatType statType] => _counters[statType.ToString()].Amount + CurrentStats[statType];
     public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
     public float Max(string name) => _counters.TryGetValue(name, out var c) ? c.Max : 0;
-    public IResourceType PrimaryResource => ResourceTypes.Any() ? ResourceTypes[0] : new InMemoryResourceType();
-    public int PrimaryResourceAmount => ResourceTypes.Any() ? _counters[PrimaryResource.Name].Amount : 0;
+    public IResourceType PrimaryResource => ResourceTypes.AnyNonAlloc() ? ResourceTypes[0] : new InMemoryResourceType();
+    public int PrimaryResourceAmount => ResourceTypes.AnyNonAlloc() ? _counters[PrimaryResource.Name].Amount : 0;
 
     public ResourceQuantity CurrentPrimaryResources => new ResourceQuantity
         {Amount = PrimaryResourceAmount, ResourceType = PrimaryResource.Name};
@@ -385,7 +393,12 @@ public sealed class MemberState : IStats
             BattleLog.Write($"{Name} lost {qty.Negate()}");
     });
 
-    public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any() || _temporalStatsToReduceAtEndOfTurn.Any(x => this[x] > 0); 
+    public bool HasAnyTemporalStates => _additiveMods.AnyNonAlloc() 
+                                        || _multiplierMods.AnyNonAlloc() 
+                                        || _reactiveStates.AnyNonAlloc() 
+                                        || _persistentStates.AnyNonAlloc() 
+                                        || _temporalStatsToReduceAtEndOfTurn.AnyNonAlloc(x => this[x] > 0); 
+    
     public IPayloadProvider[] GetTurnStartEffects()
     {
         return _additiveMods.Select(m => m.OnTurnStart())

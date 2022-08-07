@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 public class StatsSnapshot : IStats
@@ -13,10 +12,10 @@ public class StatsSnapshot : IStats
     public StatsSnapshot(IResourceType[] resourceTypes, IStats origin, StatType primaryStat)
     {
         ResourceTypes = resourceTypes;
-        foreach (StatType st in Enum.GetValues(typeof(StatType)))
+        foreach (var st in StatExtensions.StatTypes)
             _statValues[st] = origin[st];
         _statValues[StatType.Power] = origin[primaryStat];
-        foreach (TemporalStatType st in Enum.GetValues(typeof(TemporalStatType)))
+        foreach (var st in TemporalStatTypeExtensions.StatTypes)
             _temporalValues[st] = origin[st];
     }
 }
