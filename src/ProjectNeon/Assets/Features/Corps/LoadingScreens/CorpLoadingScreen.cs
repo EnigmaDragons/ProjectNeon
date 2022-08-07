@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "LadingScreen/Corp")]
+[CreateAssetMenu(menuName = "LoadingScreen/Corp")]
 public class CorpLoadingScreen : ScriptableObject
 {
     [SerializeField] private StaticCorp corp;
