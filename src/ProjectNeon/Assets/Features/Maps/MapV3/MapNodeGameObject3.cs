@@ -104,7 +104,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
                     Message.Publish(new AutoSaveRequested());
                 };
 
-                if (!CurrentAcademyData.Data.ConfirmedStorySkipBehavior && mapData.Type != MapNodeType.MainStory && gameMap.CurrentChoices.Any(n => n.Type == MapNodeType.MainStory))
+                if (isEnlarged && !CurrentAcademyData.Data.ConfirmedStorySkipBehavior && mapData.Type != MapNodeType.MainStory && gameMap.CurrentChoices.Any(n => n.Type == MapNodeType.MainStory))
                 {
                     Message.Publish(new ShowTwoChoiceDialog
                     {     
