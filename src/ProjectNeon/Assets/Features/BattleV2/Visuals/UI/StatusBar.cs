@@ -37,7 +37,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
             .Replace("[Originator]", battleState.Members.TryGetValue(x.OriginatorId, out var m)
                 ? m.UnambiguousName
                 : "Originator")
-            .Replace("[PrimaryStat]", _member.PrimaryStat().ToString()), x => x.Length > 1 ? x.Length : 0);
+            .Replace("[PrimaryStat]", _member.PrimaryStat().GetString()), x => x.Length > 1 ? x.Length : 0);
         combined.IfPresent(c => statuses.Add(c));
     }
 
@@ -50,13 +50,13 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         var statusTag = first.Status.Tag;
         var statusValue = new CurrentStatusValue
         {
-            Type = statusTag.ToString(),
+            Type = statusTag.GetString(),
             Icon = icons[statusTag].Icon,
         };
 
         var number = numberTemplate(statuses);
         if (number != 0)
-            statusValue.Text = number.ToString();
+            statusValue.Text = number.GetString();
 
         var originators = statuses.Where(s => s.OriginatorId != _member.Id).Select(s => s.OriginatorId).Distinct().ToArray();
         if (originators.Length == 1)
@@ -75,11 +75,11 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
 
         var cardPlayAmount = CeilingInt(_member.State[StatType.ExtraCardPlays]);
         if (cardPlayAmount > 1)
-            statuses.Add(new CurrentStatusValue { Type = StatType.ExtraCardPlays.ToString(), Icon = icons[StatType.ExtraCardPlays].Icon, Text = cardPlayAmount.ToString(), 
+            statuses.Add(new CurrentStatusValue { Type = StatType.ExtraCardPlays.GetString(), Icon = icons[StatType.ExtraCardPlays].Icon, Text = cardPlayAmount.GetString(), 
                 Tooltip = $"Plays {cardPlayAmount} Cards per turn"});
         
         if (_member.State.HasStatus(StatusTag.Invulnerable))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.Invulnerable.ToString(), Icon = icons[StatusTag.Invulnerable].Icon, Tooltip = "Invincible to all Damage" });
+            statuses.Add(new CurrentStatusValue { Type = StatusTag.Invulnerable.GetString(), Icon = icons[StatusTag.Invulnerable].Icon, Tooltip = "Invincible to all Damage" });
         
         AddCustomTextStatusIcons(statuses, StatusTag.CounterAttack, "Counterattack");
         AddCustomTextStatusIcons(statuses, StatusTag.Trap, "Secret Trap Power");
@@ -100,7 +100,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         AddStatusIconIfApplicable(statuses, TemporalStatType.Inhibit, true, v => $"Inhibited (guaranteed miss) for {v} Spells");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => $"Taunt for {v} Turns");
         if (_member.State[TemporalStatType.Stealth] > 0)
-            statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Stealth.ToString(), Icon = icons[TemporalStatType.Stealth].Icon, Tooltip = "Stealth"});
+            statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Stealth.GetString(), Icon = icons[TemporalStatType.Stealth].Icon, Tooltip = "Stealth"});
         AddStatusIconIfApplicable(statuses, TemporalStatType.Disabled, true, v => $"Disabled for {v} Turns");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Stun, true, v => $"Stunned for {v} Cards. Reactions disabled.");
         AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => $"Confused for {v} Turns");
@@ -126,10 +126,10 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         dotCombined.IfPresent(d => statuses.Add(d));
         
         if (_member.State.HasStatus(StatusTag.HealOverTime))
-            statuses.Add(new CurrentStatusValue {  Type = StatusTag.HealOverTime.ToString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
+            statuses.Add(new CurrentStatusValue { Type = StatusTag.HealOverTime.GetString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Heals At The Start of Turn" });
 
         if (_member.State[TemporalStatType.Prominent] > 0)
-            statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Prominent.ToString(), Icon = icons[TemporalStatType.Prominent].Icon, Tooltip = "Heroes cannot stealth while prominent." });
+            statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Prominent.GetString(), Icon = icons[TemporalStatType.Prominent].Icon, Tooltip = "Heroes cannot stealth while prominent." });
 
         AddCustomTextStatusIcons(statuses, StatusTag.WhenHit, "Secret On Hit Effect");
         AddCustomTextStatusIcons(statuses, StatusTag.WhenKilled, "Secret When Killed Effect");
@@ -149,7 +149,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
         
         var buffAmount = CeilingInt(_member.State[statType] - _member.State.BaseStats[statType]);
         if (buffAmount != 0)
-            statuses.Add(new CurrentStatusValue { Icon = icons[statType].Icon, Text = buffAmount.ToString(), Tooltip = $"{Sign(buffAmount)}{buffAmount} {statType}"});
+            statuses.Add(new CurrentStatusValue { Icon = icons[statType].Icon, Text = buffAmount.GetString(), Tooltip = $"{Sign(buffAmount)}{buffAmount} {statType}"});
     }
 
     private string Sign(float amount) => amount > 0 ? "+" : "";
@@ -184,18 +184,18 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
     {
         var value = _member.State[stat];
         var text = showNumber && value < 800 // More than 800 is effectively infinite.
-            ? value.ToString() 
+            ? value.GetCeilingIntString() 
             : "";
         if (value > 0)
-            statuses.Add(new CurrentStatusValue { Type = stat.ToString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
+            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
     }
     
     private void AddStatusIconIfApplicable(List<CurrentStatusValue> statuses, StatType stat, bool showNumber, Func<float, string> makeTooltip)
     {
         var value = _member.State[stat];
-        var text = showNumber ? value.ToString() : "";
+        var text = showNumber ? value.GetCeilingIntString() : "";
         if (value > 0)
-            statuses.Add(new CurrentStatusValue { Type = stat.ToString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
+            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
     }
 
     protected abstract void UpdateStatuses(List<CurrentStatusValue> statuses);

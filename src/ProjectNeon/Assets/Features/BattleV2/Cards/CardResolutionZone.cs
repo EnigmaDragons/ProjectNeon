@@ -91,7 +91,7 @@ public class CardResolutionZone : ScriptableObject
             _currentCardStartSnapshot.IfPresent(s => battleState.RecordSingleCardDamageDealt(s));
             WrapupCard(c, c.Card);
         });
-        _current = Maybe<IPlayedCard>.Missing();
+        _current.Clear();
         currentResolvingCardZone.Clear();
     }
     

@@ -42,6 +42,8 @@ public static class Message
     
     public sealed class MessageQueue
     {
+        private static readonly Dictionary<Type, string> TypeNamesCache = new Dictionary<Type, string>();
+        
         private readonly Dictionary<string, List<object>> _eventActions = new Dictionary<string, List<object>>();
         private readonly Dictionary<object, List<MessageSubscription>> _ownerSubscriptions = new Dictionary<object, List<MessageSubscription>>();
 
@@ -73,7 +75,7 @@ public static class Message
                 return;
             var events = _ownerSubscriptions[owner];
             for (var i = 0; i < _eventActions.Count; i++)
-                _eventActions.ElementAt(i).Value.RemoveAll(x => events.Any(y => y.OnEvent.Equals(x)));
+                _eventActions.ElementAt(i).Value.RemoveAll(x => events.AnyNonAlloc(y => y.OnEvent.Equals(x)));
             _ownerSubscriptions.Remove(owner);
         }
 
@@ -89,12 +91,23 @@ public static class Message
 
         private void Publish(object payload)
         {
-            var eventType = payload.GetType().Name;
+            var eventType = GetTypeName(payload);
             //Log.Info($"Message - Published {eventType}");
 
             if (_eventActions.ContainsKey(eventType))
                 foreach (var action in _eventActions[eventType].ToList())
                     ((Action<object>)action)(payload);
+        }
+
+        private string GetTypeName(object payload)
+        {
+            var t = payload.GetType();
+            if (TypeNamesCache.TryGetValue(t, out var name)) 
+                return name;
+            
+            var n = t.Name;
+            TypeNamesCache[t] = t.Name;
+            return n;
         }
     }
 }

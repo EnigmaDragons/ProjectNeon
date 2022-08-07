@@ -33,9 +33,9 @@ public sealed class MemberState : IStats
         .WithWholeNumbersWhereExpected();
 
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter '{n}'");
-    private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
-    private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
-    public int GetCounterAmount(TemporalStatType statType) => _counters[statType.ToString()].Amount;
+    private BattleCounter Counter(StatType statType) => _counters[statType.GetString()];
+    private BattleCounter Counter(TemporalStatType statType) => _counters[statType.GetString()];
+    public int GetCounterAmount(TemporalStatType statType) => _counters[statType.GetString()].Amount;
 
     public int MemberId { get; }
     public string Name { get; }
@@ -77,8 +77,7 @@ public sealed class MemberState : IStats
     public MemberStateSnapshot ToSnapshot()
         => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats.ToSnapshot(PrimaryStat), BaseStats.ToSnapshot(PrimaryStat),
             _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount,
-                new DictionaryWithDefault<StatusTag, int>(0, Enum.GetValues(typeof(StatusTag)).Cast<StatusTag>()
-                    .SafeToDictionary(s => s, s => StatusesOfType(s).Length)), PrimaryStat);
+                new DictionaryWithDefault<StatusTag, int>(0, StatusTagExtensions.Values.SafeToDictionary(s => s, s => StatusesOfType(s).Length)), PrimaryStat);
     
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public static class AllEffects
 {
+    public static readonly bool Init = true;
+    
     private static readonly Dictionary<EffectType, Func<EffectData, Effect>> CreateEffectOfType = new Dictionary<EffectType, Func<EffectData, Effect>>
     {
         { EffectType.Nothing, e => new NoEffect() },

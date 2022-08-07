@@ -10,9 +10,9 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     [SerializeField] private Transform enemyGroupLocation;
     [SerializeField] private Transform heroesGroupLocation;
     [SerializeField] private Transform effectsParent;
-    [SerializeField] private bool loggingEnabled = false;
     [SerializeField] private PartyAdventureState partyAdventureState;
 
+    private bool _loggingEnabled = false;
     private Dictionary<string, BattleVFX> _fxByName;
     
     private void Awake()
@@ -25,7 +25,8 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
     
     protected override void Execute(BattleEffectAnimationRequested e)
     {
-        LogInfo($"Requested VFX {e.EffectName}");
+        if (_loggingEnabled)
+            LogInfo($"Requested VFX {e.EffectName}");
         var f = _fxByName.ValueOrMaybe(e.EffectName);
         var ctx = new EffectContext(e.Source, e.Target, e.Card, e.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), state.CreditsAtStartOfBattle, 
@@ -34,7 +35,8 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         var conditionResult = e.Condition.GetShouldNotApplyReason(ctx);
         if (conditionResult.IsPresent)
         {
-            LogInfo($"Condition Not Meant: {conditionResult.Value}");
+            if (_loggingEnabled)
+                LogInfo($"Condition Not Meant: {conditionResult.Value}");
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
         }
         else if (f.IsMissing)
@@ -98,7 +100,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         var instVFX = o.GetComponent<BattleVFX>();
         SetupEffect(o, instVFX, size, speed, color, shouldFlipHorizontal);
         if (!skipWaitingForCompletion && instVFX.WaitForCompletion)
-            StartCoroutine(AwaitAnimationFinish(instVFX));
+            StartCoroutine(AwaitAnimationFinish(instVFX, new WaitForSeconds(f.DurationSeconds)));
         else
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
     }
@@ -134,17 +136,18 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         }
         o.SetActive(true);
     }
-
-    private IEnumerator AwaitAnimationFinish(BattleVFX f)
+    
+    private IEnumerator AwaitAnimationFinish(BattleVFX f, WaitForSeconds w)
     {
-        yield return new WaitForSeconds(f.DurationSeconds);
-        LogInfo($"Finished {f.EffectName} in {f.DurationSeconds} seconds.");
-        Message.Publish(new Finished<BattleEffectAnimationRequested>());
+        yield return w;
+        if (_loggingEnabled)
+            LogInfo($"Finished {f.EffectName} in {f.DurationSeconds} seconds.");
+        this.ExecuteAfterTinyDelay(() => Message.Publish(new Finished<BattleEffectAnimationRequested>()));
     }
 
     private void LogInfo(string msg)
     {
-        if (loggingEnabled)
+        if (_loggingEnabled)
             Log.Info("VFX - " + msg);
     }
 }

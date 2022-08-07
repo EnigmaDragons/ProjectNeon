@@ -50,7 +50,7 @@ public class BattleState : ScriptableObject
                                                      CurrentTurnPartyNonBonusStandardCardPlays -
                                                      _numPlayerDiscardsUsedThisTurn;
 
-    public PlayedCardSnapshot[] CurrentTurnCardPlays() => _playedCardHistory.Any()
+    public PlayedCardSnapshot[] CurrentTurnCardPlays() => _playedCardHistory.Count > 0
         ? _playedCardHistory.Last().ToArray()
         : Array.Empty<PlayedCardSnapshot>();
 
@@ -504,6 +504,7 @@ public class BattleState : ScriptableObject
             var centerPoint = maybeTransform.Value.GetComponentInChildren<CenterPoint>();
             if (centerPoint != null)
                 return centerPoint.transform;
+            
             Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
             return maybeTransform.Value;
         });

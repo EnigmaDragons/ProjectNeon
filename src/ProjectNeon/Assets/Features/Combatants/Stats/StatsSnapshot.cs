@@ -3,20 +3,21 @@ using System.Collections.Generic;
 
 public class StatsSnapshot : IStats
 {
-    private readonly Dictionary<string, float> _values = new Dictionary<string, float>();
+    private readonly Dictionary<StatType, float> _statValues = new Dictionary<StatType, float>();
+    private readonly Dictionary<TemporalStatType, float> _temporalValues = new Dictionary<TemporalStatType, float>();
 
-    public float this[StatType statType] => _values[statType.ToString()];
-    public float this[TemporalStatType statType] => _values[statType.ToString()];
+    public float this[StatType statType] => _statValues[statType];
+    public float this[TemporalStatType statType] => _temporalValues[statType];
     public IResourceType[] ResourceTypes { get; }
 
     public StatsSnapshot(IResourceType[] resourceTypes, IStats origin, StatType primaryStat)
     {
         ResourceTypes = resourceTypes;
         foreach (StatType st in Enum.GetValues(typeof(StatType)))
-            _values[st.ToString()] = origin[st];
-        _values[StatType.Power.ToString()] = origin[primaryStat];
+            _statValues[st] = origin[st];
+        _statValues[StatType.Power] = origin[primaryStat];
         foreach (TemporalStatType st in Enum.GetValues(typeof(TemporalStatType)))
-            _values[st.ToString()] = origin[st];
+            _temporalValues[st] = origin[st];
     }
 }
 

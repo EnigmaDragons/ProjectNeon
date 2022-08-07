@@ -22,6 +22,15 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     private float _playerDelayFactor = 0.2f;
     private bool _debugLog;
 
+    private WaitForSeconds _enemyWait;
+    private WaitForSeconds _partyWait;
+
+    private void Awake()
+    {
+        _enemyWait = new WaitForSeconds(DelaySeconds(TeamType.Enemies));
+        _partyWait = new WaitForSeconds(DelaySeconds(TeamType.Party));
+    }
+    
     private void DebugLog(string msg)
     {
         if (!_debugLog)
@@ -173,7 +182,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     }
 
     protected override void Execute(CardResolutionFinished msg) => StartCoroutine(FinishEffect());
-
+    
     private IEnumerator FinishEffect()
     {
         state.CleanupExpiredMemberStates();
@@ -185,7 +194,11 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         }
         else
         {
-            yield return new WaitForSeconds(DelaySeconds(resolutionZone.CurrentTeamType.OrDefault(TeamType.Enemies)));
+            var teamType = resolutionZone.CurrentTeamType.OrDefault(TeamType.Enemies);
+            if (teamType == TeamType.Enemies)
+                yield return _enemyWait;
+            else
+                yield return _partyWait;
             _resolvingEffect = false;
             resolutionZone.OnCardResolutionFinished();
             ResolveNext();

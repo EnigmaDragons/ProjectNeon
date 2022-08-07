@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 public enum TemporalStatType
 {
     HP = 0,
@@ -23,4 +27,11 @@ public enum TemporalStatType
     AntiHeal = 22,
     PrimaryResource = 23,
     OverkillDamageAmount = 24,
+}
+
+public static class TemporalStatTypeExtensions
+{
+    public static Dictionary<TemporalStatType, string> StatNames = Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>().ToDictionary(s => s, s => s.ToString());
+    public static Dictionary<string, TemporalStatType> StatTypesByName = Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>().ToDictionary(s => s.ToString(), s => s);
+    public static string GetString(this TemporalStatType s) => StatNames[s];
 }

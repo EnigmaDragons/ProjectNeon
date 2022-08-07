@@ -3,7 +3,7 @@ using System.Linq;
 
 public sealed class StatMultipliers : IStats
 {
-    private readonly DictionaryWithDefault<string, float> _values = new DictionaryWithDefault<string, float>(1);
+    private readonly DictionaryWithDefault<string, float> _values;
 
     public StatMultipliers() : this(new DictionaryWithDefault<string, float>(1)) {}
     public StatMultipliers(Dictionary<string, float> values) : this(new DictionaryWithDefault<string, float>(1, values)) {}
@@ -11,14 +11,14 @@ public sealed class StatMultipliers : IStats
     
     public float this[StatType statType]
     {
-        get => _values[statType.ToString()];
-        set => _values[statType.ToString()] = value;
+        get => _values[statType.GetString()];
+        set => _values[statType.GetString()] = value;
     }
 
     public float this[TemporalStatType statType] 
     {
-        get => _values[statType.ToString()];
-        set => _values[statType.ToString()] = value;
+        get => _values[statType.GetString()];
+        set => _values[statType.GetString()] = value;
     }
 
     public StatMultipliers With(StatType statType, float value)

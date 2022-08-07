@@ -264,4 +264,13 @@ public static class CollectionExtensions
 
         return arr[index];
     }
+
+    public static bool AnyNonAlloc<T>(this IEnumerable<T> items, Func<T, bool> condition)
+    {
+        foreach (var i in items)
+            if (condition(i))
+                return true;
+
+        return false;
+    }
 }

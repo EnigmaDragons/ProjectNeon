@@ -13,10 +13,12 @@ public class HpDamageBloodEffect : OnMessage<MemberStateChanged>
         var damageEffectType = state.GetMaterialType(msg.MemberId()) == MemberMaterialType.Organic 
             ? OrganicDamageEffect 
             : MetallicDamageEffect;
-        
+
         if (msg.State.MissingHp() > msg.BeforeState.MissingHp)
-            state.GetMaybeCenterPoint(msg.MemberId())
-                .IfPresent(cp => this.ExecuteAfterDelay(
-                    () => Message.Publish(new PlayRawBattleEffect(damageEffectType, cp.position)), fxDelay));
+        {
+            var cp = state.GetMaybeCenterPoint(msg.MemberId());
+            if (cp.IsPresent)
+                this.ExecuteAfterDelay(() => Message.Publish(new PlayRawBattleEffect(damageEffectType, cp.Value.position)), fxDelay);
+        }
     }
 }

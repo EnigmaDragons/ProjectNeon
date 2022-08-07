@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,6 +36,10 @@ public static class StatExtensions
         new StatAddendData { Stat = StatType.Economy.ToString(), Value = stats.Economy() },
         new StatAddendData { Stat = StatType.ExtraCardPlays.ToString(), Value = stats.ExtraCardPlays() },
     }.Where(x => x.Value != 0).ToArray();
+
+    public static Dictionary<StatType, string> StatNames = Enum.GetValues(typeof(StatType)).Cast<StatType>().ToDictionary(s => s, s => s.ToString());
+    public static Dictionary<string, StatType> StatTypesByName = Enum.GetValues(typeof(StatType)).Cast<StatType>().ToDictionary(s => s.ToString(), s => s);
+    public static string GetString(this StatType s) => StatNames[s];
     
     public static Dictionary<string, bool> _map = new Dictionary<string, bool>
     {

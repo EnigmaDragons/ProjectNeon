@@ -7,6 +7,10 @@ using UnityEngine;
 
 public static class Formula
 {
+    private static readonly StatType[] StatTypes = Enum.GetValues(typeof(StatType)).Cast<StatType>().ToArray();
+    private static readonly TemporalStatType[] TemporalStatTypes = Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>().ToArray();
+    private static readonly CardTag[] CardTags = Enum.GetValues(typeof(CardTag)).Cast<CardTag>().ToArray();
+    
     private static int RoundUp(float f) => f > 0 ? Mathf.CeilToInt(f) : Mathf.FloorToInt(f);
     
     public static int EvaluateToInt(MemberStateSnapshot src, string expression, ResourceQuantity xAmountPaid) 
@@ -54,7 +58,7 @@ public static class Formula
     
     private static string ReplaceTags(string expression, FormulaContext ctx)
     {
-        foreach (var tag in Enum.GetValues(typeof(CardTag)).Cast<CardTag>())
+        foreach (var tag in CardTags)
             expression = expression.Replace($"Tag[{tag}]", ctx.Source.TagsPlayed[tag].ToString());
         return expression;
     }
@@ -84,18 +88,18 @@ public static class Formula
 
     private static string ReplaceStats(string expression, FormulaContext ctx)
     {
-        foreach (var stat in Enum.GetValues(typeof(StatType)).Cast<StatType>())
+        foreach (var stat in StatTypes)
         {
             expression = ReplaceOrRemoveTargetValue(expression, stat, ctx);
-            expression = expression.Replace($"Base[{stat}]", ctx.Source.BaseStats[stat].ToString());
-            expression = expression.Replace(stat.ToString(), ctx.Source[stat].ToString());
+            expression = expression.Replace($"Base[{stat}]", ctx.Source.BaseStats[stat].CeilingInt().ToString());
+            expression = expression.Replace(stat.ToString(), ctx.Source[stat].CeilingInt().ToString());
         }
         return expression;
     }
     
     private static string ReplaceTemporalStats(string expression, FormulaContext ctx)
     {
-        foreach (var stat in Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>())
+        foreach (var stat in TemporalStatTypes)
         {
             expression = ReplaceOrRemoveTargetValue(expression, stat, ctx);
             expression = expression.Replace(stat.ToString(), ctx.Source[stat].ToString());
@@ -106,10 +110,10 @@ public static class Formula
     private static string ReplaceOrRemoveTargetValue(string expression, StatType stat, FormulaContext ctx)
     {        
         ctx.Target.ExecuteIfPresentOrElse(
-            t => expression = expression.Replace($"Target[{stat}]", t[stat].ToString()), 
+            t => expression = expression.Replace($"Target[{stat}]", t[stat].CeilingInt().ToString()), 
             () => expression = expression.Replace($"Target[{stat}]", ""));
         ctx.Target.ExecuteIfPresentOrElse(
-            t => expression = expression.Replace($"TargetBase[{stat}]", t.BaseStats[stat].ToString()), 
+            t => expression = expression.Replace($"TargetBase[{stat}]", t.BaseStats[stat].CeilingInt().ToString()), 
             () => expression = expression.Replace($"TargetBase[{stat}]", ""));
         return expression;
     }
@@ -117,10 +121,10 @@ public static class Formula
     private static string ReplaceOrRemoveTargetValue(string expression, TemporalStatType stat, FormulaContext ctx)
     {
         ctx.Target.ExecuteIfPresentOrElse(
-            t => expression = expression.Replace($"Target[{stat}]", t[stat].ToString()), 
+            t => expression = expression.Replace($"Target[{stat}]", t[stat].CeilingInt().ToString()), 
             () => expression = expression.Replace($"Target[{stat}]", ""));
         ctx.Target.ExecuteIfPresentOrElse(
-            t => expression = expression.Replace($"TargetBase[{stat}]", t.BaseStats[stat].ToString()), 
+            t => expression = expression.Replace($"TargetBase[{stat}]", t.BaseStats[stat].CeilingInt().ToString()), 
             () => expression = expression.Replace($"TargetBase[{stat}]", ""));
         return expression;
     }

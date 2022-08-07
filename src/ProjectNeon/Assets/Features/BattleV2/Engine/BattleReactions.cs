@@ -3,6 +3,7 @@ using System.Linq;
 
 public class BattleReactions
 {
+    private bool _loggingEnabled = false;
     private readonly Queue<ProposedReaction> _instantReactions;
     private readonly Queue<ProposedReaction> _cardReactions;
     
@@ -20,7 +21,8 @@ public class BattleReactions
 
     public void Enqueue(ProposedReaction p)
     {
-        Log.Info($"Queued Proposed Reaction - {p.ReactionCard.Select(c => $"Card {c.Name}", "Effect")}");
+        if (_loggingEnabled)
+            Log.Info($"Queued Proposed Reaction - {p.ReactionCard.Select(c => $"Card {c.Name}", "Effect")}");
         if (p.ReactionCard.IsMissing)
             _instantReactions.Enqueue(p);
         else

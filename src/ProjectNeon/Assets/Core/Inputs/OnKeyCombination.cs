@@ -17,9 +17,14 @@ public class OnKeyCombination : MonoBehaviour
     
     private void Update()
     {
-        var combinationIsPressed = _values.All(v => Input.GetKey((KeyCode)v));
+        var combinationIsPressed = _values.Length != 0;
+        foreach(var k in keys)
+            if (!Input.GetKey(k))
+                combinationIsPressed = false;
+        
         if (!_triggered && combinationIsPressed)
             action.Invoke();
+        
         _triggered = combinationIsPressed;
     }
 }

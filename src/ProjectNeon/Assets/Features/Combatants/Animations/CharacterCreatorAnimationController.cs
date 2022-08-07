@@ -151,9 +151,9 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         SetAnimatorFloat("Aim", _characterAnimations.Aim);
         SetAnimatorBool(_characterAnimations.Idle, true);
         SetAnimatorBool(_characterAnimations.AimIdle, true);
-        foreach (var state in _currentStates)
-            SetAnimatorBool(state.Value, false);
-        _currentStates = new Dictionary<int, string>();
+        foreach (var s in _currentStates)
+            SetAnimatorBool(s.Value, false);
+        _currentStates.Clear();
         if (!_initializedPosition)
             return;
         _source = _start;

@@ -40,6 +40,18 @@ public sealed class Maybe<T>
             elseAction();
     }
 
+    public void Clear()
+    {
+        value = default(T);
+        isPresent = false;
+    }
+
+    public void Set(T obj, bool newIsPresent)
+    {
+        value = obj;
+        isPresent = newIsPresent;
+    }
+    
     public bool IsPresentAnd(Func<T, bool> condition) => IsPresent && condition(value);
     public bool IsMissingOr(Func<T, bool> condition) => IsMissing || condition(value);
 

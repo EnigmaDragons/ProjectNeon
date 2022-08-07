@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -192,6 +193,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         }
     }
 
+    private static readonly Dictionary<BattleV2Phase, string> PhaseMessages = 
+        Enum.GetValues(typeof(BattleV2Phase)).Cast<BattleV2Phase>()
+            .ToDictionary(p => p, p => $"-- Phase - {p.ToString().WithSpaceBetweenWords()} --"); 
+    
     private void BeginPhase(BattleV2Phase newPhase)
     {
         if (newPhase == state.Phase)
@@ -203,7 +208,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         var finishedMessage = state.Phase != BattleV2Phase.NotBegun ? $"Finished {state.Phase} Phase -> " : "";
         var message = $"Phase - {finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);
-        BattleLog.Write($"-- Phase - {newPhase.ToString().WithSpaceBetweenWords()} --");
+        BattleLog.Write(PhaseMessages[newPhase]);
         state.CleanupExpiredMemberStates();
         state.SetPhase(newPhase);
     }
