@@ -23,7 +23,7 @@ public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTar
     {
         yield return new WaitForSeconds(5);
         if (!_hasWon)
-        Message.Publish(new ShowTutorialByName(_callerId));
+            Message.Publish(new ShowTutorialByName(_callerId));
     }
 
     protected override void Execute(BeginTargetSelectionRequested msg)
