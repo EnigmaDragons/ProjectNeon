@@ -13,6 +13,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private bool _hasSwappedToBasic;
     private bool _hasWon;
     private bool _hasWorried;
+    private bool _hasCommentedOnGainingResources; 
     
     private void Start()
     {
@@ -73,10 +74,13 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     {
         if (msg.Phase == BattleV2Phase.EnemyCards)
         {
-            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, true, _callerId));
-            Message.Publish(new PunchYourself(BattleUiElement.EnemyTechPoints));
-            Message.Publish(new ShowHeroBattleThought(4, "I can gain powerful resources too! Hah!"));
-            
+            if (!_hasCommentedOnGainingResources)
+            {
+                _hasCommentedOnGainingResources = true;
+                Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, true, _callerId));
+                Message.Publish(new PunchYourself(BattleUiElement.EnemyTechPoints));
+                Message.Publish(new ShowHeroBattleThought(4, "I can gain powerful resources too! Hah!"));
+            }
         }
     }
 
