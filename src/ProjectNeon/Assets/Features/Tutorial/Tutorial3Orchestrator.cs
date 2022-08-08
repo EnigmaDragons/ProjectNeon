@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStarted, CardResolutionFinished, WinBattleWithRewards>
+public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStarted, CardResolutionFinished, WinBattleWithRewards, MemberUnconscious>
 {
     private const string _callerId = "Tutorial3Orchestrator";
 
@@ -15,6 +15,7 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
     private bool _blockedWithArmorAlready;
     private bool _blockedWithResistanceAlready;
     private bool _hasWon;
+    private bool _hasMadeUnconsciousAllyComment;
     
     private void Start()
     {
@@ -74,6 +75,22 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+    
+    protected override void Execute(MemberUnconscious msg)
+    {
+        if (_hasMadeUnconsciousAllyComment)
+            return;
+
+        _hasMadeUnconsciousAllyComment = true;
+        if (msg.Member.Id == 4)
+        {
+            Message.Publish(new ShowHeroBattleThought(5, "No!!! My Sister!!! \nI'll make you pay for that!"));
+        }
+        if (msg.Member.Id == 5)
+        {
+            Message.Publish(new ShowHeroBattleThought(4, "Nooooooooo!!! \nBrother! How can this be?!? I'll avenge you!"));
+        }
+    }
 
     private void UpdateHealthTotals()
     {
