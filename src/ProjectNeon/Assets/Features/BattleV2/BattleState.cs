@@ -499,16 +499,24 @@ public class BattleState : ScriptableObject
     
     public Maybe<Transform> GetMaybeCenterPoint(int memberId)
     {
-        var maybeTransform = GetMaybeTransform(memberId);
-        return maybeTransform.Map(t =>
+        try
         {
-            var centerPoint = maybeTransform.Value.GetComponentInChildren<CenterPoint>();
-            if (centerPoint != null)
-                return centerPoint.transform;
-            
+            var maybeTransform = GetMaybeTransform(memberId);
+            return maybeTransform.Map(t =>
+            {
+                var centerPoint = maybeTransform.Value.GetComponentInChildren<CenterPoint>();
+                if (centerPoint != null)
+                    return centerPoint.transform;
+
+                Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
+                return maybeTransform.Value;
+            });
+        }
+        catch (Exception)
+        {
             Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
-            return maybeTransform.Value;
-        });
+            return Maybe<Transform>.Missing();
+        }
     }
 
     public Vector3 GetCenterPoint(TeamType team)

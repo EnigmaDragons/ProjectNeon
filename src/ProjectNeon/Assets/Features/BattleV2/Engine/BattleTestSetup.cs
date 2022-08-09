@@ -30,7 +30,7 @@ public class BattleTestSetup : MonoBehaviour
 
     [Header("Enemies")] 
     [SerializeField] private List<Enemy> enemies;
-    [SerializeField] private EncounterBuilder encounterBuilder;
+    [SerializeField] private EncounterBuilderV5 encounterBuilder;
     [SerializeField] private int stage;
 
     [Header("Card Test")] 
