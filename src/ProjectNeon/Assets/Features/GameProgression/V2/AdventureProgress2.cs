@@ -34,6 +34,11 @@ public class AdventureProgress2 : AdventureProgressBase
     public override bool IsFinalBoss => IsFinalStageSegment;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
+    public override Difficulty Difficulty
+    {
+        get => Difficulty.Experienced;
+        set { }
+    }
 
     public int[] FinishedCurrentStageHeatUpEvents => finishedCurrentStageHeatUpEvents.ToArray();
 

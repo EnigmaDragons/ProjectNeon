@@ -12,7 +12,8 @@ public class AdventureProgressV5 : AdventureProgressBase
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private int currentSegmentIndex;
     [SerializeField] private int rngSeed = Rng.NewSeed();
-
+    [SerializeField] private Difficulty difficulty;
+    
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
 
     public override int AdventureId => currentAdventure.Adventure.Id;
@@ -35,6 +36,11 @@ public class AdventureProgressV5 : AdventureProgressBase
         .Select((x, i) => (x, i))
         .Where(y => y.x.MapNodeType == MapNodeType.Elite).Select(y => (float) y.i / CurrentChapter.SegmentCountToBoss)
         .ToArray();
+    public override Difficulty Difficulty
+    {
+        get => difficulty;
+        set => difficulty = value;
+    }
     
     public HybridStageV5 CurrentChapter
     {
@@ -166,7 +172,8 @@ public class AdventureProgressV5 : AdventureProgressBase
              ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray(),
              RngSeed = rngSeed,
              States = _storyStates.Keys.ToArray(),
-             StateValues = _storyStates.Values.ToArray()
+             StateValues = _storyStates.Values.ToArray(),
+             Difficulty = difficulty
         };
     
     public bool InitAdventure(GameAdventureProgressData d, Adventure adventure)
@@ -178,6 +185,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         _storyStates = new DictionaryWithDefault<string, bool>(false);
         for (var i = 0; i < d.States.Length; i++)
              _storyStates[d.States[i]] = d.StateValues[i];
+        difficulty = d.Difficulty;
         return true;
     }
 

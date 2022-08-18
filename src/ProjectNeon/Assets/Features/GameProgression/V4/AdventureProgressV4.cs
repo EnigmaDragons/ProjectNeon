@@ -30,7 +30,12 @@ public class AdventureProgressV4 : AdventureProgressBase
     public override float ProgressToBoss => CurrentStageProgress < 1 || CurrentChapter == null || CurrentChapter.SegmentCount < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
     public override float[] RisingActionPoints => new float[0];
     private int CurrentStageLength => CurrentChapter.SegmentCount;
-    
+    public override Difficulty Difficulty
+    {
+        get => Difficulty.Experienced;
+        set { }
+    }
+
     public StaticStageV4 CurrentChapter
     {
         get { 

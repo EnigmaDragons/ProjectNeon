@@ -32,6 +32,7 @@ public class GameAdventureProgressData
     public int RngSeed = Rng.NewSeed();
     public string[] States = new string[0];
     public bool[] StateValues = new bool[0];
+    public Difficulty Difficulty = Difficulty.Experienced;
 }
 
 public enum GameAdventureProgressType

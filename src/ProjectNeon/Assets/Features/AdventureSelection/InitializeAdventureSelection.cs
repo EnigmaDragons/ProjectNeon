@@ -59,10 +59,7 @@ public class InitializeAdventureSelection : MonoBehaviour
         if (adventure.IsV4)
             navigator.NavigateToGameSceneV4();
         if (adventure.IsV5)
-            if (adventure.Mode == AdventureMode.Draft)
-                navigator.NavigateToSquadSelection();
-            else
-                Message.Publish(new StartAdventureV5Requested(adventure, Maybe<BaseHero[]>.Missing()));
-                
+            navigator.NavigateToDifficultyScene();
+
     }
 }

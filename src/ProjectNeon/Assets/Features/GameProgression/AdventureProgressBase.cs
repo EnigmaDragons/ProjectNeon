@@ -28,4 +28,5 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract bool IsFinalBoss { get; }
     public abstract float ProgressToBoss { get; }
     public abstract float[] RisingActionPoints { get; }
+    public abstract Difficulty Difficulty { get; set; }
 }

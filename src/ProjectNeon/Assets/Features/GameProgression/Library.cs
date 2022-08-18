@@ -11,12 +11,14 @@ public class Library : ScriptableObject
     [SerializeField] private AllEquipment allEquipment;
     [SerializeField] private AllLevelUpOptions allLevelUps;
     [SerializeField] private Adventure[] unlockedAdventures;
+    [SerializeField] private Difficulty[] unlockedDifficulties;
     [SerializeField] private BaseHero noHero;
 
     public BaseHero NoHero => noHero;
     public Maybe<BaseHero> MaybeFeaturedHero => featuredHero != null ? featuredHero : Maybe<BaseHero>.Missing();
     public BaseHero[] UnlockedHeroes => unlockedHeroes.Where(h => !h.IsDisabled).ToArray();
     public Adventure[] UnlockedAdventures => unlockedAdventures;
+    public Difficulty[] UnlockedDifficulties => unlockedDifficulties;
 
     public BaseHero HeroById(int id) => allHeroes.GetHeroByIdOrDefault(id);
     public Maybe<CardTypeData> GetCardById(int id) => allCards.GetCardById(id);

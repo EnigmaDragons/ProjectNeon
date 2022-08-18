@@ -23,6 +23,7 @@ public sealed class Navigator : ScriptableObject
     public void NavigateToDiscordServer() => Application.OpenURL("https://discord.gg/V3yKWAwknC");
     public void NavigateToSteamPage() => Application.OpenURL("https://store.steampowered.com/app/1412960/Metroplex_Zero/");
     public void NavigateToSettingsScene() => NavigateTo("SettingsScene");
+    public void NavigateToDifficultyScene() => NavigateTo("DifficultySelection");
 
     public void ReloadScene()
     {
