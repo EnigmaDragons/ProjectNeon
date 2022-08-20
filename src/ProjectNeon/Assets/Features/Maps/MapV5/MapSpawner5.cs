@@ -18,8 +18,8 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     [SerializeField] private GameObject playerTokenParent;
     [SerializeField] private AllStageSegments allStageSegments;
     [SerializeField] private FloatReference minDistanceBetweenNodes = new FloatReference(0f);
-    
-    
+    [SerializeField] private CurrentTheme currentTheme;
+
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
     [SerializeField] private MapNodeGameObject3 eliteCombatNode;
@@ -54,6 +54,8 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     private void Awake()
     {
         gameMap.CurrentMap = progress.CurrentChapter.Map;
+        if (gameMap.CurrentMap.Theme != null && currentTheme != null)
+            currentTheme.Set(gameMap.CurrentMap.Theme);
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         _map.transform.SetAsFirstSibling();
     }
