@@ -23,6 +23,8 @@ public class InitializeDifficultySelection : MonoBehaviour
     private void Begin(Difficulty difficulty)
     {
         adventureProgress.AdventureProgress.Difficulty = difficulty;
+        foreach (var globalEffect in difficulty.GlobalEffects)
+            adventureProgress.AdventureProgress.GlobalEffects.Apply(globalEffect, new GlobalEffectContext(adventureProgress.AdventureProgress.GlobalEffects));
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;

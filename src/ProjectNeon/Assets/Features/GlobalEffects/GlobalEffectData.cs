@@ -17,6 +17,8 @@ public class GlobalEffectData
     public StringReference CorpName;
     public StringReference EffectScope;
 
+    public StaticEquipment Equipment;
+
     public GlobalEffectData WithOriginatingId(int id)
     {
         OriginatingId = id;

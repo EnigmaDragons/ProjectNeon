@@ -15,6 +15,7 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private PartyEquipmentCollection equipment;
     [SerializeField] private Hero[] heroes = new Hero[0];
     [SerializeField] private ShopCardPool allCards;
+    [SerializeField] private Equipment[] globalEquipment;
 
     private List<CorpCostModifier> _corpCostModifiers = new List<CorpCostModifier>();
     private Queue<Blessing> _blessings = new Queue<Blessing>();
@@ -36,6 +37,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public Blessing[] Blessings => _blessings?.ToArray() ?? (_blessings = new Queue<Blessing>()).ToArray();
     public PartyCardCollection Cards => cards;
     public PartyEquipmentCollection Equipment => equipment;
+    public Equipment[] GlobalEquipment => globalEquipment ?? new Equipment[0];
     private Dictionary<string, List<Hero>> _archKeyHeroes;
 
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
@@ -85,7 +87,13 @@ public sealed class PartyAdventureState : ScriptableObject
     {
         party.Initialized(one, two, three);
         var baseHeroes = party.Heroes;
-        heroes = baseHeroes.Select(h => new Hero(h, CreateDeck(h.Deck))).ToArray();
+        heroes = baseHeroes.Select(h =>
+        {
+            var hero = new Hero(h, CreateDeck(h.Deck));
+            foreach (var equip in GlobalEquipment)
+                hero.ApplyPermanent(equip);
+            return hero;
+        }).ToArray();
         credits = heroes.Sum(h => h.Character.StartingCredits);
         clinicVouchers = 0;
         numShopRestocks = 2;
@@ -123,7 +131,10 @@ public sealed class PartyAdventureState : ScriptableObject
 
         UpdateState(() =>
         {
-            heroes = heroes.Append(new Hero(hero, CreateDeck(hero.Deck))).ToArray();
+            var heroInst = new Hero(hero, CreateDeck(hero.Deck));
+            foreach (var equip in GlobalEquipment)
+                heroInst.ApplyPermanent(equip);
+            heroes = heroes.Append(heroInst).ToArray();
             party.Add(hero);
             credits += hero.StartingCredits;
             cards.Add(HeroStartingCards(hero).ToArray());
@@ -139,7 +150,10 @@ public sealed class PartyAdventureState : ScriptableObject
         
         UpdateState(() =>
         {
-            heroes = heroes.Append(new Hero(hero, deck)).ToArray();
+            var heroInst = new Hero(hero, deck);
+            foreach (var equip in GlobalEquipment)
+                heroInst.ApplyPermanent(equip);
+            heroes = heroes.Append(heroInst).ToArray();
             party.Add(hero);
             cards.Add(HeroDraftStartingCards(hero).ToArray());
             InitArchKeyHeroes();
@@ -311,6 +325,19 @@ public sealed class PartyAdventureState : ScriptableObject
     public void SetCorpCostModifier(CorpCostModifier[] modifiers) => _corpCostModifiers = modifiers?.ToList() ?? new List<CorpCostModifier>();
     public void AddCorpCostModifier(CorpCostModifier modifier) => _corpCostModifiers.Add(modifier);
 
+    public void AddGlobalEquipment(Equipment equip)
+    {
+        if (GlobalEquipment.Contains(equip))
+            return;
+        globalEquipment = GlobalEquipment.Concat(equip).ToArray();
+        heroes.ForEach(x => x.ApplyPermanent(equip));
+    }
+    public void RemoveGlobalEquipment(Equipment equip)
+    {
+        globalEquipment = GlobalEquipment.Where(x => x != equip).ToArray();
+        heroes.ForEach(x => x.Equipment.Unequip(equip));
+    }
+    
     public float GetCostFactorForEquipment(string corp)
         => Mathf.Clamp(_corpCostModifiers
             .Where(x => x.AppliesToEquipmentShop && x.Corp.Equals(corp, StringComparison.OrdinalIgnoreCase))

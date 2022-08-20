@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName="GlobalEffects/CurrentGlobalEffects")]
@@ -11,6 +12,7 @@ public class CurrentGlobalEffects : ScriptableObject
     [SerializeField] private float encounterDifficultyFactor = 1f;
     [SerializeField] private List<TargetedEffectData> startOfBattleEffects = new List<TargetedEffectData>();
     [SerializeField] private List<Tuple<string, MapNodeType>> travelPreventedCorpNodeTypes = new List<Tuple<string, MapNodeType>>();
+    [SerializeField] private PartyAdventureState party;
 
     public AllStaticGlobalEffects AllStaticGlobalEffects => allStaticGlobalEffects;
     public GlobalEffect[] Value => globalEffects.ToArray();
@@ -29,6 +31,9 @@ public class CurrentGlobalEffects : ScriptableObject
 
     public void PreventTravelTo(string corpName, MapNodeType nodeType) => PublishAfter(() => travelPreventedCorpNodeTypes.Add(new Tuple<string, MapNodeType>(corpName, nodeType)));
     public void AllowTravelTo(string corpName, MapNodeType nodeType) => PublishAfter(() => travelPreventedCorpNodeTypes.Remove(new Tuple<string, MapNodeType>(corpName, nodeType)));
+
+    public void AddHeroEquipment(Equipment equipment) => party.AddGlobalEquipment(equipment);
+    public void RemoveHeroEquipment(Equipment equipment) => party.RemoveGlobalEquipment(equipment);
     
     public void Clear() => PublishAfter(() =>
     {
