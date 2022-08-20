@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
@@ -18,8 +19,8 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     [SerializeField] private GameObject playerTokenParent;
     [SerializeField] private AllStageSegments allStageSegments;
     [SerializeField] private FloatReference minDistanceBetweenNodes = new FloatReference(0f);
-    
-    
+    [SerializeField] private CurrentTheme currentTheme;
+
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
     [SerializeField] private MapNodeGameObject3 eliteCombatNode;
@@ -54,6 +55,8 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     private void Awake()
     {
         gameMap.CurrentMap = progress.CurrentChapter.Map;
+        if (gameMap.CurrentMap.Theme != null && currentTheme != null)
+            currentTheme.Set(gameMap.CurrentMap.Theme);
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         _map.transform.SetAsFirstSibling();
     }
@@ -78,9 +81,6 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
                 var rect = (RectTransform) obj.transform;
                 rect.pivot = new Vector2(0.5f, 0.5f);
                 rect.anchoredPosition = x.Position;
-
-                var pathLine = Instantiate(pathLinePrototype, pathLinesParent.transform);
-                pathLine.m_points = new [] {gameMap.DestinationPosition, x.Position};
             }
             catch (Exception e)
             {
@@ -88,11 +88,38 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
                 Log.Error($"Node Prefab for {x.Type} - {x.Corp} is null");
             }
         });
+
+        SpawnPathLines();
+
         if (_playerToken != null)
             _playerToken.transform.SetAsLastSibling();
         Message.Publish(new AutoSaveRequested());
     }
-    
+
+    private void SpawnPathLines()
+    {
+        if (pathLinesParent == null)
+            return;
+        
+        var allChoices = gameMap.CurrentChoices.OrderBy(c => c.Position.x).ToArray();
+        var mapLineCombinations = new List<(Vector2, Vector2)>();
+        allChoices.ForEach(c => mapLineCombinations.Add((gameMap.DestinationPosition, c.Position)));
+        
+        for (var i = 0; i < allChoices.Length; i++)
+        {
+            var rootChoice = allChoices[i];
+            allChoices.Skip(i + 1).ForEach(c => mapLineCombinations.Add((rootChoice.Position, c.Position)));
+        }
+
+        mapLineCombinations.ForEach(c =>
+        {
+            var pathLine = Instantiate(pathLinePrototype, pathLinesParent.transform);
+            var leftPoint = c.Item1.x <= c.Item2.x ? c.Item1 : c.Item2;
+            var rightPoint = c.Item1.x > c.Item2.x ? c.Item1 : c.Item2;
+            pathLine.m_points = new[] {leftPoint, rightPoint};
+        });
+    }
+
     private void GenerateOptions()
     {
         var sideSegments = progress.SecondarySegments.ToList();

@@ -18,8 +18,13 @@ public class WinBattleWithRewardsHandler : OnMessage<WinBattleWithRewards>
         var rewardXp = state.EnemyArea.Enemies.Sum(e => e.GetRewardXp(state.XpPerPowerLevelRewardFactor));
         state.AddRewardCredits(rewardCredits);
         state.AddRewardXp(rewardXp);
+        var startedOnFinish = false;
         conclusion.GrantVictoryRewardsAndThen(() =>
         {
+            if (startedOnFinish)
+                return;
+
+            startedOnFinish = true;
             Message.Publish(new BattleFinished(TeamType.Party));
             state.Wrapup();
         });
