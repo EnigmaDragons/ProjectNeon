@@ -56,16 +56,18 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
     private readonly int _numOfImplants;
     private readonly DeterministicRng _rng;
     private readonly bool _isTutorial;
+    private readonly Rarity[] _rarityChances;
     
     private ClinicServiceButtonData[] _generatedOptions;
     private bool[] _available;
 
-    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants, DeterministicRng rng, bool isTutorial)
+    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants, DeterministicRng rng, bool isTutorial, Rarity[] rarityChances)
     {
         _party = party;
         _numOfImplants = numOfImplants;
         _rng = rng;
         _isTutorial = isTutorial;
+        _rarityChances = rarityChances;
     }
     
     public string GetTitle() => "Available Implant Procedures";
@@ -101,10 +103,26 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         var gain = StatAmounts.Where(x => x.Key != loss.Key && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat) && (!_isTutorial || TutorialStatTypes.Contains(x.Key))).Random(_rng);
         var gainStat = gain.Key;
         var gainAmount = gain.Value;
+        var rarity = _rarityChances.Random(_rng);
+        if (rarity == Rarity.Uncommon || rarity == Rarity.Epic)
+            gainAmount = gainAmount * 2;
+        if (rarity == Rarity.Rare || rarity == Rarity.Epic)
+            lossAmount = 0;
+        var cost = 0;
+        if (rarity == Rarity.Common)
+            cost = 1;
+        else if (rarity == Rarity.Uncommon)
+            cost = 2;
+        else if (rarity == Rarity.Rare)
+            cost = 3;
+        else if (rarity == Rarity.Epic)
+            cost = 4;
         return new ClinicServiceButtonData(
             $"{NegativePrefix[lossStat]} {PositiveSuffix[gainStat]}",
-            $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}</b>",
-            1,
+            rarity == Rarity.Rare || rarity == Rarity.Epic
+                ? $"Gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}"
+                : $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}</b>",
+            cost,
             () =>
             {
                 if (_available.Length > index)
@@ -112,8 +130,10 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
                     _available[index] = false;
                     AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount);
                 }
-            }, Array.Empty<EffectData>(),
-            "Medigeneix");
+            }, 
+            Array.Empty<EffectData>(),
+            "Medigeneix",
+            rarity);
     }
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)
