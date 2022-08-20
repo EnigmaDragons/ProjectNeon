@@ -70,7 +70,8 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
             CalculateCost(hero, lossStat, lossAmount, gainStat, gainAmount),
             () => AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount),
             Array.Empty<EffectData>(),
-            "Medigeneix");
+            "Medigeneix",
+            Rarity.Starter);
     }
 
     public int CalculateCost(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount) 

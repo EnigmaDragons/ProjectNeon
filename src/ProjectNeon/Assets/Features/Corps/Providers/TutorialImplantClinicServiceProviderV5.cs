@@ -82,7 +82,8 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
                 AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount);
                 _available[index] = false;
             }, Array.Empty<EffectData>(),
-            "Medigeneix");
+            "Medigeneix",
+            Rarity.Common);
     }
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)

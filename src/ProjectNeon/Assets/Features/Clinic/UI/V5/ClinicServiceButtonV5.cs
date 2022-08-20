@@ -13,6 +13,7 @@ public class ClinicServiceButtonV5 : MonoBehaviour
     [SerializeField] private CorpUiBase[] corpUi;
     [SerializeField] private AllCorps corps;
     [SerializeField] private CanvasGroup disabledCanvasGroup;
+    [SerializeField] private RarityPresenter rarity;
 
     private ClinicServiceButtonData _data;
     
@@ -41,6 +42,10 @@ public class ClinicServiceButtonV5 : MonoBehaviour
         }
         corps.GetCorpByName(data.CorpName)
             .IfPresent(c => corpUi.ForEach(cui => cui.Init(c)));
+        if (data.Rarity == Rarity.Starter)
+            rarity.gameObject.SetActive(false);
+        else 
+            rarity.Set(data.Rarity);
     }
 
     public void ShowRules()
