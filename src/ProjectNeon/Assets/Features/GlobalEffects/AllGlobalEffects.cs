@@ -23,6 +23,9 @@ public static class AllGlobalEffects
         { GlobalEffectType.PreventTravelToCorpNodeType, d => new BasicGlobalEffect(d,
             fx => Enum.TryParse(d.EffectScope, out MapNodeType nodeType).If(() => fx.PreventTravelTo(d.CorpName, nodeType)),
             fx => Enum.TryParse(d.EffectScope, out MapNodeType nodeType).If(() => fx.AllowTravelTo(d.CorpName, nodeType))) },
+        { GlobalEffectType.AddHeroEquipment, d => new BasicGlobalEffect(d,
+            fx => fx.AddHeroEquipment(d.Equipment),
+            fx => fx.RemoveHeroEquipment(d.Equipment))}
     };
 
     public static GlobalEffect Create(GlobalEffectData data)

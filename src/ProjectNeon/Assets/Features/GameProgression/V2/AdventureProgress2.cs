@@ -13,6 +13,7 @@ public class AdventureProgress2 : AdventureProgressBase
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
     [SerializeField] private List<int> finishedCurrentStageHeatUpEvents = new List<int>();
     [SerializeField] private bool playerReadMapPrompt = false;
+    [SerializeField] private Library library;
 
     public override int AdventureId => currentAdventure.Adventure.Id;
     public Adventure CurrentAdventure => currentAdventure.Adventure;
@@ -36,7 +37,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
     public override Difficulty Difficulty
     {
-        get => Difficulty.Experienced;
+        get => library.UnlockedDifficulties.FirstOrDefault(x => x.Id == 0) ?? library.UnlockedDifficulties.First();
         set { }
     }
 

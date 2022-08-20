@@ -6,4 +6,5 @@ public enum GlobalEffectType
     AdjustEncounterPowerLevel = 2,
     AddStartOfBattleEffect = 3,
     PreventTravelToCorpNodeType = 4,
+    AddHeroEquipment = 5
 }

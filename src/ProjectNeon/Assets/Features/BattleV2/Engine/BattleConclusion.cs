@@ -79,7 +79,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         Time.timeScale = 1;
         if (msg.Winner == TeamType.Party)
             Advance();
-        else if ((state.IsTutorialCombat && useNewTutorialFlow.Value) || adventureProgress.AdventureProgress.Difficulty == Difficulty.Casual)
+        else if ((state.IsTutorialCombat && useNewTutorialFlow.Value) || adventureProgress.AdventureProgress.Difficulty.ResetAfterDeath)
         {
             Log.Info("Restarting Battle");
             saveLoadSystem.LoadSavedGame();

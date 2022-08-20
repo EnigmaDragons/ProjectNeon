@@ -10,6 +10,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private int currentSegmentIndex;
     [SerializeField] private int rngSeed = Rng.NewSeed();
+    [SerializeField] private Library library;
 
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
 
@@ -32,7 +33,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     private int CurrentStageLength => CurrentChapter.SegmentCount;
     public override Difficulty Difficulty
     {
-        get => Difficulty.Experienced;
+        get => library.UnlockedDifficulties.FirstOrDefault(x => x.Id == 0) ?? library.UnlockedDifficulties.First();
         set { }
     }
 

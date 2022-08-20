@@ -93,7 +93,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         var maybeEquipments = partyData.Equipment.Select(e => library.GetEquipment(e));
         if (maybeEquipments.Any(c => c.IsMissing))
             return LoadFailedReason("Missing Equipments");
-        
+
         party.InitFromSave(
             library.HeroById(partyData.Heroes[0].BaseHeroId),
             numHeroes > 1 ? library.HeroById(partyData.Heroes[1].BaseHeroId) : library.HeroById(0),

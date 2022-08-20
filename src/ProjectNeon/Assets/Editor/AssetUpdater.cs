@@ -117,7 +117,7 @@ public class AssetUpdater
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<Adventure>(), x => x.id, (x, id) => x.id = id);
     }
-    
+
     [MenuItem("Neon/Update/Update Heroes")]
     private static void UpdateHeroes()
     {

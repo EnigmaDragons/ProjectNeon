@@ -16,7 +16,7 @@ public static class GameDataMappingExtensions
                     Stats = h.LevelUpsAndImplants.GetSaveData(),
                     Levels = h.Levels,
                     Deck = new GameDeckData { CardIds = h.Deck.Cards.Select(c => c.Id).ToArray() },
-                    EquipmentIdNames = h.Equipment.All.Where(e => e.Slot != EquipmentSlot.Permanent)
+                    EquipmentIdNames = h.Equipment.All.Where(e => !h.Equipment.Implants.Contains(e))
                         .Select(x => new GameEquipmentIdName { Id = x.Id, Name = x.Name }).ToArray(),
                     Implants = h.Equipment.Implants.Select(x => x.GetData()).ToArray(),
                     PrimaryStat = h.PlayerPrimaryStatSelection

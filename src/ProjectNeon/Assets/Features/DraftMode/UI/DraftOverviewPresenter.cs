@@ -52,7 +52,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
 
     private void RenderGear(Hero currentHero)
     {
-        var equippedGear = currentHero.Equipment.All;
+        var equippedGear = currentHero.Equipment.All.Where(x => x.Slot != EquipmentSlot.Permanent).ToArray();
         for (var i = 0; i < gear.Length; i++)
         {
             var hasEquipment = equippedGear.Length > i;
