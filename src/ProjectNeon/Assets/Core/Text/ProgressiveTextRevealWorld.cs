@@ -28,7 +28,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     private Action _onFinished = () => { };
 
     private static bool _debugLog = false;
-    
+
     public override void Hide()
     {
         if (!chatBox.gameObject.activeSelf || isRevealing)
@@ -134,6 +134,8 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
         if (!gameObject.activeSelf)
             yield break;
         
+        var waitUntilGameUnpaused = new WaitUntil(() => Time.timeScale > 0.1f);
+        var waitForNextChar = new WaitForSecondsRealtime(secondsPerCharacter);
         if (secondsPerCharacter.Value < 0.01f)
         {
             ShowCompletely();
@@ -154,14 +156,14 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
             _cursor++;
             if (sfx != null && shownText.Length % sfxEveryXCharacters == 0)
                 sfx.Play(transform.position);
+            
             //This advances past markdown
             while (_cursor < fullText.Length && fullText[_cursor - 1] == '<')
                 _cursor = fullText.IndexOf('>', _cursor) + 2;
-            
-            if (Time.timeScale < 0.1f)
-                yield return new WaitUntil(() => Time.timeScale > 0.1f);
-            
-            yield return new WaitForSeconds(secondsPerCharacter);
+
+            if (Time.timeScale <= 0.1f)
+                yield return waitUntilGameUnpaused;
+            yield return waitForNextChar;
         }
 
         ShowCompletely();

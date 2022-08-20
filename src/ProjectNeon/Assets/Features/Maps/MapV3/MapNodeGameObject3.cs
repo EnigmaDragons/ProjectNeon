@@ -9,16 +9,22 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
 {
     [SerializeField] private Button button;
     [SerializeField] private StageSegment segment;
-    [SerializeField] private GameObject hoverRulesPanel;
     [SerializeField] private GameObject travelPreventedVisual;
     [SerializeField] private GameObject plotEventVisual;
     [SerializeField] private TextMeshProUGUI unvisitedTextLabel;
     [SerializeField] private TextMeshProUGUI visitedTextLabel;
-    [SerializeField] private bool alwaysShowRules = false;
+    
+    [Header("Enlargement")]
     [SerializeField] private GameObject[] imagesToEnlarge;
     [SerializeField] private FloatReference enlargeAmount;
     [SerializeField] private GameObject[] objectsToOffsetWhenEnlarged;
     [SerializeField] private FloatReference enlargedYOffsets;
+    
+    [Header("Hover Description")]
+    [SerializeField] private bool alwaysShowRules = false;
+    [SerializeField] private MapNodeDescription description;
+    [SerializeField] private string descriptionName;
+    [SerializeField, TextArea(1, 4)] private string descriptionDetail;
     
     public IStageSegment ArrivalSegment { get; private set; }
     public MapNode3 MapData { get; private set; }
@@ -42,6 +48,8 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (visitedTextLabel != null)
             visitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
                 .Select(e => $"<b>If Visited</b>:\n{e.FullDescription}", "");
+        if (description != null)
+            description.Init(descriptionName, descriptionDetail);
         button.enabled = canTravel;
         if (canTravel)
             button.onClick.AddListener(() =>
@@ -80,6 +88,8 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (visitedTextLabel != null)
             visitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
                 .Select(e => $"<b>If Visited</b>:\n{e.FullDescription}", "");
+        if (description != null)
+            description.Init(descriptionName, descriptionDetail);
         button.enabled = canTravel;
         if (canTravel)
             button.onClick.AddListener(() =>
@@ -140,7 +150,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     
     private void Awake()
     {
-        _rulesPanel = hoverRulesPanel != null ? new Maybe<GameObject>(hoverRulesPanel) : Maybe<GameObject>.Missing();
+        _rulesPanel = description != null ? new Maybe<GameObject>(description.gameObject) : Maybe<GameObject>.Missing();
         _rulesPanel.IfPresent(r => r.SetActive(alwaysShowRules));
     }
     
