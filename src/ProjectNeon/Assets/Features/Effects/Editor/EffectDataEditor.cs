@@ -69,6 +69,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, new[] {"Formula"}},
         {EffectType.RemoveTemporalModsMatchingStatusTag, new[]{ "EffectScope"}},
         {EffectType.InvulnerableForTurns, new [] { "DurationFormula" }},
+        {EffectType.RandomEffect, new [] { "ReferencedSequences" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
