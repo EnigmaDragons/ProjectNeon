@@ -53,8 +53,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
 
     private void Awake()
     {
-        if (gameMap.CurrentMap == null)
-            gameMap.CurrentMap = progress.CurrentChapter.Map;
+        gameMap.CurrentMap = progress.CurrentChapter.Map;
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         _map.transform.SetAsFirstSibling();
     }
