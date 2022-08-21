@@ -1,12 +1,12 @@
 #if UNITY_EDITOR
-using UnityEditor;
 using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 
-public class RunQaBeforeBuild : IPreprocessBuild
+public class RunQaBeforeBuild : IPreprocessBuildWithReport
 {
     public int callbackOrder => 0;
     
-    public void OnPreprocessBuild(BuildTarget target, string path)
+    public void OnPreprocessBuild(BuildReport report)
     {
         var succeeded = QualityAssurance.Go();
         if (!succeeded)
