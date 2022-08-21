@@ -22,7 +22,7 @@ public class HeroRightClickViewDetails : OnMessage<CharacterHoverChanged>
                 h.SetAction(() => { }, () =>
                 {
                     h.Revert();
-                    Message.Publish(new ShowHeroDetailsView(hero));
+                    Message.Publish(new ShowHeroDetailsView(hero, h.Member));
                     Message.Publish(new ShowEnemySFX(transform));
                 });
                 h.SetIsHovered();

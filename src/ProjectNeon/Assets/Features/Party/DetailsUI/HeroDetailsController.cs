@@ -8,7 +8,7 @@ public class HeroDetailsController : OnMessage<ShowHeroDetailsView, HideHeroDeta
     protected override void Execute(ShowHeroDetailsView msg)
     {
         target.SetActive(true);
-        heroDetails.Init(msg.Hero);
+        heroDetails.Init(msg.Hero, msg.Member);
     }
 
     protected override void Execute(HideHeroDetailsView msg)

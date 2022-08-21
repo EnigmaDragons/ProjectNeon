@@ -41,5 +41,5 @@ public class HeroSelectionUI : MonoBehaviour
             state.SelectedHeroesDeck = state.HeroesDecks.First();
     }
 
-    private void ViewHeroDetails() => Message.Publish(new ShowHeroDetailsView(state.SelectedHero));
+    private void ViewHeroDetails() => Message.Publish(new ShowHeroDetailsView(state.SelectedHero, Maybe<Member>.Missing()));
 }

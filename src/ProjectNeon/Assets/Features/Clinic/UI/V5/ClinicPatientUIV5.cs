@@ -28,7 +28,7 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
         injuriesParent.DestroyAllChildren();
     }
 
-    private void ViewHeroDetail() => Message.Publish(new ShowHeroDetailsView(_hero));
+    private void ViewHeroDetail() => Message.Publish(new ShowHeroDetailsView(_hero, Maybe<Member>.Missing()));
     
     public ClinicPatientUIV5 Initialized(Hero h)
     {

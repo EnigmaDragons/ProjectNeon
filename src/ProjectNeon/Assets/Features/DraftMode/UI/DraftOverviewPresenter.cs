@@ -112,6 +112,6 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
             return;
 
         var currentHero = party.Heroes[draftState.HeroIndex];
-        Message.Publish(new ShowHeroDetailsView(currentHero));
+        Message.Publish(new ShowHeroDetailsView(currentHero, Maybe<Member>.Missing()));
     }
 }
