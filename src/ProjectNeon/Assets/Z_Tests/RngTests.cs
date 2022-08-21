@@ -9,6 +9,6 @@ public class RngTests
         var arr = new[] {1};
 
         for (var i = 0; i < 1000; i++)
-            arr.Random();
+            arr.Random(DeterministicRng.CreateRandom());
     }
 }
