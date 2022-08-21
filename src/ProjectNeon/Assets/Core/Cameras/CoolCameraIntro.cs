@@ -53,7 +53,6 @@ public class CoolCameraIntro : MonoBehaviour
             _cam.transform.position = _finalWaypoint.transform.position;
             _cam.transform.rotation = _finalWaypoint.transform.rotation;
         }
-        Log.Info($"Fixed Update. Amt: {amount} Pos: {_cam.transform.position} Start: {_currentStartPoint} Way: {_nextWaypoint}");
     }
 
     private void MoveNext()
@@ -65,9 +64,7 @@ public class CoolCameraIntro : MonoBehaviour
         }
 
         _index++;
-        Log.Info($"Move Next - {_index}");
         _currentStartPoint = waypoints[_index - 1];
-        Log.Info($"{_currentStartPoint}");
         _nextWaypoint = waypoints[_index];
         _currentDuration = durations[_index];
         _remainingDuration = durations[_index];
@@ -75,7 +72,6 @@ public class CoolCameraIntro : MonoBehaviour
 
     private void Finish()
     {
-        Log.Info("Finished");
         isFinished = true;
         if (onFinish != null)
             onFinish.Publish();
