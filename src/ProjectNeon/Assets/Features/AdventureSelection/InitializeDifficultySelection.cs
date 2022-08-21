@@ -12,8 +12,9 @@ public class InitializeDifficultySelection : MonoBehaviour
 
     private void Start()
     {
+        container.DestroyAllChildren();
         var unlockedDifficulty = CurrentProgressionData.Data.UnlockedDifficulty;
-        var difficulties = library.UnlockedDifficulties.Where(x => x.id <= unlockedDifficulty).ToArray();
+        var difficulties = library.UnlockedDifficulties.Where(x => x.id <= unlockedDifficulty).OrderBy(x => x.id).ToArray();
         for (var i = 0; i < difficulties.Length; i++)
         {
             var difficulty = difficulties[i];

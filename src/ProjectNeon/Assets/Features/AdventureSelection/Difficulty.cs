@@ -4,6 +4,7 @@
 public class Difficulty : ScriptableObject
 {
     [SerializeField] public int id;
+    [SerializeField, PreviewSprite] private Sprite img; 
     [SerializeField] private string difficultyName;
     [SerializeField] private string description;
     [SerializeField, TextArea(minLines: 3, maxLines: 9)] private string changes;
@@ -16,4 +17,5 @@ public class Difficulty : ScriptableObject
     public string Changes => changes;
     public bool ResetAfterDeath => resetAfterDeath;
     public StaticGlobalEffect[] GlobalEffects => globalEffects;
+    public Sprite Image => img;
 }
