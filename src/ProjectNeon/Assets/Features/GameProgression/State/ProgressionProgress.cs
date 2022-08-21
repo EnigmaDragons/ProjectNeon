@@ -26,20 +26,18 @@ public class ProgressionProgress : MonoBehaviour
         var nonTutorialAdventures = library.UnlockedAdventures.Except(tutorialAdventure).ToArray();
         return GetTutorialProgress()
             .Concat(GetAdventureBaseDifficultyProgress(heroes, nonTutorialAdventures, adventureCompletionRecords))
-            .Concat(GetAdventureHigherDifficultyProgress(nonTutorialAdventures.Length))
+            .Concat(GetAdventureHigherDifficultyProgress(nonTutorialAdventures, library.UnlockedDifficulties, CurrentProgressionData.Data))
             .ToArray();
     }
-
-    private const int HighestDifficulty = 5;
     
     private ProgressionItem[] GetTutorialProgress()
     {
-        return new ProgressionItem(true, $"Adventure - {tutorialAdventure.MapTitle} - Anon", tutorialAdventure.RequiredHeroes.First(), tutorialAdventure).AsArray();
+        return new ProgressionItem(true, $"Adventure - {tutorialAdventure.MapTitle} - Anon", tutorialAdventure.RequiredHeroes.First(), tutorialAdventure, Maybe<Difficulty>.Missing()).AsArray();
     }
 
     private ProgressionItem[] GetHeroUnlockProgress(BaseHero[] heroes)
     {
-        return heroes.Select(x => new ProgressionItem(false, $"Hero - Unlocked - {x.Name}", x, Maybe<Adventure>.Missing())).ToArray();
+        return heroes.Select(x => new ProgressionItem(false, $"Hero - Unlocked - {x.Name}", x, Maybe<Adventure>.Missing(), Maybe<Difficulty>.Missing())).ToArray();
     }
 
     private ProgressionItem[] GetAdventureBaseDifficultyProgress(BaseHero[] heroes, Adventure[] adventures, List<AdventureCompletionRecord> records)
@@ -52,14 +50,31 @@ public class ProgressionProgress : MonoBehaviour
                 return heroes
                     .Select(h =>
                         new ProgressionItem(keyable.ContainsKey($"{a.Id}-{h.id}"),
-                            $"{adventureWord} - {a.MapTitle} - {h.Name}", h, a));
+                            $"{adventureWord} - {a.MapTitle} - {h.Name}", h, a, Maybe<Difficulty>.Missing()));
             })
             .ToArray();
     }
     
-    private ProgressionItem[] GetAdventureHigherDifficultyProgress(int numAdventures)
+    private ProgressionItem[] GetAdventureHigherDifficultyProgress(Adventure[] adventures, Difficulty[] difficulties, ProgressionData data)
     {
-        return Enumerable.Range(0, HighestDifficulty * numAdventures)
-            .Select(x => new ProgressionItem(false, $"Higher Difficulty - Unlockable Later In Early Access", Maybe<BaseHero>.Missing(), Maybe<Adventure>.Missing())).ToArray();
+        var difficultiesDict = difficulties.ToDictionary(d => d.id, d => d);
+        var items = new List<ProgressionItem>();
+        adventures.ForEach(a =>
+        {
+            var highestCompleted = data.HighestCompletedDifficulty(a.id);
+            Enumerable.Range(-1, difficulties.Length).ForEach(difficultyId =>
+            {
+                var adventureWord = a.Mode == AdventureMode.Draft ? "Draft" : "Adventure";
+                if (!difficultiesDict.ContainsKey(difficultyId))
+                    return;
+                
+                var difficulty = difficultiesDict[difficultyId];
+                items.Add(new ProgressionItem(highestCompleted >= difficultyId, 
+                    $"{adventureWord} - {a.MapTitle} - Difficulty - {difficulty.Name}", 
+                        Maybe<BaseHero>.Missing(), a, difficulty));
+            });
+        });
+
+        return items.ToArray();
     }
 }
