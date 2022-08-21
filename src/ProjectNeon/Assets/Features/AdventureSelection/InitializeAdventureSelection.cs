@@ -60,6 +60,5 @@ public class InitializeAdventureSelection : MonoBehaviour
             navigator.NavigateToGameSceneV4();
         if (adventure.IsV5)
             navigator.NavigateToDifficultyScene();
-
     }
 }

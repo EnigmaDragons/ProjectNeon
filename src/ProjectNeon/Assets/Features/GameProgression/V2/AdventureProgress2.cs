@@ -37,7 +37,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
     public override Difficulty Difficulty
     {
-        get => library.UnlockedDifficulties.FirstOrDefault(x => x.Id == 0) ?? library.UnlockedDifficulties.First();
+        get => library.DefaultDifficulty;
         set { }
     }
 

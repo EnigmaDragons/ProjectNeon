@@ -14,6 +14,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     [SerializeField] private Adventure defaultAdventure;
     [SerializeField] private bool allowPlayerToSelectAdventure;
     [SerializeField] private EncounterBuilderHistory encounterHistory;
+    [SerializeField] private Library library;
     
     protected override void Execute(StartNewGame msg)
     {
@@ -78,19 +79,23 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         }
     }
 
-    private void StartDefaultAdventureV5() => StartAdventureV5(defaultAdventure, Maybe<BaseHero[]>.Missing());
+    private void StartDefaultAdventureV5() => StartAdventureV5(defaultAdventure, Maybe<BaseHero[]>.Missing(), library.DefaultDifficulty);
     
     protected override void Execute(StartAdventureV5Requested msg)
     {
         Init();
-        StartAdventureV5(msg.Adventure, msg.OverrideHeroes);
+        StartAdventureV5(msg.Adventure, msg.OverrideHeroes, msg.Difficulty);
     }
 
-    private void StartAdventureV5(Adventure adventure, Maybe<BaseHero[]> overrideHeroes)
+    private void StartAdventureV5(Adventure adventure, Maybe<BaseHero[]> overrideHeroes, Maybe<Difficulty> possibleDifficulty)
     {
         var startingSegment = 0;
+        var difficulty = possibleDifficulty.IsPresent ? possibleDifficulty.Value : library.DefaultDifficulty;
         adventureProgress.AdventureProgress = adventureProgress5;
         adventureProgress.AdventureProgress.Init(adventure, 0, startingSegment);
+        adventureProgress.AdventureProgress.Difficulty = difficulty;
+        foreach (var globalEffect in difficulty.GlobalEffects)
+            adventureProgress.AdventureProgress.GlobalEffects.Apply(globalEffect, new GlobalEffectContext(adventureProgress.AdventureProgress.GlobalEffects));
         if (adventure.Mode == AdventureMode.Draft)
             party.InitializedForDraft(overrideHeroes.Select(o => o, adventure.FixedStartingHeroes));
         else

@@ -33,7 +33,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     private int CurrentStageLength => CurrentChapter.SegmentCount;
     public override Difficulty Difficulty
     {
-        get => library.UnlockedDifficulties.FirstOrDefault(x => x.Id == 0) ?? library.UnlockedDifficulties.First();
+        get => library.DefaultDifficulty;
         set { }
     }
 
