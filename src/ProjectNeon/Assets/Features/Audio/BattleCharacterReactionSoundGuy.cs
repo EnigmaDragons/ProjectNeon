@@ -114,8 +114,13 @@ public class BattleCharacterReactionSoundGuy : MonoBehaviour
     }
     
     private void PlayOneShot(string eventName, Transform memberTransform)
-        => FMODUnity.RuntimeManager.PlayOneShot(eventName, memberTransform.position);
-    
+    {
+        if (eventName == null || memberTransform == null)
+            return;
+        
+        FMODUnity.RuntimeManager.PlayOneShot(eventName, memberTransform.position);
+    }
+
     private void DebugLog(string msg)
     {
         if (debuggingLoggingEnabled)
