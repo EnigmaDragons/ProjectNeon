@@ -26,7 +26,7 @@ public class ClinicPatientUI : OnMessage<UpdateClinic, HeroStateChanged, PartyAd
         injuriesParent.DestroyAllChildren();
     }
 
-    private void ViewHeroDetail() => Message.Publish(new ShowHeroDetailsView(_hero));
+    private void ViewHeroDetail() => Message.Publish(new ShowHeroDetailsView(_hero, Maybe<Member>.Missing()));
     
     public ClinicPatientUI Initialized(Hero h, ClinicCostCalculator cost)
     {

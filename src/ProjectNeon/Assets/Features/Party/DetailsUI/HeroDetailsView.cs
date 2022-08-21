@@ -25,9 +25,9 @@ public class HeroDetailsView : MonoBehaviour
         _viewScale = view.transform.localScale;
     }
     
-    public void Init(Hero h)
+    public void Init(Hero h, Maybe<Member> member)
     {
-        heroDisplay.Init(h.Character, h.AsMember(-1), false, () => { });
+        heroDisplay.Init(h.Character, member.IsPresent ? member.Value : h.AsMember(-1), false, () => { });
         heroDisplay.LockToTab("Stats");
         if (_augmentsDisplay != null)
             Destroy(_augmentsDisplay);

@@ -9,6 +9,6 @@ public class ShowFirstHeroDetailsViewOnStart : MonoBehaviour
     {
         var h = party.Heroes[0];
         equips.ForEach(e => h.ApplyPermanent(e));
-        Message.Publish(new ShowHeroDetailsView(h));
+        Message.Publish(new ShowHeroDetailsView(h, Maybe<Member>.Missing()));
     }
 }
