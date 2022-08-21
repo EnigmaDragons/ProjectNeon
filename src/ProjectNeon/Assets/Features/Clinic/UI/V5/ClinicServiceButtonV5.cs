@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ClinicServiceButtonV5 : MonoBehaviour
+public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI description;
@@ -14,6 +15,7 @@ public class ClinicServiceButtonV5 : MonoBehaviour
     [SerializeField] private AllCorps corps;
     [SerializeField] private CanvasGroup disabledCanvasGroup;
     [SerializeField] private RarityPresenter rarity;
+    [SerializeField] private GameObject highlight;
 
     private ClinicServiceButtonData _data;
     
@@ -58,5 +60,18 @@ public class ClinicServiceButtonV5 : MonoBehaviour
     {
         if (rules != null)
             rules.Hide();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        ShowRules();
+        highlight.SetActive(true);
+        Message.Publish(new ItemHovered(transform));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        HideRules();
+        highlight.SetActive(false);
     }
 }
