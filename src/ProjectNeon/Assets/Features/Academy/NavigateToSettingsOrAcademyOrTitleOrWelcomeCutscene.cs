@@ -31,7 +31,7 @@ public class NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene : OnMessage<Nav
         }
         // Start Tutorial Adventure
         else if (!d.IsLicensedBenefactor && useNewTutorialFlow.Value)
-            Message.Publish(new StartAdventureV5Requested(tutorialAdventure, Maybe<BaseHero[]>.Missing()));
+            Message.Publish(new StartAdventureV5Requested(tutorialAdventure, Maybe<BaseHero[]>.Missing(), Maybe<Difficulty>.Missing()));
         // Welcome To Metroplex Cutscene
         else if (!d.HasCompletedWelcomeToMetroplexCutscene)
             entranceCutsceneStarter.Execute();

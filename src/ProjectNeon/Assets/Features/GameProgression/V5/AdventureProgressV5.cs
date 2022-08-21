@@ -92,7 +92,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         currentSegmentIndex = segmentIndex;
         currentMap.SetMap(CurrentChapter.Map);
         rngSeed = ConsumableRngSeed.GenerateNew().Peek.Value;
-        difficulty = library.UnlockedDifficulties.FirstOrDefault(x => x.Id == 0) ?? library.UnlockedDifficulties.First();
+        difficulty = library.DefaultDifficulty;
         Log.Info($"Init Adventure. {this}");
     }
     
@@ -187,7 +187,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         _storyStates = new DictionaryWithDefault<string, bool>(false);
         for (var i = 0; i < d.States.Length; i++)
              _storyStates[d.States[i]] = d.StateValues[i];
-        difficulty = library.UnlockedDifficulties.FirstOrDefault(x => x.Id == d.DifficultyId) ?? library.UnlockedDifficulties.First();
+        difficulty = library.DefaultDifficulty;
         return true;
     }
 

@@ -28,6 +28,6 @@ public class SquadSelectionHandler : OnMessage<ConfirmSquadSelection>
         //     s.PartyData = party.GetData();
         //     return s;
         // });
-        Message.Publish(new StartAdventureV5Requested(currentAdventure.Adventure, pool.SelectedHeroes));
+        Message.Publish(new StartAdventureV5Requested(currentAdventure.Adventure, pool.SelectedHeroes, adventure.HasActiveAdventure ? adventure.AdventureProgress.Difficulty : Maybe<Difficulty>.Missing()));
     }
 }

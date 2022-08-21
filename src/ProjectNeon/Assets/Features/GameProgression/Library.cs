@@ -19,6 +19,7 @@ public class Library : ScriptableObject
     public BaseHero[] UnlockedHeroes => unlockedHeroes.Where(h => !h.IsDisabled).ToArray();
     public Adventure[] UnlockedAdventures => unlockedAdventures;
     public Difficulty[] UnlockedDifficulties => unlockedDifficulties;
+    public Difficulty DefaultDifficulty => UnlockedDifficulties.FirstOrDefault(x => x.id == 0) ?? UnlockedDifficulties.First();
 
     public BaseHero HeroById(int id) => allHeroes.GetHeroByIdOrDefault(id);
     public Maybe<CardTypeData> GetCardById(int id) => allCards.GetCardById(id);
