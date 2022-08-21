@@ -5,6 +5,7 @@ public class ProgressionItem
     public string Description { get; }
     public Maybe<BaseHero> Hero { get; }
     public Maybe<Adventure> Adventure { get; }
+    public Maybe<Difficulty> Difficulty { get; }
 
     public string FullDescription()
     {
@@ -12,11 +13,12 @@ public class ProgressionItem
         return $"{completedWord} - {Description}";
     }
 
-    public ProgressionItem(bool completed, string description, Maybe<BaseHero> hero, Maybe<Adventure> adventure)
+    public ProgressionItem(bool completed, string description, Maybe<BaseHero> hero, Maybe<Adventure> adventure, Maybe<Difficulty> difficulty)
     {
         Completed = completed;
         Description = description;
         Hero = hero;
         Adventure = adventure;
+        Difficulty = difficulty;
     }
 }
