@@ -58,7 +58,11 @@ public class InitializeAdventureSelection : MonoBehaviour
             navigator.NavigateToSquadSelection();
         if (adventure.IsV4)
             navigator.NavigateToGameSceneV4();
-        if (adventure.IsV5)
+        if (adventure.IsV5 && adventure.AllowDifficultySelection)
             navigator.NavigateToDifficultyScene();
+        if (adventure.IsV5 && !adventure.AllowDifficultySelection && currentAdventure.Adventure.Mode == AdventureMode.Draft)
+            navigator.NavigateToSquadSelection();
+        if (adventure.IsV5 && !adventure.AllowDifficultySelection && currentAdventure.Adventure.Mode != AdventureMode.Draft)
+            Message.Publish(new StartAdventureV5Requested(currentAdventure.Adventure, Maybe<BaseHero[]>.Missing(), Maybe<Difficulty>.Missing()));
     }
 }

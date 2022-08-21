@@ -34,6 +34,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     [SerializeField, TextArea(4, 10)] private string defeatConclusion = "";
     [SerializeField, TextArea(4, 10)] private string victoryConclusion = "";
     [SerializeField] private bool mapDeckbuildingEnabled = true;
+    [SerializeField] private bool allowDifficultySelection = true;
 
     public AdventureMode Mode => mode;
     public int Id => id;
@@ -86,4 +87,5 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     public string AllowedHeroesDescription => allowedHeroesDescription;
     public BattleRewards NormalBattleRewards => normalBattleRewards;
     public BattleRewards EliteBattleRewards => eliteBattleRewards;
+    public bool AllowDifficultySelection => allowDifficultySelection;
 }
