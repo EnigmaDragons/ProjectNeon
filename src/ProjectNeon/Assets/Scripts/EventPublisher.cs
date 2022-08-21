@@ -68,4 +68,5 @@ public class EventPublisher : ScriptableObject
     public void RespawnMap() => Message.Publish(new RespawnMap());
     public void SkipDraftCheat() => Message.Publish(new SkipDraft());
     public void Proceed(string contextName) => Message.Publish(new ProceedRequested(contextName));
+    public void DismissUnlockDisplay() => Message.Publish(new DismissUnlockDisplay());
 }

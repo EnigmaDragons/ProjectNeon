@@ -22,8 +22,8 @@ public class ProgressionData
             .FirstAsMaybe()
             .Select(a => a.Difficulty, () => -99);
     
-    private const string UnlockTypeAdventure = "Adventure";
-    private const string UnlockTypeDifficulty = "Difficulty";
+    public const string UnlockTypeAdventure = "Adventure";
+    public const string UnlockTypeDifficulty = "Difficulty";
 
     public bool HasShownUnlockForAdventure(int adventureId) 
         => ShownUnlocks.Any(s => s.UnlockType == UnlockTypeAdventure && s.ItemId == adventureId);
