@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class InitializeDifficultySelection : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class InitializeDifficultySelection : MonoBehaviour
 
     private void Start()
     {
-        var difficulties = library.UnlockedDifficulties;
+        var unlockedDifficulty = CurrentProgressionData.Data.UnlockedDifficulty;
+        var difficulties = library.UnlockedDifficulties.Where(x => x.id <= unlockedDifficulty).ToArray();
         for (var i = 0; i < difficulties.Length; i++)
         {
             var difficulty = difficulties[i];
