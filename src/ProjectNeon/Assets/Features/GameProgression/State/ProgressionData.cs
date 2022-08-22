@@ -13,15 +13,18 @@ public class ProgressionData
     public bool Completed(int adventureId, int heroId) 
         => AdventureCompletions.Any(a => a.AdventureId == adventureId && a.HeroId == heroId);
     
+    private const int TutorialAdventureId = 10;
+    private IEnumerable<AdventureCompletionRecord> NonTutorialCompletions => AdventureCompletions.Where(a => a.AdventureId != TutorialAdventureId);
+    
     public int UnlockedDifficulty 
-        => AdventureCompletions.Any() ? AdventureCompletions.Max(x => x.Difficulty) + 1 : 0;
+        => NonTutorialCompletions.Any() ? NonTutorialCompletions.Max(x => x.Difficulty) + 1 : 0;
     public int HighestCompletedDifficulty(int adventureId) 
         => AdventureCompletions
             .Where(a => a.AdventureId == adventureId)
             .OrderByDescending(a => a.Difficulty)
             .FirstAsMaybe()
             .Select(a => a.Difficulty, () => -99);
-    
+
     public const string UnlockTypeAdventure = "Adventure";
     public const string UnlockTypeDifficulty = "Difficulty";
 
