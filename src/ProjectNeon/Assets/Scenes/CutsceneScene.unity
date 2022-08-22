@@ -136,6 +136,8 @@ GameObject:
   - component: {fileID: 506956602}
   - component: {fileID: 506956603}
   - component: {fileID: 506956604}
+  - component: {fileID: 506956606}
+  - component: {fileID: 506956605}
   m_Layer: 0
   m_Name: CutsceneStarter
   m_TagString: Untagged
@@ -234,6 +236,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7ad29e15624c43bd3235d56b4fdf63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &506956605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506956599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b68c914ac14e329bf2f09354912f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutscene: {fileID: 11400000, guid: 5636127e9804d4a48826330847a64eaa, type: 2}
+  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
+--- !u!114 &506956606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506956599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c217342eb0d84f568eb71b3a72711a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
+  cutscene: {fileID: 11400000, guid: 602acc8818d69aa47b360c80898bac90, type: 2}
+  entranceCutsceneStarter: {fileID: 506956605}
+  useNewTutorialFlow:
+    UseConstant: 1
+    ConstantValue: 1
+    Variable: {fileID: 0}
+  adventure: {fileID: 11400000, guid: 62e84d9ce18ccb747b8d7d0083704709, type: 2}
+  tutorialAdventure: {fileID: 11400000, guid: 33573d05bf3281c49ba648958ee7cf7f, type: 2}
+  io: {fileID: 11400000, guid: 0b98c3ae5692e1b4ebf1af274f3692e4, type: 2}
+  adventureProgress5: {fileID: 11400000, guid: 6ef30d47ce052304d92b2cf6f2a2fb59, type: 2}
 --- !u!224 &640907664 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5315339888696462072, guid: be8857112f57ca443b6a97fbe2fcb278, type: 3}
