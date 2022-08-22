@@ -72,6 +72,8 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     {
         BattleLog.Write($"--------------  Turn {state.TurnNumber}  --------------");
         BeginPhase(BattleV2Phase.StartOfTurnEffects);
+        if (state.TurnNumber == 1)
+            state.ApplyAllGlobalStartOfBattleEffects();
         state.StartTurn();
         _playerTurnConfirmed = false;
         Message.Publish(new TurnStarted());

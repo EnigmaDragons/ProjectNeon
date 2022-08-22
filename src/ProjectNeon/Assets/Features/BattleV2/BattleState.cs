@@ -277,13 +277,12 @@ public class BattleState : ScriptableObject
         turnNumber = 1;
         CreditsAtStartOfBattle = party.Credits;
         party.ApplyBlessings(this);
-        ApplyAllGlobalStartOfBattleEffects();
-        
+
         DevLog.Write("Finished Battle State Init");
         return result;
     }
 
-    private void ApplyAllGlobalStartOfBattleEffects()
+    public void ApplyAllGlobalStartOfBattleEffects()
     {
         if (adventureProgress.HasActiveAdventure)
             adventureProgress.AdventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
