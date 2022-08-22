@@ -13,7 +13,7 @@ public class FmodMainBattleMusicPlayer : MonoBehaviour
         BattleMusic.getPlaybackState(out PbState);
         if (PbState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
         {
-            BattleMusic = FMODUnity.RuntimeManager.CreateInstance("event:/GameMusic/BattleMusic1");
+            BattleMusic = FMODUnity.RuntimeManager.CreateInstance("event:/GameMusic/Dark_Alley_Music");
             BattleMusic.start();
             BattleMusic.release();
         }
