@@ -361,6 +361,8 @@ GameObject:
   - component: {fileID: 2083760549336428593}
   - component: {fileID: 7383342876310849040}
   - component: {fileID: 8200434770054109129}
+  - component: {fileID: 4327949824937634055}
+  - component: {fileID: 4692101353905906762}
   m_Layer: 0
   m_Name: Cheats
   m_TagString: Untagged
@@ -420,6 +422,46 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e42353b1773d4f26ab141f2b7e2af05f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4327949824937634055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8286347422399388423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a58015a0ad344745be8d684218d85943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: 0e01000070000000
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4692101353905906762}
+        m_TargetAssemblyTypeName: UnlockAllDifficultiesCheat, GameAssembly
+        m_MethodName: Unlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4692101353905906762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8286347422399388423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f77ca4cccb408993c6876a33e18ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &9161318548471781477
