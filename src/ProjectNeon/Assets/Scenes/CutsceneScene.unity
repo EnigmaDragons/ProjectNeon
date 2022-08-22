@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 506956604}
   - component: {fileID: 506956606}
   - component: {fileID: 506956605}
+  - component: {fileID: 506956607}
   m_Layer: 0
   m_Name: CutsceneStarter
   m_TagString: Untagged
@@ -273,6 +274,20 @@ MonoBehaviour:
   tutorialAdventure: {fileID: 11400000, guid: 33573d05bf3281c49ba648958ee7cf7f, type: 2}
   io: {fileID: 11400000, guid: 0b98c3ae5692e1b4ebf1af274f3692e4, type: 2}
   adventureProgress5: {fileID: 11400000, guid: 6ef30d47ce052304d92b2cf6f2a2fb59, type: 2}
+--- !u!114 &506956607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506956599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740bc98774554602ac74e7bedc15d1ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current: {fileID: 11400000, guid: 20a63148439186645b88b8d51ad2b750, type: 2}
+  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
 --- !u!224 &640907664 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5315339888696462072, guid: be8857112f57ca443b6a97fbe2fcb278, type: 3}
