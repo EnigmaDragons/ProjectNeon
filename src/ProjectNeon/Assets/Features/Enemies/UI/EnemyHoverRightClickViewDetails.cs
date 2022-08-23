@@ -22,7 +22,7 @@ public class EnemyHoverRightClickViewDetails : OnMessage<CharacterHoverChanged>
                         return;
                     
                     h.Revert();
-                    Message.Publish(new ShowEnemyDetails(state.GetEnemyById(h.Member.Id)));
+                    Message.Publish(new ShowEnemyDetails(state.GetEnemyById(h.Member.Id), h.Member));
                     Message.Publish(new ShowEnemySFX(transform));
                 });
                 h.SetIsHovered();

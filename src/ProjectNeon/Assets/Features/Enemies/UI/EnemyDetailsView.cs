@@ -27,10 +27,10 @@ public class EnemyDetailsView : MonoBehaviour
     private void Awake()
     {
         if (!_isInitialized && staringEnemy != null)
-            Show(staringEnemy.ForStage(currentAdventureProgress.AdventureProgress.CurrentChapterNumber));
+            Show(staringEnemy.ForStage(currentAdventureProgress.AdventureProgress.CurrentChapterNumber), Maybe<Member>.Missing());
     }
 
-    public void Show(EnemyInstance e)
+    public void Show(EnemyInstance e, Maybe<Member> possibleMember)
     {
         _isInitialized = true;
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
@@ -42,7 +42,7 @@ public class EnemyDetailsView : MonoBehaviour
         if (statPanel != null)
             statPanel.Initialized(e.Stats);
         
-        var member = e.AsMember(InfoMemberId.Get());
+        var member = possibleMember.OrDefault(() => e.AsMember(InfoMemberId.Get()));
         if (specialPowers != null && icons != null)
         {
             var powers = e.StartOfBattleEffects.Where(x => x.StatusTag != StatusTag.None).Select(s =>
