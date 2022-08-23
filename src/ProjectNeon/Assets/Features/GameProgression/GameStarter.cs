@@ -18,6 +18,12 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     
     protected override void Execute(StartNewGame msg)
     {
+        if (CurrentGameData.HasActiveGame && adventureProgress.HasActiveAdventure && adventureProgress.AdventureProgress.CurrentStageProgress > 0 && adventureProgress.AdventureProgress.AdventureId != 10)
+            CurrentProgressionData.Write(x =>
+            {
+                x.RunsFinished += 1;
+                return x;
+            });
         Init();
 
         if (allowPlayerToSelectAdventure)

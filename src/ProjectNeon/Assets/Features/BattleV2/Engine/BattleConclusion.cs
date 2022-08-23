@@ -93,6 +93,11 @@ public class BattleConclusion : OnMessage<BattleFinished>
             state.AccumulateRunStats();
             conclusion.Set(false, adventure.Adventure.DefeatConclusion, CurrentGameData.Data.Stats, partyState.BaseHeroes);
             CurrentGameData.Clear();
+            CurrentProgressionData.Write(x =>
+            {
+                x.RunsFinished += 1;
+                return x;
+            });
             this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
         }
     }
