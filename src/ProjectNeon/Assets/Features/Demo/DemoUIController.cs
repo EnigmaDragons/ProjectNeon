@@ -14,6 +14,7 @@ public class DemoUIController : MonoBehaviour
     {
         if (isDemo.Value)
         {
+            text.gameObject.SetActive(true);
             text.text = $"Runs Remaining In Demo: {Math.Max(3 - CurrentProgressionData.Data.RunsFinished, 0)}";
             if (CurrentProgressionData.Data.RunsFinished >= 3)
             {
@@ -21,5 +22,7 @@ public class DemoUIController : MonoBehaviour
                 startDraft.interactable = false;
             }
         }
+        else 
+            text.gameObject.SetActive(false);
     }
 }
