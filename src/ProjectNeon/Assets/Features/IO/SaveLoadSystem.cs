@@ -157,6 +157,9 @@ public sealed class SaveLoadSystem : ScriptableObject
             foreach (var implant in heroSaveData.Implants)
                 hero.ApplyPermanent(implant.GeneratedEquipment);
 
+            foreach (var equipment in party.GlobalEquipment)
+                hero.ApplyPermanent(equipment);
+            
             hero.AddToStats(new StatAddends(heroSaveData.Stats.ToDictionary(x => x.Stat, x => x.Value)));
             
             var generatedLevelUpOptionId = -2;
