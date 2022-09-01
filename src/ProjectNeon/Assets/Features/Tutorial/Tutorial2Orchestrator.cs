@@ -79,7 +79,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
                 _hasCommentedOnGainingResources = true;
                 Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, true, _callerId));
                 Message.Publish(new PunchYourself(BattleUiElement.EnemyTechPoints));
-                Message.Publish(new ShowHeroBattleThought(4, "I can gain powerful resources too! Hah!"));
+                Message.Publish(new ShowHeroBattleThought(4, "I can gain energy too! Hah!"));
             }
         }
     }

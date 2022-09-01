@@ -624,7 +624,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             if (_card.Owner.IsDisabled())
                 Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, "I'm disabled this turn. I can only discard, watch an ally play a card, or end the turn early."));
             else if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
-                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, "I don't have enough resources to play this card right now."));
+                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, $"I don't have enough {_card.Cost.ResourceType.Name} to play this card right now."));
             else if (conditionNotMetHighlight.activeSelf)
                 Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, "This probably isn't a good time to play that card."));
             
