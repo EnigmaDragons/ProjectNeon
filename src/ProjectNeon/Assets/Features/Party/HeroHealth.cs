@@ -24,7 +24,7 @@ public class HeroHealth
         .GroupBy(x => x.InjuryName)
         .ToDictionary(g => g.First(), g => g.Count());
 
-    private IEnumerable<HeroInjury> AllInjuries => additiveStatInjuries.Cast<HeroInjury>()
+    public IEnumerable<HeroInjury> AllInjuries => additiveStatInjuries.Cast<HeroInjury>()
         .Concat(multiplicativeStatInjuries);
 
     public HeroHealth() {}

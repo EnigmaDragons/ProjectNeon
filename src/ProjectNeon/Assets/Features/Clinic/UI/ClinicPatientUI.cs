@@ -64,8 +64,8 @@ public class ClinicPatientUI : OnMessage<UpdateClinic, HeroStateChanged, PartyAd
     {
         healToFullButton.gameObject.SetActive(party.Credits >= _fullHealCost && _hero.CurrentHp < _hero.Stats.MaxHp());
         injuriesParent.DestroyAllChildren();
-        _hero.Health.InjuryNames.ForEach(x => Instantiate(healInjuryButtonPrototype, injuriesParent.transform)
-            .Init(x, _injuryHealCost, party.Credits >= _injuryHealCost ? (Action)(() => HealInjury(x)) : () => { }));
+        _hero.Health.AllInjuries.ForEach(x => Instantiate(healInjuryButtonPrototype, injuriesParent.transform)
+            .Init(x, _injuryHealCost, party.Credits >= _injuryHealCost ? (Action)(() => HealInjury(x.InjuryName)) : () => { }));
     }
     
     private void HealHeroToFull()

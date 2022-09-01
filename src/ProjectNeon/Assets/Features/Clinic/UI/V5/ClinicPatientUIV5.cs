@@ -68,8 +68,10 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
         if (fullHealth != null)
             fullHealth.SetActive(_hero.CurrentHp >= _hero.Stats.MaxHp());
         injuriesParent.DestroyAllChildren();
-        _hero.Health.InjuryNames.ForEach(x => Instantiate(healInjuryButtonPrototype, injuriesParent.transform)
-            .Init(x, _injuryHealCost, party.ClinicVouchers >= _injuryHealCost ? (Action)(() => HealInjury(x)) : () => { }));
+        _hero.Health.AllInjuries
+            .DistinctBy(x => x.InjuryName)
+            .ForEach(x => Instantiate(healInjuryButtonPrototype, injuriesParent.transform)
+                .Init(x, _injuryHealCost, party.ClinicVouchers >= _injuryHealCost ? (Action)(() => HealInjury(x.InjuryName)) : () => { }));
         if (noInjuriesPrototype != null && _hero.Health.InjuryNames.None())
             Instantiate(noInjuriesPrototype, injuriesParent.transform);
     }
