@@ -39,7 +39,7 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: 
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
   animationSounds: {fileID: 0}
@@ -74,7 +74,9 @@ MonoBehaviour:
       resourceValue: 0
       perTurnPower: 0
       maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
       estimatedTurnsAlive: 0
+      estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 0
     startOfBattleEffects:
     - EffectType: 74
@@ -108,6 +110,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 4
       ReactionEffectScope:
         UseConstant: 0
@@ -120,5 +123,9 @@ MonoBehaviour:
         scope: 2
         cardActions: {fileID: 11400000, guid: 4457239d1b66aa84488bb9127e62ab03, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

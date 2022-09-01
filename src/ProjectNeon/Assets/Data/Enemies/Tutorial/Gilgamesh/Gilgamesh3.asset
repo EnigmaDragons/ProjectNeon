@@ -39,7 +39,7 @@ MonoBehaviour:
   tier: 3
   unique: 1
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: A Cybernetic Celebrity that has a reputation of being immortal
   animations: {fileID: 11400000, guid: 0c6ec023aa24f014b9c90f242dccdf77, type: 2}
   animationSounds: {fileID: 11400000, guid: b37b21136045a4f47b5aa7d16f49dd3b, type: 2}
@@ -74,7 +74,9 @@ MonoBehaviour:
       resourceValue: 0
       perTurnPower: 0
       maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
       estimatedTurnsAlive: 0
+      estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 0
     startOfBattleEffects:
     - EffectType: 75
@@ -108,6 +110,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 1
       ReactionEffectScope:
         UseConstant: 1
@@ -152,6 +155,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 99
       ReactionEffectScope:
         UseConstant: 1
@@ -169,3 +173,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e66a392d71390264f84917a0250b49c8, type: 2}
     - {fileID: 11400000, guid: e494e5e48fa086b4aa632dd45050662e, type: 2}
     - {fileID: 11400000, guid: ab9d349cd738f5a408f865f5f49179f5, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0
