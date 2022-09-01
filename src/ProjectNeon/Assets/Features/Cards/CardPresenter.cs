@@ -626,7 +626,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             else if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
                 Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, $"I don't have enough {_card.Cost.ResourceType.Name} to play this card right now."));
             else if (conditionNotMetHighlight.activeSelf)
-                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, "This probably isn't a good time to play that card."));
+                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, _card.UnhighlightCondition.Value.UnhighlightMessage));
+            else if (conditionMetHighlight.activeSelf)
+                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, _card.HighlightCondition.Value.HighlightMessage));
             
             _onBeginDrag();
             Message.Publish(new CardDragged());

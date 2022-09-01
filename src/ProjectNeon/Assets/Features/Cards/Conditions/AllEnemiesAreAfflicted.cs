@@ -6,4 +6,6 @@ public class AllEnemiesAreAfflicted : StaticCardCondition
 {
     public override bool ConditionMet(CardConditionContext ctx)
         => ctx.AllEnemies(x => x.State.DamageOverTimes().Length > 0);
+
+    public override string Description => "All enemies are afflicted";
 }

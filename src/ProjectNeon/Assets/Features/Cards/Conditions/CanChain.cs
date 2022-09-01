@@ -7,6 +7,8 @@ public class CanChain : StaticCardCondition
     public override bool ConditionMet(CardConditionContext ctx) 
         => Evaluate(ctx) && ctx.BattleState.NumberOfCardPlaysRemainingThisTurn == 1;
     
+    public override string Description => "This will chain";
+    
     public static bool Evaluate(CardConditionContext ctx)
     {
         var hasChainedCard = ctx.Card.ChainedCard.IsPresent;
