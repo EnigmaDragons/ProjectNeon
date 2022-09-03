@@ -7,26 +7,34 @@ public static class KeywordRules
     // Rule Importance
     private static readonly DictionaryWithDefault<string, int> RulesByImportance = new DictionaryWithDefault<string, int>(0);
 
-    public static readonly string Afflicted = "Afflicted";
-    public static readonly string Bloodied = "Bloodied";
+    public const string Afflict = "Afflict";
+    public const string Afflicted = "Afflicted";
+    public const string Bloodied = "Bloodied";
+    public const string Bloody = "Bloody";
+    public const string Buyout = "Buyout";
+    public const string Chain = "Chain";
+    public const string Critical = "Critical";
+    public const string Crit = "Crit";
+    public const string Debuffs = "Debuffs";
+    public const string Debuff = "Debuff";
+    public const string Defenseless = "Defenseless";
+    public const string Drain = "Drain";
+    public const string Focus = "Focus";
+    public const string Glitch = "Glitch";
+    public const string Igniting = "Igniting";
+    public const string Injure = "Injure";
+    public const string Injury = "Injury";
+    public const string Mark = "Mark";
+    public const string Motionless = "Motionless";
+    public const string PrimaryStat = "PrimaryStat";
+    public const string Quick = "Quick";
+    public const string ReStealth = "ReStealth";
+    public const string ReStealthHyphen = "Re-Stealth";
+    public const string SelfDestruct = "SelfDestruct";
+    public const string SelfDestructHyphen = "Self-Destruct";
+    public const string Sneaky = "Sneaky";
+    public const string Profitable = "Profitable";
     
-    public static readonly string Buyout = "Buyout";
-    public static readonly string Chain = "Chain";
-    public static readonly string Drain = "Drain";
-    public static readonly string Focus = "Focus";
-    public static readonly string Glitch = "Glitch";
-    
-    public static readonly string Igniting = "Igniting";
-    public static readonly string Injure = "Injure";
-    
-    public static readonly string Motionless = "Motionless";
-    public static readonly string PrimaryStat = "PrimaryStat";
-    public static readonly string Quick = "Quick";
-    public static readonly string SelfDestruct = "SelfDestruct";
-    public static readonly string ReStealth = "ReStealth";
-    public static readonly string Debuffs = "Debuffs";
-
-
     private static readonly string[] RulesByImportanceArr = {
         Injure,
         SelfDestruct,
@@ -36,9 +44,10 @@ public static class KeywordRules
         Igniting,
         Bloodied,
         Motionless,
-        "Sneaky",
-        "Profitable",
-        "Defenseless",
+        Sneaky,
+        TemporalStatType.Prominent.ToString(),
+        Profitable,
+        Defenseless,
         ReStealth,
         TemporalStatType.Marked.ToString(),
         TemporalStatType.DoubleDamage.ToString(),
@@ -58,15 +67,16 @@ public static class KeywordRules
         Glitch,
         "TagPlayed",
         TemporalStatType.Vulnerable.ToString(),
-        "Critical",
+        Critical,
         PrimaryStat,
+        StatType.Power.ToString(),
         PlayerStatType.CardCycles.ToString(),
         Debuffs,
         "Swap",
         "SingleUse",
         "X-Cost",
         Chain,
-        Quick
+        Quick,
     };
 
     public static int ImportanceOrder(string rule)
@@ -90,29 +100,32 @@ public static class KeywordRules
 
     public static void AddAllDescriptionFoundRules(List<string> rulesToShow, string description)
     {
-        rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase(SelfDestruct));
-        rulesToShow.AddIf(SelfDestruct, description.ContainsAnyCase("Self-Destruct"));
-        rulesToShow.AddIf(ReStealth, description.ContainsAnyCase(ReStealth));
-        rulesToShow.AddIf(ReStealth, description.ContainsAnyCase("Re-Stealth"));
-        rulesToShow.AddIf(Injure, description.ContainsAnyCase(Injure));
-        rulesToShow.AddIf(Injure, description.ContainsAnyCase("Injury"));
-        rulesToShow.AddIf(Focus, description.ContainsAnyCase(Focus));
-        rulesToShow.AddIf(Drain, description.ContainsAnyCase(Drain));
-        rulesToShow.AddIf(Quick, description.ContainsAnyCase(Quick));
-        rulesToShow.AddIf(Chain, description.ContainsAnyCase(Chain));
-        rulesToShow.AddIf(Bloodied, description.ContainsAnyCase(Bloodied));
-        rulesToShow.AddIf(Bloodied, description.ContainsAnyCase("Bloody"));
-        rulesToShow.AddIf("Sneaky", description.ContainsAnyCase("Sneaky"));
-        rulesToShow.AddIf("Profitable", description.ContainsAnyCase("profitable"));
-        rulesToShow.AddIf("Defenseless", description.ContainsAnyCase("Defenseless"));
-        rulesToShow.AddIf("Buyout", description.ContainsAnyCase("Buyout"));
-        rulesToShow.AddIf("Critical", description.ContainsAnyCase("Crit"));
-        rulesToShow.AddIf(TemporalStatType.Marked.ToString(), description.ContainsAnyCase("Mark"));
-        rulesToShow.AddIf(TemporalStatType.Lifesteal.ToString(), description.ContainsAnyCase(TemporalStatType.Lifesteal.ToString()));
-        rulesToShow.AddIf(Afflicted, description.ContainsAnyCase("Afflict"));
-        rulesToShow.AddIf(Motionless, description.ContainsAnyCase(Motionless));
-        rulesToShow.AddIf(Debuffs, description.ContainsAnyCase(Debuffs));
-        rulesToShow.AddIf(Debuffs, description.ContainsAnyCase("Debuff"));
+        void AddTerm(string term, params string[] aliases)
+        {
+            rulesToShow.AddIf(term, description.ContainsAnyCase(term));
+            aliases.ForEach(a => rulesToShow.AddIf(term, description.ContainsAnyCase(a)));
+        }
+        
+        AddTerm(Afflicted, Afflict);
+        AddTerm(Bloodied, Bloody);
+        AddTerm(Buyout);
+        AddTerm(Chain);
+        AddTerm(Critical, Crit);
+        AddTerm(Defenseless);
+        AddTerm(Drain);
+        AddTerm(Debuffs, Debuff);
+        AddTerm(Focus);
+        AddTerm(Injure, Injury);
+        AddTerm(TemporalStatType.Lifesteal.GetString());
+        AddTerm(TemporalStatType.Marked.GetString(), Mark);
+        AddTerm(Motionless);
+        AddTerm(StatType.Power.GetString());
+        AddTerm(Profitable);
+        AddTerm(TemporalStatType.Prominent.GetString());
+        AddTerm(Quick);
+        AddTerm(ReStealth, ReStealthHyphen);
+        AddTerm(SelfDestruct, SelfDestructHyphen);
+        AddTerm(Sneaky);
     }
 
     public static void AddAllMatchingEffectScopeRules(List<string> rulesToShow, EffectData e, params string[] scopes) 

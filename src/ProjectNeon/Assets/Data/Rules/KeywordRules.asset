@@ -256,6 +256,16 @@ MonoBehaviour:
 
       When a target is killed by your action, trigger the
       stated effect.'
+  - title: Power
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 776ba0867ae352c459b9844d0b78d6e2, type: 2}
+    Value: '<b>Power</b>
+
+
+      Power refers to the main card-scaling state of a
+      character.'
   - title: Profitable
     Key:
       UseConstant: 1
@@ -267,14 +277,29 @@ MonoBehaviour:
       If you have gained more money
       than lost during the battle than "Profitable" effects will apply, otherwise
       "Unprofitable" effects will apply'
+  - title: Prominent
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: bc2e1a70d3c68eb468c87038fa8893ba, type: 2}
+    Value: '<b>Prominent</b>
+
+
+      You cannot <b>Stealth</b> while prominent, <i>(although
+      you can Re-Stealth)</i>.
+
+      After breaking stealth, a character gains Prominent
+      for the remainder of the turn. '
   - title: Primary Stat
     Key:
       UseConstant: 0
       ConstantValue: Buyout
       Variable: {fileID: 11400000, guid: a961f902c2ecfd54ebfbfe875405e991, type: 2}
-    Value: "<b>Primary Stat</b>\n\nPrimary Stat refers to the highest ability stat
-      for enemies. \n\nFor your characters, Primary Stat is whatever you have chosen
-      in Party Management."
+    Value: '<b>Primary Stat</b>
+
+
+      Primary Stat refers to the main card-scaling
+      state of a character.'
   - title: Quick
     Key:
       UseConstant: 0
