@@ -41,14 +41,17 @@ public class CardCostPresenter : MonoBehaviour
             return numericAmount;
 
         // X Cost Cards
-        if (maybeCard.IsMissing || forceShowXcostAsX)
-            return $"{numericAmount}+X".Replace("0+", "");
-        else
-        {
-            var card = maybeCard.Value;
-            return card.LockedXValue.Select(
-                r => $"{card.Cost.BaseAmount}+{r.Amount}".Replace("0+", string.Empty),
-                () => $"{card.Cost.BaseAmount}+{card.Owner.CalculateResources(card.Type).XAmountPriceTag}".Replace("0+", string.Empty));
-        }
+        return $"{numericAmount}+X".Replace("0+", "");
+        
+        // Old X-Cost Cards Split
+        // if (maybeCard.IsMissing || forceShowXcostAsX)
+        //     return $"{numericAmount}+X".Replace("0+", "");
+        // else
+        // {
+        //     var card = maybeCard.Value;
+        //     return card.LockedXValue.Select(
+        //         r => $"{card.Cost.BaseAmount}+{r.Amount}".Replace("0+", string.Empty),
+        //         () => $"{card.Cost.BaseAmount}+{card.Owner.CalculateResources(card.Type).XAmountPriceTag}".Replace("0+", string.Empty));
+        // }
     }
 }
