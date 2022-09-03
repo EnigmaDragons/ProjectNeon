@@ -65,6 +65,7 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
     private void CancelCardPlays()
     {
         ShownCards.ForEach(c => c.Cancel());
+        UpdateVisibleCards();
     }
     
     public override void SetCardPlayingAllowed(bool isAllowed)

@@ -175,15 +175,20 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void LateUpdate()
     {
-        if (!_isHand || _siblingIndex <= -1) 
+        if (!_isHand) 
             return;
         
-        if (IsFocused)
-            transform.SetAsLastSibling();
-        else
-            transform.SetSiblingIndex(_siblingIndex);
+        UpdateMouseDragStatus();
+        
+        if (_siblingIndex > -1)
+        {
+            if (IsFocused)
+                transform.SetAsLastSibling();
+            else
+                transform.SetSiblingIndex(_siblingIndex);
+        }
     }
-    
+
     private void InitFreshCard(Action onClick)
     {
         gameObject.SetActive(true);
@@ -514,7 +519,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.dragging || _buttonAlreadyDown)
+        if (MouseDragState.IsDragging || eventData.dragging || _buttonAlreadyDown)
             return;
 
         if (eventData.button == PointerEventData.InputButton.Left)
@@ -540,6 +545,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private const string ClickString = "Click";
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (MouseDragState.IsDragging) 
+            return;
+        
         if (_debug)
             DebugLog("UI - Pointer Up");
         if (_leftButtonAlreadyDown && eventData.button == PointerEventData.InputButton.Left)
@@ -603,6 +611,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             }, () => { });
     }
 
+    
+    private void UpdateMouseDragStatus()
+    {
+        if (!_isHand || !MouseDragState.IsDragging)
+            return;
+        
+        if (!Input.GetMouseButton(0) && !Input.GetMouseButton(1))
+            CleanupOnDragEnded();
+    }
+    
     public void OnBeginDrag(PointerEventData eventData)
         => WhenActivatableHand(() =>
         {
@@ -636,13 +654,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }, () => { });
 
     public void OnEndDrag(PointerEventData eventData) 
-        => WhenActivatableHand(() =>
+        => CleanupOnDragEnded();
+
+    private void CleanupOnDragEnded()
+    {
+        WhenActivatableHand(() =>
         {
             MouseDragState.Set(false);
             Message.Publish(new CancelTargetSelectionRequested());
             ReturnHandToNormal();
         }, UndoDragMovement);
-    
+    }
+
     private void WhenActivatableHand(Action action, Action elseAction)
     {
         if (_isHand && _getCanActivate())
