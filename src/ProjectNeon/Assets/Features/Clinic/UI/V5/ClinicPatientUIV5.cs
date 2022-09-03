@@ -18,8 +18,8 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     [SerializeField] private HealInjuryButton healInjuryButtonPrototype;
     
     private Hero _hero;
-    private int _fullHealCost;
-    private int _injuryHealCost;
+    private const int FullHealCost = 1;
+    private const int InjuryHealCost = 1;
     
     private void Awake()
     {
@@ -48,9 +48,7 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
 
     private void UpdateCosts()
     {
-        _fullHealCost = 1;
-        _injuryHealCost = 1;
-        healToFullCostLabel.text = _fullHealCost.ToString();
+        healToFullCostLabel.text = FullHealCost.ToString();
     }
 
     protected override void Execute(HeroStateChanged msg)
@@ -64,14 +62,14 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
 
     private void UpdateButtons()
     {
-        healToFullButton.gameObject.SetActive(party.ClinicVouchers >= _fullHealCost && _hero.CurrentHp < _hero.Stats.MaxHp());
+        healToFullButton.gameObject.SetActive(party.ClinicVouchers >= FullHealCost && _hero.CurrentHp < _hero.Stats.MaxHp());
         if (fullHealth != null)
             fullHealth.SetActive(_hero.CurrentHp >= _hero.Stats.MaxHp());
         injuriesParent.DestroyAllChildren();
         _hero.Health.AllInjuries
             .DistinctBy(x => x.InjuryName)
             .ForEach(x => Instantiate(healInjuryButtonPrototype, injuriesParent.transform)
-                .Init(x, _injuryHealCost, party.ClinicVouchers >= _injuryHealCost ? (Action)(() => HealInjury(x.InjuryName)) : () => { }));
+                .Init(x, InjuryHealCost, party.ClinicVouchers >= InjuryHealCost ? (Action)(() => HealInjury(x.InjuryName)) : () => { }));
         if (noInjuriesPrototype != null && _hero.Health.InjuryNames.None())
             Instantiate(noInjuriesPrototype, injuriesParent.transform);
     }
@@ -79,14 +77,15 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     private void HealHeroToFull()
     {
         party.HealHeroToFull(_hero.Character);
-        party.UpdateClinicVouchersBy(-1);
+        party.UpdateClinicVouchersBy(-FullHealCost);
         Message.Publish(new UpdateClinic());
     }
 
     private void HealInjury(string injuryName)
     {
         _hero.HealInjuryByName(injuryName);
-        party.UpdateClinicVouchersBy(-_injuryHealCost);
+        party.UpdateClinicVouchersBy(-InjuryHealCost);
+        Message.Publish(new HideTooltip());
         Message.Publish(new UpdateClinic());
     }
 }
