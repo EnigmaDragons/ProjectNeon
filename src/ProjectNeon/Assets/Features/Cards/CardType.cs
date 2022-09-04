@@ -22,7 +22,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private string presentationIssues;
     [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private StaticCardCondition[] highlightCondition;
-    [SerializeField] private StaticCardCondition[] unhighlightCondition;
+    [SerializeField] public StaticCardCondition[] unhighlightCondition;
     [SerializeField] private bool isWIP = true;
     [SerializeField] private bool notAvailableForGeneralDistribution = false;
 
