@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 7012276421727046813}
   - component: {fileID: 5762204041482077312}
   - component: {fileID: 1642065405546241574}
+  - component: {fileID: 1922195679553434625}
   m_Layer: 5
   m_Name: UiNewsCanvas
   m_TagString: Untagged
@@ -644,6 +645,21 @@ MonoBehaviour:
   narrator: {fileID: 4865961842358193970}
   you: {fileID: 4865961842358193970}
   player: {fileID: 4865961842358193970}
+  videoScreen: {fileID: 3606029420846450143}
+--- !u!114 &1922195679553434625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4747680932121233149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46933f1cb0ef4a69ac32de6e49250a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnable: event:/MapScene/BreakingNews
+  onDisable: 
 --- !u!1 &5562256618512121914
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,7 +868,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 85.62686, y: 21.388123, z: 85.33826, w: 144.98524}
+  m_margin: {x: 53.46341, y: 21.388123, z: 53.17505, w: 96.040924}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -971,8 +987,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: -0.05}
   m_AnchorMax: {x: 0.5, y: -0.05}
-  m_AnchoredPosition: {x: 395, y: 204}
-  m_SizeDelta: {x: 800, y: 350}
+  m_AnchoredPosition: {x: 462, y: 204}
+  m_SizeDelta: {x: 600, y: 240}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8218344103243121249
 CanvasRenderer:
