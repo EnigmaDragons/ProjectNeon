@@ -13,6 +13,7 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
     [SerializeField] private FloatReference autoAdvanceDelay = new FloatReference(0.8f);
     [SerializeField] private PlayableUiSound sfx;
     [SerializeField] private Vector2 reversedTextBoxOffset = Vector2.zero;
+    [SerializeField] private Color invisibleTextColorHex = Color.white;
     
     [Header("Debug Info")]
     [SerializeField, ReadOnly] private bool isRevealing;
@@ -151,8 +152,9 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
             _cursor = fullText.IndexOf('>', _cursor) + 2;
         while (isRevealing && _cursor < fullText.Length)
         {
-            var shownText = fullText.Substring(0, _cursor);
-            textBox.text = $"{shownText}<color=\"white\">{fullText.Substring(_cursor)}</color>";
+            var shownText = fullText.Substring(0, _cursor);            
+            var containsTextColoring = fullText.ContainsAnyCase("<color=");
+            textBox.text = containsTextColoring ? shownText : $"{shownText}<color=\"white\">{fullText.Substring(_cursor)}</color>";
             _cursor++;
             if (sfx != null && shownText.Length % sfxEveryXCharacters == 0)
                 sfx.Play(transform.position);

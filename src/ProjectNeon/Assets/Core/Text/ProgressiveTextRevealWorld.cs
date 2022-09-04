@@ -152,7 +152,8 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
         while (isRevealing && _cursor < fullText.Length)
         {
             var shownText = fullText.Substring(0, _cursor);
-            textBox.text = $"{shownText}<color=\"white\">{fullText.Substring(_cursor)}</color>";
+            var containsTextColoring = fullText.ContainsAnyCase("<color=");
+            textBox.text = containsTextColoring ? shownText : $"{shownText}<color=\"white\">{fullText.Substring(_cursor)}</color>";
             _cursor++;
             if (sfx != null && shownText.Length % sfxEveryXCharacters == 0)
                 sfx.Play(transform.position);
