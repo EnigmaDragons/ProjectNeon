@@ -631,23 +631,22 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             canvasGroup.blocksRaycasts = false;
             HideComprehensiveCardInfo();
 
-            if (_rightButtonAlreadyDown == true && _card.Mode == CardMode.Normal) 
+            if (_rightButtonAlreadyDown == true && _card.Mode == CardMode.Normal)
                 _card.TransitionTo(CardMode.Basic);
 
             // Targeting Card Selection Process can run the arrow
-            if (_requiresPlayerTargeting && IsPlayable) 
+            if (_requiresPlayerTargeting && IsPlayable)
                 Message.Publish(new ShowMouseTargetArrow(transform));
-            
+
             // This is crude. Reason for not being able to play a card should flow through
-            if (_card.Owner.IsDisabled())
-                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, "I'm disabled this turn. I can only discard, watch an ally play a card, or end the turn early."));
+            var owner = _card.Owner;
+            if (owner.IsDisabled())
+                Message.Publish(new ShowHeroBattleThought(owner.Id, "I'm disabled this turn. I can only discard, watch an ally play a card, or end the turn early."));
             else if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
-                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, $"I don't have enough {_card.Cost.ResourceType.Name} to play this card right now."));
-            else if (conditionNotMetHighlight.activeSelf)
-                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, _card.UnhighlightCondition.Value.UnhighlightMessage));
-            else if (conditionMetHighlight.activeSelf)
-                Message.Publish(new ShowHeroBattleThought(_card.Owner.Id, _card.HighlightCondition.Value.HighlightMessage));
-            
+                Message.Publish(new ShowHeroBattleThought(owner.Id, $"I don't have enough {_card.Cost.ResourceType.Name} to play this card right now."));
+            else if (conditionNotMetHighlight.activeSelf && _card.UnhighlightCondition is { IsPresent: true })
+                Message.Publish(new ShowHeroBattleThought(owner.Id, _card.UnhighlightCondition.Value.UnhighlightMessage));
+
             _onBeginDrag();
             Message.Publish(new CardDragged());
             Message.Publish(new BeginTargetSelectionRequested(_card));
