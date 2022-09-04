@@ -37,6 +37,14 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         Message.Subscribe<WinBattleWithRewards>(Execute, this);
     }
 
+    protected void Reset()
+    {
+        _currentSegment = null;
+        _finishTriggered = false;
+        _waitFinishTriggered = false;
+        _skippable = true;
+    }
+    
     private void OnDisable()
     {
         Message.Unsubscribe(this);

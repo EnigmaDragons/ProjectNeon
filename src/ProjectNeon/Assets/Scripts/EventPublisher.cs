@@ -69,4 +69,5 @@ public class EventPublisher : ScriptableObject
     public void SkipDraftCheat() => Message.Publish(new SkipDraft());
     public void Proceed(string contextName) => Message.Publish(new ProceedRequested(contextName));
     public void DismissUnlockDisplay() => Message.Publish(new DismissUnlockDisplay());
+    public void ShowNewscast(Cutscene cutscene) => Message.Publish(new ShowNewscast(cutscene));
 }

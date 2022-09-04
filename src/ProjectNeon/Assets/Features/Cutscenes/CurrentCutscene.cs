@@ -16,6 +16,8 @@ public class CurrentCutscene : ScriptableObject
     public bool IsOnFinalSegment => _segments.IsLastItem;
     public bool HasStartBattleCutscene => startBattleCutscene != null && !startBattleCutsceneFinished;
 
+    public void Reset() => _segments = new IndexSelector<CutsceneSegmentData>(cutscene.Segments);
+    
     public void Init(Cutscene c, Maybe<Action> onCutsceneFinished)
     {
         cutscene = c;
