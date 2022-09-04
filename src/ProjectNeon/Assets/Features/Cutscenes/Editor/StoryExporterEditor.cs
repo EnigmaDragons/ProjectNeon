@@ -72,11 +72,12 @@ public class StoryExporterEditor : EditorWindow
                     return;
 
                 var c = s as CutsceneStageSegment;
-                if (c == null)
+                var n = s as NewsStageSegment;
+                if (c == null && n == null)
                     return;
 
                 ++sceneNumber;
-                var cutscene = c.Cutscene;
+                var cutscene = c != null ? c.Cutscene : n.Cutscene;
                 storyLines.Add($"Story Scene: {sceneNumber} - Setting: {cutscene.Setting.GetDisplayName()}");
                 var lines = cutscene.Segments;
                 var lastCondition = "";

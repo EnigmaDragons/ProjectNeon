@@ -34,5 +34,19 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
             progress.CurrentStageSegment.Start();
             map.ClearSegment();
         }
+        else
+        {
+            var secondary = progress.SecondarySegments;
+            for (var i = 0; i < secondary.Length; i++)
+            {
+                var segment = secondary[i];
+                if (segment.ShouldAutoStart && segment.MapNodeType == MapNodeType.Unknown)
+                {
+                    Log.Info($"V5 - Auto-Start Secondary Segment");
+                    segment.Start();
+                    return;
+                }
+            }
+        }
     }
 }

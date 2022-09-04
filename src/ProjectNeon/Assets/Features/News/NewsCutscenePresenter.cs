@@ -20,6 +20,7 @@ public class NewsCutscenePresenter : BaseCutscenePresenter
         DebugLog($"Characters in cutscene: {string.Join(", ", Characters.Select(c => c.PrimaryName))}");
         
         DebugLog($"Num Cutscene Segments {cutscene.Current.Segments.Length}");
+        MessageGroup.TerminateAndClear();
         this.ExecuteAfterDelay(2, () => 
             MessageGroup.Start(
                 new MultiplePayloads("Cutscene Script", cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
