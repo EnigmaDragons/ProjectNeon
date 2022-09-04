@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5939874922242222645}
   - component: {fileID: 4832436373970862662}
   - component: {fileID: 2909504415021695778}
+  - component: {fileID: 634106547601099254}
   m_Layer: 0
   m_Name: FullGameSceneV5
   m_TagString: Untagged
@@ -103,6 +104,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85535086a1364d7da1b67ec094c20b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &634106547601099254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979888111680634500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb9c3bd4bf1417c83695df1c2eca28d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 365656863883087178}
+  targetName:
+    UseConstant: 1
+    ConstantValue: NewsTicker
+    Variable: {fileID: 0}
+  alwaysStartInactive: 0
 --- !u!1 &2807981226263634453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,6 +1816,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a07f1e42a0a2da24dadee0c0fe7086d1, type: 3}
+--- !u!1 &365656863883087178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3286790228204834556, guid: a07f1e42a0a2da24dadee0c0fe7086d1, type: 3}
+  m_PrefabInstance: {fileID: 2922295982713504694}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7508115288458753200 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4664668896714028806, guid: a07f1e42a0a2da24dadee0c0fe7086d1, type: 3}
