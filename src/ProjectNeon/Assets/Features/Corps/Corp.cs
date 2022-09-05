@@ -12,4 +12,5 @@ public interface Corp
     string[] RivalCorpNames { get; }
     StatType[] GeneratedEquipmentPrimaryStatPreference { get; }
     string ShortDescription { get; }
+    string LongDescription { get; }
 }

@@ -16,6 +16,7 @@ public class StaticCorp : ScriptableObject, Corp
     [SerializeField] private StatType[] generatedEquipmentPrimaryStatPreference;
     [SerializeField, TextArea(2, 4)] private string shortDescription;
     [SerializeField, TextArea(4, 10)] private string description;
+    [SerializeField, TextArea(4, 24)] private string longDescription;
     [SerializeField] private string[] slogans;
     
     public string Name => corpName.Value;
@@ -28,4 +29,5 @@ public class StaticCorp : ScriptableObject, Corp
     public string[] RivalCorpNames => rivalCorps.Select(r => r.Name).ToArray();
     public StatType[] GeneratedEquipmentPrimaryStatPreference => generatedEquipmentPrimaryStatPreference ?? new StatType[0];
     public string ShortDescription => shortDescription;
+    public string LongDescription => longDescription;
 }

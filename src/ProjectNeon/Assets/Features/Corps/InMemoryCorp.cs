@@ -12,6 +12,7 @@ public class InMemoryCorp : Corp
     public string[] RivalCorpNames { get; set; } = new string[0];
     public StatType[] GeneratedEquipmentPrimaryStatPreference { get; } = new StatType[0];
     public string ShortDescription { get; set; } = "None";
+    public string LongDescription { get; set; } = "None";
 
     public static implicit operator string(InMemoryCorp c) => c.Name;
 }
