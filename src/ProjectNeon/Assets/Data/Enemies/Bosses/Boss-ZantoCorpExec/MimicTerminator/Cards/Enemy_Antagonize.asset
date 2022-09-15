@@ -14,24 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   customName: 
-  art: {fileID: 0}
+  art: {fileID: 21300000, guid: df187cdb0a19aa543b4f19c8cc9cab7a, type: 3}
   description: 
   typeDescription: {fileID: 0}
-  tags: 
+  tags: 0400000014000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 0}
+    cost: 3
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 0
-  actionSequences: []
+  rarity: 2
+  actionSequences:
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: f53b54be0c21e4e438bd5f12ebfea7a9, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 43ab179b0a9428c449d2d0000eda3a82, type: 2}
+    repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  archetypes: []
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 1
+  isWIP: 0
   notAvailableForGeneralDistribution: 0

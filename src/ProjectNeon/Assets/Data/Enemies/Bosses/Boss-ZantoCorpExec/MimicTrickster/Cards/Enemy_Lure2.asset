@@ -15,20 +15,29 @@ MonoBehaviour:
   id: 0
   customName: Lure
   art: {fileID: 0}
-  description: 
+  description: 'Enter Stealth for 1 turn.
+
+    Gain 5 Energy.
+
+    Give Bait.'
   typeDescription: {fileID: 0}
-  tags: 
+  tags: 0c000000
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 5
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 1
   actionSequences:
   - scope: 0
-    group: 0
+    group: 1
     cardActions: {fileID: 11400000, guid: 81651ce3a8f3795438e0e524186d04b3, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 7ddc54d17ee2f0d4e987d83d573aaa55, type: 2}
     repeatX: 0
     repeatCount: 0
   - scope: 0
@@ -40,8 +49,9 @@ MonoBehaviour:
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  archetypes: []
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 1
+  isWIP: 0
   notAvailableForGeneralDistribution: 0

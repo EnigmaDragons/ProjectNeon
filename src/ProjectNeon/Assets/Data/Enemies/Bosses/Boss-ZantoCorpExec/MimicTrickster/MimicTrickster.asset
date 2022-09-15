@@ -28,8 +28,8 @@ MonoBehaviour:
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
   preferredTurnOrder: 99
-  prefab: {fileID: 0}
-  materialType: 0
+  prefab: {fileID: 2420971031176298728, guid: db48b5659ec58ea4a9d6c988c22edb07, type: 3}
+  materialType: 1
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
   deathEffect:
     UseConstant: 1
@@ -40,9 +40,10 @@ MonoBehaviour:
   unique: 1
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-  description: Sneaking with lethal intention
-  animations: {fileID: 0}
-  animationSounds: {fileID: 0}
+  description: While Stealthing and attacking from the shadows gives the player a
+    way to manipulate her attacks
+  animations: {fileID: 11400000, guid: 0c6ec023aa24f014b9c90f242dccdf77, type: 2}
+  animationSounds: {fileID: 11400000, guid: cd7a247aea1ce42488a090793e3557b1, type: 2}
   stageDetails:
   - stage: 1
     maxHp: 192
@@ -61,7 +62,7 @@ MonoBehaviour:
     startingResourceAmount: 0
     maxResourceAmount: 16
     resourceGainPerTurn: 1
-    cardsPerTurn: 0
+    cardsPerTurn: 1
     powerLevel: 0
     calculationVariables:
       startingDefensiveValueAdjustment: 0
@@ -80,12 +81,11 @@ MonoBehaviour:
       calculatedPowerLevel: 0
     startOfBattleEffects: []
     Cards:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 11400000, guid: 9317329ec713a5b4d9e7efe2c35631fe, type: 2}
+    - {fileID: 11400000, guid: 3548096ddc1618c47adb42c82eb5561c, type: 2}
+    - {fileID: 11400000, guid: 0f75f99298005b149b493e2c6b62882f, type: 2}
+    - {fileID: 11400000, guid: 40ef00fe05900474fb23e7109e57046c, type: 2}
+    - {fileID: 11400000, guid: b35aebd30c1ec15468a4f1d954177183, type: 2}
   maxCopies: 0
   minimumAllies: 0
-  damageType: 0
+  damageType: 1

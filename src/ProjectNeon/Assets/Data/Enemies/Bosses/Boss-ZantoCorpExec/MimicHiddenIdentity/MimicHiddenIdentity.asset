@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MimicHiddenIdentity
   m_EditorClassIdentifier: 
   id: 74
-  enemyName: 'Helen DeVries '
+  enemyName: '"Real" Helen DeVries '
   allowedForSocialMedia: 0
   excludeFromBestiary: 1
   isTutorialEnemy: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
   aiPreferences:
-    DesignatedAttackerPriority: 50
+    DesignatedAttackerPriority: 40
     CardOrderPreferenceFactor: 0
     CardTagPriority: 
     UnpreferredCardTags: 
@@ -40,15 +40,16 @@ MonoBehaviour:
   unique: 1
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-  description: 
-  animations: {fileID: 0}
-  animationSounds: {fileID: 0}
+  description: She is keeping her identity hidden from her "allies" if you could
+    just reveal she isn't human, this battle will be over
+  animations: {fileID: 11400000, guid: 9fd6e25010652ae47b60b5c0805b650c, type: 2}
+  animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 200
-    maxShield: 0
+    maxHp: 256
+    maxShield: 64
     startingShield: 0
-    startingAegis: 0
+    startingAegis: 3
     startingPhase: 0
     startingDodge: 3
     startingTaunt: 0
@@ -59,9 +60,9 @@ MonoBehaviour:
     resistance: 0
     nonStatCardValueFactor: 0
     startingResourceAmount: 0
-    maxResourceAmount: 0
-    resourceGainPerTurn: 0
-    cardsPerTurn: 0
+    maxResourceAmount: 16
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
     powerLevel: 0
     calculationVariables:
       startingDefensiveValueAdjustment: 0
@@ -78,8 +79,58 @@ MonoBehaviour:
       estimatedTurnsAlive: 0
       estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 0
-    startOfBattleEffects: []
-    Cards: []
+    startOfBattleEffects:
+    - EffectType: 75
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 'When HP Damaged: Kill all allies and leave the battle'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 1
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 11400000, guid: 758e80e9772dc1a408b85003636a87e2, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    Cards:
+    - {fileID: 11400000, guid: f557032599fcae34e8f618c4be4326d4, type: 2}
+    - {fileID: 11400000, guid: 5bd286df436083644949817b6064fabd, type: 2}
+    - {fileID: 11400000, guid: 2197438d5f9402745a0612630cb045e1, type: 2}
+    - {fileID: 11400000, guid: 4f0228013603d6b4a8486c246003cc4f, type: 2}
+    - {fileID: 11400000, guid: 7735e0eb4d2227747ae6cc9cf9f454af, type: 2}
   maxCopies: 0
   minimumAllies: 0
-  damageType: 0
+  damageType: 3
