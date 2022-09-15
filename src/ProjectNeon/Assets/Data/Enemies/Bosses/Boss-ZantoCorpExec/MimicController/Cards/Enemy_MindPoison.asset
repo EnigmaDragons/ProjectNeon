@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Enemy_MindPoison
+  m_EditorClassIdentifier: 
+  id: 0
+  customName: 
+  art: {fileID: 0}
+  description: 'Gives {E[0]} Primary Stat.
+
+    Kills target if they are at 0 Primary
+    Stat.
+
+    Gain 5 Energy.'
+  typeDescription: {fileID: 0}
+  tags: 0300000004000000
+  speed: 0
+  isSinglePlay: 0
+  cost:
+    cost: 5
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+    plusXCost: 0
+  rarity: 4
+  actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 8034cd86801e00c41aabd3ee2990f368, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 04e3bc3d65cfb6447a60cc5d7b81dc86, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  isWIP: 0
+  notAvailableForGeneralDistribution: 0
