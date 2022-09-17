@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
   m_Name: Enemy_EmpPulse
   m_EditorClassIdentifier: 
-  id: 0
+  id: 629
   customName: 
-  art: {fileID: 0}
-  description: 
+  art: {fileID: 21300000, guid: 573dddc4a2eb3eb479021ca625456a06, type: 3}
+  description: Remove ALL Shields
   typeDescription: {fileID: 0}
   tags: 
   speed: 0
@@ -25,13 +25,19 @@ MonoBehaviour:
     resourceType: {fileID: 0}
     plusXCost: 0
   rarity: 0
-  actionSequences: []
+  actionSequences:
+  - scope: 1
+    group: 3
+    cardActions: {fileID: 11400000, guid: d36c822fe0183fe4296434eaa384149f, type: 2}
+    repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  archetypes: []
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 1
+  isWIP: 0
   notAvailableForGeneralDistribution: 0
