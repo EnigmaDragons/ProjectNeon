@@ -148,6 +148,8 @@ public class CardResolutionZone : ScriptableObject
             return " on all Allies";
         if (seq.Group == Group.Opponent && seq.Scope == Scope.All)
             return " on all Enemies";
+        if (seq.Group == Group.All && seq.Scope == Scope.All)
+            return " on everyone";
         return string.Empty;
     }
     

@@ -23,10 +23,11 @@ MonoBehaviour:
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
   aiPreferences:
     DesignatedAttackerPriority: 10
-    CardOrderPreferenceFactor: 0
+    CardOrderPreferenceFactor: 1000
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 1
   preferredTurnOrder: 99
   prefab: {fileID: 2420971031176298728, guid: db48b5659ec58ea4a9d6c988c22edb07, type: 3}
   materialType: 2
@@ -59,7 +60,7 @@ MonoBehaviour:
     resistance: 0
     nonStatCardValueFactor: 0
     startingResourceAmount: 0
-    maxResourceAmount: 16
+    maxResourceAmount: 8
     resourceGainPerTurn: 1
     cardsPerTurn: 1
     powerLevel: 0
@@ -80,11 +81,11 @@ MonoBehaviour:
       calculatedPowerLevel: 0
     startOfBattleEffects: []
     Cards:
-    - {fileID: 11400000, guid: 9e14642ae2ccee249a793d5eb1e4c7d4, type: 2}
-    - {fileID: 11400000, guid: 926636cd65fffa947ad356a9b5ff3797, type: 2}
-    - {fileID: 11400000, guid: b59cb5015efa3f84e9c3592a3e71ce67, type: 2}
-    - {fileID: 11400000, guid: e837c7b3b1a4e8c4b974fdca327baa3d, type: 2}
     - {fileID: 11400000, guid: 74e6bcac78554c64aa8bbab37c18a52a, type: 2}
+    - {fileID: 11400000, guid: e837c7b3b1a4e8c4b974fdca327baa3d, type: 2}
+    - {fileID: 11400000, guid: b59cb5015efa3f84e9c3592a3e71ce67, type: 2}
+    - {fileID: 11400000, guid: 926636cd65fffa947ad356a9b5ff3797, type: 2}
+    - {fileID: 11400000, guid: 9e14642ae2ccee249a793d5eb1e4c7d4, type: 2}
   maxCopies: 0
   minimumAllies: 0
   damageType: 2

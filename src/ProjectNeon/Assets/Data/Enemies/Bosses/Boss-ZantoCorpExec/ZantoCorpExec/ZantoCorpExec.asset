@@ -22,11 +22,12 @@ MonoBehaviour:
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
   aiPreferences:
-    DesignatedAttackerPriority: 90
+    DesignatedAttackerPriority: 10
     CardOrderPreferenceFactor: 0
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 1
   preferredTurnOrder: 99
   prefab: {fileID: 2420971031176298728, guid: db48b5659ec58ea4a9d6c988c22edb07, type: 3}
   materialType: 0
@@ -35,7 +36,7 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 
     Variable: {fileID: 0}
-  battleRole: 3
+  battleRole: 1
   tier: 3
   unique: 1
   isHasty: 0
@@ -54,7 +55,7 @@ MonoBehaviour:
     startingTaunt: 0
     attack: 0
     magic: 0
-    leadership: 0
+    leadership: 14
     armor: 0
     resistance: 3
     nonStatCardValueFactor: 0
