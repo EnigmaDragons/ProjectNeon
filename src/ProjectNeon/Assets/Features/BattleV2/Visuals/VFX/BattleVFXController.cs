@@ -69,8 +69,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         }
         else if (e.Group == Group.All)
         {
-            LogInfo($"All Characters VFX not supported yet");
-            Message.Publish(new Finished<BattleEffectAnimationRequested>());
+            PlayEffect(f.Value, state.GetCenterPoint(new Multiple(state.Members.Values)), e.Size, e.Speed, e.Color, false, e.SkipWaitingForCompletion);
         }
         else
         {

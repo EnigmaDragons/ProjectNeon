@@ -29,12 +29,13 @@ public class GeneralAI : StatefulTurnAI
     private IPlayedCard Select(int turnNumber, CardSelectionContext ctx)
     {
         var updatedContext = UpdateTurnTracking(turnNumber, ctx);
-        
-        return updatedContext
+        updatedContext = updatedContext
             .WithCommonSenseSelections()
             .IfTrueDontPlayType(_ => _currentTurnPlayed.ValueOrMaybe(ctx.Member.Id).IsPresentAnd(cards => cards.Any(c => c.Card.Is(CardTag.Exclusive))), CardTag.Exclusive)
-            .WithSelectedFocusCardIfApplicable()
-            .WithSelectedDesignatedAttackerCardIfApplicable()
+            .WithSelectedFocusCardIfApplicable();
+        if (!ctx.AiPreferences.IgnoreDesignatedAttackerRole)
+            updatedContext = updatedContext.WithSelectedDesignatedAttackerCardIfApplicable();
+        return updatedContext
             .WithFinalizedSmartCardSelection()
             .WithSelectedTargetsPlayedCard();
     }

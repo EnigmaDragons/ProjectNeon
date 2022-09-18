@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
   m_Name: AntiRobotAreaEmitter
   m_EditorClassIdentifier: 
-  id: 0
+  id: 79
   enemyName: Anti Robot Area Emitter
   allowedForSocialMedia: 0
   excludeFromBestiary: 1
@@ -22,11 +22,12 @@ MonoBehaviour:
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
   aiPreferences:
-    DesignatedAttackerPriority: 40
+    DesignatedAttackerPriority: 10
     CardOrderPreferenceFactor: 0
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 1
   preferredTurnOrder: 99
   prefab: {fileID: 1771151275093467103, guid: c50db8efb1027e346b45de5e46b52c43, type: 3}
   materialType: 0
@@ -35,7 +36,7 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 
     Variable: {fileID: 0}
-  battleRole: 3
+  battleRole: 1
   tier: 3
   unique: 1
   isHasty: 0
@@ -53,7 +54,7 @@ MonoBehaviour:
     startingDodge: 0
     startingTaunt: 0
     attack: 0
-    magic: 0
+    magic: 14
     leadership: 0
     armor: 3
     resistance: 0

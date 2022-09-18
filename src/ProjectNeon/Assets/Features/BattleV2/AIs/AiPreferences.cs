@@ -10,6 +10,7 @@ public class AiPreferences
     public CardTag[] CardTagPriority = new CardTag[0];
     public CardTag[] UnpreferredCardTags = new CardTag[0];
     public CardTag[] RotatePlayingCardTags = new CardTag[0];
+    public bool IgnoreDesignatedAttackerRole = false;
 
     public bool IsDefault => CardTagPriority.Length == 0
                              && UnpreferredCardTags.Length == 0
