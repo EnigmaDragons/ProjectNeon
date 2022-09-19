@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
-  m_Name: AR_05_DeVriesBunker_Cut
+  m_Name: AR_08_AlgeronResolution_Cut
   m_EditorClassIdentifier: 
   isObsolete: 0
   isPrimaryCutscene: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: This is where it ends, DeVries!
+    Text: Should we use the virus to stop the mimics?
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -43,9 +43,9 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: "Wait! Don\u2019t hurt me, please! What do you want? Money? Privileges?
-      Information?"
+      Variable: {fileID: 11400000, guid: 3eb7c225c9be7384195d3ca04074f861, type: 2}
+    Text: Do we even believe what she said about the mimics being real and that it
+      only affects them?
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -65,29 +65,8 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: "I don\u2019t want anything from you. You\u2019re dangerous."
-    FloatAmount:
-      UseConstant: 1
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates:
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    ForbiddenStates: []
-    Or: 0
-    StoryState:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: What are you talking about?
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: I don't believe her at all. I killed DeVries.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -108,8 +87,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: "Stop playing dumb, lady. We found the footage where you talk about a certain
-      virus. You\u2019re planning to use it on all androids."
+    Text: "What the hell, man! Why did you kill DeVries? It wasn\u2019t necessary."
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -129,9 +107,8 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: "You\u2019re mistaken! I\u2019m not planning to use the virus on all androids.
-      It\u2019s designed to fight the Mimics."
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: "You can\u2019t trust the corpos, everyone knows that!"
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -151,10 +128,9 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: 'The what?
-
-'
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: "I\u2019ve been an activist for robot rights all my life. I know when I
+      see a fanatic."
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -174,8 +150,8 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: The Mimics are a new series, model KL-789, created by Secubotics.
+      Variable: {fileID: 11400000, guid: 3eb7c225c9be7384195d3ca04074f861, type: 2}
+    Text: So what is the plan?
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -191,18 +167,17 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - SegmentType: 4
     DialogueCharacterId:
-      UseConstant: 0
+      UseConstant: 1
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: Their skin is made of liquid polymers which allows them to take any shape
-      they want. They can mimic literally anyone.
+      Variable: {fileID: 11400000, guid: 3eb7c225c9be7384195d3ca04074f861, type: 2}
+    Text: 
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
+    StoryEvent: {fileID: 11400000, guid: 20d3f3ac51a24314b969b10b0ce200c3, type: 2}
     RequiredStates:
     - UseConstant: 0
       ConstantValue: 
@@ -217,8 +192,8 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Why would Secutronics create robots like those?
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: "I can\u2019t believe you are making me fight to stop you now."
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -228,27 +203,9 @@ MonoBehaviour:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    ForbiddenStates: []
-    Or: 0
-    StoryState:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: So they can replace humans in powerful positions with robots loyal to them.
-    FloatAmount:
-      UseConstant: 1
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates:
     - UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+      Variable: {fileID: 11400000, guid: 826cb0894b4fb6c40a8529c9fdab6da1, type: 2}
     ForbiddenStates: []
     Or: 0
     StoryState:
@@ -260,7 +217,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: What went wrong?
+    Text: "Don\u2019t do this Algeron, you can\u2019t win."
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -270,6 +227,9 @@ MonoBehaviour:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 826cb0894b4fb6c40a8529c9fdab6da1, type: 2}
     ForbiddenStates: []
     Or: 0
     StoryState:
@@ -280,9 +240,8 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: The robots decided the powerful position they went to replace first was
-      the project leader.
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: "I fight for what I believe in.\r"
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -292,6 +251,9 @@ MonoBehaviour:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 826cb0894b4fb6c40a8529c9fdab6da1, type: 2}
     ForbiddenStates: []
     Or: 0
     StoryState:
@@ -302,9 +264,8 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: Now they are in complete control of their own project and their end goal
-      is the singularity.
+      Variable: {fileID: 11400000, guid: 301d9e4e0f178654a8c08f3404fe7a90, type: 2}
+    Text: 'I''m picking up chatter. Corpos moving towards us. '
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -314,6 +275,9 @@ MonoBehaviour:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 826cb0894b4fb6c40a8529c9fdab6da1, type: 2}
     ForbiddenStates: []
     Or: 0
     StoryState:
@@ -324,8 +288,8 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: "How do we know you\u2019re telling the truth and aren\u2019t full of shit?"
+      Variable: {fileID: 11400000, guid: 301d9e4e0f178654a8c08f3404fe7a90, type: 2}
+    Text: Seems Algeron informed the corps where we are, time to fight.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -335,6 +299,9 @@ MonoBehaviour:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 826cb0894b4fb6c40a8529c9fdab6da1, type: 2}
     ForbiddenStates: []
     Or: 0
     StoryState:
@@ -345,9 +312,9 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: I am unofficially the head of secubotics intelligence. You can check the
-      files on my computer.
+      Variable: {fileID: 11400000, guid: 301d9e4e0f178654a8c08f3404fe7a90, type: 2}
+    Text: "Let\u2019s break into the original lab this virus was produced in. Give
+      me those juicy data packets"
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -357,7 +324,10 @@ MonoBehaviour:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    ForbiddenStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 826cb0894b4fb6c40a8529c9fdab6da1, type: 2}
     Or: 0
     StoryState:
       UseConstant: 1
@@ -367,18 +337,18 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: ZantoCorp and their bad habit of spying on everyone.
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: "Looks like I don\u2019t need to hide my identity anymore."
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
     StoryEvent: {fileID: 0}
-    RequiredStates:
+    RequiredStates: []
+    ForbiddenStates:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    ForbiddenStates: []
     Or: 0
     StoryState:
       UseConstant: 1
@@ -388,19 +358,18 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: Look, I need your help! The Anti-Mimic virus is ready, but there has been
-      no way for me to safely get it to ZantoCorp Master Data Node.
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: You know us Androids really do have feelings.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
     StoryEvent: {fileID: 0}
-    RequiredStates:
+    RequiredStates: []
+    ForbiddenStates:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    ForbiddenStates: []
     Or: 0
     StoryState:
       UseConstant: 1
@@ -410,18 +379,18 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: We were able to break into here so you believe we can break in there.
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: That is why it is gonna feel so very good to kill and replace you.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
     StoryEvent: {fileID: 0}
-    RequiredStates:
+    RequiredStates: []
+    ForbiddenStates:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    ForbiddenStates: []
     Or: 0
     StoryState:
       UseConstant: 1
@@ -431,52 +400,8 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: You have to stop them.
-    FloatAmount:
-      UseConstant: 1
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates:
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    ForbiddenStates: []
-    Or: 0
-    StoryState:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: "Do we really? We will take the virus but we don\u2019t take orders from
-      corpos we will decide what to do."
-    FloatAmount:
-      UseConstant: 1
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates:
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    ForbiddenStates: []
-    Or: 0
-    StoryState:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: "Thank you for stopping the invasion, I didn\u2019t think the mimics would
-      resort to something so forceful."
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: Then your mimic clone will kill everyone you have ever loved.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -497,7 +422,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Mimics?
+    Text: You really are a corp product; defective and you give empty threats.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -517,8 +442,8 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: The Mimics are a new series, model KL-789, created by Secubotics.
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: Your mimic clones are already out there committing murder sprees.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -538,9 +463,29 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: Their skin is made of liquid polymers which allows them to take any shape
-      they want. They can mimic literally anyone.
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: They are giving your group the reputation it deserves.
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - SegmentType: 7
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
+    Text: 
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -560,52 +505,9 @@ MonoBehaviour:
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: I have been making a virus to kill them.
-    FloatAmount:
-      UseConstant: 1
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates: []
-    ForbiddenStates:
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    Or: 0
-    StoryState:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Ahthe story comes together. Algeron is actually a mimic and tried to trick
-      us into helping him. He would have had us raid your bunker.
-    FloatAmount:
-      UseConstant: 1
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates: []
-    ForbiddenStates:
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    Or: 0
-    StoryState:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: That makes sense my Anti Robot Aura Emitter would certainly make it hard
-      for the androids to invade.
+      Variable: {fileID: 11400000, guid: 301d9e4e0f178654a8c08f3404fe7a90, type: 2}
+    Text: Rather than wasting time going after mimics, lets just expose the project
+      and make everyone know.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -626,28 +528,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: So give us a copy of the Virus and we can deliver it to ZantoCorp.
-    FloatAmount:
-      UseConstant: 1
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates: []
-    ForbiddenStates:
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
-    Or: 0
-    StoryState:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
-    Text: Here you go, best of luck!
+    Text: Time to work with NNZ.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
