@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+
+using UnityEngine;
 using UnityEditor;
 
 public class WallFX_GUI : ShaderGUI
@@ -115,3 +117,5 @@ public class WallFX_GUI : ShaderGUI
 
     }
 }
+
+#endif
