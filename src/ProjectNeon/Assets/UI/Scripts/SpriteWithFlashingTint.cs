@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class SpriteWithFlashingTint : MonoBehaviour
 {
     [SerializeField] private float amount = 0.3f;
