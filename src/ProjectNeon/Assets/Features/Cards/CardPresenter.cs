@@ -545,7 +545,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private const string ClickString = "Click";
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (MouseDragState.IsDragging) 
+        if (MouseDragState.IsDragging && _buttonAlreadyDown == false) 
             return;
         
         if (_debug)
