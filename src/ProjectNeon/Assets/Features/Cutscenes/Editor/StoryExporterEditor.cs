@@ -63,6 +63,8 @@ public class StoryExporterEditor : EditorWindow
                         storySegments.Add(a.StagesV5[stage].Segments[i]);
                     if (a.StagesV5[stage].MaybeStorySegments.Length > i && a.StagesV5[stage].MaybeStorySegments[i]?.MapNodeType == MapNodeType.MainStory)
                         storySegments.Add(a.StagesV5[stage].MaybeStorySegments[i]);
+                    if (a.StagesV5[stage].Segments[i] is SpecificEncounterSegment && (a.StagesV5[stage].Segments[i] as SpecificEncounterSegment).Cutscene != null)
+                        storySegments.Add(a.StagesV5[stage].Segments[i]);
                 }
             }
             var sceneNumber = 0;
@@ -73,12 +75,13 @@ public class StoryExporterEditor : EditorWindow
 
                 var c = s as CutsceneStageSegment;
                 var n = s as NewsStageSegment;
-                if (c == null && n == null)
+                var b = s as SpecificEncounterSegment;
+                if (c == null && n == null && b == null)
                     return;
 
                 ++sceneNumber;
-                var cutscene = c != null ? c.Cutscene : n.Cutscene;
-                storyLines.Add($"Story Scene: {sceneNumber} - Setting: {cutscene.Setting.GetDisplayName()}");
+                var cutscene = c != null ? c.Cutscene : n != null ? n.Cutscene : b.Cutscene;
+                storyLines.Add($"Story Scene: {sceneNumber} - Setting: {(b == null ? cutscene.Setting.GetDisplayName() : "Battle")}");
                 var lines = cutscene.Segments;
                 var lastCondition = "";
                 foreach (var l in lines)
