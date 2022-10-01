@@ -39,7 +39,7 @@ public sealed class Navigator : ScriptableObject
             Log.Info($"Navigating to {sceneName}");
         Message.Publish(new NavigateToSceneRequested(sceneName));
     }
-
+    
     public void ExitGame()
     {     
 #if UNITY_EDITOR

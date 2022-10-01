@@ -11,14 +11,17 @@ public static class AllMetrics
     private static string _installId = "Not Initialized";
     private static string _runId = "Not Initialized";
     private static string _version = "Not Initialized";
+    private static string _customPrefix = "";
     private static bool _isEditor = false;
     
-    public static void Init(string version, string installId)
+    public static void Init(string version, string installId, string customPrefix)
     {
         _version = version;
         _installId = installId;
+        _customPrefix = customPrefix;
 #if UNITY_EDITOR
         _isEditor = true;
+        _customPrefix = "Editor";
 #endif
     }
 
@@ -43,7 +46,7 @@ public static class AllMetrics
         => Send("heroLevelUp", new HeroLevelUpSelectionData {heroName = heroName, level = level, selection = selectedDescription, options = optionsDescription});
     
     public static void PublishMapNodeSelection(int mapProgress, string selectedMapNodeName, string[] mapNodeOptions)
-        => Send("mapNodeSelected",  new MapNodeSelectionData { progress = mapProgress, selected = selectedMapNodeName, options = mapNodeOptions});
+        => Send("mapNodeSelected", new MapNodeSelectionData { progress = mapProgress, selected = selectedMapNodeName, options = mapNodeOptions});
 
     public static void PublishBattleSummary(BattleSummaryReport report)
         => Send("battleSummary", report);
@@ -53,6 +56,9 @@ public static class AllMetrics
 
     public static void PublishGameWon(int adventureId)
         => Send("gameWon", new AdventureIdData {adventureId = adventureId});
+
+    public static void PublishInteractedWith(string uiElement)
+        => Send("interactedWith", new InteractionWithData { uiElement = uiElement });
 
     public static void PublishHeroSelected(string selectedHero, string[] options, string[] existingPartyHeroes)
         => Send("heroAdded", new HeroSelectedData {heroName = selectedHero, heroOptions = options, currentPartyHeroes = existingPartyHeroes});
@@ -94,7 +100,7 @@ public static class AllMetrics
                 new StringContent(
                     JsonUtility.ToJson(new GeneralMetricData
                     {
-                        gameVersion = WithEditorInfoAppended(_version),
+                        gameVersion = VersionString(_version),
                         installId = _installId,
                         runId = _runId,
                         eventType = m.EventType,
@@ -106,7 +112,7 @@ public static class AllMetrics
                 OnResponse);
     }
 
-    private static string WithEditorInfoAppended(string version) => _isEditor ? $"{version} Editor" : version;
+    private static string VersionString(string version) => $"{_customPrefix} {version}".Trim();
 
     private static void OnResponse(HttpResponseMessage resp)
     {
@@ -193,5 +199,11 @@ public static class AllMetrics
     {
         public string[] options;
         public string[] purchases;
+    }
+    
+    [Serializable]
+    private class InteractionWithData
+    {
+        public string uiElement;
     }
 }

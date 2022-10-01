@@ -11,7 +11,8 @@ public class TutorialWonHandler : OnMessage<TutorialWon>
     
     public static void Execute(float delay = 3f)
     {
-        Log.Info("Finished Tutorial Adventure");
+        Log.Info("Finished Tutorial Adventure");        
+        AllMetrics.PublishGameWon(TutorialAdventureId);
         CurrentAcademyData.Mutate(a => a.TutorialData = new AcademyTutorialData { CompletedTutorialNames = AcademyData.RequiredLicenseTutorials.Concat(AcademyData.SimpleTutorialPanels).ToArray() });
         CurrentProgressionData.RecordCompletedAdventure(TutorialAdventureId, TutorialDifficultyLevel, TutorialHeroId.AsArray());
         CurrentGameData.Clear();
