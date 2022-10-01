@@ -52,10 +52,19 @@ public static class AllMetrics
         => Send("battleSummary", report);
 
     public static void PublishGameLost(int adventureId)
-        => Send("gameLost", new AdventureIdData {adventureId = adventureId});
+    {
+        Send("gameLost", new AdventureIdData {adventureId = adventureId});
+        Send("gameFinished", new AdventureIdData {adventureId = adventureId});
+    }
 
     public static void PublishGameWon(int adventureId)
-        => Send("gameWon", new AdventureIdData {adventureId = adventureId});
+    {
+        Send("gameWon", new AdventureIdData {adventureId = adventureId});
+        Send("gameFinished", new AdventureIdData {adventureId = adventureId});
+    }
+
+    public static void PublishGameStarted(int adventureId)
+        => Send("gameStarted", new AdventureIdData {adventureId = adventureId});
 
     public static void PublishInteractedWith(string uiElement)
         => Send("interactedWith", new InteractionWithData { uiElement = uiElement });

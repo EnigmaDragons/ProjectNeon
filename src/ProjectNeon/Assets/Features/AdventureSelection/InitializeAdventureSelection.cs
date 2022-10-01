@@ -53,7 +53,8 @@ public class InitializeAdventureSelection : MonoBehaviour
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             return s;
         });
-            
+        AllMetrics.PublishGameStarted(adventure.id);
+
         if (adventure.IsV2)
             navigator.NavigateToSquadSelection();
         if (adventure.IsV4)

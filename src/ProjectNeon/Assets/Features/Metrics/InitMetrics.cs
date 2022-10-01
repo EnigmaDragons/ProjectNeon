@@ -6,11 +6,14 @@ public class InitMetrics : MonoBehaviour
     [SerializeField] private StringReference appName;
     [SerializeField] private StringReference version;
     [SerializeField] private BoolReference isDemo;
+    [SerializeField] private bool sendEventOnLaunch = true;
     
     private void Awake()
     {
         AllMetrics.Init(version, InstallId.Get(), isDemo ? "Demo" : "");
         InitErrorReporting();
+        if (sendEventOnLaunch)
+            AllMetrics.PublishInteractedWith("Game Launched");
     }
 
     private void InitErrorReporting()
