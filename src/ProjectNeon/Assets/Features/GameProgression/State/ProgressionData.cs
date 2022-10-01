@@ -9,6 +9,7 @@ public class ProgressionData
     public List<AdventureCompletionRecord> AdventureCompletions = new List<AdventureCompletionRecord>();
     public List<UnlockItemDisplayRecord> ShownUnlocks = new List<UnlockItemDisplayRecord>();
     public int RunsFinished;
+    public bool HasShownWishlistScene;
 
     public bool Completed(int adventureId) => CompletedAdventureIds.Any(a => a == adventureId);
     public bool Completed(int adventureId, int heroId) 

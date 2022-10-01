@@ -24,6 +24,7 @@ public sealed class Navigator : ScriptableObject
     public void NavigateToSteamPage() => Application.OpenURL("https://store.steampowered.com/app/1412960/Metroplex_Zero/");
     public void NavigateToSettingsScene() => NavigateTo("SettingsScene");
     public void NavigateToDifficultyScene() => NavigateTo("DifficultySelection");
+    public void NavigateToWishlistScene() => NavigateTo("WishlistScene");
 
     public void ReloadScene()
     {

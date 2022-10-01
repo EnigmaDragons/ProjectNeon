@@ -2219,6 +2219,7 @@ GameObject:
   - component: {fileID: 1411385590}
   - component: {fileID: 1411385593}
   - component: {fileID: 1411385594}
+  - component: {fileID: 1411385595}
   m_Layer: 5
   m_Name: ConclusionUiCanvas
   m_TagString: Untagged
@@ -2349,9 +2350,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
-        m_TargetAssemblyTypeName: Navigator, EnigmaDragons.Core
-        m_MethodName: NavigateToTitleScreen
+      - m_Target: {fileID: 1411385595}
+        m_TargetAssemblyTypeName: ConclusionButton, GameAssembly
+        m_MethodName: NavigateAway
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2364,6 +2365,23 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 1771593194}
   isPrimaryActionButton: 1
+--- !u!114 &1411385595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411385588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f7640d8b21443eaa78217cdbe6cbf60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
+  isDemo:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f8e6c381c1bd57e4d950f2d691e83d1d, type: 2}
 --- !u!1 &1447520645
 GameObject:
   m_ObjectHideFlags: 0
