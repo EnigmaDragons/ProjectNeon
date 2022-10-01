@@ -481,6 +481,7 @@ MonoBehaviour:
   previousPageButton: {fileID: 6834981893336693700}
   pageNumText: {fileID: 1633233822747849949}
   nextPageButton: {fileID: 4758495365511249239}
+  bindButtons: 0
 --- !u!1 &1212875734929194470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,6 +1340,7 @@ MonoBehaviour:
   previousPageButton: {fileID: 1212875734929194470}
   pageNumText: {fileID: 3834698382664496388}
   nextPageButton: {fileID: 1107239940963377413}
+  bindButtons: 0
 --- !u!1 &3516935671992085284
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,6 +3158,7 @@ MonoBehaviour:
   previousPageButton: {fileID: 8988656351523992389}
   pageNumText: {fileID: 7505542665328439184}
   nextPageButton: {fileID: 4381129145119783751}
+  bindButtons: 0
 --- !u!1 &8533996541219031168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3390,9 +3393,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8553277952631793861}
-  - component: {fileID: 8987352653363702452}
   - component: {fileID: 8727165726416725551}
-  - component: {fileID: 547658862539816271}
   m_Layer: 0
   m_Name: FullCardLibraryUI
   m_TagString: Untagged
@@ -3419,34 +3420,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8987352653363702452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8727165726416725550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64c0fdeae8a04ce78d21bbf450093a1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keys: 6c000000
-  action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ToggleCardLibrary
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &8727165726416725551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3461,34 +3434,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   library: {fileID: 4019621586430875335}
   enemyLibrary: {fileID: 1831797262924701654}
---- !u!114 &547658862539816271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8727165726416725550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64c0fdeae8a04ce78d21bbf450093a1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keys: 65000000
-  action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ToggleEnemyCardLibrary
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &8941867400774109134
 GameObject:
   m_ObjectHideFlags: 0
