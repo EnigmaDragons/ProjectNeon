@@ -147,7 +147,6 @@ public class AdventureProgressV5 : AdventureProgressBase
         {
             currentMap.SetMap(CurrentChapter.Map);
             currentChapterIndex++;
-            AllMetrics.PublishAdventureProgress(AdventureName, Progress);
         } 
         else
         {
@@ -196,6 +195,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         currentSegmentIndex++;
         rngSeed = Rng.NewSeed();;
         AdvanceStageIfNeeded();
+        AllMetrics.PublishAdventureProgress(AdventureName, Progress);
     }
 
     public override void SetStoryState(string state, bool value) => _storyStates[state] = value;

@@ -5,11 +5,14 @@ const eventTypes = ({
   heroAdded: 'heroAdded',
   gameWon: 'gameWon',
   gameLost: 'gameLost',
+  gameFinished: 'gameFinished',
   rewardCardSelected: 'rewardCardSelected',
   rewardGearSelected: 'rewardGearSelected',
   battleSummary: 'battleSummary',
   selectedSquad: 'selectedSquad',
   mapNodeSelected: 'mapNodeSelected',
+  adventureProgress: 'adventureProgress',
+  interactedWith: 'interactedWith',
 });
 
 const queryEvents = (db, version, eventType, onEvents) => {
