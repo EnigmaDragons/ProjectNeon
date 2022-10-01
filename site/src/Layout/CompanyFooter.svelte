@@ -8,11 +8,13 @@
 <section class="">
   <Container>
     <div class="row">
-      <div class="credits column center-v">
-        <a href={company.social.twitter}>Enigma Dragons</a>
-      </div>
       <div class="logo-box center-vh">
         <div class="logo">
+          <img src={company.gameLogo} alt="Game Logo" loading="lazy"/>
+        </div>
+      </div>
+      <div class="logo-box center-vh">
+        <div class="logo-reduced">
           <img src={company.publisherLogo} alt="Publisher Logo" loading="lazy"/>
         </div>
       </div>
@@ -43,15 +45,22 @@
   }
 
   .logo {
-    margin-left: 2vw;
     margin-bottom: 3em;
     width: 240px;
+    max-width: 40vw;
+  }
+  
+  .logo-reduced {
+    margin-left: 3vw;
+    margin-bottom: 3em;
+    width: 180px;
     max-width: 40vw;
   }
 
   .row {
     display: flex;
     margin: 0 auto;
+    margin-top: 1em;
   }
 
   .credits {

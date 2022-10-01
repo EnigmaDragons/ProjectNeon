@@ -25,6 +25,7 @@
       <p><b>Website</b>: <a href={presskit.website}>{presskit.website}</a></p>
       <p><b>Press Contact</b>: <a href="mailto:{presskit.contact}">{presskit.contact}</a></p>
       <p><b>Presskit (PDF)</b>: <a href={presskit.pdf}>Download</a></p>
+      <p><b>Asset Kit</b>: <a href={presskit.assetKit}>Google Drive</a></p>
       <p><b>Social</b>:
         {#if presskit.social.discord}
           <a href={presskit.social.discord}>Discord</a>
