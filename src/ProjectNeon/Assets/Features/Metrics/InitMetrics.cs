@@ -5,10 +5,11 @@ public class InitMetrics : MonoBehaviour
 {
     [SerializeField] private StringReference appName;
     [SerializeField] private StringReference version;
+    [SerializeField] private BoolReference isDemo;
     
     private void Awake()
     {
-        AllMetrics.Init(version, InstallId.Get());
+        AllMetrics.Init(version, InstallId.Get(), isDemo ? "Demo" : "");
         InitErrorReporting();
     }
 

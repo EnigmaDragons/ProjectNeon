@@ -11,14 +11,17 @@ public static class AllMetrics
     private static string _installId = "Not Initialized";
     private static string _runId = "Not Initialized";
     private static string _version = "Not Initialized";
+    private static string _customPrefix = "";
     private static bool _isEditor = false;
     
-    public static void Init(string version, string installId)
+    public static void Init(string version, string installId, string customPrefix)
     {
         _version = version;
         _installId = installId;
+        _customPrefix = customPrefix;
 #if UNITY_EDITOR
         _isEditor = true;
+        _customPrefix = "Editor";
 #endif
     }
 
@@ -94,7 +97,7 @@ public static class AllMetrics
                 new StringContent(
                     JsonUtility.ToJson(new GeneralMetricData
                     {
-                        gameVersion = WithEditorInfoAppended(_version),
+                        gameVersion = VersionString(_version),
                         installId = _installId,
                         runId = _runId,
                         eventType = m.EventType,
@@ -106,7 +109,7 @@ public static class AllMetrics
                 OnResponse);
     }
 
-    private static string WithEditorInfoAppended(string version) => _isEditor ? $"{version} Editor" : version;
+    private static string VersionString(string version) => $"{_customPrefix} {version}".Trim();
 
     private static void OnResponse(HttpResponseMessage resp)
     {
