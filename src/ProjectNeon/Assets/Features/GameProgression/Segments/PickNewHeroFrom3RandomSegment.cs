@@ -32,7 +32,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
     public static BaseHero[] GetFeatureHeroOptions(Library library, BaseHero[] currentHeroes)
     {
         var existingHeroes = currentHeroes.ToArray();
-        var allOptions = library.UnlockedHeroes.ToList();
+        var allOptions = library.UnlockedHeroes.Where(x => CurrentProgressionData.Data.RunsFinished >= x.AdventuresPlayedBeforeUnlocked).ToList();
         existingHeroes.ForEach(h => allOptions.Remove(h));
         
         var currentArchs = currentHeroes.SelectMany(h => h.Archetypes).ToHashSet();

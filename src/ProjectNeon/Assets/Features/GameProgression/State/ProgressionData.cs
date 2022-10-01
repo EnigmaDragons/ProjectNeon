@@ -28,12 +28,16 @@ public class ProgressionData
 
     public const string UnlockTypeAdventure = "Adventure";
     public const string UnlockTypeDifficulty = "Difficulty";
+    public const string UnlockTypeHero = "Hero";
 
     public bool HasShownUnlockForAdventure(int adventureId) 
         => ShownUnlocks.Any(s => s.UnlockType == UnlockTypeAdventure && s.ItemId == adventureId);
     
     public bool HasShownUnlockForDifficultyId(int difficultyId) 
         => ShownUnlocks.Any(s => s.UnlockType == UnlockTypeDifficulty && s.ItemId == difficultyId);
+    
+    public bool HasShownUnlockForHeroId(int heroId)
+        => ShownUnlocks.Any(s => s.UnlockType == UnlockTypeHero && s.ItemId == heroId);
     
     public void Record(AdventureCompletionRecord r)
     {

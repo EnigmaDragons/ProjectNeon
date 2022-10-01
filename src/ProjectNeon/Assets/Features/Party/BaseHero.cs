@@ -22,6 +22,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private CharacterAnimationSoundSet animationSounds;
     [SerializeField] private int startingCredits = 100;
     [SerializeField, Range(1, 5)] private int complexityRating = 3;
+    [SerializeField] private int adventuresPlayedBeforeUnlocked;
 
     // Stats
     [SerializeField] public int maxHp = 40;
@@ -148,4 +149,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
             rt[1] = resource2;
         return rt;
     }
+
+    public int AdventuresPlayedBeforeUnlocked => adventuresPlayedBeforeUnlocked;
 }
