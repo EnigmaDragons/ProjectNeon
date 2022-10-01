@@ -41,6 +41,8 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
         var randomThree = optimizedSelection.Shuffled(new DeterministicRng(ConsumableRngSeed.Consume())).Take(3).ToArray();
         
         var maybeFeaturedHero = library.MaybeFeaturedHero;
+        if (maybeFeaturedHero.IsMissing && allOptions.Any(x => CurrentProgressionData.Data.RunsFinished == x.AdventuresPlayedBeforeUnlocked))
+            maybeFeaturedHero = allOptions.First(x => CurrentProgressionData.Data.RunsFinished == x.AdventuresPlayedBeforeUnlocked);
         var featuredThree = randomThree;
         if (maybeFeaturedHero.IsPresentAnd(h => !currentHeroes.Contains(h) 
                                                 && !randomThree.Contains(h) 
