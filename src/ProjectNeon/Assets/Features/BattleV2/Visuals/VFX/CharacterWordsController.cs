@@ -22,7 +22,7 @@ public class CharacterWordsController : OnMessage<DisplayCharacterWordRequested>
     {
         if (_cooldown > 0)
             _cooldown -= Time.unscaledDeltaTime;
-        if (_cooldown <= 0 && _actionQueue.Any())
+        if (_cooldown <= 0 && _actionQueue.AnyNonAlloc())
         {
             _actionQueue.Dequeue().Invoke();
             _cooldown = cooldownDelay;

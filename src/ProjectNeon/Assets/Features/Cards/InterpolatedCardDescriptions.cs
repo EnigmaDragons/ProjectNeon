@@ -16,9 +16,9 @@ public static class InterpolatedCardDescriptions
         => card.Type.InterpolatedDescription(card.Owner, xCost);
 
     public static string AutoDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost)
-        => InterpolatedDescription(card, owner, xCost, "{Auto}");
+        => InterpolatedDescription(card, owner, xCost, 0, 0, "{Auto}");
     
-    public static string InterpolatedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, string overrideDescription = null)
+    public static string InterpolatedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardsCycledThisTurn = 0, string overrideDescription = null)
     {
         var desc = overrideDescription ?? card.Description;
 
@@ -39,12 +39,12 @@ public static class InterpolatedCardDescriptions
                     .SelectMany(a => a.Actions.Where(c => c.Type == CardBattleActionType.Condition))
                     .SelectMany(b => b.ConditionData.ReferencedEffect.InnerBattleEffects));
 
-            return InterpolatedDescription(desc, card.Speed == CardSpeed.Quick, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard, card.SwappedCard);
+            return InterpolatedDescription(desc, card.Speed == CardSpeed.Quick, battleEffects.Concat(conditionalBattleEffects).ToArray(), card.ReactionBattleEffects().ToArray(), innerBattleEffects.ToArray(), owner, xCost, card.ChainedCard, card.SwappedCard, cardsInHand, cardsCycledThisTurn);
         }
         catch (Exception e)
         {
             #if UNITY_EDITOR
-            Log.Error($"Unable to Generate Interpolated Description for {card.Name}");
+            Log.Error($"Unable to Generate Interpolated Description for {card.Name} {card.Id}");
             Log.Error(e);
             throw;
             #else
@@ -63,7 +63,9 @@ public static class InterpolatedCardDescriptions
         Maybe<Member> owner, 
         ResourceQuantity xCost,
         Maybe<CardTypeData> chainedCard,
-        Maybe<CardTypeData> swappedCard)
+        Maybe<CardTypeData> swappedCard,
+        int cardsInHand,
+        int cardCyclesUsedThisTurn)
     {
         var result = desc;
 
@@ -74,8 +76,8 @@ public static class InterpolatedCardDescriptions
                 sb.Append("<b>Quick:</b> ");
             sb.Append(AutoDescription(effects, owner, xCost));
             sb = new StringBuilder(ShortenRepeatedEffects(sb.ToString()));
-            sb.Append(chainedCard.Select(c => $". {Bold("Chain:")} {c.Name}", ""));
-            sb.Append(swappedCard.Select(c => $". {Bold("Swap:")} {c.Name}", ""));
+            sb.Append(chainedCard.Select(c => $". {Bold("Finisher:")} {c.Name}", string.Empty));
+            sb.Append(swappedCard.Select(c => $". {Bold("Swap:")} {c.Name}", string.Empty));
             return sb.ToString();
         }
 
@@ -90,7 +92,7 @@ public static class InterpolatedCardDescriptions
         {
             var forReaction = token.Value.StartsWith("{RE[");
             var forInnerEffect = token.Value.StartsWith("{I");
-            var prefixes = new[] {"{E", "{D", "{RE", "{RD", "{IE", "{ID" };
+            var prefixes = new[] {"{E", "{D", "{RE", "{RD", "{IE", "{ID", "{ES", "{F" };
             if (prefixes.None(p => token.Value.StartsWith(p)))
                 throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects, Durations, and Reaction Effects");
 
@@ -103,15 +105,19 @@ public static class InterpolatedCardDescriptions
                 throw new InvalidDataException($"Requested Interpolating Inner Effect {effectIndex}, but only found {innerEffects.Length} Inner Effects");
 
             if (token.Value.StartsWith("{E["))
-                result = result.Replace("{E[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner, xCost)));
+                result = result.Replace("{E[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner, xCost, cardsInHand, cardCyclesUsedThisTurn)));
+            if (token.Value.StartsWith("{ES["))
+                result = result.Replace("{ES[" + effectIndex + "]}", Bold(EffectDescription(effects[effectIndex], owner, xCost, cardsInHand, cardCyclesUsedThisTurn, false)));
             if (token.Value.StartsWith("{D["))
                 result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex], owner, xCost));
+            if (token.Value.StartsWith("{F["))
+                result = result.Replace("{F[" + effectIndex + "]}", Bold(effects[effectIndex].Formula));
             if (forReaction)
-                result = result.Replace("{RE[" + effectIndex + "]}", Bold(EffectDescription(reactionEffects[effectIndex], owner, xCost)));
+                result = result.Replace("{RE[" + effectIndex + "]}", Bold(EffectDescription(reactionEffects[effectIndex], owner, xCost, cardsInHand, cardCyclesUsedThisTurn)));
             if (token.Value.StartsWith("{RD["))
                 result = result.Replace("{RD[" + effectIndex + "]}", DurationDescription(reactionEffects[effectIndex], owner, xCost));
             if (token.Value.StartsWith("{IE"))
-                result = result.Replace("{IE[" + effectIndex + "]}", Bold(EffectDescription(innerEffects[effectIndex], owner, xCost)));
+                result = result.Replace("{IE[" + effectIndex + "]}", Bold(EffectDescription(innerEffects[effectIndex], owner, xCost, cardsInHand, cardCyclesUsedThisTurn)));
             if (token.Value.StartsWith("{ID"))
                 result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex], owner, xCost));
         }
@@ -127,7 +133,9 @@ public static class InterpolatedCardDescriptions
         }
 
         foreach (var r in _resourceIcons)
-            result = result.Replace(r.Key, Sprite(r.Value));
+            result = Regex.Replace(result, $" {r.Key}", $" {Sprite(r.Value)}");
+
+        result = Regex.Replace(result, @"@(\w+)", "$1");
         
         // Add Line Breaks
         result = result.Replace("\\n", "\n");
@@ -154,14 +162,14 @@ public static class InterpolatedCardDescriptions
     private static string AutoDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
         var delay = DelayDescription(data);
-        var coreDesc = "";
+        var coreDesc = string.Empty;
         if (data.EffectType == EffectType.AttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.RawDamageAttackFormula)
+        if (data.EffectType == EffectType.TrueDamageAttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.HealFormula)
             coreDesc = $"heal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.DealRawDamageFormula)
+        if (data.EffectType == EffectType.DealTrueDamageFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.MagicAttackFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
@@ -217,7 +225,7 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"drain {EffectDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.ShieldRemoveAll)
             coreDesc = $"removes all shields";
-        if (coreDesc == "")
+        if (coreDesc == string.Empty)
             throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
         return delay.Length > 0 
             ? $"{delay}{coreDesc}".Replace("Next turn, for the turn,", "Next turn,")
@@ -236,7 +244,7 @@ public static class InterpolatedCardDescriptions
     }
 
     private static string AOrAn(string archetype) => "aeiouAEIOU".IndexOf(archetype[0]) >= 0 ? "an" : "a";
-    private static string WithCommaIfPresent(string value) => string.IsNullOrWhiteSpace(value) ? "" : $"{value}, ";
+    private static string WithCommaIfPresent(string value) => string.IsNullOrWhiteSpace(value) ? string.Empty : $"{value}, ";
     
     private static string GivesOrRemoves(string remainingEffectDesc) 
         => remainingEffectDesc.Contains("-") || remainingEffectDesc.Contains("All") 
@@ -246,7 +254,7 @@ public static class InterpolatedCardDescriptions
     private static string ReactionSourceDescription(Maybe<Member> owner, ReactiveMember member) 
         => member == ReactiveMember.Originator 
             ? owner.Select(o => o.Name + " will ", "Originator will ") 
-            : "";
+            : string.Empty;
     
     private static string ReactiveTargetFriendlyName(ReactiveTargetScope s) 
         => s == ReactiveTargetScope.Source 
@@ -273,27 +281,27 @@ public static class InterpolatedCardDescriptions
         { "Credits", 21},
         { "Creds", 21},
     };
-    private static string PhysDamageIcon => Sprite(0);
-    private static string RawDamageIcon => Sprite(1);
-    private static string MagicDamageIcon => Sprite(2);
+    public static string PhysDamageIcon => Sprite(0);
+    public static string TrueDamageIcon => Sprite(1);
+    public static string MagicDamageIcon => Sprite(2);
     private static string Sprite(int index) => $"<sprite index={index}>";
-
-    private static string WithPhysicalDamageIcon(string s) => $"{s} {PhysDamageIcon}";
-    private static string WithMagicDamageIcon(string s) => $"{s} {MagicDamageIcon}";
-    private static string WithRawDamageIcon(string s) => $"{s} {RawDamageIcon}";
     
-    public static string EffectDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
+    public static string WithPhysicalDamageIcon(string s) => $"{s.PhysDamageColored()} {PhysDamageIcon}";
+    public static string WithMagicDamageIcon(string s) => $"{s.MagicDamageColored()} {MagicDamageIcon}";
+    public static string WithTrueDamageIcon(string s) => $"{s.TrueDamageColored()} {TrueDamageIcon}";
+    
+    public static string EffectDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardCyclesUsedThisTurn = 0, bool showSprites = true)
     {
         if (data.EffectType == EffectType.AttackFormula)
-            return WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost));
+            return showSprites ? WithPhysicalDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.MagicAttackFormula)
-            return WithMagicDamageIcon(FormulaAmount(data, owner, xCost));
-        if (data.EffectType == EffectType.RawDamageAttackFormula)
-            return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
+            return showSprites ? WithMagicDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
+        if (data.EffectType == EffectType.TrueDamageAttackFormula)
+            return showSprites ? WithTrueDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.DamageOverTimeFormula)
-            return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
-        if (data.EffectType == EffectType.DealRawDamageFormula)
-            return WithRawDamageIcon(FormulaAmount(data, owner, xCost));
+            return showSprites ? WithTrueDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
+        if (data.EffectType == EffectType.DealTrueDamageFormula)
+            return showSprites ? WithTrueDamageIcon(FormulaAmount(data, owner, xCost)) : FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.HealFormula 
                 || data.EffectType == EffectType.AdjustPlayerStatsFormula
                 || data.EffectType == EffectType.ChooseCardToCreate)
@@ -313,7 +321,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustCounterFormula)
             return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources")}";
+            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent && showSprites ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources")}";
         if (data.EffectType == EffectType.ShieldBasedOnNumberOfOpponentsDoTs)
             return owner.IsPresent
                 ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.MaxShield]))).ToString()
@@ -336,6 +344,8 @@ public static class InterpolatedCardDescriptions
             return $"{Bold(FormulaAmount(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()}";
         if (data.EffectType == EffectType.EnterStealth)
             return $"Enter {Bold("Stealth")}";
+        if (data.EffectType == EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand)
+            return cardsInHand + cardCyclesUsedThisTurn - 1 > 0 ? $"{cardsInHand + cardCyclesUsedThisTurn - 1}" : string.Empty;
         
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";
@@ -364,8 +374,8 @@ public static class InterpolatedCardDescriptions
             var ipf = f.InterpolatePartialFormula;
             var formulaResult = ipf.EvaluationPartialFormula.Length > 0
                 ? FormulaResult(ipf.EvaluationPartialFormula, owner, xCost).ToString("0.##")
-                : "";
-            formulaResult = formulaResult.Equals("0") ? "" : formulaResult;
+                : string.Empty;
+            formulaResult = formulaResult.Equals("0") ? string.Empty : formulaResult;
             return FormattedFormula($"{ipf.Prefix} {formulaResult} {ipf.Suffix}".Trim())
                     .Replace("Owner[PrimaryResource]", owner.PrimaryResourceQuantity().ResourceType)
                     .Replace("PrimaryResource", owner.PrimaryResourceQuantity().ResourceType);
@@ -391,8 +401,8 @@ public static class InterpolatedCardDescriptions
     
     private static string WithBaseAmount(EffectData data, string floatString)
     {
-        var baseAmount = data.BaseAmount != 0 ? $"{data.BaseAmount.Value}" : "";
-        var floatAmount = data.FloatAmount > 0 ? $"{data.FloatAmount.Value}{floatString}" : "";
+        var baseAmount = data.BaseAmount != 0 ? $"{data.BaseAmount.Value}" : string.Empty;
+        var floatAmount = data.FloatAmount > 0 ? $"{data.FloatAmount.Value}{floatString}" : string.Empty;
         return baseAmount + floatAmount;
     }
 
@@ -404,7 +414,7 @@ public static class InterpolatedCardDescriptions
 
     private static string DurationDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
-        var turnString = "";
+        var turnString = string.Empty;
         if (owner.IsMissing)
         {
             turnString = $"for {Bold(FormattedFormula(data.DurationFormula))} turns";
@@ -425,7 +435,7 @@ public static class InterpolatedCardDescriptions
     {
         var delayValue = data.TurnDelay;
         var delayString = delayValue < 1
-            ? ""
+            ? string.Empty
             : delayValue == 1
                 ? "Next turn, "
                 : $"In {delayValue} turns, ";

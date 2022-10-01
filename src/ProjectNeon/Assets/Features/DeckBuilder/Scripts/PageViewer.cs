@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PageViewer : MonoBehaviour
 {
@@ -12,11 +13,13 @@ public class PageViewer : MonoBehaviour
     [SerializeField] private GameObject previousPageButton;
     [SerializeField] private TextMeshProUGUI pageNumText;
     [SerializeField] private GameObject nextPageButton;
+    [SerializeField] private bool bindButtons;
 
     private List<Vector2> _elementPositions;
 
     private List<GameObject> _pages;
     private int _pageIndex;
+    private bool _isInitialized;
 
     public void Init(GameObject elementTemplate, GameObject defaultElementTemplate, 
         List<Action<GameObject>> initElement, Action<GameObject> initDefaultElement, bool keepPageIndex, bool shouldHaveAtLeastOneDefault = false)
@@ -60,8 +63,17 @@ public class PageViewer : MonoBehaviour
 
     private void InitIfNeeded()
     {
+        if (_isInitialized)
+            return;
+        
+        _isInitialized = true;
         if (_elementPositions == null)
             CalculateElementPositions();
+        if (bindButtons)
+        {
+            nextPageButton.GetComponent<Button>().onClick.AddListener(NextPage);
+            previousPageButton.GetComponent<Button>().onClick.AddListener(PreviousPage);
+        }
     }
 
     private void CalculateElementPositions()

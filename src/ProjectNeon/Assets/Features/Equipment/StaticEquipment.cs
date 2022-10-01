@@ -53,6 +53,12 @@ public class StaticEquipment : ScriptableObject, Equipment
             ExcludeIfPartyHasStatType = excludeIfPartyHasStatType
         };
 
+    public Maybe<CardTypeData> ReferencedCard => TurnStartEffects.Concat(TurnEndEffects).Concat(BattleStartEffects)
+        .Select(e => e.BonusCardType)
+        .Cast<CardTypeData>()
+        .Where(e => e != null)
+        .FirstAsMaybe();
+
     private static string WipWord(bool isWip) => isWip ? "WIP - " : "";
     public string EditorName => $"{WipWord(IsWip)}{Rarity} - {Name}";
 

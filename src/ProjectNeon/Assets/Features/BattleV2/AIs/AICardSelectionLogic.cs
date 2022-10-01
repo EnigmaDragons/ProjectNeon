@@ -20,6 +20,7 @@ public static class AICardSelectionLogic
     public static CardSelectionContext WithSelectedDesignatedAttackerCardIfApplicable(this CardSelectionContext ctx) 
         => (ctx.SelectedCard.IsMissing 
            && ctx.Strategy.DesignatedAttacker.Equals(ctx.Member) 
+           && ctx.CurrentTurnPlayedCards.None(p => p.Is(CardTag.Attack))
            && ctx.CardOptions.Any(p => p.Is(CardTag.Attack))
             ? ctx.WithSelectedCard(ctx.SelectAttackCard())
             : ctx).WithLoggedSelection(nameof(WithSelectedDesignatedAttackerCardIfApplicable));
@@ -53,7 +54,10 @@ public static class AICardSelectionLogic
             .DontPlayArmorIfEnemiesDontHaveAttack()
             .DontGiveAlliesDodgeIfTheyAlreadyHaveEnough()
             .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
-            .DontStealCreditsIfOpponentDoesntHaveAny();
+            .DontStealCreditsIfOpponentDoesntHaveAny()
+            .DontRemoveDodgeIfOpponentDoesntHaveAny()
+            .DontPlayAttackResistanceIfEnemiesDontHaveResistance()
+            .DontPlayAttackArmorIfEnemiesDontHaveArmor();
 
     public static CardSelectionContext DontPlayRequiresFocusCardWithoutAFocusTarget(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsMissing, CardTag.RequiresFocus);
@@ -85,15 +89,15 @@ public static class AICardSelectionLogic
         => ctx.IfTrueDontPlay(x => x.Member.PrimaryResourceAmount() == 0, c => c.Cost.PlusXCost);
     
     public static CardSelectionContext DontGiveExtraResourcesIfAlliesHaveEnough(this CardSelectionContext ctx)
-        => ctx.IfTrueDontPlayType(x => x.Allies.Except(ctx.Member).All(e => e.RemainingPrimaryResourceCapacity() < 2), CardTag.BuffResource);
+        => ctx.IfTrueDontPlayType(x => x.NonSelfAllies.All(e => e.RemainingPrimaryResourceCapacity() < 2), CardTag.BuffResource);
     
     public static CardSelectionContext DontPlayPhysicalCountersIfOpponentsAreNotPhysical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.DebuffPhysical)
-            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.Armor);
+            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Attack() == 0), CardTag.Defense, CardTag.Armor);
 
     public static CardSelectionContext DontPlayMagicalCountersIfOpponentsAreNotMagical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.DebuffMagical)
-            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Resistance);
+            .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Armor, CardTag.Resistance);
             
     public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Strategy.SelectedNonStackingTargets.ContainsKey(CardTag.Taunt), CardTag.Taunt);
@@ -109,7 +113,8 @@ public static class AICardSelectionLogic
         => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentHp() >= a.MaxHp() * 0.9), CardTag.Healing);
 
     private static CardSelectionContext DontPlayShieldsIfAlliesDontNeedShielding(this CardSelectionContext ctx)
-        => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentShield() > a.MaxShield() * 0.6), CardTag.Defense, CardTag.Shield);
+        => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentShield() >= a.MaxShield() * 0.6), CardTag.Defense, CardTag.Shield)
+            .IfTrueDontPlayType(x => x.NonSelfAllies.All(a => a.CurrentShield() >= a.MaxShield() * 0.6), CardTag.Shield, CardTag.Defense, CardTag.NonSelfOnly);
 
     private static CardSelectionContext DontPlayDamageOverTimeDefenseIfAlliesAreTooLow(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Allies.All(a => a.CurrentHp() < 6), CardTag.Defense, CardTag.DamageOverTime);
@@ -119,18 +124,33 @@ public static class AICardSelectionLogic
     
     private static CardSelectionContext DontPlayArmorIfEnemiesDontHaveAttack(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Attack] < 5), CardTag.Defense, CardTag.Armor);
+    
+    private static CardSelectionContext DontPlayAttackResistanceIfEnemiesDontHaveResistance(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Resistance] < 1), CardTag.Attack, CardTag.Resistance);
+    
+    private static CardSelectionContext DontPlayAttackArmorIfEnemiesDontHaveArmor(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[StatType.Armor] < 1), CardTag.Attack, CardTag.Armor);
 
     private static CardSelectionContext DontRemoveResourcesIfOpponentsDontHaveMany(this CardSelectionContext ctx)
-        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State.PrimaryResourceValue < 1f), CardTag.RemoveResources);
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State.PrimaryResourceAmount < 1f), CardTag.RemoveResources);
 
     private static CardSelectionContext DontStealCreditsIfOpponentDoesntHaveAny(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.PartyAdventureState.Credits <= 0, CardTag.StealCredits);
 
-    private static CardTypeData SelectAttackCard(this CardSelectionContext ctx) 
-        => ctx.CardOptions.Where(o => o.Is(CardTag.Attack))
-            .Select((o, i) => (option: o, index: i))
-            .OrderByDescending(c => SmartCardPreference(ctx, c.option, c.index))
-            .First().option;
+    private static CardSelectionContext DontRemoveDodgeIfOpponentDoesntHaveAny(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[TemporalStatType.Dodge] < 1f), CardTag.RemoveDodge);
+    
+    private static CardTypeData SelectAttackCard(this CardSelectionContext ctx)
+    {
+        var options = ctx.CardOptions.Where(o => o.Is(CardTag.Attack))
+            .Select((o, i) => (option: o, index: i, preference: SmartCardPreference(ctx, o, i)))
+            .ToArray()
+            .Shuffled()
+            .OrderByDescending(c => c.preference);
+            
+        DevLog.Write($"Card Preference Order: {string.Join(", ", options.Select(c => $"{c.option.Name} {c.preference}"))}");
+        return options.First().option;
+    }
 
     private static CardTypeData SelectFocusCard(this CardSelectionContext ctx)
         => ctx.CardOptions.Where(o => o.Is(CardTag.Focus)).ToArray().Shuffled().First();
@@ -203,8 +223,11 @@ public static class AICardSelectionLogic
         
         if (ctx.LastPlayedCard.IsPresent && ctx.AiPreferences.RotatePlayingCardTags.Any())
             preferenceScore += RotatingCardTagPreferenceAmount(ctx, card);
+        
+        if (ctx.AiPreferences.CardOrderPreferenceFactor != 0 && !card.Is(CardTag.IgnoreCardOrder))
+            preferenceScore += (ctx.CardOptions.Count() - (optionIndex + 1)) * ctx.AiPreferences.CardOrderPreferenceFactor;
 
-        preferenceScore += (ctx.CardOptions.Count() - (optionIndex + 1)) * ctx.AiPreferences.CardOrderPreferenceFactor;
+        preferenceScore += card.Cost.BaseAmount * SlightlyPreferred;
         
         return preferenceScore;
     }

@@ -28,7 +28,7 @@ public sealed class DamageNumbersController : OnMessage<MemberStateChanged, Memb
     {
         if (_cooldown > 0)
             _cooldown -= Time.unscaledDeltaTime;
-        if (_cooldown <= 0 && _actionQueue.Any())
+        if (_cooldown <= 0 && _actionQueue.Count > 0)
         {
             _actionQueue.Dequeue().Invoke();
             _cooldown = delayBeforeNewNumber;

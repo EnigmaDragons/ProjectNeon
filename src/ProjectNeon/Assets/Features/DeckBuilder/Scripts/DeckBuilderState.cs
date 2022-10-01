@@ -10,14 +10,12 @@ public class DeckBuilderState : ScriptableObject
     
     private HeroesDeck _selectedHeroesDeck;
 
-    public bool AllHeroDecksAreValid => HeroesDecks != null && HeroesDecks.Any() && HeroesDecks.Where(h => h != null).All(h => h.Deck.Count == deckSize);
+    public bool AllHeroDecksAreValid => HeroesDecks != null && HeroesDecks.Any() && HeroesDecks.Where(h => h != null && h.Deck != null).All(h => h.Deck.Count == deckSize);
     public bool SelectedHeroDeckIsValid => SelectedHeroesDeck.Deck.Count == deckSize;
 
     public List<HeroesDeck> HeroesDecks { get; set; } = new List<HeroesDeck>();
     
     public bool ShowFormulas { get; set; } = false;
-    public Rarity[] ShowRarities { get; set; } = {Rarity.Basic, Rarity.Common, Rarity.Rare, Rarity.Epic, Rarity.Starter};
-    public string[] ShowArchetypes { get; set; } = new string [0];
     public EquipmentSlot[] ShowEquipmentSlots { get; set; } = new EquipmentSlot[0];
 
     public HeroCharacter SelectedHeroCharacter => SelectedHeroesDeck.Hero.Character;
@@ -28,11 +26,17 @@ public class DeckBuilderState : ScriptableObject
         set
         {
             _selectedHeroesDeck = value;
-            ShowArchetypes = value.Hero.Archetypes.Concat("").ToArray();
             Message.Publish(new DeckBuilderHeroSelected(_selectedHeroesDeck));
-            Message.Publish(new DeckBuilderFiltersChanged());
+            Message.Publish(new DeckBuilderStateUpdated());
         }
     }
 
     public Action OnDeckbuilderClosedAction { get; set; } = () => { };
+
+    public void ClearCurrentDeck()
+    {
+        SelectedHeroesDeck.Deck.Clear();
+        Message.Publish(new DeckCleared());
+        Message.Publish(new DeckBuilderCurrentDeckChanged(SelectedHeroesDeck));
+    }
 }

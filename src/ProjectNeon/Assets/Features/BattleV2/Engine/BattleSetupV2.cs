@@ -17,7 +17,7 @@ public class BattleSetupV2 : MonoBehaviour
     
     [Header("Enemies")]
     [SerializeField] private EnemyArea enemyArea;
-    [SerializeField] private EncounterBuilder encounterBuilder;
+    [SerializeField] private EncounterBuilderV5 encounterBuilder;
     
     [Header("Technical")]
     [SerializeField] private CardResolutionZone resolutionZone;
@@ -44,7 +44,7 @@ public class BattleSetupV2 : MonoBehaviour
             party.EquipTo(equip, hero);
     }
     public void InitPartyDecks(List<CardTypeData> d1, List<CardTypeData> d2, List<CardTypeData> d3) => party.UpdateDecks(d1, d2, d3);
-    public void InitEncounterBuilder(EncounterBuilder e) => encounterBuilder = e;
+    public void InitEncounterBuilder(EncounterBuilderV5 e) => encounterBuilder = e;
     public void InitEncounter(IEnumerable<EnemyInstance> enemies) => enemyArea.Initialized(enemies);
     public void InitRng(DeterministicRng rng) => _battleRng = rng;
 
@@ -89,8 +89,8 @@ public class BattleSetupV2 : MonoBehaviour
 
         if (enemyArea.Enemies.Count == 0)
         {
-            DevLog.Write("Setting Up Fallback Random Encounter");
-            enemyArea = enemyArea.Initialized(encounterBuilder.Generate(100, 1));
+            DevLog.Write("Setting Up Fallback Random Encounter of Difficulty 250");
+            enemyArea = enemyArea.Initialized(encounterBuilder.Generate(250, 1, false));
         }
 
         foreach (var enemy in enemyArea.Enemies)
@@ -114,7 +114,7 @@ public class BattleSetupV2 : MonoBehaviour
         for (var i = 0; i < party.BaseHeroes.Length; i++)
         {
             var hero = party.BaseHeroes[i];
-            if (hero == null || hero.Name.Equals(""))
+            if (hero == null || hero.Name.Equals(string.Empty))
                  continue;
 
             var cardTypes = state.OverrideDeck == null ? party.Decks[i].Cards : state.OverrideDeck.Cast<CardTypeData>();

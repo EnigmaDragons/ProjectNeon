@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
 {
     private readonly PartyAdventureState _party;
     private readonly BlessingData[] _blessings;
+    private readonly DeterministicRng _rng;
     private ClinicServiceButtonData[] _generatedOptions;
     private bool[] _available;
     
-    public BlessingClinicServiceProviderV4(PartyAdventureState party, BlessingData[] blessings)
+    public BlessingClinicServiceProviderV4(PartyAdventureState party, BlessingData[] blessings, DeterministicRng rng)
     {
         _party = party;
         _blessings = blessings;
+        _rng = rng;
     }
     
     public string GetTitle() => "Blessings";
@@ -32,36 +33,44 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                                 .Where(x => x.Stats[blessingData.StatRequirement] >= blessingData.RequirementThreshold)
                                 .Select(h => h.Character)
                                 .ToArray()
-                                .Shuffled()
+                                .Shuffled(_rng)
                                 .Take(1)
                                 .ToArray()
                             : _party.Heroes.Select(h => h.Character).ToArray()
                 }})
-                .Where(x => x.blessing.Targets.Length > 0 && (x.blessingData.IsSingleTarget 
-                    || (x.blessing.Targets.Count(target => target.Stats[x.blessingData.StatRequirement] >= x.blessingData.RequirementThreshold) > 1)))
+                .Where(x => x.blessing.Targets.Length > 0 
+                    && (_blessings.None(b => b.IsSingleTarget)
+                          || x.blessingData.IsSingleTarget 
+                          || x.blessing.Targets.Count(target => target.Stats[x.blessingData.StatRequirement] >= x.blessingData.RequirementThreshold) > 1))
                 .ToArray()
-                .Shuffled()
+                .Shuffled(_rng)
                 .Take(3)
                 .ToArray();
-            for (int i = 0; i < 3; i++)
+            if (blessingChoices.Length == 0)
+                Log.Error("Blessing Clinic Provider Generated 0 Blessing Choices");
+            for (int i = 0; i < blessingChoices.Length; i++)
             {
                 var index = i;
+                var d = blessingChoices[i].blessingData;
                 _generatedOptions[i] = new ClinicServiceButtonData(
-                    blessingChoices[i].blessingData.Name,
-                    blessingChoices[i].blessingData.IsSingleTarget
-                        ? string.Format(blessingChoices[i].blessingData.Description,
+                    d.Name,
+                    d.IsSingleTarget
+                        ? string.Format(d.Description,
                             blessingChoices[i].blessing.Targets[0].DisplayName())
-                        : blessingChoices[i].blessingData.Description,
+                        : d.Description,
                     1,
                     () =>
                     {
                         _party.AddBlessing(blessingChoices[index].blessing);
                         _available[index] = false;
-                    });
+                    }, d.Effect.AsArray(), 
+                    "Tritoonico",
+                    Rarity.Starter);
             }
         }
         for (var i = 0; i < _generatedOptions.Length; i++)
-            _generatedOptions[i].Enabled = _available[i];
+            if (_generatedOptions[i] != null)
+                _generatedOptions[i].Enabled = _available[i];
         return _generatedOptions;
     }
     

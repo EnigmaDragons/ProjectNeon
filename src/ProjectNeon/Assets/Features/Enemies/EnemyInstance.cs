@@ -143,13 +143,12 @@ public class EnemyInstance : EnemyType
     
     public int GetRewardCredits(float powerLevelFactor)
     {
-        var typeFactor = Tier == EnemyTier.Boss ? 4 : 1;
-        return Mathf.RoundToInt(PowerLevel * powerLevelFactor * typeFactor);
+        return Mathf.RoundToInt(PowerLevel * powerLevelFactor);
     }
 
     public int GetRewardXp(float powerLevelFactor)
     {
-        var typeFactor = Tier == EnemyTier.Boss ? 4 : 1;
+        var typeFactor = Tier == EnemyTier.Boss ? 0 : 1;
         return Mathf.RoundToInt(PowerLevel * powerLevelFactor * typeFactor);
     }
 }

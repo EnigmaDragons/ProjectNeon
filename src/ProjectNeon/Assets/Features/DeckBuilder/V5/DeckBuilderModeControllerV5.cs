@@ -12,9 +12,12 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     [SerializeField] private TextCommandButton saveButtonCont;
     [SerializeField] private GameObject[] fightOnlyElements;
     [SerializeField] private Button fightButton;
+    [SerializeField] private TextCommandButton fightButtonCont;
     [SerializeField] private Navigator navigator;
 
-    private void Awake()
+    private bool _doneButtonCannotBeInteractive;
+    
+    private void Start()
     {
         saveButtonCont.Init("Save", OnFinished);
         fightButton.onClick.AddListener(OnFinished);
@@ -46,7 +49,13 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
         }
 
         var initialTab = "hero";
-        Message.Publish(new CustomizationTabSwitched { TabName = initialTab });
+        Message.Publish(new CustomizationTabSwitched {TabName = initialTab});
+        if (msg.ClearDeckOnShow)
+        {
+            state.HeroesDecks.ForEach(x => x.Deck.Clear());
+            Message.Publish(new DeckCleared());
+            Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
+        }
     }
 
     private void OnFinished() => state.OnDeckbuilderClosedAction();
@@ -63,7 +72,7 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     
     private void OnFightButtonClicked()
     {
-        if (state.HeroesDecks.Any(x => x.Deck.Count != deckSize)) 
+        if (state.HeroesDecks.Any(x => x.Deck.Count != deckSize) || _doneButtonCannotBeInteractive) 
             return;
         
         BeginFight();
@@ -73,6 +82,8 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     {
         fightButton.gameObject.SetActive(false);
         party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
+        AllMetrics.PublishDecks(party.Heroes.Select(h => h.Name).ToArray(), 
+            party.Decks.Select(h => h.Cards.Select(c => c.Name).ToArray()).ToArray());
         Message.Publish(new StartBattleInitiated(fightButton.transform));
         Message.Publish(new AutoSaveRequested());
         navigator.NavigateToBattleScene();
@@ -80,15 +91,29 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
 
     protected override void Execute(DeckBuilderCurrentDeckChanged msg)
     {
-        if (state.HeroesDecks.All(x => x.Deck.Count == deckSize))
+        UpdateSaveButtonCont();
+    }
+
+    private void UpdateSaveButtonCont()
+    {
+        if (state == null || state.HeroesDecks == null || state.HeroesDecks.AnyNonAlloc(h => h.Deck == null))
+            return;
+        
+        if (state.HeroesDecks.All(x => x.Deck.Count == deckSize) && !_doneButtonCannotBeInteractive)
         {
             saveButtonCont.SetButtonDisabled(false, Color.white);
-            saveButtonCont.SetButtonDisabled(false, Color.white);
+            fightButtonCont.SetButtonDisabled(false, Color.white);
         }
         else
         {
             saveButtonCont.SetButtonDisabled(true, Color.white);
-            saveButtonCont.SetButtonDisabled(true, Color.white);
+            fightButtonCont.SetButtonDisabled(true, Color.white);
         }
+    }
+
+    public void SetSaveButtonContInteractivity(bool isInteractive)
+    {
+        _doneButtonCannotBeInteractive = !isInteractive;
+        UpdateSaveButtonCont();
     }
 }

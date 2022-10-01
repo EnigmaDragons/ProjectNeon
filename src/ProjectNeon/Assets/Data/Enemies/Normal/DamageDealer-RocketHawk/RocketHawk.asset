@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 49
   enemyName: Rocket Hawk
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 1/9/22
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -37,14 +39,15 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: f6dc0d0477e4a3f45a7376d02fd56dd9, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: Fast-maneuvering rocket drone that unleashes a barrage of shots and
     missiles. Very shifty and hard to hit.
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
-    maxHp: 76
-    maxShield: 12
+    maxHp: 128
+    maxShield: 32
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
@@ -55,25 +58,27 @@ MonoBehaviour:
     leadership: 0
     armor: 2
     resistance: 4
-    nonStatCardValueFactor: 0
+    nonStatCardValueFactor: 16
     startingResourceAmount: 0
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 276
+    powerLevel: 311
     calculationVariables:
-      startingDefensiveValueAdjustment: 30
+      startingDefensiveValueAdjustment: 48
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 123.45214
+      startingPower: 193.94833
       perCardValue: 16
       resourceValue: 5.28
       perTurnPower: 21.28
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 12.345214
-      calculatedPowerLevel: 276
+      estimatedHeroDamage: 17
+      estimatedTurnsAlive: 7.605817
+      estimatedPerTurnTotalValue: 116.80324
+      calculatedPowerLevel: 311
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
@@ -106,20 +111,26 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 4
       ReactionEffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 1
         scope: 0
         cardActions: {fileID: 11400000, guid: aed57e30eaf6e9745b965aee734216e6, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
     - {fileID: 11400000, guid: 4c5772970902504489199eb6f1c56209, type: 2}
     - {fileID: 11400000, guid: c17a4d87658260f45a1090b5eace6bb9, type: 2}
     - {fileID: 11400000, guid: 1796e37e5152a4844bc7e846c65d92fa, type: 2}
     - {fileID: 11400000, guid: 56f7dc68eed41d149b355ae97efa0ac0, type: 2}
+  maxCopies: 4
+  minimumAllies: 0
+  damageType: 1

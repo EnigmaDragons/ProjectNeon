@@ -28,23 +28,21 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     private Action _onFinished = () => { };
 
     private static bool _debugLog = false;
-    
+
     public override void Hide()
     {
         if (!chatBox.gameObject.activeSelf || isRevealing)
             return;
-        
-        Info($"Text Box - Hide");
-        chatBox.gameObject.SetActive(false);
-    }
 
+        PerformHideUpdates();
+    }
+    
     public override void ForceHide()
     {
         if (!chatBox.gameObject.activeSelf)
             return;
-        
-        Info($"Text Box - Hide");
-        chatBox.gameObject.SetActive(false);
+
+        PerformHideUpdates();
     }
     
     public override void Display(string text, bool shouldAutoProceed, bool manualInterventionDisablesAuto, Action onFinished) 
@@ -59,6 +57,7 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
         _manualInterventionDisablesAuto = manualInterventionDisablesAuto;
         _finished = false;
         gameObject.SetActive(true);
+        enabled = true;
         StartCoroutine(BeginReveal());
     }
 
@@ -96,7 +95,14 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
     }
 
     public override void SetOnFullyShown(Action action) => _onFullyShown = action;
-
+    
+    private void PerformHideUpdates()
+    {
+        Info($"Text Box - Hide");
+        chatBox.gameObject.SetActive(false);
+        isRevealing = false;
+    }
+    
     private void Finish()
     {
         if (_finished)
@@ -122,9 +128,14 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
             panelBg.transform.Rotate(0, 180, 0);
         textBox.transform.localPosition = textBox.transform.localPosition + new Vector3(reversedTextBoxOffset.x, reversedTextBoxOffset.y);
     }
-
+    
     private IEnumerator BeginReveal()
     {
+        if (!gameObject.activeSelf)
+            yield break;
+        
+        var waitUntilGameUnpaused = new WaitUntil(() => Time.timeScale > 0.1f);
+        var waitForNextChar = new WaitForSecondsRealtime(secondsPerCharacter);
         if (secondsPerCharacter.Value < 0.01f)
         {
             ShowCompletely();
@@ -141,18 +152,19 @@ public sealed class ProgressiveTextRevealWorld : ProgressiveText
         while (isRevealing && _cursor < fullText.Length)
         {
             var shownText = fullText.Substring(0, _cursor);
-            textBox.text = shownText;
+            var containsTextColoring = fullText.ContainsAnyCase("<color=");
+            textBox.text = containsTextColoring ? shownText : $"{shownText}<color=\"white\">{fullText.Substring(_cursor)}</color>";
             _cursor++;
             if (sfx != null && shownText.Length % sfxEveryXCharacters == 0)
                 sfx.Play(transform.position);
+            
             //This advances past markdown
             while (_cursor < fullText.Length && fullText[_cursor - 1] == '<')
                 _cursor = fullText.IndexOf('>', _cursor) + 2;
-            
-            if (Time.timeScale < 0.1f)
-                yield return new WaitUntil(() => Time.timeScale > 0.1f);
-            
-            yield return new WaitForSeconds(secondsPerCharacter);
+
+            if (Time.timeScale <= 0.1f)
+                yield return waitUntilGameUnpaused;
+            yield return waitForNextChar;
         }
 
         ShowCompletely();

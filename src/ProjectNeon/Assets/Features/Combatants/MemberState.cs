@@ -6,11 +6,9 @@ public sealed class MemberState : IStats
 {
     private int _versionNumber;
 
-    private readonly Dictionary<string, BattleCounter> _counters =
-        new Dictionary<string, BattleCounter>(StringComparer.InvariantCultureIgnoreCase);
+    private readonly Dictionary<string, BattleCounter> _counters = new Dictionary<string, BattleCounter>();
 
-    private readonly DictionaryWithDefault<CardTag, int> _tagsPlayedCount 
-        = new DictionaryWithDefault<CardTag, int>(0);
+    private readonly DictionaryWithDefault<CardTag, int> _tagsPlayedCount = new DictionaryWithDefault<CardTag, int>(0);
 
     private readonly IStats _baseStats;
     private readonly List<IPersistentState> _persistentStates = new List<IPersistentState>();
@@ -26,15 +24,18 @@ public sealed class MemberState : IStats
     public IStats BaseStats => _baseStats;
     public StatType PrimaryStat { get; }
 
-    private IStats CurrentStats => _baseStats
-        .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats))
-        .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats))
-        .NotBelow(0)
+    private IStats _currentStats;
+    
+    private IStats GetCurrentStats() => _baseStats
+        .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
+        .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
+        .NotBelowZero()
         .WithWholeNumbersWhereExpected();
 
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter '{n}'");
-    private BattleCounter Counter(StatType statType) => _counters[statType.ToString()];
-    private BattleCounter Counter(TemporalStatType statType) => _counters[statType.ToString()];
+    private BattleCounter Counter(StatType statType) => _counters[statType.GetString()];
+    private BattleCounter Counter(TemporalStatType statType) => _counters[statType.GetString()];
+    public int GetCounterAmount(TemporalStatType statType) => _counters[statType.GetString()].Amount;
 
     public int MemberId { get; }
     public string Name { get; }
@@ -51,66 +52,74 @@ public sealed class MemberState : IStats
         PrimaryStat = primaryStat;
         _baseStats = baseStats;
 
-        _counters[TemporalStatType.HP.ToString()] =
-            new BattleCounter(TemporalStatType.HP, initialHp, () => CurrentStats.MaxHp());
-        _counters[TemporalStatType.Shield.ToString()] =
-            new BattleCounter(TemporalStatType.Shield, baseStats[StatType.StartingShield], () => CurrentStats.MaxShield());
+        _counters[TemporalStatType.HP.GetString()] =
+            new BattleCounter(TemporalStatType.HP, initialHp, () => _currentStats.MaxHp());
+        _counters[TemporalStatType.Shield.GetString()] =
+            new BattleCounter(TemporalStatType.Shield, baseStats[StatType.StartingShield], () => _baseStats.MaxShield());
         Enum.GetValues(typeof(TemporalStatType))
             .Cast<TemporalStatType>()
             .Skip(2)
-            .ForEach(t => _counters[t.ToString()] = new BattleCounter(t, 0, () => 999));
-        _counters[TemporalStatType.Phase.ToString()].Set(1);
+            .ForEach(t => _counters[t.GetString()] = new BattleCounter(t, 0, () => 999));
+        _counters[TemporalStatType.Phase.GetString()].Set(1);
 
         baseStats.ResourceTypes?.ForEach(r =>
             _counters[r.Name] = new BattleCounter(r.Name, Math.Max(0, r.StartingAmount), () => r.MaxAmount));
-        if (baseStats.ResourceTypes.Length > 0)
+        if ((baseStats.ResourceTypes?.Length ?? 0) > 0)
             _counters["PrimaryResource"] = _counters[baseStats.ResourceTypes[0].Name];
         
         _counters["None"] = new BattleCounter("None", 0, () => 0);
         _counters[""] = new BattleCounter("", 0, () => 0);
+        
+        UpdateCurrentStats();
     }
 
     public void InitResourceAmount(IResourceType resourceType, int amount) => _counters[resourceType.Name].Set(amount);
 
     // Queries
     public MemberStateSnapshot ToSnapshot()
-        => new MemberStateSnapshot(_versionNumber, MemberId, CurrentStats.ToSnapshot(PrimaryStat),
-            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount,
-                new DictionaryWithDefault<StatusTag, int>(0, Enum.GetValues(typeof(StatusTag)).Cast<StatusTag>()
-                    .SafeToDictionary(s => s, s => StatusesOfType(s).Length)), PrimaryStat);
-    
+    {
+        var statusTagCounts = new DictionaryWithDefault<StatusTag, int>(0);
+        foreach (var tmp in TemporalStates)
+        {
+            var tag = tmp.Status.Tag;
+            if (!statusTagCounts.ContainsKey(tag))
+                statusTagCounts[tag] = 0;
+            statusTagCounts[tag]++;
+        }
+
+        return MemberStateSnapshotExtensions.Create(_versionNumber, MemberId, _currentStats.ToSnapshot(PrimaryStat), BaseStats.ToSnapshot(PrimaryStat),
+            _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount, statusTagCounts, PrimaryStat);
+    }
+
     public bool IsConscious => this[TemporalStatType.HP] > 0;
     public bool IsUnconscious => !IsConscious;
-    public int this[IResourceType resourceType] => _counters.TryGetValue(resourceType.Name, out var r) ? r.Amount : 0;
-    public int ResourceAmount(string resourceType) => _counters[resourceType].Amount;
+    public int this[IResourceType resourceType] => ResourceAmount(resourceType.Name);
+    public int ResourceAmount(string resourceType) => _counters.TryGetValue(resourceType, out var r) ? r.Amount : 0;
     public float this[StatType statType] => statType switch
     {
-        StatType.Damagability => CurrentStats.Damagability() + (IsVulnerable() ? 0.33f : 0),
-        StatType.Healability => CurrentStats.Healability() + (IsAntiHeal() ? -0.5f : 0),
-        StatType.Power => CurrentStats[PrimaryStat],
-        _ => CurrentStats[statType]
+        StatType.Damagability => _currentStats.Damagability() + (IsVulnerable() ? 0.5f : 0),
+        StatType.Healability => _currentStats.Healability() + (IsAntiHeal() ? -0.5f : 0),
+        StatType.Power => _currentStats[PrimaryStat],
+        _ => _currentStats[statType]
     };
     private bool IsVulnerable() => Counter(TemporalStatType.Vulnerable).Amount > 0;
     private bool IsAntiHeal() => Counter(TemporalStatType.AntiHeal).Amount > 0;
-    public float this[TemporalStatType statType] => _counters[statType.ToString()].Amount + CurrentStats[statType];
-    public IResourceType[] ResourceTypes => CurrentStats.ResourceTypes;
+    public float this[TemporalStatType statType] => _counters[statType.GetString()].Amount + _currentStats[statType];
+    public IResourceType[] ResourceTypes => _currentStats.ResourceTypes;
     public float Max(string name) => _counters.TryGetValue(name, out var c) ? c.Max : 0;
-    public IResourceType PrimaryResource => ResourceTypes.Any() ? ResourceTypes[0] : new InMemoryResourceType();
-    public int PrimaryResourceAmount => ResourceTypes.Any() ? _counters[PrimaryResource.Name].Amount : 0;
+    public IResourceType PrimaryResource => ResourceTypes.AnyNonAlloc() ? ResourceTypes[0] : new InMemoryResourceType();
+    public int PrimaryResourceAmount => ResourceTypes.AnyNonAlloc() ? _counters[PrimaryResource.Name].Amount : 0;
 
     public ResourceQuantity CurrentPrimaryResources => new ResourceQuantity
         {Amount = PrimaryResourceAmount, ResourceType = PrimaryResource.Name};
 
     public float PrimaryResourceValue => 1f / 4f;
 
-    public int DifferenceFromBase(StatType statType) => (CurrentStats[statType] - _baseStats[statType]).CeilingInt();
+    public int DifferenceFromBase(StatType statType) => (_currentStats[statType] - _baseStats[statType]).CeilingInt();
 
-    public bool HasStatus(StatusTag tag) => _reactiveStates.Any(r => r.Status.Tag == tag)
-                                            || _additiveMods.Any(r => r.Status.Tag == tag)
-                                            || _multiplierMods.Any(r => r.Status.Tag == tag);
-
-    public ITemporalState[] StatusesOfType(StatusTag tag)
-        => TemporalStates.Where(s => s.Status.Tag == tag).ToArray();
+    public bool HasStatus(StatusTag tag) => _reactiveStates.AnyNonAlloc(r => r.Status.Tag == tag)
+                                            || _additiveMods.AnyNonAlloc(r => r.Status.Tag == tag)
+                                            || _multiplierMods.AnyNonAlloc(r => r.Status.Tag == tag);
 
     public CustomStatusIcon[] CustomStatuses()
         => _customStatusIcons.ToArray();
@@ -185,16 +194,21 @@ public sealed class MemberState : IStats
 
     public void ResetStatToBase(string statType) => PublishAfter(() =>
     {
-        _counters[statType].Set(0);
+        if (_counters.TryGetValue(statType, out var counter))
+            counter.Set(0);
         if (Enum.TryParse(statType, out TemporalStatType tst))
         {
+            Log.Info($"Resetting Stat Type {tst}");
             _additiveMods.RemoveAll(m => m.Stats[tst] > 0);
             _multiplierMods.RemoveAll(m => m.Stats[tst] > 1);
         }
         if (Enum.TryParse(statType, out StatType t))
         {
+            Log.Info(this[t].GetCeilingIntString());
+            Log.Info($"Resetting Stat Type {t}");
             _additiveMods.RemoveAll(m => m.Stats[t] > 0);
             _multiplierMods.RemoveAll(m => m.Stats[t] > 1);
+            Log.Info(this[t].GetCeilingIntString());
         }
     });
     
@@ -204,11 +218,17 @@ public sealed class MemberState : IStats
     public void ApplyTemporaryAdditive(ITemporalState mods) => PublishAfter(() =>
     {
         _additiveMods.Add(mods);
-        if (CurrentStats.MaxHp() < CurrentStats.Hp())
-            SetHp(CurrentStats.MaxHp());
+        UpdateCurrentStats();
+        if (_currentStats.MaxHp() < _currentStats.Hp())
+            SetHp(_currentStats.MaxHp());
     });
 
-    public IEnumerable<ITemporalState> DamageOverTimes() => StatusesOfType(StatusTag.DamageOverTime);
+    private void UpdateCurrentStats()
+    {
+        _currentStats = GetCurrentStats().ToSnapshot(PrimaryStat);
+    }
+
+    public ITemporalState[] DamageOverTimes() => TemporalStates.Where(x => x.Status.Tag == StatusTag.DamageOverTime).ToArray();
 
     public void ApplyTemporaryMultiplier(ITemporalState mods) => PublishAfter(() =>
     {
@@ -223,7 +243,7 @@ public sealed class MemberState : IStats
         TemporalStatType.Stun
     };
 
-    private IEnumerable<ITemporalState> TemporalStates => _additiveMods
+    public IEnumerable<ITemporalState> TemporalStates => _additiveMods
         .Concat(_multiplierMods)
         .Concat(_reactiveStates)
         .Concat(_transformers)
@@ -233,14 +253,14 @@ public sealed class MemberState : IStats
     
     private int GetNumDebuffs()
     {
-        return DebuffStatTypes.Sum(t => _counters[t.ToString()].Amount)
+        return DebuffStatTypes.Sum(t => _counters[t.GetString()].Amount)
             + _preventedTags.Count 
             + TemporalStates.Count(x => x.IsDebuff);
     }
     
     public int CleanseDebuffs() => -Diff(PublishAfter(() =>
     {
-        DebuffStatTypes.ForEach(d => _counters[d.ToString()].Set(0));
+        DebuffStatTypes.ForEach(d => _counters[d.GetString()].Set(0));
         _preventedTags = new Dictionary<CardTag, int>();
         RemoveTemporaryEffects(s => s.IsDebuff);
     }, GetNumDebuffs));
@@ -248,8 +268,8 @@ public sealed class MemberState : IStats
     public void BreakStealth() => PublishAfter(() =>
     {
         RemoveTemporaryEffects(t => t.Status.Tag == StatusTag.Stealth);
-        _counters[TemporalStatType.Stealth.ToString()].Set(0);
-        _counters[TemporalStatType.Prominent.ToString()].Set(1);
+        _counters[TemporalStatType.Stealth.GetString()].Set(0);
+        _counters[TemporalStatType.Prominent.GetString()].Set(1);
     });
     
     public int RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() => 
@@ -270,7 +290,7 @@ public sealed class MemberState : IStats
     // HP Commands
     public void GainHp(float amount) => ChangeHp(amount * this[StatType.Healability]);
     public void SetHp(float amount) => PublishAfter(() => Counter(TemporalStatType.HP).Set(amount));
-    public int TakeRawDamage(int amount) => -ChangeHp(-amount * this[StatType.Damagability]);
+    public int TakeTrueDamage(int amount) => -ChangeHp(-amount * this[StatType.Damagability]);
     public void TakeDamage(int amount)
     {
         var clampedAmount = Math.Max(amount, 0);
@@ -285,8 +305,14 @@ public sealed class MemberState : IStats
     {
         if (this[TemporalStatType.PreventDeath] > 0)
             amount = Math.Max(amount, 1 - this[TemporalStatType.HP]);
-        if (amount < 0)
+
+        var isDamage = amount < 0;
+        if (isDamage)
+        {
+            Counter(TemporalStatType.OverkillDamageAmount).ChangeBy(-(amount + this[TemporalStatType.HP]));
             Message.Publish(new CharacterAnimationRequested2(MemberId, CharacterAnimationType.WhenHit) { Condition = Maybe<EffectCondition>.Missing() });
+        }
+        
         Counter(TemporalStatType.HP).ChangeBy(amount);
     }, () => Counter(TemporalStatType.HP).Amount));
 
@@ -296,9 +322,9 @@ public sealed class MemberState : IStats
             Diff(PublishAfter(() => Counter(counterName).ChangeBy(amount), () => Counter(counterName).Amount)), 
             v => $"{Name}'s {counterName} adjusted by {v}", 
             v => v != 0);
-    public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter(() => Counter(t.ToString()).ChangeBy(amount), () => this[t].CeilingInt()));
+    public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter(() => Counter(t.GetString()).ChangeBy(amount), () => this[t].CeilingInt()));
     public int AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
-    private void AdjustShieldNoPublish(float amount) => Counter(TemporalStatType.Shield.ToString()).ChangeBy(amount);
+    private void AdjustShieldNoPublish(float amount) => Counter(TemporalStatType.Shield.GetString()).ChangeBy(amount);
 
     private int Diff(int[] beforeAndAfter) => beforeAndAfter.Last() - beforeAndAfter.First();
 
@@ -340,7 +366,6 @@ public sealed class MemberState : IStats
     {
         if (numToGive < 0 || this[TemporalStatType.PreventResourceGains] == 0)
         {
-            BattleLog.Write($"{Name} {BattleLog.GainedOrLostTerm(numToGive)} {numToGive} {PrimaryResource.Name}");
             ChangeResourceAmount(new ResourceQuantity { Amount = numToGive, ResourceType = PrimaryResource.Name }, false);
         }
     }
@@ -368,23 +393,28 @@ public sealed class MemberState : IStats
         
         Message.Publish(new MemberResourceChanged(MemberId, qty, wasPaidCost));
         if (wasPaidCost)
-            BattleLog.Write($"{Name} spent {qty}");
+            BattleLog.Write($"{Name} spent {qty.Negate()}");
         else if (qty.Amount > 0) 
             BattleLog.Write($"{Name} gained {qty}");
         else if (qty.Amount < 0)
             BattleLog.Write($"{Name} lost {qty.Negate()}");
     });
 
-    public bool HasAnyTemporalStates => _additiveMods.Any() || _multiplierMods.Any() || _reactiveStates.Any() || _persistentStates.Any() || _temporalStatsToReduceAtEndOfTurn.Any(x => this[x] > 0); 
+    public bool HasAnyTemporalStates => _additiveMods.AnyNonAlloc() 
+                                        || _multiplierMods.AnyNonAlloc() 
+                                        || _reactiveStates.AnyNonAlloc() 
+                                        || _persistentStates.AnyNonAlloc() 
+                                        || _temporalStatsToReduceAtEndOfTurn.AnyNonAlloc(x => this[x] > 0); 
+    
     public IPayloadProvider[] GetTurnStartEffects()
     {
-        _persistentStates.ForEach(m => m.OnTurnStart());
         return _additiveMods.Select(m => m.OnTurnStart())
             .Concat(_multiplierMods.Select(m => m.OnTurnStart()))
             .Concat(_reactiveStates.Select(m => m.OnTurnStart()))
             .Concat(_transformers.Select(m => m.OnTurnStart()))
             .Concat(_additiveResourceCalculators.Select(m => m.OnTurnStart()))
             .Concat(_multiplicativeResourceCalculators.Select(m => m.OnTurnStart()))
+            .Concat(_persistentStates.Select(m => m.OnTurnStart()))
             .ToArray();
     }
 
@@ -409,7 +439,7 @@ public sealed class MemberState : IStats
         TemporalStatType.Prominent,
         TemporalStatType.PreventResourceGains,
         TemporalStatType.Vulnerable,
-        TemporalStatType.AntiHeal
+        TemporalStatType.AntiHeal,
     };
 
     private void WithOtherAdjustmentRulesApplied(MemberStateSnapshot before)
@@ -418,14 +448,14 @@ public sealed class MemberState : IStats
             Counter(TemporalStatType.Taunt).Set(0);
         if (before[TemporalStatType.Stealth] > 0 && this[TemporalStatType.Taunt] > before[TemporalStatType.Taunt])
             BreakStealth();
+        UpdateCurrentStats();
     }
     
     public IPayloadProvider[] GetTurnEndEffects()
     {
         PublishAfter(() =>
         {
-            _persistentStates.ForEach(m => m.OnTurnEnd());
-            _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.ToString()].ChangeBy(-1));
+            _temporalStatsToReduceAtEndOfTurn.ForEach(s => _counters[s.GetString()].ChangeBy(-1));
             _customStatusIcons.ForEach(m => m.StateTracker.AdvanceTurn());
             _customStatusIcons.RemoveAll(m => !m.StateTracker.IsActive);
             ReducePreventedTagCounters();
@@ -437,6 +467,7 @@ public sealed class MemberState : IStats
             .Concat(_transformers.Select(m => m.OnTurnEnd()))
             .Concat(_additiveResourceCalculators.Select(m => m.OnTurnEnd()))
             .Concat(_multiplicativeResourceCalculators.Select(m => m.OnTurnEnd()))
+            .Concat(_persistentStates.Select(m => m.OnTurnEnd()))
             .ToArray();;
     }
     

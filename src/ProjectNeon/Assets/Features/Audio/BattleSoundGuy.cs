@@ -25,7 +25,8 @@ public class BattleSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnCardSwapped;
     [SerializeField, FMODUnity.EventRef] private string OnCardRightClick;
     [SerializeField, FMODUnity.EventRef] private string OnCardRightClickBack;
-    
+    [SerializeField, FMODUnity.EventRef] private string OnCardGlitchedSFX;
+
     private void OnEnable()
     {
         Message.Subscribe<ShowEnemySFX>(e => PlayOneShot(OnEnemyDetalisShown, e.UiSource), this);
@@ -50,6 +51,12 @@ public class BattleSoundGuy : MonoBehaviour
         Message.Subscribe<WinBattleWithRewards>(_ => OnBattleWon(), this);
         Message.Subscribe<BattleRewardsStarted>(_ => OnBattleWon(), this);
         Message.Subscribe<NavigateToSceneRequested>(OnBattleWonFadeFUNC, this);
+        Message.Subscribe<CardsGlitched>(OnCardGlithced, this);
+    }
+
+    private void OnCardGlithced(CardsGlitched msg)
+    {
+        FMODUnity.RuntimeManager.PlayOneShot(OnCardGlitchedSFX, Vector3.zero);
     }
 
     private void OnBattleWon()

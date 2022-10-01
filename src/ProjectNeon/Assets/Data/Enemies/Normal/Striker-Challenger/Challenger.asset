@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 39
   enemyName: Drug Enhanced Challenger
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 10/15/2021
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
@@ -37,44 +39,46 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: Anytime your team's has their primary stats buffed, this enemy gains
-    attack
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Any time a hero has their primary stats buffed, this enemy injects
+    himself with a nice attack booster.
   animations: {fileID: 11400000, guid: f4be4445584c15649bef7394b564dd13, type: 2}
   animationSounds: {fileID: 11400000, guid: ef690b9ff1cdd2845a7095aceaca96ce, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 60
-    maxShield: 15
+    maxHp: 140
+    maxShield: 34
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 9
+    attack: 15
     magic: 0
     leadership: 0
     armor: 0
-    resistance: 1
-    nonStatCardValueFactor: 9
+    resistance: 3
+    nonStatCardValueFactor: 6
     startingResourceAmount: 0
     maxResourceAmount: 5
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 137
+    powerLevel: 236
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 3
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 64.58822
-      perCardValue: 9
-      resourceValue: 2.97
-      perTurnPower: 14.97
-      maxAndStartingResourcesPower: 1.9967906
-      estimatedTurnsAlive: 6.458822
-      calculatedPowerLevel: 137
+      startingPower: 150.07437
+      perCardValue: 10.5
+      resourceValue: 3.465
+      perTurnPower: 16.965
+      maxAndStartingResourcesPower: 1.1647944
+      estimatedHeroDamage: 15
+      estimatedTurnsAlive: 6.6699724
+      estimatedPerTurnTotalValue: 85.11975
+      calculatedPowerLevel: 236
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
@@ -107,6 +111,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 40
       ReactionEffectScope:
         UseConstant: 1
@@ -119,7 +124,11 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 11400000, guid: c8f77f6e65d472b4e848a487ed8be99e, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
     - {fileID: 11400000, guid: d34217d9ed683ac46831b0d7bf5cf884, type: 2}
     - {fileID: 11400000, guid: e3f5706dc1ef656498749ed477680ecb, type: 2}
+  maxCopies: 2
+  minimumAllies: 0
+  damageType: 1

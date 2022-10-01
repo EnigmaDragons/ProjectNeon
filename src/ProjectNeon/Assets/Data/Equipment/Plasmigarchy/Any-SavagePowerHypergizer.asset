@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 27
   displayName: 
-  description: 'On Slay: Gives Double Damage'
+  description: '+2 Power, On Slay: Gives Double Damage'
+  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes: []
   rarity: 4
   slot: 2
   priceFactor: 1
   modifiers:
   - ModifierType: 0
-    Amount: 0
-    StatType: 
+    Amount: 2
+    StatType: Power
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
@@ -43,8 +44,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: <b>On Slay:</b> Gives Double Damage
     TurnDelay: 0
@@ -63,11 +64,16 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
       scope: 0
       cardActions: {fileID: 11400000, guid: 00b5e2b09f02f3f4fb3d72cec8949c8d, type: 2}
     BonusCardType: {fileID: 0}
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 

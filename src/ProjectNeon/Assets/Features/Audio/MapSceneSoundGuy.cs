@@ -22,6 +22,8 @@ public class MapSceneSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpStat;
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpOptionRevealed;
     [SerializeField, FMODUnity.EventRef] private string OnLevelUpOptionSelectedWhoosh;
+    [SerializeField, FMODUnity.EventRef] private string OnShopCardHovered;
+    [SerializeField, FMODUnity.EventRef] private string OnNewsDismissed;
 
     private bool _debuggingLoggingEnabled = false;
     private EventInstance _levelUpStinger;
@@ -44,6 +46,8 @@ public class MapSceneSoundGuy : MonoBehaviour
         Message.Subscribe<DieThrown>(e => PlayOneShot(OnDieThrown, e.UiSource), this);
         Message.Subscribe<ArrivedAtNode>(OnArrivedAtNode, this);
         Message.Subscribe<PlayUiSound>(OnPlayUiSound, this);
+        Message.Subscribe<ShopCardHovered>(e => PlayOneShot(OnShopCardHovered, e.UiSource), this);
+        Message.Subscribe<OnNewsDismissed>(e => PlayOneShot(OnNewsDismissed, e.UiSource), this);
     }
 
     private void OnPlayUiSound(PlayUiSound msg)

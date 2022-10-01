@@ -18,6 +18,7 @@ public class CardResolutionZone : ScriptableObject
     private List<IPlayedCard> _movesThisTurn = new List<IPlayedCard>();
     private List<IPlayedCard> _pendingMoves = new List<IPlayedCard>();
     private Maybe<IPlayedCard> _current = Maybe<IPlayedCard>.Missing();
+    private Maybe<BattleStateSnapshot> _currentCardStartSnapshot = Maybe<BattleStateSnapshot>.Missing();
 
     public Maybe<TeamType> CurrentTeamType => _current.Map(c => c.Member.TeamType);
     
@@ -30,7 +31,7 @@ public class CardResolutionZone : ScriptableObject
     }
 
     public bool IsDone => !isResolving && !HasMore;
-    public bool HasMore => _pendingMoves.Any();
+    public bool HasMore => _pendingMoves.AnyNonAlloc();
     public int NumPlayedThisTurn => _movesThisTurn.Count;
 
     public void NotifyTurnFinished()
@@ -85,8 +86,12 @@ public class CardResolutionZone : ScriptableObject
 
     public void OnCardResolutionFinished()
     {
-        _current.IfPresent(c => WrapupCard(c, c.Card));
-        _current = Maybe<IPlayedCard>.Missing();
+        _current.IfPresent(c =>
+        {
+            _currentCardStartSnapshot.IfPresent(s => battleState.RecordSingleCardDamageDealt(s));
+            WrapupCard(c, c.Card);
+        });
+        _current.Clear();
         currentResolvingCardZone.Clear();
     }
     
@@ -138,12 +143,14 @@ public class CardResolutionZone : ScriptableObject
         if (seq.Scope == Scope.One)
             return $" on {c.Targets[0].Members[0].Name}";
         if (seq.Group == Group.Self)
-            return "";
+            return string.Empty;
         if (seq.Group == Group.Ally && seq.Scope == Scope.All)
             return " on all Allies";
         if (seq.Group == Group.Opponent && seq.Scope == Scope.All)
             return " on all Enemies";
-        return "";
+        if (seq.Group == Group.All && seq.Scope == Scope.All)
+            return " on everyone";
+        return string.Empty;
     }
     
     private void StartResolvingOneNonReactionCard(IPlayedCard played)
@@ -159,9 +166,12 @@ public class CardResolutionZone : ScriptableObject
         BattleLog.Write($"Resolving {played.Member.Name}'s {played.Card.Name}");
 
         _current = new Maybe<IPlayedCard>(played);
+        _currentCardStartSnapshot = battleState.GetSnapshot();
         var card = played.Card;
-        if (card.IsActive && !card.Owner.IsStunnedForCard() && currentResolvingCardZone.TopCard.IsMissingOr(c => c != card))
-            currentResolvingCardZone.Set(card);
+        if (card.IsActive 
+            && currentResolvingCardZone.TopCard.IsMissingOr(c => c != card)
+            && (!card.Owner.IsStunnedForCard() || card.Is(CardTag.CanPlayThisReactionEvenWhenStunned)))
+                currentResolvingCardZone.Set(card);
         
         Async.ExecuteAfterDelay(delayBeforeResolving, () =>
         {
@@ -170,7 +180,7 @@ public class CardResolutionZone : ScriptableObject
                 BattleLog.Write($"{card.Name} is {card.Mode}, so it does not resolve.");
                 Message.Publish(new CardResolutionFinished(played));
             }
-            else if (card.Owner.IsStunnedForCard())
+            else if (card.Owner.IsStunnedForCard() && !card.Is(CardTag.CanPlayThisReactionEvenWhenStunned))
             {
                 BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Stun, -1);
@@ -220,7 +230,7 @@ public class CardResolutionZone : ScriptableObject
             }
         }
         played.Member.State.RemoveTemporaryEffects(x => x.Status.Tag == StatusTag.CurrentCardOnly);
-        isResolving = _pendingMoves.Any();
+        isResolving = _pendingMoves.AnyNonAlloc();
     }
 
     private void AddBonusCardsIfApplicable()

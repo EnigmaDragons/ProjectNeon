@@ -8,7 +8,7 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
     private void Start()
     {
         Go();
-    } 
+    }
 
     protected override void Execute(NodeFinished msg)
     {
@@ -32,6 +32,7 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
             Log.Info($"V5 - Auto-Start Segment");
             map.CompleteCurrentNode();
             progress.CurrentStageSegment.Start();
+            map.ClearSegment();
         }
     }
 }

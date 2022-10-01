@@ -10,12 +10,13 @@ public class AdventureProgressV4 : AdventureProgressBase
     [SerializeField] private int currentChapterIndex;
     [SerializeField] private int currentSegmentIndex;
     [SerializeField] private int rngSeed = Rng.NewSeed();
+    [SerializeField] private Library library;
 
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
-    
+
+    public override int AdventureId => currentAdventure.Adventure.Id;
     public override string AdventureName => currentAdventure.Adventure.Title;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
-    public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     private float Progress => CurrentStageProgress < 1 || CurrentChapter == null || CurrentChapter.SegmentCount < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
@@ -27,9 +28,15 @@ public class AdventureProgressV4 : AdventureProgressBase
     public override float BonusXpLevelFactor => 0.33333f;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public override bool IsFinalBoss => IsFinalStageSegment;
+    public override float ProgressToBoss => CurrentStageProgress < 1 || CurrentChapter == null || CurrentChapter.SegmentCount < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
+    public override float[] RisingActionPoints => new float[0];
     private int CurrentStageLength => CurrentChapter.SegmentCount;
-    
-    
+    public override Difficulty Difficulty
+    {
+        get => library.DefaultDifficulty;
+        set { }
+    }
+
     public StaticStageV4 CurrentChapter
     {
         get { 
@@ -112,7 +119,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     public override GameAdventureProgressData GetData()
         => new GameAdventureProgressData
         {
-            AdventureId = CurrentAdventureId,
+            AdventureId = AdventureId,
             Type = GameAdventureProgressType.V4,
             CurrentChapterIndex = currentChapterIndex,
             CurrentSegmentIndex = currentSegmentIndex,

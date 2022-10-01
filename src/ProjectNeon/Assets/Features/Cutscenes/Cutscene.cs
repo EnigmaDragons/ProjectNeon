@@ -4,12 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Cutscene/Cutscene")]
 public class Cutscene : ScriptableObject
 {
+    [SerializeField] private bool isObsolete = false;
     [SerializeField] private bool isPrimaryCutscene;
     [SerializeField] private CutsceneSetting setting;
     [SerializeField] private StringReference[] skipTrueStates;
     [SerializeField] private StringReference[] skipFalseStates;
     [SerializeField] private CutsceneSegmentData[] segments;
 
+    public bool IsObsolete => isObsolete;
     public bool IsPrimaryCutscene => isPrimaryCutscene;
     public CutsceneSetting Setting => setting;
     public CutsceneSegmentData[] Segments => segments.ToArray();

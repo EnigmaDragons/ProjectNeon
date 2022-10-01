@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: NNZSecurityGuard2
+  m_EditorClassIdentifier: 
+  id: 74
+  enemyName: NNZ Security
+  allowedForSocialMedia: 0
+  excludeFromBestiary: 1
+  isTutorialEnemy: 1
+  lastBalanceDate: 05/21/2022
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: 783e7e0b303bb41449ab6de7be056a1c, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
+  preferredTurnOrder: 99
+  prefab: {fileID: 9175040503357354290, guid: 22772e5c3d9340a4c996ec91af1f95ee, type: 3}
+  materialType: 1
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 0
+  unique: 0
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: After the first shot, this enemy hits harder.
+  animations: {fileID: 11400000, guid: b6a3876d317273348b9af1d1383ce245, type: 2}
+  animationSounds: {fileID: 11400000, guid: 991c5e6dfa8be8f48a94dac660a52f43, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 62
+    maxShield: 0
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 9
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 1
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 20
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 1
+    calculationResults:
+      startingPower: 0
+      perCardValue: 0
+      resourceValue: 0
+      perTurnPower: 0
+      maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
+      estimatedTurnsAlive: 0
+      estimatedPerTurnTotalValue: 0
+      calculatedPowerLevel: 0
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+    - {fileID: 11400000, guid: 840f1ae69a943b845a33689480284649, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

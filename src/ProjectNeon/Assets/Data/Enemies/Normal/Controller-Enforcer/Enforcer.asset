@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 23
   enemyName: Enforcer
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -37,16 +39,15 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: Disrupting stats, disabling heroes and erasing shields. Don't put
-    your eggs in one basket against this enemy.
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Disrupts stats, disables heroes and wipes out shields.
   animations: {fileID: 11400000, guid: b6a3876d317273348b9af1d1383ce245, type: 2}
   animationSounds: {fileID: 11400000, guid: 3c690ffb296512449876d868a342843f, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 35
-    maxShield: 20
-    startingShield: 0
+    maxHp: 72
+    maxShield: 24
+    startingShield: 24
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
@@ -61,20 +62,22 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 73
+    powerLevel: 147
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 36.756847
+      startingPower: 97.84047
       perCardValue: 8
       resourceValue: 2.64
       perTurnPower: 10.64
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 3.6756847
-      calculatedPowerLevel: 73
+      estimatedHeroDamage: 11
+      estimatedTurnsAlive: 5.929725
+      estimatedPerTurnTotalValue: 48.868095
+      calculatedPowerLevel: 147
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
@@ -82,3 +85,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 27a30fcd48934044eae557c820ec58e1, type: 2}
     - {fileID: 11400000, guid: a6c88668ab3057a469b34c4ef2808fb8, type: 2}
     - {fileID: 11400000, guid: c4974e9b44339234bb068b09782531a1, type: 2}
+  maxCopies: 1
+  minimumAllies: 1
+  damageType: 0

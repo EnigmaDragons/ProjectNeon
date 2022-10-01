@@ -11,7 +11,15 @@ public class HeroHpPresenter : OnMessage<PartyAdventureStateChanged, HeroStateCh
     
     public void Init(Hero hero)
     {
+        if (hero == null)
+        {
+            bust.enabled = false;
+            hpText.text = "";
+            return;
+        }
+        
         _hero = hero;
+        bust.enabled = true;
         bust.sprite = hero.Character.Bust;
         hpText.text = $"{hero.CurrentHp}/{hero.Stats.MaxHp()}";
     }

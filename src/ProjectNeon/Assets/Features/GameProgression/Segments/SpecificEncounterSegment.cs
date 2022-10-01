@@ -24,6 +24,7 @@ public class SpecificEncounterSegment : StageSegment
     public override bool ShouldAutoStart => shouldAutoStart;
     public override Maybe<string> Detail => Maybe<string>.Missing();
     public override Maybe<string> Corp => Maybe<string>.Missing();
+    public Cutscene Cutscene => cutscene;
     public override MapNodeType MapNodeType => 
         mapNodeType != MapNodeType.Unknown && mapNodeType != MapNodeType.Start
             ? mapNodeType 

@@ -12,9 +12,9 @@ public sealed class CardReactionSequence
     public ReactiveTargetScope Scope => scope;
     public CardActionsData CardActions => cardActions;
 
-    public void Perform(string reactionName, Member source, Target target, ResourceQuantity xAmountPaid)
+    public void Perform(string reactionName, Member source, Target target, ResourceQuantity xAmountPaid, ReactionTimingWindow timing)
     {
-        MessageGroup.Start(cardActions.PlayAsReaction(source, target, xAmountPaid, reactionName), 
+        MessageGroup.Start(cardActions.PlayAsReaction(source, target, xAmountPaid, reactionName, timing), 
             () => Message.Publish(new CardResolutionFinished(reactionName, -1, NextPlayedCardId.Get(), source.Id)));
     }
 

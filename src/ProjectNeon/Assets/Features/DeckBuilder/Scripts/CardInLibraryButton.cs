@@ -4,34 +4,41 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 
-public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl>, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private CardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private TextMeshProUGUI numCopiesLabel;
+    [SerializeField] private GameObject superFocus;
 
-    public void InitInfoOnly(Card card, Action action)
+    public CardInLibraryButton InitInfoOnly(Card card, Action action)
     {
         presenter.Set(card, action);
         numCopiesLabel.text = "";
+        return this;
     }
 
-    public void InitInfoOnly(CardTypeData card)
+    public CardInLibraryButton InitInfoOnly(CardTypeData card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "";
+        return this;
     }
 
-    public void Init(Card card, int numTotal, int numAvailable)
+    public CardInLibraryButton Init(Card card, int numTotal, int numAvailable, bool superFocusEnabled)
     {
         presenter.Set(card, CreateCardAction(card, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
+        superFocus.SetActive(superFocusEnabled);
+        return this;
     }
     
-    public void Init(CardTypeData card, int numTotal, int numAvailable)
+    public CardInLibraryButton Init(CardTypeData card, int numTotal, int numAvailable, bool superFocusEnabled)
     {
         presenter.Set(card, CreateCardAction(card, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
+        superFocus.SetActive(superFocusEnabled);
+        return this;
     }
 
     private Action CreateCardAction(CardTypeData c, int numAvailable) =>
@@ -44,20 +51,30 @@ public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointer
     private void UpdateNumberText(int numTotal, int numAvailable) 
         => numCopiesLabel.text = $"{numAvailable}/{numTotal}";
 
-    public void InitBasic(CardTypeData card)
+    public void SetNumberText(string value) => numCopiesLabel.text = value;
+    
+    public CardInLibraryButton InitBasic(CardTypeData card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "Basic";
+        return this;
     }
     
-    public void InitBasic(Card card)
+    public CardInLibraryButton InitBasic(Card card)
     {
         presenter.Set(card, () => { });
         numCopiesLabel.text = "Basic";
+        return this;
     }
 
     public void AddCard(CardTypeData card)
     {
+        if (card.Rarity == Rarity.Starter && card.Archetypes.None() && !CurrentAcademyData.Data.ReceivedNoticeAboutGeneralStarterCards)
+        {
+            CurrentAcademyData.Mutate(a => a.ReceivedNoticeAboutGeneralStarterCards = true);
+            Message.Publish(new ShowInfoDialog("The general starter cards (Lite Charge Shield/Improvise/Scrounge) are playable, but usually weaker than your hero's card set. " +
+                                               "Choose wisely! Be sure you want them.", "Got it!"));
+        }
         state.SelectedHeroesDeck.Deck.Add(card);
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
         Message.Publish(new CardAddedToDeck(transform));
@@ -70,5 +87,11 @@ public class CardInLibraryButton : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerExit(PointerEventData eventData)
     {
+    }
+
+    protected override void Execute(SetSuperFocusDeckBuilderControl msg)
+    {
+        if (msg.Name == DeckBuilderControls.CardInLibrary)
+            superFocus.SetActive(msg.Enabled);
     }
 }

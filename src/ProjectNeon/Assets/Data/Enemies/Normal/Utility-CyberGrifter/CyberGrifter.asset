@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 43
   enemyName: Cyber Grifter
+  allowedForSocialMedia: 0
   excludeFromBestiary: 1
+  isTutorialEnemy: 0
   lastBalanceDate: 10/17/2021
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: e72d679f60e6cd847aae8a43673fa10f, type: 2}
@@ -37,43 +39,45 @@ MonoBehaviour:
   tier: 0
   unique: 1
   isHasty: 1
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: Steals your credits and runs
   animations: {fileID: 11400000, guid: d549351053161df488bad944d00dc6f6, type: 2}
   animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 26
-    maxShield: 26
-    startingShield: 13
+    maxHp: 76
+    maxShield: 38
+    startingShield: 19
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
     attack: 0
-    magic: 9
+    magic: 8
     leadership: 0
     armor: 0
-    resistance: 3
-    nonStatCardValueFactor: 10
+    resistance: 4
+    nonStatCardValueFactor: 12
     startingResourceAmount: 0
-    maxResourceAmount: 0
+    maxResourceAmount: 5
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 106
+    powerLevel: 175
     calculationVariables:
-      startingDefensiveValueAdjustment: 5
+      startingDefensiveValueAdjustment: 6
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 54.00078
-      perCardValue: 9.5
-      resourceValue: 3.1350002
-      perTurnPower: 12.635
-      maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 5.400078
-      calculatedPowerLevel: 106
+      startingPower: 113.2805
+      perCardValue: 10
+      resourceValue: 3.3
+      perTurnPower: 13.3
+      maxAndStartingResourcesPower: 1.109328
+      estimatedHeroDamage: 13
+      estimatedTurnsAlive: 5.8092566
+      estimatedPerTurnTotalValue: 60.300907
+      calculatedPowerLevel: 175
     startOfBattleEffects:
     - EffectType: 58
       Conditions: []
@@ -106,6 +110,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 0
@@ -118,7 +123,11 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 5c79a808f6b1810439b70f8a6d14ce33, type: 2}
     - {fileID: 11400000, guid: a925973019f59c443a49d7109e22952c, type: 2}
     - {fileID: 11400000, guid: 528f7df81508f684eb4f5448970b643b, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

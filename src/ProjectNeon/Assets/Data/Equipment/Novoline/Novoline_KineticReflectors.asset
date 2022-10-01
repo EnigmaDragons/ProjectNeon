@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 31
   displayName: Kinetic Reflectors
-  description: 'When Damaged: Deal 3 raw damage to attacker'
+  description: 'When Damaged: Deal 3 true damage to attacker'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
   rarity: 2
@@ -44,7 +44,7 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 1
-    StatusDetailText: 'When Damaged: Deal 3 raw damage to attacker'
+    StatusDetailText: 'When Damaged: Deal 3 true damage to attacker'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -61,13 +61,14 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
-    ReactionTimingWindow: 250
+    ReactionTimingWindow: 100
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
       scope: 2
       cardActions: {fileID: 11400000, guid: 12d8b7fcfb895274aadb4e56dec1aad2, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

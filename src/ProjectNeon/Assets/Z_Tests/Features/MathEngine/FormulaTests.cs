@@ -29,6 +29,9 @@ public class FormulaTests
     [Test] public void Formula_PrimaryStatOfMagic_PowerCorrect() 
         => AssertResultsIs(2, "Power", TestMembers.Create(s => s.With(StatType.Magic, 2)));
     
+    [Test] public void Formula_PrimaryStatOfMagicAlt_PowerCorrect() 
+        => AssertResultsIs(2, "PrimaryStat", TestMembers.Create(s => s.With(StatType.Magic, 2)));
+
     [Test] public void Formula_PrimaryStatOfLeadership_PowerCorrect() 
         => AssertResultsIs(2, "Power", TestMembers.Create(s => s.With(StatType.Leadership, 2)));
 
@@ -67,6 +70,11 @@ public class FormulaTests
         => AssertResultsIs(1, "PrimaryResource", 
             new FormulaContext(TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }).GetSnapshot().State, Maybe<MemberState>.Missing(), ResourceQuantity.None));
     
+    [Test] public void Formula_NamedResource()
+        => AssertResultsIs(2, "Ammo", 
+            new FormulaContext(TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }, 
+                new InMemoryResourceType("Ammo") { MaxAmount = 4, StartingAmount = 2 }).GetSnapshot().State, Maybe<MemberState>.Missing(), ResourceQuantity.None));
+    
     [Test] public void Formula_TargetPrimaryResource()
         => AssertResultsIs(1, "Target[PrimaryResource]", 
             new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }), ResourceQuantity.None));
@@ -74,6 +82,15 @@ public class FormulaTests
     [Test] public void Formula_TargetMarked()
         => AssertResultsIs(1, "Target[Marked]", 
             new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.Marked, 1)), ResourceQuantity.None));
+
+    [Test] public void Formula_BasePower()
+    {
+        var member = TestMembers.Create(x => x.With(StatType.Attack, 10));
+        member.State.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(StatType.Attack, 5), TemporalStateMetadata.Unlimited(-1, false)));
+        
+        AssertResultsIs(15, "Power", new FormulaContext(member.State.ToSnapshot(), member, ResourceQuantity.None));
+        AssertResultsIs(10, "Base[Power]", new FormulaContext(member.State.ToSnapshot(), member, ResourceQuantity.None));
+    }
 
     private void AssertResultsIs(float val, string exp) 
         => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None));

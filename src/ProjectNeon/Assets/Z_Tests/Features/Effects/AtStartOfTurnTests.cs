@@ -6,7 +6,7 @@ public class AtStartOfTurnTests
     public void AtStartOfTurn_TriggersAsExpected()
     {
         var member = TestMembers.Create(m => m.With(StatType.MaxHP, 10))
-            .Apply(m => m.TakeRawDamage(9));
+            .Apply(m => m.TakeTrueDamage(9));
         
         TestEffects.Apply(new EffectData
         {

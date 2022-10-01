@@ -22,7 +22,7 @@ public class CardPlayZone : ScriptableObject
     public bool IsEmpty => cards.Length == 0;
     public bool HasCards => cards.Length > 0;
 
-    public Maybe<Card> TopCard => cards.Any() ? cards[0] : Maybe<Card>.Missing();
+    public Maybe<Card> TopCard => cards.AnyNonAlloc() ? cards[0] : Maybe<Card>.Missing();
 
     public void Init(IEnumerable<Card> newCards)
     {

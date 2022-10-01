@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 36
   enemyName: Security Officer
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
@@ -37,15 +39,15 @@ MonoBehaviour:
   tier: 0
   unique: 1
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: Provides packet mitigation and shields while disrupting your ability
-    to target by taunting.
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Provides evasion and shields while disrupting your ability to target
+    by taunting.
   animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
   animationSounds: {fileID: 11400000, guid: 320a1f41711f2514e858f7835f7dd049, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 62
-    maxShield: 24
+    maxHp: 175
+    maxShield: 35
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
@@ -54,27 +56,29 @@ MonoBehaviour:
     attack: 0
     magic: 0
     leadership: 15
-    armor: 2
-    resistance: 2
+    armor: 3
+    resistance: 3
     nonStatCardValueFactor: 0
     startingResourceAmount: 0
-    maxResourceAmount: 0
+    maxResourceAmount: 5
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 199
+    powerLevel: 321
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 85.24046
+      startingPower: 210.20993
       perCardValue: 15
-      resourceValue: 4.9500003
+      resourceValue: 4.95
       perTurnPower: 19.95
-      maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 7.524047
-      calculatedPowerLevel: 199
+      maxAndStartingResourcesPower: 1.663992
+      estimatedHeroDamage: 17
+      estimatedTurnsAlive: 7.5768604
+      estimatedPerTurnTotalValue: 109.2596
+      calculatedPowerLevel: 321
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 1e4a4eeb00b28b647a392e69d3a57977, type: 2}
@@ -83,3 +87,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 08c1960e25c0f1840874c4cd249bf8c1, type: 2}
     - {fileID: 11400000, guid: 7409c3a615b9f8140b225e03d1038f80, type: 2}
     - {fileID: 11400000, guid: de652355f188bfe45841dfadb2e3d158, type: 2}
+  maxCopies: 1
+  minimumAllies: 1
+  damageType: 0

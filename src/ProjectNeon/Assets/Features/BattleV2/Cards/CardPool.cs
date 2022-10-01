@@ -8,6 +8,13 @@ public sealed class CardPool
     public CardPresenter this[int index] => _cards[index];
     public CardPresenter[] ShownCards => _cards.ToArray();
 
+    public CardPool(CardPresenter[] cards, bool clearOnConstruct = true)
+    {
+        _cards = cards;
+        if (clearOnConstruct)
+            _cards.ForEach(c => c.Clear());
+    }
+    
     public CardPool(int size, MonoBehaviour owner, CardPresenter prototype, Vector3 cardRotation)
     {
         _cards = new CardPresenter[size];

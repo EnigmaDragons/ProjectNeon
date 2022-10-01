@@ -6,16 +6,37 @@ public class LootPicker
     private readonly int stage;
     private readonly RarityFactors factors;
     private readonly PartyAdventureState party;
+    private readonly DeterministicRng rng;
 
     public LootPicker(int stage, RarityFactors factors, PartyAdventureState party)
+        : this(stage, factors, party, new DeterministicRng(Rng.NewSeed())) {}
+    
+    public LootPicker(int stage, RarityFactors factors, PartyAdventureState party, DeterministicRng rng)
     {
         this.stage = stage;
         this.factors = factors;
         this.party = party;
+        this.rng = rng;
     }
 
     public Rarity RandomRarity() => factors.Random();
     
+    // Factor out duplication after more thinking. Be careful not to combine all archetypes across heroes.
+    public CardTypeData[] PickCardsForSingleHero(ShopCardPool cards, HashSet<string> archetypes, int numCards, params Rarity[] rarities)
+    {
+        var weightedCards = cards.Get(archetypes, party.CardsYouCantHaveMoreOf(), rarities)
+            .Distinct()
+            .FactoredByRarity(factors, x => x.Rarity)
+            .ToArray()
+            .Shuffled();
+    
+        var selectedCards = new HashSet<CardTypeData>();
+        for (var i = 0; i < weightedCards.Length && selectedCards.Count < numCards; i++)
+            selectedCards.Add(weightedCards[i]);
+        
+        return selectedCards.ToArray();
+    }
+
     public CardTypeData[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
     {
         var weightedCards = party.BaseHeroes.SelectMany(h => cards.Get(h.Archetypes, party.CardsYouCantHaveMoreOf(), rarities))
@@ -63,7 +84,7 @@ public class LootPicker
                 .Concat(PickCards(cards, 3, Rarity.Uncommon))
                 .Concat(PickCards(cards, numCards - 5, Rarity.Common))
                 .ToArray()
-                .Shuffled();
+                .Shuffled(rng);
         }
         else
         {            
@@ -71,7 +92,7 @@ public class LootPicker
                 .Concat(PickCards(cards, 2, Rarity.Uncommon))
                 .Concat(PickCards(cards, numCards - 3, Rarity.Common))
                 .ToArray()
-                .Shuffled();
+                .Shuffled(rng);
         }
 
         return new ShopSelection(new List<Equipment>(), selectedCards.ToList());

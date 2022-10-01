@@ -2,6 +2,7 @@
 
 public abstract class AdventureProgressBase : ScriptableObject
 {
+    public abstract int AdventureId { get; }
     public abstract string AdventureName { get; }
     public abstract GameAdventureProgressType AdventureType { get; }
     public abstract int RngSeed { get; }
@@ -25,4 +26,7 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract void SetStoryState(string state, bool value);
     public abstract bool IsTrue(string state);
     public abstract bool IsFinalBoss { get; }
+    public abstract float ProgressToBoss { get; }
+    public abstract float[] RisingActionPoints { get; }
+    public abstract Difficulty Difficulty { get; set; }
 }

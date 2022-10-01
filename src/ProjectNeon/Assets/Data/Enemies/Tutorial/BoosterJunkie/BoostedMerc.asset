@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: BoostedMerc
+  m_EditorClassIdentifier: 
+  id: 60
+  enemyName: Boosted Bounty Hunter
+  allowedForSocialMedia: 0
+  excludeFromBestiary: 1
+  isTutorialEnemy: 1
+  lastBalanceDate: 2022/05/21
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: e72d679f60e6cd847aae8a43673fa10f, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 03000000
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
+  preferredTurnOrder: 99
+  prefab: {fileID: 1495954902125262927, guid: b43914bf777ffa74c8551284607016e9, type: 3}
+  materialType: 1
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 0
+  unique: 0
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: 
+  animations: {fileID: 11400000, guid: 8122ecd1fb5538141b8f649fe5db4c9a, type: 2}
+  animationSounds: {fileID: 11400000, guid: c144fd0ef6ecbf548980a8e4d17cfb94, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 20
+    maxShield: 0
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 10
+    magic: 0
+    leadership: 0
+    armor: 8
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 1
+    maxResourceAmount: 1
+    resourceGainPerTurn: 1
+    cardsPerTurn: 2
+    powerLevel: 20
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 0
+      perCardValue: 0
+      resourceValue: 0
+      perTurnPower: 0
+      maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
+      estimatedTurnsAlive: 0
+      estimatedPerTurnTotalValue: 0
+      calculatedPowerLevel: 0
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
+    - {fileID: 11400000, guid: 5e7cced180ca22a4bbd3ecaaed1996b7, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

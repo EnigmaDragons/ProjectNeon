@@ -24,7 +24,7 @@ public class EnemyBestiaryView : MonoBehaviour
         var enemy = _enemies.Current;
         var firstStage = enemy.Stages[0];
         var enemyInstance = enemy.ForStage(firstStage);
-        enemyView.Show(enemyInstance);
+        enemyView.Show(enemyInstance, Maybe<Member>.Missing());
     }
 
     private void MoveNext()

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11
   enemyName: Grizzled Veteran
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 1/8/21
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
@@ -43,37 +45,39 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: 320a1f41711f2514e858f7835f7dd049, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 60
+    maxHp: 216
     maxShield: 20
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 15
+    attack: 20
     magic: 0
     leadership: 0
-    armor: 1
+    armor: 4
     resistance: 0
-    nonStatCardValueFactor: 15
-    startingResourceAmount: 6
-    maxResourceAmount: 6
+    nonStatCardValueFactor: 12
+    startingResourceAmount: 4
+    maxResourceAmount: 4
     resourceGainPerTurn: 0
     cardsPerTurn: 1
-    powerLevel: 180
+    powerLevel: 405
     calculationVariables:
       startingDefensiveValueAdjustment: 0
-      startingValueAdjustment: 0
-      perTurnValueAdjustment: 7.5
-      resourceScaledValueOverride: 0.1
+      startingValueAdjustment: 12
+      perTurnValueAdjustment: 10
+      resourceScaledValueOverride: 0.25
     calculationResults:
-      startingPower: 64.75684
-      perCardValue: 15
-      resourceValue: 1.5
-      perTurnPower: 22.5
-      maxAndStartingResourcesPower: 10.106784
-      estimatedTurnsAlive: 6.4756846
-      calculatedPowerLevel: 180
+      startingPower: 240.07385
+      perCardValue: 16
+      resourceValue: 4
+      perTurnPower: 26
+      maxAndStartingResourcesPower: 17.1808
+      estimatedHeroDamage: 19
+      estimatedTurnsAlive: 8.002591
+      estimatedPerTurnTotalValue: 148.10751
+      calculatedPowerLevel: 405
     startOfBattleEffects:
     - EffectType: 75
       Conditions: []
@@ -118,6 +122,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 75
       Conditions: []
       BaseAmount:
@@ -161,6 +166,10 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: f3b0b55f3762a5543a7580b2183e4d7a, type: 2}
     - {fileID: 11400000, guid: 7bd5c3fd3b2d4544683282e80dc3b132, type: 2}
+  maxCopies: 1
+  minimumAllies: 0
+  damageType: 1

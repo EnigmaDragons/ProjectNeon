@@ -32,10 +32,15 @@ public sealed class EffectData
     public InterpolatePartialFormula InterpolatePartialFormula = new InterpolatePartialFormula();
     public StringReference FlavorText = new StringReference();
     public CardActionsData ReferencedSequence;
+    public CardActionsData[] ReferencedSequences;
     
     public bool IsReactionCard => ReactionSequence != null;
     public bool IsReactionEffect => ReactionEffect != null;
-    public ReactionTimingWindow FinalReactionTimingWindow => !ReferenceEquals(ReactionSequence, null) ? ReactionTimingWindow.ReactionCard : ReactionTimingWindow;
+    public ReactionTimingWindow FinalReactionTimingWindow => !ReactionTimingWindow.Equals(ReactionTimingWindow.Default) 
+        ? ReactionTimingWindow 
+        : !ReferenceEquals(ReactionSequence, null) 
+            ? ReactionTimingWindow.ReactionCard 
+            : ReactionTimingWindow.Default;
     public ReactionConditionType ReactionConditionType;
     public StringReference ReactionEffectScope = new StringReference();
     public ReactionTimingWindow ReactionTimingWindow = ReactionTimingWindow.Default;
@@ -43,6 +48,7 @@ public sealed class EffectData
     public CardReactionSequence ReactionEffect;
 
     public CardType BonusCardType;
+    public bool Unpreventable = false;
 }
 
 public static class EffectDataExtensions
@@ -77,7 +83,9 @@ public static class EffectDataExtensions
             ReactionSequence = e.ReactionSequence,
             ReactionEffect = e.ReactionEffect,
             
-            BonusCardType = e.BonusCardType
+            BonusCardType = e.BonusCardType,
+            
+            Unpreventable = e.Unpreventable
         };
 
     public static EffectData Immediately(this EffectData e)

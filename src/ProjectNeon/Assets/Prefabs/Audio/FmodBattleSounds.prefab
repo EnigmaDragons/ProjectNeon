@@ -48,7 +48,6 @@ MonoBehaviour:
   onHpLostFlesh: event:/BattleScene/HP_LOST
   onHpLostMetal: event:/BattleScene/HP_LOST_METAL
   onCardFizzledBecauseStunnedEvent: event:/BattleScene/STUNNED
-  onDeath: event:/BattleScene/CHAR_DEATH
   onShieldGained: event:/BattleScene/SHIELD_GAINED
   onShieldLost: event:/BattleScene/SHIELD_LOST
   onStealthGained: event:/BattleScene/STEALTH_GAINED
@@ -64,6 +63,7 @@ MonoBehaviour:
   onDoubleDMetal: event:/BattleScene/DOUBLE_D_METAL
   onDoubleDFlesh: event:/BattleScene/DOUBLE_D_FLESH
   onInhibited: event:/BattleScene/INHIBITED
+  onTookZeroDamage: event:/BattleScene/TOokZeroDamage
 --- !u!1 &2588964735260512764
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +124,7 @@ MonoBehaviour:
   OnCardSwapped: event:/BattleScene/CARD_SWAP
   OnCardRightClick: event:/BattleScene/CARD_CLICK_H1
   OnCardRightClickBack: event:/BattleScene/CARD_UNCLICK_H1
+  OnCardGlitchedSFX: event:/BattleScene/CARD_GLITCHED
 --- !u!1 &7511220457973149351
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
-public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCardSelected, CardClicked, CardDragged, CardResolutionStarted>
+public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCardSelected, CardClicked, CardDragged, CardResolutionStarted, WinBattleWithRewards>
 {
+    private const string _callerId = "Tutorial1Orchestrator";
+    
     [SerializeField] private float _notClickingCardPromptDelay;
     [SerializeField] private float _notDraggingCardPromptDelay;
     [SerializeField] private float _notTargetingEnemyPromptDelay;
@@ -14,13 +17,20 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     private float _timeTilPrompt;
     private bool _firstCardResolved;
     private bool _firstEnemyCardResolved;
+    private bool _hasWon;
     
     private void Start()
     {
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.ClickableControls, false));
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DeckInfo, false));
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, false));
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.TrashRecycleDropArea, false));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.ClickableControls, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DeckInfo, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DiscardInfo, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.TrashRecycleDropArea, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PrimaryStat, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerResources, false, _callerId));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerShields, false, _callerId));
         _timeTilPrompt = _notClickingCardPromptDelay;
     }
 
@@ -34,7 +44,7 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
                 if (!_hasClickedCard)
                 {
                     _timeTilPrompt = _notClickingCardPromptDelay;
-                    Message.Publish(new ShowHeroBattleThought(4, "I knew you would be easy to take, you can't even figure out you need to click and hold your card"));
+                    Message.Publish(new ShowHeroBattleThought(4, "I knew you would be easy to take. You can't even figure out that you need to click and hold your card."));
                 }
                 else if (!_hasDraggedCard)
                 {
@@ -53,9 +63,14 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     protected override void Execute(StartCardSetupRequested msg)
     {
         _hasStarted = true;
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false));
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PrimaryStat, false));
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, false));
+        StartCoroutine(ShowTutorialAfterDelay());
+    }
+
+    private IEnumerator ShowTutorialAfterDelay()
+    {
+        yield return TutorialSettings.BattleTutorialPanelPopupDelay;
+        if (!_hasWon)
+            Message.Publish(new ShowTutorialByName(_callerId));
     }
 
     protected override void Execute(PlayerCardSelected msg)
@@ -63,7 +78,10 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
         if (!_hasTargetedEnemy)
         {
             _hasTargetedEnemy = true;
-            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DeckInfo, true));   
+            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DeckInfo, true, _callerId));   
+            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.DiscardInfo, false, _callerId));
+            Message.Publish(new PunchYourself(BattleUiElement.DeckInfo));
+            Message.Publish(new PunchYourself(BattleUiElement.DiscardInfo));
         }
     }
 
@@ -90,12 +108,18 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
         if (!_firstCardResolved && msg.Originator == 1)
         {
             _firstCardResolved = true;
-            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true));
+            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));
+            Message.Publish(new PunchYourself(BattleUiElement.EnemyInfo));
+            Message.Publish(new ShowHeroBattleThought(4, "<i>Ouch</i> is what I would have said if I didn't have anti-pain implants!"));
         }
         if (!_firstEnemyCardResolved && msg.Originator == 4)
         {
             _firstEnemyCardResolved = true;
-            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, true));
+            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, true, _callerId));
+            Message.Publish(new PunchYourself(BattleUiElement.SquadInfo));
+            Message.Publish(new ShowHeroBattleThought(4, "Now look who is hurting!"));
         }
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 }

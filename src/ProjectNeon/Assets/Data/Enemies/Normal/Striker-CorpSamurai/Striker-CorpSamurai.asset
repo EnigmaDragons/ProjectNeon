@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Striker-CorpSamurai
   m_EditorClassIdentifier: 
   id: 31
-  enemyName: Samurai
+  enemyName: Corporate Samurai
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 2022/01/09
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
@@ -38,19 +40,20 @@ MonoBehaviour:
   unique: 0
   isHasty: 0
   resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
-  description: Dealing damage while this Samurai punishs attempts to hurt them.
+  description: Quick and clever, this foe gets stronger every time he evades your
+    attacks and effects.
   animations: {fileID: 11400000, guid: 0c6ec023aa24f014b9c90f242dccdf77, type: 2}
   animationSounds: {fileID: 11400000, guid: b37b21136045a4f47b5aa7d16f49dd3b, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 42
-    maxShield: 16
+    maxHp: 130
+    maxShield: 30
     startingShield: 0
     startingAegis: 1
     startingPhase: 0
-    startingDodge: 1
+    startingDodge: 2
     startingTaunt: 0
-    attack: 13
+    attack: 15
     magic: 0
     leadership: 0
     armor: 3
@@ -60,20 +63,22 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 187
+    powerLevel: 276
     calculationVariables:
-      startingDefensiveValueAdjustment: 15
+      startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 2
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 76.75939
-      perCardValue: 13
-      resourceValue: 4.29
-      perTurnPower: 19.29
+      startingPower: 164.04521
+      perCardValue: 15
+      resourceValue: 4.95
+      perTurnPower: 21.95
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 7.675939
-      calculatedPowerLevel: 187
+      estimatedHeroDamage: 16
+      estimatedTurnsAlive: 6.8352175
+      estimatedPerTurnTotalValue: 111.7709
+      calculatedPowerLevel: 276
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
@@ -118,6 +123,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 11400000, guid: e420af7b0dc751c4baef209c58236e74, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     - EffectType: 74
       Conditions: []
       BaseAmount:
@@ -161,8 +167,12 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 11400000, guid: e420af7b0dc751c4baef209c58236e74, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: c3b0ab050d7734d4e9f9bb7e30c6aba6, type: 2}
     - {fileID: 11400000, guid: 3d537d0c252acda42805d3e8a2ea2d5b, type: 2}
     - {fileID: 11400000, guid: c4f3b35153cbc614b9a51d8b89db2a1d, type: 2}
     - {fileID: 11400000, guid: c44a554143cabd84fbbe1b5bd4517216, type: 2}
+  maxCopies: 2
+  minimumAllies: 0
+  damageType: 1

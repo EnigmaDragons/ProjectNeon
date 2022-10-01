@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +15,13 @@ public class AdjustCounterFormula : Effect
         TemporalStatType.Inhibit.ToString(),
         TemporalStatType.Stun.ToString(),
         TemporalStatType.Vulnerable.ToString(),
-        TemporalStatType.AntiHeal.ToString()
+        TemporalStatType.AntiHeal.ToString(),
+        TemporalStatType.PreventResourceGains.ToString()
+    };
+
+    private readonly HashSet<string> _neutralEffectScopes = new HashSet<string>()
+    {
+        TemporalStatType.Prominent.ToString(),
     };
 
     public void Apply(EffectContext ctx)
@@ -26,12 +31,12 @@ public class AdjustCounterFormula : Effect
             var impactSign = _negativeEffectScopes.Contains(_e.EffectScope) ? -1 : 1;
             var formulaAmount = Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.Formula, ctx.XPaidAmount);
 
-            var isDebuff = impactSign * formulaAmount < 0; 
-            if (isDebuff)
+            var isDebuff = !_neutralEffectScopes.Contains(_e.EffectScope) && (impactSign * formulaAmount < 0); 
+            if (isDebuff && !_e.Unpreventable)
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, new [] { m });
             
             if (isDebuff && ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.Name} prevented {_e.EffectType} with an Aegis");
+                BattleLog.Write($"{m.UnambiguousName} prevented {_e.EffectType} with an Aegis");
             else
                 m.State.Adjust(_e.EffectScope, formulaAmount);
         });

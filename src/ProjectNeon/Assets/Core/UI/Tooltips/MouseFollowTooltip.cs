@@ -45,7 +45,7 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
         HideTooltip();
 
         _showTooltipObjectMsg = msg;
-        tooltipLabel.text = "";
+        tooltipLabel.text = string.Empty;
         background.SetActive(false);
         _tooltipObj = Instantiate(msg.Prototype, panel.transform);
         panel.SetActive(true);

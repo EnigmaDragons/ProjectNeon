@@ -14,8 +14,8 @@ public sealed class VulnerableTests
         
         TestEffects.ApplyBasicAttack(attacker, target);
         
-        Assert.AreEqual(1.33f, target.State[StatType.Damagability]);
-        Assert.AreEqual(16, target.CurrentHp());
+        Assert.AreEqual(1.5f, target.State[StatType.Damagability]);
+        Assert.AreEqual(15, target.CurrentHp());
     }
     
     [Test]
@@ -29,7 +29,7 @@ public sealed class VulnerableTests
         
         TestEffects.ApplyBasicAttack(attacker, target);
         
-        Assert.AreEqual(1.33f, target.State[StatType.Damagability]);
-        Assert.AreEqual(16, target.CurrentHp());
+        Assert.AreEqual(1.5f, target.State[StatType.Damagability]);
+        Assert.AreEqual(15, target.CurrentHp());
     }
 }

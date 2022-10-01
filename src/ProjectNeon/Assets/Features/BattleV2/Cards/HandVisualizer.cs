@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public sealed class HandVisualizer : MonoBehaviour
+public sealed class HandVisualizer : HandVisualizerBase
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones zones;
@@ -23,11 +23,11 @@ public sealed class HandVisualizer : MonoBehaviour
     private bool _useRecycle = false;
     private bool _cardPlayingAllowed = true;
 
-    public CardPresenter[] ShownCards => _cardPool == null ? new CardPresenter[0] : _cardPool?.ShownCards;
+    public override CardPresenter[] ShownCards => _cardPool == null ? new CardPresenter[0] : _cardPool?.ShownCards;
 
-    public void SetOnShownCardsChanged(Action action) => _onShownCardsChanged = action;
+    public override void SetOnShownCardsChanged(Action action) => _onShownCardsChanged = action;
 
-    public void ReProcess() => UpdateCurrentCards(Hand.Cards.ToArray());
+    public override void ReProcess() => UpdateCurrentCards(Hand.Cards.ToArray());
 
     private void Awake()
     {
@@ -68,13 +68,13 @@ public sealed class HandVisualizer : MonoBehaviour
         ShownCards.ForEach(c => c.Cancel());
     }
     
-    public void SetCardPlayingAllowed(bool isAllowed)
+    public override void SetCardPlayingAllowed(bool isAllowed)
     {
         allowInteractions = isAllowed;
         UpdateVisibleCards();
     }
 
-    public void UpdateVisibleCards()
+    public override void UpdateVisibleCards()
     {
         var newCards = Hand.Cards.ToArray();
         CleanRemovedCards(newCards);
@@ -161,7 +161,7 @@ public sealed class HandVisualizer : MonoBehaviour
             Message.Publish(new CancelTargetSelectionRequested());
     }
     
-    public void SelectCard(int cardIndex)
+    public override void SelectCard(int cardIndex)
     {
         if (state.Phase != BattleV2Phase.PlayCards)
             return;
@@ -184,7 +184,7 @@ public sealed class HandVisualizer : MonoBehaviour
         }
     }
 
-    public void RecycleCard(int cardIndex)
+    public override void RecycleCard(int cardIndex)
     {
         if (state.NumberOfRecyclesRemainingThisTurn < 1)
             return;

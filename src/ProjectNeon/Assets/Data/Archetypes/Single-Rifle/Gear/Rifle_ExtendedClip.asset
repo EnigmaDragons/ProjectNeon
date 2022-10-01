@@ -14,22 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 7
   displayName: Extended Clip
-  description: +2 Max Ammo
+  description: +3 Max Ammo, +3 Starting Ammo
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   rarity: 2
   slot: 2
   priceFactor: 1
-  modifiers:
-  - ModifierType: 0
-    Amount: 0
-    StatType: 
+  modifiers: []
   resourceModifiers:
   - baseResource: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
-    maxAdjustment: 2
-    startingAdjustment: 2
+    maxAdjustment: 3
+    startingAdjustment: 3
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects: []
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 

@@ -34,7 +34,7 @@ public class EncounterBuilder : ScriptableObject, IEncounterBuilder
         possible = possibleEnemies.ToArray();
     }
     
-    public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber)
+    public List<EnemyInstance> Generate(int difficulty, int currentChapterNumber, bool isElite)
     {
         DebugLog($"Started generating encounter of difficulty {difficulty}");
 

@@ -10,13 +10,16 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private float secondsBeforeReturnToAdventure = 2f;
     [SerializeField] private float secondsBeforeGameOverScreen = 3f;
     [SerializeField] private BattleState state;
+    [SerializeField] private BoolReference useNewTutorialFlow;
+    [SerializeField] private SaveLoadSystem saveLoadSystem;
+    [SerializeField] private PartyAdventureState partyState;
 
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
         Message.Publish(new BattleRewardsStarted());
-        if (adventureProgress.HasActiveAdventure && !state.IsTutorialCombat)
+        if (adventureProgress.HasActiveAdventure && (!state.IsTutorialCombat || useNewTutorialFlow.Value))
             if (adventureProgress.AdventureProgress.IsFinalStageSegment || adventureProgress.AdventureProgress.IsFinalBoss)
-                Advance();
+                onFinished();
             else if (state.IsEliteBattle)
                 adventure.Adventure.EliteBattleRewards.GrantVictoryRewardsAndThen(onFinished, adventureProgress.AdventureProgress.CreateLootPicker(state.Party));
             else
@@ -27,10 +30,10 @@ public class BattleConclusion : OnMessage<BattleFinished>
     
     private void Advance()
     {
-        if (state.IsTutorialCombat)
+        if (state.IsTutorialCombat && !useNewTutorialFlow.Value)
         {
             Log.Info("Returning to academy from tutorial combat");
-            this.ExecuteAfterDelay(() => navigator.NavigateToAcademyScene(), secondsBeforeReturnToAdventure);
+            this.ExecuteAfterDelay(() => Message.Publish(new NavigateToNextTutorialFlow()), secondsBeforeReturnToAdventure);
         }
         else if (state.IsStoryEventCombat)
         {
@@ -41,8 +44,15 @@ public class BattleConclusion : OnMessage<BattleFinished>
         }
         else if (adventureProgress.AdventureProgress.IsFinalStageSegment)
         {
-            state.AccumulateRunStats();
-            this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion), secondsBeforeGameOverScreen);
+            if (state.IsTutorialCombat || !CurrentAcademyData.Data.IsLicensedBenefactor)
+            {
+                TutorialWonHandler.Execute(secondsBeforeGameOverScreen);
+            }
+            else
+            {
+                state.AccumulateRunStats();
+                this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion, partyState.BaseHeroes), secondsBeforeGameOverScreen);   
+            }
         }
         else
         {
@@ -69,13 +79,25 @@ public class BattleConclusion : OnMessage<BattleFinished>
         Time.timeScale = 1;
         if (msg.Winner == TeamType.Party)
             Advance();
+        else if ((state.IsTutorialCombat && useNewTutorialFlow.Value) || adventureProgress.AdventureProgress.Difficulty.ResetAfterDeath)
+        {
+            Log.Info("Restarting Battle");
+            saveLoadSystem.LoadSavedGame();
+            partyState.Heroes.ForEach(x => x.SetHp(x.Stats.MaxHp()));
+            this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV5(), secondsBeforeGameOverScreen);
+        }
         else
         {
             Log.Info("Navigating to defeat screen");
-            AllMetrics.PublishGameLost();
+            AllMetrics.PublishGameLost(adventure.Adventure.Id);
             state.AccumulateRunStats();
-            conclusion.Set(false, adventure.Adventure.DefeatConclusion, CurrentGameData.Data.Stats);
+            conclusion.Set(false, adventure.Adventure.DefeatConclusion, CurrentGameData.Data.Stats, partyState.BaseHeroes);
             CurrentGameData.Clear();
+            CurrentProgressionData.Write(x =>
+            {
+                x.RunsFinished += 1;
+                return x;
+            });
             this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
         }
     }

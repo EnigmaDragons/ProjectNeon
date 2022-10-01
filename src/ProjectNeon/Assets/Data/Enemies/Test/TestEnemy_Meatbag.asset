@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 37
   enemyName: Meatbag
+  allowedForSocialMedia: 0
   excludeFromBestiary: 1
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 0
   corp: {fileID: 11400000, guid: e72d679f60e6cd847aae8a43673fa10f, type: 2}
@@ -37,7 +39,7 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: Test Enemy
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
   animationSounds: {fileID: 0}
@@ -72,8 +74,13 @@ MonoBehaviour:
       resourceValue: 0.33
       perTurnPower: 1
       maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
       estimatedTurnsAlive: 5.775685
+      estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 62
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

@@ -241,7 +241,37 @@ public class FindCardsEditor : EditorWindow
                 .Where(c => !c.IsWip)
                 .Where(c => c.BattleEffects()
                     .Any(b => (b.Formula ?? "").ContainsAnyCase(_formulaText)))
-                .Select(e => $"{e.Name}")
+                .Select(e => $"{e.GetArchetypeKey()} - {e.Name}")
+                .OrderBy(e => e)
+                .ToArray();
+            ShowCards($"Total Items: {items.Length}", items);
+            GUIUtility.ExitGUI();
+        }
+        
+        if (GUILayout.Button("Find Circular Buffing Cards"))
+        {
+            var items = GetAllInstances<CardType>()
+                .Where(c => !c.IsWip)
+                .Where(c => c.BattleEffects()
+                    .Any(b => (b.Formula ?? "").ContainsAnyCase(_formulaText) 
+                              && b.EffectScope.Value.ContainsAnyCase(_formulaText)
+                              && !(b.Formula ?? "").ContainsAnyCase($"Base[{_formulaText}]")
+                              && !(b.Formula ?? "").ContainsAnyCase($"-{_formulaText}")
+                         ))
+                .Select(e => $"{e.GetArchetypeKey()} - {e.Name}")
+                .OrderBy(e => e)
+                .ToArray();
+            ShowCards($"Total Items: {items.Length}", items);
+            GUIUtility.ExitGUI();
+        }
+        
+        if (GUILayout.Button("Find Multi-Condition Unhighlight Cards"))
+        {
+            var items = GetAllInstances<CardType>()
+                .Where(c => !c.IsWip)
+                .Where(c => c.unhighlightCondition.Length > 1)
+                .Select(e => $"{e.GetArchetypeKey()} - {e.Name}")
+                .OrderBy(e => e)
                 .ToArray();
             ShowCards($"Total Items: {items.Length}", items);
             GUIUtility.ExitGUI();

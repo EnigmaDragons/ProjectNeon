@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 19
   enemyName: Spiderling
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 1/9/22
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -37,14 +39,15 @@ MonoBehaviour:
   tier: 1
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: Focuses a single enemy and uses poison and sharp legs to harm its
     prey.
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
-    maxHp: 14
-    maxShield: 6
+    maxHp: 49
+    maxShield: 9
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
@@ -53,27 +56,29 @@ MonoBehaviour:
     attack: 5
     magic: 0
     leadership: 0
-    armor: 0
+    armor: 2
     resistance: 0
     nonStatCardValueFactor: 4
     startingResourceAmount: 0
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 20
+    powerLevel: 72
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0.1
     calculationResults:
-      startingPower: 14.937118
+      startingPower: 55.92516
       perCardValue: 4.5
-      resourceValue: 0.45000002
+      resourceValue: 0.45
       perTurnPower: 4.95
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 1.4937117
-      calculatedPowerLevel: 20
+      estimatedHeroDamage: 10
+      estimatedTurnsAlive: 3.728344
+      estimatedPerTurnTotalValue: 15.84862
+      calculatedPowerLevel: 72
     startOfBattleEffects:
     - EffectType: 58
       Conditions: []
@@ -106,176 +111,24 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 7b8a00e986c134e4dbf208e9cb002fdb, type: 2}
     - {fileID: 11400000, guid: 8664b6e1d3874cc46b60e052e564a1de, type: 2}
     - {fileID: 11400000, guid: 54d8f1eb336df2549886cf14aa9a2983, type: 2}
-  - stage: 2
-    maxHp: 17
-    maxShield: 10
-    startingShield: 0
-    startingAegis: 0
-    startingPhase: 0
-    startingDodge: 0
-    startingTaunt: 0
-    attack: 8
-    magic: 0
-    leadership: 0
-    armor: 2
-    resistance: 0
-    nonStatCardValueFactor: 7
-    startingResourceAmount: 0
-    maxResourceAmount: 0
-    resourceGainPerTurn: 0
-    cardsPerTurn: 1
-    powerLevel: 32
-    calculationVariables:
-      startingDefensiveValueAdjustment: 0
-      startingValueAdjustment: 0
-      perTurnValueAdjustment: 0
-      resourceScaledValueOverride: 0
-    calculationResults:
-      startingPower: 24.002644
-      perCardValue: 7.5
-      resourceValue: 2.4750001
-      perTurnPower: 7.5
-      maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 1.2001321
-      calculatedPowerLevel: 32
-    startOfBattleEffects:
-    - EffectType: 58
-      Conditions: []
-      BaseAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      DurationFormula: 1
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReTargetScope: 0
-      ApplyToEachMemberIndividually: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 0
-      Formula: 
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
-    Cards:
-    - {fileID: 11400000, guid: 7b8a00e986c134e4dbf208e9cb002fdb, type: 2}
-    - {fileID: 11400000, guid: 8664b6e1d3874cc46b60e052e564a1de, type: 2}
-    - {fileID: 11400000, guid: 54d8f1eb336df2549886cf14aa9a2983, type: 2}
-  - stage: 3
-    maxHp: 22
-    maxShield: 14
-    startingShield: 0
-    startingAegis: 0
-    startingPhase: 0
-    startingDodge: 0
-    startingTaunt: 0
-    attack: 10
-    magic: 0
-    leadership: 0
-    armor: 3
-    resistance: 0
-    nonStatCardValueFactor: 9
-    startingResourceAmount: 0
-    maxResourceAmount: 0
-    resourceGainPerTurn: 0
-    cardsPerTurn: 1
-    powerLevel: 41
-    calculationVariables:
-      startingDefensiveValueAdjustment: 0
-      startingValueAdjustment: 0
-      perTurnValueAdjustment: 0
-      resourceScaledValueOverride: 0
-    calculationResults:
-      startingPower: 31.672462
-      perCardValue: 9.5
-      resourceValue: 3.1350002
-      perTurnPower: 9.5
-      maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 0.7918116
-      calculatedPowerLevel: 41
-    startOfBattleEffects:
-    - EffectType: 58
-      Conditions: []
-      BaseAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      DurationFormula: 1
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReTargetScope: 0
-      ApplyToEachMemberIndividually: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 0
-      Formula: 
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
-    Cards:
-    - {fileID: 11400000, guid: 7b8a00e986c134e4dbf208e9cb002fdb, type: 2}
-    - {fileID: 11400000, guid: 8664b6e1d3874cc46b60e052e564a1de, type: 2}
-    - {fileID: 11400000, guid: 54d8f1eb336df2549886cf14aa9a2983, type: 2}
+  maxCopies: 4
+  minimumAllies: 0
+  damageType: 1

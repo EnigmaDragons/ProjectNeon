@@ -9,7 +9,7 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
     [SerializeField] private TextMeshProUGUI label;
 
     private Vector3 _originalScale;
-    private string _tooltip = "";
+    private string _tooltip = string.Empty;
     private Maybe<int> _originator = Maybe<int>.Missing();
 
     private void Awake()

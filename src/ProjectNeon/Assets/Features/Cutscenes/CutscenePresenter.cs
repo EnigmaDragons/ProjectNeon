@@ -34,17 +34,20 @@ public class CutscenePresenter : BaseCutscenePresenter
         DebugLog($"Characters in cutscene: {string.Join(", ", Characters.Select(c => c.PrimaryName))}");
         
         DebugLog($"Num Cutscene Segments {cutscene.Current.Segments.Length}");
+        MessageGroup.TerminateAndClear();
         MessageGroup.Start(
             new MultiplePayloads("Cutscene Script", cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
             () => Message.Publish(new CutsceneFinished()));
     }
 
-    protected override void Execute(SkipCutsceneRequested msg)
-    { 
+    protected override void Execute(SkipCutsceneRequested msg) => SkipCutscene();
+
+    private void SkipCutscene()
+    {
         cutscene.Current.MarkSkipped(progress.AdventureProgress);
         _skipDelay = true;
         FinishCutscene();
-    } 
+    }
 
     protected override void FinishCutscene()
     {
@@ -72,13 +75,17 @@ public class CutscenePresenter : BaseCutscenePresenter
         }
         
         var onFinishedAction = shouldGoToAdventureVictoryScreen 
-            ? () => GameWrapup.NavigateToVictoryScreen(progress, adventure, navigator, conclusion) 
+            ? () => GameWrapup.NavigateToVictoryScreen(progress, adventure, navigator, conclusion, setupParty.Party.Heroes.Cast<HeroCharacter>().ToArray()) 
             : cutscene.OnCutsceneFinishedAction.Select(a => a, NavigateToInferredGameScene);
+        if (shouldGoToAdventureVictoryScreen && !CurrentAcademyData.Data.IsLicensedBenefactor)
+            onFinishedAction = () => TutorialWonHandler.Execute();
         if (_skipDelay)
             onFinishedAction();
         else
             this.ExecuteAfterDelay(onFinishedAction, cutsceneFinishNavigationDelay);
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => SkipCutscene();
 
     private void NavigateToInferredGameScene()
     {

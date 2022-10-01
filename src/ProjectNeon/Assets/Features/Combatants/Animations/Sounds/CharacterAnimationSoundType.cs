@@ -9,5 +9,5 @@ public enum CharacterAnimationSoundType
     RapidShot = 4,
     Slash = 5,
     Stab = 6,
-    ThrowGrenade = 7
+    ThrowGrenade = 7,
 }

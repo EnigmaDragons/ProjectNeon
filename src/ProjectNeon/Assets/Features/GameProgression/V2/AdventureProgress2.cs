@@ -13,14 +13,17 @@ public class AdventureProgress2 : AdventureProgressBase
     [SerializeField] private List<string> finishedStoryEvents = new List<string>();
     [SerializeField] private List<int> finishedCurrentStageHeatUpEvents = new List<int>();
     [SerializeField] private bool playerReadMapPrompt = false;
-    
+    [SerializeField] private Library library;
+
+    public override int AdventureId => currentAdventure.Adventure.Id;
     public Adventure CurrentAdventure => currentAdventure.Adventure;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
-    public int CurrentAdventureId => currentAdventure.Adventure.Id;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
     public override int CurrentStageProgress => currentMap3.Progress;
     public float ProgressToUnlockChapterBoss => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
+    public override float ProgressToBoss => ProgressToUnlockChapterBoss;
+    public override float[] RisingActionPoints => new float[0];
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
     public override string AdventureName => CurrentAdventure.Title;
@@ -32,6 +35,11 @@ public class AdventureProgress2 : AdventureProgressBase
     public override bool IsFinalBoss => IsFinalStageSegment;
     public string[] FinishedStoryEvents => finishedStoryEvents.ToArray();
     public bool PlayerReadMapPrompt => playerReadMapPrompt;
+    public override Difficulty Difficulty
+    {
+        get => library.DefaultDifficulty;
+        set { }
+    }
 
     public int[] FinishedCurrentStageHeatUpEvents => finishedCurrentStageHeatUpEvents.ToArray();
 
@@ -147,7 +155,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public override GameAdventureProgressData GetData()
         => new GameAdventureProgressData
         {
-            AdventureId = CurrentAdventureId,
+            AdventureId = AdventureId,
             Type = GameAdventureProgressType.V2,
             CurrentChapterIndex = CurrentChapterIndex,
             CurrentChapterFinishedHeatUpEvents = FinishedCurrentStageHeatUpEvents,

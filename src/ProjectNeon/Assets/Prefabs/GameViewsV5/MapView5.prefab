@@ -28,7 +28,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4230648877988689464}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -63,7 +63,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4230648877988689464}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -102,6 +102,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 6473588603246130302}
   - {fileID: 1644882597690703024}
   - {fileID: 6264179463378325381}
   m_Father: {fileID: 5117924627911951897}
@@ -188,7 +189,7 @@ MonoBehaviour:
   adventure: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
   gameMap: {fileID: 11400000, guid: 5064fe74d4176254a9e1729682f69c71, type: 2}
   mapV5: {fileID: 11400000, guid: 8b49e4d38d0ddb4498585c4bf00f7852, type: 2}
-  speed: 410
+  speed: 600
 --- !u!114 &9220088553375195990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +209,8 @@ MonoBehaviour:
   playerToken: {fileID: 62304065873535587, guid: a4775238501ca3445aad9d5cd06aaa55, type: 3}
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   shopSegment: {fileID: 11400000, guid: 3ff6329504405af4398b6a75e24e272f, type: 2}
+  pathLinePrototype: {fileID: 8116082259351485848, guid: e0e6b900a0ec86740a5f3af9ece5b3d5, type: 3}
+  pathLinesParent: {fileID: 7147771854699897659}
   mapNodesParent: {fileID: 1232896574179439673}
   playerTokenParent: {fileID: 1377718157360487722}
   allStageSegments: {fileID: 11400000, guid: c69bc5e501192cf45a6a1149c30c520e, type: 2}
@@ -215,6 +218,7 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     FloatVariable: {fileID: 11400000, guid: 0c8a28265a0bb56429ea4fcc4d8ba73c, type: 2}
+  currentTheme: {fileID: 11400000, guid: 1edf4d0c4ba3c2948a646ce791644584, type: 2}
   combatNode: {fileID: 591490670348005607, guid: a7d9119f37c7abd4a9edc65ba0f8e463, type: 3}
   eliteCombatNode: {fileID: 6700350599225383442, guid: 44d454fc2abac8f4d806561e8e7abe13, type: 3}
   cardShopNode: {fileID: 6029525275930381626, guid: 5f2f508cf25316544b311a742f0c0755, type: 3}
@@ -248,6 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5117924627911951897}
+  - component: {fileID: 8501161644917924136}
   m_Layer: 0
   m_Name: MapView5
   m_TagString: Untagged
@@ -270,3 +275,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8501161644917924136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5463330826091715206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf10506979143d4ba3ff45234854275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7147771854699897659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6473588603246130302}
+  m_Layer: 5
+  m_Name: PathLines
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6473588603246130302
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7147771854699897659}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4230648877988689464}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}

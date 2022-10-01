@@ -1,5 +1,6 @@
 using NUnit.Framework;
 
+[Ignore("Test Engine Doesn't Resolve Preventions Yet")]
 [TestFixture]
 public class DodgeTests
 {
@@ -11,7 +12,6 @@ public class DodgeTests
         }
     };
     
-    [Ignore("Test Engine Doesn't Resolve Preventions Yet")]
     [Test]
     public void AttackerIsBlindAndDefenderHasDodge_DodgeStillPresent()
     {
@@ -27,7 +27,6 @@ public class DodgeTests
         Assert.AreEqual(1, defender.State[TemporalStatType.Dodge]);
     }
     
-    [Ignore("Test Engine Doesn't Resolve Preventions Yet")]
     [Test]
     public void AttackerPlaysAttack_DodgeGoneAndHpUnchanged()
     {
@@ -43,7 +42,6 @@ public class DodgeTests
         Assert.AreEqual(0, defender.State.MissingHp());
     }
     
-    [Ignore("Test Engine Doesn't Resolve Preventions Yet")]
     [Test]
     public void AttackerPlaysDoubleAttack_TwoDodgesGoneAndHpUnchanged()
     {
@@ -67,7 +65,6 @@ public class DodgeTests
         Assert.AreEqual(0, defender.State.MissingHp());
     }
     
-    [Ignore("Test Engine Doesn't Resolve Preventions Yet")]
     [Test]
     public void AttackerIsBlindAndDefenderHasDodge_BlindGone()
     {

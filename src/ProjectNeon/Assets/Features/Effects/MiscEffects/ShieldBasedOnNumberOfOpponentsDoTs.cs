@@ -17,6 +17,6 @@ public class ShieldBasedOnNumberOfOpponentsDoTs : Effect
                 * ctx.BattleMembers.Values
                     .ToArray()
                     .GetConsciousEnemies(m)
-                    .Sum(opp => opp.State.StatusesOfType(StatusTag.DamageOverTime).Length)));
+                    .Sum(opp => opp.State.DamageOverTimes().Count())));
     }
 }

@@ -200,7 +200,7 @@ public class AegisIfFormulaResult : Effect
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
 
             if (ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.Name} prevented effect with an Aegis");
+                BattleLog.Write($"{m.UnambiguousName} prevented the effect with an Aegis");
             else
                 _applyToOne(ctx, formulaAmount, m.State);
         });

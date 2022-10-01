@@ -1,5 +1,6 @@
 <script>
   export let open = false;
+  export let pageName;
 
   import HamburgerIcon from '../Elements/HamburgerIcon.svelte';
 
@@ -13,7 +14,7 @@
       <a href="." class="home"><h1>{company.name}</h1></a>
       <HamburgerIcon bind:open/>
     </div>
-    {#each pages as page}
+    {#each pages.filter(p => !!p.showInMainNav && (!pageName || p.name !== pageName)) as page}
       <a class="navlink decor-font" href={page.href}>{page.name}</a>
     {/each}
     <div class="row center-vh center">

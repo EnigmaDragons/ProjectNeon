@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI.Extensions;
 
 public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
 {
@@ -11,11 +13,14 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     [SerializeField] private GameObject playerToken;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private StageSegment shopSegment;
+    [SerializeField] private UILineRenderer pathLinePrototype;
+    [SerializeField] private GameObject pathLinesParent;
     [SerializeField] private GameObject mapNodesParent;
     [SerializeField] private GameObject playerTokenParent;
     [SerializeField] private AllStageSegments allStageSegments;
     [SerializeField] private FloatReference minDistanceBetweenNodes = new FloatReference(0f);
-    
+    [SerializeField] private CurrentTheme currentTheme;
+
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
     [SerializeField] private MapNodeGameObject3 eliteCombatNode;
@@ -35,7 +40,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     
     protected override void Execute(RegenerateMapRequested msg)
     {
-        SpawnPartyTokenIfNeeded(_map.gameObject);
+        SpawnPartyToken();
         SpawnNodes();
     }
     
@@ -43,23 +48,26 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     {
         progress.Advance();
         gameMap.ClearSegment();
-        SpawnPartyTokenIfNeeded(_map.gameObject);
+        SpawnPartyToken();
         SpawnNodes();
     }
 
     private void Awake()
     {
-        if (gameMap.CurrentMap == null)
-            gameMap.CurrentMap = progress.CurrentChapter.Map;
+        gameMap.CurrentMap = progress.CurrentChapter.Map;
+        if (gameMap.CurrentMap.Theme != null && currentTheme != null)
+            currentTheme.Set(gameMap.CurrentMap.Theme);
         _map = Instantiate(gameMap.CurrentMap.Background, transform);
         _map.transform.SetAsFirstSibling();
     }
 
     private void SpawnNodes()
     {
+        if (pathLinesParent != null)
+            pathLinesParent.DestroyAllChildren();
         mapNodesParent.DestroyAllChildren();
         
-        if (gameMap.CurrentChoices.None())
+        if (gameMap.CurrentChoices.None(c => c.AdvancesAdventure))
             GenerateOptions();
         var fx = progress.GlobalEffects.AllStaticGlobalEffects;
         Log.Info($"Map Spawning Nodes: {gameMap.CurrentChoices.Count} Nodes. Adventure Progress: Chapter {progress.CurrentChapterNumber}, Segment {progress.CurrentStageProgress}");
@@ -69,7 +77,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
             try
             {
                 var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), mapNodesParent.transform);
-                obj.InitForV5(x, gameMap, allStageSegments.GetStageSegmentById(x.PresetStageId).Value, fx, _ => Message.Publish(new ContinueTraveling()));
+                obj.InitForV5(x, gameMap, allStageSegments.GetStageSegmentById(x.PresetStageId).Value, fx, x.AdvancesAdventure, _ => Message.Publish(new ContinueTraveling()));
                 var rect = (RectTransform) obj.transform;
                 rect.pivot = new Vector2(0.5f, 0.5f);
                 rect.anchoredPosition = x.Position;
@@ -80,11 +88,38 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
                 Log.Error($"Node Prefab for {x.Type} - {x.Corp} is null");
             }
         });
+
+        SpawnPathLines();
+
         if (_playerToken != null)
             _playerToken.transform.SetAsLastSibling();
         Message.Publish(new AutoSaveRequested());
     }
-    
+
+    private void SpawnPathLines()
+    {
+        if (pathLinesParent == null)
+            return;
+        
+        var allChoices = gameMap.CurrentChoices.OrderBy(c => c.Position.x).ToArray();
+        var mapLineCombinations = new List<(Vector2, Vector2)>();
+        allChoices.ForEach(c => mapLineCombinations.Add((gameMap.DestinationPosition, c.Position)));
+        
+        for (var i = 0; i < allChoices.Length; i++)
+        {
+            var rootChoice = allChoices[i];
+            allChoices.Skip(i + 1).ForEach(c => mapLineCombinations.Add((rootChoice.Position, c.Position)));
+        }
+
+        mapLineCombinations.ForEach(c =>
+        {
+            var pathLine = Instantiate(pathLinePrototype, pathLinesParent.transform);
+            var leftPoint = c.Item1.x <= c.Item2.x ? c.Item1 : c.Item2;
+            var rightPoint = c.Item1.x > c.Item2.x ? c.Item1 : c.Item2;
+            pathLine.m_points = new[] {leftPoint, rightPoint};
+        });
+    }
+
     private void GenerateOptions()
     {
         var sideSegments = progress.SecondarySegments.ToList();
@@ -114,19 +149,25 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
         
         var locations = gameMap.CurrentMap.Points.Where(x => x != gameMap.DestinationPosition)
             .ToArray()
-            .Shuffled()
+            .Shuffled(new DeterministicRng(progress.RngSeed))
             .ToList();
         foreach (var choice in gameMap.CurrentChoices)
         {
-            if (locations.Count < 1)
+            if (gameMap.CurrentChoices.Last() == choice)
             {
-                Log.Error("Not Enough Map Points or Minimum Distance is too high");
-                return;
+                choice.Position = gameMap.CurrentMap.EndingPoint;
             }
-
-            var pos = locations[0];
-            choice.Position = pos;
-            locations.RemoveAll(l => Vector2.Distance(l, pos) < minDistanceBetweenNodes);
+            else
+            {
+                if (locations.Count < 1)
+                {
+                    Log.Error("Not Enough Map Points or Minimum Distance is too high");
+                    return;
+                }
+                var pos = locations[0];
+                choice.Position = pos;
+                locations.RemoveAll(l => Vector2.Distance(l, pos) < minDistanceBetweenNodes);   
+            }
         }
     }
 
@@ -170,6 +211,16 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
         if (matchingCorpNodes.Length > 0)
             defaultNode = matchingCorpNodes[0].Object;
         return defaultNode;
+    }
+
+    private void SpawnPartyToken()
+    {
+        if (_playerToken != null)
+        {
+            Destroy(_playerToken);
+            _playerToken = null;
+        }
+        SpawnPartyTokenIfNeeded(_map.gameObject);
     }
 
     private void SpawnPartyTokenIfNeeded(GameObject map)

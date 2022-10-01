@@ -40,6 +40,15 @@ public static class TargetExtensions
     
     public static float TotalResourceValue(this Target t) 
         => t.Members.Sum(m => m.State.PrimaryResourceValue);
+    
+    public static float TotalDodgeValue(this Target t) 
+        => t.Members.Sum(m => m.State[TemporalStatType.Dodge]);
+    
+    public static float TotalResistance(this Target t) 
+        => t.Members.Sum(m => m.State[StatType.Resistance]);
+    
+    public static float TotalArmor(this Target t) 
+        => t.Members.Sum(m => m.State[StatType.Armor]);
 
     public static bool HasShield(this Target t)
         => t.Members.Sum(m => m.CurrentShield()) > 0;
@@ -47,6 +56,6 @@ public static class TargetExtensions
     
 
     public static bool Matches(this Target t, Target other)
-        => string.Join(",", t.Members.Select(m => m.Id.ToString()))
-            .Equals(string.Join(",", other.Members.Select(m => m.Id.ToString())));
+        => string.Join(",", t.Members.Select(m => m.Id.GetString()))
+            .Equals(string.Join(",", other.Members.Select(m => m.Id.GetString())));
 }

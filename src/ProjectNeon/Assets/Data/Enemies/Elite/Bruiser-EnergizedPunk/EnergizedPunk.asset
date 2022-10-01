@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: EnergizedPunk
+  m_EditorClassIdentifier: 
+  id: 55
+  enemyName: 
+  allowedForSocialMedia: 1
+  excludeFromBestiary: 0
+  isTutorialEnemy: 0
+  lastBalanceDate: 2022/02/20
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: f536780fabfce9141933c05122731104, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 0f00000004000000
+  preferredTurnOrder: 40
+  prefab: {fileID: 8506642138073819228, guid: 9bb512d5184a05d4eb81d7a5866d3d8c, type: 3}
+  materialType: 1
+  libraryCameraOffset: {x: 0, y: -0.9, z: 2.4}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 1
+  tier: 2
+  unique: 1
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Gives resources when damaged, hits hard, and tries to lockdown your
+    heroes.
+  animations: {fileID: 11400000, guid: 0c6ec023aa24f014b9c90f242dccdf77, type: 2}
+  animationSounds: {fileID: 11400000, guid: b37b21136045a4f47b5aa7d16f49dd3b, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 140
+    maxShield: 28
+    startingShield: 14
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 14
+    magic: 0
+    leadership: 0
+    armor: 2
+    resistance: 2
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 12
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 286
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 4
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 167.29533
+      perCardValue: 14
+      resourceValue: 4.62
+      perTurnPower: 22.62
+      maxAndStartingResourcesPower: 2.151258
+      estimatedHeroDamage: 16
+      estimatedTurnsAlive: 6.9706388
+      estimatedPerTurnTotalValue: 116.521996
+      calculatedPowerLevel: 286
+    startOfBattleEffects:
+    - EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 9
+      StatusDetailText: When Damaged the attacker loses 1 resource
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 2
+        cardActions: {fileID: 11400000, guid: c2ba2802859a5ef4692d7ef4842a6786, type: 2}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    Cards:
+    - {fileID: 11400000, guid: 7b18c20a3abb2c344b0ba32c74c3f487, type: 2}
+    - {fileID: 11400000, guid: 943bc25e79b55d64f83b9b79751aa4a9, type: 2}
+    - {fileID: 11400000, guid: 87c5f7470590e8f4796fcf2a66e7fed5, type: 2}
+  maxCopies: 1
+  minimumAllies: 0
+  damageType: 1

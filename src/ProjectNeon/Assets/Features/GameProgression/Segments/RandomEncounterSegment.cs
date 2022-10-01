@@ -20,11 +20,11 @@ public class RandomEncounterSegment : StageSegment
     {
         Log.Info("Setting Up Random Encounter");
         battleState.SetNextBattleground(possibleBattlegrounds.Random());
-        battleState.SetNextEncounter(encounterBuilder.Generate(encounterDifficulty, 1));
+        battleState.SetNextEncounter(encounterBuilder.Generate(encounterDifficulty, 1, false));
         SceneManager.LoadScene("BattleSceneV2");
     }
     
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx , MapNode3 mapData)
-        => new GeneratedBattleStageSegment(Name, possibleBattlegrounds.Random(), false, encounterBuilder.Generate(encounterDifficulty, 1).ToArray());
+        => new GeneratedBattleStageSegment(Name, possibleBattlegrounds.Random(), false, encounterBuilder.Generate(encounterDifficulty, 1, false).ToArray());
     public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 }

@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class Member 
+public class Member
 {
     public int Id { get; }
+    public string UnambiguousName { get; }
     public string Name { get; }
     public string Class { get; }
     public MemberMaterialType MaterialType { get; }
@@ -18,8 +19,6 @@ public class Member
     public override bool Equals(object obj) => obj is Member && ((Member)obj).Id == Id;
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{Name} {Id}";
-    
-    public string UnambiguousName => TeamType == TeamType.Enemies ? ToString() : Name;
     
     public Member(int id, string name, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
         : this(id, name, characterClass, materialType, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
@@ -37,6 +36,7 @@ public class Member
         BattleRole = battleRole;
         State = new MemberState(id, name, baseStats, primaryStat, initialHp);
         BasicCard = basicCard;
+        UnambiguousName = TeamType == TeamType.Enemies ? $"{Name} {Id}" : Name;
     }
 
     public Member Apply(Action<MemberState> effect)
@@ -53,7 +53,8 @@ public static class MemberExtensions
     public static string Names(this IEnumerable<Member> members) => string.Join(", ", members.Select(m => m.Name));
     
     public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.Name, m.Class, m.TeamType, m.State.ToSnapshot());
-    public static int HpAndShield(this Member m) => CurrentHp(m) + CurrentShield(m);
+    public static int HpAndShield(this Member m) => CurrentHp(m) + CurrentShield(m);    
+    public static int HpAndShieldWithOverkill(this Member m) => CurrentHp(m) + CurrentShield(m) - RoundUp(m.State[TemporalStatType.OverkillDamageAmount]);
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);
     public static int MaxHp(this Member m) => RoundUp(m.State.MaxHp());
     public static int MissingHp(this Member m) => RoundUp(m.State.MaxHp() - m.CurrentHp());
@@ -83,7 +84,7 @@ public static class MemberExtensions
     public static bool HasAttackBuff(this Member m) => m.State.DifferenceFromBase(StatType.Attack) > 0;
     public static bool HasDoubleDamage(this Member m) => m.State[TemporalStatType.DoubleDamage] > 0;
     public static bool HasTaunt(this Member m) => m.State[TemporalStatType.Taunt] > 0;
-    public static bool IsAfflicted(this Member m) => m.State.StatusesOfType(StatusTag.DamageOverTime).Length > 0;
+    public static bool IsAfflicted(this Member m) => m.State.DamageOverTimes().Length > 0;
     public static bool IsBloodied(this Member m) => m.IsConscious() && m.CurrentHp() * 2 <= m.MaxHp();
     public static bool IsStealthed(this Member m) => m.State[TemporalStatType.Stealth] > 0;
     public static bool IsProminent(this Member m) => m.State[TemporalStatType.Prominent] > 0;
@@ -116,17 +117,24 @@ public static class MemberExtensions
 
     public static bool CanAfford(this Member m, ResourceCalculations calc, PartyAdventureState partyState)
     {
-        if (calc.XAmount == 0 && calc.ResourcesPaid == 0)
-            return true;
-        var amountAvailable = calc.ResourcePaidType.Name == "Creds" ? partyState.Credits : m.State.ResourceAmount(calc.ResourcePaidType.Name);
-        var remaining = amountAvailable - calc.ResourcesPaid;
-        return remaining >= 0;
+        try
+        {
+            if (calc.XAmount == 0 && calc.ResourcesPaid == 0)
+                return true;
+
+            var amountAvailable = calc.ResourcePaidType.Name == "Creds"
+                ? partyState.Credits
+                : m.State[calc.ResourcePaidType];
+            var remaining = amountAvailable - calc.ResourcesPaid;
+            return remaining >= 0;
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+            return false;
+        }
     }
     
     public static ResourceCalculations CalculateResources(this Member m, CardTypeData card)
         => m.State.CalculateResources(card).ClampResources(m);
-    
-    //Should reaction cards be modified by changers
-    public static ResourceCalculations CalculateResourcesForReaction(this Member m, ReactionCardType reaction)
-        => TimelessResourceCalculator.CalculateResources(reaction.Cost, m.State).ClampResources(m);
 }

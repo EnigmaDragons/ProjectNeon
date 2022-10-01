@@ -47,8 +47,11 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         if (state == null)
             Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(state)} is null");
         if (state == null || partyAdventureState == null || character == null || characterAnimations == null)
+        {
+            Log.Warn($"{nameof(CharacterCreatorAnimationController)} - {team} {memberId} - Cannot Animate");
             _canAnimate = false;
-        
+        }
+
         ReturnToDefault();
     }
 
@@ -65,6 +68,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         if (msg.MemberId != _memberId)
             return;
 
+        Log.Info($"Received Character Animation Requested Message for {msg.MemberId}");
         if (!_canAnimate)
         {
             Message.Publish(new Finished<CharacterAnimationRequested2> { Message = msg });
@@ -80,6 +84,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             var reasonToNotApply = msg.Condition.Value.GetShouldNotApplyReason(ctx);
             if (reasonToNotApply.IsPresent)
             {
+                Log.Info($"Not Starting Character Animation Requested Message for {msg.MemberId} - {reasonToNotApply.Value}");
                 Message.Publish(new Finished<CharacterAnimationRequested2> { Message = msg });
                 return;
             }
@@ -88,6 +93,8 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             StopCoroutine(_currentCoroutine);
         ReturnToDefault();
         _currentCoroutine = FinishAnimationInTime(msg);
+        
+        Log.Info($"Starting Character Animation Requested Message for {msg.MemberId}");
         StartCoroutine(_currentCoroutine);
     }
 
@@ -144,9 +151,9 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         SetAnimatorFloat("Aim", _characterAnimations.Aim);
         SetAnimatorBool(_characterAnimations.Idle, true);
         SetAnimatorBool(_characterAnimations.AimIdle, true);
-        foreach (var state in _currentStates)
-            SetAnimatorBool(state.Value, false);
-        _currentStates = new Dictionary<int, string>();
+        foreach (var s in _currentStates)
+            SetAnimatorBool(s.Value, false);
+        _currentStates.Clear();
         if (!_initializedPosition)
             return;
         _source = _start;

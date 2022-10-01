@@ -2,8 +2,9 @@
 using System;
 using System.Linq;
 
-public static class Message 
+public static class Message
 {
+    private static readonly object Lock = new object();
     private static readonly List<MessageSubscription> EventSubs = new List<MessageSubscription>();
     private static MessageQueue Msgs = new MessageQueue();
 
@@ -16,7 +17,7 @@ public static class Message
         var tempOwner = new { };
         Subscribe(MessageSubscription.Create<T>(x => 
         { 
-            Message.Unsubscribe(tempOwner);
+            Unsubscribe(tempOwner);
             onEvent(x);
         }, tempOwner));
     } 
@@ -31,17 +32,21 @@ public static class Message
     public static void Subscribe(MessageSubscription subscription)
     {
         Msgs.Subscribe(subscription);
-        EventSubs.Add(subscription);
+        lock(Lock)
+            EventSubs.Add(subscription);
     }
 
     public static void Unsubscribe(object owner)
     {
         Msgs.Unsubscribe(owner);
-        EventSubs.Where(x => x.Owner.Equals(owner)).CopiedForEach(x => EventSubs.Remove(x));
+        lock(Lock)
+            EventSubs.RemoveAll(x => x.Owner.Equals(owner));
     }
     
     public sealed class MessageQueue
     {
+        private static readonly Dictionary<Type, string> TypeNamesCache = new Dictionary<Type, string>();
+        
         private readonly Dictionary<string, List<object>> _eventActions = new Dictionary<string, List<object>>();
         private readonly Dictionary<object, List<MessageSubscription>> _ownerSubscriptions = new Dictionary<object, List<MessageSubscription>>();
 
@@ -58,7 +63,7 @@ public static class Message
 
         public void Subscribe(MessageSubscription subscription)
         {
-            var eventType = subscription.EventType.Name;
+            var eventType = GetTypeName(subscription.EventType);
             if (!_eventActions.ContainsKey(eventType))
                 _eventActions[eventType] = new List<object>();
             if (!_ownerSubscriptions.ContainsKey(subscription.Owner))
@@ -71,9 +76,9 @@ public static class Message
         {
             if (!_ownerSubscriptions.ContainsKey(owner))
                 return;
+            
             var events = _ownerSubscriptions[owner];
-            for (var i = 0; i < _eventActions.Count; i++)
-                _eventActions.ElementAt(i).Value.RemoveAll(x => events.Any(y => y.OnEvent.Equals(x)));
+            _eventActions.ForEach(e => e.Value.RemoveAll(x => events.AnyNonAlloc(y => y.OnEvent.Equals(x))));
             _ownerSubscriptions.Remove(owner);
         }
 
@@ -82,19 +87,31 @@ public static class Message
             if (_isPublishing) return;
             
             _isPublishing = true;
-            while (_eventQueue.Any()) 
+            while (_eventQueue.AnyNonAlloc()) 
                 Publish(_eventQueue.Dequeue());
             _isPublishing = false;
         }
 
         private void Publish(object payload)
         {
-            var eventType = payload.GetType().Name;
+            var eventType = GetTypeName(payload);
             //Log.Info($"Message - Published {eventType}");
 
             if (_eventActions.ContainsKey(eventType))
                 foreach (var action in _eventActions[eventType].ToList())
                     ((Action<object>)action)(payload);
+        }
+
+        private string GetTypeName(object payload) => GetTypeName(payload.GetType());
+
+        private string GetTypeName(Type t)
+        {
+            if (TypeNamesCache.TryGetValue(t, out var name)) 
+                return name;
+            
+            var n = t.Name;
+            TypeNamesCache[t] = t.Name;
+            return n;
         }
     }
 }

@@ -20,8 +20,8 @@ public class MainframeAI : TurnAI
     
     public override IPlayedCard Play(int memberId, BattleState battleState, AIStrategy strategy)
     {
-        var maybeStatus = battleState.Members[memberId].State.StatusesOfType(StatusTag.WhenKilled);
-        _stage = maybeStatus.Any() ? maybeStatus.First().Amount.OrDefault(() => 0) == 2 ? 1 : 2 : 3;
+        var maybeStatus = battleState.Members[memberId].State.TemporalStates.Where(x => x.Status.Tag == StatusTag.WhenKilled).ToArray();
+        _stage = maybeStatus.AnyNonAlloc() ? maybeStatus.First().Amount.OrDefault(() => 0) == 2 ? 1 : 2 : 3;
         if (!_hasbootedUp)
         {
             _isfirstCard = false;

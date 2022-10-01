@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 26
   enemyName: Hypervisor
+  allowedForSocialMedia: 0
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -37,46 +39,51 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: Will empower allies by giving them resources and making the enemes
-    vulnerable
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Empower allies with resources and selects target foes.
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
-    maxHp: 24
-    maxShield: 12
+    maxHp: 116
+    maxShield: 24
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 4
+    attack: 0
     magic: 0
-    leadership: 6
-    armor: 0
-    resistance: 3
-    nonStatCardValueFactor: 0
+    leadership: 10
+    armor: 5
+    resistance: 0
+    nonStatCardValueFactor: 6
     startingResourceAmount: 0
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 55
+    powerLevel: 184
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 33.56514
-      perCardValue: 6
-      resourceValue: 1.98
-      perTurnPower: 7.98
+      startingPower: 130.12576
+      perCardValue: 8
+      resourceValue: 2.64
+      perTurnPower: 10.64
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 3.356514
-      calculatedPowerLevel: 55
+      estimatedHeroDamage: 13
+      estimatedTurnsAlive: 6.673116
+      estimatedPerTurnTotalValue: 53.400253
+      calculatedPowerLevel: 184
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: b9e0eb5244bf2884190a107363dae9dc, type: 2}
     - {fileID: 11400000, guid: a1176cd86ff09a0458d7d6094f9f04d1, type: 2}
     - {fileID: 11400000, guid: c50cea6bb7744ea4ea05f4a4594d7a4b, type: 2}
-    - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+    - {fileID: 11400000, guid: 6fa193abe5651f845a45b10a0fe06da8, type: 2}
+  maxCopies: 1
+  minimumAllies: 1
+  damageType: 0

@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 public class BattleCutscenePresenter : BaseCutscenePresenter
 {
+    private const string _callerId = "BattleCutscenePresenter";
+    
     [SerializeField] private GameObject heroArea;
     [SerializeField] private GameObject enemyArea;
     [SerializeField] private GameObject[] disableOnStarted;
@@ -14,7 +17,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
 
     public IEnumerator Begin()
     {
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false, _callerId));
         disableOnStarted.ForEach(d => d.SetActive(false));
         enableOnStarted.ForEach(d => d.SetActive(true));
         Characters.Clear();
@@ -49,12 +52,18 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
         
         _finishTriggered = true;
         DebugLog("Cutscene Finished");
-        Characters.ForEach(x => x.SpeechBubble.ForceHide());
-        disableOnFinished.ForEach(d => d.SetActive(false));
-        enableOnFinished.ForEach(d => d.SetActive(true));
+        Characters.ForEach(x => x.ForceEndConversation());
+        try
+        {
+            disableOnFinished.ForEach(d => d.SetActive(false));
+            enableOnFinished.ForEach(d => d.SetActive(true));
+        }
+        catch (Exception ex) {}
         MessageGroup.TerminateAndClear();
         cutscene.FinishStartBattleCutscene();
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true));
+        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));
         Message.Publish(new StartCardSetupRequested());
     }
+
+    protected override void Execute(WinBattleWithRewards msg) => FinishCutscene();
 }

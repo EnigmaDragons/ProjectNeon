@@ -34,7 +34,7 @@ public sealed class InterpolatedCardDescriptionsTests
     [Test]
     public void Interpolated_ResourceIcon_IsCorrect()
         => AssertContainsSprite(Description("Flames", BasicAttack, Owner));
-    
+
     [Test]
     public void Interpolated_Duration_IsCorrect()
         => AssertMatchesIgnoreStyling("Deal 3 for 2 turns", 
@@ -77,9 +77,9 @@ public sealed class InterpolatedCardDescriptionsTests
             , Owner));
 
     [Test]
-    public void Interpolated_RawDamageFormula_IsCorrect()
-        => AssertMatchesIgnoreStyling("Deal 8 raw damage",
-            Description("Deal {E[0]} raw damage", new EffectData {EffectType = EffectType.DealRawDamageFormula, Formula = "Shield * 2"},
+    public void Interpolated_TrueDamageFormula_IsCorrect()
+        => AssertMatchesIgnoreStyling("Deal 8 true damage",
+            Description("Deal {E[0]} true damage", new EffectData {EffectType = EffectType.DealTrueDamageFormula, Formula = "Shield * 2"},
                 OwnerWith(m => m.State.AdjustShield(4))));
 
     [Test]
@@ -89,7 +89,7 @@ public sealed class InterpolatedCardDescriptionsTests
     [Test]
     public void Interpolated_Auto_QuickSpeed_IsCorrect() 
         => AssertMatchesIgnoreStyling("Quick: ", 
-            InterpolatedCardDescriptions.InterpolatedDescription("{auto}", true, new EffectData[0], new EffectData[0], new EffectData[0], Owner, ResourceQuantity.None, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing()));
+            InterpolatedCardDescriptions.InterpolatedDescription("{auto}", true, new EffectData[0], new EffectData[0], new EffectData[0], Owner, ResourceQuantity.None, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing(), 0, 0));
     
     private string Description(string s, EffectData e, Maybe<Member> owner)
         => Description(s, e, owner, ResourceQuantity.None);
@@ -98,11 +98,11 @@ public sealed class InterpolatedCardDescriptionsTests
     private string Description(string s, EffectData e, Maybe<Member> owner, ResourceQuantity xCost)
         => Description(s, new [] {e}, owner, xCost);
     private string Description(string s, EffectData[] e, Maybe<Member> owner, ResourceQuantity xCost) 
-        => InterpolatedCardDescriptions.InterpolatedDescription(s, false, e, new EffectData[0], new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing());
+        => InterpolatedCardDescriptions.InterpolatedDescription(s, false, e, new EffectData[0], new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing(), 0, 0);
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner)
         => ReactionDescription(s, re, owner, ResourceQuantity.None);
     private string ReactionDescription(string s, EffectData re, Maybe<Member> owner, ResourceQuantity xCost) 
-        => InterpolatedCardDescriptions.InterpolatedDescription(s, false, new EffectData[0], new [] {re}, new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing());
+        => InterpolatedCardDescriptions.InterpolatedDescription(s, false, new EffectData[0], new [] {re}, new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing(), 0, 0);
     private string ForEffect(EffectData e, Maybe<Member> owner, ResourceQuantity xCost) => InterpolatedCardDescriptions.EffectDescription(e, owner, xCost);
 
     private void AssertContainsSprite(string actual) => Assert.IsTrue(actual.Contains("<sprite index="));
@@ -112,6 +112,9 @@ public sealed class InterpolatedCardDescriptionsTests
         var unstyledActual = actual
             .Replace("<b>", "")
             .Replace("</b>", "")
+            .Replace("<color=#fac34c>", "")
+            .Replace("<color=#ff647b>", "")
+            .Replace("</color>", "")
             .Replace(" <sprite index=", "");
         Enumerable.Range(0, 32)
             .ForEach(i => unstyledActual = unstyledActual.Replace($"{i}>", ""));

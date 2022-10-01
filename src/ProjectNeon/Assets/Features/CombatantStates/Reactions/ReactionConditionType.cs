@@ -29,16 +29,17 @@ public enum ReactionConditionType
     WhenAfflicted = 34,
     OnArchetypeCardPlayed = 35,
     OnCardPlayed = 36,
+    OnTeamCardCycled = 61,
     WhenShieldMaxed = 38,
     WhenEnemyPrimaryStatBuffed = 40,
     WhenAllyVulnerable = 41,
     OnResourcesLost = 42,
     WhenEnemyShielded = 43,
     WhenAllyBloodied = 44,
-    //OnTeamCardCycled = 61, // Need To Implement in #3522 
     WhenKilled = 99,
     WhenNonSelfAllyBloodied = 101,
     WhenNonSelfAllyHpDamaged = 102,
     WhenNonSelfAllyHpDamagedButNotKilled = 103,
-    WhenNonSelfAllyBloodiedButNotKilled = 104
+    WhenNonSelfAllyBloodiedButNotKilled = 104,
+    WhenHas10CardsOrMoreInHand = 105,
 }

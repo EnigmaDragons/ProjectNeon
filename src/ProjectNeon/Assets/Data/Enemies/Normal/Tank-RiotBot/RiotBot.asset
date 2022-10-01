@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: RiotBot
   m_EditorClassIdentifier: 
   id: 34
-  enemyName: RiotBot
+  enemyName: Riot Bot
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -28,7 +30,7 @@ MonoBehaviour:
   preferredTurnOrder: 99
   prefab: {fileID: 6441058707833588892, guid: b8dd859d630f7f54ca8957632a2402a1, type: 3}
   materialType: 2
-  libraryCameraOffset: {x: -0.2, y: 0, z: 1.6}
+  libraryCameraOffset: {x: 0, y: -0.9, z: 2.4}
   deathEffect:
     UseConstant: 1
     ConstantValue: 
@@ -37,15 +39,15 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 1
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: Protecting its team in a variety of ways, but taunt may force your
-    hand to target it before others
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Protecting its team in a variety of ways. Its taunt may force your
+    hand to target it before others.
   animations: {fileID: 11400000, guid: 4b63dc4db22e0134fb833a9580427bcc, type: 2}
   animationSounds: {fileID: 11400000, guid: ef690b9ff1cdd2845a7095aceaca96ce, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 48
-    maxShield: 22
+    maxHp: 124
+    maxShield: 30
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
@@ -58,23 +60,25 @@ MonoBehaviour:
     resistance: 0
     nonStatCardValueFactor: 0
     startingResourceAmount: 0
-    maxResourceAmount: 0
+    maxResourceAmount: 5
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 120
+    powerLevel: 200
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 57.933044
+      startingPower: 134.06133
       perCardValue: 10
-      resourceValue: 3.3000002
+      resourceValue: 3.3
       perTurnPower: 13.3
-      maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 5.7933044
-      calculatedPowerLevel: 120
+      maxAndStartingResourcesPower: 1.109328
+      estimatedHeroDamage: 14
+      estimatedTurnsAlive: 6.3838725
+      estimatedPerTurnTotalValue: 64.92407
+      calculatedPowerLevel: 200
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
@@ -83,3 +87,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 92fef7afef928a54fbb42678e949d421, type: 2}
     - {fileID: 11400000, guid: 80e13803e7bd6464ab3ab6c6f07cf668, type: 2}
     - {fileID: 11400000, guid: e0934cf0a9df5744cbc545c7f4e8c4e7, type: 2}
+  maxCopies: 1
+  minimumAllies: 1
+  damageType: 0

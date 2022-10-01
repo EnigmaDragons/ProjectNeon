@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllable, IConfirmCancellable
 {
-    [SerializeField] private HandVisualizer cards;
+    [SerializeField] private HandVisualizerBase cards;
     [SerializeField] private BattleState state;
     
     private IndexSelector<CardPresenter> _indexSelector;

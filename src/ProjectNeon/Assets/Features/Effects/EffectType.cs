@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 100
+// LAST NUMBER USED: 101
 
 public enum EffectType
 {
@@ -8,8 +8,8 @@ public enum EffectType
     // Most Common Effects
     AttackFormula = 30,
     MagicAttackFormula = 31,
-    RawDamageAttackFormula = 95,
-    DealRawDamageFormula = 70,
+    TrueDamageAttackFormula = 95,
+    DealTrueDamageFormula = 70,
     DamageOverTimeFormula = 84,
 
     AdjustStatAdditivelyFormula = 68,
@@ -92,5 +92,6 @@ public enum EffectType
     ChooseBuyoutCardsOrDefault = 48,
     AdjustBattleRewardFormula = 91,
     TransformCardsIntoCard = 93,
-    AdjustOwnersPrimaryResourceBasedOnTargetShieldSum = 98
+    AdjustOwnersPrimaryResourceBasedOnTargetShieldSum = 98,
+    RandomEffect = 101
 }

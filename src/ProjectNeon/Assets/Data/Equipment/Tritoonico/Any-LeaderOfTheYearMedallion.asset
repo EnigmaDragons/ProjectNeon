@@ -14,13 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 19
   displayName: Leader of the Year Medallion
-  description: 'Team: +1 Card Play'
+  description: '-5 Primary Stat, Team: +1 Card Play'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes: []
   rarity: 4
   slot: 2
   priceFactor: 1.8
-  modifiers: []
+  modifiers:
+  - ModifierType: 0
+    Amount: -4
+    StatType: Power
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
@@ -41,8 +44,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: d4fdd5b4a8bc9e346802d3c013d735fd, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -61,10 +64,17 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

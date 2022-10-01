@@ -4,7 +4,7 @@ public sealed class IntVariable : ScriptableObject
 {
 #if UNITY_EDITOR
     [Multiline]
-    public string DeveloperDescription = "";
+    public string DeveloperDescription = string.Empty;
 #endif
     public int Value;
 

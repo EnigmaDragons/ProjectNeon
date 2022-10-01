@@ -10,8 +10,8 @@ public class PlayerStatAddends : IPlayerStats
     
     public float this[PlayerStatType statType]
     {
-        get => _values[statType.ToString()];
-        private set => _values[statType.ToString()] = value;
+        get => _values[statType.GetString()];
+        private set => _values[statType.GetString()] = value;
     }
     
     public PlayerStatAddends With(PlayerStatType statType, float value)

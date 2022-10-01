@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 20
   enemyName: Cyber Junkie
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 1/9/22
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
@@ -37,20 +39,20 @@ MonoBehaviour:
   tier: 0
   unique: 1
   isHasty: 1
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: Tough enemy who acts quickly, packs a wallop, and swaps defenses.
   animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
   animationSounds: {fileID: 11400000, guid: 320a1f41711f2514e858f7835f7dd049, type: 2}
   stageDetails:
-  - stage: 2
-    maxHp: 76
-    maxShield: 26
+  - stage: 1
+    maxHp: 125
+    maxShield: 25
     startingShield: 0
     startingAegis: 1
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 12
+    attack: 15
     magic: 0
     leadership: 0
     armor: 0
@@ -60,20 +62,22 @@ MonoBehaviour:
     maxResourceAmount: 6
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 175
+    powerLevel: 256
     calculationVariables:
-      startingDefensiveValueAdjustment: 24
+      startingDefensiveValueAdjustment: 21
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 106.87078
-      perCardValue: 12
-      resourceValue: 3.96
-      perTurnPower: 15.96
-      maxAndStartingResourcesPower: 2.92191
-      estimatedTurnsAlive: 5.343539
-      calculatedPowerLevel: 175
+      startingPower: 155.85641
+      perCardValue: 15
+      resourceValue: 4.95
+      perTurnPower: 19.95
+      maxAndStartingResourcesPower: 1.8261936
+      estimatedHeroDamage: 16
+      estimatedTurnsAlive: 6.4940176
+      estimatedPerTurnTotalValue: 98.44957
+      calculatedPowerLevel: 256
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
@@ -106,6 +110,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 4
       ReactionEffectScope:
         UseConstant: 0
@@ -118,8 +123,12 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 11400000, guid: bf674097bc9a92b4586206e7adad0830, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: b133b0844aac3a141aed20b804335eb4, type: 2}
     - {fileID: 11400000, guid: c888bd26b7c873d45a046d5efba4b675, type: 2}
     - {fileID: 11400000, guid: af35d56220925b1489452c05bf31c741, type: 2}
     - {fileID: 11400000, guid: 6d806d0c3bc23ff46820f6a20fb18e20, type: 2}
+  maxCopies: 2
+  minimumAllies: 0
+  damageType: 3

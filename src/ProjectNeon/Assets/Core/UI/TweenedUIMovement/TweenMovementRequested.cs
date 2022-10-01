@@ -11,7 +11,7 @@ public class TweenMovementRequested
     public bool UseScaledTime { get; set; } = true;
 
     public TweenMovementRequested(Transform transform, Vector3 relativeDistance, float seconds, MovementDimension dimension)
-        : this(transform, relativeDistance, seconds, dimension, TweenMovementType.GoTo, "") {}
+        : this(transform, relativeDistance, seconds, dimension, TweenMovementType.GoTo, string.Empty) {}
 
     public TweenMovementRequested(Transform transform, Vector3 relativeDistance, float seconds, MovementDimension dimension, TweenMovementType movementType, string movementName)
     {

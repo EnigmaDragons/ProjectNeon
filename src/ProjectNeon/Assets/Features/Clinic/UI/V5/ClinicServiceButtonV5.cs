@@ -1,23 +1,36 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ClinicServiceButtonV5 : MonoBehaviour
+public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private Image currencyIcon;
     [SerializeField] private Button button;
+    [SerializeField] private TwoSidedRulesDescriptionPresenter rules;
+    [SerializeField] private CorpUiBase[] corpUi;
+    [SerializeField] private AllCorps corps;
+    [SerializeField] private CanvasGroup disabledCanvasGroup;
+    [SerializeField] private RarityPresenter rarity;
+    [SerializeField] private GameObject highlight;
 
+    private ClinicServiceButtonData _data;
+    
     public void Init(ClinicServiceButtonData data, PartyAdventureState party)
     {
+        _data = data;
         title.text = data.Name;
         description.text = data.Description;
         cost.text = data.Cost.ToString();
-        button.interactable = data.Enabled && party.ClinicVouchers >= data.Cost;
+        var interactable = data.Enabled && party.ClinicVouchers >= data.Cost;
+        button.interactable = interactable;
+        if (disabledCanvasGroup != null)
+            disabledCanvasGroup.alpha = interactable ? 1 : 0.3f;
         button.onClick.RemoveAllListeners();
-        if (party.Credits >= data.Cost)
+        if (party.ClinicVouchers >= data.Cost)
             button.onClick.AddListener(() =>
             {
                 party.UpdateClinicVouchersBy(-data.Cost);
@@ -29,5 +42,36 @@ public class ClinicServiceButtonV5 : MonoBehaviour
             cost.gameObject.SetActive(false);
             currencyIcon.gameObject.SetActive(false);
         }
+        corps.GetCorpByName(data.CorpName)
+            .IfPresent(c => corpUi.ForEach(cui => cui.Init(c)));
+        if (data.Rarity == Rarity.Starter)
+            rarity.gameObject.SetActive(false);
+        else 
+            rarity.Set(data.Rarity);
+    }
+
+    public void ShowRules()
+    {
+        if (rules != null)
+            rules.Show(_data.RulesContext);
+    }
+
+    public void HideRules()
+    {
+        if (rules != null)
+            rules.Hide();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        ShowRules();
+        highlight.SetActive(true);
+        Message.Publish(new ItemHovered(transform));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        HideRules();
+        highlight.SetActive(false);
     }
 }

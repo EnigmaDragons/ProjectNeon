@@ -4,9 +4,21 @@ using System.Linq;
 public static class TestPayloadExecutor
 {
     public static void ExecuteStartOfTurnEffects(this Member m)
-        => m.State.GetTurnStartEffects()
-            .ForEach(e => e.ExecuteAll(EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, new UnpreventableContext())));
-    
+    {
+        m.State.GetTurnStartEffects()
+            .ForEach(e => e.ExecuteAll(EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(),
+                ResourceQuantity.None, new UnpreventableContext())));
+        m.State.CleanExpiredStates();
+    }
+
+    public static void ExecuteEndOfTurnEffects(this Member m)
+    {
+        m.State.GetTurnEndEffects()
+            .ForEach(e => e.ExecuteAll(EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(),
+                ResourceQuantity.None, new UnpreventableContext())));
+        m.State.CleanExpiredStates();
+    }
+
     public static void ExecuteAll(this IPayloadProvider p, EffectContext ctx)
     {
         while (!p.IsFinished())

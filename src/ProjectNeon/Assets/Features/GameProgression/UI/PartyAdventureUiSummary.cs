@@ -7,6 +7,10 @@ public class PartyAdventureUiSummary : OnMessage<PartyAdventureStateChanged, Par
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private AdventureHeroUiSummary heroPresenter;
     [SerializeField] private GameObject itemParent;
+    [SerializeField] private RectTransform backPanel;
+    [SerializeField] private Vector2 backPanelOffsetIfLessThan3Heroes;
+
+    private bool _offsetApplied;
     
     [ReadOnly, SerializeField] private List<AdventureHeroUiSummary> active = new List<AdventureHeroUiSummary>();
 
@@ -16,6 +20,7 @@ public class PartyAdventureUiSummary : OnMessage<PartyAdventureStateChanged, Par
 
     private void UpdateUiSummary()
     {
+        ToggleOffset(party.BaseHeroes.Length);
         active.ForEach(Destroy);
         active.Clear();
         itemParent.DestroyAllChildren();
@@ -26,5 +31,18 @@ public class PartyAdventureUiSummary : OnMessage<PartyAdventureStateChanged, Par
             h.Init(party.Heroes[i], current.Adventure.IsV1);
             active.Add(h);
         }
+    }
+
+    private void ToggleOffset(int partySize)
+    {
+        if (partySize < 3 && _offsetApplied)
+            return;
+        if (partySize == 3 && !_offsetApplied)
+            return;
+        if (partySize < 3 && !_offsetApplied)
+            backPanel.anchoredPosition += backPanelOffsetIfLessThan3Heroes;
+        if (partySize == 3 && _offsetApplied)
+            backPanel.anchoredPosition -= backPanelOffsetIfLessThan3Heroes;
+        _offsetApplied = partySize < 3;
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
   m_Name: DefTech_AcceleratorCircuit
   m_EditorClassIdentifier: 
-  id: 105
+  id: 115
   displayName: 
   description: If you have Max Shield during a turn, gain +1 Card Play
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
@@ -41,7 +41,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: d4fdd5b4a8bc9e346802d3c013d735fd, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -62,14 +61,17 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   - EffectType: 74
-    Conditions: []
+    Conditions:
+    - {fileID: 11400000, guid: dfd0a81729c665147affbb0614bd5e37, type: 2}
     BaseAmount:
       UseConstant: 0
       ConstantValue: 0
@@ -84,7 +86,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: d4fdd5b4a8bc9e346802d3c013d735fd, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
@@ -105,13 +106,19 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
       scope: 0
       cardActions: {fileID: 11400000, guid: bc4c8b4fdf4c7ae47b54417dd1eeb29f, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects: []
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

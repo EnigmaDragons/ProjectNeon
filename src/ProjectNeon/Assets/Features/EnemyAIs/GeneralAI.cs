@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,13 +28,14 @@ public class GeneralAI : StatefulTurnAI
         
     private IPlayedCard Select(int turnNumber, CardSelectionContext ctx)
     {
-        UpdateTurnTracking(turnNumber);
-        
-        return ctx
+        var updatedContext = UpdateTurnTracking(turnNumber, ctx);
+        updatedContext = updatedContext
             .WithCommonSenseSelections()
             .IfTrueDontPlayType(_ => _currentTurnPlayed.ValueOrMaybe(ctx.Member.Id).IsPresentAnd(cards => cards.Any(c => c.Card.Is(CardTag.Exclusive))), CardTag.Exclusive)
-            .WithSelectedFocusCardIfApplicable()
-            .WithSelectedDesignatedAttackerCardIfApplicable()
+            .WithSelectedFocusCardIfApplicable();
+        if (!ctx.AiPreferences.IgnoreDesignatedAttackerRole)
+            updatedContext = updatedContext.WithSelectedDesignatedAttackerCardIfApplicable();
+        return updatedContext
             .WithFinalizedSmartCardSelection()
             .WithSelectedTargetsPlayedCard();
     }
@@ -46,7 +48,8 @@ public class GeneralAI : StatefulTurnAI
 
         var unhighlightedCards = battleState.GetUnhighlightedCards(memberId,
             battleState.GetPlayableCards(memberId, battleState.Party, strategy.SpecialCards));
-        var ctx = new CardSelectionContext(me, battleState, strategy, focusTarget, lastPlayedCard, unhighlightedCards);
+        var ctx = new CardSelectionContext(me, battleState, strategy, focusTarget, lastPlayedCard, unhighlightedCards)
+            .WithCurrentTurnPlayedCards(_currentTurnPlayed.ValueOrMaybe(memberId).OrDefault(() => new List<IPlayedCard>()).Select(p => p.Card.Type).ToArray());
         
         return Select(battleState.TurnNumber, ctx);
     }
@@ -85,12 +88,13 @@ public class GeneralAI : StatefulTurnAI
         return maybeMember;
     }
     
-    private void UpdateTurnTracking(int currentTurnNumber)
+    private CardSelectionContext UpdateTurnTracking(int currentTurnNumber, CardSelectionContext ctx)
     {
         if (currentTurnNumber == _currentTurnNumber)
-            return;
+            return ctx;
 
         _currentTurnNumber = currentTurnNumber;
         _currentTurnPlayed = new Dictionary<int, List<IPlayedCard>>();
+        return ctx.WithCurrentTurnPlayedCards(Array.Empty<CardTypeData>());
     }
 }

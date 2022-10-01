@@ -7,7 +7,7 @@ public sealed class PhysicalDamage : DamageCalculation
 
     public PhysicalDamage(Func<EffectContext, Member, float> damageCalc) => _damageCalc = damageCalc;
 
-    public bool DealRawDamage => false;
+    public bool DealTrueDamage => false;
     
     public DamageCalculation WithFactor(float factor) => new PhysicalDamage((ctx, m) => Mathf.CeilToInt(_damageCalc(ctx, m)) * factor);
 

@@ -71,6 +71,7 @@ public class CardRulesPresenter : MonoBehaviour
                     TemporalStatType.Confused.ToString(),
                     TemporalStatType.Marked.ToString(),
                     TemporalStatType.Vulnerable.ToString(),
+                    TemporalStatType.Prominent.ToString(),
                     PrimaryStat);
             }
 

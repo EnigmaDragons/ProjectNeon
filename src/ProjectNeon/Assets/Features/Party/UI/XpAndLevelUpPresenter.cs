@@ -22,6 +22,10 @@ public sealed class XpAndLevelUpPresenter : MonoBehaviour
     {
         xp.Init(_hero);
         levelLabel.text = _hero.Level.ToString();
+        
+        if (levelUpButton == null) 
+            return;
+        
         levelUpButton.gameObject.SetActive(false);
         if (_hero.Levels.UnspentLevelUpPoints > 0)
             levelUpButton.Init("Level\nUp", () =>

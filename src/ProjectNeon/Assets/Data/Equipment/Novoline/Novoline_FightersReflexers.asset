@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 60
   displayName: Fighter's Reflexers
-  description: "Once Per Turn: Counterattack for 1 \xD7 Attack damage"
+  description: "Once Per Turn: Counterattack for 1 \xD7 PrimaryStat damage"
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
   rarity: 3
@@ -39,10 +39,10 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 1
-    StatusDetailText: "Counterattack for 1 \xD7 Attack damage"
+    StatusDetailText: "Counterattack for 1 \xD7 PrimaryStat damage"
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -59,12 +59,19 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 11400000, guid: 1cb65337ae8e5f345a10404187ee3b0f, type: 2}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects: []
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

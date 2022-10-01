@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 50
   enemyName: Anton
+  allowedForSocialMedia: 1
   excludeFromBestiary: 1
+  isTutorialEnemy: 0
   lastBalanceDate: 2022/01/09
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
@@ -44,37 +46,39 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: cd7a247aea1ce42488a090793e3557b1, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 50
-    maxShield: 50
-    startingShield: 50
+    maxHp: 100
+    maxShield: 100
+    startingShield: 100
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
     attack: 0
     magic: 0
-    leadership: 16
+    leadership: 12
     armor: 0
     resistance: 0
-    nonStatCardValueFactor: 16
+    nonStatCardValueFactor: 12
     startingResourceAmount: 0
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 182
+    powerLevel: 244
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: -9
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 101.98969
-      perCardValue: 16
-      resourceValue: 5.28
-      perTurnPower: 12.280001
+      startingPower: 201.99995
+      perCardValue: 12
+      resourceValue: 3.96
+      perTurnPower: 6.96
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 10.198969
-      calculatedPowerLevel: 182
+      estimatedHeroDamage: 15
+      estimatedTurnsAlive: 8.977776
+      estimatedPerTurnTotalValue: 42.28218
+      calculatedPowerLevel: 244
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
@@ -120,6 +124,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 11400000, guid: 930a85934f2acdd42af673f8262ada57, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: cb4e9c41316824c429001acb62c7de15, type: 2}
     - {fileID: 11400000, guid: a82b2d1633dbb6647a206de86997fd34, type: 2}

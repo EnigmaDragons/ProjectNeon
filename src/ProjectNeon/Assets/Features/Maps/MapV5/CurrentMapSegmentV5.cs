@@ -9,7 +9,7 @@ public class CurrentMapSegmentV5 : ScriptableObject
     public List<MapNode3> CurrentChoices { get; set; } = new List<MapNode3>();
     public Vector2 PreviousPosition { get; set; } = Vector2.zero;
     public Vector2 DestinationPosition { get; set; } = Vector2.zero;
-    public int CurrentNodeRngSeed { get; set; } = Rng.NewSeed();
+    public OneTimeSeed CurrentNodeRngSeed { get; set; } = ConsumableRngSeed.GetValid();
 
     public void CompleteCurrentNode()
     {
@@ -32,10 +32,12 @@ public class CurrentMapSegmentV5 : ScriptableObject
 
     public void ClearSegment()
     {
+        PreviousPosition = CurrentMap.StartingPoint;
+        DestinationPosition = CurrentMap.StartingPoint;
         CurrentNode = Maybe<MapNode3>.Missing();
         CurrentChoices = new List<MapNode3>();
         UpdateSeed();
     }
 
-    private void UpdateSeed() => CurrentNodeRngSeed = Rng.NewSeed();
+    private void UpdateSeed() => CurrentNodeRngSeed = ConsumableRngSeed.GetValid();
 }

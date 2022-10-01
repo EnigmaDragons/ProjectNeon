@@ -45,8 +45,10 @@ public class FmodMusicPlayer : MonoBehaviour
     {
         { "TitleScreen", TitleMusic },
         { "AdventureSelection", TitleMusic },
+        { "DraftAdventureSelection", TitleMusic },
         { "SettingsScene", TitleMusic },
-        { "SquadSelection", GameMainMusic },
+        { "SquadSelection", TitleMusic },
+        { "DatabaseScene", GameMainMusic },
         { "CutsceneScene", Med_Music },
         { "GameScene", GameMainMusic },
         { "GameSceneV4", GameMainMusic },

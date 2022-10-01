@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0afb03af2a154c7786638821429910f9, type: 3}
+  m_Name: OppressionEffect
+  m_EditorClassIdentifier: 
+  id: 10
+  data:
+    OriginatingId: 10
+    ShortDescription: Gives A Debuff
+    FullDescription: Every battle a random debuff is applied to one hero
+    EffectType: 3
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    BattleEffect:
+      Scope: 1
+      Group: 2
+      EffectData:
+        EffectType: 101
+        Conditions: []
+        BaseAmount:
+          UseConstant: 1
+          ConstantValue: 0
+          Variable: {fileID: 0}
+        FloatAmount:
+          UseConstant: 1
+          ConstantValue: 0
+          FloatVariable: {fileID: 0}
+        DurationFormula: 0
+        EffectScope:
+          UseConstant: 0
+          ConstantValue: 
+          Variable: {fileID: 0}
+        HitsRandomTargetMember: 0
+        ReTargetScope: 40
+        ApplyToEachMemberIndividually: 0
+        StatusTag: 0
+        StatusDetailText: 
+        TurnDelay: 0
+        Formula: 
+        InterpolatePartialFormula:
+          EvaluationPartialFormula: 
+          Prefix: 
+          Suffix: 
+        FlavorText:
+          UseConstant: 1
+          ConstantValue: 
+          Variable: {fileID: 0}
+        ReferencedSequence: {fileID: 0}
+        ReferencedSequences:
+        - {fileID: 11400000, guid: 4ba9fc682c15ba344bf285c480078451, type: 2}
+        - {fileID: 11400000, guid: ddc09218cada91f4e984194c8c1f2823, type: 2}
+        - {fileID: 11400000, guid: 7c863a0c6982ff94e844435220fd942c, type: 2}
+        - {fileID: 11400000, guid: f9cede03d85268b41bb0b131e88be758, type: 2}
+        - {fileID: 11400000, guid: b59afabd2ef70b8409e827c2d79df28f, type: 2}
+        - {fileID: 11400000, guid: 565f59ef2bce1c74b9f0735f11bbd245, type: 2}
+        - {fileID: 11400000, guid: 130086595b383b14f87a4ec9735eef7d, type: 2}
+        - {fileID: 11400000, guid: 0d1ae71752296334b8112b536ac455b5, type: 2}
+        - {fileID: 11400000, guid: 659363f2d0120a04f8a2315b74031702, type: 2}
+        ReactionConditionType: 0
+        ReactionEffectScope:
+          UseConstant: 1
+          ConstantValue: 
+          Variable: {fileID: 0}
+        ReactionTimingWindow: 0
+        ReactionSequence: {fileID: 0}
+        ReactionEffect:
+          reactor: 0
+          scope: 0
+          cardActions: {fileID: 0}
+        BonusCardType: {fileID: 0}
+        Unpreventable: 0
+    CorpName:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: f940f79b6bcf7bd4184a364dad6a06b7, type: 2}
+    EffectScope:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    Equipment: {fileID: 0}

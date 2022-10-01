@@ -13,6 +13,7 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
     [SerializeField] private FloatReference autoAdvanceDelay = new FloatReference(0.8f);
     [SerializeField] private PlayableUiSound sfx;
     [SerializeField] private Vector2 reversedTextBoxOffset = Vector2.zero;
+    [SerializeField] private Color invisibleTextColorHex = Color.white;
     
     [Header("Debug Info")]
     [SerializeField, ReadOnly] private bool isRevealing;
@@ -128,9 +129,14 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
             panelBg.transform.Rotate(0, 180, 0);
         textBox.transform.localPosition = textBox.transform.localPosition + new Vector3(reversedTextBoxOffset.x, reversedTextBoxOffset.y);
     }
-
+    
     private IEnumerator BeginReveal()
     {
+        if (!gameObject.activeSelf)
+            yield break;
+        
+        var waitUntilGameUnpaused = new WaitUntil(() => Time.timeScale > 0.1f);
+        var waitForNextChar = new WaitForSecondsRealtime(secondsPerCharacter);
         if (secondsPerCharacter.Value < 0.01f)
         {
             ShowCompletely();
@@ -146,17 +152,20 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
             _cursor = fullText.IndexOf('>', _cursor) + 2;
         while (isRevealing && _cursor < fullText.Length)
         {
-            var shownText = fullText.Substring(0, _cursor);
-            textBox.text = shownText;
+            var shownText = fullText.Substring(0, _cursor);            
+            var containsTextColoring = fullText.ContainsAnyCase("<color=");
+            textBox.text = containsTextColoring ? shownText : $"{shownText}<color=\"white\">{fullText.Substring(_cursor)}</color>";
             _cursor++;
             if (sfx != null && shownText.Length % sfxEveryXCharacters == 0)
                 sfx.Play(transform.position);
+            
             //This advances past markdown
             while (_cursor < fullText.Length && fullText[_cursor - 1] == '<')
                 _cursor = fullText.IndexOf('>', _cursor) + 2;
-            
-            yield return new WaitUntil(() => Time.timeScale > 0.1f);
-            yield return new WaitForSeconds(secondsPerCharacter);
+
+            if (Time.timeScale <= 0.1f)
+                yield return waitUntilGameUnpaused;
+            yield return waitForNextChar;
         }
 
         ShowCompletely();

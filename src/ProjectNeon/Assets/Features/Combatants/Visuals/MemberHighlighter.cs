@@ -37,7 +37,7 @@ public class MemberHighlighter : OnMessage<HighlightCardOwner, UnhighlightCardOw
         Hide();
         IfInitialized(() =>
         {
-            if (_highlights.Any())
+            if (_highlights.AnyNonAlloc())
                 sprite.color = WithAlpha(Colors[_highlights.Last()], _highlightAlpha);
         });
     }

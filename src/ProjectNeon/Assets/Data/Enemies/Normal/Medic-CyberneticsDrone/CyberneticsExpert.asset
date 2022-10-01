@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 51
   enemyName: 
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 2022/01/30
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
@@ -37,23 +39,22 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: Healing enemies to full but cutting their max health down as they
-    do, hurting your health pool and weakening your stats, with a potent stat buff
-    ultimate to an enemy with reduced max HP
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Uses powerful cybernetics to heal its allies and reduce your heroes
+    power. Can supercharge a cybernetically healed ally.
   animations: {fileID: 11400000, guid: d549351053161df488bad944d00dc6f6, type: 2}
   animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 77
-    maxShield: 17
+    maxHp: 137
+    maxShield: 26
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
     attack: 0
-    magic: 12
+    magic: 15
     leadership: 0
     armor: 3
     resistance: 0
@@ -62,22 +63,27 @@ MonoBehaviour:
     maxResourceAmount: 9
     resourceGainPerTurn: 1
     cardsPerTurn: 2
-    powerLevel: 188
+    powerLevel: 245
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: -12
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 86.796455
-      perCardValue: 12
-      resourceValue: 3.96
-      perTurnPower: 15.96
-      maxAndStartingResourcesPower: 3.428498
-      estimatedTurnsAlive: 8.679646
-      calculatedPowerLevel: 188
+      startingPower: 147.00078
+      perCardValue: 13.5
+      resourceValue: 4.455
+      perTurnPower: 19.455
+      maxAndStartingResourcesPower: 1.92853
+      estimatedHeroDamage: 15
+      estimatedTurnsAlive: 6.533368
+      estimatedPerTurnTotalValue: 96.37139
+      calculatedPowerLevel: 245
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 14ca84880bfdd2f4bbc0bc26bda4246c, type: 2}
     - {fileID: 11400000, guid: 642cc0e21f6f529448ce7c980f716767, type: 2}
     - {fileID: 11400000, guid: d4604012f8a56de43a17bab798d32fb6, type: 2}
+  maxCopies: 1
+  minimumAllies: 2
+  damageType: 0

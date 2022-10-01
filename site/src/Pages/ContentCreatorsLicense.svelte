@@ -8,11 +8,13 @@
       <img src={game.logo} alt={`${game.name} Logo`} />
     </div>
 
-    <h2>{game.name} Let's Play Monetization Permission</h2>
+    <h2>Let's Play Monetization Permission</h2>
 
     <p>{game.siteOwner} gives permission to any user to monetize their videos when doing Let's Plays, Speedruns, and Reviews of {game.name}.</p>
 
     <p>However, videos and uploads of the {game.name} Original Soundtrack are not permitted.</p>
+
+    <a href={game.assetKit}>Content Creator Asset Kit</a>
 
     <p>{game.siteOwner} retains the right to revoke this license at any time.</p>
   </div>
@@ -33,5 +35,10 @@
   .column {
     flex-direction: column;
     padding: 6em;
+  }
+
+  a {
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
 </style>

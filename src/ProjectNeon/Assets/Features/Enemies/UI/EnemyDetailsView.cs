@@ -27,22 +27,22 @@ public class EnemyDetailsView : MonoBehaviour
     private void Awake()
     {
         if (!_isInitialized && staringEnemy != null)
-            Show(staringEnemy.ForStage(currentAdventureProgress.AdventureProgress.CurrentChapterNumber));
+            Show(staringEnemy.ForStage(currentAdventureProgress.AdventureProgress.CurrentChapterNumber), Maybe<Member>.Missing());
     }
 
-    public void Show(EnemyInstance e)
+    public void Show(EnemyInstance e, Maybe<Member> possibleMember)
     {
         _isInitialized = true;
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLabel.text = e.Name;
-        var eliteText = e.Tier == EnemyTier.Elite ? "Elite" : "";
-        var hastyText = e.IsHasty ? "Hasty " : "";
+        var eliteText = e.Tier == EnemyTier.Elite ? "Elite" : string.Empty;
+        var hastyText = e.IsHasty ? "Hasty " : string.Empty;
         if (typeLabel != null)
             typeLabel.text = hastyText + eliteText;
         if (statPanel != null)
             statPanel.Initialized(e.Stats);
         
-        var member = e.AsMember(InfoMemberId.Get());
+        var member = possibleMember.OrDefault(() => e.AsMember(InfoMemberId.Get()));
         if (specialPowers != null && icons != null)
         {
             var powers = e.StartOfBattleEffects.Where(x => x.StatusTag != StatusTag.None).Select(s =>

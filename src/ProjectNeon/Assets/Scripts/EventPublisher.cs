@@ -5,7 +5,8 @@ public class EventPublisher : ScriptableObject
 {
     public void WinBattle() => Message.Publish(new WinBattleWithRewards());
     public void LoseBattle() => Message.Publish(new BattleFinished(TeamType.Enemies));
-    public void StartNewGame() => Message.Publish(new StartNewGameRequested());
+    public void StartNewGame() => Message.Publish(new StartNewGameRequested(AdventureMode.Standard));
+    public void StartNewDraft() => Message.Publish(new StartNewGameRequested(AdventureMode.Draft));
     public void ContinueCurrentGame() => Message.Publish(new ContinueCurrentGame());
     public void StartNextStage() => Message.Publish(new StartNextStage());
     public void ToggleUseCardAsBasic() => Message.Publish(new ToggleUseCardAsBasic());
@@ -13,7 +14,7 @@ public class EventPublisher : ScriptableObject
     public void BeginTurnConfirmation() => Message.Publish(new BeginPlayerTurnConfirmation());
     public void ToggleGameSpeed() => Message.Publish(new ToggleGameSpeed());
     public void ToggleShop() => Message.Publish(new ToggleShop());
-    public void ToggleCardShop() => Message.Publish(new ToggleCardShop());
+    public void ToggleCardShop() => Message.Publish(new ToggleCardShop(false));
     public void ToggleEquipmentShop() => Message.Publish(new ToggleEquipmentShop());
     public void TogglePartyDetails() => Message.Publish(new TogglePartyDetails());
     public void ShowDeckBuilder() => Message.Publish(new ShowDeckBuilder());
@@ -35,6 +36,7 @@ public class EventPublisher : ScriptableObject
     public void HideHeroLevelUpPathway() => Message.Publish(new HideHeroLevelUpPathway());
     public void GivePartyXp() => Message.Publish(new GivePartyXp(100));
     public void CancelTargetSelection() => Message.Publish(new CancelTargetSelectionRequested());
+    public void EnableMapView() => Message.Publish(new ShowNamedTarget("MapView"));
     public void FinishNode() => Message.Publish(new NodeFinished());
     public void ToggleBestiary() => Message.Publish(new ToggleBestiary());
     public void GainRandomEquipment() => Message.Publish(new GainRandomEquipment());
@@ -52,6 +54,7 @@ public class EventPublisher : ScriptableObject
     public void ClearGlobalEffects() => Message.Publish(new ClearGlobalEffects());
     public void WinGameImmediately() => Message.Publish(new WinGameRequested());
     public void ToggleCredits() => Message.Publish(new ToggleCredits());
+    public void ToggleGameProgressionSummary() => Message.Publish(new ToggleNamedTarget("ProgressionView"));
     public void ToggleLearningMenu() => Message.Publish(new ToggleNamedTarget("LearningMenu"));
     public void SkipCutscene() => Message.Publish(new SkipCutsceneRequested());
     public void AdvanceCutscene() => Message.Publish(new AdvanceCutsceneRequested());
@@ -62,4 +65,9 @@ public class EventPublisher : ScriptableObject
     public void SwitchToNightEnvironment() => Message.Publish(new SetNightMode(true));
     public void SkipSegment() => Message.Publish(new SkipSegment());
     public void SetBasicSuperFocusEnabled(bool enabled) => Message.Publish(new SetSuperFocusBasicControl(enabled));
+    public void RespawnMap() => Message.Publish(new RespawnMap());
+    public void SkipDraftCheat() => Message.Publish(new SkipDraft());
+    public void Proceed(string contextName) => Message.Publish(new ProceedRequested(contextName));
+    public void DismissUnlockDisplay() => Message.Publish(new DismissUnlockDisplay());
+    public void ShowNewscast(Cutscene cutscene) => Message.Publish(new ShowNewscast(cutscene));
 }

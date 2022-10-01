@@ -11,6 +11,8 @@ public class AiCardSelectionTests
     private static readonly CardTypeData ControlCard = CreateCard("Control 1", CardTag.Disable.AsArray(), Scope.One, Group.Opponent);
     private static readonly CardTypeData AttackCard1 = CreateCard("Attack 1", CardTag.Attack.AsArray(), Scope.One, Group.Opponent);
     private static readonly CardTypeData AttackCard2 = CreateCard("Attack 2", CardTag.Attack.AsArray(), Scope.One, Group.Opponent);
+    private static readonly CardTypeData ResistanceAttackCard = CreateCard("Resistance Attack", new [] { CardTag.Attack, CardTag.Resistance }, Scope.One, Group.Opponent);
+    private static readonly CardTypeData HigherCostAttackCard = CreateCard("High-Cost Attack", CardTag.Attack.AsArray(), Scope.One, Group.Opponent, 5);
     private static readonly EnemySpecialCircumstanceCards SpecialCards = new EnemySpecialCircumstanceCards(DisabledCard, AntiStealthCard, AIGlitchedCard);
     
     [Test]
@@ -38,6 +40,17 @@ public class AiCardSelectionTests
         
         var nextPlayed = ExecuteGeneralAiSelection(ctx.WithLastPlayedCard(AttackCard1), ai, 2);
         Assert.AreEqual(AttackCard2.Name, nextPlayed.Card.Name);
+    }
+    
+    [Test]
+    public void GeneralAI_HigherCostAttackCards_PlaysHigherCostedOne()
+    {
+        var opp = TestMembers.Any();
+        var me = TestMembers.CreateEnemy(e => e.With(new InMemoryResourceType("Energy") { MaxAmount = 99, StartingAmount = 99 }));
+
+        var ctx = AsDesignatedAttacker(me, opp, new AiPreferences { CardOrderPreferenceFactor = 0 }, HigherCostAttackCard, AttackCard1);
+
+        AssertAlwaysPlays(ctx, HigherCostAttackCard);
     }
     
     [Test]
@@ -91,7 +104,8 @@ public class AiCardSelectionTests
 
         var ctx = AsNonDesignatedAttacker(me, opp, designatedOtherAttacker, aiPreferences, AttackCard1, ControlCard);
         
-        AssertAlwaysPlays(ctx, ControlCard);
+        var played = ExecuteGeneralAiSelection(ctx, CreateAI(), 1);
+        Assert.AreNotEqual(AttackCard1.Name, played.Card.Name);
     }
 
     [Test]
@@ -118,7 +132,7 @@ public class AiCardSelectionTests
         var exclusiveCard2 = CreateCard("Exclusive 2", new[] {CardTag.Exclusive}, Scope.One, Group.Opponent);
         
         var ctx = new CardSelectionContext(me, Maybe<Member>.Missing(), new[] {opp, me, designatedOtherAttacker},
-            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedOtherAttacker, SpecialCards),
+            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedOtherAttacker, SpecialCards, new DeterministicRng(Rng.NewSeed())),
             PartyAdventureState.InMemory(), CardPlayZones.InMemory,
             aiPreferences, Maybe<CardTypeData>.Missing(), new []{ exclusiveCard1, exclusiveCard2, AttackCard1 }, new CardTypeData[0]);
 
@@ -138,11 +152,40 @@ public class AiCardSelectionTests
         var designatedOtherAttacker = TestMembers.AnyEnemy();
         
         var ctx = new CardSelectionContext(me, Maybe<Member>.Missing(), new[] {opp, me, designatedOtherAttacker},
-            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedOtherAttacker, SpecialCards),
+            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedOtherAttacker, SpecialCards, new DeterministicRng(Rng.NewSeed())),
             PartyAdventureState.InMemory(), CardPlayZones.InMemory,
             new AiPreferences(), Maybe<CardTypeData>.Missing(), new []{ AttackCard1, AttackCard2 }, AttackCard2.AsArray());
 
         AssertAlwaysPlays(ctx, AttackCard1);
+    }
+
+    [Test]
+    public void GeneralAI_MultiCardDesignatedAttacker_OnlyNeedsToPlayOneAttack()
+    {
+        var opp = TestMembers.Any();
+        var me = TestMembers.CreateEnemy(s => s.With(StatType.ExtraCardPlays, 2));
+
+        var ctx = AsDesignatedAttacker(me, opp, new AiPreferences(), ControlCard, AttackCard1)
+            .WithLastPlayedCard(AttackCard1)
+            .WithCurrentTurnPlayedCards(AttackCard1.AsArray());
+
+        for (var i = 0; i < 10; i++)
+        {
+            var ai = CreateAI();
+            var cardTwo = ExecuteGeneralAiSelection(ctx, ai);
+            Assert.AreEqual(ControlCard.Name, cardTwo.Card.Name, $"Wrong Card Played on Turn {i + 1}");
+        }
+    }
+
+    [Test]
+    public void GeneralAI_AttackResistance_DoesntPlayWhenNoResistance()
+    {
+        var opp = TestMembers.Create(s => s.With(StatType.Resistance, 1));
+        var me = TestMembers.CreateEnemy(s => s.With(StatType.Resistance, 1));
+
+        var ctx = AsDesignatedAttacker(me, opp, new AiPreferences { CardTagPriority = new [] { CardTag.Resistance } }, ResistanceAttackCard, AttackCard1);
+        
+        AssertFirstCardIsAlways(ctx, ResistanceAttackCard);
     }
     
     private static GeneralAI CreateAI() 
@@ -154,12 +197,12 @@ public class AiCardSelectionTests
     
     private static CardSelectionContext AsDesignatedAttacker(Member me, Member opp, AiPreferences aiPreferences, params CardTypeData[] cards)
         => new CardSelectionContext(me, Maybe<Member>.Missing(), new[] {opp, me},
-            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), me, SpecialCards),
+            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), me, SpecialCards, new DeterministicRng(Rng.NewSeed())),
             PartyAdventureState.InMemory(), CardPlayZones.InMemory, aiPreferences,Maybe<CardTypeData>.Missing(), cards, new CardTypeData[0]);
     
     private static CardSelectionContext AsNonDesignatedAttacker(Member me, Member opp, Member designatedAttacker, AiPreferences aiPreferences, params CardTypeData[] cards)
         => new CardSelectionContext(me, Maybe<Member>.Missing(), new[] {opp, me, designatedAttacker},
-            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedAttacker, SpecialCards),
+            new AIStrategy(Maybe<Member>.Missing(), new Single(opp), designatedAttacker, SpecialCards, new DeterministicRng(Rng.NewSeed())),
             PartyAdventureState.InMemory(), CardPlayZones.InMemory, aiPreferences, Maybe<CardTypeData>.Missing(), cards, new CardTypeData[0]);
 
     private void AssertAlwaysPlays(CardSelectionContext ctx, CardTypeData c) => AssertAlwaysPlays(ctx, c, CreateAI());
@@ -186,13 +229,14 @@ public class AiCardSelectionTests
     private static IPlayedCard ExecuteGeneralAiSelection(CardSelectionContext ctx, GeneralAI ai, int turnNumber = 0) 
         => ai.Play(turnNumber, ctx);
 
-    private static CardTypeData CreateCard(string name, CardTag[] tags, Scope s, Group g)
+    private static CardTypeData CreateCard(string name, CardTag[] tags, Scope s, Group g, int cost = 0)
     {
        return new InMemoryCard
         {
             Name = name,
             Id = _nextCardId++,
             Tags = new HashSet<CardTag>(tags),
+            Cost = new InMemoryResourceAmount(cost, "Energy"),
             ActionSequences = new []
             {
                 CardActionSequence.Create(s, g, TestableObjectFactory.Create<CardActionsData>(), false),

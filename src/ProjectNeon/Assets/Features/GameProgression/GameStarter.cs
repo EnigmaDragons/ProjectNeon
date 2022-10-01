@@ -14,25 +14,36 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     [SerializeField] private Adventure defaultAdventure;
     [SerializeField] private bool allowPlayerToSelectAdventure;
     [SerializeField] private EncounterBuilderHistory encounterHistory;
+    [SerializeField] private Library library;
     
     protected override void Execute(StartNewGame msg)
+    {
+        if (CurrentGameData.HasActiveGame && adventureProgress.HasActiveAdventure && adventureProgress.AdventureProgress.CurrentStageProgress > 0 && adventureProgress.AdventureProgress.AdventureId != 10)
+            CurrentProgressionData.Write(x =>
+            {
+                x.RunsFinished += 1;
+                return x;
+            });
+        Init();
+
+        if (allowPlayerToSelectAdventure)
+            navigator.NavigateToAdventureSelection();
+        else if (defaultAdventure.IsV5)
+            StartDefaultAdventureV5();
+        else if (defaultAdventure.IsV2)
+            SelectDefaultAdventureV2();
+        else if (defaultAdventure.IsV4)
+            StartDefaultAdventureV4(true);
+    }
+
+    private void Init()
     {
         io.ClearCurrentSlot();
         encounterHistory.Clear();
         AllMetrics.SetRunId(CurrentGameData.Data.RunId);
-        
-        if (defaultAdventure.IsV2)
-            if (allowPlayerToSelectAdventure)
-                navigator.NavigateToAdventureSelection();
-            else
-                SelectDefaultAdventureV2();
-        
-        if (defaultAdventure.IsV5)
-            StartDefaultAdventureV5();
-        else if (defaultAdventure.IsV4)
-            StartDefaultAdventureV4(true);
+        RunTimer.ConsumeElapsedTime();
     }
-    
+
     private void SelectDefaultAdventureV2()
     {
         var adventure = defaultAdventure;
@@ -45,7 +56,6 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             return s;
         });
-        Message.Publish(new GameStarted());
         navigator.NavigateToSquadSelection();
     }
 
@@ -58,7 +68,6 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         if (adventure.FixedStartingHeroes.Length == 0)
         {
             Log.Error("Developer Data Error - V4 Adventures should start with a fixed party");
-            Message.Publish(new GameStarted());
             navigator.NavigateToSquadSelection();
         }
         else
@@ -72,21 +81,31 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                 s.PartyData = party.GetData();
                 return s;
             });
-            Message.Publish(new GameStarted());
             navigator.NavigateToGameSceneV4();
         }
     }
 
-    private void StartDefaultAdventureV5() => StartAdventureV5(defaultAdventure);
+    private void StartDefaultAdventureV5() => StartAdventureV5(defaultAdventure, Maybe<BaseHero[]>.Missing(), library.DefaultDifficulty);
     
-    protected override void Execute(StartAdventureV5Requested msg) => StartAdventureV5(msg.Adventure);
+    protected override void Execute(StartAdventureV5Requested msg)
+    {
+        Init();
+        StartAdventureV5(msg.Adventure, msg.OverrideHeroes, msg.Difficulty);
+    }
 
-    private void StartAdventureV5(Adventure adventure)
+    private void StartAdventureV5(Adventure adventure, Maybe<BaseHero[]> overrideHeroes, Maybe<Difficulty> possibleDifficulty)
     {
         var startingSegment = 0;
+        var difficulty = possibleDifficulty.IsPresent ? possibleDifficulty.Value : library.DefaultDifficulty;
         adventureProgress.AdventureProgress = adventureProgress5;
         adventureProgress.AdventureProgress.Init(adventure, 0, startingSegment);
-        party.Initialized(adventure.FixedStartingHeroes);
+        adventureProgress.AdventureProgress.Difficulty = difficulty;
+        foreach (var globalEffect in difficulty.GlobalEffects)
+            adventureProgress.AdventureProgress.GlobalEffects.Apply(globalEffect, new GlobalEffectContext(adventureProgress.AdventureProgress.GlobalEffects));
+        if (adventure.Mode == AdventureMode.Draft)
+            party.InitializedForDraft(overrideHeroes.Select(o => o, adventure.FixedStartingHeroes));
+        else
+            party.Initialized(overrideHeroes.Select(o => o, adventure.FixedStartingHeroes));
         party.UpdateClinicVouchersBy(adventure.StartingClinicVouchers);
         CurrentGameData.Write(s =>
         {
@@ -96,8 +115,17 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             s.PartyData = party.GetData();
             return s;
         });
-        Message.Publish(new GameStarted());
-        navigator.NavigateToGameSceneV5();
+        Navigate(navigator, adventureProgress5);
+    }
+
+    public static void Navigate(Navigator n, AdventureProgressV5 a)
+    {
+        var segment = a.CurrentStageSegment;
+        DevLog.Info($"Start Adventure. Auto-Start: {segment.ShouldAutoStart}. MapNodeType: {segment.MapNodeType}");
+        if (a != null && segment.ShouldAutoStart && segment.MapNodeType != MapNodeType.Unknown)
+            segment.Start();
+        else
+            n.NavigateToGameSceneV5();
     }
 
     protected override void Execute(ContinueCurrentGame msg)
@@ -146,21 +174,24 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     protected override void Execute(StartNewGameRequested msg)
     {
         if (!CurrentGameData.HasActiveGame) 
-            KickOffGameStartProcess();
+            KickOffGameStartProcess(msg.Mode);
         else
             Message.Publish(new ShowTwoChoiceDialog
             {
                 UseDarken = true,
                 Prompt = "Starting a new game will abandon your current run. Are you sure you wish to start to start a new game?",
                 PrimaryButtonText = "Yes",
-                PrimaryAction = KickOffGameStartProcess,
+                PrimaryAction = () => KickOffGameStartProcess(msg.Mode),
                 SecondaryButtonText = "No",
                 SecondaryAction = () => { }
             });
     }
 
-    private void KickOffGameStartProcess()
+    private void KickOffGameStartProcess(AdventureMode mode)
     {
-        Message.Publish(new StartNewGame());
+        if (mode == AdventureMode.Draft)
+            navigator.NavigateToDraftAdventureSelection();
+        else
+            Message.Publish(new StartNewGame());
     }
 }

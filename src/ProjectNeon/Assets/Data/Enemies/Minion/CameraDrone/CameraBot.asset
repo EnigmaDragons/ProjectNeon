@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 35
   enemyName: Camera Bot
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 2022/01/29
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: 783e7e0b303bb41449ab6de7be056a1c, type: 2}
@@ -37,16 +39,16 @@ MonoBehaviour:
   tier: 1
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: Provides additional power to allies and vulnerable to enemies by putting
-    them in the spotlight.
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Empower its allies andmake ites foes vulnerable by putting them in
+    the spotlight.
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
   animationSounds: {fileID: 11400000, guid: f31f3f458a9414c40b41bf417f757877, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 8
-    maxShield: 16
-    startingShield: 6
+    maxHp: 22
+    maxShield: 22
+    startingShield: 22
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
@@ -54,27 +56,29 @@ MonoBehaviour:
     attack: 0
     magic: 0
     leadership: 5
-    armor: 2
+    armor: 0
     resistance: 0
     nonStatCardValueFactor: 5
     startingResourceAmount: 0
     maxResourceAmount: 0
     resourceGainPerTurn: 0
     cardsPerTurn: 1
-    powerLevel: 36
+    powerLevel: 65
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 5
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 26.329395
+      startingPower: 50.803047
       perCardValue: 5
-      resourceValue: 1.6500001
+      resourceValue: 1.65
       perTurnPower: 5
       maxAndStartingResourcesPower: 0
-      estimatedTurnsAlive: 2.1329396
-      calculatedPowerLevel: 36
+      estimatedHeroDamage: 10
+      estimatedTurnsAlive: 3.0535364
+      estimatedPerTurnTotalValue: 13.744042
+      calculatedPowerLevel: 65
     startOfBattleEffects:
     - EffectType: 74
       Conditions: []
@@ -108,6 +112,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 41
       ReactionEffectScope:
         UseConstant: 1
@@ -120,7 +125,11 @@ MonoBehaviour:
         scope: 3
         cardActions: {fileID: 11400000, guid: c766588a32e032940a937fb95771411c, type: 2}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: b705d255ef690f245a6225306f4742bc, type: 2}
     - {fileID: 11400000, guid: 65616dc3afc45004abf729f8baf6c599, type: 2}
     - {fileID: 11400000, guid: 3a1604a4c2ba6014db6c3c0d47fd4360, type: 2}
+  maxCopies: 1
+  minimumAllies: 1
+  damageType: 0

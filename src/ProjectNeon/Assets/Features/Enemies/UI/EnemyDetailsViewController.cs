@@ -21,7 +21,7 @@ public class EnemyDetailsViewController : OnMessage<ShowEnemyDetails, HideEnemyD
     
     protected override void Execute(ShowEnemyDetails msg)
     {        
-        enemy.Show(msg.Enemy);
+        enemy.Show(msg.Enemy, msg.Member);
         viewParent.SetActive(true);
         darken.color = new Color(darken.color.r, darken.color.g, darken.color.b, 0);
         darken.DOFade(_darkenAlpha, _duration);

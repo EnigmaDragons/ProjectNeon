@@ -7,4 +7,6 @@ public class NoEnemiesHaveAnyTemporalStatType : StaticCardCondition
 
     public override bool ConditionMet(CardConditionContext ctx)
         => ctx.NoEnemy(x => x.State[statType] > 0);
+    
+    public override string Description => $"No enemy has {statType}";
 }

@@ -7,10 +7,12 @@ public class EffectReactWith : Effect
 {
     private static Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>> Conditions = new Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>>
     {
-        { ReactionConditionType.OnCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(c => c.Owner.Id == ctx.Possessor.Id) },
+        { ReactionConditionType.WhenHas10CardsOrMoreInHand, ctx => effect => ctx.Possessor.IsConscious() && effect.CardZones.HandZone.Count >= 10 },
+        { ReactionConditionType.OnTeamCardCycled, ctx => effect => ctx.Actor.IsConscious() && effect.CycledCard.IsPresent },
+        { ReactionConditionType.OnCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(c => c.Owner.Id == ctx.Possessor.Id) && effect.IsFirstBattleEffectOfChosenTarget },
         { ReactionConditionType.WhenAttacked, ctx => effect => 
             ctx.Actor.IsConscious()
-            && new [] {EffectType.AttackFormula, EffectType.MagicAttackFormula, EffectType.RawDamageAttackFormula}.Contains(effect.EffectData.EffectType)
+            && new [] {EffectType.AttackFormula, EffectType.MagicAttackFormula, EffectType.TrueDamageAttackFormula}.Contains(effect.EffectData.EffectType)
             && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
         { ReactionConditionType.WhenBloodied, ctx => effect => 
             ctx.Actor.IsConscious() && !effect.BattleBefore.Members[ctx.Possessor.Id].IsBloodied() && effect.BattleAfter.Members[ctx.Possessor.Id].IsBloodied() },
@@ -221,6 +223,9 @@ public class EffectReactWith : Effect
             ctx.Target.ApplyToAllConscious(m =>
             {
                 var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
+                if (!ctx.BattleMembers.ContainsKey(m.MemberId))
+                    return;
+                
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionCard.Value.ActionSequence.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
                 m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount),
@@ -232,6 +237,9 @@ public class EffectReactWith : Effect
             ctx.Target.ApplyToAllConscious(m =>
             {
                 var reactionConditionContext = new ReactionConditionContext { ReactionEffectScope = _reactionEffectContext };
+                if (!ctx.BattleMembers.ContainsKey(m.MemberId))
+                    return;
+
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionEffect.Value.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
                 m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), 

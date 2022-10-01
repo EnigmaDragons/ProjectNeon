@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
 {
-    private static readonly Dictionary<StatType, int> _statAmounts = new Dictionary<StatType, int>
+    private static readonly Dictionary<StatType, int> StatAmounts = new Dictionary<StatType, int>
     {
-        { StatType.MaxHP, 9 },
-        { StatType.StartingShield, 6 },
+        { StatType.MaxHP, 16 },
+        { StatType.StartingShield, 8 },
         { StatType.Attack, 1 },
         { StatType.Magic, 1 },
         { StatType.Leadership, 1 },
@@ -15,9 +15,9 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         { StatType.Armor, 2 },
         { StatType.Resistance, 2 },
     };
-    private static readonly Dictionary<StatType, string> _negativePrefix = new Dictionary<StatType, string>
+    private static readonly Dictionary<StatType, string> NegativePrefix = new Dictionary<StatType, string>
     {
-        { StatType.MaxHP, "Unhealthy" },
+        { StatType.MaxHP, "Lifeblood" },
         { StatType.StartingShield, "Powered" },
         { StatType.Attack, "Dulled" },
         { StatType.Magic, "Inhibiting" },
@@ -26,7 +26,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         { StatType.Armor, "Fragilizing" },
         { StatType.Resistance, "Cursed" },
     };
-    private static readonly Dictionary<StatType, string> _positiveSuffix = new Dictionary<StatType, string>
+    private static readonly Dictionary<StatType, string> PositiveSuffix = new Dictionary<StatType, string>
     {
         { StatType.MaxHP, "Vitality" },
         { StatType.StartingShield, "Barrier" },
@@ -37,19 +37,38 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         { StatType.Armor, "Protection" },
         { StatType.Resistance, "Ward" },
     };
-    private static readonly StatType[] _powerStats = new[]
+    private static readonly StatType[] PowerStats = 
     {
         StatType.Attack,
         StatType.Magic,
         StatType.Leadership,
         StatType.Economy
     };
+    private static readonly StatType[] TutorialStatTypes =
+    {
+        StatType.MaxHP,
+        StatType.Attack,
+        StatType.Armor,
+        StatType.Resistance
+    };
+    
     private readonly PartyAdventureState _party;
+    private readonly int _numOfImplants;
+    private readonly DeterministicRng _rng;
+    private readonly bool _isTutorial;
+    private readonly Rarity[] _rarityChances;
+    
     private ClinicServiceButtonData[] _generatedOptions;
     private bool[] _available;
 
-    public ImplantClinicServiceProviderV4(PartyAdventureState party)
-        => _party = party;
+    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants, DeterministicRng rng, bool isTutorial, Rarity[] rarityChances)
+    {
+        _party = party;
+        _numOfImplants = numOfImplants;
+        _rng = rng;
+        _isTutorial = isTutorial;
+        _rarityChances = rarityChances;
+    }
     
     public string GetTitle() => "Available Implant Procedures";
 
@@ -60,7 +79,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
             var newGeneratedOptions = new List<ClinicServiceButtonData>();
             for (int i = 0; i < _party.Heroes.Length; i++)
             {
-                for (var ii = 0; ii < 2; ii++)
+                for (var ii = 0; ii < _numOfImplants / _party.Heroes.Length; ii++)
                 {
                     var option = GetOption(_party.Heroes[i], i * 2 + ii);
                     while (newGeneratedOptions.Any(x => x.Description == option.Description))
@@ -78,21 +97,43 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
 
     private ClinicServiceButtonData GetOption(Hero hero, int index)
     {
-        var loss = _statAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value && (!_powerStats.Contains(x.Key) || x.Key == hero.PrimaryStat)).ToArray().Shuffled().First();
+        var loss = StatAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat) && (!_isTutorial || TutorialStatTypes.Contains(x.Key))).Random(_rng);
         var lossStat = loss.Key;
         var lossAmount = loss.Value;
-        var gain = _statAmounts.Where(x => x.Key != loss.Key && (!_powerStats.Contains(x.Key) || x.Key == hero.PrimaryStat)).ToArray().Shuffled().First();
+        var gain = StatAmounts.Where(x => x.Key != loss.Key && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat) && (!_isTutorial || TutorialStatTypes.Contains(x.Key))).Random(_rng);
         var gainStat = gain.Key;
         var gainAmount = gain.Value;
+        var rarity = _rarityChances.Random(_rng);
+        if (rarity == Rarity.Uncommon || rarity == Rarity.Epic)
+            gainAmount = gainAmount * 2;
+        if (rarity == Rarity.Rare || rarity == Rarity.Epic)
+            lossAmount = 0;
+        var cost = 0;
+        if (rarity == Rarity.Common)
+            cost = 1;
+        else if (rarity == Rarity.Uncommon)
+            cost = 2;
+        else if (rarity == Rarity.Rare)
+            cost = 3;
+        else if (rarity == Rarity.Epic)
+            cost = 4;
         return new ClinicServiceButtonData(
-            $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}",
-            $"Lose {lossAmount} {lossStat} to gain {gainAmount} {gainStat} on {hero.DisplayName}",
-            1,
+            $"{NegativePrefix[lossStat]} {PositiveSuffix[gainStat]}",
+            rarity == Rarity.Rare || rarity == Rarity.Epic
+                ? $"Gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}"
+                : $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}</b>",
+            cost,
             () =>
             {
-                AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount);
-                _available[index] = false;
-            });
+                if (_available.Length > index)
+                {
+                    _available[index] = false;
+                    AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount);
+                }
+            }, 
+            Array.Empty<EffectData>(),
+            "Medigeneix",
+            rarity);
     }
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)

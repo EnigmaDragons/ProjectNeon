@@ -9,7 +9,7 @@ public class SpellDamage : DamageCalculation
 
     public DamageCalculation WithFactor(float factor) => new SpellDamage((ctx, m) => _damageCalc(ctx, m) * factor);
 
-    public bool DealRawDamage => false;
+    public bool DealTrueDamage => false;
 
     public int Calculate(EffectContext ctx, Member target)
     {        

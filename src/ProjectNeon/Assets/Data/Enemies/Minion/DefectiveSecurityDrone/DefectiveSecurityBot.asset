@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 53
   enemyName: 
+  allowedForSocialMedia: 0
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: 2022/02/19
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -27,7 +29,7 @@ MonoBehaviour:
     RotatePlayingCardTags: 
   preferredTurnOrder: 99
   prefab: {fileID: 8479632304954044795, guid: d8e4dfe3008d6374a9b6097dbfa1afc6, type: 3}
-  materialType: 0
+  materialType: 2
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
   deathEffect:
     UseConstant: 1
@@ -37,20 +39,20 @@ MonoBehaviour:
   tier: 1
   unique: 0
   isHasty: 1
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: Damage dealer that breaks down over time
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Fast and aggressive, but gets weaker over time.
   animations: {fileID: 11400000, guid: f4be4445584c15649bef7394b564dd13, type: 2}
   animationSounds: {fileID: 11400000, guid: ef690b9ff1cdd2845a7095aceaca96ce, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 12
+    maxHp: 55
     maxShield: 0
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 7
+    attack: 8
     magic: 0
     leadership: 0
     armor: 0
@@ -60,20 +62,22 @@ MonoBehaviour:
     maxResourceAmount: 5
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 27
+    powerLevel: 92
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: -2
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 17.7
-      perCardValue: 7
-      resourceValue: 2.3100002
-      perTurnPower: 7.3100004
-      maxAndStartingResourcesPower: 1.5530593
-      estimatedTurnsAlive: 1.7700001
-      calculatedPowerLevel: 33
+      startingPower: 60.7
+      perCardValue: 8
+      resourceValue: 2.64
+      perTurnPower: 8.64
+      maxAndStartingResourcesPower: 0.8874624
+      estimatedHeroDamage: 10
+      estimatedTurnsAlive: 4.0466666
+      estimatedPerTurnTotalValue: 29.976202
+      calculatedPowerLevel: 92
     startOfBattleEffects:
     - EffectType: 66
       Conditions: []
@@ -106,6 +110,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 11400000, guid: 44adda5a3ef2edb4588086d23ab9361d, type: 2}
+      ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 0
@@ -118,7 +123,11 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
     - {fileID: 11400000, guid: eaf631b5c07a72e4195f45094a5e59ca, type: 2}
     - {fileID: 11400000, guid: 761950a3d56290744807009265401c22, type: 2}
+  maxCopies: 2
+  minimumAllies: 0
+  damageType: 1

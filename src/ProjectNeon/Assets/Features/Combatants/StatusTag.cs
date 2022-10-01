@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 public enum StatusTag
 {
     None = 0,
@@ -24,4 +28,12 @@ public enum StatusTag
     ResourceGainsPrevented = 23,
     AfterShielded = 24,
     RetainsStealth = 25
+}
+
+public static class StatusTagExtensions
+{
+    public static StatusTag[] Values = Enum.GetValues(typeof(StatusTag)).Cast<StatusTag>().ToArray();
+    public static Dictionary<StatusTag, string> StatNames = Values.ToDictionary(s => s, s => s.ToString());
+    public static Dictionary<string, StatusTag> StatTypesByName = Values.ToDictionary(s => s.ToString(), s => s);
+    public static string GetString(this StatusTag s) => StatNames[s];
 }

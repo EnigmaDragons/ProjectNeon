@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 48
   enemyName: Anton
+  allowedForSocialMedia: 1
   excludeFromBestiary: 1
+  isTutorialEnemy: 0
   lastBalanceDate: 2022/01/09
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: 4ec64e052044c784b9623a8a67c794db, type: 2}
@@ -44,37 +46,39 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: cd7a247aea1ce42488a090793e3557b1, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 150
-    maxShield: 50
-    startingShield: 50
+    maxHp: 300
+    maxShield: 100
+    startingShield: 100
     startingAegis: 1
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 16
+    attack: 12
     magic: 0
     leadership: 0
     armor: 6
     resistance: 6
-    nonStatCardValueFactor: 16
+    nonStatCardValueFactor: 12
     startingResourceAmount: 1
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 3
-    powerLevel: 725
+    powerLevel: 726
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 235.10323
-      perCardValue: 16
-      resourceValue: 5.28
-      perTurnPower: 53.28
-      maxAndStartingResourcesPower: 5.28
-      estimatedTurnsAlive: 23.510323
-      calculatedPowerLevel: 731
+      startingPower: 443.1135
+      perCardValue: 12
+      resourceValue: 3.96
+      perTurnPower: 39.96
+      maxAndStartingResourcesPower: 3.96
+      estimatedHeroDamage: 26
+      estimatedTurnsAlive: 11.361884
+      estimatedPerTurnTotalValue: 278.5695
+      calculatedPowerLevel: 726
     startOfBattleEffects:
     - EffectType: 73
       Conditions: []
@@ -120,6 +124,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 6c486442156ddfd4c96870534c23f9b8, type: 2}
     - {fileID: 11400000, guid: faa825ecf1e12a84b84cff15ebaa2666, type: 2}

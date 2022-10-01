@@ -13,7 +13,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private CardTag[] tags;
     [SerializeField] private CardSpeed speed;
     [SerializeField] private bool isSinglePlay;
-    [SerializeField] private ResourceCost cost;
+    [SerializeField] public ResourceCost cost;
     [SerializeField] private Rarity rarity;
     [SerializeField] public CardActionSequence[] actionSequences = new CardActionSequence[0];
     [SerializeField] private CardType chainedCard;
@@ -22,7 +22,7 @@ public class CardType : ScriptableObject, CardTypeData
     [SerializeField] private string presentationIssues;
     [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private StaticCardCondition[] highlightCondition;
-    [SerializeField] private StaticCardCondition[] unhighlightCondition;
+    [SerializeField] public StaticCardCondition[] unhighlightCondition;
     [SerializeField] private bool isWIP = true;
     [SerializeField] private bool notAvailableForGeneralDistribution = false;
 
@@ -33,7 +33,7 @@ public class CardType : ScriptableObject, CardTypeData
     public Sprite Art => art;
     public string Description => description;
     public HashSet<CardTag> Tags => new HashSet<CardTag>(tags);
-    public string TypeDescription => typeDescription?.Value ?? "";
+    public string TypeDescription => typeDescription?.Value ?? string.Empty;
     public Rarity Rarity => rarity;
     public CardActionSequence[] ActionSequences => actionSequences == null ? new CardActionSequence[0] : actionSequences.ToArray();
     public CardActionsData[] Actions => ActionSequences.Select(a => a.CardActions).ToArray();
@@ -41,6 +41,7 @@ public class CardType : ScriptableObject, CardTypeData
     public Maybe<CardTypeData> ChainedCard => chainedCard;
     public Maybe<CardTypeData> SwappedCard => swappedCard;
     public HashSet<string> Archetypes => archetypes != null ? new HashSet<string>(archetypes.Where(x => x != null).Select(x => x.Value)) : new HashSet<string>();
+    
     public bool IsWip => isWIP;
     public bool IncludeInPools => !isWIP && !notAvailableForGeneralDistribution;
     public Maybe<CardCondition> HighlightCondition => highlightCondition != null && highlightCondition.Length > 0
@@ -51,7 +52,7 @@ public class CardType : ScriptableObject, CardTypeData
         : Maybe<CardCondition>.Missing();
     public bool IsSinglePlay => isSinglePlay;
     
-    private static string WipWord(bool isWip) => isWip ? "WIP - " : "";
+    private static string WipWord(bool isWip) => isWip ? "WIP - " : string.Empty;
     public string EditorName => $"{WipWord(IsWip)}{Rarity} - {Name}";
 
     public override string ToString() => Name;

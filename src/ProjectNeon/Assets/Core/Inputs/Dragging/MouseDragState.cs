@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public static class MouseDragState
 {
@@ -7,6 +8,7 @@ public static class MouseDragState
     {
         var changed = IsDragging != isDragging;
         IsDragging = isDragging;
+        Cursor.visible = !isDragging;
         if (changed)
             Message.Publish(new MouseDragStateChanged(isDragging));
     }

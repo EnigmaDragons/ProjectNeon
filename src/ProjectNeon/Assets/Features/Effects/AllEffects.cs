@@ -6,6 +6,8 @@ using UnityEngine;
 
 public static class AllEffects
 {
+    public static readonly bool Init = true;
+    
     private static readonly Dictionary<EffectType, Func<EffectData, Effect>> CreateEffectOfType = new Dictionary<EffectType, Func<EffectData, Effect>>
     {
         { EffectType.Nothing, e => new NoEffect() },
@@ -38,16 +40,16 @@ public static class AllEffects
         { EffectType.AtStartOfTurn, e => new StartOfTurnEffect(e) },
         { EffectType.AtEndOfTurn, e => new EndOfTurnEffect(e) },
         { EffectType.DelayedStartOfTurn, e => new DelayedStartOfTurnEffect(e) },
-        { EffectType.EnterStealth, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(TemporalStatType.Stealth, 1), 
-            TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Stealth)))), e.DurationFormula) },
+        { EffectType.EnterStealth, e => new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.Name} entered Stealth", () => m.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(TemporalStatType.Stealth, 1), 
+            TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Stealth))))), e.DurationFormula) },
         { EffectType.GainDoubleDamage, e => new SimpleEffect(m => m.Adjust(TemporalStatType.DoubleDamage, e.IntAmount))},
         { EffectType.FullyReviveAllAllies, e => new FullyReviveAllAllies() },
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.DuplicateStatesOfTypeToRandomEnemy, e => new DuplicateStatesOfTypeToRandomEnemy(e.StatusTag)},
-        { EffectType.DealRawDamageFormula, e => new FullContextEffect((ctx, _, m) => 
-            BattleLoggedItem(amount => $"{amount} raw damage dealt to {m.Name}", 
-                m.TakeRawDamage(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount))), e.DurationFormula)},
+        { EffectType.DealTrueDamageFormula, e => new FullContextEffect((ctx, _, m) => 
+            BattleLoggedItem(amount => $"{amount} true damage dealt to {m.Name}", 
+                m.TakeTrueDamage(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount))), e.DurationFormula)},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
@@ -55,14 +57,14 @@ public static class AllEffects
             new CustomStatusIcon(string.IsNullOrWhiteSpace(e.StatusDetailText) ? e.FlavorText: e.StatusDetailText, 
                 e.StatusTag == StatusTag.None ? e.EffectScope : e.StatusTag.ToString(), e.IntAmount, 
                 e.ForSimpleDurationStatAdjustment(ctx.Source.Id, duration))), e.DurationFormula) },
-        { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.DurationFormula, e.ReactionSequence, e.ReactionTimingWindow) },
+        { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.DurationFormula, e.ReactionSequence, e.ReactionTimingWindow, e) },
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(m.MemberId, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
         { EffectType.PlayBonusChainCard, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(new PlayBonusChainCard(m.MemberId, e.BonusCardType, e.StatusDetail)))},
         { EffectType.HealFormula, e => new FullContextEffect((ctx, _, m) => m.GainHp(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)), e.DurationFormula) },
         { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
-        { EffectType.RawDamageAttackFormula, e => new RawDamageAttack(new RawDamageCalculation((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.TrueDamageAttackFormula, e => new TrueDamageAttack(new TrueDamageCalculation((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.CycleAllCardsInHand, e => new FullContextEffect((ctx, _) =>
             {
@@ -78,11 +80,11 @@ public static class AllEffects
         { EffectType.DrawCardsOfArchetype, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(BattleLoggedItem(v => $"Drew {v} {e.EffectScope} cards", 
                 Formula.EvaluateToInt(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount)), 
                     card => card.Archetypes.Contains(e.EffectScope.Value)), e.DurationFormula)},
-        { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope, cards => cards) },
+        { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope) },
         { EffectType.LeaveBattle, e => new SimpleEffect((m, __) =>
         {
             Message.Publish(new DisplayCharacterWordRequested(m, CharacterReactionType.LeftBattle));
-            Message.Publish(new DespawnEnemy(m));
+            Message.Publish(new DespawnEnemy(m, true));
         }) },
         { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))},
         { EffectType.TransferPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 
@@ -105,12 +107,13 @@ public static class AllEffects
             (ctx, m) => BattleLoggedItem(v => $"{m.Name} {GainedOrLostTerm(v)} {v} {e.EffectScope.Value}", 
                 Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount))) },
         { EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, 
-            e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource(ctx.Target.TotalShields() 
-                * Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)))},
+            e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource((ctx.Target.TotalShields() 
+                * Formula.EvaluateRaw(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)).CeilingInt()))},
         { EffectType.RemoveTemporalModsMatchingStatusTag, e => new SimpleEffect(m => m.RemoveTemporaryEffects(t => t.Status.Tag.ToString() == e.EffectScope.Value))},
         { EffectType.InvulnerableForTurns, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryMultiplier(new AdjustedStats(
             new StatMultipliers().With(StatType.Damagability, 0f),
-            TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing())))), e.DurationFormula)}
+            TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing())))), e.DurationFormula)},
+        { EffectType.RandomEffect, e => new ResolveInnerEffect(e.ReferencedSequences?.Random()?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
@@ -263,7 +266,7 @@ public static class AllEffects
             .Where(m => m.IsConscious() && m.TeamType == ctx.Source.TeamType)
             .ToArray()
             .Shuffled();
-        return targets.Any() ? new Multiple(targets.Take(targets.Length - 1)) : new Multiple(new Member[0]);
+        return targets.AnyNonAlloc() ? new Multiple(targets.Take(targets.Length - 1)) : new Multiple(new Member[0]);
     }
 
     private static Target RandomEnemyExcludingTarget(EffectContext ctx) => RandomEnemy(ctx, ctx.Target.Members);
@@ -273,7 +276,7 @@ public static class AllEffects
         var tauntEnemies = ctx.BattleMembers.Values
             .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt() && !excludedMembers.Contains(m))
             .ToArray();
-        if (tauntEnemies.Any())
+        if (tauntEnemies.AnyNonAlloc())
             return new Single(tauntEnemies.First());
         
         return new Multiple(ctx.BattleMembers.Values
@@ -289,13 +292,13 @@ public static class AllEffects
             .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.HasTaunt())
             .ToArray()
             .Shuffled();
-        if (tauntEnemies.Any())
+        if (tauntEnemies.AnyNonAlloc())
             return new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.Id != tauntEnemies[0].Id));
         var enemiesToIgnore = ctx.BattleMembers.Values
             .Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && !m.IsStealthed())
             .ToArray()
             .Shuffled();
-        if (enemiesToIgnore.Any())
+        if (enemiesToIgnore.AnyNonAlloc())
             return new Multiple(ctx.BattleMembers.Values.Where(m => m.IsConscious() && m.TeamType != ctx.Source.TeamType && m.Id != enemiesToIgnore[0].Id));
         return new Multiple(new Member[0]);
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TalkingCharacter : MonoBehaviour
 {
-    [SerializeField] private CharacterViewer character;
+    [SerializeField] public CharacterViewer character;
     [SerializeField] private Sprite[] talkingSprites;
 
     private const float DelayBetweenChange = 0.2f;

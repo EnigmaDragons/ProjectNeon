@@ -99,6 +99,28 @@ public sealed class ContentSummarizerEditor : EditorWindow
         }
         DrawUILine();
         
+        if (GUILayout.Button("Gear By Archetypes"))
+        {
+            var result = GetAllInstances<StaticEquipment>()
+                .Where(c => c.IncludeInPools)
+                .GroupBy(x => x.GetArchetypeKey())
+                .ToDictionary(
+                    x => x.Key, // By Archetype 
+                    x => x.GroupBy(g => g.Rarity).OrderBy(r => (int)r.Key) // By Rarity
+                        .ToDictionary(
+                            r => r.Key, 
+                            r => r.Count()))
+                .OrderByDescending(x => x.Value.Sum(v => v.Value))
+                .Select(x => $"{x.Key} - Total {x.Value.Sum(v => v.Value)} - {string.Join(", " , x.Value.Select(v => $"{v.Key}: {v.Value}"))}")
+                .ToArray();
+
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Gear By Archetype", "", result)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
         HeroName = GUILayout.TextField(HeroName);
         if (GUILayout.Button("Hero Content Summary"))
         {
@@ -221,7 +243,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
             var hasValue = equipments.TryGetValue(arch, out var e);
             var numEquipRarities = hasValue ? e.Count(v => v.Value > 0) : 0;
             var numEquip = hasValue ? e.Sum(v => v.Value) : 0;
-            var equipExpected = 4;
+            var equipExpected = 8;
             var archRaritiesExpected = 4;
             expectedEquipCount += equipExpected;
             presentEquipCounter += numEquip;
@@ -235,7 +257,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
 
         var expectedAllCounter = expectedCardsCounter + expectedEquipCount;
         var presentAllCounter = Math.Min(presentCardsCounter, expectedCardsCounter)
-                                + Math.Min(Math.Min(presentEquipCounter, expectedEquipCount), Math.Min(presentEquipRaritiesCounter, expectedEquipRaritiesCounter));
+                                + Math.Max(Math.Min(presentEquipCounter, expectedEquipCount), Math.Min(presentEquipRaritiesCounter, expectedEquipRaritiesCounter));
         var percentage = expectedAllCounter > 0 
             ? presentAllCounter/(float)expectedAllCounter
             : 0;
@@ -267,10 +289,10 @@ public sealed class ContentSummarizerEditor : EditorWindow
         
         return r switch
         {
-            Rarity.Common => "/1",
-            Rarity.Uncommon => "/1",
-            Rarity.Rare => "/1",
-            Rarity.Epic => "/1",
+            Rarity.Common => "/2",
+            Rarity.Uncommon => "/2",
+            Rarity.Rare => "/2",
+            Rarity.Epic => "/2",
             _ => ""
         };
     }

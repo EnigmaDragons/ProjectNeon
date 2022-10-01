@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class InitializeAdventureSelection : MonoBehaviour
 {
@@ -11,38 +12,58 @@ public class InitializeAdventureSelection : MonoBehaviour
     [SerializeField] private AdventureProgressV4 adventureProgress4;
     [SerializeField] private AdventureProgressV5 adventureProgress5;
     [SerializeField] private Navigator navigator;
+    [SerializeField] private AdventureMode mode = AdventureMode.Standard;
 
     private void Start()
     {
-        for (var i = 0; i < library.UnlockedAdventures.Length; i++)
+        var adventures = library.UnlockedAdventures.Where(a => a.Mode == mode).ToArray();
+        for (var i = 0; i < adventures.Length; i++)
         {
-            var adventure = library.UnlockedAdventures[i];
+            var adventure = adventures[i];
             var adventureInstance = Instantiate(adventureDisplayPrefab, container.transform);
-            var currentIndex = i;
-            adventureInstance.Init(adventure, () => BeginAdventure(currentIndex));
+            adventureInstance.Init(adventure, () => Begin(adventure));
         }
     }
 
     public void BeginAdventure(int index)
     {
-        if (library.UnlockedAdventures.Length > index)
+        var adventures = library.UnlockedAdventures.Where(a => a.Mode == mode).ToArray();
+        if (adventures.Length > index)
         {
-            var adventure = library.UnlockedAdventures[index];
-            if (adventure.IsV2)
-                adventureProgress.AdventureProgress = adventureProgress2;
-            if (adventure.IsV4)
-                adventureProgress.AdventureProgress = adventureProgress4;
-            if (adventure.IsV5)
-                adventureProgress.AdventureProgress = adventureProgress5;
-            adventureProgress.AdventureProgress.Init(adventure, 0);
-            CurrentGameData.Write(s =>
-            {
-                s.IsInitialized = true;
-                s.Phase = CurrentGamePhase.SelectedAdventure;
-                s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
-                return s;
-            });
-            navigator.NavigateToSquadSelection();
+            var adventure = adventures[index];
+            Begin(adventure);
         }
+    }
+
+    private void Begin(Adventure adventure)
+    {
+        if (adventure.IsV2)
+            adventureProgress.AdventureProgress = adventureProgress2;
+        if (adventure.IsV4)
+            adventureProgress.AdventureProgress = adventureProgress4;
+        if (adventure.IsV5)
+            adventureProgress.AdventureProgress = adventureProgress5;
+
+        currentAdventure.Adventure = adventure;
+        adventureProgress.AdventureProgress.Init(adventure, 0);
+        CurrentGameData.Write(s =>
+        {
+            s.IsInitialized = true;
+            s.Phase = CurrentGamePhase.SelectedAdventure;
+            s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
+            return s;
+        });
+        AllMetrics.PublishGameStarted(adventure.id);
+
+        if (adventure.IsV2)
+            navigator.NavigateToSquadSelection();
+        if (adventure.IsV4)
+            navigator.NavigateToGameSceneV4();
+        if (adventure.IsV5 && adventure.AllowDifficultySelection)
+            navigator.NavigateToDifficultyScene();
+        if (adventure.IsV5 && !adventure.AllowDifficultySelection && currentAdventure.Adventure.Mode == AdventureMode.Draft)
+            navigator.NavigateToSquadSelection();
+        if (adventure.IsV5 && !adventure.AllowDifficultySelection && currentAdventure.Adventure.Mode != AdventureMode.Draft)
+            Message.Publish(new StartAdventureV5Requested(currentAdventure.Adventure, Maybe<BaseHero[]>.Missing(), Maybe<Difficulty>.Missing()));
     }
 }

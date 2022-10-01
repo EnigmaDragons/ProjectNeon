@@ -45,7 +45,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
             return;
         
         var max = state.Max(_resourceType.Name);
-        var maxString = max < 25 ? $"/{max}" : "";
+        var maxString = max < 25 ? $"/{max}" : string.Empty;
         counter.text = $"{state[_resourceType]}{maxString}";
         if (resourceNameLabel != null)
             resourceNameLabel.text = _resourceType.Name;

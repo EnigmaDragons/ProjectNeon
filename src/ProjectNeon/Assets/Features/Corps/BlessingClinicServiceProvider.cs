@@ -47,7 +47,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
                     {
                         _party.AddBlessing(x.blessing);
                         _hasProvidedService = true;
-                    }))
+                    }, x.blessingData.Effect.AsArray(), "Tritoonico", Rarity.Starter))
                 .ToArray();
         _generatedOptions.ForEach(x => x.Enabled = !_hasProvidedService);
         return _generatedOptions;

@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13
   enemyName: Sonic Boomer
+  allowedForSocialMedia: 0
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 1
-  corp: {fileID: 11400000, guid: dbfa70d638416ca4b861022122325d50, type: 2}
+  corp: {fileID: 11400000, guid: f536780fabfce9141933c05122731104, type: 2}
   ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
   aiPreferences:
     DesignatedAttackerPriority: 50
@@ -26,9 +28,9 @@ MonoBehaviour:
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
   preferredTurnOrder: 99
-  prefab: {fileID: 8066022272146804906, guid: 9c3e1fea97c00cc4e9fde06104a31065, type: 3}
+  prefab: {fileID: 7292159452309709872, guid: 0951ed46652af1542ae736a83b844ed4, type: 3}
   materialType: 1
-  libraryCameraOffset: {x: -0.4, y: -0.6, z: 1.8}
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.8}
   deathEffect:
     UseConstant: 1
     ConstantValue: 
@@ -37,15 +39,16 @@ MonoBehaviour:
   tier: 0
   unique: 1
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: A damage dealer that can ramp up to be exetremely dangerous, while
-    punishing you for keeping resources.
-  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Damage dealer that ramps up to be extremely dangerous, while punishing
+    you for stockpiling resources.
+  animations: {fileID: 11400000, guid: f4a48cd9a4d75ea479bfb1d030ea5c2d, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
-    maxHp: 64
+    maxHp: 136
     maxShield: 32
-    startingShield: 8
+    startingShield: 16
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
@@ -60,22 +63,27 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 231
+    powerLevel: 295
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 4
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 82.061325
+      startingPower: 162.06133
       perCardValue: 16
       resourceValue: 5.28
       perTurnPower: 25.28
       maxAndStartingResourcesPower: 5.28
-      estimatedTurnsAlive: 8.206133
-      calculatedPowerLevel: 231
+      estimatedHeroDamage: 16
+      estimatedTurnsAlive: 6.7525554
+      estimatedPerTurnTotalValue: 127.79147
+      calculatedPowerLevel: 295
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 431ebd02ef4f0ee4dac0e78e3d7d63cb, type: 2}
     - {fileID: 11400000, guid: e947c0afed2080e43bc9e942db02fcc6, type: 2}
     - {fileID: 11400000, guid: 7648d730cf77f18459c711e04a73f41a, type: 2}
+  maxCopies: 2
+  minimumAllies: 0
+  damageType: 2

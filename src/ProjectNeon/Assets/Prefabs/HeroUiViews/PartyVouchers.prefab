@@ -110,7 +110,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 320, y: 92}
+  m_SizeDelta: {x: 140, y: 92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2113802549457036688
 CanvasRenderer:
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
   m_sharedMaterial: {fileID: -3462019426021366834, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
@@ -263,6 +263,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   label: {fileID: 464653065160464007}
+  animateTarget: {fileID: 0}
+  animateOnChange: 1
+  recolorWhenZero: {fileID: 0}
+  tintWhenZero: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1746615498663073366
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class CharacterAnimationSoundPlayer : OnMessage<CharacterAnimationRequest
     private CharacterAnimationSoundSet _sounds;
     private Transform _uiSource;
     private bool _active;
+    private bool _loggingEnabled = false;
 
     public void Init(int memberId, CharacterAnimationSoundSet sounds, Transform uiSource)
     {
@@ -39,7 +40,8 @@ public class CharacterAnimationSoundPlayer : OnMessage<CharacterAnimationRequest
     {
         if (!IsInitialized() || (!_active && !alwaysActive))
         {
-            Log.Info($"{nameof(PlayCharacterAnimSound)} IsInitialized: {IsInitialized()}, IsActive {_active || alwaysActive}");
+            if (_loggingEnabled)
+                Log.Info($"{nameof(PlayCharacterAnimSound)} IsInitialized: {IsInitialized()}, IsActive {_active || alwaysActive}");
             return;
         }
 

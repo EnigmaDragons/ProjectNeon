@@ -30,7 +30,7 @@ public class BattleTestSetup : MonoBehaviour
 
     [Header("Enemies")] 
     [SerializeField] private List<Enemy> enemies;
-    [SerializeField] private EncounterBuilder encounterBuilder;
+    [SerializeField] private EncounterBuilderV5 encounterBuilder;
     [SerializeField] private int stage;
 
     [Header("Card Test")] 
@@ -57,7 +57,7 @@ public class BattleTestSetup : MonoBehaviour
     }
 
     public void UseCustomBattlefield() => setup.InitBattleField(battlefield);
-    public void UseFixedEncounter() => state.SetNextEncounter(enemies.Select(x => x.ForStage(stage)));
+    public void UseFixedEncounter() => state.SetNextEncounter(enemies.Where(e => e != null).Select(x => x.ForStage(stage)));
     public void UseCustomEncounterSet() => setup.InitEncounterBuilder(encounterBuilder);
     public void SetupBattle() => engine.Setup();
 

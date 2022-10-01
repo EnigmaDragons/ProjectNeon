@@ -41,6 +41,7 @@ public enum CardTag
     Exclusive = 36,
     Grenade = 37,
     SelfOnly = 38,
+    NonSelfOnly = 49,
     Glitch = 39,
     Igniting = 40,
     CredAdjust = 41,
@@ -49,5 +50,9 @@ public enum CardTag
     Invulnerable = 44,
     Focus = 45,
     RequiresFocus = 46,
-    ScaledOnMissingMaxHealth = 100
+    NextTurn = 50,
+    ScaledOnMissingMaxHealth = 100,
+    IgnoreCardOrder = 101,
+    CanPlayThisReactionEvenWhenStunned = 102,
+    RemoveDodge = 103,
 }

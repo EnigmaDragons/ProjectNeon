@@ -50,7 +50,7 @@ public class BattleState : ScriptableObject
                                                      CurrentTurnPartyNonBonusStandardCardPlays -
                                                      _numPlayerDiscardsUsedThisTurn;
 
-    public PlayedCardSnapshot[] CurrentTurnCardPlays() => _playedCardHistory.Any()
+    public PlayedCardSnapshot[] CurrentTurnCardPlays() => _playedCardHistory.Count > 0
         ? _playedCardHistory.Last().ToArray()
         : Array.Empty<PlayedCardSnapshot>();
 
@@ -58,6 +58,7 @@ public class BattleState : ScriptableObject
     public BattleRewardState RewardState => rewards;
     public int RewardCredits => rewards.RewardCredits;
     public int RewardXp => rewards.RewardXp;
+    public int PredictedTotalRewardXp => rewards.RewardXp + (_heroesById.First().Value.Levels.XpRequiredForNextLevel * adventureProgress.AdventureProgress.BonusXpLevelFactor).CeilingInt();
     public int RewardClinicVouchers => adventure.Adventure.BattleRewardClinicVouchers;
     public CardTypeData[] RewardCards => rewards.RewardCards;
     public Equipment[] RewardEquipments => rewards.RewardEquipments;
@@ -156,7 +157,7 @@ public class BattleState : ScriptableObject
     private void LogEncounterInfo(bool isElite, int targetPower, int actualPower)
     {
         var factor = actualPower / (float) targetPower;
-        DevLog.Write($"{(isElite ? "Elite " : "")}Encounter: Target Power Level {targetPower}. Actual: {actualPower}. Factor: {factor:F2}");
+        DevLog.Write($"{(isElite ? "Elite " : string.Empty)}Encounter: Target Power Level {targetPower}. Actual: {actualPower}. Factor: {factor:F2}");
     }
 
     public void SetupEnemyEncounter()
@@ -276,13 +277,12 @@ public class BattleState : ScriptableObject
         turnNumber = 1;
         CreditsAtStartOfBattle = party.Credits;
         party.ApplyBlessings(this);
-        ApplyAllGlobalStartOfBattleEffects();
-        
+
         DevLog.Write("Finished Battle State Init");
         return result;
     }
 
-    private void ApplyAllGlobalStartOfBattleEffects()
+    public void ApplyAllGlobalStartOfBattleEffects()
     {
         if (adventureProgress.HasActiveAdventure)
             adventureProgress.AdventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
@@ -316,6 +316,23 @@ public class BattleState : ScriptableObject
     public void RecordCardDiscarded() => UpdateState(() => _numPlayerDiscardsUsedThisTurn++);
     public void CleanupExpiredMemberStates() => UpdateState(() => _membersById.ForEach(x => x.Value.State.CleanExpiredStates()));
 
+    public void RecordSingleCardDamageDealt(BattleStateSnapshot before)
+    {
+        var totalBefore = before.Members.Where(x => x.Value.TeamType == TeamType.Enemies).Sum(x => x.Value.State.HpAndShieldWithOverkill);
+        var totalAfter = Enemies.Sum(x => x.Member.HpAndShieldWithOverkill());
+        RecordSingleCardDamageDealt(totalBefore - totalAfter);
+    }
+    
+    private void RecordSingleCardDamageDealt(int amount)
+    {
+        if (TurnNumber > 3)
+            return;
+
+        Stats.HighestPreTurn4CardDamage = Math.Max(amount, Stats.HighestPreTurn4CardDamage);
+        if (Stats.HighestPreTurn4CardDamage > PermanentStats.Data.HighestPreTurn4SingleCardDamage)
+            PermanentStats.Mutate(s => s.HighestPreTurn4SingleCardDamage = Stats.HighestPreTurn4CardDamage);
+    }
+    
     public Member[] GetAllNewlyUnconsciousMembers()
     {
         var newlyUnconscious = Members
@@ -348,6 +365,12 @@ public class BattleState : ScriptableObject
         });
 
     public void UseRecycle() => UpdateState(() => PlayerState.NumberOfCyclesUsedThisTurn++);
+    public void AddEnemyDefeatedRewards(int memberId)
+    {
+        var enemy = GetEnemyById(memberId);
+        AddRewardCredits(enemy.GetRewardCredits(CreditPerPowerLevelRewardFactor));
+        AddRewardXp(enemy.GetRewardXp(XpPerPowerLevelRewardFactor));
+    }
     public void AddRewardCredits(int amount) => UpdateState(() => rewards.AddRewardCredits(amount));
     public void AddRewardXp(int xp) => UpdateState(() => rewards.AddRewardXp(xp)); 
     public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewards.SetRewardCards(cards));
@@ -375,17 +398,18 @@ public class BattleState : ScriptableObject
             
         });
 
-    private void SetMemberName(int id, string name)
+    private void SetMemberName(int id, string memberName)
     {
         while (memberNames.Count <= id)
-            memberNames.Add("");
-        memberNames[id] = name;
+            memberNames.Add(string.Empty);
+        memberNames[id] = memberName;
     }
     
     // Battle Wrapup
     public void Wrapup()
     {
         EnemyArea.Clear();
+        EncounterIdTrackingState.MarkEncounterFinished();
 
         if (!adventureProgress.HasActiveAdventure)
             return;
@@ -410,6 +434,7 @@ public class BattleState : ScriptableObject
             rewardCards = RewardCards.Select(c => c.Name).ToArray(),
             rewardGear = RewardEquipments.Select(e => e.GetMetricNameOrDescription()).ToArray() 
         };
+        Log.Info($"Battle Xp {xpGranted} - Creds {RewardCredits}");
         AllMetrics.PublishBattleSummary(battleSummaryReport);
         AccumulateRunStats();
     }
@@ -430,6 +455,7 @@ public class BattleState : ScriptableObject
             d.Stats.TotalDamageReceived += Stats.DamageReceived;
             d.Stats.TotalHpDamageReceived += Stats.HpDamageReceived;
             d.Stats.TotalHealingReceived += Stats.HealingReceived;
+            d.Stats.HighestPreTurn4SingleCardDamage = Math.Max(Stats.HighestPreTurn4CardDamage, d.Stats.HighestPreTurn4SingleCardDamage);
             return d;
         });
     }
@@ -467,18 +493,35 @@ public class BattleState : ScriptableObject
     public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
     public Maybe<Transform> GetMaybeTransform(int memberId) => _uiTransformsById.ValueOrMaybe(memberId);
     public AiPreferences GetAiPreferences(int memberId) => _enemiesById.ValueOrMaybe(memberId).Select(e => e.AIPreferences.WithDefaultsBasedOnRole(e.Role), () => new AiPreferences());
+
+    public MemberMaterialType GetMaterialType(int memberId) => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
     
     public Maybe<Transform> GetMaybeCenterPoint(int memberId)
     {
-        var maybeTransform = GetMaybeTransform(memberId);
-        return maybeTransform.Map(t =>
+        try
         {
-            var centerPoint = maybeTransform.Value.GetComponentInChildren<CenterPoint>();
-            if (centerPoint != null)
-                return centerPoint.transform;
+            var maybeTransform = GetMaybeTransform(memberId);
+            return maybeTransform.Map(t =>
+            {
+                var centerPoint = maybeTransform.Value.GetComponentInChildren<CenterPoint>();
+                if (centerPoint != null)
+                    return centerPoint.transform;
+
+                Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
+                return maybeTransform.Value;
+            });
+        }
+        catch (Exception)
+        {
             Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
-            return maybeTransform.Value;
-        });
+            return Maybe<Transform>.Missing();
+        }
+    }
+
+    public Vector3 GetCenterPoint(TeamType team)
+    {
+        var target = team == TeamType.Party ? new Multiple(Heroes) : new Multiple(EnemyMembers);
+        return GetCenterPoint(target);
     }
     
     public Vector3 GetCenterPoint(Target target)

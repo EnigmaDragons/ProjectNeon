@@ -15,7 +15,11 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     private AsyncOperation _loadState;
     private string _newSceneName;
 
-    private void Awake() => Application.targetFrameRate = 60;
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+        loadUi.alpha = 0;
+    }
 
     protected override void Execute(NavigateToSceneRequested msg) => Navigate(msg.SceneName);
     protected override void Execute(ReloadSceneRequested msg) => Navigate(SceneManager.GetActiveScene().name);
@@ -24,6 +28,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     {
         if (Time.timeScale < 0.01)
             Time.timeScale = 1;
+        MouseDragState.Set(false);
         
         _isLoading = true;
         onStartedLoading.Invoke();

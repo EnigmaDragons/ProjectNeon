@@ -9,10 +9,10 @@ public sealed class BattleCounter
     public int Max => Round(_getCurrentMaxAmount());
 
     public BattleCounter(TemporalStatType type, float initialAmount, Func<float> getCurrentMaxAmount) 
-        : this(type.ToString(), initialAmount, getCurrentMaxAmount) {}
+        : this(type.GetString(), initialAmount, getCurrentMaxAmount) {}
     
     public BattleCounter(StatType type, float initialAmount, Func<float> getCurrentMaxAmount) 
-        : this(type.ToString(), initialAmount, getCurrentMaxAmount) {}
+        : this(type.GetString(), initialAmount, getCurrentMaxAmount) {}
     
     public BattleCounter(string name, float initialAmount, Func<float> getCurrentMaxAmount)
     {

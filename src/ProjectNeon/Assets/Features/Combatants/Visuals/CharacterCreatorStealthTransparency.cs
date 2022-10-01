@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterCreatorStealthTransparency : OnMessage<MemberStateChanged>
 {
-    [SerializeField] private CharacterViewer viewer;
+    [SerializeField] public CharacterViewer viewer;
     
     private Maybe<Member> _member = Maybe<Member>.Missing();
     private static readonly Color _stealthTint = new Color(1f, 1f, 1f, 0.2f);
@@ -17,8 +17,16 @@ public class CharacterCreatorStealthTransparency : OnMessage<MemberStateChanged>
     protected override void Execute(MemberStateChanged msg) 
         => _member.IfPresentAndMatches(m => m.Id == msg.State.MemberId, Render);
 
-    private void Render(Member m) 
-        => viewer.TintColor = m.State[TemporalStatType.Stealth] > 0 
-            ? _stealthTint 
+    private void Render(Member m)
+    {
+        if (viewer == null)
+        {
+            Log.Error($"{m.Name} - {nameof(CharacterCreatorStealthTransparency)} viewer is null.");
+            return;
+        }
+        
+        viewer.TintColor = m.State[TemporalStatType.Stealth] > 0
+            ? _stealthTint
             : Color.white;
+    }
 }

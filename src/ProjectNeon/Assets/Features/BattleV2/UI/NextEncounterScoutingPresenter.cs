@@ -45,7 +45,7 @@ public class NextEncounterScoutingPresenter : MonoBehaviour
             _enemyIndex = 0;
         previous.gameObject.SetActive(_enemyIndex > 0);
         next.gameObject.SetActive(state.NextEncounterEnemies.Length - 1 > _enemyIndex);
-        enemyDetails.Show(state.NextEncounterEnemies[_enemyIndex]);
+        enemyDetails.Show(state.NextEncounterEnemies[_enemyIndex], Maybe<Member>.Missing());
         enemyList.text = string.Join("\n", state.NextEncounterEnemies.Select(x => x.Name));
     }
 }

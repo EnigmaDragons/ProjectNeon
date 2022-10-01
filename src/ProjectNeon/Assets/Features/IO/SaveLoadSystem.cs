@@ -17,7 +17,6 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private AllMaps maps;
     [SerializeField] private CorpClinicProvider clinics;
     [SerializeField] private AllStaticGlobalEffects globalEffects;
-    [SerializeField] private CurrentRunStats runStats;
 
     public bool HasSavedGame => CurrentGameData.HasActiveGame;
     public void SaveCheckpoint() => SaveCurrentGame();
@@ -31,7 +30,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             s.PartyData = party.GetData();
             s.GameMap = adventureProgress.AdventureProgress.AdventureType.GetMapData(map, mapV5);
-            s.Stats = runStats.GetData();
+            s.Stats = s.Stats.WithAdditionalElapsedTime(RunTimer.ConsumeElapsedTime());
             return s;
         });
     }
@@ -42,8 +41,6 @@ public sealed class SaveLoadSystem : ScriptableObject
         var loadedSuccessfully = true;
         if (!string.IsNullOrWhiteSpace(saveData.RunId))
             AllMetrics.SetRunId(saveData.RunId);
-        if (loadedSuccessfully)
-            runStats.Init(saveData.Stats);
         if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure))
             loadedSuccessfully = InitAdventure(saveData.AdventureProgress);
         if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedSquad))
@@ -86,6 +83,9 @@ public sealed class SaveLoadSystem : ScriptableObject
     private bool InitParty(GamePartyData partyData)
     {
         var numHeroes = partyData.Heroes.Length;
+        if (numHeroes == 0)
+            return true;
+        
         var maybeCards = partyData.CardIds.Select(id => library.GetCardById(id));
         if (maybeCards.Any(c => c.IsMissing))
             return LoadFailedReason("Missing Cards");
@@ -93,7 +93,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         var maybeEquipments = partyData.Equipment.Select(e => library.GetEquipment(e));
         if (maybeEquipments.Any(c => c.IsMissing))
             return LoadFailedReason("Missing Equipments");
-        
+
         party.InitFromSave(
             library.HeroById(partyData.Heroes[0].BaseHeroId),
             numHeroes > 1 ? library.HeroById(partyData.Heroes[1].BaseHeroId) : library.HeroById(0),
@@ -143,6 +143,7 @@ public sealed class SaveLoadSystem : ScriptableObject
 
             foreach (var equipmentIdName in heroSaveData.EquipmentIdNames)
             {
+                Log.Info($"Load Equipment - {equipmentIdName}");
                 if (equipmentIdName.Name.Equals("Implant"))
                     continue;
                 
@@ -156,10 +157,14 @@ public sealed class SaveLoadSystem : ScriptableObject
             foreach (var implant in heroSaveData.Implants)
                 hero.ApplyPermanent(implant.GeneratedEquipment);
 
+            foreach (var equipment in party.GlobalEquipment)
+                hero.ApplyPermanent(equipment);
+            
             hero.AddToStats(new StatAddends(heroSaveData.Stats.ToDictionary(x => x.Stat, x => x.Value)));
             
             var generatedLevelUpOptionId = -2;
-            foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds.Where(id => id != generatedLevelUpOptionId))
+            var draftLevelUpOptionId = -3;
+            foreach (var optionId in hero.Levels.SelectedLevelUpOptionIds.Where(id => id != generatedLevelUpOptionId && id != draftLevelUpOptionId))
             {
                 var maybePerk = library.GetLevelUpPerkById(optionId);
                 if (!maybePerk.IsPresent)
@@ -191,7 +196,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         mapV5.PreviousPosition = mapData.CurrentPosition;
         mapV5.DestinationPosition = mapData.CurrentPosition;
         mapV5.CurrentChoices = mapData.CurrentChoices.ToList();
-        mapV5.CurrentNodeRngSeed = mapData.CurrentNodeRngSeed;
+        mapV5.CurrentNodeRngSeed = ConsumableRngSeed.Init(mapData.CurrentNodeRngSeed);
         return true;
     }
     

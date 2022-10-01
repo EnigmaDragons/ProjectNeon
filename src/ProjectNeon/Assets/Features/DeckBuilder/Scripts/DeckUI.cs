@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 
-public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckChanged>
+public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckChanged, SetSuperFocusDeckBuilderControl>
 {
     [SerializeField] private PageViewer pageViewer;
     [SerializeField] private DeckBuilderState state;
@@ -13,7 +13,8 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
     [SerializeField] private Button clearDeckButton;
 
     private List<CardInDeckButton> _cardButtons;
-
+    private bool _cardInDeckSuperFocusEnabled;
+    
     private void Awake()
     {
         if (clearDeckButton != null)
@@ -22,6 +23,12 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
 
     protected override void Execute(DeckBuilderHeroSelected msg) => GenerateDeck();
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => OnDeckChanged();
+    
+    protected override void Execute(SetSuperFocusDeckBuilderControl msg)
+    {
+        if (msg.Name == DeckBuilderControls.CardInDeck)
+            _cardInDeckSuperFocusEnabled = msg.Enabled;
+    }
 
     private void OnDeckChanged() => GenerateDeck();
 
@@ -35,11 +42,15 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
     public void GenerateDeck()
     {
         _cardButtons = new List<CardInDeckButton>();
+        if (state.SelectedHeroesDeck == null)
+            return;
+        
         var hero = state.SelectedHeroesDeck.Hero;
         pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.SelectedHeroesDeck.Deck
             .Select(x => x.ToNonBattleCard(hero))
             .GroupBy(x => x.Name)
-            .OrderBy(x => x.First().Rarity)
+            .OrderBy(x => x.First().Cost.CostSortOrder())
+            .ThenBy(x => x.First().Rarity)
             .ThenBy(x => x.Key)
             .Select(x => InitCardInDeckButton(x.First()))
             .ToList(), x => {},
@@ -51,7 +62,7 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
         Action<GameObject> init = gameObj =>
         {
             var cardInDeckButton = gameObj.GetComponent<CardInDeckButton>();
-            cardInDeckButton.Init(card);
+            cardInDeckButton.Init(card, _cardInDeckSuperFocusEnabled);
             _cardButtons.Add(cardInDeckButton);
         };
         return init;
@@ -62,15 +73,11 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
         Action<GameObject> init = gameObj =>
         {
             var cardInDeckButton = gameObj.GetComponent<CardInDeckButton>();
-            cardInDeckButton.Init(card);
+            cardInDeckButton.Init(card, _cardInDeckSuperFocusEnabled);
             _cardButtons.Add(cardInDeckButton);
         };
         return init;
     }
 
-    private void ClearDeck()
-    {
-        state.SelectedHeroesDeck.Deck.Clear();
-        Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
-    }
+    private void ClearDeck() => state.ClearCurrentDeck();
 }

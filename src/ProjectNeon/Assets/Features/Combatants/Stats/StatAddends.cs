@@ -4,7 +4,7 @@ using System.Linq;
 
 public sealed class StatAddends : IStats
 {
-    private readonly DictionaryWithDefault<string, float> _values ;
+    private readonly DictionaryWithDefault<string, float> _values;
 
     public StatAddends() : this(new DictionaryWithDefault<string, float>(0)) {}
     public StatAddends(Dictionary<string, float> values) : this(new DictionaryWithDefault<string, float>(0, values)) {}
@@ -12,14 +12,14 @@ public sealed class StatAddends : IStats
     
     public float this[StatType statType]
     {
-        get => _values[statType.ToString()];
-        private set => _values[statType.ToString()] = value;
+        get => _values[statType.GetString()];
+        private set => _values[statType.GetString()] = value;
     }
 
     public float this[TemporalStatType statType] 
     {
-        get => _values[statType.ToString()];
-        private set => _values[statType.ToString()] = value;
+        get => _values[statType.GetString()];
+        private set => _values[statType.GetString()] = value;
     }
     
     public StatAddends With(StatType statType, float value)

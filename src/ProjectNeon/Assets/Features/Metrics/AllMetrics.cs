@@ -11,14 +11,17 @@ public static class AllMetrics
     private static string _installId = "Not Initialized";
     private static string _runId = "Not Initialized";
     private static string _version = "Not Initialized";
+    private static string _customPrefix = "";
     private static bool _isEditor = false;
     
-    public static void Init(string version, string installId)
+    public static void Init(string version, string installId, string customPrefix)
     {
         _version = version;
         _installId = installId;
+        _customPrefix = customPrefix;
 #if UNITY_EDITOR
         _isEditor = true;
+        _customPrefix = "Editor";
 #endif
     }
 
@@ -33,6 +36,12 @@ public static class AllMetrics
     public static void PublishGearRewardSelection(string selectedGearNameOrDescription, string[] optionNameOrDescriptions)
         => Send("rewardGearSelected", new OptionSelectionData {selected = selectedGearNameOrDescription, options = optionNameOrDescriptions});
 
+    public static void PublishDraftCardSelection(string selectedCardName, string[] optionNames)
+        => Send("draftCardSelected", new OptionSelectionData {selected = selectedCardName, options = optionNames});
+    
+    public static void PublishDraftGearSelection(string selectedGearNameOrDescription, string[] optionNameOrDescriptions)
+        => Send("draftGearSelected", new OptionSelectionData {selected = selectedGearNameOrDescription, options = optionNameOrDescriptions});
+    
     public static void PublishLevelUpOptionSelection(string heroName, int level, string selectedDescription, string[] optionsDescription)
         => Send("heroLevelUp", new HeroLevelUpSelectionData {heroName = heroName, level = level, selection = selectedDescription, options = optionsDescription});
     
@@ -42,14 +51,52 @@ public static class AllMetrics
     public static void PublishBattleSummary(BattleSummaryReport report)
         => Send("battleSummary", report);
 
-    public static void PublishGameLost()
-        => Send("gameLost", new NoEventData());
+    public static void PublishGameLost(int adventureId)
+    {
+        Send("gameLost", new AdventureIdData {adventureId = adventureId});
+        Send("gameFinished", new AdventureIdData {adventureId = adventureId});
+    }
 
-    public static void PublishGameWon()
-        => Send("gameWon", new NoEventData());
+    public static void PublishGameWon(int adventureId)
+    {
+        Send("gameWon", new AdventureIdData {adventureId = adventureId});
+        Send("gameFinished", new AdventureIdData {adventureId = adventureId});
+    }
+
+    public static void PublishGameStarted(int adventureId)
+        => Send("gameStarted", new AdventureIdData {adventureId = adventureId});
+
+    public static void PublishInteractedWith(string uiElement)
+        => Send("interactedWith", new InteractionWithData { uiElement = uiElement });
 
     public static void PublishHeroSelected(string selectedHero, string[] options, string[] existingPartyHeroes)
         => Send("heroAdded", new HeroSelectedData {heroName = selectedHero, heroOptions = options, currentPartyHeroes = existingPartyHeroes});
+
+    public static void PublishAdventureProgress(string adventureName, float totalProgress)
+        => Send("adventureProgress", new AdventureProgressData {adventureName = adventureName, totalProgress = totalProgress});
+    
+    public static void PublishDecks(string[] heroesNames, string[][] decks)
+        => Send("battleDeck", () => new DeckData {
+            heroes = heroesNames, 
+            deck1 = decks.IndexValueOrDefault(0, Array.Empty<string>), 
+            deck2 = decks.IndexValueOrDefault(1, Array.Empty<string>),
+            deck3 = decks.IndexValueOrDefault(2, Array.Empty<string>),
+        });
+
+    public static void PublishCardShopPurchases(string[] cardOptions, string[] cardPurchases)
+        => Send("cardShopPurchase", new CardShopPurchaseData { options = cardOptions, purchases = cardPurchases });
+
+    private static void Send(string eventName, Func<object> createPayload)
+    {
+        try
+        {
+            Send(eventName, createPayload());
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+        }
+    }
     
     private static void Send(string eventName, object payload)
         => Send(new GeneralMetric(eventName, JsonUtility.ToJson(payload)));
@@ -62,7 +109,7 @@ public static class AllMetrics
                 new StringContent(
                     JsonUtility.ToJson(new GeneralMetricData
                     {
-                        gameVersion = WithEditorInfoAppended(_version),
+                        gameVersion = VersionString(_version),
                         installId = _installId,
                         runId = _runId,
                         eventType = m.EventType,
@@ -74,12 +121,12 @@ public static class AllMetrics
                 OnResponse);
     }
 
-    private static string WithEditorInfoAppended(string version) => _isEditor ? $"{version} Editor" : version;
+    private static string VersionString(string version) => $"{_customPrefix} {version}".Trim();
 
     private static void OnResponse(HttpResponseMessage resp)
     {
         if (!resp.IsSuccessStatusCode)
-            Log.Error($"Failed to submit Error Message: {resp.StatusCode}");
+            Log.Error($"Failed to submit Metric: {resp.StatusCode}");
     }
 
     [Serializable]
@@ -127,10 +174,45 @@ public static class AllMetrics
     private class NoEventData {}
 
     [Serializable]
+    private class AdventureIdData
+    {
+        public int adventureId;
+    }
+    
+    [Serializable]
     private class HeroSelectedData
     {
         public string[] currentPartyHeroes;
         public string heroName;
         public string[] heroOptions;
+    }
+
+    [Serializable]
+    private class DeckData
+    {
+        public string[] heroes;
+        public string[] deck1;
+        public string[] deck2;
+        public string[] deck3;
+    }
+
+    [Serializable]
+    private class AdventureProgressData
+    {
+        public string adventureName;
+        public float totalProgress;
+    }
+
+    [Serializable]
+    private class CardShopPurchaseData
+    {
+        public string[] options;
+        public string[] purchases;
+    }
+    
+    [Serializable]
+    private class InteractionWithData
+    {
+        public string uiElement;
     }
 }

@@ -9,6 +9,7 @@ public class ClinicServiceButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private Image credIcon;
     [SerializeField] private Button button;
+    [SerializeField] private TwoSidedRulesDescriptionPresenter rules;
 
     public void Init(ClinicServiceButtonData data, PartyAdventureState party)
     {
@@ -28,6 +29,10 @@ public class ClinicServiceButton : MonoBehaviour
         {
             cost.gameObject.SetActive(false);
             credIcon.gameObject.SetActive(false);
+        }
+        if (rules != null)
+        {
+            rules.Show(data.RulesContext);
         }
     }
 }

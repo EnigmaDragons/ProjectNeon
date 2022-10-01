@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class CoolCameraIntro : MonoBehaviour
 {
+    [SerializeField] private Camera targetCamera;
     [SerializeField] private GameEvent onStart;
     [SerializeField] private GameEvent onFinish;
     [SerializeField] private List<float> durations = new List<float>();
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
+    
+    [Header("Info Only")]
     [SerializeField, ReadOnly] private bool isFinished;
-
     [SerializeField, ReadOnly] private Transform _currentStartPoint;
     [SerializeField, ReadOnly] private Transform _nextWaypoint;
     private Transform _finalWaypoint;
@@ -21,7 +23,7 @@ public class CoolCameraIntro : MonoBehaviour
 
     private void OnEnable()
     {
-        _cam = FindObjectOfType<Camera>();
+        _cam = targetCamera != null ? targetCamera : FindObjectOfType<Camera>();
         MoveNext();
         _cam.transform.position = _currentStartPoint.position;
         _cam.transform.rotation = _currentStartPoint.rotation;

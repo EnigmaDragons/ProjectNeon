@@ -9,6 +9,8 @@ public class AcademyDataSnapshot
     public List<string> CompletedTutorials { get; private set; }
     public bool HasConfiguredSettings { get; private set; }
     public bool HasCompletedWelcomeToMetroplexCutscene { get; private set; }
+    public bool ConfirmedStorySkipBehavior { get; private set; }
+    public bool ReceivedNoticeAboutGeneralStarterCards { get; private set; }
 
     public AcademyDataSnapshot(AcademyData src)
     {
@@ -16,6 +18,8 @@ public class AcademyDataSnapshot
         CompletedTutorials = src.TutorialData.CompletedTutorialNames.ToList();
         HasConfiguredSettings = src.HasConfiguredSettings;
         HasCompletedWelcomeToMetroplexCutscene = src.HasCompletedWelcomeToMetroplexCutscene;
+        ConfirmedStorySkipBehavior = src.ConfirmedStorySkipBehavior;
+        ReceivedNoticeAboutGeneralStarterCards = src.ReceivedNoticeAboutGeneralStarterCards;
     }
 }
 
@@ -25,6 +29,8 @@ public class AcademyData
     public AcademyTutorialData TutorialData = new AcademyTutorialData();
     public bool HasConfiguredSettings = false;
     public bool HasCompletedWelcomeToMetroplexCutscene = false;
+    public bool ConfirmedStorySkipBehavior = false;
+    public bool ReceivedNoticeAboutGeneralStarterCards = false;
     
     public static List<string> RequiredLicenseTutorials = new List<string>
     {
@@ -33,6 +39,13 @@ public class AcademyData
         Tutorials.BattleV4
     };
 
+    public static List<string> SimpleTutorialPanels = new List<string>()
+    {
+        Tutorials.SimpleClinic,
+        Tutorials.SimpleDeckbuilder,
+        Tutorials.SimpleCardShop,
+    };
+    
     public bool IsLicensedBenefactor => RequiredLicenseTutorials.All(TutorialData.CompletedTutorialNames.Contains);
     public AcademyDataSnapshot ToSnapshot() => new AcademyDataSnapshot(this);
 }

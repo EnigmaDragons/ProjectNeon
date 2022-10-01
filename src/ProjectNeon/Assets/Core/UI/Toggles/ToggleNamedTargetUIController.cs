@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ToggleNamedTargetUIController : OnMessage<ToggleNamedTarget>
+public class ToggleNamedTargetUIController : OnMessage<ToggleNamedTarget, HideNamedTarget, ShowNamedTarget>
 {
     [SerializeField] private GameObject[] targets;
     [SerializeField] private StringReference targetName;
@@ -16,5 +16,17 @@ public class ToggleNamedTargetUIController : OnMessage<ToggleNamedTarget>
     {
         if (msg.TargetName.Value.Equals(targetName.Value))
             targets.ForEach(t => t.SetActive(!t.activeSelf));
+    }
+
+    protected override void Execute(HideNamedTarget msg)
+    {
+        if (msg.TargetName.Value.Equals(targetName.Value))
+            targets.ForEach(t => t.SetActive(false));
+    }
+
+    protected override void Execute(ShowNamedTarget msg)
+    {
+        if (msg.TargetName.Value.Equals(targetName.Value))
+            targets.ForEach(t => t.SetActive(true));
     }
 }

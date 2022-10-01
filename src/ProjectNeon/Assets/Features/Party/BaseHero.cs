@@ -7,6 +7,8 @@ using UnityEngine;
 public class BaseHero : ScriptableObject, HeroCharacter
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
+    [SerializeField] private bool allowedForSocialMedia = false;
+    [SerializeField] private bool isDisabled = false;
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
     [SerializeField] private StringReference className;
@@ -20,9 +22,10 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private CharacterAnimationSoundSet animationSounds;
     [SerializeField] private int startingCredits = 100;
     [SerializeField, Range(1, 5)] private int complexityRating = 3;
+    [SerializeField] private int adventuresPlayedBeforeUnlocked;
 
     // Stats
-    [SerializeField] private int maxHp = 40;
+    [SerializeField] public int maxHp = 40;
     [SerializeField] private int maxShield = 12;
     [SerializeField] private int startingShield = 0;
     [SerializeField] private int attack = 8;
@@ -54,7 +57,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public string Class => className;
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
-    public CardType[] AdditionalStartingCards => additionalStartingCards ?? new CardType[0];    
+    public CardTypeData[] AdditionalStartingCards => additionalStartingCards != null ? additionalStartingCards.Cast<CardTypeData>().ToArray() : Array.Empty<CardTypeData>();    
     public HashSet<CardTypeData> ExcludedCards => excludedStartingCards != null 
         ? new HashSet<CardTypeData>(excludedStartingCards.Concat(BasicCard)) 
         : new HashSet<CardTypeData>(BasicCard.AsArray());
@@ -67,6 +70,8 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public Color Tint => tint;
     public CharacterAnimations Animations => animations;
     public CharacterAnimationSoundSet AnimationSounds => animationSounds;
+    public bool IsAllowedForSocialMedia => allowedForSocialMedia;
+    public bool IsDisabled => isDisabled;
     
     public IStats Stats => new StatAddends { ResourceTypes = GetResourceTypes() }
         .With(StatType.MaxHP, maxHp)
@@ -144,4 +149,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
             rt[1] = resource2;
         return rt;
     }
+
+    public int AdventuresPlayedBeforeUnlocked => adventuresPlayedBeforeUnlocked;
 }

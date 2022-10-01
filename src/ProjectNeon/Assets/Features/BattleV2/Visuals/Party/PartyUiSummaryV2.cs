@@ -14,15 +14,30 @@ public class PartyUiSummaryV2 : MonoBehaviour
     [ReadOnly, SerializeField] private List<HeroBattleUIPresenter> active = new List<HeroBattleUIPresenter>();
 
     private Party Party => partyArea.Party;
+
+    private bool _primaryStatVisible = true;
+    private bool _shieldsVisible = true;
+    private bool _resourcesVisible = true;
     
-    private void OnEnable()
+    private void Awake()
     {
         Message.Subscribe<MemberUnconscious>(ResolveUnconscious, this);
+        Message.Subscribe<SetHeroesUiVisibility>(Execute, this);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         Message.Unsubscribe(this);
+    }
+
+    private void Execute(SetHeroesUiVisibility msg)
+    {
+        if (msg.Component == BattleUiElement.PrimaryStat)
+            _primaryStatVisible = msg.ShouldShow;
+        if (msg.Component == BattleUiElement.PlayerShields)
+            _shieldsVisible = msg.ShouldShow;
+        if (msg.Component == BattleUiElement.PlayerResources)
+            _resourcesVisible = msg.ShouldShow;
     }
 
     public void Setup()
@@ -36,7 +51,7 @@ public class PartyUiSummaryV2 : MonoBehaviour
         {
             var h = Instantiate(heroPresenter,
                 new Vector3(position.x + xOffset + xSpacing * i, position.y +yOffset + ySpacing * i, position.z), Quaternion.identity, gameObject.transform); 
-            h.Set(heroes[ReverseIndex(i)]);
+            h.Set(heroes[ReverseIndex(i)], _primaryStatVisible, _resourcesVisible, _shieldsVisible);
             active.Add(h);
         }
     }

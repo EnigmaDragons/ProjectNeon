@@ -86,7 +86,7 @@ public class Hero
         h.Init(() => Stats);
     }
 
-    public void AddToStats(IStats stats) => UpdateState(() => _statAdditions = _statAdditions.Plus(stats));
+    public void AddToStats(IStats stats) => UpdateState(() => _statAdditions = _statAdditions.Plus(stats.WithConvertedPower(PrimaryStat)));
     public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
     public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);

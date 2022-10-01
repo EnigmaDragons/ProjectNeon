@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopUIController : OnMessage<ToggleCardShop, ToggleEquipmentShop>
 {
@@ -10,6 +11,8 @@ public class ShopUIController : OnMessage<ToggleCardShop, ToggleEquipmentShop>
     protected override void Execute(ToggleCardShop msg)
     {
         cardShop.SetActive(!cardShop.activeSelf);
+        if (cardShop.activeSelf && msg.IsTutorial)
+            Message.Publish(new SetSuperFocusBuyControl(true));
     }
 
     protected override void Execute(ToggleEquipmentShop msg)

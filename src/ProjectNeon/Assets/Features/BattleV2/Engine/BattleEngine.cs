@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, ResolutionsFinished, CardAndEffectsResolutionFinished, StartCardSetupRequested>
+public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, 
+    ResolutionsFinished, CardAndEffectsResolutionFinished, StartCardSetupRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones cards;
@@ -19,6 +21,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private bool setupOnStart;
     [SerializeField] private CurrentCutscene cutscene;
     [SerializeField] private BattleCutscenePresenter battleCutscenePresenter;
+    [SerializeField] private ConfirmPlayerTurnV2 confirm;
 
     private bool _triggeredBattleFinish;
     private bool _playerTurnConfirmed = false;
@@ -29,6 +32,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     {
         state.SetPhase(BattleV2Phase.NotBegun);
         cards.ClearAll();
+        confirm.Init(resolutions);
     }
     
     public void Start()
@@ -68,6 +72,8 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     {
         BattleLog.Write($"--------------  Turn {state.TurnNumber}  --------------");
         BeginPhase(BattleV2Phase.StartOfTurnEffects);
+        if (state.TurnNumber == 1)
+            state.ApplyAllGlobalStartOfBattleEffects();
         state.StartTurn();
         _playerTurnConfirmed = false;
         Message.Publish(new TurnStarted());
@@ -165,6 +171,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             return;
         
         _triggeredBattleFinish = true;
+        var startedOnFinish = false;
         if (state.PlayerLoses())
         {
             Message.Publish(new BattleFinished(TeamType.Enemies));
@@ -175,6 +182,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         {
             conclusion.GrantVictoryRewardsAndThen(() =>
             {
+                if (startedOnFinish)
+                    return;
+
+                startedOnFinish = true;
                 state.Heroes.Where(h => h.CurrentHp() < 1).ForEach(h => h.State.SetHp(1));
                 state.Party.Heroes.ForEach(h => h.ApplyBattleEndEquipmentEffects(state.GetMemberByHero(h.Character), state));
                 Message.Publish(new BattleFinished(TeamType.Party));
@@ -184,6 +195,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         }
     }
 
+    private static readonly Dictionary<BattleV2Phase, string> PhaseMessages = 
+        Enum.GetValues(typeof(BattleV2Phase)).Cast<BattleV2Phase>()
+            .ToDictionary(p => p, p => $"-- Phase - {p.ToString().WithSpaceBetweenWords()} --"); 
+    
     private void BeginPhase(BattleV2Phase newPhase)
     {
         if (newPhase == state.Phase)
@@ -192,10 +207,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             return;
         }
 
-        var finishedMessage = state.Phase != BattleV2Phase.NotBegun ? $"Finished {state.Phase} Phase -> " : "";
+        var finishedMessage = state.Phase != BattleV2Phase.NotBegun ? $"Finished {state.Phase} Phase -> " : string.Empty;
         var message = $"Phase - {finishedMessage}Beginning {newPhase} Phase";
         LogProcessStep(message);
-        BattleLog.Write($"-- Phase - {newPhase.ToString().WithSpaceBetweenWords()} --");
+        BattleLog.Write(PhaseMessages[newPhase]);
         state.CleanupExpiredMemberStates();
         state.SetPhase(newPhase);
     }

@@ -4,10 +4,6 @@ public class MarkSettingsConfigured : MonoBehaviour
 {
     public void Execute()
     {
-        CurrentAcademyData.Write(a =>
-        {
-            a.HasConfiguredSettings = true;
-            return a;
-        });
+        CurrentAcademyData.Mutate(a => a.HasConfiguredSettings = true);
     }
 }

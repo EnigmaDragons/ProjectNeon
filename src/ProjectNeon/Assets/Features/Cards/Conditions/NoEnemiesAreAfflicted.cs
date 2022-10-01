@@ -4,5 +4,7 @@ using UnityEngine;
 public class NoEnemiesAreAfflicted : StaticCardCondition
 {
     public override bool ConditionMet(CardConditionContext ctx)
-        => ctx.NoEnemy(x => x.State.StatusesOfType(StatusTag.DamageOverTime).Length > 0);
+        => ctx.NoEnemy(x => x.State.DamageOverTimes().Length > 0);
+    
+    public override string Description => "No enemy is afflicted";
 }

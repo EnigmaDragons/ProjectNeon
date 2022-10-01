@@ -48,4 +48,11 @@ public static class StatsExtensions
 
     public static HashSet<StatType> KeyStatTypes(this IStats stats)
         => PrimaryStatOptions.Where(x => stats[x] > 0).ToHashSet();
+
+    public static IStats WithConvertedPower(this IStats stats, StatType primaryStat)
+    {
+        var powerAmount = stats[StatType.Power];
+        return new AddedStats(stats,
+            new StatAddends().With(primaryStat, powerAmount).With(StatType.Power, -powerAmount));
+    }
 }

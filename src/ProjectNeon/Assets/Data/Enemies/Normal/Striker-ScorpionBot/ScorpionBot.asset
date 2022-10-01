@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: ScorpionBot
   m_EditorClassIdentifier: 
   id: 33
-  enemyName: ScorpionBot
+  enemyName: Scorpion Bot
+  allowedForSocialMedia: 1
   excludeFromBestiary: 0
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 1
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -37,47 +39,51 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
-  description: An enemy focused on killing with the trick of poison to bypass pesky
-    defenses
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: An enemy focused on killing, it uses poisons to bypass your defenses.
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
   animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
-    maxHp: 44
-    maxShield: 14
-    startingShield: 0
+    maxHp: 60
+    maxShield: 12
+    startingShield: 12
     startingAegis: 0
     startingPhase: 0
     startingDodge: 0
     startingTaunt: 0
-    attack: 11
+    attack: 9
     magic: 0
     leadership: 0
-    armor: 2
+    armor: 1
     resistance: 0
     nonStatCardValueFactor: 0
     startingResourceAmount: 0
     maxResourceAmount: 10
     resourceGainPerTurn: 1
     cardsPerTurn: 1
-    powerLevel: 124
+    powerLevel: 130
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0.5
     calculationResults:
-      startingPower: 51.242462
-      perCardValue: 11
-      resourceValue: 5.5
-      perTurnPower: 16.5
-      maxAndStartingResourcesPower: 4.909442
-      estimatedTurnsAlive: 5.124246
-      calculatedPowerLevel: 124
+      startingPower: 76.43514
+      perCardValue: 9
+      resourceValue: 4.5
+      perTurnPower: 13.5
+      maxAndStartingResourcesPower: 2.008408
+      estimatedHeroDamage: 11
+      estimatedTurnsAlive: 4.632433
+      estimatedPerTurnTotalValue: 51.667084
+      calculatedPowerLevel: 130
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
     - {fileID: 11400000, guid: e503ca5c956395d4498e8f00b5f58cdf, type: 2}
     - {fileID: 11400000, guid: eb0de07eb2420c44dbf23c1c12c10db8, type: 2}
     - {fileID: 11400000, guid: ebe41d259458d0b49bb9aded67522184, type: 2}
+  maxCopies: 4
+  minimumAllies: 0
+  damageType: 1

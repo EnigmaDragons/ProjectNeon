@@ -25,7 +25,7 @@ public interface CardTypeData
 public static class CardTypeDataExtensions
 {
     public static bool Is(this CardTypeData c, params CardTag[] tags) => tags.All(tag => c.Tags.Contains(tag));
-    public static bool IsAoE(this CardTypeData c) => c.ActionSequences.Any() && c.ActionSequences[0].Scope == Scope.All;
+    public static bool IsAoE(this CardTypeData c) => c.ActionSequences.AnyNonAlloc() && c.ActionSequences[0].Scope == Scope.All;
 
     public static CardActionsData[] Actions(this CardTypeData c) => c.ActionSequences.Select(a => a.CardActions).ToArray();
     
@@ -33,7 +33,7 @@ public static class CardTypeDataExtensions
         ? "General" 
         : string.Join(" - ", c.Archetypes.OrderBy(a => a).Select(a => a.WithSpaceBetweenWords()));
     
-    public static string GetArchetypeKey(this CardTypeData c) => c.Archetypes.Any() 
+    public static string GetArchetypeKey(this CardTypeData c) => c.Archetypes.AnyNonAlloc() 
             ? string.Join(" + ", c.Archetypes.OrderBy(a => a)) 
             : "General";
     
@@ -74,8 +74,8 @@ public static class CardTypeDataExtensions
         => new Card(-1, hero.AsMemberForLibrary(heroStats), c, c.NonBattleTint(hero), c.NonBattleBust(hero));
 
     private static Color NonBattleTint(this CardTypeData c, HeroCharacter h)
-        => c.Archetypes.Any() ? h.Tint : Color.white;
+        => c.Archetypes.AnyNonAlloc() ? h.Tint : Color.white;
     
     private static Maybe<Sprite> NonBattleBust(this CardTypeData c, HeroCharacter h)
-        => c.Archetypes.Any() ? new Maybe<Sprite>(h.Bust) : Maybe<Sprite>.Missing();
+        => c.Archetypes.AnyNonAlloc() ? new Maybe<Sprite>(h.Bust) : Maybe<Sprite>.Missing();
 }

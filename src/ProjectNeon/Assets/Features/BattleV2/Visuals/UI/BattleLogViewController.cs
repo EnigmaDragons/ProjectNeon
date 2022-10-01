@@ -1,17 +1,21 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageRequested, ToggleBattleLogView>
 {
     [SerializeField] private BoolReference loggingEnabled;
     [SerializeField] private TextMeshProUGUI textArea;
     [SerializeField] private GameObject view;
+    [SerializeField] private Scrollbar scroll;
     [SerializeField] private int maxLines = 40;
     
     private readonly List<string> _battleLogMessages = new List<string>();
 
-    private void Awake() => textArea.text = "";
+    private void Awake() => textArea.text = string.Empty;
     
     protected override void Execute(WriteBattleLogMessageRequested msg)
     {
@@ -19,8 +23,6 @@ public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageReq
             return;
         
         _battleLogMessages.Add(msg.Message);
-        while (_battleLogMessages.Count > maxLines)
-            _battleLogMessages.RemoveAt(0);
         textArea.text = string.Join("\n", _battleLogMessages);
     }
 
@@ -30,5 +32,12 @@ public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageReq
             return;
 
         view.SetActive(!view.activeSelf);
+        StartCoroutine(ScrollToBottom());
+    }
+
+    private IEnumerator ScrollToBottom()
+    {
+        yield return new WaitForSeconds(0.2f);
+        scroll.value = 0;
     }
 }

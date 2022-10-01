@@ -47,7 +47,7 @@
 </div>
 
 <style>
-  .all {
+  html {
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("/images/bg-gradient-high-rez.jpg") !important;
   }
 

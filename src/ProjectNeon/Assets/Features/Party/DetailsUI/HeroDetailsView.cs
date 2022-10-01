@@ -25,18 +25,18 @@ public class HeroDetailsView : MonoBehaviour
         _viewScale = view.transform.localScale;
     }
     
-    public void Init(Hero h)
+    public void Init(Hero h, Maybe<Member> member)
     {
-        heroDisplay.Init(h.Character, h.AsMember(-1), false, () => { });
+        heroDisplay.Init(h.Character, member.IsPresent ? member.Value : h.AsMember(-1), false, () => { });
         heroDisplay.LockToTab("Stats");
         if (_augmentsDisplay != null)
             Destroy(_augmentsDisplay);
         _augmentsDisplay = Instantiate(augmentsDisplayPrototype, augmentsDisplayParent.transform);
-        var numGear = h.Equipment.All.Length;
-        h.Equipment.All
-            .Where(x => !x.Name.Equals("Implant"))
-            .ForEach(a => Instantiate(equipmentPresenterProto, _augmentsDisplay.transform).Initialized(a, () => { }, false, false));
-        noAugmentsLabel.SetActive(numGear == 0);
+        var augments = h.Equipment.All
+                .Where(x => !x.Name.Equals("Implant") && !x.Name.StartsWith("Starting") && x.Slot != EquipmentSlot.Permanent)
+                .ToArray();
+        augments.ForEach(a => Instantiate(equipmentPresenterProto, _augmentsDisplay.transform).Initialized(a, () => { }, false, false));
+        noAugmentsLabel.SetActive(augments.Length == 0);
         
         Animate();
     }

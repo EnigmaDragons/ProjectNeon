@@ -13,6 +13,7 @@ public class GameData
     public GamePartyData PartyData = new GamePartyData();
     public GameMapData GameMap = new GameMapData();
     public RunStats Stats = new RunStats();
+    public FightHistoryData Fights = new FightHistoryData();
 
     public bool FinishedPhase(CurrentGamePhase phase) => (int)Phase >= (int)phase;
 }
@@ -31,6 +32,7 @@ public class GameAdventureProgressData
     public int RngSeed = Rng.NewSeed();
     public string[] States = new string[0];
     public bool[] StateValues = new bool[0];
+    public int DifficultyId = 0;
 }
 
 public enum GameAdventureProgressType
@@ -127,7 +129,7 @@ public class StatAddendData
 [Serializable]
 public class RunStats
 {
-    public int TimeElapsedSeconds;
+    public float TimeElapsedSeconds;
     public int TotalTurnsPlayed;
     public int TotalDamageDealt;
     public int TotalDamageReceived;
@@ -135,6 +137,19 @@ public class RunStats
     public int TotalCardsPlayed;
     public int TotalEnemiesKilled;
     [FormerlySerializedAs("TotalHealingGiven")] public int TotalHealingReceived;
+    public int HighestPreTurn4SingleCardDamage;
+    
+    public RunStats WithAdditionalElapsedTime(float time)
+    {
+        TimeElapsedSeconds += time;
+        return this;
+    }
+}
+
+[Serializable]
+public class FightHistoryData
+{
+    public string[] Encounters = new string[0];
 }
 
 public enum GameEquipmentDataType
