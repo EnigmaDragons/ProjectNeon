@@ -46,7 +46,7 @@ public static class AllMetrics
         => Send("heroLevelUp", new HeroLevelUpSelectionData {heroName = heroName, level = level, selection = selectedDescription, options = optionsDescription});
     
     public static void PublishMapNodeSelection(int mapProgress, string selectedMapNodeName, string[] mapNodeOptions)
-        => Send("mapNodeSelected",  new MapNodeSelectionData { progress = mapProgress, selected = selectedMapNodeName, options = mapNodeOptions});
+        => Send("mapNodeSelected", new MapNodeSelectionData { progress = mapProgress, selected = selectedMapNodeName, options = mapNodeOptions});
 
     public static void PublishBattleSummary(BattleSummaryReport report)
         => Send("battleSummary", report);
@@ -56,6 +56,9 @@ public static class AllMetrics
 
     public static void PublishGameWon(int adventureId)
         => Send("gameWon", new AdventureIdData {adventureId = adventureId});
+
+    public static void PublishInteractedWith(string uiElement)
+        => Send("interactedWith", new InteractionWithData { uiElement = uiElement });
 
     public static void PublishHeroSelected(string selectedHero, string[] options, string[] existingPartyHeroes)
         => Send("heroAdded", new HeroSelectedData {heroName = selectedHero, heroOptions = options, currentPartyHeroes = existingPartyHeroes});
@@ -196,5 +199,11 @@ public static class AllMetrics
     {
         public string[] options;
         public string[] purchases;
+    }
+    
+    [Serializable]
+    private class InteractionWithData
+    {
+        public string uiElement;
     }
 }
