@@ -60,6 +60,7 @@ public class FmodMusicPlayer : MonoBehaviour
         { "AcademyScene", Nothing },
         { "BattleSceneV2", Nothing },
         { "BattleTestScene", Nothing },
+        { "WishlistScene", Nothing },
     };
 
     private void PlayMusicForScene(string sceneName)
@@ -77,6 +78,7 @@ public class FmodMusicPlayer : MonoBehaviour
 
     private void PlayCustomMusic(string musicName)
     {
+        Log.Info("Play Custom Music");
         BattleLostStinger.stop(STOP_MODE.ALLOWFADEOUT);
         GameWonStinger.stop(STOP_MODE.ALLOWFADEOUT);
         CustomMusic.stop(STOP_MODE.ALLOWFADEOUT);
