@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public sealed class Navigator : ScriptableObject
 {
@@ -44,11 +43,16 @@ public sealed class Navigator : ScriptableObject
     
     public void ExitGame()
     {     
+        Message.Publish(new ExitGameRequested());
+    }
+
+    public static void HardExitGame()
+    {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBGL
 #else
         Application.Quit();
-#endif
+#endif 
     }
 }
