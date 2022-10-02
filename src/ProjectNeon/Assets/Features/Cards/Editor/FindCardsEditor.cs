@@ -50,6 +50,9 @@ public class FindCardsEditor : EditorWindow
     // By Formula Text
     private string _formulaText;
     
+    //By Resource Type
+    private string _resourceType;
+    
     void OnGUI()
     {
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
@@ -270,6 +273,21 @@ public class FindCardsEditor : EditorWindow
             var items = GetAllInstances<CardType>()
                 .Where(c => !c.IsWip)
                 .Where(c => c.unhighlightCondition.Length > 1)
+                .Select(e => $"{e.GetArchetypeKey()} - {e.Name}")
+                .OrderBy(e => e)
+                .ToArray();
+            ShowCards($"Total Items: {items.Length}", items);
+            GUIUtility.ExitGUI();
+        }
+        
+        DrawUILine();
+        
+        _resourceType = GUILayout.TextField(_resourceType);
+        if (GUILayout.Button("Find By Resource"))
+        {
+            var items = GetAllInstances<CardType>()
+                .Where(c => !c.IsWip)
+                .Where(c => c.Cost.ResourceType.Name == _resourceType)
                 .Select(e => $"{e.GetArchetypeKey()} - {e.Name}")
                 .OrderBy(e => e)
                 .ToArray();

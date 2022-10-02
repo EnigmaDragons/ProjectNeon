@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 7
   enemyName: Core
+  allowedForSocialMedia: 0
   excludeFromBestiary: 1
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 0
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -25,6 +27,7 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 100
   prefab: {fileID: 5988069194025963528, guid: be1ec610282caad4386c4c0d8dc3fbb0, type: 3}
   materialType: 0
@@ -37,9 +40,10 @@ MonoBehaviour:
   tier: 3
   unique: 1
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: 
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
     maxHp: 160
@@ -71,7 +75,9 @@ MonoBehaviour:
       resourceValue: 5.94
       perTurnPower: 18
       maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
       estimatedTurnsAlive: 16.197044
+      estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 309
     startOfBattleEffects: []
     Cards:
@@ -79,3 +85,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a6d16d7c845f7f2409fefb55bcc21ea3, type: 2}
     - {fileID: 11400000, guid: fb50b30f60dc2744a95ce0217f9264cc, type: 2}
     - {fileID: 11400000, guid: 6cff28865689d024f9b056f127932152, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

@@ -121,8 +121,7 @@ public class EffectReactWith : Effect
                     return false;
                 if (effect.Target.Members.All(x => x.TeamType == ctx.Possessor.TeamType))
                     return false;
-                if ((effect.EffectData.EffectType == EffectType.AdjustStatAdditivelyFormula || effect.EffectData.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
-                    && effect.BattleAfter.Members.Any(after =>
+                if (effect.BattleAfter.Members.Any(after =>
                     {
                         var before = effect.BattleBefore.Members.Select(x => x.Value).FirstOrDefault(before => before.Id == after.Key);
                         return before != null 

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   enemyName: Big Bad
+  allowedForSocialMedia: 0
   excludeFromBestiary: 1
+  isTutorialEnemy: 0
   lastBalanceDate: Never
   isCurrentlyWorking: 0
   corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
@@ -25,6 +27,7 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 8662641428941987335, guid: 840b4f3e90f6aa64e9dda06bae4881b8, type: 3}
   materialType: 0
@@ -37,9 +40,10 @@ MonoBehaviour:
   tier: 3
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: 
   animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
   stageDetails:
   - stage: 1
     maxHp: 150
@@ -71,7 +75,9 @@ MonoBehaviour:
       resourceValue: 6.6000004
       perTurnPower: 53.2
       maxAndStartingResourcesPower: 13.200001
+      estimatedHeroDamage: 0
       estimatedTurnsAlive: 15.484047
+      estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 591
     startOfBattleEffects: []
     Cards:
@@ -82,3 +88,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0109d46dc625e284586091d18af3eadb, type: 2}
     - {fileID: 11400000, guid: 4cf6182eb01218f44859cd6140fa6655, type: 2}
     - {fileID: 11400000, guid: e934261342a22bc47a488b3a548202b3, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0
