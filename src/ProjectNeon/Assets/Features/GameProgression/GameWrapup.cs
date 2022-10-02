@@ -10,8 +10,7 @@ public static class GameWrapup
         AllMetrics.PublishGameWon(p.AdventureProgress.AdventureId);
         CurrentProgressionData.RecordCompletedAdventure(p.AdventureProgress.AdventureId, 0, heroes.Select(h => h.Id).ToArray());
         Message.Publish(new AutoSaveRequested());
-        c.Set(true, a.Adventure.VictoryConclusion, CurrentGameData.Data.Stats, heroes);
-        CurrentGameData.Clear();
+        c.RecordFinishedGameAndCleanUp(true, a.Adventure.VictoryConclusion, CurrentGameData.Data.Stats, heroes);
         n.NavigateToConclusionScene();
     }
 }
