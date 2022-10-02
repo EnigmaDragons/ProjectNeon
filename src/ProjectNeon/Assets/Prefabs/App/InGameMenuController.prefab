@@ -85,9 +85,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7329857057175961585}
   - component: {fileID: 7329857057175961586}
-  - component: {fileID: 1795354366828291251}
   - component: {fileID: 1465338511555445529}
   - component: {fileID: 2928033260176419268}
+  - component: {fileID: 6511889801813294026}
   m_Layer: 0
   m_Name: InGameMenuController
   m_TagString: Untagged
@@ -138,19 +138,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1795354366828291251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7329857057175961590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 688e8887cb6542259417b1d21eda441a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 7329857057608068820}
 --- !u!114 &1465338511555445529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +172,19 @@ MonoBehaviour:
     ConstantValue: InGameMenu
     Variable: {fileID: 0}
   alwaysStartInactive: 1
+--- !u!114 &6511889801813294026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7329857057175961590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e8887cb6542259417b1d21eda441a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 7329857057608068820}
 --- !u!1 &7329857057530285586
 GameObject:
   m_ObjectHideFlags: 0
