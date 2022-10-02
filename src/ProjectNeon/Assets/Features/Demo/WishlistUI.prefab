@@ -153,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1608138504212413082
 RectTransform:
   m_ObjectHideFlags: 0
@@ -251,6 +251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1608138505310851964}
   - component: {fileID: 280189199909349274}
+  - component: {fileID: 8513562873008781729}
   m_Layer: 0
   m_Name: WishlistUI
   m_TagString: Untagged
@@ -305,6 +306,25 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 5423444481436089793}
   isPrimaryActionButton: 0
+--- !u!114 &8513562873008781729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608138505310851963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb9c3bd4bf1417c83695df1c2eca28d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 1608138504212413081}
+  targetName:
+    UseConstant: 1
+    ConstantValue: WishlistUI
+    Variable: {fileID: 0}
+  alwaysStartInactive: 1
 --- !u!1 &1734919020272526714
 GameObject:
   m_ObjectHideFlags: 0
