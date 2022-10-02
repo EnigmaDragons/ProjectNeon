@@ -9,14 +9,19 @@ public class DemoUIController : MonoBehaviour
     [SerializeField] private TMP_Text text;
     [SerializeField] private Button startAdventure;
     [SerializeField] private Button startDraft;
+    [SerializeField] private GameObject zeroRunsRemainingView;
 
     private void Start()
     {
         if (isDemo.Value)
         {
+            var runsFinished = CurrentProgressionData.Data.RunsFinished;
+            var maxRuns = 3;
+            var outOfRuns = runsFinished >= maxRuns; 
             text.gameObject.SetActive(true);
-            text.text = $"Runs Remaining In Demo: {Math.Max(3 - CurrentProgressionData.Data.RunsFinished, 0)}";
-            if (CurrentProgressionData.Data.RunsFinished >= 3)
+            text.text = $"Demo Runs Remaining: {Math.Max(maxRuns - runsFinished, 0)}";
+            zeroRunsRemainingView.SetActive(outOfRuns);
+            if (outOfRuns)
             {
                 startAdventure.interactable = false;
                 startDraft.interactable = false;
