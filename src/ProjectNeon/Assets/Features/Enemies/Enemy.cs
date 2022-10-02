@@ -52,6 +52,7 @@ public class Enemy : ScriptableObject
     public int MinimumAllies => minimumAllies;
     public DamageType DamageType => damageType;
     public MemberMaterialType MaterialType => materialType;
+    public ResourceType ResourceType => resourceType;
     public EnemyInstance ForStage(int stage)
     {
         var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();

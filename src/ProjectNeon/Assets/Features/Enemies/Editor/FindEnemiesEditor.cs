@@ -11,6 +11,7 @@ public class FindEnemiesEditor : EditorWindow
     static void Open() => GetWindow(typeof(FindEnemiesEditor)).Show();
 
     private string _corpName;
+    private string _resourceType;
     
     void OnGUI()
     {
@@ -156,6 +157,18 @@ public class FindEnemiesEditor : EditorWindow
             GUIUtility.ExitGUI();
         }
         DrawUILine();
+        _resourceType = GUILayout.TextField(_resourceType);
+        if (GUILayout.Button("By Resource")) 
+        {
+            var items = GetAllInstances<Enemy>()
+                .Where(e => e.ResourceType.Name.Equals(_resourceType, StringComparison.InvariantCultureIgnoreCase))
+                .Select(e => e.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_corpName} - {items.Length} Enemies", items)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
     }
 
     private IEnumerable<Enemy> GetAllWorkingEnemies() => GetAllInstances<Enemy>().Where(e => e.IsCurrentlyWorking);
