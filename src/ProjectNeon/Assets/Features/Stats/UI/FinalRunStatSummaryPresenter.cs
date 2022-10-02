@@ -27,7 +27,7 @@ public class FinalRunStatSummaryPresenter : MonoBehaviour
         Render(5, "Damage Taken", stats.TotalDamageReceived);
         Render(6, "HP Damage Taken", stats.TotalHpDamageReceived);
         Render(7, "Healing Received", stats.TotalHealingReceived);
-        Render(8, "Top Card Damage", stats.HighestPreTurn4SingleCardDamage);
+        Hide(8);
     }
 
     private void RenderHeroes()
@@ -51,6 +51,15 @@ public class FinalRunStatSummaryPresenter : MonoBehaviour
         }
     }
 
+    private void Hide(int index)
+    {
+        if (labels.Length < index || values.Length < index)
+            return;
+        
+        labels[index].text = "";
+        values[index].text = "";
+    }
+    
     private void Render(int index, string label, int value)
         => Render(index, label, value.ToString());
     private void Render(int index, string label, string value)
