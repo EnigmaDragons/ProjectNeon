@@ -12,8 +12,19 @@ public class AdventureConclusionState : ScriptableObject
     public string EndingStoryText => endingText;
     public RunStats Stats => runStats;
     public HeroCharacter[] Heroes => heroes;
+
+    public void RecordFinishedGameAndCleanUp(bool playerWon, string storyText, RunStats stats, HeroCharacter[] runHeroes)
+    {
+        Set(playerWon, storyText, stats, runHeroes);
+        CurrentGameData.Clear();
+        CurrentProgressionData.Write(x =>
+        {
+            x.RunsFinished += 1;
+            return x;
+        });
+    }
     
-    public void Set(bool playerWon, string storyText, RunStats stats, HeroCharacter[] runHeroes)
+    private void Set(bool playerWon, string storyText, RunStats stats, HeroCharacter[] runHeroes)
     {
         isVictorious = playerWon;
         endingText = storyText;
