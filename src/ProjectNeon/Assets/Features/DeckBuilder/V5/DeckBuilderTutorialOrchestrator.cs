@@ -35,7 +35,6 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         SetFocusDeckTabActive(false);
         SetFocusHeroStatsActive(false);
         SetFocusHeroTabActive(false);
-        SetFocusDeckClearActive(false);
         SetFocusAddCardActive(false);
         SetFocusRemoveCardActive(false);
         SetFocusLibraryNextActive(false);
