@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, TurnStarted, CardCycled, CardDiscarded>
+public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, CardCycled, CardDiscarded>
 {
     private const string _callerId = "Tutorial12Orchestrator";
     
@@ -22,7 +22,6 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
     private void Start()
     {
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.ClickableControls, false, _callerId));
-        Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.TrashRecycleDropArea, false, _callerId));
         _timeTilPrompt = _notCyclingPromptDelay;
         _gilgameshDodges = 9;
     }
@@ -89,16 +88,6 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
-
-    protected override void Execute(TurnStarted msg)
-    {
-        _turn++;
-        if (_turn == 2)
-        {
-            Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.TrashRecycleDropArea, true, _callerId));
-            Message.Publish(new PunchYourself(BattleUiElement.TrashRecycleDropArea));
-        }
-    }
 
     protected override void Execute(CardCycled msg)
     {
