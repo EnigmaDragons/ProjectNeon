@@ -20,7 +20,7 @@ public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardReso
 
     private IEnumerator ShowTutorialAfterDelay()
     {
-        yield return new WaitForSeconds(6);
+        yield return TutorialSettings.BattleTutorialPanelPopupDelay;
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
