@@ -9,55 +9,72 @@ public static class MessageGroup
     public static bool IsClear => Msgs.IsClear;
     public static string CurrentName => Msgs.CurrentName;
     public static void Start(IPayloadProvider payloadProvider, Action onFinished) => Msgs.Start(payloadProvider, onFinished);
-    public static void Add(IPayloadProvider payloadProvider) => Msgs.Add(payloadProvider);
+    public static void ExtendCurrentGroup(IPayloadProvider payloadProvider) => Msgs.ExtendCurrentGroup(payloadProvider);
     public static void TerminateAndClear() => Msgs.TerminateAndClear();
 
     private sealed class MessageGroupQueue
     {
-        private readonly Queue<IPayloadProvider> _enqueuedPayloadQueues = new Queue<IPayloadProvider>();
-        private IPayloadProvider _currentPayloadQueue = new NoPayload();
+        private Queue<IPayloadProvider> _futurePayloadProviderQueue = new Queue<IPayloadProvider>();
+        private Queue<Action> _onFinishedQueue = new Queue<Action>();
+        private Queue<IPayloadProvider> _payloadProviderQueue = new Queue<IPayloadProvider>();
         private Action _onFinished = () => { };
+        private IPayloadProvider _payloadProvider = new NoPayload();
+        public bool IsClear = true;
+        
+        public string CurrentName => _payloadProvider.Name;
 
-        public bool IsClear => _currentPayloadQueue.IsFinished() && _enqueuedPayloadQueues.Count == 0;
-        public string CurrentName => _currentPayloadQueue.Name;
-
-        public void Start(IPayloadProvider queueData, Action onFinished)
+        public void Start(IPayloadProvider payloadProvider, Action onFinished)
         {
+            _futurePayloadProviderQueue.Enqueue(payloadProvider);
+            _onFinishedQueue.Enqueue(onFinished);
             if (IsClear)
             {
-                _onFinished = onFinished;
-                _enqueuedPayloadQueues.Enqueue(queueData);
-                ProcessNext();   
-            }
-            else
-            {
-                Log.Error($"Attempted to start a new MessageGroup while the Queue is currently processing - New Group: {queueData.Name} Active: {CurrentName}");
+                IsClear = false;
+                ProcessNext();
             }
         }
         
-        public void Add(IPayloadProvider queueData)
+        public void ExtendCurrentGroup(IPayloadProvider queueData)
         {
-            _enqueuedPayloadQueues.Enqueue(queueData);
+            if (!IsClear)
+                _payloadProviderQueue.Enqueue(queueData);
+            else
+                Log.Warn("Can't extend a completed queue");
         }
         
         public void TerminateAndClear()
         {
             Message.Unsubscribe(this);
-            _enqueuedPayloadQueues.Clear();
-            _currentPayloadQueue = new NoPayload();
+            _futurePayloadProviderQueue = new Queue<IPayloadProvider>();
+            _onFinishedQueue = new Queue<Action>();
+            _payloadProviderQueue = new Queue<IPayloadProvider>();
             _onFinished = () => { };
+            _payloadProvider = new NoPayload();
+            IsClear = true;
         }
 
         private void ProcessNext()
         {
             Message.Unsubscribe(this);
-            while (_currentPayloadQueue.IsFinished() && _enqueuedPayloadQueues.Count > 0)
-                _currentPayloadQueue = _enqueuedPayloadQueues.Dequeue();
-            if (_currentPayloadQueue.IsFinished())
+            while (_payloadProvider.IsFinished() && (_payloadProviderQueue.Count > 0 || _futurePayloadProviderQueue.Count > 0))
+            {
+                if (_payloadProviderQueue.Count > 0)
+                    _payloadProvider = _payloadProviderQueue.Dequeue();
+                else
+                {
+                    _onFinished();
+                    _payloadProviderQueue.Enqueue(_futurePayloadProviderQueue.Dequeue());
+                    _onFinished = _onFinishedQueue.Dequeue();
+                }
+            }
+            if (_payloadProvider.IsFinished())
+            {
                 _onFinished();
+                IsClear = true;
+            }
             else
             {
-                var payloadData = _currentPayloadQueue.GetNext();
+                var payloadData = _payloadProvider.GetNext();
                 Message.Subscribe(new MessageSubscription(payloadData.Finished, msg =>
                 {
                     if (payloadData.FinishedCondition(msg))
