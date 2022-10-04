@@ -287,9 +287,19 @@ public class BattleState : ScriptableObject
         if (adventureProgress.HasActiveAdventure)
             adventureProgress.AdventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
             {
+                if (_membersById.None())
+                    return;
+                
                 var heroLeader = _membersById.First().Value;
+                
                 var possibleTargets = this.GetPossibleConsciousTargets(heroLeader, e.Group, e.Scope);
+                if (possibleTargets.None())
+                    return;
+                
                 var target = possibleTargets.First();
+                if (target.Members.None())
+                    return;
+                
                 var src = target.Members.First();
                 var ctx = EffectContext.ForEffectFromBattleState(this, src, target, ReactionTimingWindow.FirstCause);
                 AllEffects.Apply(e.EffectData, ctx);
