@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class HpDamageBloodEffect : OnMessage<MemberStateChanged>
@@ -18,7 +19,18 @@ public class HpDamageBloodEffect : OnMessage<MemberStateChanged>
         {
             var cp = state.GetMaybeCenterPoint(msg.MemberId());
             if (cp.IsPresent)
-                this.ExecuteAfterDelay(() => Message.Publish(new PlayRawBattleEffect(damageEffectType, cp.Value.position)), fxDelay);
+                this.ExecuteAfterDelay(() =>
+                {
+                    try
+                    {
+                        if (cp.IsPresent && cp.Value != null)
+                            Message.Publish(new PlayRawBattleEffect(damageEffectType, cp.Value.position));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warn($"{nameof(HpDamageBloodEffect)} target has become null. Probably despawned");
+                    }
+                }, fxDelay);
         }
     }
 }
