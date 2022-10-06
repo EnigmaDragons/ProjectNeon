@@ -24,6 +24,8 @@ public class DragRotator : MonoBehaviour
     {
         try
         {
+            if (Time.deltaTime == 0)
+                return;
             var position = transform.position;
             var vector3 = position - m_prevPos;
             if ((double) vector3.sqrMagnitude > 9.99999974737875E-05)

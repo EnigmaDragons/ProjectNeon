@@ -17,7 +17,7 @@ public class BattleGlobalEffectCardsPhase : OnMessage<BattleStateChanged, CardRe
 
     public void BeginPlayingAllGlobalEffectCards()
     {
-        _globalMember = new Member(AllGlobalEffects.GlobalEffectMemberId, "Global Effect Member", "Game Master", MemberMaterialType.Metallic, TeamType.Party, new StatAddends(new Dictionary<string, float>() { { StatType.Damagability.ToString(), 1f }}), BattleRole.Specialist, StatType.Leadership);
+        _globalMember = new Member(AllGlobalEffects.GlobalEffectMemberId, "Global Effect Member", "Game Master", MemberMaterialType.Metallic, TeamType.Enemies, new StatAddends(new Dictionary<string, float>() { { StatType.Damagability.ToString(), 1f }}), BattleRole.Specialist, StatType.Leadership);
         _globalCardsToPlay = _globalCardsToPlay = new Queue<CardType[]>(globalEffects.StartOfBattleCards.ToArray());
         PlayNextGlobalEffectCard();
     } 
@@ -29,25 +29,28 @@ public class BattleGlobalEffectCardsPhase : OnMessage<BattleStateChanged, CardRe
         {
             if (_globalCardsToPlay.Count == 0)
                 StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.GlobalEffectCards));
-            var cardType = _globalCardsToPlay.Dequeue().Random();
-            var targets = cardType.ActionSequences.Select<CardActionSequence, Target>(x =>
+            else
             {
-                if (x.Group == Group.All && x.Scope == Scope.All)
-                    return new Multiple(state.MembersWithoutIds.Where(m => m.IsConscious()).ToArray());
-                if (x.Group == Group.Ally && x.Scope == Scope.All)
-                    return new Multiple(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Party && m.IsConscious()).ToArray());
-                if (x.Group == Group.Opponent && x.Scope == Scope.All)
-                    return new Multiple(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Enemies && m.IsConscious()).ToArray());
-                if (x.Group == Group.All && x.Scope == Scope.One)
-                    return new Single(state.MembersWithoutIds.Where(m => m.IsConscious()).Random());
-                if (x.Group == Group.Ally && x.Scope == Scope.One)
-                    return new Single(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Party && m.IsConscious()).Random());
-                if (x.Group == Group.Opponent && x.Scope == Scope.One)
-                    return new Single(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Enemies && m.IsConscious()).Random());
-                return new NoTarget();
-            }).ToArray();
-            var card = new Card(state.GetNextCardId(), _globalMember, cardType);
-            resolutionZone.PlayImmediately(new PlayedCardV2(_globalMember, targets, card, false));
+                var cardType = _globalCardsToPlay.Dequeue().Random();
+                var targets = cardType.ActionSequences.Select<CardActionSequence, Target>(x =>
+                {
+                    if (x.Group == Group.All && x.Scope == Scope.All)
+                        return new Multiple(state.MembersWithoutIds.Where(m => m.IsConscious()).ToArray());
+                    if (x.Group == Group.Ally && x.Scope == Scope.All)
+                        return new Multiple(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Party && m.IsConscious()).ToArray());
+                    if (x.Group == Group.Opponent && x.Scope == Scope.All)
+                        return new Multiple(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Enemies && m.IsConscious()).ToArray());
+                    if (x.Group == Group.All && x.Scope == Scope.One)
+                        return new Single(state.MembersWithoutIds.Where(m => m.IsConscious()).Random());
+                    if (x.Group == Group.Ally && x.Scope == Scope.One)
+                        return new Single(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Party && m.IsConscious()).Random());
+                    if (x.Group == Group.Opponent && x.Scope == Scope.One)
+                        return new Single(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Enemies && m.IsConscious()).Random());
+                    return new NoTarget();
+                }).ToArray();
+                var card = new Card(state.GetNextCardId(), _globalMember, cardType);
+                resolutionZone.PlayImmediately(new PlayedCardV2(_globalMember, targets, card, false));
+            }
         }));
     }
     
