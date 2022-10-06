@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 
-public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl>, IPointerEnterHandler, IPointerExitHandler
+public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, StartBattleInitiated>, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private CardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
@@ -94,4 +94,9 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl>, I
         if (msg.Name == DeckBuilderControls.CardInLibrary)
             superFocus.SetActive(msg.Enabled);
     }
+    
+    protected override void Execute(StartBattleInitiated msg)
+    {
+        presenter.DisableInteractions();
+    } 
 }

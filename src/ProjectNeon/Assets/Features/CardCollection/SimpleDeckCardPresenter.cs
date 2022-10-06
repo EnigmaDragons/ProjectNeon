@@ -147,4 +147,9 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
         tintGradient.Vertex1 = cTwo;
         tintGradient.Vertex2 = cOne;
     }
+
+    public void DisableInteractions()
+    {
+        _leftClickAction = () => { };
+    }
 }

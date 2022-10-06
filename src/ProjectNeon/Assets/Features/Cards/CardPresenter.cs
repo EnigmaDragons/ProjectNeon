@@ -207,6 +207,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _hoverEnterAction = NoOp;
         _hoverExitAction = NoOp;
     }
+
+    public void DisableInteractions()
+    {
+        _onClick = () => { };
+        _onMiddleMouse = () => { };
+        _onRightClick = () => { };
+        _useCustomHoverActions = false;
+        _hoverEnterAction = NoOp;
+        _hoverExitAction = NoOp;
+    } 
     
     private void NoOp() {}
 
