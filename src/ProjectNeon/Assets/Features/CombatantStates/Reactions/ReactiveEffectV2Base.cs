@@ -99,7 +99,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         if (action.Scope == ReactiveTargetScope.Everyone)
             target = new Multiple(members.Values.Where(x => x.IsConscious()).ToArray());
         if (action.Scope == ReactiveTargetScope.OneRandomAlly)
-            target = new Single(members.Values.ToArray().GetConsciousAllies(reactor).Random());
+            target = new Multiple(members.Values.ToArray().GetConsciousAllies(reactor).Shuffled().Take(1));
         if (action.Scope == ReactiveTargetScope.HealthiestAllyExceptSelf)
             target = new Multiple(members.Values.ToArray().GetConsciousNonSelfAllies(reactor).Shuffled().OrderByDescending(x => x.CurrentHp()).Take(1));
         if (action.Scope == ReactiveTargetScope.UnhealthiestAllyExceptSelf)
@@ -107,7 +107,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         if (action.Scope == ReactiveTargetScope.UnhealthiestByPercentageAllyExceptSelf)
             target = new Multiple(members.Values.ToArray().GetConsciousNonSelfAllies(reactor).Shuffled().OrderBy(x => (x.CurrentHp() + x.CurrentShield()) / (x.MaxHp() + x.State.StartingShield())).Take(1));
         if (action.Scope == ReactiveTargetScope.OneRandomEnemy)
-            target = new Single(members.Values.ToArray().GetConsciousEnemies(reactor).Random());
+            target = new Multiple(members.Values.ToArray().GetConsciousEnemies(reactor).Shuffled().Take(1));
         return target;
     }
 
