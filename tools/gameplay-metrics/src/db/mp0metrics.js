@@ -57,6 +57,10 @@ const queryLevelUpsPicked = (db, version) => {
   return db.queryAsyncEventData(`SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType = '${eventTypes.heroLevelUp}'`);
 }
 
+const queryAdventureProgress = (db, version) => {
+  return db.queryAsyncEventData(`SELECT * FROM ${tblName} WHERE GameVersion LIKE '%${version}%' AND EventType = '${eventTypes.adventureProgress}'`);
+}
+
 const createByVersion = (db, version) => ({
   eventTypes: eventTypes,
   queryEvents: (eventType, onEvents) => queryEvents(db, version, eventType, onEvents),
@@ -68,6 +72,7 @@ const createByVersion = (db, version) => ({
   queryCardsPicked: () => queryCardsPicked(db, version),
   queryLevelUpsPicked: () => queryLevelUpsPicked(db, version),
   queryBattleSummaries: () => queryBattleSummary(db, version),
+  queryAdventureProgress: () => queryAdventureProgress(db, version),
 });
 
 module.exports = ({ eventTypes, queryEventTypes, queryEvents, queryUniqueInstalls, createByVersion });
