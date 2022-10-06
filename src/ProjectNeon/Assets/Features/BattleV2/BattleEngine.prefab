@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 3521385163762330731}
   - component: {fileID: 6304377302531333178}
   - component: {fileID: 8347980704372164314}
+  - component: {fileID: 1502407836623812080}
   m_Layer: 0
   m_Name: BattleEngine
   m_TagString: Untagged
@@ -77,6 +78,7 @@ MonoBehaviour:
   cutscene: {fileID: 11400000, guid: 20a63148439186645b88b8d51ad2b750, type: 2}
   battleCutscenePresenter: {fileID: 5296797323349544989}
   confirm: {fileID: 7208299206351966848}
+  globalEffectCardsPhases: {fileID: 1502407836623812080}
 --- !u!114 &2115684586857430258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +379,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   current: {fileID: 11400000, guid: 20a63148439186645b88b8d51ad2b750, type: 2}
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
+--- !u!114 &1502407836623812080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115684586857430259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4474f766f8e4bf7b4ecebe2e7588db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  resolutions: {fileID: 2285146240355017327}
+  resolutionZone: {fileID: 11400000, guid: 74d2299f8469d0b438fc5c0e3412a61d, type: 2}
+  globalEffects: {fileID: 11400000, guid: f5587298eaa09d540ad68952817e0e25, type: 2}
 --- !u!1 &7515626014630951634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,6 +1251,14 @@ PrefabInstance:
     - target: {fileID: 4926778540057555374, guid: 43c309133836439458750b399bed21b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7116493016816556826, guid: 43c309133836439458750b399bed21b2, type: 3}
+      propertyPath: m_AfterStackBundles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7116493016816556826, guid: 43c309133836439458750b399bed21b2, type: 3}
+      propertyPath: m_AfterStackBundles.Array.data[0].assemblyQualifiedName
+      value: Xibanya.Scanline, GameAssembly, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43c309133836439458750b399bed21b2, type: 3}

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public static class AllGlobalEffects
 {
+    public static int GlobalEffectMemberId = 999;
+    
     private static readonly GlobalEffect NoEffect = new FullGlobalEffect(
         new GlobalEffectData {ShortDescription = "None", FullDescription = "None", EffectType = GlobalEffectType.None}, 
         _ => {},
@@ -25,7 +27,10 @@ public static class AllGlobalEffects
             fx => Enum.TryParse(d.EffectScope, out MapNodeType nodeType).If(() => fx.AllowTravelTo(d.CorpName, nodeType))) },
         { GlobalEffectType.AddHeroEquipment, d => new BasicGlobalEffect(d,
             fx => fx.AddHeroEquipment(d.Equipment),
-            fx => fx.RemoveHeroEquipment(d.Equipment))}
+            fx => fx.RemoveHeroEquipment(d.Equipment))},
+        { GlobalEffectType.AddStartOfBattleCard, d => new BasicGlobalEffect(d, 
+            fx => fx.AddStartOfBattleCards(d.Cards),
+            fx => fx.RemoveStartOfBattleCards(d.Cards))}
     };
 
     public static GlobalEffect Create(GlobalEffectData data)

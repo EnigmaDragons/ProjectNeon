@@ -19,6 +19,8 @@ public class GlobalEffectData
 
     public StaticEquipment Equipment;
 
+    public CardType[] Cards;
+
     public GlobalEffectData WithOriginatingId(int id)
     {
         OriginatingId = id;

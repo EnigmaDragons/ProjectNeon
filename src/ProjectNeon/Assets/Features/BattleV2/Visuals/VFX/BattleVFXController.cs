@@ -73,7 +73,9 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         }
         else
         {
-            var performerTeam = state.Members[e.PerformerId].TeamType;
+            var performerTeam = e.PerformerId == AllGlobalEffects.GlobalEffectMemberId 
+                ? TeamType.Party
+                : state.Members[e.PerformerId].TeamType;
             var opponentTeam = performerTeam == TeamType.Enemies ? TeamType.Party : TeamType.Enemies;
             var targetTeam = e.Group == Group.Opponent ? opponentTeam : performerTeam;
             var location = state.GetCenterPoint(targetTeam);
