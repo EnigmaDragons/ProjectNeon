@@ -59,6 +59,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
             enableOnFinished.ForEach(d => d.SetActive(true));
         }
         catch (Exception ex) {}
+        MessageGroup.TerminateAndClear();
         cutscene.FinishStartBattleCutscene();
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));
         Message.Publish(new StartCardSetupRequested());

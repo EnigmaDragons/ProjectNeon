@@ -34,6 +34,7 @@ public class CutscenePresenter : BaseCutscenePresenter
         DebugLog($"Characters in cutscene: {string.Join(", ", Characters.Select(c => c.PrimaryName))}");
         
         DebugLog($"Num Cutscene Segments {cutscene.Current.Segments.Length}");
+        MessageGroup.TerminateAndClear();
         MessageGroup.Start(
             new MultiplePayloads("Cutscene Script", cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
             () => Message.Publish(new CutsceneFinished()));
@@ -59,6 +60,7 @@ public class CutscenePresenter : BaseCutscenePresenter
         you.SpeechBubble.ForceHide();
         player.SpeechBubble.ForceHide();
         disableOnFinished.ForEach(d => d.SetActive(false));
+        MessageGroup.TerminateAndClear();
 
         var shouldGoToAdventureVictoryScreen = cutscene.OnCutsceneFinishedAction.IsMissing
                                                && cutscene.Current.IsPrimaryCutscene
