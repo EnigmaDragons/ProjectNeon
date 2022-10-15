@@ -27,6 +27,8 @@ public class BattleSetupV2 : MonoBehaviour
     private CardPlayZone Hand => playerCardPlayZones.HandZone;
     private CardPlayZone Deck => playerCardPlayZones.DrawZone;
 
+    private void Awake() => Log.Info("BattleSetupV2");
+    
     public void InitBattleField(GameObject battlefield) => state.SetNextBattleground(battlefield);
     public void InitParty(BaseHero h1, BaseHero h2, BaseHero h3) => party.Initialized(h1, h2, h3);
     public void InitPartyEquipment(IEnumerable<Equipment> h1, IEnumerable<Equipment> h2, IEnumerable<Equipment> h3)

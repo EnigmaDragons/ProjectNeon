@@ -15,6 +15,7 @@ public class CardPlayZones : ScriptableObject
     [SerializeField] private CardPlayZone resolutionZone;
     [SerializeField] private CardPlayZone reactionZone;
     [SerializeField] private CardPlayZone currentResolvingCardZone;
+    [SerializeField] private CardPlayZone voidZone;
 
     public CardPlayZone DrawZone => drawZone;
     public CardPlayZone HandZone => handZone;
@@ -22,6 +23,7 @@ public class CardPlayZones : ScriptableObject
     public CardPlayZone DiscardZone => discardZone;
     public CardPlayZone SelectionZone => selectionZone;
     public CardPlayZone ResolutionZone => resolutionZone;
+    public CardPlayZone VoidZone => voidZone;
     public Card[] AllCards => DrawZone.Cards.Concat(HandZone.Cards).Concat(DiscardZone.Cards).ToArray();
     
     public void ClearAll()
@@ -33,6 +35,7 @@ public class CardPlayZones : ScriptableObject
         selectionZone.Clear();
         resolutionZone.Clear();
         reactionZone.Clear();
+        voidZone.Clear();
         currentResolvingCardZone.Clear();
     }
 
