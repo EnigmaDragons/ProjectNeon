@@ -77,4 +77,15 @@ public class DrawSelectedCardTests
         Assert.AreEqual(_context.PlayerCardZones.HandZone.Count, 1);
         Assert.AreEqual(_discardCard2, _context.PlayerCardZones.HandZone.Cards[0]);
     }
+
+    [Test]
+    public void DrawCardForNonMatchingPredicate_NoExceptions()
+    {
+        AllEffects.Apply(new EffectData
+        {
+            EffectType = EffectType.DrawCardsOfArchetype,
+            Formula = "1",
+            EffectScope = new StringReference("Fire")
+        }, _context);
+    }
 }

@@ -71,8 +71,10 @@ public class CardPlayZones : ScriptableObject
     public void DrawCards(int number) 
         => Enumerable.Range(0, number).ForEach(_ => DrawOneCard());
     
-    public void DrawCards(int number, Func<Card, bool> cardCondition) 
-        => Enumerable.Range(0, number).ForEach(_ => DrawOneCard(cardCondition));
+    public void DrawCards(int number, Func<Card, bool> cardCondition)
+    {
+        Enumerable.Range(0, number).ForEach(_ => DrawOneCard(cardCondition));
+    }
 
     public void DrawOneCard()
     {
@@ -95,7 +97,13 @@ public class CardPlayZones : ScriptableObject
             BattleLog.Write("Hand Is Full. Not Drawing Any More Cards");
             return;
         }
-        
+
+        if (AllCards.None(cardCondition))
+        {
+            BattleLog.Write("Unable to find card of selected type. Not Drawing Any Cards");
+            return;
+        }
+
         if (!DrawZone.Cards.Any(cardCondition))
             Reshuffle();
         HandZone.PutOnBottom(DrawZone.DrawOneCard(cardCondition));
