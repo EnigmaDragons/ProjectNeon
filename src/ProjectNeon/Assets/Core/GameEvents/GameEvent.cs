@@ -4,7 +4,8 @@ using UnityEngine;
 using System.Linq;
 using System.Runtime.Serialization;
 
-[Obsolete] 
+[Obsolete]
+[CreateAssetMenu]
 public class GameEvent : ScriptableObject
 {
     private IEnumerable<GameEventSubscription> listeners = Array.Empty<GameEventSubscription>();

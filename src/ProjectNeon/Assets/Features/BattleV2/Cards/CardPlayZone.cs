@@ -107,8 +107,7 @@ public class CardPlayZone : ScriptableObject
         if (newVal.Length > maxCards.Value)
             throw new InvalidOperationException($"{name} can hold a Maximum of {maxCards.Value} Cards");
         cards = newVal;
-        if (onZoneCardsChanged != null)
-            onZoneCardsChanged.Publish();
+        onZoneCardsChanged.Publish();
     }
     
     public static CardPlayZone InMemory
