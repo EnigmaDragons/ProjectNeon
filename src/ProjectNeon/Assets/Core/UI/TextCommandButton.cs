@@ -43,6 +43,14 @@ public sealed class TextCommandButton : MonoBehaviour
         return this;
     }
 
+    public void Init(Action cmd)
+    {        
+        InitButton();
+        _cmd = cmd;
+        _button.interactable = true;
+        gameObject.SetActive(true);
+    }
+    
     public void Init(string commandText, Action cmd)
     {
         InitButton();

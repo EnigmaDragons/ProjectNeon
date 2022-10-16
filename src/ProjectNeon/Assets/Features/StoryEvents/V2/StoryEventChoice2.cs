@@ -15,8 +15,8 @@ public class StoryEventChoice2
     public StoryResult Reward => Resolution.OrderByDescending(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     public StoryResult Penalty => Resolution.OrderBy(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     
-    public string ChoiceText(int parentStoryEventId) => ((string)new LocalizedString($"Event{parentStoryEventId} Choice{Choice}")).Trim();
-    public string ChoiceFullText(StoryEventContext ctx, StoryEvent2 owner) => ((string)new LocalizedString($"Event{owner.id} Choice{Choice}")).Trim();
+    public string ChoiceText(int parentStoryEventId) => (new LocalizedString($"Legacy/Event{parentStoryEventId} Choice{Choice}").ToString()).Trim();
+    public string ChoiceFullText(StoryEventContext ctx, StoryEvent2 owner) => (new LocalizedString($"Legacy/Event{owner.id} Choice{Choice}").ToString()).Trim();
     public bool CanSelect(StoryEventContext ctx) => true;
     
     public void Select(StoryEventContext ctx, StoryEvent2 owner, Maybe<double> predeterminedRoll)
