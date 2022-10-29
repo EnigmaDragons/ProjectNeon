@@ -8,9 +8,8 @@ namespace I2.Loc
 {
 	public partial class LocalizationEditor
 	{
-
 		#region Variables
-
+	
 		public enum eViewMode { ImportExport, Keys, Languages, Tools, References }
 		public static eViewMode mCurrentViewMode = eViewMode.Keys;
 		

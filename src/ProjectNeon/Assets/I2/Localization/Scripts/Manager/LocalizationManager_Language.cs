@@ -126,6 +126,7 @@ namespace I2.Loc
                 IsRight2Left = IsRTL(mLanguageCode);
                 HasJoinedWords = GoogleLanguages.LanguageCode_HasJoinedWord(mLanguageCode);
                 LocalizeAll(Force);
+                Message.Publish(new LanguageChanged());
             }
         }
 

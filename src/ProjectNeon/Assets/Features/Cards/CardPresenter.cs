@@ -13,7 +13,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private BattleState battleState;
     [SerializeField] private RarityPresenter rarity;
     [SerializeField] private CardTargetPresenter target;
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    
+    [SerializeField] private Localize localizedNameLabel;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private Image art;
@@ -98,6 +99,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         Message.Subscribe<CardHighlighted>(OnCardHighlighted, this);
         Message.Subscribe<MemberUnconscious>(_ => UpdateCardHighlight(), this);
+        Message.Subscribe<LanguageChanged>(_ => RenderCardType(), this);
     }
 
     private void OnDisable()
@@ -439,7 +441,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         var shouldUseLibraryMode = _card == null || _card.Owner.TeamType == TeamType.Party && (_card.Cost.PlusXCost && !_isHand);
         IsPlayable = CheckIfCanPlay();
-        nameLabel.text = _cardType.Name;
+        
+        //nameLabel.text = _cardType.Name; //LocalizationManager.GetTranslation(_cardType.CardLocalizationNameKey());
+        if (localizedNameLabel)
+            localizedNameLabel.SetTerm(_cardType.CardLocalizationNameTerm()); //, "UI-Kit2-Sans-SDF");
+        
         description.text = shouldUseLibraryMode
             ? _cardType.InterpolatedDescription(_card?.Owner ?? Maybe<Member>.Missing(), ResourceQuantity.DontInterpolateX)
             : _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity), handZone.Count, state.PlayerState.NumberOfCyclesUsedThisTurn);

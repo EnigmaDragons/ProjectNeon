@@ -155,7 +155,7 @@ namespace I2.Loc
             if (LocalizeCallBack.HasCallback())
                 return true;
             return LocalizeEvent.GetPersistentEventCount() > 0;
-        }
+        } 
 
 		public void OnLocalize( bool Force = false )
 		{
@@ -184,7 +184,9 @@ namespace I2.Loc
 			CallBackSecondaryTerm = FinalSecondaryTerm;
 			MainTranslation = string.IsNullOrEmpty(FinalTerm) || FinalTerm=="-" ? null : LocalizationManager.GetTranslation (FinalTerm, false);
 			SecondaryTranslation = string.IsNullOrEmpty(FinalSecondaryTerm) || FinalSecondaryTerm == "-" ? null : LocalizationManager.GetTranslation (FinalSecondaryTerm, false);
-
+			
+			DebugLocalization.Write($"Term '{CallBackTerm}' -> '{MainTranslation}' | 2nd '{CallBackSecondaryTerm}' -> '{SecondaryTranslation}'");
+			
 			if (!hasCallback && /*string.IsNullOrEmpty (MainTranslation)*/ string.IsNullOrEmpty(FinalTerm) && string.IsNullOrEmpty (SecondaryTranslation))
 				return;
 
@@ -193,7 +195,7 @@ namespace I2.Loc
                 LocalizeEvent.Invoke();
                 if (AllowParameters)
 					LocalizationManager.ApplyLocalizationParams (ref MainTranslation, gameObject, AllowLocalizedParameters);
-			}
+			} 
 
 			if (!FindTarget())
 				return;

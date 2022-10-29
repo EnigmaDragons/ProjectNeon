@@ -10,5 +10,6 @@ public class LocalizationToggleChinese : ScriptableObject
         var newLanguageName = before == "Chinese" ? "English" : "Chinese";
         var newLanguageCode = before == "Chinese" ? "en" : "zh";
         LocalizationManager.SetLanguageAndCode(newLanguageName, newLanguageCode);
+        Message.Publish(new CheatAcceptedSuccessfully());
     }
 }

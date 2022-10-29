@@ -36,6 +36,7 @@ namespace I2.Loc
 
         public override void DoLocalize(Localize cmp, string mainTranslation, string secondaryTranslation)
         {
+            DebugLocalization.Write($"Localizing UGUI {mainTranslation} {secondaryTranslation}");
             {
                 //--[ Localize Font Object ]----------
                 TMP_FontAsset newFont = cmp.GetSecondaryTranslatedObj<TMP_FontAsset>(ref mainTranslation, ref secondaryTranslation);

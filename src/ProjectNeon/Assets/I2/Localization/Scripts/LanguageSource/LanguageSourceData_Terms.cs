@@ -51,7 +51,7 @@ namespace I2.Loc
 				if (data!=null)
 				{
 					Translation = data.GetTranslation(Index, overrideSpecialization, editMode:true);
-
+					
 					// "---" is a code to define that the translation is meant to be empty
 					if (Translation == "---")
 					{
