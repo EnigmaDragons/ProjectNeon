@@ -15,5 +15,7 @@ public class StringKeyValueCollection : ScriptableObject
         items.FirstOrMaybe(x => x.Key.Value.Equals(key))
             .Select(x => x.Value, defaultValue);
 
+    public bool Contains(string key) => items.FirstOrMaybe(x => x.Key.Value.Equals(key)).IsPresent;
+
     public IEnumerable<StringKeyValuePair> All => items;
 }
