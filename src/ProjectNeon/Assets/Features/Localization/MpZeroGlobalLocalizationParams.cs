@@ -18,8 +18,11 @@ public class MpZeroGlobalLocalizationParams : MonoBehaviour, ILocalizationParams
     
     public virtual string GetParameterValue(string paramName)
     {
-        if (paramName == "BR")
-            return "<br>";
+        if (paramName == "BR") return "<br>";
+        
+        if (paramName == "B") return "<b>";
+        
+        if (paramName == "/B") return "</b>";
 
         return null;
     }
