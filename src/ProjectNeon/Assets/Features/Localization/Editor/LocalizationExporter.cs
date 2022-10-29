@@ -74,7 +74,22 @@ public class LocalizationExporter
                 WriteCsv("keywords", data);
             });
     }
-    
+
+    [MenuItem("Neon/Localization/ExportTutorialSlides")]
+    public static void ExportTutorialSlides()
+    {
+        var data = new List<string>();
+        GetAllInstances<TutorialSlide>().ForEach(s =>
+        {
+            var text = s.Text
+                .Replace(Environment.NewLine, LocalizeNewLineSymbol)
+                .Replace("\r\n", LocalizeNewLineSymbol)
+                .Replace("\n", LocalizeNewLineSymbol);
+            data.Add($"Tutorial_Slide_{s.id}^{text}");
+        });
+        WriteCsv("tutorial-slides", data);
+    }
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

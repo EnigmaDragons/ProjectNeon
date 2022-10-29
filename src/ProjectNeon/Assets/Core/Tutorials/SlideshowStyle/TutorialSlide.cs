@@ -8,5 +8,6 @@ public class TutorialSlide : ScriptableObject
     [SerializeField] private GameObject uiElementPrototype;
 
     public string Text => text;
+    public string Term => $"TutorialSlides/Tutorial_Slide_{id}";
     public GameObject UiElementPrototype => uiElementPrototype;
 }

@@ -9,12 +9,12 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
     [SerializeField] private GameObject backgroundUiParent;
     [SerializeField] private TextMeshProUGUI titleLabel;
     [SerializeField] private GameObject slideUiParent;
-    [SerializeField] private SlideTextPresenter defaultTextPresenter;
+    [SerializeField] private SlideTextPresenterBase defaultTextPresenter;
     [SerializeField] private GameObject nextButtonIndicator;
 
     private readonly Queue<TutorialSlideshow> _queue = new Queue<TutorialSlideshow>();
     private Maybe<TutorialSlideshow> _current = Maybe<TutorialSlideshow>.Missing();
-    private SlideTextPresenter _currentSlideTextPresenter;
+    private SlideTextPresenterBase _currentSlideTextPresenter;
     private Maybe<IndexSelector<TutorialSlide>> _maybeSlideWalker = Maybe<IndexSelector<TutorialSlide>>.Missing();
     private int _uiLockId;
     
