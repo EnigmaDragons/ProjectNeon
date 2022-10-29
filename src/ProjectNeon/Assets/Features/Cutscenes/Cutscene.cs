@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Cutscene/Cutscene")]
 public class Cutscene : ScriptableObject
 {
+    [SerializeField] public int id;
     [SerializeField] private bool isObsolete = false;
     [SerializeField] private bool isPrimaryCutscene;
     [SerializeField] private CutsceneSetting setting;

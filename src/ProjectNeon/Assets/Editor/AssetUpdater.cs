@@ -29,6 +29,7 @@ public class AssetUpdater
         UpdateStageSegmentIDs();
         UpdateAllStageSegments();
         UpdateTutorialSlideIDs();
+        UpdateCutsceneIDs();
         UpdateAllCorps();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
@@ -195,7 +196,7 @@ public class AssetUpdater
         AssignAllIds(ScriptableExtensions.GetAllInstances<CardType>(), c => c.id, (c, id) => c.id = id);
     }
 
-    [MenuItem("Neon/Update/UpdateAllCards")]
+    [MenuItem("Neon/Update/Update All Cards")]
     private static void UpdateAllCards()
     {
         var cards = ScriptableExtensions.GetAllInstances<CardType>().Where(x => x != null).ToArray();
@@ -210,7 +211,7 @@ public class AssetUpdater
         });
     }
     
-    [MenuItem("Neon/Update/UpdateAllHeroes")]
+    [MenuItem("Neon/Update/Update All Heroes")]
     private static void UpdateAllHeroes()
     {
         var items = ScriptableExtensions.GetAllInstances<BaseHero>().Where(x => x != null).ToArray();
@@ -226,7 +227,7 @@ public class AssetUpdater
     }
 
 
-    [MenuItem("Neon/Update/UpdateAllCorps")]
+    [MenuItem("Neon/Update/Update All Corps")]
     private static void UpdateAllCorps()
     {
         var corps = ScriptableExtensions.GetAllInstances<StaticCorp>();
@@ -241,7 +242,7 @@ public class AssetUpdater
         });
     }
 
-    [MenuItem("Neon/Update/UpdateAllEquipments")]
+    [MenuItem("Neon/Update/Update All Equipments")]
     private static void UpdateAllEquipments()
     {
         var equipments = ScriptableExtensions.GetAllInstances<StaticEquipment>().Where(e => e.IncludeInPools).ToArray();
@@ -253,7 +254,7 @@ public class AssetUpdater
         });
     }
     
-    [MenuItem("Neon/Update/UpdateAllResourceTypes")]
+    [MenuItem("Neon/Update/Update All Resource Types")]
     private static void UpdateAllResourceTypes()
     {
         var resourceTypes = ScriptableExtensions.GetAllInstances<SimpleResourceType>().ToArray();
@@ -301,7 +302,7 @@ public class AssetUpdater
         });
     }
 
-    [MenuItem("Neon/Update/UpdateAllMaps")]
+    [MenuItem("Neon/Update/Update All Maps")]
     private static void UpdateAllMaps()
     {
         var maps = ScriptableExtensions.GetAllInstances<GameMap3>();
@@ -319,7 +320,7 @@ public class AssetUpdater
         AssignAllIds(ScriptableExtensions.GetAllInstances<Enemy>(), c => c.id, (c, id) => c.id = id);
     }
     
-    [MenuItem("Neon/Update/UpdateAllEnemies")]
+    [MenuItem("Neon/Update/Update All Enemies")]
     private static void UpdateAllEnemies()
     {
         var enemies = ScriptableExtensions.GetAllInstances<Enemy>();
@@ -331,7 +332,7 @@ public class AssetUpdater
         });
     }
     
-    [MenuItem("Neon/Update/UpdatePossibleEncounters")]
+    [MenuItem("Neon/Update/Update Possible Encounters")]
     private static void UpdatePossibleEncounters()
     {
         var enemies = ScriptableExtensions.GetAllInstances<EncounterBuilderV5>();
@@ -371,7 +372,7 @@ public class AssetUpdater
         });
     }
 
-    [MenuItem("Neon/Update/ClearPossibleEncounters")]
+    [MenuItem("Neon/Update/Clear Possible Encounters")]
     private static void ClearPossibleEncounters()
     {
         var enemies = ScriptableExtensions.GetAllInstances<EncounterBuilderV5>();
@@ -405,6 +406,12 @@ public class AssetUpdater
     private static void UpdateTutorialSlideIDs()
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<TutorialSlide>(), s => s.id, (s, id) => s.id = id);
+    }
+
+    [MenuItem("Neon/Update/Update Cutscene IDs")]
+    private static void UpdateCutsceneIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<Cutscene>(), c => c.id, (c, id) => c.id = id);
     }
 
     private const decimal _hpValue = 1;

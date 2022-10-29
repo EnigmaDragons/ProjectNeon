@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Tutorial/Slideshow/Slide", fileName = "Tutorial-")]
 public class TutorialSlide : ScriptableObject
 {
-    [SerializeField, ReadOnly] public int id;
+    [SerializeField] public int id;
     [SerializeField, TextArea(4, 6)] public string text;
     [SerializeField] private GameObject uiElementPrototype;
 

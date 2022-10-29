@@ -11,6 +11,8 @@ public class LocalizationExporter
 {
     private static string BaseDir = ".\\LocalizationAssets";
     private static string LocalizeNewLineSymbol = "{[BR]}";
+    private static string LocalizeOpenBold = "{[B]}";
+    private static string LocalizeCloseBold = "{[/B]}";
 
     private static void WriteCsv(string filename, List<string> data)
     {
@@ -19,6 +21,14 @@ public class LocalizationExporter
         
         File.WriteAllLines($"{BaseDir}\\{filename}.csv", data);
     }
+
+    private static string ReplaceSpecialCharacters(string toReplace)
+        => toReplace
+            .Replace(Environment.NewLine, LocalizeNewLineSymbol)
+            .Replace("\r\n", LocalizeNewLineSymbol)
+            .Replace("\n", LocalizeNewLineSymbol)
+            .Replace("<b>", LocalizeOpenBold)
+            .Replace("</b>", LocalizeCloseBold);
     
     [MenuItem("Neon/Localization/Export Cards For Localization")]
     public static void ExportCardsForLocalization()
@@ -31,10 +41,7 @@ public class LocalizationExporter
         allCards.ForEach(c =>
         {
             data.Add($"{c.CardLocalizationNameKey()}^{c.Name}");
-            var csvDesc = c.description
-                .Replace(Environment.NewLine, LocalizeNewLineSymbol)
-                .Replace("\r\n", LocalizeNewLineSymbol)
-                .Replace("\n", LocalizeNewLineSymbol);
+            var csvDesc = ReplaceSpecialCharacters(c.description);
             data.Add($"{c.CardLocalizationDescriptionKey()}^{csvDesc}");
         });
         WriteCsv("cards-for-localization", data);
@@ -64,10 +71,7 @@ public class LocalizationExporter
                 foreach (var k in keywordRules.All)
                 {
                     data.Add($"{k.Key.Value}^{k.Key.Value}");
-                    var csvDesc = k.Value
-                        .Replace(Environment.NewLine, LocalizeNewLineSymbol)
-                        .Replace("\r\n", LocalizeNewLineSymbol)
-                        .Replace("\n", LocalizeNewLineSymbol);
+                    var csvDesc = ReplaceSpecialCharacters(k.Value);
                     data.Add($"{k.Key.Value}_Rule^{csvDesc}");
                 }
 
@@ -81,10 +85,7 @@ public class LocalizationExporter
         var data = new List<string>();
         GetAllInstances<TutorialSlide>().ForEach(s =>
         {
-            var text = s.Text
-                .Replace(Environment.NewLine, LocalizeNewLineSymbol)
-                .Replace("\r\n", LocalizeNewLineSymbol)
-                .Replace("\n", LocalizeNewLineSymbol);
+            var text = ReplaceSpecialCharacters(s.Text);
             data.Add($"Tutorial_Slide_{s.id}^{text}");
         });
         WriteCsv("tutorial-slides", data);
