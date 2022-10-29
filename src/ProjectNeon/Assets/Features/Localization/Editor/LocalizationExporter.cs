@@ -7,9 +7,10 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-public class CardLocalization
+public class LocalizationExporter
 {
     private static string BaseDir = ".\\LocalizationAssets";
+    private static string LocalizeNewLineSymbol = "{[BR]}";
 
     private static void WriteCsv(string filename, List<string> data)
     {
@@ -26,15 +27,14 @@ public class CardLocalization
             .Where(c => !c.IsWip)
             .OrderBy(c => c.Id);
 
-        var localizeNewLineSymbol = "{[BR]}";
         var data = new List<string>();
         allCards.ForEach(c =>
         {
             data.Add($"{c.CardLocalizationNameKey()}^{c.Name}");
             var csvDesc = c.description
-                .Replace(Environment.NewLine, localizeNewLineSymbol)
-                .Replace("\r\n", localizeNewLineSymbol)
-                .Replace("\n", localizeNewLineSymbol);
+                .Replace(Environment.NewLine, LocalizeNewLineSymbol)
+                .Replace("\r\n", LocalizeNewLineSymbol)
+                .Replace("\n", LocalizeNewLineSymbol);
             data.Add($"{c.CardLocalizationDescriptionKey()}^{csvDesc}");
         });
         WriteCsv("cards-for-localization", data);
@@ -50,6 +50,29 @@ public class CardLocalization
             .ToList();
         
         WriteCsv("archetypes", allArchetypes);
+    }
+
+    [MenuItem("Neon/Localization/ExportKeywordRules")]
+    public static void ExportKeywordRules()
+    {
+        GetAllInstances<StringKeyValueCollection>()
+            .Where(c => c.name.Equals("KeywordRules"))
+            .FirstAsMaybe()
+            .IfPresent(keywordRules =>
+            {
+                var data = new List<string>();
+                foreach (var k in keywordRules.All)
+                {
+                    data.Add($"{k.Key.Value}^{k.Key.Value}");
+                    var csvDesc = k.Value
+                        .Replace(Environment.NewLine, LocalizeNewLineSymbol)
+                        .Replace("\r\n", LocalizeNewLineSymbol)
+                        .Replace("\n", LocalizeNewLineSymbol);
+                    data.Add($"{k.Key.Value}_Rule^{csvDesc}");
+                }
+
+                WriteCsv("keywords", data);
+            });
     }
     
     private static T[] GetAllInstances<T>() where T : ScriptableObject
