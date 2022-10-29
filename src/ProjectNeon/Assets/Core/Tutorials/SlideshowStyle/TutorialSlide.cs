@@ -4,7 +4,7 @@ using UnityEngine;
 public class TutorialSlide : ScriptableObject
 {
     [SerializeField, ReadOnly] public int id;
-    [SerializeField, TextArea(4, 6)] private string text;
+    [SerializeField, TextArea(4, 6)] public string text;
     [SerializeField] private GameObject uiElementPrototype;
 
     public string Text => Term;

@@ -20,7 +20,7 @@ public class LocalizationExporter
         File.WriteAllLines($"{BaseDir}\\{filename}.csv", data);
     }
     
-    [MenuItem("Neon/Localization/ExportCardsForLocalization")]
+    [MenuItem("Neon/Localization/Export Cards For Localization")]
     public static void ExportCardsForLocalization()
     {
         var allCards = GetAllInstances<CardType>()
@@ -40,7 +40,7 @@ public class LocalizationExporter
         WriteCsv("cards-for-localization", data);
     }
 
-    [MenuItem("Neon/Localization/ExportArchetypesForLocalization")]
+    [MenuItem("Neon/Localization/Export Archetypes For Localization")]
     public static void ExportArchetypesForLocalization()
     {
         var allArchetypes = GetAllInstances<StringVariable>()
@@ -52,7 +52,7 @@ public class LocalizationExporter
         WriteCsv("archetypes", allArchetypes);
     }
 
-    [MenuItem("Neon/Localization/ExportKeywordRules")]
+    [MenuItem("Neon/Localization/Export Keyword Rules")]
     public static void ExportKeywordRules()
     {
         GetAllInstances<StringKeyValueCollection>()
@@ -75,7 +75,7 @@ public class LocalizationExporter
             });
     }
 
-    [MenuItem("Neon/Localization/ExportTutorialSlides")]
+    [MenuItem("Neon/Localization/Export Tutorial Slides")]
     public static void ExportTutorialSlides()
     {
         var data = new List<string>();
