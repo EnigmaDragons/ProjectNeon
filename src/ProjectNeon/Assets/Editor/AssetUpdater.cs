@@ -28,6 +28,7 @@ public class AssetUpdater
         UpdateAllEnemies();
         UpdateStageSegmentIDs();
         UpdateAllStageSegments();
+        UpdateTutorialSlideIDs();
         UpdateAllCorps();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
@@ -398,6 +399,12 @@ public class AssetUpdater
             x.Stages = stageSegments;
             EditorUtility.SetDirty(x);
         });
+    }
+
+    [MenuItem("Neon/Update/Update Tutorial Slide IDs")]
+    private static void UpdateTutorialSlideIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<TutorialSlide>(), s => s.id, (s, id) => s.id = id);
     }
 
     private const decimal _hpValue = 1;
