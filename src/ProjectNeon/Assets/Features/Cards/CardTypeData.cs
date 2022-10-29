@@ -29,13 +29,19 @@ public static class CardTypeDataExtensions
 
     public static CardActionsData[] Actions(this CardTypeData c) => c.ActionSequences.Select(a => a.CardActions).ToArray();
     
+    public static string LocalizedArchetypeDescription(this CardTypeData c) 
+        => string.Join(" - ", c.Archetypes().Select(Localized.Archetype));
+
     public static string ArchetypeDescription(this CardTypeData c) => c.Archetypes.None() 
         ? "General" 
         : string.Join(" - ", c.Archetypes.OrderBy(a => a).Select(a => a.WithSpaceBetweenWords()));
+
+    public static string GetArchetypeKey(this CardTypeData c) => string.Join(" + ", c.Archetypes());
     
-    public static string GetArchetypeKey(this CardTypeData c) => c.Archetypes.AnyNonAlloc() 
-            ? string.Join(" + ", c.Archetypes.OrderBy(a => a)) 
-            : "General";
+    private static List<string> Archetypes(this CardTypeData c) =>
+        c.Archetypes.AnyNonAlloc() 
+            ? c.Archetypes.OrderBy(a => a).ToList() 
+            : new List<string>{"General"};
     
     public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c, Maybe<Color>.Missing(), Maybe<Sprite>.Missing());
     public static Card CreateInstance(this CardTypeData c, int id, Member owner, Maybe<Color> tint, Maybe<Sprite> bust) => new Card(id, owner, c, tint, bust);

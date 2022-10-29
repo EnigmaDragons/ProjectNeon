@@ -155,9 +155,9 @@ namespace I2.Loc
             if (LocalizeCallBack.HasCallback())
                 return true;
             return LocalizeEvent.GetPersistentEventCount() > 0;
-        } 
+        }
 
-		public void OnLocalize( bool Force = false )
+        public void OnLocalize( bool Force = false, string finalMainTranslation = null )
 		{
 			if (!Force && (!enabled || gameObject==null || !gameObject.activeInHierarchy))
 				return;
@@ -182,7 +182,11 @@ namespace I2.Loc
 			CurrentLocalizeComponent = this;
 			CallBackTerm = FinalTerm;
 			CallBackSecondaryTerm = FinalSecondaryTerm;
-			MainTranslation = string.IsNullOrEmpty(FinalTerm) || FinalTerm=="-" ? null : LocalizationManager.GetTranslation (FinalTerm, false);
+			MainTranslation = !string.IsNullOrEmpty(finalMainTranslation) 
+				? finalMainTranslation 
+				: string.IsNullOrEmpty(FinalTerm) || FinalTerm=="-" 
+					? null 
+					: LocalizationManager.GetTranslation (FinalTerm, false);
 			SecondaryTranslation = string.IsNullOrEmpty(FinalSecondaryTerm) || FinalSecondaryTerm == "-" ? null : LocalizationManager.GetTranslation (FinalSecondaryTerm, false);
 			
 			DebugLocalization.Write($"Term '{CallBackTerm}' -> '{MainTranslation}' | 2nd '{CallBackSecondaryTerm}' -> '{SecondaryTranslation}'");
@@ -368,6 +372,11 @@ namespace I2.Loc
 			FinalSecondaryTerm = mTermSecondary = secondary;
 
 			OnLocalize(true);
+		}
+
+		public void SetFinalText(string finalText)
+		{
+			OnLocalize(true, finalText);
 		}
 
 		internal T GetSecondaryTranslatedObj<T>( ref string mainTranslation, ref string secondaryTranslation ) where T: Object

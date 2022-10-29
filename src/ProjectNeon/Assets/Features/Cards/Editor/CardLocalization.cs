@@ -9,6 +9,16 @@ using UnityEngine;
 
 public class CardLocalization
 {
+    private static string BaseDir = ".\\LocalizationAssets";
+
+    private static void WriteCsv(string filename, List<string> data)
+    {
+        if (!Directory.Exists(BaseDir))
+            Directory.CreateDirectory(BaseDir);
+        
+        File.WriteAllLines($"{BaseDir}\\{filename}.csv", data);
+    }
+    
     [MenuItem("Neon/Localization/ExportCardsForLocalization")]
     public static void ExportCardsForLocalization()
     {
@@ -27,7 +37,19 @@ public class CardLocalization
                 .Replace("\n", localizeNewLineSymbol);
             data.Add($"{c.CardLocalizationDescriptionKey()}^{csvDesc}");
         });
-        File.WriteAllLines("c:\\temp\\cards-for-localization.csv", data);
+        WriteCsv("cards-for-localization", data);
+    }
+
+    [MenuItem("Neon/Localization/ExportArchetypesForLocalization")]
+    public static void ExportArchetypesForLocalization()
+    {
+        var allArchetypes = GetAllInstances<StringVariable>()
+            .Where(x => x.name.ContainsAnyCase("Archetype"))
+            .Select(x => x.Value)
+            .OrderBy(x => x)
+            .ToList();
+        
+        WriteCsv("archetypes", allArchetypes);
     }
     
     private static T[] GetAllInstances<T>() where T : ScriptableObject
