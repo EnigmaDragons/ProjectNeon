@@ -96,6 +96,15 @@ public class LocalizationExporter
         WriteCsv("cutscenes", data);
     }
 
+    [MenuItem("Neon/Localization/Export Loading Screens")]
+    public static void ExportLoadingScreens()
+    {
+        var data = new List<string>();
+        foreach (var screen in GetAllInstances<CorpLoadingScreen>())
+            data.Add($"LocationTitle{screen.id}^{ToSingleLineI2Format(screen.locationTitle)}");
+        WriteCsv("loading-screens", data);
+    }
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

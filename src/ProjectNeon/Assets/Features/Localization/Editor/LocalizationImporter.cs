@@ -15,6 +15,7 @@ public class LocalizationImporter
         ImportTutorialSlides(true);
         ImportCutscenes(true);
         ImportStoryEvents(true);
+        ImportLoadingScreens(true);
     }
 
     [MenuItem("Neon/Localization/Import Tutorial Slides")]
@@ -37,9 +38,20 @@ public class LocalizationImporter
         ImportItems<StoryEvent2>(x => x.Term, (x, text) => x.storyText = text, hasInit);
         ImportSubItems<StoryEvent2, StoryEventChoice2>(x => x.Choices, choice => choice.Term, (choice, text) => choice.Choice = text, hasInit);
     }
+
+    [MenuItem("Neon/Localization/Import Loading Screens")]
+    private static void ImportLoadingScreens()
+        => ImportLoadingScreens(false);
+
+    private static void ImportLoadingScreens(bool hasInit)
+        => ImportItems<CorpLoadingScreen>(x => x.Term, (x, text) => x.locationTitle = text, hasInit);
     
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject
     {
+        if (LocalizationManager.CurrentLanguage != "English")
+        {
+            Debug.LogError("Language is currently not english. Cannot import.");
+        }
         if (!hasInit)
             LocalizationManager.UpdateSources();
         foreach (var item in GetAllInstances<T>())
@@ -58,6 +70,10 @@ public class LocalizationImporter
 
     private static void ImportSubItems<T, T2>(Func<T, T2[]> getSubItems, Func<T2, string> getTerm, Action<T2, string> setText, bool hasInit) where T : ScriptableObject
     {
+        if (LocalizationManager.CurrentLanguage != "English")
+        {
+            Debug.LogError("Language is currently not english. Cannot import.");
+        }
         if (!hasInit)
             LocalizationManager.UpdateSources();
         foreach (var item in GetAllInstances<T>())

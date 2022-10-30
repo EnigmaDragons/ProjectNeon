@@ -31,6 +31,7 @@ public class AssetUpdater
         UpdateTutorialSlideIDs();
         UpdateCutsceneIDs();
         UpdateStoryEventIDs();
+        UpdateLoadingScreensIDs();
         UpdateAllCorps();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
@@ -444,6 +445,12 @@ public class AssetUpdater
         var events = ScriptableExtensions.GetAllInstances<StoryEvent2>();
         AssignAllIds(events, e => e.id, (e, id) => e.id = id);
         AssignAllSubIds(events.SelectMany(storyEvent => storyEvent.Choices.Select(choice => new Tuple<StoryEvent2, StoryEventChoice2>(storyEvent, choice))).ToArray(), c => c.Id, (c, id) => c.Id = id);
+    }
+
+    [MenuItem("Neon/Update/Update Loading Screens IDs")]
+    private static void UpdateLoadingScreensIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<CorpLoadingScreen>(), s => s.id, (s, id) => s.id = id);
     }
 
     private const decimal _hpValue = 1;
