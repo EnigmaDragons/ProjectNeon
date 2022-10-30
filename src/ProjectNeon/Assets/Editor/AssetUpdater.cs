@@ -30,6 +30,7 @@ public class AssetUpdater
         UpdateAllStageSegments();
         UpdateTutorialSlideIDs();
         UpdateCutsceneIDs();
+        //UpdateStoryEventIDs();
         UpdateAllCorps();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
@@ -130,6 +131,36 @@ public class AssetUpdater
     private static void UpdateEquipmentIDs()
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<StaticEquipment>(), x => x.id, (x, id) => x.id = id);
+    }
+
+    private static void AssignAllSubIds<T>(T[] subItems, Func<T, int> getId, Action<T, int> setId)
+    {
+        var map = Enumerable.Range(0, subItems.Length + 1).ToDictionary(x => x, x => new List<T>());
+        foreach (var h in subItems)
+        {
+            if (map.TryGetValue(getId(h), out var collection))
+                collection.Add(h);
+            else
+                map[0].Add(h);
+        }
+        for (var i = 1; i < map.Count; i++)
+        {
+            while (map[i].Count > 1)
+            {
+                var item = map[i][0];
+                setId(item, 0);
+                map[i].Remove(item);
+            }
+        }
+        for (var i = 1; i < map.Count; i++)
+        {
+            if (map[i].Count == 0)
+            {
+                var item = map[0][0];
+                setId(item, i);
+                map[0].Remove(item);
+            }
+        }   
     }
 
     private static void AssignAllIds<T>(T[] items, Func<T, int> getId, Action<T, int> setId) where T : Object
@@ -411,7 +442,17 @@ public class AssetUpdater
     [MenuItem("Neon/Update/Update Cutscene IDs")]
     private static void UpdateCutsceneIDs()
     {
-        AssignAllIds(ScriptableExtensions.GetAllInstances<Cutscene>(), c => c.id, (c, id) => c.id = id);
+        var cutscenes = ScriptableExtensions.GetAllInstances<Cutscene>();
+        AssignAllIds(cutscenes, c => c.id, (c, id) => c.id = id);
+        AssignAllSubIds(cutscenes.SelectMany(x => x.Segments).ToArray(), s => s.Id, (s, id) => s.Id = id);
+    }
+
+    [MenuItem("Neon/Update/Update Story Event IDs")]
+    private static void UpdateStoryEventIDs()
+    {
+        var events = ScriptableExtensions.GetAllInstances<StoryEvent2>();
+        AssignAllIds(events, e => e.id, (e, id) => e.id = id);
+        AssignAllSubIds(events.SelectMany(x => x.Choices).ToArray(), c => c.Id, (c, id) => c.Id = id);
     }
 
     private const decimal _hpValue = 1;

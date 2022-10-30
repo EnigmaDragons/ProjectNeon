@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using I2.Loc;
 using UnityEngine;
 
 [Serializable]
 public class CutsceneSegmentData
 {
+    public int Id;
     public CutsceneSegmentType SegmentType;
     public StringReference DialogueCharacterId = new StringReference { UseConstant = false };
     [TextArea(4, 4)] public string Text = "";
@@ -16,7 +18,8 @@ public class CutsceneSegmentData
     public StringReference[] ForbiddenStates;
     public bool Or;
     public StringReference StoryState = new StringReference("");
-
+    public string GetText() => LocalizationManager.GetTranslation($"Choice{Id}");
+    
     public bool ShouldShow(Func<string, bool> storyState)
         => !ShouldSkip(storyState);
     

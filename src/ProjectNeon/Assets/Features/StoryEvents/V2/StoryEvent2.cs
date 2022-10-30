@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "StoryEvent/StoryEvent2")]
 public class StoryEvent2 : ScriptableObject
 {
-    [SerializeField, ReadOnly] public int id;
+    [SerializeField] public int id;
     [SerializeField] private StorySetting settingType;
     [SerializeField] private StaticCorp corp;
     [SerializeField] private StoryEventChoice2[] choices;
@@ -17,7 +17,7 @@ public class StoryEvent2 : ScriptableObject
     
     public StorySetting StorySetting => settingType;
     public StaticCorp Corp => corp;
-    public string StoryText => new LocalizedString($"Event{id} Story");
+    public string StoryText =>  (new LocalizedString($"Legacy/Event{id} Story").ToString()).Trim();
     public StoryEventChoice2[] Choices => choices.ToArray();
     public bool InCutscene => inCutscene;
     public bool IsMultiChoice => isMultiChoice;

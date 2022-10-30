@@ -113,7 +113,7 @@ public class QualityAssurance
             for (var i = 0; i < c.Segments.Length; i++)
             {
                 var s = c.Segments[i];
-                var text = s.Text;
+                var text = s.GetText();
                 var numberOfLineBreaks = CCount(text.Replace("\n\n", "\n"), "\n");
                 var textEffectiveLength = text.Length + numberOfLineBreaks * 77;
                 if (textEffectiveLength > 252)

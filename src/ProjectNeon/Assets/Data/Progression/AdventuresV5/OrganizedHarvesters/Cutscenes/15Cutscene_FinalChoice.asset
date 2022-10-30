@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: 15Cutscene_FinalChoice
   m_EditorClassIdentifier: 
+  id: 58
+  isObsolete: 0
   isPrimaryCutscene: 1
   setting: {fileID: 11400000, guid: 16ff067cea58b1f4285b745b5134e3d6, type: 2}
   skipTrueStates:
@@ -20,7 +22,8 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: 0036d49e2a3fd524ba3665013ae360d7, type: 2}
   skipFalseStates: []
   segments:
-  - SegmentType: 1
+  - Id: 507
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Anton
@@ -38,7 +41,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 508
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Anton
@@ -56,7 +60,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 4
+  - Id: 509
+    SegmentType: 4
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Anton
@@ -68,43 +73,14 @@ MonoBehaviour:
       FloatVariable: {fileID: 0}
     StoryEvent: {fileID: 11400000, guid: 77bd7d750b5d17c4386fa552d6a23fdd, type: 2}
     RequiredStates: []
-    ForbiddenStates:
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
+    ForbiddenStates: []
     Or: 0
     StoryState:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 4
-    DialogueCharacterId:
-      UseConstant: 1
-      ConstantValue: Anton
-      Variable: {fileID: 0}
-    Text: 
-    FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 11400000, guid: 2cfe37d41e2d42840ad42b17b9e8e479, type: 2}
-    RequiredStates:
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 142ecaeb6c6dd444a838b21aa0c636c5, type: 2}
-    - UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 11400000, guid: 4e8de568b490f554eb70ebf87b175995, type: 2}
-    ForbiddenStates: []
-    Or: 1
-    StoryState:
-      UseConstant: 0
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 511
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Anton
@@ -126,7 +102,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 512
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Anton

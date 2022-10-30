@@ -7,7 +7,11 @@ using UnityEngine;
 [Serializable]
 public class StoryEventChoice2
 {
+    public int Id;
     public int Choice;
+    public bool Or;
+    public StringVariable[] RequiredStates;
+    public StringVariable[] ForbiddenStates;
     public StoryResolution2[] Resolution;
 
     public float OddsTableTotal => Resolution.Sum(r => r.Chance);
@@ -18,6 +22,10 @@ public class StoryEventChoice2
     public string ChoiceText(int parentStoryEventId) => (new LocalizedString($"Legacy/Event{parentStoryEventId} Choice{Choice}").ToString()).Trim();
     public string ChoiceFullText(StoryEventContext ctx, StoryEvent2 owner) => (new LocalizedString($"Legacy/Event{owner.id} Choice{Choice}").ToString()).Trim();
     public bool CanSelect(StoryEventContext ctx) => true;
+    public bool ShouldSkip(Func<string, bool> storyState)
+        => ForbiddenStates.Any(x => storyState(x.Value))
+           || (Or && RequiredStates.None(x => storyState(x.Value)))
+           || (!Or && RequiredStates.Any(x => !storyState(x.Value)));
     
     public void Select(StoryEventContext ctx, StoryEvent2 owner, Maybe<double> predeterminedRoll)
     {

@@ -61,6 +61,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
 
     public void Present(StoryEvent2 s)
     {
+        var choices = s.Choices.Where(choice => choice.ShouldSkip(x => adventure.IsTrue(x))).ToArray();
         Message.Publish(new HideDieRoll());
         rewardParent.DestroyAllChildren();
         InitFreshOptionsButtons();
@@ -95,12 +96,12 @@ public class StoryEventPresenterV4 : MonoBehaviour
             }
             for (var i = _multiChoiceButtons.Length - 1; i > -1; i--)
             {
-                if (s.Choices.Length <= i)
+                if (choices.Length <= i)
                 {
                     _multiChoiceButtons[i].Hide();
                     continue;
                 }
-                _multiChoiceButtons[i].Init(s.Choices[i], ctx, s);
+                _multiChoiceButtons[i].Init(choices[i], ctx, s);
             }
         }
         else
@@ -108,12 +109,12 @@ public class StoryEventPresenterV4 : MonoBehaviour
             multiChoiceParent.SetActive(false);
             for (var i = _buttons.Length - 1; i > -1; i--)
             {
-                if (s.Choices.Length <= i)
+                if (choices.Length <= i)
                 {
                     _buttons[i].Hide();
                     continue;
                 }
-                _buttons[i].Init(s.Choices[i], ctx, s);
+                _buttons[i].Init(choices[i], ctx, s);
             }
         }
         Message.Publish(new StoryEventBegun(transform));

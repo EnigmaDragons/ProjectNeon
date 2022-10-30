@@ -10,20 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7dab33deee9460b8aab4769accdd7a5, type: 3}
-  m_Name: EndingChoice-Variant2
+  m_Name: EndingChoice
   m_EditorClassIdentifier: 
   id: 11
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 2
+  - Id: 15
+    Choice: 1
+    Or: 0
+    RequiredStates:
+    - {fileID: 11400000, guid: 657664c4e9236f84785087e7b38ba10f, type: 2}
+    ForbiddenStates: []
+    Resolution:
+    - Chance: 1
+      ContinueWith: {fileID: 0}
+      Result: {fileID: 11400000, guid: 023cbe10045a81748966be1e6894ec08, type: 2}
+      ResultNumber: 1
+      StoryText: 
+  - Id: 16
+    Choice: 2
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: ee42f4a1b5a64284e8314e697803e657, type: 2}
       ResultNumber: 1
       StoryText: 
-  - Choice: 3
+  - Id: 17
+    Choice: 3
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}

@@ -8,10 +8,10 @@ public static class AllCutsceneSegments
         {
             {CutsceneSegmentType.Nothing, e => new SimpleSegment(() => { })},
             {CutsceneSegmentType.DialogueLine, e => new MessagePublishSegment(
-                new ShowCharacterDialogueLine(e.DialogueCharacterId, e.Text), 
+                new ShowCharacterDialogueLine(e.DialogueCharacterId, e.GetText()), 
                 new FullyDisplayDialogueLine(e.DialogueCharacterId))},
             {CutsceneSegmentType.NarratorLine, e => new MessagePublishSegment(
-                new ShowCharacterDialogueLine(CutsceneCharacterAliases.Narrator, e.Text),
+                new ShowCharacterDialogueLine(CutsceneCharacterAliases.Narrator, e.GetText()),
                 new FullyDisplayDialogueLine(CutsceneCharacterAliases.Narrator))},
             {CutsceneSegmentType.Wait, e => new MessagePublishSegment(new CutsceneWaitRequested(e.FloatAmount))},
             {CutsceneSegmentType.Choice, e => new MessagePublishSegment(new BeginStoryEvent2(e.StoryEvent))},
@@ -20,7 +20,7 @@ public static class AllCutsceneSegments
             {CutsceneSegmentType.HideCharacter, e => new MessagePublishSegment(new HideCharacterRequested(e.DialogueCharacterId.Value))},
             {CutsceneSegmentType.ShowCharacter, e => new MessagePublishSegment(new ShowCharacterRequested(e.DialogueCharacterId.Value))},
             {CutsceneSegmentType.PlayerLine, e => new MessagePublishSegment(
-                new ShowCharacterDialogueLine(CutsceneCharacterAliases.Player, e.Text),
+                new ShowCharacterDialogueLine(CutsceneCharacterAliases.Player, e.GetText()),
                 new FullyDisplayDialogueLine(CutsceneCharacterAliases.Player))},
         };
 
