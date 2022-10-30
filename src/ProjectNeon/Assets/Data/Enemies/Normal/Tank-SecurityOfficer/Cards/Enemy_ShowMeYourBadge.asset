@@ -15,8 +15,13 @@ MonoBehaviour:
   id: 272
   customName: 
   art: {fileID: 21300000, guid: 1240559d4586dda4e9232552f2f619ef, type: 3}
-  description: '{Auto}'
+  description: Shield {E[0]}. Next turn, gives {E[1]}
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
+  descriptionV2:
+    text: Shield {0}. Next turn, gives {1}
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 07000000010000002600000014000000
   speed: 0
   isSinglePlay: 0

@@ -15,8 +15,13 @@ MonoBehaviour:
   id: 80
   customName: Where There's Smoke
   art: {fileID: 21300000, guid: 9762d46df6f61e544800dbaaf6b86ee3, type: 3}
-  description: '{Auto}'
+  description: Gives {E[0]}. Deal {E[1]}
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  descriptionV2:
+    text: Gives {0}. Deal {1}
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 28000000
   speed: 0
   isSinglePlay: 0
