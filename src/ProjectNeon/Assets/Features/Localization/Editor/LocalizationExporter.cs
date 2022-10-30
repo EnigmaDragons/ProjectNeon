@@ -1,6 +1,5 @@
 #if UNITY_EDITOR
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,9 +9,6 @@ using UnityEngine;
 public class LocalizationExporter
 {
     private static string BaseDir = ".\\LocalizationAssets";
-    private static string LocalizeNewLineSymbol = "{[BR]}";
-    private static string LocalizeOpenBold = "{[B]}";
-    private static string LocalizeCloseBold = "{[/B]}";
 
     private static void WriteCsv(string filename, List<string> data)
     {
@@ -22,13 +18,10 @@ public class LocalizationExporter
         File.WriteAllLines($"{BaseDir}\\{filename}.csv", data);
     }
 
-    private static string ReplaceSpecialCharacters(string toReplace)
-        => toReplace
-            .Replace(Environment.NewLine, LocalizeNewLineSymbol)
-            .Replace("\r\n", LocalizeNewLineSymbol)
-            .Replace("\n", LocalizeNewLineSymbol)
-            .Replace("<b>", LocalizeOpenBold)
-            .Replace("</b>", LocalizeCloseBold);
+    private static string ToSingleLineI2Format(string toReplace)
+        => toReplace.ToI2Format()
+            .Replace("\r\n", "<br>")
+            .Replace("\n", "<br>");
     
     [MenuItem("Neon/Localization/Export Cards For Localization")]
     public static void ExportCardsForLocalization()
@@ -41,7 +34,7 @@ public class LocalizationExporter
         allCards.ForEach(c =>
         {
             data.Add($"{c.CardLocalizationNameKey()}^{c.Name}");
-            var csvDesc = ReplaceSpecialCharacters(c.description);
+            var csvDesc = ToSingleLineI2Format(c.description);
             data.Add($"{c.CardLocalizationDescriptionKey()}^{csvDesc}");
         });
         WriteCsv("cards-for-localization", data);
@@ -71,7 +64,7 @@ public class LocalizationExporter
                 foreach (var k in keywordRules.All)
                 {
                     data.Add($"{k.Key.Value}^{k.Key.Value}");
-                    var csvDesc = ReplaceSpecialCharacters(k.Value);
+                    var csvDesc = ToSingleLineI2Format(k.Value);
                     data.Add($"{k.Key.Value}_Rule^{csvDesc}");
                 }
 
@@ -85,7 +78,7 @@ public class LocalizationExporter
         var data = new List<string>();
         GetAllInstances<TutorialSlide>().ForEach(s =>
         {
-            var text = ReplaceSpecialCharacters(s.Text);
+            var text = ToSingleLineI2Format(s.Text);
             data.Add($"Tutorial_Slide_{s.id}^{text}");
         });
         WriteCsv("tutorial-slides", data);

@@ -15,7 +15,7 @@ public class CardDescriptionUpgradeHelper
         else
             Log.Info("All Finished! Yay!");
     }
-    
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

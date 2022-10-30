@@ -1,10 +1,34 @@
+using System;
 using System.Collections.Generic;
 using I2.Loc;
 
 public static class Localized
 {
+    public static string Card(string term) => String("Cards", term);
     public static string Archetype(string term) => String("Archetypes", term);
-    public static string String(string category, string term) => new LocalizedString($"{category}/{term}").ToString();
+
+    public static string String(string category, string term) => StringTerm($"{category}/{term}");
+    public static string StringTerm(string term) => new LocalizedString(term).ToString();
+    public static string StringTermOrDefault(string term, string def)
+    {
+        try
+        {
+            return new LocalizedString(term).ToString();
+        }
+        catch (Exception e)
+        {
+            return def;
+        }
+    }
+
+    public static string Format(string category, string term, params object[] args)
+        => FormatTerm($"{category}/{term}", args);
+    
+    public static string FormatTerm(string term, params object[] args)
+        => string.Format(StringTerm(term), args);
+
+    public static string FormatTermOrDefault(string term, string defaultTranslation, params object[] args)
+        => string.Format(StringTermOrDefault(term, defaultTranslation), args);
 
     public static string ToI2Format(this string s)
     {

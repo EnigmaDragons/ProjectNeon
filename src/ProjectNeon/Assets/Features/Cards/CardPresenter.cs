@@ -15,7 +15,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private CardTargetPresenter target;
     
     [SerializeField] private Localize nameLabel;
-    [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private Localize description;
     [SerializeField] private Localize typeLabel;
     [SerializeField] private Image art;
     [SerializeField] private Image tint;
@@ -442,9 +442,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         var shouldUseLibraryMode = _card == null || _card.Owner.TeamType == TeamType.Party && (_card.Cost.PlusXCost && !_isHand);
         IsPlayable = CheckIfCanPlay();
         nameLabel.SetTerm(_cardType.CardLocalizationNameTerm());
-        description.text = shouldUseLibraryMode
-            ? _cardType.InterpolatedDescription(_card?.Owner ?? Maybe<Member>.Missing(), ResourceQuantity.DontInterpolateX)
-            : _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity), handZone.Count, state.PlayerState.NumberOfCyclesUsedThisTurn);
+
+        description.SetFinalText(shouldUseLibraryMode
+            ? _cardType.LocalizedDescription(_card?.Owner ?? Maybe<Member>.Missing(), ResourceQuantity.DontInterpolateX)
+            : _cardType.LocalizedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity), handZone.Count, state.PlayerState.NumberOfCyclesUsedThisTurn));
+
         typeLabel.SetFinalText(_cardType.LocalizedArchetypeDescription());
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);
