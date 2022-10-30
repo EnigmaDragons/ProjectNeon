@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Card", order = -100)]
-public class CardType : ScriptableObject, CardTypeData
+public class CardType : ScriptableObject, CardTypeData, ILocalizeTerms
 {
     [SerializeField, ReadOnly] public int id;
     [SerializeField] private string customName;
@@ -58,8 +58,11 @@ public class CardType : ScriptableObject, CardTypeData
     public string EditorName => $"{WipWord(IsWip)}{Rarity} - {Name}";
 
     public override string ToString() => Name;
+
     public override int GetHashCode() => ToString().GetHashCode();
     public override bool Equals(object other) => other is CardType && other.ToString() == ToString();
+    
+    public string[] GetLocalizeTerms() => new [] { this.CardLocalizationNameTerm(), this.CardLocalizationDescriptionTerm() }; 
 
     public CardType Initialized(Rarity rarity, int id)
     {
