@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using I2.Loc;
 using UnityEngine;
 
 public static class InterpolatedCardDescriptions
@@ -16,9 +17,17 @@ public static class InterpolatedCardDescriptions
     
     public static string LocalizedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardsCycledThisTurn = 0)
     {
-        var descV1 = card.DescriptionV2.IsUsable() 
-            ? string.Format(Localized.Card(card.CardLocalizationDescriptionKey()), card.DescriptionV2.formatArgs)
-            : card.Description;
+        var descV1 = card.Description;
+        try
+        {
+            if (card.DescriptionV2.IsUsable())
+                descV1 = Localized.FormatTerm(card.CardLocalizationDescriptionTerm(), card.DescriptionV2.formatArgs);
+        }
+        catch (Exception)
+        {
+            Log.Warn($"{card.Name} is not Translated Correctly into {LocalizationManager.CurrentLanguage}");
+        }
+
         return card.InterpolatedDescription(owner, xCost, cardsInHand, cardsCycledThisTurn, descV1);
     }
 
