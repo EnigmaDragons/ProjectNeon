@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: fadd17da4456278449d1d7dd936d50f4, type: 3}
   description: Deal {E[0]}<br><i>(Based on Shield and X)</i>
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  descriptionV2:
+    text: Deal {0}<br><i>(Based on Shield and X)</i>
+    formatArgs:
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -42,3 +46,4 @@ MonoBehaviour:
   unhighlightCondition:
   - {fileID: 11400000, guid: 9f016a8dee8ff6f498cad11940e849e7, type: 2}
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

@@ -17,6 +17,11 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: bd34cae42e09f5244823ca9d852c8258, type: 3}
   description: "Deal {E[0]}. \n\nYou gain {E[1]} Armor this turn"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: "Deal {0}. \n\nYou gain {1} Armor this turn"
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 04000000
   speed: 0
   isSinglePlay: 0

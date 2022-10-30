@@ -18,6 +18,11 @@ MonoBehaviour:
   description: "Deal {E[0]}. \n<b>Consume 1 Mark</b>: Draw <b>1</b> of your Cards.
     Gain <b>+1 Card Play</b>"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: "Deal {0}. \n<b>Consume 1 Mark</b>: Draw <b>1</b> of your Cards. Gain <b>+1
+      Card Play</b>"
+    formatArgs:
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -43,3 +48,4 @@ MonoBehaviour:
   unhighlightCondition:
   - {fileID: 11400000, guid: 830098948a8b7284585e71d2cf044926, type: 2}
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

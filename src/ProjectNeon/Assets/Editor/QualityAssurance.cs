@@ -114,12 +114,20 @@ public class QualityAssurance
             {
                 var s = c.Segments[i];
                 var text = s.GetText();
-                var numberOfLineBreaks = CCount(text.Replace("\n\n", "\n"), "\n");
-                var textEffectiveLength = text.Length + numberOfLineBreaks * 77;
-                if (textEffectiveLength > 252)
-                    Log.Warn($"Cutscene Segment is a little long: {c.name} - Segment {i}. More than 252 Effective Characters. (Linebreaks count at 77, a pessimistic value)");
-                if (textEffectiveLength > 385)
-                    issues.Add($"Cutscene Segment Too Long: {c.name} - Segment {i}");
+                if (text == null)
+                {
+                    issues.Add($"Cutscene Segment Null Text: {c.name}");
+                }
+                else
+                {
+                    var numberOfLineBreaks = CCount(text.Replace("\n\n", "\n"), "\n");
+                    var textEffectiveLength = text.Length + numberOfLineBreaks * 77;
+                    if (textEffectiveLength > 252)
+                        Log.Warn(
+                            $"Cutscene Segment is a little long: {c.name} - Segment {i}. More than 252 Effective Characters. (Linebreaks count at 77, a pessimistic value)");
+                    if (textEffectiveLength > 385)
+                        issues.Add($"Cutscene Segment Too Long: {c.name} - Segment {i}");
+                }
             }
             if (issues.Any())
                 badItems.Add(new ValidationResult(c.name, issues));

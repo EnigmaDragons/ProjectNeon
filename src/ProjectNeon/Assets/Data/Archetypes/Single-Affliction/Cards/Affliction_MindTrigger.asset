@@ -17,6 +17,11 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: f8d07bd405483a445961ca3b5341eede, type: 3}
   description: 'Deal {E[0]}.<br><br><b>Afflicted</b>: Deal {E[1]}.'
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  descriptionV2:
+    text: 'Deal {0}.<br><br><b>Afflicted</b>: Deal {1}.'
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -40,3 +45,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

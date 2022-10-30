@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 3fe368efc55f10a48822225b2041feb0, type: 3}
   description: Launch {X} Missiles
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: Launch {0} Missiles
+    formatArgs:
+    - '{X}'
   tags: 0300000024000000
   speed: 0
   isSinglePlay: 0
@@ -24,10 +28,6 @@ MonoBehaviour:
     cost: 0
     resourceType: {fileID: 11400000, guid: f6dc0d0477e4a3f45a7376d02fd56dd9, type: 2}
     plusXCost: 1
-  onPlayGain:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: f6dc0d0477e4a3f45a7376d02fd56dd9, type: 2}
-    plusXCost: 0
   rarity: 0
   actionSequences:
   - scope: 0
@@ -44,3 +44,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

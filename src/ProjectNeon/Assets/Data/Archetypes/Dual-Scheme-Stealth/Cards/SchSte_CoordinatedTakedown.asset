@@ -18,6 +18,13 @@ MonoBehaviour:
   description: 'Next turn, gives allies {ES[0]} each and when an enemy dies, draw
     {RE[0]} <b>Card</b> and <b>+</b>{RE[1]} <b>Card Play</b> '
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: 'Next turn, gives allies {0} each and when an enemy dies, draw {1} <b>Card</b>
+      and <b>+</b>{2} <b>Card Play</b> '
+    formatArgs:
+    - '{ES[0]}'
+    - '{RE[0]}'
+    - '{RE[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0

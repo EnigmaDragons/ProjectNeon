@@ -17,14 +17,15 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: ce02b48849f37ee40b65c3f3e7da08d7, type: 3}
   description: Shield {E[0]} <b>| Unprofitable:</b> {E[1]}
   typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
+  descriptionV2:
+    text: Shield {0} <b>| Unprofitable:</b> {1}
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 6b5b53513be79104389fa0628a71e30d, type: 2}
-    plusXCost: 0
-  onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 6b5b53513be79104389fa0628a71e30d, type: 2}
     plusXCost: 0
@@ -46,3 +47,4 @@ MonoBehaviour:
   unhighlightCondition:
   - {fileID: 11400000, guid: c554198a76d69424aa1f887694bfbe71, type: 2}
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
