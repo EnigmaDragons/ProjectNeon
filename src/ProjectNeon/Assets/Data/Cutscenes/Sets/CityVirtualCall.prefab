@@ -537,10 +537,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8085cc2fd2924a98839711c67a04f296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 1445033641393995759}
+  text: {fileID: 3925430683041260803}
   talking: {fileID: 6352561292379576217}
   character: {fileID: 4623093481878284531}
   reverse: 0
+  defaultAliases: []
 --- !u!114 &1022607390669626699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,10 +554,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8085cc2fd2924a98839711c67a04f296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 8725675557816056136}
+  text: {fileID: 6585379381848302500}
   talking: {fileID: 1701423553670276713}
   character: {fileID: 8430251687044443573}
   reverse: 0
+  defaultAliases: []
 --- !u!1 &2913310853803325052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,6 +1393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   music: event:/GameMusic/GameMusic
+  delay: 0
 --- !u!1 &6886502687935343883
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,15 +2776,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8481384636431756729, guid: 64fa24db5c3108243bcd408fa54f7ea6, type: 3}
   m_PrefabInstance: {fileID: 1352543467928319743}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8725675557816056136 stripped
+--- !u!114 &6585379381848302500 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7769519346267410359, guid: 64fa24db5c3108243bcd408fa54f7ea6, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5307145497320592731, guid: 64fa24db5c3108243bcd408fa54f7ea6, type: 3}
   m_PrefabInstance: {fileID: 1352543467928319743}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e43a2e82108429d8c17bc68c7bc9539, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e94767e611c4efb9a45630db7477d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3687079612041399250
@@ -3003,6 +3006,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 10.166
       objectReference: {fileID: 0}
+    - target: {fileID: 5273210669002477433, guid: 619b34db3516fbb4f9ae3995d6445a60, type: 3}
+      propertyPath: m_AfterStackBundles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273210669002477433, guid: 619b34db3516fbb4f9ae3995d6445a60, type: 3}
+      propertyPath: m_AfterStackBundles.Array.data[0].assemblyQualifiedName
+      value: Xibanya.Scanline, GameAssembly, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      objectReference: {fileID: 0}
     - target: {fileID: 5273210669473457293, guid: 619b34db3516fbb4f9ae3995d6445a60, type: 3}
       propertyPath: m_Name
       value: TitleWorldDay
@@ -3172,15 +3183,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64fa24db5c3108243bcd408fa54f7ea6, type: 3}
---- !u!114 &1445033641393995759 stripped
+--- !u!114 &3925430683041260803 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7769519346267410359, guid: 64fa24db5c3108243bcd408fa54f7ea6, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5307145497320592731, guid: 64fa24db5c3108243bcd408fa54f7ea6, type: 3}
   m_PrefabInstance: {fileID: 9214130498111828056}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e43a2e82108429d8c17bc68c7bc9539, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e94767e611c4efb9a45630db7477d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &751191555770162657 stripped

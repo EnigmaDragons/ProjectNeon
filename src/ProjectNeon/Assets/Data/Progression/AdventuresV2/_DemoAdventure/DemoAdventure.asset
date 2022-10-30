@@ -14,20 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   lockConditionExplanation: 
+  prerequisiteCompletedAdventures: []
+  mode: 0
   dynamicStages:
   - {fileID: 11400000, guid: 1ffdc1b9e459d554fb479d6010c50df0, type: 2}
   stages: []
+  v5Stages: []
   adventureTitle: Organized Harvesting
+  mapAdventureTitle: 
   adventureImage: {fileID: 21300000, guid: 556255fc3941acf4ab87117a3008df0b, type: 3}
   partySize: 3
   allowedHeroesDescription: Simple Heroes Only
   requiredHeroes: []
   bannedHeroes: []
+  fixedStartingHeroes: []
   baseNumberOfCardCycles: 0
   rewardCreditsPerPowerLevel: 0.17
   xpPerPowerLevel: 0.18
+  bonusXpFactor: 0.33333
+  maxHeroLevel: 99
   normalBattleRewards: {fileID: 11400000, guid: cfeb2b6940f901f489662c57c8678133, type: 2}
   eliteBattleRewards: {fileID: 11400000, guid: 81efbcd63404d464fb25aefce000d60c, type: 2}
+  startingClinicVouchers: 1
+  battleRewardClinicVouchers: 1
+  numOfImplantOptions: 4
   story: "Medigeneix is one of the region's leading medical suppliers. Unfortunately,
     one of their clinics in Metroplex Zero has deviated from normal healthcare protocols.\n\nInstead
     of transplanting organs into patients who need life-saving donations, they are
@@ -52,3 +62,5 @@ MonoBehaviour:
     out a final message to his bosses at Medigeneix. Then the final light leaves
     his eyes.\n\nYou have a bad feeling that maybe he wasn't the mastermind of this
     dastardly scheme..."
+  mapDeckbuildingEnabled: 1
+  allowDifficultySelection: 1

@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -91,23 +92,10 @@ public class LocalizationExporter
         foreach(var cutscene in GetAllInstances<Cutscene>())
             foreach(var segment in cutscene.Segments)
                 if (segment.SegmentType == CutsceneSegmentType.DialogueLine || segment.SegmentType == CutsceneSegmentType.NarratorLine || segment.SegmentType == CutsceneSegmentType.PlayerLine)
-                    data.Add($"Segment{segment.Id}^{ReplaceSpecialCharacters(segment.Text)}");
+                    data.Add($"Segment{segment.Id}^{ToSingleLineI2Format(segment.Text)}");
         WriteCsv("cutscenes", data);
     }
 
-    [MenuItem("Neon/Localization/Export Story Events")]
-    public static void ExportStoryEvents()
-    {
-        var data = new List<string>();
-        foreach (var e in GetAllInstances<StoryEvent2>())
-        {
-            data.Add($"Event{e.id}^{ReplaceSpecialCharacters(e.StoryText)}");
-            foreach (var choice in e.Choices)
-                data.Add($"Choice{choice.Id}^{ReplaceSpecialCharacters(choice.ChoiceText(e.id))}");   
-        }
-        WriteCsv("story-events", data);
-    }
-    
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

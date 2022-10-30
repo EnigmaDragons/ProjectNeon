@@ -8,7 +8,7 @@ using UnityEngine;
 public class StoryEventChoice2
 {
     public int Id;
-    public int Choice;
+    public string Choice;
     public bool Or;
     public StringVariable[] RequiredStates;
     public StringVariable[] ForbiddenStates;
@@ -18,9 +18,9 @@ public class StoryEventChoice2
     public bool OddsTableIsValid => Mathf.Approximately(1f, OddsTableTotal);
     public StoryResult Reward => Resolution.OrderByDescending(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
     public StoryResult Penalty => Resolution.OrderBy(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
-    
-    public string ChoiceText(int parentStoryEventId) => (new LocalizedString($"Legacy/Event{parentStoryEventId} Choice{Choice}").ToString()).Trim();
-    public string ChoiceFullText(StoryEventContext ctx, StoryEvent2 owner) => (new LocalizedString($"Legacy/Event{owner.id} Choice{Choice}").ToString()).Trim();
+
+    public string Term => $"StoryEvents/Choice{Id}";
+    public string ChoiceText() => LocalizationManager.GetTranslation(Term);
     public bool CanSelect(StoryEventContext ctx) => true;
     public bool ShouldSkip(Func<string, bool> storyState)
         => ForbiddenStates.Any(x => storyState(x.Value))
@@ -31,7 +31,7 @@ public class StoryEventChoice2
     {
         if (Resolution.Sum(r => r.Chance) > 1 || Resolution.Sum(r => r.Chance) <= 0)
         {
-            Log.Error($"Story Event: Invalid Total Resolution Chance for {Choice}");
+            Log.Error($"Story Event: Invalid Total Resolution Chance for {Id}");
             Message.Publish(new ShowStoryEventResolution("Something peculiar occurred, which you can't explain, of which you can never speak (except to the developers)", 0));
         }
 
@@ -59,7 +59,7 @@ public class StoryEventChoice2
         else
         {
             r.Result.Apply(ctx);
-            Message.Publish(new ShowStoryEventResolution(((string)new LocalizedString($"Event{owner.id} Choice{Choice} Result{r.ResultNumber}")).Trim(), r.EstimatedCreditsValue));   
+            Message.Publish(new ShowStoryEventResolution("", r.EstimatedCreditsValue));   
         }
     }
 }

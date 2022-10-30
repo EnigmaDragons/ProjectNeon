@@ -13,24 +13,37 @@ MonoBehaviour:
   m_Name: HowEvilToDie
   m_EditorClassIdentifier: 
   id: 7
+  storyText: How evil does someone have to be to get marked for death?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 20
+    Choice: Murderers, causing the deaths of the innocent
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 2fbf03bb64b926847a5938975ffc7f97, type: 2}
       ResultNumber: 1
       StoryText: 
-  - Choice: 2
+  - Id: 21
+    Choice: Abusers, scarring and destroying the lives of those around them
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: e6d853a6c9351fc4381635ded99d159c, type: 2}
       ResultNumber: 1
       StoryText: 
-  - Choice: 3
+  - Id: 22
+    Choice: Parasites, just a drain on society and those they depend on
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
@@ -38,3 +51,4 @@ MonoBehaviour:
       ResultNumber: 1
       StoryText: 
   inCutscene: 1
+  isMultiChoice: 0

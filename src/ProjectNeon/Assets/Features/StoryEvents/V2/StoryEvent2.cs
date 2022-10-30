@@ -7,6 +7,7 @@ using UnityEngine;
 public class StoryEvent2 : ScriptableObject
 {
     [SerializeField] public int id;
+    [SerializeField] public string storyText;
     [SerializeField] private StorySetting settingType;
     [SerializeField] private StaticCorp corp;
     [SerializeField] private StoryEventChoice2[] choices;
@@ -17,7 +18,8 @@ public class StoryEvent2 : ScriptableObject
     
     public StorySetting StorySetting => settingType;
     public StaticCorp Corp => corp;
-    public string StoryText =>  (new LocalizedString($"Legacy/Event{id} Story").ToString()).Trim();
+    public string Term => $"StoryEvents/Event{id}";
+    public string StoryText => LocalizationManager.GetTranslation(Term);
     public StoryEventChoice2[] Choices => choices.ToArray();
     public bool InCutscene => inCutscene;
     public bool IsMultiChoice => isMultiChoice;
@@ -31,7 +33,7 @@ public class StoryEvent2 : ScriptableObject
         sb.AppendLine();
         foreach (var choice in s.Choices)
         {
-            sb.AppendLine($"Choice: {choice.ChoiceText(s.id)}");
+            sb.AppendLine($"Choice: {choice.ChoiceText()}");
             foreach (var resolution in choice.Resolution)
                 if (!resolution.HasContinuation)
                     sb.AppendLine($"Outcome: {resolution.Result}");

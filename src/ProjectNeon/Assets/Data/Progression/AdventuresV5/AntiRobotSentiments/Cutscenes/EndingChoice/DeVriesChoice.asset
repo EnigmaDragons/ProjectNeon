@@ -13,24 +13,40 @@ MonoBehaviour:
   m_Name: DeVriesChoice
   m_EditorClassIdentifier: 
   id: 16
+  storyText: What will you do to DeVries? All the mimics? The Virus?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 10
+    Choice: Let DeVries live, keep the virus. In return, she has promised to use
+      mimics to assist you in future agendas.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: b5af39318120d424e8249b68fda2f5ff, type: 2}
       ResultNumber: 1
       StoryText: 
-  - Choice: 2
+  - Id: 11
+    Choice: Let Devries and the mimics live. But on the condition all mimics must
+      move into a reservation in the Sahara desert where they can live apart from
+      humans.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 4ad1679dd015a45449a9cf5d20a9f0c6, type: 2}
       ResultNumber: 1
       StoryText: 
-  - Choice: 3
+  - Id: 12
+    Choice: Kill DeVries and activate the virus.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}

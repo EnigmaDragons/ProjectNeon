@@ -13,17 +13,26 @@ MonoBehaviour:
   m_Name: AreYouStoppingHelenDeVries
   m_EditorClassIdentifier: 
   id: 14
+  storyText: Will you help stop Helen DeVries scheme?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 6
+    Choice: Yes!
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 0ee330c525a288a41930b04d8ab93755, type: 2}
       ResultNumber: 1
       StoryText: 
-  - Choice: 2
+  - Id: 7
+    Choice: "She is probably just murdering other corpos, I don\u2019t care."
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}

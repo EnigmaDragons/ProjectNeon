@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: RecordChoiceRemade
   m_EditorClassIdentifier: 
   id: 9
+  storyText: Choose again who gets targeted to be killed for their organs.
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 18
+    Choice: Ready
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}

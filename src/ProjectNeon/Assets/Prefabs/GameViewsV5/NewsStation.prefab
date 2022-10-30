@@ -290,7 +290,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1632983471109532001}
-  - component: {fileID: 6896361400839128064}
+  - component: {fileID: 7378933670304677939}
   m_Layer: 0
   m_Name: NewsTextArea
   m_TagString: Untagged
@@ -318,7 +318,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6896361400839128064
+--- !u!114 &7378933670304677939
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -327,7 +327,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2718956846458439889}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 080cc0dc21bf4d059028e7c30771f600, type: 3}
+  m_Script: {fileID: 11500000, guid: d85cb4395fd34cd3af6b262652e51f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   chatBox: {fileID: 9009249341182862785}
@@ -343,8 +343,10 @@ MonoBehaviour:
     FloatVariable: {fileID: 11400000, guid: ab7695f3776a40e459569d12c477dbae, type: 2}
   sfx: {fileID: 11400000, guid: 4a8826cd8fe5c664c9a086a162e7ad0f, type: 2}
   reversedTextBoxOffset: {x: 0, y: 0}
+  invisibleTextColorHex: {r: 1, g: 1, b: 1, a: 1}
   isRevealing: 0
   fullText: 
+  localize: {fileID: 319090316711758927}
 --- !u!1 &2970386085479722451
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +748,7 @@ GameObject:
   - component: {fileID: 7854341189435086782}
   - component: {fileID: 4869312185456989655}
   - component: {fileID: 2739447068654344513}
+  - component: {fileID: 319090316711758927}
   m_Layer: 0
   m_Name: NewsTextBox
   m_TagString: Untagged
@@ -874,6 +877,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &319090316711758927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5648140865508763488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &6309855039341926859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,7 +1346,7 @@ PrefabInstance:
     - target: {fileID: 5234195232540307795, guid: 36c9d11be79096a48bb8d56424f908ee, type: 3}
       propertyPath: text
       value: 
-      objectReference: {fileID: 6896361400839128064}
+      objectReference: {fileID: 7378933670304677939}
     - target: {fileID: 7187258091004378871, guid: 36c9d11be79096a48bb8d56424f908ee, type: 3}
       propertyPath: m_RootOrder
       value: 2

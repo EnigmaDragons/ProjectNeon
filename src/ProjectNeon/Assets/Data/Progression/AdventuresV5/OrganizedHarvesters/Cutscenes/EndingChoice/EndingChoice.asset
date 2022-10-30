@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: EndingChoice
   m_EditorClassIdentifier: 
   id: 11
+  storyText: How will you choose to end this?
   settingType: 0
   corp: {fileID: 0}
   choices:
   - Id: 15
-    Choice: 1
+    Choice: Activate the virus embedded in all of Metroplex Zero's Medigeneix clinics
     Or: 0
     RequiredStates:
     - {fileID: 11400000, guid: 657664c4e9236f84785087e7b38ba10f, type: 2}
@@ -29,7 +30,8 @@ MonoBehaviour:
       ResultNumber: 1
       StoryText: 
   - Id: 16
-    Choice: 2
+    Choice: Leave Anton and his AI alive, but it is clear he now works with your
+      oversight
     Or: 0
     RequiredStates: []
     ForbiddenStates: []
@@ -40,7 +42,7 @@ MonoBehaviour:
       ResultNumber: 1
       StoryText: 
   - Id: 17
-    Choice: 3
+    Choice: Kill Anton and his AI, putting an end to his schemes
     Or: 0
     RequiredStates: []
     ForbiddenStates: []

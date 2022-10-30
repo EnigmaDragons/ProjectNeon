@@ -97,7 +97,7 @@ public class StoryEventPresenter2 : MonoBehaviour
             for (var i = _buttons.Length - 1; i > -1; i--)
             {
                 if (i == 1)
-                    _buttons[i].Init("Done", () => Message.Publish(new MarkStoryEventCompleted()));
+                    _buttons[i].Init("StoryEvents/Done", () => Message.Publish(new MarkStoryEventCompleted()));
                 else
                     _buttons[i].Hide();
             }

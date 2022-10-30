@@ -28,7 +28,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     private readonly Dictionary<HeroCharacter, CharacterWordsController> _words  = new Dictionary<HeroCharacter, CharacterWordsController>();
     private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
-    private readonly Dictionary<HeroCharacter, ProgressiveTextRevealWorld> _speech = new Dictionary<HeroCharacter, ProgressiveTextRevealWorld>();
+    private readonly Dictionary<HeroCharacter, I2ProgressiveTextRevealWorld> _speech = new Dictionary<HeroCharacter, I2ProgressiveTextRevealWorld>();
     
     public IEnumerator Setup()
     {
@@ -104,9 +104,9 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         else
             _stealths[hero] = stealth;
 
-        var speech = character.GetComponentInChildren<ProgressiveTextRevealWorld>();
+        var speech = character.GetComponentInChildren<I2ProgressiveTextRevealWorld>();
         if (speech == null)
-            Debug.LogError($"{hero.Name} is missing a {nameof(ProgressiveTextRevealWorld)}");
+            Debug.LogError($"{hero.Name} is missing a {nameof(I2ProgressiveTextRevealWorld)}");
         else
             _speech[hero] = speech;
         

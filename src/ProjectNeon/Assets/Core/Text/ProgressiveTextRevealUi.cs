@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class ProgressiveTextRevealUi : ProgressiveText
+public class ProgressiveTextRevealUi : ProgressiveText
 {
     [SerializeField] private Button chatBox;
     [SerializeField] private Image panelBg;

@@ -132,7 +132,7 @@ public class FindEnemiesEditor : EditorWindow
                     if (e.Prefab == null)
                         return false;
 
-                    var texts = e.Prefab.GetComponentsInChildren<ProgressiveTextRevealWorld>();
+                    var texts = e.Prefab.GetComponentsInChildren<I2ProgressiveTextRevealWorld>();
                     return texts.Any() 
                            && texts.Count(t => t.name.Equals("EnemySpeechBubble", StringComparison.InvariantCultureIgnoreCase)) == 0;
                 })

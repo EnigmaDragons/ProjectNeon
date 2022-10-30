@@ -17,7 +17,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
     [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
     
-    private readonly Dictionary<EnemyInstance, ProgressiveTextRevealWorld> _speech = new Dictionary<EnemyInstance, ProgressiveTextRevealWorld>();
+    private readonly Dictionary<EnemyInstance, I2ProgressiveTextRevealWorld> _speech = new Dictionary<EnemyInstance, I2ProgressiveTextRevealWorld>();
     private List<Tuple<int, Member>> _enemyPositions;
     private bool _enemyVisualsVisible = true;
     private bool _techPointsVisible = true;
@@ -56,7 +56,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             var enemyObject = Instantiate(enemy.Prefab, transform);
             active.Add(enemyObject);
             enemyArea.WithUiTransforms(active.Select(a => a.transform));
-            var speech = enemyObject.GetComponentInChildren<ProgressiveTextRevealWorld>();
+            var speech = enemyObject.GetComponentInChildren<I2ProgressiveTextRevealWorld>();
             if (speech != null)
                 _speech[enemy] = speech;
             return enemyObject;

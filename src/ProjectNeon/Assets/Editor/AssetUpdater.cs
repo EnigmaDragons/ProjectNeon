@@ -30,7 +30,7 @@ public class AssetUpdater
         UpdateAllStageSegments();
         UpdateTutorialSlideIDs();
         UpdateCutsceneIDs();
-        //UpdateStoryEventIDs();
+        UpdateStoryEventIDs();
         UpdateAllCorps();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
@@ -133,65 +133,56 @@ public class AssetUpdater
         AssignAllIds(ScriptableExtensions.GetAllInstances<StaticEquipment>(), x => x.id, (x, id) => x.id = id);
     }
 
-    private static void AssignAllSubIds<T>(T[] subItems, Func<T, int> getId, Action<T, int> setId)
+    private static void AssignAllSubIds<T, T2>(Tuple<T, T2>[] subItems, Func<T2, int> getId, Action<T2, int> setId) where T : Object
     {
-        var map = Enumerable.Range(0, subItems.Length + 1).ToDictionary(x => x, x => new List<T>());
-        foreach (var h in subItems)
+        if (subItems.Length == 0)
+            return;
+        var nextId = subItems.Max(x => getId(x.Item2)) + 1;
+        var hashSet = new HashSet<int>();
+        foreach (var item in subItems)
         {
-            if (map.TryGetValue(getId(h), out var collection))
-                collection.Add(h);
+            var itemId = getId(item.Item2);
+            if (itemId == 0)
+            {
+                setId(item.Item2, nextId);
+                EditorUtility.SetDirty(item.Item1);
+                hashSet.Add(nextId);
+                nextId++;
+            }
             else
-                map[0].Add(h);
-        }
-        for (var i = 1; i < map.Count; i++)
-        {
-            while (map[i].Count > 1)
             {
-                var item = map[i][0];
-                setId(item, 0);
-                map[i].Remove(item);
+                if (hashSet.Contains(itemId))
+                    Debug.LogError($"{string.Join(" & ", subItems.Where(x => getId(x.Item2) == itemId).Select(x => x.Item1.name))} of type {typeof(T).Name} have the sub item of type {typeof(T2).Name} duplicate ID of {itemId}");
+                else
+                    hashSet.Add(itemId);
             }
-        }
-        for (var i = 1; i < map.Count; i++)
-        {
-            if (map[i].Count == 0)
-            {
-                var item = map[0][0];
-                setId(item, i);
-                map[0].Remove(item);
-            }
-        }   
+        }  
     }
 
     private static void AssignAllIds<T>(T[] items, Func<T, int> getId, Action<T, int> setId) where T : Object
     {
-        var map = Enumerable.Range(0, items.Length + 1).ToDictionary(x => x, x => new List<T>());
-        foreach (var h in items)
+        if (items.Length == 0)
+            return;
+        var nextId = items.Max(getId) + 1;
+        var hashSet = new HashSet<int>();
+        foreach (var item in items)
         {
-            if (map.TryGetValue(getId(h), out var collection))
-                collection.Add(h);
-            else
-                map[0].Add(h);
-        }
-        for (var i = 1; i < map.Count; i++)
-        {
-            while (map[i].Count > 1)
+            var itemId = getId(item);
+            if (itemId == 0)
             {
-                var item = map[i][0];
-                setId(item, 0);
-                map[i].Remove(item);
-            }
-        }
-        for (var i = 1; i < map.Count; i++)
-        {
-            if (map[i].Count == 0)
-            {
-                var item = map[0][0];
-                setId(item, i);
+                setId(item, nextId);
+                hashSet.Add(nextId);
+                nextId++;
                 EditorUtility.SetDirty(item);
-                map[0].Remove(item);
             }
-        }   
+            else
+            {
+                if (hashSet.Contains(itemId))
+                    Debug.LogError($"{string.Join(" & ", items.Where(x => getId(x) == itemId).Select(x => x.name))} of type {typeof(T).Name} have the duplicate ID of {itemId}");
+                else
+                    hashSet.Add(itemId);
+            }
+        }
     }
 
     [MenuItem("Neon/Update/Update Equipment Pools")]
@@ -444,7 +435,7 @@ public class AssetUpdater
     {
         var cutscenes = ScriptableExtensions.GetAllInstances<Cutscene>();
         AssignAllIds(cutscenes, c => c.id, (c, id) => c.id = id);
-        AssignAllSubIds(cutscenes.SelectMany(x => x.Segments).ToArray(), s => s.Id, (s, id) => s.Id = id);
+        AssignAllSubIds(cutscenes.SelectMany(cutscene => cutscene.Segments.Select(segment => new Tuple<Cutscene, CutsceneSegmentData>(cutscene, segment))).ToArray(), s => s.Id, (s, id) => s.Id = id);
     }
 
     [MenuItem("Neon/Update/Update Story Event IDs")]
@@ -452,7 +443,7 @@ public class AssetUpdater
     {
         var events = ScriptableExtensions.GetAllInstances<StoryEvent2>();
         AssignAllIds(events, e => e.id, (e, id) => e.id = id);
-        AssignAllSubIds(events.SelectMany(x => x.Choices).ToArray(), c => c.Id, (c, id) => c.Id = id);
+        AssignAllSubIds(events.SelectMany(storyEvent => storyEvent.Choices.Select(choice => new Tuple<StoryEvent2, StoryEventChoice2>(storyEvent, choice))).ToArray(), c => c.Id, (c, id) => c.Id = id);
     }
 
     private const decimal _hpValue = 1;

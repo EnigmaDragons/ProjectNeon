@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 6
   lockConditionExplanation: Unlocked Later In Early Access
+  prerequisiteCompletedAdventures: []
+  mode: 0
   dynamicStages:
   - {fileID: 11400000, guid: 1ffdc1b9e459d554fb479d6010c50df0, type: 2}
   - {fileID: 11400000, guid: 1ffdc1b9e459d554fb479d6010c50df0, type: 2}
   stages: []
   v5Stages: []
   adventureTitle: No Conspiracy Here
+  mapAdventureTitle: 
   adventureImage: {fileID: 21300000, guid: f266b549be4d2c749bd47ba33c15a63b, type: 3}
   partySize: 3
   allowedHeroesDescription: Any 3 Heroes
@@ -29,10 +32,13 @@ MonoBehaviour:
   baseNumberOfCardCycles: 0
   rewardCreditsPerPowerLevel: 0.18
   xpPerPowerLevel: 0.18
+  bonusXpFactor: 0.33333
+  maxHeroLevel: 99
   normalBattleRewards: {fileID: 0}
   eliteBattleRewards: {fileID: 0}
   startingClinicVouchers: 1
   battleRewardClinicVouchers: 1
+  numOfImplantOptions: 4
   story: "While Metroplex Zero is supposed to be a purely collaborative region in
     which all discrimination is formally banned, ZantoCorp is making a secret power
     play to dominate this purely democratic region.\n\nSynergy Enterprises, one of
@@ -42,4 +48,5 @@ MonoBehaviour:
     find a way to put a stop to ZantoCorp's nefarious scheme."
   defeatConclusion: 
   victoryConclusion: 
-  isCompleted: 0
+  mapDeckbuildingEnabled: 1
+  allowDifficultySelection: 1

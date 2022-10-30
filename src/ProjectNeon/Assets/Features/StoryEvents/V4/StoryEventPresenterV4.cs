@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 public class StoryEventPresenterV4 : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI storyNameLabel;
-    [SerializeField] private TextMeshProUGUI storyTextArea;
+    [SerializeField] private Localize storyTextLocalize;
     [SerializeField] private Image corpLogo;
     [SerializeField] private UnityEngine.UI.Extensions.Gradient corpTint;
     [SerializeField] private GameObject optionsParent;
@@ -61,7 +62,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
 
     public void Present(StoryEvent2 s)
     {
-        var choices = s.Choices.Where(choice => choice.ShouldSkip(x => adventure.IsTrue(x))).ToArray();
+        var choices = s.Choices.Where(choice => !choice.ShouldSkip(x => adventure.IsTrue(x))).ToArray();
         Message.Publish(new HideDieRoll());
         rewardParent.DestroyAllChildren();
         InitFreshOptionsButtons();
@@ -79,14 +80,14 @@ public class StoryEventPresenterV4 : MonoBehaviour
             corpTint.Vertex2 = s.Corp.Color2;
             storyNameLabel.text = s.DisplayName;
         }
-        storyTextArea.text = s.StoryText;
+        storyTextLocalize.SetTerm(s.Term);
         if (s.IsMultiChoice)
         {
             InitFreshMultiChoiceButtons();
             for (var i = _buttons.Length - 1; i > -1; i--)
             {
                 if (i == 1)
-                    _buttons[i].Init("Done", () =>
+                    _buttons[i].Init("StoryEvents/Done", () =>
                     {
                         _multiChoiceButtons.ForEach(x => x.Apply());
                         Message.Publish(new MarkStoryEventCompleted());
@@ -148,11 +149,11 @@ public class StoryEventPresenterV4 : MonoBehaviour
             this.ExecuteAfterDelay(outcomeDelay, () =>
             {
                 InitFreshOptionsButtons();
-                storyTextArea.text = msg.Story;
+                storyTextLocalize.SetTerm(msg.Story);
                 for (var i = _buttons.Length - 1; i > -1; i--)
                 {
                     if (i == 1)
-                        _buttons[i].Init("Done", () => Message.Publish(new MarkStoryEventCompleted()));
+                        _buttons[i].Init("StoryEvents/Done", () => Message.Publish(new MarkStoryEventCompleted()));
                     else
                         _buttons[i].Hide();
                 }
@@ -162,7 +163,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
     private void ClearStoryElements()
     {
         ClearOptions();
-        storyTextArea.text = String.Empty;
+        storyTextLocalize.SetTerm("");
     }
 
     private void HideOutcomesAndPreviews()
