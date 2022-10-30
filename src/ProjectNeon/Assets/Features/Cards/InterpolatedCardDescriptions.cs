@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -17,7 +16,15 @@ public static class InterpolatedCardDescriptions
 
     public static string AutoDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost)
         => InterpolatedDescription(card, owner, xCost, 0, 0, "{Auto}");
-    
+
+    public static string LocalizedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardsCycledThisTurn = 0)
+    {
+        var descV1 = card.DescriptionV2.IsUsable() 
+            ? string.Format(Localized.Card(card.CardLocalizationDescriptionKey()), card.DescriptionV2.formatArgs)
+            : card.Description;
+        return card.InterpolatedDescription(owner, xCost, cardsInHand, cardsCycledThisTurn, descV1);
+    }
+
     public static string InterpolatedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardsCycledThisTurn = 0, string overrideDescription = null)
     {
         var desc = overrideDescription ?? card.Description;
@@ -133,7 +140,10 @@ public static class InterpolatedCardDescriptions
         }
 
         foreach (var r in _resourceIcons)
+        {
             result = Regex.Replace(result, $" {r.Key}", $" {Sprite(r.Value)}");
+            result = Regex.Replace(result, $"{r.Key}", $"{Sprite(r.Value)}");
+        }
 
         result = Regex.Replace(result, @"@(\w+)", "$1");
         
@@ -143,14 +153,13 @@ public static class InterpolatedCardDescriptions
         return result;
     }
 
+    private const string X = "X";
     private static string XCostDescription(Maybe<Member> owner, ResourceQuantity xCost)
     {
         if (xCost.Amount == -1)
-            return "X";
+            return X;
         if (ResourceQuantity.None == xCost)
-            return owner.Select(
-                o => o.State.PrimaryResourceAmount.ToString(),
-                () => "X");
+            return owner.Select(o => o.State.PrimaryResourceAmount.ToString(), () => X);
         return xCost.Amount.ToString();
     }
 
@@ -305,9 +314,9 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.HealFormula 
                 || data.EffectType == EffectType.AdjustPlayerStatsFormula
                 || data.EffectType == EffectType.ChooseCardToCreate)
-            return $"{FormulaAmount(data, owner, xCost)}";
+            return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
-            return $"{FormulaAmount(data, owner, xCost)}";
+            return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
             return $"× {FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.HealOverTime)
@@ -335,11 +344,11 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustPlayerStats)
             return $"{data.TotalIntAmount}";
         if (data.EffectType == EffectType.TransferPrimaryResourceFormula)
-            return $"{FormulaAmount(data, owner, xCost)}";
+            return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.GainCredits)
-            return $"{data.BaseAmount}";
+            return data.BaseAmount.ToString();
         if (data.EffectType == EffectType.DisableForTurns)
-            return $"{Bold("Disabled")}";
+            return Bold("Disabled");
         if (data.EffectType == EffectType.Drain)
             return $"{Bold(FormulaAmount(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()}";
         if (data.EffectType == EffectType.EnterStealth)
@@ -391,13 +400,6 @@ public static class InterpolatedCardDescriptions
         => WithImplications(owner.IsPresent
             ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
             : WithBaseAmount(data, " × MAG"));
-
-    private static string AttackAmount(EffectData data, Maybe<Member> owner)
-        => WithImplications(owner.IsPresent
-            ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
-            : data.BaseAmount > 0
-                ? $"{data.BaseAmount} + {data.FloatAmount} × ATK"
-                : $"{data.FloatAmount} × ATK");
     
     private static string WithBaseAmount(EffectData data, string floatString)
     {
@@ -412,23 +414,35 @@ public static class InterpolatedCardDescriptions
             .Replace("999", "Max");
     }
 
+    private static string Dur_ForNTurns = "Cards/Interp_ForNTurns";
+    private static string Eng_ForNTurns = "for {0} turns";
+    private static string Dur_ForTheBattle = "Cards/Interp_ForTheBattle";
+    private static string Eng_ForTheBattle = "for the battle";
+    private static string Dur_ThisTurn = "Cards/Interp_ForThisTurn";
+    private static string Eng_ThisTurn = "this turn";
+    private static string Dur_ForTheTurn = "Cards/Interp_ForTheTurn";
+    private static string Eng_ForTheTurn = "for the turn";
+    
     private static string DurationDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
-        var turnString = string.Empty;
-        if (owner.IsMissing)
+        var value = -1;
+        var formulaValueString = owner.IsMissing ? Bold(FormattedFormula(data.DurationFormula)) : string.Empty;
+        if (owner.IsPresent)
         {
-            turnString = $"for {Bold(FormattedFormula(data.DurationFormula))} turns";
+            value = Formula.EvaluateToInt(owner.Value.State.ToSnapshot(), data.DurationFormula, xCost);
+            formulaValueString = Bold(value.ToString());
         }
-        else
-        {
-            var value = Formula.EvaluateToInt(owner.Value.State.ToSnapshot(), data.DurationFormula, xCost);
-            turnString = value < 0
-                ? "for the battle" 
-                : $"for {Bold(value.ToString())} turns";
-        }
-        if (turnString.Equals($"for {Bold("1")} turns"))
-            turnString = data.TurnDelay == 0 ? "this turn" : "for the turn";
-        return $"{turnString}";
+
+        if (owner.IsPresent && value < 0)
+            return Localized.StringTermOrDefault(Dur_ForTheBattle, Eng_ForTheBattle);
+        
+        if (value == 1) 
+            if (data.TurnDelay == 0)
+                return Localized.StringTermOrDefault(Dur_ThisTurn, Eng_ThisTurn); 
+            else
+                return Localized.StringTermOrDefault(Dur_ForTheTurn, Eng_ForTheTurn); 
+
+        return Localized.FormatTermOrDefault(Dur_ForNTurns, Eng_ForNTurns, formulaValueString);
     }
 
     private static string DelayDescription(EffectData data)
@@ -453,19 +467,20 @@ public static class InterpolatedCardDescriptions
 
         return FormattedFormula(data.Formula);
     }
+
+    private static string StarMultiplySymbol = " * ";
+    private static string TimesMuliplySymbol = " × ";
     
     private static string FormattedFormula(string s)
     {
         var newS = s;
-        newS = newS.Replace(" * ", " × ");
+        newS = newS.Replace(StarMultiplySymbol, TimesMuliplySymbol);
         foreach (var stat in StatTypeAliases.FullNameToAbbreviations)
             if (newS.Contains(stat.Key))
                 newS = newS.Replace(stat.Key, stat.Value);
 
         return newS;
     }
-
-    private static string Standardized(string effectScope) => StatTypeAliases.FullNameToAbbreviations.ValueOrDefault(effectScope, () => effectScope);
     
     private static Dictionary<string, string> TemporalStatFriendlyNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
     {

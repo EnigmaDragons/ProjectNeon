@@ -39,7 +39,22 @@ public sealed class InterpolatedCardDescriptionsTests
     public void Interpolated_Duration_IsCorrect()
         => AssertMatchesIgnoreStyling("Deal 3 for 2 turns", 
             Description("Deal 3 {D[0]}", new EffectData {DurationFormula = "2"}, Owner));
-
+    
+    [Test]
+    public void Interpolated_DurationForTheBattle_IsCorrect()
+        => AssertMatchesIgnoreStyling("Deal 3 for the battle", 
+            Description("Deal 3 {D[0]}", new EffectData {DurationFormula = "-1"}, Owner));
+    
+    [Test]
+    public void Interpolated_DurationThisTurn_IsCorrect()
+        => AssertMatchesIgnoreStyling("Gain 3 Armor this turn", 
+            Description("Gain 3 Armor {D[0]}", new EffectData {DurationFormula = "1"}, Owner));
+    
+    [Test]
+    public void Interpolated_DurationNextTurnForTheTurn_IsCorrect()
+        => AssertMatchesIgnoreStyling("Next turn, gain 3 Armor for the turn", 
+            Description("Next turn, gain 3 Armor {D[0]}", new EffectData {DurationFormula = "1", TurnDelay = 1}, Owner));
+    
     [Test]
     public void Interpolated_XCost_WithOwner_IsCorrect()
         => AssertMatchesIgnoreStyling("6", Description("{X}", new EffectData(), Owner, new ResourceQuantity { Amount = 6 }));
@@ -105,7 +120,7 @@ public sealed class InterpolatedCardDescriptionsTests
         => InterpolatedCardDescriptions.InterpolatedDescription(s, false, new EffectData[0], new [] {re}, new EffectData[0], owner, xCost, Maybe<CardTypeData>.Missing(), Maybe<CardTypeData>.Missing(), 0, 0);
     private string ForEffect(EffectData e, Maybe<Member> owner, ResourceQuantity xCost) => InterpolatedCardDescriptions.EffectDescription(e, owner, xCost);
 
-    private void AssertContainsSprite(string actual) => Assert.IsTrue(actual.Contains("<sprite index="));
+    private void AssertContainsSprite(string actual) => Assert.IsTrue(actual.Contains("<sprite index="), $"Final was '{actual}' and contains no sprite.");
     
     private void AssertMatchesIgnoreStyling(string expected, string actual)
     {

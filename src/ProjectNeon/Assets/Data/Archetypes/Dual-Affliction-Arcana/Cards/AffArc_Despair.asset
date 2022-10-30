@@ -17,6 +17,12 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 7b3df3a02d213664ba75adfff34dab10, type: 3}
   description: '<b>Afflicted</b>: Gives self {IE[1]} shield.<br><br>Deal {E[1]} {D[1]}'
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: '<b>Afflicted</b>: Gives self {0} Shield.<br><br>Deal {1} {2}'
+    formatArgs:
+    - '{IE[1]}'
+    - '{E[1]}'
+    - '{D[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -41,3 +47,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

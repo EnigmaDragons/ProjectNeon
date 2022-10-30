@@ -10,6 +10,7 @@ public interface CardTypeData
     CardSpeed Speed { get; }
     Sprite Art  { get; }
     string Description  { get; }
+    CardDescriptionV2 DescriptionV2 { get; }
     HashSet<CardTag> Tags  { get; }
     string TypeDescription  { get; }
     CardActionSequence[] ActionSequences  { get; }
@@ -81,7 +82,10 @@ public static class CardTypeDataExtensions
     
     public static string CardLocalizationNameKey(this CardTypeData c)
         => $"{c.Id.ToString().PadLeft(5, '0')}-00-Name";
-
+    
+    public static string CardLocalizationDescriptionTerm(this CardTypeData c)
+        => $"Cards/{CardLocalizationDescriptionKey(c)}";
+    
     public static string CardLocalizationDescriptionKey(this CardTypeData c)
         => $"{c.Id.ToString().PadLeft(5, '0')}-05-Desc";
     
