@@ -37,7 +37,7 @@ public class ProgressionProgress : MonoBehaviour
 
     private ProgressionItem[] GetHeroUnlockProgress(BaseHero[] heroes)
     {
-        return heroes.Select(x => new ProgressionItem(false, $"Hero - Unlocked - {x.Name}", x, Maybe<Adventure>.Missing(), Maybe<Difficulty>.Missing())).ToArray();
+        return heroes.Select(x => new ProgressionItem(false, $"Hero - Unlocked - {x.NameTerm().ToEnglish()}", x, Maybe<Adventure>.Missing(), Maybe<Difficulty>.Missing())).ToArray();
     }
 
     private ProgressionItem[] GetAdventureBaseDifficultyProgress(BaseHero[] heroes, Adventure[] adventures, List<AdventureCompletionRecord> records)
@@ -50,7 +50,7 @@ public class ProgressionProgress : MonoBehaviour
                 return heroes
                     .Select(h =>
                         new ProgressionItem(keyable.ContainsKey($"{a.Id}-{h.id}"),
-                            $"{adventureWord} - {a.MapTitle} - {h.Name}", h, a, Maybe<Difficulty>.Missing()));
+                            $"{adventureWord} - {a.MapTitle} - {h.NameTerm().ToEnglish()}", h, a, Maybe<Difficulty>.Missing()));
             })
             .ToArray();
     }

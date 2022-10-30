@@ -35,7 +35,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
 
         var combined = Combine(s, x => x.Status.CustomText.OrDefault(() => defaultText)
             .Replace("[Originator]", battleState.Members.TryGetValue(x.OriginatorId, out var m)
-                ? m.UnambiguousName
+                ? m.TeamType == TeamType.Enemies ? $"{m.NameTerm.ToEnglish()} {m.Id}" : m.NameTerm.ToEnglish()
                 : "Originator")
             .Replace("[PrimaryStat]", _member.PrimaryStat().GetString()), x => x.Length > 1 ? x.Length : 0);
         combined.IfPresent(c => statuses.Add(c));

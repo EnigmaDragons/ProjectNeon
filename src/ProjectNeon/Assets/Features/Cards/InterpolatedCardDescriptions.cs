@@ -92,7 +92,7 @@ public static class InterpolatedCardDescriptions
         result = result.Replace(xCostReplacementToken, Bold(XCostDescription(owner, xCost)));
 
         var ownerReplacementToken = "{Owner}";
-        result = result.Replace(ownerReplacementToken, owner.Select(o => o.Name, () => "Owner"));
+        result = result.Replace(ownerReplacementToken, owner.Select(o => o.NameTerm.ToLocalized(), () => "Owner"));
         
         var tokens = Regex.Matches(result, "{(.*?)}");
         foreach (Match token in tokens)
@@ -163,84 +163,6 @@ public static class InterpolatedCardDescriptions
         return xCost.Amount.ToString();
     }
 
-    private static string AutoDescription(IEnumerable<EffectData> effects, Maybe<Member> owner, ResourceQuantity xCost) 
-        => string.Join(". ", effects.Select(e => e.EffectType == EffectType.ResolveInnerEffect 
-            ? AutoDescription(e.ReferencedSequence.BattleEffects, owner, xCost)
-            : AutoDescription(e, owner, xCost)));
-
-    private static string AutoDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
-    {
-        var delay = DelayDescription(data);
-        var coreDesc = string.Empty;
-        if (data.EffectType == EffectType.AttackFormula)
-            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.TrueDamageAttackFormula)
-            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.HealFormula)
-            coreDesc = $"heal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.DealTrueDamageFormula)
-            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.MagicAttackFormula)
-            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.DamageOverTimeFormula)
-            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))} {DurationDescription(data, owner, xCost)}";
-        if (data.EffectType == EffectType.AdjustCounterFormula)
-            coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
-        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data, owner, xCost)}";
-        if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data, owner, xCost)}";
-        if (data.EffectType == EffectType.AdjustResourceFlat)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value}";
-        if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.DisableForTurns)
-            coreDesc = $"gives {Bold((EffectDescription(data, owner, xCost)))}";
-        if (data.EffectType == EffectType.ReactWithEffect)
-            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" +
-                       $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
-                       $"{ReactionSourceDescription(owner, data.ReactionEffect.Reactor)}" +
-                       $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
-                       $"to {ReactiveTargetFriendlyName(data.ReactionEffect.Scope)}";
-        if (data.EffectType == EffectType.ReactWithCard)
-            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" +
-                       $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
-                       $"{ReactionSourceDescription(owner, data.ReactionSequence.ActionSequence.Reactor)}" +
-                       $"{AutoDescription(data.ReactionSequence.ActionSequence.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
-                       $"to {ReactiveTargetFriendlyName(data.ReactionSequence.ActionSequence.Scope)}";
-        if (data.EffectType == EffectType.ShieldFormula)
-            coreDesc = $"shield {Bold(EffectDescription(data, owner, xCost))}";
-        if (data.EffectType == EffectType.DrawCards)
-            coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} Cards";
-        if (data.EffectType == EffectType.DrawCardsOfOwner)
-            coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} of your Cards";
-        if (data.EffectType == EffectType.EnterStealth)
-            coreDesc = $"enter {Bold(TemporalStatType.Stealth.ToString())}";
-        if (data.EffectType == EffectType.AdjustPlayerStats)
-            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" 
-                       + $"gives {Bold(EffectDescription(data, owner, xCost))} " 
-                       + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
-        if (data.EffectType == EffectType.RemoveDebuffs)
-            coreDesc = "removes all debuffs";
-        if (data.EffectType == EffectType.AdjustPlayerStatsFormula)
-            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" 
-                       + $"gives {Bold(FormulaAmount(data, owner, xCost))} " 
-                       + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
-        if (data.EffectType == EffectType.GainCredits)
-            coreDesc = $"gives {Bold($"{data.BaseAmount} Creds")}";
-        if (data.EffectType == EffectType.ChooseAndDrawCardOfArchetype)
-            coreDesc = $"choose and draw {AOrAn(data.EffectScope)} {Bold(data.EffectScope.ToString().WithSpaceBetweenWords())} card";
-        if (data.EffectType == EffectType.Drain)
-            coreDesc = $"drain {EffectDescription(data, owner, xCost)}";
-        if (data.EffectType == EffectType.ShieldRemoveAll)
-            coreDesc = $"removes all shields";
-        if (coreDesc == string.Empty)
-            throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
-        return delay.Length > 0 
-            ? $"{delay}{coreDesc}".Replace("Next turn, for the turn,", "Next turn,")
-            : UppercaseFirst(coreDesc);
-    }
-
     private static string ShortenRepeatedEffects(string value)
     {
         var modifiedValue = value + ". ";
@@ -259,12 +181,7 @@ public static class InterpolatedCardDescriptions
         => remainingEffectDesc.Contains("-") || remainingEffectDesc.Contains("All") 
             ? $"removes {remainingEffectDesc}" 
             : $"gives {remainingEffectDesc}";
-    
-    private static string ReactionSourceDescription(Maybe<Member> owner, ReactiveMember member) 
-        => member == ReactiveMember.Originator 
-            ? owner.Select(o => o.Name + " will ", "Originator will ") 
-            : string.Empty;
-    
+
     private static string ReactiveTargetFriendlyName(ReactiveTargetScope s) 
         => s == ReactiveTargetScope.Source 
             ? "attacker" 
@@ -486,4 +403,91 @@ public static class InterpolatedCardDescriptions
     {
         {TemporalStatType.Marked.ToString(), "Mark"},
     };
+    
+#region Auto
+
+    private static string AutoDescription(IEnumerable<EffectData> effects, Maybe<Member> owner, ResourceQuantity xCost) 
+        => string.Join(". ", effects.Select(e => e.EffectType == EffectType.ResolveInnerEffect 
+            ? AutoDescription(e.ReferencedSequence.BattleEffects, owner, xCost)
+            : AutoDescription(e, owner, xCost)));
+
+    private static string AutoDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
+    {
+        var delay = DelayDescription(data);
+        var coreDesc = string.Empty;
+        if (data.EffectType == EffectType.AttackFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.TrueDamageAttackFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.HealFormula)
+            coreDesc = $"heal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.DealTrueDamageFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.MagicAttackFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.DamageOverTimeFormula)
+            coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))} {DurationDescription(data, owner, xCost)}";
+        if (data.EffectType == EffectType.AdjustCounterFormula)
+            coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
+        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data, owner, xCost)}";
+        if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data, owner, xCost)}";
+        if (data.EffectType == EffectType.AdjustResourceFlat)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value}";
+        if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
+            coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.DisableForTurns)
+            coreDesc = $"gives {Bold((EffectDescription(data, owner, xCost)))}";
+        if (data.EffectType == EffectType.ReactWithEffect)
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" +
+                       $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
+                       $"{AutoReactionSourceDescription(owner, data.ReactionEffect.Reactor)}" +
+                       $"{AutoDescription(data.ReactionEffect.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
+                       $"to {ReactiveTargetFriendlyName(data.ReactionEffect.Scope)}";
+        if (data.EffectType == EffectType.ReactWithCard)
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" +
+                       $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
+                       $"{AutoReactionSourceDescription(owner, data.ReactionSequence.ActionSequence.Reactor)}" +
+                       $"{AutoDescription(data.ReactionSequence.ActionSequence.CardActions.BattleEffects, owner, ResourceQuantity.None)} " +
+                       $"to {ReactiveTargetFriendlyName(data.ReactionSequence.ActionSequence.Scope)}";
+        if (data.EffectType == EffectType.ShieldFormula)
+            coreDesc = $"shield {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.DrawCards)
+            coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} Cards";
+        if (data.EffectType == EffectType.DrawCardsOfOwner)
+            coreDesc = $"draw {Bold(EffectDescription(data, owner, xCost))} of your Cards";
+        if (data.EffectType == EffectType.EnterStealth)
+            coreDesc = $"enter {Bold(TemporalStatType.Stealth.ToString())}";
+        if (data.EffectType == EffectType.AdjustPlayerStats)
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" 
+                       + $"gives {Bold(EffectDescription(data, owner, xCost))} " 
+                       + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
+        if (data.EffectType == EffectType.RemoveDebuffs)
+            coreDesc = "removes all debuffs";
+        if (data.EffectType == EffectType.AdjustPlayerStatsFormula)
+            coreDesc = $"{WithCommaIfPresent(DurationDescription(data, owner, xCost))}" 
+                       + $"gives {Bold(FormulaAmount(data, owner, xCost))} " 
+                       + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
+        if (data.EffectType == EffectType.GainCredits)
+            coreDesc = $"gives {Bold($"{data.BaseAmount} Creds")}";
+        if (data.EffectType == EffectType.ChooseAndDrawCardOfArchetype)
+            coreDesc = $"choose and draw {AOrAn(data.EffectScope)} {Bold(data.EffectScope.ToString().WithSpaceBetweenWords())} card";
+        if (data.EffectType == EffectType.Drain)
+            coreDesc = $"drain {EffectDescription(data, owner, xCost)}";
+        if (data.EffectType == EffectType.ShieldRemoveAll)
+            coreDesc = $"removes all shields";
+        if (coreDesc == string.Empty)
+            throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
+        return delay.Length > 0 
+            ? $"{delay}{coreDesc}".Replace("Next turn, for the turn,", "Next turn,")
+            : UppercaseFirst(coreDesc);
+    }
+
+    private static string AutoReactionSourceDescription(Maybe<Member> owner, ReactiveMember member) 
+        => member == ReactiveMember.Originator 
+            ? owner.Select(o => o.NameTerm.ToEnglish() + " will ", "Originator will ") 
+            : string.Empty;
+    
+    #endregion
 }

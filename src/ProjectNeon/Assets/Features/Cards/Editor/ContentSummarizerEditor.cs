@@ -124,7 +124,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         HeroName = GUILayout.TextField(HeroName);
         if (GUILayout.Button("Hero Content Summary"))
         {
-            var hero = GetAllInstances<BaseHero>().FirstOrDefault(x => x.Name.Equals(HeroName, StringComparison.InvariantCultureIgnoreCase));
+            var hero = GetAllInstances<BaseHero>().FirstOrDefault(x => x.NameTerm().ToEnglish().Equals(HeroName, StringComparison.InvariantCultureIgnoreCase));
             if (hero == null)
                 GUIUtility.ExitGUI();
 
@@ -140,7 +140,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         if (GUILayout.Button("All Heroes Content Summary"))
         {
             var result = new List<string>();
-            var heroes = GetAllInstances<Library>().First().UnlockedHeroes.OrderBy(x => x.Name);
+            var heroes = GetAllInstances<Library>().First().UnlockedHeroes.OrderBy(x => x.NameTerm().ToEnglish());
 
             foreach (var hero in heroes)
             {
@@ -187,7 +187,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         var shouldLog = true;
         var result = new List<string>();
         if (shouldLog)
-            Log.Info($"Cards for {hero.Name}");
+            Log.Info($"Cards for {hero.NameTerm().ToEnglish()}");
         
         var archetypeKeys = hero.ArchetypeKeys;
         var paragonCards = hero.ParagonCards.ToHashSet();
@@ -267,7 +267,7 @@ public sealed class ContentSummarizerEditor : EditorWindow
         // Wrong Content Complete Check
         var isContentComplete = presentAllCounter >= expectedAllCounter && paragonsV4Count == 3;
         var finalCheckChar = CheckChar(isContentComplete);
-        result.Add($"{finalCheckChar} - {hero.Name} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} - Missing {expectedAllCounter - presentAllCounter} - " +
+        result.Add($"{finalCheckChar} - {hero.NameTerm().ToEnglish()} - {percentage:P} - All {presentAllCounter}/{expectedAllCounter} - Missing {expectedAllCounter - presentAllCounter} - " +
                    $"Extra Cards {extraCards} " +
                    $"V4 Paragons {paragonsV4Count}/3 " +
                    $"Cards {presentCardsCounter}/{expectedCardsCounter} " +

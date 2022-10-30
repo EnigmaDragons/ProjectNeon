@@ -38,17 +38,17 @@ public sealed class MemberState : IStats
     public int GetCounterAmount(TemporalStatType statType) => _counters[statType.GetString()].Amount;
 
     public int MemberId { get; }
-    public string Name { get; }
+    public string NameTerm { get; }
 
     public MemberState(int id, string name, IStats baseStats, StatType primaryStat)
         : this(id, name, baseStats, primaryStat, baseStats.MaxHp())
     {
     }
 
-    public MemberState(int id, string name, IStats baseStats, StatType primaryStat, int initialHp)
+    public MemberState(int id, string nameTerm, IStats baseStats, StatType primaryStat, int initialHp)
     {
         MemberId = id;
-        Name = name;
+        NameTerm = nameTerm;
         PrimaryStat = primaryStat;
         _baseStats = baseStats;
 
@@ -320,7 +320,7 @@ public sealed class MemberState : IStats
     public void Adjust(string counterName, float amount) 
         => BattleLog.WriteIf(
             Diff(PublishAfter(() => Counter(counterName).ChangeBy(amount), () => Counter(counterName).Amount)), 
-            v => $"{Name}'s {counterName} adjusted by {v}", 
+            v => $"{NameTerm.ToEnglish()}'s {counterName} adjusted by {v}", 
             v => v != 0);
     public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter(() => Counter(t.GetString()).ChangeBy(amount), () => this[t].CeilingInt()));
     public int AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
@@ -393,11 +393,11 @@ public sealed class MemberState : IStats
         
         Message.Publish(new MemberResourceChanged(MemberId, qty, wasPaidCost));
         if (wasPaidCost)
-            BattleLog.Write($"{Name} spent {qty.Negate()}");
+            BattleLog.Write($"{NameTerm.ToEnglish()} spent {qty.Negate()}");
         else if (qty.Amount > 0) 
-            BattleLog.Write($"{Name} gained {qty}");
+            BattleLog.Write($"{NameTerm.ToEnglish()} gained {qty}");
         else if (qty.Amount < 0)
-            BattleLog.Write($"{Name} lost {qty.Negate()}");
+            BattleLog.Write($"{NameTerm.ToEnglish()} lost {qty.Negate()}");
     });
 
     public bool HasAnyTemporalStates => _additiveMods.AnyNonAlloc() 
@@ -428,7 +428,7 @@ public sealed class MemberState : IStats
                 + _additiveResourceCalculators.RemoveAll(m => !m.IsActive)
                 + _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive);
             if (count > 0)
-                DevLog.Write($"Cleaned {count} expired states from {Name}");
+                DevLog.Write($"Cleaned {count} expired states from {NameTerm.ToEnglish()}");
         });
 
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType>

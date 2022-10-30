@@ -19,7 +19,7 @@ public class GlitchCards : Effect
         if (ctx.Target.Members.All(x => x.Aegis() > 0))
         {
             ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, ctx.Target.Members);   
-            BattleLog.Write($"{string.Join(" & ", ctx.Target.Members.Select(x => x.Name))} prevented glitching with an Aegis");
+            BattleLog.Write($"{string.Join(" & ", ctx.Target.Members.Select(x => x.NameTerm.ToEnglish()))} prevented glitching with an Aegis");
             return;
         }
         

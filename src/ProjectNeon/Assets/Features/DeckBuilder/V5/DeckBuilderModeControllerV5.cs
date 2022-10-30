@@ -82,7 +82,7 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     {
         fightButton.gameObject.SetActive(false);
         party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
-        AllMetrics.PublishDecks(party.Heroes.Select(h => h.Name).ToArray(), 
+        AllMetrics.PublishDecks(party.Heroes.Select(h => h.NameTerm.ToEnglish()).ToArray(), 
             party.Decks.Select(h => h.Cards.Select(c => c.Name).ToArray()).ToArray());
         Message.Publish(new StartBattleInitiated(fightButton.transform));
         Message.Publish(new AutoSaveRequested());

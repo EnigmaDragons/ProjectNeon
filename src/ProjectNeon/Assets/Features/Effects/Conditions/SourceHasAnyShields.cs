@@ -7,6 +7,6 @@ public class SourceHasAnyShields : StaticEffectCondition
     {
         return ctx.Source.CurrentShield() > 0
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} does not have any shields");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} does not have any shields");
     }
 }

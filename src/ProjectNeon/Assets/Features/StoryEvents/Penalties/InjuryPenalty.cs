@@ -15,7 +15,7 @@ public class InjuryPenalty : StoryResult
     {
         var hero = ctx.Party.Heroes.Random();
         hero.Apply(new AdditiveStatInjury {Stat = stat, Amount = amount, Name = injuryName});
-        Message.Publish(new ShowStoryEventResultMessage(string.Format(new LocalizedString("InjuryPenalty"), hero.DisplayName, injuryName.Value, amount, new LocalizedString(stat.Value))));
+        Message.Publish(new ShowStoryEventResultMessage(string.Format(new LocalizedString("InjuryPenalty"), hero.NameTerm.ToEnglish(), injuryName.Value, amount, new LocalizedString(stat.Value))));
     }
 
     public override void Preview()

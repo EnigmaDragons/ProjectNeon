@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : ScriptableObject
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
-    [SerializeField] private string enemyName;
+    [SerializeField] public string enemyName;
     [SerializeField] private bool allowedForSocialMedia = false;
     [SerializeField] private bool excludeFromBestiary = false;
     [SerializeField] private bool isTutorialEnemy = false;
@@ -39,6 +39,7 @@ public class Enemy : ScriptableObject
     public bool IsTutorialEnemy => isTutorialEnemy;
     
     public string EnemyName => this.GetName(enemyName);
+    public string EnemyNameTerm => $"Enemies/EnemyName{id}";
     public string Description => description;
     public Corp Corp => corp;
     public EnemyTier Tier => tier;
@@ -57,13 +58,13 @@ public class Enemy : ScriptableObject
     {
         var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();
         if (detail == null)
-            Log.Error($"Enemy {EnemyName} has no stage details and can not be used");
+            Log.Error($"Enemy {enemyName} has no stage details and can not be used");
         if (enemyName == null)
             Log.Error($"Enemy {name} has no Enemy Name");
         return new EnemyInstance(id, resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
-            prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, EnemyName, deathEffect, 
+            prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, deathEffect, 
             isHasty, unique, detail.CounterAdjustments, corp, animations, animationSounds, materialType, description, 
             detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence),
             aiPreferences ?? new AiPreferences());

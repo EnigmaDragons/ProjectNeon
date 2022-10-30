@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using I2.Loc;
 using UnityEngine;
 
 public class Member
 {
     public int Id { get; }
-    public string UnambiguousName { get; }
-    public string Name { get; }
+    public string UnambiguousEnglishName { get; }
+    public string NameTerm { get; }
     public string Class { get; }
     public MemberMaterialType MaterialType { get; }
     public TeamType TeamType { get; }
@@ -18,25 +19,25 @@ public class Member
 
     public override bool Equals(object obj) => obj is Member && ((Member)obj).Id == Id;
     public override int GetHashCode() => Id.GetHashCode();
-    public override string ToString() => $"{Name} {Id}";
+    public override string ToString() => $"{NameTerm.ToEnglish()} {Id}";
     
-    public Member(int id, string name, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
-        : this(id, name, characterClass, materialType, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
+    public Member(int id, string nameTerm, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
+        : this(id, nameTerm, characterClass, materialType, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
     
-    public Member(int id, string name, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp, Maybe<CardTypeData> basicCard)
+    public Member(int id, string nameTerm, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp, Maybe<CardTypeData> basicCard)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
-            throw new InvalidDataException($"Damagability of {name} is 0");
+            throw new InvalidDataException($"Damagability of {NameTerm.ToEnglish()} is 0");
         
         Id = id;
-        Name = name;
+        NameTerm = nameTerm;
         Class = characterClass;
         MaterialType = materialType;
         TeamType = team;
         BattleRole = battleRole;
-        State = new MemberState(id, name, baseStats, primaryStat, initialHp);
+        State = new MemberState(id, nameTerm, baseStats, primaryStat, initialHp);
         BasicCard = basicCard;
-        UnambiguousName = TeamType == TeamType.Enemies ? $"{Name} {Id}" : Name;
+        UnambiguousEnglishName = TeamType == TeamType.Enemies ? $"{NameTerm.ToEnglish()} {Id}" : NameTerm.ToEnglish();
     }
 
     public Member Apply(Action<MemberState> effect)
@@ -50,9 +51,9 @@ public static class MemberExtensions
 {
     private static int RoundUp(float v) => Mathf.CeilToInt(v);
 
-    public static string Names(this IEnumerable<Member> members) => string.Join(", ", members.Select(m => m.Name));
+    public static string EnglishNames(this IEnumerable<Member> members) => string.Join(", ", members.Select(m => m.NameTerm.ToEnglish()));
     
-    public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.Name, m.Class, m.TeamType, m.State.ToSnapshot());
+    public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.NameTerm, m.Class, m.TeamType, m.State.ToSnapshot());
     public static int HpAndShield(this Member m) => CurrentHp(m) + CurrentShield(m);    
     public static int HpAndShieldWithOverkill(this Member m) => CurrentHp(m) + CurrentShield(m) - RoundUp(m.State[TemporalStatType.OverkillDamageAmount]);
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);

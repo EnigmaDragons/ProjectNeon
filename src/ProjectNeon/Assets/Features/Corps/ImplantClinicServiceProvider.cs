@@ -66,7 +66,7 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
         var gainAmount = statsToAdjust[1].Value;
         return new ClinicServiceButtonData(
             $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}",
-            $"Lose {lossAmount} {lossStat.ToString().WithSpaceBetweenWords()} to gain {gainAmount} {gainStat.ToString().WithSpaceBetweenWords()} on {hero.DisplayName}",
+            $"Lose {lossAmount} {lossStat.ToString().WithSpaceBetweenWords()} to gain {gainAmount} {gainStat.ToString().WithSpaceBetweenWords()} on {hero.NameTerm.ToEnglish()}",
             CalculateCost(hero, lossStat, lossAmount, gainStat, gainAmount),
             () => AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount),
             Array.Empty<EffectData>(),

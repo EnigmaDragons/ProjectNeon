@@ -19,7 +19,7 @@ public class AegisPreventable : Effect
         consciousTargets.ForEach(m =>
         {
             if (aegisMemberIds.Contains(m.Id))
-                BattleLog.Write($"{m.UnambiguousName} prevented {_effectDescription} with an Aegis");
+                BattleLog.Write($"{m.UnambiguousEnglishName} prevented {_effectDescription} with an Aegis");
             else
                 _inner.Apply(ctx.Retargeted(ctx.Source, new Single(m)));
         });

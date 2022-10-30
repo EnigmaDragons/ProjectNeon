@@ -33,7 +33,7 @@ public static class AttackProcessing
             var amount = lifeStealCounters * 0.25f * totalHpDamageDealt;
             attacker.State.GainHp(amount);
             attacker.State.Adjust(TemporalStatType.Lifesteal, -lifeStealCounters);
-            BattleLog.Write($"{attacker.Name} gained {amount} HP from LifeSteal");
+            BattleLog.Write($"{attacker.NameTerm.ToEnglish()} gained {amount} HP from LifeSteal");
         }
     }
 }

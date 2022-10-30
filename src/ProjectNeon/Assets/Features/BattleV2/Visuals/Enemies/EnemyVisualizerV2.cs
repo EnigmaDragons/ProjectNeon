@@ -63,7 +63,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         }
         catch(Exception e)
         {
-            Log.Error($"Cannot Instantiate {enemy.Name}");
+            Log.Error($"Cannot Instantiate {enemy.NameTerm.ToEnglish()}");
             Log.Error(e);
             return null;
         }
@@ -102,42 +102,42 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
 
     private void SetupVisualComponents(GameObject obj, Member member)
     {
-        obj.GetCharacterMouseHover(member.Name).Init(member);
+        obj.GetCharacterMouseHover(member.NameTerm).Init(member);
 
         var stealth = obj.GetComponentInChildren<StealthTransparency>();
         if (stealth == null)
-            Log.Info($"{member.Name} is missing a {nameof(StealthTransparency)}");
+            Log.Info($"{member.NameTerm.ToEnglish()} is missing a {nameof(StealthTransparency)}");
         else
             stealth.Init(member);
         
         var stealth2 = obj.GetComponentInChildren<CharacterCreatorStealthTransparency>();
         if (stealth2 == null)
-            Log.Info($"{member.Name} is missing a {nameof(CharacterCreatorStealthTransparency)}");
+            Log.Info($"{member.NameTerm.ToEnglish()} is missing a {nameof(CharacterCreatorStealthTransparency)}");
         else
             stealth2.Init(member);
 
         var shield = obj.GetComponentInChildren<ShieldVisual>();
         if (shield == null)
-            Log.Info($"{member.Name} is missing a {nameof(ShieldVisual)}");
+            Log.Info($"{member.NameTerm.ToEnglish()} is missing a {nameof(ShieldVisual)}");
         else
             shield.Init(member);
         
         var highlighter = obj.GetComponentInChildren<MemberHighlighter>();
         if (highlighter == null)
-            Debug.LogError($"{member.Name} is missing a {nameof(MemberHighlighter)}");
+            Debug.LogError($"{member.NameTerm.ToEnglish()} is missing a {nameof(MemberHighlighter)}");
         else
             highlighter.Init(member);
         
         var tauntEffect = obj.GetComponentInChildren<TauntEffect>();
         if (tauntEffect == null)
-            Debug.LogError($"{member.Name} is missing a {nameof(TauntEffect)}");
+            Debug.LogError($"{member.NameTerm.ToEnglish()} is missing a {nameof(TauntEffect)}");
         else
             tauntEffect.Init(member);
     }
     
     public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset)
     {
-        DevLog.Write($"Spawning {enemy.Name}");
+        DevLog.Write($"Spawning {enemy.NameTerm.ToEnglish()}");
         var member = enemy.AsMember(state.GetNextEnemyId());
         var enemyObject = AddEnemy(enemy, member, offset);
         state.AddEnemy(enemy, enemyObject, member);
@@ -148,7 +148,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     
     public void Despawn(MemberState enemy)
     {
-        DevLog.Write($"Despawning {enemy.Name}");
+        DevLog.Write($"Despawning {enemy.NameTerm.ToEnglish()}");
         var index = state.GetEnemyIndexByMemberId(enemy.MemberId);
         state.RemoveEnemy(enemy);
         Destroy(active[index]);

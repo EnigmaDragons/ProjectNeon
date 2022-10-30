@@ -115,7 +115,7 @@ public static class AITargetSelectionLogic
         if (ctx.SelectedCard.IsMissing)
             ctx = ctx.WithFinalizedSmartCardSelection();
         
-        Log($"{ctx.Member.Name} chose {ctx.SelectedCard.Value.Name} out of {ctx.CardOptionsString}");
+        Log($"{ctx.Member.NameTerm.ToEnglish()} chose {ctx.SelectedCard.Value.Name} out of {ctx.CardOptionsString}");
         
         var targets = ctx.SelectedTargets(isPreferredTarget);
 

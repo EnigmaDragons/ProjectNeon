@@ -1,3 +1,4 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ public sealed class HeroLevelUpTreeUiController : OnMessage<ShowHeroLevelUpPathw
     [SerializeField] private GameObject target;
     [SerializeField] private Image bust;
     [SerializeField] private TextMeshProUGUI classLabel;
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private Localize nameLocalize;
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private LevelUpPathwayPresenter presenter;
 
@@ -18,7 +19,7 @@ public sealed class HeroLevelUpTreeUiController : OnMessage<ShowHeroLevelUpPathw
         presenter.Init(msg.Hero.LevelUpTree);
         bust.sprite = msg.Hero.Bust;
         classLabel.text = msg.Hero.Class;
-        nameLabel.text = msg.Hero.DisplayName();
+        nameLocalize.SetTerm(msg.Hero.NameTerm());
         stats.Initialized(msg.Hero.Stats);
         target.SetActive(true);
     }

@@ -120,9 +120,9 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     protected override void Execute(CardActionPrevented msg)
     {
         if (msg.ToDecrement == TemporalStatType.Blind)
-            BattleLog.Write($"{msg.Source.Name} was blinded, so their attack missed.");
+            BattleLog.Write($"{msg.Source.NameTerm.ToEnglish()} was blinded, so their attack missed.");
         if (msg.ToDecrement == TemporalStatType.Inhibit)
-            BattleLog.Write($"{msg.Source.Name} was inhibited, so their action fizzled.");
+            BattleLog.Write($"{msg.Source.NameTerm.ToEnglish()} was inhibited, so their action fizzled.");
         Message.Publish(new PlayRawBattleEffect("MissedText", Vector3.zero));
         msg.Source.State.Adjust(msg.ToDecrement, -1);
         Message.Publish(new Finished<CardActionPrevented>());
@@ -152,7 +152,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         if (msg.Source.IsStealthed() && StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
         {
             msg.Source.State.BreakStealth();
-            BattleLog.Write($"{msg.Source.Name} emerged from the shadows.");
+            BattleLog.Write($"{msg.Source.NameTerm.ToEnglish()} emerged from the shadows.");
         }
 
         // Effect Resolved Details
@@ -166,7 +166,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     {
         var details = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset);
         var member = details.Member;
-        BattleLog.Write($"Spawned {member.Name}");
+        BattleLog.Write($"Spawned {member.NameTerm.ToEnglish()}");
         Message.Publish(new MemberSpawned(member, details.Transform));
         Message.Publish(new Finished<SpawnEnemy>());
     }
@@ -176,7 +176,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         var pos = state.GetMaybeTransform(msg.Member.Id).Map(t => t.position).OrDefault(Vector3.zero);
         state.AddEnemyDefeatedRewards(msg.Member.Id);
         enemies.Despawn(msg.Member.State);
-        BattleLog.Write($"Despawned {msg.Member.Name}");
+        BattleLog.Write($"Despawned {msg.Member.NameTerm.ToEnglish()}");
         Message.Publish(new MemberDespawned(msg.Member, pos));
         Message.Publish(new Finished<DespawnEnemy>());
     }
@@ -242,7 +242,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         if (!isReactionCard)
         {
             Log.Error($"Should not be Queueing instant Effect Reactions. They should already be processed. " +
-                      $"Reaction - {r.Source.Name} {r.Name} {r.ReactionSequence.CardActions.BattleEffects.First().EffectType}");
+                      $"Reaction - {r.Source.NameTerm.ToEnglish()} {r.Name} {r.ReactionSequence.CardActions.BattleEffects.First().EffectType}");
             StartCoroutine(FinishEffect());
             yield break;
         }
@@ -256,7 +256,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         var reactionCard = r.ReactionCard.Value;
         if (reactionCard.IsPlayableBy(r.Source, state.Party, 1))
         {
-            BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
+            BattleLog.Write($"{r.Source.NameTerm.ToEnglish()} has reacted with {reactionCard.Name}");
             Message.Publish(new DisplayCharacterWordRequested(r.Source, CharacterReactionType.ReactionCardPlayed));
             var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
             if (r.Source.TeamType == TeamType.Party)
@@ -274,7 +274,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         }
         else
         {
-            BattleLog.Write($"{r.Source.Name} could not afford reaction card {reactionCard.Name}");
+            BattleLog.Write($"{r.Source.NameTerm.ToEnglish()} could not afford reaction card {reactionCard.Name}");
             this.ExecuteAfterDelay(() => StartCoroutine(FinishEffect()), 0.1f);
         }
     }

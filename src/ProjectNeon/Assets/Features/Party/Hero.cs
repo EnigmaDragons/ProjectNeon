@@ -28,8 +28,7 @@ public class Hero
         _primaryResourceType = character.Stats.ResourceTypes.FirstAsMaybe().Select(r => r, () => new InMemoryResourceType());
     }
 
-    public string Name => character.Name;
-    public string DisplayName => character.DisplayName();
+    public string NameTerm => character.NameTerm();
     public string Class => character.Class;
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
@@ -104,7 +103,7 @@ public class Hero
 
     public Member AsMember(int id)
     {
-        var m = new Member(id, Character.Name, Character.Class, Character.MaterialType, TeamType.Party,
+        var m = new Member(id, Character.NameTerm(), Character.Class, Character.MaterialType, TeamType.Party,
             Stats, Character.BattleRole, PrimaryStat, CurrentHp, new Maybe<CardTypeData>(basicCard));
         Character.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;

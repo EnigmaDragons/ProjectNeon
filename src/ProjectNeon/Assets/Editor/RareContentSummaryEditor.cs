@@ -15,7 +15,7 @@ public class RareContentSummaryEditor
         var tiers = new[] {EnemyTier.Elite, EnemyTier.Boss}.ToHashSet();
         var enemies = ScriptableExtensions.GetAllInstances<Enemy>()
             .Where(e => e.IsCurrentlyWorking && tiers.Contains(e.Tier))
-            .Select(e => $"Enemy: {e.EnemyName} - {e.name}");
+            .Select(e => $"Enemy: {e.enemyName} - {e.name}");
         
         ((ListDisplayWindow)EditorWindow.GetWindow(typeof(ListDisplayWindow)))
             .Initialized("Rare Content", "Content", cards.Concat(enemies).ToArray())

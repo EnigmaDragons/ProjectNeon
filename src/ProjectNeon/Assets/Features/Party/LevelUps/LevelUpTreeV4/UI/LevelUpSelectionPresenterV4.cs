@@ -1,5 +1,6 @@
 using System.Linq;
 using DG.Tweening;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
     [SerializeField] private TextMeshProUGUI headerLabel;
     [SerializeField] private TextMeshProUGUI levelLabel;
     [SerializeField] private GameObject heroNameObject;
-    [SerializeField] private TextMeshProUGUI heroNameLabel;
+    [SerializeField] private Localize heroNameLocalize;
     [SerializeField] private GameObject heroClassObject;
     [SerializeField] private TextMeshProUGUI heroClassLabel;
     [SerializeField] private Image bust;
@@ -72,7 +73,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         faintClassName.text = _hero.Class;
         faintClassName.color = new Color(1, 1, 1, 1 / 255f);
         stats.Initialized(_hero);
-        heroNameLabel.text = _hero.DisplayName;
+        heroNameLocalize.SetTerm(_hero.NameTerm);
         heroClassLabel.text = _hero.Class;
         levelLabel.text = $"Level {_hero.Level.ToString()}";
         var adventureMode = adventure != null ? adventure.Adventure.Mode : AdventureMode.Standard;
@@ -101,7 +102,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         faintLevelLabel.DOColor(Color.white, 2.4f).SetEase(Ease.InQuad);
         faintClassName.DOColor(Color.white, 2.4f).SetEase(Ease.Linear);
         optionsPresenter.ClearUnselectedOptions(msg.Selected);
-        AllMetrics.PublishLevelUpOptionSelection(_hero.Name, _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
+        AllMetrics.PublishLevelUpOptionSelection(_hero.NameTerm.ToEnglish(), _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
         msg.Selected.SelectAsLevelUp(_hero);
         Message.Publish(new LevelUpClicked(transform));
         

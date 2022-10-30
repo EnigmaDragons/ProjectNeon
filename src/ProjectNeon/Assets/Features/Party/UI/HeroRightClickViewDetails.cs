@@ -16,7 +16,7 @@ public class HeroRightClickViewDetails : OnMessage<CharacterHoverChanged>
         {
             if (!h.IsInitialized || h.Member.TeamType != TeamType.Party) return;
             
-            var maybeHero = party.Heroes.FirstOrMaybe(hero => hero.Name.Equals(h.Member.Name));
+            var maybeHero = party.Heroes.FirstOrMaybe(hero => hero.NameTerm.Equals(h.Member.NameTerm));
             maybeHero.IfPresent(hero =>
             {
                 h.SetAction(() => { }, () =>

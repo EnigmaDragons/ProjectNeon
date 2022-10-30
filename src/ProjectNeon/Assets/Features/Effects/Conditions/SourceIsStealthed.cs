@@ -7,6 +7,6 @@ public class SourceIsStealthed : StaticEffectCondition
     {
         return ctx.Source.IsStealthed()
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} is not Stealthed");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} is not Stealthed");
     }
 }

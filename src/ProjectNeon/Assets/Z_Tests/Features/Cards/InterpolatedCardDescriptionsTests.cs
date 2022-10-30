@@ -69,7 +69,7 @@ public sealed class InterpolatedCardDescriptionsTests
 
     [Test]
     public void Interpolated_Originator_NameIsCorrect()
-        => AssertMatchesIgnoreStyling(Owner.Name, Description("{Owner}", new EffectData(), Owner));
+        => AssertMatchesIgnoreStyling(Owner.NameTerm.ToLocalized(), Description("{Owner}", new EffectData(), Owner));
     
     [Test]
     public void Interpolated_Injury_IsCorrect()

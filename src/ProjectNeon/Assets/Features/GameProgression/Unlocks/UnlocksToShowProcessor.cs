@@ -36,7 +36,7 @@ public class UnlocksToShowProcessor : MonoBehaviour
         var allUnlocksToShow = 
             unshownAdventureUnlocks.Select(a => new UnlockUiData(ProgressionData.UnlockTypeAdventure, a.id, "New Unlocked Adventure!", a.MapTitle, a.AdventureImage))
                 .Concat(unshownDifficultes.Select(d => new UnlockUiData(ProgressionData.UnlockTypeDifficulty, d.id, "New Unlocked Difficulty!", d.Name, d.Image)))
-                .Concat(unshownHeroUnlocks.Select(h => new UnlockUiData(ProgressionData.UnlockTypeHero, h.id, "New Unlocked Hero!", h.Name, h.Bust)))
+                .Concat(unshownHeroUnlocks.Select(h => new UnlockUiData(ProgressionData.UnlockTypeHero, h.id, "New Unlocked Hero!", h.NameTerm().ToEnglish(), h.Bust)))
                 .ToArray();
 
         //allUnlocksToShow.ForEach(a => Log.Info($"To Show Unlock: {a}"));

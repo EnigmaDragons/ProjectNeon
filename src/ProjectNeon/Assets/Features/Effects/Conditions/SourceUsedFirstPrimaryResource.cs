@@ -7,6 +7,6 @@ public class SourceUsedFirstPrimaryResource : StaticEffectCondition
     {
         return ctx.Source.PrimaryResourceAmount() + 1 == ctx.Source.State.PrimaryResource.MaxAmount
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} did not just use first resource.");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} did not just use first resource.");
     }
 }

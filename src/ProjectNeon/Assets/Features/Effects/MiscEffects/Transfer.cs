@@ -15,7 +15,7 @@ public class Transfer : Effect
     {
         if (_maybeStatType.IsMissing)
         {
-            Log.Error($"Transfer was attempted without a valid Temporal Stat Type by {ctx.Source.Name}");
+            Log.Error($"Transfer was attempted without a valid Temporal Stat Type by {ctx.Source.NameTerm.ToEnglish()}");
             return;
         }
 
@@ -30,9 +30,9 @@ public class Transfer : Effect
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
             
             if (ctx.Preventions.IsDodging(m) && (statType == TemporalStatType.HP || statType == TemporalStatType.Shield))
-                BattleLog.Write($"{m.UnambiguousName} prevented Drain with a Dodge");
+                BattleLog.Write($"{m.UnambiguousEnglishName} prevented Drain with a Dodge");
             else if (ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.UnambiguousName} prevented Drain with an Aegis");
+                BattleLog.Write($"{m.UnambiguousEnglishName} prevented Drain with an Aegis");
             else
                 drainedAmount -= m.State.Adjust(statType, amount);
         }

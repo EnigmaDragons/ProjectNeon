@@ -15,7 +15,7 @@ public class SpellDamage : DamageCalculation
     {        
         var amount = Mathf.CeilToInt(_damageCalc(ctx, target) - target.State.Resistance());
         if (amount < 1)
-            Log.Warn($"{target.Name} is taking 0 magic damage");
+            Log.Warn($"{target.NameTerm.ToEnglish()} is taking 0 magic damage");
         return amount;
     }
 }

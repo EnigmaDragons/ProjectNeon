@@ -20,7 +20,7 @@ public class HeroRebalanceEditor : EditorWindow
         {
             Log.Info("Rebalance Heroes Begun");
             var heroes =  UnityResourceUtils.FindAssetsByType<BaseHero>()
-                .Where(h => !h.Name.Equals("Anon"))
+                .Where(h => !h.name.Equals("Anon"))
                 .ToArray();
             
             heroes.ForEach(h =>

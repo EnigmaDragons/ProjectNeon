@@ -16,15 +16,15 @@ public sealed class DealDamage : Effect
             var wasVulnerableString = m.IsVulnerable() ? " (Vulnerable) " : " ";
             if (ctx.Preventions.IsDodging(m))
             {
-                BattleLog.Write($"{m.UnambiguousName} Dodged the attack.");
+                BattleLog.Write($"{m.UnambiguousEnglishName} Dodged the attack.");
                 return;
             }
             
             if (m.State[StatType.Damagability] < 0.01)
-                BattleLog.Write($"0 damage was dealt to Invincible {m.UnambiguousName}");
+                BattleLog.Write($"0 damage was dealt to Invincible {m.UnambiguousEnglishName}");
             else
             {
-                BattleLog.Write($"{amount} damage dealt to{wasVulnerableString}{m.UnambiguousName}");
+                BattleLog.Write($"{amount} damage dealt to{wasVulnerableString}{m.UnambiguousEnglishName}");
                 if (_damage.DealTrueDamage)
                     m.State.TakeTrueDamage(amount);
                 else

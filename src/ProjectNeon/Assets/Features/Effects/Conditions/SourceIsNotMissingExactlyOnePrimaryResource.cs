@@ -7,6 +7,6 @@ public class SourceIsNotMissingExactlyOnePrimaryResource : StaticEffectCondition
     {
         return ctx.Source.PrimaryResourceAmount() + 1 != ctx.Source.State.PrimaryResource.MaxAmount
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} incorrect primary resource amount");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} incorrect primary resource amount");
     }
 }

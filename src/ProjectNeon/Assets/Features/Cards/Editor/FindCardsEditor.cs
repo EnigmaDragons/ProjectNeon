@@ -207,7 +207,7 @@ public class FindCardsEditor : EditorWindow
         if (GUILayout.Button("Find By Hero"))
         {
             var heroes = GetAllInstances<BaseHero>()
-                .Where(h => h.Name.Equals(_heroString, StringComparison.InvariantCultureIgnoreCase));
+                .Where(h => h.NameTerm().ToEnglish().Equals(_heroString, StringComparison.InvariantCultureIgnoreCase));
             if (!heroes.Any())
                 GUIUtility.ExitGUI();
 

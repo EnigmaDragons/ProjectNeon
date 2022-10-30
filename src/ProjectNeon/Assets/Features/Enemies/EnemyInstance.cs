@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using I2.Loc;
 using UnityEngine;
 
 [Serializable]
@@ -36,7 +37,7 @@ public class EnemyInstance : EnemyType
     public Corp Corp => _corp;
     public int PowerLevel { get; }
     public int PreferredTurnOrder { get; }
-    public string Name { get; }
+    public string NameTerm => $"Enemies/EnemyName{_enemyId}";
     public string DeathEffect { get; }
     public bool IsHasty { get; }
     public bool IsUnique { get; }
@@ -56,7 +57,7 @@ public class EnemyInstance : EnemyType
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
-        int preferredTurnOrder, string enemyName, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp,
+        int preferredTurnOrder, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp,
         CharacterAnimations animations, CharacterAnimationSoundSet sounds, MemberMaterialType materialType, string description, IEnumerable<ReactionCardType> reactionCards, AiPreferences aiPreferences)
     {
         _enemyId = enemyId;
@@ -85,7 +86,6 @@ public class EnemyInstance : EnemyType
         Tier = tier;
         PowerLevel = powerLevel;
         PreferredTurnOrder = preferredTurnOrder;
-        Name = enemyName ?? "Missing Name";
         DeathEffect = deathEffect;
         IsHasty = isHasty;
         IsUnique = isUnique;
@@ -95,15 +95,15 @@ public class EnemyInstance : EnemyType
         ReactionCards = reactionCards != null ? reactionCards : new ReactionCardType[0];
         Description = description != null ? description : "";
         if (_resourceType == null)
-            Log.Error($"Null Resource Type for {Name} {enemyId}");
+            Log.Error($"Null Resource Type for {NameTerm.ToEnglish()} {enemyId}");
         if (_counterAdjustments == null)
-            Log.Error($"Null Counter Adjustments for {Name} {enemyId}");
+            Log.Error($"Null Counter Adjustments for {NameTerm.ToEnglish()} {enemyId}");
     }
         
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, Name, "Enemy", _materialType, TeamType.Enemies, stats, Role, stats.DefaultPrimaryStat(stats));
+        var m = new Member(id, NameTerm, "Enemy", _materialType, TeamType.Enemies, stats, Role, stats.DefaultPrimaryStat(stats));
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;

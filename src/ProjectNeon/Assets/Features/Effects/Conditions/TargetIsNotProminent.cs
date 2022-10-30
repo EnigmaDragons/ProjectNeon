@@ -8,7 +8,7 @@ public class TargetIsNotProminent : StaticEffectCondition
     {
         var prominents = ctx.Target.Members.Where(m => m.State[TemporalStatType.Prominent] > 0);
         return prominents.Any()
-            ? new Maybe<string>($"{prominents.Names()} was prominent")
+            ? new Maybe<string>($"{prominents.EnglishNames()} was prominent")
             : Maybe<string>.Missing();
     }
 }

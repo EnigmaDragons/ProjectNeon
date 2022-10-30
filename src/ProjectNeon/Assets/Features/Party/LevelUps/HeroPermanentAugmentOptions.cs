@@ -38,7 +38,7 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
     {
         var archetypes = h.Archetypes;
         var possible = allEquipmentPool.Possible(EquipmentSlot.Augmentation, rarities, h.Archetypes, h.Stats.KeyStatTypes(), party.KeyStats).ToList();
-        Log.Info($"{h.Name}: {possible.Count} Possible Level Up Augment Options - {string.Join(", ", possible.Select(e => e.Name))}");
+        Log.Info($"{h.NameTerm().ToEnglish()}: {possible.Count} Possible Level Up Augment Options - {string.Join(", ", possible.Select(e => e.Name))}");
         
         // Pick one augment matching the character's Archetypes
         var archMatchingAugment = allEquipmentPool.All

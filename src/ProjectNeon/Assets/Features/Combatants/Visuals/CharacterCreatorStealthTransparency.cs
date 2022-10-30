@@ -21,7 +21,7 @@ public class CharacterCreatorStealthTransparency : OnMessage<MemberStateChanged>
     {
         if (viewer == null)
         {
-            Log.Error($"{m.Name} - {nameof(CharacterCreatorStealthTransparency)} viewer is null.");
+            Log.Error($"{m.NameTerm.ToEnglish()} - {nameof(CharacterCreatorStealthTransparency)} viewer is null.");
             return;
         }
         

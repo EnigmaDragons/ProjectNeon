@@ -9,6 +9,6 @@ public class TargetIsUnconscious : StaticEffectCondition
         var conscious = ctx.Target.Members.Where(m => m.IsConscious());
         return conscious.None()
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{conscious.Names()} are not stunned");
+            : new Maybe<string>($"{conscious.EnglishNames()} are not stunned");
     }
 }

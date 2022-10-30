@@ -1,11 +1,12 @@
 using System;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ClinicPatientUI : OnMessage<UpdateClinic, HeroStateChanged, PartyAdventureStateChanged>
 {
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private Localize nameLocalize;
     [SerializeField] private HeroHpPresenter hpPresenter;
     [SerializeField] private Button healToFullButton;
     [SerializeField] private Button viewHeroDetailButton;
@@ -32,7 +33,7 @@ public class ClinicPatientUI : OnMessage<UpdateClinic, HeroStateChanged, PartyAd
     {
         _hero = h;
         _cost = cost;
-        nameLabel.text = h.DisplayName;
+        nameLocalize.SetTerm(h.NameTerm);
         hpPresenter.Init(h);
         UpdateCosts();
         UpdateButtons();

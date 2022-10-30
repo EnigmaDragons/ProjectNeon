@@ -8,6 +8,6 @@ public class TargetIsOutOfPrimaryResource : StaticEffectCondition
     {
         return ctx.Target.Members.All(x => x.PrimaryResourceAmount() <= 0)
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} still has some Primary Resources");
+            : new Maybe<string>($"{ctx.Target.Members.EnglishNames()} still has some Primary Resources");
     }
 }

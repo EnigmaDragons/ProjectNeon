@@ -47,7 +47,7 @@ public class EncounterBuilder : ScriptableObject, IEncounterBuilder
             var nextEnemy = mustIncludePossibilities.Random();
             var nextEnemyInstance = nextEnemy.ForStage(currentChapterNumber);
             enemies.Add(nextEnemyInstance);
-            DebugLog($"Added \"Must Include\" {nextEnemyInstance.Name} to Encounter");
+            DebugLog($"Added \"Must Include\" {nextEnemyInstance.NameTerm.ToEnglish()} to Encounter");
             numRemainingMustIncludes--;
             currentDifficulty = currentDifficulty + Math.Max(nextEnemyInstance.PowerLevel, 1);
         }
@@ -61,7 +61,7 @@ public class EncounterBuilder : ScriptableObject, IEncounterBuilder
         while (Selector.TryGetEnemy(new EncounterBuildingContext(enemies.ToArray(), possibleEnemies, currentDifficulty, difficulty), out EnemyInstance enemy))
         {
             enemies.Add(enemy);
-            DebugLog($"Added {enemy.Name} to Encounter");
+            DebugLog($"Added {enemy.NameTerm.ToEnglish()} to Encounter");
             currentDifficulty += enemy.PowerLevel;
         }
 

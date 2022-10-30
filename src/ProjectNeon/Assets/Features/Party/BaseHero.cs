@@ -49,7 +49,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private HeroLevelUpTreeV4 levelUpTreeV4;
 
     public int Id => id;
-    public string Name => name;
     public int ComplexityRating => complexityRating;
     public Sprite Bust => bust;
     public GameObject Body => body;
