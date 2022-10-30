@@ -230,7 +230,7 @@ public class EffectReactWith : Effect
                 m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount),
                     _status, _timing, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionCard.Value,
                     _conditionBuilder(reactionConditionContext)));
-                DevLog.Write($"Applied React With Card {_conditionType} to {m.Name}");
+                DevLog.Write($"Applied React With Card {_conditionType} to {m.NameTerm.ToEnglish()}");
             });
         else if (_reactionEffect.IsPresent)
             ctx.Target.ApplyToAllConscious(m =>
@@ -244,7 +244,7 @@ public class EffectReactWith : Effect
                 m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), 
                     _status, _timing, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionEffect.Value,
                     _conditionBuilder(reactionConditionContext)));
-                DevLog.Write($"Applied React With Effect {_conditionType} to {m.Name}");
+                DevLog.Write($"Applied React With Effect {_conditionType} to {m.NameTerm.ToEnglish()}");
             });
     }
 }

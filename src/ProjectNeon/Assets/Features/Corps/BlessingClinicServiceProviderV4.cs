@@ -56,7 +56,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                     d.Name,
                     d.IsSingleTarget
                         ? string.Format(d.Description,
-                            blessingChoices[i].blessing.Targets[0].DisplayName())
+                            blessingChoices[i].blessing.Targets[0].NameTerm().ToEnglish())
                         : d.Description,
                     1,
                     () =>

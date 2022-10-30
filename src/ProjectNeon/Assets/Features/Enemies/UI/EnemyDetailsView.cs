@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Schema;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class EnemyDetailsView : MonoBehaviour
 {
     [SerializeField] private Enemy staringEnemy;
     [SerializeField] private TextMeshProUGUI idLabel;
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private Localize nameLocalize;
     [SerializeField] private TextMeshProUGUI typeLabel;
     [SerializeField] private TextMeshProUGUI descriptionLabel;
     [SerializeField] private MemberStatPanel statPanel;
@@ -34,7 +35,7 @@ public class EnemyDetailsView : MonoBehaviour
     {
         _isInitialized = true;
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
-        nameLabel.text = e.Name;
+        nameLocalize.SetTerm(e.NameTerm);
         var eliteText = e.Tier == EnemyTier.Elite ? "Elite" : string.Empty;
         var hastyText = e.IsHasty ? "Hasty " : string.Empty;
         if (typeLabel != null)

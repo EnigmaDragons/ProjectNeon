@@ -8,6 +8,6 @@ public class SourceHasAnAlly : StaticEffectCondition
     {
         return ctx.BattleMembers.Any(x => x.Value.IsConscious() && x.Value.TeamType == ctx.Source.TeamType && x.Value.Id != ctx.Source.Id)
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} has no ally");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} has no ally");
     }
 }

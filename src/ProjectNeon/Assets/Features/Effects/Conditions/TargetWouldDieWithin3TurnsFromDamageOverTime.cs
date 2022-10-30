@@ -19,7 +19,7 @@ public class TargetWouldDieWithin3TurnsFromDamageOverTime : StaticEffectConditio
             return damage < m.CurrentHp();
         });
         return survivingTargets.Any()
-            ? new Maybe<string>($"{survivingTargets.Names()} would survive")
+            ? new Maybe<string>($"{survivingTargets.EnglishNames()} would survive")
             : Maybe<string>.Missing();
     }
 }

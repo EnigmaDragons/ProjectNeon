@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
 {
     [SerializeField] private DeckBuilderState deckBuilderState;
     [SerializeField] private Image heroBust;
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private Localize nameLocalize;
     [SerializeField] private TextMeshProUGUI classLabel;
     [SerializeField] private MemberResourcePanel resources;
     [SerializeField] private MemberStatPanel stats;
@@ -31,7 +32,7 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
     {
         _ignoreChanges = true;
         _hero = deckBuilderState.SelectedHeroesDeck.Hero;
-        nameLabel.text = _hero.DisplayName;
+        nameLocalize.SetTerm(_hero.NameTerm);
         classLabel.text = _hero.Class;
         levelLabel.text = _hero.Level.ToString();
         heroBust.sprite = _hero.Character.Bust;

@@ -30,7 +30,7 @@ public sealed class XpAndLevelUpPresenter : MonoBehaviour
         if (_hero.Levels.UnspentLevelUpPoints > 0)
             levelUpButton.Init("Level\nUp", () =>
             {
-                Debug.Log($"Clicked Level Up {_hero.Name}");
+                Debug.Log($"Clicked Level Up {_hero.NameTerm.ToEnglish()}");
                 Message.Publish(new LevelUpHero(_hero));
             });
     }

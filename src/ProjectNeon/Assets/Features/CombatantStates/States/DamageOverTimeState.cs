@@ -28,7 +28,7 @@ public class DamageOverTimeState : TemporalStateBase
         {
             var damageAmount =  _target.State.TakeTrueDamage(_amount);
             var vulnerableDetailStr = _target.IsVulnerable() ? " [Vulnerable]" : ""; 
-            BattleLog.Write($"{damageAmount} DoT damage dealt to {_target.Name}{vulnerableDetailStr}");
+            BattleLog.Write($"{damageAmount} DoT damage dealt to {_target.NameTerm.ToEnglish()}{vulnerableDetailStr}");
         }));
     }
 

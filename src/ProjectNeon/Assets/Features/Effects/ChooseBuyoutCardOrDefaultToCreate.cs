@@ -38,7 +38,7 @@ public class ChooseBuyoutCardOrDefaultToCreate : Effect
                     Archetypes = cardTemplate.Archetypes,
                     IsSinglePlay = true,
                     Art = cardTemplate.Art,
-                    Description = $"{ctx.EnemyTypes[x.Key].Name} is paid off to leave the battle.",
+                    Description = $"this effect is no longer implemented",
                     Tags = cardTemplate.Tags,
                     TypeDescription = cardTemplate.TypeDescription
                 }, 

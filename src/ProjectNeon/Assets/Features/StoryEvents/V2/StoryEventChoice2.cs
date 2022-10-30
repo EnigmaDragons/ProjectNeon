@@ -20,7 +20,6 @@ public class StoryEventChoice2
     public StoryResult Penalty => Resolution.OrderBy(r => r.Result.EstimatedCreditsValue).FirstAsMaybe().Select(r => r.Result, () => null);
 
     public string Term => $"StoryEvents/Choice{Id}";
-    public string ChoiceText() => LocalizationManager.GetTranslation(Term);
     public bool CanSelect(StoryEventContext ctx) => true;
     public bool ShouldSkip(Func<string, bool> storyState)
         => ForbiddenStates.Any(x => storyState(x.Value))

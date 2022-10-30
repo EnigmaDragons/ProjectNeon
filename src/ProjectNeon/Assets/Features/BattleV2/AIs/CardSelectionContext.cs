@@ -55,7 +55,7 @@ public sealed class CardSelectionContext
     {
         if (!excludedTagsCombination.Any())
         {
-            Log.Error($"{Member.Name} attempted to exclude all card types");
+            Log.Error($"{Member.NameTerm.ToEnglish()} attempted to exclude all card types");
             return this;
         }
         return LogAfter(() => shouldRefine(this)
@@ -105,7 +105,7 @@ public sealed class CardSelectionContext
     private CardSelectionContext LogAfter(Func<CardSelectionContext> getNext)
     {
         var ctx = getNext();
-        Log.Info($"AI - {ctx.Member.Name} - {ctx.SelectedCard.Select(x => $"Selected {x.Name}", () => "Not Selected Yet")} - Options {ctx.CardOptionsString}");
+        Log.Info($"AI - {ctx.Member.NameTerm.ToEnglish()} - {ctx.SelectedCard.Select(x => $"Selected {x.Name}", () => "Not Selected Yet")} - Options {ctx.CardOptionsString}");
         return ctx;
     }
 }

@@ -17,7 +17,7 @@ public class TransferPrimaryResource : Effect
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
             
             if (ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.UnambiguousName} prevented Resource Drain with an Aegis");
+                BattleLog.Write($"{m.UnambiguousEnglishName} prevented Resource Drain with an Aegis");
             else
             {
                 var before = m.PrimaryResourceAmount();

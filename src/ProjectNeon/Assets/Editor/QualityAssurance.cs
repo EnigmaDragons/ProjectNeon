@@ -113,7 +113,7 @@ public class QualityAssurance
             for (var i = 0; i < c.Segments.Length; i++)
             {
                 var s = c.Segments[i];
-                var text = s.GetText();
+                var text = s.Term.ToEnglish();
                 if (text == null)
                 {
                     issues.Add($"Cutscene Segment Null Text: {c.name}");
@@ -146,7 +146,7 @@ public class QualityAssurance
             var issues = new List<string>();
             ValidateHeroPrefab(h, issues);
             if (issues.Any())
-                badItems.Add(new ValidationResult(h.Name, issues));
+                badItems.Add(new ValidationResult(h.name, issues));
         }
         
         return (numItemsCount, badItems);
@@ -163,12 +163,12 @@ public class QualityAssurance
             
             var issues = new List<string>();
             if (!e.IsReadyForPlay) 
-                issues.Add($"Broken Enemy: {e.EnemyName} is not ReadyForPlay");
+                issues.Add($"Broken Enemy: {e.enemyName} is not ReadyForPlay");
             if (e.MaterialType == MemberMaterialType.Unknown)
-                issues.Add($"Enemy {e.EnemyName} does not have a Material Type set.");
+                issues.Add($"Enemy {e.enemyName} does not have a Material Type set.");
             ValidateEnemyPrefab(e, issues);
             if (issues.Any())
-                badEnemies.Add(new ValidationResult(e.EnemyName, issues));
+                badEnemies.Add(new ValidationResult(e.enemyName, issues));
         }
         
         return (numEnemiesCount, badEnemies);
@@ -179,7 +179,7 @@ public class QualityAssurance
         if (!e.Prefab)
             return;
 
-        var enemyName = e.EnemyName;
+        var enemyName = e.enemyName;
         var obj = (GameObject)PrefabUtility.InstantiatePrefab(e.Prefab);
         
         var stealth = obj.GetComponentInChildren<StealthTransparency>();
@@ -243,7 +243,7 @@ public class QualityAssurance
         if (!h.Body)
             return;
 
-        var hName = h.Name;
+        var hName = h.name;
         var obj = (GameObject)PrefabUtility.InstantiatePrefab(h.Body);
         
         var stealth = obj.GetComponentInChildren<CharacterCreatorStealthTransparency>();

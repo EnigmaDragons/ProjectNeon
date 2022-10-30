@@ -9,6 +9,6 @@ public class TargetIsStunned : StaticEffectCondition
         var notStunned = ctx.Target.Members.Where(m => !m.IsStunnedForCard());
         return notStunned.None()
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{notStunned.Names()} are not stunned");
+            : new Maybe<string>($"{notStunned.EnglishNames()} are not stunned");
     }
 }

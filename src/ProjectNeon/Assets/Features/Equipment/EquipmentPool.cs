@@ -70,7 +70,7 @@ public class EquipmentPool : ScriptableObject
         }
         catch (Exception e)
         {
-            Log.Error($"Tried to get Random Equipment: {slot} {rarity} for {string.Join(", ", party.Select(x => x.Name))} and got {e.Message}");
+            Log.Error($"Tried to get Random Equipment: {slot} {rarity} for {string.Join(", ", party.Select(x => x.NameTerm().ToEnglish()))} and got {e.Message}");
             return All.Random();
         }
     }

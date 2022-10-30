@@ -75,7 +75,7 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
         var gainAmount = gain.Value;
         return new ClinicServiceButtonData(
             $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}",
-            $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}</b>",
+            $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.NameTerm.ToEnglish()}</b>",
             1,
             () =>
             {

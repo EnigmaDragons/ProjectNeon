@@ -68,7 +68,7 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
 
     private void Execute(DeckBuilderHeroSelected msg)
     {
-        if (msg.HeroesDeck.Hero.Name != tutorialHero.Name && !_hasSwitchedHeroes)
+        if (msg.HeroesDeck.Hero.NameTerm != tutorialHero.NameTerm() && !_hasSwitchedHeroes)
         {
             _hasSwitchedHeroes = true;
             SetNextFocus();

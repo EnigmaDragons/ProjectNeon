@@ -1,4 +1,5 @@
 using System;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class HeroFaceSelector : MonoBehaviour
     [SerializeField] private Image bustImage;
     [SerializeField] private Button nextHeroButton;
     [SerializeField] private Button previousHeroButton;
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private Localize nameLocalize;
     [SerializeField] private TextMeshProUGUI classLabel;
 
     private IndexSelector<HeroCharacter> _heroes = new IndexSelector<HeroCharacter>(Array.Empty<HeroCharacter>());
@@ -30,7 +31,7 @@ public class HeroFaceSelector : MonoBehaviour
     private void Render()
     {
         bustImage.sprite = _heroes.Current.Bust;
-        nameLabel.text = _heroes.Current.Name;
+        nameLocalize.SetTerm(_heroes.Current.NameTerm());
         classLabel.text = _heroes.Current.Class;
     }
 

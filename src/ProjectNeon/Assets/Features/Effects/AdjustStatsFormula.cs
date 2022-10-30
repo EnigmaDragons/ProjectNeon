@@ -37,10 +37,10 @@ public class AdjustStatsFormula : Effect
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
 
             if (ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.Name} prevented {stat} debuff with an Aegis");
+                BattleLog.Write($"{m.NameTerm.ToEnglish()} prevented {stat} debuff with an Aegis");
             else
             {
-                BattleLog.Write($"{m.Name}'s {stat} is adjusted by x{formulaAmount}");
+                BattleLog.Write($"{m.NameTerm.ToEnglish()}'s {stat} is adjusted by x{formulaAmount}");
                 var stats = new AdjustedStats(new StatMultipliers().WithRaw(stat, formulaAmount), _e.ForSimpleDurationStatAdjustment(ctx.Source.Id,
                     Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount)));
                 m.State.ApplyTemporaryMultiplier(stats);
@@ -72,13 +72,13 @@ public class AdjustStatsFormula : Effect
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
 
             if (ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.UnambiguousName} prevented {stat} debuff with an Aegis");
+                BattleLog.Write($"{m.UnambiguousEnglishName} prevented {stat} debuff with an Aegis");
             else
             {                
                 var finalAmount = isDebuff 
                     ? Mathf.Clamp(formulaAmount, -CurrentStatAmount(m, stat), 0) 
                     : formulaAmount;
-                BattleLog.Write($"{m.UnambiguousName}'s {stat} is adjusted by {finalAmount}");
+                BattleLog.Write($"{m.UnambiguousEnglishName}'s {stat} is adjusted by {finalAmount}");
                 var stats = new AdjustedStats(new StatAddends().WithRaw(stat, finalAmount),
                     _e.ForSimpleDurationStatAdjustment(ctx.Source.Id, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount)));
                 m.State.ApplyTemporaryAdditive(stats);

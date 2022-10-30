@@ -181,11 +181,11 @@ public class EnemyStatsEditor : EditorWindow
         DrawUILine();
         EditorGUILayout.LabelField($"Normal Enemies:");
         foreach (var enemy in normalEnemies)
-            EditorGUILayout.LabelField($"    {enemy.EnemyName}: Power = {enemy.stageDetails[0].powerLevel} | {enemy.BattleRole}");
+            EditorGUILayout.LabelField($"    {enemy.enemyName}: Power = {enemy.stageDetails[0].powerLevel} | {enemy.BattleRole}");
         DrawUILine();
         EditorGUILayout.LabelField($"Elite Enemies:");
         foreach (var enemy in eliteEnemies)
-            EditorGUILayout.LabelField($"    {enemy.EnemyName}: Power = {enemy.stageDetails[0].powerLevel} | {enemy.BattleRole}");
+            EditorGUILayout.LabelField($"    {enemy.enemyName}: Power = {enemy.stageDetails[0].powerLevel} | {enemy.BattleRole}");
         EditorGUILayout.EndScrollView();
     }
     

@@ -1444,6 +1444,7 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!114 &2832741724972137659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1605,6 +1606,7 @@ GameObject:
   - component: {fileID: 1567919882314425925}
   - component: {fileID: 3977170850987354316}
   - component: {fileID: 3391315925275081204}
+  - component: {fileID: 9154636764809891554}
   m_Layer: 0
   m_Name: HeroName
   m_TagString: Untagged
@@ -1728,6 +1730,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9154636764809891554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5058274442844185831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &5714802641091583908
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,6 +2250,7 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!1 &7012438809170822410
 GameObject:
   m_ObjectHideFlags: 0
@@ -2393,7 +2435,7 @@ MonoBehaviour:
   bustImage: {fileID: 3907378608699185348}
   nextHeroButton: {fileID: 2764438775220645429}
   previousHeroButton: {fileID: 8677860586713553241}
-  nameLabel: {fileID: 3391315925275081204}
+  nameLocalize: {fileID: 9154636764809891554}
   classLabel: {fileID: 3986868850311814841}
 --- !u!1 &8614555555883897514
 GameObject:
@@ -2652,6 +2694,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
+--- !u!224 &1339859718299780371 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1703994310890730665, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
+  m_PrefabInstance: {fileID: 377720300536639930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8677860586713553241 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9029746549933746403, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
@@ -2663,11 +2710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &1339859718299780371 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1703994310890730665, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
-  m_PrefabInstance: {fileID: 377720300536639930}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1732049868860770648
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3751,14 +3793,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
---- !u!224 &8768279224991303114 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1703994310890730665, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
-  m_PrefabInstance: {fileID: 7929399355032138083}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9077932138467753997 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1437116249067745646, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
+  m_PrefabInstance: {fileID: 7929399355032138083}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &8768279224991303114 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1703994310890730665, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
   m_PrefabInstance: {fileID: 7929399355032138083}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8939930906281757494

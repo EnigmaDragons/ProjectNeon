@@ -49,7 +49,7 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
                 if (msg.Hero.Levels.UnspentLevelUpPoints < 1)
                     return;
                 
-                Log.Info($"Starting Level Up - {msg.Hero.Name}");
+                Log.Info($"Starting Level Up - {msg.Hero.NameTerm.ToEnglish()}");
                 presenterV4.Initialized(msg.Hero);
                 targetV4.SetActive(true);
                 Message.Publish(new HeroLeveledUpSFX(transform));

@@ -8,7 +8,7 @@ public class TargetIsAlly : StaticEffectCondition
     {
         var notAllyMember = ctx.Target.Members.Where(m => m.TeamType != ctx.Source.TeamType);
         return notAllyMember.Any()
-            ? new Maybe<string>($"{notAllyMember.Names()} not Allied with {ctx.Source.Name}")
+            ? new Maybe<string>($"{notAllyMember.EnglishNames()} not Allied with {ctx.Source.NameTerm.ToEnglish()}")
             : Maybe<string>.Missing();
     }
 }

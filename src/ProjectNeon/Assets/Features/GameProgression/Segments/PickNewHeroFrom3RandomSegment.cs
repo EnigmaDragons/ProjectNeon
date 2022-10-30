@@ -14,7 +14,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
         var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Mission Squad Leader" : "Choose A New Squad Member";
         Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {
-            AllMetrics.PublishHeroSelected(h.Name, featuredThree.Select(x => x.Name).ToArray(), currentParty.Heroes.Select(x => x.Name).ToArray());
+            AllMetrics.PublishHeroSelected(h.NameTerm().ToEnglish(), featuredThree.Select(x => x.NameTerm().ToEnglish()).ToArray(), currentParty.Heroes.Select(x => x.NameTerm().ToEnglish()).ToArray());
             Message.Publish(new AddHeroToPartyRequested(h));
             Async.ExecuteAfterDelay(0.5f, () => Message.Publish(new ToggleNamedTarget("HeroSelectionView")));
         }));

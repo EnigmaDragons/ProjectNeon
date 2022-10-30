@@ -13,7 +13,7 @@ public static class AIHelpers
 
         var cards = enemy.Cards.Where(x => x != null).Concat(specialCircumstanceCards.AntiStealthCard);
         if (!enemy.DeckIsValid) 
-            Log.Error($"{enemy.Name} has a deck with null cards");
+            Log.Error($"{enemy.NameTerm.ToEnglish()} has a deck with null cards");
 
         var opponentsAllStealthed = s.Heroes.All(m => m.IsStealthed());
         

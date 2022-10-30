@@ -58,7 +58,7 @@ public class CardScreenshotExporter : MonoBehaviour
 
     private void ExportCard(BaseHero h, CardTypeData c)
     {
-        var savePath = Path.Combine(baseExportPathDir, h.Name + "-" + c.Name.Replace(" ", "").Replace("\"", "") + ".png");
+        var savePath = Path.Combine(baseExportPathDir, h.NameTerm().ToEnglish() + "-" + c.Name.Replace(" ", "").Replace("\"", "") + ".png");
         var tex = ScreenCapture.CaptureScreenshotAsTexture();
 
         var newTexture = new Texture2D(tex.width, tex.height, TextureFormat.ARGB32, false);

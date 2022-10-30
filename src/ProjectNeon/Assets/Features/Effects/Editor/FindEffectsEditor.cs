@@ -162,7 +162,7 @@ public class FindEffectsEditor : EditorWindow
         {
             var effectType = EffectType.ReactWithEffect;
             var enemies = GetAllInstances<Enemy>()
-                .SelectMany(e => e.Effects.Where(x => x.EffectType == effectType).Select(x => $"{x.FinalReactionTimingWindow} - {e.EnemyName}"));
+                .SelectMany(e => e.Effects.Where(x => x.EffectType == effectType).Select(x => $"{x.FinalReactionTimingWindow} - {e.enemyName}"));
             var equips = GetAllInstances<StaticEquipment>()
                 .SelectMany(e => e.AllEffects.Where(x => x.EffectType == effectType).Select(x => $"{x.FinalReactionTimingWindow} - {e.Name}"));
             var cards = GetAllInstances<CardActionsData>()

@@ -8,6 +8,6 @@ public class TargetHasPrimaryResource : StaticEffectCondition
     {
         return ctx.Target.Members.All(x => x.PrimaryResourceAmount() > 0)
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} has no Primary Resources");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} has no Primary Resources");
     }
 }

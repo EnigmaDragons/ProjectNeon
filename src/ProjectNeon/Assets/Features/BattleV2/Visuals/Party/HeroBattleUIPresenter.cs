@@ -16,7 +16,7 @@ public class HeroBattleUIPresenter : OnMessage<SetHeroesUiVisibility>
     private bool _hasResource2;
     private BaseHero _hero;
 
-    public bool Contains(string heroName) => _hero.Name.Equals(heroName);
+    public bool Contains(string heroNameTerm) => _hero.NameTerm().Equals(heroNameTerm);
     
     public void Set(BaseHero hero, bool primaryStatVisible, bool resourcesVisible, bool shieldsVisible)
     {

@@ -31,7 +31,7 @@ public class PermanentStatAdjustmentResult : StoryResult
         }
         var baseMessage = appliesToAll
             ? (string)new LocalizedString("PermanentStatAdjustmentResult-All")
-            : string.Format(new LocalizedString("PermanentStatAdjustmentResult-Single"), members.First().DisplayName);
+            : string.Format(new LocalizedString("PermanentStatAdjustmentResult-Single"), members.First().NameTerm.ToEnglish());
         Message.Publish(new ShowStoryEventResultMessage($"{baseMessage}\n{string.Join("\n", permanentStatAdjustments.Select(x => $"{x.Amount} { new LocalizedString(x.Stat.ToString())}"))}"));
     }
 

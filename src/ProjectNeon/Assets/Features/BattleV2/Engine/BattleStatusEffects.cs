@@ -139,7 +139,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                 ? member.State.GetTurnStartEffects()
                 : member.State.GetTurnEndEffects();
             if (effects.Length > 0)
-                DevLog.Write($"Resolving {effects.Length} Status Effects for {member.Name}");
+                DevLog.Write($"Resolving {effects.Length} Status Effects for {member.NameTerm.ToEnglish()}");
             effects.Where(e => !e.IsFinished())
                 .ForEach(e => _currentMemberEffects.Enqueue(e));
             ResolveNext("Enqueue Next Member Effects");

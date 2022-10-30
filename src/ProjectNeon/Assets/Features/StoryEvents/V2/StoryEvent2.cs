@@ -19,7 +19,6 @@ public class StoryEvent2 : ScriptableObject
     public StorySetting StorySetting => settingType;
     public StaticCorp Corp => corp;
     public string Term => $"StoryEvents/Event{id}";
-    public string StoryText => LocalizationManager.GetTranslation(Term);
     public StoryEventChoice2[] Choices => choices.ToArray();
     public bool InCutscene => inCutscene;
     public bool IsMultiChoice => isMultiChoice;
@@ -29,11 +28,11 @@ public class StoryEvent2 : ScriptableObject
     private static string ToString(StoryEvent2 s)
     {
         var sb = new StringBuilder();
-        sb.Append(s.StoryText);
+        sb.Append(s.Term.ToEnglish());
         sb.AppendLine();
         foreach (var choice in s.Choices)
         {
-            sb.AppendLine($"Choice: {choice.ChoiceText()}");
+            sb.AppendLine($"Choice: {choice.Term.ToEnglish()}");
             foreach (var resolution in choice.Resolution)
                 if (!resolution.HasContinuation)
                     sb.AppendLine($"Outcome: {resolution.Result}");

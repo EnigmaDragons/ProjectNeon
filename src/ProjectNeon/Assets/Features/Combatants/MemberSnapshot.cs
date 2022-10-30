@@ -3,15 +3,15 @@ using System;
 public sealed class MemberSnapshot
 {
     public int Id { get; }
-    public string Name { get; }
+    public string NameTerm { get; }
     public string Class { get; }
     public TeamType TeamType { get; }
     public MemberStateSnapshot State { get; }
 
-    public MemberSnapshot(int memberId, string name, string memberClass, TeamType teamType, MemberStateSnapshot stateSnapshot)
+    public MemberSnapshot(int memberId, string nameTerm, string memberClass, TeamType teamType, MemberStateSnapshot stateSnapshot)
     {
         Id = memberId;
-        Name = name;
+        NameTerm = nameTerm;
         Class = memberClass;
         TeamType = teamType;
         State = stateSnapshot;

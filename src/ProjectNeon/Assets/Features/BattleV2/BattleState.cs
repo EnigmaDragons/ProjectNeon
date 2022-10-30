@@ -136,7 +136,7 @@ public class BattleState : ScriptableObject
         ShowSwapCardForBasic = true;
         AllowRightClickOnCard = true;
         BasicSuperFocusEnabled = false;
-        DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.Name))}");
+        DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.NameTerm.ToEnglish()))}");
     }
 
     public void SetNextBattleStartingCardCount(int cardCount)
@@ -209,8 +209,7 @@ public class BattleState : ScriptableObject
     public int GetNextEnemyId() => _nextEnemyId++;
     public List<Tuple<int, Member>> FinishSetup()
     {
-        var id = 0;      
-        memberNames = new List<string>();
+        var id = 0;
         _uiTransformsById = new Dictionary<int, Transform>();
 
         var heroes = Party.Heroes;
@@ -230,14 +229,13 @@ public class BattleState : ScriptableObject
                 var sound = heroTransform.GetComponentInChildren<CharacterAnimationSoundPlayer>();
                 if (sound == null)
                 {
-                    Log.Warn($"{hero.Name} is missing CharacterAnimationSoundPlayer");
+                    Log.Warn($"{hero.NameTerm.ToEnglish()} is missing CharacterAnimationSoundPlayer");
                     sound = heroTransform.gameObject.AddComponent<CharacterAnimationSoundPlayer>();
                 }
                 if (sound != null)
                     sound.Init(id, hero.Character.AnimationSounds, heroTransform);
                 
             }
-            SetMemberName(id, hero.Character.Name);
         }
 
         id = EnemyStartingIndex - 1;
@@ -255,7 +253,6 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id].GetComponentInChildren<DeathPresenter>()?.Init(id);
             if(enemy.AnimationSounds != null)
                 _uiTransformsById[id].GetComponentInChildren<CharacterAnimationSoundPlayer>()?.Init(id, enemy.AnimationSounds, enemyTransform);
-            SetMemberName(id, enemies.Enemies[i].Name);
             result.Add(new Tuple<int, Member>(i, enemy.AsMember(id)));
         }
         _nextEnemyId = id + 1;
@@ -393,7 +390,6 @@ public class BattleState : ScriptableObject
             _enemiesById[member.Id] = e;
             _membersById[member.Id] = member;
             _uiTransformsById[member.Id] = gameObject.transform;
-            SetMemberName(member.Id, e.Name);
             e.SetupMemberState(member, this);
         });
 
@@ -408,13 +404,6 @@ public class BattleState : ScriptableObject
             
         });
 
-    private void SetMemberName(int id, string memberName)
-    {
-        while (memberNames.Count <= id)
-            memberNames.Add(string.Empty);
-        memberNames[id] = memberName;
-    }
-    
     // Battle Wrapup
     public void Wrapup()
     {
@@ -433,7 +422,7 @@ public class BattleState : ScriptableObject
         var xpGranted = GrantXp();
         var battleSummaryReport = new BattleSummaryReport
         {
-            enemies = _battleStartingEnemies.Select(e => e.Name).ToArray(),
+            enemies = _battleStartingEnemies.Select(e => e.NameTerm.ToEnglish()).ToArray(),
             fightTier = (isEliteBattle ? EnemyTier.Elite : EnemyTier.Normal).ToString(),
             totalEnemyPowerLevel = _battleStartingEnemies.Sum(e => e.PowerLevel),
             attritionCreditsChange = battleAttritionReport.TotalCreditsChange,
@@ -517,13 +506,13 @@ public class BattleState : ScriptableObject
                 if (centerPoint != null)
                     return centerPoint.transform;
 
-                Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
+                Log.Warn($"Center Point Missing For: {_membersById[memberId].NameTerm.ToEnglish()}");
                 return maybeTransform.Value;
             });
         }
         catch (Exception)
         {
-            Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
+            Log.Warn($"Center Point Missing For: {_membersById[memberId].NameTerm.ToEnglish()}");
             return Maybe<Transform>.Missing();
         }
     }

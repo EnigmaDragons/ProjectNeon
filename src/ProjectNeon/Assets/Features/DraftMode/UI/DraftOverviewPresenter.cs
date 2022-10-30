@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
     [SerializeField] private DecklistUIController decklistUi;
     [SerializeField] private Button viewHeroDetailsButton;
     [SerializeField] private Image heroBust;
-    [SerializeField] private TextMeshProUGUI heroName;
+    [SerializeField] private Localize heroName;
     [SerializeField] private GameObject currentHeroUi;
     [SerializeField] private DraftHeroButton[] heroes;
     [SerializeField] private EquipmentPresenter[] gear;
@@ -103,7 +104,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
         
         var currentHero = party.Heroes[draftState.HeroIndex];
         heroBust.sprite = currentHero.Character.Bust;
-        heroName.text = currentHero.Name;
+        heroName.SetTerm(currentHero.NameTerm);
     }
     
     private void ViewHeroDetails()

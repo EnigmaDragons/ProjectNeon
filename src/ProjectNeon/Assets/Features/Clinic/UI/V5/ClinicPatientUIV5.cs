@@ -1,11 +1,12 @@
 using System;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, PartyAdventureStateChanged, SetSuperFocusHealControl>
 {
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private Localize nameLocalize;
     [SerializeField] private HeroHpPresenter hpPresenter;
     [SerializeField] private Button healToFullButton;
     [SerializeField] private GameObject healToFullSuperFocus;
@@ -33,7 +34,7 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     public ClinicPatientUIV5 Initialized(Hero h)
     {
         _hero = h;
-        nameLabel.text = h.DisplayName;
+        nameLocalize.SetTerm(h.NameTerm);
         hpPresenter.Init(h);
         UpdateCosts();
         UpdateButtons();

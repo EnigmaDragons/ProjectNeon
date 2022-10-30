@@ -19,8 +19,7 @@ public class CutsceneSegmentData
     public bool Or;
     public StringReference StoryState = new StringReference("");
     public string Term => $"Cutscenes/Segment{Id}";
-    public string GetText() => LocalizationManager.GetTranslation(Term);
-    
+
     public bool ShouldShow(Func<string, bool> storyState)
         => !ShouldSkip(storyState);
     
@@ -69,14 +68,14 @@ public class CutsceneSegmentData
     {
         var lines = new List<string>();
         lines.Add($"Present Player Game With {(StoryEvent.IsMultiChoice ? "Multi-Choice" : "Choice")}: {StoryEvent.DisplayName}");
-        lines.Add($"  Choice Prompt: \"{StoryEvent.StoryText}\"");
+        lines.Add($"  Choice Prompt: \"{StoryEvent.Term.ToEnglish()}\"");
         for (var i = 0; i < StoryEvent.Choices.Length; i++)
         {
             var choice = StoryEvent.Choices[i];
             if (choice.Resolution.Length == 1 && choice.Resolution[0].Result is RecordChoiceResult)
-                lines.Add($"    {i + 1}. \"{choice.ChoiceText()}\" - {((RecordChoiceResult)choice.Resolution[0].Result).Name} - {((RecordChoiceResult)choice.Resolution[0].Result).state}");
+                lines.Add($"    {i + 1}. \"{choice.Term.ToEnglish()}\" - {((RecordChoiceResult)choice.Resolution[0].Result).Name} - {((RecordChoiceResult)choice.Resolution[0].Result).state}");
             else
-                lines.Add($"    {i + 1}. \"{choice.ChoiceText()}\"");
+                lines.Add($"    {i + 1}. \"{choice.Term.ToEnglish()}\"");
         }
         return lines.ToArray();
     }

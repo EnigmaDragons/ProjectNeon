@@ -64,7 +64,7 @@ public class StoryEventPresenter2 : MonoBehaviour
         corpTint.Vertex1 = s.Corp.Color1;
         corpTint.Vertex2 = s.Corp.Color2;
         storyNameLabel.text = s.DisplayName;
-        storyTextArea.text = s.StoryText;
+        storyTextArea.text = s.Term.ToEnglish();
         for (var i = _buttons.Length - 1; i > -1; i--)
         {
             if (s.Choices.Length <= i)

@@ -25,7 +25,7 @@
             }
             else
             {
-                Log.Error($"Couldn't draw cards for {ctx.Target.Members[0].Name}");
+                Log.Error($"Couldn't draw cards for {ctx.Target.Members[0].NameTerm.ToEnglish()}");
                 break;
             }
         }

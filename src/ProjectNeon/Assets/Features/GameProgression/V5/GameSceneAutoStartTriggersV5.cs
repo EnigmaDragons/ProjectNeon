@@ -18,7 +18,7 @@ public class GameSceneAutoStartTriggersV5 : OnMessage<PartyAdventureStateChanged
         foreach (var hero in party.Heroes)
             if (hero.Levels.UnspentLevelUpPoints > 0)
             {
-                Log.Info($"{hero.Name} - XP {hero.Levels.Xp} - Unspent Points {hero.Levels.UnspentLevelUpPoints}");
+                Log.Info($"{hero.NameTerm.ToEnglish()} - XP {hero.Levels.Xp} - Unspent Points {hero.Levels.UnspentLevelUpPoints}");
                 Message.Publish(new LevelUpHero(hero));
                 return;
             }

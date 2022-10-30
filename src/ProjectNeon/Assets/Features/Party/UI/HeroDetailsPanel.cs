@@ -1,3 +1,4 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,7 +6,7 @@ using UnityEngine.UI;
 public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
 {
     [SerializeField] private Image heroBust;
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private Localize nameLocalize;
     [SerializeField] private TextMeshProUGUI classLabel;
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private HeroEquipmentPanel equipment;
@@ -20,7 +21,7 @@ public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
     {
         _hero = h;
         _canInteractWithEquipment = canInteractWithEquipment;
-        nameLabel.text = h.DisplayName;
+        nameLocalize.SetTerm(h.NameTerm);
         classLabel.text = h.Class;
         levelLabel.text = h.Level.ToString();
         heroBust.sprite = h.Character.Bust;

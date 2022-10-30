@@ -8,7 +8,7 @@ public class TargetIsBloodied : StaticEffectCondition
     {
         var notBloodiedMembers = ctx.Target.Members.Where(m => !m.IsBloodied());
         return notBloodiedMembers.Any()
-            ? new Maybe<string>($"{notBloodiedMembers.Names()} not bloodied")
+            ? new Maybe<string>($"{notBloodiedMembers.EnglishNames()} not bloodied")
             : Maybe<string>.Missing();
     }
 }

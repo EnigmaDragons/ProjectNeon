@@ -7,6 +7,6 @@ public class SourceHasAnyPrimaryResources : StaticEffectCondition
     {
         return ctx.Source.PrimaryResourceAmount() > 0
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} does not have any Primary Resources");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} does not have any Primary Resources");
     }
 }

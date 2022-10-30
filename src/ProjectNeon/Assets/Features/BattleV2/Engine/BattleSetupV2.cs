@@ -98,11 +98,11 @@ public class BattleSetupV2 : MonoBehaviour
         foreach (var enemy in enemyArea.Enemies)
         {
             if (enemy.AI == null)
-                throw new Exception($"{enemy.Name} does not have an AI");
+                throw new Exception($"{enemy.NameTerm.ToEnglish()} does not have an AI");
             if (!enemy.IsReadyForPlay)
-                throw new Exception($"{enemy.Name} is not ready for play.");
+                throw new Exception($"{enemy.NameTerm.ToEnglish()} is not ready for play.");
             if (enemy.Cards.All(c => c.Cost.BaseAmount > 0))
-                throw new Exception($"{enemy.Name}'s Deck does not contain a 0-Cost Card.");
+                throw new Exception($"{enemy.NameTerm.ToEnglish()}'s Deck does not contain a 0-Cost Card.");
             enemy.AI.InitForBattle();
         }
     }
@@ -116,7 +116,7 @@ public class BattleSetupV2 : MonoBehaviour
         for (var i = 0; i < party.BaseHeroes.Length; i++)
         {
             var hero = party.BaseHeroes[i];
-            if (hero == null || hero.Name.Equals(string.Empty))
+            if (hero == null)
                  continue;
 
             var cardTypes = state.OverrideDeck == null ? party.Decks[i].Cards : state.OverrideDeck.Cast<CardTypeData>();

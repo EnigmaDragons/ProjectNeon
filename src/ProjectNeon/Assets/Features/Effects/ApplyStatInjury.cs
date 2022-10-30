@@ -19,7 +19,7 @@ public class ApplyStatInjury : Effect
     {
         var heroes = ctx.Target.Members.Where(x => x.TeamType == TeamType.Party).ToList();
         heroes
-            .SelectMany(x => ctx.AdventureState.Heroes.Where(h => h.Name.Equals(x.Name)))
+            .SelectMany(x => ctx.AdventureState.Heroes.Where(h => h.NameTerm.Equals(x.NameTerm)))
             .ForEach(ApplyInjury);
         heroes.ForEach(h => h.State.Adjust(TemporalStatType.Injury, 1));
     }

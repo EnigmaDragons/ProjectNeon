@@ -9,8 +9,8 @@ public class ChooseBuyoutCardOrDefaultToCreateTests
     [Test]
     public void ChooseBuyoutCardOrDefaultToCreate_HasBuyoutOptionForTheEnemyAndDefaultInSelection()
     {
-        var enemy1 = new InMemoryEnemyType() {Name = "Lavos", PowerLevel = 999, Tier = EnemyTier.Elite};
-        var enemy2 = new InMemoryEnemyType() {Name = "Frog", PowerLevel = 1, Tier = EnemyTier.Minion};
+        var enemy1 = new InMemoryEnemyType() { PowerLevel = 999, Tier = EnemyTier.Elite};
+        var enemy2 = new InMemoryEnemyType() { PowerLevel = 1, Tier = EnemyTier.Minion};
         var enemies = new Dictionary<int,EnemyType>{{1,enemy1},{2,enemy2}};
         var member1 = TestMembers.CreateEnemy(s => s.With(StatType.MaxHP, 10f));
         var member2 = TestMembers.CreateEnemy(s => s.With(StatType.MaxHP, 10f));

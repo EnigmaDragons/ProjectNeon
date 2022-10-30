@@ -68,45 +68,45 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
          
         var damageEffectController = character.GetComponentInChildren<DamageNumbersController>();
         if (damageEffectController == null)
-            Debug.LogError($"{hero.Name} is missing a DamageNumbersController");
+            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a DamageNumbersController");
         else
             _damagesNew[hero] = damageEffectController;
         
         var wordsController = character.GetComponentInChildren<CharacterWordsController>();
         if (wordsController == null)
-            Debug.LogError($"{hero.Name} is missing a {nameof(CharacterWordsController)}");
+            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a {nameof(CharacterWordsController)}");
         else
             _words[hero] = wordsController;
 
-        _hovers[hero] = character.GetCharacterMouseHover(hero.Name);
+        _hovers[hero] = character.GetCharacterMouseHover(hero.NameTerm());
          
         var centerPoint = character.GetComponentInChildren<CenterPoint>();
         if (centerPoint == null)
-            Debug.LogError($"{hero.Name} is missing a CenterPoint");
+            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a CenterPoint");
         else
             _centers[hero] = centerPoint;
 
         var shield = character.GetComponentInChildren<ShieldVisual>();
         if (shield == null)
-            Debug.LogError($"{hero.Name} is missing a {nameof(ShieldVisual)}");
+            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a {nameof(ShieldVisual)}");
         else
             _shields[hero] = shield;
         
         var highlighter = character.GetComponentInChildren<MemberHighlighter>();
         if (highlighter == null)
-            Debug.LogError($"{hero.Name} is missing a {nameof(MemberHighlighter)}");
+            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a {nameof(MemberHighlighter)}");
         else
             _highlighters[hero] = highlighter;
          
         var stealth = character.GetComponentInChildren<CharacterCreatorStealthTransparency>();
         if (stealth == null)
-            Debug.LogWarning($"{hero.Name} is missing a {nameof(CharacterCreatorStealthTransparency)}");
+            Debug.LogWarning($"{hero.NameTerm().ToEnglish()} is missing a {nameof(CharacterCreatorStealthTransparency)}");
         else
             _stealths[hero] = stealth;
 
         var speech = character.GetComponentInChildren<I2ProgressiveTextRevealWorld>();
         if (speech == null)
-            Debug.LogError($"{hero.Name} is missing a {nameof(I2ProgressiveTextRevealWorld)}");
+            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a {nameof(I2ProgressiveTextRevealWorld)}");
         else
             _speech[hero] = speech;
         
@@ -114,7 +114,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         
         var tauntEffect = character.GetComponentInChildren<TauntEffect>();
         if (tauntEffect == null)
-            Debug.LogWarning($"{hero.Name} is missing a {nameof(TauntEffect)}");
+            Debug.LogWarning($"{hero.NameTerm().ToEnglish()} is missing a {nameof(TauntEffect)}");
         else
             _tauntEffects[hero] = tauntEffect;
     }
@@ -127,7 +127,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         var hero = state.GetHeroById(e.MemberId);
         var animator = _animators[hero];
         if (animator == null)
-            Debug.LogError($"No Animator found for {state.GetHeroById(e.MemberId).Name}");
+            Debug.LogError($"No Animator found for {state.GetHeroById(e.MemberId).NameTerm().ToEnglish()}");
         else
             StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
             {
@@ -143,22 +143,22 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         
         _renderers.ForEach(kv =>
         {
-            kv.Value.material = msg.Member.Name == kv.Key.Name
+            kv.Value.material = msg.Member.NameTerm == kv.Key.NameTerm()
                 ? cardOwnerMaterial
                 : defaultSpriteMaterial;
         });
     }
 
-    protected override void Execute(UnhighlightCardOwner msg) => RevertMaterial(msg.Member.Name);
+    protected override void Execute(UnhighlightCardOwner msg) => RevertMaterial(msg.Member.NameTerm);
 
     protected override void Execute(DisplaySpriteEffect msg)
     {
         if (msg.EffectType == SpriteEffectType.Evade)
         {
             _renderers
-                .Where(kv => kv.Key.Name == msg.Target.Name)
+                .Where(kv => kv.Key.NameTerm() == msg.Target.NameTerm)
                 .ForEach(kv => kv.Value.material = evadeMaterial);
-            StartCoroutine(ExecuteAfterDelay(() => RevertMaterial(msg.Target.Name), 1.4f));
+            StartCoroutine(ExecuteAfterDelay(() => RevertMaterial(msg.Target.NameTerm), 1.4f));
         }
         else
             Log.Error($"Unknown Sprite Effect Type {msg.EffectType}");
@@ -176,10 +176,10 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         s.Proceed(true);
     }
 
-    private void RevertMaterial(string memberName)
+    private void RevertMaterial(string memberNameTerm)
     {
         _renderers
-            .Where(kv => memberName.Equals(kv.Key.Name))
+            .Where(kv => memberNameTerm.Equals(kv.Key.NameTerm()))
             .ForEach(kv => kv.Value.material = defaultSpriteMaterial);
     }
 

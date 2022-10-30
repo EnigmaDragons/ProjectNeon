@@ -48,16 +48,12 @@ public class LocalizationImporter
     
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject
     {
-        if (LocalizationManager.CurrentLanguage != "English")
-        {
-            Debug.LogError("Language is currently not english. Cannot import.");
-        }
         if (!hasInit)
             LocalizationManager.UpdateSources();
         foreach (var item in GetAllInstances<T>())
         {
             var term = getTerm(item);
-            var text = LocalizationManager.GetTranslation(term);
+            var text = term.ToEnglish();
             if (string.IsNullOrWhiteSpace(text) || text == term)
                 Debug.LogError($"Could not translate {term}");
             else
@@ -70,10 +66,6 @@ public class LocalizationImporter
 
     private static void ImportSubItems<T, T2>(Func<T, T2[]> getSubItems, Func<T2, string> getTerm, Action<T2, string> setText, bool hasInit) where T : ScriptableObject
     {
-        if (LocalizationManager.CurrentLanguage != "English")
-        {
-            Debug.LogError("Language is currently not english. Cannot import.");
-        }
         if (!hasInit)
             LocalizationManager.UpdateSources();
         foreach (var item in GetAllInstances<T>())
@@ -82,7 +74,7 @@ public class LocalizationImporter
             foreach (var subItem in getSubItems(item))
             {
                 var term = getTerm(subItem);
-                var text = LocalizationManager.GetTranslation(term);
+                var text = term.ToEnglish();
                 if (string.IsNullOrWhiteSpace(text) || text == term)
                     Debug.LogError($"Could not translate {term}");
                 else

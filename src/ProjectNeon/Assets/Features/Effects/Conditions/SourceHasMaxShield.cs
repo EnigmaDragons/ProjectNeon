@@ -7,6 +7,6 @@ public class SourceHasMaxShield : StaticEffectCondition
     {
         return ctx.Source.CurrentShield() == ctx.Source.MaxShield()
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} does not have max shield");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} does not have max shield");
     }
 }

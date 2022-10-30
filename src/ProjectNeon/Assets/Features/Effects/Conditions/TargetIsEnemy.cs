@@ -8,7 +8,7 @@ public class TargetIsEnemy : StaticEffectCondition
     {
         var notEnemyMembers = ctx.Target.Members.Where(m => m.TeamType == ctx.Source.TeamType);
         return notEnemyMembers.Any()
-            ? new Maybe<string>($"{notEnemyMembers.Names()} not Enemies of {ctx.Source.Name}")
+            ? new Maybe<string>($"{notEnemyMembers.EnglishNames()} not Enemies of {ctx.Source.NameTerm.ToEnglish()}")
             : Maybe<string>.Missing();
     }
 }

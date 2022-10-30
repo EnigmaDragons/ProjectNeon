@@ -120,8 +120,8 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         return new ClinicServiceButtonData(
             $"{NegativePrefix[lossStat]} {PositiveSuffix[gainStat]}",
             rarity == Rarity.Rare || rarity == Rarity.Epic
-                ? $"Gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}"
-                : $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}</b>",
+                ? $"Gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.NameTerm.ToEnglish()}"
+                : $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.NameTerm.ToEnglish()}</b>",
             cost,
             () =>
             {

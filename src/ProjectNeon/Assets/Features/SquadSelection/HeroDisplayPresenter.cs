@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private HeroCharacter currentHero;
     [SerializeField] private GameObject hoverGraphic;
     [SerializeField] private Image heroBust;
-    [SerializeField] private TextMeshProUGUI heroName;
+    [SerializeField] private Localize heroName;
     [SerializeField] private TextMeshProUGUI heroClassName;
     [SerializeField] private TextMeshProUGUI heroDescription;
     [FormerlySerializedAs("roleDescription")] [SerializeField] private TextMeshProUGUI complexityLabel;
@@ -58,7 +59,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         _isClickable = isClickable;
         currentHero = c;
         heroBust.sprite = c.Bust;
-        heroName.text = c.DisplayName();
+        heroName.SetTerm(c.NameTerm());
         heroClassName.text = c.Class;
         heroDescription.text = c.Flavor.HeroDescription;
         complexityLabel.text = $"Complexity:";

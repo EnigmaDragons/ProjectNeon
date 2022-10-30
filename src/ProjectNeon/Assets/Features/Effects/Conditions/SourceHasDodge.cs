@@ -7,6 +7,6 @@ public class SourceHasDodge : StaticEffectCondition
     {
         return ctx.Source.Dodge() > 0
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} has no dodge");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} has no dodge");
     }
 }

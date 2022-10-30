@@ -8,7 +8,7 @@ public class TargetIsAfflicted : StaticEffectCondition
     {
         var notAfflictedMembers = ctx.Target.Members.Where(m => !m.IsAfflicted());
         return notAfflictedMembers.Any()
-            ? new Maybe<string>($"{notAfflictedMembers.Names()} not Afflicted")
+            ? new Maybe<string>($"{notAfflictedMembers.EnglishNames()} not Afflicted")
             : Maybe<string>.Missing();
     }
 }
