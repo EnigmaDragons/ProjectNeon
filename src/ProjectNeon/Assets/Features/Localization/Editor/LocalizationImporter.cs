@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Xml.Schema;
 using I2.Loc;
 using UnityEditor;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class LocalizationImporter
         ImportCutscenes(true);
         ImportStoryEvents(true);
         ImportLoadingScreens(true);
+        ImportEnemies(true);
     }
 
     [MenuItem("Neon/Localization/Import Tutorial Slides")]
@@ -42,10 +44,16 @@ public class LocalizationImporter
     [MenuItem("Neon/Localization/Import Loading Screens")]
     private static void ImportLoadingScreens()
         => ImportLoadingScreens(false);
-
     private static void ImportLoadingScreens(bool hasInit)
         => ImportItems<CorpLoadingScreen>(x => x.Term, (x, text) => x.locationTitle = text, hasInit);
-    
+
+    [MenuItem("Neon/Localization/Import Enemies")]
+    private static void ImportEnemies()
+        => ImportEnemies(false);
+
+    private static void ImportEnemies(bool hasInit)
+        => ImportItems<Enemy>(x => x.EnemyNameTerm, (enemy, text) => enemy.enemyName = text, hasInit);
+
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject
     {
         if (!hasInit)

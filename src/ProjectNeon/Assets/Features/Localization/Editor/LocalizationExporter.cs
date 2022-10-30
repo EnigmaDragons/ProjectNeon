@@ -105,6 +105,24 @@ public class LocalizationExporter
         WriteCsv("loading-screens", data);
     }
 
+    [MenuItem("Neon/Localization/Export Enemy Names")]
+    public static void ExportEnemyNames()
+    {
+        var data = new List<string>();
+        foreach (var enemy in GetAllInstances<Enemy>())
+            data.Add($"EnemyName{enemy.id}^{enemy.EnemyName}");
+        WriteCsv("enemy-names", data);
+    }
+
+    [MenuItem("Neon/Localization/Export Hero Names")]
+    public static void ExportHeroNames()
+    {
+        var data = new List<string>();
+        foreach (var hero in GetAllInstances<BaseHero>())
+            data.Add($"HeroName{hero.id}^{hero.name}");
+        WriteCsv("hero-names", data);
+    }
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);
