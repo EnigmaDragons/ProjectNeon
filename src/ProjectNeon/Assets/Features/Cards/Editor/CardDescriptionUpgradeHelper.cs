@@ -15,10 +15,15 @@ public class CardDescriptionUpgradeHelper
     static void SelectNextAutoCard()
     {
         GetAllInstances<CardType>()
+            .Where(c => !c.IsWip)
             .Where(c => c.description.ContainsAnyCase("auto"))
             .Take(1)
             .FirstAsMaybe()
-            .IfPresent(c => Selection.objects = new Object[] { c });
+            .IfPresent(c =>
+            {
+                Log.Info($"Selecting Card {c.Name}");
+                Selection.objects = new Object[] { c };
+            });
     }
     
     private static void CleanBadV2CardDescriptions()

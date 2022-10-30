@@ -62,6 +62,11 @@ public class CardTypeEditor : Editor
                 targetCard.description = targetCard.AutoDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
                 EditorUtility.SetDirty(target);
             }
+            if (GUILayout.Button("Generate Auto Partial V1"))
+            {
+                targetCard.description = targetCard.AutoPartial();
+                EditorUtility.SetDirty(target);
+            }
             if (GUILayout.Button("Convert To V2 Description"))
             {
                 targetCard.descriptionV2 = CardDescriptionV2.FromDescriptionV1(GetSerializedValue<string>(description));

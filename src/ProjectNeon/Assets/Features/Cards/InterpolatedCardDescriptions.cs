@@ -13,10 +13,7 @@ public static class InterpolatedCardDescriptions
 
     public static string InterpolatedDescription(this Card card, ResourceQuantity xCost) 
         => card.Type.InterpolatedDescription(card.Owner, xCost);
-
-    public static string AutoDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost)
-        => InterpolatedDescription(card, owner, xCost, 0, 0, "{Auto}");
-
+    
     public static string LocalizedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardsCycledThisTurn = 0)
     {
         var descV1 = card.DescriptionV2.IsUsable() 
@@ -82,6 +79,18 @@ public static class InterpolatedCardDescriptions
             if (isQuick)
                 sb.Append("<b>Quick:</b> ");
             sb.Append(AutoDescription(effects, owner, xCost));
+            sb = new StringBuilder(ShortenRepeatedEffects(sb.ToString()));
+            sb.Append(chainedCard.Select(c => $". {Bold("Finisher:")} {c.Name}", string.Empty));
+            sb.Append(swappedCard.Select(c => $". {Bold("Swap:")} {c.Name}", string.Empty));
+            return sb.ToString();
+        }
+        
+        if (desc.Trim().Equals("{AutoPartial}", StringComparison.InvariantCultureIgnoreCase))
+        {
+            var sb = new StringBuilder();
+            if (isQuick)
+                sb.Append("<b>Quick:</b> ");
+            sb.Append(AutoPartial(effects));
             sb = new StringBuilder(ShortenRepeatedEffects(sb.ToString()));
             sb.Append(chainedCard.Select(c => $". {Bold("Finisher:")} {c.Name}", string.Empty));
             sb.Append(swappedCard.Select(c => $". {Bold("Swap:")} {c.Name}", string.Empty));
@@ -181,7 +190,12 @@ public static class InterpolatedCardDescriptions
         => remainingEffectDesc.Contains("-") || remainingEffectDesc.Contains("All") 
             ? $"removes {remainingEffectDesc}" 
             : $"gives {remainingEffectDesc}";
-
+    
+    private static string GivesOrRemovesPartial(string effectPart, string remainingEffectDesc) 
+        => remainingEffectDesc.Contains("-") || remainingEffectDesc.Contains("All") 
+            ? $"removes {effectPart}" 
+            : $"gives {effectPart}";
+    
     private static string ReactiveTargetFriendlyName(ReactiveTargetScope s) 
         => s == ReactiveTargetScope.Source 
             ? "attacker" 
@@ -406,11 +420,99 @@ public static class InterpolatedCardDescriptions
     
 #region Auto
 
+    public static string AutoDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost)
+        => InterpolatedDescription(card, owner, xCost, 0, 0, "{Auto}");
+
+    public static string AutoPartial(this CardTypeData card)
+        => InterpolatedDescription(card, Maybe<Member>.Missing(), ResourceQuantity.None, 0, 0, "{AutoPartial}");
+
+    private static string AutoPartial(IEnumerable<EffectData> effects)
+    {
+        if (effects.Any(e => e.EffectType == EffectType.ResolveInnerEffect))
+            throw new Exception("Should Not Partialized Automatically");
+        return string.Join(". ", effects.Select((e, i) => AutoPartial(i, e)));
+    }
+
+    private static string AutoPartial(int index, EffectData data)
+    {
+        var delay = DelayDescription(data);
+        var e = "{E[" + index +"]}";
+        var d = "{D[" + index + "]}";
+        var coreDesc = string.Empty;
+        if (data.EffectType == EffectType.AttackFormula)
+            coreDesc = $"deal {e}";
+        if (data.EffectType == EffectType.TrueDamageAttackFormula)
+            coreDesc = $"deal {e}";
+        if (data.EffectType == EffectType.HealFormula)
+            coreDesc = $"heal {e}";
+        if (data.EffectType == EffectType.DealTrueDamageFormula)
+            coreDesc = $"deal {e}";
+        if (data.EffectType == EffectType.MagicAttackFormula)
+            coreDesc = $"deal {e}";
+        if (data.EffectType == EffectType.DamageOverTimeFormula)
+            coreDesc = $"deal {e} {d}";
+        if (data.EffectType == EffectType.AdjustCounterFormula)
+            coreDesc = GivesOrRemoves(e);
+        if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
+            coreDesc = $"gives {e} {d}";
+        if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
+            coreDesc = $"gives {e} {d}";
+        if (data.EffectType == EffectType.AdjustResourceFlat)
+            coreDesc = $"gives {e}";
+        if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
+            coreDesc = $"gives {e}";
+        if (data.EffectType == EffectType.DisableForTurns)
+            coreDesc = $"gives {e}";
+        if (data.EffectType == EffectType.ReactWithEffect)
+            coreDesc = $"{WithCommaIfPresent(d)}" +
+                       $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
+                       $"{AutoReactionSourceDescription(Maybe<Member>.Missing(), data.ReactionEffect.Reactor)}" +
+                       $"{AutoPartial(data.ReactionEffect.CardActions.BattleEffects)} " +
+                       $"to {ReactiveTargetFriendlyName(data.ReactionEffect.Scope)}";
+        if (data.EffectType == EffectType.ReactWithCard)
+            coreDesc = $"{WithCommaIfPresent(d)}" +
+                       $"{Bold(data.ReactionConditionType.ToString().WithSpaceBetweenWords())}: " +
+                       $"{AutoReactionSourceDescription(Maybe<Member>.Missing(), data.ReactionSequence.ActionSequence.Reactor)}" +
+                       $"{AutoPartial(data.ReactionSequence.ActionSequence.CardActions.BattleEffects)} " +
+                       $"to {ReactiveTargetFriendlyName(data.ReactionSequence.ActionSequence.Scope)}";
+        if (data.EffectType == EffectType.ShieldFormula)
+            coreDesc = $"shield {e}";
+        if (data.EffectType == EffectType.DrawCards)
+            coreDesc = $"draw {e} Cards";
+        if (data.EffectType == EffectType.DrawCardsOfOwner)
+            coreDesc = $"draw {e} of your Cards";
+        if (data.EffectType == EffectType.EnterStealth)
+            coreDesc = $"enter {Bold(TemporalStatType.Stealth.ToString())}";
+        if (data.EffectType == EffectType.AdjustPlayerStats)
+            coreDesc = $"{WithCommaIfPresent(d)}" 
+                       + $"gives {e} "
+                       + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
+        if (data.EffectType == EffectType.RemoveDebuffs)
+            coreDesc = "removes all debuffs";
+        if (data.EffectType == EffectType.AdjustPlayerStatsFormula)
+            coreDesc = $"{WithCommaIfPresent(d)}" 
+                       + $"gives {e} " 
+                       + $"{Bold(data.EffectScope.ToString().WithSpaceBetweenWords())}";
+        if (data.EffectType == EffectType.GainCredits)
+            coreDesc = $"gives {Bold($"{data.BaseAmount} Creds")}";
+        if (data.EffectType == EffectType.ChooseAndDrawCardOfArchetype)
+            coreDesc = $"choose and draw {AOrAn(data.EffectScope)} {Bold(data.EffectScope.ToString().WithSpaceBetweenWords())} card";
+        if (data.EffectType == EffectType.Drain)
+            coreDesc = $"drain {e}";
+        if (data.EffectType == EffectType.ShieldRemoveAll)
+            coreDesc = $"removes all shields";
+        if (coreDesc == string.Empty)
+            throw new InvalidDataException($"Unable to generate Auto Description for {data.EffectType}");
+        return delay.Length > 0 
+            ? $"{delay}{coreDesc}".Replace("Next turn, for the turn,", "Next turn,")
+            : UppercaseFirst(coreDesc);
+    }
+    
     private static string AutoDescription(IEnumerable<EffectData> effects, Maybe<Member> owner, ResourceQuantity xCost) 
         => string.Join(". ", effects.Select(e => e.EffectType == EffectType.ResolveInnerEffect 
             ? AutoDescription(e.ReferencedSequence.BattleEffects, owner, xCost)
             : AutoDescription(e, owner, xCost)));
-
+    
     private static string AutoDescription(EffectData data, Maybe<Member> owner, ResourceQuantity xCost)
     {
         var delay = DelayDescription(data);

@@ -15,8 +15,14 @@ MonoBehaviour:
   id: 178
   customName: 
   art: {fileID: 21300000, guid: 252b29e52411e67418e4fcbc412934ac, type: 3}
-  description: '{auto}'
+  description: Deal {E[0]}. Gives {E[1]} {D[1]}
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: Deal {0}. Gives {1} {2}
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
+    - '{D[1]}'
   tags: 04000000
   speed: 0
   isSinglePlay: 0
