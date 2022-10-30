@@ -13,7 +13,7 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
     [SerializeField] private CharacterWordsController words;
     [SerializeField] private OnlyShowWhenHovered hoverReveal;
     [SerializeField] private WorldStatPresenter primaryStatPresenter;
-    [SerializeField] private WorldTextPresenter descriptionPresenter;
+    [SerializeField] private Localize descriptionLocalize;
 
     private Member _member;
 
@@ -36,8 +36,8 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
         hoverReveal.Initialized(m);
         if (primaryStatPresenter != null)
             primaryStatPresenter.Init(m, m.PrimaryStat());
-        if (descriptionPresenter != null)
-            descriptionPresenter.Init(e.Description);
+        if (descriptionLocalize != null)
+            descriptionLocalize.SetTerm(e.DescriptionTerm);
         return this;
     }
     

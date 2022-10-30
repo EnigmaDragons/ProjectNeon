@@ -57,7 +57,7 @@ public class FindEnemiesEditor : EditorWindow
         if (GUILayout.Button("Enemy Descriptions"))
         {
             var items = GetAllWorkingEnemies()
-                .Select(e => $"{e.name} - {e.Description}")
+                .Select(e => $"{e.name} - {e.DescriptionTerm.ToEnglish()}")
                 .OrderBy(e => e)
                 .ToArray();
             GetWindow<ListDisplayWindow>()

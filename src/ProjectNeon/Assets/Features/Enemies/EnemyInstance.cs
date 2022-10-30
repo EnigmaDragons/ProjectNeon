@@ -48,7 +48,7 @@ public class EnemyInstance : EnemyType
     public CharacterAnimationSoundSet AnimationSounds { get; }
     public AiPreferences AIPreferences { get; }
     public IEnumerable<ReactionCardType> ReactionCards { get; }
-    public string Description { get; }
+    public string DescriptionTerm { get; }
 
     public bool DeckIsValid => Cards.None(x => x == null);
     public bool IsReadyForPlay => Cards != null && Prefab != null && AI != null;
@@ -58,7 +58,7 @@ public class EnemyInstance : EnemyType
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
         int preferredTurnOrder, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp,
-        CharacterAnimations animations, CharacterAnimationSoundSet sounds, MemberMaterialType materialType, string description, IEnumerable<ReactionCardType> reactionCards, AiPreferences aiPreferences)
+        CharacterAnimations animations, CharacterAnimationSoundSet sounds, MemberMaterialType materialType, string descriptionTerm, IEnumerable<ReactionCardType> reactionCards, AiPreferences aiPreferences)
     {
         _enemyId = enemyId;
         _resourceType = resourceType;
@@ -93,7 +93,7 @@ public class EnemyInstance : EnemyType
         AnimationSounds = sounds;
         AIPreferences = aiPreferences;
         ReactionCards = reactionCards != null ? reactionCards : new ReactionCardType[0];
-        Description = description != null ? description : "";
+        DescriptionTerm = descriptionTerm;
         if (_resourceType == null)
             Log.Error($"Null Resource Type for {NameTerm.ToEnglish()} {enemyId}");
         if (_counterAdjustments == null)

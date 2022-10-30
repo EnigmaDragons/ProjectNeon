@@ -52,7 +52,10 @@ public class LocalizationImporter
         => ImportEnemies(false);
 
     private static void ImportEnemies(bool hasInit)
-        => ImportItems<Enemy>(x => x.EnemyNameTerm, (enemy, text) => enemy.enemyName = text, hasInit);
+    {
+        ImportItems<Enemy>(x => x.EnemyNameTerm, (enemy, text) => enemy.enemyName = text, hasInit);
+        ImportItems<Enemy>(x => x.DescriptionTerm, (enemy, text) => enemy.description = text, hasInit);
+    }
 
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject
     {

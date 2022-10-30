@@ -11,7 +11,7 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI idLabel;
     [SerializeField] private Localize nameLocalize;
     [SerializeField] private TextMeshProUGUI typeLabel;
-    [SerializeField] private TextMeshProUGUI descriptionLabel;
+    [SerializeField] private Localize descriptionLocalize;
     [SerializeField] private MemberStatPanel statPanel;
     [SerializeField] private MemberUiBase[] otherViews;
     [SerializeField] private ReadOnlyEnemyDeckUI enemyDeckUi;
@@ -81,8 +81,8 @@ public class EnemyDetailsView : MonoBehaviour
             resources.Init(e);
         if (hasUnshownCardsItem != null && cardsView != null)
             hasUnshownCardsItem.SetActive(e.Cards.Distinct().Count() > cardsView.MaxCardsDisplayed);
-        if (descriptionLabel != null)
-            descriptionLabel.text = e.Description;
+        if (descriptionLocalize != null)
+            descriptionLocalize.SetTerm(e.DescriptionTerm);
         otherViews.ForEach(o => o.Init(member));
         Message.Publish(new ShowEnemyOnStage(e));
     }

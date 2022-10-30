@@ -113,6 +113,8 @@ public class QualityAssurance
             for (var i = 0; i < c.Segments.Length; i++)
             {
                 var s = c.Segments[i];
+                if (s.SegmentType != CutsceneSegmentType.DialogueLine && s.SegmentType != CutsceneSegmentType.NarratorLine && s.SegmentType != CutsceneSegmentType.PlayerLine)
+                    continue;
                 var text = s.Term.ToEnglish();
                 if (text == null)
                 {
