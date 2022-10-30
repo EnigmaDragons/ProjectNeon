@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 138f29b8a74f96948a56693cd0d83f05, type: 3}
   description: "Gives <b>2 Mark</b>. \n\n<b>Sneaky:</b> You gain {E[1]}"
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: "Gives <b>2 Mark</b>. \n\n<b>Sneaky:</b> You gain {0}"
+    formatArgs:
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -47,3 +51,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

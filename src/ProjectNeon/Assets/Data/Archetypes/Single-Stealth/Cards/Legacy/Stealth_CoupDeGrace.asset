@@ -17,6 +17,11 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: c43ca6ef96bc7a9439b159c1627fa533, type: 3}
   description: '<b>On Slay</b>: {E[3]} \n\nDeal {E[2]} | <b>Crit: Bloody</b>'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: '<b>On Slay</b>: {0} \n\nDeal {1} | <b>Crit: Bloody</b>'
+    formatArgs:
+    - '{E[3]}'
+    - '{E[2]}'
   tags: 
   speed: 0
   isSinglePlay: 0

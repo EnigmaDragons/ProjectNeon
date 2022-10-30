@@ -18,6 +18,12 @@ MonoBehaviour:
   description: "Next turn, gives <b>1 Vulnerable</b>. \nYou gain {E[1]}.\nThis turn,
     when an enemy attacks, you gain {RE[0]}"
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: "Next turn, gives <b>1 Vulnerable</b>. \nYou gain {0}.\nThis turn, when
+      an enemy attacks, you gain {1}"
+    formatArgs:
+    - '{E[1]}'
+    - '{RE[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0

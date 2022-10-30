@@ -18,6 +18,12 @@ MonoBehaviour:
   description: <b>Defenseless:</b> Gives {E[0]}, else <b>-2 Armor & -2 Resistance.</b>
     Deal {E[3]}.
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: <b>Defenseless:</b> Gives {0}, else <b>-2 Armor & -2 Resistance.</b> Deal
+      {1}.
+    formatArgs:
+    - '{E[0]}'
+    - '{E[3]}'
   tags: 
   speed: 0
   isSinglePlay: 0

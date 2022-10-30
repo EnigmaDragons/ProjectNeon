@@ -25,11 +25,33 @@ public static class Localized
         => FormatTerm($"{category}/{term}", args);
     
     public static string FormatTerm(string term, params object[] args)
-        => string.Format(StringTerm(term), args);
+        => Format(StringTerm(term), args);
 
     public static string FormatTermOrDefault(string term, string defaultTranslation, params object[] args)
-        => string.Format(StringTermOrDefault(term, defaultTranslation), args);
+    {
+        try
+        {
+            return Format(StringTermOrDefault(term, defaultTranslation), args);
+        }
+        catch (Exception)
+        {
+            return Format(defaultTranslation, args);
+        }
+    }
 
+    private static string Format(string template, params object[] args)
+    {
+        try
+        {
+            return string.Format(template, args);
+        }
+        catch (Exception)
+        {
+            Log.Error($"Unable to Format. Input String {template}");
+            throw;
+        }
+    }
+    
     public static string ToI2Format(this string s)
     {
         var r = s;

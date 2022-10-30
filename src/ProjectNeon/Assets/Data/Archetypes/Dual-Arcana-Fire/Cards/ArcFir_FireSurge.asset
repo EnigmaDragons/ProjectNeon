@@ -17,6 +17,12 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 1b6fa32ed6550eb408027c73d70340b2, type: 3}
   description: Deal {E[0]}.<br><br>Gives self {E[1]} <b>Magic</b> {D[1]}
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: Deal {0}.<br><br>Gives self {1} <b>Magic</b> {2}
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
+    - '{D[1]}'
   tags: 28000000
   speed: 0
   isSinglePlay: 0
@@ -46,3 +52,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

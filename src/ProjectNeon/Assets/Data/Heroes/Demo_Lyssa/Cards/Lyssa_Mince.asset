@@ -18,6 +18,11 @@ MonoBehaviour:
   description: '<b>Quick:</b> Deal {E[0]} + consume each enemy mark for {E[1]} <b>Crit:
     Marked</b>'
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: '<b>Quick:</b> Deal {0} + consume each enemy mark for {1} <b>Crit: Marked</b>'
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 04000000
   speed: 1
   isSinglePlay: 1

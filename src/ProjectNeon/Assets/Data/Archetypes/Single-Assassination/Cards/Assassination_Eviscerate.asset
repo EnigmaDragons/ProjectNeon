@@ -18,6 +18,13 @@ MonoBehaviour:
   description: "<b>On Slay</b>: You gain <b>+</b>{RE[0]} <b>Card Plays</b> and  <b>+</b>{RE[1]}
     <b>POW</b>. \nDeal {E[2]} <b> | Crit: Marked"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: "<b>On Slay</b>: You gain <b>+</b>{0} <b>Card Plays</b> and  <b>+</b>{1}
+      <b>POW</b>. \nDeal {2} <b> | Crit: Marked"
+    formatArgs:
+    - '{RE[0]}'
+    - '{RE[1]}'
+    - '{E[2]}'
   tags: 
   speed: 0
   isSinglePlay: 0
