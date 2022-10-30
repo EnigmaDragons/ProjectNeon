@@ -1,4 +1,6 @@
 #if UNITY_EDITOR
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using I2.Loc;
 using UnityEditor;
@@ -10,7 +12,6 @@ public class CategoryTranslator : EditorWindow
     public static LanguageSourceData GetSource()
     {
         var s = AssetDatabase.LoadAssetAtPath<LanguageSourceAsset>("Assets/Resources/I2Languages.asset");
-        Log.Info($"Language Source Loaded {s != null}");
         return s.mSource;
     }
 
@@ -23,7 +24,9 @@ public class CategoryTranslator : EditorWindow
         _categoryTranslatedCount = -1;
         _categoryUntranslatedCount = -1;
         _activeTranslationCount = 0;
-        
+        _autoTranslateAll = false;
+
+        _source = GetSource();
         GetWindow(typeof(CategoryTranslator)).Show();
     }
 
@@ -33,50 +36,109 @@ public class CategoryTranslator : EditorWindow
     private static int _categoryUntranslatedCount = -1;
     private static int _categoryTranslatedCount = -1;
     private static int _activeTranslationCount = 0;
-
-    private bool _autoTranslateAll = false;
-    private string _categoryTranslationSummary = "Category Not Initialized";
+    private static LanguageSourceData _source;
+    private static bool _autoTranslateAll = false;
+    private static string _autoTranslateCategory = "";
+    private static long _lastLogTime = 0;
     
-    private string _categoryString;
+    private string _categoryTranslationSummary = "Category Not Initialized";
     private string _termString;
+    private string _categoryString;
 
+    private const bool ShouldDebug = false;
+    
     private struct TranslationState<T>
     {
         public bool IsTranslated;
         public T Data;
     }
+
+    static void MoveNext(string categoryString)
+    {
+        if (string.IsNullOrWhiteSpace(categoryString))
+            return;
+        
+        _shouldRefreshCategory = true;
+        _source ??= GetSource();
+        if (ShouldDebug)
+            Log.Info($" Translate Move Next - Is Translating {_isTranslating} Auto {_autoTranslateAll} Active {_activeTranslationCount}");
+        if (!_isTranslating && _autoTranslateAll && _activeTranslationCount < 1)
+        {
+            _source.mTerms
+                .Where(t => t.TermType == eTermType.Text)
+                .Where(t => t.Term.StartsWith($"{categoryString}/"))
+                .Where(t => t.Languages.Any(string.IsNullOrWhiteSpace))
+                .Where(t => !t.Term.Equals(_lastTranslatedTerm))
+                .Take(1)
+                .FirstAsMaybe()
+                .ExecuteIfPresentOrElse(t =>
+                {
+                    _isTranslating = true;
+                    TranslateLanguage(_source, t.Term, t);
+                }, () => { _autoTranslateAll = false; });
+        }
+        else
+        {
+            if (ShouldDebug)
+                Log.Info($"No Translate Move Next - Is Translating {_isTranslating} Auto {_autoTranslateAll} Active {_activeTranslationCount}");
+
+            var lastTranslatedCount = _categoryTranslatedCount;
+            RefreshCategory(categoryString);
+            if (lastTranslatedCount != _categoryTranslatedCount)
+            {
+                var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                var durationMs = now - _lastLogTime;
+                _lastLogTime = now;
+                Log.Info($"Translator: {categoryString} - Translated: {_categoryTranslatedCount} Untranslated: {_categoryUntranslatedCount} - {durationMs}ms");
+            }
+        }
+    }
+
+    static Dictionary<string, TranslationState<TermData>> RefreshCategory(string categoryString)
+    {
+        _shouldRefreshCategory = false;
+        var textTermsInCategory = _source.mTerms
+            .Where(t => t.TermType == eTermType.Text)
+            .Where(t => t.Term.StartsWith($"{categoryString}/"))
+            .ToDictionary(t => t.Term, t => new TranslationState<TermData> { IsTranslated = t.Languages.All(l => !string.IsNullOrWhiteSpace(l)), Data = t });
+        _categoryTranslatedCount = textTermsInCategory.Count(t => t.Value.IsTranslated);
+        _categoryUntranslatedCount = textTermsInCategory.Count(t => !t.Value.IsTranslated);
+        return textTermsInCategory;
+    }
     
     void OnGUI()
     {
+        _source ??= GetSource();
+        
         GUI.enabled = true;
-        EditorGUILayout.LabelField(_isTranslating ? $"Status: Translating... {_termString}" : "Status :Awaiting Command");
+        var translatingString = _autoTranslateAll ? "Auto-Translating" : "Translating";
+        EditorGUILayout.LabelField(_isTranslating || _autoTranslateAll ? $"Status: {translatingString}... {_termString}" : "Status :Awaiting Command");
         DrawUILine();
         
         EditorGUILayout.LabelField($"Active Translation Items: {_activeTranslationCount}");
         EditorGUILayout.LabelField($"Last Translated... {_lastTranslatedTerm}");
         DrawUILine();
         
+        
         if (!string.IsNullOrWhiteSpace(_categoryString))
             _categoryTranslationSummary = $"{_categoryString} - Translated: {_categoryTranslatedCount} Untranslated: {_categoryUntranslatedCount}"; 
         EditorGUILayout.LabelField(_categoryTranslationSummary);
+        Rect r = EditorGUILayout.BeginVertical();
+        var progress = _categoryTranslatedCount > 0
+            ? (float)_categoryTranslatedCount / (_categoryTranslatedCount + _categoryUntranslatedCount)
+            : 0f;
+        EditorGUI.ProgressBar(r, progress , "Category Translation Progress");
+        GUILayout.Space(16);
+        EditorGUILayout.EndVertical();
         DrawUILine();
         
-        if (_isTranslating)
+        if (_isTranslating || _autoTranslateAll)
             GUI.enabled = false;
         
         _categoryString = EditorGUILayout.TextField(_categoryString);
         if (GUILayout.Button("Refresh Category") || _shouldRefreshCategory)
         {
-            _shouldRefreshCategory = false;
-            var source = GetSource();
-            var textTermsInCategory = source.mTerms
-                .Where(t => t.TermType == eTermType.Text)
-                .Where(t => t.Term.StartsWith($"{_categoryString}/"))
-                .ToDictionary(t => t.Term, t => new TranslationState<TermData> { IsTranslated = t.Languages.All(l => !string.IsNullOrWhiteSpace(l)), Data = t });
-            var termSummary = textTermsInCategory.Select(kvp => $"{kvp.Key} - Translated {kvp.Value.IsTranslated}").ToArray();
-            _categoryTranslatedCount = textTermsInCategory.Count(t => t.Value.IsTranslated);
-            _categoryUntranslatedCount = textTermsInCategory.Count(t => !t.Value.IsTranslated);
-
+            var termSummary = RefreshCategory(_categoryString).Select(kvp => $"{kvp.Key} - Translated {kvp.Value.IsTranslated}").ToArray();
             GetWindow<ListDisplayWindow>()
                 .Initialized($"{_categoryString} Terms", "Term", termSummary)
                 .Show();
@@ -84,40 +146,26 @@ public class CategoryTranslator : EditorWindow
 
         if (string.IsNullOrWhiteSpace(_categoryString))
             GUI.enabled = false;
-        
-        if (_autoTranslateAll || GUILayout.Button("Auto-Translate Next Term"))
-        {
-            var source = GetSource();
-            source.mTerms
-                .Where(t => t.TermType == eTermType.Text)
-                .Where(t => t.Term.StartsWith($"{_categoryString}/"))
-                .Where(t => t.Languages.Any(string.IsNullOrWhiteSpace))
-                .Take(1)
-                .FirstAsMaybe()
-                .ExecuteIfPresentOrElse(t =>
-                {
-                    _isTranslating = true;
-                    _termString = t.Term;
-                    TranslateLanguage(source, t.Term, t);
-                }, () =>
-                {
-                    _autoTranslateAll = false;
-                });
-        }
+        if (GUILayout.Button("Auto-Translate Next Term")) 
+            MoveNext(_categoryString);
 
+        GUI.enabled = GUI.enabled && !_autoTranslateAll;
         if (GUILayout.Button("Auto-Translate All"))
         {
+            _lastLogTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             _autoTranslateAll = true;
+            _autoTranslateCategory = _categoryString;
+            MoveNext(_autoTranslateCategory);
+        }
+
+        GUI.enabled = _autoTranslateAll;
+        if (GUILayout.Button("Stop Auto-Translate"))
+        {
+            _autoTranslateAll = false;
+            _autoTranslateCategory = "";
         }
 
         GUI.enabled = true;
-        // _termString = EditorGUILayout.TextField(_termString);
-        // if (GUILayout.Button("Auto-Translate Term"))
-        // {
-        //     var source = GetSource();
-        //     source.mTerms.Where(t => t.Term.Equals(_termString)).FirstAsMaybe()
-        //         .ExecuteIfPresentOrElse(termData => TranslateLanguage(source, _termString, termData), () => Log.Error("Term Not Found"));
-        // }
     }
     
     static void TranslateLanguage(LanguageSourceData source, string Key, TermData termdata)
@@ -134,7 +182,6 @@ public class CategoryTranslator : EditorWindow
                 Translate(source, mainText, ref termdata, source.mLanguages[i].Code,
                     (translation, error) =>
                     {
-                        _shouldRefreshCategory = true;
                         _isTranslating = false;
                         _activeTranslationCount--;
                         if (error != null)
@@ -146,6 +193,7 @@ public class CategoryTranslator : EditorWindow
                             i2source.Editor_SetDirty();
                             _lastTranslatedTerm = Key;
                         }
+                        MoveNext(_autoTranslateCategory);
                     }, null);
             }
     }
