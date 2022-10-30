@@ -8,6 +8,7 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     [SerializeField] private string displayName;
     [PreviewSprite] [SerializeField] private Sprite art;
     [SerializeField] [TextArea(1, 12)] private string description;
+    [SerializeField] private CardDescriptionV2 descriptionV2;
     [SerializeField] private StringVariable[] archetypes;
     [SerializeField] private ResourceCost cost;
     [SerializeField] private CardReactionSequence actionSequence;
@@ -20,6 +21,7 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
     public int Id => -1;
     public Sprite Art => art;
     public string Description => description;
+    public CardDescriptionV2 DescriptionV2 => descriptionV2;
     public string TypeDescription => "Reaction";
     public IResourceAmount Cost => cost;
     public CardSpeed Speed => CardSpeed.Standard;

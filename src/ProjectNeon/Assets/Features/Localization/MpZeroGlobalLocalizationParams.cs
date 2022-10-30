@@ -15,15 +15,6 @@ public class MpZeroGlobalLocalizationParams : MonoBehaviour, ILocalizationParams
     {
         LocalizationManager.ParamManagers.Remove(this);
     }
-    
-    public virtual string GetParameterValue(string paramName)
-    {
-        if (paramName == "BR") return "<br>";
-        
-        if (paramName == "B") return "<b>";
-        
-        if (paramName == "/B") return "</b>";
 
-        return null;
-    }
+    public virtual string GetParameterValue(string paramName) => paramName.FromI2ParamValue();
 }

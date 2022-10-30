@@ -32,6 +32,7 @@ public sealed class Card : CardTypeData
     public CardSpeed Speed => _type.Speed;
     public Sprite Art => _type.Art;
     public string Description => _type.Description;
+    public CardDescriptionV2 DescriptionV2 => _type.DescriptionV2;
     public HashSet<CardTag> Tags => _type.Tags;
     public string TypeDescription => _type.TypeDescription;
     public CardActionSequence[] ActionSequences => _type.ActionSequences ?? new CardActionSequence[0];

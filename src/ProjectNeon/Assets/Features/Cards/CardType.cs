@@ -10,6 +10,7 @@ public class CardType : ScriptableObject, CardTypeData
     [PreviewSprite] [SerializeField] private Sprite art;
     [SerializeField] [TextArea(1, 12)] public string description;
     [SerializeField] private StringVariable typeDescription;
+    [SerializeField] public CardDescriptionV2 descriptionV2;
     [SerializeField] private CardTag[] tags;
     [SerializeField] private CardSpeed speed;
     [SerializeField] private bool isSinglePlay;
@@ -32,6 +33,7 @@ public class CardType : ScriptableObject, CardTypeData
     public CardSpeed Speed => speed;
     public Sprite Art => art;
     public string Description => description;
+    public CardDescriptionV2 DescriptionV2 => descriptionV2;
     public HashSet<CardTag> Tags => new HashSet<CardTag>(tags);
     public string TypeDescription => typeDescription?.Value ?? string.Empty;
     public Rarity Rarity => rarity;

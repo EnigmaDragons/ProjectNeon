@@ -1,8 +1,9 @@
 ﻿#if UNITY_EDITOR
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using DG.DemiEditor;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ using UnityEngine;
 public class CardTypeEditor : Editor
 {
     private CardType targetCard;
-    private SerializedProperty customName, functionalityIssues, art, description, typeDescription, tags, 
+    private SerializedProperty customName, functionalityIssues, art, description, descriptionV2, typeDescription, tags, 
         cost, rarity, cardAction1, cardAction2, chainedCard, presentationIssues, speed, archetypes, isWip, 
         highlightCondition, unhighlightCondition, swappedCard, isSinglePlay, id, notAvailableForGeneralDistribution;
 
@@ -20,6 +21,7 @@ public class CardTypeEditor : Editor
         customName = serializedObject.FindProperty("customName");
         art = serializedObject.FindProperty("art");
         description = serializedObject.FindProperty("description");
+        descriptionV2 = serializedObject.FindProperty("descriptionV2");
         typeDescription = serializedObject.FindProperty("typeDescription");
         tags = serializedObject.FindProperty("tags");
         cost = serializedObject.FindProperty("cost");
@@ -45,12 +47,30 @@ public class CardTypeEditor : Editor
         GUI.enabled = true;
         PresentUnchanged(customName);
         PresentUnchanged(art);
-        if (GUILayout.Button("Generate Auto Description"))
+        
+        var descV2 = GetSerializedValue<CardDescriptionV2>(descriptionV2);
+
+        if (descV2.IsUsable())
         {
-            targetCard.description = targetCard.AutoDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
-            EditorUtility.SetDirty(target);
+            GUILayout.Label("Description V2 - Preview:", new GUIStyle() { fontStyle = FontStyle.Bold });
+            GUILayout.TextArea(descV2.Preview(), new GUIStyle { padding = new RectOffset(0,0,8,8), stretchHeight = true});
         }
-        PresentUnchanged(description);
+        else
+        {        
+            if (GUILayout.Button("Generate Auto Description V1"))
+            {
+                targetCard.description = targetCard.AutoDescription(Maybe<Member>.Missing(), ResourceQuantity.None);
+                EditorUtility.SetDirty(target);
+            }
+            if (GUILayout.Button("Convert To V2 Description"))
+            {
+                targetCard.descriptionV2 = CardDescriptionV2.FromDescriptionV1(GetSerializedValue<string>(description));
+                EditorUtility.SetDirty(target);
+            }
+            PresentUnchanged(description, "Description V1");
+        }
+        
+        PresentUnchanged(descriptionV2);
         PresentUnchanged(typeDescription);
         PresentUnchanged(archetypes);
         PresentUnchanged(rarity);
@@ -161,6 +181,32 @@ public class CardTypeEditor : Editor
         r.x-=2;
         r.width +=6;
         EditorGUI.DrawRect(r, color);
+    }
+    
+    public static T GetSerializedValue<T>(SerializedProperty property)
+    {
+        object @object = property.serializedObject.targetObject;
+        string[] propertyNames = property.propertyPath.Split('.');
+ 
+        // Clear the property path from "Array" and "data[i]".
+        if (propertyNames.Length >= 3 && propertyNames[propertyNames.Length - 2] == "Array")
+            propertyNames = propertyNames.Take(propertyNames.Length - 2).ToArray();
+ 
+        // Get the last object of the property path.
+        foreach (string path in propertyNames)
+        {
+            @object = @object.GetType()
+                .GetField(path, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
+                .GetValue(@object);
+        }
+ 
+        if (@object.GetType().GetInterfaces().Contains(typeof(IList<T>)))
+        {
+            int propertyIndex = int.Parse(property.propertyPath[property.propertyPath.Length - 2].ToString());
+ 
+            return ((IList<T>) @object)[propertyIndex];
+        }
+        else return (T) @object;
     }
 }
 

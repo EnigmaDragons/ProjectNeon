@@ -10,6 +10,7 @@ public interface CardTypeData
     CardSpeed Speed { get; }
     Sprite Art  { get; }
     string Description  { get; }
+    CardDescriptionV2 DescriptionV2 { get; }
     HashSet<CardTag> Tags  { get; }
     string TypeDescription  { get; }
     CardActionSequence[] ActionSequences  { get; }

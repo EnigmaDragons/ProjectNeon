@@ -391,13 +391,6 @@ public static class InterpolatedCardDescriptions
         => WithImplications(owner.IsPresent
             ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Magic]).ToString()
             : WithBaseAmount(data, " × MAG"));
-
-    private static string AttackAmount(EffectData data, Maybe<Member> owner)
-        => WithImplications(owner.IsPresent
-            ? RoundUp(data.BaseAmount + data.FloatAmount * owner.Value.State[StatType.Attack]).ToString()
-            : data.BaseAmount > 0
-                ? $"{data.BaseAmount} + {data.FloatAmount} × ATK"
-                : $"{data.FloatAmount} × ATK");
     
     private static string WithBaseAmount(EffectData data, string floatString)
     {
@@ -464,8 +457,6 @@ public static class InterpolatedCardDescriptions
 
         return newS;
     }
-
-    private static string Standardized(string effectScope) => StatTypeAliases.FullNameToAbbreviations.ValueOrDefault(effectScope, () => effectScope);
     
     private static Dictionary<string, string> TemporalStatFriendlyNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
     {

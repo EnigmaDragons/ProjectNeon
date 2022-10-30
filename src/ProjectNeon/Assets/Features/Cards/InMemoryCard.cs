@@ -18,6 +18,7 @@ public class InMemoryCard : CardTypeData
 
     public Sprite Art { get; set; }
     public string Description { get; set; }
+    public CardDescriptionV2 DescriptionV2 { get; set; } = new CardDescriptionV2();
     public HashSet<CardTag> Tags { get; set; }
     public string TypeDescription { get; set; }
 
