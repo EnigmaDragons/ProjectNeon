@@ -87,7 +87,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
             for (var i = _buttons.Length - 1; i > -1; i--)
             {
                 if (i == 1)
-                    _buttons[i].Init("StoryEvents/Done", () =>
+                    _buttons[i].Init("Menu/Done", () =>
                     {
                         _multiChoiceButtons.ForEach(x => x.Apply());
                         Message.Publish(new MarkStoryEventCompleted());
@@ -153,7 +153,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
                 for (var i = _buttons.Length - 1; i > -1; i--)
                 {
                     if (i == 1)
-                        _buttons[i].Init("StoryEvents/Done", () => Message.Publish(new MarkStoryEventCompleted()));
+                        _buttons[i].Init("Menu/Done", () => Message.Publish(new MarkStoryEventCompleted()));
                     else
                         _buttons[i].Hide();
                 }
