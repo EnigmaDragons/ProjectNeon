@@ -60,8 +60,13 @@ public class LocalizationImporter
     [MenuItem("Neon/Localization/Import Heroes")]
     private static void ImportHeroes()
         => ImportHeroes(false);
+
     private static void ImportHeroes(bool hasInit)
-        => ImportItems<BaseHero>(x => x.ClassTerm(), (hero, text) => hero.className = text, hasInit);
+    {
+        ImportItems<BaseHero>(x => x.ClassTerm(), (hero, text) => hero.className = text, hasInit);
+        ImportItems<BaseHero>(x => x.DescriptionTerm(), (hero, text) => hero.flavorDetails.HeroDescription = text, hasInit);
+        ImportItems<BaseHero>(x => x.BackStoryTerm(), (hero, text) => hero.flavorDetails.BackStory = text, hasInit);
+    }
 
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject
     {

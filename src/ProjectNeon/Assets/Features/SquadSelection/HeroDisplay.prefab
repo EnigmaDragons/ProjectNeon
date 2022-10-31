@@ -690,10 +690,10 @@ MonoBehaviour:
   heroBust: {fileID: 5791232123472069759}
   heroName: {fileID: 47799988098271038}
   heroClassName: {fileID: 1310178101080726811}
-  heroDescription: {fileID: 3250449877530101633}
+  heroDescription: {fileID: 2000670075364361359}
   complexityLabel: {fileID: 7492229740669669824}
   complexitySlider: {fileID: 5036471172128917298}
-  backstory: {fileID: 371472023587165805}
+  backstory: {fileID: 124323083828227170}
   tabTargets:
   - Name: Lore
     Obj: {fileID: 2754036997101240767}
@@ -845,6 +845,7 @@ GameObject:
   - component: {fileID: 5025999569564116529}
   - component: {fileID: 1170036419924415464}
   - component: {fileID: 371472023587165805}
+  - component: {fileID: 124323083828227170}
   m_Layer: 5
   m_Name: Backstory
   m_TagString: Untagged
@@ -971,6 +972,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &124323083828227170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434772294405474881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &1593120023461075496
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,6 +3097,7 @@ GameObject:
   - component: {fileID: 7202572853912282255}
   - component: {fileID: 3471833802601859109}
   - component: {fileID: 3250449877530101633}
+  - component: {fileID: 2000670075364361359}
   m_Layer: 5
   m_Name: DescLabel
   m_TagString: Untagged
@@ -3181,6 +3222,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2000670075364361359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8122628579392668176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &8202453768814005927
 GameObject:
   m_ObjectHideFlags: 0
@@ -5620,6 +5700,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3366c3c2878d6d64a810a60e9a879a1f, type: 3}
+--- !u!224 &1274199145966024341 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6636511404268683108, guid: 3366c3c2878d6d64a810a60e9a879a1f, type: 3}
+  m_PrefabInstance: {fileID: 5600017962039396849}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &598734473549151105 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5041889176891896432, guid: 3366c3c2878d6d64a810a60e9a879a1f, type: 3}
@@ -5631,11 +5716,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313d2b801d2640f88dab1a674c4a69dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &1274199145966024341 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6636511404268683108, guid: 3366c3c2878d6d64a810a60e9a879a1f, type: 3}
-  m_PrefabInstance: {fileID: 5600017962039396849}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6368691104678634608
 PrefabInstance:
   m_ObjectHideFlags: 0

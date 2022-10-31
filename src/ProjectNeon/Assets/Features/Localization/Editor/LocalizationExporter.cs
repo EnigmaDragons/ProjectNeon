@@ -132,6 +132,18 @@ public class LocalizationExporter
         WriteCsv("hero-classes", data);
     }
 
+    [MenuItem("Neon/Localization/Export Hero Flavor")]
+    public static void ExportHeroFlavor()
+    {
+        var data = new List<string>();
+        foreach (var hero in GetAllInstances<BaseHero>())
+        {
+            data.Add($"HeroDescription{hero.id}^{hero.flavorDetails.HeroDescription}");  
+            data.Add($"HeroBackStory{hero.id}^{hero.flavorDetails.BackStory}"); 
+        }
+        WriteCsv("hero-flavor", data);
+    }
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

@@ -18,7 +18,6 @@ public interface HeroCharacter
     CardTypeData[] AdditionalStartingCards { get; }
     IStats Stats { get; }
     int StartingCredits { get; }
-    HeroFlavorDetails Flavor { get; }
     HeroLevelUpPathway LevelUpTree { get; }
     HeroLevelUpTreeV4 LevelUpTreeV4 { get; }
     HashSet<string> Archetypes { get; }
@@ -97,4 +96,6 @@ public static class HeroCharacterExtensions
 
     public static string NameTerm(this HeroCharacter hero) => $"Heroes/HeroName{hero.Id}";
     public static string ClassTerm(this HeroCharacter hero) => $"Heroes/HeroClass{hero.Id}";
+    public static string DescriptionTerm(this HeroCharacter hero) => $"Heroes/HeroDescription{hero.Id}";
+    public static string BackStoryTerm(this HeroCharacter hero) => $"Heroes/HeroBackStory{hero.Id}";
 }
