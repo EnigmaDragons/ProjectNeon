@@ -9,7 +9,18 @@ public class CardDescriptionV2
     [SerializeField] [TextArea(1, 12)] public string text = string.Empty;
     public string[] formatArgs = Array.Empty<string>();
 
-    public string Preview() => text != null ? string.Format(text, formatArgs) : "";
+    public string Preview()
+    {
+        try
+        {
+            return text != null ? string.Format(text, formatArgs) : "";
+        }
+        catch (Exception)
+        {
+            return $"Invalid Format Pattern: {text}";
+        }
+    }
+    
     public bool IsUsable() => !string.IsNullOrWhiteSpace(text);
     public string ToI2Format() => text.ToI2Format();
 

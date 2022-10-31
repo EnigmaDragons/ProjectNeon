@@ -1,6 +1,5 @@
 #if UNITY_EDITOR
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,9 +19,10 @@ public class LocalizationExporter
     }
 
     private static string ToSingleLineI2Format(string toReplace)
-        => toReplace.ToI2Format()
+        => toReplace
             .Replace("\r\n", "<br>")
-            .Replace("\n", "<br>");
+            .Replace("\n", "<br>")
+            .ToI2Format();
     
     [MenuItem("Neon/Localization/Export Cards For Localization")]
     public static void ExportCardsForLocalization()
@@ -31,14 +31,16 @@ public class LocalizationExporter
             .Where(c => !c.IsWip)
             .OrderBy(c => c.Id);
 
-        var data = new List<string>();
+        var names = new List<string>();
+        var descs = new List<string>();
         allCards.ForEach(c =>
         {
-            data.Add($"{c.CardLocalizationNameKey()}^{c.Name}");
-            var csvDesc = ToSingleLineI2Format(c.description);
-            data.Add($"{c.CardLocalizationDescriptionKey()}^{csvDesc}");
+            names.Add($"{c.CardLocalizationNameKey()}^{c.Name}");
+            var csvDesc = ToSingleLineI2Format(c.DescriptionV2.text);
+            descs.Add($"{c.CardLocalizationDescriptionKey()}^{csvDesc}");
         });
-        WriteCsv("cards-for-localization", data);
+        WriteCsv("card-names", names);
+        WriteCsv("card-descs", descs);
     }
 
     [MenuItem("Neon/Localization/Export Archetypes For Localization")]

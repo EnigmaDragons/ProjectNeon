@@ -78,13 +78,13 @@ public static class CardTypeDataExtensions
         => ToNonBattleCard(c, hero.Character, hero.Stats);
 
     public static string CardLocalizationNameTerm(this CardTypeData c)
-        => $"Cards/{CardLocalizationNameKey(c)}";
+        => $"CardNames/{CardLocalizationNameKey(c)}";
     
     public static string CardLocalizationNameKey(this CardTypeData c)
         => $"{c.Id.ToString().PadLeft(5, '0')}-00-Name";
     
     public static string CardLocalizationDescriptionTerm(this CardTypeData c)
-        => $"Cards/{CardLocalizationDescriptionKey(c)}";
+        => $"CardDescriptions/{CardLocalizationDescriptionKey(c)}";
     
     public static string CardLocalizationDescriptionKey(this CardTypeData c)
         => $"{c.Id.ToString().PadLeft(5, '0')}-05-Desc";

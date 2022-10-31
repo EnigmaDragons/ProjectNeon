@@ -54,6 +54,9 @@ public class CardTypeEditor : Editor
         {
             GUILayout.Label("Description V2 - Preview:", new GUIStyle() { fontStyle = FontStyle.Bold });
             GUILayout.TextArea(descV2.Preview(), new GUIStyle { padding = new RectOffset(0,0,8,8), stretchHeight = true});
+            GUILayout.Label("Description V2 - Library Sample:", new GUIStyle() { fontStyle = FontStyle.Bold });
+            GUILayout.TextArea(targetCard.EditorOnlyLibraryPreview().Replace("<br>", "\r\n"), 
+                new GUIStyle { padding = new RectOffset(0,0,8,8), stretchHeight = true});
         }
         else
         {        

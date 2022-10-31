@@ -4,7 +4,6 @@ using I2.Loc;
 
 public static class Localized
 {
-    //public static string Card(string term) => String("Cards", term);
     public static string Archetype(string term) => String("Archetypes", term);
 
     public static string String(string category, string term) => StringTerm($"{category}/{term}");
@@ -77,6 +76,8 @@ public static class Localized
             { "BR", "<br>" },
             { "B", "<b>" },
             { "/B", "</b>" },
+            { "I", "<i>" },
+            { "/I", "</i>" },
             { "0", "{0}" },
             { "1", "{1}" },
             { "2", "{2}" },

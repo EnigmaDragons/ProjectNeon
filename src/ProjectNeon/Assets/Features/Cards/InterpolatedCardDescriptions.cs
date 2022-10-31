@@ -14,7 +14,21 @@ public static class InterpolatedCardDescriptions
 
     public static string InterpolatedDescription(this Card card, ResourceQuantity xCost) 
         => card.Type.InterpolatedDescription(card.Owner, xCost);
-    
+
+#if UNITY_EDITOR
+    public static string EditorOnlyLibraryPreview(this CardTypeData card)
+    {
+        try
+        {
+            return card.InterpolatedDescription(Maybe<Member>.Missing(), ResourceQuantity.None, 0, 0, card.DescriptionV2.Preview());
+        }
+        catch (Exception)
+        {
+            return $"{card.Name} is not Translated Correctly into {LocalizationManager.CurrentLanguage}";
+        }
+    }
+#endif
+
     public static string LocalizedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardsCycledThisTurn = 0)
     {
         var descV1 = card.Description;
