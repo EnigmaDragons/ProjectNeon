@@ -128,7 +128,7 @@ public class LocalizationExporter
     {
         var data = new List<string>();
         foreach (var hero in GetAllInstances<BaseHero>())
-            data.Add($"HeroClass{hero.id}^{hero.Class}");
+            data.Add($"HeroClass{hero.id}^{hero.className}");
         WriteCsv("hero-classes", data);
     }
 

@@ -11,7 +11,7 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private bool isDisabled = false;
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
-    [SerializeField] private StringReference className;
+    [SerializeField] public string className;
     [SerializeField] private MemberMaterialType materialType;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private CardType basic;
@@ -53,7 +53,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public Sprite Bust => bust;
     public GameObject Body => body;
     public MemberMaterialType MaterialType => materialType;
-    public string Class => className;
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
     public CardTypeData[] AdditionalStartingCards => additionalStartingCards != null ? additionalStartingCards.Cast<CardTypeData>().ToArray() : Array.Empty<CardTypeData>();    

@@ -18,6 +18,7 @@ public class LocalizationImporter
         ImportStoryEvents(true);
         ImportLoadingScreens(true);
         ImportEnemies(true);
+        ImportHeroes(true);
     }
 
     [MenuItem("Neon/Localization/Import Tutorial Slides")]
@@ -50,12 +51,17 @@ public class LocalizationImporter
     [MenuItem("Neon/Localization/Import Enemies")]
     private static void ImportEnemies()
         => ImportEnemies(false);
-
     private static void ImportEnemies(bool hasInit)
     {
         ImportItems<Enemy>(x => x.EnemyNameTerm, (enemy, text) => enemy.enemyName = text, hasInit);
         ImportItems<Enemy>(x => x.DescriptionTerm, (enemy, text) => enemy.description = text, hasInit);
     }
+
+    [MenuItem("Neon/Localization/Import Heroes")]
+    private static void ImportHeroes()
+        => ImportHeroes(false);
+    private static void ImportHeroes(bool hasInit)
+        => ImportItems<BaseHero>(x => x.ClassTerm(), (hero, text) => hero.className = text, hasInit);
 
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject
     {
