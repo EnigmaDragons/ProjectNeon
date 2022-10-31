@@ -1,4 +1,5 @@
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private ClinicState clinic;
     [SerializeField] private CorpClinicProvider clinics;
+    [SerializeField] private Localize serviceTitleLocalize;
     [SerializeField] private TextMeshProUGUI serviceTitle;
     [SerializeField] private GameObject servicesParent;
     [SerializeField] private ClinicServiceButtonV5 serviceButtonPrototype;
@@ -49,8 +51,9 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>
             corpUi.ForEach(c => c.Init(clinic.Corp));
         doneButton.interactable = !_serviceProvider.RequiresSelection() && (!clinic.IsTutorial || party.ClinicVouchers == 0 || party.Heroes.All(x => x.Health.MissingHp == 0));
         var options = _serviceProvider.GetOptions();
+        serviceTitleLocalize.SetTerm("");
         serviceTitle.text = options.Length > 0 
-            ? $"{_serviceProvider.GetTitle()}{(_serviceProvider.RequiresSelection() ? " (Selection Required To Leave)" : "")}"
+            ? $"{_serviceProvider.GetTitleTerm().ToLocalized()}{(_serviceProvider.RequiresSelection() ? $" ({"Clinics/SelectionRequired".ToLocalized()})" : "")}"
             : "";
         for (var i = 0; i < _serviceButtons.Length; i++)
         {

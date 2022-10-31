@@ -13,7 +13,7 @@ public class ClinicServiceButton : MonoBehaviour
 
     public void Init(ClinicServiceButtonData data, PartyAdventureState party)
     {
-        title.text = data.Name;
+        title.text = data.NameTerm;
         description.text = data.Description;
         cost.text = data.Cost.ToString();
         button.interactable = data.Enabled && party.Credits >= data.Cost;

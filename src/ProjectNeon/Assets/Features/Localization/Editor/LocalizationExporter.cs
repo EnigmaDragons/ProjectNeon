@@ -146,6 +146,21 @@ public class LocalizationExporter
         WriteCsv("hero-flavor", data);
     }
 
+    [MenuItem("Neon/Localization/Export Blessings")]
+    public static void ExportBlessings()
+    {
+        var data = new List<string>();
+        foreach (var provider in GetAllInstances<CorpClinicProvider>())
+        {
+            foreach (var blessing in provider.blessingsV4)
+            {
+                data.Add($"Blessing{blessing.Id}Name^{blessing.Name}");
+                data.Add($"Blessing{blessing.Id}Description^{blessing.Description}");
+            }   
+        }
+        WriteCsv("blessings", data);
+    }
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

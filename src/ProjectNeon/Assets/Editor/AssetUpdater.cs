@@ -32,6 +32,7 @@ public class AssetUpdater
         UpdateCutsceneIDs();
         UpdateStoryEventIDs();
         UpdateLoadingScreensIDs();
+        UpdateBlessingIDs();
         UpdateAllCorps();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
@@ -436,7 +437,10 @@ public class AssetUpdater
     {
         var cutscenes = ScriptableExtensions.GetAllInstances<Cutscene>();
         AssignAllIds(cutscenes, c => c.id, (c, id) => c.id = id);
-        AssignAllSubIds(cutscenes.SelectMany(cutscene => cutscene.Segments.Select(segment => new Tuple<Cutscene, CutsceneSegmentData>(cutscene, segment))).ToArray(), s => s.Id, (s, id) => s.Id = id);
+        AssignAllSubIds(
+            cutscenes.SelectMany(cutscene => cutscene.Segments.Select(segment => new Tuple<Cutscene, CutsceneSegmentData>(cutscene, segment))).ToArray(), 
+            s => s.Id, 
+            (s, id) => s.Id = id);
     }
 
     [MenuItem("Neon/Update/Update Story Event IDs")]
@@ -444,13 +448,25 @@ public class AssetUpdater
     {
         var events = ScriptableExtensions.GetAllInstances<StoryEvent2>();
         AssignAllIds(events, e => e.id, (e, id) => e.id = id);
-        AssignAllSubIds(events.SelectMany(storyEvent => storyEvent.Choices.Select(choice => new Tuple<StoryEvent2, StoryEventChoice2>(storyEvent, choice))).ToArray(), c => c.Id, (c, id) => c.Id = id);
+        AssignAllSubIds(
+            events.SelectMany(storyEvent => storyEvent.Choices.Select(choice => new Tuple<StoryEvent2, StoryEventChoice2>(storyEvent, choice))).ToArray(), 
+            c => c.Id, 
+            (c, id) => c.Id = id);
     }
 
     [MenuItem("Neon/Update/Update Loading Screens IDs")]
     private static void UpdateLoadingScreensIDs()
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<CorpLoadingScreen>(), s => s.id, (s, id) => s.id = id);
+    }
+
+    [MenuItem("Neon/Update/Update Blessing IDs")]
+    private static void UpdateBlessingIDs()
+    {
+        AssignAllSubIds(
+            ScriptableExtensions.GetAllInstances<CorpClinicProvider>().SelectMany(provider => provider.blessingsV4.Select(blessing => new Tuple<CorpClinicProvider, BlessingData>(provider, blessing))).ToArray(), 
+            b => b.Id, 
+            (b, id) => b.Id = id);
     }
 
     private const decimal _hpValue = 1;

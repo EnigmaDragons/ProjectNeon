@@ -15,7 +15,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
         _rng = rng;
     }
     
-    public string GetTitle() => "Blessings";
+    public string GetTitleTerm() => "Clinics/BlessingTitle";
 
     public ClinicServiceButtonData[] GetOptions()
     {
@@ -53,11 +53,11 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                 var index = i;
                 var d = blessingChoices[i].blessingData;
                 _generatedOptions[i] = new ClinicServiceButtonData(
-                    d.Name,
+                    d.NameTerm,
                     d.IsSingleTarget
-                        ? string.Format(d.Description,
+                        ? string.Format(d.DescriptionTerm.ToLocalized(),
                             blessingChoices[i].blessing.Targets[0].NameTerm().ToEnglish())
-                        : d.Description,
+                        : d.DescriptionTerm.ToLocalized(),
                     1,
                     () =>
                     {

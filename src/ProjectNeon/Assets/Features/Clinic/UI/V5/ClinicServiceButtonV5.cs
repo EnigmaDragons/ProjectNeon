@@ -1,3 +1,4 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,7 +6,8 @@ using UnityEngine.UI;
 
 public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private TextMeshProUGUI title;
+    [SerializeField] private Localize title;
+    [SerializeField] private Localize descriptionLocalize;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private Image currencyIcon;
@@ -22,7 +24,8 @@ public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPoint
     public void Init(ClinicServiceButtonData data, PartyAdventureState party)
     {
         _data = data;
-        title.text = data.Name;
+        title.SetTerm(data.NameTerm);
+        descriptionLocalize.SetTerm("");
         description.text = data.Description;
         cost.text = data.Cost.ToString();
         var interactable = data.Enabled && party.ClinicVouchers >= data.Cost;

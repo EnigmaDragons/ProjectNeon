@@ -14,7 +14,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
         _blessings = blessings;
     }
     
-    public string GetTitle() => "Blessings";
+    public string GetTitleTerm() => "Blessings";
 
     public ClinicServiceButtonData[] GetOptions()
     {

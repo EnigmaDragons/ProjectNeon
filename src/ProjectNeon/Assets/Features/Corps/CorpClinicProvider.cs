@@ -12,7 +12,7 @@ public class CorpClinicProvider : ScriptableObject
     [SerializeField] private StaticCorp[] procedureCorps;
     [SerializeField] private StaticCorp[] blessingCorps;
     [SerializeField] private BlessingData[] blessings;
-    [SerializeField] private BlessingData[] blessingsV4;
+    [SerializeField] public BlessingData[] blessingsV4;
     [SerializeField] private ClinicState clinicState;
     [SerializeField] private int commonChances;
     [SerializeField] private int uncommonChances;

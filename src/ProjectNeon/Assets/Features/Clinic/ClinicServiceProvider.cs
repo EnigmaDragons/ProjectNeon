@@ -2,14 +2,14 @@
 
 public interface ClinicServiceProvider
 {
-    string GetTitle();
+    string GetTitleTerm();
     ClinicServiceButtonData[] GetOptions();
     bool RequiresSelection();
 }
 
 public class ClinicServiceButtonData
 {
-    public string Name { get; }
+    public string NameTerm { get; }
     public string Description { get; }
     public int Cost { get; }
     public Action Action { get; }
@@ -19,13 +19,13 @@ public class ClinicServiceButtonData
     
     public bool Enabled { get; set; }
 
-    public ClinicServiceButtonData(string name, string description, int cost, Action action, EffectData[] effects, string corpName, Rarity rarity)
+    public ClinicServiceButtonData(string nameTerm, string description, int cost, Action action, EffectData[] effects, string corpName, Rarity rarity)
     {
-        Name = name;
+        NameTerm = nameTerm;
         Description = description;
         Cost = cost;
         Action = action;
-        RulesContext = new RulePanelContext(name, description, effects);
+        RulesContext = new RulePanelContext(nameTerm, description, effects);
         CorpName = corpName;
         Rarity = rarity;
     }
