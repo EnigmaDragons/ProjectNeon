@@ -51,7 +51,7 @@ public class ClinicUI : OnMessage<UpdateClinic, RefreshShop>
         if (clinic.Corp != null && corpUi != null)
             corpUi.ForEach(c => c.Init(clinic.Corp));
         doneButton.interactable = !_serviceProvider.RequiresSelection();
-        serviceTitle.text = $"{_serviceProvider.GetTitle()}{(_serviceProvider.RequiresSelection() ? " (Selection Required To Leave)" : string.Empty)}";
+        serviceTitle.text = $"{_serviceProvider.GetTitleTerm()}{(_serviceProvider.RequiresSelection() ? " (Selection Required To Leave)" : string.Empty)}";
         var options = _serviceProvider.GetOptions();
         for (var i = 0; i < _serviceButtons.Length; i++)
         {

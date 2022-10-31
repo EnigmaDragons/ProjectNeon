@@ -4,11 +4,18 @@ using I2.Loc;
 
 public static class Localized
 {
+    public static string ToEnglish(this string term) => LocalizationManager.GetTranslation(term, overrideLanguage: "English");
+    public static string ToLocalized(this string term) => StringTerm(term);
     //public static string Card(string term) => String("Cards", term);
     public static string Archetype(string term) => String("Archetypes", term);
 
     public static string String(string category, string term) => StringTerm($"{category}/{term}");
-    public static string StringTerm(string term) => new LocalizedString(term).ToString();
+    public static string StringTerm(string term)
+    {
+        var result = new LocalizedString(term).ToString();
+        return string.IsNullOrWhiteSpace(result) ? term.ToEnglish() : result;
+    }
+
     public static string StringTermOrDefault(string term, string def)
     {
         try

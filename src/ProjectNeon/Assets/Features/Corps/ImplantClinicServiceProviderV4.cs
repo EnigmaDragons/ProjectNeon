@@ -11,38 +11,14 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         { StatType.Attack, 1 },
         { StatType.Magic, 1 },
         { StatType.Leadership, 1 },
-        { StatType.Economy, 1 },
         { StatType.Armor, 2 },
         { StatType.Resistance, 2 },
-    };
-    private static readonly Dictionary<StatType, string> NegativePrefix = new Dictionary<StatType, string>
-    {
-        { StatType.MaxHP, "Lifeblood" },
-        { StatType.StartingShield, "Powered" },
-        { StatType.Attack, "Dulled" },
-        { StatType.Magic, "Inhibiting" },
-        { StatType.Leadership, "Clouded" },
-        { StatType.Economy, "Costly" },
-        { StatType.Armor, "Fragilizing" },
-        { StatType.Resistance, "Cursed" },
-    };
-    private static readonly Dictionary<StatType, string> PositiveSuffix = new Dictionary<StatType, string>
-    {
-        { StatType.MaxHP, "Vitality" },
-        { StatType.StartingShield, "Barrier" },
-        { StatType.Attack, "Lethality" },
-        { StatType.Magic, "Attunement" },
-        { StatType.Leadership, "Focus" },
-        { StatType.Economy, "Greed" },
-        { StatType.Armor, "Protection" },
-        { StatType.Resistance, "Ward" },
     };
     private static readonly StatType[] PowerStats = 
     {
         StatType.Attack,
         StatType.Magic,
-        StatType.Leadership,
-        StatType.Economy
+        StatType.Leadership
     };
     private static readonly StatType[] TutorialStatTypes =
     {
@@ -70,7 +46,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         _rarityChances = rarityChances;
     }
     
-    public string GetTitle() => "Available Implant Procedures";
+    public string GetTitleTerm() => "Clinics/ImplantTitle";
 
     public ClinicServiceButtonData[] GetOptions()
     {
@@ -118,11 +94,11 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         else if (rarity == Rarity.Epic)
             cost = 4;
         return new ClinicServiceButtonData(
-            $"{NegativePrefix[lossStat]} {PositiveSuffix[gainStat]}",
+            $"Clinics/Implant{lossStat.ToString()}{gainStat.ToString()}",
             rarity == Rarity.Rare || rarity == Rarity.Epic
-                ? $"Gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.NameTerm.ToEnglish()}"
-                : $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.NameTerm.ToEnglish()}</b>",
-            cost,
+                ? string.Format("Clinics/ImplantLossless".ToLocalized(), $"<b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>")
+                : string.Format("Clinics/ImplantTradeOff".ToLocalized(), $"<b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>"),
+        cost,
             () =>
             {
                 if (_available.Length > index)

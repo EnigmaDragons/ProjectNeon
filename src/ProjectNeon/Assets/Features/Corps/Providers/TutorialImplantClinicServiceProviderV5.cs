@@ -40,7 +40,7 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
         _rng = rng;
     }
     
-    public string GetTitle() => "Available Implant Procedures";
+    public string GetTitleTerm() => "Available Implant Procedures";
 
     public ClinicServiceButtonData[] GetOptions()
     {

@@ -19,6 +19,7 @@ public class LocalizationImporter
         ImportLoadingScreens(true);
         ImportEnemies(true);
         ImportHeroes(true);
+        ImportBlessings(true);
     }
 
     [MenuItem("Neon/Localization/Import Tutorial Slides")]
@@ -60,12 +61,21 @@ public class LocalizationImporter
     [MenuItem("Neon/Localization/Import Heroes")]
     private static void ImportHeroes()
         => ImportHeroes(false);
-
     private static void ImportHeroes(bool hasInit)
     {
         ImportItems<BaseHero>(x => x.ClassTerm(), (hero, text) => hero.className = text, hasInit);
         ImportItems<BaseHero>(x => x.DescriptionTerm(), (hero, text) => hero.flavorDetails.HeroDescription = text, hasInit);
         ImportItems<BaseHero>(x => x.BackStoryTerm(), (hero, text) => hero.flavorDetails.BackStory = text, hasInit);
+    }
+
+    [MenuItem("Neon/Localization/Import Blessings")]
+    private static void ImportBlessings()
+        => ImportBlessings(false);
+
+    private static void ImportBlessings(bool hasInit)
+    {
+        ImportSubItems<CorpClinicProvider, BlessingData>(p => p.blessingsV4, b => b.NameTerm, (b, text) => b.Name = text, hasInit);
+        ImportSubItems<CorpClinicProvider, BlessingData>(p => p.blessingsV4, b => b.DescriptionTerm, (b, text) => b.Description = text, hasInit); 
     }
 
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject

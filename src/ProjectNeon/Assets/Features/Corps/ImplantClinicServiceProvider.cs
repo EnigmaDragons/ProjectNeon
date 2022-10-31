@@ -45,7 +45,7 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
     public ImplantClinicServiceProvider(PartyAdventureState party)
         => _party = party;
     
-    public string GetTitle() => "Available Implant Procedures";
+    public string GetTitleTerm() => "Available Implant Procedures";
 
     public ClinicServiceButtonData[] GetOptions()
     {
