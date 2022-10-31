@@ -10,7 +10,6 @@ public interface HeroCharacter
     Sprite Bust { get; }
     GameObject Body { get; }
     MemberMaterialType MaterialType { get; }
-    string Class { get; }
     BattleRole BattleRole { get; }
     Deck Deck { get; }
     CardTypeData BasicCard { get; }
@@ -84,7 +83,7 @@ public static class HeroCharacterExtensions
     public static Member AsMemberForLibrary(this HeroCharacter h) => AsMemberForLibrary(h, h.Stats);
     public static Member AsMemberForLibrary(this HeroCharacter h, IStats stats)
     {
-        var m = new Member(-1, h.NameTerm(), h.Class, h.MaterialType, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.BasicCard));
+        var m = new Member(-1, h.NameTerm(), h.ClassTerm(), h.MaterialType, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), stats.MaxHp(), Maybe<CardTypeData>.Present(h.BasicCard));
         h.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;
     }
@@ -97,4 +96,5 @@ public static class HeroCharacterExtensions
         .ToArray();
 
     public static string NameTerm(this HeroCharacter hero) => $"Heroes/HeroName{hero.Id}";
+    public static string ClassTerm(this HeroCharacter hero) => $"Heroes/HeroClass{hero.Id}";
 }

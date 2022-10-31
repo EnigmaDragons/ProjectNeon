@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 1532179563813356727}
   - component: {fileID: 23517732199775465}
   - component: {fileID: 3986868850311814841}
+  - component: {fileID: 8439780699978420199}
   m_Layer: 0
   m_Name: HeroClass
   m_TagString: Untagged
@@ -169,6 +170,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8439780699978420199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959433804387203928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &1062348756569969695
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,7 +2476,7 @@ MonoBehaviour:
   nextHeroButton: {fileID: 2764438775220645429}
   previousHeroButton: {fileID: 8677860586713553241}
   nameLocalize: {fileID: 9154636764809891554}
-  classLabel: {fileID: 3986868850311814841}
+  classLocalize: {fileID: 8439780699978420199}
 --- !u!1 &8614555555883897514
 GameObject:
   m_ObjectHideFlags: 0
@@ -3122,6 +3162,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff77fc2bd9dfd234e8b2497fe259b35e, type: 3}
+--- !u!224 &6906980992359325628 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8904525599835186363, guid: ff77fc2bd9dfd234e8b2497fe259b35e, type: 3}
+  m_PrefabInstance: {fileID: 2614828062943984391}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3907378608699185348 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1328685449942016963, guid: ff77fc2bd9dfd234e8b2497fe259b35e, type: 3}
@@ -3133,11 +3178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &6906980992359325628 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8904525599835186363, guid: ff77fc2bd9dfd234e8b2497fe259b35e, type: 3}
-  m_PrefabInstance: {fileID: 2614828062943984391}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2873334050688376774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3416,6 +3456,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!224 &2997570566431058348 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 3303125856166062523}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &796370362850961670 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -3427,11 +3472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &2997570566431058348 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 3303125856166062523}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6572647861148988161
 PrefabInstance:
   m_ObjectHideFlags: 0

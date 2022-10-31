@@ -10,7 +10,7 @@ public class HeroFaceSelector : MonoBehaviour
     [SerializeField] private Button nextHeroButton;
     [SerializeField] private Button previousHeroButton;
     [SerializeField] private Localize nameLocalize;
-    [SerializeField] private TextMeshProUGUI classLabel;
+    [SerializeField] private Localize classLocalize;
 
     private IndexSelector<HeroCharacter> _heroes = new IndexSelector<HeroCharacter>(Array.Empty<HeroCharacter>());
     private Action<HeroCharacter> _onChanged = _ => { };
@@ -32,7 +32,7 @@ public class HeroFaceSelector : MonoBehaviour
     {
         bustImage.sprite = _heroes.Current.Bust;
         nameLocalize.SetTerm(_heroes.Current.NameTerm());
-        classLabel.text = _heroes.Current.Class;
+        classLocalize.SetTerm(_heroes.Current.ClassTerm());
     }
 
     public void MoveNext()

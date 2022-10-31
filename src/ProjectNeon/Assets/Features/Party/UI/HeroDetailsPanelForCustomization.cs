@@ -10,7 +10,7 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
     [SerializeField] private DeckBuilderState deckBuilderState;
     [SerializeField] private Image heroBust;
     [SerializeField] private Localize nameLocalize;
-    [SerializeField] private TextMeshProUGUI classLabel;
+    [SerializeField] private Localize classLocalize;
     [SerializeField] private MemberResourcePanel resources;
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private HeroEquipmentPanelV2 equipment;
@@ -33,7 +33,7 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
         _ignoreChanges = true;
         _hero = deckBuilderState.SelectedHeroesDeck.Hero;
         nameLocalize.SetTerm(_hero.NameTerm);
-        classLabel.text = _hero.Class;
+        classLocalize.SetTerm(_hero.ClassTerm);
         levelLabel.text = _hero.Level.ToString();
         heroBust.sprite = _hero.Character.Bust;
         _optionToStat = new Dictionary<int, StatType>();

@@ -7,7 +7,7 @@ public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
 {
     [SerializeField] private Image heroBust;
     [SerializeField] private Localize nameLocalize;
-    [SerializeField] private TextMeshProUGUI classLabel;
+    [SerializeField] private Localize classLocalize;
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private HeroEquipmentPanel equipment;
     [SerializeField] private HeroInjuryPanel injuries;
@@ -22,7 +22,7 @@ public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
         _hero = h;
         _canInteractWithEquipment = canInteractWithEquipment;
         nameLocalize.SetTerm(h.NameTerm);
-        classLabel.text = h.Class;
+        classLocalize.SetTerm(h.ClassTerm);
         levelLabel.text = h.Level.ToString();
         heroBust.sprite = h.Character.Bust;
         stats.Initialized(h);

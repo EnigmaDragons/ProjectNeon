@@ -123,6 +123,15 @@ public class LocalizationExporter
         WriteCsv("enemy-descriptions", data);
     }
 
+    [MenuItem("Neon/Localization/Export Hero Classes")]
+    public static void ExportHeroClasses()
+    {
+        var data = new List<string>();
+        foreach (var hero in GetAllInstances<BaseHero>())
+            data.Add($"HeroClass{hero.id}^{hero.Class}");
+        WriteCsv("hero-classes", data);
+    }
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

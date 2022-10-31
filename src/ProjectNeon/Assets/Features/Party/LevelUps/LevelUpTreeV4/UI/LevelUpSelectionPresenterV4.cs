@@ -14,13 +14,14 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
     [SerializeField] private GameObject heroNameObject;
     [SerializeField] private Localize heroNameLocalize;
     [SerializeField] private GameObject heroClassObject;
-    [SerializeField] private TextMeshProUGUI heroClassLabel;
+    [SerializeField] private Localize heroClassLocalize;
     [SerializeField] private Image bust;
     [SerializeField] private ResourceCounterPresenter primaryResourceCounter;
     [SerializeField] private ResourceCounterPresenter secondaryResourceCounter;
     
     [SerializeField] private TextMeshProUGUI faintLevelLabel;
     [SerializeField] private Image faintBust;
+    [SerializeField] private Localize faintClassLocalize;
     [SerializeField] private TextMeshProUGUI faintClassName;
     
     [SerializeField] private MemberStatDiffPanel stats;
@@ -70,11 +71,11 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         faintBust.color = new Color(1, 1, 1, 1 / 255f);
         faintLevelLabel.text = _hero.Level.ToString(); 
         faintLevelLabel.color = new Color(1, 1, 1, 1 / 255f);
-        faintClassName.text = _hero.Class;
+        faintClassLocalize.SetTerm(_hero.ClassTerm);
         faintClassName.color = new Color(1, 1, 1, 1 / 255f);
         stats.Initialized(_hero);
         heroNameLocalize.SetTerm(_hero.NameTerm);
-        heroClassLabel.text = _hero.Class;
+        heroClassLocalize.SetTerm(_hero.ClassTerm);
         levelLabel.text = $"Level {_hero.Level.ToString()}";
         var adventureMode = adventure != null ? adventure.Adventure.Mode : AdventureMode.Standard;
         optionsPresenter.Init(adventureMode, _hero);

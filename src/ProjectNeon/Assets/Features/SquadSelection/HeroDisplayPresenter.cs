@@ -13,7 +13,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private GameObject hoverGraphic;
     [SerializeField] private Image heroBust;
     [SerializeField] private Localize heroName;
-    [SerializeField] private TextMeshProUGUI heroClassName;
+    [SerializeField] private Localize heroClassName;
     [SerializeField] private TextMeshProUGUI heroDescription;
     [FormerlySerializedAs("roleDescription")] [SerializeField] private TextMeshProUGUI complexityLabel;
     [SerializeField] private Slider complexitySlider;
@@ -60,7 +60,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         currentHero = c;
         heroBust.sprite = c.Bust;
         heroName.SetTerm(c.NameTerm());
-        heroClassName.text = c.Class;
+        heroClassName.SetTerm(c.ClassTerm());
         heroDescription.text = c.Flavor.HeroDescription;
         complexityLabel.text = $"Complexity:";
         complexitySlider.value = Mathf.Clamp(c.ComplexityRating / 5f, 0.2f, 1f);

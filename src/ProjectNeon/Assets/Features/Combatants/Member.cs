@@ -10,7 +10,7 @@ public class Member
     public int Id { get; }
     public string UnambiguousEnglishName { get; }
     public string NameTerm { get; }
-    public string Class { get; }
+    public string ClassTerm { get; }
     public MemberMaterialType MaterialType { get; }
     public TeamType TeamType { get; }
     public BattleRole BattleRole { get; }
@@ -21,17 +21,17 @@ public class Member
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{NameTerm.ToEnglish()} {Id}";
     
-    public Member(int id, string nameTerm, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
-        : this(id, nameTerm, characterClass, materialType, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
+    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
+        : this(id, nameTerm, characterClassTerm, materialType, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
     
-    public Member(int id, string nameTerm, string characterClass, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp, Maybe<CardTypeData> basicCard)
+    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp, Maybe<CardTypeData> basicCard)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {NameTerm.ToEnglish()} is 0");
         
         Id = id;
         NameTerm = nameTerm;
-        Class = characterClass;
+        ClassTerm = characterClassTerm;
         MaterialType = materialType;
         TeamType = team;
         BattleRole = battleRole;
@@ -53,7 +53,7 @@ public static class MemberExtensions
 
     public static string EnglishNames(this IEnumerable<Member> members) => string.Join(", ", members.Select(m => m.NameTerm.ToEnglish()));
     
-    public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.NameTerm, m.Class, m.TeamType, m.State.ToSnapshot());
+    public static MemberSnapshot GetSnapshot(this Member m) => new MemberSnapshot(m.Id, m.NameTerm, m.ClassTerm, m.TeamType, m.State.ToSnapshot());
     public static int HpAndShield(this Member m) => CurrentHp(m) + CurrentShield(m);    
     public static int HpAndShieldWithOverkill(this Member m) => CurrentHp(m) + CurrentShield(m) - RoundUp(m.State[TemporalStatType.OverkillDamageAmount]);
     public static int CurrentHp(this Member m) => RoundUp(m.State[TemporalStatType.HP]);

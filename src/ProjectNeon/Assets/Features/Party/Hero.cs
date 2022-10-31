@@ -29,7 +29,7 @@ public class Hero
     }
 
     public string NameTerm => character.NameTerm();
-    public string Class => character.Class;
+    public string ClassTerm => character.ClassTerm();
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
     public int CurrentHp => Stats.MaxHp() - health.MissingHp;
@@ -103,7 +103,7 @@ public class Hero
 
     public Member AsMember(int id)
     {
-        var m = new Member(id, Character.NameTerm(), Character.Class, Character.MaterialType, TeamType.Party,
+        var m = new Member(id, Character.NameTerm(), Character.ClassTerm(), Character.MaterialType, TeamType.Party,
             Stats, Character.BattleRole, PrimaryStat, CurrentHp, new Maybe<CardTypeData>(basicCard));
         Character.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;

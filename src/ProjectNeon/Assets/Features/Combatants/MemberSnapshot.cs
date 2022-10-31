@@ -4,15 +4,15 @@ public sealed class MemberSnapshot
 {
     public int Id { get; }
     public string NameTerm { get; }
-    public string Class { get; }
+    public string ClassTerm { get; }
     public TeamType TeamType { get; }
     public MemberStateSnapshot State { get; }
 
-    public MemberSnapshot(int memberId, string nameTerm, string memberClass, TeamType teamType, MemberStateSnapshot stateSnapshot)
+    public MemberSnapshot(int memberId, string nameTerm, string memberClassTerm, TeamType teamType, MemberStateSnapshot stateSnapshot)
     {
         Id = memberId;
         NameTerm = nameTerm;
-        Class = memberClass;
+        ClassTerm = memberClassTerm;
         TeamType = teamType;
         State = stateSnapshot;
     }
