@@ -20,6 +20,7 @@ public class LocalizationImporter
         ImportEnemies(true);
         ImportHeroes(true);
         ImportBlessings(true);
+        ImportDifficulties(true);
     }
 
     [MenuItem("Neon/Localization/Import Tutorial Slides")]
@@ -76,6 +77,16 @@ public class LocalizationImporter
     {
         ImportSubItems<CorpClinicProvider, BlessingData>(p => p.blessingsV4, b => b.NameTerm, (b, text) => b.Name = text, hasInit);
         ImportSubItems<CorpClinicProvider, BlessingData>(p => p.blessingsV4, b => b.DescriptionTerm, (b, text) => b.Description = text, hasInit); 
+    }
+    
+    [MenuItem("Neon/Localization/Import Difficulties")]
+    private static void ImportDifficulties()
+        => ImportDifficulties(false);
+    private static void ImportDifficulties(bool hasInit)
+    {
+        ImportItems<Difficulty>(x => x.NameTerm, (d, text) => d.difficultyName = text, hasInit);
+        ImportItems<Difficulty>(x => x.DescriptionTerm, (d, text) => d.description = text, hasInit);
+        ImportItems<Difficulty>(x => x.ChangesTerm, (d, text) => d.changes = text, hasInit);
     }
 
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject
