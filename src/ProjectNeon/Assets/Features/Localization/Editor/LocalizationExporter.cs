@@ -94,7 +94,7 @@ public class LocalizationExporter
         foreach(var cutscene in GetAllInstances<Cutscene>())
             foreach(var segment in cutscene.Segments)
                 if (segment.SegmentType == CutsceneSegmentType.DialogueLine || segment.SegmentType == CutsceneSegmentType.NarratorLine || segment.SegmentType == CutsceneSegmentType.PlayerLine)
-                    data.Add($"Segment{segment.Id}^{ToSingleLineI2Format(segment.Text)}");
+                    data.Add($"{segment.Term.Split('/').Last()}^{ToSingleLineI2Format(segment.Text)}");
         WriteCsv("cutscenes", data);
     }
 

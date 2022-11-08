@@ -8,6 +8,7 @@ using UnityEngine;
 public class CutsceneSegmentData
 {
     public int Id;
+    public int AdventureId;
     public CutsceneSegmentType SegmentType;
     public StringReference DialogueCharacterId = new StringReference { UseConstant = false };
     [TextArea(4, 4)] public string Text = "";
@@ -18,7 +19,7 @@ public class CutsceneSegmentData
     public StringReference[] ForbiddenStates;
     public bool Or;
     public StringReference StoryState = new StringReference("");
-    public string Term => $"Cutscenes/Segment{Id}";
+    public string Term => AdventureId > 0 ? $"Cutscenes/Adventure{AdventureId}_Segment{Id}" : $"Cutscenes/Orphaned_Segment{Id}";
 
     public bool ShouldShow(Func<string, bool> storyState)
         => !ShouldSkip(storyState);

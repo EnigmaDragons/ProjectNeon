@@ -441,6 +441,40 @@ public class AssetUpdater
             cutscenes.SelectMany(cutscene => cutscene.Segments.Select(segment => new Tuple<Cutscene, CutsceneSegmentData>(cutscene, segment))).ToArray(), 
             s => s.Id, 
             (s, id) => s.Id = id);
+        foreach (var adventure in ScriptableExtensions.GetAllInstances<Adventure>())
+        {
+            foreach (var stage in adventure.StagesV5)
+            {
+                foreach (var segment in stage.Segments.Concat(stage.MaybeSecondarySegments).Concat(stage.MaybeStorySegments))
+                {
+                    if (segment == null)
+                        return;
+                    var shouldSetDirty = false;
+                    if (segment is CutsceneStageSegment)
+                    {
+                        foreach (var cutsceneSegment in ((CutsceneStageSegment)segment).Cutscene.Segments)
+                        {
+                            shouldSetDirty = shouldSetDirty || cutsceneSegment.AdventureId != adventure.id;
+                            cutsceneSegment.AdventureId = adventure.id;
+                        }   
+                    }
+                    else if (segment is SpecificEncounterSegment)
+                    {
+                        var encounter = ((SpecificEncounterSegment)segment);
+                        if (encounter.Cutscene != null)
+                        {
+                            foreach (var cutsceneSegment in encounter.Cutscene.Segments)
+                            {
+                                shouldSetDirty = shouldSetDirty || cutsceneSegment.AdventureId != adventure.id;
+                                cutsceneSegment.AdventureId = adventure.id;
+                            } 
+                        }
+                    }
+                    if (shouldSetDirty)
+                        EditorUtility.SetDirty(segment);
+                }
+            }
+        }
     }
 
     [MenuItem("Neon/Update/Update Story Event IDs")]
